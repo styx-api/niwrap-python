@@ -205,13 +205,13 @@ class VolumeWeightedStatsOutputs(typing.NamedTuple):
 
 
 def volume_weighted_stats_params(
-    subvolume: str | None,
-    percent: float | None,
     volume_in: InputPathType,
     weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
+    subvolume: str | None = None,
     roi: VolumeWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
 ) -> VolumeWeightedStatsParamsDictTagged:
@@ -219,19 +219,19 @@ def volume_weighted_stats_params(
     Build parameters.
     
     Args:
+        volume_in: the input volume.
+        weight_volume: use weights from a volume file.
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        volume_in: the input volume.
-        weight_volume: use weights from a volume file.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
     Returns:
@@ -280,9 +280,9 @@ def volume_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("sample", False) is not None:
+    if params.get("sample", None) is not None:
         if not isinstance(params["sample"], bool):
-            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
     if params.get("percent", None) is not None:
         if not isinstance(params["percent"], (float, int)):
             raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
@@ -314,7 +314,7 @@ def volume_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("weight-volume", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", False) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
+    if params.get("weight-volume", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
             "wb_command",
             "-volume-weighted-stats",
@@ -324,7 +324,7 @@ def volume_weighted_stats_cargs(
             *(volume_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-mean" if (params.get("mean", False)) else ""),
             "-stdev",
-            ("-sample" if (params.get("sample", False) is not None) else ""),
+            ("-sample" if (params.get("sample", None) is not None) else ""),
             "-percentile",
             (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             ("-sum" if (params.get("sum", False)) else ""),
@@ -388,13 +388,13 @@ def volume_weighted_stats_execute(
 
 
 def volume_weighted_stats(
-    subvolume: str | None,
-    percent: float | None,
     volume_in: InputPathType,
     weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
+    subvolume: str | None = None,
     roi: VolumeWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -414,19 +414,19 @@ def volume_weighted_stats(
     to volume.
     
     Args:
+        volume_in: the input volume.
+        weight_volume: use weights from a volume file.
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        volume_in: the input volume.
-        weight_volume: use weights from a volume file.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
         runner: Command runner.

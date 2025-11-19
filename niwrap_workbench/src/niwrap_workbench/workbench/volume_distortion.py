@@ -42,8 +42,8 @@ class VolumeDistortionOutputs(typing.NamedTuple):
 
 def volume_distortion_params(
     volume_out: str,
-    source_volume: str | None,
     warpfield: str,
+    source_volume: str | None = None,
     circular: bool = False,
     log2: bool = False,
 ) -> VolumeDistortionParamsDictTagged:
@@ -52,10 +52,10 @@ def volume_distortion_params(
     
     Args:
         volume_out: the output distortion measures.
+        warpfield: the warpfield to compute the distortion of.
         source_volume: MUST be used if using a fnirt warpfield\
             \
             the source volume used when generating the warpfield.
-        warpfield: the warpfield to compute the distortion of.
         circular: use the circle-based formula for the anisotropic measure.
         log2: apply base-2 log transform.
     Returns:
@@ -192,8 +192,8 @@ def volume_distortion_execute(
 
 def volume_distortion(
     volume_out: str,
-    source_volume: str | None,
     warpfield: str,
+    source_volume: str | None = None,
     circular: bool = False,
     log2: bool = False,
     runner: Runner | None = None,
@@ -216,10 +216,10 @@ def volume_distortion(
     
     Args:
         volume_out: the output distortion measures.
+        warpfield: the warpfield to compute the distortion of.
         source_volume: MUST be used if using a fnirt warpfield\
             \
             the source volume used when generating the warpfield.
-        warpfield: the warpfield to compute the distortion of.
         circular: use the circle-based formula for the anisotropic measure.
         log2: apply base-2 log transform.
         runner: Command runner.

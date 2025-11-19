@@ -200,26 +200,26 @@ class VolumeTfceOutputs(typing.NamedTuple):
 
 def volume_tfce_params(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvolume: str | None,
     volume_in: InputPathType,
     presmooth: VolumeTfcePresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
     parameters: VolumeTfceParametersParamsDict | None = None,
+    subvolume: str | None = None,
 ) -> VolumeTfceParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
+        volume_in: the volume to run TFCE on.
+        presmooth: smooth the volume before running TFCE.
         roi_volume: select a region of interest to run TFCE on\
             \
             the area to run TFCE on, as a volume.
+        parameters: set parameters for TFCE integral.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
-        volume_in: the volume to run TFCE on.
-        presmooth: smooth the volume before running TFCE.
-        parameters: set parameters for TFCE integral.
     Returns:
         Parameter dictionary
     """
@@ -365,11 +365,11 @@ def volume_tfce_execute(
 
 def volume_tfce(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvolume: str | None,
     volume_in: InputPathType,
     presmooth: VolumeTfcePresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
     parameters: VolumeTfceParametersParamsDict | None = None,
+    subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
@@ -396,15 +396,15 @@ def volume_tfce(
     
     Args:
         volume_out: the output volume.
+        volume_in: the volume to run TFCE on.
+        presmooth: smooth the volume before running TFCE.
         roi_volume: select a region of interest to run TFCE on\
             \
             the area to run TFCE on, as a volume.
+        parameters: set parameters for TFCE integral.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
-        volume_in: the volume to run TFCE on.
-        presmooth: smooth the volume before running TFCE.
-        parameters: set parameters for TFCE integral.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeTfceOutputs`).

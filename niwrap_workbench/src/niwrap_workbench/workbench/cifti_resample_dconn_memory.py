@@ -259,7 +259,7 @@ CiftiResampleDconnMemoryParamsDictTagged = typing.TypedDict('CiftiResampleDconnM
 
 
 def cifti_resample_dconn_memory_weighted(
-    exponent: float | None,
+    exponent: float | None = None,
     legacy_cutoff: bool = False,
 ) -> CiftiResampleDconnMemoryWeightedParamsDictTagged:
     """
@@ -402,7 +402,7 @@ def cifti_resample_dconn_memory_volume_predilate_cargs(
 
 
 def cifti_resample_dconn_memory_weighted_(
-    exponent: float | None,
+    exponent: float | None = None,
     legacy_cutoff: bool = False,
 ) -> CiftiResampleDconnMemoryWeightedParamsDictTagged_:
     """
@@ -684,7 +684,7 @@ def cifti_resample_dconn_memory_affine_cargs(
 
 def cifti_resample_dconn_memory_warpfield(
     warpfield: str,
-    source_volume: str | None,
+    source_volume: str | None = None,
 ) -> CiftiResampleDconnMemoryWarpfieldParamsDictTagged:
     """
     Build parameters.

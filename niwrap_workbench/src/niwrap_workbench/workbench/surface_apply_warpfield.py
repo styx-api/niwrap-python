@@ -40,20 +40,20 @@ class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):
 
 def surface_apply_warpfield_params(
     out_surf: str,
-    forward_warp: str | None,
     in_surf: InputPathType,
     warpfield: str,
+    forward_warp: str | None = None,
 ) -> SurfaceApplyWarpfieldParamsDictTagged:
     """
     Build parameters.
     
     Args:
         out_surf: the output transformed surface.
+        in_surf: the surface to transform.
+        warpfield: the INVERSE warpfield.
         forward_warp: MUST be used if using a fnirt warpfield\
             \
             the forward warpfield.
-        in_surf: the surface to transform.
-        warpfield: the INVERSE warpfield.
     Returns:
         Parameter dictionary
     """
@@ -177,9 +177,9 @@ def surface_apply_warpfield_execute(
 
 def surface_apply_warpfield(
     out_surf: str,
-    forward_warp: str | None,
     in_surf: InputPathType,
     warpfield: str,
+    forward_warp: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
@@ -195,11 +195,11 @@ def surface_apply_warpfield(
     
     Args:
         out_surf: the output transformed surface.
+        in_surf: the surface to transform.
+        warpfield: the INVERSE warpfield.
         forward_warp: MUST be used if using a fnirt warpfield\
             \
             the forward warpfield.
-        in_surf: the surface to transform.
-        warpfield: the INVERSE warpfield.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).

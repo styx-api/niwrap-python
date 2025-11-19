@@ -107,8 +107,8 @@ class CiftiMergeDenseOutputs(typing.NamedTuple):
 
 def cifti_merge_dense_params(
     cifti_out: str,
-    action: str | None,
     direction: str,
+    action: str | None = None,
     cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
 ) -> CiftiMergeDenseParamsDictTagged:
     """
@@ -116,11 +116,11 @@ def cifti_merge_dense_params(
     
     Args:
         cifti_out: the output cifti file.
+        direction: which dimension to merge along, ROW or COLUMN.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'FIRST', or 'LEGACY', default 'ERROR', use 'LEGACY' to\
             match v1.4.2 and earlier.
-        direction: which dimension to merge along, ROW or COLUMN.
         cifti: specify an input cifti file.
     Returns:
         Parameter dictionary
@@ -243,8 +243,8 @@ def cifti_merge_dense_execute(
 
 def cifti_merge_dense(
     cifti_out: str,
-    action: str | None,
     direction: str,
+    action: str | None = None,
     cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
@@ -257,11 +257,11 @@ def cifti_merge_dense(
     
     Args:
         cifti_out: the output cifti file.
+        direction: which dimension to merge along, ROW or COLUMN.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'FIRST', or 'LEGACY', default 'ERROR', use 'LEGACY' to\
             match v1.4.2 and earlier.
-        direction: which dimension to merge along, ROW or COLUMN.
         cifti: specify an input cifti file.
         runner: Command runner.
     Returns:

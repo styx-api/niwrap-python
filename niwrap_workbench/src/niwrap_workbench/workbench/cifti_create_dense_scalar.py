@@ -165,7 +165,7 @@ def cifti_create_dense_scalar_volume_cargs(
 
 def cifti_create_dense_scalar_left_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseScalarLeftMetricParamsDictTagged:
     """
     Build parameters.
@@ -234,7 +234,7 @@ def cifti_create_dense_scalar_left_metric_cargs(
 
 def cifti_create_dense_scalar_right_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseScalarRightMetricParamsDictTagged:
     """
     Build parameters.
@@ -303,7 +303,7 @@ def cifti_create_dense_scalar_right_metric_cargs(
 
 def cifti_create_dense_scalar_cerebellum_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseScalarCerebellumMetricParamsDictTagged:
     """
     Build parameters.
@@ -373,7 +373,7 @@ def cifti_create_dense_scalar_cerebellum_metric_cargs(
 def cifti_create_dense_scalar_metric(
     structure: str,
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseScalarMetricParamsDictTagged:
     """
     Build parameters.
@@ -459,11 +459,11 @@ class CiftiCreateDenseScalarOutputs(typing.NamedTuple):
 
 def cifti_create_dense_scalar_params(
     cifti_out: str,
-    file: str | None,
     volume: CiftiCreateDenseScalarVolumeParamsDict | None = None,
     left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
+    file: str | None = None,
     metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
 ) -> CiftiCreateDenseScalarParamsDictTagged:
     """
@@ -471,13 +471,13 @@ def cifti_create_dense_scalar_params(
     
     Args:
         cifti_out: the output cifti file.
-        file: use a text file to set all map names\
-            \
-            text file containing map names, one per line.
         volume: volume component.
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
+        file: use a text file to set all map names\
+            \
+            text file containing map names, one per line.
         metric: metric for a specified surface structure.
     Returns:
         Parameter dictionary
@@ -655,11 +655,11 @@ def cifti_create_dense_scalar_execute(
 
 def cifti_create_dense_scalar(
     cifti_out: str,
-    file: str | None,
     volume: CiftiCreateDenseScalarVolumeParamsDict | None = None,
     left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
+    file: str | None = None,
     metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseScalarOutputs:
@@ -713,13 +713,13 @@ def cifti_create_dense_scalar(
     
     Args:
         cifti_out: the output cifti file.
-        file: use a text file to set all map names\
-            \
-            text file containing map names, one per line.
         volume: volume component.
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
+        file: use a text file to set all map names\
+            \
+            text file containing map names, one per line.
         metric: metric for a specified surface structure.
         runner: Command runner.
     Returns:

@@ -116,22 +116,22 @@ class CiftiEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def cifti_estimate_fwhm_params(
-    column: int | None,
     cifti: InputPathType,
     merged_volume: bool = False,
-    demean: bool | None = False,
+    column: int | None = None,
+    demean: bool | None = None,
     surface: list[CiftiEstimateFwhmSurfaceParamsDict] | None = None,
 ) -> CiftiEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        column: only output estimates for one column\
-            \
-            the column number.
         cifti: the input cifti file.
         merged_volume: treat volume components as if they were a single\
             component.
+        column: only output estimates for one column\
+            \
+            the column number.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.
@@ -172,9 +172,9 @@ def cifti_estimate_fwhm_validate(
     if params.get("column", None) is not None:
         if not isinstance(params["column"], int):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
-    if params.get("demean", False) is not None:
+    if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
-            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
             raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiEstimateFwhmSurfaceParamsDict] | None`')
@@ -200,7 +200,7 @@ def cifti_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("merged-volume", False) or params.get("column", None) is not None or params.get("demean", False) is not None or params.get("surface", None) is not None:
+    if params.get("merged-volume", False) or params.get("column", None) is not None or params.get("demean", None) is not None or params.get("surface", None) is not None:
         cargs.extend([
             "wb_command",
             "-cifti-estimate-fwhm",
@@ -208,7 +208,7 @@ def cifti_estimate_fwhm_cargs(
             "-column",
             (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
             "-whole-file",
-            ("-demean" if (params.get("demean", False) is not None) else ""),
+            ("-demean" if (params.get("demean", None) is not None) else ""),
             *([a for c in [cifti_estimate_fwhm_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))
@@ -300,10 +300,10 @@ def cifti_estimate_fwhm_execute(
 
 
 def cifti_estimate_fwhm(
-    column: int | None,
     cifti: InputPathType,
     merged_volume: bool = False,
-    demean: bool | None = False,
+    column: int | None = None,
+    demean: bool | None = None,
     surface: list[CiftiEstimateFwhmSurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
@@ -353,12 +353,12 @@ def cifti_estimate_fwhm(
     THALAMUS_RIGHT.
     
     Args:
-        column: only output estimates for one column\
-            \
-            the column number.
         cifti: the input cifti file.
         merged_volume: treat volume components as if they were a single\
             component.
+        column: only output estimates for one column\
+            \
+            the column number.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.

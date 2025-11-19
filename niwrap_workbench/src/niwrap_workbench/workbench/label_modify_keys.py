@@ -40,20 +40,20 @@ class LabelModifyKeysOutputs(typing.NamedTuple):
 
 def label_modify_keys_params(
     label_out: str,
-    column: str | None,
     label_in: InputPathType,
     remap_file: str,
+    column: str | None = None,
 ) -> LabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
         label_out: output label file.
+        label_in: the input label file.
+        remap_file: text file with old and new key values.
         column: select a single column to use\
             \
             the column number or name.
-        label_in: the input label file.
-        remap_file: text file with old and new key values.
     Returns:
         Parameter dictionary
     """
@@ -183,9 +183,9 @@ def label_modify_keys_execute(
 
 def label_modify_keys(
     label_out: str,
-    column: str | None,
     label_in: InputPathType,
     remap_file: str,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelModifyKeysOutputs:
     """
@@ -207,11 +207,11 @@ def label_modify_keys(
     
     Args:
         label_out: output label file.
+        label_in: the input label file.
+        remap_file: text file with old and new key values.
         column: select a single column to use\
             \
             the column number or name.
-        label_in: the input label file.
-        remap_file: text file with old and new key values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelModifyKeysOutputs`).

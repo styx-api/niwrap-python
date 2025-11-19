@@ -464,29 +464,35 @@ class MetricPaletteOutputs(typing.NamedTuple):
 
 
 def metric_palette_params(
-    column: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     metric: str,
     mode: str,
+    column: str | None = None,
     pos_percent: MetricPalettePosPercentParamsDict | None = None,
     neg_percent: MetricPaletteNegPercentParamsDict | None = None,
     pos_user: MetricPalettePosUserParamsDict | None = None,
     neg_user: MetricPaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: MetricPaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
 ) -> MetricPaletteParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        metric: the metric to modify.
+        mode: the mapping mode.
         column: select a single column\
             \
             the column number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -502,6 +508,7 @@ def metric_palette_params(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -509,13 +516,6 @@ def metric_palette_params(
             setting, NOT per-map)\
             \
             the normalization mode.
-        metric: the metric to modify.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
     Returns:
         Parameter dictionary
     """
@@ -778,21 +778,21 @@ def metric_palette_execute(
 
 
 def metric_palette(
-    column: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     metric: str,
     mode: str,
+    column: str | None = None,
     pos_percent: MetricPalettePosPercentParamsDict | None = None,
     neg_percent: MetricPaletteNegPercentParamsDict | None = None,
     pos_user: MetricPalettePosUserParamsDict | None = None,
     neg_user: MetricPaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: MetricPaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
@@ -880,9 +880,15 @@ def metric_palette(
     .
     
     Args:
+        metric: the metric to modify.
+        mode: the mapping mode.
         column: select a single column\
             \
             the column number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -898,6 +904,7 @@ def metric_palette(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -905,13 +912,6 @@ def metric_palette(
             setting, NOT per-map)\
             \
             the normalization mode.
-        metric: the metric to modify.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricPaletteOutputs`).

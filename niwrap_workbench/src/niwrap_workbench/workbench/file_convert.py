@@ -74,7 +74,7 @@ def file_convert_border_version_convert(
     border_in: InputPathType,
     out_version: int,
     border_out: str,
-    surface: InputPathType | None,
+    surface: InputPathType | None = None,
 ) -> FileConvertBorderVersionConvertParamsDictTagged:
     """
     Build parameters.

@@ -210,32 +210,29 @@ class VolumeExtremaOutputs(typing.NamedTuple):
 
 def volume_extrema_params(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
     sum_subvols: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
+    subvolume: str | None = None,
 ) -> VolumeExtremaParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output extrema volume.
-        roi_volume: ignore values outside the selected area\
-            \
-            the area to find extrema in.
-        subvolume: select a single subvolume to find extrema in\
-            \
-            the subvolume number or name.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the volume before finding extrema.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
         threshold: ignore small extrema.
         sum_subvols: output the sum of the extrema subvolumes instead of each\
             subvolume separately.
@@ -243,6 +240,9 @@ def volume_extrema_params(
             neighborhood.
         only_maxima: only find the maxima.
         only_minima: only find the minima.
+        subvolume: select a single subvolume to find extrema in\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -420,16 +420,16 @@ def volume_extrema_execute(
 
 def volume_extrema(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
     sum_subvols: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
+    subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
@@ -458,16 +458,13 @@ def volume_extrema(
     
     Args:
         volume_out: the output extrema volume.
-        roi_volume: ignore values outside the selected area\
-            \
-            the area to find extrema in.
-        subvolume: select a single subvolume to find extrema in\
-            \
-            the subvolume number or name.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the volume before finding extrema.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
         threshold: ignore small extrema.
         sum_subvols: output the sum of the extrema subvolumes instead of each\
             subvolume separately.
@@ -475,6 +472,9 @@ def volume_extrema(
             neighborhood.
         only_maxima: only find the maxima.
         only_minima: only find the minima.
+        subvolume: select a single subvolume to find extrema in\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).

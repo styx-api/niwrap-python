@@ -37,21 +37,21 @@ class VolumeLabelExportTableOutputs(typing.NamedTuple):
 
 
 def volume_label_export_table_params(
-    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
+    json_out: str | None = None,
 ) -> VolumeLabelExportTableParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        json_out: export the hierarchy as json\
-            \
-            output - filename to write hierarchy to.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
     Returns:
         Parameter dictionary
     """
@@ -168,10 +168,10 @@ def volume_label_export_table_execute(
 
 
 def volume_label_export_table(
-    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
+    json_out: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
@@ -181,12 +181,12 @@ def volume_label_export_table(
     format matching what is expected by -volume-label-import.
     
     Args:
-        json_out: export the hierarchy as json\
-            \
-            output - filename to write hierarchy to.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).

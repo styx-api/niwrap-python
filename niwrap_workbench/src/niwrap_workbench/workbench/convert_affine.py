@@ -372,26 +372,26 @@ class ConvertAffineOutputs(typing.NamedTuple):
 
 
 def convert_affine_params(
-    input_: str | None,
-    output: str | None,
     from_world: ConvertAffineFromWorldParamsDict | None = None,
+    input_: str | None = None,
     from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
     to_world: ConvertAffineToWorldParamsDict | None = None,
+    output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
 ) -> ConvertAffineParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        from_world: input is a NIFTI 'world' affine.
         input_: input is an ITK matrix\
             \
             the input affine.
+        from_flirt: input is a flirt matrix.
+        to_world: write output as a NIFTI 'world' affine.
         output: write output as an ITK affine\
             \
             output - the output affine.
-        from_world: input is a NIFTI 'world' affine.
-        from_flirt: input is a flirt matrix.
-        to_world: write output as a NIFTI 'world' affine.
         to_flirt: write output as a flirt matrix.
     Returns:
         Parameter dictionary
@@ -530,11 +530,11 @@ def convert_affine_execute(
 
 
 def convert_affine(
-    input_: str | None,
-    output: str | None,
     from_world: ConvertAffineFromWorldParamsDict | None = None,
+    input_: str | None = None,
     from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
     to_world: ConvertAffineToWorldParamsDict | None = None,
+    output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
@@ -554,15 +554,15 @@ def convert_affine(
     options, and -to-flirt may be specified more than once.
     
     Args:
+        from_world: input is a NIFTI 'world' affine.
         input_: input is an ITK matrix\
             \
             the input affine.
+        from_flirt: input is a flirt matrix.
+        to_world: write output as a NIFTI 'world' affine.
         output: write output as an ITK affine\
             \
             output - the output affine.
-        from_world: input is a NIFTI 'world' affine.
-        from_flirt: input is a flirt matrix.
-        to_world: write output as a NIFTI 'world' affine.
         to_flirt: write output as a flirt matrix.
         runner: Command runner.
     Returns:

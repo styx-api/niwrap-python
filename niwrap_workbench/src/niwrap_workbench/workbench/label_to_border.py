@@ -42,24 +42,24 @@ class LabelToBorderOutputs(typing.NamedTuple):
 
 def label_to_border_params(
     border_out: str,
-    fraction: float | None,
-    column: str | None,
     surface: InputPathType,
     label_in: InputPathType,
+    fraction: float | None = None,
+    column: str | None = None,
 ) -> LabelToBorderParamsDictTagged:
     """
     Build parameters.
     
     Args:
         border_out: the output border file.
+        surface: the surface to use for neighbor information.
+        label_in: the input label file.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        surface: the surface to use for neighbor information.
-        label_in: the input label file.
     Returns:
         Parameter dictionary
     """
@@ -187,10 +187,10 @@ def label_to_border_execute(
 
 def label_to_border(
     border_out: str,
-    fraction: float | None,
-    column: str | None,
     surface: InputPathType,
     label_in: InputPathType,
+    fraction: float | None = None,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
@@ -203,14 +203,14 @@ def label_to_border(
     
     Args:
         border_out: the output border file.
+        surface: the surface to use for neighbor information.
+        label_in: the input label file.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        surface: the surface to use for neighbor information.
-        label_in: the input label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToBorderOutputs`).

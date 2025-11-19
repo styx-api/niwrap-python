@@ -143,15 +143,15 @@ class CiftiExtremaOutputs(typing.NamedTuple):
 
 def cifti_extrema_params(
     cifti_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
     cifti: InputPathType,
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     threshold: CiftiExtremaThresholdParamsDict | None = None,
     merged_volume: bool = False,
@@ -165,6 +165,12 @@ def cifti_extrema_params(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        surface_distance: the minimum distance between extrema of the same\
+            type, for surface components.
+        volume_distance: the minimum distance between extrema of the same type,\
+            for volume components.
+        direction: which dimension to find extrema along, ROW or COLUMN.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -182,12 +188,6 @@ def cifti_extrema_params(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        cifti: the input cifti.
-        surface_distance: the minimum distance between extrema of the same\
-            type, for surface components.
-        volume_distance: the minimum distance between extrema of the same type,\
-            for volume components.
-        direction: which dimension to find extrema along, ROW or COLUMN.
         presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
         threshold: ignore small extrema.
         merged_volume: treat volume components as if they were a single\
@@ -400,15 +400,15 @@ def cifti_extrema_execute(
 
 def cifti_extrema(
     cifti_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
     cifti: InputPathType,
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     threshold: CiftiExtremaThresholdParamsDict | None = None,
     merged_volume: bool = False,
@@ -429,6 +429,12 @@ def cifti_extrema(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        surface_distance: the minimum distance between extrema of the same\
+            type, for surface components.
+        volume_distance: the minimum distance between extrema of the same type,\
+            for volume components.
+        direction: which dimension to find extrema along, ROW or COLUMN.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -446,12 +452,6 @@ def cifti_extrema(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        cifti: the input cifti.
-        surface_distance: the minimum distance between extrema of the same\
-            type, for surface components.
-        volume_distance: the minimum distance between extrema of the same type,\
-            for volume components.
-        direction: which dimension to find extrema along, ROW or COLUMN.
         presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
         threshold: ignore small extrema.
         merged_volume: treat volume components as if they were a single\

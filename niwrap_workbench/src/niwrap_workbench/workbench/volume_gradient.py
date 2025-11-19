@@ -123,17 +123,19 @@ class VolumeGradientOutputs(typing.NamedTuple):
 
 def volume_gradient_params(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    vector_volume_out: str | None,
-    subvol: str | None,
     volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
+    vector_volume_out: str | None = None,
+    subvol: str | None = None,
 ) -> VolumeGradientParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output gradient magnitude volume.
+        volume_in: the input volume.
+        presmooth: smooth the volume before computing the gradient.
         roi_volume: select a region of interest to take the gradient of\
             \
             the region to take the gradient within.
@@ -143,8 +145,6 @@ def volume_gradient_params(
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
-        volume_in: the input volume.
-        presmooth: smooth the volume before computing the gradient.
     Returns:
         Parameter dictionary
     """
@@ -280,11 +280,11 @@ def volume_gradient_execute(
 
 def volume_gradient(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    vector_volume_out: str | None,
-    subvol: str | None,
     volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
+    roi_volume: InputPathType | None = None,
+    vector_volume_out: str | None = None,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
@@ -299,6 +299,8 @@ def volume_gradient(
     
     Args:
         volume_out: the output gradient magnitude volume.
+        volume_in: the input volume.
+        presmooth: smooth the volume before computing the gradient.
         roi_volume: select a region of interest to take the gradient of\
             \
             the region to take the gradient within.
@@ -308,8 +310,6 @@ def volume_gradient(
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
-        volume_in: the input volume.
-        presmooth: smooth the volume before computing the gradient.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeGradientOutputs`).

@@ -469,30 +469,36 @@ class CiftiPaletteOutputs(typing.NamedTuple):
 
 def cifti_palette_params(
     cifti_out: str,
-    column: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     cifti_in: InputPathType,
     mode: str,
+    column: str | None = None,
     pos_percent: CiftiPalettePosPercentParamsDict | None = None,
     neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
     pos_user: CiftiPalettePosUserParamsDict | None = None,
     neg_user: CiftiPaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: CiftiPaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
 ) -> CiftiPaletteParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the cifti input.
+        mode: the mapping mode.
         column: select a single column for scalar maps\
             \
             the column number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -508,6 +514,7 @@ def cifti_palette_params(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -515,13 +522,6 @@ def cifti_palette_params(
             setting, NOT per-map)\
             \
             the normalization mode.
-        cifti_in: the cifti input.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
     Returns:
         Parameter dictionary
     """
@@ -793,21 +793,21 @@ def cifti_palette_execute(
 
 def cifti_palette(
     cifti_out: str,
-    column: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     cifti_in: InputPathType,
     mode: str,
+    column: str | None = None,
     pos_percent: CiftiPalettePosPercentParamsDict | None = None,
     neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
     pos_user: CiftiPalettePosUserParamsDict | None = None,
     neg_user: CiftiPaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: CiftiPaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
@@ -897,9 +897,15 @@ def cifti_palette(
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the cifti input.
+        mode: the mapping mode.
         column: select a single column for scalar maps\
             \
             the column number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -915,6 +921,7 @@ def cifti_palette(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -922,13 +929,6 @@ def cifti_palette(
             setting, NOT per-map)\
             \
             the normalization mode.
-        cifti_in: the cifti input.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiPaletteOutputs`).

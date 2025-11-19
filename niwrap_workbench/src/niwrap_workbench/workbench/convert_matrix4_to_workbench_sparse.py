@@ -123,22 +123,19 @@ class ConvertMatrix4ToWorkbenchSparseOutputs(typing.NamedTuple):
 
 
 def convert_matrix4_to_workbench_sparse_params(
-    seed_roi: InputPathType | None,
     matrix4_1: str,
     matrix4_2: str,
     matrix4_3: str,
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
+    seed_roi: InputPathType | None = None,
     volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        seed_roi: specify the surface seed space\
-            \
-            metric roi file of all vertices used in the seed space.
         matrix4_1: the first matrix4 file.
         matrix4_2: the second matrix4 file.
         matrix4_3: the third matrix4 file.
@@ -147,6 +144,9 @@ def convert_matrix4_to_workbench_sparse_params(
         voxel_list: list of white matter voxel index triplets as used in the\
             trajectory matrix.
         wb_sparse_out: output - the output workbench sparse file.
+        seed_roi: specify the surface seed space\
+            \
+            metric roi file of all vertices used in the seed space.
         volume_seeds: specify the volume seed space.
     Returns:
         Parameter dictionary
@@ -287,13 +287,13 @@ def convert_matrix4_to_workbench_sparse_execute(
 
 
 def convert_matrix4_to_workbench_sparse(
-    seed_roi: InputPathType | None,
     matrix4_1: str,
     matrix4_2: str,
     matrix4_3: str,
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
+    seed_roi: InputPathType | None = None,
     volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
@@ -304,9 +304,6 @@ def convert_matrix4_to_workbench_sparse(
     Exactly one of -surface-seeds and -volume-seeds must be specified.
     
     Args:
-        seed_roi: specify the surface seed space\
-            \
-            metric roi file of all vertices used in the seed space.
         matrix4_1: the first matrix4 file.
         matrix4_2: the second matrix4 file.
         matrix4_3: the third matrix4 file.
@@ -315,6 +312,9 @@ def convert_matrix4_to_workbench_sparse(
         voxel_list: list of white matter voxel index triplets as used in the\
             trajectory matrix.
         wb_sparse_out: output - the output workbench sparse file.
+        seed_roi: specify the surface seed space\
+            \
+            metric roi file of all vertices used in the seed space.
         volume_seeds: specify the volume seed space.
         runner: Command runner.
     Returns:

@@ -82,7 +82,7 @@ CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
 
 def cifti_dilate_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiDilateLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -152,7 +152,7 @@ def cifti_dilate_left_surface_cargs(
 
 def cifti_dilate_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiDilateRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -222,7 +222,7 @@ def cifti_dilate_right_surface_cargs(
 
 def cifti_dilate_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiDilateCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -302,7 +302,6 @@ class CiftiDilateOutputs(typing.NamedTuple):
 
 def cifti_dilate_params(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
@@ -310,6 +309,7 @@ def cifti_dilate_params(
     left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     nearest: bool = False,
     merged_volume: bool = False,
     legacy_mode: bool = False,
@@ -319,11 +319,6 @@ def cifti_dilate_params(
     
     Args:
         cifti_out: the output cifti file.
-        roi_cifti: specify an roi of brainordinates to overwrite, rather than\
-            zeros\
-            \
-            cifti dscalar or dtseries file, positive values denote\
-            brainordinates to have their values replaced.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
@@ -331,6 +326,11 @@ def cifti_dilate_params(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: specify an roi of brainordinates to overwrite, rather than\
+            zeros\
+            \
+            cifti dscalar or dtseries file, positive values denote\
+            brainordinates to have their values replaced.
         nearest: use nearest good value instead of a weighted average.
         merged_volume: treat volume components as if they were a single\
             component.
@@ -511,7 +511,6 @@ def cifti_dilate_execute(
 
 def cifti_dilate(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
@@ -519,6 +518,7 @@ def cifti_dilate(
     left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     nearest: bool = False,
     merged_volume: bool = False,
     legacy_mode: bool = False,
@@ -545,11 +545,6 @@ def cifti_dilate(
     
     Args:
         cifti_out: the output cifti file.
-        roi_cifti: specify an roi of brainordinates to overwrite, rather than\
-            zeros\
-            \
-            cifti dscalar or dtseries file, positive values denote\
-            brainordinates to have their values replaced.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
@@ -557,6 +552,11 @@ def cifti_dilate(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: specify an roi of brainordinates to overwrite, rather than\
+            zeros\
+            \
+            cifti dscalar or dtseries file, positive values denote\
+            brainordinates to have their values replaced.
         nearest: use nearest good value instead of a weighted average.
         merged_volume: treat volume components as if they were a single\
             component.

@@ -35,19 +35,19 @@ class LabelExportTableOutputs(typing.NamedTuple):
 
 
 def label_export_table_params(
-    json_out: str | None,
     label_in: InputPathType,
     table_out: str,
+    json_out: str | None = None,
 ) -> LabelExportTableParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        label_in: the input label file.
+        table_out: output - the output text file.
         json_out: export the hierarchy as json\
             \
             output - filename to write hierarchy to.
-        label_in: the input label file.
-        table_out: output - the output text file.
     Returns:
         Parameter dictionary
     """
@@ -158,9 +158,9 @@ def label_export_table_execute(
 
 
 def label_export_table(
-    json_out: str | None,
     label_in: InputPathType,
     table_out: str,
+    json_out: str | None = None,
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
@@ -170,11 +170,11 @@ def label_export_table(
     format matching what is expected by -metric-label-import.
     
     Args:
+        label_in: the input label file.
+        table_out: output - the output text file.
         json_out: export the hierarchy as json\
             \
             output - filename to write hierarchy to.
-        label_in: the input label file.
-        table_out: output - the output text file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelExportTableOutputs`).

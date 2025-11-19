@@ -275,8 +275,8 @@ class CiftiMergeOutputs(typing.NamedTuple):
 
 def cifti_merge_params(
     cifti_out: str,
-    direction: str | None,
-    limit_gb: float | None,
+    direction: str | None = None,
+    limit_gb: float | None = None,
     cifti: list[CiftiMergeCiftiParamsDict] | None = None,
 ) -> CiftiMergeParamsDictTagged:
     """
@@ -424,8 +424,8 @@ def cifti_merge_execute(
 
 def cifti_merge(
     cifti_out: str,
-    direction: str | None,
-    limit_gb: float | None,
+    direction: str | None = None,
+    limit_gb: float | None = None,
     cifti: list[CiftiMergeCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMergeOutputs:

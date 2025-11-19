@@ -73,12 +73,12 @@ CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsD
 
 
 def cifti_weighted_stats_spatial_weights(
-    left_surf: InputPathType | None,
-    right_surf: InputPathType | None,
-    cerebellum_surf: InputPathType | None,
-    left_metric: InputPathType | None,
-    right_metric: InputPathType | None,
-    cerebellum_metric: InputPathType | None,
+    left_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    left_metric: InputPathType | None = None,
+    right_metric: InputPathType | None = None,
+    cerebellum_metric: InputPathType | None = None,
 ) -> CiftiWeightedStatsSpatialWeightsParamsDictTagged:
     """
     Build parameters.
@@ -264,14 +264,14 @@ class CiftiWeightedStatsOutputs(typing.NamedTuple):
 
 
 def cifti_weighted_stats_params(
-    weight_cifti: InputPathType | None,
-    column: int | None,
-    percent: float | None,
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
+    weight_cifti: InputPathType | None = None,
+    column: int | None = None,
     roi: CiftiWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
 ) -> CiftiWeightedStatsParamsDictTagged:
@@ -279,22 +279,22 @@ def cifti_weighted_stats_params(
     Build parameters.
     
     Args:
+        cifti_in: the input cifti.
+        spatial_weights: use vertex area and voxel volume as weights.
         weight_cifti: use a cifti file containing weights\
             \
             the weights to use, as a cifti file.
         column: only display output for one column\
             \
             the column to use (1-based).
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        cifti_in: the input cifti.
-        spatial_weights: use vertex area and voxel volume as weights.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
     Returns:
@@ -348,9 +348,9 @@ def cifti_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("sample", False) is not None:
+    if params.get("sample", None) is not None:
         if not isinstance(params["sample"], bool):
-            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
     if params.get("percent", None) is not None:
         if not isinstance(params["percent"], (float, int)):
             raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
@@ -382,7 +382,7 @@ def cifti_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", False) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
+    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
             "wb_command",
             "-cifti-weighted-stats",
@@ -394,7 +394,7 @@ def cifti_weighted_stats_cargs(
             *(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-mean" if (params.get("mean", False)) else ""),
             "-stdev",
-            ("-sample" if (params.get("sample", False) is not None) else ""),
+            ("-sample" if (params.get("sample", None) is not None) else ""),
             "-percentile",
             (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             ("-sum" if (params.get("sum", False)) else ""),
@@ -462,14 +462,14 @@ def cifti_weighted_stats_execute(
 
 
 def cifti_weighted_stats(
-    weight_cifti: InputPathType | None,
-    column: int | None,
-    percent: float | None,
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
+    weight_cifti: InputPathType | None = None,
+    column: int | None = None,
     roi: CiftiWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -493,22 +493,22 @@ def cifti_weighted_stats(
     therefore output the area or volume of each ROI.
     
     Args:
+        cifti_in: the input cifti.
+        spatial_weights: use vertex area and voxel volume as weights.
         weight_cifti: use a cifti file containing weights\
             \
             the weights to use, as a cifti file.
         column: only display output for one column\
             \
             the column to use (1-based).
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        cifti_in: the input cifti.
-        spatial_weights: use vertex area and voxel volume as weights.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
         runner: Command runner.

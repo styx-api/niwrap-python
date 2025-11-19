@@ -46,18 +46,21 @@ class LabelErodeOutputs(typing.NamedTuple):
 
 def label_erode_params(
     label_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
 ) -> LabelErodeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         label_out: the output label file.
+        label: the input label.
+        surface: the surface to erode on.
+        erode_dist: distance in mm to erode the labels.
         roi_metric: assume values outside this roi are labeled\
             \
             metric file, positive values denote vertices that have data.
@@ -68,9 +71,6 @@ def label_erode_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        label: the input label.
-        surface: the surface to erode on.
-        erode_dist: distance in mm to erode the labels.
     Returns:
         Parameter dictionary
     """
@@ -213,12 +213,12 @@ def label_erode_execute(
 
 def label_erode(
     label_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
@@ -233,6 +233,9 @@ def label_erode(
     
     Args:
         label_out: the output label file.
+        label: the input label.
+        surface: the surface to erode on.
+        erode_dist: distance in mm to erode the labels.
         roi_metric: assume values outside this roi are labeled\
             \
             metric file, positive values denote vertices that have data.
@@ -243,9 +246,6 @@ def label_erode(
             surface\
             \
             the corrected vertex areas, as a metric.
-        label: the input label.
-        surface: the surface to erode on.
-        erode_dist: distance in mm to erode the labels.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelErodeOutputs`).

@@ -76,7 +76,7 @@ CiftiErodeParamsDictTagged = typing.TypedDict('CiftiErodeParamsDictTagged', {
 
 def cifti_erode_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiErodeLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -146,7 +146,7 @@ def cifti_erode_left_surface_cargs(
 
 def cifti_erode_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiErodeRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -216,7 +216,7 @@ def cifti_erode_right_surface_cargs(
 
 def cifti_erode_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiErodeCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.

@@ -38,18 +38,18 @@ class CiftiTransposeOutputs(typing.NamedTuple):
 
 def cifti_transpose_params(
     cifti_out: str,
-    limit_gb: float | None,
     cifti_in: InputPathType,
+    limit_gb: float | None = None,
 ) -> CiftiTransposeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the input cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
-        cifti_in: the input cifti file.
     Returns:
         Parameter dictionary
     """
@@ -162,8 +162,8 @@ def cifti_transpose_execute(
 
 def cifti_transpose(
     cifti_out: str,
-    limit_gb: float | None,
     cifti_in: InputPathType,
+    limit_gb: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
@@ -174,10 +174,10 @@ def cifti_transpose(
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the input cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
-        cifti_in: the input cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).

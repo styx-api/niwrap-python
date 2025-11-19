@@ -120,10 +120,10 @@ class CiftiStatsOutputs(typing.NamedTuple):
 
 
 def cifti_stats_params(
-    operation: str | None,
-    percent: float | None,
-    column: int | None,
     cifti_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    column: int | None = None,
     roi: CiftiStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
 ) -> CiftiStatsParamsDictTagged:
@@ -131,6 +131,7 @@ def cifti_stats_params(
     Build parameters.
     
     Args:
+        cifti_in: the input cifti.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -140,7 +141,6 @@ def cifti_stats_params(
         column: only display output for one column\
             \
             the column index (starting from 1).
-        cifti_in: the input cifti.
         roi: only consider data inside an roi.
         show_map_name: print column index and name before each output.
     Returns:
@@ -296,10 +296,10 @@ def cifti_stats_execute(
 
 
 def cifti_stats(
-    operation: str | None,
-    percent: float | None,
-    column: int | None,
     cifti_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    column: int | None = None,
     roi: CiftiStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -335,6 +335,7 @@ def cifti_stats(
     .
     
     Args:
+        cifti_in: the input cifti.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -344,7 +345,6 @@ def cifti_stats(
         column: only display output for one column\
             \
             the column index (starting from 1).
-        cifti_in: the input cifti.
         roi: only consider data inside an roi.
         show_map_name: print column index and name before each output.
         runner: Command runner.

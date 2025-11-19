@@ -42,16 +42,17 @@ class CiftiLabelToRoiOutputs(typing.NamedTuple):
 
 def cifti_label_to_roi_params(
     scalar_out: str,
-    label_name: str | None,
-    label_key: int | None,
-    map_: str | None,
     label_in: InputPathType,
+    label_name: str | None = None,
+    label_key: int | None = None,
+    map_: str | None = None,
 ) -> CiftiLabelToRoiParamsDictTagged:
     """
     Build parameters.
     
     Args:
         scalar_out: the output cifti scalar file.
+        label_in: the input cifti label file.
         label_name: select label by name\
             \
             the label name that you want an roi of.
@@ -61,7 +62,6 @@ def cifti_label_to_roi_params(
         map_: select a single label map to use\
             \
             the map number or name.
-        label_in: the input cifti label file.
     Returns:
         Parameter dictionary
     """
@@ -190,10 +190,10 @@ def cifti_label_to_roi_execute(
 
 def cifti_label_to_roi(
     scalar_out: str,
-    label_name: str | None,
-    label_key: int | None,
-    map_: str | None,
     label_in: InputPathType,
+    label_name: str | None = None,
+    label_key: int | None = None,
+    map_: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
@@ -206,6 +206,7 @@ def cifti_label_to_roi(
     
     Args:
         scalar_out: the output cifti scalar file.
+        label_in: the input cifti label file.
         label_name: select label by name\
             \
             the label name that you want an roi of.
@@ -215,7 +216,6 @@ def cifti_label_to_roi(
         map_: select a single label map to use\
             \
             the map number or name.
-        label_in: the input cifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToRoiOutputs`).

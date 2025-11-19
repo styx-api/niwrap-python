@@ -53,9 +53,9 @@ VolumeLabelToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeLabelToSur
 def volume_label_to_surface_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    roi_volume: InputPathType | None,
-    dist: float | None,
-    subdiv_num: int | None,
+    roi_volume: InputPathType | None = None,
+    dist: float | None = None,
+    subdiv_num: int | None = None,
     thin_columns: bool = False,
 ) -> VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged:
     """
@@ -169,22 +169,22 @@ class VolumeLabelToSurfaceMappingOutputs(typing.NamedTuple):
 
 def volume_label_to_surface_mapping_params(
     label_out: str,
-    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
+    subvol: str | None = None,
 ) -> VolumeLabelToSurfaceMappingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         label_out: the output gifti label file.
-        subvol: select a single subvolume to map\
-            \
-            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
         ribbon_constrained: use ribbon constrained mapping algorithm.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -322,10 +322,10 @@ def volume_label_to_surface_mapping_execute(
 
 def volume_label_to_surface_mapping(
     label_out: str,
-    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
@@ -350,12 +350,12 @@ def volume_label_to_surface_mapping(
     
     Args:
         label_out: the output gifti label file.
-        subvol: select a single subvolume to map\
-            \
-            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
         ribbon_constrained: use ribbon constrained mapping algorithm.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToSurfaceMappingOutputs`).

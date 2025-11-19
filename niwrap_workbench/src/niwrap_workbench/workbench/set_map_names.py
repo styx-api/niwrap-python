@@ -114,22 +114,22 @@ class SetMapNamesOutputs(typing.NamedTuple):
 
 
 def set_map_names_params(
-    file: str | None,
-    file_: str | None,
     data_file: str,
+    file: str | None = None,
+    file_: str | None = None,
     map_: list[SetMapNamesMapParamsDict] | None = None,
 ) -> SetMapNamesParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        data_file: the file to set the map names of.
         file: use a text file to replace all map names\
             \
             text file containing map names, one per line.
         file_: use the map names from another data file\
             \
             a data file with the same number of maps.
-        data_file: the file to set the map names of.
         map_: specify a map to set the name of.
     Returns:
         Parameter dictionary
@@ -252,9 +252,9 @@ def set_map_names_execute(
 
 
 def set_map_names(
-    file: str | None,
-    file_: str | None,
     data_file: str,
+    file: str | None = None,
+    file_: str | None = None,
     map_: list[SetMapNamesMapParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
@@ -267,13 +267,13 @@ def set_map_names(
     mutually exclusive.
     
     Args:
+        data_file: the file to set the map names of.
         file: use a text file to replace all map names\
             \
             text file containing map names, one per line.
         file_: use the map names from another data file\
             \
             a data file with the same number of maps.
-        data_file: the file to set the map names of.
         map_: specify a map to set the name of.
         runner: Command runner.
     Returns:

@@ -48,19 +48,23 @@ class SurfaceGeodesicRoisOutputs(typing.NamedTuple):
 
 def surface_geodesic_rois_params(
     metric_out: str,
-    sigma: float | None,
-    method: str | None,
-    name_list_file: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
+    sigma: float | None = None,
+    method: str | None = None,
+    name_list_file: str | None = None,
+    area_metric: InputPathType | None = None,
 ) -> SurfaceGeodesicRoisParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to draw on.
+        limit: geodesic distance limit from vertex, in mm.
+        vertex_list_file: a text file containing the vertices to draw ROIs\
+            around.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -74,10 +78,6 @@ def surface_geodesic_rois_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to draw on.
-        limit: geodesic distance limit from vertex, in mm.
-        vertex_list_file: a text file containing the vertices to draw ROIs\
-            around.
     Returns:
         Parameter dictionary
     """
@@ -233,13 +233,13 @@ def surface_geodesic_rois_execute(
 
 def surface_geodesic_rois(
     metric_out: str,
-    sigma: float | None,
-    method: str | None,
-    name_list_file: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
+    sigma: float | None = None,
+    method: str | None = None,
+    name_list_file: str | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
@@ -260,6 +260,10 @@ def surface_geodesic_rois(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to draw on.
+        limit: geodesic distance limit from vertex, in mm.
+        vertex_list_file: a text file containing the vertices to draw ROIs\
+            around.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -273,10 +277,6 @@ def surface_geodesic_rois(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to draw on.
-        limit: geodesic distance limit from vertex, in mm.
-        vertex_list_file: a text file containing the vertices to draw ROIs\
-            around.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).

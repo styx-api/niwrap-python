@@ -48,30 +48,30 @@ class MetricFalseCorrelationOutputs(typing.NamedTuple):
 
 def metric_false_correlation_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    text_out: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    roi_metric: InputPathType | None = None,
+    text_out: str | None = None,
 ) -> MetricFalseCorrelationParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute geodesic and 3D distance with.
+        metric_in: the metric to correlate.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
+        geo_outer: maximum geodesic distance to use for neighboring correlation.
+        geo_inner: minimum geodesic distance to use for neighboring correlation.
         roi_metric: select a region of interest that has data\
             \
             the region, as a metric file.
         text_out: dump the raw measures used to a text file\
             \
             the output text file.
-        surface: the surface to compute geodesic and 3D distance with.
-        metric_in: the metric to correlate.
-        v_3_d_dist: maximum 3D distance to check around each vertex.
-        geo_outer: maximum geodesic distance to use for neighboring correlation.
-        geo_inner: minimum geodesic distance to use for neighboring correlation.
     Returns:
         Parameter dictionary
     """
@@ -219,13 +219,13 @@ def metric_false_correlation_execute(
 
 def metric_false_correlation(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    text_out: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    roi_metric: InputPathType | None = None,
+    text_out: str | None = None,
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
@@ -240,17 +240,17 @@ def metric_false_correlation(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute geodesic and 3D distance with.
+        metric_in: the metric to correlate.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
+        geo_outer: maximum geodesic distance to use for neighboring correlation.
+        geo_inner: minimum geodesic distance to use for neighboring correlation.
         roi_metric: select a region of interest that has data\
             \
             the region, as a metric file.
         text_out: dump the raw measures used to a text file\
             \
             the output text file.
-        surface: the surface to compute geodesic and 3D distance with.
-        metric_in: the metric to correlate.
-        v_3_d_dist: maximum 3D distance to check around each vertex.
-        geo_outer: maximum geodesic distance to use for neighboring correlation.
-        geo_inner: minimum geodesic distance to use for neighboring correlation.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFalseCorrelationOutputs`).

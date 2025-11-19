@@ -464,29 +464,35 @@ class VolumePaletteOutputs(typing.NamedTuple):
 
 
 def volume_palette_params(
-    subvolume: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     volume: str,
     mode: str,
+    subvolume: str | None = None,
     pos_percent: VolumePalettePosPercentParamsDict | None = None,
     neg_percent: VolumePaletteNegPercentParamsDict | None = None,
     pos_user: VolumePalettePosUserParamsDict | None = None,
     neg_user: VolumePaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: VolumePaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
 ) -> VolumePaletteParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        volume: the volume file to modify.
+        mode: the mapping mode.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -502,6 +508,7 @@ def volume_palette_params(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -509,13 +516,6 @@ def volume_palette_params(
             setting, NOT per-map)\
             \
             the normalization mode.
-        volume: the volume file to modify.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
     Returns:
         Parameter dictionary
     """
@@ -778,21 +778,21 @@ def volume_palette_execute(
 
 
 def volume_palette(
-    subvolume: str | None,
-    interpolate: bool | None,
-    display: bool | None,
-    display_: bool | None,
-    display_2: bool | None,
-    name: str | None,
-    type_: str | None,
-    type_2: str | None,
     volume: str,
     mode: str,
+    subvolume: str | None = None,
     pos_percent: VolumePalettePosPercentParamsDict | None = None,
     neg_percent: VolumePaletteNegPercentParamsDict | None = None,
     pos_user: VolumePalettePosUserParamsDict | None = None,
     neg_user: VolumePaletteNegUserParamsDict | None = None,
+    interpolate: bool | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    name: str | None = None,
     thresholding: VolumePaletteThresholdingParamsDict | None = None,
+    type_: str | None = None,
+    type_2: str | None = None,
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
@@ -880,9 +880,15 @@ def volume_palette(
     .
     
     Args:
+        volume: the volume file to modify.
+        mode: the mapping mode.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
+        pos_percent: percentage min/max for positive data coloring.
+        neg_percent: percentage min/max for negative data coloring.
+        pos_user: user min/max values for positive data coloring.
+        neg_user: user min/max values for negative data coloring.
         interpolate: interpolate colors\
             \
             boolean, whether to interpolate.
@@ -898,6 +904,7 @@ def volume_palette(
         name: set the palette used\
             \
             the name of the palette.
+        thresholding: set the thresholding.
         type_: specify palette inversion\
             \
             the type of inversion.
@@ -905,13 +912,6 @@ def volume_palette(
             setting, NOT per-map)\
             \
             the normalization mode.
-        volume: the volume file to modify.
-        mode: the mapping mode.
-        pos_percent: percentage min/max for positive data coloring.
-        neg_percent: percentage min/max for negative data coloring.
-        pos_user: user min/max values for positive data coloring.
-        neg_user: user min/max values for negative data coloring.
-        thresholding: set the thresholding.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumePaletteOutputs`).

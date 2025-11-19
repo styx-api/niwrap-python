@@ -114,7 +114,7 @@ CiftiFindClustersParamsDictTagged = typing.TypedDict('CiftiFindClustersParamsDic
 
 def cifti_find_clusters_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiFindClustersLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -184,7 +184,7 @@ def cifti_find_clusters_left_surface_cargs(
 
 def cifti_find_clusters_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiFindClustersRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -254,7 +254,7 @@ def cifti_find_clusters_right_surface_cargs(
 
 def cifti_find_clusters_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiFindClustersCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -466,8 +466,6 @@ class CiftiFindClustersOutputs(typing.NamedTuple):
 
 def cifti_find_clusters_params(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
-    startval: int | None,
     cifti: InputPathType,
     surface_value_threshold: float,
     surface_minimum_area: float,
@@ -478,21 +476,17 @@ def cifti_find_clusters_params(
     left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     merged_volume: bool = False,
     size_ratio: CiftiFindClustersSizeRatioParamsDict | None = None,
     distance: CiftiFindClustersDistanceParamsDict | None = None,
+    startval: int | None = None,
 ) -> CiftiFindClustersParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output cifti.
-        roi_cifti: search only within regions of interest\
-            \
-            the regions to search within, as a cifti file.
-        startval: start labeling clusters from a value other than 1\
-            \
-            the value to give the first cluster found.
         cifti: the input cifti.
         surface_value_threshold: threshold for surface data values.
         surface_minimum_area: threshold for surface cluster area, in mm^2.
@@ -504,12 +498,18 @@ def cifti_find_clusters_params(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: search only within regions of interest\
+            \
+            the regions to search within, as a cifti file.
         merged_volume: treat volume components as if they were a single\
             component.
         size_ratio: ignore clusters smaller than a given fraction of the\
             largest cluster in the structure.
         distance: ignore clusters further than a given distance from the\
             largest cluster in the structure.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
     Returns:
         Parameter dictionary
     """
@@ -703,8 +703,6 @@ def cifti_find_clusters_execute(
 
 def cifti_find_clusters(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
-    startval: int | None,
     cifti: InputPathType,
     surface_value_threshold: float,
     surface_minimum_area: float,
@@ -715,9 +713,11 @@ def cifti_find_clusters(
     left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     merged_volume: bool = False,
     size_ratio: CiftiFindClustersSizeRatioParamsDict | None = None,
     distance: CiftiFindClustersDistanceParamsDict | None = None,
+    startval: int | None = None,
     runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
@@ -735,12 +735,6 @@ def cifti_find_clusters(
     
     Args:
         cifti_out: the output cifti.
-        roi_cifti: search only within regions of interest\
-            \
-            the regions to search within, as a cifti file.
-        startval: start labeling clusters from a value other than 1\
-            \
-            the value to give the first cluster found.
         cifti: the input cifti.
         surface_value_threshold: threshold for surface data values.
         surface_minimum_area: threshold for surface cluster area, in mm^2.
@@ -752,12 +746,18 @@ def cifti_find_clusters(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: search only within regions of interest\
+            \
+            the regions to search within, as a cifti file.
         merged_volume: treat volume components as if they were a single\
             component.
         size_ratio: ignore clusters smaller than a given fraction of the\
             largest cluster in the structure.
         distance: ignore clusters further than a given distance from the\
             largest cluster in the structure.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiFindClustersOutputs`).

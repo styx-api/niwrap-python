@@ -37,15 +37,17 @@ class SetStructureOutputs(typing.NamedTuple):
 
 
 def set_structure_params(
-    type_: str | None,
-    secondary_type: str | None,
     data_file: str,
     structure: str,
+    type_: str | None = None,
+    secondary_type: str | None = None,
 ) -> SetStructureParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        data_file: the file to set the structure of.
+        structure: the structure to set the file to.
         type_: set the type of a surface (only used if file is a surface file)\
             \
             name of surface type.
@@ -53,8 +55,6 @@ def set_structure_params(
             is a surface file)\
             \
             name of surface secondary type.
-        data_file: the file to set the structure of.
-        structure: the structure to set the file to.
     Returns:
         Parameter dictionary
     """
@@ -231,10 +231,10 @@ def set_structure_execute(
 
 
 def set_structure(
-    type_: str | None,
-    secondary_type: str | None,
     data_file: str,
     structure: str,
+    type_: str | None = None,
+    secondary_type: str | None = None,
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
@@ -303,6 +303,8 @@ def set_structure(
     .
     
     Args:
+        data_file: the file to set the structure of.
+        structure: the structure to set the file to.
         type_: set the type of a surface (only used if file is a surface file)\
             \
             name of surface type.
@@ -310,8 +312,6 @@ def set_structure(
             is a surface file)\
             \
             name of surface secondary type.
-        data_file: the file to set the structure of.
-        structure: the structure to set the file to.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).

@@ -256,7 +256,7 @@ def cifti_convert_to_gifti_ext_cargs(
 def cifti_convert_reset_timepoints(
     timestep: float,
     timestart: float,
-    unit: str | None,
+    unit: str | None = None,
 ) -> CiftiConvertResetTimepointsParamsDictTagged:
     """
     Build parameters.
@@ -649,7 +649,7 @@ def cifti_convert_to_nifti_outputs(
 def cifti_convert_reset_timepoints_(
     timestep: float,
     timestart: float,
-    unit: str | None,
+    unit: str | None = None,
 ) -> CiftiConvertResetTimepointsParamsDictTagged_:
     """
     Build parameters.
@@ -848,7 +848,7 @@ def cifti_convert_from_nifti_outputs(
 def cifti_convert_to_text(
     cifti_in: InputPathType,
     text_out: str,
-    delim_string: str | None,
+    delim_string: str | None = None,
 ) -> CiftiConvertToTextParamsDictTagged:
     """
     Build parameters.
@@ -925,7 +925,7 @@ def cifti_convert_to_text_cargs(
 def cifti_convert_reset_timepoints_2(
     timestep: float,
     timestart: float,
-    unit: str | None,
+    unit: str | None = None,
 ) -> CiftiConvertResetTimepointsParamsDictTagged_2:
     """
     Build parameters.
@@ -1013,7 +1013,7 @@ def cifti_convert_from_text(
     text_in: str,
     cifti_template: InputPathType,
     cifti_out: str,
-    delim_string: str | None,
+    delim_string: str | None = None,
     reset_timepoints: CiftiConvertResetTimepointsParamsDict_2 | None = None,
     reset_scalars: bool = False,
 ) -> CiftiConvertFromTextParamsDictTagged:

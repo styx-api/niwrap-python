@@ -204,22 +204,26 @@ class MetricTfceOutputs(typing.NamedTuple):
 
 def metric_tfce_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
     presmooth: MetricTfcePresmoothParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     parameters: MetricTfceParametersParamsDict | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
 ) -> MetricTfceParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        metric_in: the metric to run TFCE on.
+        presmooth: smooth the metric before running TFCE.
         roi_metric: select a region of interest to run TFCE on\
             \
             the area to run TFCE on, as a metric.
+        parameters: set parameters for TFCE integral.
         column: select a single column\
             \
             the column number or name.
@@ -227,10 +231,6 @@ def metric_tfce_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        metric_in: the metric to run TFCE on.
-        presmooth: smooth the metric before running TFCE.
-        parameters: set parameters for TFCE integral.
     Returns:
         Parameter dictionary
     """
@@ -395,13 +395,13 @@ def metric_tfce_execute(
 
 def metric_tfce(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
     presmooth: MetricTfcePresmoothParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     parameters: MetricTfceParametersParamsDict | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
@@ -434,9 +434,13 @@ def metric_tfce(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        metric_in: the metric to run TFCE on.
+        presmooth: smooth the metric before running TFCE.
         roi_metric: select a region of interest to run TFCE on\
             \
             the area to run TFCE on, as a metric.
+        parameters: set parameters for TFCE integral.
         column: select a single column\
             \
             the column number or name.
@@ -444,10 +448,6 @@ def metric_tfce(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        metric_in: the metric to run TFCE on.
-        presmooth: smooth the metric before running TFCE.
-        parameters: set parameters for TFCE integral.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricTfceOutputs`).

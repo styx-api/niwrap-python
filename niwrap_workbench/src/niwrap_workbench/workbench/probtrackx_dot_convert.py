@@ -362,12 +362,12 @@ class ProbtrackxDotConvertOutputs(typing.NamedTuple):
 
 def probtrackx_dot_convert_params(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
     dot_file: str,
     row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
     col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
+    roi_metric_: InputPathType | None = None,
     col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
     transpose: bool = False,
     make_symmetric: bool = False,
@@ -377,16 +377,16 @@ def probtrackx_dot_convert_params(
     
     Args:
         cifti_out: output cifti file.
+        dot_file: input .dot file.
+        row_voxels: the output mapping along a row will be voxels.
         roi_metric: the output mapping along a row will be surface vertices\
             \
             a metric file with positive values on all vertices used.
+        row_cifti: take the mapping along a row from a cifti file.
+        col_voxels: the output mapping along a column will be voxels.
         roi_metric_: the output mapping along a column will be surface vertices\
             \
             a metric file with positive values on all vertices used.
-        dot_file: input .dot file.
-        row_voxels: the output mapping along a row will be voxels.
-        row_cifti: take the mapping along a row from a cifti file.
-        col_voxels: the output mapping along a column will be voxels.
         col_cifti: take the mapping along a column from a cifti file.
         transpose: transpose the input matrix.
         make_symmetric: transform half-square input into full matrix output.
@@ -586,12 +586,12 @@ def probtrackx_dot_convert_execute(
 
 def probtrackx_dot_convert(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
     dot_file: str,
     row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
     col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
+    roi_metric_: InputPathType | None = None,
     col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
     transpose: bool = False,
     make_symmetric: bool = False,
@@ -650,16 +650,16 @@ def probtrackx_dot_convert(
     
     Args:
         cifti_out: output cifti file.
+        dot_file: input .dot file.
+        row_voxels: the output mapping along a row will be voxels.
         roi_metric: the output mapping along a row will be surface vertices\
             \
             a metric file with positive values on all vertices used.
+        row_cifti: take the mapping along a row from a cifti file.
+        col_voxels: the output mapping along a column will be voxels.
         roi_metric_: the output mapping along a column will be surface vertices\
             \
             a metric file with positive values on all vertices used.
-        dot_file: input .dot file.
-        row_voxels: the output mapping along a row will be voxels.
-        row_cifti: take the mapping along a row from a cifti file.
-        col_voxels: the output mapping along a column will be voxels.
         col_cifti: take the mapping along a column from a cifti file.
         transpose: transpose the input matrix.
         make_symmetric: transform half-square input into full matrix output.

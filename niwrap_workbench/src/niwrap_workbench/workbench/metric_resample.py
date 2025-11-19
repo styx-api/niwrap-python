@@ -208,14 +208,14 @@ class MetricResampleOutputs(typing.NamedTuple):
 
 def metric_resample_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    roi_out: str | None,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_out: str | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
 ) -> MetricResampleParamsDictTagged:
@@ -224,14 +224,6 @@ def metric_resample_params(
     
     Args:
         metric_out: the output metric.
-        roi_metric: use an input roi on the current mesh to exclude non-data\
-            vertices\
-            \
-            the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
@@ -241,6 +233,14 @@ def metric_resample_params(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         largest: use only the value of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
@@ -424,14 +424,14 @@ def metric_resample_execute(
 
 def metric_resample(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    roi_out: str | None,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_out: str | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
@@ -465,14 +465,6 @@ def metric_resample(
     
     Args:
         metric_out: the output metric.
-        roi_metric: use an input roi on the current mesh to exclude non-data\
-            vertices\
-            \
-            the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
@@ -482,6 +474,14 @@ def metric_resample(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         largest: use only the value of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.

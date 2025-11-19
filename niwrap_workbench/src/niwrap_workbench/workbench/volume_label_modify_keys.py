@@ -40,20 +40,20 @@ class VolumeLabelModifyKeysOutputs(typing.NamedTuple):
 
 def volume_label_modify_keys_params(
     volume_out: str,
-    subvolume: str | None,
     volume_in: InputPathType,
     remap_file: str,
+    subvolume: str | None = None,
 ) -> VolumeLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume label file.
+        volume_in: the input volume label file.
+        remap_file: text file with old and new key values.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
-        volume_in: the input volume label file.
-        remap_file: text file with old and new key values.
     Returns:
         Parameter dictionary
     """
@@ -183,9 +183,9 @@ def volume_label_modify_keys_execute(
 
 def volume_label_modify_keys(
     volume_out: str,
-    subvolume: str | None,
     volume_in: InputPathType,
     remap_file: str,
+    subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
@@ -207,11 +207,11 @@ def volume_label_modify_keys(
     
     Args:
         volume_out: the output volume label file.
+        volume_in: the input volume label file.
+        remap_file: text file with old and new key values.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
-        volume_in: the input volume label file.
-        remap_file: text file with old and new key values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).

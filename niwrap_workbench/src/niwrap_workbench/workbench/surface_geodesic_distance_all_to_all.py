@@ -44,10 +44,10 @@ class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
 
 def surface_geodesic_distance_all_to_all_params(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    limit_mm: float | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
+    roi_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    area_metric: InputPathType | None = None,
     naive: bool = False,
 ) -> SurfaceGeodesicDistanceAllToAllParamsDictTagged:
     """
@@ -55,6 +55,7 @@ def surface_geodesic_distance_all_to_all_params(
     
     Args:
         cifti_out: single-hemisphere dconn containing the distances.
+        surface: the surface to compute on.
         roi_metric: only output distances for vertices inside an ROI\
             \
             the ROI as a metric file.
@@ -65,7 +66,6 @@ def surface_geodesic_distance_all_to_all_params(
             group-average surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
         naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
@@ -216,10 +216,10 @@ def surface_geodesic_distance_all_to_all_execute(
 
 def surface_geodesic_distance_all_to_all(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    limit_mm: float | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
+    roi_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    area_metric: InputPathType | None = None,
     naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
@@ -248,6 +248,7 @@ def surface_geodesic_distance_all_to_all(
     
     Args:
         cifti_out: single-hemisphere dconn containing the distances.
+        surface: the surface to compute on.
         roi_metric: only output distances for vertices inside an ROI\
             \
             the ROI as a metric file.
@@ -258,7 +259,6 @@ def surface_geodesic_distance_all_to_all(
             group-average surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
         naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:

@@ -96,7 +96,7 @@ CiftiGradientParamsDictTagged = typing.TypedDict('CiftiGradientParamsDictTagged'
 
 def cifti_gradient_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiGradientLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -166,7 +166,7 @@ def cifti_gradient_left_surface_cargs(
 
 def cifti_gradient_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiGradientRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -236,7 +236,7 @@ def cifti_gradient_right_surface_cargs(
 
 def cifti_gradient_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiGradientCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -307,7 +307,7 @@ def cifti_gradient_cerebellum_surface_cargs(
 def cifti_gradient_surface(
     structure: str,
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiGradientSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -394,16 +394,16 @@ class CiftiGradientOutputs(typing.NamedTuple):
 
 def cifti_gradient_params(
     cifti_out: str,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
-    vectors_out: str | None,
     cifti: InputPathType,
     direction: str,
     left_surface: CiftiGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParamsDict | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     average_output: bool = False,
+    vectors_out: str | None = None,
     surface: list[CiftiGradientSurfaceParamsDict] | None = None,
 ) -> CiftiGradientParamsDictTagged:
     """
@@ -411,6 +411,11 @@ def cifti_gradient_params(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        direction: which dimension to take the gradient along, ROW or COLUMN.
+        left_surface: specify the left surface to use.
+        right_surface: specify the right surface to use.
+        cerebellum_surface: specify the cerebellum surface to use.
         surface_kernel: smooth on the surface before computing the gradient\
             \
             the size of the gaussian surface smoothing kernel in mm, as sigma\
@@ -419,17 +424,12 @@ def cifti_gradient_params(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        vectors_out: output gradient vectors\
-            \
-            the vectors, as a dscalar file.
-        cifti: the input cifti.
-        direction: which dimension to take the gradient along, ROW or COLUMN.
-        left_surface: specify the left surface to use.
-        right_surface: specify the right surface to use.
-        cerebellum_surface: specify the cerebellum surface to use.
         presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
         average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
+        vectors_out: output gradient vectors\
+            \
+            the vectors, as a dscalar file.
         surface: specify a surface by structure name.
     Returns:
         Parameter dictionary
@@ -640,16 +640,16 @@ def cifti_gradient_execute(
 
 def cifti_gradient(
     cifti_out: str,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
-    vectors_out: str | None,
     cifti: InputPathType,
     direction: str,
     left_surface: CiftiGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParamsDict | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     average_output: bool = False,
+    vectors_out: str | None = None,
     surface: list[CiftiGradientSurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
@@ -703,6 +703,11 @@ def cifti_gradient(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        direction: which dimension to take the gradient along, ROW or COLUMN.
+        left_surface: specify the left surface to use.
+        right_surface: specify the right surface to use.
+        cerebellum_surface: specify the cerebellum surface to use.
         surface_kernel: smooth on the surface before computing the gradient\
             \
             the size of the gaussian surface smoothing kernel in mm, as sigma\
@@ -711,17 +716,12 @@ def cifti_gradient(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        vectors_out: output gradient vectors\
-            \
-            the vectors, as a dscalar file.
-        cifti: the input cifti.
-        direction: which dimension to take the gradient along, ROW or COLUMN.
-        left_surface: specify the left surface to use.
-        right_surface: specify the right surface to use.
-        cerebellum_surface: specify the cerebellum surface to use.
         presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
         average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
+        vectors_out: output gradient vectors\
+            \
+            the vectors, as a dscalar file.
         surface: specify a surface by structure name.
         runner: Command runner.
     Returns:

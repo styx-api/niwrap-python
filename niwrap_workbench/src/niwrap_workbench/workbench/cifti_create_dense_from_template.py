@@ -115,7 +115,7 @@ CiftiCreateDenseFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateDens
 def cifti_create_dense_from_template_series(
     step: float,
     start: float,
-    unit: str | None,
+    unit: str | None = None,
 ) -> CiftiCreateDenseFromTemplateSeriesParamsDictTagged:
     """
     Build parameters.
@@ -529,10 +529,10 @@ class CiftiCreateDenseFromTemplateOutputs(typing.NamedTuple):
 
 def cifti_create_dense_from_template_params(
     cifti_out: str,
-    action: str | None,
     template_cifti: InputPathType,
     series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
     volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
+    action: str | None = None,
     cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
     metric: list[CiftiCreateDenseFromTemplateMetricParamsDict] | None = None,
     label: list[CiftiCreateDenseFromTemplateLabelParamsDict] | None = None,
@@ -543,13 +543,13 @@ def cifti_create_dense_from_template_params(
     
     Args:
         cifti_out: the output cifti file.
+        template_cifti: file to match brainordinates of.
+        series: make a dtseries file instead of a dscalar.
+        volume_all: specify an input volume file for all voxel data.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'SURFACES_FIRST', or 'LEGACY', default 'ERROR', use\
             'LEGACY' to match v1.4.2 and earlier.
-        template_cifti: file to match brainordinates of.
-        series: make a dtseries file instead of a dscalar.
-        volume_all: specify an input volume file for all voxel data.
         cifti: use input data from a cifti file.
         metric: use input data from a metric file.
         label: use input data from surface label files.
@@ -764,10 +764,10 @@ def cifti_create_dense_from_template_execute(
 
 def cifti_create_dense_from_template(
     cifti_out: str,
-    action: str | None,
     template_cifti: InputPathType,
     series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
     volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
+    action: str | None = None,
     cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
     metric: list[CiftiCreateDenseFromTemplateMetricParamsDict] | None = None,
     label: list[CiftiCreateDenseFromTemplateLabelParamsDict] | None = None,
@@ -838,13 +838,13 @@ def cifti_create_dense_from_template(
     
     Args:
         cifti_out: the output cifti file.
+        template_cifti: file to match brainordinates of.
+        series: make a dtseries file instead of a dscalar.
+        volume_all: specify an input volume file for all voxel data.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'SURFACES_FIRST', or 'LEGACY', default 'ERROR', use\
             'LEGACY' to match v1.4.2 and earlier.
-        template_cifti: file to match brainordinates of.
-        series: make a dtseries file instead of a dscalar.
-        volume_all: specify an input volume file for all voxel data.
         cifti: use input data from a cifti file.
         metric: use input data from a metric file.
         label: use input data from surface label files.

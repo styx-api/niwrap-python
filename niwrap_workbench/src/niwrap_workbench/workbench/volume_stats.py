@@ -120,10 +120,10 @@ class VolumeStatsOutputs(typing.NamedTuple):
 
 
 def volume_stats_params(
-    operation: str | None,
-    percent: float | None,
-    subvolume: str | None,
     volume_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    subvolume: str | None = None,
     roi: VolumeStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
 ) -> VolumeStatsParamsDictTagged:
@@ -131,6 +131,7 @@ def volume_stats_params(
     Build parameters.
     
     Args:
+        volume_in: the input volume.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -140,7 +141,6 @@ def volume_stats_params(
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        volume_in: the input volume.
         roi: only consider data inside an roi.
         show_map_name: print map index and name before each output.
     Returns:
@@ -296,10 +296,10 @@ def volume_stats_execute(
 
 
 def volume_stats(
-    operation: str | None,
-    percent: float | None,
-    subvolume: str | None,
     volume_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    subvolume: str | None = None,
     roi: VolumeStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -335,6 +335,7 @@ def volume_stats(
     .
     
     Args:
+        volume_in: the input volume.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -344,7 +345,6 @@ def volume_stats(
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        volume_in: the input volume.
         roi: only consider data inside an roi.
         show_map_name: print map index and name before each output.
         runner: Command runner.

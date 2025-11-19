@@ -48,22 +48,19 @@ class VolumeParcelResamplingOutputs(typing.NamedTuple):
 
 def volume_parcel_resampling_params(
     volume_out: str,
-    subvol: str | None,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
     fix_zeros: bool = False,
     fwhm: bool = False,
+    subvol: str | None = None,
 ) -> VolumeParcelResamplingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: output volume.
-        subvol: select a single subvolume as input\
-            \
-            the subvolume number or name.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
@@ -71,6 +68,9 @@ def volume_parcel_resampling_params(
             sigma by default.
         fix_zeros: treat zero values as not being data.
         fwhm: smoothing kernel size is FWHM, not sigma.
+        subvol: select a single subvolume as input\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -221,13 +221,13 @@ def volume_parcel_resampling_execute(
 
 def volume_parcel_resampling(
     volume_out: str,
-    subvol: str | None,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
     fix_zeros: bool = False,
     fwhm: bool = False,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingOutputs:
     """
@@ -246,9 +246,6 @@ def volume_parcel_resampling(
     
     Args:
         volume_out: output volume.
-        subvol: select a single subvolume as input\
-            \
-            the subvolume number or name.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
@@ -256,6 +253,9 @@ def volume_parcel_resampling(
             sigma by default.
         fix_zeros: treat zero values as not being data.
         fwhm: smoothing kernel size is FWHM, not sigma.
+        subvol: select a single subvolume as input\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingOutputs`).

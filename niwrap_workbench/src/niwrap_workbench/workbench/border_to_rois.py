@@ -44,9 +44,9 @@ class BorderToRoisOutputs(typing.NamedTuple):
 
 def border_to_rois_params(
     metric_out: str,
-    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
+    name: str | None = None,
     inverse: bool = False,
     include_border: bool = False,
 ) -> BorderToRoisParamsDictTagged:
@@ -55,11 +55,11 @@ def border_to_rois_params(
     
     Args:
         metric_out: the output metric file.
+        surface: the surface the borders are drawn on.
+        border_file: the border file.
         name: create ROI for only one border\
             \
             the name of the border.
-        surface: the surface the borders are drawn on.
-        border_file: the border file.
         inverse: use inverse selection (outside border).
         include_border: include vertices the border is closest to.
     Returns:
@@ -192,9 +192,9 @@ def border_to_rois_execute(
 
 def border_to_rois(
     metric_out: str,
-    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
+    name: str | None = None,
     inverse: bool = False,
     include_border: bool = False,
     runner: Runner | None = None,
@@ -207,11 +207,11 @@ def border_to_rois(
     
     Args:
         metric_out: the output metric file.
+        surface: the surface the borders are drawn on.
+        border_file: the border file.
         name: create ROI for only one border\
             \
             the name of the border.
-        surface: the surface the borders are drawn on.
-        border_file: the border file.
         inverse: use inverse selection (outside border).
         include_border: include vertices the border is closest to.
         runner: Command runner.

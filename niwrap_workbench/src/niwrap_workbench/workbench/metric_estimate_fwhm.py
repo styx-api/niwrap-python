@@ -39,24 +39,24 @@ class MetricEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def metric_estimate_fwhm_params(
-    roi_metric: InputPathType | None,
-    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    demean: bool | None = False,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    demean: bool | None = None,
 ) -> MetricEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        surface: the surface to use for distance and neighbor information.
+        metric_in: the input metric.
         roi_metric: use only data within an ROI\
             \
             the metric file to use as an ROI.
         column: select a single column to estimate smoothness of\
             \
             the column number or name.
-        surface: the surface to use for distance and neighbor information.
-        metric_in: the input metric.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.
@@ -95,9 +95,9 @@ def metric_estimate_fwhm_validate(
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("demean", False) is not None:
+    if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
-            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -122,7 +122,7 @@ def metric_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("demean", False) is not None:
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("demean", None) is not None:
         cargs.extend([
             "wb_command",
             "-metric-estimate-fwhm",
@@ -131,7 +131,7 @@ def metric_estimate_fwhm_cargs(
             "-column",
             (params.get("column", None) if (params.get("column", None) is not None) else ""),
             "-whole-file",
-            ("-demean" if (params.get("demean", False) is not None) else "")
+            ("-demean" if (params.get("demean", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
@@ -184,11 +184,11 @@ def metric_estimate_fwhm_execute(
 
 
 def metric_estimate_fwhm(
-    roi_metric: InputPathType | None,
-    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    demean: bool | None = False,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    demean: bool | None = None,
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
@@ -198,14 +198,14 @@ def metric_estimate_fwhm(
     standard output. These estimates ignore variation in vertex spacing.
     
     Args:
+        surface: the surface to use for distance and neighbor information.
+        metric_in: the input metric.
         roi_metric: use only data within an ROI\
             \
             the metric file to use as an ROI.
         column: select a single column to estimate smoothness of\
             \
             the column number or name.
-        surface: the surface to use for distance and neighbor information.
-        metric_in: the input metric.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.

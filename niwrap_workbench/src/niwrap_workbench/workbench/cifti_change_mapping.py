@@ -71,7 +71,7 @@ CiftiChangeMappingParamsDictTagged = typing.TypedDict('CiftiChangeMappingParamsD
 def cifti_change_mapping_series(
     step: float,
     start: float,
-    unit: str | None,
+    unit: str | None = None,
 ) -> CiftiChangeMappingSeriesParamsDictTagged:
     """
     Build parameters.
@@ -146,7 +146,7 @@ def cifti_change_mapping_series_cargs(
 
 
 def cifti_change_mapping_scalar(
-    file: str | None,
+    file: str | None = None,
 ) -> CiftiChangeMappingScalarParamsDictTagged:
     """
     Build parameters.

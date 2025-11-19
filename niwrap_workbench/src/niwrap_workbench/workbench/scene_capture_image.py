@@ -376,28 +376,44 @@ class SceneCaptureImageOutputs(typing.NamedTuple):
 
 
 def scene_capture_image_params(
-    width: float | None,
-    height: float | None,
-    units: str | None,
-    size: int | None,
-    renderer: str | None,
     scene_file: str,
     scene_name_or_number: str,
     image_file_name: str,
     size_window: bool = False,
     size_capture: bool = False,
     size_width_height: SceneCaptureImageSizeWidthHeightParamsDict | None = None,
+    width: float | None = None,
+    height: float | None = None,
+    units: str | None = None,
     resolution: SceneCaptureImageResolutionParamsDict | None = None,
+    size: int | None = None,
     no_scene_colors: bool = False,
     set_map_yoke: SceneCaptureImageSetMapYokeParamsDict | None = None,
     conn_db_login: SceneCaptureImageConnDbLoginParamsDict | None = None,
     show_capture_settings: bool = False,
+    renderer: str | None = None,
     print_image_info: bool = False,
 ) -> SceneCaptureImageParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        scene_file: scene file.
+        scene_name_or_number: name or number (starting at one) of the scene in\
+            the scene file.
+        image_file_name: output - image file name\
+            The file name must end with a valid extension that identifies the\
+            image file format. Valid extensions on this system are: (.bmp .jpeg\
+            .jpg .png .ppm).\
+            \
+            If there is more than one window in the scene, multiple image files\
+            are output with the window's number inserted into the name of the\
+            image file immediately before the image file's extension.
+        size_window: Output image is size of window's graphics region from when\
+            scene was created.
+        size_capture: Output image uses size from Capture Dialog when scene was\
+            created.
+        size_width_height: Width and height for output image.
         width: Width for output image. Height is computed using the aspect\
             ratio from the window's width and height saved in the scene.\
             \
@@ -415,33 +431,12 @@ def scene_capture_image_params(
             MILLIMETERS\
             METERS\
             PIXELS.
+        resolution: Image resolution (number pixels per size unit)\
+            Default is 300 PIXELS_PER_INCH.
         size: Add a margin to sides of the image using the window's background\
             color.\
             \
             size of margin, in pixels, added to all sides of output image.
-        renderer: Select renderer for drawing image\
-            \
-            Name of renderer to use for drawing image\
-            Available renderers are (first is default):\
-            OSMesa - Mesa3D OSMesa software renderer.
-        scene_file: scene file.
-        scene_name_or_number: name or number (starting at one) of the scene in\
-            the scene file.
-        image_file_name: output - image file name\
-            The file name must end with a valid extension that identifies the\
-            image file format. Valid extensions on this system are: (.bmp .jpeg\
-            .jpg .png .ppm).\
-            \
-            If there is more than one window in the scene, multiple image files\
-            are output with the window's number inserted into the name of the\
-            image file immediately before the image file's extension.
-        size_window: Output image is size of window's graphics region from when\
-            scene was created.
-        size_capture: Output image uses size from Capture Dialog when scene was\
-            created.
-        size_width_height: Width and height for output image.
-        resolution: Image resolution (number pixels per size unit)\
-            Default is 300 PIXELS_PER_INCH.
         no_scene_colors: Do not use background and foreground colors in scene.
         set_map_yoke: Override selected map index for a map yoking group.
         conn_db_login: Login for scenes with files in Connectome Database. If\
@@ -449,6 +444,11 @@ def scene_capture_image_params(
             user's preferences is used.
         show_capture_settings: Print settings from Capture Dialog only, DO NOT\
             create image file(s).
+        renderer: Select renderer for drawing image\
+            \
+            Name of renderer to use for drawing image\
+            Available renderers are (first is default):\
+            OSMesa - Mesa3D OSMesa software renderer.
         print_image_info: Print the size and other information about output\
             images only and DO NOT create any output images.
     Returns:
@@ -685,22 +685,22 @@ def scene_capture_image_execute(
 
 
 def scene_capture_image(
-    width: float | None,
-    height: float | None,
-    units: str | None,
-    size: int | None,
-    renderer: str | None,
     scene_file: str,
     scene_name_or_number: str,
     image_file_name: str,
     size_window: bool = False,
     size_capture: bool = False,
     size_width_height: SceneCaptureImageSizeWidthHeightParamsDict | None = None,
+    width: float | None = None,
+    height: float | None = None,
+    units: str | None = None,
     resolution: SceneCaptureImageResolutionParamsDict | None = None,
+    size: int | None = None,
     no_scene_colors: bool = False,
     set_map_yoke: SceneCaptureImageSetMapYokeParamsDict | None = None,
     conn_db_login: SceneCaptureImageConnDbLoginParamsDict | None = None,
     show_capture_settings: bool = False,
+    renderer: str | None = None,
     print_image_info: bool = False,
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
@@ -751,6 +751,22 @@ def scene_capture_image(
     .
     
     Args:
+        scene_file: scene file.
+        scene_name_or_number: name or number (starting at one) of the scene in\
+            the scene file.
+        image_file_name: output - image file name\
+            The file name must end with a valid extension that identifies the\
+            image file format. Valid extensions on this system are: (.bmp .jpeg\
+            .jpg .png .ppm).\
+            \
+            If there is more than one window in the scene, multiple image files\
+            are output with the window's number inserted into the name of the\
+            image file immediately before the image file's extension.
+        size_window: Output image is size of window's graphics region from when\
+            scene was created.
+        size_capture: Output image uses size from Capture Dialog when scene was\
+            created.
+        size_width_height: Width and height for output image.
         width: Width for output image. Height is computed using the aspect\
             ratio from the window's width and height saved in the scene.\
             \
@@ -768,33 +784,12 @@ def scene_capture_image(
             MILLIMETERS\
             METERS\
             PIXELS.
+        resolution: Image resolution (number pixels per size unit)\
+            Default is 300 PIXELS_PER_INCH.
         size: Add a margin to sides of the image using the window's background\
             color.\
             \
             size of margin, in pixels, added to all sides of output image.
-        renderer: Select renderer for drawing image\
-            \
-            Name of renderer to use for drawing image\
-            Available renderers are (first is default):\
-            OSMesa - Mesa3D OSMesa software renderer.
-        scene_file: scene file.
-        scene_name_or_number: name or number (starting at one) of the scene in\
-            the scene file.
-        image_file_name: output - image file name\
-            The file name must end with a valid extension that identifies the\
-            image file format. Valid extensions on this system are: (.bmp .jpeg\
-            .jpg .png .ppm).\
-            \
-            If there is more than one window in the scene, multiple image files\
-            are output with the window's number inserted into the name of the\
-            image file immediately before the image file's extension.
-        size_window: Output image is size of window's graphics region from when\
-            scene was created.
-        size_capture: Output image uses size from Capture Dialog when scene was\
-            created.
-        size_width_height: Width and height for output image.
-        resolution: Image resolution (number pixels per size unit)\
-            Default is 300 PIXELS_PER_INCH.
         no_scene_colors: Do not use background and foreground colors in scene.
         set_map_yoke: Override selected map index for a map yoking group.
         conn_db_login: Login for scenes with files in Connectome Database. If\
@@ -802,6 +797,11 @@ def scene_capture_image(
             user's preferences is used.
         show_capture_settings: Print settings from Capture Dialog only, DO NOT\
             create image file(s).
+        renderer: Select renderer for drawing image\
+            \
+            Name of renderer to use for drawing image\
+            Available renderers are (first is default):\
+            OSMesa - Mesa3D OSMesa software renderer.
         print_image_info: Print the size and other information about output\
             images only and DO NOT create any output images.
         runner: Command runner.

@@ -131,15 +131,15 @@ class CiftiRoisFromExtremaOutputs(typing.NamedTuple):
 
 def cifti_rois_from_extrema_params(
     cifti_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
-    method: str | None,
     cifti: InputPathType,
     surf_limit: float,
     vol_limit: float,
     direction: str,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
     gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
+    method: str | None = None,
     merged_volume: bool = False,
 ) -> CiftiRoisFromExtremaParamsDictTagged:
     """
@@ -147,6 +147,10 @@ def cifti_rois_from_extrema_params(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        surf_limit: geodesic distance limit from vertex, in mm.
+        vol_limit: euclidean distance limit from voxel center, in mm.
+        direction: which dimension an extrema map is along, ROW or COLUMN.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -156,14 +160,10 @@ def cifti_rois_from_extrema_params(
         surface_2: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
+        gaussian: generate gaussian kernels instead of flat ROIs.
         method: how to handle overlapping ROIs, default ALLOW\
             \
             the method of resolving overlaps.
-        cifti: the input cifti.
-        surf_limit: geodesic distance limit from vertex, in mm.
-        vol_limit: euclidean distance limit from voxel center, in mm.
-        direction: which dimension an extrema map is along, ROW or COLUMN.
-        gaussian: generate gaussian kernels instead of flat ROIs.
         merged_volume: treat volume components as if they were a single\
             component.
     Returns:
@@ -334,15 +334,15 @@ def cifti_rois_from_extrema_execute(
 
 def cifti_rois_from_extrema(
     cifti_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
-    method: str | None,
     cifti: InputPathType,
     surf_limit: float,
     vol_limit: float,
     direction: str,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
     gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
+    method: str | None = None,
     merged_volume: bool = False,
     runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
@@ -360,6 +360,10 @@ def cifti_rois_from_extrema(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        surf_limit: geodesic distance limit from vertex, in mm.
+        vol_limit: euclidean distance limit from voxel center, in mm.
+        direction: which dimension an extrema map is along, ROW or COLUMN.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -369,14 +373,10 @@ def cifti_rois_from_extrema(
         surface_2: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
+        gaussian: generate gaussian kernels instead of flat ROIs.
         method: how to handle overlapping ROIs, default ALLOW\
             \
             the method of resolving overlaps.
-        cifti: the input cifti.
-        surf_limit: geodesic distance limit from vertex, in mm.
-        vol_limit: euclidean distance limit from voxel center, in mm.
-        direction: which dimension an extrema map is along, ROW or COLUMN.
-        gaussian: generate gaussian kernels instead of flat ROIs.
         merged_volume: treat volume components as if they were a single\
             component.
         runner: Command runner.

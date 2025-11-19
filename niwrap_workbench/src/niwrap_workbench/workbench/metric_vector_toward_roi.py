@@ -40,20 +40,20 @@ class MetricVectorTowardRoiOutputs(typing.NamedTuple):
 
 def metric_vector_toward_roi_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
     surface: InputPathType,
     target_roi: InputPathType,
+    roi_metric: InputPathType | None = None,
 ) -> MetricVectorTowardRoiParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        target_roi: the roi to find the shortest path to.
         roi_metric: don't compute for vertices outside an roi\
             \
             the region to compute inside, as a metric.
-        surface: the surface to compute on.
-        target_roi: the roi to find the shortest path to.
     Returns:
         Parameter dictionary
     """
@@ -172,9 +172,9 @@ def metric_vector_toward_roi_execute(
 
 def metric_vector_toward_roi(
     metric_out: str,
-    roi_metric: InputPathType | None,
     surface: InputPathType,
     target_roi: InputPathType,
+    roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
@@ -185,11 +185,11 @@ def metric_vector_toward_roi(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        target_roi: the roi to find the shortest path to.
         roi_metric: don't compute for vertices outside an roi\
             \
             the region to compute inside, as a metric.
-        surface: the surface to compute on.
-        target_roi: the roi to find the shortest path to.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).

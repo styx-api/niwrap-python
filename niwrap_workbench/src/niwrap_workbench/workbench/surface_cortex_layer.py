@@ -42,23 +42,23 @@ class SurfaceCortexLayerOutputs(typing.NamedTuple):
 
 def surface_cortex_layer_params(
     out_surface: str,
-    placement_metric: str | None,
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
+    placement_metric: str | None = None,
 ) -> SurfaceCortexLayerParamsDictTagged:
     """
     Build parameters.
     
     Args:
         out_surface: the output surface.
+        white_surface: the white matter surface.
+        pial_surface: the pial surface.
+        location: what volume fraction to place the layer at.
         placement_metric: output the placement as a volume fraction from pial\
             to white\
             \
             output metric.
-        white_surface: the white matter surface.
-        pial_surface: the pial surface.
-        location: what volume fraction to place the layer at.
     Returns:
         Parameter dictionary
     """
@@ -187,10 +187,10 @@ def surface_cortex_layer_execute(
 
 def surface_cortex_layer(
     out_surface: str,
-    placement_metric: str | None,
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
+    placement_metric: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
@@ -205,13 +205,13 @@ def surface_cortex_layer(
     
     Args:
         out_surface: the output surface.
+        white_surface: the white matter surface.
+        pial_surface: the pial surface.
+        location: what volume fraction to place the layer at.
         placement_metric: output the placement as a volume fraction from pial\
             to white\
             \
             output metric.
-        white_surface: the white matter surface.
-        pial_surface: the pial surface.
-        location: what volume fraction to place the layer at.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).

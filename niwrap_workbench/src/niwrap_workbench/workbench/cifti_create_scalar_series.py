@@ -129,9 +129,9 @@ class CiftiCreateScalarSeriesOutputs(typing.NamedTuple):
 
 def cifti_create_scalar_series_params(
     cifti_out: str,
-    file: str | None,
     input_: str,
     transpose: bool = False,
+    file: str | None = None,
     series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
 ) -> CiftiCreateScalarSeriesParamsDictTagged:
     """
@@ -139,12 +139,12 @@ def cifti_create_scalar_series_params(
     
     Args:
         cifti_out: output cifti file.
-        file: use a text file to set names on scalar dimension\
-            \
-            text file containing names, one per line.
         input_: input file.
         transpose: use if the rows of the text file are along the scalar\
             dimension.
+        file: use a text file to set names on scalar dimension\
+            \
+            text file containing names, one per line.
         series: set the units and values of the series.
     Returns:
         Parameter dictionary
@@ -277,9 +277,9 @@ def cifti_create_scalar_series_execute(
 
 def cifti_create_scalar_series(
     cifti_out: str,
-    file: str | None,
     input_: str,
     transpose: bool = False,
+    file: str | None = None,
     series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
@@ -299,12 +299,12 @@ def cifti_create_scalar_series(
     
     Args:
         cifti_out: output cifti file.
-        file: use a text file to set names on scalar dimension\
-            \
-            text file containing names, one per line.
         input_: input file.
         transpose: use if the rows of the text file are along the scalar\
             dimension.
+        file: use a text file to set names on scalar dimension\
+            \
+            text file containing names, one per line.
         series: set the units and values of the series.
         runner: Command runner.
     Returns:

@@ -47,7 +47,7 @@ MetricMathParamsDictTagged = typing.TypedDict('MetricMathParamsDictTagged', {
 def metric_math_var(
     name: str,
     metric: InputPathType,
-    column: str | None,
+    column: str | None = None,
     repeat: bool = False,
 ) -> MetricMathVarParamsDictTagged:
     """
@@ -141,8 +141,8 @@ class MetricMathOutputs(typing.NamedTuple):
 
 def metric_math_params(
     metric_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     var: list[MetricMathVarParamsDict] | None = None,
 ) -> MetricMathParamsDictTagged:
     """
@@ -150,10 +150,10 @@ def metric_math_params(
     
     Args:
         metric_out: the output metric.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         var: a metric to use as a variable.
     Returns:
         Parameter dictionary
@@ -342,8 +342,8 @@ def metric_math_execute(
 
 def metric_math(
     metric_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     var: list[MetricMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
@@ -422,10 +422,10 @@ def metric_math(
     
     Args:
         metric_out: the output metric.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         var: a metric to use as a variable.
         runner: Command runner.
     Returns:

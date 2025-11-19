@@ -56,16 +56,16 @@ class MetricDilateOutputs(typing.NamedTuple):
 
 def metric_dilate_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    column: str | None,
-    exponent: float | None,
-    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    column: str | None = None,
     nearest: bool = False,
     linear: bool = False,
+    exponent: float | None = None,
+    area_metric: InputPathType | None = None,
     legacy_cutoff: bool = False,
 ) -> MetricDilateParamsDictTagged:
     """
@@ -73,6 +73,9 @@ def metric_dilate_params(
     
     Args:
         metric_out: the output metric.
+        metric: the metric to dilate.
+        surface: the surface to compute on.
+        distance: distance in mm to dilate.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with value zero\
             \
@@ -84,6 +87,9 @@ def metric_dilate_params(
         column: select a single column to dilate\
             \
             the column number or name.
+        nearest: use the nearest good value instead of a weighted average.
+        linear: fill in values with linear interpolation along strongest\
+            gradient.
         exponent: use a different exponent in the weighting function\
             \
             exponent 'n' to use in (area / (distance ^ n)) as the weighting\
@@ -92,12 +98,6 @@ def metric_dilate_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        metric: the metric to dilate.
-        surface: the surface to compute on.
-        distance: distance in mm to dilate.
-        nearest: use the nearest good value instead of a weighted average.
-        linear: fill in values with linear interpolation along strongest\
-            gradient.
         legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
             use when calulating the dilated value with weighted method.
     Returns:
@@ -286,16 +286,16 @@ def metric_dilate_execute(
 
 def metric_dilate(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    column: str | None,
-    exponent: float | None,
-    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    column: str | None = None,
     nearest: bool = False,
     linear: bool = False,
+    exponent: float | None = None,
+    area_metric: InputPathType | None = None,
     legacy_cutoff: bool = False,
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
@@ -323,6 +323,9 @@ def metric_dilate(
     
     Args:
         metric_out: the output metric.
+        metric: the metric to dilate.
+        surface: the surface to compute on.
+        distance: distance in mm to dilate.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with value zero\
             \
@@ -334,6 +337,9 @@ def metric_dilate(
         column: select a single column to dilate\
             \
             the column number or name.
+        nearest: use the nearest good value instead of a weighted average.
+        linear: fill in values with linear interpolation along strongest\
+            gradient.
         exponent: use a different exponent in the weighting function\
             \
             exponent 'n' to use in (area / (distance ^ n)) as the weighting\
@@ -342,12 +348,6 @@ def metric_dilate(
             surface\
             \
             the corrected vertex areas, as a metric.
-        metric: the metric to dilate.
-        surface: the surface to compute on.
-        distance: distance in mm to dilate.
-        nearest: use the nearest good value instead of a weighted average.
-        linear: fill in values with linear interpolation along strongest\
-            gradient.
         legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
             use when calulating the dilated value with weighted method.
         runner: Command runner.

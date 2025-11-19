@@ -35,21 +35,21 @@ class SurfaceCurvatureOutputs(typing.NamedTuple):
 
 
 def surface_curvature_params(
-    mean_out: str | None,
-    gauss_out: str | None,
     surface: InputPathType,
+    mean_out: str | None = None,
+    gauss_out: str | None = None,
 ) -> SurfaceCurvatureParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        surface: the surface to compute the curvature of.
         mean_out: output mean curvature\
             \
             mean curvature metric.
         gauss_out: output gaussian curvature\
             \
             gaussian curvature metric.
-        surface: the surface to compute the curvature of.
     Returns:
         Parameter dictionary
     """
@@ -162,9 +162,9 @@ def surface_curvature_execute(
 
 
 def surface_curvature(
-    mean_out: str | None,
-    gauss_out: str | None,
     surface: InputPathType,
+    mean_out: str | None = None,
+    gauss_out: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
@@ -175,13 +175,13 @@ def surface_curvature(
     ACM-0-98791-601-8/93/008.
     
     Args:
+        surface: the surface to compute the curvature of.
         mean_out: output mean curvature\
             \
             mean curvature metric.
         gauss_out: output gaussian curvature\
             \
             gaussian curvature metric.
-        surface: the surface to compute the curvature of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).

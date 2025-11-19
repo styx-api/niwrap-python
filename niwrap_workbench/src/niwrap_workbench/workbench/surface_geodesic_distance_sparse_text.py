@@ -39,23 +39,23 @@ class SurfaceGeodesicDistanceSparseTextOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_distance_sparse_text_params(
-    area_metric: InputPathType | None,
     surface: InputPathType,
     limit: float,
     text_out: str,
+    area_metric: InputPathType | None = None,
     naive: bool = False,
 ) -> SurfaceGeodesicDistanceSparseTextParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        surface: the surface to compute on.
+        limit: the geodesic distance limit in mm.
+        text_out: output - the output text file.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        limit: the geodesic distance limit in mm.
-        text_out: output - the output text file.
         naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
@@ -192,10 +192,10 @@ def surface_geodesic_distance_sparse_text_execute(
 
 
 def surface_geodesic_distance_sparse_text(
-    area_metric: InputPathType | None,
     surface: InputPathType,
     limit: float,
     text_out: str,
+    area_metric: InputPathType | None = None,
     naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceSparseTextOutputs:
@@ -219,13 +219,13 @@ def surface_geodesic_distance_sparse_text(
     share an edge.
     
     Args:
+        surface: the surface to compute on.
+        limit: the geodesic distance limit in mm.
+        text_out: output - the output text file.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        limit: the geodesic distance limit in mm.
-        text_out: output - the output text file.
         naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:

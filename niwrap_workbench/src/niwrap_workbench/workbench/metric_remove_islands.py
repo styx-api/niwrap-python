@@ -40,21 +40,21 @@ class MetricRemoveIslandsOutputs(typing.NamedTuple):
 
 def metric_remove_islands_params(
     metric_out: str,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
+    area_metric: InputPathType | None = None,
 ) -> MetricRemoveIslandsParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output ROI metric.
+        surface: the surface to use for neighbor information.
+        metric_in: the input ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to use for neighbor information.
-        metric_in: the input ROI metric.
     Returns:
         Parameter dictionary
     """
@@ -173,9 +173,9 @@ def metric_remove_islands_execute(
 
 def metric_remove_islands(
     metric_out: str,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
@@ -186,12 +186,12 @@ def metric_remove_islands(
     
     Args:
         metric_out: the output ROI metric.
+        surface: the surface to use for neighbor information.
+        metric_in: the input ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to use for neighbor information.
-        metric_in: the input ROI metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRemoveIslandsOutputs`).

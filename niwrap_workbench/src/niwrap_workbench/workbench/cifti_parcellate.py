@@ -79,12 +79,12 @@ CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTag
 
 
 def cifti_parcellate_spatial_weights(
-    left_surf: InputPathType | None,
-    right_surf: InputPathType | None,
-    cerebellum_surf: InputPathType | None,
-    left_metric: InputPathType | None,
-    right_metric: InputPathType | None,
-    cerebellum_metric: InputPathType | None,
+    left_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    left_metric: InputPathType | None = None,
+    right_metric: InputPathType | None = None,
+    cerebellum_metric: InputPathType | None = None,
 ) -> CiftiParcellateSpatialWeightsParamsDictTagged:
     """
     Build parameters.
@@ -271,16 +271,16 @@ class CiftiParcellateOutputs(typing.NamedTuple):
 
 def cifti_parcellate_params(
     cifti_out: str,
-    weight_cifti: InputPathType | None,
-    method: str | None,
-    value: float | None,
-    mask_out: str | None,
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
+    weight_cifti: InputPathType | None = None,
+    method: str | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
+    value: float | None = None,
+    mask_out: str | None = None,
     legacy_mode: bool = False,
     include_empty: bool = False,
 ) -> CiftiParcellateParamsDictTagged:
@@ -289,6 +289,11 @@ def cifti_parcellate_params(
     
     Args:
         cifti_out: output cifti file.
+        cifti_in: the cifti file to parcellate.
+        cifti_label: a cifti label file to use for the parcellation.
+        direction: which mapping to parcellate (integer, ROW, or COLUMN).
+        spatial_weights: use voxel volume and either vertex areas or metric\
+            files as weights.
         weight_cifti: use a cifti file containing weights\
             \
             the weights to use, as a cifti file.
@@ -297,6 +302,9 @@ def cifti_parcellate_params(
             \
             the method to use to assign parcel values from the values of member\
             brainordinates.
+        exclude_outliers: exclude non-numeric values and outliers from each\
+            parcel by standard deviation.
+        only_numeric: exclude non-numeric values.
         value: specify value to use in empty parcels (default 0)\
             \
             the value to fill empty parcels with.
@@ -304,14 +312,6 @@ def cifti_parcellate_params(
             and 1s elsewhere\
             \
             the output mask file.
-        cifti_in: the cifti file to parcellate.
-        cifti_label: a cifti label file to use for the parcellation.
-        direction: which mapping to parcellate (integer, ROW, or COLUMN).
-        spatial_weights: use voxel volume and either vertex areas or metric\
-            files as weights.
-        exclude_outliers: exclude non-numeric values and outliers from each\
-            parcel by standard deviation.
-        only_numeric: exclude non-numeric values.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.
@@ -522,16 +522,16 @@ def cifti_parcellate_execute(
 
 def cifti_parcellate(
     cifti_out: str,
-    weight_cifti: InputPathType | None,
-    method: str | None,
-    value: float | None,
-    mask_out: str | None,
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
+    weight_cifti: InputPathType | None = None,
+    method: str | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
+    value: float | None = None,
+    mask_out: str | None = None,
     legacy_mode: bool = False,
     include_empty: bool = False,
     runner: Runner | None = None,
@@ -577,6 +577,11 @@ def cifti_parcellate(
     
     Args:
         cifti_out: output cifti file.
+        cifti_in: the cifti file to parcellate.
+        cifti_label: a cifti label file to use for the parcellation.
+        direction: which mapping to parcellate (integer, ROW, or COLUMN).
+        spatial_weights: use voxel volume and either vertex areas or metric\
+            files as weights.
         weight_cifti: use a cifti file containing weights\
             \
             the weights to use, as a cifti file.
@@ -585,6 +590,9 @@ def cifti_parcellate(
             \
             the method to use to assign parcel values from the values of member\
             brainordinates.
+        exclude_outliers: exclude non-numeric values and outliers from each\
+            parcel by standard deviation.
+        only_numeric: exclude non-numeric values.
         value: specify value to use in empty parcels (default 0)\
             \
             the value to fill empty parcels with.
@@ -592,14 +600,6 @@ def cifti_parcellate(
             and 1s elsewhere\
             \
             the output mask file.
-        cifti_in: the cifti file to parcellate.
-        cifti_label: a cifti label file to use for the parcellation.
-        direction: which mapping to parcellate (integer, ROW, or COLUMN).
-        spatial_weights: use voxel volume and either vertex areas or metric\
-            files as weights.
-        exclude_outliers: exclude non-numeric values and outliers from each\
-            parcel by standard deviation.
-        only_numeric: exclude non-numeric values.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.

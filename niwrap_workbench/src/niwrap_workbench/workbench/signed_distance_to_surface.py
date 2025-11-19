@@ -40,21 +40,21 @@ class SignedDistanceToSurfaceOutputs(typing.NamedTuple):
 
 def signed_distance_to_surface_params(
     metric: str,
-    method: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    method: str | None = None,
 ) -> SignedDistanceToSurfaceParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric: the output metric.
-        method: winding method for point inside surface test\
-            \
-            name of the method (default EVEN_ODD).
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
     Returns:
         Parameter dictionary
     """
@@ -188,9 +188,9 @@ def signed_distance_to_surface_execute(
 
 def signed_distance_to_surface(
     metric: str,
-    method: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    method: str | None = None,
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
@@ -216,12 +216,12 @@ def signed_distance_to_surface(
     
     Args:
         metric: the output metric.
-        method: winding method for point inside surface test\
-            \
-            name of the method (default EVEN_ODD).
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SignedDistanceToSurfaceOutputs`).

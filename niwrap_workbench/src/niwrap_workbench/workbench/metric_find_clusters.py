@@ -56,23 +56,28 @@ class MetricFindClustersOutputs(typing.NamedTuple):
 
 def metric_find_clusters_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    area_metric: InputPathType | None,
-    column: str | None,
-    ratio: float | None,
-    distance: float | None,
-    startval: int | None,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
     less_than: bool = False,
+    roi_metric: InputPathType | None = None,
+    area_metric: InputPathType | None = None,
+    column: str | None = None,
+    ratio: float | None = None,
+    distance: float | None = None,
+    startval: int | None = None,
 ) -> MetricFindClustersParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        metric_in: the input metric.
+        value_threshold: threshold for data values.
+        minimum_area: threshold for cluster area, in mm^2.
+        less_than: find values less than <value-threshold>, rather than greater.
         roi_metric: select a region of interest\
             \
             the roi, as a metric.
@@ -95,11 +100,6 @@ def metric_find_clusters_params(
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
-        surface: the surface to compute on.
-        metric_in: the input metric.
-        value_threshold: threshold for data values.
-        minimum_area: threshold for cluster area, in mm^2.
-        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
@@ -277,17 +277,17 @@ def metric_find_clusters_execute(
 
 def metric_find_clusters(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    area_metric: InputPathType | None,
-    column: str | None,
-    ratio: float | None,
-    distance: float | None,
-    startval: int | None,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
     less_than: bool = False,
+    roi_metric: InputPathType | None = None,
+    area_metric: InputPathType | None = None,
+    column: str | None = None,
+    ratio: float | None = None,
+    distance: float | None = None,
+    startval: int | None = None,
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
@@ -304,6 +304,11 @@ def metric_find_clusters(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        metric_in: the input metric.
+        value_threshold: threshold for data values.
+        minimum_area: threshold for cluster area, in mm^2.
+        less_than: find values less than <value-threshold>, rather than greater.
         roi_metric: select a region of interest\
             \
             the roi, as a metric.
@@ -326,11 +331,6 @@ def metric_find_clusters(
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
-        surface: the surface to compute on.
-        metric_in: the input metric.
-        value_threshold: threshold for data values.
-        minimum_area: threshold for cluster area, in mm^2.
-        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).

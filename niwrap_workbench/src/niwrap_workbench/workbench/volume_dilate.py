@@ -199,13 +199,13 @@ class VolumeDilateOutputs(typing.NamedTuple):
 
 def volume_dilate_params(
     volume_out: str,
-    exponent: float | None,
-    roi_volume: InputPathType | None,
-    roi_volume_: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
     distance: float,
     method: str,
+    exponent: float | None = None,
+    roi_volume: InputPathType | None = None,
+    roi_volume_: InputPathType | None = None,
+    subvol: str | None = None,
     legacy_cutoff: bool = False,
     grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
 ) -> VolumeDilateParamsDictTagged:
@@ -214,6 +214,9 @@ def volume_dilate_params(
     
     Args:
         volume_out: the output volume.
+        volume: the volume to dilate.
+        distance: distance in mm to dilate.
+        method: dilation method to use.
         exponent: use a different exponent in the weighting function\
             \
             exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
@@ -229,9 +232,6 @@ def volume_dilate_params(
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
-        volume: the volume to dilate.
-        distance: distance in mm to dilate.
-        method: dilation method to use.
         legacy_cutoff: use the v1.3.2 method of excluding voxels further than\
             the dilation distance when calculating the dilated value.
         grad_extrapolate: additionally use the gradient to extrapolate,\
@@ -407,13 +407,13 @@ def volume_dilate_execute(
 
 def volume_dilate(
     volume_out: str,
-    exponent: float | None,
-    roi_volume: InputPathType | None,
-    roi_volume_: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
     distance: float,
     method: str,
+    exponent: float | None = None,
+    roi_volume: InputPathType | None = None,
+    roi_volume_: InputPathType | None = None,
+    subvol: str | None = None,
     legacy_cutoff: bool = False,
     grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
     runner: Runner | None = None,
@@ -441,6 +441,9 @@ def volume_dilate(
     
     Args:
         volume_out: the output volume.
+        volume: the volume to dilate.
+        distance: distance in mm to dilate.
+        method: dilation method to use.
         exponent: use a different exponent in the weighting function\
             \
             exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
@@ -456,9 +459,6 @@ def volume_dilate(
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
-        volume: the volume to dilate.
-        distance: distance in mm to dilate.
-        method: dilation method to use.
         legacy_cutoff: use the v1.3.2 method of excluding voxels further than\
             the dilation distance when calculating the dilated value.
         grad_extrapolate: additionally use the gradient to extrapolate,\

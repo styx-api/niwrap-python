@@ -44,17 +44,20 @@ class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):
 
 def surface_geodesic_distance_params(
     metric_out: str,
-    limit_mm: float | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     vertex: int,
     naive: bool = False,
+    limit_mm: float | None = None,
+    area_metric: InputPathType | None = None,
 ) -> SurfaceGeodesicDistanceParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        vertex: the vertex to compute geodesic distance from.
+        naive: use only neighbors, don't crawl triangles (not recommended).
         limit_mm: stop at a certain distance\
             \
             distance in mm to stop at.
@@ -62,9 +65,6 @@ def surface_geodesic_distance_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        vertex: the vertex to compute geodesic distance from.
-        naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
     """
@@ -209,11 +209,11 @@ def surface_geodesic_distance_execute(
 
 def surface_geodesic_distance(
     metric_out: str,
-    limit_mm: float | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     vertex: int,
     naive: bool = False,
+    limit_mm: float | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
@@ -237,6 +237,9 @@ def surface_geodesic_distance(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to compute on.
+        vertex: the vertex to compute geodesic distance from.
+        naive: use only neighbors, don't crawl triangles (not recommended).
         limit_mm: stop at a certain distance\
             \
             distance in mm to stop at.
@@ -244,9 +247,6 @@ def surface_geodesic_distance(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute on.
-        vertex: the vertex to compute geodesic distance from.
-        naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).

@@ -39,9 +39,9 @@ class BorderLengthOutputs(typing.NamedTuple):
 
 
 def border_length_params(
-    area_metric: InputPathType | None,
     border: InputPathType,
     surface: InputPathType,
+    area_metric: InputPathType | None = None,
     separate_pieces: bool = False,
     hide_border_name: bool = False,
 ) -> BorderLengthParamsDictTagged:
@@ -49,12 +49,12 @@ def border_length_params(
     Build parameters.
     
     Args:
+        border: the input border file.
+        surface: the surface to measure the borders on.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        border: the input border file.
-        surface: the surface to measure the borders on.
         separate_pieces: report lengths for multi-part borders as separate\
             numbers.
         hide_border_name: don't print border name before each output.
@@ -185,9 +185,9 @@ def border_length_execute(
 
 
 def border_length(
-    area_metric: InputPathType | None,
     border: InputPathType,
     surface: InputPathType,
+    area_metric: InputPathType | None = None,
     separate_pieces: bool = False,
     hide_border_name: bool = False,
     runner: Runner | None = None,
@@ -204,12 +204,12 @@ def border_length(
     correction for the reduction in structure of a group average surface.
     
     Args:
+        border: the input border file.
+        surface: the surface to measure the borders on.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        border: the input border file.
-        surface: the surface to measure the borders on.
         separate_pieces: report lengths for multi-part borders as separate\
             numbers.
         hide_border_name: don't print border name before each output.

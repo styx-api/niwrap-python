@@ -42,16 +42,17 @@ class CiftiLabelAdjacencyOutputs(typing.NamedTuple):
 
 def cifti_label_adjacency_params(
     adjacency_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
     label_in: InputPathType,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
 ) -> CiftiLabelAdjacencyParamsDictTagged:
     """
     Build parameters.
     
     Args:
         adjacency_out: the output cifti pconn adjacency matrix.
+        label_in: the input cifti label file.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -61,7 +62,6 @@ def cifti_label_adjacency_params(
         surface_2: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
-        label_in: the input cifti label file.
     Returns:
         Parameter dictionary
     """
@@ -190,10 +190,10 @@ def cifti_label_adjacency_execute(
 
 def cifti_label_adjacency(
     adjacency_out: str,
-    surface: InputPathType | None,
-    surface_: InputPathType | None,
-    surface_2: InputPathType | None,
     label_in: InputPathType,
+    surface: InputPathType | None = None,
+    surface_: InputPathType | None = None,
+    surface_2: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
@@ -206,6 +206,7 @@ def cifti_label_adjacency(
     
     Args:
         adjacency_out: the output cifti pconn adjacency matrix.
+        label_in: the input cifti label file.
         surface: specify the left surface to use\
             \
             the left surface file.
@@ -215,7 +216,6 @@ def cifti_label_adjacency(
         surface_2: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
-        label_in: the input cifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).

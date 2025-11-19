@@ -46,18 +46,21 @@ class LabelDilateOutputs(typing.NamedTuple):
 
 def label_dilate_params(
     label_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
 ) -> LabelDilateParamsDictTagged:
     """
     Build parameters.
     
     Args:
         label_out: the output label file.
+        label: the input label.
+        surface: the surface to dilate on.
+        dilate_dist: distance in mm to dilate the labels.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with the unlabeled key\
             \
@@ -70,9 +73,6 @@ def label_dilate_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        label: the input label.
-        surface: the surface to dilate on.
-        dilate_dist: distance in mm to dilate the labels.
     Returns:
         Parameter dictionary
     """
@@ -214,12 +214,12 @@ def label_dilate_execute(
 
 def label_dilate(
     label_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
@@ -233,6 +233,9 @@ def label_dilate(
     
     Args:
         label_out: the output label file.
+        label: the input label.
+        surface: the surface to dilate on.
+        dilate_dist: distance in mm to dilate the labels.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with the unlabeled key\
             \
@@ -245,9 +248,6 @@ def label_dilate(
             surface\
             \
             the corrected vertex areas, as a metric.
-        label: the input label.
-        surface: the surface to dilate on.
-        dilate_dist: distance in mm to dilate the labels.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelDilateOutputs`).

@@ -121,9 +121,9 @@ class CiftiReduceOutputs(typing.NamedTuple):
 
 def cifti_reduce_params(
     cifti_out: str,
-    direction: str | None,
     cifti_in: InputPathType,
     operation: str,
+    direction: str | None = None,
     exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
 ) -> CiftiReduceParamsDictTagged:
@@ -132,11 +132,11 @@ def cifti_reduce_params(
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the cifti file to reduce.
+        operation: the reduction operator to use.
         direction: specify what direction to reduce along\
             \
             the direction (default ROW).
-        cifti_in: the cifti file to reduce.
-        operation: the reduction operator to use.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.
@@ -288,9 +288,9 @@ def cifti_reduce_execute(
 
 def cifti_reduce(
     cifti_out: str,
-    direction: str | None,
     cifti_in: InputPathType,
     operation: str,
+    direction: str | None = None,
     exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
@@ -322,11 +322,11 @@ def cifti_reduce(
     
     Args:
         cifti_out: the output cifti file.
+        cifti_in: the cifti file to reduce.
+        operation: the reduction operator to use.
         direction: specify what direction to reduce along\
             \
             the direction (default ROW).
-        cifti_in: the cifti file to reduce.
-        operation: the reduction operator to use.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.

@@ -40,20 +40,20 @@ class FociGetProjectionVertexOutputs(typing.NamedTuple):
 
 def foci_get_projection_vertex_params(
     metric_out: str,
-    name: str | None,
     foci: InputPathType,
     surface: InputPathType,
+    name: str | None = None,
 ) -> FociGetProjectionVertexParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric file.
+        foci: the foci file.
+        surface: the surface related to the foci file.
         name: select a focus by name\
             \
             the name of the focus.
-        foci: the foci file.
-        surface: the surface related to the foci file.
     Returns:
         Parameter dictionary
     """
@@ -173,9 +173,9 @@ def foci_get_projection_vertex_execute(
 
 def foci_get_projection_vertex(
     metric_out: str,
-    name: str | None,
     foci: InputPathType,
     surface: InputPathType,
+    name: str | None = None,
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
@@ -187,11 +187,11 @@ def foci_get_projection_vertex(
     
     Args:
         metric_out: the output metric file.
+        foci: the foci file.
+        surface: the surface related to the foci file.
         name: select a focus by name\
             \
             the name of the focus.
-        foci: the foci file.
-        surface: the surface related to the foci file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).

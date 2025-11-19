@@ -40,20 +40,20 @@ class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):
 
 def surface_to_surface_3d_distance_params(
     dists_out: str,
-    vectors_out: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    vectors_out: str | None = None,
 ) -> SurfaceToSurface3dDistanceParamsDictTagged:
     """
     Build parameters.
     
     Args:
         dists_out: the output distances.
+        surface_comp: the surface to compare to the reference.
+        surface_ref: the surface to use as the reference.
         vectors_out: output the displacement vectors\
             \
             the output vectors.
-        surface_comp: the surface to compare to the reference.
-        surface_ref: the surface to use as the reference.
     Returns:
         Parameter dictionary
     """
@@ -173,9 +173,9 @@ def surface_to_surface_3d_distance_execute(
 
 def surface_to_surface_3d_distance(
     dists_out: str,
-    vectors_out: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    vectors_out: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
@@ -187,11 +187,11 @@ def surface_to_surface_3d_distance(
     
     Args:
         dists_out: the output distances.
+        surface_comp: the surface to compare to the reference.
+        surface_ref: the surface to use as the reference.
         vectors_out: output the displacement vectors\
             \
             the output vectors.
-        surface_comp: the surface to compare to the reference.
-        surface_ref: the surface to use as the reference.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).

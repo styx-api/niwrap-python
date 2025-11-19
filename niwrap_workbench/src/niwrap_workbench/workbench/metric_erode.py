@@ -46,18 +46,21 @@ class MetricErodeOutputs(typing.NamedTuple):
 
 def metric_erode_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
 ) -> MetricErodeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        metric: the metric file to erode.
+        surface: the surface to compute on.
+        distance: distance in mm to erode.
         roi_metric: assume values outside this roi are nonzero\
             \
             metric file, positive values denote vertices that have data.
@@ -68,9 +71,6 @@ def metric_erode_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        metric: the metric file to erode.
-        surface: the surface to compute on.
-        distance: distance in mm to erode.
     Returns:
         Parameter dictionary
     """
@@ -213,12 +213,12 @@ def metric_erode_execute(
 
 def metric_erode(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
@@ -233,6 +233,9 @@ def metric_erode(
     
     Args:
         metric_out: the output metric.
+        metric: the metric file to erode.
+        surface: the surface to compute on.
+        distance: distance in mm to erode.
         roi_metric: assume values outside this roi are nonzero\
             \
             metric file, positive values denote vertices that have data.
@@ -243,9 +246,6 @@ def metric_erode(
             surface\
             \
             the corrected vertex areas, as a metric.
-        metric: the metric file to erode.
-        surface: the surface to compute on.
-        distance: distance in mm to erode.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricErodeOutputs`).

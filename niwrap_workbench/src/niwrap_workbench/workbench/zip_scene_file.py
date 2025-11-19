@@ -41,10 +41,10 @@ class ZipSceneFileOutputs(typing.NamedTuple):
 
 
 def zip_scene_file_params(
-    directory: str | None,
     scene_file: str,
     extract_folder: str,
     zip_file: str,
+    directory: str | None = None,
     skip_missing: bool = False,
     write_scene_file: bool = False,
 ) -> ZipSceneFileParamsDictTagged:
@@ -52,14 +52,14 @@ def zip_scene_file_params(
     Build parameters.
     
     Args:
-        directory: specify a directory that all data files are somewhere\
-            within, this will become the root of the zipfile's directory structure\
-            \
-            the directory.
         scene_file: the scene file to make the zip file from.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         skip_missing: any missing files will generate only warnings, and the\
             zip file will be created anyway.
         write_scene_file: rewrite the scene file before zipping, to store a new\
@@ -194,10 +194,10 @@ def zip_scene_file_execute(
 
 
 def zip_scene_file(
-    directory: str | None,
     scene_file: str,
     extract_folder: str,
     zip_file: str,
+    directory: str | None = None,
     skip_missing: bool = False,
     write_scene_file: bool = False,
     runner: Runner | None = None,
@@ -211,14 +211,14 @@ def zip_scene_file(
     paths, and no data files may be outside the base directory.
     
     Args:
-        directory: specify a directory that all data files are somewhere\
-            within, this will become the root of the zipfile's directory structure\
-            \
-            the directory.
         scene_file: the scene file to make the zip file from.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         skip_missing: any missing files will generate only warnings, and the\
             zip file will be created anyway.
         write_scene_file: rewrite the scene file before zipping, to store a new\

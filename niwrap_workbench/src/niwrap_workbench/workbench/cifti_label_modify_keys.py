@@ -40,20 +40,20 @@ class CiftiLabelModifyKeysOutputs(typing.NamedTuple):
 
 def cifti_label_modify_keys_params(
     cifti_out: str,
-    column: str | None,
     cifti_in: InputPathType,
     remap_file: str,
+    column: str | None = None,
 ) -> CiftiLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output dlabel file.
+        cifti_in: the input dlabel file.
+        remap_file: text file with old and new key values.
         column: select a single column to use\
             \
             the column number or name.
-        cifti_in: the input dlabel file.
-        remap_file: text file with old and new key values.
     Returns:
         Parameter dictionary
     """
@@ -183,9 +183,9 @@ def cifti_label_modify_keys_execute(
 
 def cifti_label_modify_keys(
     cifti_out: str,
-    column: str | None,
     cifti_in: InputPathType,
     remap_file: str,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
@@ -207,11 +207,11 @@ def cifti_label_modify_keys(
     
     Args:
         cifti_out: the output dlabel file.
+        cifti_in: the input dlabel file.
+        remap_file: text file with old and new key values.
         column: select a single column to use\
             \
             the column number or name.
-        cifti_in: the input dlabel file.
-        remap_file: text file with old and new key values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).

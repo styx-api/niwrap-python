@@ -359,7 +359,7 @@ def volume_resample_affine_series_cargs(
 
 def volume_resample_warp(
     warpfield: str,
-    source_volume: str | None,
+    source_volume: str | None = None,
 ) -> VolumeResampleWarpParamsDictTagged:
     """
     Build parameters.
@@ -438,10 +438,10 @@ class VolumeResampleOutputs(typing.NamedTuple):
 
 def volume_resample_params(
     volume_out: str,
-    value: float | None,
     volume_in: InputPathType,
     volume_space: str,
     method: str,
+    value: float | None = None,
     affine: list[VolumeResampleAffineParamsDict] | None = None,
     affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
     warp: list[VolumeResampleWarpParamsDict] | None = None,
@@ -451,13 +451,13 @@ def volume_resample_params(
     
     Args:
         volume_out: the output volume.
+        volume_in: volume to resample.
+        volume_space: a volume file in the volume space you want for the output.
+        method: the resampling method.
         value: use a specified value for locations outside the FoV of the input\
             image or warpfield(s)\
             \
             the value to use (default 0).
-        volume_in: volume to resample.
-        volume_space: a volume file in the volume space you want for the output.
-        method: the resampling method.
         affine: add an affine transform.
         affine_series: add an independent affine per-frame.
         warp: add a nonlinear warpfield transform.
@@ -618,10 +618,10 @@ def volume_resample_execute(
 
 def volume_resample(
     volume_out: str,
-    value: float | None,
     volume_in: InputPathType,
     volume_space: str,
     method: str,
+    value: float | None = None,
     affine: list[VolumeResampleAffineParamsDict] | None = None,
     affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
     warp: list[VolumeResampleWarpParamsDict] | None = None,
@@ -644,13 +644,13 @@ def volume_resample(
     
     Args:
         volume_out: the output volume.
+        volume_in: volume to resample.
+        volume_space: a volume file in the volume space you want for the output.
+        method: the resampling method.
         value: use a specified value for locations outside the FoV of the input\
             image or warpfield(s)\
             \
             the value to use (default 0).
-        volume_in: volume to resample.
-        volume_space: a volume file in the volume space you want for the output.
-        method: the resampling method.
         affine: add an affine transform.
         affine_series: add an independent affine per-frame.
         warp: add a nonlinear warpfield transform.

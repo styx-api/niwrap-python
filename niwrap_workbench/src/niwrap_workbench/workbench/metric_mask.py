@@ -40,20 +40,20 @@ class MetricMaskOutputs(typing.NamedTuple):
 
 def metric_mask_params(
     metric_out: str,
-    column: str | None,
     metric: InputPathType,
     mask: InputPathType,
+    column: str | None = None,
 ) -> MetricMaskParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        metric: the input metric.
+        mask: the mask metric.
         column: select a single column\
             \
             the column number or name.
-        metric: the input metric.
-        mask: the mask metric.
     Returns:
         Parameter dictionary
     """
@@ -174,9 +174,9 @@ def metric_mask_execute(
 
 def metric_mask(
     metric_out: str,
-    column: str | None,
     metric: InputPathType,
     mask: InputPathType,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricMaskOutputs:
     """
@@ -189,11 +189,11 @@ def metric_mask(
     
     Args:
         metric_out: the output metric.
+        metric: the input metric.
+        mask: the mask metric.
         column: select a single column\
             \
             the column number or name.
-        metric: the input metric.
-        mask: the mask metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMaskOutputs`).

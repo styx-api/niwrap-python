@@ -221,8 +221,8 @@ class CiftiMathOutputs(typing.NamedTuple):
 
 def cifti_math_params(
     cifti_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     override_mapping_check: bool = False,
     var: list[CiftiMathVarParamsDict] | None = None,
 ) -> CiftiMathParamsDictTagged:
@@ -231,10 +231,10 @@ def cifti_math_params(
     
     Args:
         cifti_out: the output cifti file.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         var: a cifti file to use as a variable.
@@ -434,8 +434,8 @@ def cifti_math_execute(
 
 def cifti_math(
     cifti_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     override_mapping_check: bool = False,
     var: list[CiftiMathVarParamsDict] | None = None,
     runner: Runner | None = None,
@@ -518,10 +518,10 @@ def cifti_math(
     
     Args:
         cifti_out: the output cifti file.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         var: a cifti file to use as a variable.

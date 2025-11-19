@@ -50,20 +50,22 @@ class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
 
 def create_signed_distance_volume_params(
     outvol: str,
-    roi_vol: str | None,
-    value: float | None,
-    dist: float | None,
-    dist_: float | None,
-    num: int | None,
-    method: str | None,
     surface: InputPathType,
     refspace: str,
+    roi_vol: str | None = None,
+    value: float | None = None,
+    dist: float | None = None,
+    dist_: float | None = None,
+    num: int | None = None,
+    method: str | None = None,
 ) -> CreateSignedDistanceVolumeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         outvol: the output volume.
+        surface: the input surface.
+        refspace: a volume in the desired output space (dims, spacing, origin).
         roi_vol: output an roi volume of where the output has a computed value\
             \
             the output roi volume.
@@ -84,8 +86,6 @@ def create_signed_distance_volume_params(
         method: winding method for point inside surface test\
             \
             name of the method (default EVEN_ODD).
-        surface: the input surface.
-        refspace: a volume in the desired output space (dims, spacing, origin).
     Returns:
         Parameter dictionary
     """
@@ -255,14 +255,14 @@ def create_signed_distance_volume_execute(
 
 def create_signed_distance_volume(
     outvol: str,
-    roi_vol: str | None,
-    value: float | None,
-    dist: float | None,
-    dist_: float | None,
-    num: int | None,
-    method: str | None,
     surface: InputPathType,
     refspace: str,
+    roi_vol: str | None = None,
+    value: float | None = None,
+    dist: float | None = None,
+    dist_: float | None = None,
+    num: int | None = None,
+    method: str | None = None,
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
@@ -289,6 +289,8 @@ def create_signed_distance_volume(
     
     Args:
         outvol: the output volume.
+        surface: the input surface.
+        refspace: a volume in the desired output space (dims, spacing, origin).
         roi_vol: output an roi volume of where the output has a computed value\
             \
             the output roi volume.
@@ -309,8 +311,6 @@ def create_signed_distance_volume(
         method: winding method for point inside surface test\
             \
             name of the method (default EVEN_ODD).
-        surface: the input surface.
-        refspace: a volume in the desired output space (dims, spacing, origin).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).

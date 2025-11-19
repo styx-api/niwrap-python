@@ -48,33 +48,33 @@ class VolumeLabelImportOutputs(typing.NamedTuple):
 
 def volume_label_import_params(
     output: str,
-    value: int | None,
-    subvol: str | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
+    subvol: str | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
 ) -> VolumeLabelImportParamsDictTagged:
     """
     Build parameters.
     
     Args:
         output: the output workbench label volume.
+        input_: the input volume file.
+        label_list_file: text file containing the values and names for labels.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         subvol: select a single subvolume to import\
             \
             the subvolume number or name.
+        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
-        input_: the input volume file.
-        label_list_file: text file containing the values and names for labels.
-        discard_others: set any voxels with values not mentioned in the label\
-            list to the ??? label.
-        drop_unused_labels: remove any unused label values from the label table.
     Returns:
         Parameter dictionary
     """
@@ -242,13 +242,13 @@ def volume_label_import_execute(
 
 def volume_label_import(
     output: str,
-    value: int | None,
-    subvol: str | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
+    subvol: str | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
@@ -282,20 +282,20 @@ def volume_label_import(
     
     Args:
         output: the output workbench label volume.
+        input_: the input volume file.
+        label_list_file: text file containing the values and names for labels.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         subvol: select a single subvolume to import\
             \
             the subvolume number or name.
+        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
-        input_: the input volume file.
-        label_list_file: text file containing the values and names for labels.
-        discard_others: set any voxels with values not mentioned in the label\
-            list to the ??? label.
-        drop_unused_labels: remove any unused label values from the label table.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).

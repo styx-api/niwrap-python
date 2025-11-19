@@ -58,7 +58,7 @@ MetricRegressionParamsDictTagged = typing.TypedDict('MetricRegressionParamsDictT
 
 def metric_regression_remove(
     metric: InputPathType,
-    column: str | None,
+    column: str | None = None,
 ) -> MetricRegressionRemoveParamsDictTagged:
     """
     Build parameters.
@@ -127,7 +127,7 @@ def metric_regression_remove_cargs(
 
 def metric_regression_keep(
     metric: InputPathType,
-    column: str | None,
+    column: str | None = None,
 ) -> MetricRegressionKeepParamsDictTagged:
     """
     Build parameters.
@@ -206,9 +206,9 @@ class MetricRegressionOutputs(typing.NamedTuple):
 
 def metric_regression_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
     metric_in: InputPathType,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
     remove: list[MetricRegressionRemoveParamsDict] | None = None,
     keep: list[MetricRegressionKeepParamsDict] | None = None,
 ) -> MetricRegressionParamsDictTagged:
@@ -217,13 +217,13 @@ def metric_regression_params(
     
     Args:
         metric_out: the output metric.
+        metric_in: the metric to regress from.
         roi_metric: only regress inside an roi\
             \
             the area to use for regression, as a metric.
         column: select a single column to regress from\
             \
             the column number or name.
-        metric_in: the metric to regress from.
         remove: specify a metric to regress out.
         keep: specify a metric to include in regression, but not remove.
     Returns:
@@ -364,9 +364,9 @@ def metric_regression_execute(
 
 def metric_regression(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
     metric_in: InputPathType,
+    roi_metric: InputPathType | None = None,
+    column: str | None = None,
     remove: list[MetricRegressionRemoveParamsDict] | None = None,
     keep: list[MetricRegressionKeepParamsDict] | None = None,
     runner: Runner | None = None,
@@ -382,13 +382,13 @@ def metric_regression(
     
     Args:
         metric_out: the output metric.
+        metric_in: the metric to regress from.
         roi_metric: only regress inside an roi\
             \
             the area to use for regression, as a metric.
         column: select a single column to regress from\
             \
             the column number or name.
-        metric_in: the metric to regress from.
         remove: specify a metric to regress out.
         keep: specify a metric to include in regression, but not remove.
         runner: Command runner.

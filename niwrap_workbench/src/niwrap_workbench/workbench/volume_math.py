@@ -47,7 +47,7 @@ VolumeMathParamsDictTagged = typing.TypedDict('VolumeMathParamsDictTagged', {
 def volume_math_var(
     name: str,
     volume: InputPathType,
-    subvol: str | None,
+    subvol: str | None = None,
     repeat: bool = False,
 ) -> VolumeMathVarParamsDictTagged:
     """
@@ -141,8 +141,8 @@ class VolumeMathOutputs(typing.NamedTuple):
 
 def volume_math_params(
     volume_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     var: list[VolumeMathVarParamsDict] | None = None,
 ) -> VolumeMathParamsDictTagged:
     """
@@ -150,10 +150,10 @@ def volume_math_params(
     
     Args:
         volume_out: the output volume.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         var: a volume file to use as a variable.
     Returns:
         Parameter dictionary
@@ -341,8 +341,8 @@ def volume_math_execute(
 
 def volume_math(
     volume_out: str,
-    replace: float | None,
     expression: str,
+    replace: float | None = None,
     var: list[VolumeMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
@@ -420,10 +420,10 @@ def volume_math(
     
     Args:
         volume_out: the output volume.
+        expression: the expression to evaluate, in quotes.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        expression: the expression to evaluate, in quotes.
         var: a volume file to use as a variable.
         runner: Command runner.
     Returns:

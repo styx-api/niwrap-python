@@ -46,18 +46,20 @@ class VolumeRoisFromExtremaOutputs(typing.NamedTuple):
 
 def volume_rois_from_extrema_params(
     volume_out: str,
-    sigma: float | None,
-    roi_volume: InputPathType | None,
-    method: str | None,
-    subvol: str | None,
     volume_in: InputPathType,
     limit: float,
+    sigma: float | None = None,
+    roi_volume: InputPathType | None = None,
+    method: str | None = None,
+    subvol: str | None = None,
 ) -> VolumeRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
+        volume_in: the input volume.
+        limit: distance limit from voxel center, in mm.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -70,8 +72,6 @@ def volume_rois_from_extrema_params(
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
-        volume_in: the input volume.
-        limit: distance limit from voxel center, in mm.
     Returns:
         Parameter dictionary
     """
@@ -217,12 +217,12 @@ def volume_rois_from_extrema_execute(
 
 def volume_rois_from_extrema(
     volume_out: str,
-    sigma: float | None,
-    roi_volume: InputPathType | None,
-    method: str | None,
-    subvol: str | None,
     volume_in: InputPathType,
     limit: float,
+    sigma: float | None = None,
+    roi_volume: InputPathType | None = None,
+    method: str | None = None,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
@@ -239,6 +239,8 @@ def volume_rois_from_extrema(
     
     Args:
         volume_out: the output volume.
+        volume_in: the input volume.
+        limit: distance limit from voxel center, in mm.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -251,8 +253,6 @@ def volume_rois_from_extrema(
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
-        volume_in: the input volume.
-        limit: distance limit from voxel center, in mm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).

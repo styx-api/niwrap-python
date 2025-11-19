@@ -198,14 +198,14 @@ class CiftiAverageRoiCorrelationOutputs(typing.NamedTuple):
 
 def cifti_average_roi_correlation_params(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
-    left_surf: InputPathType | None,
-    right_surf: InputPathType | None,
-    cerebellum_surf: InputPathType | None,
     cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
     cifti: list[CiftiAverageRoiCorrelationCiftiParamsDict] | None = None,
 ) -> CiftiAverageRoiCorrelationParamsDictTagged:
     """
@@ -213,6 +213,7 @@ def cifti_average_roi_correlation_params(
     
     Args:
         cifti_out: output cifti file.
+        cifti_roi: cifti file containing combined weights.
         roi_metric: weights to use for left hempsphere\
             \
             the left roi as a metric file.
@@ -235,7 +236,6 @@ def cifti_average_roi_correlation_params(
             correction\
             \
             the cerebellum surface file.
-        cifti_roi: cifti file containing combined weights.
         cifti: specify an input cifti file.
     Returns:
         Parameter dictionary
@@ -404,14 +404,14 @@ def cifti_average_roi_correlation_execute(
 
 def cifti_average_roi_correlation(
     cifti_out: str,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
-    left_surf: InputPathType | None,
-    right_surf: InputPathType | None,
-    cerebellum_surf: InputPathType | None,
     cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
     cifti: list[CiftiAverageRoiCorrelationCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
@@ -429,6 +429,7 @@ def cifti_average_roi_correlation(
     
     Args:
         cifti_out: output cifti file.
+        cifti_roi: cifti file containing combined weights.
         roi_metric: weights to use for left hempsphere\
             \
             the left roi as a metric file.
@@ -451,7 +452,6 @@ def cifti_average_roi_correlation(
             correction\
             \
             the cerebellum surface file.
-        cifti_roi: cifti file containing combined weights.
         cifti: specify an input cifti file.
         runner: Command runner.
     Returns:

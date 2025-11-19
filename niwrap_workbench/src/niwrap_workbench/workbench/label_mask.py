@@ -40,20 +40,20 @@ class LabelMaskOutputs(typing.NamedTuple):
 
 def label_mask_params(
     label_out: str,
-    column: str | None,
     label: InputPathType,
     mask: InputPathType,
+    column: str | None = None,
 ) -> LabelMaskParamsDictTagged:
     """
     Build parameters.
     
     Args:
         label_out: the output label file.
+        label: the label file to mask.
+        mask: the mask metric.
         column: select a single column\
             \
             the column number or name.
-        label: the label file to mask.
-        mask: the mask metric.
     Returns:
         Parameter dictionary
     """
@@ -174,9 +174,9 @@ def label_mask_execute(
 
 def label_mask(
     label_out: str,
-    column: str | None,
     label: InputPathType,
     mask: InputPathType,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelMaskOutputs:
     """
@@ -189,11 +189,11 @@ def label_mask(
     
     Args:
         label_out: the output label file.
+        label: the label file to mask.
+        mask: the mask metric.
         column: select a single column\
             \
             the column number or name.
-        label: the label file to mask.
-        mask: the mask metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelMaskOutputs`).

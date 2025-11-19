@@ -39,7 +39,7 @@ NiftiInformationParamsDictTagged = typing.TypedDict('NiftiInformationParamsDictT
 
 
 def nifti_information_print_xml(
-    version: str | None,
+    version: str | None = None,
 ) -> NiftiInformationPrintXmlParamsDictTagged:
     """
     Build parameters.
@@ -110,7 +110,7 @@ class NiftiInformationOutputs(typing.NamedTuple):
 
 def nifti_information_params(
     nifti_file: str,
-    allow_truncated: bool | None = False,
+    allow_truncated: bool | None = None,
     print_matrix: bool = False,
     print_xml: NiftiInformationPrintXmlParamsDict | None = None,
 ) -> NiftiInformationParamsDictTagged:
@@ -151,9 +151,9 @@ def nifti_information_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("allow-truncated", False) is not None:
+    if params.get("allow-truncated", None) is not None:
         if not isinstance(params["allow-truncated"], bool):
-            raise StyxValidationError(f'`allow-truncated` has the wrong type: Received `{type(params.get("allow-truncated", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`allow-truncated` has the wrong type: Received `{type(params.get("allow-truncated", None))}` expected `bool | None`')
     if params.get("print-matrix", False) is None:
         raise StyxValidationError("`print-matrix` must not be None")
     if not isinstance(params["print-matrix"], bool):
@@ -180,12 +180,12 @@ def nifti_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("allow-truncated", False) is not None or params.get("print-matrix", False) or params.get("print-xml", None) is not None:
+    if params.get("allow-truncated", None) is not None or params.get("print-matrix", False) or params.get("print-xml", None) is not None:
         cargs.extend([
             "wb_command",
             "-nifti-information",
             "-print-header",
-            ("-allow-truncated" if (params.get("allow-truncated", False) is not None) else ""),
+            ("-allow-truncated" if (params.get("allow-truncated", None) is not None) else ""),
             ("-print-matrix" if (params.get("print-matrix", False)) else ""),
             *(nifti_information_print_xml_cargs(params.get("print-xml", None), execution) if (params.get("print-xml", None) is not None) else [])
         ])
@@ -239,7 +239,7 @@ def nifti_information_execute(
 
 def nifti_information(
     nifti_file: str,
-    allow_truncated: bool | None = False,
+    allow_truncated: bool | None = None,
     print_matrix: bool = False,
     print_xml: NiftiInformationPrintXmlParamsDict | None = None,
     runner: Runner | None = None,

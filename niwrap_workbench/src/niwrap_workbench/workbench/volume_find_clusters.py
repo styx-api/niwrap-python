@@ -52,21 +52,25 @@ class VolumeFindClustersOutputs(typing.NamedTuple):
 
 def volume_find_clusters_params(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvol: str | None,
-    ratio: float | None,
-    distance: float | None,
-    startval: int | None,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
     less_than: bool = False,
+    roi_volume: InputPathType | None = None,
+    subvol: str | None = None,
+    ratio: float | None = None,
+    distance: float | None = None,
+    startval: int | None = None,
 ) -> VolumeFindClustersParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
+        volume_in: the input volume.
+        value_threshold: threshold for data values.
+        minimum_volume: threshold for cluster volume, in mm^3.
+        less_than: find values less than <value-threshold>, rather than greater.
         roi_volume: select a region of interest\
             \
             the roi, as a volume file.
@@ -85,10 +89,6 @@ def volume_find_clusters_params(
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
-        volume_in: the input volume.
-        value_threshold: threshold for data values.
-        minimum_volume: threshold for cluster volume, in mm^3.
-        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
@@ -253,15 +253,15 @@ def volume_find_clusters_execute(
 
 def volume_find_clusters(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvol: str | None,
-    ratio: float | None,
-    distance: float | None,
-    startval: int | None,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
     less_than: bool = False,
+    roi_volume: InputPathType | None = None,
+    subvol: str | None = None,
+    ratio: float | None = None,
+    distance: float | None = None,
+    startval: int | None = None,
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
@@ -278,6 +278,10 @@ def volume_find_clusters(
     
     Args:
         volume_out: the output volume.
+        volume_in: the input volume.
+        value_threshold: threshold for data values.
+        minimum_volume: threshold for cluster volume, in mm^3.
+        less_than: find values less than <value-threshold>, rather than greater.
         roi_volume: select a region of interest\
             \
             the roi, as a volume file.
@@ -296,10 +300,6 @@ def volume_find_clusters(
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
-        volume_in: the input volume.
-        value_threshold: threshold for data values.
-        minimum_volume: threshold for cluster volume, in mm^3.
-        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).

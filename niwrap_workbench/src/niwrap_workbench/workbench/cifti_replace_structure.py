@@ -365,11 +365,11 @@ class CiftiReplaceStructureOutputs(typing.NamedTuple):
 
 
 def cifti_replace_structure_params(
-    action: str | None,
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
     discard_unused_labels: bool = False,
+    action: str | None = None,
     label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
     metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
     volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
@@ -378,15 +378,15 @@ def cifti_replace_structure_params(
     Build parameters.
     
     Args:
-        action: how to handle conflicts between label keys\
-            \
-            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
-            'LEGACY' to match v1.4.2 and earlier.
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
         discard_unused_labels: when operating on a dlabel file, drop any unused\
             label keys from the label table.
+        action: how to handle conflicts between label keys\
+            \
+            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
+            'LEGACY' to match v1.4.2 and earlier.
         label: replace the data in a surface label component.
         metric: replace the data in a surface component.
         volume: replace the data in a volume component.
@@ -580,11 +580,11 @@ def cifti_replace_structure_execute(
 
 
 def cifti_replace_structure(
-    action: str | None,
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
     discard_unused_labels: bool = False,
+    action: str | None = None,
     label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
     metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
     volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
@@ -642,15 +642,15 @@ def cifti_replace_structure(
     THALAMUS_RIGHT.
     
     Args:
-        action: how to handle conflicts between label keys\
-            \
-            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
-            'LEGACY' to match v1.4.2 and earlier.
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
         discard_unused_labels: when operating on a dlabel file, drop any unused\
             label keys from the label table.
+        action: how to handle conflicts between label keys\
+            \
+            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
+            'LEGACY' to match v1.4.2 and earlier.
         label: replace the data in a surface label component.
         metric: replace the data in a surface component.
         volume: replace the data in a volume component.

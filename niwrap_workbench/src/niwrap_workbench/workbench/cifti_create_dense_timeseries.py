@@ -169,7 +169,7 @@ def cifti_create_dense_timeseries_volume_cargs(
 
 def cifti_create_dense_timeseries_left_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged:
     """
     Build parameters.
@@ -238,7 +238,7 @@ def cifti_create_dense_timeseries_left_metric_cargs(
 
 def cifti_create_dense_timeseries_right_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseTimeseriesRightMetricParamsDictTagged:
     """
     Build parameters.
@@ -307,7 +307,7 @@ def cifti_create_dense_timeseries_right_metric_cargs(
 
 def cifti_create_dense_timeseries_cerebellum_metric(
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged:
     """
     Build parameters.
@@ -377,7 +377,7 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
 def cifti_create_dense_timeseries_metric(
     structure: str,
     metric: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateDenseTimeseriesMetricParamsDictTagged:
     """
     Build parameters.
@@ -463,13 +463,13 @@ class CiftiCreateDenseTimeseriesOutputs(typing.NamedTuple):
 
 def cifti_create_dense_timeseries_params(
     cifti_out: str,
-    interval: float | None,
-    start: float | None,
-    unit: str | None,
     volume: CiftiCreateDenseTimeseriesVolumeParamsDict | None = None,
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
+    interval: float | None = None,
+    start: float | None = None,
+    unit: str | None = None,
     metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
 ) -> CiftiCreateDenseTimeseriesParamsDictTagged:
     """
@@ -477,6 +477,10 @@ def cifti_create_dense_timeseries_params(
     
     Args:
         cifti_out: the output cifti file.
+        volume: volume component.
+        left_metric: metric for the left cortical surface.
+        right_metric: metric for the right cortical surface.
+        cerebellum_metric: metric for the cerebellum.
         interval: set the timestep\
             \
             the timestep, in seconds (default 1.0).
@@ -486,10 +490,6 @@ def cifti_create_dense_timeseries_params(
         unit: use a unit other than time\
             \
             unit identifier (default SECOND).
-        volume: volume component.
-        left_metric: metric for the left cortical surface.
-        right_metric: metric for the right cortical surface.
-        cerebellum_metric: metric for the cerebellum.
         metric: metric for a specified surface structure.
     Returns:
         Parameter dictionary
@@ -688,13 +688,13 @@ def cifti_create_dense_timeseries_execute(
 
 def cifti_create_dense_timeseries(
     cifti_out: str,
-    interval: float | None,
-    start: float | None,
-    unit: str | None,
     volume: CiftiCreateDenseTimeseriesVolumeParamsDict | None = None,
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
+    interval: float | None = None,
+    start: float | None = None,
+    unit: str | None = None,
     metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
@@ -755,6 +755,10 @@ def cifti_create_dense_timeseries(
     
     Args:
         cifti_out: the output cifti file.
+        volume: volume component.
+        left_metric: metric for the left cortical surface.
+        right_metric: metric for the right cortical surface.
+        cerebellum_metric: metric for the cerebellum.
         interval: set the timestep\
             \
             the timestep, in seconds (default 1.0).
@@ -764,10 +768,6 @@ def cifti_create_dense_timeseries(
         unit: use a unit other than time\
             \
             unit identifier (default SECOND).
-        volume: volume component.
-        left_metric: metric for the left cortical surface.
-        right_metric: metric for the right cortical surface.
-        cerebellum_metric: metric for the cerebellum.
         metric: metric for a specified surface structure.
         runner: Command runner.
     Returns:

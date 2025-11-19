@@ -44,26 +44,26 @@ class MetricRoisToBorderOutputs(typing.NamedTuple):
 
 def metric_rois_to_border_params(
     border_out: str,
-    fraction: float | None,
-    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
+    fraction: float | None = None,
+    column: str | None = None,
 ) -> MetricRoisToBorderParamsDictTagged:
     """
     Build parameters.
     
     Args:
         border_out: the output border file.
+        surface: the surface to use for neighbor information.
+        metric: the input metric containing ROIs.
+        class_name: the name to use for the class of the output borders.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        surface: the surface to use for neighbor information.
-        metric: the input metric containing ROIs.
-        class_name: the name to use for the class of the output borders.
     Returns:
         Parameter dictionary
     """
@@ -196,11 +196,11 @@ def metric_rois_to_border_execute(
 
 def metric_rois_to_border(
     border_out: str,
-    fraction: float | None,
-    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
+    fraction: float | None = None,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
@@ -212,15 +212,15 @@ def metric_rois_to_border(
     
     Args:
         border_out: the output border file.
+        surface: the surface to use for neighbor information.
+        metric: the input metric containing ROIs.
+        class_name: the name to use for the class of the output borders.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        surface: the surface to use for neighbor information.
-        metric: the input metric containing ROIs.
-        class_name: the name to use for the class of the output borders.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).

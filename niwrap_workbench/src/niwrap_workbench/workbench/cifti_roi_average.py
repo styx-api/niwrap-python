@@ -43,18 +43,20 @@ class CiftiRoiAverageOutputs(typing.NamedTuple):
 
 
 def cifti_roi_average_params(
-    roi_cifti: InputPathType | None,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     text_out: str,
+    roi_cifti: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
 ) -> CiftiRoiAverageParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        cifti_in: the cifti file to average rows from.
+        text_out: output text file of the average values.
         roi_cifti: cifti file containing combined rois\
             \
             the rois as a cifti file.
@@ -70,8 +72,6 @@ def cifti_roi_average_params(
         roi_vol: voxels to use\
             \
             the roi volume file.
-        cifti_in: the cifti file to average rows from.
-        text_out: output text file of the average values.
     Returns:
         Parameter dictionary
     """
@@ -212,13 +212,13 @@ def cifti_roi_average_execute(
 
 
 def cifti_roi_average(
-    roi_cifti: InputPathType | None,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     text_out: str,
+    roi_cifti: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> CiftiRoiAverageOutputs:
     """
@@ -230,6 +230,8 @@ def cifti_roi_average(
     specified.
     
     Args:
+        cifti_in: the cifti file to average rows from.
+        text_out: output text file of the average values.
         roi_cifti: cifti file containing combined rois\
             \
             the rois as a cifti file.
@@ -245,8 +247,6 @@ def cifti_roi_average(
         roi_vol: voxels to use\
             \
             the roi volume file.
-        cifti_in: the cifti file to average rows from.
-        text_out: output text file of the average values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRoiAverageOutputs`).

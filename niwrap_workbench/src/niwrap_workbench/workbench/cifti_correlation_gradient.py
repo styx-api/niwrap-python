@@ -102,7 +102,7 @@ CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGra
 
 def cifti_correlation_gradient_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiCorrelationGradientLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -172,7 +172,7 @@ def cifti_correlation_gradient_left_surface_cargs(
 
 def cifti_correlation_gradient_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiCorrelationGradientRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -242,7 +242,7 @@ def cifti_correlation_gradient_right_surface_cargs(
 
 def cifti_correlation_gradient_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -399,19 +399,19 @@ class CiftiCorrelationGradientOutputs(typing.NamedTuple):
 
 def cifti_correlation_gradient_params(
     cifti_out: str,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
-    distance: float | None,
-    distance_: float | None,
-    limit_gb: float | None,
     cifti: InputPathType,
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     undo_fisher_z: bool = False,
     fisher_z: bool = False,
+    distance: float | None = None,
+    distance_: float | None = None,
     covariance: bool = False,
+    limit_gb: float | None = None,
     double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
 ) -> CiftiCorrelationGradientParamsDictTagged:
     """
@@ -419,6 +419,10 @@ def cifti_correlation_gradient_params(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        left_surface: specify the left surface to use.
+        right_surface: specify the right surface to use.
+        cerebellum_surface: specify the cerebellum surface to use.
         surface_kernel: smooth on the surface before computing the gradient\
             \
             the size of the gaussian surface smoothing kernel in mm, as sigma\
@@ -427,24 +431,20 @@ def cifti_correlation_gradient_params(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        fisher_z: apply the fisher small z transform to the correlations before\
+            taking the gradient.
         distance: exclude vertices near each seed vertex from computation\
             \
             geodesic distance from seed vertex for the exclusion zone, in mm.
         distance_: exclude voxels near each seed voxel from computation\
             \
             distance from seed voxel for the exclusion zone, in mm.
+        covariance: compute covariance instead of correlation.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
-        cifti: the input cifti.
-        left_surface: specify the left surface to use.
-        right_surface: specify the right surface to use.
-        cerebellum_surface: specify the cerebellum surface to use.
-        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        undo_fisher_z: apply the inverse fisher small z transform to the input.
-        fisher_z: apply the fisher small z transform to the correlations before\
-            taking the gradient.
-        covariance: compute covariance instead of correlation.
         double_correlation: do two correlations before taking the gradient.
     Returns:
         Parameter dictionary
@@ -632,19 +632,19 @@ def cifti_correlation_gradient_execute(
 
 def cifti_correlation_gradient(
     cifti_out: str,
-    surface_kernel: float | None,
-    volume_kernel: float | None,
-    distance: float | None,
-    distance_: float | None,
-    limit_gb: float | None,
     cifti: InputPathType,
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
+    surface_kernel: float | None = None,
+    volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     undo_fisher_z: bool = False,
     fisher_z: bool = False,
+    distance: float | None = None,
+    distance_: float | None = None,
     covariance: bool = False,
+    limit_gb: float | None = None,
     double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
@@ -658,6 +658,10 @@ def cifti_correlation_gradient(
     
     Args:
         cifti_out: the output cifti.
+        cifti: the input cifti.
+        left_surface: specify the left surface to use.
+        right_surface: specify the right surface to use.
+        cerebellum_surface: specify the cerebellum surface to use.
         surface_kernel: smooth on the surface before computing the gradient\
             \
             the size of the gaussian surface smoothing kernel in mm, as sigma\
@@ -666,24 +670,20 @@ def cifti_correlation_gradient(
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        fisher_z: apply the fisher small z transform to the correlations before\
+            taking the gradient.
         distance: exclude vertices near each seed vertex from computation\
             \
             geodesic distance from seed vertex for the exclusion zone, in mm.
         distance_: exclude voxels near each seed voxel from computation\
             \
             distance from seed voxel for the exclusion zone, in mm.
+        covariance: compute covariance instead of correlation.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
-        cifti: the input cifti.
-        left_surface: specify the left surface to use.
-        right_surface: specify the right surface to use.
-        cerebellum_surface: specify the cerebellum surface to use.
-        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        undo_fisher_z: apply the inverse fisher small z transform to the input.
-        fisher_z: apply the fisher small z transform to the correlations before\
-            taking the gradient.
-        covariance: compute covariance instead of correlation.
         double_correlation: do two correlations before taking the gradient.
         runner: Command runner.
     Returns:

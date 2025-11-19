@@ -104,8 +104,8 @@ class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
 
 def cifti_separate_volume_all(
     volume_out: str,
-    roi_out: str | None,
-    label_out: str | None,
+    roi_out: str | None = None,
+    label_out: str | None = None,
     crop: bool = False,
 ) -> CiftiSeparateVolumeAllParamsDictTagged:
     """
@@ -225,7 +225,7 @@ class CiftiSeparateLabelOutputs(typing.NamedTuple):
 def cifti_separate_label(
     structure: str,
     label_out: str,
-    roi_out: str | None,
+    roi_out: str | None = None,
 ) -> CiftiSeparateLabelParamsDictTagged:
     """
     Build parameters.
@@ -332,7 +332,7 @@ class CiftiSeparateMetricOutputs(typing.NamedTuple):
 def cifti_separate_metric(
     structure: str,
     metric_out: str,
-    roi_out: str | None,
+    roi_out: str | None = None,
 ) -> CiftiSeparateMetricParamsDictTagged:
     """
     Build parameters.
@@ -439,7 +439,7 @@ class CiftiSeparateVolumeOutputs(typing.NamedTuple):
 def cifti_separate_volume(
     structure: str,
     volume_out: str,
-    roi_out: str | None,
+    roi_out: str | None = None,
     crop: bool = False,
 ) -> CiftiSeparateVolumeParamsDictTagged:
     """

@@ -43,8 +43,8 @@ class SurfaceGenerateInflatedOutputs(typing.NamedTuple):
 def surface_generate_inflated_params(
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    iterations_scale_value: float | None,
     anatomical_surface_in: InputPathType,
+    iterations_scale_value: float | None = None,
 ) -> SurfaceGenerateInflatedParamsDictTagged:
     """
     Build parameters.
@@ -52,10 +52,10 @@ def surface_generate_inflated_params(
     Args:
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
+        anatomical_surface_in: the anatomical surface.
         iterations_scale_value: optional iterations scaling\
             \
             iterations-scale value.
-        anatomical_surface_in: the anatomical surface.
     Returns:
         Parameter dictionary
     """
@@ -179,8 +179,8 @@ def surface_generate_inflated_execute(
 def surface_generate_inflated(
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    iterations_scale_value: float | None,
     anatomical_surface_in: InputPathType,
+    iterations_scale_value: float | None = None,
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
@@ -195,10 +195,10 @@ def surface_generate_inflated(
     Args:
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
+        anatomical_surface_in: the anatomical surface.
         iterations_scale_value: optional iterations scaling\
             \
             iterations-scale value.
-        anatomical_surface_in: the anatomical surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).

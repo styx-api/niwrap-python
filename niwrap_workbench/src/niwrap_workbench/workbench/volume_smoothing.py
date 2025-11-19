@@ -46,29 +46,29 @@ class VolumeSmoothingOutputs(typing.NamedTuple):
 
 def volume_smoothing_params(
     volume_out: str,
-    roivol: InputPathType | None,
-    subvol: str | None,
     volume_in: InputPathType,
     kernel: float,
     fwhm: bool = False,
+    roivol: InputPathType | None = None,
     fix_zeros: bool = False,
+    subvol: str | None = None,
 ) -> VolumeSmoothingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
-        roivol: smooth only from data within an ROI\
-            \
-            the volume to use as an ROI.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
         fwhm: kernel size is FWHM, not sigma.
+        roivol: smooth only from data within an ROI\
+            \
+            the volume to use as an ROI.
         fix_zeros: treat zero values as not being data.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -215,12 +215,12 @@ def volume_smoothing_execute(
 
 def volume_smoothing(
     volume_out: str,
-    roivol: InputPathType | None,
-    subvol: str | None,
     volume_in: InputPathType,
     kernel: float,
     fwhm: bool = False,
+    roivol: InputPathType | None = None,
     fix_zeros: bool = False,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
@@ -240,17 +240,17 @@ def volume_smoothing(
     
     Args:
         volume_out: the output volume.
-        roivol: smooth only from data within an ROI\
-            \
-            the volume to use as an ROI.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
         fwhm: kernel size is FWHM, not sigma.
+        roivol: smooth only from data within an ROI\
+            \
+            the volume to use as an ROI.
         fix_zeros: treat zero values as not being data.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeSmoothingOutputs`).

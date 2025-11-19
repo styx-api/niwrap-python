@@ -147,22 +147,22 @@ class CiftiLabelToBorderOutputs(typing.NamedTuple):
 
 
 def cifti_label_to_border_params(
-    fraction: float | None,
-    column: str | None,
     cifti_in: InputPathType,
+    fraction: float | None = None,
+    column: str | None = None,
     border: list[CiftiLabelToBorderBorderParamsDict] | None = None,
 ) -> CiftiLabelToBorderParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        cifti_in: the input cifti dlabel file.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        cifti_in: the input cifti dlabel file.
         border: specify output file for a surface structure.
     Returns:
         Parameter dictionary
@@ -285,9 +285,9 @@ def cifti_label_to_border_execute(
 
 
 def cifti_label_to_border(
-    fraction: float | None,
-    column: str | None,
     cifti_in: InputPathType,
+    fraction: float | None = None,
+    column: str | None = None,
     border: list[CiftiLabelToBorderBorderParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
@@ -299,13 +299,13 @@ def cifti_label_to_border(
     map.
     
     Args:
+        cifti_in: the input cifti dlabel file.
         fraction: set how far along the edge border points are drawn\
             \
             fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
-        cifti_in: the input cifti dlabel file.
         border: specify output file for a surface structure.
         runner: Command runner.
     Returns:

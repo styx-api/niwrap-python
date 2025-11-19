@@ -131,21 +131,28 @@ class MetricSmoothingOutputs(typing.NamedTuple):
 
 def metric_smoothing_params(
     metric_out: str,
-    column: str | None,
-    area_metric: InputPathType | None,
-    method: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
     fwhm: bool = False,
     roi: MetricSmoothingRoiParamsDict | None = None,
     fix_zeros: bool = False,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
+    method: str | None = None,
 ) -> MetricSmoothingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric.
+        surface: the surface to smooth on.
+        metric_in: the metric to smooth.
+        smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
+            sigma by default.
+        fwhm: kernel size is FWHM, not sigma.
+        roi: select a region of interest to smooth.
+        fix_zeros: treat zero values as not being data.
         column: select a single column to smooth\
             \
             the column number or name.
@@ -156,13 +163,6 @@ def metric_smoothing_params(
         method: select smoothing method, default GEO_GAUSS_AREA\
             \
             the name of the smoothing method.
-        surface: the surface to smooth on.
-        metric_in: the metric to smooth.
-        smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
-            sigma by default.
-        fwhm: kernel size is FWHM, not sigma.
-        roi: select a region of interest to smooth.
-        fix_zeros: treat zero values as not being data.
     Returns:
         Parameter dictionary
     """
@@ -359,15 +359,15 @@ def metric_smoothing_execute(
 
 def metric_smoothing(
     metric_out: str,
-    column: str | None,
-    area_metric: InputPathType | None,
-    method: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
     fwhm: bool = False,
     roi: MetricSmoothingRoiParamsDict | None = None,
     fix_zeros: bool = False,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
+    method: str | None = None,
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
@@ -419,6 +419,13 @@ def metric_smoothing(
     
     Args:
         metric_out: the output metric.
+        surface: the surface to smooth on.
+        metric_in: the metric to smooth.
+        smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
+            sigma by default.
+        fwhm: kernel size is FWHM, not sigma.
+        roi: select a region of interest to smooth.
+        fix_zeros: treat zero values as not being data.
         column: select a single column to smooth\
             \
             the column number or name.
@@ -429,13 +436,6 @@ def metric_smoothing(
         method: select smoothing method, default GEO_GAUSS_AREA\
             \
             the name of the smoothing method.
-        surface: the surface to smooth on.
-        metric_in: the metric to smooth.
-        smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
-            sigma by default.
-        fwhm: kernel size is FWHM, not sigma.
-        roi: select a region of interest to smooth.
-        fix_zeros: treat zero values as not being data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).

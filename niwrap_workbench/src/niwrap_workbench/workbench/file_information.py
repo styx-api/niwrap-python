@@ -51,7 +51,7 @@ FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTag
 
 
 def file_information_only_metadata(
-    key: str | None,
+    key: str | None = None,
 ) -> FileInformationOnlyMetadataParamsDictTagged:
     """
     Build parameters.

@@ -46,27 +46,27 @@ class VolumeParcelSmoothingOutputs(typing.NamedTuple):
 
 def volume_parcel_smoothing_params(
     volume_out: str,
-    subvol: str | None,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
     fwhm: bool = False,
     fix_zeros: bool = False,
+    subvol: str | None = None,
 ) -> VolumeParcelSmoothingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
         fwhm: smoothing kernel size is FWHM, not sigma.
         fix_zeros: treat zero values as not being data.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -205,12 +205,12 @@ def volume_parcel_smoothing_execute(
 
 def volume_parcel_smoothing(
     volume_out: str,
-    subvol: str | None,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
     fwhm: bool = False,
     fix_zeros: bool = False,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
@@ -223,15 +223,15 @@ def volume_parcel_smoothing(
     
     Args:
         volume_out: the output volume.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
         fwhm: smoothing kernel size is FWHM, not sigma.
         fix_zeros: treat zero values as not being data.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).

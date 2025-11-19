@@ -37,21 +37,21 @@ class CiftiLabelExportTableOutputs(typing.NamedTuple):
 
 
 def cifti_label_export_table_params(
-    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
+    json_out: str | None = None,
 ) -> CiftiLabelExportTableParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        json_out: export the hierarchy as json\
-            \
-            output - filename to write hierarchy to.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
     Returns:
         Parameter dictionary
     """
@@ -168,10 +168,10 @@ def cifti_label_export_table_execute(
 
 
 def cifti_label_export_table(
-    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
+    json_out: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelExportTableOutputs:
     """
@@ -181,12 +181,12 @@ def cifti_label_export_table(
     format matching what is expected by -cifti-label-import.
     
     Args:
-        json_out: export the hierarchy as json\
-            \
-            output - filename to write hierarchy to.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelExportTableOutputs`).

@@ -53,7 +53,7 @@ LabelToVolumeMappingParamsDictTagged = typing.TypedDict('LabelToVolumeMappingPar
 def label_to_volume_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    subdiv_num: int | None,
+    subdiv_num: int | None = None,
     greedy: bool = False,
     thick_columns: bool = False,
 ) -> LabelToVolumeMappingRibbonConstrainedParamsDictTagged:
@@ -156,10 +156,10 @@ class LabelToVolumeMappingOutputs(typing.NamedTuple):
 
 def label_to_volume_mapping_params(
     volume_out: str,
-    distance: float | None,
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
+    distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
 ) -> LabelToVolumeMappingParamsDictTagged:
     """
@@ -167,12 +167,12 @@ def label_to_volume_mapping_params(
     
     Args:
         volume_out: the output volume file.
-        distance: use the label from the vertex closest to the voxel center\
-            \
-            how far from the surface to map labels to voxels, in mm.
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        distance: use the label from the vertex closest to the voxel center\
+            \
+            how far from the surface to map labels to voxels, in mm.
         ribbon_constrained: use ribbon constrained mapping algorithm.
     Returns:
         Parameter dictionary
@@ -306,10 +306,10 @@ def label_to_volume_mapping_execute(
 
 def label_to_volume_mapping(
     volume_out: str,
-    distance: float | None,
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
+    distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
@@ -324,12 +324,12 @@ def label_to_volume_mapping(
     
     Args:
         volume_out: the output volume file.
-        distance: use the label from the vertex closest to the voxel center\
-            \
-            how far from the surface to map labels to voxels, in mm.
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        distance: use the label from the vertex closest to the voxel center\
+            \
+            how far from the surface to map labels to voxels, in mm.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         runner: Command runner.
     Returns:

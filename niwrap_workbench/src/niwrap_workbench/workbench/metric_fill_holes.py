@@ -40,21 +40,21 @@ class MetricFillHolesOutputs(typing.NamedTuple):
 
 def metric_fill_holes_params(
     metric_out: str,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
+    area_metric: InputPathType | None = None,
 ) -> MetricFillHolesParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output ROI metric.
+        surface: the surface to use for neighbor information.
+        metric_in: the input ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to use for neighbor information.
-        metric_in: the input ROI metric.
     Returns:
         Parameter dictionary
     """
@@ -173,9 +173,9 @@ def metric_fill_holes_execute(
 
 def metric_fill_holes(
     metric_out: str,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
+    area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
     """
@@ -186,12 +186,12 @@ def metric_fill_holes(
     
     Args:
         metric_out: the output ROI metric.
+        surface: the surface to use for neighbor information.
+        metric_in: the input ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to use for neighbor information.
-        metric_in: the input ROI metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFillHolesOutputs`).

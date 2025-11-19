@@ -42,16 +42,17 @@ class GiftiLabelToRoiOutputs(typing.NamedTuple):
 
 def gifti_label_to_roi_params(
     metric_out: str,
-    label_name: str | None,
-    label_key: int | None,
-    map_: str | None,
     label_in: InputPathType,
+    label_name: str | None = None,
+    label_key: int | None = None,
+    map_: str | None = None,
 ) -> GiftiLabelToRoiParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric file.
+        label_in: the input gifti label file.
         label_name: select label by name\
             \
             the label name that you want an roi of.
@@ -61,7 +62,6 @@ def gifti_label_to_roi_params(
         map_: select a single label map to use\
             \
             the map number or name.
-        label_in: the input gifti label file.
     Returns:
         Parameter dictionary
     """
@@ -190,10 +190,10 @@ def gifti_label_to_roi_execute(
 
 def gifti_label_to_roi(
     metric_out: str,
-    label_name: str | None,
-    label_key: int | None,
-    map_: str | None,
     label_in: InputPathType,
+    label_name: str | None = None,
+    label_key: int | None = None,
+    map_: str | None = None,
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
@@ -206,6 +206,7 @@ def gifti_label_to_roi(
     
     Args:
         metric_out: the output metric file.
+        label_in: the input gifti label file.
         label_name: select label by name\
             \
             the label name that you want an roi of.
@@ -215,7 +216,6 @@ def gifti_label_to_roi(
         map_: select a single label map to use\
             \
             the map number or name.
-        label_in: the input gifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).

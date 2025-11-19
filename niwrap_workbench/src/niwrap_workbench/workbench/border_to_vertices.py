@@ -40,20 +40,20 @@ class BorderToVerticesOutputs(typing.NamedTuple):
 
 def border_to_vertices_params(
     metric_out: str,
-    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
+    name: str | None = None,
 ) -> BorderToVerticesParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric file.
+        surface: the surface the borders are drawn on.
+        border_file: the border file.
         name: create ROI for only one border\
             \
             the name of the border.
-        surface: the surface the borders are drawn on.
-        border_file: the border file.
     Returns:
         Parameter dictionary
     """
@@ -172,9 +172,9 @@ def border_to_vertices_execute(
 
 def border_to_vertices(
     metric_out: str,
-    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
+    name: str | None = None,
     runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
     """
@@ -185,11 +185,11 @@ def border_to_vertices(
     
     Args:
         metric_out: the output metric file.
+        surface: the surface the borders are drawn on.
+        border_file: the border file.
         name: create ROI for only one border\
             \
             the name of the border.
-        surface: the surface the borders are drawn on.
-        border_file: the border file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderToVerticesOutputs`).

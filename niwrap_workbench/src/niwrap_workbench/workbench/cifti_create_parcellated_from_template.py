@@ -109,9 +109,9 @@ class CiftiCreateParcellatedFromTemplateOutputs(typing.NamedTuple):
 
 def cifti_create_parcellated_from_template_params(
     cifti_out: str,
-    value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
+    value: float | None = None,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
 ) -> CiftiCreateParcellatedFromTemplateParamsDictTagged:
     """
@@ -119,13 +119,13 @@ def cifti_create_parcellated_from_template_params(
     
     Args:
         cifti_out: the output cifti file.
-        value: specify value to be used in parcels that don't match\
-            \
-            value to use (default 0).
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
+        value: specify value to be used in parcels that don't match\
+            \
+            value to use (default 0).
         cifti: specify an input cifti file.
     Returns:
         Parameter dictionary
@@ -256,9 +256,9 @@ def cifti_create_parcellated_from_template_execute(
 
 def cifti_create_parcellated_from_template(
     cifti_out: str,
-    value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
+    value: float | None = None,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
@@ -273,13 +273,13 @@ def cifti_create_parcellated_from_template(
     
     Args:
         cifti_out: the output cifti file.
-        value: specify value to be used in parcels that don't match\
-            \
-            value to use (default 0).
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
+        value: specify value to be used in parcels that don't match\
+            \
+            value to use (default 0).
         cifti: specify an input cifti file.
         runner: Command runner.
     Returns:

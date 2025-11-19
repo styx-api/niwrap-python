@@ -48,19 +48,22 @@ class MetricRoisFromExtremaOutputs(typing.NamedTuple):
 
 def metric_rois_from_extrema_params(
     metric_out: str,
-    sigma: float | None,
-    roi_metric: InputPathType | None,
-    method: str | None,
-    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
+    sigma: float | None = None,
+    roi_metric: InputPathType | None = None,
+    method: str | None = None,
+    column: str | None = None,
 ) -> MetricRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric file.
+        surface: the surface to use for geodesic distance.
+        metric: the input metric file.
+        limit: geodesic distance limit from vertex, in mm.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -73,9 +76,6 @@ def metric_rois_from_extrema_params(
         column: select a single input column to use\
             \
             the column number or name.
-        surface: the surface to use for geodesic distance.
-        metric: the input metric file.
-        limit: geodesic distance limit from vertex, in mm.
     Returns:
         Parameter dictionary
     """
@@ -227,13 +227,13 @@ def metric_rois_from_extrema_execute(
 
 def metric_rois_from_extrema(
     metric_out: str,
-    sigma: float | None,
-    roi_metric: InputPathType | None,
-    method: str | None,
-    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
+    sigma: float | None = None,
+    roi_metric: InputPathType | None = None,
+    method: str | None = None,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
@@ -250,6 +250,9 @@ def metric_rois_from_extrema(
     
     Args:
         metric_out: the output metric file.
+        surface: the surface to use for geodesic distance.
+        metric: the input metric file.
+        limit: geodesic distance limit from vertex, in mm.
         sigma: generate a gaussian kernel instead of a flat ROI\
             \
             the sigma for the gaussian kernel, in mm.
@@ -262,9 +265,6 @@ def metric_rois_from_extrema(
         column: select a single input column to use\
             \
             the column number or name.
-        surface: the surface to use for geodesic distance.
-        metric: the input metric file.
-        limit: geodesic distance limit from vertex, in mm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).

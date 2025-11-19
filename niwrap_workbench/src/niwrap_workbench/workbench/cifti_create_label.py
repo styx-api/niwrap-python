@@ -162,7 +162,7 @@ def cifti_create_label_volume_cargs(
 
 def cifti_create_label_left_label(
     label: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateLabelLeftLabelParamsDictTagged:
     """
     Build parameters.
@@ -231,7 +231,7 @@ def cifti_create_label_left_label_cargs(
 
 def cifti_create_label_right_label(
     label: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateLabelRightLabelParamsDictTagged:
     """
     Build parameters.
@@ -300,7 +300,7 @@ def cifti_create_label_right_label_cargs(
 
 def cifti_create_label_cerebellum_label(
     label: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateLabelCerebellumLabelParamsDictTagged:
     """
     Build parameters.
@@ -370,7 +370,7 @@ def cifti_create_label_cerebellum_label_cargs(
 def cifti_create_label_label(
     structure: str,
     label: InputPathType,
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> CiftiCreateLabelLabelParamsDictTagged:
     """
     Build parameters.

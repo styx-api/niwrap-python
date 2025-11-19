@@ -360,15 +360,15 @@ class VolumeToSurfaceMappingRibbonConstrainedOutputs(typing.NamedTuple):
 def volume_to_surface_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    subdiv_num: int | None,
-    scale: float | None,
-    method: str | None,
-    roi_out: str | None,
-    text_out: str | None,
     volume_roi: VolumeToSurfaceMappingVolumeRoiParamsDict | None = None,
     dilate_missing: VolumeToSurfaceMappingDilateMissingParamsDict | None = None,
+    subdiv_num: int | None = None,
     thin_columns: bool = False,
+    scale: float | None = None,
+    method: str | None = None,
+    roi_out: str | None = None,
     output_weights: VolumeToSurfaceMappingOutputWeightsParamsDict | None = None,
+    text_out: str | None = None,
 ) -> VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
@@ -376,9 +376,13 @@ def volume_to_surface_mapping_ribbon_constrained(
     Args:
         inner_surf: the inner surface of the ribbon.
         outer_surf: the outer surface of the ribbon.
+        volume_roi: use a volume roi.
+        dilate_missing: use dilation for small vertices that 'missed' the\
+            geometry tests.
         subdiv_num: voxel divisions while estimating voxel weights\
             \
             number of subdivisions, default 3.
+        thin_columns: use non-overlapping polyhedra.
         scale: reduce weight to voxels that aren't near <surface>\
             \
             value to multiply the local thickness by, to get the gaussian sigma.
@@ -390,14 +394,10 @@ def volume_to_surface_mapping_ribbon_constrained(
             voxels\
             \
             the output metric file of vertices that have no data.
+        output_weights: write the voxel weights for a vertex to a volume file.
         text_out: write the voxel weights for all vertices to a text file\
             \
             output - the output text filename.
-        volume_roi: use a volume roi.
-        dilate_missing: use dilation for small vertices that 'missed' the\
-            geometry tests.
-        thin_columns: use non-overlapping polyhedra.
-        output_weights: write the voxel weights for a vertex to a volume file.
     Returns:
         Parameter dictionary
     """
@@ -627,7 +627,6 @@ class VolumeToSurfaceMappingOutputs(typing.NamedTuple):
 
 def volume_to_surface_mapping_params(
     metric_out: str,
-    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
     trilinear: bool = False,
@@ -635,15 +634,13 @@ def volume_to_surface_mapping_params(
     cubic: bool = False,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
+    subvol: str | None = None,
 ) -> VolumeToSurfaceMappingParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output metric file.
-        subvol: select a single subvolume to map\
-            \
-            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
         trilinear: use trilinear volume interpolation.
@@ -651,6 +648,9 @@ def volume_to_surface_mapping_params(
         cubic: use cubic splines.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -833,7 +833,6 @@ def volume_to_surface_mapping_execute(
 
 def volume_to_surface_mapping(
     metric_out: str,
-    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
     trilinear: bool = False,
@@ -841,6 +840,7 @@ def volume_to_surface_mapping(
     cubic: bool = False,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
@@ -886,9 +886,6 @@ def volume_to_surface_mapping(
     
     Args:
         metric_out: the output metric file.
-        subvol: select a single subvolume to map\
-            \
-            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
         trilinear: use trilinear volume interpolation.
@@ -896,6 +893,9 @@ def volume_to_surface_mapping(
         cubic: use cubic splines.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).

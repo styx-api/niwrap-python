@@ -46,29 +46,29 @@ class CiftiLabelImportOutputs(typing.NamedTuple):
 
 def cifti_label_import_params(
     output: str,
-    value: int | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
 ) -> CiftiLabelImportParamsDictTagged:
     """
     Build parameters.
     
     Args:
         output: the output cifti label file.
-        value: set the value that will be interpreted as unlabeled\
-            \
-            the numeric value for unlabeled (default 0).
-        file: read label name hierarchy from a json file\
-            \
-            the input json file.
         input_: the input cifti file.
         label_list_file: text file containing the values and names for labels.
         discard_others: set any values not mentioned in the label list to the\
             ??? label.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
         drop_unused_labels: remove any unused label values from the label table.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
     Returns:
         Parameter dictionary
     """
@@ -227,12 +227,12 @@ def cifti_label_import_execute(
 
 def cifti_label_import(
     output: str,
-    value: int | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
@@ -264,17 +264,17 @@ def cifti_label_import(
     
     Args:
         output: the output cifti label file.
-        value: set the value that will be interpreted as unlabeled\
-            \
-            the numeric value for unlabeled (default 0).
-        file: read label name hierarchy from a json file\
-            \
-            the input json file.
         input_: the input cifti file.
         label_list_file: text file containing the values and names for labels.
         discard_others: set any values not mentioned in the label list to the\
             ??? label.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
         drop_unused_labels: remove any unused label values from the label table.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelImportOutputs`).

@@ -74,7 +74,7 @@ CiftiFalseCorrelationParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationP
 
 def cifti_false_correlation_left_surface(
     surface: InputPathType,
-    text_out: str | None,
+    text_out: str | None = None,
 ) -> CiftiFalseCorrelationLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -143,7 +143,7 @@ def cifti_false_correlation_left_surface_cargs(
 
 def cifti_false_correlation_right_surface(
     surface: InputPathType,
-    text_out: str | None,
+    text_out: str | None = None,
 ) -> CiftiFalseCorrelationRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -212,7 +212,7 @@ def cifti_false_correlation_right_surface_cargs(
 
 def cifti_false_correlation_cerebellum_surface(
     surface: InputPathType,
-    text_out: str | None,
+    text_out: str | None = None,
 ) -> CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.

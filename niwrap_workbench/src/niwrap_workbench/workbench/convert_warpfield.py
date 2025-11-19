@@ -287,28 +287,28 @@ class ConvertWarpfieldOutputs(typing.NamedTuple):
 
 
 def convert_warpfield_params(
-    input_: str | None,
-    output: str | None,
-    output_: str | None,
     from_world: ConvertWarpfieldFromWorldParamsDict | None = None,
+    input_: str | None = None,
     from_fnirt: ConvertWarpfieldFromFnirtParamsDict | None = None,
+    output: str | None = None,
+    output_: str | None = None,
     to_fnirt: list[ConvertWarpfieldToFnirtParamsDict] | None = None,
 ) -> ConvertWarpfieldParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        from_world: input is a NIFTI 'world' warpfield.
         input_: input is an ITK warpfield\
             \
             the input warpfield.
+        from_fnirt: input is a fnirt warpfield.
         output: write output as a NIFTI 'world' warpfield\
             \
             output - the output warpfield.
         output_: write output as an ITK warpfield\
             \
             output - the output warpfield.
-        from_world: input is a NIFTI 'world' warpfield.
-        from_fnirt: input is a fnirt warpfield.
         to_fnirt: write output as a fnirt warpfield.
     Returns:
         Parameter dictionary
@@ -450,11 +450,11 @@ def convert_warpfield_execute(
 
 
 def convert_warpfield(
-    input_: str | None,
-    output: str | None,
-    output_: str | None,
     from_world: ConvertWarpfieldFromWorldParamsDict | None = None,
+    input_: str | None = None,
     from_fnirt: ConvertWarpfieldFromFnirtParamsDict | None = None,
+    output: str | None = None,
+    output_: str | None = None,
     to_fnirt: list[ConvertWarpfieldToFnirtParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
@@ -475,17 +475,17 @@ def convert_warpfield(
     options, and -to-fnirt may be specified more than once.
     
     Args:
+        from_world: input is a NIFTI 'world' warpfield.
         input_: input is an ITK warpfield\
             \
             the input warpfield.
+        from_fnirt: input is a fnirt warpfield.
         output: write output as a NIFTI 'world' warpfield\
             \
             output - the output warpfield.
         output_: write output as an ITK warpfield\
             \
             output - the output warpfield.
-        from_world: input is a NIFTI 'world' warpfield.
-        from_fnirt: input is a fnirt warpfield.
         to_fnirt: write output as a fnirt warpfield.
         runner: Command runner.
     Returns:

@@ -100,7 +100,7 @@ CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagge
 
 def cifti_smoothing_left_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiSmoothingLeftSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -170,7 +170,7 @@ def cifti_smoothing_left_surface_cargs(
 
 def cifti_smoothing_right_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiSmoothingRightSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -240,7 +240,7 @@ def cifti_smoothing_right_surface_cargs(
 
 def cifti_smoothing_cerebellum_surface(
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiSmoothingCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -311,7 +311,7 @@ def cifti_smoothing_cerebellum_surface_cargs(
 def cifti_smoothing_surface(
     structure: str,
     surface: InputPathType,
-    area_metric: InputPathType | None,
+    area_metric: InputPathType | None = None,
 ) -> CiftiSmoothingSurfaceParamsDictTagged:
     """
     Build parameters.
@@ -398,7 +398,6 @@ class CiftiSmoothingOutputs(typing.NamedTuple):
 
 def cifti_smoothing_params(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
     cifti: InputPathType,
     surface_kernel: float,
     volume_kernel: float,
@@ -407,6 +406,7 @@ def cifti_smoothing_params(
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     fix_zeros_volume: bool = False,
     fix_zeros_surface: bool = False,
     merged_volume: bool = False,
@@ -417,9 +417,6 @@ def cifti_smoothing_params(
     
     Args:
         cifti_out: the output cifti.
-        roi_cifti: smooth only within regions of interest\
-            \
-            the regions to smooth within, as a cifti file.
         cifti: the input cifti.
         surface_kernel: the size of the gaussian surface smoothing kernel in\
             mm, as sigma by default.
@@ -430,6 +427,9 @@ def cifti_smoothing_params(
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: smooth only within regions of interest\
+            \
+            the regions to smooth within, as a cifti file.
         fix_zeros_volume: treat values of zero in the volume as missing data.
         fix_zeros_surface: treat values of zero on the surface as missing data.
         merged_volume: smooth across subcortical structure boundaries.
@@ -664,7 +664,6 @@ def cifti_smoothing_execute(
 
 def cifti_smoothing(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
     cifti: InputPathType,
     surface_kernel: float,
     volume_kernel: float,
@@ -673,6 +672,7 @@ def cifti_smoothing(
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
+    roi_cifti: InputPathType | None = None,
     fix_zeros_volume: bool = False,
     fix_zeros_surface: bool = False,
     merged_volume: bool = False,
@@ -740,9 +740,6 @@ def cifti_smoothing(
     
     Args:
         cifti_out: the output cifti.
-        roi_cifti: smooth only within regions of interest\
-            \
-            the regions to smooth within, as a cifti file.
         cifti: the input cifti.
         surface_kernel: the size of the gaussian surface smoothing kernel in\
             mm, as sigma by default.
@@ -753,6 +750,9 @@ def cifti_smoothing(
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        roi_cifti: smooth only within regions of interest\
+            \
+            the regions to smooth within, as a cifti file.
         fix_zeros_volume: treat values of zero in the volume as missing data.
         fix_zeros_surface: treat values of zero on the surface as missing data.
         merged_volume: smooth across subcortical structure boundaries.

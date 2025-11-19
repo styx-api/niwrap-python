@@ -48,19 +48,22 @@ class CiftiRestrictDenseMapOutputs(typing.NamedTuple):
 
 def cifti_restrict_dense_map_params(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     direction: str,
+    roi_cifti: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
 ) -> CiftiRestrictDenseMapParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output cifti.
+        cifti_in: the input cifti.
+        direction: which dimension to change the mapping on (integer, 'ROW', or\
+            'COLUMN').
         roi_cifti: cifti file containing combined rois\
             \
             the rois as a cifti file.
@@ -76,9 +79,6 @@ def cifti_restrict_dense_map_params(
         roi_vol: voxels to use\
             \
             the roi volume file.
-        cifti_in: the input cifti.
-        direction: which dimension to change the mapping on (integer, 'ROW', or\
-            'COLUMN').
     Returns:
         Parameter dictionary
     """
@@ -229,13 +229,13 @@ def cifti_restrict_dense_map_execute(
 
 def cifti_restrict_dense_map(
     cifti_out: str,
-    roi_cifti: InputPathType | None,
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     direction: str,
+    roi_cifti: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
@@ -250,6 +250,9 @@ def cifti_restrict_dense_map(
     
     Args:
         cifti_out: the output cifti.
+        cifti_in: the input cifti.
+        direction: which dimension to change the mapping on (integer, 'ROW', or\
+            'COLUMN').
         roi_cifti: cifti file containing combined rois\
             \
             the rois as a cifti file.
@@ -265,9 +268,6 @@ def cifti_restrict_dense_map(
         roi_vol: voxels to use\
             \
             the roi volume file.
-        cifti_in: the input cifti.
-        direction: which dimension to change the mapping on (integer, 'ROW', or\
-            'COLUMN').
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRestrictDenseMapOutputs`).

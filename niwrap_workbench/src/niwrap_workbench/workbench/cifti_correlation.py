@@ -55,11 +55,11 @@ CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictT
 
 
 def cifti_correlation_roi_override(
-    roi_metric: InputPathType | None,
-    roi_metric_: InputPathType | None,
-    roi_metric_2: InputPathType | None,
-    roi_vol: InputPathType | None,
-    roi_cifti: InputPathType | None,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
+    roi_metric_2: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
+    roi_cifti: InputPathType | None = None,
 ) -> CiftiCorrelationRoiOverrideParamsDictTagged:
     """
     Build parameters.
@@ -171,31 +171,31 @@ class CiftiCorrelationOutputs(typing.NamedTuple):
 
 def cifti_correlation_params(
     cifti_out: str,
-    weight_file: str | None,
-    limit_gb: float | None,
     cifti: InputPathType,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
+    weight_file: str | None = None,
     fisher_z: bool = False,
     no_demean: bool = False,
     covariance: bool = False,
+    limit_gb: float | None = None,
 ) -> CiftiCorrelationParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: output cifti file.
+        cifti: input cifti file.
+        roi_override: perform correlation from a subset of rows to all rows.
         weight_file: specify column weights\
             \
             text file containing one weight per column.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
-        cifti: input cifti file.
-        roi_override: perform correlation from a subset of rows to all rows.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
         no_demean: instead of correlation, do dot product of rows, then\
             normalize by diagonal.
         covariance: compute covariance instead of correlation.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
     Returns:
         Parameter dictionary
     """
@@ -350,13 +350,13 @@ def cifti_correlation_execute(
 
 def cifti_correlation(
     cifti_out: str,
-    weight_file: str | None,
-    limit_gb: float | None,
     cifti: InputPathType,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
+    weight_file: str | None = None,
     fisher_z: bool = False,
     no_demean: bool = False,
     covariance: bool = False,
+    limit_gb: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
@@ -379,18 +379,18 @@ def cifti_correlation(
     
     Args:
         cifti_out: output cifti file.
+        cifti: input cifti file.
+        roi_override: perform correlation from a subset of rows to all rows.
         weight_file: specify column weights\
             \
             text file containing one weight per column.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
-        cifti: input cifti file.
-        roi_override: perform correlation from a subset of rows to all rows.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
         no_demean: instead of correlation, do dot product of rows, then\
             normalize by diagonal.
         covariance: compute covariance instead of correlation.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).

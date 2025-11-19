@@ -212,34 +212,31 @@ class MetricExtremaOutputs(typing.NamedTuple):
 
 def metric_extrema_params(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
     sum_columns: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
+    column: str | None = None,
 ) -> MetricExtremaParamsDictTagged:
     """
     Build parameters.
     
     Args:
         metric_out: the output extrema metric.
-        roi_metric: ignore values outside the selected area\
-            \
-            the area to find extrema in, as a metric.
-        column: select a single column to find extrema in\
-            \
-            the column number or name.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the metric before finding extrema.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
         threshold: ignore small extrema.
         sum_columns: output the sum of the extrema columns instead of each\
             column separately.
@@ -247,6 +244,9 @@ def metric_extrema_params(
             neighborhood.
         only_maxima: only find the maxima.
         only_minima: only find the minima.
+        column: select a single column to find extrema in\
+            \
+            the column number or name.
     Returns:
         Parameter dictionary
     """
@@ -435,17 +435,17 @@ def metric_extrema_execute(
 
 def metric_extrema(
     metric_out: str,
-    roi_metric: InputPathType | None,
-    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
     sum_columns: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
+    column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
@@ -479,17 +479,14 @@ def metric_extrema(
     
     Args:
         metric_out: the output extrema metric.
-        roi_metric: ignore values outside the selected area\
-            \
-            the area to find extrema in, as a metric.
-        column: select a single column to find extrema in\
-            \
-            the column number or name.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the metric before finding extrema.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
         threshold: ignore small extrema.
         sum_columns: output the sum of the extrema columns instead of each\
             column separately.
@@ -497,6 +494,9 @@ def metric_extrema(
             neighborhood.
         only_maxima: only find the maxima.
         only_minima: only find the minima.
+        column: select a single column to find extrema in\
+            \
+            the column number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).

@@ -48,33 +48,33 @@ class MetricLabelImportOutputs(typing.NamedTuple):
 
 def metric_label_import_params(
     output: str,
-    value: int | None,
-    column: str | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
+    column: str | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
 ) -> MetricLabelImportParamsDictTagged:
     """
     Build parameters.
     
     Args:
         output: the output gifti label file.
+        input_: the input metric file.
+        label_list_file: text file containing the values and names for labels.
+        discard_others: set any values not mentioned in the label list to the\
+            ??? label.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         column: select a single column to import\
             \
             the column number or name.
+        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
-        input_: the input metric file.
-        label_list_file: text file containing the values and names for labels.
-        discard_others: set any values not mentioned in the label list to the\
-            ??? label.
-        drop_unused_labels: remove any unused label values from the label table.
     Returns:
         Parameter dictionary
     """
@@ -240,13 +240,13 @@ def metric_label_import_execute(
 
 def metric_label_import(
     output: str,
-    value: int | None,
-    column: str | None,
-    file: str | None,
     input_: InputPathType,
     label_list_file: str,
     discard_others: bool = False,
+    value: int | None = None,
+    column: str | None = None,
     drop_unused_labels: bool = False,
+    file: str | None = None,
     runner: Runner | None = None,
 ) -> MetricLabelImportOutputs:
     """
@@ -278,20 +278,20 @@ def metric_label_import(
     
     Args:
         output: the output gifti label file.
+        input_: the input metric file.
+        label_list_file: text file containing the values and names for labels.
+        discard_others: set any values not mentioned in the label list to the\
+            ??? label.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         column: select a single column to import\
             \
             the column number or name.
+        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
-        input_: the input metric file.
-        label_list_file: text file containing the values and names for labels.
-        discard_others: set any values not mentioned in the label list to the\
-            ??? label.
-        drop_unused_labels: remove any unused label values from the label table.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricLabelImportOutputs`).

@@ -37,22 +37,22 @@ class VolumeEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def volume_estimate_fwhm_params(
-    roivol: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
-    demean: bool | None = False,
+    roivol: InputPathType | None = None,
+    subvol: str | None = None,
+    demean: bool | None = None,
 ) -> VolumeEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        volume: the input volume.
         roivol: use only data within an ROI\
             \
             the volume to use as an ROI.
         subvol: select a single subvolume to estimate smoothness of\
             \
             the subvolume number or name.
-        volume: the input volume.
         demean: estimate for the whole file at once, not each subvolume\
             separately\
             \
@@ -91,9 +91,9 @@ def volume_estimate_fwhm_validate(
     if params.get("subvol", None) is not None:
         if not isinstance(params["subvol"], str):
             raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
-    if params.get("demean", False) is not None:
+    if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
-            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
     if params.get("volume", None) is None:
         raise StyxValidationError("`volume` must not be None")
     if not isinstance(params["volume"], (pathlib.Path, str)):
@@ -114,7 +114,7 @@ def volume_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roivol", None) is not None or params.get("subvol", None) is not None or params.get("demean", False) is not None:
+    if params.get("roivol", None) is not None or params.get("subvol", None) is not None or params.get("demean", None) is not None:
         cargs.extend([
             "wb_command",
             "-volume-estimate-fwhm",
@@ -123,7 +123,7 @@ def volume_estimate_fwhm_cargs(
             "-subvolume",
             (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
             "-whole-file",
-            ("-demean" if (params.get("demean", False) is not None) else "")
+            ("-demean" if (params.get("demean", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume", None)))
     return cargs
@@ -177,10 +177,10 @@ def volume_estimate_fwhm_execute(
 
 
 def volume_estimate_fwhm(
-    roivol: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
-    demean: bool | None = False,
+    roivol: InputPathType | None = None,
+    subvol: str | None = None,
+    demean: bool | None = None,
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
@@ -192,13 +192,13 @@ def volume_estimate_fwhm(
     displayed separately.
     
     Args:
+        volume: the input volume.
         roivol: use only data within an ROI\
             \
             the volume to use as an ROI.
         subvol: select a single subvolume to estimate smoothness of\
             \
             the subvolume number or name.
-        volume: the input volume.
         demean: estimate for the whole file at once, not each subvolume\
             separately\
             \

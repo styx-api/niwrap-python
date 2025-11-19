@@ -208,14 +208,14 @@ class LabelResampleOutputs(typing.NamedTuple):
 
 def label_resample_params(
     label_out: str,
-    roi_metric: InputPathType | None,
-    roi_out: str | None,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_out: str | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
 ) -> LabelResampleParamsDictTagged:
@@ -224,14 +224,6 @@ def label_resample_params(
     
     Args:
         label_out: the output label file.
-        roi_metric: use an input roi on the current mesh to exclude non-data\
-            vertices\
-            \
-            the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
@@ -241,6 +233,14 @@ def label_resample_params(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         largest: use only the label of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
@@ -422,14 +422,14 @@ def label_resample_execute(
 
 def label_resample(
     label_out: str,
-    roi_metric: InputPathType | None,
-    roi_out: str | None,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
+    roi_metric: InputPathType | None = None,
+    roi_out: str | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
@@ -461,14 +461,6 @@ def label_resample(
     
     Args:
         label_out: the output label file.
-        roi_metric: use an input roi on the current mesh to exclude non-data\
-            vertices\
-            \
-            the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
@@ -478,6 +470,14 @@ def label_resample(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         largest: use only the label of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.

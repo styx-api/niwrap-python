@@ -208,13 +208,13 @@ class MetricGradientOutputs(typing.NamedTuple):
 
 def metric_gradient_params(
     metric_out: str,
-    vector_metric_out: str | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
     presmooth: MetricGradientPresmoothParamsDict | None = None,
     roi: MetricGradientRoiParamsDict | None = None,
+    vector_metric_out: str | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     average_normals: bool = False,
 ) -> MetricGradientParamsDictTagged:
     """
@@ -222,6 +222,10 @@ def metric_gradient_params(
     
     Args:
         metric_out: the magnitude of the gradient.
+        surface: the surface to compute the gradient on.
+        metric_in: the metric to compute the gradient of.
+        presmooth: smooth the metric before computing the gradient.
+        roi: select a region of interest to take the gradient of.
         vector_metric_out: output gradient vectors\
             \
             the vectors as a metric file.
@@ -232,10 +236,6 @@ def metric_gradient_params(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute the gradient on.
-        metric_in: the metric to compute the gradient of.
-        presmooth: smooth the metric before computing the gradient.
-        roi: select a region of interest to take the gradient of.
         average_normals: average the normals of each vertex with its neighbors\
             before using them to compute the gradient.
     Returns:
@@ -411,13 +411,13 @@ def metric_gradient_execute(
 
 def metric_gradient(
     metric_out: str,
-    vector_metric_out: str | None,
-    column: str | None,
-    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
     presmooth: MetricGradientPresmoothParamsDict | None = None,
     roi: MetricGradientRoiParamsDict | None = None,
+    vector_metric_out: str | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
     average_normals: bool = False,
     runner: Runner | None = None,
 ) -> MetricGradientOutputs:
@@ -454,6 +454,10 @@ def metric_gradient(
     
     Args:
         metric_out: the magnitude of the gradient.
+        surface: the surface to compute the gradient on.
+        metric_in: the metric to compute the gradient of.
+        presmooth: smooth the metric before computing the gradient.
+        roi: select a region of interest to take the gradient of.
         vector_metric_out: output gradient vectors\
             \
             the vectors as a metric file.
@@ -464,10 +468,6 @@ def metric_gradient(
             surface\
             \
             the corrected vertex areas, as a metric.
-        surface: the surface to compute the gradient on.
-        metric_in: the metric to compute the gradient of.
-        presmooth: smooth the metric before computing the gradient.
-        roi: select a region of interest to take the gradient of.
         average_normals: average the normals of each vertex with its neighbors\
             before using them to compute the gradient.
         runner: Command runner.

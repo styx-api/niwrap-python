@@ -165,8 +165,8 @@ class ConvertMatrix4ToMatrix2Outputs(typing.NamedTuple):
 
 def convert_matrix4_to_matrix2_params(
     counts_out: str,
-    distance_out: str | None,
     matrix4_wbsparse: str,
+    distance_out: str | None = None,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
 ) -> ConvertMatrix4ToMatrix2ParamsDictTagged:
     """
@@ -174,10 +174,10 @@ def convert_matrix4_to_matrix2_params(
     
     Args:
         counts_out: the total fiber counts, as a cifti file.
+        matrix4_wbsparse: a wbsparse matrix4 file.
         distance_out: output average trajectory distance\
             \
             the distances, as a cifti file.
-        matrix4_wbsparse: a wbsparse matrix4 file.
         individual_fibers: output files for each fiber direction.
     Returns:
         Parameter dictionary
@@ -300,8 +300,8 @@ def convert_matrix4_to_matrix2_execute(
 
 def convert_matrix4_to_matrix2(
     counts_out: str,
-    distance_out: str | None,
     matrix4_wbsparse: str,
+    distance_out: str | None = None,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
@@ -316,10 +316,10 @@ def convert_matrix4_to_matrix2(
     
     Args:
         counts_out: the total fiber counts, as a cifti file.
+        matrix4_wbsparse: a wbsparse matrix4 file.
         distance_out: output average trajectory distance\
             \
             the distances, as a cifti file.
-        matrix4_wbsparse: a wbsparse matrix4 file.
         individual_fibers: output files for each fiber direction.
         runner: Command runner.
     Returns:

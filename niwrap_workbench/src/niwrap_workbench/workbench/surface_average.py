@@ -42,7 +42,7 @@ SurfaceAverageParamsDictTagged = typing.TypedDict('SurfaceAverageParamsDictTagge
 
 def surface_average_surf(
     surface: InputPathType,
-    weight: float | None,
+    weight: float | None = None,
 ) -> SurfaceAverageSurfParamsDictTagged:
     """
     Build parameters.
@@ -121,8 +121,8 @@ class SurfaceAverageOutputs(typing.NamedTuple):
 
 def surface_average_params(
     surface_out: str,
-    stddev_metric_out: str | None,
-    uncert_metric_out: str | None,
+    stddev_metric_out: str | None = None,
+    uncert_metric_out: str | None = None,
     surf: list[SurfaceAverageSurfParamsDict] | None = None,
 ) -> SurfaceAverageParamsDictTagged:
     """
@@ -264,8 +264,8 @@ def surface_average_execute(
 
 def surface_average(
     surface_out: str,
-    stddev_metric_out: str | None,
-    uncert_metric_out: str | None,
+    stddev_metric_out: str | None = None,
+    uncert_metric_out: str | None = None,
     surf: list[SurfaceAverageSurfParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:

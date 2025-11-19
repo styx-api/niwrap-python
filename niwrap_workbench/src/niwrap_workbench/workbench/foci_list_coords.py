@@ -35,19 +35,19 @@ class FociListCoordsOutputs(typing.NamedTuple):
 
 
 def foci_list_coords_params(
-    names_file_out: str | None,
     foci_file: InputPathType,
     coord_file_out: str,
+    names_file_out: str | None = None,
 ) -> FociListCoordsParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        foci_file: input foci file.
+        coord_file_out: output - the output coordinate text file.
         names_file_out: output the foci names\
             \
             output - text file to put foci names in.
-        foci_file: input foci file.
-        coord_file_out: output - the output coordinate text file.
     Returns:
         Parameter dictionary
     """
@@ -158,9 +158,9 @@ def foci_list_coords_execute(
 
 
 def foci_list_coords(
-    names_file_out: str | None,
     foci_file: InputPathType,
     coord_file_out: str,
+    names_file_out: str | None = None,
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
@@ -170,11 +170,11 @@ def foci_list_coords(
     focus names in a second text file.
     
     Args:
+        foci_file: input foci file.
+        coord_file_out: output - the output coordinate text file.
         names_file_out: output the foci names\
             \
             output - text file to put foci names in.
-        foci_file: input foci file.
-        coord_file_out: output - the output coordinate text file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociListCoordsOutputs`).

@@ -125,7 +125,7 @@ def surface_distortion_smooth_cargs(
 
 
 def surface_distortion_match_surface_area(
-    roi_metric: InputPathType | None,
+    roi_metric: InputPathType | None = None,
 ) -> SurfaceDistortionMatchSurfaceAreaParamsDictTagged:
     """
     Build parameters.
@@ -204,7 +204,7 @@ def surface_distortion_params(
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     caret5_method: bool = False,
     edge_method: bool = False,
-    log2: bool | None = False,
+    log2: bool | None = None,
 ) -> SurfaceDistortionParamsDictTagged:
     """
     Build parameters.
@@ -269,9 +269,9 @@ def surface_distortion_validate(
         raise StyxValidationError("`edge-method` must not be None")
     if not isinstance(params["edge-method"], bool):
         raise StyxValidationError(f'`edge-method` has the wrong type: Received `{type(params.get("edge-method", False))}` expected `bool`')
-    if params.get("log2", False) is not None:
+    if params.get("log2", None) is not None:
         if not isinstance(params["log2"], bool):
-            raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", None))}` expected `bool | None`')
     if params.get("surface-reference", None) is None:
         raise StyxValidationError("`surface-reference` must not be None")
     if not isinstance(params["surface-reference"], (pathlib.Path, str)):
@@ -296,7 +296,7 @@ def surface_distortion_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("smooth", None) is not None or params.get("match-surface-area", None) is not None or params.get("caret5-method", False) or params.get("edge-method", False) or params.get("log2", False) is not None:
+    if params.get("smooth", None) is not None or params.get("match-surface-area", None) is not None or params.get("caret5-method", False) or params.get("edge-method", False) or params.get("log2", None) is not None:
         cargs.extend([
             "wb_command",
             "-surface-distortion",
@@ -306,7 +306,7 @@ def surface_distortion_cargs(
             ("-caret5-method" if (params.get("caret5-method", False)) else ""),
             ("-edge-method" if (params.get("edge-method", False)) else ""),
             "-local-affine-method",
-            ("-log2" if (params.get("log2", False) is not None) else "")
+            ("-log2" if (params.get("log2", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface-reference", None)))
     cargs.append(execution.input_file(params.get("surface-distorted", None)))
@@ -384,7 +384,7 @@ def surface_distortion(
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     caret5_method: bool = False,
     edge_method: bool = False,
-    log2: bool | None = False,
+    log2: bool | None = None,
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """

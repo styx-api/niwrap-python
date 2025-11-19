@@ -120,10 +120,10 @@ class MetricStatsOutputs(typing.NamedTuple):
 
 
 def metric_stats_params(
-    operation: str | None,
-    percent: float | None,
-    column: str | None,
     metric_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    column: str | None = None,
     roi: MetricStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
 ) -> MetricStatsParamsDictTagged:
@@ -131,6 +131,7 @@ def metric_stats_params(
     Build parameters.
     
     Args:
+        metric_in: the input metric.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -140,7 +141,6 @@ def metric_stats_params(
         column: only display output for one column\
             \
             the column number or name.
-        metric_in: the input metric.
         roi: only consider data inside an roi.
         show_map_name: print map index and name before each output.
     Returns:
@@ -296,10 +296,10 @@ def metric_stats_execute(
 
 
 def metric_stats(
-    operation: str | None,
-    percent: float | None,
-    column: str | None,
     metric_in: InputPathType,
+    operation: str | None = None,
+    percent: float | None = None,
+    column: str | None = None,
     roi: MetricStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -335,6 +335,7 @@ def metric_stats(
     .
     
     Args:
+        metric_in: the input metric.
         operation: use a reduction operation\
             \
             the reduction operation.
@@ -344,7 +345,6 @@ def metric_stats(
         column: only display output for one column\
             \
             the column number or name.
-        metric_in: the input metric.
         roi: only consider data inside an roi.
         show_map_name: print map index and name before each output.
         runner: Command runner.

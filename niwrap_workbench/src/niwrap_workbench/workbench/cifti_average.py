@@ -119,7 +119,7 @@ def cifti_average_exclude_outliers_cargs(
 
 def cifti_average_cifti(
     cifti_in: InputPathType,
-    weight: float | None,
+    weight: float | None = None,
 ) -> CiftiAverageCiftiParamsDictTagged:
     """
     Build parameters.
@@ -198,8 +198,8 @@ class CiftiAverageOutputs(typing.NamedTuple):
 
 def cifti_average_params(
     cifti_out: str,
-    limit_gb: float | None,
     exclude_outliers: CiftiAverageExcludeOutliersParamsDict | None = None,
+    limit_gb: float | None = None,
     cifti: list[CiftiAverageCiftiParamsDict] | None = None,
 ) -> CiftiAverageParamsDictTagged:
     """
@@ -207,11 +207,11 @@ def cifti_average_params(
     
     Args:
         cifti_out: output cifti file.
+        exclude_outliers: exclude outliers by standard deviation of each\
+            element across files.
         limit_gb: restrict memory used for file reading efficiency\
             \
             memory limit in gigabytes.
-        exclude_outliers: exclude outliers by standard deviation of each\
-            element across files.
         cifti: specify an input file.
     Returns:
         Parameter dictionary
@@ -336,8 +336,8 @@ def cifti_average_execute(
 
 def cifti_average(
     cifti_out: str,
-    limit_gb: float | None,
     exclude_outliers: CiftiAverageExcludeOutliersParamsDict | None = None,
+    limit_gb: float | None = None,
     cifti: list[CiftiAverageCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
@@ -353,11 +353,11 @@ def cifti_average(
     
     Args:
         cifti_out: output cifti file.
+        exclude_outliers: exclude outliers by standard deviation of each\
+            element across files.
         limit_gb: restrict memory used for file reading efficiency\
             \
             memory limit in gigabytes.
-        exclude_outliers: exclude outliers by standard deviation of each\
-            element across files.
         cifti: specify an input file.
         runner: Command runner.
     Returns:

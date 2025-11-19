@@ -42,24 +42,24 @@ class VolumeErodeOutputs(typing.NamedTuple):
 
 def volume_erode_params(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
     distance: float,
+    roi_volume: InputPathType | None = None,
+    subvol: str | None = None,
 ) -> VolumeErodeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         volume_out: the output volume.
+        volume: the volume to erode.
+        distance: distance in mm to erode.
         roi_volume: assume voxels outside this roi are nonzero\
             \
             volume file, positive values denote voxels that have data.
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
-        volume: the volume to erode.
-        distance: distance in mm to erode.
     Returns:
         Parameter dictionary
     """
@@ -186,10 +186,10 @@ def volume_erode_execute(
 
 def volume_erode(
     volume_out: str,
-    roi_volume: InputPathType | None,
-    subvol: str | None,
     volume: InputPathType,
     distance: float,
+    roi_volume: InputPathType | None = None,
+    subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
@@ -201,14 +201,14 @@ def volume_erode(
     
     Args:
         volume_out: the output volume.
+        volume: the volume to erode.
+        distance: distance in mm to erode.
         roi_volume: assume voxels outside this roi are nonzero\
             \
             volume file, positive values denote voxels that have data.
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
-        volume: the volume to erode.
-        distance: distance in mm to erode.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeErodeOutputs`).

@@ -117,24 +117,24 @@ class VolumeWarpfieldAffineRegressionOutputs(typing.NamedTuple):
 
 
 def volume_warpfield_affine_regression_params(
-    roi_vol: InputPathType | None,
-    source_volume: str | None,
     warpfield: str,
     affine_out: str,
+    roi_vol: InputPathType | None = None,
+    source_volume: str | None = None,
     flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None = None,
 ) -> VolumeWarpfieldAffineRegressionParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        warpfield: the input warpfield.
+        affine_out: output - the output affine file.
         roi_vol: only consider voxels within a mask (e.g., a brain mask)\
             \
             the mask volume.
         source_volume: input is a fnirt warpfield\
             \
             the source volume used when generating the fnirt warpfield.
-        warpfield: the input warpfield.
-        affine_out: output - the output affine file.
         flirt_out: write output as a flirt matrix rather than a world\
             coordinate transform.
     Returns:
@@ -265,10 +265,10 @@ def volume_warpfield_affine_regression_execute(
 
 
 def volume_warpfield_affine_regression(
-    roi_vol: InputPathType | None,
-    source_volume: str | None,
     warpfield: str,
     affine_out: str,
+    roi_vol: InputPathType | None = None,
+    source_volume: str | None = None,
     flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
@@ -285,14 +285,14 @@ def volume_warpfield_affine_regression(
     -flirt-out as needed, as their coordinate conventions are different.
     
     Args:
+        warpfield: the input warpfield.
+        affine_out: output - the output affine file.
         roi_vol: only consider voxels within a mask (e.g., a brain mask)\
             \
             the mask volume.
         source_volume: input is a fnirt warpfield\
             \
             the source volume used when generating the fnirt warpfield.
-        warpfield: the input warpfield.
-        affine_out: output - the output affine file.
         flirt_out: write output as a flirt matrix rather than a world\
             coordinate transform.
         runner: Command runner.

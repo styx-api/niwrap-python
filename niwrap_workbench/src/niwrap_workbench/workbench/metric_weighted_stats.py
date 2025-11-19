@@ -128,14 +128,14 @@ class MetricWeightedStatsOutputs(typing.NamedTuple):
 
 
 def metric_weighted_stats_params(
-    area_surface: InputPathType | None,
-    weight_metric: InputPathType | None,
-    column: str | None,
-    percent: float | None,
     metric_in: InputPathType,
+    area_surface: InputPathType | None = None,
+    weight_metric: InputPathType | None = None,
+    column: str | None = None,
     roi: MetricWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
 ) -> MetricWeightedStatsParamsDictTagged:
@@ -143,6 +143,7 @@ def metric_weighted_stats_params(
     Build parameters.
     
     Args:
+        metric_in: the input metric.
         area_surface: use vertex areas as weights\
             \
             the surface to use for vertex areas.
@@ -152,15 +153,14 @@ def metric_weighted_stats_params(
         column: only display output for one column\
             \
             the column number or name.
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        metric_in: the input metric.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
     Returns:
@@ -215,9 +215,9 @@ def metric_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("sample", False) is not None:
+    if params.get("sample", None) is not None:
         if not isinstance(params["sample"], bool):
-            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
     if params.get("percent", None) is not None:
         if not isinstance(params["percent"], (float, int)):
             raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
@@ -249,7 +249,7 @@ def metric_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-surface", None) is not None or params.get("weight-metric", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", False) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
+    if params.get("area-surface", None) is not None or params.get("weight-metric", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
             "wb_command",
             "-metric-weighted-stats",
@@ -262,7 +262,7 @@ def metric_weighted_stats_cargs(
             *(metric_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-mean" if (params.get("mean", False)) else ""),
             "-stdev",
-            ("-sample" if (params.get("sample", False) is not None) else ""),
+            ("-sample" if (params.get("sample", None) is not None) else ""),
             "-percentile",
             (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             ("-sum" if (params.get("sum", False)) else ""),
@@ -329,14 +329,14 @@ def metric_weighted_stats_execute(
 
 
 def metric_weighted_stats(
-    area_surface: InputPathType | None,
-    weight_metric: InputPathType | None,
-    column: str | None,
-    percent: float | None,
     metric_in: InputPathType,
+    area_surface: InputPathType | None = None,
+    weight_metric: InputPathType | None = None,
+    column: str | None = None,
     roi: MetricWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
-    sample: bool | None = False,
+    sample: bool | None = None,
+    percent: float | None = None,
     sum_: bool = False,
     show_map_name: bool = False,
     runner: Runner | None = None,
@@ -359,6 +359,7 @@ def metric_weighted_stats(
     midthickness.surf.gii.
     
     Args:
+        metric_in: the input metric.
         area_surface: use vertex areas as weights\
             \
             the surface to use for vertex areas.
@@ -368,15 +369,14 @@ def metric_weighted_stats(
         column: only display output for one column\
             \
             the column number or name.
-        percent: compute weighted percentile\
-            \
-            the percentile to find, must be between 0 and 100.
-        metric_in: the input metric.
         roi: only consider data inside an roi.
         mean: compute weighted mean.
         sample: compute weighted standard deviation\
             \
             estimate population stdev from the sample.
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         sum_: compute weighted sum.
         show_map_name: print map index and name before each output.
         runner: Command runner.
