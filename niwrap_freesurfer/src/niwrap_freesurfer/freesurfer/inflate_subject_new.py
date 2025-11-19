@@ -13,14 +13,14 @@ INFLATE_SUBJECT_NEW_METADATA = Metadata(
 )
 
 
-InflateSubjectNewParamsDict = typing.TypedDict('InflateSubjectNewParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_new"]],
+_InflateSubjectNewParamsDictNoTag = typing.TypedDict('_InflateSubjectNewParamsDictNoTag', {
     "subject_dir": str,
 })
 InflateSubjectNewParamsDictTagged = typing.TypedDict('InflateSubjectNewParamsDictTagged', {
     "@type": typing.Literal["freesurfer/inflate_subject_new"],
     "subject_dir": str,
 })
+InflateSubjectNewParamsDict = _InflateSubjectNewParamsDictNoTag | InflateSubjectNewParamsDictTagged
 
 
 class InflateSubjectNewOutputs(typing.NamedTuple):

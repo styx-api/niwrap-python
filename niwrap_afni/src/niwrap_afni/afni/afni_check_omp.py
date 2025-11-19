@@ -13,14 +13,14 @@ AFNI_CHECK_OMP_METADATA = Metadata(
 )
 
 
-AfniCheckOmpParamsDict = typing.TypedDict('AfniCheckOmpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_check_omp"]],
+_AfniCheckOmpParamsDictNoTag = typing.TypedDict('_AfniCheckOmpParamsDictNoTag', {
     "iterations": typing.NotRequired[float | None],
 })
 AfniCheckOmpParamsDictTagged = typing.TypedDict('AfniCheckOmpParamsDictTagged', {
     "@type": typing.Literal["afni/afni_check_omp"],
     "iterations": typing.NotRequired[float | None],
 })
+AfniCheckOmpParamsDict = _AfniCheckOmpParamsDictNoTag | AfniCheckOmpParamsDictTagged
 
 
 class AfniCheckOmpOutputs(typing.NamedTuple):

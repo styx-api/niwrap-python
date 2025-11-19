@@ -13,8 +13,7 @@ V_3DAXIALIZE_METADATA = Metadata(
 )
 
 
-V3daxializeParamsDict = typing.TypedDict('V3daxializeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3daxialize"]],
+_V3daxializeParamsDictNoTag = typing.TypedDict('_V3daxializeParamsDictNoTag', {
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verb": bool,
@@ -35,6 +34,7 @@ V3daxializeParamsDictTagged = typing.TypedDict('V3daxializeParamsDictTagged', {
     "orient_code": typing.NotRequired[str | None],
     "frugal": bool,
 })
+V3daxializeParamsDict = _V3daxializeParamsDictNoTag | V3daxializeParamsDictTagged
 
 
 class V3daxializeOutputs(typing.NamedTuple):

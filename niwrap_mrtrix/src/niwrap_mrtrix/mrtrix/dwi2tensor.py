@@ -13,8 +13,7 @@ DWI2TENSOR_METADATA = Metadata(
 )
 
 
-Dwi2tensorFslgradParamsDict = typing.TypedDict('Dwi2tensorFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_Dwi2tensorFslgradParamsDictNoTag = typing.TypedDict('_Dwi2tensorFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ Dwi2tensorFslgradParamsDictTagged = typing.TypedDict('Dwi2tensorFslgradParamsDic
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+Dwi2tensorFslgradParamsDict = _Dwi2tensorFslgradParamsDictNoTag | Dwi2tensorFslgradParamsDictTagged
 
 
-Dwi2tensorConfigParamsDict = typing.TypedDict('Dwi2tensorConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Dwi2tensorConfigParamsDictNoTag = typing.TypedDict('_Dwi2tensorConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ Dwi2tensorConfigParamsDictTagged = typing.TypedDict('Dwi2tensorConfigParamsDictT
     "key": str,
     "value": str,
 })
+Dwi2tensorConfigParamsDict = _Dwi2tensorConfigParamsDictNoTag | Dwi2tensorConfigParamsDictTagged
 
 
-Dwi2tensorParamsDict = typing.TypedDict('Dwi2tensorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2tensor"]],
+_Dwi2tensorParamsDictNoTag = typing.TypedDict('_Dwi2tensorParamsDictNoTag', {
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
     "b0": typing.NotRequired[str | None],
@@ -79,6 +78,7 @@ Dwi2tensorParamsDictTagged = typing.TypedDict('Dwi2tensorParamsDictTagged', {
     "dwi": InputPathType,
     "dt": str,
 })
+Dwi2tensorParamsDict = _Dwi2tensorParamsDictNoTag | Dwi2tensorParamsDictTagged
 
 
 def dwi2tensor_fslgrad(

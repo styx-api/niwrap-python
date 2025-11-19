@@ -13,8 +13,7 @@ FABBER_CEST_METADATA = Metadata(
 )
 
 
-FabberCestParamsDict = typing.TypedDict('FabberCestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_cest"]],
+_FabberCestParamsDictNoTag = typing.TypedDict('_FabberCestParamsDictNoTag', {
     "output": str,
     "method": str,
     "model": str,
@@ -91,6 +90,7 @@ FabberCestParamsDictTagged = typing.TypedDict('FabberCestParamsDictTagged', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
+FabberCestParamsDict = _FabberCestParamsDictNoTag | FabberCestParamsDictTagged
 
 
 class FabberCestOutputs(typing.NamedTuple):

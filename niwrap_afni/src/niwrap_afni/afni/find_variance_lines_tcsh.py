@@ -13,8 +13,7 @@ FIND_VARIANCE_LINES_TCSH_METADATA = Metadata(
 )
 
 
-FindVarianceLinesTcshParamsDict = typing.TypedDict('FindVarianceLinesTcshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/find_variance_lines.tcsh"]],
+_FindVarianceLinesTcshParamsDictNoTag = typing.TypedDict('_FindVarianceLinesTcshParamsDictNoTag', {
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
     "min_cvox": typing.NotRequired[int | None],
@@ -49,6 +48,7 @@ FindVarianceLinesTcshParamsDictTagged = typing.TypedDict('FindVarianceLinesTcshP
     "hist": bool,
     "ver": bool,
 })
+FindVarianceLinesTcshParamsDict = _FindVarianceLinesTcshParamsDictNoTag | FindVarianceLinesTcshParamsDictTagged
 
 
 class FindVarianceLinesTcshOutputs(typing.NamedTuple):

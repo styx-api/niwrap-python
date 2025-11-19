@@ -12,8 +12,7 @@ METRIC_TFCE_METADATA = Metadata(
 )
 
 
-MetricTfcePresmoothParamsDict = typing.TypedDict('MetricTfcePresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_MetricTfcePresmoothParamsDictNoTag = typing.TypedDict('_MetricTfcePresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ MetricTfcePresmoothParamsDictTagged = typing.TypedDict('MetricTfcePresmoothParam
     "kernel": float,
     "fwhm": bool,
 })
+MetricTfcePresmoothParamsDict = _MetricTfcePresmoothParamsDictNoTag | MetricTfcePresmoothParamsDictTagged
 
 
-MetricTfceParametersParamsDict = typing.TypedDict('MetricTfceParametersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["parameters"]],
+_MetricTfceParametersParamsDictNoTag = typing.TypedDict('_MetricTfceParametersParamsDictNoTag', {
     "E": float,
     "H": float,
 })
@@ -34,10 +33,10 @@ MetricTfceParametersParamsDictTagged = typing.TypedDict('MetricTfceParametersPar
     "E": float,
     "H": float,
 })
+MetricTfceParametersParamsDict = _MetricTfceParametersParamsDictNoTag | MetricTfceParametersParamsDictTagged
 
 
-MetricTfceParamsDict = typing.TypedDict('MetricTfceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-tfce"]],
+_MetricTfceParamsDictNoTag = typing.TypedDict('_MetricTfceParamsDictNoTag', {
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricTfcePresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -58,6 +57,7 @@ MetricTfceParamsDictTagged = typing.TypedDict('MetricTfceParamsDictTagged', {
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
+MetricTfceParamsDict = _MetricTfceParamsDictNoTag | MetricTfceParamsDictTagged
 
 
 def metric_tfce_presmooth(

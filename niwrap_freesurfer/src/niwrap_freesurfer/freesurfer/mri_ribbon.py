@@ -13,8 +13,7 @@ MRI_RIBBON_METADATA = Metadata(
 )
 
 
-MriRibbonParamsDict = typing.TypedDict('MriRibbonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ribbon"]],
+_MriRibbonParamsDictNoTag = typing.TypedDict('_MriRibbonParamsDictNoTag', {
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
@@ -29,6 +28,7 @@ MriRibbonParamsDictTagged = typing.TypedDict('MriRibbonParamsDictTagged', {
     "input_volume": str,
     "output_volume": str,
 })
+MriRibbonParamsDict = _MriRibbonParamsDictNoTag | MriRibbonParamsDictTagged
 
 
 class MriRibbonOutputs(typing.NamedTuple):

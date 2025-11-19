@@ -13,8 +13,7 @@ V_3D_LOCAL_ACF_METADATA = Metadata(
 )
 
 
-V3dLocalAcfParamsDict = typing.TypedDict('V3dLocalAcfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalACF"]],
+_V3dLocalAcfParamsDictNoTag = typing.TypedDict('_V3dLocalAcfParamsDictNoTag', {
     "prefix": str,
     "input_file": InputPathType,
     "neighborhood": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ V3dLocalAcfParamsDictTagged = typing.TypedDict('V3dLocalAcfParamsDictTagged', {
     "mask_file": typing.NotRequired[InputPathType | None],
     "auto_mask": bool,
 })
+V3dLocalAcfParamsDict = _V3dLocalAcfParamsDictNoTag | V3dLocalAcfParamsDictTagged
 
 
 class V3dLocalAcfOutputs(typing.NamedTuple):

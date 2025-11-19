@@ -13,8 +13,7 @@ V__HELP_AFNI_METADATA = Metadata(
 )
 
 
-VHelpAfniParamsDict = typing.TypedDict('VHelpAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@help.AFNI"]],
+_VHelpAfniParamsDictNoTag = typing.TypedDict('_VHelpAfniParamsDictNoTag', {
     "match": typing.NotRequired[str | None],
     "lynx": bool,
     "vi": bool,
@@ -31,6 +30,7 @@ VHelpAfniParamsDictTagged = typing.TypedDict('VHelpAfniParamsDictTagged', {
     "nedit": bool,
     "noview": bool,
 })
+VHelpAfniParamsDict = _VHelpAfniParamsDictNoTag | VHelpAfniParamsDictTagged
 
 
 class VHelpAfniOutputs(typing.NamedTuple):

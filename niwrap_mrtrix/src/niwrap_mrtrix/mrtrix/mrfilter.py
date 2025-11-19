@@ -13,28 +13,27 @@ MRFILTER_METADATA = Metadata(
 )
 
 
-MrfilterVariousStringParamsDict = typing.TypedDict('MrfilterVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MrfilterVariousStringParamsDictNoTag = typing.TypedDict('_MrfilterVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MrfilterVariousStringParamsDictTagged = typing.TypedDict('MrfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MrfilterVariousStringParamsDict = _MrfilterVariousStringParamsDictNoTag | MrfilterVariousStringParamsDictTagged
 
 
-MrfilterVariousFileParamsDict = typing.TypedDict('MrfilterVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MrfilterVariousFileParamsDictNoTag = typing.TypedDict('_MrfilterVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrfilterVariousFileParamsDictTagged = typing.TypedDict('MrfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MrfilterVariousFileParamsDict = _MrfilterVariousFileParamsDictNoTag | MrfilterVariousFileParamsDictTagged
 
 
-MrfilterConfigParamsDict = typing.TypedDict('MrfilterConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrfilterConfigParamsDictNoTag = typing.TypedDict('_MrfilterConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -43,10 +42,10 @@ MrfilterConfigParamsDictTagged = typing.TypedDict('MrfilterConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+MrfilterConfigParamsDict = _MrfilterConfigParamsDictNoTag | MrfilterConfigParamsDictTagged
 
 
-MrfilterParamsDict = typing.TypedDict('MrfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrfilter"]],
+_MrfilterParamsDictNoTag = typing.TypedDict('_MrfilterParamsDictNoTag', {
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
     "magnitude": bool,
@@ -109,6 +108,7 @@ MrfilterParamsDictTagged = typing.TypedDict('MrfilterParamsDictTagged', {
     "filter": str,
     "output": str,
 })
+MrfilterParamsDict = _MrfilterParamsDictNoTag | MrfilterParamsDictTagged
 
 
 def mrfilter_strides_cargs_dyn_fn(

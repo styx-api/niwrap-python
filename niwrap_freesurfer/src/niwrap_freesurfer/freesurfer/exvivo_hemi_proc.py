@@ -13,8 +13,7 @@ EXVIVO_HEMI_PROC_METADATA = Metadata(
 )
 
 
-ExvivoHemiProcParamsDict = typing.TypedDict('ExvivoHemiProcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/exvivo-hemi-proc"]],
+_ExvivoHemiProcParamsDictNoTag = typing.TypedDict('_ExvivoHemiProcParamsDictNoTag', {
     "flashdir": str,
     "outdir": str,
     "subject": str,
@@ -49,6 +48,7 @@ ExvivoHemiProcParamsDictTagged = typing.TypedDict('ExvivoHemiProcParamsDictTagge
     "stop_mmppsp_after": typing.NotRequired[str | None],
     "force": bool,
 })
+ExvivoHemiProcParamsDict = _ExvivoHemiProcParamsDictNoTag | ExvivoHemiProcParamsDictTagged
 
 
 class ExvivoHemiProcOutputs(typing.NamedTuple):

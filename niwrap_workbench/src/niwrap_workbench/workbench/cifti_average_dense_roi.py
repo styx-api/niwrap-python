@@ -12,8 +12,7 @@ CIFTI_AVERAGE_DENSE_ROI_METADATA = Metadata(
 )
 
 
-CiftiAverageDenseRoiCiftiRoiParamsDict = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti-roi"]],
+_CiftiAverageDenseRoiCiftiRoiParamsDictNoTag = typing.TypedDict('_CiftiAverageDenseRoiCiftiRoiParamsDictNoTag', {
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
@@ -22,20 +21,20 @@ CiftiAverageDenseRoiCiftiRoiParamsDictTagged = typing.TypedDict('CiftiAverageDen
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
+CiftiAverageDenseRoiCiftiRoiParamsDict = _CiftiAverageDenseRoiCiftiRoiParamsDictNoTag | CiftiAverageDenseRoiCiftiRoiParamsDictTagged
 
 
-CiftiAverageDenseRoiCiftiParamsDict = typing.TypedDict('CiftiAverageDenseRoiCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiAverageDenseRoiCiftiParamsDictNoTag = typing.TypedDict('_CiftiAverageDenseRoiCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
 })
 CiftiAverageDenseRoiCiftiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
+CiftiAverageDenseRoiCiftiParamsDict = _CiftiAverageDenseRoiCiftiParamsDictNoTag | CiftiAverageDenseRoiCiftiParamsDictTagged
 
 
-CiftiAverageDenseRoiParamsDict = typing.TypedDict('CiftiAverageDenseRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-average-dense-roi"]],
+_CiftiAverageDenseRoiParamsDictNoTag = typing.TypedDict('_CiftiAverageDenseRoiParamsDictNoTag', {
     "cifti-out": str,
     "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -60,6 +59,7 @@ CiftiAverageDenseRoiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiPar
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
     "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParamsDict] | None],
 })
+CiftiAverageDenseRoiParamsDict = _CiftiAverageDenseRoiParamsDictNoTag | CiftiAverageDenseRoiParamsDictTagged
 
 
 def cifti_average_dense_roi_cifti_roi(

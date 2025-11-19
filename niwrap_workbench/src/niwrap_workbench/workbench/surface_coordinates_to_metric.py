@@ -12,8 +12,7 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 )
 
 
-SurfaceCoordinatesToMetricParamsDict = typing.TypedDict('SurfaceCoordinatesToMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-coordinates-to-metric"]],
+_SurfaceCoordinatesToMetricParamsDictNoTag = typing.TypedDict('_SurfaceCoordinatesToMetricParamsDictNoTag', {
     "metric-out": str,
     "surface": InputPathType,
 })
@@ -22,6 +21,7 @@ SurfaceCoordinatesToMetricParamsDictTagged = typing.TypedDict('SurfaceCoordinate
     "metric-out": str,
     "surface": InputPathType,
 })
+SurfaceCoordinatesToMetricParamsDict = _SurfaceCoordinatesToMetricParamsDictNoTag | SurfaceCoordinatesToMetricParamsDictTagged
 
 
 class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):

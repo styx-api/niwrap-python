@@ -13,8 +13,7 @@ QHULL_METADATA = Metadata(
 )
 
 
-QhullParamsDict = typing.TypedDict('QhullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/qhull"]],
+_QhullParamsDictNoTag = typing.TypedDict('_QhullParamsDictNoTag', {
     "input_coords": str,
     "delaunay": bool,
     "furthest_delaunay": bool,
@@ -61,6 +60,7 @@ QhullParamsDictTagged = typing.TypedDict('QhullParamsDictTagged', {
     "print_facets": typing.NotRequired[str | None],
     "output_file": typing.NotRequired[str | None],
 })
+QhullParamsDict = _QhullParamsDictNoTag | QhullParamsDictTagged
 
 
 class QhullOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_THRESHOLD_METADATA = Metadata(
 )
 
 
-MriThresholdParamsDict = typing.TypedDict('MriThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_threshold"]],
+_MriThresholdParamsDictNoTag = typing.TypedDict('_MriThresholdParamsDictNoTag', {
     "input_vol": InputPathType,
     "threshold": float,
     "output_vol": str,
@@ -31,6 +30,7 @@ MriThresholdParamsDictTagged = typing.TypedDict('MriThresholdParamsDictTagged', 
     "upper_threshold": bool,
     "frame_number": typing.NotRequired[float | None],
 })
+MriThresholdParamsDict = _MriThresholdParamsDictNoTag | MriThresholdParamsDictTagged
 
 
 class MriThresholdOutputs(typing.NamedTuple):

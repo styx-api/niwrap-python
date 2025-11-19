@@ -13,8 +13,7 @@ V__DJUNCT_ANONYMIZE_METADATA = Metadata(
 )
 
 
-VDjunctAnonymizeParamsDict = typing.TypedDict('VDjunctAnonymizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_anonymize"]],
+_VDjunctAnonymizeParamsDictNoTag = typing.TypedDict('_VDjunctAnonymizeParamsDictNoTag', {
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
     "copy_to": typing.NotRequired[InputPathType | None],
@@ -27,6 +26,7 @@ VDjunctAnonymizeParamsDictTagged = typing.TypedDict('VDjunctAnonymizeParamsDictT
     "copy_to": typing.NotRequired[InputPathType | None],
     "overwrite": bool,
 })
+VDjunctAnonymizeParamsDict = _VDjunctAnonymizeParamsDictNoTag | VDjunctAnonymizeParamsDictTagged
 
 
 class VDjunctAnonymizeOutputs(typing.NamedTuple):

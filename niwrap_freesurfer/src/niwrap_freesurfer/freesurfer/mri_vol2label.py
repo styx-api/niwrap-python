@@ -13,8 +13,7 @@ MRI_VOL2LABEL_METADATA = Metadata(
 )
 
 
-MriVol2labelParamsDict = typing.TypedDict('MriVol2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2label"]],
+_MriVol2labelParamsDictNoTag = typing.TypedDict('_MriVol2labelParamsDictNoTag', {
     "input": InputPathType,
     "label_id": typing.NotRequired[float | None],
     "threshold": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ MriVol2labelParamsDictTagged = typing.TypedDict('MriVol2labelParamsDictTagged', 
     "erosions": typing.NotRequired[float | None],
     "help": bool,
 })
+MriVol2labelParamsDict = _MriVol2labelParamsDictNoTag | MriVol2labelParamsDictTagged
 
 
 class MriVol2labelOutputs(typing.NamedTuple):

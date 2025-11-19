@@ -13,14 +13,14 @@ SEGMENT_MONKEY_METADATA = Metadata(
 )
 
 
-SegmentMonkeyParamsDict = typing.TypedDict('SegmentMonkeyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_monkey"]],
+_SegmentMonkeyParamsDictNoTag = typing.TypedDict('_SegmentMonkeyParamsDictNoTag', {
     "control_points": list[str],
 })
 SegmentMonkeyParamsDictTagged = typing.TypedDict('SegmentMonkeyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_monkey"],
     "control_points": list[str],
 })
+SegmentMonkeyParamsDict = _SegmentMonkeyParamsDictNoTag | SegmentMonkeyParamsDictTagged
 
 
 class SegmentMonkeyOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ REINFLATE_SUBJECT_LH_METADATA = Metadata(
 )
 
 
-ReinflateSubjectLhParamsDict = typing.TypedDict('ReinflateSubjectLhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject-lh"]],
+_ReinflateSubjectLhParamsDictNoTag = typing.TypedDict('_ReinflateSubjectLhParamsDictNoTag', {
     "subject_id": str,
 })
 ReinflateSubjectLhParamsDictTagged = typing.TypedDict('ReinflateSubjectLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reinflate_subject-lh"],
     "subject_id": str,
 })
+ReinflateSubjectLhParamsDict = _ReinflateSubjectLhParamsDictNoTag | ReinflateSubjectLhParamsDictTagged
 
 
 class ReinflateSubjectLhOutputs(typing.NamedTuple):

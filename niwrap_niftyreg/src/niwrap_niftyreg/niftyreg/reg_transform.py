@@ -13,8 +13,7 @@ REG_TRANSFORM_METADATA = Metadata(
 )
 
 
-RegTransformParamsDict = typing.TypedDict('RegTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_transform"]],
+_RegTransformParamsDictNoTag = typing.TypedDict('_RegTransformParamsDictNoTag', {
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
     "cpp2def_output": typing.NotRequired[str | None],
@@ -75,6 +74,7 @@ RegTransformParamsDictTagged = typing.TypedDict('RegTransformParamsDictTagged', 
     "comp_aff_2nd": typing.NotRequired[InputPathType | None],
     "comp_aff_output": typing.NotRequired[str | None],
 })
+RegTransformParamsDict = _RegTransformParamsDictNoTag | RegTransformParamsDictTagged
 
 
 class RegTransformOutputs(typing.NamedTuple):

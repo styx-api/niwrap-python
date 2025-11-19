@@ -13,8 +13,7 @@ V_3DEDGEDOG_METADATA = Metadata(
 )
 
 
-V3dedgedogParamsDict = typing.TypedDict('V3dedgedogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dedgedog"]],
+_V3dedgedogParamsDictNoTag = typing.TypedDict('_V3dedgedogParamsDictNoTag', {
     "input": InputPathType,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ V3dedgedogParamsDictTagged = typing.TypedDict('V3dedgedogParamsDictTagged', {
     "edge_bnd_scale": bool,
     "only2d": typing.NotRequired[str | None],
 })
+V3dedgedogParamsDict = _V3dedgedogParamsDictNoTag | V3dedgedogParamsDictTagged
 
 
 class V3dedgedogOutputs(typing.NamedTuple):

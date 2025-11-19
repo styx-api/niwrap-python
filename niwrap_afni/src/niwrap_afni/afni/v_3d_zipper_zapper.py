@@ -13,8 +13,7 @@ V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
 )
 
 
-V3dZipperZapperParamsDict = typing.TypedDict('V3dZipperZapperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dZipperZapper"]],
+_V3dZipperZapperParamsDictNoTag = typing.TypedDict('_V3dZipperZapperParamsDictNoTag', {
     "input_file": InputPathType,
     "output_prefix": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ V3dZipperZapperParamsDictTagged = typing.TypedDict('V3dZipperZapperParamsDictTag
     "min_corr_len": typing.NotRequired[float | None],
     "min_corr_corr": typing.NotRequired[float | None],
 })
+V3dZipperZapperParamsDict = _V3dZipperZapperParamsDictNoTag | V3dZipperZapperParamsDictTagged
 
 
 class V3dZipperZapperOutputs(typing.NamedTuple):

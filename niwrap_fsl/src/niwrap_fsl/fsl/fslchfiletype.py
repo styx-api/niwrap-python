@@ -13,8 +13,7 @@ FSLCHFILETYPE_METADATA = Metadata(
 )
 
 
-FslchfiletypeParamsDict = typing.TypedDict('FslchfiletypeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslchfiletype"]],
+_FslchfiletypeParamsDictNoTag = typing.TypedDict('_FslchfiletypeParamsDictNoTag', {
     "filetype": str,
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ FslchfiletypeParamsDictTagged = typing.TypedDict('FslchfiletypeParamsDictTagged'
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],
 })
+FslchfiletypeParamsDict = _FslchfiletypeParamsDictNoTag | FslchfiletypeParamsDictTagged
 
 
 class FslchfiletypeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TILE_IMAGES_METADATA = Metadata(
 )
 
 
-TileImagesParamsDict = typing.TypedDict('TileImagesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/TileImages"]],
+_TileImagesParamsDictNoTag = typing.TypedDict('_TileImagesParamsDictNoTag', {
     "image_dimension": int,
     "output_image": str,
     "layout": str,
@@ -27,6 +26,7 @@ TileImagesParamsDictTagged = typing.TypedDict('TileImagesParamsDictTagged', {
     "layout": str,
     "input_images": list[InputPathType],
 })
+TileImagesParamsDict = _TileImagesParamsDictNoTag | TileImagesParamsDictTagged
 
 
 class TileImagesOutputs(typing.NamedTuple):

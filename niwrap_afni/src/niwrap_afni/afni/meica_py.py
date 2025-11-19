@@ -13,8 +13,7 @@ MEICA_PY_METADATA = Metadata(
 )
 
 
-MeicaPyParamsDict = typing.TypedDict('MeicaPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/meica.py"]],
+_MeicaPyParamsDictNoTag = typing.TypedDict('_MeicaPyParamsDictNoTag', {
     "infile": InputPathType,
     "echo_times": str,
     "affine": str,
@@ -35,6 +34,7 @@ MeicaPyParamsDictTagged = typing.TypedDict('MeicaPyParamsDictTagged', {
     "threshold": typing.NotRequired[float | None],
     "debug": bool,
 })
+MeicaPyParamsDict = _MeicaPyParamsDictNoTag | MeicaPyParamsDictTagged
 
 
 class MeicaPyOutputs(typing.NamedTuple):

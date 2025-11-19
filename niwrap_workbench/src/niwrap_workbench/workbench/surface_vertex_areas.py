@@ -12,8 +12,7 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 )
 
 
-SurfaceVertexAreasParamsDict = typing.TypedDict('SurfaceVertexAreasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-vertex-areas"]],
+_SurfaceVertexAreasParamsDictNoTag = typing.TypedDict('_SurfaceVertexAreasParamsDictNoTag', {
     "metric": str,
     "surface": InputPathType,
 })
@@ -22,6 +21,7 @@ SurfaceVertexAreasParamsDictTagged = typing.TypedDict('SurfaceVertexAreasParamsD
     "metric": str,
     "surface": InputPathType,
 })
+SurfaceVertexAreasParamsDict = _SurfaceVertexAreasParamsDictNoTag | SurfaceVertexAreasParamsDictTagged
 
 
 class SurfaceVertexAreasOutputs(typing.NamedTuple):

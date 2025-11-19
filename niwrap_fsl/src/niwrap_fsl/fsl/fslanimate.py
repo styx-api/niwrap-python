@@ -13,8 +13,7 @@ FSLANIMATE_METADATA = Metadata(
 )
 
 
-FslanimateParamsDict = typing.TypedDict('FslanimateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslanimate"]],
+_FslanimateParamsDictNoTag = typing.TypedDict('_FslanimateParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ FslanimateParamsDictTagged = typing.TypedDict('FslanimateParamsDictTagged', {
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],
 })
+FslanimateParamsDict = _FslanimateParamsDictNoTag | FslanimateParamsDictTagged
 
 
 class FslanimateOutputs(typing.NamedTuple):

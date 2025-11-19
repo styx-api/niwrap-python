@@ -13,8 +13,7 @@ GDCMCONV_FS_METADATA = Metadata(
 )
 
 
-GdcmconvFsParamsDict = typing.TypedDict('GdcmconvFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gdcmconv.fs"]],
+_GdcmconvFsParamsDictNoTag = typing.TypedDict('_GdcmconvFsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "explicit_flag": bool,
@@ -99,6 +98,7 @@ GdcmconvFsParamsDictTagged = typing.TypedDict('GdcmconvFsParamsDictTagged', {
     "irreversible_flag": bool,
     "ignore_errors_flag": bool,
 })
+GdcmconvFsParamsDict = _GdcmconvFsParamsDictNoTag | GdcmconvFsParamsDictTagged
 
 
 class GdcmconvFsOutputs(typing.NamedTuple):

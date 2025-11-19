@@ -13,8 +13,7 @@ V_3D_TCORRELATE_METADATA = Metadata(
 )
 
 
-V3dTcorrelateParamsDict = typing.TypedDict('V3dTcorrelateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTcorrelate"]],
+_V3dTcorrelateParamsDictNoTag = typing.TypedDict('_V3dTcorrelateParamsDictNoTag', {
     "xset": InputPathType,
     "yset": InputPathType,
     "pearson": bool,
@@ -51,6 +50,7 @@ V3dTcorrelateParamsDictTagged = typing.TypedDict('V3dTcorrelateParamsDictTagged'
     "zcensor": bool,
     "prefix": typing.NotRequired[str | None],
 })
+V3dTcorrelateParamsDict = _V3dTcorrelateParamsDictNoTag | V3dTcorrelateParamsDictTagged
 
 
 class V3dTcorrelateOutputs(typing.NamedTuple):

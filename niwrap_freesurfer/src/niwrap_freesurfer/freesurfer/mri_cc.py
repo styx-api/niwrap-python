@@ -13,8 +13,7 @@ MRI_CC_METADATA = Metadata(
 )
 
 
-MriCcParamsDict = typing.TypedDict('MriCcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cc"]],
+_MriCcParamsDictNoTag = typing.TypedDict('_MriCcParamsDictNoTag', {
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
     "aseg_file": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ MriCcParamsDictTagged = typing.TypedDict('MriCcParamsDictTagged', {
     "skip_voxels": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
 })
+MriCcParamsDict = _MriCcParamsDictNoTag | MriCcParamsDictTagged
 
 
 class MriCcOutputs(typing.NamedTuple):

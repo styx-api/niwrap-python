@@ -13,8 +13,7 @@ MRI_CORRECT_SEGMENTATIONS_METADATA = Metadata(
 )
 
 
-MriCorrectSegmentationsParamsDict = typing.TypedDict('MriCorrectSegmentationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_correct_segmentations"]],
+_MriCorrectSegmentationsParamsDictNoTag = typing.TypedDict('_MriCorrectSegmentationsParamsDictNoTag', {
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })
@@ -23,6 +22,7 @@ MriCorrectSegmentationsParamsDictTagged = typing.TypedDict('MriCorrectSegmentati
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })
+MriCorrectSegmentationsParamsDict = _MriCorrectSegmentationsParamsDictNoTag | MriCorrectSegmentationsParamsDictTagged
 
 
 class MriCorrectSegmentationsOutputs(typing.NamedTuple):

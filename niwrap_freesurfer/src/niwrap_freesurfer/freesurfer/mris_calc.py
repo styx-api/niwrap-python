@@ -13,8 +13,7 @@ MRIS_CALC_METADATA = Metadata(
 )
 
 
-MrisCalcParamsDict = typing.TypedDict('MrisCalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_calc"]],
+_MrisCalcParamsDictNoTag = typing.TypedDict('_MrisCalcParamsDictNoTag', {
     "input_file1": InputPathType,
     "action": str,
     "input_file2_or_float": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ MrisCalcParamsDictTagged = typing.TypedDict('MrisCalcParamsDictTagged', {
     "label_file": typing.NotRequired[InputPathType | None],
     "verbosity": typing.NotRequired[str | None],
 })
+MrisCalcParamsDict = _MrisCalcParamsDictNoTag | MrisCalcParamsDictTagged
 
 
 class MrisCalcOutputs(typing.NamedTuple):

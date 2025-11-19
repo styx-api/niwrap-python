@@ -13,8 +13,7 @@ MRI_EXVIVO_NORM_METADATA = Metadata(
 )
 
 
-MriExvivoNormParamsDict = typing.TypedDict('MriExvivoNormParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_norm"]],
+_MriExvivoNormParamsDictNoTag = typing.TypedDict('_MriExvivoNormParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "hemi": str,
@@ -49,6 +48,7 @@ MriExvivoNormParamsDictTagged = typing.TypedDict('MriExvivoNormParamsDictTagged'
     "weights_file": typing.NotRequired[InputPathType | None],
     "gpu_number": typing.NotRequired[float | None],
 })
+MriExvivoNormParamsDict = _MriExvivoNormParamsDictNoTag | MriExvivoNormParamsDictTagged
 
 
 class MriExvivoNormOutputs(typing.NamedTuple):

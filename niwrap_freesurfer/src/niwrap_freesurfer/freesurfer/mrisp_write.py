@@ -13,8 +13,7 @@ MRISP_WRITE_METADATA = Metadata(
 )
 
 
-MrispWriteParamsDict = typing.TypedDict('MrispWriteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_write"]],
+_MrispWriteParamsDictNoTag = typing.TypedDict('_MrispWriteParamsDictNoTag', {
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
     "output_name": str,
@@ -41,6 +40,7 @@ MrispWriteParamsDictTagged = typing.TypedDict('MrispWriteParamsDictTagged', {
     "verbose_vertex": typing.NotRequired[float | None],
     "write_diagnostics": bool,
 })
+MrispWriteParamsDict = _MrispWriteParamsDictNoTag | MrispWriteParamsDictTagged
 
 
 class MrispWriteOutputs(typing.NamedTuple):

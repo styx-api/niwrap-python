@@ -13,8 +13,7 @@ FSL_HISTOGRAM_METADATA = Metadata(
 )
 
 
-FslHistogramParamsDict = typing.TypedDict('FslHistogramParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_histogram"]],
+_FslHistogramParamsDictNoTag = typing.TypedDict('_FslHistogramParamsDictNoTag', {
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
     "output_file": str,
@@ -69,6 +68,7 @@ FslHistogramParamsDictTagged = typing.TypedDict('FslHistogramParamsDictTagged', 
     "zoom_factor_duplicate": typing.NotRequired[float | None],
     "use_gmm_flag": bool,
 })
+FslHistogramParamsDict = _FslHistogramParamsDictNoTag | FslHistogramParamsDictTagged
 
 
 class FslHistogramOutputs(typing.NamedTuple):

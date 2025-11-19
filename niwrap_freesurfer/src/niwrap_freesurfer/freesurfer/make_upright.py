@@ -13,8 +13,7 @@ MAKE_UPRIGHT_METADATA = Metadata(
 )
 
 
-MakeUprightParamsDict = typing.TypedDict('MakeUprightParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_upright"]],
+_MakeUprightParamsDictNoTag = typing.TypedDict('_MakeUprightParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "transformation_map": InputPathType,
@@ -25,6 +24,7 @@ MakeUprightParamsDictTagged = typing.TypedDict('MakeUprightParamsDictTagged', {
     "output_image": str,
     "transformation_map": InputPathType,
 })
+MakeUprightParamsDict = _MakeUprightParamsDictNoTag | MakeUprightParamsDictTagged
 
 
 class MakeUprightOutputs(typing.NamedTuple):

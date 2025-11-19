@@ -13,1798 +13,1797 @@ C2D_METADATA = Metadata(
 )
 
 
-C2dAccumParamsDict = typing.TypedDict('C2dAccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["accum"]],
+_C2dAccumParamsDictNoTag = typing.TypedDict('_C2dAccumParamsDictNoTag', {
     "accum": str,
 })
 C2dAccumParamsDictTagged = typing.TypedDict('C2dAccumParamsDictTagged', {
     "@type": typing.Literal["accum"],
     "accum": str,
 })
+C2dAccumParamsDict = _C2dAccumParamsDictNoTag | C2dAccumParamsDictTagged
 
 
-C2dAcosParamsDict = typing.TypedDict('C2dAcosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["acos"]],
+_C2dAcosParamsDictNoTag = typing.TypedDict('_C2dAcosParamsDictNoTag', {
     "acos": str,
 })
 C2dAcosParamsDictTagged = typing.TypedDict('C2dAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
     "acos": str,
 })
+C2dAcosParamsDict = _C2dAcosParamsDictNoTag | C2dAcosParamsDictTagged
 
 
-C2dAddParamsDict = typing.TypedDict('C2dAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["add"]],
+_C2dAddParamsDictNoTag = typing.TypedDict('_C2dAddParamsDictNoTag', {
     "add": str,
 })
 C2dAddParamsDictTagged = typing.TypedDict('C2dAddParamsDictTagged', {
     "@type": typing.Literal["add"],
     "add": str,
 })
+C2dAddParamsDict = _C2dAddParamsDictNoTag | C2dAddParamsDictTagged
 
 
-C2dAlignLandmarksParamsDict = typing.TypedDict('C2dAlignLandmarksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+_C2dAlignLandmarksParamsDictNoTag = typing.TypedDict('_C2dAlignLandmarksParamsDictNoTag', {
     "align_landmarks": str,
 })
 C2dAlignLandmarksParamsDictTagged = typing.TypedDict('C2dAlignLandmarksParamsDictTagged', {
     "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
+C2dAlignLandmarksParamsDict = _C2dAlignLandmarksParamsDictNoTag | C2dAlignLandmarksParamsDictTagged
 
 
-C2dAnisotropicDiffusionParamsDict = typing.TypedDict('C2dAnisotropicDiffusionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+_C2dAnisotropicDiffusionParamsDictNoTag = typing.TypedDict('_C2dAnisotropicDiffusionParamsDictNoTag', {
     "anisotropic_diffusion": str,
 })
 C2dAnisotropicDiffusionParamsDictTagged = typing.TypedDict('C2dAnisotropicDiffusionParamsDictTagged', {
     "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
+C2dAnisotropicDiffusionParamsDict = _C2dAnisotropicDiffusionParamsDictNoTag | C2dAnisotropicDiffusionParamsDictTagged
 
 
-C2dAntialiasParamsDict = typing.TypedDict('C2dAntialiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["antialias"]],
+_C2dAntialiasParamsDictNoTag = typing.TypedDict('_C2dAntialiasParamsDictNoTag', {
     "antialias": str,
 })
 C2dAntialiasParamsDictTagged = typing.TypedDict('C2dAntialiasParamsDictTagged', {
     "@type": typing.Literal["antialias"],
     "antialias": str,
 })
+C2dAntialiasParamsDict = _C2dAntialiasParamsDictNoTag | C2dAntialiasParamsDictTagged
 
 
-C2dSetParamsDict = typing.TypedDict('C2dSetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set"]],
+_C2dSetParamsDictNoTag = typing.TypedDict('_C2dSetParamsDictNoTag', {
     "set": str,
 })
 C2dSetParamsDictTagged = typing.TypedDict('C2dSetParamsDictTagged', {
     "@type": typing.Literal["set"],
     "set": str,
 })
+C2dSetParamsDict = _C2dSetParamsDictNoTag | C2dSetParamsDictTagged
 
 
-C2dAsinParamsDict = typing.TypedDict('C2dAsinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["asin"]],
+_C2dAsinParamsDictNoTag = typing.TypedDict('_C2dAsinParamsDictNoTag', {
     "asin": str,
 })
 C2dAsinParamsDictTagged = typing.TypedDict('C2dAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
     "asin": str,
 })
+C2dAsinParamsDict = _C2dAsinParamsDictNoTag | C2dAsinParamsDictTagged
 
 
-C2dAtan2ParamsDict = typing.TypedDict('C2dAtan2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["atan2"]],
+_C2dAtan2ParamsDictNoTag = typing.TypedDict('_C2dAtan2ParamsDictNoTag', {
     "atan2": str,
 })
 C2dAtan2ParamsDictTagged = typing.TypedDict('C2dAtan2ParamsDictTagged', {
     "@type": typing.Literal["atan2"],
     "atan2": str,
 })
+C2dAtan2ParamsDict = _C2dAtan2ParamsDictNoTag | C2dAtan2ParamsDictTagged
 
 
-C2dBackgroundParamsDict = typing.TypedDict('C2dBackgroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["background"]],
+_C2dBackgroundParamsDictNoTag = typing.TypedDict('_C2dBackgroundParamsDictNoTag', {
     "background": str,
 })
 C2dBackgroundParamsDictTagged = typing.TypedDict('C2dBackgroundParamsDictTagged', {
     "@type": typing.Literal["background"],
     "background": str,
 })
+C2dBackgroundParamsDict = _C2dBackgroundParamsDictNoTag | C2dBackgroundParamsDictTagged
 
 
-C2dN4BiasCorrectionParamsDict = typing.TypedDict('C2dN4BiasCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+_C2dN4BiasCorrectionParamsDictNoTag = typing.TypedDict('_C2dN4BiasCorrectionParamsDictNoTag', {
     "n4_bias_correction": str,
 })
 C2dN4BiasCorrectionParamsDictTagged = typing.TypedDict('C2dN4BiasCorrectionParamsDictTagged', {
     "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
+C2dN4BiasCorrectionParamsDict = _C2dN4BiasCorrectionParamsDictNoTag | C2dN4BiasCorrectionParamsDictTagged
 
 
-C2dBinarizeParamsDict = typing.TypedDict('C2dBinarizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["binarize"]],
+_C2dBinarizeParamsDictNoTag = typing.TypedDict('_C2dBinarizeParamsDictNoTag', {
     "binarize": str,
 })
 C2dBinarizeParamsDictTagged = typing.TypedDict('C2dBinarizeParamsDictTagged', {
     "@type": typing.Literal["binarize"],
     "binarize": str,
 })
+C2dBinarizeParamsDict = _C2dBinarizeParamsDictNoTag | C2dBinarizeParamsDictTagged
 
 
-C2dCannyParamsDict = typing.TypedDict('C2dCannyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["canny"]],
+_C2dCannyParamsDictNoTag = typing.TypedDict('_C2dCannyParamsDictNoTag', {
     "canny": str,
 })
 C2dCannyParamsDictTagged = typing.TypedDict('C2dCannyParamsDictTagged', {
     "@type": typing.Literal["canny"],
     "canny": str,
 })
+C2dCannyParamsDict = _C2dCannyParamsDictNoTag | C2dCannyParamsDictTagged
 
 
-C2dCeilParamsDict = typing.TypedDict('C2dCeilParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ceil"]],
+_C2dCeilParamsDictNoTag = typing.TypedDict('_C2dCeilParamsDictNoTag', {
     "ceil": str,
 })
 C2dCeilParamsDictTagged = typing.TypedDict('C2dCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
     "ceil": str,
 })
+C2dCeilParamsDict = _C2dCeilParamsDictNoTag | C2dCeilParamsDictTagged
 
 
-C2dCentroidParamsDict = typing.TypedDict('C2dCentroidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid"]],
+_C2dCentroidParamsDictNoTag = typing.TypedDict('_C2dCentroidParamsDictNoTag', {
     "centroid": str,
 })
 C2dCentroidParamsDictTagged = typing.TypedDict('C2dCentroidParamsDictTagged', {
     "@type": typing.Literal["centroid"],
     "centroid": str,
 })
+C2dCentroidParamsDict = _C2dCentroidParamsDictNoTag | C2dCentroidParamsDictTagged
 
 
-C2dCentroidMarkParamsDict = typing.TypedDict('C2dCentroidMarkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+_C2dCentroidMarkParamsDictNoTag = typing.TypedDict('_C2dCentroidMarkParamsDictNoTag', {
     "centroid_mark": str,
 })
 C2dCentroidMarkParamsDictTagged = typing.TypedDict('C2dCentroidMarkParamsDictTagged', {
     "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
+C2dCentroidMarkParamsDict = _C2dCentroidMarkParamsDictNoTag | C2dCentroidMarkParamsDictTagged
 
 
-C2dConnectedComponentsParamsDict = typing.TypedDict('C2dConnectedComponentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+_C2dConnectedComponentsParamsDictNoTag = typing.TypedDict('_C2dConnectedComponentsParamsDictNoTag', {
     "connected_components": str,
 })
 C2dConnectedComponentsParamsDictTagged = typing.TypedDict('C2dConnectedComponentsParamsDictTagged', {
     "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
+C2dConnectedComponentsParamsDict = _C2dConnectedComponentsParamsDictNoTag | C2dConnectedComponentsParamsDictTagged
 
 
-C2dClearParamsDict = typing.TypedDict('C2dClearParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clear"]],
+_C2dClearParamsDictNoTag = typing.TypedDict('_C2dClearParamsDictNoTag', {
     "clear": str,
 })
 C2dClearParamsDictTagged = typing.TypedDict('C2dClearParamsDictTagged', {
     "@type": typing.Literal["clear"],
     "clear": str,
 })
+C2dClearParamsDict = _C2dClearParamsDictNoTag | C2dClearParamsDictTagged
 
 
-C2dClipParamsDict = typing.TypedDict('C2dClipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clip"]],
+_C2dClipParamsDictNoTag = typing.TypedDict('_C2dClipParamsDictNoTag', {
     "clip": str,
 })
 C2dClipParamsDictTagged = typing.TypedDict('C2dClipParamsDictTagged', {
     "@type": typing.Literal["clip"],
     "clip": str,
 })
+C2dClipParamsDict = _C2dClipParamsDictNoTag | C2dClipParamsDictTagged
 
 
-C2dColorMapParamsDict = typing.TypedDict('C2dColorMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["color_map"]],
+_C2dColorMapParamsDictNoTag = typing.TypedDict('_C2dColorMapParamsDictNoTag', {
     "color_map": str,
 })
 C2dColorMapParamsDictTagged = typing.TypedDict('C2dColorMapParamsDictTagged', {
     "@type": typing.Literal["color_map"],
     "color_map": str,
 })
+C2dColorMapParamsDict = _C2dColorMapParamsDictNoTag | C2dColorMapParamsDictTagged
 
 
-C2dCompressParamsDict = typing.TypedDict('C2dCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["compress"]],
+_C2dCompressParamsDictNoTag = typing.TypedDict('_C2dCompressParamsDictNoTag', {
     "compress": str,
 })
 C2dCompressParamsDictTagged = typing.TypedDict('C2dCompressParamsDictTagged', {
     "@type": typing.Literal["compress"],
     "compress": str,
 })
+C2dCompressParamsDict = _C2dCompressParamsDictNoTag | C2dCompressParamsDictTagged
 
 
-C2dNoCompressParamsDict = typing.TypedDict('C2dNoCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+_C2dNoCompressParamsDictNoTag = typing.TypedDict('_C2dNoCompressParamsDictNoTag', {
     "no_compress": str,
 })
 C2dNoCompressParamsDictTagged = typing.TypedDict('C2dNoCompressParamsDictTagged', {
     "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
+C2dNoCompressParamsDict = _C2dNoCompressParamsDictNoTag | C2dNoCompressParamsDictTagged
 
 
-C2dConvParamsDict = typing.TypedDict('C2dConvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["conv"]],
+_C2dConvParamsDictNoTag = typing.TypedDict('_C2dConvParamsDictNoTag', {
     "conv": str,
 })
 C2dConvParamsDictTagged = typing.TypedDict('C2dConvParamsDictTagged', {
     "@type": typing.Literal["conv"],
     "conv": str,
 })
+C2dConvParamsDict = _C2dConvParamsDictNoTag | C2dConvParamsDictTagged
 
 
-C2dCoordinateMapVoxelParamsDict = typing.TypedDict('C2dCoordinateMapVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+_C2dCoordinateMapVoxelParamsDictNoTag = typing.TypedDict('_C2dCoordinateMapVoxelParamsDictNoTag', {
     "coordinate_map_voxel": str,
 })
 C2dCoordinateMapVoxelParamsDictTagged = typing.TypedDict('C2dCoordinateMapVoxelParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
+C2dCoordinateMapVoxelParamsDict = _C2dCoordinateMapVoxelParamsDictNoTag | C2dCoordinateMapVoxelParamsDictTagged
 
 
-C2dCoordinateMapPhysicalParamsDict = typing.TypedDict('C2dCoordinateMapPhysicalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+_C2dCoordinateMapPhysicalParamsDictNoTag = typing.TypedDict('_C2dCoordinateMapPhysicalParamsDictNoTag', {
     "coordinate_map_physical": str,
 })
 C2dCoordinateMapPhysicalParamsDictTagged = typing.TypedDict('C2dCoordinateMapPhysicalParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
+C2dCoordinateMapPhysicalParamsDict = _C2dCoordinateMapPhysicalParamsDictNoTag | C2dCoordinateMapPhysicalParamsDictTagged
 
 
-C2dCopyTransformParamsDict = typing.TypedDict('C2dCopyTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+_C2dCopyTransformParamsDictNoTag = typing.TypedDict('_C2dCopyTransformParamsDictNoTag', {
     "copy_transform": str,
 })
 C2dCopyTransformParamsDictTagged = typing.TypedDict('C2dCopyTransformParamsDictTagged', {
     "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
+C2dCopyTransformParamsDict = _C2dCopyTransformParamsDictNoTag | C2dCopyTransformParamsDictTagged
 
 
-C2dCosParamsDict = typing.TypedDict('C2dCosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cos"]],
+_C2dCosParamsDictNoTag = typing.TypedDict('_C2dCosParamsDictNoTag', {
     "cos": str,
 })
 C2dCosParamsDictTagged = typing.TypedDict('C2dCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
     "cos": str,
 })
+C2dCosParamsDict = _C2dCosParamsDictNoTag | C2dCosParamsDictTagged
 
 
-C2dCreateParamsDict = typing.TypedDict('C2dCreateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["create"]],
+_C2dCreateParamsDictNoTag = typing.TypedDict('_C2dCreateParamsDictNoTag', {
     "create": str,
 })
 C2dCreateParamsDictTagged = typing.TypedDict('C2dCreateParamsDictTagged', {
     "@type": typing.Literal["create"],
     "create": str,
 })
+C2dCreateParamsDict = _C2dCreateParamsDictNoTag | C2dCreateParamsDictTagged
 
 
-C2dDicomSeriesListParamsDict = typing.TypedDict('C2dDicomSeriesListParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+_C2dDicomSeriesListParamsDictNoTag = typing.TypedDict('_C2dDicomSeriesListParamsDictNoTag', {
     "dicom_series_list": str,
 })
 C2dDicomSeriesListParamsDictTagged = typing.TypedDict('C2dDicomSeriesListParamsDictTagged', {
     "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
+C2dDicomSeriesListParamsDict = _C2dDicomSeriesListParamsDictNoTag | C2dDicomSeriesListParamsDictTagged
 
 
-C2dDicomSeriesReadParamsDict = typing.TypedDict('C2dDicomSeriesReadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+_C2dDicomSeriesReadParamsDictNoTag = typing.TypedDict('_C2dDicomSeriesReadParamsDictNoTag', {
     "dicom_series_read": str,
 })
 C2dDicomSeriesReadParamsDictTagged = typing.TypedDict('C2dDicomSeriesReadParamsDictTagged', {
     "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
+C2dDicomSeriesReadParamsDict = _C2dDicomSeriesReadParamsDictNoTag | C2dDicomSeriesReadParamsDictTagged
 
 
-C2dDilateParamsDict = typing.TypedDict('C2dDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dilate"]],
+_C2dDilateParamsDictNoTag = typing.TypedDict('_C2dDilateParamsDictNoTag', {
     "dilate": str,
 })
 C2dDilateParamsDictTagged = typing.TypedDict('C2dDilateParamsDictTagged', {
     "@type": typing.Literal["dilate"],
     "dilate": str,
 })
+C2dDilateParamsDict = _C2dDilateParamsDictNoTag | C2dDilateParamsDictTagged
 
 
-C2dDivideParamsDict = typing.TypedDict('C2dDivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["divide"]],
+_C2dDivideParamsDictNoTag = typing.TypedDict('_C2dDivideParamsDictNoTag', {
     "divide": str,
 })
 C2dDivideParamsDictTagged = typing.TypedDict('C2dDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
     "divide": str,
 })
+C2dDivideParamsDict = _C2dDivideParamsDictNoTag | C2dDivideParamsDictTagged
 
 
-C2dDuplicateParamsDict = typing.TypedDict('C2dDuplicateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+_C2dDuplicateParamsDictNoTag = typing.TypedDict('_C2dDuplicateParamsDictNoTag', {
     "duplicate": str,
 })
 C2dDuplicateParamsDictTagged = typing.TypedDict('C2dDuplicateParamsDictTagged', {
     "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
+C2dDuplicateParamsDict = _C2dDuplicateParamsDictNoTag | C2dDuplicateParamsDictTagged
 
 
-C2dEndaccumParamsDict = typing.TypedDict('C2dEndaccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+_C2dEndaccumParamsDictNoTag = typing.TypedDict('_C2dEndaccumParamsDictNoTag', {
     "endaccum": str,
 })
 C2dEndaccumParamsDictTagged = typing.TypedDict('C2dEndaccumParamsDictTagged', {
     "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
+C2dEndaccumParamsDict = _C2dEndaccumParamsDictNoTag | C2dEndaccumParamsDictTagged
 
 
-C2dEndforParamsDict = typing.TypedDict('C2dEndforParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endfor"]],
+_C2dEndforParamsDictNoTag = typing.TypedDict('_C2dEndforParamsDictNoTag', {
     "endfor": str,
 })
 C2dEndforParamsDictTagged = typing.TypedDict('C2dEndforParamsDictTagged', {
     "@type": typing.Literal["endfor"],
     "endfor": str,
 })
+C2dEndforParamsDict = _C2dEndforParamsDictNoTag | C2dEndforParamsDictTagged
 
 
-C2dErodeParamsDict = typing.TypedDict('C2dErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erode"]],
+_C2dErodeParamsDictNoTag = typing.TypedDict('_C2dErodeParamsDictNoTag', {
     "erode": str,
 })
 C2dErodeParamsDictTagged = typing.TypedDict('C2dErodeParamsDictTagged', {
     "@type": typing.Literal["erode"],
     "erode": str,
 })
+C2dErodeParamsDict = _C2dErodeParamsDictNoTag | C2dErodeParamsDictTagged
 
 
-C2dErfParamsDict = typing.TypedDict('C2dErfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erf"]],
+_C2dErfParamsDictNoTag = typing.TypedDict('_C2dErfParamsDictNoTag', {
     "erf": str,
 })
 C2dErfParamsDictTagged = typing.TypedDict('C2dErfParamsDictTagged', {
     "@type": typing.Literal["erf"],
     "erf": str,
 })
+C2dErfParamsDict = _C2dErfParamsDictNoTag | C2dErfParamsDictTagged
 
 
-C2dExpParamsDict = typing.TypedDict('C2dExpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exp"]],
+_C2dExpParamsDictNoTag = typing.TypedDict('_C2dExpParamsDictNoTag', {
     "exp": str,
 })
 C2dExpParamsDictTagged = typing.TypedDict('C2dExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
     "exp": str,
 })
+C2dExpParamsDict = _C2dExpParamsDictNoTag | C2dExpParamsDictTagged
 
 
-C2dExportPatchesParamsDict = typing.TypedDict('C2dExportPatchesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+_C2dExportPatchesParamsDictNoTag = typing.TypedDict('_C2dExportPatchesParamsDictNoTag', {
     "export_patches": str,
 })
 C2dExportPatchesParamsDictTagged = typing.TypedDict('C2dExportPatchesParamsDictTagged', {
     "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
+C2dExportPatchesParamsDict = _C2dExportPatchesParamsDictNoTag | C2dExportPatchesParamsDictTagged
 
 
-C2dExportPatchesAugParamsDict = typing.TypedDict('C2dExportPatchesAugParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+_C2dExportPatchesAugParamsDictNoTag = typing.TypedDict('_C2dExportPatchesAugParamsDictNoTag', {
     "export_patches_aug": str,
 })
 C2dExportPatchesAugParamsDictTagged = typing.TypedDict('C2dExportPatchesAugParamsDictTagged', {
     "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
+C2dExportPatchesAugParamsDict = _C2dExportPatchesAugParamsDictNoTag | C2dExportPatchesAugParamsDictTagged
 
 
-C2dExtrudeSegParamsDict = typing.TypedDict('C2dExtrudeSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+_C2dExtrudeSegParamsDictNoTag = typing.TypedDict('_C2dExtrudeSegParamsDictNoTag', {
     "extrude_seg": str,
 })
 C2dExtrudeSegParamsDictTagged = typing.TypedDict('C2dExtrudeSegParamsDictTagged', {
     "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
+C2dExtrudeSegParamsDict = _C2dExtrudeSegParamsDictNoTag | C2dExtrudeSegParamsDictTagged
 
 
-C2dFillBackgroundWithNoiseParamsDict = typing.TypedDict('C2dFillBackgroundWithNoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+_C2dFillBackgroundWithNoiseParamsDictNoTag = typing.TypedDict('_C2dFillBackgroundWithNoiseParamsDictNoTag', {
     "fill_background_with_noise": str,
 })
 C2dFillBackgroundWithNoiseParamsDictTagged = typing.TypedDict('C2dFillBackgroundWithNoiseParamsDictTagged', {
     "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
+C2dFillBackgroundWithNoiseParamsDict = _C2dFillBackgroundWithNoiseParamsDictNoTag | C2dFillBackgroundWithNoiseParamsDictTagged
 
 
-C2dFftParamsDict = typing.TypedDict('C2dFftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fft"]],
+_C2dFftParamsDictNoTag = typing.TypedDict('_C2dFftParamsDictNoTag', {
     "fft": str,
 })
 C2dFftParamsDictTagged = typing.TypedDict('C2dFftParamsDictTagged', {
     "@type": typing.Literal["fft"],
     "fft": str,
 })
+C2dFftParamsDict = _C2dFftParamsDictNoTag | C2dFftParamsDictTagged
 
 
-C2dFlipParamsDict = typing.TypedDict('C2dFlipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flip"]],
+_C2dFlipParamsDictNoTag = typing.TypedDict('_C2dFlipParamsDictNoTag', {
     "flip": str,
 })
 C2dFlipParamsDictTagged = typing.TypedDict('C2dFlipParamsDictTagged', {
     "@type": typing.Literal["flip"],
     "flip": str,
 })
+C2dFlipParamsDict = _C2dFlipParamsDictNoTag | C2dFlipParamsDictTagged
 
 
-C2dFloorParamsDict = typing.TypedDict('C2dFloorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["floor"]],
+_C2dFloorParamsDictNoTag = typing.TypedDict('_C2dFloorParamsDictNoTag', {
     "floor": str,
 })
 C2dFloorParamsDictTagged = typing.TypedDict('C2dFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
     "floor": str,
 })
+C2dFloorParamsDict = _C2dFloorParamsDictNoTag | C2dFloorParamsDictTagged
 
 
-C2dForeachParamsDict = typing.TypedDict('C2dForeachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach"]],
+_C2dForeachParamsDictNoTag = typing.TypedDict('_C2dForeachParamsDictNoTag', {
     "foreach": str,
 })
 C2dForeachParamsDictTagged = typing.TypedDict('C2dForeachParamsDictTagged', {
     "@type": typing.Literal["foreach"],
     "foreach": str,
 })
+C2dForeachParamsDict = _C2dForeachParamsDictNoTag | C2dForeachParamsDictTagged
 
 
-C2dForeachCompParamsDict = typing.TypedDict('C2dForeachCompParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+_C2dForeachCompParamsDictNoTag = typing.TypedDict('_C2dForeachCompParamsDictNoTag', {
     "foreach_comp": str,
 })
 C2dForeachCompParamsDictTagged = typing.TypedDict('C2dForeachCompParamsDictTagged', {
     "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
+C2dForeachCompParamsDict = _C2dForeachCompParamsDictNoTag | C2dForeachCompParamsDictTagged
 
 
-C2dGlmParamsDict = typing.TypedDict('C2dGlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["glm"]],
+_C2dGlmParamsDictNoTag = typing.TypedDict('_C2dGlmParamsDictNoTag', {
     "glm": str,
 })
 C2dGlmParamsDictTagged = typing.TypedDict('C2dGlmParamsDictTagged', {
     "@type": typing.Literal["glm"],
     "glm": str,
 })
+C2dGlmParamsDict = _C2dGlmParamsDictNoTag | C2dGlmParamsDictTagged
 
 
-C2dGradientParamsDict = typing.TypedDict('C2dGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gradient"]],
+_C2dGradientParamsDictNoTag = typing.TypedDict('_C2dGradientParamsDictNoTag', {
     "gradient": str,
 })
 C2dGradientParamsDictTagged = typing.TypedDict('C2dGradientParamsDictTagged', {
     "@type": typing.Literal["gradient"],
     "gradient": str,
 })
+C2dGradientParamsDict = _C2dGradientParamsDictNoTag | C2dGradientParamsDictTagged
 
 
-C2dHelpParamsDict = typing.TypedDict('C2dHelpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["_help"]],
+_C2dHelpParamsDictNoTag = typing.TypedDict('_C2dHelpParamsDictNoTag', {
     "_help": str,
 })
 C2dHelpParamsDictTagged = typing.TypedDict('C2dHelpParamsDictTagged', {
     "@type": typing.Literal["_help"],
     "_help": str,
 })
+C2dHelpParamsDict = _C2dHelpParamsDictNoTag | C2dHelpParamsDictTagged
 
 
-C2dHolefillParamsDict = typing.TypedDict('C2dHolefillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["holefill"]],
+_C2dHolefillParamsDictNoTag = typing.TypedDict('_C2dHolefillParamsDictNoTag', {
     "holefill": str,
 })
 C2dHolefillParamsDictTagged = typing.TypedDict('C2dHolefillParamsDictTagged', {
     "@type": typing.Literal["holefill"],
     "holefill": str,
 })
+C2dHolefillParamsDict = _C2dHolefillParamsDictNoTag | C2dHolefillParamsDictTagged
 
 
-C2dHessianEigenvaluesParamsDict = typing.TypedDict('C2dHessianEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+_C2dHessianEigenvaluesParamsDictNoTag = typing.TypedDict('_C2dHessianEigenvaluesParamsDictNoTag', {
     "hessian_eigenvalues": str,
 })
 C2dHessianEigenvaluesParamsDictTagged = typing.TypedDict('C2dHessianEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
+C2dHessianEigenvaluesParamsDict = _C2dHessianEigenvaluesParamsDictNoTag | C2dHessianEigenvaluesParamsDictTagged
 
 
-C2dHessianObjectnessParamsDict = typing.TypedDict('C2dHessianObjectnessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+_C2dHessianObjectnessParamsDictNoTag = typing.TypedDict('_C2dHessianObjectnessParamsDictNoTag', {
     "hessian_objectness": str,
 })
 C2dHessianObjectnessParamsDictTagged = typing.TypedDict('C2dHessianObjectnessParamsDictTagged', {
     "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
+C2dHessianObjectnessParamsDict = _C2dHessianObjectnessParamsDictNoTag | C2dHessianObjectnessParamsDictTagged
 
 
-C2dHistogramMatchParamsDict = typing.TypedDict('C2dHistogramMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+_C2dHistogramMatchParamsDictNoTag = typing.TypedDict('_C2dHistogramMatchParamsDictNoTag', {
     "histogram_match": str,
 })
 C2dHistogramMatchParamsDictTagged = typing.TypedDict('C2dHistogramMatchParamsDictTagged', {
     "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
+C2dHistogramMatchParamsDict = _C2dHistogramMatchParamsDictNoTag | C2dHistogramMatchParamsDictTagged
 
 
-C2dInfoParamsDict = typing.TypedDict('C2dInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info"]],
+_C2dInfoParamsDictNoTag = typing.TypedDict('_C2dInfoParamsDictNoTag', {
     "info": str,
 })
 C2dInfoParamsDictTagged = typing.TypedDict('C2dInfoParamsDictTagged', {
     "@type": typing.Literal["info"],
     "info": str,
 })
+C2dInfoParamsDict = _C2dInfoParamsDictNoTag | C2dInfoParamsDictTagged
 
 
-C2dInfoFullParamsDict = typing.TypedDict('C2dInfoFullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info_full"]],
+_C2dInfoFullParamsDictNoTag = typing.TypedDict('_C2dInfoFullParamsDictNoTag', {
     "info_full": str,
 })
 C2dInfoFullParamsDictTagged = typing.TypedDict('C2dInfoFullParamsDictTagged', {
     "@type": typing.Literal["info_full"],
     "info_full": str,
 })
+C2dInfoFullParamsDict = _C2dInfoFullParamsDictNoTag | C2dInfoFullParamsDictTagged
 
 
-C2dInsertParamsDict = typing.TypedDict('C2dInsertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["insert"]],
+_C2dInsertParamsDictNoTag = typing.TypedDict('_C2dInsertParamsDictNoTag', {
     "insert": str,
 })
 C2dInsertParamsDictTagged = typing.TypedDict('C2dInsertParamsDictTagged', {
     "@type": typing.Literal["insert"],
     "insert": str,
 })
+C2dInsertParamsDict = _C2dInsertParamsDictNoTag | C2dInsertParamsDictTagged
 
 
-C2dInterpolationParamsDict = typing.TypedDict('C2dInterpolationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+_C2dInterpolationParamsDictNoTag = typing.TypedDict('_C2dInterpolationParamsDictNoTag', {
     "interpolation": str,
 })
 C2dInterpolationParamsDictTagged = typing.TypedDict('C2dInterpolationParamsDictTagged', {
     "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
+C2dInterpolationParamsDict = _C2dInterpolationParamsDictNoTag | C2dInterpolationParamsDictTagged
 
 
-C2dIterationsParamsDict = typing.TypedDict('C2dIterationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["iterations"]],
+_C2dIterationsParamsDictNoTag = typing.TypedDict('_C2dIterationsParamsDictNoTag', {
     "iterations": str,
 })
 C2dIterationsParamsDictTagged = typing.TypedDict('C2dIterationsParamsDictTagged', {
     "@type": typing.Literal["iterations"],
     "iterations": str,
 })
+C2dIterationsParamsDict = _C2dIterationsParamsDictNoTag | C2dIterationsParamsDictTagged
 
 
-C2dLabelOverlapParamsDict = typing.TypedDict('C2dLabelOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+_C2dLabelOverlapParamsDictNoTag = typing.TypedDict('_C2dLabelOverlapParamsDictNoTag', {
     "label_overlap": str,
 })
 C2dLabelOverlapParamsDictTagged = typing.TypedDict('C2dLabelOverlapParamsDictTagged', {
     "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
+C2dLabelOverlapParamsDict = _C2dLabelOverlapParamsDictNoTag | C2dLabelOverlapParamsDictTagged
 
 
-C2dLabelStatisticsParamsDict = typing.TypedDict('C2dLabelStatisticsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+_C2dLabelStatisticsParamsDictNoTag = typing.TypedDict('_C2dLabelStatisticsParamsDictNoTag', {
     "label_statistics": str,
 })
 C2dLabelStatisticsParamsDictTagged = typing.TypedDict('C2dLabelStatisticsParamsDictTagged', {
     "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
+C2dLabelStatisticsParamsDict = _C2dLabelStatisticsParamsDictNoTag | C2dLabelStatisticsParamsDictTagged
 
 
-C2dLandmarksToSpheresParamsDict = typing.TypedDict('C2dLandmarksToSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+_C2dLandmarksToSpheresParamsDictNoTag = typing.TypedDict('_C2dLandmarksToSpheresParamsDictNoTag', {
     "landmarks_to_spheres": str,
 })
 C2dLandmarksToSpheresParamsDictTagged = typing.TypedDict('C2dLandmarksToSpheresParamsDictTagged', {
     "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
+C2dLandmarksToSpheresParamsDict = _C2dLandmarksToSpheresParamsDictNoTag | C2dLandmarksToSpheresParamsDictTagged
 
 
-C2dLaplacianParamsDict = typing.TypedDict('C2dLaplacianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+_C2dLaplacianParamsDictNoTag = typing.TypedDict('_C2dLaplacianParamsDictNoTag', {
     "laplacian": str,
 })
 C2dLaplacianParamsDictTagged = typing.TypedDict('C2dLaplacianParamsDictTagged', {
     "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
+C2dLaplacianParamsDict = _C2dLaplacianParamsDictNoTag | C2dLaplacianParamsDictTagged
 
 
-C2dLevelsetParamsDict = typing.TypedDict('C2dLevelsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset"]],
+_C2dLevelsetParamsDictNoTag = typing.TypedDict('_C2dLevelsetParamsDictNoTag', {
     "levelset": str,
 })
 C2dLevelsetParamsDictTagged = typing.TypedDict('C2dLevelsetParamsDictTagged', {
     "@type": typing.Literal["levelset"],
     "levelset": str,
 })
+C2dLevelsetParamsDict = _C2dLevelsetParamsDictNoTag | C2dLevelsetParamsDictTagged
 
 
-C2dLevelsetCurvatureParamsDict = typing.TypedDict('C2dLevelsetCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+_C2dLevelsetCurvatureParamsDictNoTag = typing.TypedDict('_C2dLevelsetCurvatureParamsDictNoTag', {
     "levelset_curvature": str,
 })
 C2dLevelsetCurvatureParamsDictTagged = typing.TypedDict('C2dLevelsetCurvatureParamsDictTagged', {
     "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
+C2dLevelsetCurvatureParamsDict = _C2dLevelsetCurvatureParamsDictNoTag | C2dLevelsetCurvatureParamsDictTagged
 
 
-C2dLevelsetAdvectionParamsDict = typing.TypedDict('C2dLevelsetAdvectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+_C2dLevelsetAdvectionParamsDictNoTag = typing.TypedDict('_C2dLevelsetAdvectionParamsDictNoTag', {
     "levelset_advection": str,
 })
 C2dLevelsetAdvectionParamsDictTagged = typing.TypedDict('C2dLevelsetAdvectionParamsDictTagged', {
     "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
+C2dLevelsetAdvectionParamsDict = _C2dLevelsetAdvectionParamsDictNoTag | C2dLevelsetAdvectionParamsDictTagged
 
 
-C2dLogParamsDict = typing.TypedDict('C2dLogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log"]],
+_C2dLogParamsDictNoTag = typing.TypedDict('_C2dLogParamsDictNoTag', {
     "log": str,
 })
 C2dLogParamsDictTagged = typing.TypedDict('C2dLogParamsDictTagged', {
     "@type": typing.Literal["log"],
     "log": str,
 })
+C2dLogParamsDict = _C2dLogParamsDictNoTag | C2dLogParamsDictTagged
 
 
-C2dLog10ParamsDict = typing.TypedDict('C2dLog10ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log10"]],
+_C2dLog10ParamsDictNoTag = typing.TypedDict('_C2dLog10ParamsDictNoTag', {
     "log10": str,
 })
 C2dLog10ParamsDictTagged = typing.TypedDict('C2dLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
     "log10": str,
 })
+C2dLog10ParamsDict = _C2dLog10ParamsDictNoTag | C2dLog10ParamsDictTagged
 
 
-C2dManualParamsDict = typing.TypedDict('C2dManualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["manual"]],
+_C2dManualParamsDictNoTag = typing.TypedDict('_C2dManualParamsDictNoTag', {
     "manual": str,
 })
 C2dManualParamsDictTagged = typing.TypedDict('C2dManualParamsDictTagged', {
     "@type": typing.Literal["manual"],
     "manual": str,
 })
+C2dManualParamsDict = _C2dManualParamsDictNoTag | C2dManualParamsDictTagged
 
 
-C2dMatchBoundingBoxParamsDict = typing.TypedDict('C2dMatchBoundingBoxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+_C2dMatchBoundingBoxParamsDictNoTag = typing.TypedDict('_C2dMatchBoundingBoxParamsDictNoTag', {
     "match_bounding_box": str,
 })
 C2dMatchBoundingBoxParamsDictTagged = typing.TypedDict('C2dMatchBoundingBoxParamsDictTagged', {
     "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
+C2dMatchBoundingBoxParamsDict = _C2dMatchBoundingBoxParamsDictNoTag | C2dMatchBoundingBoxParamsDictTagged
 
 
-C2dMaximumParamsDict = typing.TypedDict('C2dMaximumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["maximum"]],
+_C2dMaximumParamsDictNoTag = typing.TypedDict('_C2dMaximumParamsDictNoTag', {
     "maximum": str,
 })
 C2dMaximumParamsDictTagged = typing.TypedDict('C2dMaximumParamsDictTagged', {
     "@type": typing.Literal["maximum"],
     "maximum": str,
 })
+C2dMaximumParamsDict = _C2dMaximumParamsDictNoTag | C2dMaximumParamsDictTagged
 
 
-C2dMulticomponentSplitParamsDict = typing.TypedDict('C2dMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+_C2dMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C2dMulticomponentSplitParamsDictNoTag', {
     "multicomponent_split": str,
 })
 C2dMulticomponentSplitParamsDictTagged = typing.TypedDict('C2dMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
+C2dMulticomponentSplitParamsDict = _C2dMulticomponentSplitParamsDictNoTag | C2dMulticomponentSplitParamsDictTagged
 
 
-C2dMeanParamsDict = typing.TypedDict('C2dMeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean"]],
+_C2dMeanParamsDictNoTag = typing.TypedDict('_C2dMeanParamsDictNoTag', {
     "mean": str,
 })
 C2dMeanParamsDictTagged = typing.TypedDict('C2dMeanParamsDictTagged', {
     "@type": typing.Literal["mean"],
     "mean": str,
 })
+C2dMeanParamsDict = _C2dMeanParamsDictNoTag | C2dMeanParamsDictTagged
 
 
-C2dMedianFilterParamsDict = typing.TypedDict('C2dMedianFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+_C2dMedianFilterParamsDictNoTag = typing.TypedDict('_C2dMedianFilterParamsDictNoTag', {
     "median_filter": str,
 })
 C2dMedianFilterParamsDictTagged = typing.TypedDict('C2dMedianFilterParamsDictTagged', {
     "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
+C2dMedianFilterParamsDict = _C2dMedianFilterParamsDictNoTag | C2dMedianFilterParamsDictTagged
 
 
-C2dMergeParamsDict = typing.TypedDict('C2dMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["merge"]],
+_C2dMergeParamsDictNoTag = typing.TypedDict('_C2dMergeParamsDictNoTag', {
     "merge": str,
 })
 C2dMergeParamsDictTagged = typing.TypedDict('C2dMergeParamsDictTagged', {
     "@type": typing.Literal["merge"],
     "merge": str,
 })
+C2dMergeParamsDict = _C2dMergeParamsDictNoTag | C2dMergeParamsDictTagged
 
 
-C2dMeanFilterParamsDict = typing.TypedDict('C2dMeanFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+_C2dMeanFilterParamsDictNoTag = typing.TypedDict('_C2dMeanFilterParamsDictNoTag', {
     "mean_filter": str,
 })
 C2dMeanFilterParamsDictTagged = typing.TypedDict('C2dMeanFilterParamsDictTagged', {
     "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
+C2dMeanFilterParamsDict = _C2dMeanFilterParamsDictNoTag | C2dMeanFilterParamsDictTagged
 
 
-C2dMutualInfoParamsDict = typing.TypedDict('C2dMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+_C2dMutualInfoParamsDictNoTag = typing.TypedDict('_C2dMutualInfoParamsDictNoTag', {
     "mutual_info": str,
 })
 C2dMutualInfoParamsDictTagged = typing.TypedDict('C2dMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
+C2dMutualInfoParamsDict = _C2dMutualInfoParamsDictNoTag | C2dMutualInfoParamsDictTagged
 
 
-C2dMinimumParamsDict = typing.TypedDict('C2dMinimumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["minimum"]],
+_C2dMinimumParamsDictNoTag = typing.TypedDict('_C2dMinimumParamsDictNoTag', {
     "minimum": str,
 })
 C2dMinimumParamsDictTagged = typing.TypedDict('C2dMinimumParamsDictTagged', {
     "@type": typing.Literal["minimum"],
     "minimum": str,
 })
+C2dMinimumParamsDict = _C2dMinimumParamsDictNoTag | C2dMinimumParamsDictTagged
 
 
-C2dMixtureModelParamsDict = typing.TypedDict('C2dMixtureModelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+_C2dMixtureModelParamsDictNoTag = typing.TypedDict('_C2dMixtureModelParamsDictNoTag', {
     "mixture_model": str,
 })
 C2dMixtureModelParamsDictTagged = typing.TypedDict('C2dMixtureModelParamsDictTagged', {
     "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
+C2dMixtureModelParamsDict = _C2dMixtureModelParamsDictNoTag | C2dMixtureModelParamsDictTagged
 
 
-C2dMomentsParamsDict = typing.TypedDict('C2dMomentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["moments"]],
+_C2dMomentsParamsDictNoTag = typing.TypedDict('_C2dMomentsParamsDictNoTag', {
     "moments": str,
 })
 C2dMomentsParamsDictTagged = typing.TypedDict('C2dMomentsParamsDictTagged', {
     "@type": typing.Literal["moments"],
     "moments": str,
 })
+C2dMomentsParamsDict = _C2dMomentsParamsDictNoTag | C2dMomentsParamsDictTagged
 
 
-C2dMattesMutualInfoParamsDict = typing.TypedDict('C2dMattesMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+_C2dMattesMutualInfoParamsDictNoTag = typing.TypedDict('_C2dMattesMutualInfoParamsDictNoTag', {
     "mattes_mutual_info": str,
 })
 C2dMattesMutualInfoParamsDictTagged = typing.TypedDict('C2dMattesMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
+C2dMattesMutualInfoParamsDict = _C2dMattesMutualInfoParamsDictNoTag | C2dMattesMutualInfoParamsDictTagged
 
 
-C2dMeanSquareParamsDict = typing.TypedDict('C2dMeanSquareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+_C2dMeanSquareParamsDictNoTag = typing.TypedDict('_C2dMeanSquareParamsDictNoTag', {
     "mean_square": str,
 })
 C2dMeanSquareParamsDictTagged = typing.TypedDict('C2dMeanSquareParamsDictTagged', {
     "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
+C2dMeanSquareParamsDict = _C2dMeanSquareParamsDictNoTag | C2dMeanSquareParamsDictTagged
 
 
-C2dMultiplyParamsDict = typing.TypedDict('C2dMultiplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiply"]],
+_C2dMultiplyParamsDictNoTag = typing.TypedDict('_C2dMultiplyParamsDictNoTag', {
     "multiply": str,
 })
 C2dMultiplyParamsDictTagged = typing.TypedDict('C2dMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
     "multiply": str,
 })
+C2dMultiplyParamsDict = _C2dMultiplyParamsDictNoTag | C2dMultiplyParamsDictTagged
 
 
-C2dNormalizedCrossCorrelationParamsDict = typing.TypedDict('C2dNormalizedCrossCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+_C2dNormalizedCrossCorrelationParamsDictNoTag = typing.TypedDict('_C2dNormalizedCrossCorrelationParamsDictNoTag', {
     "normalized_cross_correlation": str,
 })
 C2dNormalizedCrossCorrelationParamsDictTagged = typing.TypedDict('C2dNormalizedCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
+C2dNormalizedCrossCorrelationParamsDict = _C2dNormalizedCrossCorrelationParamsDictNoTag | C2dNormalizedCrossCorrelationParamsDictTagged
 
 
-C2dNormalizedCorrelationParamsDict = typing.TypedDict('C2dNormalizedCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+_C2dNormalizedCorrelationParamsDictNoTag = typing.TypedDict('_C2dNormalizedCorrelationParamsDictNoTag', {
     "normalized_correlation": str,
 })
 C2dNormalizedCorrelationParamsDictTagged = typing.TypedDict('C2dNormalizedCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
+C2dNormalizedCorrelationParamsDict = _C2dNormalizedCorrelationParamsDictNoTag | C2dNormalizedCorrelationParamsDictTagged
 
 
-C2dNormalizedMutualInfoParamsDict = typing.TypedDict('C2dNormalizedMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+_C2dNormalizedMutualInfoParamsDictNoTag = typing.TypedDict('_C2dNormalizedMutualInfoParamsDictNoTag', {
     "normalized_mutual_info": str,
 })
 C2dNormalizedMutualInfoParamsDictTagged = typing.TypedDict('C2dNormalizedMutualInfoParamsDictTagged', {
     "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
+C2dNormalizedMutualInfoParamsDict = _C2dNormalizedMutualInfoParamsDictNoTag | C2dNormalizedMutualInfoParamsDictTagged
 
 
-C2dNoiseGaussianParamsDict = typing.TypedDict('C2dNoiseGaussianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+_C2dNoiseGaussianParamsDictNoTag = typing.TypedDict('_C2dNoiseGaussianParamsDictNoTag', {
     "noise_gaussian": str,
 })
 C2dNoiseGaussianParamsDictTagged = typing.TypedDict('C2dNoiseGaussianParamsDictTagged', {
     "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
+C2dNoiseGaussianParamsDict = _C2dNoiseGaussianParamsDictNoTag | C2dNoiseGaussianParamsDictTagged
 
 
-C2dNoisePoissonParamsDict = typing.TypedDict('C2dNoisePoissonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+_C2dNoisePoissonParamsDictNoTag = typing.TypedDict('_C2dNoisePoissonParamsDictNoTag', {
     "noise_poisson": str,
 })
 C2dNoisePoissonParamsDictTagged = typing.TypedDict('C2dNoisePoissonParamsDictTagged', {
     "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
+C2dNoisePoissonParamsDict = _C2dNoisePoissonParamsDictNoTag | C2dNoisePoissonParamsDictTagged
 
 
-C2dNoiseSpeckleParamsDict = typing.TypedDict('C2dNoiseSpeckleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+_C2dNoiseSpeckleParamsDictNoTag = typing.TypedDict('_C2dNoiseSpeckleParamsDictNoTag', {
     "noise_speckle": str,
 })
 C2dNoiseSpeckleParamsDictTagged = typing.TypedDict('C2dNoiseSpeckleParamsDictTagged', {
     "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
+C2dNoiseSpeckleParamsDict = _C2dNoiseSpeckleParamsDictNoTag | C2dNoiseSpeckleParamsDictTagged
 
 
-C2dNoiseSaltPepperParamsDict = typing.TypedDict('C2dNoiseSaltPepperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+_C2dNoiseSaltPepperParamsDictNoTag = typing.TypedDict('_C2dNoiseSaltPepperParamsDictNoTag', {
     "noise_salt_pepper": str,
 })
 C2dNoiseSaltPepperParamsDictTagged = typing.TypedDict('C2dNoiseSaltPepperParamsDictTagged', {
     "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
+C2dNoiseSaltPepperParamsDict = _C2dNoiseSaltPepperParamsDictNoTag | C2dNoiseSaltPepperParamsDictTagged
 
 
-C2dNoMulticomponentSplitParamsDict = typing.TypedDict('C2dNoMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+_C2dNoMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C2dNoMulticomponentSplitParamsDictNoTag', {
     "no_multicomponent_split": str,
 })
 C2dNoMulticomponentSplitParamsDictTagged = typing.TypedDict('C2dNoMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
+C2dNoMulticomponentSplitParamsDict = _C2dNoMulticomponentSplitParamsDictNoTag | C2dNoMulticomponentSplitParamsDictTagged
 
 
-C2dNormalizeLocalWindowParamsDict = typing.TypedDict('C2dNormalizeLocalWindowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+_C2dNormalizeLocalWindowParamsDictNoTag = typing.TypedDict('_C2dNormalizeLocalWindowParamsDictNoTag', {
     "normalize_local_window": str,
 })
 C2dNormalizeLocalWindowParamsDictTagged = typing.TypedDict('C2dNormalizeLocalWindowParamsDictTagged', {
     "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
+C2dNormalizeLocalWindowParamsDict = _C2dNormalizeLocalWindowParamsDictNoTag | C2dNormalizeLocalWindowParamsDictTagged
 
 
-C2dNormpdfParamsDict = typing.TypedDict('C2dNormpdfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+_C2dNormpdfParamsDictNoTag = typing.TypedDict('_C2dNormpdfParamsDictNoTag', {
     "normpdf": str,
 })
 C2dNormpdfParamsDictTagged = typing.TypedDict('C2dNormpdfParamsDictTagged', {
     "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
+C2dNormpdfParamsDict = _C2dNormpdfParamsDictNoTag | C2dNormpdfParamsDictTagged
 
 
-C2dNoroundParamsDict = typing.TypedDict('C2dNoroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noround"]],
+_C2dNoroundParamsDictNoTag = typing.TypedDict('_C2dNoroundParamsDictNoTag', {
     "noround": str,
 })
 C2dNoroundParamsDictTagged = typing.TypedDict('C2dNoroundParamsDictTagged', {
     "@type": typing.Literal["noround"],
     "noround": str,
 })
+C2dNoroundParamsDict = _C2dNoroundParamsDictNoTag | C2dNoroundParamsDictTagged
 
 
-C2dNospmParamsDict = typing.TypedDict('C2dNospmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nospm"]],
+_C2dNospmParamsDictNoTag = typing.TypedDict('_C2dNospmParamsDictNoTag', {
     "nospm": str,
 })
 C2dNospmParamsDictTagged = typing.TypedDict('C2dNospmParamsDictTagged', {
     "@type": typing.Literal["nospm"],
     "nospm": str,
 })
+C2dNospmParamsDict = _C2dNospmParamsDictNoTag | C2dNospmParamsDictTagged
 
 
-C2dOutputParamsDict = typing.TypedDict('C2dOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output"]],
+_C2dOutputParamsDictNoTag = typing.TypedDict('_C2dOutputParamsDictNoTag', {
     "output": str,
 })
 C2dOutputParamsDictTagged = typing.TypedDict('C2dOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "output": str,
 })
+C2dOutputParamsDict = _C2dOutputParamsDictNoTag | C2dOutputParamsDictTagged
 
 
-C2dOutputMulticomponentParamsDict = typing.TypedDict('C2dOutputMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+_C2dOutputMulticomponentParamsDictNoTag = typing.TypedDict('_C2dOutputMulticomponentParamsDictNoTag', {
     "output_multicomponent": str,
 })
 C2dOutputMulticomponentParamsDictTagged = typing.TypedDict('C2dOutputMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
+C2dOutputMulticomponentParamsDict = _C2dOutputMulticomponentParamsDictNoTag | C2dOutputMulticomponentParamsDictTagged
 
 
-C2dOutputMultipleMulticomponentParamsDict = typing.TypedDict('C2dOutputMultipleMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+_C2dOutputMultipleMulticomponentParamsDictNoTag = typing.TypedDict('_C2dOutputMultipleMulticomponentParamsDictNoTag', {
     "output_multiple_multicomponent": str,
 })
 C2dOutputMultipleMulticomponentParamsDictTagged = typing.TypedDict('C2dOutputMultipleMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
+C2dOutputMultipleMulticomponentParamsDict = _C2dOutputMultipleMulticomponentParamsDictNoTag | C2dOutputMultipleMulticomponentParamsDictTagged
 
 
-C2dOrientParamsDict = typing.TypedDict('C2dOrientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient"]],
+_C2dOrientParamsDictNoTag = typing.TypedDict('_C2dOrientParamsDictNoTag', {
     "orient": str,
 })
 C2dOrientParamsDictTagged = typing.TypedDict('C2dOrientParamsDictTagged', {
     "@type": typing.Literal["orient"],
     "orient": str,
 })
+C2dOrientParamsDict = _C2dOrientParamsDictNoTag | C2dOrientParamsDictTagged
 
 
-C2dOutputMultipleParamsDict = typing.TypedDict('C2dOutputMultipleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+_C2dOutputMultipleParamsDictNoTag = typing.TypedDict('_C2dOutputMultipleParamsDictNoTag', {
     "output_multiple": str,
 })
 C2dOutputMultipleParamsDictTagged = typing.TypedDict('C2dOutputMultipleParamsDictTagged', {
     "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
+C2dOutputMultipleParamsDict = _C2dOutputMultipleParamsDictNoTag | C2dOutputMultipleParamsDictTagged
 
 
-C2dOrient1ParamsDict = typing.TypedDict('C2dOrient1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+_C2dOrient1ParamsDictNoTag = typing.TypedDict('_C2dOrient1ParamsDictNoTag', {
     "orient": str,
 })
 C2dOrient1ParamsDictTagged = typing.TypedDict('C2dOrient1ParamsDictTagged', {
     "@type": typing.Literal["orient_1"],
     "orient": str,
 })
+C2dOrient1ParamsDict = _C2dOrient1ParamsDictNoTag | C2dOrient1ParamsDictTagged
 
 
-C2dOriginParamsDict = typing.TypedDict('C2dOriginParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin"]],
+_C2dOriginParamsDictNoTag = typing.TypedDict('_C2dOriginParamsDictNoTag', {
     "origin": str,
 })
 C2dOriginParamsDictTagged = typing.TypedDict('C2dOriginParamsDictTagged', {
     "@type": typing.Literal["origin"],
     "origin": str,
 })
+C2dOriginParamsDict = _C2dOriginParamsDictNoTag | C2dOriginParamsDictTagged
 
 
-C2dOriginVoxelParamsDict = typing.TypedDict('C2dOriginVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+_C2dOriginVoxelParamsDictNoTag = typing.TypedDict('_C2dOriginVoxelParamsDictNoTag', {
     "origin_voxel": str,
 })
 C2dOriginVoxelParamsDictTagged = typing.TypedDict('C2dOriginVoxelParamsDictTagged', {
     "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
+C2dOriginVoxelParamsDict = _C2dOriginVoxelParamsDictNoTag | C2dOriginVoxelParamsDictTagged
 
 
-C2dOriginVoxelCoordParamsDict = typing.TypedDict('C2dOriginVoxelCoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+_C2dOriginVoxelCoordParamsDictNoTag = typing.TypedDict('_C2dOriginVoxelCoordParamsDictNoTag', {
     "origin_voxel_coord": str,
 })
 C2dOriginVoxelCoordParamsDictTagged = typing.TypedDict('C2dOriginVoxelCoordParamsDictTagged', {
     "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
+C2dOriginVoxelCoordParamsDict = _C2dOriginVoxelCoordParamsDictNoTag | C2dOriginVoxelCoordParamsDictTagged
 
 
-C2dOverlapParamsDict = typing.TypedDict('C2dOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlap"]],
+_C2dOverlapParamsDictNoTag = typing.TypedDict('_C2dOverlapParamsDictNoTag', {
     "overlap": str,
 })
 C2dOverlapParamsDictTagged = typing.TypedDict('C2dOverlapParamsDictTagged', {
     "@type": typing.Literal["overlap"],
     "overlap": str,
 })
+C2dOverlapParamsDict = _C2dOverlapParamsDictNoTag | C2dOverlapParamsDictTagged
 
 
-C2dOverlayLabelImageParamsDict = typing.TypedDict('C2dOverlayLabelImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+_C2dOverlayLabelImageParamsDictNoTag = typing.TypedDict('_C2dOverlayLabelImageParamsDictNoTag', {
     "overlay_label_image": str,
 })
 C2dOverlayLabelImageParamsDictTagged = typing.TypedDict('C2dOverlayLabelImageParamsDictTagged', {
     "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
+C2dOverlayLabelImageParamsDict = _C2dOverlayLabelImageParamsDictNoTag | C2dOverlayLabelImageParamsDictTagged
 
 
-C2dPadParamsDict = typing.TypedDict('C2dPadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad"]],
+_C2dPadParamsDictNoTag = typing.TypedDict('_C2dPadParamsDictNoTag', {
     "pad": str,
 })
 C2dPadParamsDictTagged = typing.TypedDict('C2dPadParamsDictTagged', {
     "@type": typing.Literal["pad"],
     "pad": str,
 })
+C2dPadParamsDict = _C2dPadParamsDictNoTag | C2dPadParamsDictTagged
 
 
-C2dPadToParamsDict = typing.TypedDict('C2dPadToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+_C2dPadToParamsDictNoTag = typing.TypedDict('_C2dPadToParamsDictNoTag', {
     "pad_to": str,
 })
 C2dPadToParamsDictTagged = typing.TypedDict('C2dPadToParamsDictTagged', {
     "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
+C2dPadToParamsDict = _C2dPadToParamsDictNoTag | C2dPadToParamsDictTagged
 
 
-C2dPcaParamsDict = typing.TypedDict('C2dPcaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pca"]],
+_C2dPcaParamsDictNoTag = typing.TypedDict('_C2dPcaParamsDictNoTag', {
     "pca": str,
 })
 C2dPcaParamsDictTagged = typing.TypedDict('C2dPcaParamsDictTagged', {
     "@type": typing.Literal["pca"],
     "pca": str,
 })
+C2dPcaParamsDict = _C2dPcaParamsDictNoTag | C2dPcaParamsDictTagged
 
 
-C2dPercentIntensityModeParamsDict = typing.TypedDict('C2dPercentIntensityModeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+_C2dPercentIntensityModeParamsDictNoTag = typing.TypedDict('_C2dPercentIntensityModeParamsDictNoTag', {
     "percent_intensity_mode": str,
 })
 C2dPercentIntensityModeParamsDictTagged = typing.TypedDict('C2dPercentIntensityModeParamsDictTagged', {
     "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
+C2dPercentIntensityModeParamsDict = _C2dPercentIntensityModeParamsDictNoTag | C2dPercentIntensityModeParamsDictTagged
 
 
-C2dPixelParamsDict = typing.TypedDict('C2dPixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pixel"]],
+_C2dPixelParamsDictNoTag = typing.TypedDict('_C2dPixelParamsDictNoTag', {
     "pixel": str,
 })
 C2dPixelParamsDictTagged = typing.TypedDict('C2dPixelParamsDictTagged', {
     "@type": typing.Literal["pixel"],
     "pixel": str,
 })
+C2dPixelParamsDict = _C2dPixelParamsDictNoTag | C2dPixelParamsDictTagged
 
 
-C2dPopParamsDict = typing.TypedDict('C2dPopParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pop"]],
+_C2dPopParamsDictNoTag = typing.TypedDict('_C2dPopParamsDictNoTag', {
     "pop": str,
 })
 C2dPopParamsDictTagged = typing.TypedDict('C2dPopParamsDictTagged', {
     "@type": typing.Literal["pop"],
     "pop": str,
 })
+C2dPopParamsDict = _C2dPopParamsDictNoTag | C2dPopParamsDictTagged
 
 
-C2dPopasParamsDict = typing.TypedDict('C2dPopasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["popas"]],
+_C2dPopasParamsDictNoTag = typing.TypedDict('_C2dPopasParamsDictNoTag', {
     "popas": str,
 })
 C2dPopasParamsDictTagged = typing.TypedDict('C2dPopasParamsDictTagged', {
     "@type": typing.Literal["popas"],
     "popas": str,
 })
+C2dPopasParamsDict = _C2dPopasParamsDictNoTag | C2dPopasParamsDictTagged
 
 
-C2dProbeParamsDict = typing.TypedDict('C2dProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["probe"]],
+_C2dProbeParamsDictNoTag = typing.TypedDict('_C2dProbeParamsDictNoTag', {
     "probe": str,
 })
 C2dProbeParamsDictTagged = typing.TypedDict('C2dProbeParamsDictTagged', {
     "@type": typing.Literal["probe"],
     "probe": str,
 })
+C2dProbeParamsDict = _C2dProbeParamsDictNoTag | C2dProbeParamsDictTagged
 
 
-C2dPushParamsDict = typing.TypedDict('C2dPushParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["push"]],
+_C2dPushParamsDictNoTag = typing.TypedDict('_C2dPushParamsDictNoTag', {
     "push": str,
 })
 C2dPushParamsDictTagged = typing.TypedDict('C2dPushParamsDictTagged', {
     "@type": typing.Literal["push"],
     "push": str,
 })
+C2dPushParamsDict = _C2dPushParamsDictNoTag | C2dPushParamsDictTagged
 
 
-C2dRankParamsDict = typing.TypedDict('C2dRankParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rank"]],
+_C2dRankParamsDictNoTag = typing.TypedDict('_C2dRankParamsDictNoTag', {
     "rank": str,
 })
 C2dRankParamsDictTagged = typing.TypedDict('C2dRankParamsDictTagged', {
     "@type": typing.Literal["rank"],
     "rank": str,
 })
+C2dRankParamsDict = _C2dRankParamsDictNoTag | C2dRankParamsDictTagged
 
 
-C2dReciprocalParamsDict = typing.TypedDict('C2dReciprocalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+_C2dReciprocalParamsDictNoTag = typing.TypedDict('_C2dReciprocalParamsDictNoTag', {
     "reciprocal": str,
 })
 C2dReciprocalParamsDictTagged = typing.TypedDict('C2dReciprocalParamsDictTagged', {
     "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
+C2dReciprocalParamsDict = _C2dReciprocalParamsDictNoTag | C2dReciprocalParamsDictTagged
 
 
-C2dRegionParamsDict = typing.TypedDict('C2dRegionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region"]],
+_C2dRegionParamsDictNoTag = typing.TypedDict('_C2dRegionParamsDictNoTag', {
     "region": str,
 })
 C2dRegionParamsDictTagged = typing.TypedDict('C2dRegionParamsDictTagged', {
     "@type": typing.Literal["region"],
     "region": str,
 })
+C2dRegionParamsDict = _C2dRegionParamsDictNoTag | C2dRegionParamsDictTagged
 
 
-C2dReorderParamsDict = typing.TypedDict('C2dReorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reorder"]],
+_C2dReorderParamsDictNoTag = typing.TypedDict('_C2dReorderParamsDictNoTag', {
     "reorder": str,
 })
 C2dReorderParamsDictTagged = typing.TypedDict('C2dReorderParamsDictTagged', {
     "@type": typing.Literal["reorder"],
     "reorder": str,
 })
+C2dReorderParamsDict = _C2dReorderParamsDictNoTag | C2dReorderParamsDictTagged
 
 
-C2dRetainLabelsParamsDict = typing.TypedDict('C2dRetainLabelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+_C2dRetainLabelsParamsDictNoTag = typing.TypedDict('_C2dRetainLabelsParamsDictNoTag', {
     "retain_labels": str,
 })
 C2dRetainLabelsParamsDictTagged = typing.TypedDict('C2dRetainLabelsParamsDictTagged', {
     "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
+C2dRetainLabelsParamsDict = _C2dRetainLabelsParamsDictNoTag | C2dRetainLabelsParamsDictTagged
 
 
-C2dRfApplyParamsDict = typing.TypedDict('C2dRfApplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+_C2dRfApplyParamsDictNoTag = typing.TypedDict('_C2dRfApplyParamsDictNoTag', {
     "rf_apply": str,
 })
 C2dRfApplyParamsDictTagged = typing.TypedDict('C2dRfApplyParamsDictTagged', {
     "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
+C2dRfApplyParamsDict = _C2dRfApplyParamsDictNoTag | C2dRfApplyParamsDictTagged
 
 
-C2dRfTrainParamsDict = typing.TypedDict('C2dRfTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+_C2dRfTrainParamsDictNoTag = typing.TypedDict('_C2dRfTrainParamsDictNoTag', {
     "rf_train": str,
 })
 C2dRfTrainParamsDictTagged = typing.TypedDict('C2dRfTrainParamsDictTagged', {
     "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
+C2dRfTrainParamsDict = _C2dRfTrainParamsDictNoTag | C2dRfTrainParamsDictTagged
 
 
-C2dRfParamPatchParamsDict = typing.TypedDict('C2dRfParamPatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+_C2dRfParamPatchParamsDictNoTag = typing.TypedDict('_C2dRfParamPatchParamsDictNoTag', {
     "rf_param_patch": str,
 })
 C2dRfParamPatchParamsDictTagged = typing.TypedDict('C2dRfParamPatchParamsDictTagged', {
     "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
+C2dRfParamPatchParamsDict = _C2dRfParamPatchParamsDictNoTag | C2dRfParamPatchParamsDictTagged
 
 
-C2dRfParamUsexyzParamsDict = typing.TypedDict('C2dRfParamUsexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+_C2dRfParamUsexyzParamsDictNoTag = typing.TypedDict('_C2dRfParamUsexyzParamsDictNoTag', {
     "rf_param_usexyz": str,
 })
 C2dRfParamUsexyzParamsDictTagged = typing.TypedDict('C2dRfParamUsexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
+C2dRfParamUsexyzParamsDict = _C2dRfParamUsexyzParamsDictNoTag | C2dRfParamUsexyzParamsDictTagged
 
 
-C2dRfParamNousexyzParamsDict = typing.TypedDict('C2dRfParamNousexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+_C2dRfParamNousexyzParamsDictNoTag = typing.TypedDict('_C2dRfParamNousexyzParamsDictNoTag', {
     "rf_param_nousexyz": str,
 })
 C2dRfParamNousexyzParamsDictTagged = typing.TypedDict('C2dRfParamNousexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
+C2dRfParamNousexyzParamsDict = _C2dRfParamNousexyzParamsDictNoTag | C2dRfParamNousexyzParamsDictTagged
 
 
-C2dRfParamNtreesParamsDict = typing.TypedDict('C2dRfParamNtreesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+_C2dRfParamNtreesParamsDictNoTag = typing.TypedDict('_C2dRfParamNtreesParamsDictNoTag', {
     "rf_param_ntrees": str,
 })
 C2dRfParamNtreesParamsDictTagged = typing.TypedDict('C2dRfParamNtreesParamsDictTagged', {
     "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
+C2dRfParamNtreesParamsDict = _C2dRfParamNtreesParamsDictNoTag | C2dRfParamNtreesParamsDictTagged
 
 
-C2dRfParamTreedepthParamsDict = typing.TypedDict('C2dRfParamTreedepthParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+_C2dRfParamTreedepthParamsDictNoTag = typing.TypedDict('_C2dRfParamTreedepthParamsDictNoTag', {
     "rf_param_treedepth": str,
 })
 C2dRfParamTreedepthParamsDictTagged = typing.TypedDict('C2dRfParamTreedepthParamsDictTagged', {
     "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
+C2dRfParamTreedepthParamsDict = _C2dRfParamTreedepthParamsDictNoTag | C2dRfParamTreedepthParamsDictTagged
 
 
-C2dSetSformParamsDict = typing.TypedDict('C2dSetSformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+_C2dSetSformParamsDictNoTag = typing.TypedDict('_C2dSetSformParamsDictNoTag', {
     "set_sform": str,
 })
 C2dSetSformParamsDictTagged = typing.TypedDict('C2dSetSformParamsDictTagged', {
     "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
+C2dSetSformParamsDict = _C2dSetSformParamsDictNoTag | C2dSetSformParamsDictTagged
 
 
-C2dReplaceParamsDict = typing.TypedDict('C2dReplaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["replace"]],
+_C2dReplaceParamsDictNoTag = typing.TypedDict('_C2dReplaceParamsDictNoTag', {
     "replace": str,
 })
 C2dReplaceParamsDictTagged = typing.TypedDict('C2dReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
     "replace": str,
 })
+C2dReplaceParamsDict = _C2dReplaceParamsDictNoTag | C2dReplaceParamsDictTagged
 
 
-C2dResampleParamsDict = typing.TypedDict('C2dResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample"]],
+_C2dResampleParamsDictNoTag = typing.TypedDict('_C2dResampleParamsDictNoTag', {
     "resample": str,
 })
 C2dResampleParamsDictTagged = typing.TypedDict('C2dResampleParamsDictTagged', {
     "@type": typing.Literal["resample"],
     "resample": str,
 })
+C2dResampleParamsDict = _C2dResampleParamsDictNoTag | C2dResampleParamsDictTagged
 
 
-C2dResampleIsoParamsDict = typing.TypedDict('C2dResampleIsoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+_C2dResampleIsoParamsDictNoTag = typing.TypedDict('_C2dResampleIsoParamsDictNoTag', {
     "resample_iso": str,
 })
 C2dResampleIsoParamsDictTagged = typing.TypedDict('C2dResampleIsoParamsDictTagged', {
     "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
+C2dResampleIsoParamsDict = _C2dResampleIsoParamsDictNoTag | C2dResampleIsoParamsDictTagged
 
 
-C2dResampleMmParamsDict = typing.TypedDict('C2dResampleMmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+_C2dResampleMmParamsDictNoTag = typing.TypedDict('_C2dResampleMmParamsDictNoTag', {
     "resample_mm": str,
 })
 C2dResampleMmParamsDictTagged = typing.TypedDict('C2dResampleMmParamsDictTagged', {
     "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
+C2dResampleMmParamsDict = _C2dResampleMmParamsDictNoTag | C2dResampleMmParamsDictTagged
 
 
-C2dResliceItkParamsDict = typing.TypedDict('C2dResliceItkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+_C2dResliceItkParamsDictNoTag = typing.TypedDict('_C2dResliceItkParamsDictNoTag', {
     "reslice_itk": str,
 })
 C2dResliceItkParamsDictTagged = typing.TypedDict('C2dResliceItkParamsDictTagged', {
     "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
+C2dResliceItkParamsDict = _C2dResliceItkParamsDictNoTag | C2dResliceItkParamsDictTagged
 
 
-C2dResliceMatrixParamsDict = typing.TypedDict('C2dResliceMatrixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+_C2dResliceMatrixParamsDictNoTag = typing.TypedDict('_C2dResliceMatrixParamsDictNoTag', {
     "reslice_matrix": str,
 })
 C2dResliceMatrixParamsDictTagged = typing.TypedDict('C2dResliceMatrixParamsDictTagged', {
     "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
+C2dResliceMatrixParamsDict = _C2dResliceMatrixParamsDictNoTag | C2dResliceMatrixParamsDictTagged
 
 
-C2dResliceIdentityParamsDict = typing.TypedDict('C2dResliceIdentityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+_C2dResliceIdentityParamsDictNoTag = typing.TypedDict('_C2dResliceIdentityParamsDictNoTag', {
     "reslice_identity": str,
 })
 C2dResliceIdentityParamsDictTagged = typing.TypedDict('C2dResliceIdentityParamsDictTagged', {
     "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
+C2dResliceIdentityParamsDict = _C2dResliceIdentityParamsDictNoTag | C2dResliceIdentityParamsDictTagged
 
 
-C2dRgb2hsvParamsDict = typing.TypedDict('C2dRgb2hsvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+_C2dRgb2hsvParamsDictNoTag = typing.TypedDict('_C2dRgb2hsvParamsDictNoTag', {
     "rgb2hsv": str,
 })
 C2dRgb2hsvParamsDictTagged = typing.TypedDict('C2dRgb2hsvParamsDictTagged', {
     "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
+C2dRgb2hsvParamsDict = _C2dRgb2hsvParamsDictNoTag | C2dRgb2hsvParamsDictTagged
 
 
-C2dRmsParamsDict = typing.TypedDict('C2dRmsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rms"]],
+_C2dRmsParamsDictNoTag = typing.TypedDict('_C2dRmsParamsDictNoTag', {
     "rms": str,
 })
 C2dRmsParamsDictTagged = typing.TypedDict('C2dRmsParamsDictTagged', {
     "@type": typing.Literal["rms"],
     "rms": str,
 })
+C2dRmsParamsDict = _C2dRmsParamsDictNoTag | C2dRmsParamsDictTagged
 
 
-C2dRoundParamsDict = typing.TypedDict('C2dRoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["round"]],
+_C2dRoundParamsDictNoTag = typing.TypedDict('_C2dRoundParamsDictNoTag', {
     "round": str,
 })
 C2dRoundParamsDictTagged = typing.TypedDict('C2dRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
     "round": str,
 })
+C2dRoundParamsDict = _C2dRoundParamsDictNoTag | C2dRoundParamsDictTagged
 
 
-C2dScaleParamsDict = typing.TypedDict('C2dScaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scale"]],
+_C2dScaleParamsDictNoTag = typing.TypedDict('_C2dScaleParamsDictNoTag', {
     "scale": str,
 })
 C2dScaleParamsDictTagged = typing.TypedDict('C2dScaleParamsDictTagged', {
     "@type": typing.Literal["scale"],
     "scale": str,
 })
+C2dScaleParamsDict = _C2dScaleParamsDictNoTag | C2dScaleParamsDictTagged
 
 
-C2dSetSform1ParamsDict = typing.TypedDict('C2dSetSform1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+_C2dSetSform1ParamsDictNoTag = typing.TypedDict('_C2dSetSform1ParamsDictNoTag', {
     "set_sform": str,
 })
 C2dSetSform1ParamsDictTagged = typing.TypedDict('C2dSetSform1ParamsDictTagged', {
     "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
+C2dSetSform1ParamsDict = _C2dSetSform1ParamsDictNoTag | C2dSetSform1ParamsDictTagged
 
 
-C2dSinParamsDict = typing.TypedDict('C2dSinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sin"]],
+_C2dSinParamsDictNoTag = typing.TypedDict('_C2dSinParamsDictNoTag', {
     "sin": str,
 })
 C2dSinParamsDictTagged = typing.TypedDict('C2dSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
     "sin": str,
 })
+C2dSinParamsDict = _C2dSinParamsDictNoTag | C2dSinParamsDictTagged
 
 
-C2dSliceParamsDict = typing.TypedDict('C2dSliceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice"]],
+_C2dSliceParamsDictNoTag = typing.TypedDict('_C2dSliceParamsDictNoTag', {
     "slice": str,
 })
 C2dSliceParamsDictTagged = typing.TypedDict('C2dSliceParamsDictTagged', {
     "@type": typing.Literal["slice"],
     "slice": str,
 })
+C2dSliceParamsDict = _C2dSliceParamsDictNoTag | C2dSliceParamsDictTagged
 
 
-C2dSliceAllParamsDict = typing.TypedDict('C2dSliceAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+_C2dSliceAllParamsDictNoTag = typing.TypedDict('_C2dSliceAllParamsDictNoTag', {
     "slice_all": str,
 })
 C2dSliceAllParamsDictTagged = typing.TypedDict('C2dSliceAllParamsDictTagged', {
     "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
+C2dSliceAllParamsDict = _C2dSliceAllParamsDictNoTag | C2dSliceAllParamsDictTagged
 
 
-C2dSharpenParamsDict = typing.TypedDict('C2dSharpenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+_C2dSharpenParamsDictNoTag = typing.TypedDict('_C2dSharpenParamsDictNoTag', {
     "sharpen": str,
 })
 C2dSharpenParamsDictTagged = typing.TypedDict('C2dSharpenParamsDictTagged', {
     "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
+C2dSharpenParamsDict = _C2dSharpenParamsDictNoTag | C2dSharpenParamsDictTagged
 
 
-C2dShiftParamsDict = typing.TypedDict('C2dShiftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["shift"]],
+_C2dShiftParamsDictNoTag = typing.TypedDict('_C2dShiftParamsDictNoTag', {
     "shift": str,
 })
 C2dShiftParamsDictTagged = typing.TypedDict('C2dShiftParamsDictTagged', {
     "@type": typing.Literal["shift"],
     "shift": str,
 })
+C2dShiftParamsDict = _C2dShiftParamsDictNoTag | C2dShiftParamsDictTagged
 
 
-C2dSignedDistanceTransformParamsDict = typing.TypedDict('C2dSignedDistanceTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+_C2dSignedDistanceTransformParamsDictNoTag = typing.TypedDict('_C2dSignedDistanceTransformParamsDictNoTag', {
     "signed_distance_transform": str,
 })
 C2dSignedDistanceTransformParamsDictTagged = typing.TypedDict('C2dSignedDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
+C2dSignedDistanceTransformParamsDict = _C2dSignedDistanceTransformParamsDictNoTag | C2dSignedDistanceTransformParamsDictTagged
 
 
-C2dSmoothParamsDict = typing.TypedDict('C2dSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth"]],
+_C2dSmoothParamsDictNoTag = typing.TypedDict('_C2dSmoothParamsDictNoTag', {
     "smooth": str,
 })
 C2dSmoothParamsDictTagged = typing.TypedDict('C2dSmoothParamsDictTagged', {
     "@type": typing.Literal["smooth"],
     "smooth": str,
 })
+C2dSmoothParamsDict = _C2dSmoothParamsDictNoTag | C2dSmoothParamsDictTagged
 
 
-C2dSmoothFastParamsDict = typing.TypedDict('C2dSmoothFastParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+_C2dSmoothFastParamsDictNoTag = typing.TypedDict('_C2dSmoothFastParamsDictNoTag', {
     "smooth_fast": str,
 })
 C2dSmoothFastParamsDictTagged = typing.TypedDict('C2dSmoothFastParamsDictTagged', {
     "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
+C2dSmoothFastParamsDict = _C2dSmoothFastParamsDictNoTag | C2dSmoothFastParamsDictTagged
 
 
-C2dSpacingParamsDict = typing.TypedDict('C2dSpacingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spacing"]],
+_C2dSpacingParamsDictNoTag = typing.TypedDict('_C2dSpacingParamsDictNoTag', {
     "spacing": str,
 })
 C2dSpacingParamsDictTagged = typing.TypedDict('C2dSpacingParamsDictTagged', {
     "@type": typing.Literal["spacing"],
     "spacing": str,
 })
+C2dSpacingParamsDict = _C2dSpacingParamsDictNoTag | C2dSpacingParamsDictTagged
 
 
-C2dSplitParamsDict = typing.TypedDict('C2dSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["split"]],
+_C2dSplitParamsDictNoTag = typing.TypedDict('_C2dSplitParamsDictNoTag', {
     "split": str,
 })
 C2dSplitParamsDictTagged = typing.TypedDict('C2dSplitParamsDictTagged', {
     "@type": typing.Literal["split"],
     "split": str,
 })
+C2dSplitParamsDict = _C2dSplitParamsDictNoTag | C2dSplitParamsDictTagged
 
 
-C2dSqrtParamsDict = typing.TypedDict('C2dSqrtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+_C2dSqrtParamsDictNoTag = typing.TypedDict('_C2dSqrtParamsDictNoTag', {
     "sqrt": str,
 })
 C2dSqrtParamsDictTagged = typing.TypedDict('C2dSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
+C2dSqrtParamsDict = _C2dSqrtParamsDictNoTag | C2dSqrtParamsDictTagged
 
 
-C2dStapleParamsDict = typing.TypedDict('C2dStapleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["staple"]],
+_C2dStapleParamsDictNoTag = typing.TypedDict('_C2dStapleParamsDictNoTag', {
     "staple": str,
 })
 C2dStapleParamsDictTagged = typing.TypedDict('C2dStapleParamsDictTagged', {
     "@type": typing.Literal["staple"],
     "staple": str,
 })
+C2dStapleParamsDict = _C2dStapleParamsDictNoTag | C2dStapleParamsDictTagged
 
 
-C2dStructureTensorEigenvaluesParamsDict = typing.TypedDict('C2dStructureTensorEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+_C2dStructureTensorEigenvaluesParamsDictNoTag = typing.TypedDict('_C2dStructureTensorEigenvaluesParamsDictNoTag', {
     "structure_tensor_eigenvalues": str,
 })
 C2dStructureTensorEigenvaluesParamsDictTagged = typing.TypedDict('C2dStructureTensorEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
+C2dStructureTensorEigenvaluesParamsDict = _C2dStructureTensorEigenvaluesParamsDictNoTag | C2dStructureTensorEigenvaluesParamsDictTagged
 
 
-C2dSpmParamsDict = typing.TypedDict('C2dSpmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spm"]],
+_C2dSpmParamsDictNoTag = typing.TypedDict('_C2dSpmParamsDictNoTag', {
     "spm": str,
 })
 C2dSpmParamsDictTagged = typing.TypedDict('C2dSpmParamsDictTagged', {
     "@type": typing.Literal["spm"],
     "spm": str,
 })
+C2dSpmParamsDict = _C2dSpmParamsDictNoTag | C2dSpmParamsDictTagged
 
 
-C2dSubtractParamsDict = typing.TypedDict('C2dSubtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["subtract"]],
+_C2dSubtractParamsDictNoTag = typing.TypedDict('_C2dSubtractParamsDictNoTag', {
     "subtract": str,
 })
 C2dSubtractParamsDictTagged = typing.TypedDict('C2dSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
     "subtract": str,
 })
+C2dSubtractParamsDict = _C2dSubtractParamsDictNoTag | C2dSubtractParamsDictTagged
 
 
-C2dSupervoxelParamsDict = typing.TypedDict('C2dSupervoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+_C2dSupervoxelParamsDictNoTag = typing.TypedDict('_C2dSupervoxelParamsDictNoTag', {
     "supervoxel": str,
 })
 C2dSupervoxelParamsDictTagged = typing.TypedDict('C2dSupervoxelParamsDictTagged', {
     "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
+C2dSupervoxelParamsDict = _C2dSupervoxelParamsDictNoTag | C2dSupervoxelParamsDictTagged
 
 
-C2dStretchParamsDict = typing.TypedDict('C2dStretchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["stretch"]],
+_C2dStretchParamsDictNoTag = typing.TypedDict('_C2dStretchParamsDictNoTag', {
     "stretch": str,
 })
 C2dStretchParamsDictTagged = typing.TypedDict('C2dStretchParamsDictTagged', {
     "@type": typing.Literal["stretch"],
     "stretch": str,
 })
+C2dStretchParamsDict = _C2dStretchParamsDictNoTag | C2dStretchParamsDictTagged
 
 
-C2dSwapdimParamsDict = typing.TypedDict('C2dSwapdimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+_C2dSwapdimParamsDictNoTag = typing.TypedDict('_C2dSwapdimParamsDictNoTag', {
     "swapdim": str,
 })
 C2dSwapdimParamsDictTagged = typing.TypedDict('C2dSwapdimParamsDictTagged', {
     "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
+C2dSwapdimParamsDict = _C2dSwapdimParamsDictNoTag | C2dSwapdimParamsDictTagged
 
 
-C2dTestImageParamsDict = typing.TypedDict('C2dTestImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_image"]],
+_C2dTestImageParamsDictNoTag = typing.TypedDict('_C2dTestImageParamsDictNoTag', {
     "test_image": str,
 })
 C2dTestImageParamsDictTagged = typing.TypedDict('C2dTestImageParamsDictTagged', {
     "@type": typing.Literal["test_image"],
     "test_image": str,
 })
+C2dTestImageParamsDict = _C2dTestImageParamsDictNoTag | C2dTestImageParamsDictTagged
 
 
-C2dTestProbeParamsDict = typing.TypedDict('C2dTestProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+_C2dTestProbeParamsDictNoTag = typing.TypedDict('_C2dTestProbeParamsDictNoTag', {
     "test_probe": str,
 })
 C2dTestProbeParamsDictTagged = typing.TypedDict('C2dTestProbeParamsDictTagged', {
     "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
+C2dTestProbeParamsDict = _C2dTestProbeParamsDictNoTag | C2dTestProbeParamsDictTagged
 
 
-C2dThresholdParamsDict = typing.TypedDict('C2dThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_C2dThresholdParamsDictNoTag = typing.TypedDict('_C2dThresholdParamsDictNoTag', {
     "threshold": str,
 })
 C2dThresholdParamsDictTagged = typing.TypedDict('C2dThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "threshold": str,
 })
+C2dThresholdParamsDict = _C2dThresholdParamsDictNoTag | C2dThresholdParamsDictTagged
 
 
-C2dTileParamsDict = typing.TypedDict('C2dTileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tile"]],
+_C2dTileParamsDictNoTag = typing.TypedDict('_C2dTileParamsDictNoTag', {
     "tile": str,
 })
 C2dTileParamsDictTagged = typing.TypedDict('C2dTileParamsDictTagged', {
     "@type": typing.Literal["tile"],
     "tile": str,
 })
+C2dTileParamsDict = _C2dTileParamsDictNoTag | C2dTileParamsDictTagged
 
 
-C2dTrimParamsDict = typing.TypedDict('C2dTrimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim"]],
+_C2dTrimParamsDictNoTag = typing.TypedDict('_C2dTrimParamsDictNoTag', {
     "trim": str,
 })
 C2dTrimParamsDictTagged = typing.TypedDict('C2dTrimParamsDictTagged', {
     "@type": typing.Literal["trim"],
     "trim": str,
 })
+C2dTrimParamsDict = _C2dTrimParamsDictNoTag | C2dTrimParamsDictTagged
 
 
-C2dTrimToSizeParamsDict = typing.TypedDict('C2dTrimToSizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+_C2dTrimToSizeParamsDictNoTag = typing.TypedDict('_C2dTrimToSizeParamsDictNoTag', {
     "trim_to_size": str,
 })
 C2dTrimToSizeParamsDictTagged = typing.TypedDict('C2dTrimToSizeParamsDictTagged', {
     "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
+C2dTrimToSizeParamsDict = _C2dTrimToSizeParamsDictNoTag | C2dTrimToSizeParamsDictTagged
 
 
-C2dTypeParamsDict = typing.TypedDict('C2dTypeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["type"]],
+_C2dTypeParamsDictNoTag = typing.TypedDict('_C2dTypeParamsDictNoTag', {
     "type": str,
 })
 C2dTypeParamsDictTagged = typing.TypedDict('C2dTypeParamsDictTagged', {
     "@type": typing.Literal["type"],
     "type": str,
 })
+C2dTypeParamsDict = _C2dTypeParamsDictNoTag | C2dTypeParamsDictTagged
 
 
-C2dVerboseParamsDict = typing.TypedDict('C2dVerboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["verbose"]],
+_C2dVerboseParamsDictNoTag = typing.TypedDict('_C2dVerboseParamsDictNoTag', {
     "verbose": str,
 })
 C2dVerboseParamsDictTagged = typing.TypedDict('C2dVerboseParamsDictTagged', {
     "@type": typing.Literal["verbose"],
     "verbose": str,
 })
+C2dVerboseParamsDict = _C2dVerboseParamsDictNoTag | C2dVerboseParamsDictTagged
 
 
-C2dNoverboseParamsDict = typing.TypedDict('C2dNoverboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+_C2dNoverboseParamsDictNoTag = typing.TypedDict('_C2dNoverboseParamsDictNoTag', {
     "noverbose": str,
 })
 C2dNoverboseParamsDictTagged = typing.TypedDict('C2dNoverboseParamsDictTagged', {
     "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
+C2dNoverboseParamsDict = _C2dNoverboseParamsDictNoTag | C2dNoverboseParamsDictTagged
 
 
-C2dVersionParamsDict = typing.TypedDict('C2dVersionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["version"]],
+_C2dVersionParamsDictNoTag = typing.TypedDict('_C2dVersionParamsDictNoTag', {
     "version": str,
 })
 C2dVersionParamsDictTagged = typing.TypedDict('C2dVersionParamsDictTagged', {
     "@type": typing.Literal["version"],
     "version": str,
 })
+C2dVersionParamsDict = _C2dVersionParamsDictNoTag | C2dVersionParamsDictTagged
 
 
-C2dVoteParamsDict = typing.TypedDict('C2dVoteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote"]],
+_C2dVoteParamsDictNoTag = typing.TypedDict('_C2dVoteParamsDictNoTag', {
     "vote": str,
 })
 C2dVoteParamsDictTagged = typing.TypedDict('C2dVoteParamsDictTagged', {
     "@type": typing.Literal["vote"],
     "vote": str,
 })
+C2dVoteParamsDict = _C2dVoteParamsDictNoTag | C2dVoteParamsDictTagged
 
 
-C2dVoteMrfParamsDict = typing.TypedDict('C2dVoteMrfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+_C2dVoteMrfParamsDictNoTag = typing.TypedDict('_C2dVoteMrfParamsDictNoTag', {
     "vote_mrf": str,
 })
 C2dVoteMrfParamsDictTagged = typing.TypedDict('C2dVoteMrfParamsDictTagged', {
     "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
+C2dVoteMrfParamsDict = _C2dVoteMrfParamsDictNoTag | C2dVoteMrfParamsDictTagged
 
 
-C2dVoteLabelParamsDict = typing.TypedDict('C2dVoteLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+_C2dVoteLabelParamsDictNoTag = typing.TypedDict('_C2dVoteLabelParamsDictNoTag', {
     "vote_label": str,
 })
 C2dVoteLabelParamsDictTagged = typing.TypedDict('C2dVoteLabelParamsDictTagged', {
     "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
+C2dVoteLabelParamsDict = _C2dVoteLabelParamsDictNoTag | C2dVoteLabelParamsDictTagged
 
 
-C2dVoxelSumParamsDict = typing.TypedDict('C2dVoxelSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+_C2dVoxelSumParamsDictNoTag = typing.TypedDict('_C2dVoxelSumParamsDictNoTag', {
     "voxel_sum": str,
 })
 C2dVoxelSumParamsDictTagged = typing.TypedDict('C2dVoxelSumParamsDictTagged', {
     "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
+C2dVoxelSumParamsDict = _C2dVoxelSumParamsDictNoTag | C2dVoxelSumParamsDictTagged
 
 
-C2dVoxelIntegralParamsDict = typing.TypedDict('C2dVoxelIntegralParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+_C2dVoxelIntegralParamsDictNoTag = typing.TypedDict('_C2dVoxelIntegralParamsDictNoTag', {
     "voxel_integral": str,
 })
 C2dVoxelIntegralParamsDictTagged = typing.TypedDict('C2dVoxelIntegralParamsDictTagged', {
     "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
+C2dVoxelIntegralParamsDict = _C2dVoxelIntegralParamsDictNoTag | C2dVoxelIntegralParamsDictTagged
 
 
-C2dVoxelwiseRegressionParamsDict = typing.TypedDict('C2dVoxelwiseRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+_C2dVoxelwiseRegressionParamsDictNoTag = typing.TypedDict('_C2dVoxelwiseRegressionParamsDictNoTag', {
     "voxelwise_regression": str,
 })
 C2dVoxelwiseRegressionParamsDictTagged = typing.TypedDict('C2dVoxelwiseRegressionParamsDictTagged', {
     "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
+C2dVoxelwiseRegressionParamsDict = _C2dVoxelwiseRegressionParamsDictNoTag | C2dVoxelwiseRegressionParamsDictTagged
 
 
-C2dWarpParamsDict = typing.TypedDict('C2dWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp"]],
+_C2dWarpParamsDictNoTag = typing.TypedDict('_C2dWarpParamsDictNoTag', {
     "warp": str,
 })
 C2dWarpParamsDictTagged = typing.TypedDict('C2dWarpParamsDictTagged', {
     "@type": typing.Literal["warp"],
     "warp": str,
 })
+C2dWarpParamsDict = _C2dWarpParamsDictNoTag | C2dWarpParamsDictTagged
 
 
-C2dWarpLabelParamsDict = typing.TypedDict('C2dWarpLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+_C2dWarpLabelParamsDictNoTag = typing.TypedDict('_C2dWarpLabelParamsDictNoTag', {
     "warp_label": str,
 })
 C2dWarpLabelParamsDictTagged = typing.TypedDict('C2dWarpLabelParamsDictTagged', {
     "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
+C2dWarpLabelParamsDict = _C2dWarpLabelParamsDictNoTag | C2dWarpLabelParamsDictTagged
 
 
-C2dWrapParamsDict = typing.TypedDict('C2dWrapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["wrap"]],
+_C2dWrapParamsDictNoTag = typing.TypedDict('_C2dWrapParamsDictNoTag', {
     "wrap": str,
 })
 C2dWrapParamsDictTagged = typing.TypedDict('C2dWrapParamsDictTagged', {
     "@type": typing.Literal["wrap"],
     "wrap": str,
 })
+C2dWrapParamsDict = _C2dWrapParamsDictNoTag | C2dWrapParamsDictTagged
 
 
-C2dWeightedSumParamsDict = typing.TypedDict('C2dWeightedSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+_C2dWeightedSumParamsDictNoTag = typing.TypedDict('_C2dWeightedSumParamsDictNoTag', {
     "weighted_sum": str,
 })
 C2dWeightedSumParamsDictTagged = typing.TypedDict('C2dWeightedSumParamsDictTagged', {
     "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
+C2dWeightedSumParamsDict = _C2dWeightedSumParamsDictNoTag | C2dWeightedSumParamsDictTagged
 
 
-C2dWeightedSumVoxelwiseParamsDict = typing.TypedDict('C2dWeightedSumVoxelwiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+_C2dWeightedSumVoxelwiseParamsDictNoTag = typing.TypedDict('_C2dWeightedSumVoxelwiseParamsDictNoTag', {
     "weighted_sum_voxelwise": str,
 })
 C2dWeightedSumVoxelwiseParamsDictTagged = typing.TypedDict('C2dWeightedSumVoxelwiseParamsDictTagged', {
     "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
+C2dWeightedSumVoxelwiseParamsDict = _C2dWeightedSumVoxelwiseParamsDictNoTag | C2dWeightedSumVoxelwiseParamsDictTagged
 
 
-C2dParamsDict = typing.TypedDict('C2dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["c3d/c2d"]],
+_C2dParamsDictNoTag = typing.TypedDict('_C2dParamsDictNoTag', {
     "input": list[InputPathType],
     "operations": list[typing.Union[C2dAccumParamsDictTagged, C2dAcosParamsDictTagged, C2dAddParamsDictTagged, C2dAlignLandmarksParamsDictTagged, C2dAnisotropicDiffusionParamsDictTagged, C2dAntialiasParamsDictTagged, C2dSetParamsDictTagged, C2dAsinParamsDictTagged, C2dAtan2ParamsDictTagged, C2dBackgroundParamsDictTagged, C2dN4BiasCorrectionParamsDictTagged, C2dBinarizeParamsDictTagged, C2dCannyParamsDictTagged, C2dCeilParamsDictTagged, C2dCentroidParamsDictTagged, C2dCentroidMarkParamsDictTagged, C2dConnectedComponentsParamsDictTagged, C2dClearParamsDictTagged, C2dClipParamsDictTagged, C2dColorMapParamsDictTagged, C2dCompressParamsDictTagged, C2dNoCompressParamsDictTagged, C2dConvParamsDictTagged, C2dCoordinateMapVoxelParamsDictTagged, C2dCoordinateMapPhysicalParamsDictTagged, C2dCopyTransformParamsDictTagged, C2dCosParamsDictTagged, C2dCreateParamsDictTagged, C2dDicomSeriesListParamsDictTagged, C2dDicomSeriesReadParamsDictTagged, C2dDilateParamsDictTagged, C2dDivideParamsDictTagged, C2dDuplicateParamsDictTagged, C2dEndaccumParamsDictTagged, C2dEndforParamsDictTagged, C2dErodeParamsDictTagged, C2dErfParamsDictTagged, C2dExpParamsDictTagged, C2dExportPatchesParamsDictTagged, C2dExportPatchesAugParamsDictTagged, C2dExtrudeSegParamsDictTagged, C2dFillBackgroundWithNoiseParamsDictTagged, C2dFftParamsDictTagged, C2dFlipParamsDictTagged, C2dFloorParamsDictTagged, C2dForeachParamsDictTagged, C2dForeachCompParamsDictTagged, C2dGlmParamsDictTagged, C2dGradientParamsDictTagged, C2dHelpParamsDictTagged, C2dHolefillParamsDictTagged, C2dHessianEigenvaluesParamsDictTagged, C2dHessianObjectnessParamsDictTagged, C2dHistogramMatchParamsDictTagged, C2dInfoParamsDictTagged, C2dInfoFullParamsDictTagged, C2dInsertParamsDictTagged, C2dInterpolationParamsDictTagged, C2dIterationsParamsDictTagged, C2dLabelOverlapParamsDictTagged, C2dLabelStatisticsParamsDictTagged, C2dLandmarksToSpheresParamsDictTagged, C2dLaplacianParamsDictTagged, C2dLevelsetParamsDictTagged, C2dLevelsetCurvatureParamsDictTagged, C2dLevelsetAdvectionParamsDictTagged, C2dLogParamsDictTagged, C2dLog10ParamsDictTagged, C2dManualParamsDictTagged, C2dMatchBoundingBoxParamsDictTagged, C2dMaximumParamsDictTagged, C2dMulticomponentSplitParamsDictTagged, C2dMeanParamsDictTagged, C2dMedianFilterParamsDictTagged, C2dMergeParamsDictTagged, C2dMeanFilterParamsDictTagged, C2dMutualInfoParamsDictTagged, C2dMinimumParamsDictTagged, C2dMixtureModelParamsDictTagged, C2dMomentsParamsDictTagged, C2dMattesMutualInfoParamsDictTagged, C2dMeanSquareParamsDictTagged, C2dMultiplyParamsDictTagged, C2dNormalizedCrossCorrelationParamsDictTagged, C2dNormalizedCorrelationParamsDictTagged, C2dNormalizedMutualInfoParamsDictTagged, C2dNoiseGaussianParamsDictTagged, C2dNoisePoissonParamsDictTagged, C2dNoiseSpeckleParamsDictTagged, C2dNoiseSaltPepperParamsDictTagged, C2dNoMulticomponentSplitParamsDictTagged, C2dNormalizeLocalWindowParamsDictTagged, C2dNormpdfParamsDictTagged, C2dNoroundParamsDictTagged, C2dNospmParamsDictTagged, C2dOutputParamsDictTagged, C2dOutputMulticomponentParamsDictTagged, C2dOutputMultipleMulticomponentParamsDictTagged, C2dOrientParamsDictTagged, C2dOutputMultipleParamsDictTagged, C2dOrient1ParamsDictTagged, C2dOriginParamsDictTagged, C2dOriginVoxelParamsDictTagged, C2dOriginVoxelCoordParamsDictTagged, C2dOverlapParamsDictTagged, C2dOverlayLabelImageParamsDictTagged, C2dPadParamsDictTagged, C2dPadToParamsDictTagged, C2dPcaParamsDictTagged, C2dPercentIntensityModeParamsDictTagged, C2dPixelParamsDictTagged, C2dPopParamsDictTagged, C2dPopasParamsDictTagged, C2dProbeParamsDictTagged, C2dPushParamsDictTagged, C2dRankParamsDictTagged, C2dReciprocalParamsDictTagged, C2dRegionParamsDictTagged, C2dReorderParamsDictTagged, C2dRetainLabelsParamsDictTagged, C2dRfApplyParamsDictTagged, C2dRfTrainParamsDictTagged, C2dRfParamPatchParamsDictTagged, C2dRfParamUsexyzParamsDictTagged, C2dRfParamNousexyzParamsDictTagged, C2dRfParamNtreesParamsDictTagged, C2dRfParamTreedepthParamsDictTagged, C2dSetSformParamsDictTagged, C2dReplaceParamsDictTagged, C2dResampleParamsDictTagged, C2dResampleIsoParamsDictTagged, C2dResampleMmParamsDictTagged, C2dResliceItkParamsDictTagged, C2dResliceMatrixParamsDictTagged, C2dResliceIdentityParamsDictTagged, C2dRgb2hsvParamsDictTagged, C2dRmsParamsDictTagged, C2dRoundParamsDictTagged, C2dScaleParamsDictTagged, C2dSetSform1ParamsDictTagged, C2dSinParamsDictTagged, C2dSliceParamsDictTagged, C2dSliceAllParamsDictTagged, C2dSharpenParamsDictTagged, C2dShiftParamsDictTagged, C2dSignedDistanceTransformParamsDictTagged, C2dSmoothParamsDictTagged, C2dSmoothFastParamsDictTagged, C2dSpacingParamsDictTagged, C2dSplitParamsDictTagged, C2dSqrtParamsDictTagged, C2dStapleParamsDictTagged, C2dStructureTensorEigenvaluesParamsDictTagged, C2dSpmParamsDictTagged, C2dSubtractParamsDictTagged, C2dSupervoxelParamsDictTagged, C2dStretchParamsDictTagged, C2dSwapdimParamsDictTagged, C2dTestImageParamsDictTagged, C2dTestProbeParamsDictTagged, C2dThresholdParamsDictTagged, C2dTileParamsDictTagged, C2dTrimParamsDictTagged, C2dTrimToSizeParamsDictTagged, C2dTypeParamsDictTagged, C2dVerboseParamsDictTagged, C2dNoverboseParamsDictTagged, C2dVersionParamsDictTagged, C2dVoteParamsDictTagged, C2dVoteMrfParamsDictTagged, C2dVoteLabelParamsDictTagged, C2dVoxelSumParamsDictTagged, C2dVoxelIntegralParamsDictTagged, C2dVoxelwiseRegressionParamsDictTagged, C2dWarpParamsDictTagged, C2dWarpLabelParamsDictTagged, C2dWrapParamsDictTagged, C2dWeightedSumParamsDictTagged, C2dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
@@ -1815,6 +1814,7 @@ C2dParamsDictTagged = typing.TypedDict('C2dParamsDictTagged', {
     "operations": list[typing.Union[C2dAccumParamsDictTagged, C2dAcosParamsDictTagged, C2dAddParamsDictTagged, C2dAlignLandmarksParamsDictTagged, C2dAnisotropicDiffusionParamsDictTagged, C2dAntialiasParamsDictTagged, C2dSetParamsDictTagged, C2dAsinParamsDictTagged, C2dAtan2ParamsDictTagged, C2dBackgroundParamsDictTagged, C2dN4BiasCorrectionParamsDictTagged, C2dBinarizeParamsDictTagged, C2dCannyParamsDictTagged, C2dCeilParamsDictTagged, C2dCentroidParamsDictTagged, C2dCentroidMarkParamsDictTagged, C2dConnectedComponentsParamsDictTagged, C2dClearParamsDictTagged, C2dClipParamsDictTagged, C2dColorMapParamsDictTagged, C2dCompressParamsDictTagged, C2dNoCompressParamsDictTagged, C2dConvParamsDictTagged, C2dCoordinateMapVoxelParamsDictTagged, C2dCoordinateMapPhysicalParamsDictTagged, C2dCopyTransformParamsDictTagged, C2dCosParamsDictTagged, C2dCreateParamsDictTagged, C2dDicomSeriesListParamsDictTagged, C2dDicomSeriesReadParamsDictTagged, C2dDilateParamsDictTagged, C2dDivideParamsDictTagged, C2dDuplicateParamsDictTagged, C2dEndaccumParamsDictTagged, C2dEndforParamsDictTagged, C2dErodeParamsDictTagged, C2dErfParamsDictTagged, C2dExpParamsDictTagged, C2dExportPatchesParamsDictTagged, C2dExportPatchesAugParamsDictTagged, C2dExtrudeSegParamsDictTagged, C2dFillBackgroundWithNoiseParamsDictTagged, C2dFftParamsDictTagged, C2dFlipParamsDictTagged, C2dFloorParamsDictTagged, C2dForeachParamsDictTagged, C2dForeachCompParamsDictTagged, C2dGlmParamsDictTagged, C2dGradientParamsDictTagged, C2dHelpParamsDictTagged, C2dHolefillParamsDictTagged, C2dHessianEigenvaluesParamsDictTagged, C2dHessianObjectnessParamsDictTagged, C2dHistogramMatchParamsDictTagged, C2dInfoParamsDictTagged, C2dInfoFullParamsDictTagged, C2dInsertParamsDictTagged, C2dInterpolationParamsDictTagged, C2dIterationsParamsDictTagged, C2dLabelOverlapParamsDictTagged, C2dLabelStatisticsParamsDictTagged, C2dLandmarksToSpheresParamsDictTagged, C2dLaplacianParamsDictTagged, C2dLevelsetParamsDictTagged, C2dLevelsetCurvatureParamsDictTagged, C2dLevelsetAdvectionParamsDictTagged, C2dLogParamsDictTagged, C2dLog10ParamsDictTagged, C2dManualParamsDictTagged, C2dMatchBoundingBoxParamsDictTagged, C2dMaximumParamsDictTagged, C2dMulticomponentSplitParamsDictTagged, C2dMeanParamsDictTagged, C2dMedianFilterParamsDictTagged, C2dMergeParamsDictTagged, C2dMeanFilterParamsDictTagged, C2dMutualInfoParamsDictTagged, C2dMinimumParamsDictTagged, C2dMixtureModelParamsDictTagged, C2dMomentsParamsDictTagged, C2dMattesMutualInfoParamsDictTagged, C2dMeanSquareParamsDictTagged, C2dMultiplyParamsDictTagged, C2dNormalizedCrossCorrelationParamsDictTagged, C2dNormalizedCorrelationParamsDictTagged, C2dNormalizedMutualInfoParamsDictTagged, C2dNoiseGaussianParamsDictTagged, C2dNoisePoissonParamsDictTagged, C2dNoiseSpeckleParamsDictTagged, C2dNoiseSaltPepperParamsDictTagged, C2dNoMulticomponentSplitParamsDictTagged, C2dNormalizeLocalWindowParamsDictTagged, C2dNormpdfParamsDictTagged, C2dNoroundParamsDictTagged, C2dNospmParamsDictTagged, C2dOutputParamsDictTagged, C2dOutputMulticomponentParamsDictTagged, C2dOutputMultipleMulticomponentParamsDictTagged, C2dOrientParamsDictTagged, C2dOutputMultipleParamsDictTagged, C2dOrient1ParamsDictTagged, C2dOriginParamsDictTagged, C2dOriginVoxelParamsDictTagged, C2dOriginVoxelCoordParamsDictTagged, C2dOverlapParamsDictTagged, C2dOverlayLabelImageParamsDictTagged, C2dPadParamsDictTagged, C2dPadToParamsDictTagged, C2dPcaParamsDictTagged, C2dPercentIntensityModeParamsDictTagged, C2dPixelParamsDictTagged, C2dPopParamsDictTagged, C2dPopasParamsDictTagged, C2dProbeParamsDictTagged, C2dPushParamsDictTagged, C2dRankParamsDictTagged, C2dReciprocalParamsDictTagged, C2dRegionParamsDictTagged, C2dReorderParamsDictTagged, C2dRetainLabelsParamsDictTagged, C2dRfApplyParamsDictTagged, C2dRfTrainParamsDictTagged, C2dRfParamPatchParamsDictTagged, C2dRfParamUsexyzParamsDictTagged, C2dRfParamNousexyzParamsDictTagged, C2dRfParamNtreesParamsDictTagged, C2dRfParamTreedepthParamsDictTagged, C2dSetSformParamsDictTagged, C2dReplaceParamsDictTagged, C2dResampleParamsDictTagged, C2dResampleIsoParamsDictTagged, C2dResampleMmParamsDictTagged, C2dResliceItkParamsDictTagged, C2dResliceMatrixParamsDictTagged, C2dResliceIdentityParamsDictTagged, C2dRgb2hsvParamsDictTagged, C2dRmsParamsDictTagged, C2dRoundParamsDictTagged, C2dScaleParamsDictTagged, C2dSetSform1ParamsDictTagged, C2dSinParamsDictTagged, C2dSliceParamsDictTagged, C2dSliceAllParamsDictTagged, C2dSharpenParamsDictTagged, C2dShiftParamsDictTagged, C2dSignedDistanceTransformParamsDictTagged, C2dSmoothParamsDictTagged, C2dSmoothFastParamsDictTagged, C2dSpacingParamsDictTagged, C2dSplitParamsDictTagged, C2dSqrtParamsDictTagged, C2dStapleParamsDictTagged, C2dStructureTensorEigenvaluesParamsDictTagged, C2dSpmParamsDictTagged, C2dSubtractParamsDictTagged, C2dSupervoxelParamsDictTagged, C2dStretchParamsDictTagged, C2dSwapdimParamsDictTagged, C2dTestImageParamsDictTagged, C2dTestProbeParamsDictTagged, C2dThresholdParamsDictTagged, C2dTileParamsDictTagged, C2dTrimParamsDictTagged, C2dTrimToSizeParamsDictTagged, C2dTypeParamsDictTagged, C2dVerboseParamsDictTagged, C2dNoverboseParamsDictTagged, C2dVersionParamsDictTagged, C2dVoteParamsDictTagged, C2dVoteMrfParamsDictTagged, C2dVoteLabelParamsDictTagged, C2dVoxelSumParamsDictTagged, C2dVoxelIntegralParamsDictTagged, C2dVoxelwiseRegressionParamsDictTagged, C2dWarpParamsDictTagged, C2dWarpLabelParamsDictTagged, C2dWrapParamsDictTagged, C2dWeightedSumParamsDictTagged, C2dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
 })
+C2dParamsDict = _C2dParamsDictNoTag | C2dParamsDictTagged
 
 
 def c2d_operations_cargs_dyn_fn(

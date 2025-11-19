@@ -13,14 +13,14 @@ FNAME2STEM_METADATA = Metadata(
 )
 
 
-Fname2stemParamsDict = typing.TypedDict('Fname2stemParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fname2stem"]],
+_Fname2stemParamsDictNoTag = typing.TypedDict('_Fname2stemParamsDictNoTag', {
     "filename": str,
 })
 Fname2stemParamsDictTagged = typing.TypedDict('Fname2stemParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fname2stem"],
     "filename": str,
 })
+Fname2stemParamsDict = _Fname2stemParamsDictNoTag | Fname2stemParamsDictTagged
 
 
 class Fname2stemOutputs(typing.NamedTuple):

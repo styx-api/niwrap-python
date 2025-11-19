@@ -12,8 +12,7 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 )
 
 
-CiftiRoiAverageParamsDict = typing.TypedDict('CiftiRoiAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-roi-average"]],
+_CiftiRoiAverageParamsDictNoTag = typing.TypedDict('_CiftiRoiAverageParamsDictNoTag', {
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -32,6 +31,7 @@ CiftiRoiAverageParamsDictTagged = typing.TypedDict('CiftiRoiAverageParamsDictTag
     "cifti-in": InputPathType,
     "text-out": str,
 })
+CiftiRoiAverageParamsDict = _CiftiRoiAverageParamsDictNoTag | CiftiRoiAverageParamsDictTagged
 
 
 class CiftiRoiAverageOutputs(typing.NamedTuple):

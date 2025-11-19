@@ -13,8 +13,7 @@ SWAP_SUBJECTWISE_METADATA = Metadata(
 )
 
 
-SwapSubjectwiseParamsDict = typing.TypedDict('SwapSubjectwiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/swap_subjectwise"]],
+_SwapSubjectwiseParamsDictNoTag = typing.TypedDict('_SwapSubjectwiseParamsDictNoTag', {
     "dyads": InputPathType,
     "fmean": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ SwapSubjectwiseParamsDictTagged = typing.TypedDict('SwapSubjectwiseParamsDictTag
     "averageonly_flag": bool,
     "verbose_flag": bool,
 })
+SwapSubjectwiseParamsDict = _SwapSubjectwiseParamsDictNoTag | SwapSubjectwiseParamsDictTagged
 
 
 class SwapSubjectwiseOutputs(typing.NamedTuple):

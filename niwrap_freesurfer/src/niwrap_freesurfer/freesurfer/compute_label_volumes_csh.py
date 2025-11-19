@@ -13,8 +13,7 @@ COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
 )
 
 
-ComputeLabelVolumesCshLabelLParamsDict = typing.TypedDict('ComputeLabelVolumesCshLabelLParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_L"]],
+_ComputeLabelVolumesCshLabelLParamsDictNoTag = typing.TypedDict('_ComputeLabelVolumesCshLabelLParamsDictNoTag', {
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
@@ -23,10 +22,10 @@ ComputeLabelVolumesCshLabelLParamsDictTagged = typing.TypedDict('ComputeLabelVol
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
+ComputeLabelVolumesCshLabelLParamsDict = _ComputeLabelVolumesCshLabelLParamsDictNoTag | ComputeLabelVolumesCshLabelLParamsDictTagged
 
 
-ComputeLabelVolumesCshParamsDict = typing.TypedDict('ComputeLabelVolumesCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_label_volumes.csh"]],
+_ComputeLabelVolumesCshParamsDictNoTag = typing.TypedDict('_ComputeLabelVolumesCshParamsDictNoTag', {
     "label_vol": InputPathType,
     "output_file": str,
     "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParamsDict | None],
@@ -41,6 +40,7 @@ ComputeLabelVolumesCshParamsDictTagged = typing.TypedDict('ComputeLabelVolumesCs
     "version": bool,
     "help": bool,
 })
+ComputeLabelVolumesCshParamsDict = _ComputeLabelVolumesCshParamsDictNoTag | ComputeLabelVolumesCshParamsDictTagged
 
 
 def compute_label_volumes_csh_label_l(

@@ -12,8 +12,7 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 )
 
 
-MetadataStringReplaceParamsDict = typing.TypedDict('MetadataStringReplaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metadata-string-replace"]],
+_MetadataStringReplaceParamsDictNoTag = typing.TypedDict('_MetadataStringReplaceParamsDictNoTag', {
     "case-insensitive": bool,
     "input-file": str,
     "find-string": str,
@@ -28,6 +27,7 @@ MetadataStringReplaceParamsDictTagged = typing.TypedDict('MetadataStringReplaceP
     "replace-string": str,
     "output-file": str,
 })
+MetadataStringReplaceParamsDict = _MetadataStringReplaceParamsDictNoTag | MetadataStringReplaceParamsDictTagged
 
 
 class MetadataStringReplaceOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ VOL2SEGAVG_METADATA = Metadata(
 )
 
 
-Vol2segavgParamsDict = typing.TypedDict('Vol2segavgParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2segavg"]],
+_Vol2segavgParamsDictNoTag = typing.TypedDict('_Vol2segavgParamsDictNoTag', {
     "output_file": str,
     "input_volume": InputPathType,
     "registration": str,
@@ -49,6 +48,7 @@ Vol2segavgParamsDictTagged = typing.TypedDict('Vol2segavgParamsDictTagged', {
     "xcsf_flag": bool,
     "remove_mean_flag": bool,
 })
+Vol2segavgParamsDict = _Vol2segavgParamsDictNoTag | Vol2segavgParamsDictTagged
 
 
 class Vol2segavgOutputs(typing.NamedTuple):

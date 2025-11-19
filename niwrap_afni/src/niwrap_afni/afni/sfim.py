@@ -13,8 +13,7 @@ SFIM_METADATA = Metadata(
 )
 
 
-SfimParamsDict = typing.TypedDict('SfimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/sfim"]],
+_SfimParamsDictNoTag = typing.TypedDict('_SfimParamsDictNoTag', {
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
     "baseline_state": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ SfimParamsDictTagged = typing.TypedDict('SfimParamsDictTagged', {
     "local_base_option": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
+SfimParamsDict = _SfimParamsDictNoTag | SfimParamsDictTagged
 
 
 class SfimOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DIRSTAT_METADATA = Metadata(
 )
 
 
-DirstatFslgradParamsDict = typing.TypedDict('DirstatFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_DirstatFslgradParamsDictNoTag = typing.TypedDict('_DirstatFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ DirstatFslgradParamsDictTagged = typing.TypedDict('DirstatFslgradParamsDictTagge
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+DirstatFslgradParamsDict = _DirstatFslgradParamsDictNoTag | DirstatFslgradParamsDictTagged
 
 
-DirstatConfigParamsDict = typing.TypedDict('DirstatConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirstatConfigParamsDictNoTag = typing.TypedDict('_DirstatConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ DirstatConfigParamsDictTagged = typing.TypedDict('DirstatConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+DirstatConfigParamsDict = _DirstatConfigParamsDictNoTag | DirstatConfigParamsDictTagged
 
 
-DirstatParamsDict = typing.TypedDict('DirstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirstat"]],
+_DirstatParamsDictNoTag = typing.TypedDict('_DirstatParamsDictNoTag', {
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],
@@ -69,6 +68,7 @@ DirstatParamsDictTagged = typing.TypedDict('DirstatParamsDictTagged', {
     "version": bool,
     "dirs": InputPathType,
 })
+DirstatParamsDict = _DirstatParamsDictNoTag | DirstatParamsDictTagged
 
 
 def dirstat_fslgrad(

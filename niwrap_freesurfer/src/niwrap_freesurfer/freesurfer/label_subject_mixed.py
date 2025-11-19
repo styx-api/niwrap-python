@@ -13,8 +13,7 @@ LABEL_SUBJECT_MIXED_METADATA = Metadata(
 )
 
 
-LabelSubjectMixedParamsDict = typing.TypedDict('LabelSubjectMixedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_mixed"]],
+_LabelSubjectMixedParamsDictNoTag = typing.TypedDict('_LabelSubjectMixedParamsDictNoTag', {
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
     "transform": InputPathType,
@@ -29,6 +28,7 @@ LabelSubjectMixedParamsDictTagged = typing.TypedDict('LabelSubjectMixedParamsDic
     "gca_file": InputPathType,
     "aseg_output": str,
 })
+LabelSubjectMixedParamsDict = _LabelSubjectMixedParamsDictNoTag | LabelSubjectMixedParamsDictTagged
 
 
 class LabelSubjectMixedOutputs(typing.NamedTuple):

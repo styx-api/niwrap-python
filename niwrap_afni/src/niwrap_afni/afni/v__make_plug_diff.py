@@ -13,8 +13,7 @@ V__MAKE_PLUG_DIFF_METADATA = Metadata(
 )
 
 
-VMakePlugDiffParamsDict = typing.TypedDict('VMakePlugDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@make_plug_diff"]],
+_VMakePlugDiffParamsDictNoTag = typing.TypedDict('_VMakePlugDiffParamsDictNoTag', {
     "vtk_dir": str,
     "xm_dir": str,
     "afni_src_dir": str,
@@ -33,6 +32,7 @@ VMakePlugDiffParamsDictTagged = typing.TypedDict('VMakePlugDiffParamsDictTagged'
     "linux": bool,
     "diff_dir": str,
 })
+VMakePlugDiffParamsDict = _VMakePlugDiffParamsDictNoTag | VMakePlugDiffParamsDictTagged
 
 
 class VMakePlugDiffOutputs(typing.NamedTuple):

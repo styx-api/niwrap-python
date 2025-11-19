@@ -13,14 +13,14 @@ FIXUP_MNI_PATHS_METADATA = Metadata(
 )
 
 
-FixupMniPathsParamsDict = typing.TypedDict('FixupMniPathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fixup_mni_paths"]],
+_FixupMniPathsParamsDictNoTag = typing.TypedDict('_FixupMniPathsParamsDictNoTag', {
     "verbose": bool,
 })
 FixupMniPathsParamsDictTagged = typing.TypedDict('FixupMniPathsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fixup_mni_paths"],
     "verbose": bool,
 })
+FixupMniPathsParamsDict = _FixupMniPathsParamsDictNoTag | FixupMniPathsParamsDictTagged
 
 
 class FixupMniPathsOutputs(typing.NamedTuple):

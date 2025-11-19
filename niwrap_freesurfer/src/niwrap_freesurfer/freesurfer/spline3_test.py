@@ -13,8 +13,7 @@ SPLINE3_TEST_METADATA = Metadata(
 )
 
 
-Spline3TestParamsDict = typing.TypedDict('Spline3TestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/Spline3_test"]],
+_Spline3TestParamsDictNoTag = typing.TypedDict('_Spline3TestParamsDictNoTag', {
     "x_values": list[float],
     "y_values": list[float],
     "x_new_values": list[float],
@@ -25,6 +24,7 @@ Spline3TestParamsDictTagged = typing.TypedDict('Spline3TestParamsDictTagged', {
     "y_values": list[float],
     "x_new_values": list[float],
 })
+Spline3TestParamsDict = _Spline3TestParamsDictNoTag | Spline3TestParamsDictTagged
 
 
 class Spline3TestOutputs(typing.NamedTuple):

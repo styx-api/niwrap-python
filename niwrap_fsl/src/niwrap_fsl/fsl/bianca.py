@@ -13,8 +13,7 @@ BIANCA_METADATA = Metadata(
 )
 
 
-BiancaParamsDict = typing.TypedDict('BiancaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bianca"]],
+_BiancaParamsDictNoTag = typing.TypedDict('_BiancaParamsDictNoTag', {
     "master_file": InputPathType,
     "label_feature_num": float,
     "brain_mask_feature_num": float,
@@ -53,6 +52,7 @@ BiancaParamsDictTagged = typing.TypedDict('BiancaParamsDictTagged', {
     "verbose_flag": bool,
     "out_name": typing.NotRequired[str | None],
 })
+BiancaParamsDict = _BiancaParamsDictNoTag | BiancaParamsDictTagged
 
 
 class BiancaOutputs(typing.NamedTuple):

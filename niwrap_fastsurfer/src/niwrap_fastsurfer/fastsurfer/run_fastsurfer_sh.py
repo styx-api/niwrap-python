@@ -13,8 +13,7 @@ RUN_FASTSURFER_SH_METADATA = Metadata(
 )
 
 
-RunFastsurferShParamsDict = typing.TypedDict('RunFastsurferShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fastsurfer/run_fastsurfer.sh"]],
+_RunFastsurferShParamsDictNoTag = typing.TypedDict('_RunFastsurferShParamsDictNoTag', {
     "sid": str,
     "subjects_dir": str,
     "t1_input": InputPathType,
@@ -89,6 +88,7 @@ RunFastsurferShParamsDictTagged = typing.TypedDict('RunFastsurferShParamsDictTag
     "allow_root": bool,
     "version": typing.NotRequired[str | None],
 })
+RunFastsurferShParamsDict = _RunFastsurferShParamsDictNoTag | RunFastsurferShParamsDictTagged
 
 
 class RunFastsurferShOutputs(typing.NamedTuple):

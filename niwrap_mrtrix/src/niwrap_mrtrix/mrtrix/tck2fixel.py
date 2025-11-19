@@ -13,8 +13,7 @@ TCK2FIXEL_METADATA = Metadata(
 )
 
 
-Tck2fixelConfigParamsDict = typing.TypedDict('Tck2fixelConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Tck2fixelConfigParamsDictNoTag = typing.TypedDict('_Tck2fixelConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Tck2fixelConfigParamsDictTagged = typing.TypedDict('Tck2fixelConfigParamsDictTag
     "key": str,
     "value": str,
 })
+Tck2fixelConfigParamsDict = _Tck2fixelConfigParamsDictNoTag | Tck2fixelConfigParamsDictTagged
 
 
-Tck2fixelParamsDict = typing.TypedDict('Tck2fixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tck2fixel"]],
+_Tck2fixelParamsDictNoTag = typing.TypedDict('_Tck2fixelParamsDictNoTag', {
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -57,6 +56,7 @@ Tck2fixelParamsDictTagged = typing.TypedDict('Tck2fixelParamsDictTagged', {
     "fixel_folder_out": str,
     "fixel_data_out": str,
 })
+Tck2fixelParamsDict = _Tck2fixelParamsDictNoTag | Tck2fixelParamsDictTagged
 
 
 def tck2fixel_config(

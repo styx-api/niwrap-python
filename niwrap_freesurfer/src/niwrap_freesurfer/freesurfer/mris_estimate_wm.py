@@ -13,8 +13,7 @@ MRIS_ESTIMATE_WM_METADATA = Metadata(
 )
 
 
-MrisEstimateWmParamsDict = typing.TypedDict('MrisEstimateWmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_estimate_wm"]],
+_MrisEstimateWmParamsDictNoTag = typing.TypedDict('_MrisEstimateWmParamsDictNoTag', {
     "subjs": list[str],
     "hemi": str,
     "sdir": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ MrisEstimateWmParamsDictTagged = typing.TypedDict('MrisEstimateWmParamsDictTagge
     "single_iter": bool,
     "vol": typing.NotRequired[str | None],
 })
+MrisEstimateWmParamsDict = _MrisEstimateWmParamsDictNoTag | MrisEstimateWmParamsDictTagged
 
 
 class MrisEstimateWmOutputs(typing.NamedTuple):

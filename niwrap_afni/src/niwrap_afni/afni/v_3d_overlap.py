@@ -13,8 +13,7 @@ V_3D_OVERLAP_METADATA = Metadata(
 )
 
 
-V3dOverlapParamsDict = typing.TypedDict('V3dOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dOverlap"]],
+_V3dOverlapParamsDictNoTag = typing.TypedDict('_V3dOverlapParamsDictNoTag', {
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ V3dOverlapParamsDictTagged = typing.TypedDict('V3dOverlapParamsDictTagged', {
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],
 })
+V3dOverlapParamsDict = _V3dOverlapParamsDictNoTag | V3dOverlapParamsDictTagged
 
 
 class V3dOverlapOutputs(typing.NamedTuple):

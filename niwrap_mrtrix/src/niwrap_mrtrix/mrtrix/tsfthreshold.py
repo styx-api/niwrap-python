@@ -13,8 +13,7 @@ TSFTHRESHOLD_METADATA = Metadata(
 )
 
 
-TsfthresholdConfigParamsDict = typing.TypedDict('TsfthresholdConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfthresholdConfigParamsDictNoTag = typing.TypedDict('_TsfthresholdConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfthresholdConfigParamsDictTagged = typing.TypedDict('TsfthresholdConfigParamsD
     "key": str,
     "value": str,
 })
+TsfthresholdConfigParamsDict = _TsfthresholdConfigParamsDictNoTag | TsfthresholdConfigParamsDictTagged
 
 
-TsfthresholdParamsDict = typing.TypedDict('TsfthresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfthreshold"]],
+_TsfthresholdParamsDictNoTag = typing.TypedDict('_TsfthresholdParamsDictNoTag', {
     "invert": bool,
     "info": bool,
     "quiet": bool,
@@ -55,6 +54,7 @@ TsfthresholdParamsDictTagged = typing.TypedDict('TsfthresholdParamsDictTagged', 
     "T": float,
     "output": str,
 })
+TsfthresholdParamsDict = _TsfthresholdParamsDictNoTag | TsfthresholdParamsDictTagged
 
 
 def tsfthreshold_config(

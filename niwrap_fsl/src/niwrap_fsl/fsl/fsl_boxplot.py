@@ -13,8 +13,7 @@ FSL_BOXPLOT_METADATA = Metadata(
 )
 
 
-FslBoxplotParamsDict = typing.TypedDict('FslBoxplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_boxplot"]],
+_FslBoxplotParamsDictNoTag = typing.TypedDict('_FslBoxplotParamsDictNoTag', {
     "input_files": list[InputPathType],
     "output_image": str,
     "help_flag": bool,
@@ -37,6 +36,7 @@ FslBoxplotParamsDictTagged = typing.TypedDict('FslBoxplotParamsDictTagged', {
     "plot_height": typing.NotRequired[float | None],
     "plot_width": typing.NotRequired[float | None],
 })
+FslBoxplotParamsDict = _FslBoxplotParamsDictNoTag | FslBoxplotParamsDictTagged
 
 
 class FslBoxplotOutputs(typing.NamedTuple):

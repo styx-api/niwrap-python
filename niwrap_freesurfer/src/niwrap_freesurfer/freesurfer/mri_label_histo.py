@@ -13,8 +13,7 @@ MRI_LABEL_HISTO_METADATA = Metadata(
 )
 
 
-MriLabelHistoParamsDict = typing.TypedDict('MriLabelHistoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_histo"]],
+_MriLabelHistoParamsDictNoTag = typing.TypedDict('_MriLabelHistoParamsDictNoTag', {
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
     "label": float,
@@ -27,6 +26,7 @@ MriLabelHistoParamsDictTagged = typing.TypedDict('MriLabelHistoParamsDictTagged'
     "label": float,
     "output": str,
 })
+MriLabelHistoParamsDict = _MriLabelHistoParamsDictNoTag | MriLabelHistoParamsDictTagged
 
 
 class MriLabelHistoOutputs(typing.NamedTuple):

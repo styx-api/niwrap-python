@@ -13,8 +13,7 @@ TBSS_SKELETON_METADATA = Metadata(
 )
 
 
-TbssSkeletonParamsDict = typing.TypedDict('TbssSkeletonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_skeleton"]],
+_TbssSkeletonParamsDictNoTag = typing.TypedDict('_TbssSkeletonParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "skeleton_params": typing.NotRequired[list[str] | None],
@@ -33,6 +32,7 @@ TbssSkeletonParamsDictTagged = typing.TypedDict('TbssSkeletonParamsDictTagged', 
     "debug_flag": bool,
     "debug2_flag": typing.NotRequired[InputPathType | None],
 })
+TbssSkeletonParamsDict = _TbssSkeletonParamsDictNoTag | TbssSkeletonParamsDictTagged
 
 
 class TbssSkeletonOutputs(typing.NamedTuple):

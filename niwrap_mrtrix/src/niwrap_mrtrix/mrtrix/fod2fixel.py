@@ -13,8 +13,7 @@ FOD2FIXEL_METADATA = Metadata(
 )
 
 
-Fod2fixelConfigParamsDict = typing.TypedDict('Fod2fixelConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fod2fixelConfigParamsDictNoTag = typing.TypedDict('_Fod2fixelConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Fod2fixelConfigParamsDictTagged = typing.TypedDict('Fod2fixelConfigParamsDictTag
     "key": str,
     "value": str,
 })
+Fod2fixelConfigParamsDict = _Fod2fixelConfigParamsDictNoTag | Fod2fixelConfigParamsDictTagged
 
 
-Fod2fixelParamsDict = typing.TypedDict('Fod2fixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fod2fixel"]],
+_Fod2fixelParamsDictNoTag = typing.TypedDict('_Fod2fixelParamsDictNoTag', {
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
     "disp": typing.NotRequired[str | None],
@@ -73,6 +72,7 @@ Fod2fixelParamsDictTagged = typing.TypedDict('Fod2fixelParamsDictTagged', {
     "fod": InputPathType,
     "fixel_directory": str,
 })
+Fod2fixelParamsDict = _Fod2fixelParamsDictNoTag | Fod2fixelParamsDictTagged
 
 
 def fod2fixel_config(

@@ -13,8 +13,7 @@ MRIS_DISTANCE_TRANSFORM_METADATA = Metadata(
 )
 
 
-MrisDistanceTransformParamsDict = typing.TypedDict('MrisDistanceTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_transform"]],
+_MrisDistanceTransformParamsDictNoTag = typing.TypedDict('_MrisDistanceTransformParamsDictNoTag', {
     "surface": InputPathType,
     "label": InputPathType,
     "mode": typing.Literal["signed", "unsigned", "outside"],
@@ -35,6 +34,7 @@ MrisDistanceTransformParamsDictTagged = typing.TypedDict('MrisDistanceTransformP
     "divide": typing.NotRequired[float | None],
     "olabel": bool,
 })
+MrisDistanceTransformParamsDict = _MrisDistanceTransformParamsDictNoTag | MrisDistanceTransformParamsDictTagged
 
 
 class MrisDistanceTransformOutputs(typing.NamedTuple):

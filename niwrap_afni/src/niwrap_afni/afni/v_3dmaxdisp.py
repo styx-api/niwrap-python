@@ -13,8 +13,7 @@ V_3DMAXDISP_METADATA = Metadata(
 )
 
 
-V3dmaxdispParamsDict = typing.TypedDict('V3dmaxdispParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmaxdisp"]],
+_V3dmaxdispParamsDictNoTag = typing.TypedDict('_V3dmaxdispParamsDictNoTag', {
     "inset": InputPathType,
     "matrix": InputPathType,
     "verbose": bool,
@@ -25,6 +24,7 @@ V3dmaxdispParamsDictTagged = typing.TypedDict('V3dmaxdispParamsDictTagged', {
     "matrix": InputPathType,
     "verbose": bool,
 })
+V3dmaxdispParamsDict = _V3dmaxdispParamsDictNoTag | V3dmaxdispParamsDictTagged
 
 
 class V3dmaxdispOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_SEG_OVERLAP_METADATA = Metadata(
 )
 
 
-MriSegOverlapParamsDict = typing.TypedDict('MriSegOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_overlap"]],
+_MriSegOverlapParamsDictNoTag = typing.TypedDict('_MriSegOverlapParamsDictNoTag', {
     "vol1": InputPathType,
     "vol2": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ MriSegOverlapParamsDictTagged = typing.TypedDict('MriSegOverlapParamsDictTagged'
     "seg_flag": bool,
     "quiet_flag": bool,
 })
+MriSegOverlapParamsDict = _MriSegOverlapParamsDictNoTag | MriSegOverlapParamsDictTagged
 
 
 class MriSegOverlapOutputs(typing.NamedTuple):

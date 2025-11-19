@@ -13,8 +13,7 @@ MRI_REDUCE_METADATA = Metadata(
 )
 
 
-MriReduceParamsDict = typing.TypedDict('MriReduceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reduce"]],
+_MriReduceParamsDictNoTag = typing.TypedDict('_MriReduceParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ MriReduceParamsDictTagged = typing.TypedDict('MriReduceParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+MriReduceParamsDict = _MriReduceParamsDictNoTag | MriReduceParamsDictTagged
 
 
 class MriReduceOutputs(typing.NamedTuple):

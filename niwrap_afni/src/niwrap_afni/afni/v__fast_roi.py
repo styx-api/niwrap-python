@@ -13,8 +13,7 @@ V__FAST_ROI_METADATA = Metadata(
 )
 
 
-VFastRoiParamsDict = typing.TypedDict('VFastRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@fast_roi"]],
+_VFastRoiParamsDictNoTag = typing.TypedDict('_VFastRoiParamsDictNoTag', {
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
     "anat": InputPathType,
@@ -39,6 +38,7 @@ VFastRoiParamsDictTagged = typing.TypedDict('VFastRoiParamsDictTagged', {
     "twopass": bool,
     "help": bool,
 })
+VFastRoiParamsDict = _VFastRoiParamsDictNoTag | VFastRoiParamsDictTagged
 
 
 class VFastRoiOutputs(typing.NamedTuple):

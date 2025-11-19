@@ -13,8 +13,7 @@ MRIS_PLACE_SURFACE_METADATA = Metadata(
 )
 
 
-MrisPlaceSurfaceParamsDict = typing.TypedDict('MrisPlaceSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_place_surface"]],
+_MrisPlaceSurfaceParamsDictNoTag = typing.TypedDict('_MrisPlaceSurfaceParamsDictNoTag', {
     "output_surface": str,
     "input_surface": str,
     "autodetect_gray_white_stats": str,
@@ -107,6 +106,7 @@ MrisPlaceSurfaceParamsDictTagged = typing.TypedDict('MrisPlaceSurfaceParamsDictT
     "white_border_low_factor": typing.NotRequired[float | None],
     "fill_lateral_ventricles": typing.NotRequired[list[float] | None],
 })
+MrisPlaceSurfaceParamsDict = _MrisPlaceSurfaceParamsDictNoTag | MrisPlaceSurfaceParamsDictTagged
 
 
 class MrisPlaceSurfaceOutputs(typing.NamedTuple):

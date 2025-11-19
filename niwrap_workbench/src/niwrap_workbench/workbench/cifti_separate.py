@@ -12,8 +12,7 @@ CIFTI_SEPARATE_METADATA = Metadata(
 )
 
 
-CiftiSeparateVolumeAllParamsDict = typing.TypedDict('CiftiSeparateVolumeAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-all"]],
+_CiftiSeparateVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiSeparateVolumeAllParamsDictNoTag', {
     "volume-out": str,
     "roi-out": typing.NotRequired[str | None],
     "label-out": typing.NotRequired[str | None],
@@ -26,10 +25,10 @@ CiftiSeparateVolumeAllParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeAl
     "label-out": typing.NotRequired[str | None],
     "crop": bool,
 })
+CiftiSeparateVolumeAllParamsDict = _CiftiSeparateVolumeAllParamsDictNoTag | CiftiSeparateVolumeAllParamsDictTagged
 
 
-CiftiSeparateLabelParamsDict = typing.TypedDict('CiftiSeparateLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_CiftiSeparateLabelParamsDictNoTag = typing.TypedDict('_CiftiSeparateLabelParamsDictNoTag', {
     "structure": str,
     "label-out": str,
     "roi-out": typing.NotRequired[str | None],
@@ -40,10 +39,10 @@ CiftiSeparateLabelParamsDictTagged = typing.TypedDict('CiftiSeparateLabelParamsD
     "label-out": str,
     "roi-out": typing.NotRequired[str | None],
 })
+CiftiSeparateLabelParamsDict = _CiftiSeparateLabelParamsDictNoTag | CiftiSeparateLabelParamsDictTagged
 
 
-CiftiSeparateMetricParamsDict = typing.TypedDict('CiftiSeparateMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_CiftiSeparateMetricParamsDictNoTag = typing.TypedDict('_CiftiSeparateMetricParamsDictNoTag', {
     "structure": str,
     "metric-out": str,
     "roi-out": typing.NotRequired[str | None],
@@ -54,10 +53,10 @@ CiftiSeparateMetricParamsDictTagged = typing.TypedDict('CiftiSeparateMetricParam
     "metric-out": str,
     "roi-out": typing.NotRequired[str | None],
 })
+CiftiSeparateMetricParamsDict = _CiftiSeparateMetricParamsDictNoTag | CiftiSeparateMetricParamsDictTagged
 
 
-CiftiSeparateVolumeParamsDict = typing.TypedDict('CiftiSeparateVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiSeparateVolumeParamsDictNoTag = typing.TypedDict('_CiftiSeparateVolumeParamsDictNoTag', {
     "structure": str,
     "volume-out": str,
     "roi-out": typing.NotRequired[str | None],
@@ -70,10 +69,10 @@ CiftiSeparateVolumeParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeParam
     "roi-out": typing.NotRequired[str | None],
     "crop": bool,
 })
+CiftiSeparateVolumeParamsDict = _CiftiSeparateVolumeParamsDictNoTag | CiftiSeparateVolumeParamsDictTagged
 
 
-CiftiSeparateParamsDict = typing.TypedDict('CiftiSeparateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-separate"]],
+_CiftiSeparateParamsDictNoTag = typing.TypedDict('_CiftiSeparateParamsDictNoTag', {
     "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
     "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict] | None],
     "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
@@ -90,6 +89,7 @@ CiftiSeparateParamsDictTagged = typing.TypedDict('CiftiSeparateParamsDictTagged'
     "cifti-in": InputPathType,
     "direction": str,
 })
+CiftiSeparateParamsDict = _CiftiSeparateParamsDictNoTag | CiftiSeparateParamsDictTagged
 
 
 class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):

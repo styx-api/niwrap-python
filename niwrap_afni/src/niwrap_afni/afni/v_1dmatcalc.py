@@ -13,14 +13,14 @@ V_1DMATCALC_METADATA = Metadata(
 )
 
 
-V1dmatcalcParamsDict = typing.TypedDict('V1dmatcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dmatcalc"]],
+_V1dmatcalcParamsDictNoTag = typing.TypedDict('_V1dmatcalcParamsDictNoTag', {
     "expression": typing.NotRequired[str | None],
 })
 V1dmatcalcParamsDictTagged = typing.TypedDict('V1dmatcalcParamsDictTagged', {
     "@type": typing.Literal["afni/1dmatcalc"],
     "expression": typing.NotRequired[str | None],
 })
+V1dmatcalcParamsDict = _V1dmatcalcParamsDictNoTag | V1dmatcalcParamsDictTagged
 
 
 class V1dmatcalcOutputs(typing.NamedTuple):

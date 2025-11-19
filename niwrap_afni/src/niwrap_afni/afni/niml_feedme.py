@@ -13,8 +13,7 @@ NIML_FEEDME_METADATA = Metadata(
 )
 
 
-NimlFeedmeParamsDict = typing.TypedDict('NimlFeedmeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/niml_feedme"]],
+_NimlFeedmeParamsDictNoTag = typing.TypedDict('_NimlFeedmeParamsDictNoTag', {
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
     "verbose": bool,
@@ -33,6 +32,7 @@ NimlFeedmeParamsDictTagged = typing.TypedDict('NimlFeedmeParamsDictTagged', {
     "drive_cmds": typing.NotRequired[list[str] | None],
     "dataset": InputPathType,
 })
+NimlFeedmeParamsDict = _NimlFeedmeParamsDictNoTag | NimlFeedmeParamsDictTagged
 
 
 class NimlFeedmeOutputs(typing.NamedTuple):

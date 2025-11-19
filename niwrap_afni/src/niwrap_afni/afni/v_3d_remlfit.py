@@ -13,8 +13,7 @@ V_3D_REMLFIT_METADATA = Metadata(
 )
 
 
-V3dRemlfitParamsDict = typing.TypedDict('V3dRemlfitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dREMLfit"]],
+_V3dRemlfitParamsDictNoTag = typing.TypedDict('_V3dRemlfitParamsDictNoTag', {
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
     "baseline_files": typing.NotRequired[list[str] | None],
@@ -49,6 +48,7 @@ V3dRemlfitParamsDictTagged = typing.TypedDict('V3dRemlfitParamsDictTagged', {
     "quiet": bool,
     "verbose": bool,
 })
+V3dRemlfitParamsDict = _V3dRemlfitParamsDictNoTag | V3dRemlfitParamsDictTagged
 
 
 class V3dRemlfitOutputs(typing.NamedTuple):

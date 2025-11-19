@@ -13,8 +13,7 @@ PCTSURFCON_METADATA = Metadata(
 )
 
 
-PctsurfconParamsDict = typing.TypedDict('PctsurfconParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/pctsurfcon"]],
+_PctsurfconParamsDictNoTag = typing.TypedDict('_PctsurfconParamsDictNoTag', {
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
     "outbase": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ PctsurfconParamsDictTagged = typing.TypedDict('PctsurfconParamsDictTagged', {
     "tmp": typing.NotRequired[str | None],
     "nocleanup": bool,
 })
+PctsurfconParamsDict = _PctsurfconParamsDictNoTag | PctsurfconParamsDictTagged
 
 
 class PctsurfconOutputs(typing.NamedTuple):

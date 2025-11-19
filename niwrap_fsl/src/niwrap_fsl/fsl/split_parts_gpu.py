@@ -13,8 +13,7 @@ SPLIT_PARTS_GPU_METADATA = Metadata(
 )
 
 
-SplitPartsGpuParamsDict = typing.TypedDict('SplitPartsGpuParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/split_parts_gpu"]],
+_SplitPartsGpuParamsDictNoTag = typing.TypedDict('_SplitPartsGpuParamsDictNoTag', {
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvals_file": InputPathType,
@@ -35,6 +34,7 @@ SplitPartsGpuParamsDictTagged = typing.TypedDict('SplitPartsGpuParamsDictTagged'
     "total_num_parts": int,
     "output_directory": str,
 })
+SplitPartsGpuParamsDict = _SplitPartsGpuParamsDictNoTag | SplitPartsGpuParamsDictTagged
 
 
 class SplitPartsGpuOutputs(typing.NamedTuple):

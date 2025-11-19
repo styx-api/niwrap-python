@@ -13,8 +13,7 @@ TRAC_ALL_METADATA = Metadata(
 )
 
 
-TracAllParamsDict = typing.TypedDict('TracAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-all"]],
+_TracAllParamsDictNoTag = typing.TypedDict('_TracAllParamsDictNoTag', {
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
     "dicom_file": typing.NotRequired[InputPathType | None],
@@ -87,6 +86,7 @@ TracAllParamsDictTagged = typing.TypedDict('TracAllParamsDictTagged', {
     "version_info": bool,
     "help": bool,
 })
+TracAllParamsDict = _TracAllParamsDictNoTag | TracAllParamsDictTagged
 
 
 class TracAllOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 )
 
 
-RenormalizeSubjectKeepEdittingParamsDict = typing.TypedDict('RenormalizeSubjectKeepEdittingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_subject_keep_editting"]],
+_RenormalizeSubjectKeepEdittingParamsDictNoTag = typing.TypedDict('_RenormalizeSubjectKeepEdittingParamsDictNoTag', {
     "placeholder_input": typing.NotRequired[str | None],
 })
 RenormalizeSubjectKeepEdittingParamsDictTagged = typing.TypedDict('RenormalizeSubjectKeepEdittingParamsDictTagged', {
     "@type": typing.Literal["freesurfer/renormalize_subject_keep_editting"],
     "placeholder_input": typing.NotRequired[str | None],
 })
+RenormalizeSubjectKeepEdittingParamsDict = _RenormalizeSubjectKeepEdittingParamsDictNoTag | RenormalizeSubjectKeepEdittingParamsDictTagged
 
 
 class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):

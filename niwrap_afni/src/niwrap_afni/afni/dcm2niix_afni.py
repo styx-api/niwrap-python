@@ -13,8 +13,7 @@ DCM2NIIX_AFNI_METADATA = Metadata(
 )
 
 
-Dcm2niixAfniParamsDict = typing.TypedDict('Dcm2niixAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/dcm2niix_afni"]],
+_Dcm2niixAfniParamsDictNoTag = typing.TypedDict('_Dcm2niixAfniParamsDictNoTag', {
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
     "adjacent_dicoms": typing.NotRequired[str | None],
@@ -77,6 +76,7 @@ Dcm2niixAfniParamsDictTagged = typing.TypedDict('Dcm2niixAfniParamsDictTagged', 
     "version": bool,
     "xml": bool,
 })
+Dcm2niixAfniParamsDict = _Dcm2niixAfniParamsDictNoTag | Dcm2niixAfniParamsDictTagged
 
 
 class Dcm2niixAfniOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_COMPUTE_OVERLAP_METADATA = Metadata(
 )
 
 
-MriComputeOverlapParamsDict = typing.TypedDict('MriComputeOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_overlap"]],
+_MriComputeOverlapParamsDictNoTag = typing.TypedDict('_MriComputeOverlapParamsDictNoTag', {
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
     "all_labels": bool,
@@ -41,6 +40,7 @@ MriComputeOverlapParamsDictTagged = typing.TypedDict('MriComputeOverlapParamsDic
     "translate_label": typing.NotRequired[list[float] | None],
     "help": bool,
 })
+MriComputeOverlapParamsDict = _MriComputeOverlapParamsDictNoTag | MriComputeOverlapParamsDictTagged
 
 
 class MriComputeOverlapOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__DIFF_FILES_METADATA = Metadata(
 )
 
 
-VDiffFilesParamsDict = typing.TypedDict('VDiffFilesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@diff.files"]],
+_VDiffFilesParamsDictNoTag = typing.TypedDict('_VDiffFilesParamsDictNoTag', {
     "files": list[str],
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ VDiffFilesParamsDictTagged = typing.TypedDict('VDiffFilesParamsDictTagged', {
     "X_flag": bool,
     "verbosity": typing.NotRequired[float | None],
 })
+VDiffFilesParamsDict = _VDiffFilesParamsDictNoTag | VDiffFilesParamsDictTagged
 
 
 class VDiffFilesOutputs(typing.NamedTuple):

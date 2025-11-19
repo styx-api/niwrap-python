@@ -13,8 +13,7 @@ FEAT_GM_PREPARE_METADATA = Metadata(
 )
 
 
-FeatGmPrepareParamsDict = typing.TypedDict('FeatGmPrepareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/feat_gm_prepare"]],
+_FeatGmPrepareParamsDictNoTag = typing.TypedDict('_FeatGmPrepareParamsDictNoTag', {
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })
@@ -23,6 +22,7 @@ FeatGmPrepareParamsDictTagged = typing.TypedDict('FeatGmPrepareParamsDictTagged'
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })
+FeatGmPrepareParamsDict = _FeatGmPrepareParamsDictNoTag | FeatGmPrepareParamsDictTagged
 
 
 class FeatGmPrepareOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CIFTI_PALETTE_METADATA = Metadata(
 )
 
 
-CiftiPalettePosPercentParamsDict = typing.TypedDict('CiftiPalettePosPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-percent"]],
+_CiftiPalettePosPercentParamsDictNoTag = typing.TypedDict('_CiftiPalettePosPercentParamsDictNoTag', {
     "pos-min-%": float,
     "pos-max-%": float,
 })
@@ -22,10 +21,10 @@ CiftiPalettePosPercentParamsDictTagged = typing.TypedDict('CiftiPalettePosPercen
     "pos-min-%": float,
     "pos-max-%": float,
 })
+CiftiPalettePosPercentParamsDict = _CiftiPalettePosPercentParamsDictNoTag | CiftiPalettePosPercentParamsDictTagged
 
 
-CiftiPaletteNegPercentParamsDict = typing.TypedDict('CiftiPaletteNegPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-percent"]],
+_CiftiPaletteNegPercentParamsDictNoTag = typing.TypedDict('_CiftiPaletteNegPercentParamsDictNoTag', {
     "neg-min-%": float,
     "neg-max-%": float,
 })
@@ -34,10 +33,10 @@ CiftiPaletteNegPercentParamsDictTagged = typing.TypedDict('CiftiPaletteNegPercen
     "neg-min-%": float,
     "neg-max-%": float,
 })
+CiftiPaletteNegPercentParamsDict = _CiftiPaletteNegPercentParamsDictNoTag | CiftiPaletteNegPercentParamsDictTagged
 
 
-CiftiPalettePosUserParamsDict = typing.TypedDict('CiftiPalettePosUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-user"]],
+_CiftiPalettePosUserParamsDictNoTag = typing.TypedDict('_CiftiPalettePosUserParamsDictNoTag', {
     "pos-min-user": float,
     "pos-max-user": float,
 })
@@ -46,10 +45,10 @@ CiftiPalettePosUserParamsDictTagged = typing.TypedDict('CiftiPalettePosUserParam
     "pos-min-user": float,
     "pos-max-user": float,
 })
+CiftiPalettePosUserParamsDict = _CiftiPalettePosUserParamsDictNoTag | CiftiPalettePosUserParamsDictTagged
 
 
-CiftiPaletteNegUserParamsDict = typing.TypedDict('CiftiPaletteNegUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-user"]],
+_CiftiPaletteNegUserParamsDictNoTag = typing.TypedDict('_CiftiPaletteNegUserParamsDictNoTag', {
     "neg-min-user": float,
     "neg-max-user": float,
 })
@@ -58,10 +57,10 @@ CiftiPaletteNegUserParamsDictTagged = typing.TypedDict('CiftiPaletteNegUserParam
     "neg-min-user": float,
     "neg-max-user": float,
 })
+CiftiPaletteNegUserParamsDict = _CiftiPaletteNegUserParamsDictNoTag | CiftiPaletteNegUserParamsDictTagged
 
 
-CiftiPaletteThresholdingParamsDict = typing.TypedDict('CiftiPaletteThresholdingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["thresholding"]],
+_CiftiPaletteThresholdingParamsDictNoTag = typing.TypedDict('_CiftiPaletteThresholdingParamsDictNoTag', {
     "type": str,
     "test": str,
     "min": float,
@@ -74,10 +73,10 @@ CiftiPaletteThresholdingParamsDictTagged = typing.TypedDict('CiftiPaletteThresho
     "min": float,
     "max": float,
 })
+CiftiPaletteThresholdingParamsDict = _CiftiPaletteThresholdingParamsDictNoTag | CiftiPaletteThresholdingParamsDictTagged
 
 
-CiftiPaletteParamsDict = typing.TypedDict('CiftiPaletteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-palette"]],
+_CiftiPaletteParamsDictNoTag = typing.TypedDict('_CiftiPaletteParamsDictNoTag', {
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
     "pos-percent": typing.NotRequired[CiftiPalettePosPercentParamsDict | None],
@@ -114,6 +113,7 @@ CiftiPaletteParamsDictTagged = typing.TypedDict('CiftiPaletteParamsDictTagged', 
     "cifti-in": InputPathType,
     "mode": str,
 })
+CiftiPaletteParamsDict = _CiftiPaletteParamsDictNoTag | CiftiPaletteParamsDictTagged
 
 
 def cifti_palette_pos_percent(

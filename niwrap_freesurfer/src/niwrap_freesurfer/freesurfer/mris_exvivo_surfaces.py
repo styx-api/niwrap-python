@@ -13,8 +13,7 @@ MRIS_EXVIVO_SURFACES_METADATA = Metadata(
 )
 
 
-MrisExvivoSurfacesParamsDict = typing.TypedDict('MrisExvivoSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_exvivo_surfaces"]],
+_MrisExvivoSurfacesParamsDictNoTag = typing.TypedDict('_MrisExvivoSurfacesParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -33,6 +32,7 @@ MrisExvivoSurfacesParamsDictTagged = typing.TypedDict('MrisExvivoSurfacesParamsD
     "white_only": bool,
     "formalin": typing.NotRequired[int | None],
 })
+MrisExvivoSurfacesParamsDict = _MrisExvivoSurfacesParamsDictNoTag | MrisExvivoSurfacesParamsDictTagged
 
 
 class MrisExvivoSurfacesOutputs(typing.NamedTuple):

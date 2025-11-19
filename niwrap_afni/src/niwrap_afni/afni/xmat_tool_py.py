@@ -13,8 +13,7 @@ XMAT_TOOL_PY_METADATA = Metadata(
 )
 
 
-XmatToolPyParamsDict = typing.TypedDict('XmatToolPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/xmat_tool.py"]],
+_XmatToolPyParamsDictNoTag = typing.TypedDict('_XmatToolPyParamsDictNoTag', {
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
     "load_1d": typing.NotRequired[InputPathType | None],
@@ -61,6 +60,7 @@ XmatToolPyParamsDictTagged = typing.TypedDict('XmatToolPyParamsDictTagged', {
     "show_1d": bool,
     "gui_plot_xmat_as_one": bool,
 })
+XmatToolPyParamsDict = _XmatToolPyParamsDictNoTag | XmatToolPyParamsDictTagged
 
 
 class XmatToolPyOutputs(typing.NamedTuple):

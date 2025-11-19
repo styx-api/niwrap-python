@@ -12,8 +12,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 )
 
 
-SurfaceCurvatureParamsDict = typing.TypedDict('SurfaceCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-curvature"]],
+_SurfaceCurvatureParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureParamsDictNoTag', {
     "mean-out": typing.NotRequired[str | None],
     "gauss-out": typing.NotRequired[str | None],
     "surface": InputPathType,
@@ -24,6 +23,7 @@ SurfaceCurvatureParamsDictTagged = typing.TypedDict('SurfaceCurvatureParamsDictT
     "gauss-out": typing.NotRequired[str | None],
     "surface": InputPathType,
 })
+SurfaceCurvatureParamsDict = _SurfaceCurvatureParamsDictNoTag | SurfaceCurvatureParamsDictTagged
 
 
 class SurfaceCurvatureOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ LISTSUBJ_METADATA = Metadata(
 )
 
 
-ListsubjParamsDict = typing.TypedDict('ListsubjParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/listsubj"]],
+_ListsubjParamsDictNoTag = typing.TypedDict('_ListsubjParamsDictNoTag', {
     "subject_dir": str,
     "cross": bool,
     "base": bool,
@@ -39,6 +38,7 @@ ListsubjParamsDictTagged = typing.TypedDict('ListsubjParamsDictTagged', {
     "count": bool,
     "help": bool,
 })
+ListsubjParamsDict = _ListsubjParamsDictNoTag | ListsubjParamsDictTagged
 
 
 class ListsubjOutputs(typing.NamedTuple):

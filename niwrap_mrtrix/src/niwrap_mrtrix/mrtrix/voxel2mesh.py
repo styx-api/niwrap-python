@@ -13,8 +13,7 @@ VOXEL2MESH_METADATA = Metadata(
 )
 
 
-Voxel2meshConfigParamsDict = typing.TypedDict('Voxel2meshConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Voxel2meshConfigParamsDictNoTag = typing.TypedDict('_Voxel2meshConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Voxel2meshConfigParamsDictTagged = typing.TypedDict('Voxel2meshConfigParamsDictT
     "key": str,
     "value": str,
 })
+Voxel2meshConfigParamsDict = _Voxel2meshConfigParamsDictNoTag | Voxel2meshConfigParamsDictTagged
 
 
-Voxel2meshParamsDict = typing.TypedDict('Voxel2meshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/voxel2mesh"]],
+_Voxel2meshParamsDictNoTag = typing.TypedDict('_Voxel2meshParamsDictNoTag', {
     "blocky": bool,
     "threshold": typing.NotRequired[float | None],
     "info": bool,
@@ -55,6 +54,7 @@ Voxel2meshParamsDictTagged = typing.TypedDict('Voxel2meshParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+Voxel2meshParamsDict = _Voxel2meshParamsDictNoTag | Voxel2meshParamsDictTagged
 
 
 def voxel2mesh_config(

@@ -12,8 +12,7 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-CiftiRoisFromExtremaGaussianParamsDict = typing.TypedDict('CiftiRoisFromExtremaGaussianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gaussian"]],
+_CiftiRoisFromExtremaGaussianParamsDictNoTag = typing.TypedDict('_CiftiRoisFromExtremaGaussianParamsDictNoTag', {
     "surf-sigma": float,
     "vol-sigma": float,
 })
@@ -22,10 +21,10 @@ CiftiRoisFromExtremaGaussianParamsDictTagged = typing.TypedDict('CiftiRoisFromEx
     "surf-sigma": float,
     "vol-sigma": float,
 })
+CiftiRoisFromExtremaGaussianParamsDict = _CiftiRoisFromExtremaGaussianParamsDictNoTag | CiftiRoisFromExtremaGaussianParamsDictTagged
 
 
-CiftiRoisFromExtremaParamsDict = typing.TypedDict('CiftiRoisFromExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-rois-from-extrema"]],
+_CiftiRoisFromExtremaParamsDictNoTag = typing.TypedDict('_CiftiRoisFromExtremaParamsDictNoTag', {
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
@@ -52,6 +51,7 @@ CiftiRoisFromExtremaParamsDictTagged = typing.TypedDict('CiftiRoisFromExtremaPar
     "vol-limit": float,
     "direction": str,
 })
+CiftiRoisFromExtremaParamsDict = _CiftiRoisFromExtremaParamsDictNoTag | CiftiRoisFromExtremaParamsDictTagged
 
 
 def cifti_rois_from_extrema_gaussian(

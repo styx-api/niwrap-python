@@ -13,8 +13,7 @@ CONVERT_CDIFLIST_TO_GRADS_PY_METADATA = Metadata(
 )
 
 
-ConvertCdiflistToGradsPyParamsDict = typing.TypedDict('ConvertCdiflistToGradsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/convert_cdiflist_to_grads.py"]],
+_ConvertCdiflistToGradsPyParamsDictNoTag = typing.TypedDict('_ConvertCdiflistToGradsPyParamsDictNoTag', {
     "cdiflist": InputPathType,
     "bval_max": float,
     "prefix": str,
@@ -33,6 +32,7 @@ ConvertCdiflistToGradsPyParamsDictTagged = typing.TypedDict('ConvertCdiflistToGr
     "help": bool,
     "hview": bool,
 })
+ConvertCdiflistToGradsPyParamsDict = _ConvertCdiflistToGradsPyParamsDictNoTag | ConvertCdiflistToGradsPyParamsDictTagged
 
 
 class ConvertCdiflistToGradsPyOutputs(typing.NamedTuple):

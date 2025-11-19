@@ -12,8 +12,7 @@ LABEL_MERGE_METADATA = Metadata(
 )
 
 
-LabelMergeUpToParamsDict = typing.TypedDict('LabelMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_LabelMergeUpToParamsDictNoTag = typing.TypedDict('_LabelMergeUpToParamsDictNoTag', {
     "last-column": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ LabelMergeUpToParamsDictTagged = typing.TypedDict('LabelMergeUpToParamsDictTagge
     "last-column": str,
     "reverse": bool,
 })
+LabelMergeUpToParamsDict = _LabelMergeUpToParamsDictNoTag | LabelMergeUpToParamsDictTagged
 
 
-LabelMergeColumnParamsDict = typing.TypedDict('LabelMergeColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_LabelMergeColumnParamsDictNoTag = typing.TypedDict('_LabelMergeColumnParamsDictNoTag', {
     "column": str,
     "up-to": typing.NotRequired[LabelMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ LabelMergeColumnParamsDictTagged = typing.TypedDict('LabelMergeColumnParamsDictT
     "column": str,
     "up-to": typing.NotRequired[LabelMergeUpToParamsDict | None],
 })
+LabelMergeColumnParamsDict = _LabelMergeColumnParamsDictNoTag | LabelMergeColumnParamsDictTagged
 
 
-LabelMergeLabelParamsDict = typing.TypedDict('LabelMergeLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_LabelMergeLabelParamsDictNoTag = typing.TypedDict('_LabelMergeLabelParamsDictNoTag', {
     "label-in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParamsDict] | None],
 })
@@ -46,10 +45,10 @@ LabelMergeLabelParamsDictTagged = typing.TypedDict('LabelMergeLabelParamsDictTag
     "label-in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParamsDict] | None],
 })
+LabelMergeLabelParamsDict = _LabelMergeLabelParamsDictNoTag | LabelMergeLabelParamsDictTagged
 
 
-LabelMergeParamsDict = typing.TypedDict('LabelMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-merge"]],
+_LabelMergeParamsDictNoTag = typing.TypedDict('_LabelMergeParamsDictNoTag', {
     "label-out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParamsDict] | None],
 })
@@ -58,6 +57,7 @@ LabelMergeParamsDictTagged = typing.TypedDict('LabelMergeParamsDictTagged', {
     "label-out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParamsDict] | None],
 })
+LabelMergeParamsDict = _LabelMergeParamsDictNoTag | LabelMergeParamsDictTagged
 
 
 def label_merge_up_to(

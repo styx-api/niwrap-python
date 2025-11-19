@@ -13,8 +13,7 @@ MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
 )
 
 
-MriComputeLayerFractionsParamsDict = typing.TypedDict('MriComputeLayerFractionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_layer_fractions"]],
+_MriComputeLayerFractionsParamsDictNoTag = typing.TypedDict('_MriComputeLayerFractionsParamsDictNoTag', {
     "reg_file": InputPathType,
     "input_volume": InputPathType,
     "output_stem": str,
@@ -47,6 +46,7 @@ MriComputeLayerFractionsParamsDictTagged = typing.TypedDict('MriComputeLayerFrac
     "random_file": typing.NotRequired[InputPathType | None],
     "identity_file": typing.NotRequired[str | None],
 })
+MriComputeLayerFractionsParamsDict = _MriComputeLayerFractionsParamsDictNoTag | MriComputeLayerFractionsParamsDictTagged
 
 
 class MriComputeLayerFractionsOutputs(typing.NamedTuple):

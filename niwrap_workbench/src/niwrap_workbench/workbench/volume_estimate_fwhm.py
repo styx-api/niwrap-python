@@ -12,8 +12,7 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-VolumeEstimateFwhmParamsDict = typing.TypedDict('VolumeEstimateFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-estimate-fwhm"]],
+_VolumeEstimateFwhmParamsDictNoTag = typing.TypedDict('_VolumeEstimateFwhmParamsDictNoTag', {
     "roivol": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
     "demean": typing.NotRequired[bool | None],
@@ -26,6 +25,7 @@ VolumeEstimateFwhmParamsDictTagged = typing.TypedDict('VolumeEstimateFwhmParamsD
     "demean": typing.NotRequired[bool | None],
     "volume": InputPathType,
 })
+VolumeEstimateFwhmParamsDict = _VolumeEstimateFwhmParamsDictNoTag | VolumeEstimateFwhmParamsDictTagged
 
 
 class VolumeEstimateFwhmOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRHISTMATCH_METADATA = Metadata(
 )
 
 
-MrhistmatchConfigParamsDict = typing.TypedDict('MrhistmatchConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrhistmatchConfigParamsDictNoTag = typing.TypedDict('_MrhistmatchConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrhistmatchConfigParamsDictTagged = typing.TypedDict('MrhistmatchConfigParamsDic
     "key": str,
     "value": str,
 })
+MrhistmatchConfigParamsDict = _MrhistmatchConfigParamsDictNoTag | MrhistmatchConfigParamsDictTagged
 
 
-MrhistmatchParamsDict = typing.TypedDict('MrhistmatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrhistmatch"]],
+_MrhistmatchParamsDictNoTag = typing.TypedDict('_MrhistmatchParamsDictNoTag', {
     "mask_input": typing.NotRequired[InputPathType | None],
     "mask_target": typing.NotRequired[InputPathType | None],
     "bins": typing.NotRequired[int | None],
@@ -61,6 +60,7 @@ MrhistmatchParamsDictTagged = typing.TypedDict('MrhistmatchParamsDictTagged', {
     "target": InputPathType,
     "output": str,
 })
+MrhistmatchParamsDict = _MrhistmatchParamsDictNoTag | MrhistmatchParamsDictTagged
 
 
 def mrhistmatch_config(

@@ -13,14 +13,14 @@ IS_SURFACE_METADATA = Metadata(
 )
 
 
-IsSurfaceParamsDict = typing.TypedDict('IsSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/is-surface"]],
+_IsSurfaceParamsDictNoTag = typing.TypedDict('_IsSurfaceParamsDictNoTag', {
     "infile": InputPathType,
 })
 IsSurfaceParamsDictTagged = typing.TypedDict('IsSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/is-surface"],
     "infile": InputPathType,
 })
+IsSurfaceParamsDict = _IsSurfaceParamsDictNoTag | IsSurfaceParamsDictTagged
 
 
 class IsSurfaceOutputs(typing.NamedTuple):

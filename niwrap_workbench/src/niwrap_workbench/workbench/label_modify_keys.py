@@ -12,8 +12,7 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-LabelModifyKeysParamsDict = typing.TypedDict('LabelModifyKeysParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-modify-keys"]],
+_LabelModifyKeysParamsDictNoTag = typing.TypedDict('_LabelModifyKeysParamsDictNoTag', {
     "label-out": str,
     "column": typing.NotRequired[str | None],
     "label-in": InputPathType,
@@ -26,6 +25,7 @@ LabelModifyKeysParamsDictTagged = typing.TypedDict('LabelModifyKeysParamsDictTag
     "label-in": InputPathType,
     "remap-file": str,
 })
+LabelModifyKeysParamsDict = _LabelModifyKeysParamsDictNoTag | LabelModifyKeysParamsDictTagged
 
 
 class LabelModifyKeysOutputs(typing.NamedTuple):

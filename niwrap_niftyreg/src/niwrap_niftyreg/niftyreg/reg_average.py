@@ -13,8 +13,7 @@ REG_AVERAGE_METADATA = Metadata(
 )
 
 
-RegAverageParamsDict = typing.TypedDict('RegAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_average"]],
+_RegAverageParamsDictNoTag = typing.TypedDict('_RegAverageParamsDictNoTag', {
     "output_file": str,
     "input_files": list[InputPathType],
 })
@@ -23,6 +22,7 @@ RegAverageParamsDictTagged = typing.TypedDict('RegAverageParamsDictTagged', {
     "output_file": str,
     "input_files": list[InputPathType],
 })
+RegAverageParamsDict = _RegAverageParamsDictNoTag | RegAverageParamsDictTagged
 
 
 class RegAverageOutputs(typing.NamedTuple):

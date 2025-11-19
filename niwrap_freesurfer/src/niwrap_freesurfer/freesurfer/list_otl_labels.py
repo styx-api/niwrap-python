@@ -13,14 +13,14 @@ LIST_OTL_LABELS_METADATA = Metadata(
 )
 
 
-ListOtlLabelsParamsDict = typing.TypedDict('ListOtlLabelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/list_otl_labels"]],
+_ListOtlLabelsParamsDictNoTag = typing.TypedDict('_ListOtlLabelsParamsDictNoTag', {
     "input_file": InputPathType,
 })
 ListOtlLabelsParamsDictTagged = typing.TypedDict('ListOtlLabelsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/list_otl_labels"],
     "input_file": InputPathType,
 })
+ListOtlLabelsParamsDict = _ListOtlLabelsParamsDictNoTag | ListOtlLabelsParamsDictTagged
 
 
 class ListOtlLabelsOutputs(typing.NamedTuple):

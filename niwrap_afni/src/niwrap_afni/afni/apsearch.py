@@ -13,8 +13,7 @@ APSEARCH_METADATA = Metadata(
 )
 
 
-ApsearchParamsDict = typing.TypedDict('ApsearchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/apsearch"]],
+_ApsearchParamsDictNoTag = typing.TypedDict('_ApsearchParamsDictNoTag', {
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,
@@ -25,6 +24,7 @@ ApsearchParamsDictTagged = typing.TypedDict('ApsearchParamsDictTagged', {
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,
 })
+ApsearchParamsDict = _ApsearchParamsDictNoTag | ApsearchParamsDictTagged
 
 
 class ApsearchOutputs(typing.NamedTuple):

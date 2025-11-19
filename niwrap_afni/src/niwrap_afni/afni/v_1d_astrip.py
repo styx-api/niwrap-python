@@ -13,14 +13,14 @@ V_1D_ASTRIP_METADATA = Metadata(
 )
 
 
-V1dAstripParamsDict = typing.TypedDict('V1dAstripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dAstrip"]],
+_V1dAstripParamsDictNoTag = typing.TypedDict('_V1dAstripParamsDictNoTag', {
     "infile": InputPathType,
 })
 V1dAstripParamsDictTagged = typing.TypedDict('V1dAstripParamsDictTagged', {
     "@type": typing.Literal["afni/1dAstrip"],
     "infile": InputPathType,
 })
+V1dAstripParamsDict = _V1dAstripParamsDictNoTag | V1dAstripParamsDictTagged
 
 
 class V1dAstripOutputs(typing.NamedTuple):

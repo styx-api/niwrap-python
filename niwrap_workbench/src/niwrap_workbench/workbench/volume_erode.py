@@ -12,8 +12,7 @@ VOLUME_ERODE_METADATA = Metadata(
 )
 
 
-VolumeErodeParamsDict = typing.TypedDict('VolumeErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-erode"]],
+_VolumeErodeParamsDictNoTag = typing.TypedDict('_VolumeErodeParamsDictNoTag', {
     "volume-out": str,
     "roi-volume": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
@@ -28,6 +27,7 @@ VolumeErodeParamsDictTagged = typing.TypedDict('VolumeErodeParamsDictTagged', {
     "volume": InputPathType,
     "distance": float,
 })
+VolumeErodeParamsDict = _VolumeErodeParamsDictNoTag | VolumeErodeParamsDictTagged
 
 
 class VolumeErodeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
 )
 
 
-MrisSurfaceToVolDistancesParamsDict = typing.TypedDict('MrisSurfaceToVolDistancesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_to_vol_distances"]],
+_MrisSurfaceToVolDistancesParamsDictNoTag = typing.TypedDict('_MrisSurfaceToVolDistancesParamsDictNoTag', {
     "average_subject": str,
     "hemisphere": str,
     "subjects": list[str],
@@ -27,6 +26,7 @@ MrisSurfaceToVolDistancesParamsDictTagged = typing.TypedDict('MrisSurfaceToVolDi
     "subjects": list[str],
     "output_prefix": str,
 })
+MrisSurfaceToVolDistancesParamsDict = _MrisSurfaceToVolDistancesParamsDictNoTag | MrisSurfaceToVolDistancesParamsDictTagged
 
 
 class MrisSurfaceToVolDistancesOutputs(typing.NamedTuple):

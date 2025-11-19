@@ -13,8 +13,7 @@ FIXELCONNECTIVITY_METADATA = Metadata(
 )
 
 
-FixelconnectivityConfigParamsDict = typing.TypedDict('FixelconnectivityConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelconnectivityConfigParamsDictNoTag = typing.TypedDict('_FixelconnectivityConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ FixelconnectivityConfigParamsDictTagged = typing.TypedDict('FixelconnectivityCon
     "key": str,
     "value": str,
 })
+FixelconnectivityConfigParamsDict = _FixelconnectivityConfigParamsDictNoTag | FixelconnectivityConfigParamsDictTagged
 
 
-FixelconnectivityParamsDict = typing.TypedDict('FixelconnectivityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelconnectivity"]],
+_FixelconnectivityParamsDictNoTag = typing.TypedDict('_FixelconnectivityParamsDictNoTag', {
     "threshold": typing.NotRequired[float | None],
     "angle": typing.NotRequired[float | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -59,6 +58,7 @@ FixelconnectivityParamsDictTagged = typing.TypedDict('FixelconnectivityParamsDic
     "tracks": InputPathType,
     "matrix": str,
 })
+FixelconnectivityParamsDict = _FixelconnectivityParamsDictNoTag | FixelconnectivityParamsDictTagged
 
 
 def fixelconnectivity_config(

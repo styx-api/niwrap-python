@@ -13,8 +13,7 @@ V_3D_AFNITO_RAW_METADATA = Metadata(
 )
 
 
-V3dAfnitoRawParamsDict = typing.TypedDict('V3dAfnitoRawParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoRaw"]],
+_V3dAfnitoRawParamsDictNoTag = typing.TypedDict('_V3dAfnitoRawParamsDictNoTag', {
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
     "dataset": str,
@@ -25,6 +24,7 @@ V3dAfnitoRawParamsDictTagged = typing.TypedDict('V3dAfnitoRawParamsDictTagged', 
     "force_float": bool,
     "dataset": str,
 })
+V3dAfnitoRawParamsDict = _V3dAfnitoRawParamsDictNoTag | V3dAfnitoRawParamsDictTagged
 
 
 class V3dAfnitoRawOutputs(typing.NamedTuple):

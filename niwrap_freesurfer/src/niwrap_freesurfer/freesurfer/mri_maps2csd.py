@@ -13,8 +13,7 @@ MRI_MAPS2CSD_METADATA = Metadata(
 )
 
 
-MriMaps2csdParamsDict = typing.TypedDict('MriMaps2csdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_maps2csd"]],
+_MriMaps2csdParamsDictNoTag = typing.TypedDict('_MriMaps2csdParamsDictNoTag', {
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
     "pdf_file": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ MriMaps2csdParamsDictTagged = typing.TypedDict('MriMaps2csdParamsDictTagged', {
     "debug": bool,
     "checkopts": bool,
 })
+MriMaps2csdParamsDict = _MriMaps2csdParamsDictNoTag | MriMaps2csdParamsDictTagged
 
 
 class MriMaps2csdOutputs(typing.NamedTuple):

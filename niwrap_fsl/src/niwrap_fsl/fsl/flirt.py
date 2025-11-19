@@ -13,8 +13,7 @@ FLIRT_METADATA = Metadata(
 )
 
 
-FlirtParamsDict = typing.TypedDict('FlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/flirt"]],
+_FlirtParamsDictNoTag = typing.TypedDict('_FlirtParamsDictNoTag', {
     "in_file": InputPathType,
     "reference": InputPathType,
     "out_file": str,
@@ -109,6 +108,7 @@ FlirtParamsDictTagged = typing.TypedDict('FlirtParamsDictTagged', {
     "wmcoords": typing.NotRequired[InputPathType | None],
     "wmnorms": typing.NotRequired[InputPathType | None],
 })
+FlirtParamsDict = _FlirtParamsDictNoTag | FlirtParamsDictTagged
 
 
 class FlirtOutputs(typing.NamedTuple):

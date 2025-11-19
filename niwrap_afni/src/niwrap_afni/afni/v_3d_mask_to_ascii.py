@@ -13,8 +13,7 @@ V_3D_MASK_TO_ASCII_METADATA = Metadata(
 )
 
 
-V3dMaskToAsciiParamsDict = typing.TypedDict('V3dMaskToAsciiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMaskToASCII"]],
+_V3dMaskToAsciiParamsDictNoTag = typing.TypedDict('_V3dMaskToAsciiParamsDictNoTag', {
     "tobin_flag": bool,
     "dataset": InputPathType,
     "outputfile": str,
@@ -25,6 +24,7 @@ V3dMaskToAsciiParamsDictTagged = typing.TypedDict('V3dMaskToAsciiParamsDictTagge
     "dataset": InputPathType,
     "outputfile": str,
 })
+V3dMaskToAsciiParamsDict = _V3dMaskToAsciiParamsDictNoTag | V3dMaskToAsciiParamsDictTagged
 
 
 class V3dMaskToAsciiOutputs(typing.NamedTuple):

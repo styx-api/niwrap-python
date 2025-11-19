@@ -13,8 +13,7 @@ FSDCMDECOMPRESS_METADATA = Metadata(
 )
 
 
-FsdcmdecompressParamsDict = typing.TypedDict('FsdcmdecompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsdcmdecompress"]],
+_FsdcmdecompressParamsDictNoTag = typing.TypedDict('_FsdcmdecompressParamsDictNoTag', {
     "indcmfile": InputPathType,
     "outdcmfile": str,
     "dcmtk": bool,
@@ -31,6 +30,7 @@ FsdcmdecompressParamsDictTagged = typing.TypedDict('FsdcmdecompressParamsDictTag
     "rle": bool,
     "gdcm": bool,
 })
+FsdcmdecompressParamsDict = _FsdcmdecompressParamsDictNoTag | FsdcmdecompressParamsDictTagged
 
 
 class FsdcmdecompressOutputs(typing.NamedTuple):

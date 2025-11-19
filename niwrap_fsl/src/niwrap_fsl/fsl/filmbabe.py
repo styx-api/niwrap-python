@@ -13,8 +13,7 @@ FILMBABE_METADATA = Metadata(
 )
 
 
-FilmbabeParamsDict = typing.TypedDict('FilmbabeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/filmbabe"]],
+_FilmbabeParamsDictNoTag = typing.TypedDict('_FilmbabeParamsDictNoTag', {
     "datafile": InputPathType,
     "datafile_alias": InputPathType,
     "mask": InputPathType,
@@ -85,6 +84,7 @@ FilmbabeParamsDictTagged = typing.TypedDict('FilmbabeParamsDictTagged', {
     "num_trace_samples_alias": typing.NotRequired[int | None],
     "temporal_ar_order": typing.NotRequired[int | None],
 })
+FilmbabeParamsDict = _FilmbabeParamsDictNoTag | FilmbabeParamsDictTagged
 
 
 class FilmbabeOutputs(typing.NamedTuple):

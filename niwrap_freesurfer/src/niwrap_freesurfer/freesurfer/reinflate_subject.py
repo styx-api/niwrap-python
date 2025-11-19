@@ -13,14 +13,14 @@ REINFLATE_SUBJECT_METADATA = Metadata(
 )
 
 
-ReinflateSubjectParamsDict = typing.TypedDict('ReinflateSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject"]],
+_ReinflateSubjectParamsDictNoTag = typing.TypedDict('_ReinflateSubjectParamsDictNoTag', {
     "args": typing.NotRequired[str | None],
 })
 ReinflateSubjectParamsDictTagged = typing.TypedDict('ReinflateSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reinflate_subject"],
     "args": typing.NotRequired[str | None],
 })
+ReinflateSubjectParamsDict = _ReinflateSubjectParamsDictNoTag | ReinflateSubjectParamsDictTagged
 
 
 class ReinflateSubjectOutputs(typing.NamedTuple):

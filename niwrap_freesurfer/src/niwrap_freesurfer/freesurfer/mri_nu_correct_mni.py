@@ -13,8 +13,7 @@ MRI_NU_CORRECT_MNI_METADATA = Metadata(
 )
 
 
-MriNuCorrectMniParamsDict = typing.TypedDict('MriNuCorrectMniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nu_correct.mni"]],
+_MriNuCorrectMniParamsDictNoTag = typing.TypedDict('_MriNuCorrectMniParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "iterations": float,
@@ -45,6 +44,7 @@ MriNuCorrectMniParamsDictTagged = typing.TypedDict('MriNuCorrectMniParamsDictTag
     "cm_flag": bool,
     "debug_flag": bool,
 })
+MriNuCorrectMniParamsDict = _MriNuCorrectMniParamsDictNoTag | MriNuCorrectMniParamsDictTagged
 
 
 class MriNuCorrectMniOutputs(typing.NamedTuple):

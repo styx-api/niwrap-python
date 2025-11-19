@@ -13,14 +13,14 @@ V__AFNI_REFACER_MAKE_MASTER_METADATA = Metadata(
 )
 
 
-VAfniRefacerMakeMasterParamsDict = typing.TypedDict('VAfniRefacerMakeMasterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_master"]],
+_VAfniRefacerMakeMasterParamsDictNoTag = typing.TypedDict('_VAfniRefacerMakeMasterParamsDictNoTag', {
     "input_datasets": list[InputPathType],
 })
 VAfniRefacerMakeMasterParamsDictTagged = typing.TypedDict('VAfniRefacerMakeMasterParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_refacer_make_master"],
     "input_datasets": list[InputPathType],
 })
+VAfniRefacerMakeMasterParamsDict = _VAfniRefacerMakeMasterParamsDictNoTag | VAfniRefacerMakeMasterParamsDictTagged
 
 
 class VAfniRefacerMakeMasterOutputs(typing.NamedTuple):

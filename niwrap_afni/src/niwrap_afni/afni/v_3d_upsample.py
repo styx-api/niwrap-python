@@ -13,8 +13,7 @@ V_3D_UPSAMPLE_METADATA = Metadata(
 )
 
 
-V3dUpsampleParamsDict = typing.TypedDict('V3dUpsampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dUpsample"]],
+_V3dUpsampleParamsDictNoTag = typing.TypedDict('_V3dUpsampleParamsDictNoTag', {
     "upsample_factor": int,
     "input_dataset": str,
     "linear_interpolation": bool,
@@ -31,6 +30,7 @@ V3dUpsampleParamsDictTagged = typing.TypedDict('V3dUpsampleParamsDictTagged', {
     "verbose_flag": bool,
     "datatype": typing.NotRequired[str | None],
 })
+V3dUpsampleParamsDict = _V3dUpsampleParamsDictNoTag | V3dUpsampleParamsDictTagged
 
 
 class V3dUpsampleOutputs(typing.NamedTuple):

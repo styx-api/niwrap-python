@@ -13,8 +13,7 @@ DMRI_GROUP_BY_ENDPOINTS_METADATA = Metadata(
 )
 
 
-DmriGroupByEndpointsParamsDict = typing.TypedDict('DmriGroupByEndpointsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_groupByEndpoints"]],
+_DmriGroupByEndpointsParamsDictNoTag = typing.TypedDict('_DmriGroupByEndpointsParamsDictNoTag', {
     "streamline_file": InputPathType,
     "image_file": InputPathType,
     "output_directory": str,
@@ -25,6 +24,7 @@ DmriGroupByEndpointsParamsDictTagged = typing.TypedDict('DmriGroupByEndpointsPar
     "image_file": InputPathType,
     "output_directory": str,
 })
+DmriGroupByEndpointsParamsDict = _DmriGroupByEndpointsParamsDictNoTag | DmriGroupByEndpointsParamsDictTagged
 
 
 class DmriGroupByEndpointsOutputs(typing.NamedTuple):

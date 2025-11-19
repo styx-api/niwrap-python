@@ -13,8 +13,7 @@ TCALC_METADATA = Metadata(
 )
 
 
-TcalcParamsDict = typing.TypedDict('TcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tcalc"]],
+_TcalcParamsDictNoTag = typing.TypedDict('_TcalcParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "echo_time": typing.NotRequired[float | None],
@@ -49,6 +48,7 @@ TcalcParamsDictTagged = typing.TypedDict('TcalcParamsDictTagged', {
     "save_flag": bool,
     "verbose_flag": bool,
 })
+TcalcParamsDict = _TcalcParamsDictNoTag | TcalcParamsDictTagged
 
 
 class TcalcOutputs(typing.NamedTuple):

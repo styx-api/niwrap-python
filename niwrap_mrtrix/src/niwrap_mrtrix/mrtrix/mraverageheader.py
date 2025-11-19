@@ -13,8 +13,7 @@ MRAVERAGEHEADER_METADATA = Metadata(
 )
 
 
-MraverageheaderConfigParamsDict = typing.TypedDict('MraverageheaderConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MraverageheaderConfigParamsDictNoTag = typing.TypedDict('_MraverageheaderConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MraverageheaderConfigParamsDictTagged = typing.TypedDict('MraverageheaderConfigP
     "key": str,
     "value": str,
 })
+MraverageheaderConfigParamsDict = _MraverageheaderConfigParamsDictNoTag | MraverageheaderConfigParamsDictTagged
 
 
-MraverageheaderParamsDict = typing.TypedDict('MraverageheaderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mraverageheader"]],
+_MraverageheaderParamsDictNoTag = typing.TypedDict('_MraverageheaderParamsDictNoTag', {
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
     "fill": bool,
@@ -59,6 +58,7 @@ MraverageheaderParamsDictTagged = typing.TypedDict('MraverageheaderParamsDictTag
     "input": list[InputPathType],
     "output": str,
 })
+MraverageheaderParamsDict = _MraverageheaderParamsDictNoTag | MraverageheaderParamsDictTagged
 
 
 def mraverageheader_config(

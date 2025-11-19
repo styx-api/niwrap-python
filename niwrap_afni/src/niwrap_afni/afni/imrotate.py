@@ -13,8 +13,7 @@ IMROTATE_METADATA = Metadata(
 )
 
 
-ImrotateParamsDict = typing.TypedDict('ImrotateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imrotate"]],
+_ImrotateParamsDictNoTag = typing.TypedDict('_ImrotateParamsDictNoTag', {
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
     "dx": float,
@@ -33,6 +32,7 @@ ImrotateParamsDictTagged = typing.TypedDict('ImrotateParamsDictTagged', {
     "input_image": InputPathType,
     "output_image": str,
 })
+ImrotateParamsDict = _ImrotateParamsDictNoTag | ImrotateParamsDictTagged
 
 
 class ImrotateOutputs(typing.NamedTuple):

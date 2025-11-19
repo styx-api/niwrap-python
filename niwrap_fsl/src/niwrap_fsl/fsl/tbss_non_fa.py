@@ -13,8 +13,7 @@ TBSS_NON_FA_METADATA = Metadata(
 )
 
 
-TbssNonFaParamsDict = typing.TypedDict('TbssNonFaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_non_FA"]],
+_TbssNonFaParamsDictNoTag = typing.TypedDict('_TbssNonFaParamsDictNoTag', {
     "concat_auto": bool,
     "output_file": str,
     "input_files": list[InputPathType],
@@ -37,6 +36,7 @@ TbssNonFaParamsDictTagged = typing.TypedDict('TbssNonFaParamsDictTagged', {
     "concat_tr": typing.NotRequired[float | None],
     "volume_number": typing.NotRequired[float | None],
 })
+TbssNonFaParamsDict = _TbssNonFaParamsDictNoTag | TbssNonFaParamsDictTagged
 
 
 class TbssNonFaOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 )
 
 
-CreateSignedDistanceVolumeParamsDict = typing.TypedDict('CreateSignedDistanceVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/create-signed-distance-volume"]],
+_CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDistanceVolumeParamsDictNoTag', {
     "outvol": str,
     "roi-vol": typing.NotRequired[str | None],
     "value": typing.NotRequired[float | None],
@@ -36,6 +35,7 @@ CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDista
     "surface": InputPathType,
     "refspace": str,
 })
+CreateSignedDistanceVolumeParamsDict = _CreateSignedDistanceVolumeParamsDictNoTag | CreateSignedDistanceVolumeParamsDictTagged
 
 
 class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRTHRESHOLD_METADATA = Metadata(
 )
 
 
-MrthresholdConfigParamsDict = typing.TypedDict('MrthresholdConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrthresholdConfigParamsDictNoTag = typing.TypedDict('_MrthresholdConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrthresholdConfigParamsDictTagged = typing.TypedDict('MrthresholdConfigParamsDic
     "key": str,
     "value": str,
 })
+MrthresholdConfigParamsDict = _MrthresholdConfigParamsDictNoTag | MrthresholdConfigParamsDictTagged
 
 
-MrthresholdParamsDict = typing.TypedDict('MrthresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrthreshold"]],
+_MrthresholdParamsDictNoTag = typing.TypedDict('_MrthresholdParamsDictNoTag', {
     "abs": typing.NotRequired[float | None],
     "percentile": typing.NotRequired[float | None],
     "top": typing.NotRequired[int | None],
@@ -73,6 +72,7 @@ MrthresholdParamsDictTagged = typing.TypedDict('MrthresholdParamsDictTagged', {
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
+MrthresholdParamsDict = _MrthresholdParamsDictNoTag | MrthresholdParamsDictTagged
 
 
 def mrthreshold_config(

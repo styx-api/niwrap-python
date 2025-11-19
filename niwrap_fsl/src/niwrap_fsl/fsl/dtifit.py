@@ -13,8 +13,7 @@ DTIFIT_METADATA = Metadata(
 )
 
 
-DtifitParamsDict = typing.TypedDict('DtifitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/dtifit"]],
+_DtifitParamsDictNoTag = typing.TypedDict('_DtifitParamsDictNoTag', {
     "data_file": InputPathType,
     "output_basename": str,
     "mask_file": InputPathType,
@@ -59,6 +58,7 @@ DtifitParamsDictTagged = typing.TypedDict('DtifitParamsDictTagged', {
     "gradnonlin_file": typing.NotRequired[InputPathType | None],
     "confound_regressors": typing.NotRequired[InputPathType | None],
 })
+DtifitParamsDict = _DtifitParamsDictNoTag | DtifitParamsDictTagged
 
 
 class DtifitOutputs(typing.NamedTuple):

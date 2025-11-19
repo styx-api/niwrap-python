@@ -12,8 +12,7 @@ BORDER_TO_ROIS_METADATA = Metadata(
 )
 
 
-BorderToRoisParamsDict = typing.TypedDict('BorderToRoisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-to-rois"]],
+_BorderToRoisParamsDictNoTag = typing.TypedDict('_BorderToRoisParamsDictNoTag', {
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "inverse": bool,
@@ -30,6 +29,7 @@ BorderToRoisParamsDictTagged = typing.TypedDict('BorderToRoisParamsDictTagged', 
     "surface": InputPathType,
     "border-file": InputPathType,
 })
+BorderToRoisParamsDict = _BorderToRoisParamsDictNoTag | BorderToRoisParamsDictTagged
 
 
 class BorderToRoisOutputs(typing.NamedTuple):

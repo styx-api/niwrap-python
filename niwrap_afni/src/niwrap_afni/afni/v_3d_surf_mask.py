@@ -13,8 +13,7 @@ V_3D_SURF_MASK_METADATA = Metadata(
 )
 
 
-V3dSurfMaskParamsDict = typing.TypedDict('V3dSurfMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSurfMask"]],
+_V3dSurfMaskParamsDictNoTag = typing.TypedDict('_V3dSurfMaskParamsDictNoTag', {
     "surface_type": str,
     "surface_file": InputPathType,
     "prefix": str,
@@ -37,6 +36,7 @@ V3dSurfMaskParamsDictTagged = typing.TypedDict('V3dSurfMaskParamsDictTagged', {
     "flip_orientation": bool,
     "no_distance": bool,
 })
+V3dSurfMaskParamsDict = _V3dSurfMaskParamsDictNoTag | V3dSurfMaskParamsDictTagged
 
 
 class V3dSurfMaskOutputs(typing.NamedTuple):

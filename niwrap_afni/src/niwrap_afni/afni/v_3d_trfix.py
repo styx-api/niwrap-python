@@ -13,8 +13,7 @@ V_3D_TRFIX_METADATA = Metadata(
 )
 
 
-V3dTrfixParamsDict = typing.TypedDict('V3dTrfixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTRfix"]],
+_V3dTrfixParamsDictNoTag = typing.TypedDict('_V3dTrfixParamsDictNoTag', {
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
     "time_list": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ V3dTrfixParamsDictTagged = typing.TypedDict('V3dTrfixParamsDictTagged', {
     "prefix": str,
     "output_tr": typing.NotRequired[float | None],
 })
+V3dTrfixParamsDict = _V3dTrfixParamsDictNoTag | V3dTrfixParamsDictTagged
 
 
 class V3dTrfixOutputs(typing.NamedTuple):

@@ -13,28 +13,27 @@ TCKGEN_METADATA = Metadata(
 )
 
 
-TckgenSeedImageParamsDict = typing.TypedDict('TckgenSeedImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_image"]],
+_TckgenSeedImageParamsDictNoTag = typing.TypedDict('_TckgenSeedImageParamsDictNoTag', {
     "image": InputPathType,
 })
 TckgenSeedImageParamsDictTagged = typing.TypedDict('TckgenSeedImageParamsDictTagged', {
     "@type": typing.Literal["seed_image"],
     "image": InputPathType,
 })
+TckgenSeedImageParamsDict = _TckgenSeedImageParamsDictNoTag | TckgenSeedImageParamsDictTagged
 
 
-TckgenSeedSphereParamsDict = typing.TypedDict('TckgenSeedSphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_sphere"]],
+_TckgenSeedSphereParamsDictNoTag = typing.TypedDict('_TckgenSeedSphereParamsDictNoTag', {
     "spec": list[float],
 })
 TckgenSeedSphereParamsDictTagged = typing.TypedDict('TckgenSeedSphereParamsDictTagged', {
     "@type": typing.Literal["seed_sphere"],
     "spec": list[float],
 })
+TckgenSeedSphereParamsDict = _TckgenSeedSphereParamsDictNoTag | TckgenSeedSphereParamsDictTagged
 
 
-TckgenSeedRandomPerVoxelParamsDict = typing.TypedDict('TckgenSeedRandomPerVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_random_per_voxel"]],
+_TckgenSeedRandomPerVoxelParamsDictNoTag = typing.TypedDict('_TckgenSeedRandomPerVoxelParamsDictNoTag', {
     "image": InputPathType,
     "num_per_voxel": int,
 })
@@ -43,10 +42,10 @@ TckgenSeedRandomPerVoxelParamsDictTagged = typing.TypedDict('TckgenSeedRandomPer
     "image": InputPathType,
     "num_per_voxel": int,
 })
+TckgenSeedRandomPerVoxelParamsDict = _TckgenSeedRandomPerVoxelParamsDictNoTag | TckgenSeedRandomPerVoxelParamsDictTagged
 
 
-TckgenSeedGridPerVoxelParamsDict = typing.TypedDict('TckgenSeedGridPerVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_grid_per_voxel"]],
+_TckgenSeedGridPerVoxelParamsDictNoTag = typing.TypedDict('_TckgenSeedGridPerVoxelParamsDictNoTag', {
     "image": InputPathType,
     "grid_size": int,
 })
@@ -55,130 +54,130 @@ TckgenSeedGridPerVoxelParamsDictTagged = typing.TypedDict('TckgenSeedGridPerVoxe
     "image": InputPathType,
     "grid_size": int,
 })
+TckgenSeedGridPerVoxelParamsDict = _TckgenSeedGridPerVoxelParamsDictNoTag | TckgenSeedGridPerVoxelParamsDictTagged
 
 
-TckgenSeedRejectionParamsDict = typing.TypedDict('TckgenSeedRejectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_rejection"]],
+_TckgenSeedRejectionParamsDictNoTag = typing.TypedDict('_TckgenSeedRejectionParamsDictNoTag', {
     "image": InputPathType,
 })
 TckgenSeedRejectionParamsDictTagged = typing.TypedDict('TckgenSeedRejectionParamsDictTagged', {
     "@type": typing.Literal["seed_rejection"],
     "image": InputPathType,
 })
+TckgenSeedRejectionParamsDict = _TckgenSeedRejectionParamsDictNoTag | TckgenSeedRejectionParamsDictTagged
 
 
-TckgenSeedGmwmiParamsDict = typing.TypedDict('TckgenSeedGmwmiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["seed_gmwmi"]],
+_TckgenSeedGmwmiParamsDictNoTag = typing.TypedDict('_TckgenSeedGmwmiParamsDictNoTag', {
     "image": InputPathType,
 })
 TckgenSeedGmwmiParamsDictTagged = typing.TypedDict('TckgenSeedGmwmiParamsDictTagged', {
     "@type": typing.Literal["seed_gmwmi"],
     "image": InputPathType,
 })
+TckgenSeedGmwmiParamsDict = _TckgenSeedGmwmiParamsDictNoTag | TckgenSeedGmwmiParamsDictTagged
 
 
-TckgenVariousStringParamsDict = typing.TypedDict('TckgenVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_TckgenVariousStringParamsDictNoTag = typing.TypedDict('_TckgenVariousStringParamsDictNoTag', {
     "obj": str,
 })
 TckgenVariousStringParamsDictTagged = typing.TypedDict('TckgenVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+TckgenVariousStringParamsDict = _TckgenVariousStringParamsDictNoTag | TckgenVariousStringParamsDictTagged
 
 
-TckgenVariousFileParamsDict = typing.TypedDict('TckgenVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_TckgenVariousFileParamsDictNoTag = typing.TypedDict('_TckgenVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckgenVariousFileParamsDictTagged = typing.TypedDict('TckgenVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+TckgenVariousFileParamsDict = _TckgenVariousFileParamsDictNoTag | TckgenVariousFileParamsDictTagged
 
 
-TckgenIncludeParamsDict = typing.TypedDict('TckgenIncludeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["include"]],
+_TckgenIncludeParamsDictNoTag = typing.TypedDict('_TckgenIncludeParamsDictNoTag', {
     "spec": typing.Union[TckgenVariousStringParamsDictTagged, TckgenVariousFileParamsDictTagged],
 })
 TckgenIncludeParamsDictTagged = typing.TypedDict('TckgenIncludeParamsDictTagged', {
     "@type": typing.Literal["include"],
     "spec": typing.Union[TckgenVariousStringParamsDictTagged, TckgenVariousFileParamsDictTagged],
 })
+TckgenIncludeParamsDict = _TckgenIncludeParamsDictNoTag | TckgenIncludeParamsDictTagged
 
 
-TckgenIncludeOrderedParamsDict = typing.TypedDict('TckgenIncludeOrderedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["include_ordered"]],
+_TckgenIncludeOrderedParamsDictNoTag = typing.TypedDict('_TckgenIncludeOrderedParamsDictNoTag', {
     "image": str,
 })
 TckgenIncludeOrderedParamsDictTagged = typing.TypedDict('TckgenIncludeOrderedParamsDictTagged', {
     "@type": typing.Literal["include_ordered"],
     "image": str,
 })
+TckgenIncludeOrderedParamsDict = _TckgenIncludeOrderedParamsDictNoTag | TckgenIncludeOrderedParamsDictTagged
 
 
-TckgenVariousString1ParamsDict = typing.TypedDict('TckgenVariousString1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+_TckgenVariousString1ParamsDictNoTag = typing.TypedDict('_TckgenVariousString1ParamsDictNoTag', {
     "obj": str,
 })
 TckgenVariousString1ParamsDictTagged = typing.TypedDict('TckgenVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
+TckgenVariousString1ParamsDict = _TckgenVariousString1ParamsDictNoTag | TckgenVariousString1ParamsDictTagged
 
 
-TckgenVariousFile1ParamsDict = typing.TypedDict('TckgenVariousFile1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+_TckgenVariousFile1ParamsDictNoTag = typing.TypedDict('_TckgenVariousFile1ParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckgenVariousFile1ParamsDictTagged = typing.TypedDict('TckgenVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
+TckgenVariousFile1ParamsDict = _TckgenVariousFile1ParamsDictNoTag | TckgenVariousFile1ParamsDictTagged
 
 
-TckgenExcludeParamsDict = typing.TypedDict('TckgenExcludeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude"]],
+_TckgenExcludeParamsDictNoTag = typing.TypedDict('_TckgenExcludeParamsDictNoTag', {
     "spec": typing.Union[TckgenVariousString1ParamsDictTagged, TckgenVariousFile1ParamsDictTagged],
 })
 TckgenExcludeParamsDictTagged = typing.TypedDict('TckgenExcludeParamsDictTagged', {
     "@type": typing.Literal["exclude"],
     "spec": typing.Union[TckgenVariousString1ParamsDictTagged, TckgenVariousFile1ParamsDictTagged],
 })
+TckgenExcludeParamsDict = _TckgenExcludeParamsDictNoTag | TckgenExcludeParamsDictTagged
 
 
-TckgenVariousString2ParamsDict = typing.TypedDict('TckgenVariousString2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
+_TckgenVariousString2ParamsDictNoTag = typing.TypedDict('_TckgenVariousString2ParamsDictNoTag', {
     "obj": str,
 })
 TckgenVariousString2ParamsDictTagged = typing.TypedDict('TckgenVariousString2ParamsDictTagged', {
     "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
+TckgenVariousString2ParamsDict = _TckgenVariousString2ParamsDictNoTag | TckgenVariousString2ParamsDictTagged
 
 
-TckgenVariousFile2ParamsDict = typing.TypedDict('TckgenVariousFile2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
+_TckgenVariousFile2ParamsDictNoTag = typing.TypedDict('_TckgenVariousFile2ParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckgenVariousFile2ParamsDictTagged = typing.TypedDict('TckgenVariousFile2ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
+TckgenVariousFile2ParamsDict = _TckgenVariousFile2ParamsDictNoTag | TckgenVariousFile2ParamsDictTagged
 
 
-TckgenMaskParamsDict = typing.TypedDict('TckgenMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mask"]],
+_TckgenMaskParamsDictNoTag = typing.TypedDict('_TckgenMaskParamsDictNoTag', {
     "spec": typing.Union[TckgenVariousString2ParamsDictTagged, TckgenVariousFile2ParamsDictTagged],
 })
 TckgenMaskParamsDictTagged = typing.TypedDict('TckgenMaskParamsDictTagged', {
     "@type": typing.Literal["mask"],
     "spec": typing.Union[TckgenVariousString2ParamsDictTagged, TckgenVariousFile2ParamsDictTagged],
 })
+TckgenMaskParamsDict = _TckgenMaskParamsDictNoTag | TckgenMaskParamsDictTagged
 
 
-TckgenFslgradParamsDict = typing.TypedDict('TckgenFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_TckgenFslgradParamsDictNoTag = typing.TypedDict('_TckgenFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -187,10 +186,10 @@ TckgenFslgradParamsDictTagged = typing.TypedDict('TckgenFslgradParamsDictTagged'
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+TckgenFslgradParamsDict = _TckgenFslgradParamsDictNoTag | TckgenFslgradParamsDictTagged
 
 
-TckgenConfigParamsDict = typing.TypedDict('TckgenConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckgenConfigParamsDictNoTag = typing.TypedDict('_TckgenConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -199,10 +198,10 @@ TckgenConfigParamsDictTagged = typing.TypedDict('TckgenConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+TckgenConfigParamsDict = _TckgenConfigParamsDictNoTag | TckgenConfigParamsDictTagged
 
 
-TckgenParamsDict = typing.TypedDict('TckgenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckgen"]],
+_TckgenParamsDictNoTag = typing.TypedDict('_TckgenParamsDictNoTag', {
     "algorithm": typing.NotRequired[str | None],
     "select": typing.NotRequired[int | None],
     "step": typing.NotRequired[float | None],
@@ -299,6 +298,7 @@ TckgenParamsDictTagged = typing.TypedDict('TckgenParamsDictTagged', {
     "source": InputPathType,
     "tracks": str,
 })
+TckgenParamsDict = _TckgenParamsDictNoTag | TckgenParamsDictTagged
 
 
 def tckgen_spec_cargs_dyn_fn(

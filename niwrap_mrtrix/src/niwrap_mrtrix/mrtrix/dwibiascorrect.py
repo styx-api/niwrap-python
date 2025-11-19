@@ -13,8 +13,7 @@ DWIBIASCORRECT_METADATA = Metadata(
 )
 
 
-DwibiascorrectFslgradParamsDict = typing.TypedDict('DwibiascorrectFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_DwibiascorrectFslgradParamsDictNoTag = typing.TypedDict('_DwibiascorrectFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ DwibiascorrectFslgradParamsDictTagged = typing.TypedDict('DwibiascorrectFslgradP
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+DwibiascorrectFslgradParamsDict = _DwibiascorrectFslgradParamsDictNoTag | DwibiascorrectFslgradParamsDictTagged
 
 
-DwibiascorrectConfigParamsDict = typing.TypedDict('DwibiascorrectConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DwibiascorrectConfigParamsDictNoTag = typing.TypedDict('_DwibiascorrectConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ DwibiascorrectConfigParamsDictTagged = typing.TypedDict('DwibiascorrectConfigPar
     "key": str,
     "value": str,
 })
+DwibiascorrectConfigParamsDict = _DwibiascorrectConfigParamsDictNoTag | DwibiascorrectConfigParamsDictTagged
 
 
-DwibiascorrectParamsDict = typing.TypedDict('DwibiascorrectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwibiascorrect"]],
+_DwibiascorrectParamsDictNoTag = typing.TypedDict('_DwibiascorrectParamsDictNoTag', {
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,
@@ -85,6 +84,7 @@ DwibiascorrectParamsDictTagged = typing.TypedDict('DwibiascorrectParamsDictTagge
     "ants_c": typing.NotRequired[str | None],
     "ants_s": typing.NotRequired[str | None],
 })
+DwibiascorrectParamsDict = _DwibiascorrectParamsDictNoTag | DwibiascorrectParamsDictTagged
 
 
 def dwibiascorrect_fslgrad(

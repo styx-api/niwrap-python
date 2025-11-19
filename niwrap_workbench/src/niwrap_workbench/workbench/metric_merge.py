@@ -12,8 +12,7 @@ METRIC_MERGE_METADATA = Metadata(
 )
 
 
-MetricMergeUpToParamsDict = typing.TypedDict('MetricMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_MetricMergeUpToParamsDictNoTag = typing.TypedDict('_MetricMergeUpToParamsDictNoTag', {
     "last-column": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ MetricMergeUpToParamsDictTagged = typing.TypedDict('MetricMergeUpToParamsDictTag
     "last-column": str,
     "reverse": bool,
 })
+MetricMergeUpToParamsDict = _MetricMergeUpToParamsDictNoTag | MetricMergeUpToParamsDictTagged
 
 
-MetricMergeColumnParamsDict = typing.TypedDict('MetricMergeColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_MetricMergeColumnParamsDictNoTag = typing.TypedDict('_MetricMergeColumnParamsDictNoTag', {
     "column": str,
     "up-to": typing.NotRequired[MetricMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ MetricMergeColumnParamsDictTagged = typing.TypedDict('MetricMergeColumnParamsDic
     "column": str,
     "up-to": typing.NotRequired[MetricMergeUpToParamsDict | None],
 })
+MetricMergeColumnParamsDict = _MetricMergeColumnParamsDictNoTag | MetricMergeColumnParamsDictTagged
 
 
-MetricMergeMetricParamsDict = typing.TypedDict('MetricMergeMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_MetricMergeMetricParamsDictNoTag = typing.TypedDict('_MetricMergeMetricParamsDictNoTag', {
     "metric-in": InputPathType,
     "column": typing.NotRequired[list[MetricMergeColumnParamsDict] | None],
 })
@@ -46,10 +45,10 @@ MetricMergeMetricParamsDictTagged = typing.TypedDict('MetricMergeMetricParamsDic
     "metric-in": InputPathType,
     "column": typing.NotRequired[list[MetricMergeColumnParamsDict] | None],
 })
+MetricMergeMetricParamsDict = _MetricMergeMetricParamsDictNoTag | MetricMergeMetricParamsDictTagged
 
 
-MetricMergeParamsDict = typing.TypedDict('MetricMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-merge"]],
+_MetricMergeParamsDictNoTag = typing.TypedDict('_MetricMergeParamsDictNoTag', {
     "metric-out": str,
     "metric": typing.NotRequired[list[MetricMergeMetricParamsDict] | None],
 })
@@ -58,6 +57,7 @@ MetricMergeParamsDictTagged = typing.TypedDict('MetricMergeParamsDictTagged', {
     "metric-out": str,
     "metric": typing.NotRequired[list[MetricMergeMetricParamsDict] | None],
 })
+MetricMergeParamsDict = _MetricMergeParamsDictNoTag | MetricMergeParamsDictTagged
 
 
 def metric_merge_up_to(

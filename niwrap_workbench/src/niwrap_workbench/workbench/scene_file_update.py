@@ -12,38 +12,37 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
 )
 
 
-SceneFileUpdateCopyMapOnePaletteParamsDict = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["copy-map-one-palette"]],
+_SceneFileUpdateCopyMapOnePaletteParamsDictNoTag = typing.TypedDict('_SceneFileUpdateCopyMapOnePaletteParamsDictNoTag', {
     "Data File Name Suffix": str,
 })
 SceneFileUpdateCopyMapOnePaletteParamsDictTagged = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParamsDictTagged', {
     "@type": typing.Literal["copy-map-one-palette"],
     "Data File Name Suffix": str,
 })
+SceneFileUpdateCopyMapOnePaletteParamsDict = _SceneFileUpdateCopyMapOnePaletteParamsDictNoTag | SceneFileUpdateCopyMapOnePaletteParamsDictTagged
 
 
-SceneFileUpdateDataFileAddParamsDict = typing.TypedDict('SceneFileUpdateDataFileAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["data-file-add"]],
+_SceneFileUpdateDataFileAddParamsDictNoTag = typing.TypedDict('_SceneFileUpdateDataFileAddParamsDictNoTag', {
     "Name of data file": str,
 })
 SceneFileUpdateDataFileAddParamsDictTagged = typing.TypedDict('SceneFileUpdateDataFileAddParamsDictTagged', {
     "@type": typing.Literal["data-file-add"],
     "Name of data file": str,
 })
+SceneFileUpdateDataFileAddParamsDict = _SceneFileUpdateDataFileAddParamsDictNoTag | SceneFileUpdateDataFileAddParamsDictTagged
 
 
-SceneFileUpdateDataFileRemoveParamsDict = typing.TypedDict('SceneFileUpdateDataFileRemoveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["data-file-remove"]],
+_SceneFileUpdateDataFileRemoveParamsDictNoTag = typing.TypedDict('_SceneFileUpdateDataFileRemoveParamsDictNoTag', {
     "Name of data file": str,
 })
 SceneFileUpdateDataFileRemoveParamsDictTagged = typing.TypedDict('SceneFileUpdateDataFileRemoveParamsDictTagged', {
     "@type": typing.Literal["data-file-remove"],
     "Name of data file": str,
 })
+SceneFileUpdateDataFileRemoveParamsDict = _SceneFileUpdateDataFileRemoveParamsDictNoTag | SceneFileUpdateDataFileRemoveParamsDictTagged
 
 
-SceneFileUpdateParamsDict = typing.TypedDict('SceneFileUpdateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/scene-file-update"]],
+_SceneFileUpdateParamsDictNoTag = typing.TypedDict('_SceneFileUpdateParamsDictNoTag', {
     "fix-map-palette-settings": bool,
     "remove-missing-files": bool,
     "error": bool,
@@ -68,6 +67,7 @@ SceneFileUpdateParamsDictTagged = typing.TypedDict('SceneFileUpdateParamsDictTag
     "output-scene-file": str,
     "scene-name-or-number": str,
 })
+SceneFileUpdateParamsDict = _SceneFileUpdateParamsDictNoTag | SceneFileUpdateParamsDictTagged
 
 
 def scene_file_update_copy_map_one_palette(

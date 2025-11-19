@@ -13,8 +13,7 @@ V_3D_ATTRIBUTE_METADATA = Metadata(
 )
 
 
-V3dAttributeParamsDict = typing.TypedDict('V3dAttributeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAttribute"]],
+_V3dAttributeParamsDictNoTag = typing.TypedDict('_V3dAttributeParamsDictNoTag', {
     "all": bool,
     "name": bool,
     "center": bool,
@@ -35,6 +34,7 @@ V3dAttributeParamsDictTagged = typing.TypedDict('V3dAttributeParamsDictTagged', 
     "aname": str,
     "dset": InputPathType,
 })
+V3dAttributeParamsDict = _V3dAttributeParamsDictNoTag | V3dAttributeParamsDictTagged
 
 
 class V3dAttributeOutputs(typing.NamedTuple):

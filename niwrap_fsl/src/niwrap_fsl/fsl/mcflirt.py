@@ -13,8 +13,7 @@ MCFLIRT_METADATA = Metadata(
 )
 
 
-McflirtParamsDict = typing.TypedDict('McflirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mcflirt"]],
+_McflirtParamsDictNoTag = typing.TypedDict('_McflirtParamsDictNoTag', {
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
     "cost": typing.NotRequired[typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None],
@@ -61,6 +60,7 @@ McflirtParamsDictTagged = typing.TypedDict('McflirtParamsDictTagged', {
     "use_contour": bool,
     "use_gradient": bool,
 })
+McflirtParamsDict = _McflirtParamsDictNoTag | McflirtParamsDictTagged
 
 
 class McflirtOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ AFNI_HISTORY_METADATA = Metadata(
 )
 
 
-AfniHistoryParamsDict = typing.TypedDict('AfniHistoryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_history"]],
+_AfniHistoryParamsDictNoTag = typing.TypedDict('_AfniHistoryParamsDictNoTag', {
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
     "help": bool,
@@ -61,6 +60,7 @@ AfniHistoryParamsDictTagged = typing.TypedDict('AfniHistoryParamsDictTagged', {
     "show_field": typing.NotRequired[str | None],
     "show_field_names": bool,
 })
+AfniHistoryParamsDict = _AfniHistoryParamsDictNoTag | AfniHistoryParamsDictTagged
 
 
 class AfniHistoryOutputs(typing.NamedTuple):

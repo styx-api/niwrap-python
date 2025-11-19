@@ -13,8 +13,7 @@ IMAGE_INTENSITY_STATISTICS_METADATA = Metadata(
 )
 
 
-ImageIntensityStatisticsParamsDict = typing.TypedDict('ImageIntensityStatisticsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ImageIntensityStatistics"]],
+_ImageIntensityStatisticsParamsDictNoTag = typing.TypedDict('_ImageIntensityStatisticsParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],
@@ -25,6 +24,7 @@ ImageIntensityStatisticsParamsDictTagged = typing.TypedDict('ImageIntensityStati
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],
 })
+ImageIntensityStatisticsParamsDict = _ImageIntensityStatisticsParamsDictNoTag | ImageIntensityStatisticsParamsDictTagged
 
 
 class ImageIntensityStatisticsOutputs(typing.NamedTuple):

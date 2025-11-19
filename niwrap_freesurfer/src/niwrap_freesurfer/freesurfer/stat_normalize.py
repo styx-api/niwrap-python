@@ -13,8 +13,7 @@ STAT_NORMALIZE_METADATA = Metadata(
 )
 
 
-StatNormalizeParamsDict = typing.TypedDict('StatNormalizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/stat_normalize"]],
+_StatNormalizeParamsDictNoTag = typing.TypedDict('_StatNormalizeParamsDictNoTag', {
     "input_sv_prefix": str,
     "output_sv_prefix": str,
     "resolution": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ StatNormalizeParamsDictTagged = typing.TypedDict('StatNormalizeParamsDictTagged'
     "fix_xfm_flag": bool,
     "float2int_option": typing.NotRequired[str | None],
 })
+StatNormalizeParamsDict = _StatNormalizeParamsDictNoTag | StatNormalizeParamsDictTagged
 
 
 class StatNormalizeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TIMING_TOOL_PY_METADATA = Metadata(
 )
 
 
-TimingToolPyParamsDict = typing.TypedDict('TimingToolPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/timing_tool.py"]],
+_TimingToolPyParamsDictNoTag = typing.TypedDict('_TimingToolPyParamsDictNoTag', {
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
     "run_length": typing.NotRequired[list[float] | None],
@@ -57,6 +56,7 @@ TimingToolPyParamsDictTagged = typing.TypedDict('TimingToolPyParamsDictTagged', 
     "truncate_times": bool,
     "multi_timing_event_list": typing.NotRequired[str | None],
 })
+TimingToolPyParamsDict = _TimingToolPyParamsDictNoTag | TimingToolPyParamsDictTagged
 
 
 class TimingToolPyOutputs(typing.NamedTuple):

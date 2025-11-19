@@ -13,8 +13,7 @@ FNIRT_METADATA = Metadata(
 )
 
 
-FnirtParamsDict = typing.TypedDict('FnirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fnirt"]],
+_FnirtParamsDictNoTag = typing.TypedDict('_FnirtParamsDictNoTag', {
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
     "field_file": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ FnirtParamsDictTagged = typing.TypedDict('FnirtParamsDictTagged', {
     "refmask_file": typing.NotRequired[InputPathType | None],
     "warped_file": typing.NotRequired[InputPathType | None],
 })
+FnirtParamsDict = _FnirtParamsDictNoTag | FnirtParamsDictTagged
 
 
 class FnirtOutputs(typing.NamedTuple):

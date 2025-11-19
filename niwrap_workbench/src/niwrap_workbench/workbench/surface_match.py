@@ -12,8 +12,7 @@ SURFACE_MATCH_METADATA = Metadata(
 )
 
 
-SurfaceMatchParamsDict = typing.TypedDict('SurfaceMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-match"]],
+_SurfaceMatchParamsDictNoTag = typing.TypedDict('_SurfaceMatchParamsDictNoTag', {
     "Match Surface File": InputPathType,
     "Input Surface File": InputPathType,
     "Output Surface Name": str,
@@ -24,6 +23,7 @@ SurfaceMatchParamsDictTagged = typing.TypedDict('SurfaceMatchParamsDictTagged', 
     "Input Surface File": InputPathType,
     "Output Surface Name": str,
 })
+SurfaceMatchParamsDict = _SurfaceMatchParamsDictNoTag | SurfaceMatchParamsDictTagged
 
 
 class SurfaceMatchOutputs(typing.NamedTuple):

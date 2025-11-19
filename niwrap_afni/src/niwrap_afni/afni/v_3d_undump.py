@@ -13,8 +13,7 @@ V_3D_UNDUMP_METADATA = Metadata(
 )
 
 
-V3dUndumpParamsDict = typing.TypedDict('V3dUndumpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dUndump"]],
+_V3dUndumpParamsDictNoTag = typing.TypedDict('_V3dUndumpParamsDictNoTag', {
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "master": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ V3dUndumpParamsDictTagged = typing.TypedDict('V3dUndumpParamsDictTagged', {
     "roimask": typing.NotRequired[InputPathType | None],
     "allow_nan": bool,
 })
+V3dUndumpParamsDict = _V3dUndumpParamsDictNoTag | V3dUndumpParamsDictTagged
 
 
 class V3dUndumpOutputs(typing.NamedTuple):

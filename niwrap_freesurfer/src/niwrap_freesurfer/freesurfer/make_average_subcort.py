@@ -13,8 +13,7 @@ MAKE_AVERAGE_SUBCORT_METADATA = Metadata(
 )
 
 
-MakeAverageSubcortParamsDict = typing.TypedDict('MakeAverageSubcortParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_subcort"]],
+_MakeAverageSubcortParamsDictNoTag = typing.TypedDict('_MakeAverageSubcortParamsDictNoTag', {
     "subjects": list[str],
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ MakeAverageSubcortParamsDictTagged = typing.TypedDict('MakeAverageSubcortParamsD
     "subjects": list[str],
     "output_volume": str,
 })
+MakeAverageSubcortParamsDict = _MakeAverageSubcortParamsDictNoTag | MakeAverageSubcortParamsDictTagged
 
 
 class MakeAverageSubcortOutputs(typing.NamedTuple):

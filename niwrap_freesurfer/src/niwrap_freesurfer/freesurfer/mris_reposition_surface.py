@@ -13,8 +13,7 @@ MRIS_REPOSITION_SURFACE_METADATA = Metadata(
 )
 
 
-MrisRepositionSurfaceParamsDict = typing.TypedDict('MrisRepositionSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_reposition_surface"]],
+_MrisRepositionSurfaceParamsDictNoTag = typing.TypedDict('_MrisRepositionSurfaceParamsDictNoTag', {
     "surf": InputPathType,
     "volume": InputPathType,
     "points": InputPathType,
@@ -33,6 +32,7 @@ MrisRepositionSurfaceParamsDictTagged = typing.TypedDict('MrisRepositionSurfaceP
     "sigma": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],
 })
+MrisRepositionSurfaceParamsDict = _MrisRepositionSurfaceParamsDictNoTag | MrisRepositionSurfaceParamsDictTagged
 
 
 class MrisRepositionSurfaceOutputs(typing.NamedTuple):

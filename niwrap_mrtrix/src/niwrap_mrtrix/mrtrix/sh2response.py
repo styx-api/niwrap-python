@@ -13,8 +13,7 @@ SH2RESPONSE_METADATA = Metadata(
 )
 
 
-Sh2responseConfigParamsDict = typing.TypedDict('Sh2responseConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Sh2responseConfigParamsDictNoTag = typing.TypedDict('_Sh2responseConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Sh2responseConfigParamsDictTagged = typing.TypedDict('Sh2responseConfigParamsDic
     "key": str,
     "value": str,
 })
+Sh2responseConfigParamsDict = _Sh2responseConfigParamsDictNoTag | Sh2responseConfigParamsDictTagged
 
 
-Sh2responseParamsDict = typing.TypedDict('Sh2responseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2response"]],
+_Sh2responseParamsDictNoTag = typing.TypedDict('_Sh2responseParamsDictNoTag', {
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
     "info": bool,
@@ -59,6 +58,7 @@ Sh2responseParamsDictTagged = typing.TypedDict('Sh2responseParamsDictTagged', {
     "directions": InputPathType,
     "response": str,
 })
+Sh2responseParamsDict = _Sh2responseParamsDictNoTag | Sh2responseParamsDictTagged
 
 
 def sh2response_config(

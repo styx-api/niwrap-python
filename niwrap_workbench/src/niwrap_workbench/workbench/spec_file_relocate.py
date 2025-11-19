@@ -12,8 +12,7 @@ SPEC_FILE_RELOCATE_METADATA = Metadata(
 )
 
 
-SpecFileRelocateParamsDict = typing.TypedDict('SpecFileRelocateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/spec-file-relocate"]],
+_SpecFileRelocateParamsDictNoTag = typing.TypedDict('_SpecFileRelocateParamsDictNoTag', {
     "input-spec": str,
     "output-spec": str,
 })
@@ -22,6 +21,7 @@ SpecFileRelocateParamsDictTagged = typing.TypedDict('SpecFileRelocateParamsDictT
     "input-spec": str,
     "output-spec": str,
 })
+SpecFileRelocateParamsDict = _SpecFileRelocateParamsDictNoTag | SpecFileRelocateParamsDictTagged
 
 
 class SpecFileRelocateOutputs(typing.NamedTuple):

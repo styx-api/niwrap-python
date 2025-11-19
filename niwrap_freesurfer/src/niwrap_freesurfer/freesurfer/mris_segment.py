@@ -13,8 +13,7 @@ MRIS_SEGMENT_METADATA = Metadata(
 )
 
 
-MrisSegmentParamsDict = typing.TypedDict('MrisSegmentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segment"]],
+_MrisSegmentParamsDictNoTag = typing.TypedDict('_MrisSegmentParamsDictNoTag', {
     "subjects": list[str],
     "output_subject": str,
     "output_file": str,
@@ -25,6 +24,7 @@ MrisSegmentParamsDictTagged = typing.TypedDict('MrisSegmentParamsDictTagged', {
     "output_subject": str,
     "output_file": str,
 })
+MrisSegmentParamsDict = _MrisSegmentParamsDictNoTag | MrisSegmentParamsDictTagged
 
 
 class MrisSegmentOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MTNORMALISE_METADATA = Metadata(
 )
 
 
-MtnormaliseConfigParamsDict = typing.TypedDict('MtnormaliseConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MtnormaliseConfigParamsDictNoTag = typing.TypedDict('_MtnormaliseConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MtnormaliseConfigParamsDictTagged = typing.TypedDict('MtnormaliseConfigParamsDic
     "key": str,
     "value": str,
 })
+MtnormaliseConfigParamsDict = _MtnormaliseConfigParamsDictNoTag | MtnormaliseConfigParamsDictTagged
 
 
-MtnormaliseInputOutputParamsDict = typing.TypedDict('MtnormaliseInputOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["input_output"]],
+_MtnormaliseInputOutputParamsDictNoTag = typing.TypedDict('_MtnormaliseInputOutputParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
 })
@@ -35,10 +34,10 @@ MtnormaliseInputOutputParamsDictTagged = typing.TypedDict('MtnormaliseInputOutpu
     "input": InputPathType,
     "output": str,
 })
+MtnormaliseInputOutputParamsDict = _MtnormaliseInputOutputParamsDictNoTag | MtnormaliseInputOutputParamsDictTagged
 
 
-MtnormaliseParamsDict = typing.TypedDict('MtnormaliseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mtnormalise"]],
+_MtnormaliseParamsDictNoTag = typing.TypedDict('_MtnormaliseParamsDictNoTag', {
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
     "niter": typing.NotRequired[list[int] | None],
@@ -77,6 +76,7 @@ MtnormaliseParamsDictTagged = typing.TypedDict('MtnormaliseParamsDictTagged', {
     "version": bool,
     "input_output": list[MtnormaliseInputOutputParamsDict],
 })
+MtnormaliseParamsDict = _MtnormaliseParamsDictNoTag | MtnormaliseParamsDictTagged
 
 
 def mtnormalise_config(

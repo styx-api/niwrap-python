@@ -13,8 +13,7 @@ DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA = Metadata(
 )
 
 
-DmriExtractSurfaceMeasurementsParamsDict = typing.TypedDict('DmriExtractSurfaceMeasurementsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_extractSurfaceMeasurements"]],
+_DmriExtractSurfaceMeasurementsParamsDictNoTag = typing.TypedDict('_DmriExtractSurfaceMeasurementsParamsDictNoTag', {
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
     "lh_thickness_overlay": InputPathType,
@@ -45,6 +44,7 @@ DmriExtractSurfaceMeasurementsParamsDictTagged = typing.TypedDict('DmriExtractSu
     "annotation_file": typing.NotRequired[InputPathType | None],
     "fa_options": typing.NotRequired[list[str] | None],
 })
+DmriExtractSurfaceMeasurementsParamsDict = _DmriExtractSurfaceMeasurementsParamsDictNoTag | DmriExtractSurfaceMeasurementsParamsDictTagged
 
 
 class DmriExtractSurfaceMeasurementsOutputs(typing.NamedTuple):

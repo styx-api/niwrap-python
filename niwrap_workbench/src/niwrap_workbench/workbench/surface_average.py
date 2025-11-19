@@ -12,8 +12,7 @@ SURFACE_AVERAGE_METADATA = Metadata(
 )
 
 
-SurfaceAverageSurfParamsDict = typing.TypedDict('SurfaceAverageSurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surf"]],
+_SurfaceAverageSurfParamsDictNoTag = typing.TypedDict('_SurfaceAverageSurfParamsDictNoTag', {
     "surface": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
@@ -22,10 +21,10 @@ SurfaceAverageSurfParamsDictTagged = typing.TypedDict('SurfaceAverageSurfParamsD
     "surface": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
+SurfaceAverageSurfParamsDict = _SurfaceAverageSurfParamsDictNoTag | SurfaceAverageSurfParamsDictTagged
 
 
-SurfaceAverageParamsDict = typing.TypedDict('SurfaceAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-average"]],
+_SurfaceAverageParamsDictNoTag = typing.TypedDict('_SurfaceAverageParamsDictNoTag', {
     "surface-out": str,
     "stddev-metric-out": typing.NotRequired[str | None],
     "uncert-metric-out": typing.NotRequired[str | None],
@@ -38,6 +37,7 @@ SurfaceAverageParamsDictTagged = typing.TypedDict('SurfaceAverageParamsDictTagge
     "uncert-metric-out": typing.NotRequired[str | None],
     "surf": typing.NotRequired[list[SurfaceAverageSurfParamsDict] | None],
 })
+SurfaceAverageParamsDict = _SurfaceAverageParamsDictNoTag | SurfaceAverageParamsDictTagged
 
 
 def surface_average_surf(

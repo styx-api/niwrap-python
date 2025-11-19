@@ -13,8 +13,7 @@ MRCAT_METADATA = Metadata(
 )
 
 
-MrcatConfigParamsDict = typing.TypedDict('MrcatConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrcatConfigParamsDictNoTag = typing.TypedDict('_MrcatConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrcatConfigParamsDictTagged = typing.TypedDict('MrcatConfigParamsDictTagged', {
     "key": str,
     "value": str,
 })
+MrcatConfigParamsDict = _MrcatConfigParamsDictNoTag | MrcatConfigParamsDictTagged
 
 
-MrcatParamsDict = typing.TypedDict('MrcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcat"]],
+_MrcatParamsDictNoTag = typing.TypedDict('_MrcatParamsDictNoTag', {
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
@@ -57,6 +56,7 @@ MrcatParamsDictTagged = typing.TypedDict('MrcatParamsDictTagged', {
     "image2": list[InputPathType],
     "output": str,
 })
+MrcatParamsDict = _MrcatParamsDictNoTag | MrcatParamsDictTagged
 
 
 def mrcat_config(

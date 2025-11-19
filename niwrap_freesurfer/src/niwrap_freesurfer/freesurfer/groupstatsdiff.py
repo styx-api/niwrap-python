@@ -13,8 +13,7 @@ GROUPSTATSDIFF_METADATA = Metadata(
 )
 
 
-GroupstatsdiffParamsDict = typing.TypedDict('GroupstatsdiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/groupstatsdiff"]],
+_GroupstatsdiffParamsDictNoTag = typing.TypedDict('_GroupstatsdiffParamsDictNoTag', {
     "group1_dir": str,
     "group2_dir": str,
     "output_dir": str,
@@ -59,6 +58,7 @@ GroupstatsdiffParamsDictTagged = typing.TypedDict('GroupstatsdiffParamsDictTagge
     "no_dice": bool,
     "dice_ctab": typing.NotRequired[str | None],
 })
+GroupstatsdiffParamsDict = _GroupstatsdiffParamsDictNoTag | GroupstatsdiffParamsDictTagged
 
 
 class GroupstatsdiffOutputs(typing.NamedTuple):

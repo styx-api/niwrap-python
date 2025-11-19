@@ -13,8 +13,7 @@ DMRI_PROJECT_END_POINTS_METADATA = Metadata(
 )
 
 
-DmriProjectEndPointsParamsDict = typing.TypedDict('DmriProjectEndPointsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_projectEndPoints"]],
+_DmriProjectEndPointsParamsDictNoTag = typing.TypedDict('_DmriProjectEndPointsParamsDictNoTag', {
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
     "right_surface_file": InputPathType,
@@ -31,6 +30,7 @@ DmriProjectEndPointsParamsDictTagged = typing.TypedDict('DmriProjectEndPointsPar
     "right_overlay_file": str,
     "reference_image": InputPathType,
 })
+DmriProjectEndPointsParamsDict = _DmriProjectEndPointsParamsDictNoTag | DmriProjectEndPointsParamsDictTagged
 
 
 class DmriProjectEndPointsOutputs(typing.NamedTuple):

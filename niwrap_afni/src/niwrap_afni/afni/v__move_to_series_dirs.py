@@ -13,8 +13,7 @@ V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
 )
 
 
-VMoveToSeriesDirsParamsDict = typing.TypedDict('VMoveToSeriesDirsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@move.to.series.dirs"]],
+_VMoveToSeriesDirsParamsDictNoTag = typing.TypedDict('_VMoveToSeriesDirsParamsDictNoTag', {
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
     "tag": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ VMoveToSeriesDirsParamsDictTagged = typing.TypedDict('VMoveToSeriesDirsParamsDic
     "ver": bool,
     "dicom_files": list[InputPathType],
 })
+VMoveToSeriesDirsParamsDict = _VMoveToSeriesDirsParamsDictNoTag | VMoveToSeriesDirsParamsDictTagged
 
 
 class VMoveToSeriesDirsOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ VOLUME_SET_SPACE_METADATA = Metadata(
 )
 
 
-VolumeSetSpacePlumbParamsDict = typing.TypedDict('VolumeSetSpacePlumbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["plumb"]],
+_VolumeSetSpacePlumbParamsDictNoTag = typing.TypedDict('_VolumeSetSpacePlumbParamsDictNoTag', {
     "axis-order": str,
     "x-spacing": float,
     "y-spacing": float,
@@ -32,10 +31,10 @@ VolumeSetSpacePlumbParamsDictTagged = typing.TypedDict('VolumeSetSpacePlumbParam
     "y-offset": float,
     "z-offset": float,
 })
+VolumeSetSpacePlumbParamsDict = _VolumeSetSpacePlumbParamsDictNoTag | VolumeSetSpacePlumbParamsDictTagged
 
 
-VolumeSetSpaceSformParamsDict = typing.TypedDict('VolumeSetSpaceSformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sform"]],
+_VolumeSetSpaceSformParamsDictNoTag = typing.TypedDict('_VolumeSetSpaceSformParamsDictNoTag', {
     "xi-spacing": float,
     "xj-spacing": float,
     "xk-spacing": float,
@@ -64,10 +63,10 @@ VolumeSetSpaceSformParamsDictTagged = typing.TypedDict('VolumeSetSpaceSformParam
     "zk-spacing": float,
     "z-offset": float,
 })
+VolumeSetSpaceSformParamsDict = _VolumeSetSpaceSformParamsDictNoTag | VolumeSetSpaceSformParamsDictTagged
 
 
-VolumeSetSpaceFileParamsDict = typing.TypedDict('VolumeSetSpaceFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["file"]],
+_VolumeSetSpaceFileParamsDictNoTag = typing.TypedDict('_VolumeSetSpaceFileParamsDictNoTag', {
     "volume-ref": str,
     "ignore-dims": bool,
 })
@@ -76,10 +75,10 @@ VolumeSetSpaceFileParamsDictTagged = typing.TypedDict('VolumeSetSpaceFileParamsD
     "volume-ref": str,
     "ignore-dims": bool,
 })
+VolumeSetSpaceFileParamsDict = _VolumeSetSpaceFileParamsDictNoTag | VolumeSetSpaceFileParamsDictTagged
 
 
-VolumeSetSpaceParamsDict = typing.TypedDict('VolumeSetSpaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-set-space"]],
+_VolumeSetSpaceParamsDictNoTag = typing.TypedDict('_VolumeSetSpaceParamsDictNoTag', {
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParamsDict | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParamsDict | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParamsDict | None],
@@ -94,6 +93,7 @@ VolumeSetSpaceParamsDictTagged = typing.TypedDict('VolumeSetSpaceParamsDictTagge
     "volume-in": InputPathType,
     "volume-out": str,
 })
+VolumeSetSpaceParamsDict = _VolumeSetSpaceParamsDictNoTag | VolumeSetSpaceParamsDictTagged
 
 
 def volume_set_space_plumb(

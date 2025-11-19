@@ -13,8 +13,7 @@ MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
 )
 
 
-MriEditWmWithAsegParamsDict = typing.TypedDict('MriEditWmWithAsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_wm_with_aseg"]],
+_MriEditWmWithAsegParamsDictNoTag = typing.TypedDict('_MriEditWmWithAsegParamsDictNoTag', {
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
     "aseg": InputPathType,
@@ -47,6 +46,7 @@ MriEditWmWithAsegParamsDictTagged = typing.TypedDict('MriEditWmWithAsegParamsDic
     "sa_fix_ento_wm": typing.NotRequired[str | None],
     "debug_voxel": typing.NotRequired[list[float] | None],
 })
+MriEditWmWithAsegParamsDict = _MriEditWmWithAsegParamsDictNoTag | MriEditWmWithAsegParamsDictTagged
 
 
 class MriEditWmWithAsegOutputs(typing.NamedTuple):

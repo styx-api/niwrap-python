@@ -13,8 +13,7 @@ MIDEFACE_METADATA = Metadata(
 )
 
 
-MidefaceParamsDict = typing.TypedDict('MidefaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mideface"]],
+_MidefaceParamsDictNoTag = typing.TypedDict('_MidefaceParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "facemask": typing.NotRequired[InputPathType | None],
@@ -79,6 +78,7 @@ MidefaceParamsDictTagged = typing.TypedDict('MidefaceParamsDictTagged', {
     "check_volume": typing.NotRequired[InputPathType | None],
     "check_output_file": typing.NotRequired[InputPathType | None],
 })
+MidefaceParamsDict = _MidefaceParamsDictNoTag | MidefaceParamsDictTagged
 
 
 class MidefaceOutputs(typing.NamedTuple):

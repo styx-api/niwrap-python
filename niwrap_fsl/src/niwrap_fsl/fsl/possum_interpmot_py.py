@@ -13,8 +13,7 @@ POSSUM_INTERPMOT_PY_METADATA = Metadata(
 )
 
 
-PossumInterpmotPyParamsDict = typing.TypedDict('PossumInterpmotPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/possum_interpmot.py"]],
+_PossumInterpmotPyParamsDictNoTag = typing.TypedDict('_PossumInterpmotPyParamsDictNoTag', {
     "motion_type": int,
     "tr": float,
     "tr_slice": float,
@@ -33,6 +32,7 @@ PossumInterpmotPyParamsDictTagged = typing.TypedDict('PossumInterpmotPyParamsDic
     "custom_motion_file": InputPathType,
     "output_file": str,
 })
+PossumInterpmotPyParamsDict = _PossumInterpmotPyParamsDictNoTag | PossumInterpmotPyParamsDictTagged
 
 
 class PossumInterpmotPyOutputs(typing.NamedTuple):

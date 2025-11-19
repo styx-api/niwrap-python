@@ -12,8 +12,7 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
 )
 
 
-SurfaceToSurface3dDistanceParamsDict = typing.TypedDict('SurfaceToSurface3dDistanceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-to-surface-3d-distance"]],
+_SurfaceToSurface3dDistanceParamsDictNoTag = typing.TypedDict('_SurfaceToSurface3dDistanceParamsDictNoTag', {
     "dists-out": str,
     "vectors-out": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
@@ -26,6 +25,7 @@ SurfaceToSurface3dDistanceParamsDictTagged = typing.TypedDict('SurfaceToSurface3
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
 })
+SurfaceToSurface3dDistanceParamsDict = _SurfaceToSurface3dDistanceParamsDictNoTag | SurfaceToSurface3dDistanceParamsDictTagged
 
 
 class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):

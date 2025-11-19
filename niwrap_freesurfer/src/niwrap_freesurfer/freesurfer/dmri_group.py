@@ -13,8 +13,7 @@ DMRI_GROUP_METADATA = Metadata(
 )
 
 
-DmriGroupParamsDict = typing.TypedDict('DmriGroupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_group"]],
+_DmriGroupParamsDictNoTag = typing.TypedDict('_DmriGroupParamsDictNoTag', {
     "input_list": InputPathType,
     "reference_volume": InputPathType,
     "output_base": str,
@@ -33,6 +32,7 @@ DmriGroupParamsDictTagged = typing.TypedDict('DmriGroupParamsDictTagged', {
     "debug_mode": bool,
     "check_options": bool,
 })
+DmriGroupParamsDict = _DmriGroupParamsDictNoTag | DmriGroupParamsDictTagged
 
 
 class DmriGroupOutputs(typing.NamedTuple):

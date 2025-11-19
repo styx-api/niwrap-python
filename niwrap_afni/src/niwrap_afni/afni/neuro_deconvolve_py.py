@@ -13,8 +13,7 @@ NEURO_DECONVOLVE_PY_METADATA = Metadata(
 )
 
 
-NeuroDeconvolvePyParamsDict = typing.TypedDict('NeuroDeconvolvePyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/neuro_deconvolve.py"]],
+_NeuroDeconvolvePyParamsDictNoTag = typing.TypedDict('_NeuroDeconvolvePyParamsDictNoTag', {
     "input_file": InputPathType,
     "prefix": str,
     "script": str,
@@ -39,6 +38,7 @@ NeuroDeconvolvePyParamsDictTagged = typing.TypedDict('NeuroDeconvolvePyParamsDic
     "tr_nup": typing.NotRequired[float | None],
     "verbosity": typing.NotRequired[float | None],
 })
+NeuroDeconvolvePyParamsDict = _NeuroDeconvolvePyParamsDictNoTag | NeuroDeconvolvePyParamsDictTagged
 
 
 class NeuroDeconvolvePyOutputs(typing.NamedTuple):

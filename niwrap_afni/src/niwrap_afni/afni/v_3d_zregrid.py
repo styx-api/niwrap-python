@@ -13,8 +13,7 @@ V_3D_ZREGRID_METADATA = Metadata(
 )
 
 
-V3dZregridParamsDict = typing.TypedDict('V3dZregridParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dZregrid"]],
+_V3dZregridParamsDictNoTag = typing.TypedDict('_V3dZregridParamsDictNoTag', {
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
     "z_size": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ V3dZregridParamsDictTagged = typing.TypedDict('V3dZregridParamsDictTagged', {
     "infile": InputPathType,
     "verbose": bool,
 })
+V3dZregridParamsDict = _V3dZregridParamsDictNoTag | V3dZregridParamsDictTagged
 
 
 class V3dZregridOutputs(typing.NamedTuple):

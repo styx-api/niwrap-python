@@ -13,8 +13,7 @@ MRIS_MULTIMODAL_METADATA = Metadata(
 )
 
 
-MrisMultimodalParamsDict = typing.TypedDict('MrisMultimodalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal"]],
+_MrisMultimodalParamsDictNoTag = typing.TypedDict('_MrisMultimodalParamsDictNoTag', {
     "input_surface": InputPathType,
     "target_surface": InputPathType,
     "output_surface": str,
@@ -39,6 +38,7 @@ MrisMultimodalParamsDictTagged = typing.TypedDict('MrisMultimodalParamsDictTagge
     "csv_output": str,
     "vtk_output": bool,
 })
+MrisMultimodalParamsDict = _MrisMultimodalParamsDictNoTag | MrisMultimodalParamsDictTagged
 
 
 class MrisMultimodalOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_FDR_METADATA = Metadata(
 )
 
 
-MriFdrParamsDict = typing.TypedDict('MriFdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fdr"]],
+_MriFdrParamsDictNoTag = typing.TypedDict('_MriFdrParamsDictNoTag', {
     "input_files": list[str],
     "fdr_value": float,
     "default_frame": typing.NotRequired[int | None],
@@ -39,6 +38,7 @@ MriFdrParamsDictTagged = typing.TypedDict('MriFdrParamsDictTagged', {
     "debug": bool,
     "check_options": bool,
 })
+MriFdrParamsDict = _MriFdrParamsDictNoTag | MriFdrParamsDictTagged
 
 
 class MriFdrOutputs(typing.NamedTuple):

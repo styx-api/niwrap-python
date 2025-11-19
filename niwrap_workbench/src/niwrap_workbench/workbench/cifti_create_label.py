@@ -12,8 +12,7 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
 )
 
 
-CiftiCreateLabelVolumeParamsDict = typing.TypedDict('CiftiCreateLabelVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiCreateLabelVolumeParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelVolumeParamsDictNoTag', {
     "label-volume": InputPathType,
     "structure-label-volume": InputPathType,
 })
@@ -22,10 +21,10 @@ CiftiCreateLabelVolumeParamsDictTagged = typing.TypedDict('CiftiCreateLabelVolum
     "label-volume": InputPathType,
     "structure-label-volume": InputPathType,
 })
+CiftiCreateLabelVolumeParamsDict = _CiftiCreateLabelVolumeParamsDictNoTag | CiftiCreateLabelVolumeParamsDictTagged
 
 
-CiftiCreateLabelLeftLabelParamsDict = typing.TypedDict('CiftiCreateLabelLeftLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-label"]],
+_CiftiCreateLabelLeftLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelLeftLabelParamsDictNoTag', {
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiCreateLabelLeftLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelLe
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateLabelLeftLabelParamsDict = _CiftiCreateLabelLeftLabelParamsDictNoTag | CiftiCreateLabelLeftLabelParamsDictTagged
 
 
-CiftiCreateLabelRightLabelParamsDict = typing.TypedDict('CiftiCreateLabelRightLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-label"]],
+_CiftiCreateLabelRightLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelRightLabelParamsDictNoTag', {
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiCreateLabelRightLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelR
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateLabelRightLabelParamsDict = _CiftiCreateLabelRightLabelParamsDictNoTag | CiftiCreateLabelRightLabelParamsDictTagged
 
 
-CiftiCreateLabelCerebellumLabelParamsDict = typing.TypedDict('CiftiCreateLabelCerebellumLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-label"]],
+_CiftiCreateLabelCerebellumLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelCerebellumLabelParamsDictNoTag', {
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -58,10 +57,10 @@ CiftiCreateLabelCerebellumLabelParamsDictTagged = typing.TypedDict('CiftiCreateL
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateLabelCerebellumLabelParamsDict = _CiftiCreateLabelCerebellumLabelParamsDictNoTag | CiftiCreateLabelCerebellumLabelParamsDictTagged
 
 
-CiftiCreateLabelLabelParamsDict = typing.TypedDict('CiftiCreateLabelLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_CiftiCreateLabelLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelLabelParamsDictNoTag', {
     "structure": str,
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -72,10 +71,10 @@ CiftiCreateLabelLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelLabelP
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateLabelLabelParamsDict = _CiftiCreateLabelLabelParamsDictNoTag | CiftiCreateLabelLabelParamsDictTagged
 
 
-CiftiCreateLabelParamsDict = typing.TypedDict('CiftiCreateLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-label"]],
+_CiftiCreateLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateLabelParamsDictNoTag', {
     "cifti-out": str,
     "volume": typing.NotRequired[CiftiCreateLabelVolumeParamsDict | None],
     "left-label": typing.NotRequired[CiftiCreateLabelLeftLabelParamsDict | None],
@@ -92,6 +91,7 @@ CiftiCreateLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelParamsDictT
     "cerebellum-label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParamsDict | None],
     "label": typing.NotRequired[list[CiftiCreateLabelLabelParamsDict] | None],
 })
+CiftiCreateLabelParamsDict = _CiftiCreateLabelParamsDictNoTag | CiftiCreateLabelParamsDictTagged
 
 
 def cifti_create_label_volume(

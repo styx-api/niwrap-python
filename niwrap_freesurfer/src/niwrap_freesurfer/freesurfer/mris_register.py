@@ -13,8 +13,7 @@ MRIS_REGISTER_METADATA = Metadata(
 )
 
 
-MrisRegisterParamsDict = typing.TypedDict('MrisRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register"]],
+_MrisRegisterParamsDictNoTag = typing.TypedDict('_MrisRegisterParamsDictNoTag', {
     "surf_fname": InputPathType,
     "target": InputPathType,
     "out_fname": str,
@@ -145,6 +144,7 @@ MrisRegisterParamsDictTagged = typing.TypedDict('MrisRegisterParamsDictTagged', 
     "threads": typing.NotRequired[float | None],
     "version_flag": bool,
 })
+MrisRegisterParamsDict = _MrisRegisterParamsDictNoTag | MrisRegisterParamsDictTagged
 
 
 class MrisRegisterOutputs(typing.NamedTuple):

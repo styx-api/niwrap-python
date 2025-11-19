@@ -13,8 +13,7 @@ PROMPT_USER_METADATA = Metadata(
 )
 
 
-PromptUserParamsDict = typing.TypedDict('PromptUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/prompt_user"]],
+_PromptUserParamsDictNoTag = typing.TypedDict('_PromptUserParamsDictNoTag', {
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ PromptUserParamsDictTagged = typing.TypedDict('PromptUserParamsDictTagged', {
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
 })
+PromptUserParamsDict = _PromptUserParamsDictNoTag | PromptUserParamsDictTagged
 
 
 class PromptUserOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FSLVBM_1_BET_METADATA = Metadata(
 )
 
 
-Fslvbm1BetParamsDict = typing.TypedDict('Fslvbm1BetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_1_bet"]],
+_Fslvbm1BetParamsDictNoTag = typing.TypedDict('_Fslvbm1BetParamsDictNoTag', {
     "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ Fslvbm1BetParamsDictTagged = typing.TypedDict('Fslvbm1BetParamsDictTagged', {
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
 })
+Fslvbm1BetParamsDict = _Fslvbm1BetParamsDictNoTag | Fslvbm1BetParamsDictTagged
 
 
 class Fslvbm1BetOutputs(typing.NamedTuple):

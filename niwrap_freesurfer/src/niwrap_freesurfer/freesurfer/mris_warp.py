@@ -13,8 +13,7 @@ MRIS_WARP_METADATA = Metadata(
 )
 
 
-MrisWarpParamsDict = typing.TypedDict('MrisWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_warp"]],
+_MrisWarpParamsDictNoTag = typing.TypedDict('_MrisWarpParamsDictNoTag', {
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
     "regfile": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ MrisWarpParamsDictTagged = typing.TypedDict('MrisWarpParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MrisWarpParamsDict = _MrisWarpParamsDictNoTag | MrisWarpParamsDictTagged
 
 
 class MrisWarpOutputs(typing.NamedTuple):

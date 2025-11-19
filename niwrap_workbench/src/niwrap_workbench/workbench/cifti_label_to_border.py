@@ -12,8 +12,7 @@ CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
 )
 
 
-CiftiLabelToBorderBorderParamsDict = typing.TypedDict('CiftiLabelToBorderBorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["border"]],
+_CiftiLabelToBorderBorderParamsDictNoTag = typing.TypedDict('_CiftiLabelToBorderBorderParamsDictNoTag', {
     "surface": InputPathType,
     "border-out": str,
 })
@@ -22,10 +21,10 @@ CiftiLabelToBorderBorderParamsDictTagged = typing.TypedDict('CiftiLabelToBorderB
     "surface": InputPathType,
     "border-out": str,
 })
+CiftiLabelToBorderBorderParamsDict = _CiftiLabelToBorderBorderParamsDictNoTag | CiftiLabelToBorderBorderParamsDictTagged
 
 
-CiftiLabelToBorderParamsDict = typing.TypedDict('CiftiLabelToBorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-border"]],
+_CiftiLabelToBorderParamsDictNoTag = typing.TypedDict('_CiftiLabelToBorderParamsDictNoTag', {
     "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParamsDict] | None],
@@ -38,6 +37,7 @@ CiftiLabelToBorderParamsDictTagged = typing.TypedDict('CiftiLabelToBorderParamsD
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParamsDict] | None],
     "cifti-in": InputPathType,
 })
+CiftiLabelToBorderParamsDict = _CiftiLabelToBorderParamsDictNoTag | CiftiLabelToBorderParamsDictTagged
 
 
 class CiftiLabelToBorderBorderOutputs(typing.NamedTuple):

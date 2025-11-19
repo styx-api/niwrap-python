@@ -12,8 +12,7 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-CiftiAllLabelsToRoisParamsDict = typing.TypedDict('CiftiAllLabelsToRoisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-all-labels-to-rois"]],
+_CiftiAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_CiftiAllLabelsToRoisParamsDictNoTag', {
     "cifti-out": str,
     "label-in": InputPathType,
     "map": str,
@@ -24,6 +23,7 @@ CiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('CiftiAllLabelsToRoisPar
     "label-in": InputPathType,
     "map": str,
 })
+CiftiAllLabelsToRoisParamsDict = _CiftiAllLabelsToRoisParamsDictNoTag | CiftiAllLabelsToRoisParamsDictTagged
 
 
 class CiftiAllLabelsToRoisOutputs(typing.NamedTuple):

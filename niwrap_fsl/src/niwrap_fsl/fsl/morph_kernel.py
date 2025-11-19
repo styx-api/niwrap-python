@@ -13,8 +13,7 @@ MORPH_KERNEL_METADATA = Metadata(
 )
 
 
-MorphKernelParamsDict = typing.TypedDict('MorphKernelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/morph_kernel"]],
+_MorphKernelParamsDictNoTag = typing.TypedDict('_MorphKernelParamsDictNoTag', {
     "cube_side_length": float,
     "sphere_radius": float,
 })
@@ -23,6 +22,7 @@ MorphKernelParamsDictTagged = typing.TypedDict('MorphKernelParamsDictTagged', {
     "cube_side_length": float,
     "sphere_radius": float,
 })
+MorphKernelParamsDict = _MorphKernelParamsDictNoTag | MorphKernelParamsDictTagged
 
 
 class MorphKernelOutputs(typing.NamedTuple):

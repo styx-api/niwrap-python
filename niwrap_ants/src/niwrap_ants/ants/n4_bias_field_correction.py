@@ -13,8 +13,7 @@ N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 )
 
 
-N4BiasFieldCorrectionConvergenceParamsDict = typing.TypedDict('N4BiasFieldCorrectionConvergenceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["convergence"]],
+_N4BiasFieldCorrectionConvergenceParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionConvergenceParamsDictNoTag', {
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
@@ -23,10 +22,10 @@ N4BiasFieldCorrectionConvergenceParamsDictTagged = typing.TypedDict('N4BiasField
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
+N4BiasFieldCorrectionConvergenceParamsDict = _N4BiasFieldCorrectionConvergenceParamsDictNoTag | N4BiasFieldCorrectionConvergenceParamsDictTagged
 
 
-N4BiasFieldCorrectionBsplineFittingParamsDict = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["bspline_fitting"]],
+_N4BiasFieldCorrectionBsplineFittingParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionBsplineFittingParamsDictNoTag', {
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
@@ -35,10 +34,10 @@ N4BiasFieldCorrectionBsplineFittingParamsDictTagged = typing.TypedDict('N4BiasFi
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
+N4BiasFieldCorrectionBsplineFittingParamsDict = _N4BiasFieldCorrectionBsplineFittingParamsDictNoTag | N4BiasFieldCorrectionBsplineFittingParamsDictTagged
 
 
-N4BiasFieldCorrectionHistogramSharpeningParamsDict = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["histogram_sharpening"]],
+_N4BiasFieldCorrectionHistogramSharpeningParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionHistogramSharpeningParamsDictNoTag', {
     "fwhm": typing.NotRequired[float | None],
     "wiener_noise": typing.NotRequired[float | None],
     "number_of_histogram_bins": typing.NotRequired[int | None],
@@ -49,20 +48,20 @@ N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged = typing.TypedDict('N4B
     "wiener_noise": typing.NotRequired[float | None],
     "number_of_histogram_bins": typing.NotRequired[int | None],
 })
+N4BiasFieldCorrectionHistogramSharpeningParamsDict = _N4BiasFieldCorrectionHistogramSharpeningParamsDictNoTag | N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged
 
 
-N4BiasFieldCorrectionCorrectedOutputParamsDict = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["correctedOutput"]],
+_N4BiasFieldCorrectionCorrectedOutputParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionCorrectedOutputParamsDictNoTag', {
     "correctedOutputFileName": str,
 })
 N4BiasFieldCorrectionCorrectedOutputParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParamsDictTagged', {
     "@type": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
+N4BiasFieldCorrectionCorrectedOutputParamsDict = _N4BiasFieldCorrectionCorrectedOutputParamsDictNoTag | N4BiasFieldCorrectionCorrectedOutputParamsDictTagged
 
 
-N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["correctedOutputNoise"]],
+_N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictNoTag', {
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
@@ -71,10 +70,10 @@ N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged = typing.TypedDict('N4
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
+N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict = _N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictNoTag | N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged
 
 
-N4BiasFieldCorrectionParamsDict = typing.TypedDict('N4BiasFieldCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/N4BiasFieldCorrection"]],
+_N4BiasFieldCorrectionParamsDictNoTag = typing.TypedDict('_N4BiasFieldCorrectionParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -101,6 +100,7 @@ N4BiasFieldCorrectionParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionP
     "input_image": InputPathType,
     "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParamsDictTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged],
 })
+N4BiasFieldCorrectionParamsDict = _N4BiasFieldCorrectionParamsDictNoTag | N4BiasFieldCorrectionParamsDictTagged
 
 
 def n4_bias_field_correction_output_cargs_dyn_fn(

@@ -13,8 +13,7 @@ MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA = Metadata(
 )
 
 
-MrisMultimodalSurfacePlacementParamsDict = typing.TypedDict('MrisMultimodalSurfacePlacementParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal_surface_placement"]],
+_MrisMultimodalSurfacePlacementParamsDictNoTag = typing.TypedDict('_MrisMultimodalSurfacePlacementParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "sphere_surface": InputPathType,
@@ -51,6 +50,7 @@ MrisMultimodalSurfacePlacementParamsDictTagged = typing.TypedDict('MrisMultimoda
     "flair_image": InputPathType,
     "min_max": bool,
 })
+MrisMultimodalSurfacePlacementParamsDict = _MrisMultimodalSurfacePlacementParamsDictNoTag | MrisMultimodalSurfacePlacementParamsDictTagged
 
 
 class MrisMultimodalSurfacePlacementOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_EXVIVO_STRIP_METADATA = Metadata(
 )
 
 
-MriExvivoStripParamsDict = typing.TypedDict('MriExvivoStripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_strip"]],
+_MriExvivoStripParamsDictNoTag = typing.TypedDict('_MriExvivoStripParamsDictNoTag', {
     "invol": InputPathType,
     "outvol": str,
     "hemi": str,
@@ -43,6 +42,7 @@ MriExvivoStripParamsDictTagged = typing.TypedDict('MriExvivoStripParamsDictTagge
     "wts": typing.NotRequired[InputPathType | None],
     "gpu": typing.NotRequired[float | None],
 })
+MriExvivoStripParamsDict = _MriExvivoStripParamsDictNoTag | MriExvivoStripParamsDictTagged
 
 
 class MriExvivoStripOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURFACE_BASED_SMOOTHING_METADATA = Metadata(
 )
 
 
-SurfaceBasedSmoothingParamsDict = typing.TypedDict('SurfaceBasedSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SurfaceBasedSmoothing"]],
+_SurfaceBasedSmoothingParamsDictNoTag = typing.TypedDict('_SurfaceBasedSmoothingParamsDictNoTag', {
     "image_to_smooth": InputPathType,
     "sigma": float,
     "surface_image": InputPathType,
@@ -29,6 +28,7 @@ SurfaceBasedSmoothingParamsDictTagged = typing.TypedDict('SurfaceBasedSmoothingP
     "outname": str,
     "num_repeats": typing.NotRequired[int | None],
 })
+SurfaceBasedSmoothingParamsDict = _SurfaceBasedSmoothingParamsDictNoTag | SurfaceBasedSmoothingParamsDictTagged
 
 
 class SurfaceBasedSmoothingOutputs(typing.NamedTuple):

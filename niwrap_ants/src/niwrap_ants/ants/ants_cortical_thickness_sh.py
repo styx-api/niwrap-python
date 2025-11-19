@@ -13,8 +13,7 @@ ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
 )
 
 
-AntsCorticalThicknessShParamsDict = typing.TypedDict('AntsCorticalThicknessShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsCorticalThickness.sh"]],
+_AntsCorticalThicknessShParamsDictNoTag = typing.TypedDict('_AntsCorticalThicknessShParamsDictNoTag', {
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "brain_template": InputPathType,
@@ -69,6 +68,7 @@ AntsCorticalThicknessShParamsDictTagged = typing.TypedDict('AntsCorticalThicknes
     "script_stage_to_run": typing.NotRequired[int | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
+AntsCorticalThicknessShParamsDict = _AntsCorticalThicknessShParamsDictNoTag | AntsCorticalThicknessShParamsDictTagged
 
 
 class AntsCorticalThicknessShOutputs(typing.NamedTuple):

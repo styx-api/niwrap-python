@@ -13,8 +13,7 @@ MRI_CA_TRAIN_METADATA = Metadata(
 )
 
 
-MriCaTrainParamsDict = typing.TypedDict('MriCaTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_train"]],
+_MriCaTrainParamsDictNoTag = typing.TypedDict('_MriCaTrainParamsDictNoTag', {
     "subjects": list[str],
     "output_gca": str,
     "segmentation": str,
@@ -47,6 +46,7 @@ MriCaTrainParamsDictTagged = typing.TypedDict('MriCaTrainParamsDictTagged', {
     "threads": typing.NotRequired[int | None],
     "done_file": typing.NotRequired[str | None],
 })
+MriCaTrainParamsDict = _MriCaTrainParamsDictNoTag | MriCaTrainParamsDictTagged
 
 
 class MriCaTrainOutputs(typing.NamedTuple):

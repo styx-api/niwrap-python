@@ -13,8 +13,7 @@ CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
 )
 
 
-ConvertScalarImageToRgbParamsDict = typing.TypedDict('ConvertScalarImageToRgbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ConvertScalarImageToRGB"]],
+_ConvertScalarImageToRgbParamsDictNoTag = typing.TypedDict('_ConvertScalarImageToRgbParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -41,6 +40,7 @@ ConvertScalarImageToRgbParamsDictTagged = typing.TypedDict('ConvertScalarImageTo
     "maximum_rgb_output": typing.NotRequired[int | None],
     "vtk_lookup_table": typing.NotRequired[str | None],
 })
+ConvertScalarImageToRgbParamsDict = _ConvertScalarImageToRgbParamsDictNoTag | ConvertScalarImageToRgbParamsDictTagged
 
 
 class ConvertScalarImageToRgbOutputs(typing.NamedTuple):

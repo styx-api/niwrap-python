@@ -13,8 +13,7 @@ REGDAT2XFM_METADATA = Metadata(
 )
 
 
-Regdat2xfmParamsDict = typing.TypedDict('Regdat2xfmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/regdat2xfm"]],
+_Regdat2xfmParamsDictNoTag = typing.TypedDict('_Regdat2xfmParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ Regdat2xfmParamsDictTagged = typing.TypedDict('Regdat2xfmParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+Regdat2xfmParamsDict = _Regdat2xfmParamsDictNoTag | Regdat2xfmParamsDictTagged
 
 
 class Regdat2xfmOutputs(typing.NamedTuple):

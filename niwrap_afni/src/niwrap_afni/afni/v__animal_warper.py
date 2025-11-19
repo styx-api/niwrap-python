@@ -13,8 +13,7 @@ V__ANIMAL_WARPER_METADATA = Metadata(
 )
 
 
-VAnimalWarperParamsDict = typing.TypedDict('VAnimalWarperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@animal_warper"]],
+_VAnimalWarperParamsDictNoTag = typing.TypedDict('_VAnimalWarperParamsDictNoTag', {
     "input_file": InputPathType,
     "base_template": InputPathType,
     "output_dir": str,
@@ -87,6 +86,7 @@ VAnimalWarperParamsDictTagged = typing.TypedDict('VAnimalWarperParamsDictTagged'
     "ok_to_exist": bool,
     "echo": bool,
 })
+VAnimalWarperParamsDict = _VAnimalWarperParamsDictNoTag | VAnimalWarperParamsDictTagged
 
 
 class VAnimalWarperOutputs(typing.NamedTuple):

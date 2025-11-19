@@ -13,8 +13,7 @@ REINFLATE_SUBJECT_RH_METADATA = Metadata(
 )
 
 
-ReinflateSubjectRhParamsDict = typing.TypedDict('ReinflateSubjectRhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject-rh"]],
+_ReinflateSubjectRhParamsDictNoTag = typing.TypedDict('_ReinflateSubjectRhParamsDictNoTag', {
     "subject_dir": str,
     "additional_options": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ ReinflateSubjectRhParamsDictTagged = typing.TypedDict('ReinflateSubjectRhParamsD
     "subject_dir": str,
     "additional_options": typing.NotRequired[str | None],
 })
+ReinflateSubjectRhParamsDict = _ReinflateSubjectRhParamsDictNoTag | ReinflateSubjectRhParamsDictTagged
 
 
 class ReinflateSubjectRhOutputs(typing.NamedTuple):

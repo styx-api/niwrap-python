@@ -13,8 +13,7 @@ GET_AFNI_MODEL_PRF_6_BAD_METADATA = Metadata(
 )
 
 
-GetAfniModelPrf6BadParamsDict = typing.TypedDict('GetAfniModelPrf6BadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF_6_BAD"]],
+_GetAfniModelPrf6BadParamsDictNoTag = typing.TypedDict('_GetAfniModelPrf6BadParamsDictNoTag', {
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -31,6 +30,7 @@ GetAfniModelPrf6BadParamsDictTagged = typing.TypedDict('GetAfniModelPrf6BadParam
     "sigrat": float,
     "theta": float,
 })
+GetAfniModelPrf6BadParamsDict = _GetAfniModelPrf6BadParamsDictNoTag | GetAfniModelPrf6BadParamsDictTagged
 
 
 class GetAfniModelPrf6BadOutputs(typing.NamedTuple):

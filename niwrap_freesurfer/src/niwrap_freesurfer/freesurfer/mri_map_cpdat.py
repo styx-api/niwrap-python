@@ -13,8 +13,7 @@ MRI_MAP_CPDAT_METADATA = Metadata(
 )
 
 
-MriMapCpdatParamsDict = typing.TypedDict('MriMapCpdatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_map_cpdat"]],
+_MriMapCpdatParamsDictNoTag = typing.TypedDict('_MriMapCpdatParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "lta_file": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ MriMapCpdatParamsDictTagged = typing.TypedDict('MriMapCpdatParamsDictTagged', {
     "from_mni305": typing.NotRequired[str | None],
     "subject_list_file": typing.NotRequired[InputPathType | None],
 })
+MriMapCpdatParamsDict = _MriMapCpdatParamsDictNoTag | MriMapCpdatParamsDictTagged
 
 
 class MriMapCpdatOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_SEGREG_METADATA = Metadata(
 )
 
 
-MriSegregParamsDict = typing.TypedDict('MriSegregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segreg"]],
+_MriSegregParamsDictNoTag = typing.TypedDict('_MriSegregParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ MriSegregParamsDictTagged = typing.TypedDict('MriSegregParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+MriSegregParamsDict = _MriSegregParamsDictNoTag | MriSegregParamsDictTagged
 
 
 class MriSegregOutputs(typing.NamedTuple):

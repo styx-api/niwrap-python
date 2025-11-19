@@ -13,8 +13,7 @@ MAKEROT_METADATA = Metadata(
 )
 
 
-MakerotParamsDict = typing.TypedDict('MakerotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/makerot"]],
+_MakerotParamsDictNoTag = typing.TypedDict('_MakerotParamsDictNoTag', {
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
     "center": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ MakerotParamsDictTagged = typing.TypedDict('MakerotParamsDictTagged', {
     "help_flag": bool,
     "theta": float,
 })
+MakerotParamsDict = _MakerotParamsDictNoTag | MakerotParamsDictTagged
 
 
 class MakerotOutputs(typing.NamedTuple):

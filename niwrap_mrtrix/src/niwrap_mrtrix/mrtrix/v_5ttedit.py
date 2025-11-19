@@ -13,8 +13,7 @@ V_5TTEDIT_METADATA = Metadata(
 )
 
 
-V5tteditConfigParamsDict = typing.TypedDict('V5tteditConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_V5tteditConfigParamsDictNoTag = typing.TypedDict('_V5tteditConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ V5tteditConfigParamsDictTagged = typing.TypedDict('V5tteditConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+V5tteditConfigParamsDict = _V5tteditConfigParamsDictNoTag | V5tteditConfigParamsDictTagged
 
 
-V5tteditParamsDict = typing.TypedDict('V5tteditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/5ttedit"]],
+_V5tteditParamsDictNoTag = typing.TypedDict('_V5tteditParamsDictNoTag', {
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
     "wm": typing.NotRequired[InputPathType | None],
@@ -63,6 +62,7 @@ V5tteditParamsDictTagged = typing.TypedDict('V5tteditParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+V5tteditParamsDict = _V5tteditParamsDictNoTag | V5tteditParamsDictTagged
 
 
 def v_5ttedit_config(

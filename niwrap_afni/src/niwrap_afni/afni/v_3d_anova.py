@@ -13,8 +13,7 @@ V_3D_ANOVA_METADATA = Metadata(
 )
 
 
-V3dAnovaParamsDict = typing.TypedDict('V3dAnovaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dANOVA"]],
+_V3dAnovaParamsDictNoTag = typing.TypedDict('_V3dAnovaParamsDictNoTag', {
     "levels": int,
     "datasets": list[str],
     "voxel": typing.NotRequired[int | None],
@@ -47,6 +46,7 @@ V3dAnovaParamsDictTagged = typing.TypedDict('V3dAnovaParamsDictTagged', {
     "assume_sph": bool,
     "bucket": typing.NotRequired[str | None],
 })
+V3dAnovaParamsDict = _V3dAnovaParamsDictNoTag | V3dAnovaParamsDictTagged
 
 
 class V3dAnovaOutputs(typing.NamedTuple):

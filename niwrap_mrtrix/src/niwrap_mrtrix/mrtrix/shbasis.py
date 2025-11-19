@@ -13,8 +13,7 @@ SHBASIS_METADATA = Metadata(
 )
 
 
-ShbasisConfigParamsDict = typing.TypedDict('ShbasisConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_ShbasisConfigParamsDictNoTag = typing.TypedDict('_ShbasisConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ ShbasisConfigParamsDictTagged = typing.TypedDict('ShbasisConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+ShbasisConfigParamsDict = _ShbasisConfigParamsDictNoTag | ShbasisConfigParamsDictTagged
 
 
-ShbasisParamsDict = typing.TypedDict('ShbasisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/shbasis"]],
+_ShbasisParamsDictNoTag = typing.TypedDict('_ShbasisParamsDictNoTag', {
     "convert": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -51,6 +50,7 @@ ShbasisParamsDictTagged = typing.TypedDict('ShbasisParamsDictTagged', {
     "version": bool,
     "SH": list[InputPathType],
 })
+ShbasisParamsDict = _ShbasisParamsDictNoTag | ShbasisParamsDictTagged
 
 
 def shbasis_config(

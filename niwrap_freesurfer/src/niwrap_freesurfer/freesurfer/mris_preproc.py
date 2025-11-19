@@ -13,8 +13,7 @@ MRIS_PREPROC_METADATA = Metadata(
 )
 
 
-MrisPreprocParamsDict = typing.TypedDict('MrisPreprocParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_preproc"]],
+_MrisPreprocParamsDictNoTag = typing.TypedDict('_MrisPreprocParamsDictNoTag', {
     "outfile": str,
     "target_subject": str,
     "hemi": str,
@@ -117,6 +116,7 @@ MrisPreprocParamsDictTagged = typing.TypedDict('MrisPreprocParamsDictTagged', {
     "nolog_flag": bool,
     "debug_flag": bool,
 })
+MrisPreprocParamsDict = _MrisPreprocParamsDictNoTag | MrisPreprocParamsDictTagged
 
 
 class MrisPreprocOutputs(typing.NamedTuple):

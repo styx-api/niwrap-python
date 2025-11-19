@@ -13,8 +13,7 @@ BBLABEL_METADATA = Metadata(
 )
 
 
-BblabelParamsDict = typing.TypedDict('BblabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bblabel"]],
+_BblabelParamsDictNoTag = typing.TypedDict('_BblabelParamsDictNoTag', {
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
     "xmax": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ BblabelParamsDictTagged = typing.TypedDict('BblabelParamsDictTagged', {
     "debug": bool,
     "umask": typing.NotRequired[str | None],
 })
+BblabelParamsDict = _BblabelParamsDictNoTag | BblabelParamsDictTagged
 
 
 class BblabelOutputs(typing.NamedTuple):

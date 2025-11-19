@@ -12,14 +12,14 @@ SURFACE_INFORMATION_METADATA = Metadata(
 )
 
 
-SurfaceInformationParamsDict = typing.TypedDict('SurfaceInformationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-information"]],
+_SurfaceInformationParamsDictNoTag = typing.TypedDict('_SurfaceInformationParamsDictNoTag', {
     "Surface File": InputPathType,
 })
 SurfaceInformationParamsDictTagged = typing.TypedDict('SurfaceInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-information"],
     "Surface File": InputPathType,
 })
+SurfaceInformationParamsDict = _SurfaceInformationParamsDictNoTag | SurfaceInformationParamsDictTagged
 
 
 class SurfaceInformationOutputs(typing.NamedTuple):

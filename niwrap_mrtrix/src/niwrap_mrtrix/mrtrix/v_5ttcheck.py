@@ -13,8 +13,7 @@ V_5TTCHECK_METADATA = Metadata(
 )
 
 
-V5ttcheckConfigParamsDict = typing.TypedDict('V5ttcheckConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_V5ttcheckConfigParamsDictNoTag = typing.TypedDict('_V5ttcheckConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ V5ttcheckConfigParamsDictTagged = typing.TypedDict('V5ttcheckConfigParamsDictTag
     "key": str,
     "value": str,
 })
+V5ttcheckConfigParamsDict = _V5ttcheckConfigParamsDictNoTag | V5ttcheckConfigParamsDictTagged
 
 
-V5ttcheckParamsDict = typing.TypedDict('V5ttcheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/5ttcheck"]],
+_V5ttcheckParamsDictNoTag = typing.TypedDict('_V5ttcheckParamsDictNoTag', {
     "voxels": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -51,6 +50,7 @@ V5ttcheckParamsDictTagged = typing.TypedDict('V5ttcheckParamsDictTagged', {
     "version": bool,
     "input": list[InputPathType],
 })
+V5ttcheckParamsDict = _V5ttcheckParamsDictNoTag | V5ttcheckParamsDictTagged
 
 
 def v_5ttcheck_config(

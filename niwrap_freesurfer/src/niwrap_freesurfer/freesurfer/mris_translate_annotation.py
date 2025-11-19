@@ -13,8 +13,7 @@ MRIS_TRANSLATE_ANNOTATION_METADATA = Metadata(
 )
 
 
-MrisTranslateAnnotationParamsDict = typing.TypedDict('MrisTranslateAnnotationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_translate_annotation"]],
+_MrisTranslateAnnotationParamsDictNoTag = typing.TypedDict('_MrisTranslateAnnotationParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "in_annot": InputPathType,
@@ -29,6 +28,7 @@ MrisTranslateAnnotationParamsDictTagged = typing.TypedDict('MrisTranslateAnnotat
     "translation_file": InputPathType,
     "out_annot": str,
 })
+MrisTranslateAnnotationParamsDict = _MrisTranslateAnnotationParamsDictNoTag | MrisTranslateAnnotationParamsDictTagged
 
 
 class MrisTranslateAnnotationOutputs(typing.NamedTuple):

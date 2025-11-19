@@ -13,8 +13,7 @@ MRI_VOLSYNTH_METADATA = Metadata(
 )
 
 
-MriVolsynthParamsDict = typing.TypedDict('MriVolsynthParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volsynth"]],
+_MriVolsynthParamsDictNoTag = typing.TypedDict('_MriVolsynthParamsDictNoTag', {
     "output_volid": str,
     "template": typing.NotRequired[str | None],
     "nframes": typing.NotRequired[float | None],
@@ -105,6 +104,7 @@ MriVolsynthParamsDictTagged = typing.TypedDict('MriVolsynthParamsDictTagged', {
     "dim_surf_flag": bool,
     "ctab": typing.NotRequired[InputPathType | None],
 })
+MriVolsynthParamsDict = _MriVolsynthParamsDictNoTag | MriVolsynthParamsDictTagged
 
 
 class MriVolsynthOutputs(typing.NamedTuple):

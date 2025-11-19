@@ -13,8 +13,7 @@ MRI_CONVERT_METADATA = Metadata(
 )
 
 
-MriConvertParamsDict = typing.TypedDict('MriConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_convert"]],
+_MriConvertParamsDictNoTag = typing.TypedDict('_MriConvertParamsDictNoTag', {
     "inp_volume": InputPathType,
     "out_volume": str,
     "read_only": bool,
@@ -57,6 +56,7 @@ MriConvertParamsDictTagged = typing.TypedDict('MriConvertParamsDictTagged', {
     "bfile_little_endian": bool,
     "sphinx": bool,
 })
+MriConvertParamsDict = _MriConvertParamsDictNoTag | MriConvertParamsDictTagged
 
 
 class MriConvertOutputs(typing.NamedTuple):

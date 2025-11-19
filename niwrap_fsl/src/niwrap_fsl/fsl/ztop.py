@@ -13,8 +13,7 @@ ZTOP_METADATA = Metadata(
 )
 
 
-ZtopParamsDict = typing.TypedDict('ZtopParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ztop"]],
+_ZtopParamsDictNoTag = typing.TypedDict('_ZtopParamsDictNoTag', {
     "z_score": float,
     "tail_flag": bool,
     "grf_flag": bool,
@@ -27,6 +26,7 @@ ZtopParamsDictTagged = typing.TypedDict('ZtopParamsDictTagged', {
     "grf_flag": bool,
     "number_of_resels": typing.NotRequired[float | None],
 })
+ZtopParamsDict = _ZtopParamsDictNoTag | ZtopParamsDictTagged
 
 
 class ZtopOutputs(typing.NamedTuple):

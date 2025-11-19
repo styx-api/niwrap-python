@@ -13,8 +13,7 @@ V_3D_COMPARE_AFFINE_METADATA = Metadata(
 )
 
 
-V3dCompareAffineParamsDict = typing.TypedDict('V3dCompareAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dCompareAffine"]],
+_V3dCompareAffineParamsDictNoTag = typing.TypedDict('_V3dCompareAffineParamsDictNoTag', {
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],
@@ -25,6 +24,7 @@ V3dCompareAffineParamsDictTagged = typing.TypedDict('V3dCompareAffineParamsDictT
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],
 })
+V3dCompareAffineParamsDict = _V3dCompareAffineParamsDictNoTag | V3dCompareAffineParamsDictTagged
 
 
 class V3dCompareAffineOutputs(typing.NamedTuple):

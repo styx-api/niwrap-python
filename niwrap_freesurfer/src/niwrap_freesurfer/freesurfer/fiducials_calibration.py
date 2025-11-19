@@ -13,14 +13,14 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 )
 
 
-FiducialsCalibrationParamsDict = typing.TypedDict('FiducialsCalibrationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_calibration"]],
+_FiducialsCalibrationParamsDictNoTag = typing.TypedDict('_FiducialsCalibrationParamsDictNoTag', {
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
 FiducialsCalibrationParamsDictTagged = typing.TypedDict('FiducialsCalibrationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fiducials_calibration"],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
+FiducialsCalibrationParamsDict = _FiducialsCalibrationParamsDictNoTag | FiducialsCalibrationParamsDictTagged
 
 
 class FiducialsCalibrationOutputs(typing.NamedTuple):

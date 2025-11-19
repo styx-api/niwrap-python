@@ -13,8 +13,7 @@ PNGAPPEND_METADATA = Metadata(
 )
 
 
-PngappendParamsDict = typing.TypedDict('PngappendParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pngappend"]],
+_PngappendParamsDictNoTag = typing.TypedDict('_PngappendParamsDictNoTag', {
     "input_files_and_options": list[str],
     "output_file": InputPathType,
 })
@@ -23,6 +22,7 @@ PngappendParamsDictTagged = typing.TypedDict('PngappendParamsDictTagged', {
     "input_files_and_options": list[str],
     "output_file": InputPathType,
 })
+PngappendParamsDict = _PngappendParamsDictNoTag | PngappendParamsDictTagged
 
 
 class PngappendOutputs(typing.NamedTuple):

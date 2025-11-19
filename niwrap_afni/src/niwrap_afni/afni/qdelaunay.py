@@ -13,8 +13,7 @@ QDELAUNAY_METADATA = Metadata(
 )
 
 
-QdelaunayParamsDict = typing.TypedDict('QdelaunayParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/qdelaunay"]],
+_QdelaunayParamsDictNoTag = typing.TypedDict('_QdelaunayParamsDictNoTag', {
     "input_file": InputPathType,
     "furthest_site": bool,
     "triangulated_output": bool,
@@ -85,6 +84,7 @@ QdelaunayParamsDictTagged = typing.TypedDict('QdelaunayParamsDictTagged', {
     "point_coordinates": bool,
     "summary": bool,
 })
+QdelaunayParamsDict = _QdelaunayParamsDictNoTag | QdelaunayParamsDictTagged
 
 
 class QdelaunayOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SMOOTHEST_METADATA = Metadata(
 )
 
 
-SmoothestParamsDict = typing.TypedDict('SmoothestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/smoothest"]],
+_SmoothestParamsDictNoTag = typing.TypedDict('_SmoothestParamsDictNoTag', {
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
     "zstat_image": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ SmoothestParamsDictTagged = typing.TypedDict('SmoothestParamsDictTagged', {
     "mask": InputPathType,
     "verbose_flag": bool,
 })
+SmoothestParamsDict = _SmoothestParamsDictNoTag | SmoothestParamsDictTagged
 
 
 class SmoothestOutputs(typing.NamedTuple):

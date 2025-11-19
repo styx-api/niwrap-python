@@ -13,8 +13,7 @@ DEFECT_SEG_METADATA = Metadata(
 )
 
 
-DefectSegParamsDict = typing.TypedDict('DefectSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/defect-seg"]],
+_DefectSegParamsDictNoTag = typing.TypedDict('_DefectSegParamsDictNoTag', {
     "subject": str,
     "lh_only": bool,
     "rh_only": bool,
@@ -25,6 +24,7 @@ DefectSegParamsDictTagged = typing.TypedDict('DefectSegParamsDictTagged', {
     "lh_only": bool,
     "rh_only": bool,
 })
+DefectSegParamsDict = _DefectSegParamsDictNoTag | DefectSegParamsDictTagged
 
 
 class DefectSegOutputs(typing.NamedTuple):

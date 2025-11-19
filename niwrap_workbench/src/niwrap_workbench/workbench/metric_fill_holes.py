@@ -12,8 +12,7 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 )
 
 
-MetricFillHolesParamsDict = typing.TypedDict('MetricFillHolesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-fill-holes"]],
+_MetricFillHolesParamsDictNoTag = typing.TypedDict('_MetricFillHolesParamsDictNoTag', {
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
@@ -26,6 +25,7 @@ MetricFillHolesParamsDictTagged = typing.TypedDict('MetricFillHolesParamsDictTag
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
+MetricFillHolesParamsDict = _MetricFillHolesParamsDictNoTag | MetricFillHolesParamsDictTagged
 
 
 class MetricFillHolesOutputs(typing.NamedTuple):

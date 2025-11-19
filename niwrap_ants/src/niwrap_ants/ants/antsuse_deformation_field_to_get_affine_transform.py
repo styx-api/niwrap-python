@@ -13,8 +13,7 @@ ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 )
 
 
-AntsuseDeformationFieldToGetAffineTransformParamsDict = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ANTSUseDeformationFieldToGetAffineTransform"]],
+_AntsuseDeformationFieldToGetAffineTransformParamsDictNoTag = typing.TypedDict('_AntsuseDeformationFieldToGetAffineTransformParamsDictNoTag', {
     "deformation_field": InputPathType,
     "load_ratio": float,
     "transform_type": typing.Literal["rigid", "affine"],
@@ -29,6 +28,7 @@ AntsuseDeformationFieldToGetAffineTransformParamsDictTagged = typing.TypedDict('
     "output_affine": str,
     "mask": typing.NotRequired[InputPathType | None],
 })
+AntsuseDeformationFieldToGetAffineTransformParamsDict = _AntsuseDeformationFieldToGetAffineTransformParamsDictNoTag | AntsuseDeformationFieldToGetAffineTransformParamsDictTagged
 
 
 class AntsuseDeformationFieldToGetAffineTransformOutputs(typing.NamedTuple):

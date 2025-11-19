@@ -13,8 +13,7 @@ C3D_AFFINE_TOOL_METADATA = Metadata(
 )
 
 
-C3dAffineToolParamsDict = typing.TypedDict('C3dAffineToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["c3d/c3d_affine_tool"]],
+_C3dAffineToolParamsDictNoTag = typing.TypedDict('_C3dAffineToolParamsDictNoTag', {
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
     "source_file": typing.NotRequired[InputPathType | None],
@@ -53,6 +52,7 @@ C3dAffineToolParamsDictTagged = typing.TypedDict('C3dAffineToolParamsDictTagged'
     "info": bool,
     "info_full": bool,
 })
+C3dAffineToolParamsDict = _C3dAffineToolParamsDictNoTag | C3dAffineToolParamsDictTagged
 
 
 class C3dAffineToolOutputs(typing.NamedTuple):

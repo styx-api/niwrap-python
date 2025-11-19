@@ -13,8 +13,7 @@ OPTSEQ2_METADATA = Metadata(
 )
 
 
-Optseq2ParamsDict = typing.TypedDict('Optseq2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/optseq2"]],
+_Optseq2ParamsDictNoTag = typing.TypedDict('_Optseq2ParamsDictNoTag', {
     "ntp": float,
     "tr": float,
     "tprescan": float,
@@ -83,6 +82,7 @@ Optseq2ParamsDictTagged = typing.TypedDict('Optseq2ParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+Optseq2ParamsDict = _Optseq2ParamsDictNoTag | Optseq2ParamsDictTagged
 
 
 class Optseq2Outputs(typing.NamedTuple):

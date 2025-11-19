@@ -13,8 +13,7 @@ FSLMODHD_METADATA = Metadata(
 )
 
 
-FslmodhdParamsDict = typing.TypedDict('FslmodhdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslmodhd"]],
+_FslmodhdParamsDictNoTag = typing.TypedDict('_FslmodhdParamsDictNoTag', {
     "image": InputPathType,
     "keyword": str,
     "value": str,
@@ -25,6 +24,7 @@ FslmodhdParamsDictTagged = typing.TypedDict('FslmodhdParamsDictTagged', {
     "keyword": str,
     "value": str,
 })
+FslmodhdParamsDict = _FslmodhdParamsDictNoTag | FslmodhdParamsDictTagged
 
 
 class FslmodhdOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ SPHERE_SUBJECT_RH_METADATA = Metadata(
 )
 
 
-SphereSubjectRhParamsDict = typing.TypedDict('SphereSubjectRhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject-rh"]],
+_SphereSubjectRhParamsDictNoTag = typing.TypedDict('_SphereSubjectRhParamsDictNoTag', {
     "license_file": InputPathType,
 })
 SphereSubjectRhParamsDictTagged = typing.TypedDict('SphereSubjectRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sphere_subject-rh"],
     "license_file": InputPathType,
 })
+SphereSubjectRhParamsDict = _SphereSubjectRhParamsDictNoTag | SphereSubjectRhParamsDictTagged
 
 
 class SphereSubjectRhOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ UN_WARP_EPI_PY_METADATA = Metadata(
 )
 
 
-UnWarpEpiPyParamsDict = typing.TypedDict('UnWarpEpiPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/unWarpEPI.py"]],
+_UnWarpEpiPyParamsDictNoTag = typing.TypedDict('_UnWarpEpiPyParamsDictNoTag', {
     "forward": InputPathType,
     "reverse": InputPathType,
     "anat4warp": InputPathType,
@@ -31,6 +30,7 @@ UnWarpEpiPyParamsDictTagged = typing.TypedDict('UnWarpEpiPyParamsDictTagged', {
     "subjID": str,
     "giant_move": bool,
 })
+UnWarpEpiPyParamsDict = _UnWarpEpiPyParamsDictNoTag | UnWarpEpiPyParamsDictTagged
 
 
 class UnWarpEpiPyOutputs(typing.NamedTuple):

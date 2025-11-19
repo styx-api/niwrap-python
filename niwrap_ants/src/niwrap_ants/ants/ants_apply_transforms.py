@@ -13,18 +13,17 @@ ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
 )
 
 
-AntsApplyTransformsWarpedOutputParamsDict = typing.TypedDict('AntsApplyTransformsWarpedOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warpedOutput"]],
+_AntsApplyTransformsWarpedOutputParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsWarpedOutputParamsDictNoTag', {
     "warpedOutputFileName": str,
 })
 AntsApplyTransformsWarpedOutputParamsDictTagged = typing.TypedDict('AntsApplyTransformsWarpedOutputParamsDictTagged', {
     "@type": typing.Literal["warpedOutput"],
     "warpedOutputFileName": str,
 })
+AntsApplyTransformsWarpedOutputParamsDict = _AntsApplyTransformsWarpedOutputParamsDictNoTag | AntsApplyTransformsWarpedOutputParamsDictTagged
 
 
-AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["compositeDisplacementFieldOutput"]],
+_AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictNoTag', {
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[bool | None],
 })
@@ -33,10 +32,10 @@ AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged = typing.Typ
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[bool | None],
 })
+AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict = _AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictNoTag | AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged
 
 
-AntsApplyTransformsGenericAffineTransformOutputParamsDict = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["genericAffineTransformOutput"]],
+_AntsApplyTransformsGenericAffineTransformOutputParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGenericAffineTransformOutputParamsDictNoTag', {
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[bool | None],
 })
@@ -45,64 +44,61 @@ AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged = typing.TypedDi
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[bool | None],
 })
+AntsApplyTransformsGenericAffineTransformOutputParamsDict = _AntsApplyTransformsGenericAffineTransformOutputParamsDictNoTag | AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged
 
 
-AntsApplyTransformsLinearParamsDict = typing.TypedDict('AntsApplyTransformsLinearParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["linear"]],
-})
+_AntsApplyTransformsLinearParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsLinearParamsDictNoTag', {})
 AntsApplyTransformsLinearParamsDictTagged = typing.TypedDict('AntsApplyTransformsLinearParamsDictTagged', {
     "@type": typing.Literal["linear"],
 })
+AntsApplyTransformsLinearParamsDict = _AntsApplyTransformsLinearParamsDictNoTag | AntsApplyTransformsLinearParamsDictTagged
 
 
-AntsApplyTransformsNearestNeighborParamsDict = typing.TypedDict('AntsApplyTransformsNearestNeighborParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nearestNeighbor"]],
-})
+_AntsApplyTransformsNearestNeighborParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsNearestNeighborParamsDictNoTag', {})
 AntsApplyTransformsNearestNeighborParamsDictTagged = typing.TypedDict('AntsApplyTransformsNearestNeighborParamsDictTagged', {
     "@type": typing.Literal["nearestNeighbor"],
 })
+AntsApplyTransformsNearestNeighborParamsDict = _AntsApplyTransformsNearestNeighborParamsDictNoTag | AntsApplyTransformsNearestNeighborParamsDictTagged
 
 
-AntsApplyTransformsMultiLabelnoparamsParamsDict = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiLabelnoparams"]],
-})
+_AntsApplyTransformsMultiLabelnoparamsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsMultiLabelnoparamsParamsDictNoTag', {})
 AntsApplyTransformsMultiLabelnoparamsParamsDictTagged = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParamsDictTagged', {
     "@type": typing.Literal["multiLabelnoparams"],
 })
+AntsApplyTransformsMultiLabelnoparamsParamsDict = _AntsApplyTransformsMultiLabelnoparamsParamsDictNoTag | AntsApplyTransformsMultiLabelnoparamsParamsDictTagged
 
 
-AntsApplyTransformsSigmaParamsDict = typing.TypedDict('AntsApplyTransformsSigmaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sigma"]],
+_AntsApplyTransformsSigmaParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsSigmaParamsDictNoTag', {
     "sigma": float,
 })
 AntsApplyTransformsSigmaParamsDictTagged = typing.TypedDict('AntsApplyTransformsSigmaParamsDictTagged', {
     "@type": typing.Literal["sigma"],
     "sigma": float,
 })
+AntsApplyTransformsSigmaParamsDict = _AntsApplyTransformsSigmaParamsDictNoTag | AntsApplyTransformsSigmaParamsDictTagged
 
 
-AntsApplyTransformsAlphaParamsDict = typing.TypedDict('AntsApplyTransformsAlphaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["alpha"]],
+_AntsApplyTransformsAlphaParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsAlphaParamsDictNoTag', {
     "alpha": float,
 })
 AntsApplyTransformsAlphaParamsDictTagged = typing.TypedDict('AntsApplyTransformsAlphaParamsDictTagged', {
     "@type": typing.Literal["alpha"],
     "alpha": float,
 })
+AntsApplyTransformsAlphaParamsDict = _AntsApplyTransformsAlphaParamsDictNoTag | AntsApplyTransformsAlphaParamsDictTagged
 
 
-AntsApplyTransformsMultiLabelParamsDict = typing.TypedDict('AntsApplyTransformsMultiLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiLabel"]],
+_AntsApplyTransformsMultiLabelParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsMultiLabelParamsDictNoTag', {
     "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
 })
 AntsApplyTransformsMultiLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsMultiLabelParamsDictTagged', {
     "@type": typing.Literal["multiLabel"],
     "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
 })
+AntsApplyTransformsMultiLabelParamsDict = _AntsApplyTransformsMultiLabelParamsDictNoTag | AntsApplyTransformsMultiLabelParamsDictTagged
 
 
-AntsApplyTransformsGaussianParamsDict = typing.TypedDict('AntsApplyTransformsGaussianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gaussian"]],
+_AntsApplyTransformsGaussianParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGaussianParamsDictNoTag', {
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
@@ -111,82 +107,78 @@ AntsApplyTransformsGaussianParamsDictTagged = typing.TypedDict('AntsApplyTransfo
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
+AntsApplyTransformsGaussianParamsDict = _AntsApplyTransformsGaussianParamsDictNoTag | AntsApplyTransformsGaussianParamsDictTagged
 
 
-AntsApplyTransformsBsplineParamsDict = typing.TypedDict('AntsApplyTransformsBsplineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["bspline"]],
+_AntsApplyTransformsBsplineParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsBsplineParamsDictNoTag', {
     "order": typing.NotRequired[int | None],
 })
 AntsApplyTransformsBsplineParamsDictTagged = typing.TypedDict('AntsApplyTransformsBsplineParamsDictTagged', {
     "@type": typing.Literal["bspline"],
     "order": typing.NotRequired[int | None],
 })
+AntsApplyTransformsBsplineParamsDict = _AntsApplyTransformsBsplineParamsDictNoTag | AntsApplyTransformsBsplineParamsDictTagged
 
 
-AntsApplyTransformsCosineWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cosineWindowedSinc"]],
-})
+_AntsApplyTransformsCosineWindowedSincParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsCosineWindowedSincParamsDictNoTag', {})
 AntsApplyTransformsCosineWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParamsDictTagged', {
     "@type": typing.Literal["cosineWindowedSinc"],
 })
+AntsApplyTransformsCosineWindowedSincParamsDict = _AntsApplyTransformsCosineWindowedSincParamsDictNoTag | AntsApplyTransformsCosineWindowedSincParamsDictTagged
 
 
-AntsApplyTransformsWelchWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["welchWindowedSinc"]],
-})
+_AntsApplyTransformsWelchWindowedSincParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsWelchWindowedSincParamsDictNoTag', {})
 AntsApplyTransformsWelchWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParamsDictTagged', {
     "@type": typing.Literal["welchWindowedSinc"],
 })
+AntsApplyTransformsWelchWindowedSincParamsDict = _AntsApplyTransformsWelchWindowedSincParamsDictNoTag | AntsApplyTransformsWelchWindowedSincParamsDictTagged
 
 
-AntsApplyTransformsHammingWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hammingWindowedSinc"]],
-})
+_AntsApplyTransformsHammingWindowedSincParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsHammingWindowedSincParamsDictNoTag', {})
 AntsApplyTransformsHammingWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParamsDictTagged', {
     "@type": typing.Literal["hammingWindowedSinc"],
 })
+AntsApplyTransformsHammingWindowedSincParamsDict = _AntsApplyTransformsHammingWindowedSincParamsDictNoTag | AntsApplyTransformsHammingWindowedSincParamsDictTagged
 
 
-AntsApplyTransformsLanczosWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["lanczosWindowedSinc"]],
-})
+_AntsApplyTransformsLanczosWindowedSincParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsLanczosWindowedSincParamsDictNoTag', {})
 AntsApplyTransformsLanczosWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParamsDictTagged', {
     "@type": typing.Literal["lanczosWindowedSinc"],
 })
+AntsApplyTransformsLanczosWindowedSincParamsDict = _AntsApplyTransformsLanczosWindowedSincParamsDictNoTag | AntsApplyTransformsLanczosWindowedSincParamsDictTagged
 
 
-AntsApplyTransformsGenericLabelParamsDict = typing.TypedDict('AntsApplyTransformsGenericLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["genericLabel"]],
+_AntsApplyTransformsGenericLabelParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGenericLabelParamsDictNoTag', {
     "interpolator": typing.NotRequired[str | None],
 })
 AntsApplyTransformsGenericLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsGenericLabelParamsDictTagged', {
     "@type": typing.Literal["genericLabel"],
     "interpolator": typing.NotRequired[str | None],
 })
+AntsApplyTransformsGenericLabelParamsDict = _AntsApplyTransformsGenericLabelParamsDictNoTag | AntsApplyTransformsGenericLabelParamsDictTagged
 
 
-AntsApplyTransformsTransformFileNameParamsDict = typing.TypedDict('AntsApplyTransformsTransformFileNameParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transformFileName"]],
+_AntsApplyTransformsTransformFileNameParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsTransformFileNameParamsDictNoTag', {
     "transformFileName": InputPathType,
 })
 AntsApplyTransformsTransformFileNameParamsDictTagged = typing.TypedDict('AntsApplyTransformsTransformFileNameParamsDictTagged', {
     "@type": typing.Literal["transformFileName"],
     "transformFileName": InputPathType,
 })
+AntsApplyTransformsTransformFileNameParamsDict = _AntsApplyTransformsTransformFileNameParamsDictNoTag | AntsApplyTransformsTransformFileNameParamsDictTagged
 
 
-AntsApplyTransformsUseInverseParamsDict = typing.TypedDict('AntsApplyTransformsUseInverseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["useInverse"]],
+_AntsApplyTransformsUseInverseParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsUseInverseParamsDictNoTag', {
     "transformFileName": InputPathType,
 })
 AntsApplyTransformsUseInverseParamsDictTagged = typing.TypedDict('AntsApplyTransformsUseInverseParamsDictTagged', {
     "@type": typing.Literal["useInverse"],
     "transformFileName": InputPathType,
 })
+AntsApplyTransformsUseInverseParamsDict = _AntsApplyTransformsUseInverseParamsDictNoTag | AntsApplyTransformsUseInverseParamsDictTagged
 
 
-AntsApplyTransformsParamsDict = typing.TypedDict('AntsApplyTransformsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransforms"]],
+_AntsApplyTransformsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
     "input_image": typing.NotRequired[InputPathType | None],
@@ -215,6 +207,7 @@ AntsApplyTransformsParamsDictTagged = typing.TypedDict('AntsApplyTransformsParam
     "float": typing.NotRequired[bool | None],
     "verbose": typing.NotRequired[bool | None],
 })
+AntsApplyTransformsParamsDict = _AntsApplyTransformsParamsDictNoTag | AntsApplyTransformsParamsDictTagged
 
 
 def ants_apply_transforms_output_cargs_dyn_fn(

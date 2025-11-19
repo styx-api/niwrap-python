@@ -13,8 +13,7 @@ PROMPT_POPUP_METADATA = Metadata(
 )
 
 
-PromptPopupParamsDict = typing.TypedDict('PromptPopupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/prompt_popup"]],
+_PromptPopupParamsDictNoTag = typing.TypedDict('_PromptPopupParamsDictNoTag', {
     "message": str,
     "message_pause": typing.NotRequired[str | None],
     "buttons": typing.NotRequired[list[str] | None],
@@ -31,6 +30,7 @@ PromptPopupParamsDictTagged = typing.TypedDict('PromptPopupParamsDictTagged', {
     "timeout": typing.NotRequired[float | None],
     "timeout_to": typing.NotRequired[float | None],
 })
+PromptPopupParamsDict = _PromptPopupParamsDictNoTag | PromptPopupParamsDictTagged
 
 
 class PromptPopupOutputs(typing.NamedTuple):

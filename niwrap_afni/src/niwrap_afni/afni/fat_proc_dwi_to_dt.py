@@ -13,8 +13,7 @@ FAT_PROC_DWI_TO_DT_METADATA = Metadata(
 )
 
 
-FatProcDwiToDtParamsDict = typing.TypedDict('FatProcDwiToDtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_dwi_to_dt"]],
+_FatProcDwiToDtParamsDictNoTag = typing.TypedDict('_FatProcDwiToDtParamsDictNoTag', {
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
     "prefix": str,
@@ -77,6 +76,7 @@ FatProcDwiToDtParamsDictTagged = typing.TypedDict('FatProcDwiToDtParamsDictTagge
     "uncert_extra_cmds": typing.NotRequired[str | None],
     "check_abs_min": typing.NotRequired[float | None],
 })
+FatProcDwiToDtParamsDict = _FatProcDwiToDtParamsDictNoTag | FatProcDwiToDtParamsDictTagged
 
 
 class FatProcDwiToDtOutputs(typing.NamedTuple):

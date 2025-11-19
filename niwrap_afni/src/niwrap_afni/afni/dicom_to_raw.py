@@ -13,14 +13,14 @@ DICOM_TO_RAW_METADATA = Metadata(
 )
 
 
-DicomToRawParamsDict = typing.TypedDict('DicomToRawParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/dicom_to_raw"]],
+_DicomToRawParamsDictNoTag = typing.TypedDict('_DicomToRawParamsDictNoTag', {
     "input_dicom": InputPathType,
 })
 DicomToRawParamsDictTagged = typing.TypedDict('DicomToRawParamsDictTagged', {
     "@type": typing.Literal["afni/dicom_to_raw"],
     "input_dicom": InputPathType,
 })
+DicomToRawParamsDict = _DicomToRawParamsDictNoTag | DicomToRawParamsDictTagged
 
 
 class DicomToRawOutputs(typing.NamedTuple):

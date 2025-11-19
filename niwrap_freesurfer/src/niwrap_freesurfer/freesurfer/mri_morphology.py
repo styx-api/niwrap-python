@@ -13,8 +13,7 @@ MRI_MORPHOLOGY_METADATA = Metadata(
 )
 
 
-MriMorphologyParamsDict = typing.TypedDict('MriMorphologyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_morphology"]],
+_MriMorphologyParamsDictNoTag = typing.TypedDict('_MriMorphologyParamsDictNoTag', {
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
     "number_iter": int,
@@ -29,6 +28,7 @@ MriMorphologyParamsDictTagged = typing.TypedDict('MriMorphologyParamsDictTagged'
     "output_volume": str,
     "label_option": typing.NotRequired[float | None],
 })
+MriMorphologyParamsDict = _MriMorphologyParamsDictNoTag | MriMorphologyParamsDictTagged
 
 
 class MriMorphologyOutputs(typing.NamedTuple):

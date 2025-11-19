@@ -13,8 +13,7 @@ ALIGN_EPI_ANAT_PY_METADATA = Metadata(
 )
 
 
-AlignEpiAnatPyParamsDict = typing.TypedDict('AlignEpiAnatPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/align_epi_anat.py"]],
+_AlignEpiAnatPyParamsDictNoTag = typing.TypedDict('_AlignEpiAnatPyParamsDictNoTag', {
     "epi": InputPathType,
     "anat": InputPathType,
     "epi_base": str,
@@ -53,6 +52,7 @@ AlignEpiAnatPyParamsDictTagged = typing.TypedDict('AlignEpiAnatPyParamsDictTagge
     "ex_mode": typing.NotRequired[typing.Literal["quiet", "echo", "dry_run", "script"] | None],
     "overwrite": bool,
 })
+AlignEpiAnatPyParamsDict = _AlignEpiAnatPyParamsDictNoTag | AlignEpiAnatPyParamsDictTagged
 
 
 class AlignEpiAnatPyOutputs(typing.NamedTuple):

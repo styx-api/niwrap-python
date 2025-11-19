@@ -13,8 +13,7 @@ TO3D_METADATA = Metadata(
 )
 
 
-To3dParamsDict = typing.TypedDict('To3dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/to3d"]],
+_To3dParamsDictNoTag = typing.TypedDict('_To3dParamsDictNoTag', {
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
     "statpar": typing.NotRequired[list[float] | None],
@@ -99,6 +98,7 @@ To3dParamsDictTagged = typing.TypedDict('To3dParamsDictTagged', {
     "xtwarns_flag": bool,
     "quit_on_err_flag": bool,
 })
+To3dParamsDict = _To3dParamsDictNoTag | To3dParamsDictTagged
 
 
 class To3dOutputs(typing.NamedTuple):

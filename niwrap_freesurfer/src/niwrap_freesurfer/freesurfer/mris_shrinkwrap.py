@@ -13,8 +13,7 @@ MRIS_SHRINKWRAP_METADATA = Metadata(
 )
 
 
-MrisShrinkwrapParamsDict = typing.TypedDict('MrisShrinkwrapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_shrinkwrap"]],
+_MrisShrinkwrapParamsDictNoTag = typing.TypedDict('_MrisShrinkwrapParamsDictNoTag', {
     "volume": InputPathType,
     "output_name": str,
     "threshold": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ MrisShrinkwrapParamsDictTagged = typing.TypedDict('MrisShrinkwrapParamsDictTagge
     "output_name": str,
     "threshold": typing.NotRequired[float | None],
 })
+MrisShrinkwrapParamsDict = _MrisShrinkwrapParamsDictNoTag | MrisShrinkwrapParamsDictTagged
 
 
 class MrisShrinkwrapOutputs(typing.NamedTuple):

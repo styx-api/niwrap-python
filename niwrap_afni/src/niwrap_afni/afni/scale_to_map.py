@@ -13,8 +13,7 @@ SCALE_TO_MAP_METADATA = Metadata(
 )
 
 
-ScaleToMapTraceParamsDict = typing.TypedDict('ScaleToMapTraceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trace"]],
+_ScaleToMapTraceParamsDictNoTag = typing.TypedDict('_ScaleToMapTraceParamsDictNoTag', {
     "trace": bool,
     "TRACE": bool,
 })
@@ -23,10 +22,10 @@ ScaleToMapTraceParamsDictTagged = typing.TypedDict('ScaleToMapTraceParamsDictTag
     "trace": bool,
     "TRACE": bool,
 })
+ScaleToMapTraceParamsDict = _ScaleToMapTraceParamsDictNoTag | ScaleToMapTraceParamsDictTagged
 
 
-ScaleToMapParamsDict = typing.TypedDict('ScaleToMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ScaleToMap"]],
+_ScaleToMapParamsDictNoTag = typing.TypedDict('_ScaleToMapParamsDictNoTag', {
     "input_file": InputPathType,
     "icol": float,
     "vcol": float,
@@ -89,6 +88,7 @@ ScaleToMapParamsDictTagged = typing.TypedDict('ScaleToMapParamsDictTagged', {
     "nomall": bool,
     "yesmall": bool,
 })
+ScaleToMapParamsDict = _ScaleToMapParamsDictNoTag | ScaleToMapParamsDictTagged
 
 
 def scale_to_map_trace(

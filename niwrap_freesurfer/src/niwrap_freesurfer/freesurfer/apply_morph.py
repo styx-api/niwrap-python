@@ -13,8 +13,7 @@ APPLY_MORPH_METADATA = Metadata(
 )
 
 
-ApplyMorphParamsDict = typing.TypedDict('ApplyMorphParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/applyMorph"]],
+_ApplyMorphParamsDictNoTag = typing.TypedDict('_ApplyMorphParamsDictNoTag', {
     "inputs": list[InputPathType],
     "template": InputPathType,
     "transform": InputPathType,
@@ -29,6 +28,7 @@ ApplyMorphParamsDictTagged = typing.TypedDict('ApplyMorphParamsDictTagged', {
     "zlib_buffer": typing.NotRequired[float | None],
     "dbg_coords": typing.NotRequired[list[float] | None],
 })
+ApplyMorphParamsDict = _ApplyMorphParamsDictNoTag | ApplyMorphParamsDictTagged
 
 
 class ApplyMorphOutputs(typing.NamedTuple):

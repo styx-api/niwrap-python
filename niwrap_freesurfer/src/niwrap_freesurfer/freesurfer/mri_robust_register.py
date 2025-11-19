@@ -13,8 +13,7 @@ MRI_ROBUST_REGISTER_METADATA = Metadata(
 )
 
 
-MriRobustRegisterParamsDict = typing.TypedDict('MriRobustRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_register"]],
+_MriRobustRegisterParamsDictNoTag = typing.TypedDict('_MriRobustRegisterParamsDictNoTag', {
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "output_registration": str,
@@ -117,6 +116,7 @@ MriRobustRegisterParamsDictTagged = typing.TypedDict('MriRobustRegisterParamsDic
     "debug": bool,
     "verbose": typing.NotRequired[float | None],
 })
+MriRobustRegisterParamsDict = _MriRobustRegisterParamsDictNoTag | MriRobustRegisterParamsDictTagged
 
 
 class MriRobustRegisterOutputs(typing.NamedTuple):

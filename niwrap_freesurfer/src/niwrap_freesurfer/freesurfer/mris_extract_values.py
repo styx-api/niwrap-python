@@ -13,8 +13,7 @@ MRIS_EXTRACT_VALUES_METADATA = Metadata(
 )
 
 
-MrisExtractValuesParamsDict = typing.TypedDict('MrisExtractValuesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_values"]],
+_MrisExtractValuesParamsDictNoTag = typing.TypedDict('_MrisExtractValuesParamsDictNoTag', {
     "surface": InputPathType,
     "overlay": InputPathType,
     "annotation": InputPathType,
@@ -31,6 +30,7 @@ MrisExtractValuesParamsDictTagged = typing.TypedDict('MrisExtractValuesParamsDic
     "num_images": float,
     "image_files": list[InputPathType],
 })
+MrisExtractValuesParamsDict = _MrisExtractValuesParamsDictNoTag | MrisExtractValuesParamsDictTagged
 
 
 class MrisExtractValuesOutputs(typing.NamedTuple):

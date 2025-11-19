@@ -13,8 +13,7 @@ FIXEL2SH_METADATA = Metadata(
 )
 
 
-Fixel2shConfigParamsDict = typing.TypedDict('Fixel2shConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fixel2shConfigParamsDictNoTag = typing.TypedDict('_Fixel2shConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Fixel2shConfigParamsDictTagged = typing.TypedDict('Fixel2shConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+Fixel2shConfigParamsDict = _Fixel2shConfigParamsDictNoTag | Fixel2shConfigParamsDictTagged
 
 
-Fixel2shParamsDict = typing.TypedDict('Fixel2shParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2sh"]],
+_Fixel2shParamsDictNoTag = typing.TypedDict('_Fixel2shParamsDictNoTag', {
     "lmax": typing.NotRequired[int | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ Fixel2shParamsDictTagged = typing.TypedDict('Fixel2shParamsDictTagged', {
     "fixel_in": InputPathType,
     "sh_out": str,
 })
+Fixel2shParamsDict = _Fixel2shParamsDictNoTag | Fixel2shParamsDictTagged
 
 
 def fixel2sh_config(

@@ -13,8 +13,7 @@ SIGNAL2IMAGE_METADATA = Metadata(
 )
 
 
-Signal2imageParamsDict = typing.TypedDict('Signal2imageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/signal2image"]],
+_Signal2imageParamsDictNoTag = typing.TypedDict('_Signal2imageParamsDictNoTag', {
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
     "output_image": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ Signal2imageParamsDictTagged = typing.TypedDict('Signal2imageParamsDictTagged', 
     "save_flag": bool,
     "help_flag": bool,
 })
+Signal2imageParamsDict = _Signal2imageParamsDictNoTag | Signal2imageParamsDictTagged
 
 
 class Signal2imageOutputs(typing.NamedTuple):

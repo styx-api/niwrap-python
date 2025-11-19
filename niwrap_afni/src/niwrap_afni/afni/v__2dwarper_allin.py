@@ -13,8 +13,7 @@ V__2DWARPER_ALLIN_METADATA = Metadata(
 )
 
 
-V2dwarperAllinParamsDict = typing.TypedDict('V2dwarperAllinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@2dwarper.Allin"]],
+_V2dwarperAllinParamsDictNoTag = typing.TypedDict('_V2dwarperAllinParamsDictNoTag', {
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ V2dwarperAllinParamsDictTagged = typing.TypedDict('V2dwarperAllinParamsDictTagge
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],
 })
+V2dwarperAllinParamsDict = _V2dwarperAllinParamsDictNoTag | V2dwarperAllinParamsDictTagged
 
 
 class V2dwarperAllinOutputs(typing.NamedTuple):

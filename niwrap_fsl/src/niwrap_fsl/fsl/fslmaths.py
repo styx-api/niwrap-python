@@ -13,8 +13,7 @@ FSLMATHS_METADATA = Metadata(
 )
 
 
-FslmathsOperationParamsDict = typing.TypedDict('FslmathsOperationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["operation"]],
+_FslmathsOperationParamsDictNoTag = typing.TypedDict('_FslmathsOperationParamsDictNoTag', {
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
     "mul": typing.NotRequired[float | None],
@@ -215,10 +214,10 @@ FslmathsOperationParamsDictTagged = typing.TypedDict('FslmathsOperationParamsDic
     "bptf": typing.NotRequired[list[float] | None],
     "roc": typing.NotRequired[list[float] | None],
 })
+FslmathsOperationParamsDict = _FslmathsOperationParamsDictNoTag | FslmathsOperationParamsDictTagged
 
 
-FslmathsParamsDict = typing.TypedDict('FslmathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslmaths"]],
+_FslmathsParamsDictNoTag = typing.TypedDict('_FslmathsParamsDictNoTag', {
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
     "operations": list[FslmathsOperationParamsDict],
@@ -233,6 +232,7 @@ FslmathsParamsDictTagged = typing.TypedDict('FslmathsParamsDictTagged', {
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
+FslmathsParamsDict = _FslmathsParamsDictNoTag | FslmathsParamsDictTagged
 
 
 def fslmaths_operation(

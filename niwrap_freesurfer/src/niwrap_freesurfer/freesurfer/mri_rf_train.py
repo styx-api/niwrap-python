@@ -13,8 +13,7 @@ MRI_RF_TRAIN_METADATA = Metadata(
 )
 
 
-MriRfTrainParamsDict = typing.TypedDict('MriRfTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_train"]],
+_MriRfTrainParamsDictNoTag = typing.TypedDict('_MriRfTrainParamsDictNoTag', {
     "seg_volume": str,
     "atlas_transform": str,
     "mask_volume": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ MriRfTrainParamsDictTagged = typing.TypedDict('MriRfTrainParamsDictTagged', {
     "subjects": list[str],
     "output_rfa": str,
 })
+MriRfTrainParamsDict = _MriRfTrainParamsDictNoTag | MriRfTrainParamsDictTagged
 
 
 class MriRfTrainOutputs(typing.NamedTuple):

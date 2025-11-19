@@ -13,8 +13,7 @@ MRIS_VOLMASK_METADATA = Metadata(
 )
 
 
-MrisVolmaskParamsDict = typing.TypedDict('MrisVolmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask"]],
+_MrisVolmaskParamsDictNoTag = typing.TypedDict('_MrisVolmaskParamsDictNoTag', {
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
     "label_left_white": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ MrisVolmaskParamsDictTagged = typing.TypedDict('MrisVolmaskParamsDictTagged', {
     "save_ribbon": bool,
     "io": str,
 })
+MrisVolmaskParamsDict = _MrisVolmaskParamsDictNoTag | MrisVolmaskParamsDictTagged
 
 
 class MrisVolmaskOutputs(typing.NamedTuple):

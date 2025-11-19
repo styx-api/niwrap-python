@@ -13,8 +13,7 @@ MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 )
 
 
-MakeAverageSurfaceParamsDict = typing.TypedDict('MakeAverageSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_surface"]],
+_MakeAverageSurfaceParamsDictNoTag = typing.TypedDict('_MakeAverageSurfaceParamsDictNoTag', {
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "average_subject_name": typing.NotRequired[str | None],
@@ -63,6 +62,7 @@ MakeAverageSurfaceParamsDictTagged = typing.TypedDict('MakeAverageSurfaceParamsD
     "version": bool,
     "echo": bool,
 })
+MakeAverageSurfaceParamsDict = _MakeAverageSurfaceParamsDictNoTag | MakeAverageSurfaceParamsDictTagged
 
 
 class MakeAverageSurfaceOutputs(typing.NamedTuple):

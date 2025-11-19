@@ -13,8 +13,7 @@ MRIS_ANATOMICAL_STATS_METADATA = Metadata(
 )
 
 
-MrisAnatomicalStatsParamsDict = typing.TypedDict('MrisAnatomicalStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_anatomical_stats"]],
+_MrisAnatomicalStatsParamsDictNoTag = typing.TypedDict('_MrisAnatomicalStatsParamsDictNoTag', {
     "subjectname": str,
     "hemisphere": str,
     "surfacename": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ MrisAnatomicalStatsParamsDictTagged = typing.TypedDict('MrisAnatomicalStatsParam
     "noglobal": bool,
     "th3_computation": bool,
 })
+MrisAnatomicalStatsParamsDict = _MrisAnatomicalStatsParamsDictNoTag | MrisAnatomicalStatsParamsDictTagged
 
 
 class MrisAnatomicalStatsOutputs(typing.NamedTuple):

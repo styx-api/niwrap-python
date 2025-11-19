@@ -13,8 +13,7 @@ SURF_DIST_METADATA = Metadata(
 )
 
 
-SurfDistParamsDict = typing.TypedDict('SurfDistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfDist"]],
+_SurfDistParamsDictNoTag = typing.TypedDict('_SurfDistParamsDictNoTag', {
     "surface": InputPathType,
     "nodepairs": InputPathType,
     "node_path_do": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ SurfDistParamsDictTagged = typing.TypedDict('SurfDistParamsDictTagged', {
     "from_node": typing.NotRequired[str | None],
     "to_nodes": typing.NotRequired[InputPathType | None],
 })
+SurfDistParamsDict = _SurfDistParamsDictNoTag | SurfDistParamsDictTagged
 
 
 class SurfDistOutputs(typing.NamedTuple):

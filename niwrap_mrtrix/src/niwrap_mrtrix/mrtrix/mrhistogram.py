@@ -13,8 +13,7 @@ MRHISTOGRAM_METADATA = Metadata(
 )
 
 
-MrhistogramConfigParamsDict = typing.TypedDict('MrhistogramConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrhistogramConfigParamsDictNoTag = typing.TypedDict('_MrhistogramConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrhistogramConfigParamsDictTagged = typing.TypedDict('MrhistogramConfigParamsDic
     "key": str,
     "value": str,
 })
+MrhistogramConfigParamsDict = _MrhistogramConfigParamsDictNoTag | MrhistogramConfigParamsDictTagged
 
 
-MrhistogramParamsDict = typing.TypedDict('MrhistogramParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrhistogram"]],
+_MrhistogramParamsDictNoTag = typing.TypedDict('_MrhistogramParamsDictNoTag', {
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -61,6 +60,7 @@ MrhistogramParamsDictTagged = typing.TypedDict('MrhistogramParamsDictTagged', {
     "image": InputPathType,
     "hist": str,
 })
+MrhistogramParamsDict = _MrhistogramParamsDictNoTag | MrhistogramParamsDictTagged
 
 
 def mrhistogram_config(

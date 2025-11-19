@@ -13,14 +13,14 @@ FEAT_METADATA = Metadata(
 )
 
 
-FeatParamsDict = typing.TypedDict('FeatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/feat"]],
+_FeatParamsDictNoTag = typing.TypedDict('_FeatParamsDictNoTag', {
     "design_file": InputPathType,
 })
 FeatParamsDictTagged = typing.TypedDict('FeatParamsDictTagged', {
     "@type": typing.Literal["fsl/feat"],
     "design_file": InputPathType,
 })
+FeatParamsDict = _FeatParamsDictNoTag | FeatParamsDictTagged
 
 
 class FeatOutputs(typing.NamedTuple):

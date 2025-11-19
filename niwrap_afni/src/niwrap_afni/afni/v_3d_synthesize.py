@@ -13,8 +13,7 @@ V_3D_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-V3dSynthesizeParamsDict = typing.TypedDict('V3dSynthesizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSynthesize"]],
+_V3dSynthesizeParamsDictNoTag = typing.TypedDict('_V3dSynthesizeParamsDictNoTag', {
     "c_bucket": InputPathType,
     "matrix": InputPathType,
     "select": str,
@@ -33,6 +32,7 @@ V3dSynthesizeParamsDictTagged = typing.TypedDict('V3dSynthesizeParamsDictTagged'
     "tr": typing.NotRequired[float | None],
     "cenfill": typing.NotRequired[typing.Literal["zero", "nbhr", "none"] | None],
 })
+V3dSynthesizeParamsDict = _V3dSynthesizeParamsDictNoTag | V3dSynthesizeParamsDictTagged
 
 
 class V3dSynthesizeOutputs(typing.NamedTuple):

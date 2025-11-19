@@ -13,8 +13,7 @@ ASL_FILE_METADATA = Metadata(
 )
 
 
-AslFileParamsDict = typing.TypedDict('AslFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/asl_file"]],
+_AslFileParamsDictNoTag = typing.TypedDict('_AslFileParamsDictNoTag', {
     "datafile": InputPathType,
     "ntis": float,
     "mask": typing.NotRequired[InputPathType | None],
@@ -73,6 +72,7 @@ AslFileParamsDictTagged = typing.TypedDict('AslFileParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+AslFileParamsDict = _AslFileParamsDictNoTag | AslFileParamsDictTagged
 
 
 class AslFileOutputs(typing.NamedTuple):

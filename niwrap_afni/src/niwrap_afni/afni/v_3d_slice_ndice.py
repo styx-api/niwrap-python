@@ -13,8 +13,7 @@ V_3D_SLICE_NDICE_METADATA = Metadata(
 )
 
 
-V3dSliceNdiceParamsDict = typing.TypedDict('V3dSliceNdiceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSliceNDice"]],
+_V3dSliceNdiceParamsDictNoTag = typing.TypedDict('_V3dSliceNdiceParamsDictNoTag', {
     "infile_a": InputPathType,
     "infile_b": InputPathType,
     "output_prefix": str,
@@ -29,6 +28,7 @@ V3dSliceNdiceParamsDictTagged = typing.TypedDict('V3dSliceNdiceParamsDictTagged'
     "out_domain": typing.NotRequired[typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None],
     "no_cmd_echo": bool,
 })
+V3dSliceNdiceParamsDict = _V3dSliceNdiceParamsDictNoTag | V3dSliceNdiceParamsDictTagged
 
 
 class V3dSliceNdiceOutputs(typing.NamedTuple):

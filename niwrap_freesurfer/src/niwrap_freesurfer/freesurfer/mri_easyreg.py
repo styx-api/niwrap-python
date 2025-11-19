@@ -13,8 +13,7 @@ MRI_EASYREG_METADATA = Metadata(
 )
 
 
-MriEasyregParamsDict = typing.TypedDict('MriEasyregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easyreg"]],
+_MriEasyregParamsDictNoTag = typing.TypedDict('_MriEasyregParamsDictNoTag', {
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
     "floating_image": InputPathType,
@@ -39,6 +38,7 @@ MriEasyregParamsDictTagged = typing.TypedDict('MriEasyregParamsDictTagged', {
     "affine_only": bool,
     "threads": typing.NotRequired[float | None],
 })
+MriEasyregParamsDict = _MriEasyregParamsDictNoTag | MriEasyregParamsDictTagged
 
 
 class MriEasyregOutputs(typing.NamedTuple):

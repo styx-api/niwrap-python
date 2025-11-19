@@ -13,8 +13,7 @@ LPCREGISTER_METADATA = Metadata(
 )
 
 
-LpcregisterParamsDict = typing.TypedDict('LpcregisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/lpcregister"]],
+_LpcregisterParamsDictNoTag = typing.TypedDict('_LpcregisterParamsDictNoTag', {
     "subject_id": str,
     "mov_volume": str,
     "reg_file": str,
@@ -45,6 +44,7 @@ LpcregisterParamsDictTagged = typing.TypedDict('LpcregisterParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+LpcregisterParamsDict = _LpcregisterParamsDictNoTag | LpcregisterParamsDictTagged
 
 
 class LpcregisterOutputs(typing.NamedTuple):

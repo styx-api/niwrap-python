@@ -13,8 +13,7 @@ ANNOT2STD_METADATA = Metadata(
 )
 
 
-Annot2stdParamsDict = typing.TypedDict('Annot2stdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/annot2std"]],
+_Annot2stdParamsDictNoTag = typing.TypedDict('_Annot2stdParamsDictNoTag', {
     "output_annot_path": str,
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -55,6 +54,7 @@ Annot2stdParamsDictTagged = typing.TypedDict('Annot2stdParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+Annot2stdParamsDict = _Annot2stdParamsDictNoTag | Annot2stdParamsDictTagged
 
 
 class Annot2stdOutputs(typing.NamedTuple):

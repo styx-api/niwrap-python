@@ -13,8 +13,7 @@ MRI_LABEL_VALS_METADATA = Metadata(
 )
 
 
-MriLabelValsParamsDict = typing.TypedDict('MriLabelValsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_vals"]],
+_MriLabelValsParamsDictNoTag = typing.TypedDict('_MriLabelValsParamsDictNoTag', {
     "volume": InputPathType,
     "label_file": InputPathType,
     "cras_flag": bool,
@@ -27,6 +26,7 @@ MriLabelValsParamsDictTagged = typing.TypedDict('MriLabelValsParamsDictTagged', 
     "cras_flag": bool,
     "help_flag": bool,
 })
+MriLabelValsParamsDict = _MriLabelValsParamsDictNoTag | MriLabelValsParamsDictTagged
 
 
 class MriLabelValsOutputs(typing.NamedTuple):

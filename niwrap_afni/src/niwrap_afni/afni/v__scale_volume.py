@@ -13,8 +13,7 @@ V__SCALE_VOLUME_METADATA = Metadata(
 )
 
 
-VScaleVolumeParamsDict = typing.TypedDict('VScaleVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ScaleVolume"]],
+_VScaleVolumeParamsDictNoTag = typing.TypedDict('_VScaleVolumeParamsDictNoTag', {
     "input_dset": InputPathType,
     "prefix": str,
     "val_clip": typing.NotRequired[list[float] | None],
@@ -35,6 +34,7 @@ VScaleVolumeParamsDictTagged = typing.TypedDict('VScaleVolumeParamsDictTagged', 
     "norm": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
+VScaleVolumeParamsDict = _VScaleVolumeParamsDictNoTag | VScaleVolumeParamsDictTagged
 
 
 class VScaleVolumeOutputs(typing.NamedTuple):

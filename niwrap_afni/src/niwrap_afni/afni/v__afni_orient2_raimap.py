@@ -13,14 +13,14 @@ V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
 )
 
 
-VAfniOrient2RaimapParamsDict = typing.TypedDict('VAfniOrient2RaimapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@AfniOrient2RAImap"]],
+_VAfniOrient2RaimapParamsDictNoTag = typing.TypedDict('_VAfniOrient2RaimapParamsDictNoTag', {
     "orientation_code": str,
 })
 VAfniOrient2RaimapParamsDictTagged = typing.TypedDict('VAfniOrient2RaimapParamsDictTagged', {
     "@type": typing.Literal["afni/@AfniOrient2RAImap"],
     "orientation_code": str,
 })
+VAfniOrient2RaimapParamsDict = _VAfniOrient2RaimapParamsDictNoTag | VAfniOrient2RaimapParamsDictTagged
 
 
 class VAfniOrient2RaimapOutputs(typing.NamedTuple):

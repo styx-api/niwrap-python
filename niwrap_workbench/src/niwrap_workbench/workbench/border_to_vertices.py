@@ -12,8 +12,7 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 )
 
 
-BorderToVerticesParamsDict = typing.TypedDict('BorderToVerticesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-to-vertices"]],
+_BorderToVerticesParamsDictNoTag = typing.TypedDict('_BorderToVerticesParamsDictNoTag', {
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "surface": InputPathType,
@@ -26,6 +25,7 @@ BorderToVerticesParamsDictTagged = typing.TypedDict('BorderToVerticesParamsDictT
     "surface": InputPathType,
     "border-file": InputPathType,
 })
+BorderToVerticesParamsDict = _BorderToVerticesParamsDictNoTag | BorderToVerticesParamsDictTagged
 
 
 class BorderToVerticesOutputs(typing.NamedTuple):

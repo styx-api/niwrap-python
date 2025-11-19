@@ -13,8 +13,7 @@ V__MEASURE_BB_THICK_METADATA = Metadata(
 )
 
 
-VMeasureBbThickParamsDict = typing.TypedDict('VMeasureBbThickParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@measure_bb_thick"]],
+_VMeasureBbThickParamsDictNoTag = typing.TypedDict('_VMeasureBbThickParamsDictNoTag', {
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ VMeasureBbThickParamsDictTagged = typing.TypedDict('VMeasureBbThickParamsDictTag
     "balls_only": bool,
     "surfsmooth_method": typing.NotRequired[str | None],
 })
+VMeasureBbThickParamsDict = _VMeasureBbThickParamsDictNoTag | VMeasureBbThickParamsDictTagged
 
 
 class VMeasureBbThickOutputs(typing.NamedTuple):

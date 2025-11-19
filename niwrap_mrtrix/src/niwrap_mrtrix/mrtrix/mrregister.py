@@ -13,18 +13,17 @@ MRREGISTER_METADATA = Metadata(
 )
 
 
-MrregisterTransformedParamsDict = typing.TypedDict('MrregisterTransformedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transformed"]],
+_MrregisterTransformedParamsDictNoTag = typing.TypedDict('_MrregisterTransformedParamsDictNoTag', {
     "image": str,
 })
 MrregisterTransformedParamsDictTagged = typing.TypedDict('MrregisterTransformedParamsDictTagged', {
     "@type": typing.Literal["transformed"],
     "image": str,
 })
+MrregisterTransformedParamsDict = _MrregisterTransformedParamsDictNoTag | MrregisterTransformedParamsDictTagged
 
 
-MrregisterTransformedMidwayParamsDict = typing.TypedDict('MrregisterTransformedMidwayParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transformed_midway"]],
+_MrregisterTransformedMidwayParamsDictNoTag = typing.TypedDict('_MrregisterTransformedMidwayParamsDictNoTag', {
     "image1_transformed": str,
     "image2_transformed": str,
 })
@@ -33,10 +32,10 @@ MrregisterTransformedMidwayParamsDictTagged = typing.TypedDict('MrregisterTransf
     "image1_transformed": str,
     "image2_transformed": str,
 })
+MrregisterTransformedMidwayParamsDict = _MrregisterTransformedMidwayParamsDictNoTag | MrregisterTransformedMidwayParamsDictTagged
 
 
-MrregisterNlWarpParamsDict = typing.TypedDict('MrregisterNlWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nl_warp"]],
+_MrregisterNlWarpParamsDictNoTag = typing.TypedDict('_MrregisterNlWarpParamsDictNoTag', {
     "warp1": str,
     "warp2": str,
 })
@@ -45,10 +44,10 @@ MrregisterNlWarpParamsDictTagged = typing.TypedDict('MrregisterNlWarpParamsDictT
     "warp1": str,
     "warp2": str,
 })
+MrregisterNlWarpParamsDict = _MrregisterNlWarpParamsDictNoTag | MrregisterNlWarpParamsDictTagged
 
 
-MrregisterConfigParamsDict = typing.TypedDict('MrregisterConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrregisterConfigParamsDictNoTag = typing.TypedDict('_MrregisterConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -57,10 +56,10 @@ MrregisterConfigParamsDictTagged = typing.TypedDict('MrregisterConfigParamsDictT
     "key": str,
     "value": str,
 })
+MrregisterConfigParamsDict = _MrregisterConfigParamsDictNoTag | MrregisterConfigParamsDictTagged
 
 
-MrregisterParamsDict = typing.TypedDict('MrregisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrregister"]],
+_MrregisterParamsDictNoTag = typing.TypedDict('_MrregisterParamsDictNoTag', {
     "type": typing.NotRequired[str | None],
     "transformed": typing.NotRequired[list[MrregisterTransformedParamsDict] | None],
     "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParamsDict] | None],
@@ -201,6 +200,7 @@ MrregisterParamsDictTagged = typing.TypedDict('MrregisterParamsDictTagged', {
     "image1_image2": InputPathType,
     "contrast1_contrast2": typing.NotRequired[list[InputPathType] | None],
 })
+MrregisterParamsDict = _MrregisterParamsDictNoTag | MrregisterParamsDictTagged
 
 
 class MrregisterTransformedOutputs(typing.NamedTuple):

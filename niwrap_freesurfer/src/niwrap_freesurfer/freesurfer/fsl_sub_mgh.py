@@ -13,8 +13,7 @@ FSL_SUB_MGH_METADATA = Metadata(
 )
 
 
-FslSubMghParamsDict = typing.TypedDict('FslSubMghParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_sub_mgh"]],
+_FslSubMghParamsDictNoTag = typing.TypedDict('_FslSubMghParamsDictNoTag', {
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
     "architecture": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ FslSubMghParamsDictTagged = typing.TypedDict('FslSubMghParamsDictTagged', {
     "verbose": bool,
     "shell_path": typing.NotRequired[str | None],
 })
+FslSubMghParamsDict = _FslSubMghParamsDictNoTag | FslSubMghParamsDictTagged
 
 
 class FslSubMghOutputs(typing.NamedTuple):

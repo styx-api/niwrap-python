@@ -13,8 +13,7 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 )
 
 
-MriWarpConvertParamsDict = typing.TypedDict('MriWarpConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_warp_convert"]],
+_MriWarpConvertParamsDictNoTag = typing.TypedDict('_MriWarpConvertParamsDictNoTag', {
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
     "inlps": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ MriWarpConvertParamsDictTagged = typing.TypedDict('MriWarpConvertParamsDictTagge
     "insrcgeom": typing.NotRequired[InputPathType | None],
     "downsample": bool,
 })
+MriWarpConvertParamsDict = _MriWarpConvertParamsDictNoTag | MriWarpConvertParamsDictTagged
 
 
 class MriWarpConvertOutputs(typing.NamedTuple):

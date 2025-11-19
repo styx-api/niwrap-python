@@ -13,8 +13,7 @@ V_3D_NLFIM_METADATA = Metadata(
 )
 
 
-V3dNlfimParamsDict = typing.TypedDict('V3dNlfimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNLfim"]],
+_V3dNlfimParamsDictNoTag = typing.TypedDict('_V3dNlfimParamsDictNoTag', {
     "input_file": InputPathType,
     "signal_model": str,
     "noise_model": str,
@@ -93,6 +92,7 @@ V3dNlfimParamsDictTagged = typing.TypedDict('V3dNlfimParamsDictTagged', {
     "snfit": typing.NotRequired[str | None],
     "jobs": typing.NotRequired[int | None],
 })
+V3dNlfimParamsDict = _V3dNlfimParamsDictNoTag | V3dNlfimParamsDictTagged
 
 
 class V3dNlfimOutputs(typing.NamedTuple):

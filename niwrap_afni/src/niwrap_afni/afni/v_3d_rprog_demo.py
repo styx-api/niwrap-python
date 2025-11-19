@@ -13,8 +13,7 @@ V_3D_RPROG_DEMO_METADATA = Metadata(
 )
 
 
-V3dRprogDemoParamsDict = typing.TypedDict('V3dRprogDemoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRprogDemo"]],
+_V3dRprogDemoParamsDictNoTag = typing.TypedDict('_V3dRprogDemoParamsDictNoTag', {
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "scale": float,
@@ -41,6 +40,7 @@ V3dRprogDemoParamsDictTagged = typing.TypedDict('V3dRprogDemoParamsDictTagged', 
     "show_allowed_options": bool,
     "verbosity_level": typing.NotRequired[float | None],
 })
+V3dRprogDemoParamsDict = _V3dRprogDemoParamsDictNoTag | V3dRprogDemoParamsDictTagged
 
 
 class V3dRprogDemoOutputs(typing.NamedTuple):

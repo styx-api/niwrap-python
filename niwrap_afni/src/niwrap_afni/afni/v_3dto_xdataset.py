@@ -13,8 +13,7 @@ V_3DTO_XDATASET_METADATA = Metadata(
 )
 
 
-V3dtoXdatasetParamsDict = typing.TypedDict('V3dtoXdatasetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dtoXdataset"]],
+_V3dtoXdatasetParamsDictNoTag = typing.TypedDict('_V3dtoXdatasetParamsDictNoTag', {
     "prefix": str,
     "mask": InputPathType,
     "input_files": list[InputPathType],
@@ -25,6 +24,7 @@ V3dtoXdatasetParamsDictTagged = typing.TypedDict('V3dtoXdatasetParamsDictTagged'
     "mask": InputPathType,
     "input_files": list[InputPathType],
 })
+V3dtoXdatasetParamsDict = _V3dtoXdatasetParamsDictNoTag | V3dtoXdatasetParamsDictTagged
 
 
 class V3dtoXdatasetOutputs(typing.NamedTuple):

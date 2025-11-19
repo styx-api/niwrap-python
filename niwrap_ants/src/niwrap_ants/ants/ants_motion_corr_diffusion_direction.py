@@ -13,8 +13,7 @@ ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA = Metadata(
 )
 
 
-AntsMotionCorrDiffusionDirectionParamsDict = typing.TypedDict('AntsMotionCorrDiffusionDirectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrDiffusionDirection"]],
+_AntsMotionCorrDiffusionDirectionParamsDictNoTag = typing.TypedDict('_AntsMotionCorrDiffusionDirectionParamsDictNoTag', {
     "scheme": InputPathType,
     "bvec": InputPathType,
     "physical": InputPathType,
@@ -29,6 +28,7 @@ AntsMotionCorrDiffusionDirectionParamsDictTagged = typing.TypedDict('AntsMotionC
     "moco": InputPathType,
     "output": str,
 })
+AntsMotionCorrDiffusionDirectionParamsDict = _AntsMotionCorrDiffusionDirectionParamsDictNoTag | AntsMotionCorrDiffusionDirectionParamsDictTagged
 
 
 class AntsMotionCorrDiffusionDirectionOutputs(typing.NamedTuple):

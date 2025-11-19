@@ -13,8 +13,7 @@ SURF_EXTREMA_METADATA = Metadata(
 )
 
 
-SurfExtremaParamsDict = typing.TypedDict('SurfExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfExtrema"]],
+_SurfExtremaParamsDictNoTag = typing.TypedDict('_SurfExtremaParamsDictNoTag', {
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ SurfExtremaParamsDictTagged = typing.TypedDict('SurfExtremaParamsDictTagged', {
     "prefix": str,
     "table": typing.NotRequired[str | None],
 })
+SurfExtremaParamsDict = _SurfExtremaParamsDictNoTag | SurfExtremaParamsDictTagged
 
 
 class SurfExtremaOutputs(typing.NamedTuple):

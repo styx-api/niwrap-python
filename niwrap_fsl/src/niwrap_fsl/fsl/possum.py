@@ -13,8 +13,7 @@ POSSUM_METADATA = Metadata(
 )
 
 
-PossumParamsDict = typing.TypedDict('PossumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/possum"]],
+_PossumParamsDictNoTag = typing.TypedDict('_PossumParamsDictNoTag', {
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
     "motion_matrix": InputPathType,
@@ -67,6 +66,7 @@ PossumParamsDictTagged = typing.TypedDict('PossumParamsDictTagged', {
     "no_speedup": bool,
     "rf_average": bool,
 })
+PossumParamsDict = _PossumParamsDictNoTag | PossumParamsDictTagged
 
 
 class PossumOutputs(typing.NamedTuple):

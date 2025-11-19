@@ -13,8 +13,7 @@ MRI_DEFACER_METADATA = Metadata(
 )
 
 
-MriDefacerParamsDict = typing.TypedDict('MriDefacerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_defacer"]],
+_MriDefacerParamsDictNoTag = typing.TypedDict('_MriDefacerParamsDictNoTag', {
     "input_volume": InputPathType,
     "headmask": InputPathType,
     "tempsurf": InputPathType,
@@ -67,6 +66,7 @@ MriDefacerParamsDictTagged = typing.TypedDict('MriDefacerParamsDictTagged', {
     "checkopts": bool,
     "version": bool,
 })
+MriDefacerParamsDict = _MriDefacerParamsDictNoTag | MriDefacerParamsDictTagged
 
 
 class MriDefacerOutputs(typing.NamedTuple):

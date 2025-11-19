@@ -13,8 +13,7 @@ DMRI_MERGEPATHS_METADATA = Metadata(
 )
 
 
-DmriMergepathsParamsDict = typing.TypedDict('DmriMergepathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_mergepaths"]],
+_DmriMergepathsParamsDictNoTag = typing.TypedDict('_DmriMergepathsParamsDictNoTag', {
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_volume": str,
@@ -33,6 +32,7 @@ DmriMergepathsParamsDictTagged = typing.TypedDict('DmriMergepathsParamsDictTagge
     "debug": bool,
     "check_opts": bool,
 })
+DmriMergepathsParamsDict = _DmriMergepathsParamsDictNoTag | DmriMergepathsParamsDictTagged
 
 
 class DmriMergepathsOutputs(typing.NamedTuple):

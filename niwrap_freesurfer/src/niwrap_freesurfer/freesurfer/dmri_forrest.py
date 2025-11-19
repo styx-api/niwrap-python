@@ -13,8 +13,7 @@ DMRI_FORREST_METADATA = Metadata(
 )
 
 
-DmriForrestParamsDict = typing.TypedDict('DmriForrestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_forrest"]],
+_DmriForrestParamsDictNoTag = typing.TypedDict('_DmriForrestParamsDictNoTag', {
     "test_dir": str,
     "train_file": InputPathType,
     "mask_file": InputPathType,
@@ -37,6 +36,7 @@ DmriForrestParamsDictTagged = typing.TypedDict('DmriForrestParamsDictTagged', {
     "checkopts": bool,
     "help": bool,
 })
+DmriForrestParamsDict = _DmriForrestParamsDictNoTag | DmriForrestParamsDictTagged
 
 
 class DmriForrestOutputs(typing.NamedTuple):

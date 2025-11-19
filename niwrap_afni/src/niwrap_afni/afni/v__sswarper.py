@@ -13,8 +13,7 @@ V__SSWARPER_METADATA = Metadata(
 )
 
 
-VSswarperParamsDict = typing.TypedDict('VSswarperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SSwarper"]],
+_VSswarperParamsDictNoTag = typing.TypedDict('_VSswarperParamsDictNoTag', {
     "input_file": InputPathType,
     "base_template": InputPathType,
     "subject_id": str,
@@ -65,6 +64,7 @@ VSswarperParamsDictTagged = typing.TypedDict('VSswarperParamsDictTagged', {
     "verbose": bool,
     "noclean": bool,
 })
+VSswarperParamsDict = _VSswarperParamsDictNoTag | VSswarperParamsDictTagged
 
 
 class VSswarperOutputs(typing.NamedTuple):

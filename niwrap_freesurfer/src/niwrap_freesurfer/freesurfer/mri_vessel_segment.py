@@ -13,8 +13,7 @@ MRI_VESSEL_SEGMENT_METADATA = Metadata(
 )
 
 
-MriVesselSegmentParamsDict = typing.TypedDict('MriVesselSegmentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vessel_segment"]],
+_MriVesselSegmentParamsDictNoTag = typing.TypedDict('_MriVesselSegmentParamsDictNoTag', {
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "aseg_file": InputPathType,
@@ -29,6 +28,7 @@ MriVesselSegmentParamsDictTagged = typing.TypedDict('MriVesselSegmentParamsDictT
     "output_file": str,
     "shape_flag": bool,
 })
+MriVesselSegmentParamsDict = _MriVesselSegmentParamsDictNoTag | MriVesselSegmentParamsDictTagged
 
 
 class MriVesselSegmentOutputs(typing.NamedTuple):

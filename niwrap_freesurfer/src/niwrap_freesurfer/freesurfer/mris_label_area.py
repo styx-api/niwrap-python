@@ -13,8 +13,7 @@ MRIS_LABEL_AREA_METADATA = Metadata(
 )
 
 
-MrisLabelAreaParamsDict = typing.TypedDict('MrisLabelAreaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_area"]],
+_MrisLabelAreaParamsDictNoTag = typing.TypedDict('_MrisLabelAreaParamsDictNoTag', {
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
     "brain_vol": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ MrisLabelAreaParamsDictTagged = typing.TypedDict('MrisLabelAreaParamsDictTagged'
     "annot_name": str,
     "labels": list[str],
 })
+MrisLabelAreaParamsDict = _MrisLabelAreaParamsDictNoTag | MrisLabelAreaParamsDictTagged
 
 
 class MrisLabelAreaOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ AIV_METADATA = Metadata(
 )
 
 
-AivParamsDict = typing.TypedDict('AivParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/aiv"]],
+_AivParamsDictNoTag = typing.TypedDict('_AivParamsDictNoTag', {
     "verbose": bool,
     "quiet": bool,
     "title": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ AivParamsDictTagged = typing.TypedDict('AivParamsDictTagged', {
     "pad": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
 })
+AivParamsDict = _AivParamsDictNoTag | AivParamsDictTagged
 
 
 class AivOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_BRAIN_SYNC_METADATA = Metadata(
 )
 
 
-V3dBrainSyncParamsDict = typing.TypedDict('V3dBrainSyncParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBrainSync"]],
+_V3dBrainSyncParamsDictNoTag = typing.TypedDict('_V3dBrainSyncParamsDictNoTag', {
     "inset1": InputPathType,
     "inset2": InputPathType,
     "qprefix": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ V3dBrainSyncParamsDictTagged = typing.TypedDict('V3dBrainSyncParamsDictTagged', 
     "mask": typing.NotRequired[InputPathType | None],
     "verb": bool,
 })
+V3dBrainSyncParamsDict = _V3dBrainSyncParamsDictNoTag | V3dBrainSyncParamsDictTagged
 
 
 class V3dBrainSyncOutputs(typing.NamedTuple):

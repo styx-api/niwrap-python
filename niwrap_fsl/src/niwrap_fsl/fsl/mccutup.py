@@ -13,8 +13,7 @@ MCCUTUP_METADATA = Metadata(
 )
 
 
-MccutupParamsDict = typing.TypedDict('MccutupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mccutup"]],
+_MccutupParamsDictNoTag = typing.TypedDict('_MccutupParamsDictNoTag', {
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "param1": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ MccutupParamsDictTagged = typing.TypedDict('MccutupParamsDictTagged', {
     "param1": typing.NotRequired[str | None],
     "param2": typing.NotRequired[str | None],
 })
+MccutupParamsDict = _MccutupParamsDictNoTag | MccutupParamsDictTagged
 
 
 class MccutupOutputs(typing.NamedTuple):

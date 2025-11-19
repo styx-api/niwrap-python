@@ -13,8 +13,7 @@ FNIRTFILEUTILS_METADATA = Metadata(
 )
 
 
-FnirtfileutilsParamsDict = typing.TypedDict('FnirtfileutilsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fnirtfileutils"]],
+_FnirtfileutilsParamsDictNoTag = typing.TypedDict('_FnirtfileutilsParamsDictNoTag', {
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
     "out_field": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ FnirtfileutilsParamsDictTagged = typing.TypedDict('FnirtfileutilsParamsDictTagge
     "verbose_flag": bool,
     "help_flag": bool,
 })
+FnirtfileutilsParamsDict = _FnirtfileutilsParamsDictNoTag | FnirtfileutilsParamsDictTagged
 
 
 class FnirtfileutilsOutputs(typing.NamedTuple):

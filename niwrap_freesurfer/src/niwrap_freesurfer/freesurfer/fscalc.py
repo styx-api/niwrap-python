@@ -13,8 +13,7 @@ FSCALC_METADATA = Metadata(
 )
 
 
-FscalcParamsDict = typing.TypedDict('FscalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fscalc"]],
+_FscalcParamsDictNoTag = typing.TypedDict('_FscalcParamsDictNoTag', {
     "input1": str,
     "operation": str,
     "input2": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ FscalcParamsDictTagged = typing.TypedDict('FscalcParamsDictTagged', {
     "nocleanup": bool,
     "log_file": typing.NotRequired[str | None],
 })
+FscalcParamsDict = _FscalcParamsDictNoTag | FscalcParamsDictTagged
 
 
 class FscalcOutputs(typing.NamedTuple):

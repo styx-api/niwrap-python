@@ -13,8 +13,7 @@ ANALYZETO4DFP_METADATA = Metadata(
 )
 
 
-Analyzeto4dfpParamsDict = typing.TypedDict('Analyzeto4dfpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/analyzeto4dfp"]],
+_Analyzeto4dfpParamsDictNoTag = typing.TypedDict('_Analyzeto4dfpParamsDictNoTag', {
     "analyze_image": InputPathType,
     "rois_scale": bool,
     "flip_x": bool,
@@ -33,6 +32,7 @@ Analyzeto4dfpParamsDictTagged = typing.TypedDict('Analyzeto4dfpParamsDictTagged'
     "endian": typing.NotRequired[str | None],
     "orientation": typing.NotRequired[int | None],
 })
+Analyzeto4dfpParamsDict = _Analyzeto4dfpParamsDictNoTag | Analyzeto4dfpParamsDictTagged
 
 
 class Analyzeto4dfpOutputs(typing.NamedTuple):

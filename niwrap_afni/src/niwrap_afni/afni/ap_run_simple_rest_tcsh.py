@@ -13,8 +13,7 @@ AP_RUN_SIMPLE_REST_TCSH_METADATA = Metadata(
 )
 
 
-ApRunSimpleRestTcshParamsDict = typing.TypedDict('ApRunSimpleRestTcshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ap_run_simple_rest.tcsh"]],
+_ApRunSimpleRestTcshParamsDictNoTag = typing.TypedDict('_ApRunSimpleRestTcshParamsDictNoTag', {
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
     "nt_rm": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ ApRunSimpleRestTcshParamsDictTagged = typing.TypedDict('ApRunSimpleRestTcshParam
     "verb": typing.NotRequired[float | None],
     "echo": bool,
 })
+ApRunSimpleRestTcshParamsDict = _ApRunSimpleRestTcshParamsDictNoTag | ApRunSimpleRestTcshParamsDictTagged
 
 
 class ApRunSimpleRestTcshOutputs(typing.NamedTuple):

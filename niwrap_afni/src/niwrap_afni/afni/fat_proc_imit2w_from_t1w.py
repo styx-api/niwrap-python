@@ -13,8 +13,7 @@ FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
 )
 
 
-FatProcImit2wFromT1wParamsDict = typing.TypedDict('FatProcImit2wFromT1wParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_imit2w_from_t1w"]],
+_FatProcImit2wFromT1wParamsDictNoTag = typing.TypedDict('_FatProcImit2wFromT1wParamsDictNoTag', {
     "t1_file": InputPathType,
     "prefix": str,
     "workdir": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ FatProcImit2wFromT1wParamsDictTagged = typing.TypedDict('FatProcImit2wFromT1wPar
     "no_qc_view": bool,
     "qc_prefix": typing.NotRequired[str | None],
 })
+FatProcImit2wFromT1wParamsDict = _FatProcImit2wFromT1wParamsDictNoTag | FatProcImit2wFromT1wParamsDictTagged
 
 
 class FatProcImit2wFromT1wOutputs(typing.NamedTuple):

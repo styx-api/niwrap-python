@@ -13,8 +13,7 @@ MRI_Z2P_METADATA = Metadata(
 )
 
 
-MriZ2pParamsDict = typing.TypedDict('MriZ2pParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_z2p"]],
+_MriZ2pParamsDictNoTag = typing.TypedDict('_MriZ2pParamsDictNoTag', {
     "z_volume": InputPathType,
     "p_volume": str,
     "sig_volume": str,
@@ -51,6 +50,7 @@ MriZ2pParamsDictTagged = typing.TypedDict('MriZ2pParamsDictTagged', {
     "debug": bool,
     "check_opts": bool,
 })
+MriZ2pParamsDict = _MriZ2pParamsDictNoTag | MriZ2pParamsDictTagged
 
 
 class MriZ2pOutputs(typing.NamedTuple):

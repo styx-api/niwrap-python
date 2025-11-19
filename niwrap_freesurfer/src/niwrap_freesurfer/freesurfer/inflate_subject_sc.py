@@ -13,8 +13,7 @@ INFLATE_SUBJECT_SC_METADATA = Metadata(
 )
 
 
-InflateSubjectScParamsDict = typing.TypedDict('InflateSubjectScParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_sc"]],
+_InflateSubjectScParamsDictNoTag = typing.TypedDict('_InflateSubjectScParamsDictNoTag', {
     "subject_dir": str,
     "verbose": bool,
     "debug": bool,
@@ -25,6 +24,7 @@ InflateSubjectScParamsDictTagged = typing.TypedDict('InflateSubjectScParamsDictT
     "verbose": bool,
     "debug": bool,
 })
+InflateSubjectScParamsDict = _InflateSubjectScParamsDictNoTag | InflateSubjectScParamsDictTagged
 
 
 class InflateSubjectScOutputs(typing.NamedTuple):

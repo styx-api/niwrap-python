@@ -13,14 +13,14 @@ V__NP_METADATA = Metadata(
 )
 
 
-VNpParamsDict = typing.TypedDict('VNpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@np"]],
+_VNpParamsDictNoTag = typing.TypedDict('_VNpParamsDictNoTag', {
     "prefix": str,
 })
 VNpParamsDictTagged = typing.TypedDict('VNpParamsDictTagged', {
     "@type": typing.Literal["afni/@np"],
     "prefix": str,
 })
+VNpParamsDict = _VNpParamsDictNoTag | VNpParamsDictTagged
 
 
 class VNpOutputs(typing.NamedTuple):

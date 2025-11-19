@@ -13,8 +13,7 @@ WARPINIT_METADATA = Metadata(
 )
 
 
-WarpinitConfigParamsDict = typing.TypedDict('WarpinitConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_WarpinitConfigParamsDictNoTag = typing.TypedDict('_WarpinitConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ WarpinitConfigParamsDictTagged = typing.TypedDict('WarpinitConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+WarpinitConfigParamsDict = _WarpinitConfigParamsDictNoTag | WarpinitConfigParamsDictTagged
 
 
-WarpinitParamsDict = typing.TypedDict('WarpinitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/warpinit"]],
+_WarpinitParamsDictNoTag = typing.TypedDict('_WarpinitParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -51,6 +50,7 @@ WarpinitParamsDictTagged = typing.TypedDict('WarpinitParamsDictTagged', {
     "template": InputPathType,
     "warp": str,
 })
+WarpinitParamsDict = _WarpinitParamsDictNoTag | WarpinitParamsDictTagged
 
 
 def warpinit_config(

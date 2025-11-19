@@ -13,8 +13,7 @@ BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
 )
 
 
-BiancaOverlapMeasuresParamsDict = typing.TypedDict('BiancaOverlapMeasuresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bianca_overlap_measures"]],
+_BiancaOverlapMeasuresParamsDictNoTag = typing.TypedDict('_BiancaOverlapMeasuresParamsDictNoTag', {
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
     "output_dir": str,
@@ -25,6 +24,7 @@ BiancaOverlapMeasuresParamsDictTagged = typing.TypedDict('BiancaOverlapMeasuresP
     "manual_mask": InputPathType,
     "output_dir": str,
 })
+BiancaOverlapMeasuresParamsDict = _BiancaOverlapMeasuresParamsDictNoTag | BiancaOverlapMeasuresParamsDictTagged
 
 
 class BiancaOverlapMeasuresOutputs(typing.NamedTuple):

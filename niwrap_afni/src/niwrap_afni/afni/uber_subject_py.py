@@ -13,8 +13,7 @@ UBER_SUBJECT_PY_METADATA = Metadata(
 )
 
 
-UberSubjectPyParamsDict = typing.TypedDict('UberSubjectPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/uber_subject.py"]],
+_UberSubjectPyParamsDictNoTag = typing.TypedDict('_UberSubjectPyParamsDictNoTag', {
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
     "cvar": typing.NotRequired[str | None],
@@ -105,6 +104,7 @@ UberSubjectPyParamsDictTagged = typing.TypedDict('UberSubjectPyParamsDictTagged'
     "volreg_base": typing.NotRequired[str | None],
     "verb": typing.NotRequired[str | None],
 })
+UberSubjectPyParamsDict = _UberSubjectPyParamsDictNoTag | UberSubjectPyParamsDictTagged
 
 
 class UberSubjectPyOutputs(typing.NamedTuple):

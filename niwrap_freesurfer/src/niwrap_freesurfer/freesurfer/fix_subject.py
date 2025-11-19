@@ -13,14 +13,14 @@ FIX_SUBJECT_METADATA = Metadata(
 )
 
 
-FixSubjectParamsDict = typing.TypedDict('FixSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject"]],
+_FixSubjectParamsDictNoTag = typing.TypedDict('_FixSubjectParamsDictNoTag', {
     "arguments": typing.NotRequired[str | None],
 })
 FixSubjectParamsDictTagged = typing.TypedDict('FixSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fix_subject"],
     "arguments": typing.NotRequired[str | None],
 })
+FixSubjectParamsDict = _FixSubjectParamsDictNoTag | FixSubjectParamsDictTagged
 
 
 class FixSubjectOutputs(typing.NamedTuple):

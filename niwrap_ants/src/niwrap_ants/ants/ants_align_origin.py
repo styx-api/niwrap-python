@@ -13,8 +13,7 @@ ANTS_ALIGN_ORIGIN_METADATA = Metadata(
 )
 
 
-AntsAlignOriginParamsDict = typing.TypedDict('AntsAlignOriginParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsAlignOrigin"]],
+_AntsAlignOriginParamsDictNoTag = typing.TypedDict('_AntsAlignOriginParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
     "reference_image": InputPathType,
@@ -27,6 +26,7 @@ AntsAlignOriginParamsDictTagged = typing.TypedDict('AntsAlignOriginParamsDictTag
     "reference_image": InputPathType,
     "output": str,
 })
+AntsAlignOriginParamsDict = _AntsAlignOriginParamsDictNoTag | AntsAlignOriginParamsDictTagged
 
 
 class AntsAlignOriginOutputs(typing.NamedTuple):

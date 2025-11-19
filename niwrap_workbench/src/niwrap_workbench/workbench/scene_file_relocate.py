@@ -12,8 +12,7 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
 )
 
 
-SceneFileRelocateParamsDict = typing.TypedDict('SceneFileRelocateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/scene-file-relocate"]],
+_SceneFileRelocateParamsDictNoTag = typing.TypedDict('_SceneFileRelocateParamsDictNoTag', {
     "input-scene": str,
     "output-scene": str,
 })
@@ -22,6 +21,7 @@ SceneFileRelocateParamsDictTagged = typing.TypedDict('SceneFileRelocateParamsDic
     "input-scene": str,
     "output-scene": str,
 })
+SceneFileRelocateParamsDict = _SceneFileRelocateParamsDictNoTag | SceneFileRelocateParamsDictTagged
 
 
 class SceneFileRelocateOutputs(typing.NamedTuple):

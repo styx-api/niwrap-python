@@ -13,8 +13,7 @@ FSVGLRUN_METADATA = Metadata(
 )
 
 
-FsvglrunParamsDict = typing.TypedDict('FsvglrunParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsvglrun"]],
+_FsvglrunParamsDictNoTag = typing.TypedDict('_FsvglrunParamsDictNoTag', {
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
     "dashed_arg": bool,
@@ -29,6 +28,7 @@ FsvglrunParamsDictTagged = typing.TypedDict('FsvglrunParamsDictTagged', {
     "command": str,
     "command_args": typing.NotRequired[list[str] | None],
 })
+FsvglrunParamsDict = _FsvglrunParamsDictNoTag | FsvglrunParamsDictTagged
 
 
 class FsvglrunOutputs(typing.NamedTuple):

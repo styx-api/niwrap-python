@@ -13,8 +13,7 @@ TRANSFORMCONVERT_METADATA = Metadata(
 )
 
 
-TransformconvertConfigParamsDict = typing.TypedDict('TransformconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TransformconvertConfigParamsDictNoTag = typing.TypedDict('_TransformconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TransformconvertConfigParamsDictTagged = typing.TypedDict('TransformconvertConfi
     "key": str,
     "value": str,
 })
+TransformconvertConfigParamsDict = _TransformconvertConfigParamsDictNoTag | TransformconvertConfigParamsDictTagged
 
 
-TransformconvertParamsDict = typing.TypedDict('TransformconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/transformconvert"]],
+_TransformconvertParamsDictNoTag = typing.TypedDict('_TransformconvertParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ TransformconvertParamsDictTagged = typing.TypedDict('TransformconvertParamsDictT
     "operation": str,
     "output": str,
 })
+TransformconvertParamsDict = _TransformconvertParamsDictNoTag | TransformconvertParamsDictTagged
 
 
 def transformconvert_config(

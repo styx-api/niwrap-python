@@ -13,8 +13,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 )
 
 
-AntsuseLandmarkImagesToGetAffineTransformParamsDict = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ANTSUseLandmarkImagesToGetAffineTransform"]],
+_AntsuseLandmarkImagesToGetAffineTransformParamsDictNoTag = typing.TypedDict('_AntsuseLandmarkImagesToGetAffineTransformParamsDictNoTag', {
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "transform_type": typing.Literal["rigid", "affine"],
@@ -27,6 +26,7 @@ AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged = typing.TypedDict('An
     "transform_type": typing.Literal["rigid", "affine"],
     "output_affine": str,
 })
+AntsuseLandmarkImagesToGetAffineTransformParamsDict = _AntsuseLandmarkImagesToGetAffineTransformParamsDictNoTag | AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged
 
 
 class AntsuseLandmarkImagesToGetAffineTransformOutputs(typing.NamedTuple):

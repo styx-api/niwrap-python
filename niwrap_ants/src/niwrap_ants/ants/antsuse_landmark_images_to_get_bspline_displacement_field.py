@@ -13,8 +13,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ANTSUseLandmarkImagesToGetBSplineDisplacementField"]],
+_AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictNoTag = typing.TypedDict('_AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictNoTag', {
     "fixed_image_with_labeled_landmarks": InputPathType,
     "moving_image_with_labeled_landmarks": InputPathType,
     "output_displacement_field": str,
@@ -35,6 +34,7 @@ AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged = typing.Type
     "enforce_stationary_boundaries": typing.NotRequired[int | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
+AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict = _AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictNoTag | AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged
 
 
 class AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs(typing.NamedTuple):

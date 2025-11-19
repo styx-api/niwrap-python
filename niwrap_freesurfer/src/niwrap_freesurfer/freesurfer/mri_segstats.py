@@ -13,8 +13,7 @@ MRI_SEGSTATS_METADATA = Metadata(
 )
 
 
-MriSegstatsParamsDict = typing.TypedDict('MriSegstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segstats"]],
+_MriSegstatsParamsDictNoTag = typing.TypedDict('_MriSegstatsParamsDictNoTag', {
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
     "annot_hemisphere": typing.NotRequired[str | None],
@@ -139,6 +138,7 @@ MriSegstatsParamsDictTagged = typing.TypedDict('MriSegstatsParamsDictTagged', {
     "subjects_dir": typing.NotRequired[str | None],
     "random_seed": typing.NotRequired[float | None],
 })
+MriSegstatsParamsDict = _MriSegstatsParamsDictNoTag | MriSegstatsParamsDictTagged
 
 
 class MriSegstatsOutputs(typing.NamedTuple):

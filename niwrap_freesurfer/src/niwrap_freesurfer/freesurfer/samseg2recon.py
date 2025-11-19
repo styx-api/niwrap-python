@@ -13,8 +13,7 @@ SAMSEG2RECON_METADATA = Metadata(
 )
 
 
-Samseg2reconParamsDict = typing.TypedDict('Samseg2reconParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg2recon"]],
+_Samseg2reconParamsDictNoTag = typing.TypedDict('_Samseg2reconParamsDictNoTag', {
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
     "no_cc": bool,
@@ -43,6 +42,7 @@ Samseg2reconParamsDictTagged = typing.TypedDict('Samseg2reconParamsDictTagged', 
     "from_recon_all": bool,
     "force_update": bool,
 })
+Samseg2reconParamsDict = _Samseg2reconParamsDictNoTag | Samseg2reconParamsDictTagged
 
 
 class Samseg2reconOutputs(typing.NamedTuple):

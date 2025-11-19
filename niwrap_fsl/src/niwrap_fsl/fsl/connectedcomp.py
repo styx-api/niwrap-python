@@ -13,8 +13,7 @@ CONNECTEDCOMP_METADATA = Metadata(
 )
 
 
-ConnectedcompParamsDict = typing.TypedDict('ConnectedcompParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/connectedcomp"]],
+_ConnectedcompParamsDictNoTag = typing.TypedDict('_ConnectedcompParamsDictNoTag', {
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],
@@ -25,6 +24,7 @@ ConnectedcompParamsDictTagged = typing.TypedDict('ConnectedcompParamsDictTagged'
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],
 })
+ConnectedcompParamsDict = _ConnectedcompParamsDictNoTag | ConnectedcompParamsDictTagged
 
 
 class ConnectedcompOutputs(typing.NamedTuple):

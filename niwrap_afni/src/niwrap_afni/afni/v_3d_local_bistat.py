@@ -13,8 +13,7 @@ V_3D_LOCAL_BISTAT_METADATA = Metadata(
 )
 
 
-V3dLocalBistatParamsDict = typing.TypedDict('V3dLocalBistatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalBistat"]],
+_V3dLocalBistatParamsDictNoTag = typing.TypedDict('_V3dLocalBistatParamsDictNoTag', {
     "nbhd": str,
     "stats": list[str],
     "mask": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ V3dLocalBistatParamsDictTagged = typing.TypedDict('V3dLocalBistatParamsDictTagge
     "dataset1": InputPathType,
     "dataset2": InputPathType,
 })
+V3dLocalBistatParamsDict = _V3dLocalBistatParamsDictNoTag | V3dLocalBistatParamsDictTagged
 
 
 class V3dLocalBistatOutputs(typing.NamedTuple):

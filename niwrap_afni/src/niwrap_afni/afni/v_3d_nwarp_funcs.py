@@ -13,8 +13,7 @@ V_3D_NWARP_FUNCS_METADATA = Metadata(
 )
 
 
-V3dNwarpFuncsParamsDict = typing.TypedDict('V3dNwarpFuncsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpFuncs"]],
+_V3dNwarpFuncsParamsDictNoTag = typing.TypedDict('_V3dNwarpFuncsParamsDictNoTag', {
     "input_warp": InputPathType,
     "output_prefix": str,
     "bulk_flag": bool,
@@ -31,6 +30,7 @@ V3dNwarpFuncsParamsDictTagged = typing.TypedDict('V3dNwarpFuncsParamsDictTagged'
     "vorticity_flag": bool,
     "all_flag": bool,
 })
+V3dNwarpFuncsParamsDict = _V3dNwarpFuncsParamsDictNoTag | V3dNwarpFuncsParamsDictTagged
 
 
 class V3dNwarpFuncsOutputs(typing.NamedTuple):

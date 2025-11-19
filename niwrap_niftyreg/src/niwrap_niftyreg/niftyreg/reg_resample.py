@@ -13,8 +13,7 @@ REG_RESAMPLE_METADATA = Metadata(
 )
 
 
-RegResampleParamsDict = typing.TypedDict('RegResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_resample"]],
+_RegResampleParamsDictNoTag = typing.TypedDict('_RegResampleParamsDictNoTag', {
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ RegResampleParamsDictTagged = typing.TypedDict('RegResampleParamsDictTagged', {
     "nearest_neighbor": bool,
     "linear_interpolation": bool,
 })
+RegResampleParamsDict = _RegResampleParamsDictNoTag | RegResampleParamsDictTagged
 
 
 class RegResampleOutputs(typing.NamedTuple):

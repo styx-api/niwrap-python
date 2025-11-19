@@ -13,8 +13,7 @@ SLICETIMER_METADATA = Metadata(
 )
 
 
-SlicetimerParamsDict = typing.TypedDict('SlicetimerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slicetimer"]],
+_SlicetimerParamsDictNoTag = typing.TypedDict('_SlicetimerParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
@@ -39,6 +38,7 @@ SlicetimerParamsDictTagged = typing.TypedDict('SlicetimerParamsDictTagged', {
     "tglobal_value": typing.NotRequired[float | None],
     "ocustom_file": typing.NotRequired[InputPathType | None],
 })
+SlicetimerParamsDict = _SlicetimerParamsDictNoTag | SlicetimerParamsDictTagged
 
 
 class SlicetimerOutputs(typing.NamedTuple):

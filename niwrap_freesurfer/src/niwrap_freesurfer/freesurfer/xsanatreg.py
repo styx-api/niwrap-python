@@ -13,8 +13,7 @@ XSANATREG_METADATA = Metadata(
 )
 
 
-XsanatregParamsDict = typing.TypedDict('XsanatregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xsanatreg"]],
+_XsanatregParamsDictNoTag = typing.TypedDict('_XsanatregParamsDictNoTag', {
     "src_cordir": str,
     "targ_cordir": str,
     "transform_file": str,
@@ -37,6 +36,7 @@ XsanatregParamsDictTagged = typing.TypedDict('XsanatregParamsDictTagged', {
     "version": bool,
     "umask": typing.NotRequired[str | None],
 })
+XsanatregParamsDict = _XsanatregParamsDictNoTag | XsanatregParamsDictTagged
 
 
 class XsanatregOutputs(typing.NamedTuple):

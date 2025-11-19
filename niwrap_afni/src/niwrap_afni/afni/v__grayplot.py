@@ -13,8 +13,7 @@ V__GRAYPLOT_METADATA = Metadata(
 )
 
 
-VGrayplotParamsDict = typing.TypedDict('VGrayplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@grayplot"]],
+_VGrayplotParamsDictNoTag = typing.TypedDict('_VGrayplotParamsDictNoTag', {
     "dirname": str,
     "pvorder": bool,
     "peelorder": bool,
@@ -29,6 +28,7 @@ VGrayplotParamsDictTagged = typing.TypedDict('VGrayplotParamsDictTagged', {
     "ijkorder": bool,
     "allorder": bool,
 })
+VGrayplotParamsDict = _VGrayplotParamsDictNoTag | VGrayplotParamsDictTagged
 
 
 class VGrayplotOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ NMOVIE_QT_METADATA = Metadata(
 )
 
 
-NmovieQtParamsDict = typing.TypedDict('NmovieQtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/nmovie_qt"]],
+_NmovieQtParamsDictNoTag = typing.TypedDict('_NmovieQtParamsDictNoTag', {
     "images": list[InputPathType],
 })
 NmovieQtParamsDictTagged = typing.TypedDict('NmovieQtParamsDictTagged', {
     "@type": typing.Literal["freesurfer/nmovie_qt"],
     "images": list[InputPathType],
 })
+NmovieQtParamsDict = _NmovieQtParamsDictNoTag | NmovieQtParamsDictTagged
 
 
 class NmovieQtOutputs(typing.NamedTuple):

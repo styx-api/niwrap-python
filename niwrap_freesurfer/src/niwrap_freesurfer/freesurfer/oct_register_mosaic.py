@@ -13,8 +13,7 @@ OCT_REGISTER_MOSAIC_METADATA = Metadata(
 )
 
 
-OctRegisterMosaicParamsDict = typing.TypedDict('OctRegisterMosaicParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/oct_register_mosaic"]],
+_OctRegisterMosaicParamsDictNoTag = typing.TypedDict('_OctRegisterMosaicParamsDictNoTag', {
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
     "downsample": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ OctRegisterMosaicParamsDictTagged = typing.TypedDict('OctRegisterMosaicParamsDic
     "downsample": typing.NotRequired[float | None],
     "weight_file": typing.NotRequired[InputPathType | None],
 })
+OctRegisterMosaicParamsDict = _OctRegisterMosaicParamsDictNoTag | OctRegisterMosaicParamsDictTagged
 
 
 class OctRegisterMosaicOutputs(typing.NamedTuple):

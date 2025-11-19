@@ -13,8 +13,7 @@ LABEL_SUBJECT_METADATA = Metadata(
 )
 
 
-LabelSubjectParamsDict = typing.TypedDict('LabelSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject"]],
+_LabelSubjectParamsDictNoTag = typing.TypedDict('_LabelSubjectParamsDictNoTag', {
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ LabelSubjectParamsDictTagged = typing.TypedDict('LabelSubjectParamsDictTagged', 
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })
+LabelSubjectParamsDict = _LabelSubjectParamsDictNoTag | LabelSubjectParamsDictTagged
 
 
 class LabelSubjectOutputs(typing.NamedTuple):

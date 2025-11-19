@@ -13,8 +13,7 @@ FSL_ANAT_METADATA = Metadata(
 )
 
 
-FslAnatParamsDict = typing.TypedDict('FslAnatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_anat"]],
+_FslAnatParamsDictNoTag = typing.TypedDict('_FslAnatParamsDictNoTag', {
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],
@@ -55,6 +54,7 @@ FslAnatParamsDictTagged = typing.TypedDict('FslAnatParamsDictTagged', {
     "bet_f_param": typing.NotRequired[float | None],
     "nocleanup_flag": bool,
 })
+FslAnatParamsDict = _FslAnatParamsDictNoTag | FslAnatParamsDictTagged
 
 
 class FslAnatOutputs(typing.NamedTuple):

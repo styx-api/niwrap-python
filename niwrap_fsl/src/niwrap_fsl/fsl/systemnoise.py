@@ -13,8 +13,7 @@ SYSTEMNOISE_METADATA = Metadata(
 )
 
 
-SystemnoiseParamsDict = typing.TypedDict('SystemnoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/systemnoise"]],
+_SystemnoiseParamsDictNoTag = typing.TypedDict('_SystemnoiseParamsDictNoTag', {
     "input_signal": InputPathType,
     "output_signal": str,
     "noise_standard_deviation": float,
@@ -31,6 +30,7 @@ SystemnoiseParamsDictTagged = typing.TypedDict('SystemnoiseParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+SystemnoiseParamsDict = _SystemnoiseParamsDictNoTag | SystemnoiseParamsDictTagged
 
 
 class SystemnoiseOutputs(typing.NamedTuple):

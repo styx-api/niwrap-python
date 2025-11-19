@@ -13,8 +13,7 @@ MAKE_EXVIVO_FILLED_METADATA = Metadata(
 )
 
 
-MakeExvivoFilledParamsDict = typing.TypedDict('MakeExvivoFilledParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_exvivo_filled"]],
+_MakeExvivoFilledParamsDictNoTag = typing.TypedDict('_MakeExvivoFilledParamsDictNoTag', {
     "subject_name": str,
     "input_samseg": InputPathType,
     "input_intensity_vol": InputPathType,
@@ -27,6 +26,7 @@ MakeExvivoFilledParamsDictTagged = typing.TypedDict('MakeExvivoFilledParamsDictT
     "input_intensity_vol": InputPathType,
     "hemi_both": str,
 })
+MakeExvivoFilledParamsDict = _MakeExvivoFilledParamsDictNoTag | MakeExvivoFilledParamsDictTagged
 
 
 class MakeExvivoFilledOutputs(typing.NamedTuple):

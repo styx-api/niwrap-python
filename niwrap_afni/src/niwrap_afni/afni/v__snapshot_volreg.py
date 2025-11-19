@@ -13,8 +13,7 @@ V__SNAPSHOT_VOLREG_METADATA = Metadata(
 )
 
 
-VSnapshotVolregParamsDict = typing.TypedDict('VSnapshotVolregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@snapshot_volreg"]],
+_VSnapshotVolregParamsDictNoTag = typing.TypedDict('_VSnapshotVolregParamsDictNoTag', {
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
     "jname": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ VSnapshotVolregParamsDictTagged = typing.TypedDict('VSnapshotVolregParamsDictTag
     "jname": typing.NotRequired[str | None],
     "xdisplay": typing.NotRequired[str | None],
 })
+VSnapshotVolregParamsDict = _VSnapshotVolregParamsDictNoTag | VSnapshotVolregParamsDictTagged
 
 
 class VSnapshotVolregOutputs(typing.NamedTuple):

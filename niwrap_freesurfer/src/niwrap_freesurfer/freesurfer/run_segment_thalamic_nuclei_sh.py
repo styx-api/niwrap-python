@@ -13,8 +13,7 @@ RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 )
 
 
-RunSegmentThalamicNucleiShParamsDict = typing.TypedDict('RunSegmentThalamicNucleiShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentThalamicNuclei.sh"]],
+_RunSegmentThalamicNucleiShParamsDictNoTag = typing.TypedDict('_RunSegmentThalamicNucleiShParamsDictNoTag', {
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
 })
@@ -23,6 +22,7 @@ RunSegmentThalamicNucleiShParamsDictTagged = typing.TypedDict('RunSegmentThalami
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
 })
+RunSegmentThalamicNucleiShParamsDict = _RunSegmentThalamicNucleiShParamsDictNoTag | RunSegmentThalamicNucleiShParamsDictTagged
 
 
 class RunSegmentThalamicNucleiShOutputs(typing.NamedTuple):

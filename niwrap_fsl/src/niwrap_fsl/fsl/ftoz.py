@@ -13,8 +13,7 @@ FTOZ_METADATA = Metadata(
 )
 
 
-FtozParamsDict = typing.TypedDict('FtozParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ftoz"]],
+_FtozParamsDictNoTag = typing.TypedDict('_FtozParamsDictNoTag', {
     "input_file": InputPathType,
     "dof1": float,
     "dof2": float,
@@ -29,6 +28,7 @@ FtozParamsDictTagged = typing.TypedDict('FtozParamsDictTagged', {
     "output_file": typing.NotRequired[str | None],
     "help_flag": bool,
 })
+FtozParamsDict = _FtozParamsDictNoTag | FtozParamsDictTagged
 
 
 class FtozOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TSFDIVIDE_METADATA = Metadata(
 )
 
 
-TsfdivideConfigParamsDict = typing.TypedDict('TsfdivideConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfdivideConfigParamsDictNoTag = typing.TypedDict('_TsfdivideConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfdivideConfigParamsDictTagged = typing.TypedDict('TsfdivideConfigParamsDictTag
     "key": str,
     "value": str,
 })
+TsfdivideConfigParamsDict = _TsfdivideConfigParamsDictNoTag | TsfdivideConfigParamsDictTagged
 
 
-TsfdivideParamsDict = typing.TypedDict('TsfdivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfdivide"]],
+_TsfdivideParamsDictNoTag = typing.TypedDict('_TsfdivideParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ TsfdivideParamsDictTagged = typing.TypedDict('TsfdivideParamsDictTagged', {
     "input2": InputPathType,
     "output": str,
 })
+TsfdivideParamsDict = _TsfdivideParamsDictNoTag | TsfdivideParamsDictTagged
 
 
 def tsfdivide_config(

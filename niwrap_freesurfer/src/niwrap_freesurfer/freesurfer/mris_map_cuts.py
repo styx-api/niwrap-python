@@ -13,8 +13,7 @@ MRIS_MAP_CUTS_METADATA = Metadata(
 )
 
 
-MrisMapCutsParamsDict = typing.TypedDict('MrisMapCutsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_map_cuts"]],
+_MrisMapCutsParamsDictNoTag = typing.TypedDict('_MrisMapCutsParamsDictNoTag', {
     "input_patch": InputPathType,
     "output_patch": str,
 })
@@ -23,6 +22,7 @@ MrisMapCutsParamsDictTagged = typing.TypedDict('MrisMapCutsParamsDictTagged', {
     "input_patch": InputPathType,
     "output_patch": str,
 })
+MrisMapCutsParamsDict = _MrisMapCutsParamsDictNoTag | MrisMapCutsParamsDictTagged
 
 
 class MrisMapCutsOutputs(typing.NamedTuple):

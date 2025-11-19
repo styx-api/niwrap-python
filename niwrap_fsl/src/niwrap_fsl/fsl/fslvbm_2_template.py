@@ -13,8 +13,7 @@ FSLVBM_2_TEMPLATE_METADATA = Metadata(
 )
 
 
-Fslvbm2TemplateParamsDict = typing.TypedDict('Fslvbm2TemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_2_template"]],
+_Fslvbm2TemplateParamsDictNoTag = typing.TypedDict('_Fslvbm2TemplateParamsDictNoTag', {
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],
@@ -67,6 +66,7 @@ Fslvbm2TemplateParamsDictTagged = typing.TypedDict('Fslvbm2TemplateParamsDictTag
     "runtime_limit": typing.NotRequired[float | None],
     "job_file": typing.NotRequired[InputPathType | None],
 })
+Fslvbm2TemplateParamsDict = _Fslvbm2TemplateParamsDictNoTag | Fslvbm2TemplateParamsDictTagged
 
 
 class Fslvbm2TemplateOutputs(typing.NamedTuple):

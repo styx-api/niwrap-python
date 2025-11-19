@@ -13,8 +13,7 @@ DICOM_RENAME_METADATA = Metadata(
 )
 
 
-DicomRenameParamsDict = typing.TypedDict('DicomRenameParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dicom-rename"]],
+_DicomRenameParamsDictNoTag = typing.TypedDict('_DicomRenameParamsDictNoTag', {
     "input_files": list[InputPathType],
     "output_base": str,
     "version": bool,
@@ -27,6 +26,7 @@ DicomRenameParamsDictTagged = typing.TypedDict('DicomRenameParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+DicomRenameParamsDict = _DicomRenameParamsDictNoTag | DicomRenameParamsDictTagged
 
 
 class DicomRenameOutputs(typing.NamedTuple):

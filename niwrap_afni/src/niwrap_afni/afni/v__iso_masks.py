@@ -13,8 +13,7 @@ V__ISO_MASKS_METADATA = Metadata(
 )
 
 
-VIsoMasksParamsDict = typing.TypedDict('VIsoMasksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@IsoMasks"]],
+_VIsoMasksParamsDictNoTag = typing.TypedDict('_VIsoMasksParamsDictNoTag', {
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })
@@ -23,6 +22,7 @@ VIsoMasksParamsDictTagged = typing.TypedDict('VIsoMasksParamsDictTagged', {
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })
+VIsoMasksParamsDict = _VIsoMasksParamsDictNoTag | VIsoMasksParamsDictTagged
 
 
 class VIsoMasksOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_CRUISETO_AFNI_METADATA = Metadata(
 )
 
 
-V3dCruisetoAfniTraceParamsDict = typing.TypedDict('V3dCruisetoAfniTraceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trace"]],
+_V3dCruisetoAfniTraceParamsDictNoTag = typing.TypedDict('_V3dCruisetoAfniTraceParamsDictNoTag', {
     "trace": bool,
     "TRACE": bool,
 })
@@ -23,10 +22,10 @@ V3dCruisetoAfniTraceParamsDictTagged = typing.TypedDict('V3dCruisetoAfniTracePar
     "trace": bool,
     "TRACE": bool,
 })
+V3dCruisetoAfniTraceParamsDict = _V3dCruisetoAfniTraceParamsDictNoTag | V3dCruisetoAfniTraceParamsDictTagged
 
 
-V3dCruisetoAfniParamsDict = typing.TypedDict('V3dCruisetoAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dCRUISEtoAFNI"]],
+_V3dCruisetoAfniParamsDictNoTag = typing.TypedDict('_V3dCruisetoAfniParamsDictNoTag', {
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,
@@ -49,6 +48,7 @@ V3dCruisetoAfniParamsDictTagged = typing.TypedDict('V3dCruisetoAfniParamsDictTag
     "help": bool,
     "h": bool,
 })
+V3dCruisetoAfniParamsDict = _V3dCruisetoAfniParamsDictNoTag | V3dCruisetoAfniParamsDictTagged
 
 
 def v_3d_cruiseto_afni_trace(

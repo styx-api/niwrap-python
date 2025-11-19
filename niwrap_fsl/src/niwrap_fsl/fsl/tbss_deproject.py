@@ -13,8 +13,7 @@ TBSS_DEPROJECT_METADATA = Metadata(
 )
 
 
-TbssDeprojectParamsDict = typing.TypedDict('TbssDeprojectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_deproject"]],
+_TbssDeprojectParamsDictNoTag = typing.TypedDict('_TbssDeprojectParamsDictNoTag', {
     "skeleton_space_input_image": InputPathType,
     "final_space_option": int,
     "index_image_flag": bool,
@@ -25,6 +24,7 @@ TbssDeprojectParamsDictTagged = typing.TypedDict('TbssDeprojectParamsDictTagged'
     "final_space_option": int,
     "index_image_flag": bool,
 })
+TbssDeprojectParamsDict = _TbssDeprojectParamsDictNoTag | TbssDeprojectParamsDictTagged
 
 
 class TbssDeprojectOutputs(typing.NamedTuple):

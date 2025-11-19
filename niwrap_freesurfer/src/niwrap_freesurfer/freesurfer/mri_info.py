@@ -13,8 +13,7 @@ MRI_INFO_METADATA = Metadata(
 )
 
 
-MriInfoParamsDict = typing.TypedDict('MriInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_info"]],
+_MriInfoParamsDictNoTag = typing.TypedDict('_MriInfoParamsDictNoTag', {
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
     "conformed": bool,
@@ -123,6 +122,7 @@ MriInfoParamsDictTagged = typing.TypedDict('MriInfoParamsDictTagged', {
     "orig_ras2vox": bool,
     "in_type": typing.NotRequired[str | None],
 })
+MriInfoParamsDict = _MriInfoParamsDictNoTag | MriInfoParamsDictTagged
 
 
 class MriInfoOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
 )
 
 
-AntsNeuroimagingBatteryParamsDict = typing.TypedDict('AntsNeuroimagingBatteryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsNeuroimagingBattery"]],
+_AntsNeuroimagingBatteryParamsDictNoTag = typing.TypedDict('_AntsNeuroimagingBatteryParamsDictNoTag', {
     "input_directory": str,
     "output_directory": str,
     "output_name": str,
@@ -57,6 +56,7 @@ AntsNeuroimagingBatteryParamsDictTagged = typing.TypedDict('AntsNeuroimagingBatt
     "help": bool,
     "info_only": bool,
 })
+AntsNeuroimagingBatteryParamsDict = _AntsNeuroimagingBatteryParamsDictNoTag | AntsNeuroimagingBatteryParamsDictTagged
 
 
 class AntsNeuroimagingBatteryOutputs(typing.NamedTuple):

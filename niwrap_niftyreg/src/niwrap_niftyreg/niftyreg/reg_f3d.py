@@ -13,8 +13,7 @@ REG_F3D_METADATA = Metadata(
 )
 
 
-RegF3dParamsDict = typing.TypedDict('RegF3dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_f3d"]],
+_RegF3dParamsDictNoTag = typing.TypedDict('_RegF3dParamsDictNoTag', {
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -99,6 +98,7 @@ RegF3dParamsDictTagged = typing.TypedDict('RegF3dParamsDictTagged', {
     "padding_value": typing.NotRequired[float | None],
     "verbose_off": bool,
 })
+RegF3dParamsDict = _RegF3dParamsDictNoTag | RegF3dParamsDictTagged
 
 
 class RegF3dOutputs(typing.NamedTuple):

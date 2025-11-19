@@ -12,8 +12,7 @@ CIFTI_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiAverageRoiCorrelationCiftiRoiParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti-roi"]],
+_CiftiAverageRoiCorrelationCiftiRoiParamsDictNoTag = typing.TypedDict('_CiftiAverageRoiCorrelationCiftiRoiParamsDictNoTag', {
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
@@ -22,20 +21,20 @@ CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged = typing.TypedDict('CiftiAver
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
+CiftiAverageRoiCorrelationCiftiRoiParamsDict = _CiftiAverageRoiCorrelationCiftiRoiParamsDictNoTag | CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged
 
 
-CiftiAverageRoiCorrelationCiftiParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiAverageRoiCorrelationCiftiParamsDictNoTag = typing.TypedDict('_CiftiAverageRoiCorrelationCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
 })
 CiftiAverageRoiCorrelationCiftiParamsDictTagged = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
+CiftiAverageRoiCorrelationCiftiParamsDict = _CiftiAverageRoiCorrelationCiftiParamsDictNoTag | CiftiAverageRoiCorrelationCiftiParamsDictTagged
 
 
-CiftiAverageRoiCorrelationParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-average-roi-correlation"]],
+_CiftiAverageRoiCorrelationParamsDictNoTag = typing.TypedDict('_CiftiAverageRoiCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "cifti-roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -60,6 +59,7 @@ CiftiAverageRoiCorrelationParamsDictTagged = typing.TypedDict('CiftiAverageRoiCo
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
     "cifti": typing.NotRequired[list[CiftiAverageRoiCorrelationCiftiParamsDict] | None],
 })
+CiftiAverageRoiCorrelationParamsDict = _CiftiAverageRoiCorrelationParamsDictNoTag | CiftiAverageRoiCorrelationParamsDictTagged
 
 
 def cifti_average_roi_correlation_cifti_roi(

@@ -13,8 +13,7 @@ MRIS_HAUSDORFF_DIST_METADATA = Metadata(
 )
 
 
-MrisHausdorffDistParamsDict = typing.TypedDict('MrisHausdorffDistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_hausdorff_dist"]],
+_MrisHausdorffDistParamsDictNoTag = typing.TypedDict('_MrisHausdorffDistParamsDictNoTag', {
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
@@ -27,6 +26,7 @@ MrisHausdorffDistParamsDictTagged = typing.TypedDict('MrisHausdorffDistParamsDic
     "label2": InputPathType,
     "annot_name": typing.NotRequired[str | None],
 })
+MrisHausdorffDistParamsDict = _MrisHausdorffDistParamsDictNoTag | MrisHausdorffDistParamsDictTagged
 
 
 class MrisHausdorffDistOutputs(typing.NamedTuple):

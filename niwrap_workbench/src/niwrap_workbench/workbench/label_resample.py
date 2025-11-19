@@ -12,8 +12,7 @@ LABEL_RESAMPLE_METADATA = Metadata(
 )
 
 
-LabelResampleAreaSurfsParamsDict = typing.TypedDict('LabelResampleAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+_LabelResampleAreaSurfsParamsDictNoTag = typing.TypedDict('_LabelResampleAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -22,10 +21,10 @@ LabelResampleAreaSurfsParamsDictTagged = typing.TypedDict('LabelResampleAreaSurf
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+LabelResampleAreaSurfsParamsDict = _LabelResampleAreaSurfsParamsDictNoTag | LabelResampleAreaSurfsParamsDictTagged
 
 
-LabelResampleAreaMetricsParamsDict = typing.TypedDict('LabelResampleAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+_LabelResampleAreaMetricsParamsDictNoTag = typing.TypedDict('_LabelResampleAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -34,10 +33,10 @@ LabelResampleAreaMetricsParamsDictTagged = typing.TypedDict('LabelResampleAreaMe
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+LabelResampleAreaMetricsParamsDict = _LabelResampleAreaMetricsParamsDictNoTag | LabelResampleAreaMetricsParamsDictTagged
 
 
-LabelResampleParamsDict = typing.TypedDict('LabelResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-resample"]],
+_LabelResampleParamsDictNoTag = typing.TypedDict('_LabelResampleParamsDictNoTag', {
     "label-out": str,
     "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
@@ -64,6 +63,7 @@ LabelResampleParamsDictTagged = typing.TypedDict('LabelResampleParamsDictTagged'
     "new-sphere": InputPathType,
     "method": str,
 })
+LabelResampleParamsDict = _LabelResampleParamsDictNoTag | LabelResampleParamsDictTagged
 
 
 def label_resample_area_surfs(

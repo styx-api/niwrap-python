@@ -13,8 +13,7 @@ MRIS_LEFT_RIGHT_REGISTER_METADATA = Metadata(
 )
 
 
-MrisLeftRightRegisterParamsDict = typing.TypedDict('MrisLeftRightRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_left_right_register"]],
+_MrisLeftRightRegisterParamsDictNoTag = typing.TypedDict('_MrisLeftRightRegisterParamsDictNoTag', {
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
     "lh_sphere_left_right": str,
@@ -27,6 +26,7 @@ MrisLeftRightRegisterParamsDictTagged = typing.TypedDict('MrisLeftRightRegisterP
     "lh_sphere_left_right": str,
     "rh_sphere_left_right": str,
 })
+MrisLeftRightRegisterParamsDict = _MrisLeftRightRegisterParamsDictNoTag | MrisLeftRightRegisterParamsDictTagged
 
 
 class MrisLeftRightRegisterOutputs(typing.NamedTuple):

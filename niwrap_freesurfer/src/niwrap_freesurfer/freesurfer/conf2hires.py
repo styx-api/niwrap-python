@@ -13,8 +13,7 @@ CONF2HIRES_METADATA = Metadata(
 )
 
 
-Conf2hiresParamsDict = typing.TypedDict('Conf2hiresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/conf2hires"]],
+_Conf2hiresParamsDictNoTag = typing.TypedDict('_Conf2hiresParamsDictNoTag', {
     "subject": str,
     "t2": bool,
     "no_t2": bool,
@@ -61,6 +60,7 @@ Conf2hiresParamsDictTagged = typing.TypedDict('Conf2hiresParamsDictTagged', {
     "expert": typing.NotRequired[str | None],
     "force_update": bool,
 })
+Conf2hiresParamsDict = _Conf2hiresParamsDictNoTag | Conf2hiresParamsDictTagged
 
 
 class Conf2hiresOutputs(typing.NamedTuple):

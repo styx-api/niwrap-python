@@ -13,8 +13,7 @@ V__ROI_DECLUSTER_METADATA = Metadata(
 )
 
 
-VRoiDeclusterParamsDict = typing.TypedDict('VRoiDeclusterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ROI_decluster"]],
+_VRoiDeclusterParamsDictNoTag = typing.TypedDict('_VRoiDeclusterParamsDictNoTag', {
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "nvox_thresh": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ VRoiDeclusterParamsDictTagged = typing.TypedDict('VRoiDeclusterParamsDictTagged'
     "prefix": typing.NotRequired[str | None],
     "neighborhood_type": typing.NotRequired[int | None],
 })
+VRoiDeclusterParamsDict = _VRoiDeclusterParamsDictNoTag | VRoiDeclusterParamsDictTagged
 
 
 class VRoiDeclusterOutputs(typing.NamedTuple):

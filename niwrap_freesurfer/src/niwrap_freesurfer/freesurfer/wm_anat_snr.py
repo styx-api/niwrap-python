@@ -13,8 +13,7 @@ WM_ANAT_SNR_METADATA = Metadata(
 )
 
 
-WmAnatSnrParamsDict = typing.TypedDict('WmAnatSnrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/wm-anat-snr"]],
+_WmAnatSnrParamsDictNoTag = typing.TypedDict('_WmAnatSnrParamsDictNoTag', {
     "subject": str,
     "output_file": str,
     "force": bool,
@@ -33,6 +32,7 @@ WmAnatSnrParamsDictTagged = typing.TypedDict('WmAnatSnrParamsDictTagged', {
     "cleanup": bool,
     "no_cleanup": bool,
 })
+WmAnatSnrParamsDict = _WmAnatSnrParamsDictNoTag | WmAnatSnrParamsDictTagged
 
 
 class WmAnatSnrOutputs(typing.NamedTuple):

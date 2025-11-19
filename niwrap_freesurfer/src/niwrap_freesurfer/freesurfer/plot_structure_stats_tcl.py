@@ -13,8 +13,7 @@ PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
 )
 
 
-PlotStructureStatsTclParamsDict = typing.TypedDict('PlotStructureStatsTclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/plot_structure_stats.tcl"]],
+_PlotStructureStatsTclParamsDictNoTag = typing.TypedDict('_PlotStructureStatsTclParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ PlotStructureStatsTclParamsDictTagged = typing.TypedDict('PlotStructureStatsTclP
     "input_file": InputPathType,
     "output_file": str,
 })
+PlotStructureStatsTclParamsDict = _PlotStructureStatsTclParamsDictNoTag | PlotStructureStatsTclParamsDictTagged
 
 
 class PlotStructureStatsTclOutputs(typing.NamedTuple):

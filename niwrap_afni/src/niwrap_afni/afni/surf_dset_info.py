@@ -13,8 +13,7 @@ SURF_DSET_INFO_METADATA = Metadata(
 )
 
 
-SurfDsetInfoParamsDict = typing.TypedDict('SurfDsetInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfDsetInfo"]],
+_SurfDsetInfoParamsDictNoTag = typing.TypedDict('_SurfDsetInfoParamsDictNoTag', {
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
     "novolreg": bool,
@@ -57,6 +56,7 @@ SurfDsetInfoParamsDictTagged = typing.TypedDict('SurfDsetInfoParamsDictTagged', 
     "help_aspx": bool,
     "all_opts": bool,
 })
+SurfDsetInfoParamsDict = _SurfDsetInfoParamsDictNoTag | SurfDsetInfoParamsDictTagged
 
 
 class SurfDsetInfoOutputs(typing.NamedTuple):

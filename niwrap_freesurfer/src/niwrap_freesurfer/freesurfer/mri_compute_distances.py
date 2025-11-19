@@ -13,8 +13,7 @@ MRI_COMPUTE_DISTANCES_METADATA = Metadata(
 )
 
 
-MriComputeDistancesParamsDict = typing.TypedDict('MriComputeDistancesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_distances"]],
+_MriComputeDistancesParamsDictNoTag = typing.TypedDict('_MriComputeDistancesParamsDictNoTag', {
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -25,6 +24,7 @@ MriComputeDistancesParamsDictTagged = typing.TypedDict('MriComputeDistancesParam
     "target": InputPathType,
     "output_xform": str,
 })
+MriComputeDistancesParamsDict = _MriComputeDistancesParamsDictNoTag | MriComputeDistancesParamsDictTagged
 
 
 class MriComputeDistancesOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DMRI_MOTION_METADATA = Metadata(
 )
 
 
-DmriMotionParamsDict = typing.TypedDict('DmriMotionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_motion"]],
+_DmriMotionParamsDictNoTag = typing.TypedDict('_DmriMotionParamsDictNoTag', {
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
     "mat": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ DmriMotionParamsDictTagged = typing.TypedDict('DmriMotionParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+DmriMotionParamsDict = _DmriMotionParamsDictNoTag | DmriMotionParamsDictTagged
 
 
 class DmriMotionOutputs(typing.NamedTuple):

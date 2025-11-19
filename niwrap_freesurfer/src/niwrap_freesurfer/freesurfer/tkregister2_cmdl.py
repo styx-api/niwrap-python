@@ -13,8 +13,7 @@ TKREGISTER2_CMDL_METADATA = Metadata(
 )
 
 
-Tkregister2CmdlParamsDict = typing.TypedDict('Tkregister2CmdlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2_cmdl"]],
+_Tkregister2CmdlParamsDictNoTag = typing.TypedDict('_Tkregister2CmdlParamsDictNoTag', {
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "fstarg_flag": bool,
@@ -139,6 +138,7 @@ Tkregister2CmdlParamsDictTagged = typing.TypedDict('Tkregister2CmdlParamsDictTag
     "rot": typing.NotRequired[list[float] | None],
     "conf_targ_flag": bool,
 })
+Tkregister2CmdlParamsDict = _Tkregister2CmdlParamsDictNoTag | Tkregister2CmdlParamsDictTagged
 
 
 class Tkregister2CmdlOutputs(typing.NamedTuple):

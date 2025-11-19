@@ -13,14 +13,14 @@ MPR2MNI305_METADATA = Metadata(
 )
 
 
-Mpr2mni305ParamsDict = typing.TypedDict('Mpr2mni305ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mpr2mni305"]],
+_Mpr2mni305ParamsDictNoTag = typing.TypedDict('_Mpr2mni305ParamsDictNoTag', {
     "mpr_anat": str,
 })
 Mpr2mni305ParamsDictTagged = typing.TypedDict('Mpr2mni305ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mpr2mni305"],
     "mpr_anat": str,
 })
+Mpr2mni305ParamsDict = _Mpr2mni305ParamsDictNoTag | Mpr2mni305ParamsDictTagged
 
 
 class Mpr2mni305Outputs(typing.NamedTuple):

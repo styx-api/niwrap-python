@@ -13,8 +13,7 @@ LABEL2PATCH_METADATA = Metadata(
 )
 
 
-Label2patchParamsDict = typing.TypedDict('Label2patchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label2patch"]],
+_Label2patchParamsDictNoTag = typing.TypedDict('_Label2patchParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "label_file": InputPathType,
@@ -39,6 +38,7 @@ Label2patchParamsDictTagged = typing.TypedDict('Label2patchParamsDictTagged', {
     "surface_name": typing.NotRequired[str | None],
     "write_surface": bool,
 })
+Label2patchParamsDict = _Label2patchParamsDictNoTag | Label2patchParamsDictTagged
 
 
 class Label2patchOutputs(typing.NamedTuple):

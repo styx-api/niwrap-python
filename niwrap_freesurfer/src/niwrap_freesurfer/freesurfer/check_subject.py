@@ -13,14 +13,14 @@ CHECK_SUBJECT_METADATA = Metadata(
 )
 
 
-CheckSubjectParamsDict = typing.TypedDict('CheckSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/check_subject"]],
+_CheckSubjectParamsDictNoTag = typing.TypedDict('_CheckSubjectParamsDictNoTag', {
     "subject_dir": str,
 })
 CheckSubjectParamsDictTagged = typing.TypedDict('CheckSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/check_subject"],
     "subject_dir": str,
 })
+CheckSubjectParamsDict = _CheckSubjectParamsDictNoTag | CheckSubjectParamsDictTagged
 
 
 class CheckSubjectOutputs(typing.NamedTuple):

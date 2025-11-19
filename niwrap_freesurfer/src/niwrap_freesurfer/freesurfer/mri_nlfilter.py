@@ -13,8 +13,7 @@ MRI_NLFILTER_METADATA = Metadata(
 )
 
 
-MriNlfilterParamsDict = typing.TypedDict('MriNlfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nlfilter"]],
+_MriNlfilterParamsDictNoTag = typing.TypedDict('_MriNlfilterParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "blur_sigma": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ MriNlfilterParamsDictTagged = typing.TypedDict('MriNlfilterParamsDictTagged', {
     "version_flag": bool,
     "help_flag": bool,
 })
+MriNlfilterParamsDict = _MriNlfilterParamsDictNoTag | MriNlfilterParamsDictTagged
 
 
 class MriNlfilterOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ REGISTER_CHILD_METADATA = Metadata(
 )
 
 
-RegisterChildParamsDict = typing.TypedDict('RegisterChildParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/register_child"]],
+_RegisterChildParamsDictNoTag = typing.TypedDict('_RegisterChildParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ RegisterChildParamsDictTagged = typing.TypedDict('RegisterChildParamsDictTagged'
     "input_volume": InputPathType,
     "output_directory": str,
 })
+RegisterChildParamsDict = _RegisterChildParamsDictNoTag | RegisterChildParamsDictTagged
 
 
 class RegisterChildOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-VolumeLabelImportParamsDict = typing.TypedDict('VolumeLabelImportParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-import"]],
+_VolumeLabelImportParamsDictNoTag = typing.TypedDict('_VolumeLabelImportParamsDictNoTag', {
     "output": str,
     "discard-others": bool,
     "value": typing.NotRequired[int | None],
@@ -34,6 +33,7 @@ VolumeLabelImportParamsDictTagged = typing.TypedDict('VolumeLabelImportParamsDic
     "input": InputPathType,
     "label-list-file": str,
 })
+VolumeLabelImportParamsDict = _VolumeLabelImportParamsDictNoTag | VolumeLabelImportParamsDictTagged
 
 
 class VolumeLabelImportOutputs(typing.NamedTuple):

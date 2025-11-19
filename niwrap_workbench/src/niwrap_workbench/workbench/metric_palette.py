@@ -12,8 +12,7 @@ METRIC_PALETTE_METADATA = Metadata(
 )
 
 
-MetricPalettePosPercentParamsDict = typing.TypedDict('MetricPalettePosPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-percent"]],
+_MetricPalettePosPercentParamsDictNoTag = typing.TypedDict('_MetricPalettePosPercentParamsDictNoTag', {
     "pos-min-%": float,
     "pos-max-%": float,
 })
@@ -22,10 +21,10 @@ MetricPalettePosPercentParamsDictTagged = typing.TypedDict('MetricPalettePosPerc
     "pos-min-%": float,
     "pos-max-%": float,
 })
+MetricPalettePosPercentParamsDict = _MetricPalettePosPercentParamsDictNoTag | MetricPalettePosPercentParamsDictTagged
 
 
-MetricPaletteNegPercentParamsDict = typing.TypedDict('MetricPaletteNegPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-percent"]],
+_MetricPaletteNegPercentParamsDictNoTag = typing.TypedDict('_MetricPaletteNegPercentParamsDictNoTag', {
     "neg-min-%": float,
     "neg-max-%": float,
 })
@@ -34,10 +33,10 @@ MetricPaletteNegPercentParamsDictTagged = typing.TypedDict('MetricPaletteNegPerc
     "neg-min-%": float,
     "neg-max-%": float,
 })
+MetricPaletteNegPercentParamsDict = _MetricPaletteNegPercentParamsDictNoTag | MetricPaletteNegPercentParamsDictTagged
 
 
-MetricPalettePosUserParamsDict = typing.TypedDict('MetricPalettePosUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-user"]],
+_MetricPalettePosUserParamsDictNoTag = typing.TypedDict('_MetricPalettePosUserParamsDictNoTag', {
     "pos-min-user": float,
     "pos-max-user": float,
 })
@@ -46,10 +45,10 @@ MetricPalettePosUserParamsDictTagged = typing.TypedDict('MetricPalettePosUserPar
     "pos-min-user": float,
     "pos-max-user": float,
 })
+MetricPalettePosUserParamsDict = _MetricPalettePosUserParamsDictNoTag | MetricPalettePosUserParamsDictTagged
 
 
-MetricPaletteNegUserParamsDict = typing.TypedDict('MetricPaletteNegUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-user"]],
+_MetricPaletteNegUserParamsDictNoTag = typing.TypedDict('_MetricPaletteNegUserParamsDictNoTag', {
     "neg-min-user": float,
     "neg-max-user": float,
 })
@@ -58,10 +57,10 @@ MetricPaletteNegUserParamsDictTagged = typing.TypedDict('MetricPaletteNegUserPar
     "neg-min-user": float,
     "neg-max-user": float,
 })
+MetricPaletteNegUserParamsDict = _MetricPaletteNegUserParamsDictNoTag | MetricPaletteNegUserParamsDictTagged
 
 
-MetricPaletteThresholdingParamsDict = typing.TypedDict('MetricPaletteThresholdingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["thresholding"]],
+_MetricPaletteThresholdingParamsDictNoTag = typing.TypedDict('_MetricPaletteThresholdingParamsDictNoTag', {
     "type": str,
     "test": str,
     "min": float,
@@ -74,10 +73,10 @@ MetricPaletteThresholdingParamsDictTagged = typing.TypedDict('MetricPaletteThres
     "min": float,
     "max": float,
 })
+MetricPaletteThresholdingParamsDict = _MetricPaletteThresholdingParamsDictNoTag | MetricPaletteThresholdingParamsDictTagged
 
 
-MetricPaletteParamsDict = typing.TypedDict('MetricPaletteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-palette"]],
+_MetricPaletteParamsDictNoTag = typing.TypedDict('_MetricPaletteParamsDictNoTag', {
     "column": typing.NotRequired[str | None],
     "pos-percent": typing.NotRequired[MetricPalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[MetricPaletteNegPercentParamsDict | None],
@@ -112,6 +111,7 @@ MetricPaletteParamsDictTagged = typing.TypedDict('MetricPaletteParamsDictTagged'
     "metric": str,
     "mode": str,
 })
+MetricPaletteParamsDict = _MetricPaletteParamsDictNoTag | MetricPaletteParamsDictTagged
 
 
 def metric_palette_pos_percent(

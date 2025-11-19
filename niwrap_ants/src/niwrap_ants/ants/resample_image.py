@@ -13,8 +13,7 @@ RESAMPLE_IMAGE_METADATA = Metadata(
 )
 
 
-ResampleImageParamsDict = typing.TypedDict('ResampleImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ResampleImage"]],
+_ResampleImageParamsDictNoTag = typing.TypedDict('_ResampleImageParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -31,6 +30,7 @@ ResampleImageParamsDictTagged = typing.TypedDict('ResampleImageParamsDictTagged'
     "interpolate_type": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4"] | None],
     "pixeltype": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None],
 })
+ResampleImageParamsDict = _ResampleImageParamsDictNoTag | ResampleImageParamsDictTagged
 
 
 class ResampleImageOutputs(typing.NamedTuple):

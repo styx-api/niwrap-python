@@ -13,8 +13,7 @@ MRI_VOL2VOL_METADATA = Metadata(
 )
 
 
-MriVol2volParamsDict = typing.TypedDict('MriVol2volParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2vol"]],
+_MriVol2volParamsDictNoTag = typing.TypedDict('_MriVol2volParamsDictNoTag', {
     "movvol": InputPathType,
     "targvol": InputPathType,
     "outvol": InputPathType,
@@ -107,6 +106,7 @@ MriVol2volParamsDictTagged = typing.TypedDict('MriVol2volParamsDictTagged', {
     "debug": bool,
     "version": bool,
 })
+MriVol2volParamsDict = _MriVol2volParamsDictNoTag | MriVol2volParamsDictTagged
 
 
 class MriVol2volOutputs(typing.NamedTuple):

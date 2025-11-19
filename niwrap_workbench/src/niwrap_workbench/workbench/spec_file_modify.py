@@ -12,8 +12,7 @@ SPEC_FILE_MODIFY_METADATA = Metadata(
 )
 
 
-SpecFileModifyAddParamsDict = typing.TypedDict('SpecFileModifyAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["add"]],
+_SpecFileModifyAddParamsDictNoTag = typing.TypedDict('_SpecFileModifyAddParamsDictNoTag', {
     "structure": str,
     "file": str,
 })
@@ -22,10 +21,10 @@ SpecFileModifyAddParamsDictTagged = typing.TypedDict('SpecFileModifyAddParamsDic
     "structure": str,
     "file": str,
 })
+SpecFileModifyAddParamsDict = _SpecFileModifyAddParamsDictNoTag | SpecFileModifyAddParamsDictTagged
 
 
-SpecFileModifyRemoveParamsDict = typing.TypedDict('SpecFileModifyRemoveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["remove"]],
+_SpecFileModifyRemoveParamsDictNoTag = typing.TypedDict('_SpecFileModifyRemoveParamsDictNoTag', {
     "filename": str,
     "recursive": bool,
     "suffix": bool,
@@ -36,10 +35,10 @@ SpecFileModifyRemoveParamsDictTagged = typing.TypedDict('SpecFileModifyRemovePar
     "recursive": bool,
     "suffix": bool,
 })
+SpecFileModifyRemoveParamsDict = _SpecFileModifyRemoveParamsDictNoTag | SpecFileModifyRemoveParamsDictTagged
 
 
-SpecFileModifyParamsDict = typing.TypedDict('SpecFileModifyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/spec-file-modify"]],
+_SpecFileModifyParamsDictNoTag = typing.TypedDict('_SpecFileModifyParamsDictNoTag', {
     "add": typing.NotRequired[list[SpecFileModifyAddParamsDict] | None],
     "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
     "spec-file": str,
@@ -50,6 +49,7 @@ SpecFileModifyParamsDictTagged = typing.TypedDict('SpecFileModifyParamsDictTagge
     "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
     "spec-file": str,
 })
+SpecFileModifyParamsDict = _SpecFileModifyParamsDictNoTag | SpecFileModifyParamsDictTagged
 
 
 def spec_file_modify_add(

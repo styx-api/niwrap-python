@@ -13,8 +13,7 @@ APPLYXFM4_D_METADATA = Metadata(
 )
 
 
-Applyxfm4DParamsDict = typing.TypedDict('Applyxfm4DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/applyxfm4D"]],
+_Applyxfm4DParamsDictNoTag = typing.TypedDict('_Applyxfm4DParamsDictNoTag', {
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
     "output_volume": str,
@@ -35,6 +34,7 @@ Applyxfm4DParamsDictTagged = typing.TypedDict('Applyxfm4DParamsDictTagged', {
     "four_digit_flag": bool,
     "user_prefix": typing.NotRequired[str | None],
 })
+Applyxfm4DParamsDict = _Applyxfm4DParamsDictNoTag | Applyxfm4DParamsDictTagged
 
 
 class Applyxfm4DOutputs(typing.NamedTuple):

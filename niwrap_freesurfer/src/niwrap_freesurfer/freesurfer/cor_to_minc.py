@@ -13,8 +13,7 @@ COR_TO_MINC_METADATA = Metadata(
 )
 
 
-CorToMincParamsDict = typing.TypedDict('CorToMincParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/cor_to_minc"]],
+_CorToMincParamsDictNoTag = typing.TypedDict('_CorToMincParamsDictNoTag', {
     "cor_directory": str,
     "minc_file": str,
 })
@@ -23,6 +22,7 @@ CorToMincParamsDictTagged = typing.TypedDict('CorToMincParamsDictTagged', {
     "cor_directory": str,
     "minc_file": str,
 })
+CorToMincParamsDict = _CorToMincParamsDictNoTag | CorToMincParamsDictTagged
 
 
 class CorToMincOutputs(typing.NamedTuple):

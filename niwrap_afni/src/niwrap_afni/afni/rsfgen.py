@@ -13,8 +13,7 @@ RSFGEN_METADATA = Metadata(
 )
 
 
-RsfgenParamsDict = typing.TypedDict('RsfgenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/RSFgen"]],
+_RsfgenParamsDictNoTag = typing.TypedDict('_RsfgenParamsDictNoTag', {
     "length": int,
     "num_experimental_conditions": int,
     "block_length": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ RsfgenParamsDictTagged = typing.TypedDict('RsfgenParamsDictTagged', {
     "prob_zero": typing.NotRequired[float | None],
     "input_table": typing.NotRequired[InputPathType | None],
 })
+RsfgenParamsDict = _RsfgenParamsDictNoTag | RsfgenParamsDictTagged
 
 
 class RsfgenOutputs(typing.NamedTuple):

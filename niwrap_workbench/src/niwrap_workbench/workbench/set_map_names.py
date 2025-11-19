@@ -12,8 +12,7 @@ SET_MAP_NAMES_METADATA = Metadata(
 )
 
 
-SetMapNamesMapParamsDict = typing.TypedDict('SetMapNamesMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["map"]],
+_SetMapNamesMapParamsDictNoTag = typing.TypedDict('_SetMapNamesMapParamsDictNoTag', {
     "index": int,
     "new-name": str,
 })
@@ -22,10 +21,10 @@ SetMapNamesMapParamsDictTagged = typing.TypedDict('SetMapNamesMapParamsDictTagge
     "index": int,
     "new-name": str,
 })
+SetMapNamesMapParamsDict = _SetMapNamesMapParamsDictNoTag | SetMapNamesMapParamsDictTagged
 
 
-SetMapNamesParamsDict = typing.TypedDict('SetMapNamesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/set-map-names"]],
+_SetMapNamesParamsDictNoTag = typing.TypedDict('_SetMapNamesParamsDictNoTag', {
     "file": typing.NotRequired[str | None],
     "file": typing.NotRequired[str | None],
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
@@ -38,6 +37,7 @@ SetMapNamesParamsDictTagged = typing.TypedDict('SetMapNamesParamsDictTagged', {
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
     "data-file": str,
 })
+SetMapNamesParamsDict = _SetMapNamesParamsDictNoTag | SetMapNamesParamsDictTagged
 
 
 def set_map_names_map(

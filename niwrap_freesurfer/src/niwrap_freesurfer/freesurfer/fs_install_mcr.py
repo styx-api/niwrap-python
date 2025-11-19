@@ -13,14 +13,14 @@ FS_INSTALL_MCR_METADATA = Metadata(
 )
 
 
-FsInstallMcrParamsDict = typing.TypedDict('FsInstallMcrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_install_mcr"]],
+_FsInstallMcrParamsDictNoTag = typing.TypedDict('_FsInstallMcrParamsDictNoTag', {
     "mcr_version": str,
 })
 FsInstallMcrParamsDictTagged = typing.TypedDict('FsInstallMcrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_install_mcr"],
     "mcr_version": str,
 })
+FsInstallMcrParamsDict = _FsInstallMcrParamsDictNoTag | FsInstallMcrParamsDictTagged
 
 
 class FsInstallMcrOutputs(typing.NamedTuple):

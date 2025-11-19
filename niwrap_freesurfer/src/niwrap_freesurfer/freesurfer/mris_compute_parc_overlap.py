@@ -13,8 +13,7 @@ MRIS_COMPUTE_PARC_OVERLAP_METADATA = Metadata(
 )
 
 
-MrisComputeParcOverlapParamsDict = typing.TypedDict('MrisComputeParcOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_parc_overlap"]],
+_MrisComputeParcOverlapParamsDictNoTag = typing.TypedDict('_MrisComputeParcOverlapParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "annot1": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ MrisComputeParcOverlapParamsDictTagged = typing.TypedDict('MrisComputeParcOverla
     "use_label_xyz": bool,
     "debug_overlap": bool,
 })
+MrisComputeParcOverlapParamsDict = _MrisComputeParcOverlapParamsDictNoTag | MrisComputeParcOverlapParamsDictTagged
 
 
 class MrisComputeParcOverlapOutputs(typing.NamedTuple):

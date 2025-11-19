@@ -13,8 +13,7 @@ ADJUNCT_SELECT_STR_PY_METADATA = Metadata(
 )
 
 
-AdjunctSelectStrPyParamsDict = typing.TypedDict('AdjunctSelectStrPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_select_str.py"]],
+_AdjunctSelectStrPyParamsDictNoTag = typing.TypedDict('_AdjunctSelectStrPyParamsDictNoTag', {
     "input_file": InputPathType,
     "num_bricks": float,
     "output_file": str,
@@ -25,6 +24,7 @@ AdjunctSelectStrPyParamsDictTagged = typing.TypedDict('AdjunctSelectStrPyParamsD
     "num_bricks": float,
     "output_file": str,
 })
+AdjunctSelectStrPyParamsDict = _AdjunctSelectStrPyParamsDictNoTag | AdjunctSelectStrPyParamsDictTagged
 
 
 class AdjunctSelectStrPyOutputs(typing.NamedTuple):

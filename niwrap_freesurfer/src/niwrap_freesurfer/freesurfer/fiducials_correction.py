@@ -13,8 +13,7 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 )
 
 
-FiducialsCorrectionParamsDict = typing.TypedDict('FiducialsCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_correction"]],
+_FiducialsCorrectionParamsDictNoTag = typing.TypedDict('_FiducialsCorrectionParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ FiducialsCorrectionParamsDictTagged = typing.TypedDict('FiducialsCorrectionParam
     "input_file": InputPathType,
     "output_file": str,
 })
+FiducialsCorrectionParamsDict = _FiducialsCorrectionParamsDictNoTag | FiducialsCorrectionParamsDictTagged
 
 
 class FiducialsCorrectionOutputs(typing.NamedTuple):

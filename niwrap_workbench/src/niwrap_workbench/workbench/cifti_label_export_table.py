@@ -12,8 +12,7 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-CiftiLabelExportTableParamsDict = typing.TypedDict('CiftiLabelExportTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-export-table"]],
+_CiftiLabelExportTableParamsDictNoTag = typing.TypedDict('_CiftiLabelExportTableParamsDictNoTag', {
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
@@ -26,6 +25,7 @@ CiftiLabelExportTableParamsDictTagged = typing.TypedDict('CiftiLabelExportTableP
     "map": str,
     "table-out": str,
 })
+CiftiLabelExportTableParamsDict = _CiftiLabelExportTableParamsDictNoTag | CiftiLabelExportTableParamsDictTagged
 
 
 class CiftiLabelExportTableOutputs(typing.NamedTuple):

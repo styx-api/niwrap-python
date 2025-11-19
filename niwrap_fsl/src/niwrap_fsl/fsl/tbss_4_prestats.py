@@ -13,14 +13,14 @@ TBSS_4_PRESTATS_METADATA = Metadata(
 )
 
 
-Tbss4PrestatsParamsDict = typing.TypedDict('Tbss4PrestatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_4_prestats"]],
+_Tbss4PrestatsParamsDictNoTag = typing.TypedDict('_Tbss4PrestatsParamsDictNoTag', {
     "threshold": float,
 })
 Tbss4PrestatsParamsDictTagged = typing.TypedDict('Tbss4PrestatsParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_4_prestats"],
     "threshold": float,
 })
+Tbss4PrestatsParamsDict = _Tbss4PrestatsParamsDictNoTag | Tbss4PrestatsParamsDictTagged
 
 
 class Tbss4PrestatsOutputs(typing.NamedTuple):

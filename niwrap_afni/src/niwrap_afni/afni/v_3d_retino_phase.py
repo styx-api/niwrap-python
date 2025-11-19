@@ -13,8 +13,7 @@ V_3D_RETINO_PHASE_METADATA = Metadata(
 )
 
 
-V3dRetinoPhaseParamsDict = typing.TypedDict('V3dRetinoPhaseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRetinoPhase"]],
+_V3dRetinoPhaseParamsDictNoTag = typing.TypedDict('_V3dRetinoPhaseParamsDictNoTag', {
     "prefix": str,
     "dataset": InputPathType,
     "exp": typing.NotRequired[str | None],
@@ -51,6 +50,7 @@ V3dRetinoPhaseParamsDictTagged = typing.TypedDict('V3dRetinoPhaseParamsDictTagge
     "ref_ts": typing.NotRequired[InputPathType | None],
     "multi_ref_ts": typing.NotRequired[InputPathType | None],
 })
+V3dRetinoPhaseParamsDict = _V3dRetinoPhaseParamsDictNoTag | V3dRetinoPhaseParamsDictTagged
 
 
 class V3dRetinoPhaseOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ CREATE_LUT_METADATA = Metadata(
 )
 
 
-CreateLutParamsDict = typing.TypedDict('CreateLutParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/create_lut"]],
+_CreateLutParamsDictNoTag = typing.TypedDict('_CreateLutParamsDictNoTag', {
     "output_file_root": str,
 })
 CreateLutParamsDictTagged = typing.TypedDict('CreateLutParamsDictTagged', {
     "@type": typing.Literal["fsl/create_lut"],
     "output_file_root": str,
 })
+CreateLutParamsDict = _CreateLutParamsDictNoTag | CreateLutParamsDictTagged
 
 
 class CreateLutOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DTIGEN_METADATA = Metadata(
 )
 
 
-DtigenParamsDict = typing.TypedDict('DtigenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/dtigen"]],
+_DtigenParamsDictNoTag = typing.TypedDict('_DtigenParamsDictNoTag', {
     "tensor": InputPathType,
     "s0": InputPathType,
     "output_data": str,
@@ -35,6 +34,7 @@ DtigenParamsDictTagged = typing.TypedDict('DtigenParamsDictTagged', {
     "kurtosis": typing.NotRequired[InputPathType | None],
     "help": bool,
 })
+DtigenParamsDict = _DtigenParamsDictNoTag | DtigenParamsDictTagged
 
 
 class DtigenOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_APPLY_BIAS_METADATA = Metadata(
 )
 
 
-MriApplyBiasParamsDict = typing.TypedDict('MriApplyBiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_apply_bias"]],
+_MriApplyBiasParamsDictNoTag = typing.TypedDict('_MriApplyBiasParamsDictNoTag', {
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
     "output_volume": str,
@@ -25,6 +24,7 @@ MriApplyBiasParamsDictTagged = typing.TypedDict('MriApplyBiasParamsDictTagged', 
     "bias_volume": InputPathType,
     "output_volume": str,
 })
+MriApplyBiasParamsDict = _MriApplyBiasParamsDictNoTag | MriApplyBiasParamsDictTagged
 
 
 class MriApplyBiasOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_FWHM_METADATA = Metadata(
 )
 
 
-SurfFwhmParamsDict = typing.TypedDict('SurfFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfFWHM"]],
+_SurfFwhmParamsDictNoTag = typing.TypedDict('_SurfFwhmParamsDictNoTag', {
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "surf_1": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ SurfFwhmParamsDictTagged = typing.TypedDict('SurfFwhmParamsDictTagged', {
     "examples": bool,
     "slice": bool,
 })
+SurfFwhmParamsDict = _SurfFwhmParamsDictNoTag | SurfFwhmParamsDictTagged
 
 
 class SurfFwhmOutputs(typing.NamedTuple):

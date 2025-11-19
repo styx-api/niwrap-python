@@ -13,8 +13,7 @@ SURF_LOCALSTAT_METADATA = Metadata(
 )
 
 
-SurfLocalstatParamsDict = typing.TypedDict('SurfLocalstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfLocalstat"]],
+_SurfLocalstatParamsDictNoTag = typing.TypedDict('_SurfLocalstatParamsDictNoTag', {
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
     "prefix": str,
@@ -31,6 +30,7 @@ SurfLocalstatParamsDictTagged = typing.TypedDict('SurfLocalstatParamsDictTagged'
     "input_dataset": InputPathType,
     "surface": InputPathType,
 })
+SurfLocalstatParamsDict = _SurfLocalstatParamsDictNoTag | SurfLocalstatParamsDictTagged
 
 
 class SurfLocalstatOutputs(typing.NamedTuple):

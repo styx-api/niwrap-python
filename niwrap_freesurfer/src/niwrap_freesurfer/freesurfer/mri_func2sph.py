@@ -13,8 +13,7 @@ MRI_FUNC2SPH_METADATA = Metadata(
 )
 
 
-MriFunc2sphParamsDict = typing.TypedDict('MriFunc2sphParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-func2sph"]],
+_MriFunc2sphParamsDictNoTag = typing.TypedDict('_MriFunc2sphParamsDictNoTag', {
     "instem": str,
     "outstem": str,
     "hemisphere": typing.Literal["lh", "rh"],
@@ -35,6 +34,7 @@ MriFunc2sphParamsDictTagged = typing.TypedDict('MriFunc2sphParamsDictTagged', {
     "input_type": typing.NotRequired[str | None],
     "umask": typing.NotRequired[str | None],
 })
+MriFunc2sphParamsDict = _MriFunc2sphParamsDictNoTag | MriFunc2sphParamsDictTagged
 
 
 class MriFunc2sphOutputs(typing.NamedTuple):

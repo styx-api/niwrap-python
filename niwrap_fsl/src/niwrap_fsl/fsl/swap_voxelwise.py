@@ -13,8 +13,7 @@ SWAP_VOXELWISE_METADATA = Metadata(
 )
 
 
-SwapVoxelwiseParamsDict = typing.TypedDict('SwapVoxelwiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/swap_voxelwise"]],
+_SwapVoxelwiseParamsDictNoTag = typing.TypedDict('_SwapVoxelwiseParamsDictNoTag', {
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
     "mask": InputPathType,
@@ -35,6 +34,7 @@ SwapVoxelwiseParamsDictTagged = typing.TypedDict('SwapVoxelwiseParamsDictTagged'
     "crossing_thresh": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
+SwapVoxelwiseParamsDict = _SwapVoxelwiseParamsDictNoTag | SwapVoxelwiseParamsDictTagged
 
 
 class SwapVoxelwiseOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FSL_MOTION_OUTLIERS_METADATA = Metadata(
 )
 
 
-FslMotionOutliersParamsDict = typing.TypedDict('FslMotionOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_motion_outliers"]],
+_FslMotionOutliersParamsDictNoTag = typing.TypedDict('_FslMotionOutliersParamsDictNoTag', {
     "input_4d_image": InputPathType,
     "output_confound_file": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -49,6 +48,7 @@ FslMotionOutliersParamsDictTagged = typing.TypedDict('FslMotionOutliersParamsDic
     "dummy_scans": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
+FslMotionOutliersParamsDict = _FslMotionOutliersParamsDictNoTag | FslMotionOutliersParamsDictTagged
 
 
 class FslMotionOutliersOutputs(typing.NamedTuple):

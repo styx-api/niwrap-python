@@ -13,8 +13,7 @@ BBMASK_METADATA = Metadata(
 )
 
 
-BbmaskParamsDict = typing.TypedDict('BbmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bbmask"]],
+_BbmaskParamsDictNoTag = typing.TypedDict('_BbmaskParamsDictNoTag', {
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
     "npad": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ BbmaskParamsDictTagged = typing.TypedDict('BbmaskParamsDictTagged', {
     "regheader": typing.NotRequired[InputPathType | None],
     "sub2src": typing.NotRequired[InputPathType | None],
 })
+BbmaskParamsDict = _BbmaskParamsDictNoTag | BbmaskParamsDictTagged
 
 
 class BbmaskOutputs(typing.NamedTuple):

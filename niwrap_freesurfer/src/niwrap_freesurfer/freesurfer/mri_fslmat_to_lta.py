@@ -13,8 +13,7 @@ MRI_FSLMAT_TO_LTA_METADATA = Metadata(
 )
 
 
-MriFslmatToLtaParamsDict = typing.TypedDict('MriFslmatToLtaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fslmat_to_lta"]],
+_MriFslmatToLtaParamsDictNoTag = typing.TypedDict('_MriFslmatToLtaParamsDictNoTag', {
     "src_vol": InputPathType,
     "target_vol": InputPathType,
     "fslmat_file": InputPathType,
@@ -27,6 +26,7 @@ MriFslmatToLtaParamsDictTagged = typing.TypedDict('MriFslmatToLtaParamsDictTagge
     "fslmat_file": InputPathType,
     "lta_file": str,
 })
+MriFslmatToLtaParamsDict = _MriFslmatToLtaParamsDictNoTag | MriFslmatToLtaParamsDictTagged
 
 
 class MriFslmatToLtaOutputs(typing.NamedTuple):

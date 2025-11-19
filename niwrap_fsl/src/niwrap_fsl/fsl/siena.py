@@ -13,8 +13,7 @@ SIENA_METADATA = Metadata(
 )
 
 
-SienaParamsDict = typing.TypedDict('SienaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/siena"]],
+_SienaParamsDictNoTag = typing.TypedDict('_SienaParamsDictNoTag', {
     "input1": InputPathType,
     "input2": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ SienaParamsDictTagged = typing.TypedDict('SienaParamsDictTagged', {
     "ventricle_analysis_flag": bool,
     "ventricle_mask": typing.NotRequired[InputPathType | None],
 })
+SienaParamsDict = _SienaParamsDictNoTag | SienaParamsDictTagged
 
 
 class SienaOutputs(typing.NamedTuple):

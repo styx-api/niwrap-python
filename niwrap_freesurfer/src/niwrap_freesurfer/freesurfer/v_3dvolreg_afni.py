@@ -13,8 +13,7 @@ V_3DVOLREG_AFNI_METADATA = Metadata(
 )
 
 
-V3dvolregAfniParamsDict = typing.TypedDict('V3dvolregAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/3dvolreg.afni"]],
+_V3dvolregAfniParamsDictNoTag = typing.TypedDict('_V3dvolregAfniParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "options": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ V3dvolregAfniParamsDictTagged = typing.TypedDict('V3dvolregAfniParamsDictTagged'
     "output_file": str,
     "options": typing.NotRequired[str | None],
 })
+V3dvolregAfniParamsDict = _V3dvolregAfniParamsDictNoTag | V3dvolregAfniParamsDictTagged
 
 
 class V3dvolregAfniOutputs(typing.NamedTuple):

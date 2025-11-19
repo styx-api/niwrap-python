@@ -13,8 +13,7 @@ FSR_COREG_METADATA = Metadata(
 )
 
 
-FsrCoregParamsDict = typing.TypedDict('FsrCoregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-coreg"]],
+_FsrCoregParamsDictNoTag = typing.TypedDict('_FsrCoregParamsDictNoTag', {
     "import_dir": str,
     "reference_mode": str,
     "num_threads": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ FsrCoregParamsDictTagged = typing.TypedDict('FsrCoregParamsDictTagged', {
     "output_dir": typing.NotRequired[str | None],
     "expert_options": typing.NotRequired[InputPathType | None],
 })
+FsrCoregParamsDict = _FsrCoregParamsDictNoTag | FsrCoregParamsDictTagged
 
 
 class FsrCoregOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ WARPINVERT_METADATA = Metadata(
 )
 
 
-WarpinvertConfigParamsDict = typing.TypedDict('WarpinvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_WarpinvertConfigParamsDictNoTag = typing.TypedDict('_WarpinvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ WarpinvertConfigParamsDictTagged = typing.TypedDict('WarpinvertConfigParamsDictT
     "key": str,
     "value": str,
 })
+WarpinvertConfigParamsDict = _WarpinvertConfigParamsDictNoTag | WarpinvertConfigParamsDictTagged
 
 
-WarpinvertParamsDict = typing.TypedDict('WarpinvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/warpinvert"]],
+_WarpinvertParamsDictNoTag = typing.TypedDict('_WarpinvertParamsDictNoTag', {
     "template": typing.NotRequired[InputPathType | None],
     "displacement": bool,
     "info": bool,
@@ -55,6 +54,7 @@ WarpinvertParamsDictTagged = typing.TypedDict('WarpinvertParamsDictTagged', {
     "in": InputPathType,
     "out": str,
 })
+WarpinvertParamsDict = _WarpinvertParamsDictNoTag | WarpinvertParamsDictTagged
 
 
 def warpinvert_config(

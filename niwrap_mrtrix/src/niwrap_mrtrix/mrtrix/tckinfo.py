@@ -13,8 +13,7 @@ TCKINFO_METADATA = Metadata(
 )
 
 
-TckinfoConfigParamsDict = typing.TypedDict('TckinfoConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckinfoConfigParamsDictNoTag = typing.TypedDict('_TckinfoConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TckinfoConfigParamsDictTagged = typing.TypedDict('TckinfoConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+TckinfoConfigParamsDict = _TckinfoConfigParamsDictNoTag | TckinfoConfigParamsDictTagged
 
 
-TckinfoParamsDict = typing.TypedDict('TckinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckinfo"]],
+_TckinfoParamsDictNoTag = typing.TypedDict('_TckinfoParamsDictNoTag', {
     "count": bool,
     "info": bool,
     "quiet": bool,
@@ -51,6 +50,7 @@ TckinfoParamsDictTagged = typing.TypedDict('TckinfoParamsDictTagged', {
     "version": bool,
     "tracks": list[InputPathType],
 })
+TckinfoParamsDict = _TckinfoParamsDictNoTag | TckinfoParamsDictTagged
 
 
 def tckinfo_config(

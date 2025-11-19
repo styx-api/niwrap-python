@@ -13,8 +13,7 @@ SETLABELSTAT_METADATA = Metadata(
 )
 
 
-SetlabelstatParamsDict = typing.TypedDict('SetlabelstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/setlabelstat"]],
+_SetlabelstatParamsDictNoTag = typing.TypedDict('_SetlabelstatParamsDictNoTag', {
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
     "statval": float,
@@ -27,6 +26,7 @@ SetlabelstatParamsDictTagged = typing.TypedDict('SetlabelstatParamsDictTagged', 
     "statval": float,
     "help": bool,
 })
+SetlabelstatParamsDict = _SetlabelstatParamsDictNoTag | SetlabelstatParamsDictTagged
 
 
 class SetlabelstatOutputs(typing.NamedTuple):

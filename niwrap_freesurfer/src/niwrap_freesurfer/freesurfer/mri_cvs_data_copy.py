@@ -13,8 +13,7 @@ MRI_CVS_DATA_COPY_METADATA = Metadata(
 )
 
 
-MriCvsDataCopyParamsDict = typing.TypedDict('MriCvsDataCopyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_data_copy"]],
+_MriCvsDataCopyParamsDictNoTag = typing.TypedDict('_MriCvsDataCopyParamsDictNoTag', {
     "subjid": str,
     "olddir": str,
     "newdir": str,
@@ -29,6 +28,7 @@ MriCvsDataCopyParamsDictTagged = typing.TypedDict('MriCvsDataCopyParamsDictTagge
     "version": bool,
     "help": bool,
 })
+MriCvsDataCopyParamsDict = _MriCvsDataCopyParamsDictNoTag | MriCvsDataCopyParamsDictTagged
 
 
 class MriCvsDataCopyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RCA_LONG_TP_INIT_METADATA = Metadata(
 )
 
 
-RcaLongTpInitParamsDict = typing.TypedDict('RcaLongTpInitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-long-tp-init"]],
+_RcaLongTpInitParamsDictNoTag = typing.TypedDict('_RcaLongTpInitParamsDictNoTag', {
     "timepoint": str,
     "base": str,
     "use_long_base_ctrl_vol": bool,
@@ -31,6 +30,7 @@ RcaLongTpInitParamsDictTagged = typing.TypedDict('RcaLongTpInitParamsDictTagged'
     "expert_opts": typing.NotRequired[InputPathType | None],
     "subject": typing.NotRequired[str | None],
 })
+RcaLongTpInitParamsDict = _RcaLongTpInitParamsDictNoTag | RcaLongTpInitParamsDictTagged
 
 
 class RcaLongTpInitOutputs(typing.NamedTuple):

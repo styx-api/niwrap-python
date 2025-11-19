@@ -13,8 +13,7 @@ MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
 )
 
 
-MrisMeshSubdivideParamsDict = typing.TypedDict('MrisMeshSubdivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mesh_subdivide"]],
+_MrisMeshSubdivideParamsDictNoTag = typing.TypedDict('_MrisMeshSubdivideParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
@@ -27,6 +26,7 @@ MrisMeshSubdivideParamsDictTagged = typing.TypedDict('MrisMeshSubdivideParamsDic
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
     "iterations": typing.NotRequired[float | None],
 })
+MrisMeshSubdivideParamsDict = _MrisMeshSubdivideParamsDictNoTag | MrisMeshSubdivideParamsDictTagged
 
 
 class MrisMeshSubdivideOutputs(typing.NamedTuple):

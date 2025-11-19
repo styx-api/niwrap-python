@@ -13,8 +13,7 @@ DWI2ADC_METADATA = Metadata(
 )
 
 
-Dwi2adcFslgradParamsDict = typing.TypedDict('Dwi2adcFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_Dwi2adcFslgradParamsDictNoTag = typing.TypedDict('_Dwi2adcFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ Dwi2adcFslgradParamsDictTagged = typing.TypedDict('Dwi2adcFslgradParamsDictTagge
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+Dwi2adcFslgradParamsDict = _Dwi2adcFslgradParamsDictNoTag | Dwi2adcFslgradParamsDictTagged
 
 
-Dwi2adcConfigParamsDict = typing.TypedDict('Dwi2adcConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Dwi2adcConfigParamsDictNoTag = typing.TypedDict('_Dwi2adcConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ Dwi2adcConfigParamsDictTagged = typing.TypedDict('Dwi2adcConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+Dwi2adcConfigParamsDict = _Dwi2adcConfigParamsDictNoTag | Dwi2adcConfigParamsDictTagged
 
 
-Dwi2adcParamsDict = typing.TypedDict('Dwi2adcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2adc"]],
+_Dwi2adcParamsDictNoTag = typing.TypedDict('_Dwi2adcParamsDictNoTag', {
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2adcFslgradParamsDict | None],
     "info": bool,
@@ -67,6 +66,7 @@ Dwi2adcParamsDictTagged = typing.TypedDict('Dwi2adcParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+Dwi2adcParamsDict = _Dwi2adcParamsDictNoTag | Dwi2adcParamsDictTagged
 
 
 def dwi2adc_fslgrad(

@@ -13,8 +13,7 @@ FAT_PROC_CONVERT_DCM_DWIS_METADATA = Metadata(
 )
 
 
-FatProcConvertDcmDwisParamsDict = typing.TypedDict('FatProcConvertDcmDwisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_dwis"]],
+_FatProcConvertDcmDwisParamsDictNoTag = typing.TypedDict('_FatProcConvertDcmDwisParamsDictNoTag', {
     "dicom_dir": str,
     "output_prefix": str,
     "nifti_files": typing.NotRequired[list[InputPathType] | None],
@@ -55,6 +54,7 @@ FatProcConvertDcmDwisParamsDictTagged = typing.TypedDict('FatProcConvertDcmDwisP
     "no_qc_view": bool,
     "do_movie": typing.NotRequired[str | None],
 })
+FatProcConvertDcmDwisParamsDict = _FatProcConvertDcmDwisParamsDictNoTag | FatProcConvertDcmDwisParamsDictTagged
 
 
 class FatProcConvertDcmDwisOutputs(typing.NamedTuple):

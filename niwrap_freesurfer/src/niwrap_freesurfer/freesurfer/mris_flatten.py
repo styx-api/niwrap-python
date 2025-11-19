@@ -13,8 +13,7 @@ MRIS_FLATTEN_METADATA = Metadata(
 )
 
 
-MrisFlattenParamsDict = typing.TypedDict('MrisFlattenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_flatten"]],
+_MrisFlattenParamsDictNoTag = typing.TypedDict('_MrisFlattenParamsDictNoTag', {
     "input_patch": InputPathType,
     "output_patch": str,
     "iterations": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ MrisFlattenParamsDictTagged = typing.TypedDict('MrisFlattenParamsDictTagged', {
     "copy_coords": typing.NotRequired[str | None],
     "norand": bool,
 })
+MrisFlattenParamsDict = _MrisFlattenParamsDictNoTag | MrisFlattenParamsDictTagged
 
 
 class MrisFlattenOutputs(typing.NamedTuple):

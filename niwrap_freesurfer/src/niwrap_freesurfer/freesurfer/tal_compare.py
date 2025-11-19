@@ -13,8 +13,7 @@ TAL_COMPARE_METADATA = Metadata(
 )
 
 
-TalCompareParamsDict = typing.TypedDict('TalCompareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tal_compare"]],
+_TalCompareParamsDictNoTag = typing.TypedDict('_TalCompareParamsDictNoTag', {
     "ref_file": InputPathType,
     "moving_file": InputPathType,
     "output_file": str,
@@ -27,6 +26,7 @@ TalCompareParamsDictTagged = typing.TypedDict('TalCompareParamsDictTagged', {
     "output_file": str,
     "verbose": bool,
 })
+TalCompareParamsDict = _TalCompareParamsDictNoTag | TalCompareParamsDictTagged
 
 
 class TalCompareOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SEGMENT_SUBREGIONS_METADATA = Metadata(
 )
 
 
-SegmentSubregionsParamsDict = typing.TypedDict('SegmentSubregionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subregions"]],
+_SegmentSubregionsParamsDictNoTag = typing.TypedDict('_SegmentSubregionsParamsDictNoTag', {
     "structure": str,
     "cross": typing.NotRequired[str | None],
     "long_base": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ SegmentSubregionsParamsDictTagged = typing.TypedDict('SegmentSubregionsParamsDic
     "debug": bool,
     "threads": typing.NotRequired[float | None],
 })
+SegmentSubregionsParamsDict = _SegmentSubregionsParamsDictNoTag | SegmentSubregionsParamsDictTagged
 
 
 class SegmentSubregionsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SBTIV_METADATA = Metadata(
 )
 
 
-SbtivParamsDict = typing.TypedDict('SbtivParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/sbtiv"]],
+_SbtivParamsDictNoTag = typing.TypedDict('_SbtivParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],
@@ -25,6 +24,7 @@ SbtivParamsDictTagged = typing.TypedDict('SbtivParamsDictTagged', {
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],
 })
+SbtivParamsDict = _SbtivParamsDictNoTag | SbtivParamsDictTagged
 
 
 class SbtivOutputs(typing.NamedTuple):

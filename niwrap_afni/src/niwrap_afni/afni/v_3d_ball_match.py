@@ -13,8 +13,7 @@ V_3D_BALL_MATCH_METADATA = Metadata(
 )
 
 
-V3dBallMatchParamsDict = typing.TypedDict('V3dBallMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBallMatch"]],
+_V3dBallMatchParamsDictNoTag = typing.TypedDict('_V3dBallMatchParamsDictNoTag', {
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
     "dataset_option": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ V3dBallMatchParamsDictTagged = typing.TypedDict('V3dBallMatchParamsDictTagged', 
     "ball_radius": typing.NotRequired[float | None],
     "spheroid_axes": typing.NotRequired[list[float] | None],
 })
+V3dBallMatchParamsDict = _V3dBallMatchParamsDictNoTag | V3dBallMatchParamsDictTagged
 
 
 class V3dBallMatchOutputs(typing.NamedTuple):

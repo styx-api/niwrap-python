@@ -13,8 +13,7 @@ SURF2SURF_METADATA = Metadata(
 )
 
 
-Surf2surfParamsDict = typing.TypedDict('Surf2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/surf2surf"]],
+_Surf2surfParamsDictNoTag = typing.TypedDict('_Surf2surfParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "input_convention": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ Surf2surfParamsDictTagged = typing.TypedDict('Surf2surfParamsDictTagged', {
     "output_type": typing.NotRequired[str | None],
     "output_values": typing.NotRequired[str | None],
 })
+Surf2surfParamsDict = _Surf2surfParamsDictNoTag | Surf2surfParamsDictTagged
 
 
 class Surf2surfOutputs(typing.NamedTuple):

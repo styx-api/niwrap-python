@@ -13,8 +13,7 @@ V_3D_NWARP_CAT_METADATA = Metadata(
 )
 
 
-V3dNwarpCatParamsDict = typing.TypedDict('V3dNwarpCatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpCat"]],
+_V3dNwarpCatParamsDictNoTag = typing.TypedDict('_V3dNwarpCatParamsDictNoTag', {
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
     "output_prefix": str,
@@ -37,6 +36,7 @@ V3dNwarpCatParamsDictTagged = typing.TypedDict('V3dNwarpCatParamsDictTagged', {
     "invert_final_warp": bool,
     "extra_padding": typing.NotRequired[float | None],
 })
+V3dNwarpCatParamsDict = _V3dNwarpCatParamsDictNoTag | V3dNwarpCatParamsDictTagged
 
 
 class V3dNwarpCatOutputs(typing.NamedTuple):

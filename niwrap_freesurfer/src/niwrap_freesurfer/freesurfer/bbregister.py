@@ -13,8 +13,7 @@ BBREGISTER_METADATA = Metadata(
 )
 
 
-BbregisterParamsDict = typing.TypedDict('BbregisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bbregister"]],
+_BbregisterParamsDictNoTag = typing.TypedDict('_BbregisterParamsDictNoTag', {
     "subject": str,
     "moveable_volume": InputPathType,
     "reg_file": str,
@@ -51,6 +50,7 @@ BbregisterParamsDictTagged = typing.TypedDict('BbregisterParamsDictTagged', {
     "o_outvol": typing.NotRequired[str | None],
     "s_from_reg": bool,
 })
+BbregisterParamsDict = _BbregisterParamsDictNoTag | BbregisterParamsDictTagged
 
 
 class BbregisterOutputs(typing.NamedTuple):

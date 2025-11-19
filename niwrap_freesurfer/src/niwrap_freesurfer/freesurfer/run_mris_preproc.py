@@ -13,8 +13,7 @@ RUN_MRIS_PREPROC_METADATA = Metadata(
 )
 
 
-RunMrisPreprocParamsDict = typing.TypedDict('RunMrisPreprocParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_mris_preproc"]],
+_RunMrisPreprocParamsDictNoTag = typing.TypedDict('_RunMrisPreprocParamsDictNoTag', {
     "qdec_table": InputPathType,
     "target_average": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ RunMrisPreprocParamsDictTagged = typing.TypedDict('RunMrisPreprocParamsDictTagge
     "qdec_table": InputPathType,
     "target_average": typing.NotRequired[str | None],
 })
+RunMrisPreprocParamsDict = _RunMrisPreprocParamsDictNoTag | RunMrisPreprocParamsDictTagged
 
 
 class RunMrisPreprocOutputs(typing.NamedTuple):

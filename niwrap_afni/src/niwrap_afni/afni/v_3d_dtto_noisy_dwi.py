@@ -13,8 +13,7 @@ V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
 )
 
 
-V3dDttoNoisyDwiParamsDict = typing.TypedDict('V3dDttoNoisyDwiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDTtoNoisyDWI"]],
+_V3dDttoNoisyDwiParamsDictNoTag = typing.TypedDict('_V3dDttoNoisyDwiParamsDictNoTag', {
     "dt_file": InputPathType,
     "grad_file": InputPathType,
     "noise_dwi": float,
@@ -35,6 +34,7 @@ V3dDttoNoisyDwiParamsDictTagged = typing.TypedDict('V3dDttoNoisyDwiParamsDictTag
     "bval": typing.NotRequired[float | None],
     "s0": typing.NotRequired[float | None],
 })
+V3dDttoNoisyDwiParamsDict = _V3dDttoNoisyDwiParamsDictNoTag | V3dDttoNoisyDwiParamsDictTagged
 
 
 class V3dDttoNoisyDwiOutputs(typing.NamedTuple):

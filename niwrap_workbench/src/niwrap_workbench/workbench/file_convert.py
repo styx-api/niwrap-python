@@ -12,8 +12,7 @@ FILE_CONVERT_METADATA = Metadata(
 )
 
 
-FileConvertBorderVersionConvertParamsDict = typing.TypedDict('FileConvertBorderVersionConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["border-version-convert"]],
+_FileConvertBorderVersionConvertParamsDictNoTag = typing.TypedDict('_FileConvertBorderVersionConvertParamsDictNoTag', {
     "border-in": InputPathType,
     "out-version": int,
     "border-out": str,
@@ -26,10 +25,10 @@ FileConvertBorderVersionConvertParamsDictTagged = typing.TypedDict('FileConvertB
     "border-out": str,
     "surface": typing.NotRequired[InputPathType | None],
 })
+FileConvertBorderVersionConvertParamsDict = _FileConvertBorderVersionConvertParamsDictNoTag | FileConvertBorderVersionConvertParamsDictTagged
 
 
-FileConvertNiftiVersionConvertParamsDict = typing.TypedDict('FileConvertNiftiVersionConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nifti-version-convert"]],
+_FileConvertNiftiVersionConvertParamsDictNoTag = typing.TypedDict('_FileConvertNiftiVersionConvertParamsDictNoTag', {
     "input": str,
     "version": int,
     "output": str,
@@ -40,10 +39,10 @@ FileConvertNiftiVersionConvertParamsDictTagged = typing.TypedDict('FileConvertNi
     "version": int,
     "output": str,
 })
+FileConvertNiftiVersionConvertParamsDict = _FileConvertNiftiVersionConvertParamsDictNoTag | FileConvertNiftiVersionConvertParamsDictTagged
 
 
-FileConvertCiftiVersionConvertParamsDict = typing.TypedDict('FileConvertCiftiVersionConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti-version-convert"]],
+_FileConvertCiftiVersionConvertParamsDictNoTag = typing.TypedDict('_FileConvertCiftiVersionConvertParamsDictNoTag', {
     "cifti-in": InputPathType,
     "version": str,
     "cifti-out": str,
@@ -54,10 +53,10 @@ FileConvertCiftiVersionConvertParamsDictTagged = typing.TypedDict('FileConvertCi
     "version": str,
     "cifti-out": str,
 })
+FileConvertCiftiVersionConvertParamsDict = _FileConvertCiftiVersionConvertParamsDictNoTag | FileConvertCiftiVersionConvertParamsDictTagged
 
 
-FileConvertParamsDict = typing.TypedDict('FileConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/file-convert"]],
+_FileConvertParamsDictNoTag = typing.TypedDict('_FileConvertParamsDictNoTag', {
     "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParamsDict | None],
     "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParamsDict | None],
     "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParamsDict | None],
@@ -68,6 +67,7 @@ FileConvertParamsDictTagged = typing.TypedDict('FileConvertParamsDictTagged', {
     "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParamsDict | None],
     "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParamsDict | None],
 })
+FileConvertParamsDict = _FileConvertParamsDictNoTag | FileConvertParamsDictTagged
 
 
 def file_convert_border_version_convert(

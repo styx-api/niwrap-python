@@ -13,8 +13,7 @@ ASL_MFREE_METADATA = Metadata(
 )
 
 
-AslMfreeParamsDict = typing.TypedDict('AslMfreeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/asl_mfree"]],
+_AslMfreeParamsDictNoTag = typing.TypedDict('_AslMfreeParamsDictNoTag', {
     "datafile": InputPathType,
     "mask": InputPathType,
     "out": str,
@@ -57,6 +56,7 @@ AslMfreeParamsDictTagged = typing.TypedDict('AslMfreeParamsDictTagged', {
     "shift_factor": typing.NotRequired[float | None],
     "verbose": bool,
 })
+AslMfreeParamsDict = _AslMfreeParamsDictNoTag | AslMfreeParamsDictTagged
 
 
 class AslMfreeOutputs(typing.NamedTuple):

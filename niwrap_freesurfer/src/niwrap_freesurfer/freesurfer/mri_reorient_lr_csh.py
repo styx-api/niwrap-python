@@ -13,8 +13,7 @@ MRI_REORIENT_LR_CSH_METADATA = Metadata(
 )
 
 
-MriReorientLrCshParamsDict = typing.TypedDict('MriReorientLrCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reorient_LR.csh"]],
+_MriReorientLrCshParamsDictNoTag = typing.TypedDict('_MriReorientLrCshParamsDictNoTag', {
     "input_vol": InputPathType,
     "output_vol": str,
     "display_result": bool,
@@ -33,6 +32,7 @@ MriReorientLrCshParamsDictTagged = typing.TypedDict('MriReorientLrCshParamsDictT
     "version": bool,
     "help": bool,
 })
+MriReorientLrCshParamsDict = _MriReorientLrCshParamsDictNoTag | MriReorientLrCshParamsDictTagged
 
 
 class MriReorientLrCshOutputs(typing.NamedTuple):

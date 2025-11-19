@@ -13,8 +13,7 @@ MRI_PROBE_IMA_METADATA = Metadata(
 )
 
 
-MriProbeImaParamsDict = typing.TypedDict('MriProbeImaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probe_ima"]],
+_MriProbeImaParamsDictNoTag = typing.TypedDict('_MriProbeImaParamsDictNoTag', {
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
     "offset_type_len": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ MriProbeImaParamsDictTagged = typing.TypedDict('MriProbeImaParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MriProbeImaParamsDict = _MriProbeImaParamsDictNoTag | MriProbeImaParamsDictTagged
 
 
 class MriProbeImaOutputs(typing.NamedTuple):

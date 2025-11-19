@@ -13,8 +13,7 @@ ANTS_MOTION_CORR_STATS_METADATA = Metadata(
 )
 
 
-AntsMotionCorrStatsParamsDict = typing.TypedDict('AntsMotionCorrStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrStats"]],
+_AntsMotionCorrStatsParamsDictNoTag = typing.TypedDict('_AntsMotionCorrStatsParamsDictNoTag', {
     "mask": InputPathType,
     "moco_params": InputPathType,
     "output": str,
@@ -35,6 +34,7 @@ AntsMotionCorrStatsParamsDictTagged = typing.TypedDict('AntsMotionCorrStatsParam
     "timeseries_displacement": bool,
     "help": typing.NotRequired[bool | None],
 })
+AntsMotionCorrStatsParamsDict = _AntsMotionCorrStatsParamsDictNoTag | AntsMotionCorrStatsParamsDictTagged
 
 
 class AntsMotionCorrStatsOutputs(typing.NamedTuple):

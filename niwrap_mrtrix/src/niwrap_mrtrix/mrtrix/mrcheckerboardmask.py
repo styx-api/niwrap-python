@@ -13,8 +13,7 @@ MRCHECKERBOARDMASK_METADATA = Metadata(
 )
 
 
-MrcheckerboardmaskConfigParamsDict = typing.TypedDict('MrcheckerboardmaskConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrcheckerboardmaskConfigParamsDictNoTag = typing.TypedDict('_MrcheckerboardmaskConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrcheckerboardmaskConfigParamsDictTagged = typing.TypedDict('MrcheckerboardmaskC
     "key": str,
     "value": str,
 })
+MrcheckerboardmaskConfigParamsDict = _MrcheckerboardmaskConfigParamsDictNoTag | MrcheckerboardmaskConfigParamsDictTagged
 
 
-MrcheckerboardmaskParamsDict = typing.TypedDict('MrcheckerboardmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcheckerboardmask"]],
+_MrcheckerboardmaskParamsDictNoTag = typing.TypedDict('_MrcheckerboardmaskParamsDictNoTag', {
     "tiles": typing.NotRequired[int | None],
     "invert": bool,
     "nan": bool,
@@ -57,6 +56,7 @@ MrcheckerboardmaskParamsDictTagged = typing.TypedDict('MrcheckerboardmaskParamsD
     "input": InputPathType,
     "output": str,
 })
+MrcheckerboardmaskParamsDict = _MrcheckerboardmaskParamsDictNoTag | MrcheckerboardmaskParamsDictTagged
 
 
 def mrcheckerboardmask_config(

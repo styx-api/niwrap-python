@@ -13,8 +13,7 @@ POSSUM_PLOT_PY_METADATA = Metadata(
 )
 
 
-PossumPlotPyParamsDict = typing.TypedDict('PossumPlotPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/possum_plot.py"]],
+_PossumPlotPyParamsDictNoTag = typing.TypedDict('_PossumPlotPyParamsDictNoTag', {
     "input_file": InputPathType,
     "output_basename": str,
 })
@@ -23,6 +22,7 @@ PossumPlotPyParamsDictTagged = typing.TypedDict('PossumPlotPyParamsDictTagged', 
     "input_file": InputPathType,
     "output_basename": str,
 })
+PossumPlotPyParamsDict = _PossumPlotPyParamsDictNoTag | PossumPlotPyParamsDictTagged
 
 
 class PossumPlotPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TCKCONVERT_METADATA = Metadata(
 )
 
 
-TckconvertConfigParamsDict = typing.TypedDict('TckconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckconvertConfigParamsDictNoTag = typing.TypedDict('_TckconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,30 +22,30 @@ TckconvertConfigParamsDictTagged = typing.TypedDict('TckconvertConfigParamsDictT
     "key": str,
     "value": str,
 })
+TckconvertConfigParamsDict = _TckconvertConfigParamsDictNoTag | TckconvertConfigParamsDictTagged
 
 
-TckconvertVariousStringParamsDict = typing.TypedDict('TckconvertVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_TckconvertVariousStringParamsDictNoTag = typing.TypedDict('_TckconvertVariousStringParamsDictNoTag', {
     "obj": str,
 })
 TckconvertVariousStringParamsDictTagged = typing.TypedDict('TckconvertVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+TckconvertVariousStringParamsDict = _TckconvertVariousStringParamsDictNoTag | TckconvertVariousStringParamsDictTagged
 
 
-TckconvertVariousFileParamsDict = typing.TypedDict('TckconvertVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_TckconvertVariousFileParamsDictNoTag = typing.TypedDict('_TckconvertVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckconvertVariousFileParamsDictTagged = typing.TypedDict('TckconvertVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+TckconvertVariousFileParamsDict = _TckconvertVariousFileParamsDictNoTag | TckconvertVariousFileParamsDictTagged
 
 
-TckconvertParamsDict = typing.TypedDict('TckconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckconvert"]],
+_TckconvertParamsDictNoTag = typing.TypedDict('_TckconvertParamsDictNoTag', {
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
     "voxel2scanner": typing.NotRequired[InputPathType | None],
@@ -91,6 +90,7 @@ TckconvertParamsDictTagged = typing.TypedDict('TckconvertParamsDictTagged', {
     "input": typing.Union[TckconvertVariousStringParamsDictTagged, TckconvertVariousFileParamsDictTagged],
     "output": str,
 })
+TckconvertParamsDict = _TckconvertParamsDictNoTag | TckconvertParamsDictTagged
 
 
 def tckconvert_input_cargs_dyn_fn(

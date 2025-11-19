@@ -13,8 +13,7 @@ MRDUMP_METADATA = Metadata(
 )
 
 
-MrdumpConfigParamsDict = typing.TypedDict('MrdumpConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrdumpConfigParamsDictNoTag = typing.TypedDict('_MrdumpConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrdumpConfigParamsDictTagged = typing.TypedDict('MrdumpConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MrdumpConfigParamsDict = _MrdumpConfigParamsDictNoTag | MrdumpConfigParamsDictTagged
 
 
-MrdumpParamsDict = typing.TypedDict('MrdumpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrdump"]],
+_MrdumpParamsDictNoTag = typing.TypedDict('_MrdumpParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ MrdumpParamsDictTagged = typing.TypedDict('MrdumpParamsDictTagged', {
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
+MrdumpParamsDict = _MrdumpParamsDictNoTag | MrdumpParamsDictTagged
 
 
 def mrdump_config(

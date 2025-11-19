@@ -13,8 +13,7 @@ MRIS_CONGEAL_METADATA = Metadata(
 )
 
 
-MrisCongealParamsDict = typing.TypedDict('MrisCongealParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_congeal"]],
+_MrisCongealParamsDictNoTag = typing.TypedDict('_MrisCongealParamsDictNoTag', {
     "input_surface_name": str,
     "hemi": str,
     "subjects": list[str],
@@ -49,6 +48,7 @@ MrisCongealParamsDictTagged = typing.TypedDict('MrisCongealParamsDictTagged', {
     "overlay_dir": typing.NotRequired[str | None],
     "target_subject": bool,
 })
+MrisCongealParamsDict = _MrisCongealParamsDictNoTag | MrisCongealParamsDictTagged
 
 
 class MrisCongealOutputs(typing.NamedTuple):

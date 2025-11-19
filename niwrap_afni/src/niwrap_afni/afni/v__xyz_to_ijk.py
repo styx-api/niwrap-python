@@ -13,8 +13,7 @@ V__XYZ_TO_IJK_METADATA = Metadata(
 )
 
 
-VXyzToIjkParamsDict = typing.TypedDict('VXyzToIjkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@xyz_to_ijk"]],
+_VXyzToIjkParamsDictNoTag = typing.TypedDict('_VXyzToIjkParamsDictNoTag', {
     "inset": InputPathType,
     "x_coord": float,
     "y_coord": float,
@@ -29,6 +28,7 @@ VXyzToIjkParamsDictTagged = typing.TypedDict('VXyzToIjkParamsDictTagged', {
     "z_coord": float,
     "prefix": typing.NotRequired[str | None],
 })
+VXyzToIjkParamsDict = _VXyzToIjkParamsDictNoTag | VXyzToIjkParamsDictTagged
 
 
 class VXyzToIjkOutputs(typing.NamedTuple):

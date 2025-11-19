@@ -13,8 +13,7 @@ XFMROT_METADATA = Metadata(
 )
 
 
-XfmrotParamsDict = typing.TypedDict('XfmrotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xfmrot"]],
+_XfmrotParamsDictNoTag = typing.TypedDict('_XfmrotParamsDictNoTag', {
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ XfmrotParamsDictTagged = typing.TypedDict('XfmrotParamsDictTagged', {
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],
 })
+XfmrotParamsDict = _XfmrotParamsDictNoTag | XfmrotParamsDictTagged
 
 
 class XfmrotOutputs(typing.NamedTuple):

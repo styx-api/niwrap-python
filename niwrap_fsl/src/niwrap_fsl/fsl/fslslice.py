@@ -13,8 +13,7 @@ FSLSLICE_METADATA = Metadata(
 )
 
 
-FslsliceParamsDict = typing.TypedDict('FslsliceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslslice"]],
+_FslsliceParamsDictNoTag = typing.TypedDict('_FslsliceParamsDictNoTag', {
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ FslsliceParamsDictTagged = typing.TypedDict('FslsliceParamsDictTagged', {
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })
+FslsliceParamsDict = _FslsliceParamsDictNoTag | FslsliceParamsDictTagged
 
 
 class FslsliceOutputs(typing.NamedTuple):

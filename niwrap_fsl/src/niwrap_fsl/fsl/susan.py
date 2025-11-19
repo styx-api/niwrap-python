@@ -13,8 +13,7 @@ SUSAN_METADATA = Metadata(
 )
 
 
-SusanParamsDict = typing.TypedDict('SusanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/susan"]],
+_SusanParamsDictNoTag = typing.TypedDict('_SusanParamsDictNoTag', {
     "input_file": InputPathType,
     "brightness_threshold": float,
     "spatial_size": float,
@@ -41,6 +40,7 @@ SusanParamsDictTagged = typing.TypedDict('SusanParamsDictTagged', {
     "brightness_threshold2": typing.NotRequired[float | None],
     "output_file": str,
 })
+SusanParamsDict = _SusanParamsDictNoTag | SusanParamsDictTagged
 
 
 class SusanOutputs(typing.NamedTuple):

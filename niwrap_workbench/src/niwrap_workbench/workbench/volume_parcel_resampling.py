@@ -12,8 +12,7 @@ VOLUME_PARCEL_RESAMPLING_METADATA = Metadata(
 )
 
 
-VolumeParcelResamplingParamsDict = typing.TypedDict('VolumeParcelResamplingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-resampling"]],
+_VolumeParcelResamplingParamsDictNoTag = typing.TypedDict('_VolumeParcelResamplingParamsDictNoTag', {
     "volume-out": str,
     "fix-zeros": bool,
     "fwhm": bool,
@@ -34,6 +33,7 @@ VolumeParcelResamplingParamsDictTagged = typing.TypedDict('VolumeParcelResamplin
     "new-parcels": InputPathType,
     "kernel": float,
 })
+VolumeParcelResamplingParamsDict = _VolumeParcelResamplingParamsDictNoTag | VolumeParcelResamplingParamsDictTagged
 
 
 class VolumeParcelResamplingOutputs(typing.NamedTuple):

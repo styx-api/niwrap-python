@@ -13,8 +13,7 @@ GCA_APPLY_METADATA = Metadata(
 )
 
 
-GcaApplyParamsDict = typing.TypedDict('GcaApplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gca-apply"]],
+_GcaApplyParamsDictNoTag = typing.TypedDict('_GcaApplyParamsDictNoTag', {
     "gcafile": InputPathType,
     "subject": str,
     "nthreads": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ GcaApplyParamsDictTagged = typing.TypedDict('GcaApplyParamsDictTagged', {
     "force_update": bool,
     "gcareg_iters": typing.NotRequired[float | None],
 })
+GcaApplyParamsDict = _GcaApplyParamsDictNoTag | GcaApplyParamsDictTagged
 
 
 class GcaApplyOutputs(typing.NamedTuple):

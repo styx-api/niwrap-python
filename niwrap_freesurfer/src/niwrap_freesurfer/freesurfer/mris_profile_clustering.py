@@ -13,8 +13,7 @@ MRIS_PROFILE_CLUSTERING_METADATA = Metadata(
 )
 
 
-MrisProfileClusteringParamsDict = typing.TypedDict('MrisProfileClusteringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_profileClustering"]],
+_MrisProfileClusteringParamsDictNoTag = typing.TypedDict('_MrisProfileClusteringParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "other_options": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ MrisProfileClusteringParamsDictTagged = typing.TypedDict('MrisProfileClusteringP
     "output_file": str,
     "other_options": typing.NotRequired[str | None],
 })
+MrisProfileClusteringParamsDict = _MrisProfileClusteringParamsDictNoTag | MrisProfileClusteringParamsDictTagged
 
 
 class MrisProfileClusteringOutputs(typing.NamedTuple):

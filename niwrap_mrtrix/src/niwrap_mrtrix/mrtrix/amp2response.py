@@ -13,8 +13,7 @@ AMP2RESPONSE_METADATA = Metadata(
 )
 
 
-Amp2responseConfigParamsDict = typing.TypedDict('Amp2responseConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Amp2responseConfigParamsDictNoTag = typing.TypedDict('_Amp2responseConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Amp2responseConfigParamsDictTagged = typing.TypedDict('Amp2responseConfigParamsD
     "key": str,
     "value": str,
 })
+Amp2responseConfigParamsDict = _Amp2responseConfigParamsDictNoTag | Amp2responseConfigParamsDictTagged
 
 
-Amp2responseParamsDict = typing.TypedDict('Amp2responseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/amp2response"]],
+_Amp2responseParamsDictNoTag = typing.TypedDict('_Amp2responseParamsDictNoTag', {
     "isotropic": bool,
     "noconstraint": bool,
     "directions": typing.NotRequired[InputPathType | None],
@@ -65,6 +64,7 @@ Amp2responseParamsDictTagged = typing.TypedDict('Amp2responseParamsDictTagged', 
     "directions_1": InputPathType,
     "response": str,
 })
+Amp2responseParamsDict = _Amp2responseParamsDictNoTag | Amp2responseParamsDictTagged
 
 
 def amp2response_config(

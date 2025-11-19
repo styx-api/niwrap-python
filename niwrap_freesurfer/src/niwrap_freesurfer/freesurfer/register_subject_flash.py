@@ -13,14 +13,14 @@ REGISTER_SUBJECT_FLASH_METADATA = Metadata(
 )
 
 
-RegisterSubjectFlashParamsDict = typing.TypedDict('RegisterSubjectFlashParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject_flash"]],
+_RegisterSubjectFlashParamsDictNoTag = typing.TypedDict('_RegisterSubjectFlashParamsDictNoTag', {
     "input_volumes": list[InputPathType],
 })
 RegisterSubjectFlashParamsDictTagged = typing.TypedDict('RegisterSubjectFlashParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register_subject_flash"],
     "input_volumes": list[InputPathType],
 })
+RegisterSubjectFlashParamsDict = _RegisterSubjectFlashParamsDictNoTag | RegisterSubjectFlashParamsDictTagged
 
 
 class RegisterSubjectFlashOutputs(typing.NamedTuple):

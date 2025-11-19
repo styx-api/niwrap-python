@@ -13,8 +13,7 @@ MERGESEG_METADATA = Metadata(
 )
 
 
-MergesegParamsDict = typing.TypedDict('MergesegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mergeseg"]],
+_MergesegParamsDictNoTag = typing.TypedDict('_MergesegParamsDictNoTag', {
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
     "out_seg": str,
@@ -33,6 +32,7 @@ MergesegParamsDictTagged = typing.TypedDict('MergesegParamsDictTagged', {
     "segid_erode": typing.NotRequired[float | None],
     "ctab": typing.NotRequired[InputPathType | None],
 })
+MergesegParamsDict = _MergesegParamsDictNoTag | MergesegParamsDictTagged
 
 
 class MergesegOutputs(typing.NamedTuple):

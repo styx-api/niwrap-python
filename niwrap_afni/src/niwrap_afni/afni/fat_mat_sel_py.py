@@ -13,8 +13,7 @@ FAT_MAT_SEL_PY_METADATA = Metadata(
 )
 
 
-FatMatSelPyParamsDict = typing.TypedDict('FatMatSelPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mat_sel.py"]],
+_FatMatSelPyParamsDictNoTag = typing.TypedDict('_FatMatSelPyParamsDictNoTag', {
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
     "list_match": typing.NotRequired[InputPathType | None],
@@ -65,6 +64,7 @@ FatMatSelPyParamsDictTagged = typing.TypedDict('FatMatSelPyParamsDictTagged', {
     "specifier": typing.NotRequired[str | None],
     "xtick_lab_off": bool,
 })
+FatMatSelPyParamsDict = _FatMatSelPyParamsDictNoTag | FatMatSelPyParamsDictTagged
 
 
 class FatMatSelPyOutputs(typing.NamedTuple):

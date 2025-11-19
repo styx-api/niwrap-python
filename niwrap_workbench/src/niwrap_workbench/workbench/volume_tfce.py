@@ -12,8 +12,7 @@ VOLUME_TFCE_METADATA = Metadata(
 )
 
 
-VolumeTfcePresmoothParamsDict = typing.TypedDict('VolumeTfcePresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_VolumeTfcePresmoothParamsDictNoTag = typing.TypedDict('_VolumeTfcePresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ VolumeTfcePresmoothParamsDictTagged = typing.TypedDict('VolumeTfcePresmoothParam
     "kernel": float,
     "fwhm": bool,
 })
+VolumeTfcePresmoothParamsDict = _VolumeTfcePresmoothParamsDictNoTag | VolumeTfcePresmoothParamsDictTagged
 
 
-VolumeTfceParametersParamsDict = typing.TypedDict('VolumeTfceParametersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["parameters"]],
+_VolumeTfceParametersParamsDictNoTag = typing.TypedDict('_VolumeTfceParametersParamsDictNoTag', {
     "E": float,
     "H": float,
 })
@@ -34,10 +33,10 @@ VolumeTfceParametersParamsDictTagged = typing.TypedDict('VolumeTfceParametersPar
     "E": float,
     "H": float,
 })
+VolumeTfceParametersParamsDict = _VolumeTfceParametersParamsDictNoTag | VolumeTfceParametersParamsDictTagged
 
 
-VolumeTfceParamsDict = typing.TypedDict('VolumeTfceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-tfce"]],
+_VolumeTfceParamsDictNoTag = typing.TypedDict('_VolumeTfceParamsDictNoTag', {
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeTfcePresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -54,6 +53,7 @@ VolumeTfceParamsDictTagged = typing.TypedDict('VolumeTfceParamsDictTagged', {
     "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
+VolumeTfceParamsDict = _VolumeTfceParamsDictNoTag | VolumeTfceParamsDictTagged
 
 
 def volume_tfce_presmooth(

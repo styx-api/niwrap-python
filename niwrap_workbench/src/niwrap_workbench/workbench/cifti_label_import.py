@@ -12,8 +12,7 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-CiftiLabelImportParamsDict = typing.TypedDict('CiftiLabelImportParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-import"]],
+_CiftiLabelImportParamsDictNoTag = typing.TypedDict('_CiftiLabelImportParamsDictNoTag', {
     "output": str,
     "discard-others": bool,
     "value": typing.NotRequired[int | None],
@@ -32,6 +31,7 @@ CiftiLabelImportParamsDictTagged = typing.TypedDict('CiftiLabelImportParamsDictT
     "input": InputPathType,
     "label-list-file": str,
 })
+CiftiLabelImportParamsDict = _CiftiLabelImportParamsDictNoTag | CiftiLabelImportParamsDictTagged
 
 
 class CiftiLabelImportOutputs(typing.NamedTuple):

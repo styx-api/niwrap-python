@@ -13,8 +13,7 @@ MRIS_LABEL2ANNOT_METADATA = Metadata(
 )
 
 
-MrisLabel2annotParamsDict = typing.TypedDict('MrisLabel2annotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label2annot"]],
+_MrisLabel2annotParamsDictNoTag = typing.TypedDict('_MrisLabel2annotParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "ctabfile": InputPathType,
@@ -47,6 +46,7 @@ MrisLabel2annotParamsDictTagged = typing.TypedDict('MrisLabel2annotParamsDictTag
     "surf": typing.NotRequired[str | None],
     "subjects_dir": typing.NotRequired[str | None],
 })
+MrisLabel2annotParamsDict = _MrisLabel2annotParamsDictNoTag | MrisLabel2annotParamsDictTagged
 
 
 class MrisLabel2annotOutputs(typing.NamedTuple):

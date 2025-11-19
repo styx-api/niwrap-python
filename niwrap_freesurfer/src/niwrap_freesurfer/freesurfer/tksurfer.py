@@ -13,8 +13,7 @@ TKSURFER_METADATA = Metadata(
 )
 
 
-TksurferParamsDict = typing.TypedDict('TksurferParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tksurfer"]],
+_TksurferParamsDictNoTag = typing.TypedDict('_TksurferParamsDictNoTag', {
     "subject_id": str,
     "hemisphere": str,
     "surface_name": str,
@@ -27,6 +26,7 @@ TksurferParamsDictTagged = typing.TypedDict('TksurferParamsDictTagged', {
     "surface_name": str,
     "options": typing.NotRequired[str | None],
 })
+TksurferParamsDict = _TksurferParamsDictNoTag | TksurferParamsDictTagged
 
 
 class TksurferOutputs(typing.NamedTuple):

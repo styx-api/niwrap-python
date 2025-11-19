@@ -13,8 +13,7 @@ GTMSEG_METADATA = Metadata(
 )
 
 
-GtmsegParamsDict = typing.TypedDict('GtmsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gtmseg"]],
+_GtmsegParamsDictNoTag = typing.TypedDict('_GtmsegParamsDictNoTag', {
     "subject": str,
     "outvol": typing.NotRequired[str | None],
     "usf": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ GtmsegParamsDictTagged = typing.TypedDict('GtmsegParamsDictTagged', {
     "xcerseg": bool,
     "debug": bool,
 })
+GtmsegParamsDict = _GtmsegParamsDictNoTag | GtmsegParamsDictTagged
 
 
 class GtmsegOutputs(typing.NamedTuple):

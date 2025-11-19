@@ -13,8 +13,7 @@ MRI_NORMALIZE_TP2_METADATA = Metadata(
 )
 
 
-MriNormalizeTp2ParamsDict = typing.TypedDict('MriNormalizeTp2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_normalize_tp2"]],
+_MriNormalizeTp2ParamsDictNoTag = typing.TypedDict('_MriNormalizeTp2ParamsDictNoTag', {
     "input_vol": InputPathType,
     "normalized_vol": str,
     "t1_volume": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ MriNormalizeTp2ParamsDictTagged = typing.TypedDict('MriNormalizeTp2ParamsDictTag
     "lta_src": typing.NotRequired[InputPathType | None],
     "lta_dst": typing.NotRequired[InputPathType | None],
 })
+MriNormalizeTp2ParamsDict = _MriNormalizeTp2ParamsDictNoTag | MriNormalizeTp2ParamsDictTagged
 
 
 class MriNormalizeTp2Outputs(typing.NamedTuple):

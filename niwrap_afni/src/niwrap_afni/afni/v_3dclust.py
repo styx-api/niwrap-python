@@ -13,8 +13,7 @@ V_3DCLUST_METADATA = Metadata(
 )
 
 
-V3dclustParamsDict = typing.TypedDict('V3dclustParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dclust"]],
+_V3dclustParamsDictNoTag = typing.TypedDict('_V3dclustParamsDictNoTag', {
     "rmm": typing.NotRequired[float | None],
     "vmul": typing.NotRequired[float | None],
     "datasets": list[InputPathType],
@@ -59,6 +58,7 @@ V3dclustParamsDictTagged = typing.TypedDict('V3dclustParamsDictTagged', {
     "savemask": typing.NotRequired[str | None],
     "binary": bool,
 })
+V3dclustParamsDict = _V3dclustParamsDictNoTag | V3dclustParamsDictTagged
 
 
 class V3dclustOutputs(typing.NamedTuple):

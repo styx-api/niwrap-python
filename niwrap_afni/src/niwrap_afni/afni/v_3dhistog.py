@@ -13,8 +13,7 @@ V_3DHISTOG_METADATA = Metadata(
 )
 
 
-V3dhistogParamsDict = typing.TypedDict('V3dhistogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dhistog"]],
+_V3dhistogParamsDictNoTag = typing.TypedDict('_V3dhistogParamsDictNoTag', {
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
     "dind": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ V3dhistogParamsDictTagged = typing.TypedDict('V3dhistogParamsDictTagged', {
     "unq": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
 })
+V3dhistogParamsDict = _V3dhistogParamsDictNoTag | V3dhistogParamsDictTagged
 
 
 class V3dhistogOutputs(typing.NamedTuple):

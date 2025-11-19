@@ -12,18 +12,17 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
 )
 
 
-CiftiMergeDenseCiftiParamsDict = typing.TypedDict('CiftiMergeDenseCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiMergeDenseCiftiParamsDictNoTag = typing.TypedDict('_CiftiMergeDenseCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
 })
 CiftiMergeDenseCiftiParamsDictTagged = typing.TypedDict('CiftiMergeDenseCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
+CiftiMergeDenseCiftiParamsDict = _CiftiMergeDenseCiftiParamsDictNoTag | CiftiMergeDenseCiftiParamsDictTagged
 
 
-CiftiMergeDenseParamsDict = typing.TypedDict('CiftiMergeDenseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge-dense"]],
+_CiftiMergeDenseParamsDictNoTag = typing.TypedDict('_CiftiMergeDenseParamsDictNoTag', {
     "cifti-out": str,
     "action": typing.NotRequired[str | None],
     "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
@@ -36,6 +35,7 @@ CiftiMergeDenseParamsDictTagged = typing.TypedDict('CiftiMergeDenseParamsDictTag
     "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
     "direction": str,
 })
+CiftiMergeDenseParamsDict = _CiftiMergeDenseParamsDictNoTag | CiftiMergeDenseParamsDictTagged
 
 
 def cifti_merge_dense_cifti(

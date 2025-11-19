@@ -13,8 +13,7 @@ MRIS_REMOVE_INTERSECTION_METADATA = Metadata(
 )
 
 
-MrisRemoveIntersectionParamsDict = typing.TypedDict('MrisRemoveIntersectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_intersection"]],
+_MrisRemoveIntersectionParamsDictNoTag = typing.TypedDict('_MrisRemoveIntersectionParamsDictNoTag', {
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
     "fill_holes": bool,
@@ -29,6 +28,7 @@ MrisRemoveIntersectionParamsDictTagged = typing.TypedDict('MrisRemoveIntersectio
     "map_option": typing.NotRequired[InputPathType | None],
     "projdistmm": typing.NotRequired[float | None],
 })
+MrisRemoveIntersectionParamsDict = _MrisRemoveIntersectionParamsDictNoTag | MrisRemoveIntersectionParamsDictTagged
 
 
 class MrisRemoveIntersectionOutputs(typing.NamedTuple):

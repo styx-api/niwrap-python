@@ -12,8 +12,7 @@ METRIC_REGRESSION_METADATA = Metadata(
 )
 
 
-MetricRegressionRemoveParamsDict = typing.TypedDict('MetricRegressionRemoveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["remove"]],
+_MetricRegressionRemoveParamsDictNoTag = typing.TypedDict('_MetricRegressionRemoveParamsDictNoTag', {
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
@@ -22,10 +21,10 @@ MetricRegressionRemoveParamsDictTagged = typing.TypedDict('MetricRegressionRemov
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
+MetricRegressionRemoveParamsDict = _MetricRegressionRemoveParamsDictNoTag | MetricRegressionRemoveParamsDictTagged
 
 
-MetricRegressionKeepParamsDict = typing.TypedDict('MetricRegressionKeepParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["keep"]],
+_MetricRegressionKeepParamsDictNoTag = typing.TypedDict('_MetricRegressionKeepParamsDictNoTag', {
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
@@ -34,10 +33,10 @@ MetricRegressionKeepParamsDictTagged = typing.TypedDict('MetricRegressionKeepPar
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
+MetricRegressionKeepParamsDict = _MetricRegressionKeepParamsDictNoTag | MetricRegressionKeepParamsDictTagged
 
 
-MetricRegressionParamsDict = typing.TypedDict('MetricRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-regression"]],
+_MetricRegressionParamsDictNoTag = typing.TypedDict('_MetricRegressionParamsDictNoTag', {
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -54,6 +53,7 @@ MetricRegressionParamsDictTagged = typing.TypedDict('MetricRegressionParamsDictT
     "keep": typing.NotRequired[list[MetricRegressionKeepParamsDict] | None],
     "metric-in": InputPathType,
 })
+MetricRegressionParamsDict = _MetricRegressionParamsDictNoTag | MetricRegressionParamsDictTagged
 
 
 def metric_regression_remove(

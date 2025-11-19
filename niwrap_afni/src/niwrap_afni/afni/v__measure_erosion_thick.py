@@ -13,8 +13,7 @@ V__MEASURE_EROSION_THICK_METADATA = Metadata(
 )
 
 
-VMeasureErosionThickParamsDict = typing.TypedDict('VMeasureErosionThickParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@measure_erosion_thick"]],
+_VMeasureErosionThickParamsDictNoTag = typing.TypedDict('_VMeasureErosionThickParamsDictNoTag', {
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ VMeasureErosionThickParamsDictTagged = typing.TypedDict('VMeasureErosionThickPar
     "keep_temp_files": bool,
     "surfsmooth_method": typing.NotRequired[str | None],
 })
+VMeasureErosionThickParamsDict = _VMeasureErosionThickParamsDictNoTag | VMeasureErosionThickParamsDictTagged
 
 
 class VMeasureErosionThickOutputs(typing.NamedTuple):

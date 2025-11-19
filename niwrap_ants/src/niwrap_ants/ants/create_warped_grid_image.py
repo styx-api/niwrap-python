@@ -13,8 +13,7 @@ CREATE_WARPED_GRID_IMAGE_METADATA = Metadata(
 )
 
 
-CreateWarpedGridImageParamsDict = typing.TypedDict('CreateWarpedGridImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/CreateWarpedGridImage"]],
+_CreateWarpedGridImageParamsDictNoTag = typing.TypedDict('_CreateWarpedGridImageParamsDictNoTag', {
     "image_dimension": int,
     "deformation_field": InputPathType,
     "output_image": str,
@@ -31,6 +30,7 @@ CreateWarpedGridImageParamsDictTagged = typing.TypedDict('CreateWarpedGridImageP
     "grid_spacing": typing.NotRequired[str | None],
     "grid_sigma": typing.NotRequired[str | None],
 })
+CreateWarpedGridImageParamsDict = _CreateWarpedGridImageParamsDictNoTag | CreateWarpedGridImageParamsDictTagged
 
 
 class CreateWarpedGridImageOutputs(typing.NamedTuple):

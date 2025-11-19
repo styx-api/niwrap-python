@@ -13,8 +13,7 @@ V__DJUNCT_DWI_SELECTOR_TCSH_METADATA = Metadata(
 )
 
 
-VDjunctDwiSelectorTcshParamsDict = typing.TypedDict('VDjunctDwiSelectorTcshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_dwi_selector.tcsh"]],
+_VDjunctDwiSelectorTcshParamsDictNoTag = typing.TypedDict('_VDjunctDwiSelectorTcshParamsDictNoTag', {
     "dwi": InputPathType,
     "png": InputPathType,
     "outfile": str,
@@ -25,6 +24,7 @@ VDjunctDwiSelectorTcshParamsDictTagged = typing.TypedDict('VDjunctDwiSelectorTcs
     "png": InputPathType,
     "outfile": str,
 })
+VDjunctDwiSelectorTcshParamsDict = _VDjunctDwiSelectorTcshParamsDictNoTag | VDjunctDwiSelectorTcshParamsDictTagged
 
 
 class VDjunctDwiSelectorTcshOutputs(typing.NamedTuple):

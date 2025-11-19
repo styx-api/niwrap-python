@@ -13,14 +13,14 @@ SURFACE_FDR_METADATA = Metadata(
 )
 
 
-SurfaceFdrParamsDict = typing.TypedDict('SurfaceFdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/surface_fdr"]],
+_SurfaceFdrParamsDictNoTag = typing.TypedDict('_SurfaceFdrParamsDictNoTag', {
     "input_vtk": InputPathType,
 })
 SurfaceFdrParamsDictTagged = typing.TypedDict('SurfaceFdrParamsDictTagged', {
     "@type": typing.Literal["fsl/surface_fdr"],
     "input_vtk": InputPathType,
 })
+SurfaceFdrParamsDict = _SurfaceFdrParamsDictNoTag | SurfaceFdrParamsDictTagged
 
 
 class SurfaceFdrOutputs(typing.NamedTuple):

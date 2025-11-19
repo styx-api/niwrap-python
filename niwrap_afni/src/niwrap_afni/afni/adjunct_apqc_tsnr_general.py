@@ -13,8 +13,7 @@ ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
 )
 
 
-AdjunctApqcTsnrGeneralParamsDict = typing.TypedDict('AdjunctApqcTsnrGeneralParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_apqc_tsnr_general"]],
+_AdjunctApqcTsnrGeneralParamsDictNoTag = typing.TypedDict('_AdjunctApqcTsnrGeneralParamsDictNoTag', {
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
     "montx": typing.NotRequired[str | None],
@@ -65,6 +64,7 @@ AdjunctApqcTsnrGeneralParamsDictTagged = typing.TypedDict('AdjunctApqcTsnrGenera
     "no_axi": bool,
     "echo": bool,
 })
+AdjunctApqcTsnrGeneralParamsDict = _AdjunctApqcTsnrGeneralParamsDictNoTag | AdjunctApqcTsnrGeneralParamsDictTagged
 
 
 class AdjunctApqcTsnrGeneralOutputs(typing.NamedTuple):

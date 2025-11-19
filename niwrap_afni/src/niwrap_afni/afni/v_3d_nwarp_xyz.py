@@ -13,8 +13,7 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 )
 
 
-V3dNwarpXyzParamsDict = typing.TypedDict('V3dNwarpXyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpXYZ"]],
+_V3dNwarpXyzParamsDictNoTag = typing.TypedDict('_V3dNwarpXyzParamsDictNoTag', {
     "xyzfile": InputPathType,
     "warp_spec": str,
     "iwarp": bool,
@@ -27,6 +26,7 @@ V3dNwarpXyzParamsDictTagged = typing.TypedDict('V3dNwarpXyzParamsDictTagged', {
     "iwarp": bool,
     "output_file": str,
 })
+V3dNwarpXyzParamsDict = _V3dNwarpXyzParamsDictNoTag | V3dNwarpXyzParamsDictTagged
 
 
 class V3dNwarpXyzOutputs(typing.NamedTuple):

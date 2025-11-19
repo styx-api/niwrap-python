@@ -13,8 +13,7 @@ MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
 )
 
 
-MriCalRenormalizeGcaParamsDict = typing.TypedDict('MriCalRenormalizeGcaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cal_renormalize_gca"]],
+_MriCalRenormalizeGcaParamsDictNoTag = typing.TypedDict('_MriCalRenormalizeGcaParamsDictNoTag', {
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
     "input_atlas": InputPathType,
@@ -29,6 +28,7 @@ MriCalRenormalizeGcaParamsDictTagged = typing.TypedDict('MriCalRenormalizeGcaPar
     "transform_file": InputPathType,
     "output_atlas": str,
 })
+MriCalRenormalizeGcaParamsDict = _MriCalRenormalizeGcaParamsDictNoTag | MriCalRenormalizeGcaParamsDictTagged
 
 
 class MriCalRenormalizeGcaOutputs(typing.NamedTuple):

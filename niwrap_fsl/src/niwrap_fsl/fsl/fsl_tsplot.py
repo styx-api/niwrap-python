@@ -13,8 +13,7 @@ FSL_TSPLOT_METADATA = Metadata(
 )
 
 
-FslTsplotParamsDict = typing.TypedDict('FslTsplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_tsplot"]],
+_FslTsplotParamsDictNoTag = typing.TypedDict('_FslTsplotParamsDictNoTag', {
     "input_files": str,
     "output_file": str,
     "title": typing.NotRequired[str | None],
@@ -51,6 +50,7 @@ FslTsplotParamsDictTagged = typing.TypedDict('FslTsplotParamsDictTagged', {
     "start_col": typing.NotRequired[float | None],
     "end_col": typing.NotRequired[float | None],
 })
+FslTsplotParamsDict = _FslTsplotParamsDictNoTag | FslTsplotParamsDictTagged
 
 
 class FslTsplotOutputs(typing.NamedTuple):

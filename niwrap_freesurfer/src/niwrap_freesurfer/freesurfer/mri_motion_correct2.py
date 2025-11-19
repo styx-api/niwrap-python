@@ -13,8 +13,7 @@ MRI_MOTION_CORRECT2_METADATA = Metadata(
 )
 
 
-MriMotionCorrect2ParamsDict = typing.TypedDict('MriMotionCorrect2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_motion_correct2"]],
+_MriMotionCorrect2ParamsDictNoTag = typing.TypedDict('_MriMotionCorrect2ParamsDictNoTag', {
     "output_spec": str,
     "input_files": list[InputPathType],
     "target": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ MriMotionCorrect2ParamsDictTagged = typing.TypedDict('MriMotionCorrect2ParamsDic
     "version": bool,
     "debug": bool,
 })
+MriMotionCorrect2ParamsDict = _MriMotionCorrect2ParamsDictNoTag | MriMotionCorrect2ParamsDictTagged
 
 
 class MriMotionCorrect2Outputs(typing.NamedTuple):

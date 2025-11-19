@@ -13,8 +13,7 @@ HISTO_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-HistoSynthesizeParamsDict = typing.TypedDict('HistoSynthesizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_synthesize"]],
+_HistoSynthesizeParamsDictNoTag = typing.TypedDict('_HistoSynthesizeParamsDictNoTag', {
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
     "synthetic_histo": str,
@@ -25,6 +24,7 @@ HistoSynthesizeParamsDictTagged = typing.TypedDict('HistoSynthesizeParamsDictTag
     "histo_volume": InputPathType,
     "synthetic_histo": str,
 })
+HistoSynthesizeParamsDict = _HistoSynthesizeParamsDictNoTag | HistoSynthesizeParamsDictTagged
 
 
 class HistoSynthesizeOutputs(typing.NamedTuple):

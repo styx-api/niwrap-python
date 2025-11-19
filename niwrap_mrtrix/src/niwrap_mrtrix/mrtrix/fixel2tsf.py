@@ -13,8 +13,7 @@ FIXEL2TSF_METADATA = Metadata(
 )
 
 
-Fixel2tsfConfigParamsDict = typing.TypedDict('Fixel2tsfConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fixel2tsfConfigParamsDictNoTag = typing.TypedDict('_Fixel2tsfConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Fixel2tsfConfigParamsDictTagged = typing.TypedDict('Fixel2tsfConfigParamsDictTag
     "key": str,
     "value": str,
 })
+Fixel2tsfConfigParamsDict = _Fixel2tsfConfigParamsDictNoTag | Fixel2tsfConfigParamsDictTagged
 
 
-Fixel2tsfParamsDict = typing.TypedDict('Fixel2tsfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2tsf"]],
+_Fixel2tsfParamsDictNoTag = typing.TypedDict('_Fixel2tsfParamsDictNoTag', {
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -55,6 +54,7 @@ Fixel2tsfParamsDictTagged = typing.TypedDict('Fixel2tsfParamsDictTagged', {
     "tracks": InputPathType,
     "tsf": str,
 })
+Fixel2tsfParamsDict = _Fixel2tsfParamsDictNoTag | Fixel2tsfParamsDictTagged
 
 
 def fixel2tsf_config(

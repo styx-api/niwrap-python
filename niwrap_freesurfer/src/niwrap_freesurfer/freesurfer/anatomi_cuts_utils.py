@@ -13,14 +13,14 @@ ANATOMI_CUTS_UTILS_METADATA = Metadata(
 )
 
 
-AnatomiCutsUtilsParamsDict = typing.TypedDict('AnatomiCutsUtilsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/anatomiCutsUtils"]],
+_AnatomiCutsUtilsParamsDictNoTag = typing.TypedDict('_AnatomiCutsUtilsParamsDictNoTag', {
     "modules": typing.NotRequired[list[str] | None],
 })
 AnatomiCutsUtilsParamsDictTagged = typing.TypedDict('AnatomiCutsUtilsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/anatomiCutsUtils"],
     "modules": typing.NotRequired[list[str] | None],
 })
+AnatomiCutsUtilsParamsDict = _AnatomiCutsUtilsParamsDictNoTag | AnatomiCutsUtilsParamsDictTagged
 
 
 class AnatomiCutsUtilsOutputs(typing.NamedTuple):

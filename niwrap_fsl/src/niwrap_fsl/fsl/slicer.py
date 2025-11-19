@@ -13,8 +13,7 @@ SLICER_METADATA = Metadata(
 )
 
 
-SlicerParamsDict = typing.TypedDict('SlicerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slicer"]],
+_SlicerParamsDictNoTag = typing.TypedDict('_SlicerParamsDictNoTag', {
     "in_file": InputPathType,
     "overlay_file": typing.NotRequired[InputPathType | None],
     "label_slices": bool,
@@ -65,6 +64,7 @@ SlicerParamsDictTagged = typing.TypedDict('SlicerParamsDictTagged', {
     "output_sample_axial_slices_width": typing.NotRequired[str | None],
     "output_sample_axial_slices_fname": typing.NotRequired[str | None],
 })
+SlicerParamsDict = _SlicerParamsDictNoTag | SlicerParamsDictTagged
 
 
 class SlicerOutputs(typing.NamedTuple):

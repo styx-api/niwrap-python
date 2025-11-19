@@ -13,8 +13,7 @@ SUPER_RESOLUTION_METADATA = Metadata(
 )
 
 
-SuperResolutionParamsDict = typing.TypedDict('SuperResolutionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SuperResolution"]],
+_SuperResolutionParamsDictNoTag = typing.TypedDict('_SuperResolutionParamsDictNoTag', {
     "image_dimension": int,
     "output_image": str,
     "domain_image": InputPathType,
@@ -33,6 +32,7 @@ SuperResolutionParamsDictTagged = typing.TypedDict('SuperResolutionParamsDictTag
     "number_of_levels": int,
     "input_image_files": list[InputPathType],
 })
+SuperResolutionParamsDict = _SuperResolutionParamsDictNoTag | SuperResolutionParamsDictTagged
 
 
 class SuperResolutionOutputs(typing.NamedTuple):

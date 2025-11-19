@@ -12,8 +12,7 @@ VOLUME_DISTORTION_METADATA = Metadata(
 )
 
 
-VolumeDistortionParamsDict = typing.TypedDict('VolumeDistortionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-distortion"]],
+_VolumeDistortionParamsDictNoTag = typing.TypedDict('_VolumeDistortionParamsDictNoTag', {
     "volume-out": str,
     "source-volume": typing.NotRequired[str | None],
     "circular": bool,
@@ -28,6 +27,7 @@ VolumeDistortionParamsDictTagged = typing.TypedDict('VolumeDistortionParamsDictT
     "log2": bool,
     "warpfield": str,
 })
+VolumeDistortionParamsDict = _VolumeDistortionParamsDictNoTag | VolumeDistortionParamsDictTagged
 
 
 class VolumeDistortionOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ BMEDITS2SURF_METADATA = Metadata(
 )
 
 
-Bmedits2surfParamsDict = typing.TypedDict('Bmedits2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bmedits2surf"]],
+_Bmedits2surfParamsDictNoTag = typing.TypedDict('_Bmedits2surfParamsDictNoTag', {
     "subject": str,
     "self": bool,
     "overwrite": bool,
@@ -39,6 +38,7 @@ Bmedits2surfParamsDictTagged = typing.TypedDict('Bmedits2surfParamsDictTagged', 
     "right_hemisphere": bool,
     "no_surfs": bool,
 })
+Bmedits2surfParamsDict = _Bmedits2surfParamsDictNoTag | Bmedits2surfParamsDictTagged
 
 
 class Bmedits2surfOutputs(typing.NamedTuple):

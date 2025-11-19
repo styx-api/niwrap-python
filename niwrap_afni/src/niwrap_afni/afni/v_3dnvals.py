@@ -13,8 +13,7 @@ V_3DNVALS_METADATA = Metadata(
 )
 
 
-V3dnvalsParamsDict = typing.TypedDict('V3dnvalsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dnvals"]],
+_V3dnvalsParamsDictNoTag = typing.TypedDict('_V3dnvalsParamsDictNoTag', {
     "datasets": list[InputPathType],
     "all_flag": bool,
     "verbose_flag": bool,
@@ -25,6 +24,7 @@ V3dnvalsParamsDictTagged = typing.TypedDict('V3dnvalsParamsDictTagged', {
     "all_flag": bool,
     "verbose_flag": bool,
 })
+V3dnvalsParamsDict = _V3dnvalsParamsDictNoTag | V3dnvalsParamsDictTagged
 
 
 class V3dnvalsOutputs(typing.NamedTuple):

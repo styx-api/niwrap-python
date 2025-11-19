@@ -13,8 +13,7 @@ V_3D_WARP_METADATA = Metadata(
 )
 
 
-V3dWarpParamsDict = typing.TypedDict('V3dWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dWarp"]],
+_V3dWarpParamsDictNoTag = typing.TypedDict('_V3dWarpParamsDictNoTag', {
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
     "tta2mni": bool,
@@ -63,6 +62,7 @@ V3dWarpParamsDictTagged = typing.TypedDict('V3dWarpParamsDictTagged', {
     "prefix": typing.NotRequired[str | None],
     "dataset": str,
 })
+V3dWarpParamsDict = _V3dWarpParamsDictNoTag | V3dWarpParamsDictTagged
 
 
 class V3dWarpOutputs(typing.NamedTuple):

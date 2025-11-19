@@ -13,8 +13,7 @@ V_3DSVM_METADATA = Metadata(
 )
 
 
-V3dsvmParamsDict = typing.TypedDict('V3dsvmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dsvm"]],
+_V3dsvmParamsDictNoTag = typing.TypedDict('_V3dsvmParamsDictNoTag', {
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -73,6 +72,7 @@ V3dsvmParamsDictTagged = typing.TypedDict('V3dsvmParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+V3dsvmParamsDict = _V3dsvmParamsDictNoTag | V3dsvmParamsDictTagged
 
 
 class V3dsvmOutputs(typing.NamedTuple):

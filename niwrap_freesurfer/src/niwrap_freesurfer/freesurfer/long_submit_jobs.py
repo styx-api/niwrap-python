@@ -13,8 +13,7 @@ LONG_SUBMIT_JOBS_METADATA = Metadata(
 )
 
 
-LongSubmitJobsParamsDict = typing.TypedDict('LongSubmitJobsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_jobs"]],
+_LongSubmitJobsParamsDictNoTag = typing.TypedDict('_LongSubmitJobsParamsDictNoTag', {
     "qdec": InputPathType,
     "cdir": str,
     "bdir": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ LongSubmitJobsParamsDictTagged = typing.TypedDict('LongSubmitJobsParamsDictTagge
     "bnodes": typing.NotRequired[float | None],
     "lnodes": typing.NotRequired[float | None],
 })
+LongSubmitJobsParamsDict = _LongSubmitJobsParamsDictNoTag | LongSubmitJobsParamsDictTagged
 
 
 class LongSubmitJobsOutputs(typing.NamedTuple):

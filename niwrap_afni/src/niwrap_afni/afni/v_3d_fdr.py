@@ -13,8 +13,7 @@ V_3D_FDR_METADATA = Metadata(
 )
 
 
-V3dFdrParamsDict = typing.TypedDict('V3dFdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dFDR"]],
+_V3dFdrParamsDictNoTag = typing.TypedDict('_V3dFdrParamsDictNoTag', {
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ V3dFdrParamsDictTagged = typing.TypedDict('V3dFdrParamsDictTagged', {
     "float": bool,
     "qval": bool,
 })
+V3dFdrParamsDict = _V3dFdrParamsDictNoTag | V3dFdrParamsDictTagged
 
 
 class V3dFdrOutputs(typing.NamedTuple):

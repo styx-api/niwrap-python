@@ -13,8 +13,7 @@ ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
 )
 
 
-AdjunctSumaFsRoiInfoParamsDict = typing.TypedDict('AdjunctSumaFsRoiInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_roi_info"]],
+_AdjunctSumaFsRoiInfoParamsDictNoTag = typing.TypedDict('_AdjunctSumaFsRoiInfoParamsDictNoTag', {
     "subject_id": str,
     "suma_directory": str,
     "help": bool,
@@ -29,6 +28,7 @@ AdjunctSumaFsRoiInfoParamsDictTagged = typing.TypedDict('AdjunctSumaFsRoiInfoPar
     "hview": bool,
     "version": bool,
 })
+AdjunctSumaFsRoiInfoParamsDict = _AdjunctSumaFsRoiInfoParamsDictNoTag | AdjunctSumaFsRoiInfoParamsDictTagged
 
 
 class AdjunctSumaFsRoiInfoOutputs(typing.NamedTuple):

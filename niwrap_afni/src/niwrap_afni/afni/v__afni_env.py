@@ -13,8 +13,7 @@ V__AFNI_ENV_METADATA = Metadata(
 )
 
 
-VAfniEnvParamsDict = typing.TypedDict('VAfniEnvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@AfniEnv"]],
+_VAfniEnvParamsDictNoTag = typing.TypedDict('_VAfniEnvParamsDictNoTag', {
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
     "get_flag": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ VAfniEnvParamsDictTagged = typing.TypedDict('VAfniEnvParamsDictTagged', {
     "all_opts_flag": bool,
     "help_find_flag": typing.NotRequired[str | None],
 })
+VAfniEnvParamsDict = _VAfniEnvParamsDictNoTag | VAfniEnvParamsDictTagged
 
 
 class VAfniEnvOutputs(typing.NamedTuple):

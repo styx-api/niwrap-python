@@ -13,8 +13,7 @@ V_3DEDGE3_METADATA = Metadata(
 )
 
 
-V3dedge3ParamsDict = typing.TypedDict('V3dedge3ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dedge3"]],
+_V3dedge3ParamsDictNoTag = typing.TypedDict('_V3dedge3ParamsDictNoTag', {
     "input_file": InputPathType,
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ V3dedge3ParamsDictTagged = typing.TypedDict('V3dedge3ParamsDictTagged', {
     "scale_floats": typing.NotRequired[float | None],
     "automask": bool,
 })
+V3dedge3ParamsDict = _V3dedge3ParamsDictNoTag | V3dedge3ParamsDictTagged
 
 
 class V3dedge3Outputs(typing.NamedTuple):

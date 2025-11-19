@@ -13,14 +13,14 @@ GCAINIT_METADATA = Metadata(
 )
 
 
-GcainitParamsDict = typing.TypedDict('GcainitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gcainit"]],
+_GcainitParamsDictNoTag = typing.TypedDict('_GcainitParamsDictNoTag', {
     "gcadir": str,
 })
 GcainitParamsDictTagged = typing.TypedDict('GcainitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcainit"],
     "gcadir": str,
 })
+GcainitParamsDict = _GcainitParamsDictNoTag | GcainitParamsDictTagged
 
 
 class GcainitOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ IREPIFITVOL_GLNX64_METADATA = Metadata(
 )
 
 
-IrepifitvolGlnx64ParamsDict = typing.TypedDict('IrepifitvolGlnx64ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol.glnx64"]],
+_IrepifitvolGlnx64ParamsDictNoTag = typing.TypedDict('_IrepifitvolGlnx64ParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ IrepifitvolGlnx64ParamsDictTagged = typing.TypedDict('IrepifitvolGlnx64ParamsDic
     "input_file": InputPathType,
     "output_file": str,
 })
+IrepifitvolGlnx64ParamsDict = _IrepifitvolGlnx64ParamsDictNoTag | IrepifitvolGlnx64ParamsDictTagged
 
 
 class IrepifitvolGlnx64Outputs(typing.NamedTuple):

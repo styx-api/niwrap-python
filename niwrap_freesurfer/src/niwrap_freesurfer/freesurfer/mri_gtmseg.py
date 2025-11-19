@@ -13,8 +13,7 @@ MRI_GTMSEG_METADATA = Metadata(
 )
 
 
-MriGtmsegParamsDict = typing.TypedDict('MriGtmsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmseg"]],
+_MriGtmsegParamsDictNoTag = typing.TypedDict('_MriGtmsegParamsDictNoTag', {
     "output_volume": str,
     "source_subject": str,
     "internal_usf": typing.NotRequired[float | None],
@@ -57,6 +56,7 @@ MriGtmsegParamsDictTagged = typing.TypedDict('MriGtmsegParamsDictTagged', {
     "debug": bool,
     "check_opts": bool,
 })
+MriGtmsegParamsDict = _MriGtmsegParamsDictNoTag | MriGtmsegParamsDictTagged
 
 
 class MriGtmsegOutputs(typing.NamedTuple):

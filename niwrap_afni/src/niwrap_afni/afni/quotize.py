@@ -13,8 +13,7 @@ QUOTIZE_METADATA = Metadata(
 )
 
 
-QuotizeParamsDict = typing.TypedDict('QuotizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/quotize"]],
+_QuotizeParamsDictNoTag = typing.TypedDict('_QuotizeParamsDictNoTag', {
     "name": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -25,6 +24,7 @@ QuotizeParamsDictTagged = typing.TypedDict('QuotizeParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+QuotizeParamsDict = _QuotizeParamsDictNoTag | QuotizeParamsDictTagged
 
 
 class QuotizeOutputs(typing.NamedTuple):

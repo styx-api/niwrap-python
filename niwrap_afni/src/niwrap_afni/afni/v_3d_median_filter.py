@@ -13,8 +13,7 @@ V_3D_MEDIAN_FILTER_METADATA = Metadata(
 )
 
 
-V3dMedianFilterParamsDict = typing.TypedDict('V3dMedianFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMedianFilter"]],
+_V3dMedianFilterParamsDictNoTag = typing.TypedDict('_V3dMedianFilterParamsDictNoTag', {
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
     "verbose": bool,
@@ -31,6 +30,7 @@ V3dMedianFilterParamsDictTagged = typing.TypedDict('V3dMedianFilterParamsDictTag
     "automask": bool,
     "dataset": InputPathType,
 })
+V3dMedianFilterParamsDict = _V3dMedianFilterParamsDictNoTag | V3dMedianFilterParamsDictTagged
 
 
 class V3dMedianFilterOutputs(typing.NamedTuple):

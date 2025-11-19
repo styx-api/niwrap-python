@@ -13,8 +13,7 @@ AFNI_SYSTEM_CHECK_PY_METADATA = Metadata(
 )
 
 
-AfniSystemCheckPyParamsDict = typing.TypedDict('AfniSystemCheckPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_system_check.py"]],
+_AfniSystemCheckPyParamsDictNoTag = typing.TypedDict('_AfniSystemCheckPyParamsDictNoTag', {
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
     "exact": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ AfniSystemCheckPyParamsDictTagged = typing.TypedDict('AfniSystemCheckPyParamsDic
     "casematch": typing.NotRequired[str | None],
     "data_root": typing.NotRequired[str | None],
 })
+AfniSystemCheckPyParamsDict = _AfniSystemCheckPyParamsDictNoTag | AfniSystemCheckPyParamsDictTagged
 
 
 class AfniSystemCheckPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_2D_IM_REG_METADATA = Metadata(
 )
 
 
-V2dImRegParamsDict = typing.TypedDict('V2dImRegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/2dImReg"]],
+_V2dImRegParamsDictNoTag = typing.TypedDict('_V2dImRegParamsDictNoTag', {
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
     "base": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ V2dImRegParamsDictTagged = typing.TypedDict('V2dImRegParamsDictTagged', {
     "rprefix": typing.NotRequired[str | None],
     "debug": bool,
 })
+V2dImRegParamsDict = _V2dImRegParamsDictNoTag | V2dImRegParamsDictTagged
 
 
 class V2dImRegOutputs(typing.NamedTuple):

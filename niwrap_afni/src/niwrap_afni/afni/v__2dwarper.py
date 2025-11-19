@@ -13,14 +13,14 @@ V__2DWARPER_METADATA = Metadata(
 )
 
 
-V2dwarperParamsDict = typing.TypedDict('V2dwarperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@2dwarper"]],
+_V2dwarperParamsDictNoTag = typing.TypedDict('_V2dwarperParamsDictNoTag', {
     "input_dataset": InputPathType,
 })
 V2dwarperParamsDictTagged = typing.TypedDict('V2dwarperParamsDictTagged', {
     "@type": typing.Literal["afni/@2dwarper"],
     "input_dataset": InputPathType,
 })
+V2dwarperParamsDict = _V2dwarperParamsDictNoTag | V2dwarperParamsDictTagged
 
 
 class V2dwarperOutputs(typing.NamedTuple):

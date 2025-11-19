@@ -13,8 +13,7 @@ V_1D_SEM_METADATA = Metadata(
 )
 
 
-V1dSemParamsDict = typing.TypedDict('V1dSemParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dSEM"]],
+_V1dSemParamsDictNoTag = typing.TypedDict('_V1dSemParamsDictNoTag', {
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
     "residual_variance": InputPathType,
@@ -51,6 +50,7 @@ V1dSemParamsDictTagged = typing.TypedDict('V1dSemParamsDictTagged', {
     "grow_all": bool,
     "leafpicker": bool,
 })
+V1dSemParamsDict = _V1dSemParamsDictNoTag | V1dSemParamsDictTagged
 
 
 class V1dSemOutputs(typing.NamedTuple):

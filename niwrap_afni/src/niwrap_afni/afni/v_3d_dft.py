@@ -13,8 +13,7 @@ V_3D_DFT_METADATA = Metadata(
 )
 
 
-V3dDftParamsDict = typing.TypedDict('V3dDftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDFT"]],
+_V3dDftParamsDictNoTag = typing.TypedDict('_V3dDftParamsDictNoTag', {
     "infile": InputPathType,
     "prefix": str,
     "abs_output": bool,
@@ -33,6 +32,7 @@ V3dDftParamsDictTagged = typing.TypedDict('V3dDftParamsDictTagged', {
     "taper": typing.NotRequired[float | None],
     "inverse": bool,
 })
+V3dDftParamsDict = _V3dDftParamsDictNoTag | V3dDftParamsDictTagged
 
 
 class V3dDftOutputs(typing.NamedTuple):

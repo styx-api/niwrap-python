@@ -12,8 +12,7 @@ VOLUME_DILATE_METADATA = Metadata(
 )
 
 
-VolumeDilatePresmoothParamsDict = typing.TypedDict('VolumeDilatePresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_VolumeDilatePresmoothParamsDictNoTag = typing.TypedDict('_VolumeDilatePresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,20 +21,20 @@ VolumeDilatePresmoothParamsDictTagged = typing.TypedDict('VolumeDilatePresmoothP
     "kernel": float,
     "fwhm": bool,
 })
+VolumeDilatePresmoothParamsDict = _VolumeDilatePresmoothParamsDictNoTag | VolumeDilatePresmoothParamsDictTagged
 
 
-VolumeDilateGradExtrapolateParamsDict = typing.TypedDict('VolumeDilateGradExtrapolateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["grad-extrapolate"]],
+_VolumeDilateGradExtrapolateParamsDictNoTag = typing.TypedDict('_VolumeDilateGradExtrapolateParamsDictNoTag', {
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParamsDict | None],
 })
 VolumeDilateGradExtrapolateParamsDictTagged = typing.TypedDict('VolumeDilateGradExtrapolateParamsDictTagged', {
     "@type": typing.Literal["grad-extrapolate"],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParamsDict | None],
 })
+VolumeDilateGradExtrapolateParamsDict = _VolumeDilateGradExtrapolateParamsDictNoTag | VolumeDilateGradExtrapolateParamsDictTagged
 
 
-VolumeDilateParamsDict = typing.TypedDict('VolumeDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-dilate"]],
+_VolumeDilateParamsDictNoTag = typing.TypedDict('_VolumeDilateParamsDictNoTag', {
     "volume-out": str,
     "exponent": typing.NotRequired[float | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -60,6 +59,7 @@ VolumeDilateParamsDictTagged = typing.TypedDict('VolumeDilateParamsDictTagged', 
     "distance": float,
     "method": str,
 })
+VolumeDilateParamsDict = _VolumeDilateParamsDictNoTag | VolumeDilateParamsDictTagged
 
 
 def volume_dilate_presmooth(

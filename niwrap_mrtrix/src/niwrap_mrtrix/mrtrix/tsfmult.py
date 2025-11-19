@@ -13,8 +13,7 @@ TSFMULT_METADATA = Metadata(
 )
 
 
-TsfmultConfigParamsDict = typing.TypedDict('TsfmultConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfmultConfigParamsDictNoTag = typing.TypedDict('_TsfmultConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfmultConfigParamsDictTagged = typing.TypedDict('TsfmultConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+TsfmultConfigParamsDict = _TsfmultConfigParamsDictNoTag | TsfmultConfigParamsDictTagged
 
 
-TsfmultParamsDict = typing.TypedDict('TsfmultParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfmult"]],
+_TsfmultParamsDictNoTag = typing.TypedDict('_TsfmultParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -51,6 +50,7 @@ TsfmultParamsDictTagged = typing.TypedDict('TsfmultParamsDictTagged', {
     "input1": InputPathType,
     "output": str,
 })
+TsfmultParamsDict = _TsfmultParamsDictNoTag | TsfmultParamsDictTagged
 
 
 def tsfmult_config(

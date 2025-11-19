@@ -13,8 +13,7 @@ XCEREBRALSEG_METADATA = Metadata(
 )
 
 
-XcerebralsegParamsDict = typing.TypedDict('XcerebralsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xcerebralseg"]],
+_XcerebralsegParamsDictNoTag = typing.TypedDict('_XcerebralsegParamsDictNoTag', {
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
     "atlas": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ XcerebralsegParamsDictTagged = typing.TypedDict('XcerebralsegParamsDictTagged', 
     "no_vermis": bool,
     "threads": typing.NotRequired[float | None],
 })
+XcerebralsegParamsDict = _XcerebralsegParamsDictNoTag | XcerebralsegParamsDictTagged
 
 
 class XcerebralsegOutputs(typing.NamedTuple):

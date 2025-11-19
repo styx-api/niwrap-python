@@ -13,8 +13,7 @@ V_1DPLOT_METADATA = Metadata(
 )
 
 
-V1dplotNolineParamsDict = typing.TypedDict('V1dplotNolineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noline"]],
+_V1dplotNolineParamsDictNoTag = typing.TypedDict('_V1dplotNolineParamsDictNoTag', {
     "noline": bool,
     "NOLINE": bool,
 })
@@ -23,10 +22,10 @@ V1dplotNolineParamsDictTagged = typing.TypedDict('V1dplotNolineParamsDictTagged'
     "noline": bool,
     "NOLINE": bool,
 })
+V1dplotNolineParamsDict = _V1dplotNolineParamsDictNoTag | V1dplotNolineParamsDictTagged
 
 
-V1dplotThickParamsDict = typing.TypedDict('V1dplotThickParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["thick"]],
+_V1dplotThickParamsDictNoTag = typing.TypedDict('_V1dplotThickParamsDictNoTag', {
     "thick": bool,
     "THICK": bool,
 })
@@ -35,10 +34,10 @@ V1dplotThickParamsDictTagged = typing.TypedDict('V1dplotThickParamsDictTagged', 
     "thick": bool,
     "THICK": bool,
 })
+V1dplotThickParamsDict = _V1dplotThickParamsDictNoTag | V1dplotThickParamsDictTagged
 
 
-V1dplotRboxParamsDict = typing.TypedDict('V1dplotRboxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rbox"]],
+_V1dplotRboxParamsDictNoTag = typing.TypedDict('_V1dplotRboxParamsDictNoTag', {
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
@@ -47,10 +46,10 @@ V1dplotRboxParamsDictTagged = typing.TypedDict('V1dplotRboxParamsDictTagged', {
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
+V1dplotRboxParamsDict = _V1dplotRboxParamsDictNoTag | V1dplotRboxParamsDictTagged
 
 
-V1dplotParamsDict = typing.TypedDict('V1dplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dplot"]],
+_V1dplotParamsDictNoTag = typing.TypedDict('_V1dplotParamsDictNoTag', {
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,
@@ -157,6 +156,7 @@ V1dplotParamsDictTagged = typing.TypedDict('V1dplotParamsDictTagged', {
     "rbox": typing.NotRequired[V1dplotRboxParamsDict | None],
     "line": typing.NotRequired[str | None],
 })
+V1dplotParamsDict = _V1dplotParamsDictNoTag | V1dplotParamsDictTagged
 
 
 def v_1dplot_noline(

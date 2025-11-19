@@ -13,8 +13,7 @@ IMCAT_METADATA = Metadata(
 )
 
 
-ImcatParamsDict = typing.TypedDict('ImcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imcat"]],
+_ImcatParamsDictNoTag = typing.TypedDict('_ImcatParamsDictNoTag', {
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],
@@ -69,6 +68,7 @@ ImcatParamsDictTagged = typing.TypedDict('ImcatParamsDictTagged', {
     "gap": typing.NotRequired[float | None],
     "gap_col": typing.NotRequired[list[float] | None],
 })
+ImcatParamsDict = _ImcatParamsDictNoTag | ImcatParamsDictTagged
 
 
 class ImcatOutputs(typing.NamedTuple):

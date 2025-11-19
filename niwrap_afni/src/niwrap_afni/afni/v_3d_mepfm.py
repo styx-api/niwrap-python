@@ -13,8 +13,7 @@ V_3D_MEPFM_METADATA = Metadata(
 )
 
 
-V3dMepfmParamsDict = typing.TypedDict('V3dMepfmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMEPFM"]],
+_V3dMepfmParamsDictNoTag = typing.TypedDict('_V3dMepfmParamsDictNoTag', {
     "input_files": list[str],
     "dbgArgs": bool,
     "mask": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ V3dMepfmParamsDictTagged = typing.TypedDict('V3dMepfmParamsDictTagged', {
     "hrf_model": typing.NotRequired[str | None],
     "verbosity": typing.NotRequired[int | None],
 })
+V3dMepfmParamsDict = _V3dMepfmParamsDictNoTag | V3dMepfmParamsDictTagged
 
 
 class V3dMepfmOutputs(typing.NamedTuple):

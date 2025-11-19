@@ -12,8 +12,7 @@ FOCI_RESAMPLE_METADATA = Metadata(
 )
 
 
-FociResampleLeftSurfacesParamsDict = typing.TypedDict('FociResampleLeftSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surfaces"]],
+_FociResampleLeftSurfacesParamsDictNoTag = typing.TypedDict('_FociResampleLeftSurfacesParamsDictNoTag', {
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
@@ -22,10 +21,10 @@ FociResampleLeftSurfacesParamsDictTagged = typing.TypedDict('FociResampleLeftSur
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
+FociResampleLeftSurfacesParamsDict = _FociResampleLeftSurfacesParamsDictNoTag | FociResampleLeftSurfacesParamsDictTagged
 
 
-FociResampleRightSurfacesParamsDict = typing.TypedDict('FociResampleRightSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surfaces"]],
+_FociResampleRightSurfacesParamsDictNoTag = typing.TypedDict('_FociResampleRightSurfacesParamsDictNoTag', {
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
@@ -34,10 +33,10 @@ FociResampleRightSurfacesParamsDictTagged = typing.TypedDict('FociResampleRightS
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
+FociResampleRightSurfacesParamsDict = _FociResampleRightSurfacesParamsDictNoTag | FociResampleRightSurfacesParamsDictTagged
 
 
-FociResampleCerebellumSurfacesParamsDict = typing.TypedDict('FociResampleCerebellumSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surfaces"]],
+_FociResampleCerebellumSurfacesParamsDictNoTag = typing.TypedDict('_FociResampleCerebellumSurfacesParamsDictNoTag', {
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
@@ -46,10 +45,10 @@ FociResampleCerebellumSurfacesParamsDictTagged = typing.TypedDict('FociResampleC
     "current-surf": InputPathType,
     "new-surf": InputPathType,
 })
+FociResampleCerebellumSurfacesParamsDict = _FociResampleCerebellumSurfacesParamsDictNoTag | FociResampleCerebellumSurfacesParamsDictTagged
 
 
-FociResampleParamsDict = typing.TypedDict('FociResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/foci-resample"]],
+_FociResampleParamsDictNoTag = typing.TypedDict('_FociResampleParamsDictNoTag', {
     "foci-out": str,
     "left-surfaces": typing.NotRequired[FociResampleLeftSurfacesParamsDict | None],
     "right-surfaces": typing.NotRequired[FociResampleRightSurfacesParamsDict | None],
@@ -68,6 +67,7 @@ FociResampleParamsDictTagged = typing.TypedDict('FociResampleParamsDictTagged', 
     "restore-xyz": bool,
     "foci-in": InputPathType,
 })
+FociResampleParamsDict = _FociResampleParamsDictNoTag | FociResampleParamsDictTagged
 
 
 def foci_resample_left_surfaces(

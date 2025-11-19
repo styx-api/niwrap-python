@@ -13,8 +13,7 @@ V_3DCALC_METADATA = Metadata(
 )
 
 
-V3dcalcParamsDict = typing.TypedDict('V3dcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dcalc"]],
+_V3dcalcParamsDictNoTag = typing.TypedDict('_V3dcalcParamsDictNoTag', {
     "in_file_a": InputPathType,
     "in_file_b": typing.NotRequired[InputPathType | None],
     "in_file_c": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ V3dcalcParamsDictTagged = typing.TypedDict('V3dcalcParamsDictTagged', {
     "expr": str,
     "prefix": typing.NotRequired[str | None],
 })
+V3dcalcParamsDict = _V3dcalcParamsDictNoTag | V3dcalcParamsDictTagged
 
 
 class V3dcalcOutputs(typing.NamedTuple):

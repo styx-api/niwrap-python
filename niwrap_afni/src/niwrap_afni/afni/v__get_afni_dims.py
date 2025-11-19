@@ -13,14 +13,14 @@ V__GET_AFNI_DIMS_METADATA = Metadata(
 )
 
 
-VGetAfniDimsParamsDict = typing.TypedDict('VGetAfniDimsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniDims"]],
+_VGetAfniDimsParamsDictNoTag = typing.TypedDict('_VGetAfniDimsParamsDictNoTag', {
     "input_dset": InputPathType,
 })
 VGetAfniDimsParamsDictTagged = typing.TypedDict('VGetAfniDimsParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniDims"],
     "input_dset": InputPathType,
 })
+VGetAfniDimsParamsDict = _VGetAfniDimsParamsDictNoTag | VGetAfniDimsParamsDictTagged
 
 
 class VGetAfniDimsOutputs(typing.NamedTuple):

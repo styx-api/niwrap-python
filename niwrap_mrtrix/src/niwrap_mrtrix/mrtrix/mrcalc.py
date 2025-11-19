@@ -13,408 +13,357 @@ MRCALC_METADATA = Metadata(
 )
 
 
-MrcalcAbsParamsDict = typing.TypedDict('MrcalcAbsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["abs"]],
-})
+_MrcalcAbsParamsDictNoTag = typing.TypedDict('_MrcalcAbsParamsDictNoTag', {})
 MrcalcAbsParamsDictTagged = typing.TypedDict('MrcalcAbsParamsDictTagged', {
     "@type": typing.Literal["abs"],
 })
+MrcalcAbsParamsDict = _MrcalcAbsParamsDictNoTag | MrcalcAbsParamsDictTagged
 
 
-MrcalcNegParamsDict = typing.TypedDict('MrcalcNegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg"]],
-})
+_MrcalcNegParamsDictNoTag = typing.TypedDict('_MrcalcNegParamsDictNoTag', {})
 MrcalcNegParamsDictTagged = typing.TypedDict('MrcalcNegParamsDictTagged', {
     "@type": typing.Literal["neg"],
 })
+MrcalcNegParamsDict = _MrcalcNegParamsDictNoTag | MrcalcNegParamsDictTagged
 
 
-MrcalcAddParamsDict = typing.TypedDict('MrcalcAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["add"]],
-})
+_MrcalcAddParamsDictNoTag = typing.TypedDict('_MrcalcAddParamsDictNoTag', {})
 MrcalcAddParamsDictTagged = typing.TypedDict('MrcalcAddParamsDictTagged', {
     "@type": typing.Literal["add"],
 })
+MrcalcAddParamsDict = _MrcalcAddParamsDictNoTag | MrcalcAddParamsDictTagged
 
 
-MrcalcSubtractParamsDict = typing.TypedDict('MrcalcSubtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["subtract"]],
-})
+_MrcalcSubtractParamsDictNoTag = typing.TypedDict('_MrcalcSubtractParamsDictNoTag', {})
 MrcalcSubtractParamsDictTagged = typing.TypedDict('MrcalcSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
 })
+MrcalcSubtractParamsDict = _MrcalcSubtractParamsDictNoTag | MrcalcSubtractParamsDictTagged
 
 
-MrcalcMultiplyParamsDict = typing.TypedDict('MrcalcMultiplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiply"]],
-})
+_MrcalcMultiplyParamsDictNoTag = typing.TypedDict('_MrcalcMultiplyParamsDictNoTag', {})
 MrcalcMultiplyParamsDictTagged = typing.TypedDict('MrcalcMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
 })
+MrcalcMultiplyParamsDict = _MrcalcMultiplyParamsDictNoTag | MrcalcMultiplyParamsDictTagged
 
 
-MrcalcDivideParamsDict = typing.TypedDict('MrcalcDivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["divide"]],
-})
+_MrcalcDivideParamsDictNoTag = typing.TypedDict('_MrcalcDivideParamsDictNoTag', {})
 MrcalcDivideParamsDictTagged = typing.TypedDict('MrcalcDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
 })
+MrcalcDivideParamsDict = _MrcalcDivideParamsDictNoTag | MrcalcDivideParamsDictTagged
 
 
-MrcalcMinParamsDict = typing.TypedDict('MrcalcMinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["min"]],
-})
+_MrcalcMinParamsDictNoTag = typing.TypedDict('_MrcalcMinParamsDictNoTag', {})
 MrcalcMinParamsDictTagged = typing.TypedDict('MrcalcMinParamsDictTagged', {
     "@type": typing.Literal["min"],
 })
+MrcalcMinParamsDict = _MrcalcMinParamsDictNoTag | MrcalcMinParamsDictTagged
 
 
-MrcalcMaxParamsDict = typing.TypedDict('MrcalcMaxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["max"]],
-})
+_MrcalcMaxParamsDictNoTag = typing.TypedDict('_MrcalcMaxParamsDictNoTag', {})
 MrcalcMaxParamsDictTagged = typing.TypedDict('MrcalcMaxParamsDictTagged', {
     "@type": typing.Literal["max"],
 })
+MrcalcMaxParamsDict = _MrcalcMaxParamsDictNoTag | MrcalcMaxParamsDictTagged
 
 
-MrcalcLtParamsDict = typing.TypedDict('MrcalcLtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["lt"]],
-})
+_MrcalcLtParamsDictNoTag = typing.TypedDict('_MrcalcLtParamsDictNoTag', {})
 MrcalcLtParamsDictTagged = typing.TypedDict('MrcalcLtParamsDictTagged', {
     "@type": typing.Literal["lt"],
 })
+MrcalcLtParamsDict = _MrcalcLtParamsDictNoTag | MrcalcLtParamsDictTagged
 
 
-MrcalcGtParamsDict = typing.TypedDict('MrcalcGtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gt"]],
-})
+_MrcalcGtParamsDictNoTag = typing.TypedDict('_MrcalcGtParamsDictNoTag', {})
 MrcalcGtParamsDictTagged = typing.TypedDict('MrcalcGtParamsDictTagged', {
     "@type": typing.Literal["gt"],
 })
+MrcalcGtParamsDict = _MrcalcGtParamsDictNoTag | MrcalcGtParamsDictTagged
 
 
-MrcalcLeParamsDict = typing.TypedDict('MrcalcLeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["le"]],
-})
+_MrcalcLeParamsDictNoTag = typing.TypedDict('_MrcalcLeParamsDictNoTag', {})
 MrcalcLeParamsDictTagged = typing.TypedDict('MrcalcLeParamsDictTagged', {
     "@type": typing.Literal["le"],
 })
+MrcalcLeParamsDict = _MrcalcLeParamsDictNoTag | MrcalcLeParamsDictTagged
 
 
-MrcalcGeParamsDict = typing.TypedDict('MrcalcGeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ge"]],
-})
+_MrcalcGeParamsDictNoTag = typing.TypedDict('_MrcalcGeParamsDictNoTag', {})
 MrcalcGeParamsDictTagged = typing.TypedDict('MrcalcGeParamsDictTagged', {
     "@type": typing.Literal["ge"],
 })
+MrcalcGeParamsDict = _MrcalcGeParamsDictNoTag | MrcalcGeParamsDictTagged
 
 
-MrcalcEqParamsDict = typing.TypedDict('MrcalcEqParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["eq"]],
-})
+_MrcalcEqParamsDictNoTag = typing.TypedDict('_MrcalcEqParamsDictNoTag', {})
 MrcalcEqParamsDictTagged = typing.TypedDict('MrcalcEqParamsDictTagged', {
     "@type": typing.Literal["eq"],
 })
+MrcalcEqParamsDict = _MrcalcEqParamsDictNoTag | MrcalcEqParamsDictTagged
 
 
-MrcalcNeqParamsDict = typing.TypedDict('MrcalcNeqParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neq"]],
-})
+_MrcalcNeqParamsDictNoTag = typing.TypedDict('_MrcalcNeqParamsDictNoTag', {})
 MrcalcNeqParamsDictTagged = typing.TypedDict('MrcalcNeqParamsDictTagged', {
     "@type": typing.Literal["neq"],
 })
+MrcalcNeqParamsDict = _MrcalcNeqParamsDictNoTag | MrcalcNeqParamsDictTagged
 
 
-MrcalcIfParamsDict = typing.TypedDict('MrcalcIfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["if"]],
-})
+_MrcalcIfParamsDictNoTag = typing.TypedDict('_MrcalcIfParamsDictNoTag', {})
 MrcalcIfParamsDictTagged = typing.TypedDict('MrcalcIfParamsDictTagged', {
     "@type": typing.Literal["if"],
 })
+MrcalcIfParamsDict = _MrcalcIfParamsDictNoTag | MrcalcIfParamsDictTagged
 
 
-MrcalcReplaceParamsDict = typing.TypedDict('MrcalcReplaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["replace"]],
-})
+_MrcalcReplaceParamsDictNoTag = typing.TypedDict('_MrcalcReplaceParamsDictNoTag', {})
 MrcalcReplaceParamsDictTagged = typing.TypedDict('MrcalcReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
 })
+MrcalcReplaceParamsDict = _MrcalcReplaceParamsDictNoTag | MrcalcReplaceParamsDictTagged
 
 
-MrcalcSqrtParamsDict = typing.TypedDict('MrcalcSqrtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sqrt"]],
-})
+_MrcalcSqrtParamsDictNoTag = typing.TypedDict('_MrcalcSqrtParamsDictNoTag', {})
 MrcalcSqrtParamsDictTagged = typing.TypedDict('MrcalcSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
 })
+MrcalcSqrtParamsDict = _MrcalcSqrtParamsDictNoTag | MrcalcSqrtParamsDictTagged
 
 
-MrcalcPowParamsDict = typing.TypedDict('MrcalcPowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pow"]],
-})
+_MrcalcPowParamsDictNoTag = typing.TypedDict('_MrcalcPowParamsDictNoTag', {})
 MrcalcPowParamsDictTagged = typing.TypedDict('MrcalcPowParamsDictTagged', {
     "@type": typing.Literal["pow"],
 })
+MrcalcPowParamsDict = _MrcalcPowParamsDictNoTag | MrcalcPowParamsDictTagged
 
 
-MrcalcRoundParamsDict = typing.TypedDict('MrcalcRoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["round"]],
-})
+_MrcalcRoundParamsDictNoTag = typing.TypedDict('_MrcalcRoundParamsDictNoTag', {})
 MrcalcRoundParamsDictTagged = typing.TypedDict('MrcalcRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
 })
+MrcalcRoundParamsDict = _MrcalcRoundParamsDictNoTag | MrcalcRoundParamsDictTagged
 
 
-MrcalcCeilParamsDict = typing.TypedDict('MrcalcCeilParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ceil"]],
-})
+_MrcalcCeilParamsDictNoTag = typing.TypedDict('_MrcalcCeilParamsDictNoTag', {})
 MrcalcCeilParamsDictTagged = typing.TypedDict('MrcalcCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
 })
+MrcalcCeilParamsDict = _MrcalcCeilParamsDictNoTag | MrcalcCeilParamsDictTagged
 
 
-MrcalcFloorParamsDict = typing.TypedDict('MrcalcFloorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["floor"]],
-})
+_MrcalcFloorParamsDictNoTag = typing.TypedDict('_MrcalcFloorParamsDictNoTag', {})
 MrcalcFloorParamsDictTagged = typing.TypedDict('MrcalcFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
 })
+MrcalcFloorParamsDict = _MrcalcFloorParamsDictNoTag | MrcalcFloorParamsDictTagged
 
 
-MrcalcNotParamsDict = typing.TypedDict('MrcalcNotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["not"]],
-})
+_MrcalcNotParamsDictNoTag = typing.TypedDict('_MrcalcNotParamsDictNoTag', {})
 MrcalcNotParamsDictTagged = typing.TypedDict('MrcalcNotParamsDictTagged', {
     "@type": typing.Literal["not"],
 })
+MrcalcNotParamsDict = _MrcalcNotParamsDictNoTag | MrcalcNotParamsDictTagged
 
 
-MrcalcAndParamsDict = typing.TypedDict('MrcalcAndParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["and"]],
-})
+_MrcalcAndParamsDictNoTag = typing.TypedDict('_MrcalcAndParamsDictNoTag', {})
 MrcalcAndParamsDictTagged = typing.TypedDict('MrcalcAndParamsDictTagged', {
     "@type": typing.Literal["and"],
 })
+MrcalcAndParamsDict = _MrcalcAndParamsDictNoTag | MrcalcAndParamsDictTagged
 
 
-MrcalcOrParamsDict = typing.TypedDict('MrcalcOrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["or"]],
-})
+_MrcalcOrParamsDictNoTag = typing.TypedDict('_MrcalcOrParamsDictNoTag', {})
 MrcalcOrParamsDictTagged = typing.TypedDict('MrcalcOrParamsDictTagged', {
     "@type": typing.Literal["or"],
 })
+MrcalcOrParamsDict = _MrcalcOrParamsDictNoTag | MrcalcOrParamsDictTagged
 
 
-MrcalcXorParamsDict = typing.TypedDict('MrcalcXorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["xor"]],
-})
+_MrcalcXorParamsDictNoTag = typing.TypedDict('_MrcalcXorParamsDictNoTag', {})
 MrcalcXorParamsDictTagged = typing.TypedDict('MrcalcXorParamsDictTagged', {
     "@type": typing.Literal["xor"],
 })
+MrcalcXorParamsDict = _MrcalcXorParamsDictNoTag | MrcalcXorParamsDictTagged
 
 
-MrcalcIsnanParamsDict = typing.TypedDict('MrcalcIsnanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["isnan"]],
-})
+_MrcalcIsnanParamsDictNoTag = typing.TypedDict('_MrcalcIsnanParamsDictNoTag', {})
 MrcalcIsnanParamsDictTagged = typing.TypedDict('MrcalcIsnanParamsDictTagged', {
     "@type": typing.Literal["isnan"],
 })
+MrcalcIsnanParamsDict = _MrcalcIsnanParamsDictNoTag | MrcalcIsnanParamsDictTagged
 
 
-MrcalcIsinfParamsDict = typing.TypedDict('MrcalcIsinfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["isinf"]],
-})
+_MrcalcIsinfParamsDictNoTag = typing.TypedDict('_MrcalcIsinfParamsDictNoTag', {})
 MrcalcIsinfParamsDictTagged = typing.TypedDict('MrcalcIsinfParamsDictTagged', {
     "@type": typing.Literal["isinf"],
 })
+MrcalcIsinfParamsDict = _MrcalcIsinfParamsDictNoTag | MrcalcIsinfParamsDictTagged
 
 
-MrcalcFiniteParamsDict = typing.TypedDict('MrcalcFiniteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["finite"]],
-})
+_MrcalcFiniteParamsDictNoTag = typing.TypedDict('_MrcalcFiniteParamsDictNoTag', {})
 MrcalcFiniteParamsDictTagged = typing.TypedDict('MrcalcFiniteParamsDictTagged', {
     "@type": typing.Literal["finite"],
 })
+MrcalcFiniteParamsDict = _MrcalcFiniteParamsDictNoTag | MrcalcFiniteParamsDictTagged
 
 
-MrcalcComplexParamsDict = typing.TypedDict('MrcalcComplexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["complex"]],
-})
+_MrcalcComplexParamsDictNoTag = typing.TypedDict('_MrcalcComplexParamsDictNoTag', {})
 MrcalcComplexParamsDictTagged = typing.TypedDict('MrcalcComplexParamsDictTagged', {
     "@type": typing.Literal["complex"],
 })
+MrcalcComplexParamsDict = _MrcalcComplexParamsDictNoTag | MrcalcComplexParamsDictTagged
 
 
-MrcalcPolarParamsDict = typing.TypedDict('MrcalcPolarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["polar"]],
-})
+_MrcalcPolarParamsDictNoTag = typing.TypedDict('_MrcalcPolarParamsDictNoTag', {})
 MrcalcPolarParamsDictTagged = typing.TypedDict('MrcalcPolarParamsDictTagged', {
     "@type": typing.Literal["polar"],
 })
+MrcalcPolarParamsDict = _MrcalcPolarParamsDictNoTag | MrcalcPolarParamsDictTagged
 
 
-MrcalcRealParamsDict = typing.TypedDict('MrcalcRealParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["real"]],
-})
+_MrcalcRealParamsDictNoTag = typing.TypedDict('_MrcalcRealParamsDictNoTag', {})
 MrcalcRealParamsDictTagged = typing.TypedDict('MrcalcRealParamsDictTagged', {
     "@type": typing.Literal["real"],
 })
+MrcalcRealParamsDict = _MrcalcRealParamsDictNoTag | MrcalcRealParamsDictTagged
 
 
-MrcalcImagParamsDict = typing.TypedDict('MrcalcImagParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["imag"]],
-})
+_MrcalcImagParamsDictNoTag = typing.TypedDict('_MrcalcImagParamsDictNoTag', {})
 MrcalcImagParamsDictTagged = typing.TypedDict('MrcalcImagParamsDictTagged', {
     "@type": typing.Literal["imag"],
 })
+MrcalcImagParamsDict = _MrcalcImagParamsDictNoTag | MrcalcImagParamsDictTagged
 
 
-MrcalcPhaseParamsDict = typing.TypedDict('MrcalcPhaseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["phase"]],
-})
+_MrcalcPhaseParamsDictNoTag = typing.TypedDict('_MrcalcPhaseParamsDictNoTag', {})
 MrcalcPhaseParamsDictTagged = typing.TypedDict('MrcalcPhaseParamsDictTagged', {
     "@type": typing.Literal["phase"],
 })
+MrcalcPhaseParamsDict = _MrcalcPhaseParamsDictNoTag | MrcalcPhaseParamsDictTagged
 
 
-MrcalcConjParamsDict = typing.TypedDict('MrcalcConjParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["conj"]],
-})
+_MrcalcConjParamsDictNoTag = typing.TypedDict('_MrcalcConjParamsDictNoTag', {})
 MrcalcConjParamsDictTagged = typing.TypedDict('MrcalcConjParamsDictTagged', {
     "@type": typing.Literal["conj"],
 })
+MrcalcConjParamsDict = _MrcalcConjParamsDictNoTag | MrcalcConjParamsDictTagged
 
 
-MrcalcProjParamsDict = typing.TypedDict('MrcalcProjParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["proj"]],
-})
+_MrcalcProjParamsDictNoTag = typing.TypedDict('_MrcalcProjParamsDictNoTag', {})
 MrcalcProjParamsDictTagged = typing.TypedDict('MrcalcProjParamsDictTagged', {
     "@type": typing.Literal["proj"],
 })
+MrcalcProjParamsDict = _MrcalcProjParamsDictNoTag | MrcalcProjParamsDictTagged
 
 
-MrcalcExpParamsDict = typing.TypedDict('MrcalcExpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exp"]],
-})
+_MrcalcExpParamsDictNoTag = typing.TypedDict('_MrcalcExpParamsDictNoTag', {})
 MrcalcExpParamsDictTagged = typing.TypedDict('MrcalcExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
 })
+MrcalcExpParamsDict = _MrcalcExpParamsDictNoTag | MrcalcExpParamsDictTagged
 
 
-MrcalcLogParamsDict = typing.TypedDict('MrcalcLogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log"]],
-})
+_MrcalcLogParamsDictNoTag = typing.TypedDict('_MrcalcLogParamsDictNoTag', {})
 MrcalcLogParamsDictTagged = typing.TypedDict('MrcalcLogParamsDictTagged', {
     "@type": typing.Literal["log"],
 })
+MrcalcLogParamsDict = _MrcalcLogParamsDictNoTag | MrcalcLogParamsDictTagged
 
 
-MrcalcLog10ParamsDict = typing.TypedDict('MrcalcLog10ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log10"]],
-})
+_MrcalcLog10ParamsDictNoTag = typing.TypedDict('_MrcalcLog10ParamsDictNoTag', {})
 MrcalcLog10ParamsDictTagged = typing.TypedDict('MrcalcLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
 })
+MrcalcLog10ParamsDict = _MrcalcLog10ParamsDictNoTag | MrcalcLog10ParamsDictTagged
 
 
-MrcalcCosParamsDict = typing.TypedDict('MrcalcCosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cos"]],
-})
+_MrcalcCosParamsDictNoTag = typing.TypedDict('_MrcalcCosParamsDictNoTag', {})
 MrcalcCosParamsDictTagged = typing.TypedDict('MrcalcCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
 })
+MrcalcCosParamsDict = _MrcalcCosParamsDictNoTag | MrcalcCosParamsDictTagged
 
 
-MrcalcSinParamsDict = typing.TypedDict('MrcalcSinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sin"]],
-})
+_MrcalcSinParamsDictNoTag = typing.TypedDict('_MrcalcSinParamsDictNoTag', {})
 MrcalcSinParamsDictTagged = typing.TypedDict('MrcalcSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
 })
+MrcalcSinParamsDict = _MrcalcSinParamsDictNoTag | MrcalcSinParamsDictTagged
 
 
-MrcalcTanParamsDict = typing.TypedDict('MrcalcTanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tan"]],
-})
+_MrcalcTanParamsDictNoTag = typing.TypedDict('_MrcalcTanParamsDictNoTag', {})
 MrcalcTanParamsDictTagged = typing.TypedDict('MrcalcTanParamsDictTagged', {
     "@type": typing.Literal["tan"],
 })
+MrcalcTanParamsDict = _MrcalcTanParamsDictNoTag | MrcalcTanParamsDictTagged
 
 
-MrcalcAcosParamsDict = typing.TypedDict('MrcalcAcosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["acos"]],
-})
+_MrcalcAcosParamsDictNoTag = typing.TypedDict('_MrcalcAcosParamsDictNoTag', {})
 MrcalcAcosParamsDictTagged = typing.TypedDict('MrcalcAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
 })
+MrcalcAcosParamsDict = _MrcalcAcosParamsDictNoTag | MrcalcAcosParamsDictTagged
 
 
-MrcalcAsinParamsDict = typing.TypedDict('MrcalcAsinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["asin"]],
-})
+_MrcalcAsinParamsDictNoTag = typing.TypedDict('_MrcalcAsinParamsDictNoTag', {})
 MrcalcAsinParamsDictTagged = typing.TypedDict('MrcalcAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
 })
+MrcalcAsinParamsDict = _MrcalcAsinParamsDictNoTag | MrcalcAsinParamsDictTagged
 
 
-MrcalcAtanParamsDict = typing.TypedDict('MrcalcAtanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["atan"]],
-})
+_MrcalcAtanParamsDictNoTag = typing.TypedDict('_MrcalcAtanParamsDictNoTag', {})
 MrcalcAtanParamsDictTagged = typing.TypedDict('MrcalcAtanParamsDictTagged', {
     "@type": typing.Literal["atan"],
 })
+MrcalcAtanParamsDict = _MrcalcAtanParamsDictNoTag | MrcalcAtanParamsDictTagged
 
 
-MrcalcCoshParamsDict = typing.TypedDict('MrcalcCoshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cosh"]],
-})
+_MrcalcCoshParamsDictNoTag = typing.TypedDict('_MrcalcCoshParamsDictNoTag', {})
 MrcalcCoshParamsDictTagged = typing.TypedDict('MrcalcCoshParamsDictTagged', {
     "@type": typing.Literal["cosh"],
 })
+MrcalcCoshParamsDict = _MrcalcCoshParamsDictNoTag | MrcalcCoshParamsDictTagged
 
 
-MrcalcSinhParamsDict = typing.TypedDict('MrcalcSinhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sinh"]],
-})
+_MrcalcSinhParamsDictNoTag = typing.TypedDict('_MrcalcSinhParamsDictNoTag', {})
 MrcalcSinhParamsDictTagged = typing.TypedDict('MrcalcSinhParamsDictTagged', {
     "@type": typing.Literal["sinh"],
 })
+MrcalcSinhParamsDict = _MrcalcSinhParamsDictNoTag | MrcalcSinhParamsDictTagged
 
 
-MrcalcTanhParamsDict = typing.TypedDict('MrcalcTanhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tanh"]],
-})
+_MrcalcTanhParamsDictNoTag = typing.TypedDict('_MrcalcTanhParamsDictNoTag', {})
 MrcalcTanhParamsDictTagged = typing.TypedDict('MrcalcTanhParamsDictTagged', {
     "@type": typing.Literal["tanh"],
 })
+MrcalcTanhParamsDict = _MrcalcTanhParamsDictNoTag | MrcalcTanhParamsDictTagged
 
 
-MrcalcAcoshParamsDict = typing.TypedDict('MrcalcAcoshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["acosh"]],
-})
+_MrcalcAcoshParamsDictNoTag = typing.TypedDict('_MrcalcAcoshParamsDictNoTag', {})
 MrcalcAcoshParamsDictTagged = typing.TypedDict('MrcalcAcoshParamsDictTagged', {
     "@type": typing.Literal["acosh"],
 })
+MrcalcAcoshParamsDict = _MrcalcAcoshParamsDictNoTag | MrcalcAcoshParamsDictTagged
 
 
-MrcalcAsinhParamsDict = typing.TypedDict('MrcalcAsinhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["asinh"]],
-})
+_MrcalcAsinhParamsDictNoTag = typing.TypedDict('_MrcalcAsinhParamsDictNoTag', {})
 MrcalcAsinhParamsDictTagged = typing.TypedDict('MrcalcAsinhParamsDictTagged', {
     "@type": typing.Literal["asinh"],
 })
+MrcalcAsinhParamsDict = _MrcalcAsinhParamsDictNoTag | MrcalcAsinhParamsDictTagged
 
 
-MrcalcAtanhParamsDict = typing.TypedDict('MrcalcAtanhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["atanh"]],
-})
+_MrcalcAtanhParamsDictNoTag = typing.TypedDict('_MrcalcAtanhParamsDictNoTag', {})
 MrcalcAtanhParamsDictTagged = typing.TypedDict('MrcalcAtanhParamsDictTagged', {
     "@type": typing.Literal["atanh"],
 })
+MrcalcAtanhParamsDict = _MrcalcAtanhParamsDictNoTag | MrcalcAtanhParamsDictTagged
 
 
-MrcalcConfigParamsDict = typing.TypedDict('MrcalcConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrcalcConfigParamsDictNoTag = typing.TypedDict('_MrcalcConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -423,30 +372,30 @@ MrcalcConfigParamsDictTagged = typing.TypedDict('MrcalcConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MrcalcConfigParamsDict = _MrcalcConfigParamsDictNoTag | MrcalcConfigParamsDictTagged
 
 
-MrcalcVariousStringParamsDict = typing.TypedDict('MrcalcVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MrcalcVariousStringParamsDictNoTag = typing.TypedDict('_MrcalcVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MrcalcVariousStringParamsDictTagged = typing.TypedDict('MrcalcVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MrcalcVariousStringParamsDict = _MrcalcVariousStringParamsDictNoTag | MrcalcVariousStringParamsDictTagged
 
 
-MrcalcVariousFileParamsDict = typing.TypedDict('MrcalcVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MrcalcVariousFileParamsDictNoTag = typing.TypedDict('_MrcalcVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrcalcVariousFileParamsDictTagged = typing.TypedDict('MrcalcVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MrcalcVariousFileParamsDict = _MrcalcVariousFileParamsDictNoTag | MrcalcVariousFileParamsDictTagged
 
 
-MrcalcParamsDict = typing.TypedDict('MrcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcalc"]],
+_MrcalcParamsDictNoTag = typing.TypedDict('_MrcalcParamsDictNoTag', {
     "abs": typing.NotRequired[list[MrcalcAbsParamsDict] | None],
     "neg": typing.NotRequired[list[MrcalcNegParamsDict] | None],
     "add": typing.NotRequired[list[MrcalcAddParamsDict] | None],
@@ -571,6 +520,7 @@ MrcalcParamsDictTagged = typing.TypedDict('MrcalcParamsDictTagged', {
     "version": bool,
     "operand": list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]],
 })
+MrcalcParamsDict = _MrcalcParamsDictNoTag | MrcalcParamsDictTagged
 
 
 def mrcalc_operand_cargs_dyn_fn(

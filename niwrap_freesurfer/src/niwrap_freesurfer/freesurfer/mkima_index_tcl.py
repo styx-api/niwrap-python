@@ -13,8 +13,7 @@ MKIMA_INDEX_TCL_METADATA = Metadata(
 )
 
 
-MkimaIndexTclParamsDict = typing.TypedDict('MkimaIndexTclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mkima_index.tcl"]],
+_MkimaIndexTclParamsDictNoTag = typing.TypedDict('_MkimaIndexTclParamsDictNoTag', {
     "input_file": InputPathType,
     "output_flag": bool,
 })
@@ -23,6 +22,7 @@ MkimaIndexTclParamsDictTagged = typing.TypedDict('MkimaIndexTclParamsDictTagged'
     "input_file": InputPathType,
     "output_flag": bool,
 })
+MkimaIndexTclParamsDict = _MkimaIndexTclParamsDictNoTag | MkimaIndexTclParamsDictTagged
 
 
 class MkimaIndexTclOutputs(typing.NamedTuple):

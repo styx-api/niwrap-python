@@ -12,8 +12,7 @@ SURFACE_RESAMPLE_METADATA = Metadata(
 )
 
 
-SurfaceResampleAreaSurfsParamsDict = typing.TypedDict('SurfaceResampleAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+_SurfaceResampleAreaSurfsParamsDictNoTag = typing.TypedDict('_SurfaceResampleAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -22,10 +21,10 @@ SurfaceResampleAreaSurfsParamsDictTagged = typing.TypedDict('SurfaceResampleArea
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+SurfaceResampleAreaSurfsParamsDict = _SurfaceResampleAreaSurfsParamsDictNoTag | SurfaceResampleAreaSurfsParamsDictTagged
 
 
-SurfaceResampleAreaMetricsParamsDict = typing.TypedDict('SurfaceResampleAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+_SurfaceResampleAreaMetricsParamsDictNoTag = typing.TypedDict('_SurfaceResampleAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -34,10 +33,10 @@ SurfaceResampleAreaMetricsParamsDictTagged = typing.TypedDict('SurfaceResampleAr
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+SurfaceResampleAreaMetricsParamsDict = _SurfaceResampleAreaMetricsParamsDictNoTag | SurfaceResampleAreaMetricsParamsDictTagged
 
 
-SurfaceResampleParamsDict = typing.TypedDict('SurfaceResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-resample"]],
+_SurfaceResampleParamsDictNoTag = typing.TypedDict('_SurfaceResampleParamsDictNoTag', {
     "surface-out": str,
     "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
@@ -58,6 +57,7 @@ SurfaceResampleParamsDictTagged = typing.TypedDict('SurfaceResampleParamsDictTag
     "new-sphere": InputPathType,
     "method": str,
 })
+SurfaceResampleParamsDict = _SurfaceResampleParamsDictNoTag | SurfaceResampleParamsDictTagged
 
 
 def surface_resample_area_surfs(

@@ -13,8 +13,7 @@ V_3DMAXIMA_METADATA = Metadata(
 )
 
 
-V3dmaximaParamsDict = typing.TypedDict('V3dmaximaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmaxima"]],
+_V3dmaximaParamsDictNoTag = typing.TypedDict('_V3dmaximaParamsDictNoTag', {
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "threshold": typing.NotRequired[float | None],
@@ -59,6 +58,7 @@ V3dmaximaParamsDictTagged = typing.TypedDict('V3dmaximaParamsDictTagged', {
     "hist_flag": bool,
     "ver_flag": bool,
 })
+V3dmaximaParamsDict = _V3dmaximaParamsDictNoTag | V3dmaximaParamsDictTagged
 
 
 class V3dmaximaOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RECON_ALL_EXVIVO_METADATA = Metadata(
 )
 
 
-ReconAllExvivoParamsDict = typing.TypedDict('ReconAllExvivoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-exvivo"]],
+_ReconAllExvivoParamsDictNoTag = typing.TypedDict('_ReconAllExvivoParamsDictNoTag', {
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,
@@ -25,6 +24,7 @@ ReconAllExvivoParamsDictTagged = typing.TypedDict('ReconAllExvivoParamsDictTagge
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,
 })
+ReconAllExvivoParamsDict = _ReconAllExvivoParamsDictNoTag | ReconAllExvivoParamsDictTagged
 
 
 class ReconAllExvivoOutputs(typing.NamedTuple):

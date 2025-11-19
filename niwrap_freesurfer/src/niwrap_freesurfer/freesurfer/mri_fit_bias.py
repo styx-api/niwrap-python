@@ -13,8 +13,7 @@ MRI_FIT_BIAS_METADATA = Metadata(
 )
 
 
-MriFitBiasParamsDict = typing.TypedDict('MriFitBiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fit_bias"]],
+_MriFitBiasParamsDictNoTag = typing.TypedDict('_MriFitBiasParamsDictNoTag', {
     "inputvol": InputPathType,
     "lpf_cutoff": typing.NotRequired[float | None],
     "segvol": InputPathType,
@@ -43,6 +42,7 @@ MriFitBiasParamsDictTagged = typing.TypedDict('MriFitBiasParamsDictTagged', {
     "debug": bool,
     "checkopts": bool,
 })
+MriFitBiasParamsDict = _MriFitBiasParamsDictNoTag | MriFitBiasParamsDictTagged
 
 
 class MriFitBiasOutputs(typing.NamedTuple):

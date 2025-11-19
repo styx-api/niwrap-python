@@ -13,8 +13,7 @@ V_3DNEWID_METADATA = Metadata(
 )
 
 
-V3dnewidParamsDict = typing.TypedDict('V3dnewidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dnewid"]],
+_V3dnewidParamsDictNoTag = typing.TypedDict('_V3dnewidParamsDictNoTag', {
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
     "fun11": bool,
@@ -31,6 +30,7 @@ V3dnewidParamsDictTagged = typing.TypedDict('V3dnewidParamsDictTagged', {
     "hash": typing.NotRequired[str | None],
     "MD5": typing.NotRequired[str | None],
 })
+V3dnewidParamsDict = _V3dnewidParamsDictNoTag | V3dnewidParamsDictTagged
 
 
 class V3dnewidOutputs(typing.NamedTuple):

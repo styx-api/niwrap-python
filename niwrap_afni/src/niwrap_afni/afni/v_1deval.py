@@ -13,8 +13,7 @@ V_1DEVAL_METADATA = Metadata(
 )
 
 
-V1devalParamsDict = typing.TypedDict('V1devalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1deval"]],
+_V1devalParamsDictNoTag = typing.TypedDict('_V1devalParamsDictNoTag', {
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "num": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ V1devalParamsDictTagged = typing.TypedDict('V1devalParamsDictTagged', {
     "symbol_values": typing.NotRequired[list[str] | None],
     "expression": str,
 })
+V1devalParamsDict = _V1devalParamsDictNoTag | V1devalParamsDictTagged
 
 
 class V1devalOutputs(typing.NamedTuple):

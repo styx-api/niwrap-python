@@ -13,8 +13,7 @@ MRI_DIFF_METADATA = Metadata(
 )
 
 
-MriDiffParamsDict = typing.TypedDict('MriDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_diff"]],
+_MriDiffParamsDictNoTag = typing.TypedDict('_MriDiffParamsDictNoTag', {
     "vol1file": InputPathType,
     "vol2file": InputPathType,
     "resolution_check": bool,
@@ -81,6 +80,7 @@ MriDiffParamsDictTagged = typing.TypedDict('MriDiffParamsDictTagged', {
     "verbose_mode": bool,
     "check_options": bool,
 })
+MriDiffParamsDict = _MriDiffParamsDictNoTag | MriDiffParamsDictTagged
 
 
 class MriDiffOutputs(typing.NamedTuple):

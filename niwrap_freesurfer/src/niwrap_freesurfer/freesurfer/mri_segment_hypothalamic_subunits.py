@@ -13,8 +13,7 @@ MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA = Metadata(
 )
 
 
-MriSegmentHypothalamicSubunitsParamsDict = typing.TypedDict('MriSegmentHypothalamicSubunitsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_hypothalamic_subunits"]],
+_MriSegmentHypothalamicSubunitsParamsDictNoTag = typing.TypedDict('_MriSegmentHypothalamicSubunitsParamsDictNoTag', {
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
     "write_posteriors": bool,
@@ -41,6 +40,7 @@ MriSegmentHypothalamicSubunitsParamsDictTagged = typing.TypedDict('MriSegmentHyp
     "threads": typing.NotRequired[float | None],
     "cpu": bool,
 })
+MriSegmentHypothalamicSubunitsParamsDict = _MriSegmentHypothalamicSubunitsParamsDictNoTag | MriSegmentHypothalamicSubunitsParamsDictTagged
 
 
 class MriSegmentHypothalamicSubunitsOutputs(typing.NamedTuple):

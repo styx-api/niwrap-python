@@ -13,8 +13,7 @@ V_3D_TFILTER_METADATA = Metadata(
 )
 
 
-V3dTfilterParamsDict = typing.TypedDict('V3dTfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTfilter"]],
+_V3dTfilterParamsDictNoTag = typing.TypedDict('_V3dTfilterParamsDictNoTag', {
     "inputdataset": InputPathType,
     "outputdataset": str,
     "filters": list[str],
@@ -25,6 +24,7 @@ V3dTfilterParamsDictTagged = typing.TypedDict('V3dTfilterParamsDictTagged', {
     "outputdataset": str,
     "filters": list[str],
 })
+V3dTfilterParamsDict = _V3dTfilterParamsDictNoTag | V3dTfilterParamsDictTagged
 
 
 class V3dTfilterOutputs(typing.NamedTuple):

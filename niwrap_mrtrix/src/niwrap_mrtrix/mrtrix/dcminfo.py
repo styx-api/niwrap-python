@@ -13,8 +13,7 @@ DCMINFO_METADATA = Metadata(
 )
 
 
-DcminfoTagParamsDict = typing.TypedDict('DcminfoTagParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tag"]],
+_DcminfoTagParamsDictNoTag = typing.TypedDict('_DcminfoTagParamsDictNoTag', {
     "group": str,
     "element": str,
 })
@@ -23,10 +22,10 @@ DcminfoTagParamsDictTagged = typing.TypedDict('DcminfoTagParamsDictTagged', {
     "group": str,
     "element": str,
 })
+DcminfoTagParamsDict = _DcminfoTagParamsDictNoTag | DcminfoTagParamsDictTagged
 
 
-DcminfoConfigParamsDict = typing.TypedDict('DcminfoConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DcminfoConfigParamsDictNoTag = typing.TypedDict('_DcminfoConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ DcminfoConfigParamsDictTagged = typing.TypedDict('DcminfoConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+DcminfoConfigParamsDict = _DcminfoConfigParamsDictNoTag | DcminfoConfigParamsDictTagged
 
 
-DcminfoParamsDict = typing.TypedDict('DcminfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dcminfo"]],
+_DcminfoParamsDictNoTag = typing.TypedDict('_DcminfoParamsDictNoTag', {
     "all": bool,
     "csa": bool,
     "phoenix": bool,
@@ -69,6 +68,7 @@ DcminfoParamsDictTagged = typing.TypedDict('DcminfoParamsDictTagged', {
     "version": bool,
     "file": InputPathType,
 })
+DcminfoParamsDict = _DcminfoParamsDictNoTag | DcminfoParamsDictTagged
 
 
 def dcminfo_tag(

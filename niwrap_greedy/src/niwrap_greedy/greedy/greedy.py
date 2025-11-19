@@ -13,8 +13,7 @@ GREEDY_METADATA = Metadata(
 )
 
 
-GreedyInputImagesParamsDict = typing.TypedDict('GreedyInputImagesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["input_images"]],
+_GreedyInputImagesParamsDictNoTag = typing.TypedDict('_GreedyInputImagesParamsDictNoTag', {
     "fixed": InputPathType,
     "moving": InputPathType,
 })
@@ -23,10 +22,10 @@ GreedyInputImagesParamsDictTagged = typing.TypedDict('GreedyInputImagesParamsDic
     "fixed": InputPathType,
     "moving": InputPathType,
 })
+GreedyInputImagesParamsDict = _GreedyInputImagesParamsDictNoTag | GreedyInputImagesParamsDictTagged
 
 
-GreedyInvertParamsDict = typing.TypedDict('GreedyInvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["invert"]],
+_GreedyInvertParamsDictNoTag = typing.TypedDict('_GreedyInvertParamsDictNoTag', {
     "inwarp": InputPathType,
     "outwarp": str,
 })
@@ -35,10 +34,10 @@ GreedyInvertParamsDictTagged = typing.TypedDict('GreedyInvertParamsDictTagged', 
     "inwarp": InputPathType,
     "outwarp": str,
 })
+GreedyInvertParamsDict = _GreedyInvertParamsDictNoTag | GreedyInvertParamsDictTagged
 
 
-GreedyRootParamsDict = typing.TypedDict('GreedyRootParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["root"]],
+_GreedyRootParamsDictNoTag = typing.TypedDict('_GreedyRootParamsDictNoTag', {
     "inwarp": InputPathType,
     "outwarp": str,
     "n": int,
@@ -49,10 +48,10 @@ GreedyRootParamsDictTagged = typing.TypedDict('GreedyRootParamsDictTagged', {
     "outwarp": str,
     "n": int,
 })
+GreedyRootParamsDict = _GreedyRootParamsDictNoTag | GreedyRootParamsDictTagged
 
 
-GreedyJacobianParamsDict = typing.TypedDict('GreedyJacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["jacobian"]],
+_GreedyJacobianParamsDictNoTag = typing.TypedDict('_GreedyJacobianParamsDictNoTag', {
     "inwarp": InputPathType,
     "outjac": str,
 })
@@ -61,10 +60,10 @@ GreedyJacobianParamsDictTagged = typing.TypedDict('GreedyJacobianParamsDictTagge
     "inwarp": InputPathType,
     "outjac": str,
 })
+GreedyJacobianParamsDict = _GreedyJacobianParamsDictNoTag | GreedyJacobianParamsDictTagged
 
 
-GreedyMetricParamsDict = typing.TypedDict('GreedyMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_GreedyMetricParamsDictNoTag = typing.TypedDict('_GreedyMetricParamsDictNoTag', {
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
@@ -73,10 +72,10 @@ GreedyMetricParamsDictTagged = typing.TypedDict('GreedyMetricParamsDictTagged', 
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
+GreedyMetricParamsDict = _GreedyMetricParamsDictNoTag | GreedyMetricParamsDictTagged
 
 
-GreedyTjrParamsDict = typing.TypedDict('GreedyTjrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tjr"]],
+_GreedyTjrParamsDictNoTag = typing.TypedDict('_GreedyTjrParamsDictNoTag', {
     "mesh": InputPathType,
     "weight": float,
 })
@@ -85,10 +84,10 @@ GreedyTjrParamsDictTagged = typing.TypedDict('GreedyTjrParamsDictTagged', {
     "mesh": InputPathType,
     "weight": float,
 })
+GreedyTjrParamsDict = _GreedyTjrParamsDictNoTag | GreedyTjrParamsDictTagged
 
 
-GreedySearchParamsDict = typing.TypedDict('GreedySearchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["search"]],
+_GreedySearchParamsDictNoTag = typing.TypedDict('_GreedySearchParamsDictNoTag', {
     "n": int,
     "rot": str,
     "tran": float,
@@ -99,10 +98,10 @@ GreedySearchParamsDictTagged = typing.TypedDict('GreedySearchParamsDictTagged', 
     "rot": str,
     "tran": float,
 })
+GreedySearchParamsDict = _GreedySearchParamsDictNoTag | GreedySearchParamsDictTagged
 
 
-GreedyResliceMovingImageParamsDict = typing.TypedDict('GreedyResliceMovingImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_moving_image"]],
+_GreedyResliceMovingImageParamsDictNoTag = typing.TypedDict('_GreedyResliceMovingImageParamsDictNoTag', {
     "moving": InputPathType,
     "output": str,
 })
@@ -111,10 +110,10 @@ GreedyResliceMovingImageParamsDictTagged = typing.TypedDict('GreedyResliceMoving
     "moving": InputPathType,
     "output": str,
 })
+GreedyResliceMovingImageParamsDict = _GreedyResliceMovingImageParamsDictNoTag | GreedyResliceMovingImageParamsDictTagged
 
 
-GreedyResliceSurfaceParamsDict = typing.TypedDict('GreedyResliceSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_surface"]],
+_GreedyResliceSurfaceParamsDictNoTag = typing.TypedDict('_GreedyResliceSurfaceParamsDictNoTag', {
     "inmesh": InputPathType,
     "outmesh": str,
 })
@@ -123,36 +122,34 @@ GreedyResliceSurfaceParamsDictTagged = typing.TypedDict('GreedyResliceSurfacePar
     "inmesh": InputPathType,
     "outmesh": str,
 })
+GreedyResliceSurfaceParamsDict = _GreedyResliceSurfaceParamsDictNoTag | GreedyResliceSurfaceParamsDictTagged
 
 
-GreedyNnParamsDict = typing.TypedDict('GreedyNnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nn"]],
-})
+_GreedyNnParamsDictNoTag = typing.TypedDict('_GreedyNnParamsDictNoTag', {})
 GreedyNnParamsDictTagged = typing.TypedDict('GreedyNnParamsDictTagged', {
     "@type": typing.Literal["nn"],
 })
+GreedyNnParamsDict = _GreedyNnParamsDictNoTag | GreedyNnParamsDictTagged
 
 
-GreedyLinearParamsDict = typing.TypedDict('GreedyLinearParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["linear"]],
-})
+_GreedyLinearParamsDictNoTag = typing.TypedDict('_GreedyLinearParamsDictNoTag', {})
 GreedyLinearParamsDictTagged = typing.TypedDict('GreedyLinearParamsDictTagged', {
     "@type": typing.Literal["linear"],
 })
+GreedyLinearParamsDict = _GreedyLinearParamsDictNoTag | GreedyLinearParamsDictTagged
 
 
-GreedyLabelParamsDict = typing.TypedDict('GreedyLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_GreedyLabelParamsDictNoTag = typing.TypedDict('_GreedyLabelParamsDictNoTag', {
     "sigma_spec": str,
 })
 GreedyLabelParamsDictTagged = typing.TypedDict('GreedyLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "sigma_spec": str,
 })
+GreedyLabelParamsDict = _GreedyLabelParamsDictNoTag | GreedyLabelParamsDictTagged
 
 
-GreedyResliceSimplexJacobianParamsDict = typing.TypedDict('GreedyResliceSimplexJacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_simplex_jacobian"]],
+_GreedyResliceSimplexJacobianParamsDictNoTag = typing.TypedDict('_GreedyResliceSimplexJacobianParamsDictNoTag', {
     "inmesh": InputPathType,
     "outmesh": str,
 })
@@ -161,10 +158,10 @@ GreedyResliceSimplexJacobianParamsDictTagged = typing.TypedDict('GreedyResliceSi
     "inmesh": InputPathType,
     "outmesh": str,
 })
+GreedyResliceSimplexJacobianParamsDict = _GreedyResliceSimplexJacobianParamsDictNoTag | GreedyResliceSimplexJacobianParamsDictTagged
 
 
-GreedyParamsDict = typing.TypedDict('GreedyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["greedy/greedy"]],
+_GreedyParamsDictNoTag = typing.TypedDict('_GreedyParamsDictNoTag', {
     "dimensions": int,
     "input_images": typing.NotRequired[GreedyInputImagesParamsDict | None],
     "output": typing.NotRequired[str | None],
@@ -313,6 +310,7 @@ GreedyParamsDictTagged = typing.TypedDict('GreedyParamsDictTagged', {
     "version": bool,
     "verbosity": typing.NotRequired[typing.Literal[0, 1, 2] | None],
 })
+GreedyParamsDict = _GreedyParamsDictNoTag | GreedyParamsDictTagged
 
 
 def greedy_interpolation_cargs_dyn_fn(

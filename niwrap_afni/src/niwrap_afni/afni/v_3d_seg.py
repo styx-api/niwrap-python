@@ -13,8 +13,7 @@ V_3D_SEG_METADATA = Metadata(
 )
 
 
-V3dSegParamsDict = typing.TypedDict('V3dSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSeg"]],
+_V3dSegParamsDictNoTag = typing.TypedDict('_V3dSegParamsDictNoTag', {
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
     "blur_meth": typing.NotRequired[str | None],
@@ -57,6 +56,7 @@ V3dSegParamsDictTagged = typing.TypedDict('V3dSegParamsDictTagged', {
     "vox_debug": typing.NotRequired[str | None],
     "vox_debug_file": typing.NotRequired[str | None],
 })
+V3dSegParamsDict = _V3dSegParamsDictNoTag | V3dSegParamsDictTagged
 
 
 class V3dSegOutputs(typing.NamedTuple):

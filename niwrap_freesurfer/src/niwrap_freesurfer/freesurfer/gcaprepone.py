@@ -13,8 +13,7 @@ GCAPREPONE_METADATA = Metadata(
 )
 
 
-GcapreponeParamsDict = typing.TypedDict('GcapreponeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gcaprepone"]],
+_GcapreponeParamsDictNoTag = typing.TypedDict('_GcapreponeParamsDictNoTag', {
     "gcadir": str,
     "subject": str,
     "init_subject": bool,
@@ -31,6 +30,7 @@ GcapreponeParamsDictTagged = typing.TypedDict('GcapreponeParamsDictTagged', {
     "done_file": str,
     "no_emreg": bool,
 })
+GcapreponeParamsDict = _GcapreponeParamsDictNoTag | GcapreponeParamsDictTagged
 
 
 class GcapreponeOutputs(typing.NamedTuple):

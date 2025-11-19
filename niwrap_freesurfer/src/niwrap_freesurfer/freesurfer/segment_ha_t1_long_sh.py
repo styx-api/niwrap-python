@@ -13,8 +13,7 @@ SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
 )
 
 
-SegmentHaT1LongShParamsDict = typing.TypedDict('SegmentHaT1LongShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T1_long.sh"]],
+_SegmentHaT1LongShParamsDictNoTag = typing.TypedDict('_SegmentHaT1LongShParamsDictNoTag', {
     "subject_dir": str,
     "subject_id": str,
 })
@@ -23,6 +22,7 @@ SegmentHaT1LongShParamsDictTagged = typing.TypedDict('SegmentHaT1LongShParamsDic
     "subject_dir": str,
     "subject_id": str,
 })
+SegmentHaT1LongShParamsDict = _SegmentHaT1LongShParamsDictNoTag | SegmentHaT1LongShParamsDictTagged
 
 
 class SegmentHaT1LongShOutputs(typing.NamedTuple):

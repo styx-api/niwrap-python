@@ -13,8 +13,7 @@ APAS2ASEG_METADATA = Metadata(
 )
 
 
-Apas2asegParamsDict = typing.TypedDict('Apas2asegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/apas2aseg"]],
+_Apas2asegParamsDictNoTag = typing.TypedDict('_Apas2asegParamsDictNoTag', {
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ Apas2asegParamsDictTagged = typing.TypedDict('Apas2asegParamsDictTagged', {
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],
 })
+Apas2asegParamsDict = _Apas2asegParamsDictNoTag | Apas2asegParamsDictTagged
 
 
 class Apas2asegOutputs(typing.NamedTuple):

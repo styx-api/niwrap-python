@@ -13,8 +13,7 @@ V_3D_TOUTCOUNT_METADATA = Metadata(
 )
 
 
-V3dToutcountParamsDict = typing.TypedDict('V3dToutcountParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dToutcount"]],
+_V3dToutcountParamsDictNoTag = typing.TypedDict('_V3dToutcountParamsDictNoTag', {
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ V3dToutcountParamsDictTagged = typing.TypedDict('V3dToutcountParamsDictTagged', 
     "polort_order": typing.NotRequired[float | None],
     "legendre": bool,
 })
+V3dToutcountParamsDict = _V3dToutcountParamsDictNoTag | V3dToutcountParamsDictTagged
 
 
 class V3dToutcountOutputs(typing.NamedTuple):

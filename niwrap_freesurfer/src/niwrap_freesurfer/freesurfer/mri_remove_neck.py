@@ -13,8 +13,7 @@ MRI_REMOVE_NECK_METADATA = Metadata(
 )
 
 
-MriRemoveNeckParamsDict = typing.TypedDict('MriRemoveNeckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_remove_neck"]],
+_MriRemoveNeckParamsDictNoTag = typing.TypedDict('_MriRemoveNeckParamsDictNoTag', {
     "input_volume": InputPathType,
     "transform": InputPathType,
     "gca": InputPathType,
@@ -27,6 +26,7 @@ MriRemoveNeckParamsDictTagged = typing.TypedDict('MriRemoveNeckParamsDictTagged'
     "gca": InputPathType,
     "output_volume": str,
 })
+MriRemoveNeckParamsDict = _MriRemoveNeckParamsDictNoTag | MriRemoveNeckParamsDictTagged
 
 
 class MriRemoveNeckOutputs(typing.NamedTuple):

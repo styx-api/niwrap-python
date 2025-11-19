@@ -13,8 +13,7 @@ MRIS_CURVATURE_METADATA = Metadata(
 )
 
 
-MrisCurvatureParamsDict = typing.TypedDict('MrisCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature"]],
+_MrisCurvatureParamsDictNoTag = typing.TypedDict('_MrisCurvatureParamsDictNoTag', {
     "save_curvature_files": bool,
     "max_principal_curvature": bool,
     "mgh_output_format": bool,
@@ -47,6 +46,7 @@ MrisCurvatureParamsDictTagged = typing.TypedDict('MrisCurvatureParamsDictTagged'
     "k1k2_curvature": typing.NotRequired[str | None],
     "input_surface": InputPathType,
 })
+MrisCurvatureParamsDict = _MrisCurvatureParamsDictNoTag | MrisCurvatureParamsDictTagged
 
 
 class MrisCurvatureOutputs(typing.NamedTuple):

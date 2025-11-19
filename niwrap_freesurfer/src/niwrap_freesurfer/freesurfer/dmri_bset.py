@@ -13,8 +13,7 @@ DMRI_BSET_METADATA = Metadata(
 )
 
 
-DmriBsetParamsDict = typing.TypedDict('DmriBsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_bset"]],
+_DmriBsetParamsDictNoTag = typing.TypedDict('_DmriBsetParamsDictNoTag', {
     "input_dwi": InputPathType,
     "output_dwi": str,
     "b_values": typing.NotRequired[list[float] | None],
@@ -39,6 +38,7 @@ DmriBsetParamsDictTagged = typing.TypedDict('DmriBsetParamsDictTagged', {
     "output_b_table": typing.NotRequired[str | None],
     "output_g_table": typing.NotRequired[str | None],
 })
+DmriBsetParamsDict = _DmriBsetParamsDictNoTag | DmriBsetParamsDictTagged
 
 
 class DmriBsetOutputs(typing.NamedTuple):

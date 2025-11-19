@@ -12,8 +12,7 @@ CIFTI_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-CiftiFindClustersLeftSurfaceParamsDict = typing.TypedDict('CiftiFindClustersLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiFindClustersLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFindClustersLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiFindClustersLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiFindCluste
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiFindClustersLeftSurfaceParamsDict = _CiftiFindClustersLeftSurfaceParamsDictNoTag | CiftiFindClustersLeftSurfaceParamsDictTagged
 
 
-CiftiFindClustersRightSurfaceParamsDict = typing.TypedDict('CiftiFindClustersRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiFindClustersRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFindClustersRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiFindClustersRightSurfaceParamsDictTagged = typing.TypedDict('CiftiFindClust
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiFindClustersRightSurfaceParamsDict = _CiftiFindClustersRightSurfaceParamsDictNoTag | CiftiFindClustersRightSurfaceParamsDictTagged
 
 
-CiftiFindClustersCerebellumSurfaceParamsDict = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiFindClustersCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFindClustersCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiFindClustersCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiFind
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiFindClustersCerebellumSurfaceParamsDict = _CiftiFindClustersCerebellumSurfaceParamsDictNoTag | CiftiFindClustersCerebellumSurfaceParamsDictTagged
 
 
-CiftiFindClustersSizeRatioParamsDict = typing.TypedDict('CiftiFindClustersSizeRatioParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["size-ratio"]],
+_CiftiFindClustersSizeRatioParamsDictNoTag = typing.TypedDict('_CiftiFindClustersSizeRatioParamsDictNoTag', {
     "surface-ratio": float,
     "volume-ratio": float,
 })
@@ -58,10 +57,10 @@ CiftiFindClustersSizeRatioParamsDictTagged = typing.TypedDict('CiftiFindClusters
     "surface-ratio": float,
     "volume-ratio": float,
 })
+CiftiFindClustersSizeRatioParamsDict = _CiftiFindClustersSizeRatioParamsDictNoTag | CiftiFindClustersSizeRatioParamsDictTagged
 
 
-CiftiFindClustersDistanceParamsDict = typing.TypedDict('CiftiFindClustersDistanceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["distance"]],
+_CiftiFindClustersDistanceParamsDictNoTag = typing.TypedDict('_CiftiFindClustersDistanceParamsDictNoTag', {
     "surface-distance": float,
     "volume-distance": float,
 })
@@ -70,10 +69,10 @@ CiftiFindClustersDistanceParamsDictTagged = typing.TypedDict('CiftiFindClustersD
     "surface-distance": float,
     "volume-distance": float,
 })
+CiftiFindClustersDistanceParamsDict = _CiftiFindClustersDistanceParamsDictNoTag | CiftiFindClustersDistanceParamsDictTagged
 
 
-CiftiFindClustersParamsDict = typing.TypedDict('CiftiFindClustersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-find-clusters"]],
+_CiftiFindClustersParamsDictNoTag = typing.TypedDict('_CiftiFindClustersParamsDictNoTag', {
     "cifti-out": str,
     "less-than": bool,
     "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParamsDict | None],
@@ -110,6 +109,7 @@ CiftiFindClustersParamsDictTagged = typing.TypedDict('CiftiFindClustersParamsDic
     "volume-minimum-size": float,
     "direction": str,
 })
+CiftiFindClustersParamsDict = _CiftiFindClustersParamsDictNoTag | CiftiFindClustersParamsDictTagged
 
 
 def cifti_find_clusters_left_surface(

@@ -13,8 +13,7 @@ MRIS_MAKE_TEMPLATE_METADATA = Metadata(
 )
 
 
-MrisMakeTemplateParamsDict = typing.TypedDict('MrisMakeTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_template"]],
+_MrisMakeTemplateParamsDictNoTag = typing.TypedDict('_MrisMakeTemplateParamsDictNoTag', {
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -49,6 +48,7 @@ MrisMakeTemplateParamsDictTagged = typing.TypedDict('MrisMakeTemplateParamsDictT
     "smooth_iterations": typing.NotRequired[float | None],
     "subjects_dir": typing.NotRequired[str | None],
 })
+MrisMakeTemplateParamsDict = _MrisMakeTemplateParamsDictNoTag | MrisMakeTemplateParamsDictTagged
 
 
 class MrisMakeTemplateOutputs(typing.NamedTuple):

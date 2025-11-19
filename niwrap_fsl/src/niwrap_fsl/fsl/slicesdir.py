@@ -13,8 +13,7 @@ SLICESDIR_METADATA = Metadata(
 )
 
 
-SlicesdirParamsDict = typing.TypedDict('SlicesdirParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slicesdir"]],
+_SlicesdirParamsDictNoTag = typing.TypedDict('_SlicesdirParamsDictNoTag', {
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
     "edge_threshold": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ SlicesdirParamsDictTagged = typing.TypedDict('SlicesdirParamsDictTagged', {
     "slice_option": bool,
     "filelist": list[str],
 })
+SlicesdirParamsDict = _SlicesdirParamsDictNoTag | SlicesdirParamsDictTagged
 
 
 class SlicesdirOutputs(typing.NamedTuple):

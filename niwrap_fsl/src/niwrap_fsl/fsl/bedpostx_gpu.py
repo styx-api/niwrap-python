@@ -13,8 +13,7 @@ BEDPOSTX_GPU_METADATA = Metadata(
 )
 
 
-BedpostxGpuParamsDict = typing.TypedDict('BedpostxGpuParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_gpu"]],
+_BedpostxGpuParamsDictNoTag = typing.TypedDict('_BedpostxGpuParamsDictNoTag', {
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
     "num_jobs": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ BedpostxGpuParamsDictTagged = typing.TypedDict('BedpostxGpuParamsDictTagged', {
     "deconv_model": typing.NotRequired[float | None],
     "grad_nonlinear": bool,
 })
+BedpostxGpuParamsDict = _BedpostxGpuParamsDictNoTag | BedpostxGpuParamsDictTagged
 
 
 class BedpostxGpuOutputs(typing.NamedTuple):

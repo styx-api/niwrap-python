@@ -13,8 +13,7 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 )
 
 
-FatProcConvertDcmAnatParamsDict = typing.TypedDict('FatProcConvertDcmAnatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_anat"]],
+_FatProcConvertDcmAnatParamsDictNoTag = typing.TypedDict('_FatProcConvertDcmAnatParamsDictNoTag', {
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -39,6 +38,7 @@ FatProcConvertDcmAnatParamsDictTagged = typing.TypedDict('FatProcConvertDcmAnatP
     "no_cmd_out": bool,
     "no_qc_view": bool,
 })
+FatProcConvertDcmAnatParamsDict = _FatProcConvertDcmAnatParamsDictNoTag | FatProcConvertDcmAnatParamsDictTagged
 
 
 class FatProcConvertDcmAnatOutputs(typing.NamedTuple):

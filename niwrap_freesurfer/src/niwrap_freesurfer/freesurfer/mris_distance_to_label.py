@@ -13,8 +13,7 @@ MRIS_DISTANCE_TO_LABEL_METADATA = Metadata(
 )
 
 
-MrisDistanceToLabelParamsDict = typing.TypedDict('MrisDistanceToLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_to_label"]],
+_MrisDistanceToLabelParamsDictNoTag = typing.TypedDict('_MrisDistanceToLabelParamsDictNoTag', {
     "hemisphere": str,
     "subject_1": str,
 })
@@ -23,6 +22,7 @@ MrisDistanceToLabelParamsDictTagged = typing.TypedDict('MrisDistanceToLabelParam
     "hemisphere": str,
     "subject_1": str,
 })
+MrisDistanceToLabelParamsDict = _MrisDistanceToLabelParamsDictNoTag | MrisDistanceToLabelParamsDictTagged
 
 
 class MrisDistanceToLabelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FSLSMOOTHFILL_METADATA = Metadata(
 )
 
 
-FslsmoothfillParamsDict = typing.TypedDict('FslsmoothfillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslsmoothfill"]],
+_FslsmoothfillParamsDictNoTag = typing.TypedDict('_FslsmoothfillParamsDictNoTag', {
     "input_image": InputPathType,
     "mask_image": InputPathType,
     "output_image": str,
@@ -31,6 +30,7 @@ FslsmoothfillParamsDictTagged = typing.TypedDict('FslsmoothfillParamsDictTagged'
     "debug_flag": bool,
     "verbose_flag": bool,
 })
+FslsmoothfillParamsDict = _FslsmoothfillParamsDictNoTag | FslsmoothfillParamsDictTagged
 
 
 class FslsmoothfillOutputs(typing.NamedTuple):

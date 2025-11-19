@@ -13,8 +13,7 @@ LONG_CREATE_ORIG_METADATA = Metadata(
 )
 
 
-LongCreateOrigParamsDict = typing.TypedDict('LongCreateOrigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_orig"]],
+_LongCreateOrigParamsDictNoTag = typing.TypedDict('_LongCreateOrigParamsDictNoTag', {
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ LongCreateOrigParamsDictTagged = typing.TypedDict('LongCreateOrigParamsDictTagge
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })
+LongCreateOrigParamsDict = _LongCreateOrigParamsDictNoTag | LongCreateOrigParamsDictTagged
 
 
 class LongCreateOrigOutputs(typing.NamedTuple):

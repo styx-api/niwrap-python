@@ -13,8 +13,7 @@ TBSS_2_REG_METADATA = Metadata(
 )
 
 
-Tbss2RegParamsDict = typing.TypedDict('Tbss2RegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_2_reg"]],
+_Tbss2RegParamsDictNoTag = typing.TypedDict('_Tbss2RegParamsDictNoTag', {
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,
@@ -25,6 +24,7 @@ Tbss2RegParamsDictTagged = typing.TypedDict('Tbss2RegParamsDictTagged', {
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,
 })
+Tbss2RegParamsDict = _Tbss2RegParamsDictNoTag | Tbss2RegParamsDictTagged
 
 
 class Tbss2RegOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SURFACE_SMOOTHING_METADATA = Metadata(
 )
 
 
-SurfaceSmoothingParamsDict = typing.TypedDict('SurfaceSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-smoothing"]],
+_SurfaceSmoothingParamsDictNoTag = typing.TypedDict('_SurfaceSmoothingParamsDictNoTag', {
     "surface-out": str,
     "surface-in": InputPathType,
     "smoothing-strength": float,
@@ -26,6 +25,7 @@ SurfaceSmoothingParamsDictTagged = typing.TypedDict('SurfaceSmoothingParamsDictT
     "smoothing-strength": float,
     "smoothing-iterations": int,
 })
+SurfaceSmoothingParamsDict = _SurfaceSmoothingParamsDictNoTag | SurfaceSmoothingParamsDictTagged
 
 
 class SurfaceSmoothingOutputs(typing.NamedTuple):

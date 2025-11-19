@@ -12,8 +12,7 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseScalarVolumeParamsDict = typing.TypedDict('CiftiCreateDenseScalarVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiCreateDenseScalarVolumeParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarVolumeParamsDictNoTag', {
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
@@ -22,10 +21,10 @@ CiftiCreateDenseScalarVolumeParamsDictTagged = typing.TypedDict('CiftiCreateDens
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
+CiftiCreateDenseScalarVolumeParamsDict = _CiftiCreateDenseScalarVolumeParamsDictNoTag | CiftiCreateDenseScalarVolumeParamsDictTagged
 
 
-CiftiCreateDenseScalarLeftMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-metric"]],
+_CiftiCreateDenseScalarLeftMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarLeftMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiCreateDenseScalarLeftMetricParamsDictTagged = typing.TypedDict('CiftiCreate
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseScalarLeftMetricParamsDict = _CiftiCreateDenseScalarLeftMetricParamsDictNoTag | CiftiCreateDenseScalarLeftMetricParamsDictTagged
 
 
-CiftiCreateDenseScalarRightMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarRightMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-metric"]],
+_CiftiCreateDenseScalarRightMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarRightMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiCreateDenseScalarRightMetricParamsDictTagged = typing.TypedDict('CiftiCreat
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseScalarRightMetricParamsDict = _CiftiCreateDenseScalarRightMetricParamsDictNoTag | CiftiCreateDenseScalarRightMetricParamsDictTagged
 
 
-CiftiCreateDenseScalarCerebellumMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-metric"]],
+_CiftiCreateDenseScalarCerebellumMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarCerebellumMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -58,10 +57,10 @@ CiftiCreateDenseScalarCerebellumMetricParamsDictTagged = typing.TypedDict('Cifti
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseScalarCerebellumMetricParamsDict = _CiftiCreateDenseScalarCerebellumMetricParamsDictNoTag | CiftiCreateDenseScalarCerebellumMetricParamsDictTagged
 
 
-CiftiCreateDenseScalarMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_CiftiCreateDenseScalarMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarMetricParamsDictNoTag', {
     "structure": str,
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -72,10 +71,10 @@ CiftiCreateDenseScalarMetricParamsDictTagged = typing.TypedDict('CiftiCreateDens
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseScalarMetricParamsDict = _CiftiCreateDenseScalarMetricParamsDictNoTag | CiftiCreateDenseScalarMetricParamsDictTagged
 
 
-CiftiCreateDenseScalarParamsDict = typing.TypedDict('CiftiCreateDenseScalarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-scalar"]],
+_CiftiCreateDenseScalarParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScalarParamsDictNoTag', {
     "cifti-out": str,
     "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParamsDict | None],
     "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParamsDict | None],
@@ -94,6 +93,7 @@ CiftiCreateDenseScalarParamsDictTagged = typing.TypedDict('CiftiCreateDenseScala
     "file": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParamsDict] | None],
 })
+CiftiCreateDenseScalarParamsDict = _CiftiCreateDenseScalarParamsDictNoTag | CiftiCreateDenseScalarParamsDictTagged
 
 
 def cifti_create_dense_scalar_volume(

@@ -13,8 +13,7 @@ TBSS_3_POSTREG_METADATA = Metadata(
 )
 
 
-Tbss3PostregParamsDict = typing.TypedDict('Tbss3PostregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_3_postreg"]],
+_Tbss3PostregParamsDictNoTag = typing.TypedDict('_Tbss3PostregParamsDictNoTag', {
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })
@@ -23,6 +22,7 @@ Tbss3PostregParamsDictTagged = typing.TypedDict('Tbss3PostregParamsDictTagged', 
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })
+Tbss3PostregParamsDict = _Tbss3PostregParamsDictNoTag | Tbss3PostregParamsDictTagged
 
 
 class Tbss3PostregOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ REG_ALADIN_METADATA = Metadata(
 )
 
 
-RegAladinParamsDict = typing.TypedDict('RegAladinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_aladin"]],
+_RegAladinParamsDictNoTag = typing.TypedDict('_RegAladinParamsDictNoTag', {
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "symmetric": bool,
@@ -45,6 +44,7 @@ RegAladinParamsDictTagged = typing.TypedDict('RegAladinParamsDictTagged', {
     "percent_block": typing.NotRequired[float | None],
     "percent_inlier": typing.NotRequired[float | None],
 })
+RegAladinParamsDict = _RegAladinParamsDictNoTag | RegAladinParamsDictTagged
 
 
 class RegAladinOutputs(typing.NamedTuple):

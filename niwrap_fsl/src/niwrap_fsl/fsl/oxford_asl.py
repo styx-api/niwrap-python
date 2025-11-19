@@ -13,8 +13,7 @@ OXFORD_ASL_METADATA = Metadata(
 )
 
 
-OxfordAslParamsDict = typing.TypedDict('OxfordAslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/oxford_asl"]],
+_OxfordAslParamsDictNoTag = typing.TypedDict('_OxfordAslParamsDictNoTag', {
     "asl_data": InputPathType,
     "output_dir_name": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -77,6 +76,7 @@ OxfordAslParamsDictTagged = typing.TypedDict('OxfordAslParamsDictTagged', {
     "calibration_image": typing.NotRequired[InputPathType | None],
     "calibration_method": typing.NotRequired[str | None],
 })
+OxfordAslParamsDict = _OxfordAslParamsDictNoTag | OxfordAslParamsDictTagged
 
 
 class OxfordAslOutputs(typing.NamedTuple):

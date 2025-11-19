@@ -13,8 +13,7 @@ EASYTHRESH_METADATA = Metadata(
 )
 
 
-EasythreshParamsDict = typing.TypedDict('EasythreshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/easythresh"]],
+_EasythreshParamsDictNoTag = typing.TypedDict('_EasythreshParamsDictNoTag', {
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
     "cluster_z_thresh_input": float,
@@ -33,6 +32,7 @@ EasythreshParamsDictTagged = typing.TypedDict('EasythreshParamsDictTagged', {
     "output_root": str,
     "mm_flag": bool,
 })
+EasythreshParamsDict = _EasythreshParamsDictNoTag | EasythreshParamsDictTagged
 
 
 class EasythreshOutputs(typing.NamedTuple):

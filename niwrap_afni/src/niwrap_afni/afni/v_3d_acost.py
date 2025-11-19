@@ -13,8 +13,7 @@ V_3D_ACOST_METADATA = Metadata(
 )
 
 
-V3dAcostParamsDict = typing.TypedDict('V3dAcostParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAcost"]],
+_V3dAcostParamsDictNoTag = typing.TypedDict('_V3dAcostParamsDictNoTag', {
     "infile": InputPathType,
     "basefile": InputPathType,
     "outfile": str,
@@ -27,6 +26,7 @@ V3dAcostParamsDictTagged = typing.TypedDict('V3dAcostParamsDictTagged', {
     "outfile": str,
     "all_cost": bool,
 })
+V3dAcostParamsDict = _V3dAcostParamsDictNoTag | V3dAcostParamsDictTagged
 
 
 class V3dAcostOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ROBUSTFOV_METADATA = Metadata(
 )
 
 
-RobustfovParamsDict = typing.TypedDict('RobustfovParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/robustfov"]],
+_RobustfovParamsDictNoTag = typing.TypedDict('_RobustfovParamsDictNoTag', {
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "brain_size": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ RobustfovParamsDictTagged = typing.TypedDict('RobustfovParamsDictTagged', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
+RobustfovParamsDict = _RobustfovParamsDictNoTag | RobustfovParamsDictTagged
 
 
 class RobustfovOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RTVIEW_METADATA = Metadata(
 )
 
 
-RtviewParamsDict = typing.TypedDict('RtviewParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rtview"]],
+_RtviewParamsDictNoTag = typing.TypedDict('_RtviewParamsDictNoTag', {
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
     "left_hemi": bool,
@@ -47,6 +46,7 @@ RtviewParamsDictTagged = typing.TypedDict('RtviewParamsDictTagged', {
     "tcl_file": typing.NotRequired[InputPathType | None],
     "no_cleanup": bool,
 })
+RtviewParamsDict = _RtviewParamsDictNoTag | RtviewParamsDictTagged
 
 
 class RtviewOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ POST_RECON_ALL_METADATA = Metadata(
 )
 
 
-PostReconAllParamsDict = typing.TypedDict('PostReconAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/post-recon-all"]],
+_PostReconAllParamsDictNoTag = typing.TypedDict('_PostReconAllParamsDictNoTag', {
     "subject": str,
     "subfields": bool,
     "no_subfields": bool,
@@ -59,6 +58,7 @@ PostReconAllParamsDictTagged = typing.TypedDict('PostReconAllParamsDictTagged', 
     "force": bool,
     "exit_on_error": bool,
 })
+PostReconAllParamsDict = _PostReconAllParamsDictNoTag | PostReconAllParamsDictTagged
 
 
 class PostReconAllOutputs(typing.NamedTuple):

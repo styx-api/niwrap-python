@@ -12,8 +12,7 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-MetricVectorOperationParamsDict = typing.TypedDict('MetricVectorOperationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-operation"]],
+_MetricVectorOperationParamsDictNoTag = typing.TypedDict('_MetricVectorOperationParamsDictNoTag', {
     "metric-out": str,
     "normalize-a": bool,
     "normalize-b": bool,
@@ -34,6 +33,7 @@ MetricVectorOperationParamsDictTagged = typing.TypedDict('MetricVectorOperationP
     "vectors-b": InputPathType,
     "operation": str,
 })
+MetricVectorOperationParamsDict = _MetricVectorOperationParamsDictNoTag | MetricVectorOperationParamsDictTagged
 
 
 class MetricVectorOperationOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_BLUR_TO_FWHM_METADATA = Metadata(
 )
 
 
-V3dBlurToFwhmParamsDict = typing.TypedDict('V3dBlurToFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBlurToFWHM"]],
+_V3dBlurToFwhmParamsDictNoTag = typing.TypedDict('_V3dBlurToFwhmParamsDictNoTag', {
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
     "fwhm": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ V3dBlurToFwhmParamsDictTagged = typing.TypedDict('V3dBlurToFwhmParamsDictTagged'
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "prefix": typing.NotRequired[str | None],
 })
+V3dBlurToFwhmParamsDict = _V3dBlurToFwhmParamsDictNoTag | V3dBlurToFwhmParamsDictTagged
 
 
 class V3dBlurToFwhmOutputs(typing.NamedTuple):

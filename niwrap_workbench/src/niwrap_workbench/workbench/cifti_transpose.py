@@ -12,8 +12,7 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 )
 
 
-CiftiTransposeParamsDict = typing.TypedDict('CiftiTransposeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-transpose"]],
+_CiftiTransposeParamsDictNoTag = typing.TypedDict('_CiftiTransposeParamsDictNoTag', {
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
     "cifti-in": InputPathType,
@@ -24,6 +23,7 @@ CiftiTransposeParamsDictTagged = typing.TypedDict('CiftiTransposeParamsDictTagge
     "limit-GB": typing.NotRequired[float | None],
     "cifti-in": InputPathType,
 })
+CiftiTransposeParamsDict = _CiftiTransposeParamsDictNoTag | CiftiTransposeParamsDictTagged
 
 
 class CiftiTransposeOutputs(typing.NamedTuple):

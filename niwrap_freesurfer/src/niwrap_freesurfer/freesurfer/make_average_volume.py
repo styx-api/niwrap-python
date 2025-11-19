@@ -13,8 +13,7 @@ MAKE_AVERAGE_VOLUME_METADATA = Metadata(
 )
 
 
-MakeAverageVolumeParamsDict = typing.TypedDict('MakeAverageVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_volume"]],
+_MakeAverageVolumeParamsDictNoTag = typing.TypedDict('_MakeAverageVolumeParamsDictNoTag', {
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
     "out": typing.NotRequired[str | None],
@@ -49,6 +48,7 @@ MakeAverageVolumeParamsDictTagged = typing.TypedDict('MakeAverageVolumeParamsDic
     "debug_flag": bool,
     "nocleanup_flag": bool,
 })
+MakeAverageVolumeParamsDict = _MakeAverageVolumeParamsDictNoTag | MakeAverageVolumeParamsDictTagged
 
 
 class MakeAverageVolumeOutputs(typing.NamedTuple):

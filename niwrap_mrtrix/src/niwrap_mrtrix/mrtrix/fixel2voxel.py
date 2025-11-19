@@ -13,8 +13,7 @@ FIXEL2VOXEL_METADATA = Metadata(
 )
 
 
-Fixel2voxelConfigParamsDict = typing.TypedDict('Fixel2voxelConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fixel2voxelConfigParamsDictNoTag = typing.TypedDict('_Fixel2voxelConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Fixel2voxelConfigParamsDictTagged = typing.TypedDict('Fixel2voxelConfigParamsDic
     "key": str,
     "value": str,
 })
+Fixel2voxelConfigParamsDict = _Fixel2voxelConfigParamsDictNoTag | Fixel2voxelConfigParamsDictTagged
 
 
-Fixel2voxelParamsDict = typing.TypedDict('Fixel2voxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2voxel"]],
+_Fixel2voxelParamsDictNoTag = typing.TypedDict('_Fixel2voxelParamsDictNoTag', {
     "number": typing.NotRequired[int | None],
     "fill": typing.NotRequired[float | None],
     "weighted": typing.NotRequired[InputPathType | None],
@@ -59,6 +58,7 @@ Fixel2voxelParamsDictTagged = typing.TypedDict('Fixel2voxelParamsDictTagged', {
     "operation": str,
     "image_out": str,
 })
+Fixel2voxelParamsDict = _Fixel2voxelParamsDictNoTag | Fixel2voxelParamsDictTagged
 
 
 def fixel2voxel_config(

@@ -13,8 +13,7 @@ V_2PERM_METADATA = Metadata(
 )
 
 
-V2permParamsDict = typing.TypedDict('V2permParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/2perm"]],
+_V2permParamsDictNoTag = typing.TypedDict('_V2permParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
     "bottom_int": float,
@@ -31,6 +30,7 @@ V2permParamsDictTagged = typing.TypedDict('V2permParamsDictTagged', {
     "subset1_size": typing.NotRequired[float | None],
     "subset2_size": typing.NotRequired[float | None],
 })
+V2permParamsDict = _V2permParamsDictNoTag | V2permParamsDictTagged
 
 
 class V2permOutputs(typing.NamedTuple):

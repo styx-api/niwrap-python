@@ -13,8 +13,7 @@ V_3DANISOSMOOTH_METADATA = Metadata(
 )
 
 
-V3danisosmoothParamsDict = typing.TypedDict('V3danisosmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3danisosmooth"]],
+_V3danisosmoothParamsDictNoTag = typing.TypedDict('_V3danisosmoothParamsDictNoTag', {
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[float | None],
@@ -63,6 +62,7 @@ V3danisosmoothParamsDictTagged = typing.TypedDict('V3danisosmoothParamsDictTagge
     "matchorig_flag": bool,
     "help_flag": bool,
 })
+V3danisosmoothParamsDict = _V3danisosmoothParamsDictNoTag | V3danisosmoothParamsDictTagged
 
 
 class V3danisosmoothOutputs(typing.NamedTuple):

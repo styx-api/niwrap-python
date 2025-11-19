@@ -13,8 +13,7 @@ MRIS_MS_REFINE_METADATA = Metadata(
 )
 
 
-MrisMsRefineParamsDict = typing.TypedDict('MrisMsRefineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ms_refine"]],
+_MrisMsRefineParamsDictNoTag = typing.TypedDict('_MrisMsRefineParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "xform": InputPathType,
@@ -37,6 +36,7 @@ MrisMsRefineParamsDictTagged = typing.TypedDict('MrisMsRefineParamsDictTagged', 
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
+MrisMsRefineParamsDict = _MrisMsRefineParamsDictNoTag | MrisMsRefineParamsDictTagged
 
 
 class MrisMsRefineOutputs(typing.NamedTuple):

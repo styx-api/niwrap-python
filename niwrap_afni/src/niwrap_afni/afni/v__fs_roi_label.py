@@ -13,8 +13,7 @@ V__FS_ROI_LABEL_METADATA = Metadata(
 )
 
 
-VFsRoiLabelParamsDict = typing.TypedDict('VFsRoiLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@FS_roi_label"]],
+_VFsRoiLabelParamsDictNoTag = typing.TypedDict('_VFsRoiLabelParamsDictNoTag', {
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
     "rank_int": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ VFsRoiLabelParamsDictTagged = typing.TypedDict('VFsRoiLabelParamsDictTagged', {
     "slab_int": typing.NotRequired[float | None],
     "sname_name": typing.NotRequired[str | None],
 })
+VFsRoiLabelParamsDict = _VFsRoiLabelParamsDictNoTag | VFsRoiLabelParamsDictTagged
 
 
 class VFsRoiLabelOutputs(typing.NamedTuple):

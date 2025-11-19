@@ -13,8 +13,7 @@ V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
 )
 
 
-VSumaMakeSpecFsParamsDict = typing.TypedDict('VSumaMakeSpecFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_FS"]],
+_VSumaMakeSpecFsParamsDictNoTag = typing.TypedDict('_VSumaMakeSpecFsParamsDictNoTag', {
     "subject_id": str,
     "debug": typing.NotRequired[int | None],
     "fs_setup": bool,
@@ -51,6 +50,7 @@ VSumaMakeSpecFsParamsDictTagged = typing.TypedDict('VSumaMakeSpecFsParamsDictTag
     "ldpref": typing.NotRequired[str | None],
     "no_ld": bool,
 })
+VSumaMakeSpecFsParamsDict = _VSumaMakeSpecFsParamsDictNoTag | VSumaMakeSpecFsParamsDictTagged
 
 
 class VSumaMakeSpecFsOutputs(typing.NamedTuple):

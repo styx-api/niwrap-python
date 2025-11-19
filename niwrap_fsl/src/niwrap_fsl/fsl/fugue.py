@@ -13,8 +13,7 @@ FUGUE_METADATA = Metadata(
 )
 
 
-FugueParamsDict = typing.TypedDict('FugueParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fugue"]],
+_FugueParamsDictNoTag = typing.TypedDict('_FugueParamsDictNoTag', {
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
     "despike_threshold": typing.NotRequired[float | None],
@@ -85,6 +84,7 @@ FugueParamsDictTagged = typing.TypedDict('FugueParamsDictTagged', {
     "unwarped_file": typing.NotRequired[str | None],
     "warped_file": typing.NotRequired[str | None],
 })
+FugueParamsDict = _FugueParamsDictNoTag | FugueParamsDictTagged
 
 
 class FugueOutputs(typing.NamedTuple):

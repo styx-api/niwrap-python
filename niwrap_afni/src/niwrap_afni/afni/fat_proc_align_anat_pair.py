@@ -13,8 +13,7 @@ FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
 )
 
 
-FatProcAlignAnatPairParamsDict = typing.TypedDict('FatProcAlignAnatPairParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_align_anat_pair"]],
+_FatProcAlignAnatPairParamsDictNoTag = typing.TypedDict('_FatProcAlignAnatPairParamsDictNoTag', {
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
     "output_prefix": str,
@@ -43,6 +42,7 @@ FatProcAlignAnatPairParamsDictTagged = typing.TypedDict('FatProcAlignAnatPairPar
     "no_cmd_out": bool,
     "no_clean": bool,
 })
+FatProcAlignAnatPairParamsDict = _FatProcAlignAnatPairParamsDictNoTag | FatProcAlignAnatPairParamsDictTagged
 
 
 class FatProcAlignAnatPairOutputs(typing.NamedTuple):

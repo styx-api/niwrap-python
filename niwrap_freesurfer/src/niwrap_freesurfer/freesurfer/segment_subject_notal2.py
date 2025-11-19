@@ -13,14 +13,14 @@ SEGMENT_SUBJECT_NOTAL2_METADATA = Metadata(
 )
 
 
-SegmentSubjectNotal2ParamsDict = typing.TypedDict('SegmentSubjectNotal2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_notal2"]],
+_SegmentSubjectNotal2ParamsDictNoTag = typing.TypedDict('_SegmentSubjectNotal2ParamsDictNoTag', {
     "license_file": InputPathType,
 })
 SegmentSubjectNotal2ParamsDictTagged = typing.TypedDict('SegmentSubjectNotal2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subject_notal2"],
     "license_file": InputPathType,
 })
+SegmentSubjectNotal2ParamsDict = _SegmentSubjectNotal2ParamsDictNoTag | SegmentSubjectNotal2ParamsDictTagged
 
 
 class SegmentSubjectNotal2Outputs(typing.NamedTuple):

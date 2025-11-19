@@ -13,8 +13,7 @@ FATCAT_MATPLOT_METADATA = Metadata(
 )
 
 
-FatcatMatplotParamsDict = typing.TypedDict('FatcatMatplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/FATCAT_matplot"]],
+_FatcatMatplotParamsDictNoTag = typing.TypedDict('_FatcatMatplotParamsDictNoTag', {
     "directory": str,
     "shiny_folder": bool,
 })
@@ -23,6 +22,7 @@ FatcatMatplotParamsDictTagged = typing.TypedDict('FatcatMatplotParamsDictTagged'
     "directory": str,
     "shiny_folder": bool,
 })
+FatcatMatplotParamsDict = _FatcatMatplotParamsDictNoTag | FatcatMatplotParamsDictTagged
 
 
 class FatcatMatplotOutputs(typing.NamedTuple):

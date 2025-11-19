@@ -13,8 +13,7 @@ V_3DFRACTIONIZE_METADATA = Metadata(
 )
 
 
-V3dfractionizeParamsDict = typing.TypedDict('V3dfractionizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dfractionize"]],
+_V3dfractionizeParamsDictNoTag = typing.TypedDict('_V3dfractionizeParamsDictNoTag', {
     "template": InputPathType,
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ V3dfractionizeParamsDictTagged = typing.TypedDict('V3dfractionizeParamsDictTagge
     "preserve": bool,
     "vote": bool,
 })
+V3dfractionizeParamsDict = _V3dfractionizeParamsDictNoTag | V3dfractionizeParamsDictTagged
 
 
 class V3dfractionizeOutputs(typing.NamedTuple):

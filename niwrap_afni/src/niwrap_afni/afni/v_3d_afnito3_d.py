@@ -13,8 +13,7 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 )
 
 
-V3dAfnito3DParamsDict = typing.TypedDict('V3dAfnito3DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAFNIto3D"]],
+_V3dAfnito3DParamsDictNoTag = typing.TypedDict('_V3dAfnito3DParamsDictNoTag', {
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "binary": bool,
@@ -27,6 +26,7 @@ V3dAfnito3DParamsDictTagged = typing.TypedDict('V3dAfnito3DParamsDictTagged', {
     "binary": bool,
     "text": bool,
 })
+V3dAfnito3DParamsDict = _V3dAfnito3DParamsDictNoTag | V3dAfnito3DParamsDictTagged
 
 
 class V3dAfnito3DOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ V__DO_EXAMPLES_METADATA = Metadata(
 )
 
 
-VDoExamplesParamsDict = typing.TypedDict('VDoExamplesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@DO.examples"]],
+_VDoExamplesParamsDictNoTag = typing.TypedDict('_VDoExamplesParamsDictNoTag', {
     "auto_test": bool,
 })
 VDoExamplesParamsDictTagged = typing.TypedDict('VDoExamplesParamsDictTagged', {
     "@type": typing.Literal["afni/@DO.examples"],
     "auto_test": bool,
 })
+VDoExamplesParamsDict = _VDoExamplesParamsDictNoTag | VDoExamplesParamsDictTagged
 
 
 class VDoExamplesOutputs(typing.NamedTuple):

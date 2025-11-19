@@ -13,8 +13,7 @@ MRI_NL_ALIGN_METADATA = Metadata(
 )
 
 
-MriNlAlignParamsDict = typing.TypedDict('MriNlAlignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nl_align"]],
+_MriNlAlignParamsDictNoTag = typing.TypedDict('_MriNlAlignParamsDictNoTag', {
     "source": InputPathType,
     "target": InputPathType,
     "warp": str,
@@ -115,6 +114,7 @@ MriNlAlignParamsDictTagged = typing.TypedDict('MriNlAlignParamsDictTagged', {
     "exp_k": typing.NotRequired[float | None],
     "diagnostics": typing.NotRequired[float | None],
 })
+MriNlAlignParamsDict = _MriNlAlignParamsDictNoTag | MriNlAlignParamsDictTagged
 
 
 class MriNlAlignOutputs(typing.NamedTuple):

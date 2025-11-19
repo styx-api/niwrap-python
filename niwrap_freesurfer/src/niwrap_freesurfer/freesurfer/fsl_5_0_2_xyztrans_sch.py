@@ -13,8 +13,7 @@ FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
 )
 
 
-Fsl502XyztransSchParamsDict = typing.TypedDict('Fsl502XyztransSchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl.5.0.2.xyztrans.sch"]],
+_Fsl502XyztransSchParamsDictNoTag = typing.TypedDict('_Fsl502XyztransSchParamsDictNoTag', {
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
     "no_scrollback_flag": bool,
@@ -25,6 +24,7 @@ Fsl502XyztransSchParamsDictTagged = typing.TypedDict('Fsl502XyztransSchParamsDic
     "version_flag": bool,
     "no_scrollback_flag": bool,
 })
+Fsl502XyztransSchParamsDict = _Fsl502XyztransSchParamsDictNoTag | Fsl502XyztransSchParamsDictTagged
 
 
 class Fsl502XyztransSchOutputs(typing.NamedTuple):

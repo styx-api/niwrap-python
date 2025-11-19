@@ -13,8 +13,7 @@ FSLCOMPLEX_METADATA = Metadata(
 )
 
 
-FslcomplexParamsDict = typing.TypedDict('FslcomplexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslcomplex"]],
+_FslcomplexParamsDictNoTag = typing.TypedDict('_FslcomplexParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "output_type": typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
@@ -29,6 +28,7 @@ FslcomplexParamsDictTagged = typing.TypedDict('FslcomplexParamsDictTagged', {
     "start_vol": typing.NotRequired[int | None],
     "end_vol": typing.NotRequired[int | None],
 })
+FslcomplexParamsDict = _FslcomplexParamsDictNoTag | FslcomplexParamsDictTagged
 
 
 class FslcomplexOutputs(typing.NamedTuple):

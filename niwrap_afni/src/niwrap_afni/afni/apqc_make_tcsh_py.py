@@ -13,8 +13,7 @@ APQC_MAKE_TCSH_PY_METADATA = Metadata(
 )
 
 
-ApqcMakeTcshPyParamsDict = typing.TypedDict('ApqcMakeTcshPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/apqc_make_tcsh.py"]],
+_ApqcMakeTcshPyParamsDictNoTag = typing.TypedDict('_ApqcMakeTcshPyParamsDictNoTag', {
     "uvar_json": InputPathType,
     "subj_dir": str,
     "review_style": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ ApqcMakeTcshPyParamsDictTagged = typing.TypedDict('ApqcMakeTcshPyParamsDictTagge
     "mot_grayplot_off": bool,
     "vstat_list": typing.NotRequired[list[str] | None],
 })
+ApqcMakeTcshPyParamsDict = _ApqcMakeTcshPyParamsDictNoTag | ApqcMakeTcshPyParamsDictTagged
 
 
 class ApqcMakeTcshPyOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ LABEL_MASK_METADATA = Metadata(
 )
 
 
-LabelMaskParamsDict = typing.TypedDict('LabelMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-mask"]],
+_LabelMaskParamsDictNoTag = typing.TypedDict('_LabelMaskParamsDictNoTag', {
     "label-out": str,
     "column": typing.NotRequired[str | None],
     "label": InputPathType,
@@ -26,6 +25,7 @@ LabelMaskParamsDictTagged = typing.TypedDict('LabelMaskParamsDictTagged', {
     "label": InputPathType,
     "mask": InputPathType,
 })
+LabelMaskParamsDict = _LabelMaskParamsDictNoTag | LabelMaskParamsDictTagged
 
 
 class LabelMaskOutputs(typing.NamedTuple):

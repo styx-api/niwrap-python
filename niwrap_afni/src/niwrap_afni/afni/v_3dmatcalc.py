@@ -13,8 +13,7 @@ V_3DMATCALC_METADATA = Metadata(
 )
 
 
-V3dmatcalcParamsDict = typing.TypedDict('V3dmatcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmatcalc"]],
+_V3dmatcalcParamsDictNoTag = typing.TypedDict('_V3dmatcalcParamsDictNoTag', {
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
     "output_dataset": str,
@@ -27,6 +26,7 @@ V3dmatcalcParamsDictTagged = typing.TypedDict('V3dmatcalcParamsDictTagged', {
     "output_dataset": str,
     "mask": typing.NotRequired[InputPathType | None],
 })
+V3dmatcalcParamsDict = _V3dmatcalcParamsDictNoTag | V3dmatcalcParamsDictTagged
 
 
 class V3dmatcalcOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ THICKDIFFMAP_METADATA = Metadata(
 )
 
 
-ThickdiffmapParamsDict = typing.TypedDict('ThickdiffmapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/thickdiffmap"]],
+_ThickdiffmapParamsDictNoTag = typing.TypedDict('_ThickdiffmapParamsDictNoTag', {
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
     "commonsubj": str,
@@ -29,6 +28,7 @@ ThickdiffmapParamsDictTagged = typing.TypedDict('ThickdiffmapParamsDictTagged', 
     "hemi": str,
     "steps": typing.NotRequired[list[str] | None],
 })
+ThickdiffmapParamsDict = _ThickdiffmapParamsDictNoTag | ThickdiffmapParamsDictTagged
 
 
 class ThickdiffmapOutputs(typing.NamedTuple):

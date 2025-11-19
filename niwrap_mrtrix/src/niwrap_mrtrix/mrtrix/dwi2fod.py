@@ -13,8 +13,7 @@ DWI2FOD_METADATA = Metadata(
 )
 
 
-Dwi2fodFslgradParamsDict = typing.TypedDict('Dwi2fodFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_Dwi2fodFslgradParamsDictNoTag = typing.TypedDict('_Dwi2fodFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,30 +22,30 @@ Dwi2fodFslgradParamsDictTagged = typing.TypedDict('Dwi2fodFslgradParamsDictTagge
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+Dwi2fodFslgradParamsDict = _Dwi2fodFslgradParamsDictNoTag | Dwi2fodFslgradParamsDictTagged
 
 
-Dwi2fodVariousStringParamsDict = typing.TypedDict('Dwi2fodVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_Dwi2fodVariousStringParamsDictNoTag = typing.TypedDict('_Dwi2fodVariousStringParamsDictNoTag', {
     "obj": str,
 })
 Dwi2fodVariousStringParamsDictTagged = typing.TypedDict('Dwi2fodVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+Dwi2fodVariousStringParamsDict = _Dwi2fodVariousStringParamsDictNoTag | Dwi2fodVariousStringParamsDictTagged
 
 
-Dwi2fodVariousFileParamsDict = typing.TypedDict('Dwi2fodVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_Dwi2fodVariousFileParamsDictNoTag = typing.TypedDict('_Dwi2fodVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 Dwi2fodVariousFileParamsDictTagged = typing.TypedDict('Dwi2fodVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+Dwi2fodVariousFileParamsDict = _Dwi2fodVariousFileParamsDictNoTag | Dwi2fodVariousFileParamsDictTagged
 
 
-Dwi2fodConfigParamsDict = typing.TypedDict('Dwi2fodConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Dwi2fodConfigParamsDictNoTag = typing.TypedDict('_Dwi2fodConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -55,10 +54,10 @@ Dwi2fodConfigParamsDictTagged = typing.TypedDict('Dwi2fodConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+Dwi2fodConfigParamsDict = _Dwi2fodConfigParamsDictNoTag | Dwi2fodConfigParamsDictTagged
 
 
-Dwi2fodResponseOdfParamsDict = typing.TypedDict('Dwi2fodResponseOdfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["response_odf"]],
+_Dwi2fodResponseOdfParamsDictNoTag = typing.TypedDict('_Dwi2fodResponseOdfParamsDictNoTag', {
     "response": InputPathType,
     "odf": str,
 })
@@ -67,10 +66,10 @@ Dwi2fodResponseOdfParamsDictTagged = typing.TypedDict('Dwi2fodResponseOdfParamsD
     "response": InputPathType,
     "odf": str,
 })
+Dwi2fodResponseOdfParamsDict = _Dwi2fodResponseOdfParamsDictNoTag | Dwi2fodResponseOdfParamsDictTagged
 
 
-Dwi2fodParamsDict = typing.TypedDict('Dwi2fodParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2fod"]],
+_Dwi2fodParamsDictNoTag = typing.TypedDict('_Dwi2fodParamsDictNoTag', {
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2fodFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
@@ -127,6 +126,7 @@ Dwi2fodParamsDictTagged = typing.TypedDict('Dwi2fodParamsDictTagged', {
     "dwi": InputPathType,
     "response_odf": list[Dwi2fodResponseOdfParamsDict],
 })
+Dwi2fodParamsDict = _Dwi2fodParamsDictNoTag | Dwi2fodParamsDictTagged
 
 
 def dwi2fod_strides_cargs_dyn_fn(

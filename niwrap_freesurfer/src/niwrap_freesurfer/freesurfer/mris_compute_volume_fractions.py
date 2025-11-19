@@ -13,8 +13,7 @@ MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 )
 
 
-MrisComputeVolumeFractionsParamsDict = typing.TypedDict('MrisComputeVolumeFractionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_volume_fractions"]],
+_MrisComputeVolumeFractionsParamsDictNoTag = typing.TypedDict('_MrisComputeVolumeFractionsParamsDictNoTag', {
     "volume_file": InputPathType,
     "surface_file": InputPathType,
     "accuracy": float,
@@ -31,6 +30,7 @@ MrisComputeVolumeFractionsParamsDictTagged = typing.TypedDict('MrisComputeVolume
     "debug": bool,
     "checkopts": bool,
 })
+MrisComputeVolumeFractionsParamsDict = _MrisComputeVolumeFractionsParamsDictNoTag | MrisComputeVolumeFractionsParamsDictTagged
 
 
 class MrisComputeVolumeFractionsOutputs(typing.NamedTuple):

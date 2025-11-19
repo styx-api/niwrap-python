@@ -13,8 +13,7 @@ FS_RUN_FROM_MCR_METADATA = Metadata(
 )
 
 
-FsRunFromMcrParamsDict = typing.TypedDict('FsRunFromMcrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_run_from_mcr"]],
+_FsRunFromMcrParamsDictNoTag = typing.TypedDict('_FsRunFromMcrParamsDictNoTag', {
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
     "zeroth_flag": bool,
@@ -27,6 +26,7 @@ FsRunFromMcrParamsDictTagged = typing.TypedDict('FsRunFromMcrParamsDictTagged', 
     "zeroth_flag": bool,
     "empty_env_flag": bool,
 })
+FsRunFromMcrParamsDict = _FsRunFromMcrParamsDictNoTag | FsRunFromMcrParamsDictTagged
 
 
 class FsRunFromMcrOutputs(typing.NamedTuple):

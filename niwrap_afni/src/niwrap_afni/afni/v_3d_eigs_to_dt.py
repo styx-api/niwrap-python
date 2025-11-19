@@ -13,8 +13,7 @@ V_3D_EIGS_TO_DT_METADATA = Metadata(
 )
 
 
-V3dEigsToDtParamsDict = typing.TypedDict('V3dEigsToDtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dEigsToDT"]],
+_V3dEigsToDtParamsDictNoTag = typing.TypedDict('_V3dEigsToDtParamsDictNoTag', {
     "eig_vals": str,
     "eig_vecs": str,
     "prefix": str,
@@ -35,6 +34,7 @@ V3dEigsToDtParamsDictTagged = typing.TypedDict('V3dEigsToDtParamsDictTagged', {
     "flip_z": bool,
     "scale_eigs": typing.NotRequired[float | None],
 })
+V3dEigsToDtParamsDict = _V3dEigsToDtParamsDictNoTag | V3dEigsToDtParamsDictTagged
 
 
 class V3dEigsToDtOutputs(typing.NamedTuple):

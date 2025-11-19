@@ -13,8 +13,7 @@ BIANCA_CLUSTER_STATS_METADATA = Metadata(
 )
 
 
-BiancaClusterStatsParamsDict = typing.TypedDict('BiancaClusterStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bianca_cluster_stats"]],
+_BiancaClusterStatsParamsDictNoTag = typing.TypedDict('_BiancaClusterStatsParamsDictNoTag', {
     "bianca_output_map": InputPathType,
     "threshold": float,
     "min_cluster_size": float,
@@ -27,6 +26,7 @@ BiancaClusterStatsParamsDictTagged = typing.TypedDict('BiancaClusterStatsParamsD
     "min_cluster_size": float,
     "mask": typing.NotRequired[InputPathType | None],
 })
+BiancaClusterStatsParamsDict = _BiancaClusterStatsParamsDictNoTag | BiancaClusterStatsParamsDictTagged
 
 
 class BiancaClusterStatsOutputs(typing.NamedTuple):

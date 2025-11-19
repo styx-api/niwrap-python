@@ -13,8 +13,7 @@ SIENAX_METADATA = Metadata(
 )
 
 
-SienaxParamsDict = typing.TypedDict('SienaxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/sienax"]],
+_SienaxParamsDictNoTag = typing.TypedDict('_SienaxParamsDictNoTag', {
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "debug_flag": bool,
@@ -41,6 +40,7 @@ SienaxParamsDictTagged = typing.TypedDict('SienaxParamsDictTagged', {
     "lesion_mask": typing.NotRequired[InputPathType | None],
     "fast_options": typing.NotRequired[str | None],
 })
+SienaxParamsDict = _SienaxParamsDictNoTag | SienaxParamsDictTagged
 
 
 class SienaxOutputs(typing.NamedTuple):

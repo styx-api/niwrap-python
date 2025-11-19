@@ -13,8 +13,7 @@ MRI_TRAIN_METADATA = Metadata(
 )
 
 
-MriTrainParamsDict = typing.TypedDict('MriTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_train"]],
+_MriTrainParamsDictNoTag = typing.TypedDict('_MriTrainParamsDictNoTag', {
     "training_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ MriTrainParamsDictTagged = typing.TypedDict('MriTrainParamsDictTagged', {
     "training_file": InputPathType,
     "output_file": str,
 })
+MriTrainParamsDict = _MriTrainParamsDictNoTag | MriTrainParamsDictTagged
 
 
 class MriTrainOutputs(typing.NamedTuple):

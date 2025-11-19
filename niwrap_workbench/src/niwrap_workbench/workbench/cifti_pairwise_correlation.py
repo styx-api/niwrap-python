@@ -12,8 +12,7 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiPairwiseCorrelationParamsDict = typing.TypedDict('CiftiPairwiseCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-pairwise-correlation"]],
+_CiftiPairwiseCorrelationParamsDictNoTag = typing.TypedDict('_CiftiPairwiseCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "fisher-z": bool,
     "override-mapping-check": bool,
@@ -28,6 +27,7 @@ CiftiPairwiseCorrelationParamsDictTagged = typing.TypedDict('CiftiPairwiseCorrel
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
+CiftiPairwiseCorrelationParamsDict = _CiftiPairwiseCorrelationParamsDictNoTag | CiftiPairwiseCorrelationParamsDictTagged
 
 
 class CiftiPairwiseCorrelationOutputs(typing.NamedTuple):

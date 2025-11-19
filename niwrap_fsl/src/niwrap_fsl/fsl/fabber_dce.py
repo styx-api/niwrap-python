@@ -13,8 +13,7 @@ FABBER_DCE_METADATA = Metadata(
 )
 
 
-FabberDceParamsDict = typing.TypedDict('FabberDceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dce"]],
+_FabberDceParamsDictNoTag = typing.TypedDict('_FabberDceParamsDictNoTag', {
     "output_directory": str,
     "inference_method": str,
     "forward_model": str,
@@ -91,6 +90,7 @@ FabberDceParamsDictTagged = typing.TypedDict('FabberDceParamsDictTagged', {
     "option_file": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
+FabberDceParamsDict = _FabberDceParamsDictNoTag | FabberDceParamsDictTagged
 
 
 class FabberDceOutputs(typing.NamedTuple):

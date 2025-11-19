@@ -12,8 +12,7 @@ BORDER_MERGE_METADATA = Metadata(
 )
 
 
-BorderMergeUpToParamsDict = typing.TypedDict('BorderMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_BorderMergeUpToParamsDictNoTag = typing.TypedDict('_BorderMergeUpToParamsDictNoTag', {
     "last-border": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ BorderMergeUpToParamsDictTagged = typing.TypedDict('BorderMergeUpToParamsDictTag
     "last-border": str,
     "reverse": bool,
 })
+BorderMergeUpToParamsDict = _BorderMergeUpToParamsDictNoTag | BorderMergeUpToParamsDictTagged
 
 
-BorderMergeSelectParamsDict = typing.TypedDict('BorderMergeSelectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["select"]],
+_BorderMergeSelectParamsDictNoTag = typing.TypedDict('_BorderMergeSelectParamsDictNoTag', {
     "border": str,
     "up-to": typing.NotRequired[BorderMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ BorderMergeSelectParamsDictTagged = typing.TypedDict('BorderMergeSelectParamsDic
     "border": str,
     "up-to": typing.NotRequired[BorderMergeUpToParamsDict | None],
 })
+BorderMergeSelectParamsDict = _BorderMergeSelectParamsDictNoTag | BorderMergeSelectParamsDictTagged
 
 
-BorderMergeBorderParamsDict = typing.TypedDict('BorderMergeBorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["border"]],
+_BorderMergeBorderParamsDictNoTag = typing.TypedDict('_BorderMergeBorderParamsDictNoTag', {
     "border-file-in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParamsDict] | None],
 })
@@ -46,10 +45,10 @@ BorderMergeBorderParamsDictTagged = typing.TypedDict('BorderMergeBorderParamsDic
     "border-file-in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParamsDict] | None],
 })
+BorderMergeBorderParamsDict = _BorderMergeBorderParamsDictNoTag | BorderMergeBorderParamsDictTagged
 
 
-BorderMergeParamsDict = typing.TypedDict('BorderMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-merge"]],
+_BorderMergeParamsDictNoTag = typing.TypedDict('_BorderMergeParamsDictNoTag', {
     "border-file-out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParamsDict] | None],
 })
@@ -58,6 +57,7 @@ BorderMergeParamsDictTagged = typing.TypedDict('BorderMergeParamsDictTagged', {
     "border-file-out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParamsDict] | None],
 })
+BorderMergeParamsDict = _BorderMergeParamsDictNoTag | BorderMergeParamsDictTagged
 
 
 def border_merge_up_to(

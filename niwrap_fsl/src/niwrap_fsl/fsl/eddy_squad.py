@@ -13,8 +13,7 @@ EDDY_SQUAD_METADATA = Metadata(
 )
 
 
-EddySquadParamsDict = typing.TypedDict('EddySquadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_squad"]],
+_EddySquadParamsDictNoTag = typing.TypedDict('_EddySquadParamsDictNoTag', {
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
     "update": bool,
@@ -29,6 +28,7 @@ EddySquadParamsDictTagged = typing.TypedDict('EddySquadParamsDictTagged', {
     "output_dir": typing.NotRequired[str | None],
     "subject_list": str,
 })
+EddySquadParamsDict = _EddySquadParamsDictNoTag | EddySquadParamsDictTagged
 
 
 class EddySquadOutputs(typing.NamedTuple):

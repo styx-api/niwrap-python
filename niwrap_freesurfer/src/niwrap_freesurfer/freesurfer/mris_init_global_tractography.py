@@ -13,8 +13,7 @@ MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
 )
 
 
-MrisInitGlobalTractographyParamsDict = typing.TypedDict('MrisInitGlobalTractographyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_init_global_tractography"]],
+_MrisInitGlobalTractographyParamsDictNoTag = typing.TypedDict('_MrisInitGlobalTractographyParamsDictNoTag', {
     "subject": str,
     "parcellation": str,
     "output_volume": str,
@@ -25,6 +24,7 @@ MrisInitGlobalTractographyParamsDictTagged = typing.TypedDict('MrisInitGlobalTra
     "parcellation": str,
     "output_volume": str,
 })
+MrisInitGlobalTractographyParamsDict = _MrisInitGlobalTractographyParamsDictNoTag | MrisInitGlobalTractographyParamsDictTagged
 
 
 class MrisInitGlobalTractographyOutputs(typing.NamedTuple):

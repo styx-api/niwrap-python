@@ -13,8 +13,7 @@ MRI_EDIT_SEGMENTATION_METADATA = Metadata(
 )
 
 
-MriEditSegmentationParamsDict = typing.TypedDict('MriEditSegmentationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_segmentation"]],
+_MriEditSegmentationParamsDictNoTag = typing.TypedDict('_MriEditSegmentationParamsDictNoTag', {
     "input_segmentation": InputPathType,
     "t1_volume": InputPathType,
     "output_segmentation": str,
@@ -25,6 +24,7 @@ MriEditSegmentationParamsDictTagged = typing.TypedDict('MriEditSegmentationParam
     "t1_volume": InputPathType,
     "output_segmentation": str,
 })
+MriEditSegmentationParamsDict = _MriEditSegmentationParamsDictNoTag | MriEditSegmentationParamsDictTagged
 
 
 class MriEditSegmentationOutputs(typing.NamedTuple):

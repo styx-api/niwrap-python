@@ -13,8 +13,7 @@ APARC2FEAT_METADATA = Metadata(
 )
 
 
-Aparc2featParamsDict = typing.TypedDict('Aparc2featParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/aparc2feat"]],
+_Aparc2featParamsDictNoTag = typing.TypedDict('_Aparc2featParamsDictNoTag', {
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "hemi": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ Aparc2featParamsDictTagged = typing.TypedDict('Aparc2featParamsDictTagged', {
     "help_flag": bool,
     "version_flag": bool,
 })
+Aparc2featParamsDict = _Aparc2featParamsDictNoTag | Aparc2featParamsDictTagged
 
 
 class Aparc2featOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA = Metadata(
 )
 
 
-AntsLandmarkBasedTransformInitializerParamsDict = typing.TypedDict('AntsLandmarkBasedTransformInitializerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsLandmarkBasedTransformInitializer"]],
+_AntsLandmarkBasedTransformInitializerParamsDictNoTag = typing.TypedDict('_AntsLandmarkBasedTransformInitializerParamsDictNoTag', {
     "dimension": int,
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -39,6 +38,7 @@ AntsLandmarkBasedTransformInitializerParamsDictTagged = typing.TypedDict('AntsLa
     "enforce_stationary_boundaries": typing.NotRequired[bool | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
+AntsLandmarkBasedTransformInitializerParamsDict = _AntsLandmarkBasedTransformInitializerParamsDictNoTag | AntsLandmarkBasedTransformInitializerParamsDictTagged
 
 
 class AntsLandmarkBasedTransformInitializerOutputs(typing.NamedTuple):

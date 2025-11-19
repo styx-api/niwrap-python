@@ -13,14 +13,14 @@ CHECK_MCR_SH_METADATA = Metadata(
 )
 
 
-CheckMcrShParamsDict = typing.TypedDict('CheckMcrShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/checkMCR.sh"]],
+_CheckMcrShParamsDictNoTag = typing.TypedDict('_CheckMcrShParamsDictNoTag', {
     "help": bool,
 })
 CheckMcrShParamsDictTagged = typing.TypedDict('CheckMcrShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/checkMCR.sh"],
     "help": bool,
 })
+CheckMcrShParamsDict = _CheckMcrShParamsDictNoTag | CheckMcrShParamsDictTagged
 
 
 class CheckMcrShOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_HAUSDORFF_DIST_METADATA = Metadata(
 )
 
 
-MriHausdorffDistParamsDict = typing.TypedDict('MriHausdorffDistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hausdorff_dist"]],
+_MriHausdorffDistParamsDictNoTag = typing.TypedDict('_MriHausdorffDistParamsDictNoTag', {
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_text_file": str,
@@ -35,6 +34,7 @@ MriHausdorffDistParamsDictTagged = typing.TypedDict('MriHausdorffDistParamsDictT
     "max_flag": bool,
     "label_index": typing.NotRequired[float | None],
 })
+MriHausdorffDistParamsDict = _MriHausdorffDistParamsDictNoTag | MriHausdorffDistParamsDictTagged
 
 
 class MriHausdorffDistOutputs(typing.NamedTuple):

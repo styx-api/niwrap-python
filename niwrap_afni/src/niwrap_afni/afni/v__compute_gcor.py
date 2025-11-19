@@ -13,8 +13,7 @@ V__COMPUTE_GCOR_METADATA = Metadata(
 )
 
 
-VComputeGcorParamsDict = typing.TypedDict('VComputeGcorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@compute_gcor"]],
+_VComputeGcorParamsDictNoTag = typing.TypedDict('_VComputeGcorParamsDictNoTag', {
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "corr_vol_prefix": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ VComputeGcorParamsDictTagged = typing.TypedDict('VComputeGcorParamsDictTagged', 
     "save_tmp": bool,
     "verbose": typing.NotRequired[float | None],
 })
+VComputeGcorParamsDict = _VComputeGcorParamsDictNoTag | VComputeGcorParamsDictTagged
 
 
 class VComputeGcorOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_ROISTATS_METADATA = Metadata(
 )
 
 
-V3dRoistatsParamsDict = typing.TypedDict('V3dRoistatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dROIstats"]],
+_V3dRoistatsParamsDictNoTag = typing.TypedDict('_V3dRoistatsParamsDictNoTag', {
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "debug": bool,
@@ -47,6 +46,7 @@ V3dRoistatsParamsDictTagged = typing.TypedDict('V3dRoistatsParamsDictTagged', {
     "stat": typing.NotRequired[list[InputPathType] | None],
     "zerofill": typing.NotRequired[str | None],
 })
+V3dRoistatsParamsDict = _V3dRoistatsParamsDictNoTag | V3dRoistatsParamsDictTagged
 
 
 class V3dRoistatsOutputs(typing.NamedTuple):

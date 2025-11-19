@@ -13,8 +13,7 @@ FSL_SUB_METADATA = Metadata(
 )
 
 
-FslSubParamsDict = typing.TypedDict('FslSubParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_sub"]],
+_FslSubParamsDictNoTag = typing.TypedDict('_FslSubParamsDictNoTag', {
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[float | None],
@@ -87,6 +86,7 @@ FslSubParamsDictTagged = typing.TypedDict('FslSubParamsDictTagged', {
     "version": bool,
     "fileisimage": typing.NotRequired[InputPathType | None],
 })
+FslSubParamsDict = _FslSubParamsDictNoTag | FslSubParamsDictTagged
 
 
 class FslSubOutputs(typing.NamedTuple):

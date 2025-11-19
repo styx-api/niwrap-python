@@ -13,8 +13,7 @@ MRI_WBC_METADATA = Metadata(
 )
 
 
-MriWbcParamsDict = typing.TypedDict('MriWbcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_wbc"]],
+_MriWbcParamsDictNoTag = typing.TypedDict('_MriWbcParamsDictNoTag', {
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
     "lh_functional_surface": InputPathType,
@@ -53,6 +52,7 @@ MriWbcParamsDictTagged = typing.TypedDict('MriWbcParamsDictTagged', {
     "debug": bool,
     "checkopts": bool,
 })
+MriWbcParamsDict = _MriWbcParamsDictNoTag | MriWbcParamsDictTagged
 
 
 class MriWbcOutputs(typing.NamedTuple):

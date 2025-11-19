@@ -13,8 +13,7 @@ VNO_MATCH_CHECK_METADATA = Metadata(
 )
 
 
-VnoMatchCheckParamsDict = typing.TypedDict('VnoMatchCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vno_match_check"]],
+_VnoMatchCheckParamsDictNoTag = typing.TypedDict('_VnoMatchCheckParamsDictNoTag', {
     "subjid": str,
     "debug": bool,
     "right_hemi": bool,
@@ -27,6 +26,7 @@ VnoMatchCheckParamsDictTagged = typing.TypedDict('VnoMatchCheckParamsDictTagged'
     "right_hemi": bool,
     "left_hemi": bool,
 })
+VnoMatchCheckParamsDict = _VnoMatchCheckParamsDictNoTag | VnoMatchCheckParamsDictTagged
 
 
 class VnoMatchCheckOutputs(typing.NamedTuple):

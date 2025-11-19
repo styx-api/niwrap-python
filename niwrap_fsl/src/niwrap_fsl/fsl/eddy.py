@@ -13,8 +13,7 @@ EDDY_METADATA = Metadata(
 )
 
 
-EddyParamsDict = typing.TypedDict('EddyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy"]],
+_EddyParamsDictNoTag = typing.TypedDict('_EddyParamsDictNoTag', {
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -107,6 +106,7 @@ EddyParamsDictTagged = typing.TypedDict('EddyParamsDictTagged', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
+EddyParamsDict = _EddyParamsDictNoTag | EddyParamsDictTagged
 
 
 class EddyOutputs(typing.NamedTuple):

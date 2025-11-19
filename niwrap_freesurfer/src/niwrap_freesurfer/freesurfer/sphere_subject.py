@@ -13,8 +13,7 @@ SPHERE_SUBJECT_METADATA = Metadata(
 )
 
 
-SphereSubjectParamsDict = typing.TypedDict('SphereSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject"]],
+_SphereSubjectParamsDictNoTag = typing.TypedDict('_SphereSubjectParamsDictNoTag', {
     "input_dir": str,
     "output_file": str,
     "license_file": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ SphereSubjectParamsDictTagged = typing.TypedDict('SphereSubjectParamsDictTagged'
     "output_file": str,
     "license_file": typing.NotRequired[str | None],
 })
+SphereSubjectParamsDict = _SphereSubjectParamsDictNoTag | SphereSubjectParamsDictTagged
 
 
 class SphereSubjectOutputs(typing.NamedTuple):

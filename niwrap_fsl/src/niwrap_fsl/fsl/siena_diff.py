@@ -13,8 +13,7 @@ SIENA_DIFF_METADATA = Metadata(
 )
 
 
-SienaDiffParamsDict = typing.TypedDict('SienaDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/siena_diff"]],
+_SienaDiffParamsDictNoTag = typing.TypedDict('_SienaDiffParamsDictNoTag', {
     "input1_basename": str,
     "input2_basename": str,
     "debug_flag": bool,
@@ -35,6 +34,7 @@ SienaDiffParamsDictTagged = typing.TypedDict('SienaDiffParamsDictTagged', {
     "apply_std_mask_flag": bool,
     "segment_options": typing.NotRequired[str | None],
 })
+SienaDiffParamsDict = _SienaDiffParamsDictNoTag | SienaDiffParamsDictTagged
 
 
 class SienaDiffOutputs(typing.NamedTuple):

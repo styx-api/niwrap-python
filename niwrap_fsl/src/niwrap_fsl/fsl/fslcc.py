@@ -13,8 +13,7 @@ FSLCC_METADATA = Metadata(
 )
 
 
-FslccParamsDict = typing.TypedDict('FslccParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslcc"]],
+_FslccParamsDictNoTag = typing.TypedDict('_FslccParamsDictNoTag', {
     "first_input": InputPathType,
     "second_input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ FslccParamsDictTagged = typing.TypedDict('FslccParamsDictTagged', {
     "threshold": typing.NotRequired[float | None],
     "decimal_places": typing.NotRequired[float | None],
 })
+FslccParamsDict = _FslccParamsDictNoTag | FslccParamsDictTagged
 
 
 class FslccOutputs(typing.NamedTuple):

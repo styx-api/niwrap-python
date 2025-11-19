@@ -13,8 +13,7 @@ MRIS_SEG2ANNOT_METADATA = Metadata(
 )
 
 
-MrisSeg2annotParamsDict = typing.TypedDict('MrisSeg2annotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_seg2annot"]],
+_MrisSeg2annotParamsDictNoTag = typing.TypedDict('_MrisSeg2annotParamsDictNoTag', {
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
     "auto_ctab": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ MrisSeg2annotParamsDictTagged = typing.TypedDict('MrisSeg2annotParamsDictTagged'
     "checkopts": bool,
     "version": bool,
 })
+MrisSeg2annotParamsDict = _MrisSeg2annotParamsDictNoTag | MrisSeg2annotParamsDictTagged
 
 
 class MrisSeg2annotOutputs(typing.NamedTuple):

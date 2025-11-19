@@ -13,8 +13,7 @@ MINC2SEQINFO_METADATA = Metadata(
 )
 
 
-Minc2seqinfoParamsDict = typing.TypedDict('Minc2seqinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/minc2seqinfo"]],
+_Minc2seqinfoParamsDictNoTag = typing.TypedDict('_Minc2seqinfoParamsDictNoTag', {
     "mincfile": InputPathType,
     "seqinfofile": str,
 })
@@ -23,6 +22,7 @@ Minc2seqinfoParamsDictTagged = typing.TypedDict('Minc2seqinfoParamsDictTagged', 
     "mincfile": InputPathType,
     "seqinfofile": str,
 })
+Minc2seqinfoParamsDict = _Minc2seqinfoParamsDictNoTag | Minc2seqinfoParamsDictTagged
 
 
 class Minc2seqinfoOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 )
 
 
-SurfaceCortexLayerParamsDict = typing.TypedDict('SurfaceCortexLayerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-cortex-layer"]],
+_SurfaceCortexLayerParamsDictNoTag = typing.TypedDict('_SurfaceCortexLayerParamsDictNoTag', {
     "out-surface": str,
     "placement-metric": typing.NotRequired[str | None],
     "white-surface": InputPathType,
@@ -28,6 +27,7 @@ SurfaceCortexLayerParamsDictTagged = typing.TypedDict('SurfaceCortexLayerParamsD
     "pial-surface": InputPathType,
     "location": float,
 })
+SurfaceCortexLayerParamsDict = _SurfaceCortexLayerParamsDictNoTag | SurfaceCortexLayerParamsDictTagged
 
 
 class SurfaceCortexLayerOutputs(typing.NamedTuple):

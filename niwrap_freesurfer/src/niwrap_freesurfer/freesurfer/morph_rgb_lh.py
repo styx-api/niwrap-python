@@ -13,14 +13,14 @@ MORPH_RGB_LH_METADATA = Metadata(
 )
 
 
-MorphRgbLhParamsDict = typing.TypedDict('MorphRgbLhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_rgb-lh"]],
+_MorphRgbLhParamsDictNoTag = typing.TypedDict('_MorphRgbLhParamsDictNoTag', {
     "subject_id": str,
 })
 MorphRgbLhParamsDictTagged = typing.TypedDict('MorphRgbLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_rgb-lh"],
     "subject_id": str,
 })
+MorphRgbLhParamsDict = _MorphRgbLhParamsDictNoTag | MorphRgbLhParamsDictTagged
 
 
 class MorphRgbLhOutputs(typing.NamedTuple):

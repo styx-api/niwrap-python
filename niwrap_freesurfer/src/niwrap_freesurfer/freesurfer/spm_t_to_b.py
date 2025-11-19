@@ -13,8 +13,7 @@ SPM_T_TO_B_METADATA = Metadata(
 )
 
 
-SpmTToBParamsDict = typing.TypedDict('SpmTToBParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/spm_t_to_b"]],
+_SpmTToBParamsDictNoTag = typing.TypedDict('_SpmTToBParamsDictNoTag', {
     "spm_stem_format": str,
     "bshort_stem": str,
 })
@@ -23,6 +22,7 @@ SpmTToBParamsDictTagged = typing.TypedDict('SpmTToBParamsDictTagged', {
     "spm_stem_format": str,
     "bshort_stem": str,
 })
+SpmTToBParamsDict = _SpmTToBParamsDictNoTag | SpmTToBParamsDictTagged
 
 
 class SpmTToBOutputs(typing.NamedTuple):

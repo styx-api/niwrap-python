@@ -12,8 +12,7 @@ CIFTI_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiCorrelationRoiOverrideParamsDict = typing.TypedDict('CiftiCorrelationRoiOverrideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi-override"]],
+_CiftiCorrelationRoiOverrideParamsDictNoTag = typing.TypedDict('_CiftiCorrelationRoiOverrideParamsDictNoTag', {
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -28,10 +27,10 @@ CiftiCorrelationRoiOverrideParamsDictTagged = typing.TypedDict('CiftiCorrelation
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
 })
+CiftiCorrelationRoiOverrideParamsDict = _CiftiCorrelationRoiOverrideParamsDictNoTag | CiftiCorrelationRoiOverrideParamsDictTagged
 
 
-CiftiCorrelationParamsDict = typing.TypedDict('CiftiCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation"]],
+_CiftiCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
     "weight-file": typing.NotRequired[str | None],
@@ -52,6 +51,7 @@ CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictT
     "limit-GB": typing.NotRequired[float | None],
     "cifti": InputPathType,
 })
+CiftiCorrelationParamsDict = _CiftiCorrelationParamsDictNoTag | CiftiCorrelationParamsDictTagged
 
 
 def cifti_correlation_roi_override(

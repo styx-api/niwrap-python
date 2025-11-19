@@ -12,8 +12,7 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 )
 
 
-SurfaceFlipNormalsParamsDict = typing.TypedDict('SurfaceFlipNormalsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-normals"]],
+_SurfaceFlipNormalsParamsDictNoTag = typing.TypedDict('_SurfaceFlipNormalsParamsDictNoTag', {
     "surface-out": str,
     "surface": InputPathType,
 })
@@ -22,6 +21,7 @@ SurfaceFlipNormalsParamsDictTagged = typing.TypedDict('SurfaceFlipNormalsParamsD
     "surface-out": str,
     "surface": InputPathType,
 })
+SurfaceFlipNormalsParamsDict = _SurfaceFlipNormalsParamsDictNoTag | SurfaceFlipNormalsParamsDictTagged
 
 
 class SurfaceFlipNormalsOutputs(typing.NamedTuple):

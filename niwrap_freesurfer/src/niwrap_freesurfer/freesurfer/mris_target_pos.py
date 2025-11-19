@@ -13,8 +13,7 @@ MRIS_TARGET_POS_METADATA = Metadata(
 )
 
 
-MrisTargetPosParamsDict = typing.TypedDict('MrisTargetPosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_target_pos"]],
+_MrisTargetPosParamsDictNoTag = typing.TypedDict('_MrisTargetPosParamsDictNoTag', {
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_surface": str,
@@ -45,6 +44,7 @@ MrisTargetPosParamsDictTagged = typing.TypedDict('MrisTargetPosParamsDictTagged'
     "help_flag": bool,
     "version_flag": bool,
 })
+MrisTargetPosParamsDict = _MrisTargetPosParamsDictNoTag | MrisTargetPosParamsDictTagged
 
 
 class MrisTargetPosOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_LME_METADATA = Metadata(
 )
 
 
-V3dLmeParamsDict = typing.TypedDict('V3dLmeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLME"]],
+_V3dLmeParamsDictNoTag = typing.TypedDict('_V3dLmeParamsDictNoTag', {
     "PREFIX": str,
     "MODEL": str,
     "DATA_TABLE": str,
@@ -79,6 +78,7 @@ V3dLmeParamsDictTagged = typing.TypedDict('V3dLmeParamsDictTagged', {
     "SHOW_OPTIONS_FLAG": bool,
     "SS_TYPE": typing.NotRequired[float | None],
 })
+V3dLmeParamsDict = _V3dLmeParamsDictNoTag | V3dLmeParamsDictTagged
 
 
 class V3dLmeOutputs(typing.NamedTuple):

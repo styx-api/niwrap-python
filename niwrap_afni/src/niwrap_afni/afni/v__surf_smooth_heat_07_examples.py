@@ -13,14 +13,14 @@ V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA = Metadata(
 )
 
 
-VSurfSmoothHeat07ExamplesParamsDict = typing.TypedDict('VSurfSmoothHeat07ExamplesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SurfSmooth.HEAT_07.examples"]],
+_VSurfSmoothHeat07ExamplesParamsDictNoTag = typing.TypedDict('_VSurfSmoothHeat07ExamplesParamsDictNoTag', {
     "path_to_suma_demo": str,
 })
 VSurfSmoothHeat07ExamplesParamsDictTagged = typing.TypedDict('VSurfSmoothHeat07ExamplesParamsDictTagged', {
     "@type": typing.Literal["afni/@SurfSmooth.HEAT_07.examples"],
     "path_to_suma_demo": str,
 })
+VSurfSmoothHeat07ExamplesParamsDict = _VSurfSmoothHeat07ExamplesParamsDictNoTag | VSurfSmoothHeat07ExamplesParamsDictTagged
 
 
 class VSurfSmoothHeat07ExamplesOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ V__DEMO_PROMPT_METADATA = Metadata(
 )
 
 
-VDemoPromptParamsDict = typing.TypedDict('VDemoPromptParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@demo_prompt"]],
+_VDemoPromptParamsDictNoTag = typing.TypedDict('_VDemoPromptParamsDictNoTag', {
     "message": str,
 })
 VDemoPromptParamsDictTagged = typing.TypedDict('VDemoPromptParamsDictTagged', {
     "@type": typing.Literal["afni/@demo_prompt"],
     "message": str,
 })
+VDemoPromptParamsDict = _VDemoPromptParamsDictNoTag | VDemoPromptParamsDictTagged
 
 
 class VDemoPromptOutputs(typing.NamedTuple):

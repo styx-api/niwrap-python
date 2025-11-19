@@ -13,8 +13,7 @@ V_3D_ZCAT_METADATA = Metadata(
 )
 
 
-V3dZcatParamsDict = typing.TypedDict('V3dZcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dZcat"]],
+_V3dZcatParamsDictNoTag = typing.TypedDict('_V3dZcatParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "fscale": bool,
@@ -33,6 +32,7 @@ V3dZcatParamsDictTagged = typing.TypedDict('V3dZcatParamsDictTagged', {
     "frugal": bool,
     "input_files": list[InputPathType],
 })
+V3dZcatParamsDict = _V3dZcatParamsDictNoTag | V3dZcatParamsDictTagged
 
 
 class V3dZcatOutputs(typing.NamedTuple):

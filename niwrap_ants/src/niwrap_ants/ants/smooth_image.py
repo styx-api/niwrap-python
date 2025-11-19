@@ -13,8 +13,7 @@ SMOOTH_IMAGE_METADATA = Metadata(
 )
 
 
-SmoothImageParamsDict = typing.TypedDict('SmoothImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SmoothImage"]],
+_SmoothImageParamsDictNoTag = typing.TypedDict('_SmoothImageParamsDictNoTag', {
     "image_dimension": int,
     "image_ext": InputPathType,
     "smoothing_sigma": str,
@@ -31,6 +30,7 @@ SmoothImageParamsDictTagged = typing.TypedDict('SmoothImageParamsDictTagged', {
     "sigma_units": typing.NotRequired[bool | None],
     "median_filter": typing.NotRequired[bool | None],
 })
+SmoothImageParamsDict = _SmoothImageParamsDictNoTag | SmoothImageParamsDictTagged
 
 
 class SmoothImageOutputs(typing.NamedTuple):

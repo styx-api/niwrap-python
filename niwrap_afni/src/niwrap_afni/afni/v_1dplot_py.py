@@ -13,8 +13,7 @@ V_1DPLOT_PY_METADATA = Metadata(
 )
 
 
-V1dplotPyParamsDict = typing.TypedDict('V1dplotPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dplot.py"]],
+_V1dplotPyParamsDictNoTag = typing.TypedDict('_V1dplotPyParamsDictNoTag', {
     "infiles": list[InputPathType],
     "prefix": str,
     "help": bool,
@@ -83,6 +82,7 @@ V1dplotPyParamsDictTagged = typing.TypedDict('V1dplotPyParamsDictTagged', {
     "censor_rgb": typing.NotRequired[str | None],
     "bkgd_color": typing.NotRequired[str | None],
 })
+V1dplotPyParamsDict = _V1dplotPyParamsDictNoTag | V1dplotPyParamsDictTagged
 
 
 class V1dplotPyOutputs(typing.NamedTuple):

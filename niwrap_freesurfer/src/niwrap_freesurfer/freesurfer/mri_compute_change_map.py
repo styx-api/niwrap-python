@@ -13,8 +13,7 @@ MRI_COMPUTE_CHANGE_MAP_METADATA = Metadata(
 )
 
 
-MriComputeChangeMapParamsDict = typing.TypedDict('MriComputeChangeMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_change_map"]],
+_MriComputeChangeMapParamsDictNoTag = typing.TypedDict('_MriComputeChangeMapParamsDictNoTag', {
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
     "volume1": InputPathType,
@@ -31,6 +30,7 @@ MriComputeChangeMapParamsDictTagged = typing.TypedDict('MriComputeChangeMapParam
     "transform": InputPathType,
     "outvolume": str,
 })
+MriComputeChangeMapParamsDict = _MriComputeChangeMapParamsDictNoTag | MriComputeChangeMapParamsDictTagged
 
 
 class MriComputeChangeMapOutputs(typing.NamedTuple):

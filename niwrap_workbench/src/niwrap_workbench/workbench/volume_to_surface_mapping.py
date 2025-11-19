@@ -12,8 +12,7 @@ VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
 )
 
 
-VolumeToSurfaceMappingVolumeRoiParamsDict = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-roi"]],
+_VolumeToSurfaceMappingVolumeRoiParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingVolumeRoiParamsDictNoTag', {
     "roi-volume": InputPathType,
     "weighted": bool,
 })
@@ -22,10 +21,10 @@ VolumeToSurfaceMappingVolumeRoiParamsDictTagged = typing.TypedDict('VolumeToSurf
     "roi-volume": InputPathType,
     "weighted": bool,
 })
+VolumeToSurfaceMappingVolumeRoiParamsDict = _VolumeToSurfaceMappingVolumeRoiParamsDictNoTag | VolumeToSurfaceMappingVolumeRoiParamsDictTagged
 
 
-VolumeToSurfaceMappingDilateMissingParamsDict = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dilate-missing"]],
+_VolumeToSurfaceMappingDilateMissingParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingDilateMissingParamsDictNoTag', {
     "dist": float,
     "nearest": bool,
 })
@@ -34,10 +33,10 @@ VolumeToSurfaceMappingDilateMissingParamsDictTagged = typing.TypedDict('VolumeTo
     "dist": float,
     "nearest": bool,
 })
+VolumeToSurfaceMappingDilateMissingParamsDict = _VolumeToSurfaceMappingDilateMissingParamsDictNoTag | VolumeToSurfaceMappingDilateMissingParamsDictTagged
 
 
-VolumeToSurfaceMappingOutputWeightsParamsDict = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output-weights"]],
+_VolumeToSurfaceMappingOutputWeightsParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingOutputWeightsParamsDictNoTag', {
     "vertex": int,
     "weights-out": str,
 })
@@ -46,10 +45,10 @@ VolumeToSurfaceMappingOutputWeightsParamsDictTagged = typing.TypedDict('VolumeTo
     "vertex": int,
     "weights-out": str,
 })
+VolumeToSurfaceMappingOutputWeightsParamsDict = _VolumeToSurfaceMappingOutputWeightsParamsDictNoTag | VolumeToSurfaceMappingOutputWeightsParamsDictTagged
 
 
-VolumeToSurfaceMappingRibbonConstrainedParamsDict = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+_VolumeToSurfaceMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingRibbonConstrainedParamsDictNoTag', {
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
     "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParamsDict | None],
@@ -76,10 +75,10 @@ VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('Volu
     "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParamsDict | None],
     "text-out": typing.NotRequired[str | None],
 })
+VolumeToSurfaceMappingRibbonConstrainedParamsDict = _VolumeToSurfaceMappingRibbonConstrainedParamsDictNoTag | VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged
 
 
-VolumeToSurfaceMappingMyelinStyleParamsDict = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["myelin-style"]],
+_VolumeToSurfaceMappingMyelinStyleParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingMyelinStyleParamsDictNoTag', {
     "ribbon-roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
@@ -92,10 +91,10 @@ VolumeToSurfaceMappingMyelinStyleParamsDictTagged = typing.TypedDict('VolumeToSu
     "sigma": float,
     "legacy-bug": bool,
 })
+VolumeToSurfaceMappingMyelinStyleParamsDict = _VolumeToSurfaceMappingMyelinStyleParamsDictNoTag | VolumeToSurfaceMappingMyelinStyleParamsDictTagged
 
 
-VolumeToSurfaceMappingParamsDict = typing.TypedDict('VolumeToSurfaceMappingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-to-surface-mapping"]],
+_VolumeToSurfaceMappingParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingParamsDictNoTag', {
     "metric-out": str,
     "trilinear": bool,
     "enclosing": bool,
@@ -118,6 +117,7 @@ VolumeToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappin
     "volume": InputPathType,
     "surface": InputPathType,
 })
+VolumeToSurfaceMappingParamsDict = _VolumeToSurfaceMappingParamsDictNoTag | VolumeToSurfaceMappingParamsDictTagged
 
 
 def volume_to_surface_mapping_volume_roi(

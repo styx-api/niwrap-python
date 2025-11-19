@@ -13,8 +13,7 @@ V_3DTTEST___METADATA = Metadata(
 )
 
 
-V3dttestParamsDict = typing.TypedDict('V3dttestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dttest++"]],
+_V3dttestParamsDictNoTag = typing.TypedDict('_V3dttestParamsDictNoTag', {
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
     "setA_long": typing.NotRequired[list[str] | None],
@@ -61,6 +60,7 @@ V3dttestParamsDictTagged = typing.TypedDict('V3dttestParamsDictTagged', {
     "ETAC_opt": typing.NotRequired[list[str] | None],
     "seed": typing.NotRequired[float | None],
 })
+V3dttestParamsDict = _V3dttestParamsDictNoTag | V3dttestParamsDictTagged
 
 
 class V3dttestOutputs(typing.NamedTuple):

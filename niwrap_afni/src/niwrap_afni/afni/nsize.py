@@ -13,8 +13,7 @@ NSIZE_METADATA = Metadata(
 )
 
 
-NsizeParamsDict = typing.TypedDict('NsizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/nsize"]],
+_NsizeParamsDictNoTag = typing.TypedDict('_NsizeParamsDictNoTag', {
     "image_in": InputPathType,
     "image_out": str,
 })
@@ -23,6 +22,7 @@ NsizeParamsDictTagged = typing.TypedDict('NsizeParamsDictTagged', {
     "image_in": InputPathType,
     "image_out": str,
 })
+NsizeParamsDict = _NsizeParamsDictNoTag | NsizeParamsDictTagged
 
 
 class NsizeOutputs(typing.NamedTuple):

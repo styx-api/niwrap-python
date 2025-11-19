@@ -13,8 +13,7 @@ MRI_SYNTHSEG_METADATA = Metadata(
 )
 
 
-MriSynthsegParamsDict = typing.TypedDict('MriSynthsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthseg"]],
+_MriSynthsegParamsDictNoTag = typing.TypedDict('_MriSynthsegParamsDictNoTag', {
     "input_image": InputPathType,
     "output_segmentation": str,
     "cortex_parcellation": bool,
@@ -49,6 +48,7 @@ MriSynthsegParamsDictTagged = typing.TypedDict('MriSynthsegParamsDictTagged', {
     "version_1": bool,
     "photo_synthseg": typing.NotRequired[str | None],
 })
+MriSynthsegParamsDict = _MriSynthsegParamsDictNoTag | MriSynthsegParamsDictTagged
 
 
 class MriSynthsegOutputs(typing.NamedTuple):

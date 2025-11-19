@@ -13,8 +13,7 @@ V__DIFF_TREE_METADATA = Metadata(
 )
 
 
-VDiffTreeParamsDict = typing.TypedDict('VDiffTreeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@diff.tree"]],
+_VDiffTreeParamsDictNoTag = typing.TypedDict('_VDiffTreeParamsDictNoTag', {
     "new_dir": str,
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -55,6 +54,7 @@ VDiffTreeParamsDictTagged = typing.TypedDict('VDiffTreeParamsDictTagged', {
     "xxdiff": bool,
     "X_option": bool,
 })
+VDiffTreeParamsDict = _VDiffTreeParamsDictNoTag | VDiffTreeParamsDictTagged
 
 
 class VDiffTreeOutputs(typing.NamedTuple):

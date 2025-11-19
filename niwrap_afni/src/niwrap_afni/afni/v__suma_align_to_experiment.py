@@ -13,8 +13,7 @@ V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
 )
 
 
-VSumaAlignToExperimentParamsDict = typing.TypedDict('VSumaAlignToExperimentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_AlignToExperiment"]],
+_VSumaAlignToExperimentParamsDictNoTag = typing.TypedDict('_VSumaAlignToExperimentParamsDictNoTag', {
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
     "dxyz": typing.NotRequired[float | None],
@@ -59,6 +58,7 @@ VSumaAlignToExperimentParamsDictTagged = typing.TypedDict('VSumaAlignToExperimen
     "keep_tmp": bool,
     "overwrite_resp": typing.NotRequired[str | None],
 })
+VSumaAlignToExperimentParamsDict = _VSumaAlignToExperimentParamsDictNoTag | VSumaAlignToExperimentParamsDictTagged
 
 
 class VSumaAlignToExperimentOutputs(typing.NamedTuple):

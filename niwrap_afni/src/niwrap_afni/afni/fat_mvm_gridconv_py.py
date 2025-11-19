@@ -13,8 +13,7 @@ FAT_MVM_GRIDCONV_PY_METADATA = Metadata(
 )
 
 
-FatMvmGridconvPyParamsDict = typing.TypedDict('FatMvmGridconvPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_gridconv.py"]],
+_FatMvmGridconvPyParamsDictNoTag = typing.TypedDict('_FatMvmGridconvPyParamsDictNoTag', {
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
 })
@@ -23,6 +22,7 @@ FatMvmGridconvPyParamsDictTagged = typing.TypedDict('FatMvmGridconvPyParamsDictT
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
 })
+FatMvmGridconvPyParamsDict = _FatMvmGridconvPyParamsDictNoTag | FatMvmGridconvPyParamsDictTagged
 
 
 class FatMvmGridconvPyOutputs(typing.NamedTuple):

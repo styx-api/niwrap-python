@@ -12,8 +12,7 @@ CIFTI_STATS_METADATA = Metadata(
 )
 
 
-CiftiStatsRoiParamsDict = typing.TypedDict('CiftiStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_CiftiStatsRoiParamsDictNoTag = typing.TypedDict('_CiftiStatsRoiParamsDictNoTag', {
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
@@ -22,10 +21,10 @@ CiftiStatsRoiParamsDictTagged = typing.TypedDict('CiftiStatsRoiParamsDictTagged'
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
+CiftiStatsRoiParamsDict = _CiftiStatsRoiParamsDictNoTag | CiftiStatsRoiParamsDictTagged
 
 
-CiftiStatsParamsDict = typing.TypedDict('CiftiStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-stats"]],
+_CiftiStatsParamsDictNoTag = typing.TypedDict('_CiftiStatsParamsDictNoTag', {
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[int | None],
@@ -42,6 +41,7 @@ CiftiStatsParamsDictTagged = typing.TypedDict('CiftiStatsParamsDictTagged', {
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
+CiftiStatsParamsDict = _CiftiStatsParamsDictNoTag | CiftiStatsParamsDictTagged
 
 
 def cifti_stats_roi(

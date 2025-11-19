@@ -13,8 +13,7 @@ AFDCONNECTIVITY_METADATA = Metadata(
 )
 
 
-AfdconnectivityConfigParamsDict = typing.TypedDict('AfdconnectivityConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_AfdconnectivityConfigParamsDictNoTag = typing.TypedDict('_AfdconnectivityConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ AfdconnectivityConfigParamsDictTagged = typing.TypedDict('AfdconnectivityConfigP
     "key": str,
     "value": str,
 })
+AfdconnectivityConfigParamsDict = _AfdconnectivityConfigParamsDictNoTag | AfdconnectivityConfigParamsDictTagged
 
 
-AfdconnectivityParamsDict = typing.TypedDict('AfdconnectivityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/afdconnectivity"]],
+_AfdconnectivityParamsDictNoTag = typing.TypedDict('_AfdconnectivityParamsDictNoTag', {
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
     "all_fixels": bool,
@@ -57,6 +56,7 @@ AfdconnectivityParamsDictTagged = typing.TypedDict('AfdconnectivityParamsDictTag
     "image": InputPathType,
     "tracks": InputPathType,
 })
+AfdconnectivityParamsDict = _AfdconnectivityParamsDictNoTag | AfdconnectivityParamsDictTagged
 
 
 def afdconnectivity_config(

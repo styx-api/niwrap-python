@@ -13,8 +13,7 @@ V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
 )
 
 
-VSumaFsvolToBrikParamsDict = typing.TypedDict('VSumaFsvolToBrikParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_FSvolToBRIK"]],
+_VSumaFsvolToBrikParamsDictNoTag = typing.TypedDict('_VSumaFsvolToBrikParamsDictNoTag', {
     "fs_vol_data": InputPathType,
     "prefix": str,
 })
@@ -23,6 +22,7 @@ VSumaFsvolToBrikParamsDictTagged = typing.TypedDict('VSumaFsvolToBrikParamsDictT
     "fs_vol_data": InputPathType,
     "prefix": str,
 })
+VSumaFsvolToBrikParamsDict = _VSumaFsvolToBrikParamsDictNoTag | VSumaFsvolToBrikParamsDictTagged
 
 
 class VSumaFsvolToBrikOutputs(typing.NamedTuple):

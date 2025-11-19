@@ -13,8 +13,7 @@ DWIGRADCHECK_METADATA = Metadata(
 )
 
 
-DwigradcheckFslgradParamsDict = typing.TypedDict('DwigradcheckFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_DwigradcheckFslgradParamsDictNoTag = typing.TypedDict('_DwigradcheckFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ DwigradcheckFslgradParamsDictTagged = typing.TypedDict('DwigradcheckFslgradParam
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+DwigradcheckFslgradParamsDict = _DwigradcheckFslgradParamsDictNoTag | DwigradcheckFslgradParamsDictTagged
 
 
-DwigradcheckExportGradFslParamsDict = typing.TypedDict('DwigradcheckExportGradFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+_DwigradcheckExportGradFslParamsDictNoTag = typing.TypedDict('_DwigradcheckExportGradFslParamsDictNoTag', {
     "bvecs_path": str,
     "bvals_path": str,
 })
@@ -35,10 +34,10 @@ DwigradcheckExportGradFslParamsDictTagged = typing.TypedDict('DwigradcheckExport
     "bvecs_path": str,
     "bvals_path": str,
 })
+DwigradcheckExportGradFslParamsDict = _DwigradcheckExportGradFslParamsDictNoTag | DwigradcheckExportGradFslParamsDictTagged
 
 
-DwigradcheckParamsDict = typing.TypedDict('DwigradcheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwigradcheck"]],
+_DwigradcheckParamsDictNoTag = typing.TypedDict('_DwigradcheckParamsDictNoTag', {
     "input_image": InputPathType,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[DwigradcheckFslgradParamsDict | None],
@@ -79,6 +78,7 @@ DwigradcheckParamsDictTagged = typing.TypedDict('DwigradcheckParamsDictTagged', 
     "help": bool,
     "version": bool,
 })
+DwigradcheckParamsDict = _DwigradcheckParamsDictNoTag | DwigradcheckParamsDictTagged
 
 
 def dwigradcheck_fslgrad(

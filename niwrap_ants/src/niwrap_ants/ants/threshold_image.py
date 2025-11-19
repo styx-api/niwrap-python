@@ -13,8 +13,7 @@ THRESHOLD_IMAGE_METADATA = Metadata(
 )
 
 
-ThresholdImageParamsDict = typing.TypedDict('ThresholdImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ThresholdImage"]],
+_ThresholdImageParamsDictNoTag = typing.TypedDict('_ThresholdImageParamsDictNoTag', {
     "image_dimension": int,
     "image_in": InputPathType,
     "out_image": str,
@@ -39,6 +38,7 @@ ThresholdImageParamsDictTagged = typing.TypedDict('ThresholdImageParamsDictTagge
     "kmeans_number_of_thresholds": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
 })
+ThresholdImageParamsDict = _ThresholdImageParamsDictNoTag | ThresholdImageParamsDictTagged
 
 
 class ThresholdImageOutputs(typing.NamedTuple):

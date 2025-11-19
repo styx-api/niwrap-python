@@ -13,8 +13,7 @@ LONG_STATS_COMBINE_METADATA = Metadata(
 )
 
 
-LongStatsCombineParamsDict = typing.TypedDict('LongStatsCombineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_combine"]],
+_LongStatsCombineParamsDictNoTag = typing.TypedDict('_LongStatsCombineParamsDictNoTag', {
     "qdec": InputPathType,
     "stats": str,
     "measure": str,
@@ -35,6 +34,7 @@ LongStatsCombineParamsDictTagged = typing.TypedDict('LongStatsCombineParamsDictT
     "input_stats": typing.NotRequired[InputPathType | None],
     "cross_sectional": bool,
 })
+LongStatsCombineParamsDict = _LongStatsCombineParamsDictNoTag | LongStatsCombineParamsDictTagged
 
 
 class LongStatsCombineOutputs(typing.NamedTuple):

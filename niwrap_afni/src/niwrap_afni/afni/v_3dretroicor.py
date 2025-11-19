@@ -13,8 +13,7 @@ V_3DRETROICOR_METADATA = Metadata(
 )
 
 
-V3dretroicorParamsDict = typing.TypedDict('V3dretroicorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dretroicor"]],
+_V3dretroicorParamsDictNoTag = typing.TypedDict('_V3dretroicorParamsDictNoTag', {
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
     "card": typing.NotRequired[InputPathType | None],
@@ -37,6 +36,7 @@ V3dretroicorParamsDictTagged = typing.TypedDict('V3dretroicorParamsDictTagged', 
     "order": typing.NotRequired[float | None],
     "dataset": InputPathType,
 })
+V3dretroicorParamsDict = _V3dretroicorParamsDictNoTag | V3dretroicorParamsDictTagged
 
 
 class V3dretroicorOutputs(typing.NamedTuple):

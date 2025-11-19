@@ -13,8 +13,7 @@ TABLE2MAP_METADATA = Metadata(
 )
 
 
-Table2mapParamsDict = typing.TypedDict('Table2mapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/table2map"]],
+_Table2mapParamsDictNoTag = typing.TypedDict('_Table2mapParamsDictNoTag', {
     "input_table": InputPathType,
     "output_map": str,
     "segmentation": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ Table2mapParamsDictTagged = typing.TypedDict('Table2mapParamsDictTagged', {
     "columns": typing.NotRequired[list[str] | None],
     "lookup_table": typing.NotRequired[InputPathType | None],
 })
+Table2mapParamsDict = _Table2mapParamsDictNoTag | Table2mapParamsDictTagged
 
 
 class Table2mapOutputs(typing.NamedTuple):

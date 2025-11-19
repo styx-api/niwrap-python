@@ -13,8 +13,7 @@ BAYES_VIEW_METADATA = Metadata(
 )
 
 
-BayesViewParamsDict = typing.TypedDict('BayesViewParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/bayes_view"]],
+_BayesViewParamsDictNoTag = typing.TypedDict('_BayesViewParamsDictNoTag', {
     "input_folder": str,
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ BayesViewParamsDictTagged = typing.TypedDict('BayesViewParamsDictTagged', {
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],
 })
+BayesViewParamsDict = _BayesViewParamsDictNoTag | BayesViewParamsDictTagged
 
 
 class BayesViewOutputs(typing.NamedTuple):

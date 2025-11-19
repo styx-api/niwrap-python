@@ -13,8 +13,7 @@ MAKE_HEMI_MASK_METADATA = Metadata(
 )
 
 
-MakeHemiMaskParamsDict = typing.TypedDict('MakeHemiMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_hemi_mask"]],
+_MakeHemiMaskParamsDictNoTag = typing.TypedDict('_MakeHemiMaskParamsDictNoTag', {
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -25,6 +24,7 @@ MakeHemiMaskParamsDictTagged = typing.TypedDict('MakeHemiMaskParamsDictTagged', 
     "input_file": InputPathType,
     "output_file": str,
 })
+MakeHemiMaskParamsDict = _MakeHemiMaskParamsDictNoTag | MakeHemiMaskParamsDictTagged
 
 
 class MakeHemiMaskOutputs(typing.NamedTuple):

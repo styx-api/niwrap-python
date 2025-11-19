@@ -13,8 +13,7 @@ MRIS_BA_SEGMENT_METADATA = Metadata(
 )
 
 
-MrisBaSegmentParamsDict = typing.TypedDict('MrisBaSegmentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_BA_segment"]],
+_MrisBaSegmentParamsDictNoTag = typing.TypedDict('_MrisBaSegmentParamsDictNoTag', {
     "surface": InputPathType,
     "profiles": InputPathType,
     "prior_label": InputPathType,
@@ -27,6 +26,7 @@ MrisBaSegmentParamsDictTagged = typing.TypedDict('MrisBaSegmentParamsDictTagged'
     "prior_label": InputPathType,
     "output_label": str,
 })
+MrisBaSegmentParamsDict = _MrisBaSegmentParamsDictNoTag | MrisBaSegmentParamsDictTagged
 
 
 class MrisBaSegmentOutputs(typing.NamedTuple):

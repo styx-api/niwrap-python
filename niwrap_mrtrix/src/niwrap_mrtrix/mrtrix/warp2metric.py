@@ -13,8 +13,7 @@ WARP2METRIC_METADATA = Metadata(
 )
 
 
-Warp2metricFcParamsDict = typing.TypedDict('Warp2metricFcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fc"]],
+_Warp2metricFcParamsDictNoTag = typing.TypedDict('_Warp2metricFcParamsDictNoTag', {
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
     "output_fixel_data": str,
@@ -25,10 +24,10 @@ Warp2metricFcParamsDictTagged = typing.TypedDict('Warp2metricFcParamsDictTagged'
     "output_fixel_directory": str,
     "output_fixel_data": str,
 })
+Warp2metricFcParamsDict = _Warp2metricFcParamsDictNoTag | Warp2metricFcParamsDictTagged
 
 
-Warp2metricConfigParamsDict = typing.TypedDict('Warp2metricConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Warp2metricConfigParamsDictNoTag = typing.TypedDict('_Warp2metricConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -37,10 +36,10 @@ Warp2metricConfigParamsDictTagged = typing.TypedDict('Warp2metricConfigParamsDic
     "key": str,
     "value": str,
 })
+Warp2metricConfigParamsDict = _Warp2metricConfigParamsDictNoTag | Warp2metricConfigParamsDictTagged
 
 
-Warp2metricParamsDict = typing.TypedDict('Warp2metricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/warp2metric"]],
+_Warp2metricParamsDictNoTag = typing.TypedDict('_Warp2metricParamsDictNoTag', {
     "fc": typing.NotRequired[Warp2metricFcParamsDict | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ Warp2metricParamsDictTagged = typing.TypedDict('Warp2metricParamsDictTagged', {
     "version": bool,
     "in": InputPathType,
 })
+Warp2metricParamsDict = _Warp2metricParamsDictNoTag | Warp2metricParamsDictTagged
 
 
 def warp2metric_fc(

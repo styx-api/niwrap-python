@@ -13,8 +13,7 @@ V_3D_MULTI_THRESH_METADATA = Metadata(
 )
 
 
-V3dMultiThreshParamsDict = typing.TypedDict('V3dMultiThreshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMultiThresh"]],
+_V3dMultiThreshParamsDictNoTag = typing.TypedDict('_V3dMultiThreshParamsDictNoTag', {
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
     "index": typing.NotRequired[float | None],
@@ -41,6 +40,7 @@ V3dMultiThreshParamsDictTagged = typing.TypedDict('V3dMultiThreshParamsDictTagge
     "no_zero_flag": bool,
     "quiet_flag": bool,
 })
+V3dMultiThreshParamsDict = _V3dMultiThreshParamsDictNoTag | V3dMultiThreshParamsDictTagged
 
 
 class V3dMultiThreshOutputs(typing.NamedTuple):

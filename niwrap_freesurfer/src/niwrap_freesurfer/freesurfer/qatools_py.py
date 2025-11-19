@@ -13,8 +13,7 @@ QATOOLS_PY_METADATA = Metadata(
 )
 
 
-QatoolsPyParamsDict = typing.TypedDict('QatoolsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/qatools.py"]],
+_QatoolsPyParamsDictNoTag = typing.TypedDict('_QatoolsPyParamsDictNoTag', {
     "subjects_dir": str,
     "output_dir": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -33,6 +32,7 @@ QatoolsPyParamsDictTagged = typing.TypedDict('QatoolsPyParamsDictTagged', {
     "outlier": bool,
     "outlier_table": typing.NotRequired[InputPathType | None],
 })
+QatoolsPyParamsDict = _QatoolsPyParamsDictNoTag | QatoolsPyParamsDictTagged
 
 
 class QatoolsPyOutputs(typing.NamedTuple):

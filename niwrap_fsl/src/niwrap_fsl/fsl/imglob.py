@@ -13,8 +13,7 @@ IMGLOB_METADATA = Metadata(
 )
 
 
-ImglobParamsDict = typing.TypedDict('ImglobParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/imglob"]],
+_ImglobParamsDictNoTag = typing.TypedDict('_ImglobParamsDictNoTag', {
     "multiple_extensions": bool,
     "input_list": list[str],
     "single_extension": bool,
@@ -25,6 +24,7 @@ ImglobParamsDictTagged = typing.TypedDict('ImglobParamsDictTagged', {
     "input_list": list[str],
     "single_extension": bool,
 })
+ImglobParamsDict = _ImglobParamsDictNoTag | ImglobParamsDictTagged
 
 
 class ImglobOutputs(typing.NamedTuple):

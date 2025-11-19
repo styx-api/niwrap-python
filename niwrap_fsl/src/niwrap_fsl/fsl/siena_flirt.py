@@ -13,8 +13,7 @@ SIENA_FLIRT_METADATA = Metadata(
 )
 
 
-SienaFlirtParamsDict = typing.TypedDict('SienaFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/siena_flirt"]],
+_SienaFlirtParamsDictNoTag = typing.TypedDict('_SienaFlirtParamsDictNoTag', {
     "input1_fileroot": str,
     "input2_fileroot": str,
 })
@@ -23,6 +22,7 @@ SienaFlirtParamsDictTagged = typing.TypedDict('SienaFlirtParamsDictTagged', {
     "input1_fileroot": str,
     "input2_fileroot": str,
 })
+SienaFlirtParamsDict = _SienaFlirtParamsDictNoTag | SienaFlirtParamsDictTagged
 
 
 class SienaFlirtOutputs(typing.NamedTuple):

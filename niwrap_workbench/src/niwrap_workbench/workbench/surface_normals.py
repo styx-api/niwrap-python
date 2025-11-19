@@ -12,8 +12,7 @@ SURFACE_NORMALS_METADATA = Metadata(
 )
 
 
-SurfaceNormalsParamsDict = typing.TypedDict('SurfaceNormalsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-normals"]],
+_SurfaceNormalsParamsDictNoTag = typing.TypedDict('_SurfaceNormalsParamsDictNoTag', {
     "metric-out": str,
     "surface": InputPathType,
 })
@@ -22,6 +21,7 @@ SurfaceNormalsParamsDictTagged = typing.TypedDict('SurfaceNormalsParamsDictTagge
     "metric-out": str,
     "surface": InputPathType,
 })
+SurfaceNormalsParamsDict = _SurfaceNormalsParamsDictNoTag | SurfaceNormalsParamsDictTagged
 
 
 class SurfaceNormalsOutputs(typing.NamedTuple):

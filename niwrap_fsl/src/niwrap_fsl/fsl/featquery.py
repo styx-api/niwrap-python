@@ -13,8 +13,7 @@ FEATQUERY_METADATA = Metadata(
 )
 
 
-FeatqueryParamsDict = typing.TypedDict('FeatqueryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/featquery"]],
+_FeatqueryParamsDictNoTag = typing.TypedDict('_FeatqueryParamsDictNoTag', {
     "n_featdirs": float,
     "featdirs": list[str],
     "n_stats": float,
@@ -47,6 +46,7 @@ FeatqueryParamsDictTagged = typing.TypedDict('FeatqueryParamsDictTagged', {
     "mask_file": InputPathType,
     "coords": typing.NotRequired[list[float] | None],
 })
+FeatqueryParamsDict = _FeatqueryParamsDictNoTag | FeatqueryParamsDictTagged
 
 
 class FeatqueryOutputs(typing.NamedTuple):

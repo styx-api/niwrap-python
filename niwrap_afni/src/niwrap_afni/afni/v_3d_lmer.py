@@ -13,8 +13,7 @@ V_3D_LMER_METADATA = Metadata(
 )
 
 
-V3dLmerParamsDict = typing.TypedDict('V3dLmerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLMEr"]],
+_V3dLmerParamsDictNoTag = typing.TypedDict('_V3dLmerParamsDictNoTag', {
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
     "cio": bool,
@@ -63,6 +62,7 @@ V3dLmerParamsDictTagged = typing.TypedDict('V3dLmerParamsDictTagged', {
     "vvar_centers": typing.NotRequired[str | None],
     "vvars": typing.NotRequired[str | None],
 })
+V3dLmerParamsDict = _V3dLmerParamsDictNoTag | V3dLmerParamsDictTagged
 
 
 class V3dLmerOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ROI2DATASET_METADATA = Metadata(
 )
 
 
-Roi2datasetParamsDict = typing.TypedDict('Roi2datasetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ROI2dataset"]],
+_Roi2datasetParamsDictNoTag = typing.TypedDict('_Roi2datasetParamsDictNoTag', {
     "prefix": str,
     "input_rois": list[InputPathType],
     "keep_separate": bool,
@@ -41,6 +40,7 @@ Roi2datasetParamsDictTagged = typing.TypedDict('Roi2datasetParamsDictTagged', {
     "pad_to_node": typing.NotRequired[float | None],
     "pad_label": typing.NotRequired[float | None],
 })
+Roi2datasetParamsDict = _Roi2datasetParamsDictNoTag | Roi2datasetParamsDictTagged
 
 
 class Roi2datasetOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ MRIS2RGB_METADATA = Metadata(
 )
 
 
-Mris2rgbParamsDict = typing.TypedDict('Mris2rgbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris2rgb"]],
+_Mris2rgbParamsDictNoTag = typing.TypedDict('_Mris2rgbParamsDictNoTag', {
     "library_path": str,
 })
 Mris2rgbParamsDictTagged = typing.TypedDict('Mris2rgbParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris2rgb"],
     "library_path": str,
 })
+Mris2rgbParamsDict = _Mris2rgbParamsDictNoTag | Mris2rgbParamsDictTagged
 
 
 class Mris2rgbOutputs(typing.NamedTuple):

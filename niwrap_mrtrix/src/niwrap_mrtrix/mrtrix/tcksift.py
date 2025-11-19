@@ -13,8 +13,7 @@ TCKSIFT_METADATA = Metadata(
 )
 
 
-TcksiftConfigParamsDict = typing.TypedDict('TcksiftConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TcksiftConfigParamsDictNoTag = typing.TypedDict('_TcksiftConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TcksiftConfigParamsDictTagged = typing.TypedDict('TcksiftConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+TcksiftConfigParamsDict = _TcksiftConfigParamsDictNoTag | TcksiftConfigParamsDictTagged
 
 
-TcksiftParamsDict = typing.TypedDict('TcksiftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksift"]],
+_TcksiftParamsDictNoTag = typing.TypedDict('_TcksiftParamsDictNoTag', {
     "nofilter": bool,
     "output_at_counts": typing.NotRequired[list[int] | None],
     "proc_mask": typing.NotRequired[InputPathType | None],
@@ -85,6 +84,7 @@ TcksiftParamsDictTagged = typing.TypedDict('TcksiftParamsDictTagged', {
     "in_fod": InputPathType,
     "out_tracks": str,
 })
+TcksiftParamsDict = _TcksiftParamsDictNoTag | TcksiftParamsDictTagged
 
 
 def tcksift_config(

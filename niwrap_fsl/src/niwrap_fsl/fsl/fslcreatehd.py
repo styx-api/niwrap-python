@@ -13,8 +13,7 @@ FSLCREATEHD_METADATA = Metadata(
 )
 
 
-FslcreatehdParamsDict = typing.TypedDict('FslcreatehdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslcreatehd"]],
+_FslcreatehdParamsDictNoTag = typing.TypedDict('_FslcreatehdParamsDictNoTag', {
     "xsize": float,
     "ysize": float,
     "zsize": float,
@@ -47,6 +46,7 @@ FslcreatehdParamsDictTagged = typing.TypedDict('FslcreatehdParamsDictTagged', {
     "headername": str,
     "nifti_xml_file": typing.NotRequired[InputPathType | None],
 })
+FslcreatehdParamsDict = _FslcreatehdParamsDictNoTag | FslcreatehdParamsDictTagged
 
 
 class FslcreatehdOutputs(typing.NamedTuple):

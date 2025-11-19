@@ -13,8 +13,7 @@ V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
 )
 
 
-VDjunctModalSmoothingWithRepParamsDict = typing.TypedDict('VDjunctModalSmoothingWithRepParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_modal_smoothing_with_rep"]],
+_VDjunctModalSmoothingWithRepParamsDictNoTag = typing.TypedDict('_VDjunctModalSmoothingWithRepParamsDictNoTag', {
     "input_file": InputPathType,
     "output_prefix": str,
     "modesmooth": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ VDjunctModalSmoothingWithRepParamsDictTagged = typing.TypedDict('VDjunctModalSmo
     "overwrite": bool,
     "no_clean": bool,
 })
+VDjunctModalSmoothingWithRepParamsDict = _VDjunctModalSmoothingWithRepParamsDictNoTag | VDjunctModalSmoothingWithRepParamsDictTagged
 
 
 class VDjunctModalSmoothingWithRepOutputs(typing.NamedTuple):

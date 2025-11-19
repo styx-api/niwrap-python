@@ -13,14 +13,14 @@ MORPH_SUBJECT_METADATA = Metadata(
 )
 
 
-MorphSubjectParamsDict = typing.TypedDict('MorphSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_subject"]],
+_MorphSubjectParamsDictNoTag = typing.TypedDict('_MorphSubjectParamsDictNoTag', {
     "subjid": str,
 })
 MorphSubjectParamsDictTagged = typing.TypedDict('MorphSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_subject"],
     "subjid": str,
 })
+MorphSubjectParamsDict = _MorphSubjectParamsDictNoTag | MorphSubjectParamsDictTagged
 
 
 class MorphSubjectOutputs(typing.NamedTuple):

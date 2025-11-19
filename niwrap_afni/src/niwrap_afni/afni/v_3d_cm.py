@@ -13,8 +13,7 @@ V_3D_CM_METADATA = Metadata(
 )
 
 
-V3dCmParamsDict = typing.TypedDict('V3dCmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dCM"]],
+_V3dCmParamsDictNoTag = typing.TypedDict('_V3dCmParamsDictNoTag', {
     "dset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -37,6 +36,7 @@ V3dCmParamsDictTagged = typing.TypedDict('V3dCmParamsDictTagged', {
     "icent": bool,
     "dcent": bool,
 })
+V3dCmParamsDict = _V3dCmParamsDictNoTag | V3dCmParamsDictTagged
 
 
 class V3dCmOutputs(typing.NamedTuple):

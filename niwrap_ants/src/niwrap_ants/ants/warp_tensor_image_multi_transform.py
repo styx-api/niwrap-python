@@ -13,8 +13,7 @@ WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 )
 
 
-WarpTensorImageMultiTransformParamsDict = typing.TypedDict('WarpTensorImageMultiTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/WarpTensorImageMultiTransform"]],
+_WarpTensorImageMultiTransformParamsDictNoTag = typing.TypedDict('_WarpTensorImageMultiTransformParamsDictNoTag', {
     "image_dimension": int,
     "moving_image": InputPathType,
     "output_image": str,
@@ -39,6 +38,7 @@ WarpTensorImageMultiTransformParamsDictTagged = typing.TypedDict('WarpTensorImag
     "ants_prefix": typing.NotRequired[str | None],
     "ants_prefix_invert": typing.NotRequired[str | None],
 })
+WarpTensorImageMultiTransformParamsDict = _WarpTensorImageMultiTransformParamsDictNoTag | WarpTensorImageMultiTransformParamsDictTagged
 
 
 class WarpTensorImageMultiTransformOutputs(typing.NamedTuple):

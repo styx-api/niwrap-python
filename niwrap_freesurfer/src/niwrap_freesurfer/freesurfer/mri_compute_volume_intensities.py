@@ -13,8 +13,7 @@ MRI_COMPUTE_VOLUME_INTENSITIES_METADATA = Metadata(
 )
 
 
-MriComputeVolumeIntensitiesParamsDict = typing.TypedDict('MriComputeVolumeIntensitiesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_volume_intensities"]],
+_MriComputeVolumeIntensitiesParamsDictNoTag = typing.TypedDict('_MriComputeVolumeIntensitiesParamsDictNoTag', {
     "input_intensity": InputPathType,
     "volume_fraction_stem": str,
     "output_volume": str,
@@ -25,6 +24,7 @@ MriComputeVolumeIntensitiesParamsDictTagged = typing.TypedDict('MriComputeVolume
     "volume_fraction_stem": str,
     "output_volume": str,
 })
+MriComputeVolumeIntensitiesParamsDict = _MriComputeVolumeIntensitiesParamsDictNoTag | MriComputeVolumeIntensitiesParamsDictTagged
 
 
 class MriComputeVolumeIntensitiesOutputs(typing.NamedTuple):

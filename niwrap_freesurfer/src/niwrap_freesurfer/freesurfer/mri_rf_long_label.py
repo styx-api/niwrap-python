@@ -13,14 +13,14 @@ MRI_RF_LONG_LABEL_METADATA = Metadata(
 )
 
 
-MriRfLongLabelParamsDict = typing.TypedDict('MriRfLongLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_long_label"]],
+_MriRfLongLabelParamsDictNoTag = typing.TypedDict('_MriRfLongLabelParamsDictNoTag', {
     "help_flag": typing.NotRequired[str | None],
 })
 MriRfLongLabelParamsDictTagged = typing.TypedDict('MriRfLongLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_rf_long_label"],
     "help_flag": typing.NotRequired[str | None],
 })
+MriRfLongLabelParamsDict = _MriRfLongLabelParamsDictNoTag | MriRfLongLabelParamsDictTagged
 
 
 class MriRfLongLabelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_1D_BPORT_METADATA = Metadata(
 )
 
 
-V1dBportParamsDict = typing.TypedDict('V1dBportParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dBport"]],
+_V1dBportParamsDictNoTag = typing.TypedDict('_V1dBportParamsDictNoTag', {
     "band": list[float],
     "invert": bool,
     "nozero": bool,
@@ -39,6 +38,7 @@ V1dBportParamsDictTagged = typing.TypedDict('V1dBportParamsDictTagged', {
     "tr": typing.NotRequired[float | None],
     "concat": typing.NotRequired[InputPathType | None],
 })
+V1dBportParamsDict = _V1dBportParamsDictNoTag | V1dBportParamsDictTagged
 
 
 class V1dBportOutputs(typing.NamedTuple):

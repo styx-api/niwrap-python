@@ -13,8 +13,7 @@ V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
 )
 
 
-VExamineGenFeatDistsParamsDict = typing.TypedDict('VExamineGenFeatDistsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ExamineGenFeatDists"]],
+_VExamineGenFeatDistsParamsDictNoTag = typing.TypedDict('_VExamineGenFeatDistsParamsDictNoTag', {
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
     "output_suffix": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ VExamineGenFeatDistsParamsDictTagged = typing.TypedDict('VExamineGenFeatDistsPar
     "echo": bool,
     "help": bool,
 })
+VExamineGenFeatDistsParamsDict = _VExamineGenFeatDistsParamsDictNoTag | VExamineGenFeatDistsParamsDictTagged
 
 
 class VExamineGenFeatDistsOutputs(typing.NamedTuple):

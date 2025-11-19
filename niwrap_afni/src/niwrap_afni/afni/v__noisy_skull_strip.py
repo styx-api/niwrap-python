@@ -13,8 +13,7 @@ V__NOISY_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-VNoisySkullStripParamsDict = typing.TypedDict('VNoisySkullStripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@NoisySkullStrip"]],
+_VNoisySkullStripParamsDictNoTag = typing.TypedDict('_VNoisySkullStripParamsDictNoTag', {
     "input_file": InputPathType,
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ VNoisySkullStripParamsDictTagged = typing.TypedDict('VNoisySkullStripParamsDictT
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],
 })
+VNoisySkullStripParamsDict = _VNoisySkullStripParamsDictNoTag | VNoisySkullStripParamsDictTagged
 
 
 class VNoisySkullStripOutputs(typing.NamedTuple):

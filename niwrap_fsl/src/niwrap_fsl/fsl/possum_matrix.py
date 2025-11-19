@@ -13,8 +13,7 @@ POSSUM_MATRIX_METADATA = Metadata(
 )
 
 
-PossumMatrixParamsDict = typing.TypedDict('PossumMatrixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/possum_matrix"]],
+_PossumMatrixParamsDictNoTag = typing.TypedDict('_PossumMatrixParamsDictNoTag', {
     "pulse_sequence": str,
     "motion_matrix": str,
     "output_matrix": str,
@@ -33,6 +32,7 @@ PossumMatrixParamsDictTagged = typing.TypedDict('PossumMatrixParamsDictTagged', 
     "old_version_flag": bool,
     "segment_size": typing.NotRequired[float | None],
 })
+PossumMatrixParamsDict = _PossumMatrixParamsDictNoTag | PossumMatrixParamsDictTagged
 
 
 class PossumMatrixOutputs(typing.NamedTuple):

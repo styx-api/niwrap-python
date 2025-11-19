@@ -13,8 +13,7 @@ V_3D_SHARPEN_METADATA = Metadata(
 )
 
 
-V3dSharpenParamsDict = typing.TypedDict('V3dSharpenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSharpen"]],
+_V3dSharpenParamsDictNoTag = typing.TypedDict('_V3dSharpenParamsDictNoTag', {
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
     "output_prefix": str,
@@ -25,6 +24,7 @@ V3dSharpenParamsDictTagged = typing.TypedDict('V3dSharpenParamsDictTagged', {
     "input_dataset": InputPathType,
     "output_prefix": str,
 })
+V3dSharpenParamsDict = _V3dSharpenParamsDictNoTag | V3dSharpenParamsDictTagged
 
 
 class V3dSharpenOutputs(typing.NamedTuple):

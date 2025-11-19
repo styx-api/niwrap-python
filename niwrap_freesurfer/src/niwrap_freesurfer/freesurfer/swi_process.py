@@ -13,8 +13,7 @@ SWI_PROCESS_METADATA = Metadata(
 )
 
 
-SwiProcessParamsDict = typing.TypedDict('SwiProcessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/swi_process"]],
+_SwiProcessParamsDictNoTag = typing.TypedDict('_SwiProcessParamsDictNoTag', {
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
     "swi_output": str,
@@ -41,6 +40,7 @@ SwiProcessParamsDictTagged = typing.TypedDict('SwiProcessParamsDictTagged', {
     "mip_level": typing.NotRequired[float | None],
     "phase_mask_method": typing.NotRequired[str | None],
 })
+SwiProcessParamsDict = _SwiProcessParamsDictNoTag | SwiProcessParamsDictTagged
 
 
 class SwiProcessOutputs(typing.NamedTuple):

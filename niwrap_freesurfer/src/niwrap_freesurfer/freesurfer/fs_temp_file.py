@@ -13,8 +13,7 @@ FS_TEMP_FILE_METADATA = Metadata(
 )
 
 
-FsTempFileParamsDict = typing.TypedDict('FsTempFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_temp_file"]],
+_FsTempFileParamsDictNoTag = typing.TypedDict('_FsTempFileParamsDictNoTag', {
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ FsTempFileParamsDictTagged = typing.TypedDict('FsTempFileParamsDictTagged', {
     "help": bool,
     "help_alt": bool,
 })
+FsTempFileParamsDict = _FsTempFileParamsDictNoTag | FsTempFileParamsDictTagged
 
 
 class FsTempFileOutputs(typing.NamedTuple):

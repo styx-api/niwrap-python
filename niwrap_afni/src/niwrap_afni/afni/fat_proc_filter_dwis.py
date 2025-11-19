@@ -13,8 +13,7 @@ FAT_PROC_FILTER_DWIS_METADATA = Metadata(
 )
 
 
-FatProcFilterDwisParamsDict = typing.TypedDict('FatProcFilterDwisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_filter_dwis"]],
+_FatProcFilterDwisParamsDictNoTag = typing.TypedDict('_FatProcFilterDwisParamsDictNoTag', {
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
     "select_string": str,
@@ -41,6 +40,7 @@ FatProcFilterDwisParamsDictTagged = typing.TypedDict('FatProcFilterDwisParamsDic
     "no_cmd_out": bool,
     "do_movie": typing.NotRequired[typing.Literal["AGIF", "MPEG"] | None],
 })
+FatProcFilterDwisParamsDict = _FatProcFilterDwisParamsDictNoTag | FatProcFilterDwisParamsDictTagged
 
 
 class FatProcFilterDwisOutputs(typing.NamedTuple):

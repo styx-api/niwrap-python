@@ -13,8 +13,7 @@ V_2DCAT_METADATA = Metadata(
 )
 
 
-V2dcatParamsDict = typing.TypedDict('V2dcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/2dcat"]],
+_V2dcatParamsDictNoTag = typing.TypedDict('_V2dcatParamsDictNoTag', {
     "filenames": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],
@@ -69,6 +68,7 @@ V2dcatParamsDictTagged = typing.TypedDict('V2dcatParamsDictTagged', {
     "gap": typing.NotRequired[float | None],
     "gap_col": typing.NotRequired[list[float] | None],
 })
+V2dcatParamsDict = _V2dcatParamsDictNoTag | V2dcatParamsDictTagged
 
 
 class V2dcatOutputs(typing.NamedTuple):

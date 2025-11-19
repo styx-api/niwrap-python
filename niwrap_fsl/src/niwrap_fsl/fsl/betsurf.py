@@ -13,8 +13,7 @@ BETSURF_METADATA = Metadata(
 )
 
 
-BetsurfParamsDict = typing.TypedDict('BetsurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/betsurf"]],
+_BetsurfParamsDictNoTag = typing.TypedDict('_BetsurfParamsDictNoTag', {
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
     "bet_mesh": InputPathType,
@@ -43,6 +42,7 @@ BetsurfParamsDictTagged = typing.TypedDict('BetsurfParamsDictTagged', {
     "skull_mask_flag": bool,
     "increased_precision": typing.NotRequired[int | None],
 })
+BetsurfParamsDict = _BetsurfParamsDictNoTag | BetsurfParamsDictTagged
 
 
 class BetsurfOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_RESCALE_METADATA = Metadata(
 )
 
 
-MrisRescaleParamsDict = typing.TypedDict('MrisRescaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rescale"]],
+_MrisRescaleParamsDictNoTag = typing.TypedDict('_MrisRescaleParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -23,6 +22,7 @@ MrisRescaleParamsDictTagged = typing.TypedDict('MrisRescaleParamsDictTagged', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
+MrisRescaleParamsDict = _MrisRescaleParamsDictNoTag | MrisRescaleParamsDictTagged
 
 
 class MrisRescaleOutputs(typing.NamedTuple):

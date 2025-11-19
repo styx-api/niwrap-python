@@ -13,8 +13,7 @@ RCA_FIX_ENTO_METADATA = Metadata(
 )
 
 
-RcaFixEntoParamsDict = typing.TypedDict('RcaFixEntoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-fix-ento"]],
+_RcaFixEntoParamsDictNoTag = typing.TypedDict('_RcaFixEntoParamsDictNoTag', {
     "subject": str,
     "threads": typing.NotRequired[float | None],
     "submit": bool,
@@ -29,6 +28,7 @@ RcaFixEntoParamsDictTagged = typing.TypedDict('RcaFixEntoParamsDictTagged', {
     "account": typing.NotRequired[str | None],
     "brain_mask": bool,
 })
+RcaFixEntoParamsDict = _RcaFixEntoParamsDictNoTag | RcaFixEntoParamsDictTagged
 
 
 class RcaFixEntoOutputs(typing.NamedTuple):

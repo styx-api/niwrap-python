@@ -13,8 +13,7 @@ FILE_TOOL_METADATA = Metadata(
 )
 
 
-FileToolParamsDict = typing.TypedDict('FileToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/file_tool"]],
+_FileToolParamsDictNoTag = typing.TypedDict('_FileToolParamsDictNoTag', {
     "help": bool,
     "version": bool,
     "hist": bool,
@@ -103,6 +102,7 @@ FileToolParamsDictTagged = typing.TypedDict('FileToolParamsDictTagged', {
     "disp_real4": bool,
     "swap_bytes": bool,
 })
+FileToolParamsDict = _FileToolParamsDictNoTag | FileToolParamsDictTagged
 
 
 class FileToolOutputs(typing.NamedTuple):

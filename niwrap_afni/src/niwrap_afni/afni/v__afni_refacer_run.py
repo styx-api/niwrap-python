@@ -13,8 +13,7 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 )
 
 
-VAfniRefacerRunParamsDict = typing.TypedDict('VAfniRefacerRunParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_run"]],
+_VAfniRefacerRunParamsDictNoTag = typing.TypedDict('_VAfniRefacerRunParamsDictNoTag', {
     "input_file": InputPathType,
     "mode_deface": bool,
     "mode_reface": bool,
@@ -45,6 +44,7 @@ VAfniRefacerRunParamsDictTagged = typing.TypedDict('VAfniRefacerRunParamsDictTag
     "overwrite": bool,
     "verbose": bool,
 })
+VAfniRefacerRunParamsDict = _VAfniRefacerRunParamsDictNoTag | VAfniRefacerRunParamsDictTagged
 
 
 class VAfniRefacerRunOutputs(typing.NamedTuple):

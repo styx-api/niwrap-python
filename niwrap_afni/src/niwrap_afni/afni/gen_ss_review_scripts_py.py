@@ -13,8 +13,7 @@ GEN_SS_REVIEW_SCRIPTS_PY_METADATA = Metadata(
 )
 
 
-GenSsReviewScriptsPyParamsDict = typing.TypedDict('GenSsReviewScriptsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_scripts.py"]],
+_GenSsReviewScriptsPyParamsDictNoTag = typing.TypedDict('_GenSsReviewScriptsPyParamsDictNoTag', {
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
     "num_stim": typing.NotRequired[float | None],
@@ -57,6 +56,7 @@ GenSsReviewScriptsPyParamsDictTagged = typing.TypedDict('GenSsReviewScriptsPyPar
     "uvars_json": typing.NotRequired[InputPathType | None],
     "init_uvars_json": typing.NotRequired[InputPathType | None],
 })
+GenSsReviewScriptsPyParamsDict = _GenSsReviewScriptsPyParamsDictNoTag | GenSsReviewScriptsPyParamsDictTagged
 
 
 class GenSsReviewScriptsPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__GRAD_FLIP_TEST_METADATA = Metadata(
 )
 
 
-VGradFlipTestParamsDict = typing.TypedDict('VGradFlipTestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GradFlipTest"]],
+_VGradFlipTestParamsDictNoTag = typing.TypedDict('_VGradFlipTestParamsDictNoTag', {
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
     "grad_col_vec": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ VGradFlipTestParamsDictTagged = typing.TypedDict('VGradFlipTestParamsDictTagged'
     "wdir": typing.NotRequired[str | None],
     "do_clean": bool,
 })
+VGradFlipTestParamsDict = _VGradFlipTestParamsDictNoTag | VGradFlipTestParamsDictTagged
 
 
 class VGradFlipTestOutputs(typing.NamedTuple):

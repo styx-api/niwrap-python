@@ -13,8 +13,7 @@ MRIS_COMPUTE_LAYER_INTENSITIES_METADATA = Metadata(
 )
 
 
-MrisComputeLayerIntensitiesParamsDict = typing.TypedDict('MrisComputeLayerIntensitiesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_layer_intensities"]],
+_MrisComputeLayerIntensitiesParamsDictNoTag = typing.TypedDict('_MrisComputeLayerIntensitiesParamsDictNoTag', {
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
     "input_surface": InputPathType,
@@ -27,6 +26,7 @@ MrisComputeLayerIntensitiesParamsDictTagged = typing.TypedDict('MrisComputeLayer
     "input_surface": InputPathType,
     "output_overlay": str,
 })
+MrisComputeLayerIntensitiesParamsDict = _MrisComputeLayerIntensitiesParamsDictNoTag | MrisComputeLayerIntensitiesParamsDictTagged
 
 
 class MrisComputeLayerIntensitiesOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_RETINO_MAP_METADATA = Metadata(
 )
 
 
-SurfRetinoMapParamsDict = typing.TypedDict('SurfRetinoMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfRetinoMap"]],
+_SurfRetinoMapParamsDictNoTag = typing.TypedDict('_SurfRetinoMapParamsDictNoTag', {
     "surface": str,
     "polar": str,
     "eccentricity": str,
@@ -29,6 +28,7 @@ SurfRetinoMapParamsDictTagged = typing.TypedDict('SurfRetinoMapParamsDictTagged'
     "prefix": typing.NotRequired[str | None],
     "node_debug": typing.NotRequired[float | None],
 })
+SurfRetinoMapParamsDict = _SurfRetinoMapParamsDictNoTag | SurfRetinoMapParamsDictTagged
 
 
 class SurfRetinoMapOutputs(typing.NamedTuple):

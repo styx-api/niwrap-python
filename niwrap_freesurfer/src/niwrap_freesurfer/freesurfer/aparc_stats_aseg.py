@@ -13,8 +13,7 @@ APARC_STATS_ASEG_METADATA = Metadata(
 )
 
 
-AparcStatsAsegParamsDict = typing.TypedDict('AparcStatsAsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/aparc_stats_aseg"]],
+_AparcStatsAsegParamsDictNoTag = typing.TypedDict('_AparcStatsAsegParamsDictNoTag', {
     "subject_name": str,
     "gcs_name": str,
     "subject_dir": typing.NotRequired[str | None],
@@ -63,6 +62,7 @@ AparcStatsAsegParamsDictTagged = typing.TypedDict('AparcStatsAsegParamsDictTagge
     "expert_clean_flag": bool,
     "expert_overwrite_flag": bool,
 })
+AparcStatsAsegParamsDict = _AparcStatsAsegParamsDictNoTag | AparcStatsAsegParamsDictTagged
 
 
 class AparcStatsAsegOutputs(typing.NamedTuple):

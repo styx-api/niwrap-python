@@ -13,14 +13,14 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 )
 
 
-MrisAddTemplateParamsDict = typing.TypedDict('MrisAddTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_add_template"]],
+_MrisAddTemplateParamsDictNoTag = typing.TypedDict('_MrisAddTemplateParamsDictNoTag', {
     "placeholder_input": typing.NotRequired[str | None],
 })
 MrisAddTemplateParamsDictTagged = typing.TypedDict('MrisAddTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_add_template"],
     "placeholder_input": typing.NotRequired[str | None],
 })
+MrisAddTemplateParamsDict = _MrisAddTemplateParamsDictNoTag | MrisAddTemplateParamsDictTagged
 
 
 class MrisAddTemplateOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ CP_DICOM_METADATA = Metadata(
 )
 
 
-CpDicomParamsDict = typing.TypedDict('CpDicomParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/cp-dicom"]],
+_CpDicomParamsDictNoTag = typing.TypedDict('_CpDicomParamsDictNoTag', {
     "dicom_dir": str,
     "output_dir": str,
     "debug": bool,
@@ -25,6 +24,7 @@ CpDicomParamsDictTagged = typing.TypedDict('CpDicomParamsDictTagged', {
     "output_dir": str,
     "debug": bool,
 })
+CpDicomParamsDict = _CpDicomParamsDictNoTag | CpDicomParamsDictTagged
 
 
 class CpDicomOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DMRI_VOX2VOX_METADATA = Metadata(
 )
 
 
-DmriVox2voxParamsDict = typing.TypedDict('DmriVox2voxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_vox2vox"]],
+_DmriVox2voxParamsDictNoTag = typing.TypedDict('_DmriVox2voxParamsDictNoTag', {
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_files": list[str],
@@ -45,6 +44,7 @@ DmriVox2voxParamsDictTagged = typing.TypedDict('DmriVox2voxParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+DmriVox2voxParamsDict = _DmriVox2voxParamsDictNoTag | DmriVox2voxParamsDictTagged
 
 
 class DmriVox2voxOutputs(typing.NamedTuple):

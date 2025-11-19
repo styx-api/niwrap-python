@@ -12,8 +12,7 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-CiftiEstimateFwhmSurfaceParamsDict = typing.TypedDict('CiftiEstimateFwhmSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface"]],
+_CiftiEstimateFwhmSurfaceParamsDictNoTag = typing.TypedDict('_CiftiEstimateFwhmSurfaceParamsDictNoTag', {
     "structure": str,
     "surface": InputPathType,
 })
@@ -22,10 +21,10 @@ CiftiEstimateFwhmSurfaceParamsDictTagged = typing.TypedDict('CiftiEstimateFwhmSu
     "structure": str,
     "surface": InputPathType,
 })
+CiftiEstimateFwhmSurfaceParamsDict = _CiftiEstimateFwhmSurfaceParamsDictNoTag | CiftiEstimateFwhmSurfaceParamsDictTagged
 
 
-CiftiEstimateFwhmParamsDict = typing.TypedDict('CiftiEstimateFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-estimate-fwhm"]],
+_CiftiEstimateFwhmParamsDictNoTag = typing.TypedDict('_CiftiEstimateFwhmParamsDictNoTag', {
     "merged-volume": bool,
     "column": typing.NotRequired[int | None],
     "demean": typing.NotRequired[bool | None],
@@ -40,6 +39,7 @@ CiftiEstimateFwhmParamsDictTagged = typing.TypedDict('CiftiEstimateFwhmParamsDic
     "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParamsDict] | None],
     "cifti": InputPathType,
 })
+CiftiEstimateFwhmParamsDict = _CiftiEstimateFwhmParamsDictNoTag | CiftiEstimateFwhmParamsDictTagged
 
 
 def cifti_estimate_fwhm_surface(

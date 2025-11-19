@@ -13,14 +13,14 @@ ADJUNCT_SIMPLIFY_COST_PY_METADATA = Metadata(
 )
 
 
-AdjunctSimplifyCostPyParamsDict = typing.TypedDict('AdjunctSimplifyCostPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_simplify_cost.py"]],
+_AdjunctSimplifyCostPyParamsDictNoTag = typing.TypedDict('_AdjunctSimplifyCostPyParamsDictNoTag', {
     "cost_function": str,
 })
 AdjunctSimplifyCostPyParamsDictTagged = typing.TypedDict('AdjunctSimplifyCostPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_simplify_cost.py"],
     "cost_function": str,
 })
+AdjunctSimplifyCostPyParamsDict = _AdjunctSimplifyCostPyParamsDictNoTag | AdjunctSimplifyCostPyParamsDictTagged
 
 
 class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):

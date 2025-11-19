@@ -13,8 +13,7 @@ DIRSPLIT_METADATA = Metadata(
 )
 
 
-DirsplitConfigParamsDict = typing.TypedDict('DirsplitConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirsplitConfigParamsDictNoTag = typing.TypedDict('_DirsplitConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DirsplitConfigParamsDictTagged = typing.TypedDict('DirsplitConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+DirsplitConfigParamsDict = _DirsplitConfigParamsDictNoTag | DirsplitConfigParamsDictTagged
 
 
-DirsplitParamsDict = typing.TypedDict('DirsplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirsplit"]],
+_DirsplitParamsDictNoTag = typing.TypedDict('_DirsplitParamsDictNoTag', {
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,
@@ -55,6 +54,7 @@ DirsplitParamsDictTagged = typing.TypedDict('DirsplitParamsDictTagged', {
     "dirs": InputPathType,
     "out": str,
 })
+DirsplitParamsDict = _DirsplitParamsDictNoTag | DirsplitParamsDictTagged
 
 
 def dirsplit_config(

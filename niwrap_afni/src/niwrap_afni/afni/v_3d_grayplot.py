@@ -13,8 +13,7 @@ V_3D_GRAYPLOT_METADATA = Metadata(
 )
 
 
-V3dGrayplotParamsDict = typing.TypedDict('V3dGrayplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dGrayplot"]],
+_V3dGrayplotParamsDictNoTag = typing.TypedDict('_V3dGrayplotParamsDictNoTag', {
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ V3dGrayplotParamsDictTagged = typing.TypedDict('V3dGrayplotParamsDictTagged', {
     "percent": bool,
     "raw_with_bounds": typing.NotRequired[list[float] | None],
 })
+V3dGrayplotParamsDict = _V3dGrayplotParamsDictNoTag | V3dGrayplotParamsDictTagged
 
 
 class V3dGrayplotOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_TWOTO_COMPLEX_METADATA = Metadata(
 )
 
 
-V3dTwotoComplexParamsDict = typing.TypedDict('V3dTwotoComplexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTwotoComplex"]],
+_V3dTwotoComplexParamsDictNoTag = typing.TypedDict('_V3dTwotoComplexParamsDictNoTag', {
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ V3dTwotoComplexParamsDictTagged = typing.TypedDict('V3dTwotoComplexParamsDictTag
     "mp": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
+V3dTwotoComplexParamsDict = _V3dTwotoComplexParamsDictNoTag | V3dTwotoComplexParamsDictTagged
 
 
 class V3dTwotoComplexOutputs(typing.NamedTuple):

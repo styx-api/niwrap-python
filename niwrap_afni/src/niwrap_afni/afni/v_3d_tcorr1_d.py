@@ -13,8 +13,7 @@ V_3D_TCORR1_D_METADATA = Metadata(
 )
 
 
-V3dTcorr1DParamsDict = typing.TypedDict('V3dTcorr1DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTcorr1D"]],
+_V3dTcorr1DParamsDictNoTag = typing.TypedDict('_V3dTcorr1DParamsDictNoTag', {
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -35,6 +34,7 @@ V3dTcorr1DParamsDictTagged = typing.TypedDict('V3dTcorr1DParamsDictTagged', {
     "xset": InputPathType,
     "y_1d": InputPathType,
 })
+V3dTcorr1DParamsDict = _V3dTcorr1DParamsDictNoTag | V3dTcorr1DParamsDictTagged
 
 
 class V3dTcorr1DOutputs(typing.NamedTuple):

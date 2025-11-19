@@ -13,8 +13,7 @@ V_3D_AUTOBOX_METADATA = Metadata(
 )
 
 
-V3dAutoboxParamsDict = typing.TypedDict('V3dAutoboxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAutobox"]],
+_V3dAutoboxParamsDictNoTag = typing.TypedDict('_V3dAutoboxParamsDictNoTag', {
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "alt_input": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ V3dAutoboxParamsDictTagged = typing.TypedDict('V3dAutoboxParamsDictTagged', {
     "npad": typing.NotRequired[float | None],
     "npad_safety_on": bool,
 })
+V3dAutoboxParamsDict = _V3dAutoboxParamsDictNoTag | V3dAutoboxParamsDictTagged
 
 
 class V3dAutoboxOutputs(typing.NamedTuple):

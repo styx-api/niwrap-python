@@ -12,8 +12,7 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 )
 
 
-SurfaceCreateSphereParamsDict = typing.TypedDict('SurfaceCreateSphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-create-sphere"]],
+_SurfaceCreateSphereParamsDictNoTag = typing.TypedDict('_SurfaceCreateSphereParamsDictNoTag', {
     "sphere-out": str,
     "num-vertices": int,
 })
@@ -22,6 +21,7 @@ SurfaceCreateSphereParamsDictTagged = typing.TypedDict('SurfaceCreateSphereParam
     "sphere-out": str,
     "num-vertices": int,
 })
+SurfaceCreateSphereParamsDict = _SurfaceCreateSphereParamsDictNoTag | SurfaceCreateSphereParamsDictTagged
 
 
 class SurfaceCreateSphereOutputs(typing.NamedTuple):

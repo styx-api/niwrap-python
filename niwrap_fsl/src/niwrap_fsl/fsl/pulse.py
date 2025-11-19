@@ -13,8 +13,7 @@ PULSE_METADATA = Metadata(
 )
 
 
-PulseParamsDict = typing.TypedDict('PulseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pulse"]],
+_PulseParamsDictNoTag = typing.TypedDict('_PulseParamsDictNoTag', {
     "input_file": InputPathType,
     "output_base": str,
     "seq": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ PulseParamsDictTagged = typing.TypedDict('PulseParamsDictTagged', {
     "kcoord_flag": bool,
     "cover": typing.NotRequired[float | None],
 })
+PulseParamsDict = _PulseParamsDictNoTag | PulseParamsDictTagged
 
 
 class PulseOutputs(typing.NamedTuple):

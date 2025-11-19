@@ -13,8 +13,7 @@ BAYCEST_METADATA = Metadata(
 )
 
 
-BaycestParamsDict = typing.TypedDict('BaycestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/baycest"]],
+_BaycestParamsDictNoTag = typing.TypedDict('_BaycestParamsDictNoTag', {
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "output_dir": str,
@@ -35,6 +34,7 @@ BaycestParamsDictTagged = typing.TypedDict('BaycestParamsDictTagged', {
     "spatial_flag": bool,
     "t12prior_flag": bool,
 })
+BaycestParamsDict = _BaycestParamsDictNoTag | BaycestParamsDictTagged
 
 
 class BaycestOutputs(typing.NamedTuple):

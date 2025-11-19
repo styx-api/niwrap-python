@@ -12,8 +12,7 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 )
 
 
-FiberDotProductsParamsDict = typing.TypedDict('FiberDotProductsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/fiber-dot-products"]],
+_FiberDotProductsParamsDictNoTag = typing.TypedDict('_FiberDotProductsParamsDictNoTag', {
     "dot-metric": str,
     "f-metric": str,
     "white-surf": InputPathType,
@@ -30,6 +29,7 @@ FiberDotProductsParamsDictTagged = typing.TypedDict('FiberDotProductsParamsDictT
     "max-dist": float,
     "direction": str,
 })
+FiberDotProductsParamsDict = _FiberDotProductsParamsDictNoTag | FiberDotProductsParamsDictTagged
 
 
 class FiberDotProductsOutputs(typing.NamedTuple):

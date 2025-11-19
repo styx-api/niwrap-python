@@ -13,8 +13,7 @@ BIASFIELD_METADATA = Metadata(
 )
 
 
-BiasfieldParamsDict = typing.TypedDict('BiasfieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/biasfield"]],
+_BiasfieldParamsDictNoTag = typing.TypedDict('_BiasfieldParamsDictNoTag', {
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
     "no_cleanup": bool,
@@ -31,6 +30,7 @@ BiasfieldParamsDictTagged = typing.TypedDict('BiasfieldParamsDictTagged', {
     "debug": bool,
     "version": bool,
 })
+BiasfieldParamsDict = _BiasfieldParamsDictNoTag | BiasfieldParamsDictTagged
 
 
 class BiasfieldOutputs(typing.NamedTuple):

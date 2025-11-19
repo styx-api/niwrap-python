@@ -13,8 +13,7 @@ BUGR_METADATA = Metadata(
 )
 
 
-BugrParamsDict = typing.TypedDict('BugrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bugr"]],
+_BugrParamsDictNoTag = typing.TypedDict('_BugrParamsDictNoTag', {
     "subject_name": str,
     "command_line": str,
     "error_message": str,
@@ -27,6 +26,7 @@ BugrParamsDictTagged = typing.TypedDict('BugrParamsDictTagged', {
     "error_message": str,
     "log_file": typing.NotRequired[InputPathType | None],
 })
+BugrParamsDict = _BugrParamsDictNoTag | BugrParamsDictTagged
 
 
 class BugrOutputs(typing.NamedTuple):

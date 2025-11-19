@@ -13,8 +13,7 @@ MRI_RF_LABEL_METADATA = Metadata(
 )
 
 
-MriRfLabelParamsDict = typing.TypedDict('MriRfLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_label"]],
+_MriRfLabelParamsDictNoTag = typing.TypedDict('_MriRfLabelParamsDictNoTag', {
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
     "gcafile": InputPathType,
@@ -99,6 +98,7 @@ MriRfLabelParamsDictTagged = typing.TypedDict('MriRfLabelParamsDictTagged', {
     "longitudinal_lta": typing.NotRequired[InputPathType | None],
     "relabel_unlikely_flag": typing.NotRequired[list[float] | None],
 })
+MriRfLabelParamsDict = _MriRfLabelParamsDictNoTag | MriRfLabelParamsDictTagged
 
 
 class MriRfLabelOutputs(typing.NamedTuple):

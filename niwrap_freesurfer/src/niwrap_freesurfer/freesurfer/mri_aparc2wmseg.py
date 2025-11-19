@@ -13,8 +13,7 @@ MRI_APARC2WMSEG_METADATA = Metadata(
 )
 
 
-MriAparc2wmsegParamsDict = typing.TypedDict('MriAparc2wmsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2wmseg"]],
+_MriAparc2wmsegParamsDictNoTag = typing.TypedDict('_MriAparc2wmsegParamsDictNoTag', {
     "subject": str,
     "wmseg_file": str,
     "help": bool,
@@ -27,6 +26,7 @@ MriAparc2wmsegParamsDictTagged = typing.TypedDict('MriAparc2wmsegParamsDictTagge
     "help": bool,
     "version": bool,
 })
+MriAparc2wmsegParamsDict = _MriAparc2wmsegParamsDictNoTag | MriAparc2wmsegParamsDictTagged
 
 
 class MriAparc2wmsegOutputs(typing.NamedTuple):

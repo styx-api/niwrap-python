@@ -13,8 +13,7 @@ TRIDEC_METADATA = Metadata(
 )
 
 
-TridecParamsDict = typing.TypedDict('TridecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tridec"]],
+_TridecParamsDictNoTag = typing.TypedDict('_TridecParamsDictNoTag', {
     "subject_name": str,
     "fine_file": InputPathType,
     "ico_file": InputPathType,
@@ -27,6 +26,7 @@ TridecParamsDictTagged = typing.TypedDict('TridecParamsDictTagged', {
     "ico_file": InputPathType,
     "out_file": str,
 })
+TridecParamsDict = _TridecParamsDictNoTag | TridecParamsDictTagged
 
 
 class TridecOutputs(typing.NamedTuple):

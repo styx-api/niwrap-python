@@ -13,8 +13,7 @@ V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
 )
 
 
-VExtractMeicaOrtvecParamsDict = typing.TypedDict('VExtractMeicaOrtvecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@extract_meica_ortvec"]],
+_VExtractMeicaOrtvecParamsDictNoTag = typing.TypedDict('_VExtractMeicaOrtvecParamsDictNoTag', {
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
     "reject_ignored": typing.NotRequired[int | None],
@@ -31,6 +30,7 @@ VExtractMeicaOrtvecParamsDictTagged = typing.TypedDict('VExtractMeicaOrtvecParam
     "work_dir": typing.NotRequired[str | None],
     "verbosity": typing.NotRequired[str | None],
 })
+VExtractMeicaOrtvecParamsDict = _VExtractMeicaOrtvecParamsDictNoTag | VExtractMeicaOrtvecParamsDictTagged
 
 
 class VExtractMeicaOrtvecOutputs(typing.NamedTuple):

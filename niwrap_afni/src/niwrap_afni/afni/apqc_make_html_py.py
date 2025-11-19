@@ -13,14 +13,14 @@ APQC_MAKE_HTML_PY_METADATA = Metadata(
 )
 
 
-ApqcMakeHtmlPyParamsDict = typing.TypedDict('ApqcMakeHtmlPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/apqc_make_html.py"]],
+_ApqcMakeHtmlPyParamsDictNoTag = typing.TypedDict('_ApqcMakeHtmlPyParamsDictNoTag', {
     "qc_dir": str,
 })
 ApqcMakeHtmlPyParamsDictTagged = typing.TypedDict('ApqcMakeHtmlPyParamsDictTagged', {
     "@type": typing.Literal["afni/apqc_make_html.py"],
     "qc_dir": str,
 })
+ApqcMakeHtmlPyParamsDict = _ApqcMakeHtmlPyParamsDictNoTag | ApqcMakeHtmlPyParamsDictTagged
 
 
 class ApqcMakeHtmlPyOutputs(typing.NamedTuple):

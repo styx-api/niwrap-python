@@ -13,8 +13,7 @@ FDRVAL_METADATA = Metadata(
 )
 
 
-FdrvalParamsDict = typing.TypedDict('FdrvalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fdrval"]],
+_FdrvalParamsDictNoTag = typing.TypedDict('_FdrvalParamsDictNoTag', {
     "dset": InputPathType,
     "sub": float,
     "val_list": list[float],
@@ -35,6 +34,7 @@ FdrvalParamsDictTagged = typing.TypedDict('FdrvalParamsDictTagged', {
     "qinput": bool,
     "inverse": bool,
 })
+FdrvalParamsDict = _FdrvalParamsDictNoTag | FdrvalParamsDictTagged
 
 
 class FdrvalOutputs(typing.NamedTuple):

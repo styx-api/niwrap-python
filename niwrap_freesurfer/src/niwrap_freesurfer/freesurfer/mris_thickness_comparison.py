@@ -13,8 +13,7 @@ MRIS_THICKNESS_COMPARISON_METADATA = Metadata(
 )
 
 
-MrisThicknessComparisonParamsDict = typing.TypedDict('MrisThicknessComparisonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_comparison"]],
+_MrisThicknessComparisonParamsDictNoTag = typing.TypedDict('_MrisThicknessComparisonParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "thickness_file": InputPathType,
@@ -29,6 +28,7 @@ MrisThicknessComparisonParamsDictTagged = typing.TypedDict('MrisThicknessCompari
     "w_file": InputPathType,
     "labels": list[str],
 })
+MrisThicknessComparisonParamsDict = _MrisThicknessComparisonParamsDictNoTag | MrisThicknessComparisonParamsDictTagged
 
 
 class MrisThicknessComparisonOutputs(typing.NamedTuple):

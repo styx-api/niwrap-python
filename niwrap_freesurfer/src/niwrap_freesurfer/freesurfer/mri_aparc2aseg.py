@@ -13,8 +13,7 @@ MRI_APARC2ASEG_METADATA = Metadata(
 )
 
 
-MriAparc2asegParamsDict = typing.TypedDict('MriAparc2asegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2aseg"]],
+_MriAparc2asegParamsDictNoTag = typing.TypedDict('_MriAparc2asegParamsDictNoTag', {
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
     "old_ribbon": bool,
@@ -61,6 +60,7 @@ MriAparc2asegParamsDictTagged = typing.TypedDict('MriAparc2asegParamsDictTagged'
     "help": bool,
     "version": bool,
 })
+MriAparc2asegParamsDict = _MriAparc2asegParamsDictNoTag | MriAparc2asegParamsDictTagged
 
 
 class MriAparc2asegOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_1D_FLAG_MOTION_METADATA = Metadata(
 )
 
 
-V1dFlagMotionParamsDict = typing.TypedDict('V1dFlagMotionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dFlagMotion"]],
+_V1dFlagMotionParamsDictNoTag = typing.TypedDict('_V1dFlagMotionParamsDictNoTag', {
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ V1dFlagMotionParamsDictTagged = typing.TypedDict('V1dFlagMotionParamsDictTagged'
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
 })
+V1dFlagMotionParamsDict = _V1dFlagMotionParamsDictNoTag | V1dFlagMotionParamsDictTagged
 
 
 class V1dFlagMotionOutputs(typing.NamedTuple):

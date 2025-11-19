@@ -13,8 +13,7 @@ V_3D_RSFC_METADATA = Metadata(
 )
 
 
-V3dRsfcParamsDict = typing.TypedDict('V3dRsfcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRSFC"]],
+_V3dRsfcParamsDictNoTag = typing.TypedDict('_V3dRsfcParamsDictNoTag', {
     "fbot": float,
     "ftop": float,
     "input_dataset": InputPathType,
@@ -67,6 +66,7 @@ V3dRsfcParamsDictTagged = typing.TypedDict('V3dRsfcParamsDictTagged', {
     "notrans": bool,
     "nosat": bool,
 })
+V3dRsfcParamsDict = _V3dRsfcParamsDictNoTag | V3dRsfcParamsDictTagged
 
 
 class V3dRsfcOutputs(typing.NamedTuple):

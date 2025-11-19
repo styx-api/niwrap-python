@@ -13,8 +13,7 @@ MRI_MASK_METADATA = Metadata(
 )
 
 
-MriMaskParamsDict = typing.TypedDict('MriMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mask"]],
+_MriMaskParamsDictNoTag = typing.TypedDict('_MriMaskParamsDictNoTag', {
     "input_volume": InputPathType,
     "mask_volume": InputPathType,
     "output_volume": str,
@@ -61,6 +60,7 @@ MriMaskParamsDictTagged = typing.TypedDict('MriMaskParamsDictTagged', {
     "keep_mask_deletion_edits": bool,
     "samseg": bool,
 })
+MriMaskParamsDict = _MriMaskParamsDictNoTag | MriMaskParamsDictTagged
 
 
 class MriMaskOutputs(typing.NamedTuple):

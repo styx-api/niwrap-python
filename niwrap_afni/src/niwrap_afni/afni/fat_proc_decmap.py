@@ -13,8 +13,7 @@ FAT_PROC_DECMAP_METADATA = Metadata(
 )
 
 
-FatProcDecmapParamsDict = typing.TypedDict('FatProcDecmapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_decmap"]],
+_FatProcDecmapParamsDictNoTag = typing.TypedDict('_FatProcDecmapParamsDictNoTag', {
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "prefix": str,
@@ -41,6 +40,7 @@ FatProcDecmapParamsDictTagged = typing.TypedDict('FatProcDecmapParamsDictTagged'
     "no_cmd_out": bool,
     "no_qc_view": bool,
 })
+FatProcDecmapParamsDict = _FatProcDecmapParamsDictNoTag | FatProcDecmapParamsDictTagged
 
 
 class FatProcDecmapOutputs(typing.NamedTuple):

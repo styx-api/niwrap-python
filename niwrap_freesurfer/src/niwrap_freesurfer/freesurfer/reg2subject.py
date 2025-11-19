@@ -13,14 +13,14 @@ REG2SUBJECT_METADATA = Metadata(
 )
 
 
-Reg2subjectParamsDict = typing.TypedDict('Reg2subjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reg2subject"]],
+_Reg2subjectParamsDictNoTag = typing.TypedDict('_Reg2subjectParamsDictNoTag', {
     "regfile": InputPathType,
 })
 Reg2subjectParamsDictTagged = typing.TypedDict('Reg2subjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reg2subject"],
     "regfile": InputPathType,
 })
+Reg2subjectParamsDict = _Reg2subjectParamsDictNoTag | Reg2subjectParamsDictTagged
 
 
 class Reg2subjectOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_NITERS2FWHM_METADATA = Metadata(
 )
 
 
-MrisNiters2fwhmParamsDict = typing.TypedDict('MrisNiters2fwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_niters2fwhm"]],
+_MrisNiters2fwhmParamsDictNoTag = typing.TypedDict('_MrisNiters2fwhmParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "surf": str,
@@ -37,6 +36,7 @@ MrisNiters2fwhmParamsDictTagged = typing.TypedDict('MrisNiters2fwhmParamsDictTag
     "help": bool,
     "version": bool,
 })
+MrisNiters2fwhmParamsDict = _MrisNiters2fwhmParamsDictNoTag | MrisNiters2fwhmParamsDictTagged
 
 
 class MrisNiters2fwhmOutputs(typing.NamedTuple):

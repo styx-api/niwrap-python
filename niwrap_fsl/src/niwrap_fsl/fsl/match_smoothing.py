@@ -13,8 +13,7 @@ MATCH_SMOOTHING_METADATA = Metadata(
 )
 
 
-MatchSmoothingParamsDict = typing.TypedDict('MatchSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/match_smoothing"]],
+_MatchSmoothingParamsDictNoTag = typing.TypedDict('_MatchSmoothingParamsDictNoTag', {
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
     "example_structural": InputPathType,
@@ -27,6 +26,7 @@ MatchSmoothingParamsDictTagged = typing.TypedDict('MatchSmoothingParamsDictTagge
     "example_structural": InputPathType,
     "standard_space_resolution": float,
 })
+MatchSmoothingParamsDict = _MatchSmoothingParamsDictNoTag | MatchSmoothingParamsDictTagged
 
 
 class MatchSmoothingOutputs(typing.NamedTuple):

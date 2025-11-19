@@ -13,8 +13,7 @@ DISTANCEMAP_METADATA = Metadata(
 )
 
 
-DistancemapParamsDict = typing.TypedDict('DistancemapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/distancemap"]],
+_DistancemapParamsDictNoTag = typing.TypedDict('_DistancemapParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ DistancemapParamsDictTagged = typing.TypedDict('DistancemapParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+DistancemapParamsDict = _DistancemapParamsDictNoTag | DistancemapParamsDictTagged
 
 
 class DistancemapOutputs(typing.NamedTuple):

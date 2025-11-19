@@ -13,8 +13,7 @@ MRIS_REGISTER_TO_LABEL_METADATA = Metadata(
 )
 
 
-MrisRegisterToLabelParamsDict = typing.TypedDict('MrisRegisterToLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_label"]],
+_MrisRegisterToLabelParamsDictNoTag = typing.TypedDict('_MrisRegisterToLabelParamsDictNoTag', {
     "surface": InputPathType,
     "regfile": InputPathType,
     "mri_reg": InputPathType,
@@ -43,6 +42,7 @@ MrisRegisterToLabelParamsDictTagged = typing.TypedDict('MrisRegisterToLabelParam
     "downsample": typing.NotRequired[float | None],
     "cost_file": typing.NotRequired[InputPathType | None],
 })
+MrisRegisterToLabelParamsDict = _MrisRegisterToLabelParamsDictNoTag | MrisRegisterToLabelParamsDictTagged
 
 
 class MrisRegisterToLabelOutputs(typing.NamedTuple):

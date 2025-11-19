@@ -13,8 +13,7 @@ V_3D_TOY_PROG_METADATA = Metadata(
 )
 
 
-V3dToyProgParamsDict = typing.TypedDict('V3dToyProgParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dToyProg"]],
+_V3dToyProgParamsDictNoTag = typing.TypedDict('_V3dToyProgParamsDictNoTag', {
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ V3dToyProgParamsDictTagged = typing.TypedDict('V3dToyProgParamsDictTagged', {
     "help_aspx": bool,
     "help_all_opts": bool,
 })
+V3dToyProgParamsDict = _V3dToyProgParamsDictNoTag | V3dToyProgParamsDictTagged
 
 
 class V3dToyProgOutputs(typing.NamedTuple):

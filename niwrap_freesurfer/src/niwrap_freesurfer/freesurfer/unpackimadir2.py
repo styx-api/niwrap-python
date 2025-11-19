@@ -13,14 +13,14 @@ UNPACKIMADIR2_METADATA = Metadata(
 )
 
 
-Unpackimadir2ParamsDict = typing.TypedDict('Unpackimadir2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/unpackimadir2"]],
+_Unpackimadir2ParamsDictNoTag = typing.TypedDict('_Unpackimadir2ParamsDictNoTag', {
     "directory": InputPathType,
 })
 Unpackimadir2ParamsDictTagged = typing.TypedDict('Unpackimadir2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpackimadir2"],
     "directory": InputPathType,
 })
+Unpackimadir2ParamsDict = _Unpackimadir2ParamsDictNoTag | Unpackimadir2ParamsDictTagged
 
 
 class Unpackimadir2Outputs(typing.NamedTuple):

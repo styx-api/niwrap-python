@@ -13,8 +13,7 @@ SEG2FILLED_METADATA = Metadata(
 )
 
 
-Seg2filledParamsDict = typing.TypedDict('Seg2filledParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/seg2filled"]],
+_Seg2filledParamsDictNoTag = typing.TypedDict('_Seg2filledParamsDictNoTag', {
     "seg_file": InputPathType,
     "norm_file": InputPathType,
     "output_file": str,
@@ -33,6 +32,7 @@ Seg2filledParamsDictTagged = typing.TypedDict('Seg2filledParamsDictTagged', {
     "surf_name": typing.NotRequired[str | None],
     "surf_dir": typing.NotRequired[str | None],
 })
+Seg2filledParamsDict = _Seg2filledParamsDictNoTag | Seg2filledParamsDictTagged
 
 
 class Seg2filledOutputs(typing.NamedTuple):

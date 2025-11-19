@@ -13,8 +13,7 @@ FSL_SBCA_METADATA = Metadata(
 )
 
 
-FslSbcaParamsDict = typing.TypedDict('FslSbcaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_sbca"]],
+_FslSbcaParamsDictNoTag = typing.TypedDict('_FslSbcaParamsDictNoTag', {
     "infile": InputPathType,
     "seed": InputPathType,
     "target": InputPathType,
@@ -53,6 +52,7 @@ FslSbcaParamsDictTagged = typing.TypedDict('FslSbcaParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+FslSbcaParamsDict = _FslSbcaParamsDictNoTag | FslSbcaParamsDictTagged
 
 
 class FslSbcaOutputs(typing.NamedTuple):

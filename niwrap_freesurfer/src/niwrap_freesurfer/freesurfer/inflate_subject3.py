@@ -13,8 +13,7 @@ INFLATE_SUBJECT3_METADATA = Metadata(
 )
 
 
-InflateSubject3ParamsDict = typing.TypedDict('InflateSubject3ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject3"]],
+_InflateSubject3ParamsDictNoTag = typing.TypedDict('_InflateSubject3ParamsDictNoTag', {
     "subjects_dir": str,
     "script_name": str,
 })
@@ -23,6 +22,7 @@ InflateSubject3ParamsDictTagged = typing.TypedDict('InflateSubject3ParamsDictTag
     "subjects_dir": str,
     "script_name": str,
 })
+InflateSubject3ParamsDict = _InflateSubject3ParamsDictNoTag | InflateSubject3ParamsDictTagged
 
 
 class InflateSubject3Outputs(typing.NamedTuple):

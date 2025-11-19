@@ -13,8 +13,7 @@ SURF_MESH_METADATA = Metadata(
 )
 
 
-SurfMeshParamsDict = typing.TypedDict('SurfMeshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfMesh"]],
+_SurfMeshParamsDictNoTag = typing.TypedDict('_SurfMeshParamsDictNoTag', {
     "input_surface": str,
     "output_surface": str,
     "edge_fraction": float,
@@ -35,6 +34,7 @@ SurfMeshParamsDictTagged = typing.TypedDict('SurfMeshParamsDictTagged', {
     "no_volume_registration": bool,
     "set_env": typing.NotRequired[str | None],
 })
+SurfMeshParamsDict = _SurfMeshParamsDictNoTag | SurfMeshParamsDictTagged
 
 
 class SurfMeshOutputs(typing.NamedTuple):

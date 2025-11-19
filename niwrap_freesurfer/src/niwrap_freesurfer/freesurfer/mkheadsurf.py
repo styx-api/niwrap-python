@@ -13,8 +13,7 @@ MKHEADSURF_METADATA = Metadata(
 )
 
 
-MkheadsurfParamsDict = typing.TypedDict('MkheadsurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mkheadsurf"]],
+_MkheadsurfParamsDictNoTag = typing.TypedDict('_MkheadsurfParamsDictNoTag', {
     "input_vol": InputPathType,
     "output_vol": str,
     "output_surf": str,
@@ -73,6 +72,7 @@ MkheadsurfParamsDictTagged = typing.TypedDict('MkheadsurfParamsDictTagged', {
     "umask": typing.NotRequired[float | None],
     "logfile": typing.NotRequired[str | None],
 })
+MkheadsurfParamsDict = _MkheadsurfParamsDictNoTag | MkheadsurfParamsDictTagged
 
 
 class MkheadsurfOutputs(typing.NamedTuple):

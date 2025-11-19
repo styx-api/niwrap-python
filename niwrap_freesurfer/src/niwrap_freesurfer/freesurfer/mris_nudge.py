@@ -13,8 +13,7 @@ MRIS_NUDGE_METADATA = Metadata(
 )
 
 
-MrisNudgeParamsDict = typing.TypedDict('MrisNudgeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_nudge"]],
+_MrisNudgeParamsDictNoTag = typing.TypedDict('_MrisNudgeParamsDictNoTag', {
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "vertex": int,
@@ -29,6 +28,7 @@ MrisNudgeParamsDictTagged = typing.TypedDict('MrisNudgeParamsDictTagged', {
     "target_val": float,
     "nbhd": int,
 })
+MrisNudgeParamsDict = _MrisNudgeParamsDictNoTag | MrisNudgeParamsDictTagged
 
 
 class MrisNudgeOutputs(typing.NamedTuple):

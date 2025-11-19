@@ -13,8 +13,7 @@ MRIS_RF_TRAIN_METADATA = Metadata(
 )
 
 
-MrisRfTrainParamsDict = typing.TypedDict('MrisRfTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_train"]],
+_MrisRfTrainParamsDictNoTag = typing.TypedDict('_MrisRfTrainParamsDictNoTag', {
     "subjects": list[str],
     "output_name": str,
     "hemi": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ MrisRfTrainParamsDictTagged = typing.TypedDict('MrisRfTrainParamsDictTagged', {
     "hemi": typing.NotRequired[str | None],
     "surf": typing.NotRequired[str | None],
 })
+MrisRfTrainParamsDict = _MrisRfTrainParamsDictNoTag | MrisRfTrainParamsDictTagged
 
 
 class MrisRfTrainOutputs(typing.NamedTuple):

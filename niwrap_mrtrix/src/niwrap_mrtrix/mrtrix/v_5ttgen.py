@@ -13,8 +13,7 @@ V_5TTGEN_METADATA = Metadata(
 )
 
 
-V5ttgenFreesurferParamsDict = typing.TypedDict('V5ttgenFreesurferParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer"]],
+_V5ttgenFreesurferParamsDictNoTag = typing.TypedDict('_V5ttgenFreesurferParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "lut": typing.NotRequired[InputPathType | None],
@@ -25,10 +24,10 @@ V5ttgenFreesurferParamsDictTagged = typing.TypedDict('V5ttgenFreesurferParamsDic
     "output": str,
     "lut": typing.NotRequired[InputPathType | None],
 })
+V5ttgenFreesurferParamsDict = _V5ttgenFreesurferParamsDictNoTag | V5ttgenFreesurferParamsDictTagged
 
 
-V5ttgenFslParamsDict = typing.TypedDict('V5ttgenFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl"]],
+_V5ttgenFslParamsDictNoTag = typing.TypedDict('_V5ttgenFslParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "t2": typing.NotRequired[InputPathType | None],
@@ -43,10 +42,10 @@ V5ttgenFslParamsDictTagged = typing.TypedDict('V5ttgenFslParamsDictTagged', {
     "mask": typing.NotRequired[InputPathType | None],
     "premasked": bool,
 })
+V5ttgenFslParamsDict = _V5ttgenFslParamsDictNoTag | V5ttgenFslParamsDictTagged
 
 
-V5ttgenGifParamsDict = typing.TypedDict('V5ttgenGifParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gif"]],
+_V5ttgenGifParamsDictNoTag = typing.TypedDict('_V5ttgenGifParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
 })
@@ -55,10 +54,10 @@ V5ttgenGifParamsDictTagged = typing.TypedDict('V5ttgenGifParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+V5ttgenGifParamsDict = _V5ttgenGifParamsDictNoTag | V5ttgenGifParamsDictTagged
 
 
-V5ttgenHsvsParamsDict = typing.TypedDict('V5ttgenHsvsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hsvs"]],
+_V5ttgenHsvsParamsDictNoTag = typing.TypedDict('_V5ttgenHsvsParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -75,10 +74,10 @@ V5ttgenHsvsParamsDictTagged = typing.TypedDict('V5ttgenHsvsParamsDictTagged', {
     "thalami": typing.NotRequired[typing.Literal["nuclei", "first", "aseg"] | None],
     "white_stem": bool,
 })
+V5ttgenHsvsParamsDict = _V5ttgenHsvsParamsDictNoTag | V5ttgenHsvsParamsDictTagged
 
 
-V5ttgenConfigParamsDict = typing.TypedDict('V5ttgenConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_V5ttgenConfigParamsDictNoTag = typing.TypedDict('_V5ttgenConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -87,10 +86,10 @@ V5ttgenConfigParamsDictTagged = typing.TypedDict('V5ttgenConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+V5ttgenConfigParamsDict = _V5ttgenConfigParamsDictNoTag | V5ttgenConfigParamsDictTagged
 
 
-V5ttgenParamsDict = typing.TypedDict('V5ttgenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/5ttgen"]],
+_V5ttgenParamsDictNoTag = typing.TypedDict('_V5ttgenParamsDictNoTag', {
     "algorithm": typing.Union[V5ttgenFreesurferParamsDictTagged, V5ttgenFslParamsDictTagged, V5ttgenGifParamsDictTagged, V5ttgenHsvsParamsDictTagged],
     "nocrop": bool,
     "sgm_amyg_hipp": bool,
@@ -123,6 +122,7 @@ V5ttgenParamsDictTagged = typing.TypedDict('V5ttgenParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+V5ttgenParamsDict = _V5ttgenParamsDictNoTag | V5ttgenParamsDictTagged
 
 
 def v_5ttgen_algorithm_cargs_dyn_fn(

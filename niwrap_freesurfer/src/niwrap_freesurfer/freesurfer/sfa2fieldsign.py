@@ -13,8 +13,7 @@ SFA2FIELDSIGN_METADATA = Metadata(
 )
 
 
-Sfa2fieldsignParamsDict = typing.TypedDict('Sfa2fieldsignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/sfa2fieldsign"]],
+_Sfa2fieldsignParamsDictNoTag = typing.TypedDict('_Sfa2fieldsignParamsDictNoTag', {
     "sfadir": str,
     "register_dat": str,
     "threshold": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ Sfa2fieldsignParamsDictTagged = typing.TypedDict('Sfa2fieldsignParamsDictTagged'
     "lh": bool,
     "rh": bool,
 })
+Sfa2fieldsignParamsDict = _Sfa2fieldsignParamsDictNoTag | Sfa2fieldsignParamsDictTagged
 
 
 class Sfa2fieldsignOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_SURF2SURF_METADATA = Metadata(
 )
 
 
-MriSurf2surfParamsDict = typing.TypedDict('MriSurf2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2surf"]],
+_MriSurf2surfParamsDictNoTag = typing.TypedDict('_MriSurf2surfParamsDictNoTag', {
     "src_subject": str,
     "sval_path": typing.NotRequired[InputPathType | None],
     "sval_xyz": typing.NotRequired[str | None],
@@ -131,6 +130,7 @@ MriSurf2surfParamsDictTagged = typing.TypedDict('MriSurf2surfParamsDictTagged', 
     "rms": typing.NotRequired[InputPathType | None],
     "rms_mask": typing.NotRequired[InputPathType | None],
 })
+MriSurf2surfParamsDict = _MriSurf2surfParamsDictNoTag | MriSurf2surfParamsDictTagged
 
 
 class MriSurf2surfOutputs(typing.NamedTuple):

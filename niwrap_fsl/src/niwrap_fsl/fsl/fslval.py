@@ -13,8 +13,7 @@ FSLVAL_METADATA = Metadata(
 )
 
 
-FslvalParamsDict = typing.TypedDict('FslvalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslval"]],
+_FslvalParamsDictNoTag = typing.TypedDict('_FslvalParamsDictNoTag', {
     "input_file": InputPathType,
     "keyword": str,
 })
@@ -23,6 +22,7 @@ FslvalParamsDictTagged = typing.TypedDict('FslvalParamsDictTagged', {
     "input_file": InputPathType,
     "keyword": str,
 })
+FslvalParamsDict = _FslvalParamsDictNoTag | FslvalParamsDictTagged
 
 
 class FslvalOutputs(typing.NamedTuple):

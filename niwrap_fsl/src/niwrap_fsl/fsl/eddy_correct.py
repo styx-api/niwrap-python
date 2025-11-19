@@ -13,8 +13,7 @@ EDDY_CORRECT_METADATA = Metadata(
 )
 
 
-EddyCorrectParamsDict = typing.TypedDict('EddyCorrectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_correct"]],
+_EddyCorrectParamsDictNoTag = typing.TypedDict('_EddyCorrectParamsDictNoTag', {
     "4d_input": InputPathType,
     "4d_output": str,
     "reference_no": int,
@@ -27,6 +26,7 @@ EddyCorrectParamsDictTagged = typing.TypedDict('EddyCorrectParamsDictTagged', {
     "reference_no": int,
     "interp_method": typing.NotRequired[typing.Literal["trilinear", "spline"] | None],
 })
+EddyCorrectParamsDict = _EddyCorrectParamsDictNoTag | EddyCorrectParamsDictTagged
 
 
 class EddyCorrectOutputs(typing.NamedTuple):

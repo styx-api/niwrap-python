@@ -13,8 +13,7 @@ V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA = Metadata(
 )
 
 
-VDjunctSswIntermedEdgeImgsParamsDict = typing.TypedDict('VDjunctSswIntermedEdgeImgsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_ssw_intermed_edge_imgs"]],
+_VDjunctSswIntermedEdgeImgsParamsDictNoTag = typing.TypedDict('_VDjunctSswIntermedEdgeImgsParamsDictNoTag', {
     "prefix": str,
     "ulay": InputPathType,
     "olay": InputPathType,
@@ -45,6 +44,7 @@ VDjunctSswIntermedEdgeImgsParamsDictTagged = typing.TypedDict('VDjunctSswInterme
     "version": bool,
     "no_clean": bool,
 })
+VDjunctSswIntermedEdgeImgsParamsDict = _VDjunctSswIntermedEdgeImgsParamsDictNoTag | VDjunctSswIntermedEdgeImgsParamsDictTagged
 
 
 class VDjunctSswIntermedEdgeImgsOutputs(typing.NamedTuple):

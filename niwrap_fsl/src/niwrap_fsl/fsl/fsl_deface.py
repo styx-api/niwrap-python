@@ -13,8 +13,7 @@ FSL_DEFACE_METADATA = Metadata(
 )
 
 
-FslDefaceParamsDict = typing.TypedDict('FslDefaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_deface"]],
+_FslDefaceParamsDictNoTag = typing.TypedDict('_FslDefaceParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "cropped_defacing_flag": bool,
@@ -45,6 +44,7 @@ FslDefaceParamsDictTagged = typing.TypedDict('FslDefaceParamsDictTagged', {
     "center_of_gravity": typing.NotRequired[list[float] | None],
     "qc_images": typing.NotRequired[str | None],
 })
+FslDefaceParamsDict = _FslDefaceParamsDictNoTag | FslDefaceParamsDictTagged
 
 
 class FslDefaceOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 )
 
 
-VolumeFillHolesParamsDict = typing.TypedDict('VolumeFillHolesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-fill-holes"]],
+_VolumeFillHolesParamsDictNoTag = typing.TypedDict('_VolumeFillHolesParamsDictNoTag', {
     "volume-out": str,
     "volume-in": InputPathType,
 })
@@ -22,6 +21,7 @@ VolumeFillHolesParamsDictTagged = typing.TypedDict('VolumeFillHolesParamsDictTag
     "volume-out": str,
     "volume-in": InputPathType,
 })
+VolumeFillHolesParamsDict = _VolumeFillHolesParamsDictNoTag | VolumeFillHolesParamsDictTagged
 
 
 class VolumeFillHolesOutputs(typing.NamedTuple):

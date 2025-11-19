@@ -13,8 +13,7 @@ PREDICT_V1_SH_METADATA = Metadata(
 )
 
 
-PredictV1ShParamsDict = typing.TypedDict('PredictV1ShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/predict_v1.sh"]],
+_PredictV1ShParamsDictNoTag = typing.TypedDict('_PredictV1ShParamsDictNoTag', {
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
     "hemisphere": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ PredictV1ShParamsDictTagged = typing.TypedDict('PredictV1ShParamsDictTagged', {
     "subjects": list[str],
     "usage_flag": bool,
 })
+PredictV1ShParamsDict = _PredictV1ShParamsDictNoTag | PredictV1ShParamsDictTagged
 
 
 class PredictV1ShOutputs(typing.NamedTuple):

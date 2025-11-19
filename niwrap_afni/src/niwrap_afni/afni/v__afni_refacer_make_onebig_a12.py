@@ -13,14 +13,14 @@ V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
 )
 
 
-VAfniRefacerMakeOnebigA12ParamsDict = typing.TypedDict('VAfniRefacerMakeOnebigA12ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_onebigA12"]],
+_VAfniRefacerMakeOnebigA12ParamsDictNoTag = typing.TypedDict('_VAfniRefacerMakeOnebigA12ParamsDictNoTag', {
     "t1w_dataset": InputPathType,
 })
 VAfniRefacerMakeOnebigA12ParamsDictTagged = typing.TypedDict('VAfniRefacerMakeOnebigA12ParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_refacer_make_onebigA12"],
     "t1w_dataset": InputPathType,
 })
+VAfniRefacerMakeOnebigA12ParamsDict = _VAfniRefacerMakeOnebigA12ParamsDictNoTag | VAfniRefacerMakeOnebigA12ParamsDictTagged
 
 
 class VAfniRefacerMakeOnebigA12Outputs(typing.NamedTuple):

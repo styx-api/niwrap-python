@@ -13,8 +13,7 @@ MRIS_MAKE_SURFACES_METADATA = Metadata(
 )
 
 
-MrisMakeSurfacesParamsDict = typing.TypedDict('MrisMakeSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_surfaces"]],
+_MrisMakeSurfacesParamsDictNoTag = typing.TypedDict('_MrisMakeSurfacesParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "white": typing.NotRequired[str | None],
@@ -125,6 +124,7 @@ MrisMakeSurfacesParamsDictTagged = typing.TypedDict('MrisMakeSurfacesParamsDictT
     "min_gray_csf_border": typing.NotRequired[float | None],
     "max_csf": typing.NotRequired[float | None],
 })
+MrisMakeSurfacesParamsDict = _MrisMakeSurfacesParamsDictNoTag | MrisMakeSurfacesParamsDictTagged
 
 
 class MrisMakeSurfacesOutputs(typing.NamedTuple):

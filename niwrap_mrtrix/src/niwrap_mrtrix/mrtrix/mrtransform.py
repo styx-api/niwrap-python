@@ -13,8 +13,7 @@ MRTRANSFORM_METADATA = Metadata(
 )
 
 
-MrtransformFslgradParamsDict = typing.TypedDict('MrtransformFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_MrtransformFslgradParamsDictNoTag = typing.TypedDict('_MrtransformFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ MrtransformFslgradParamsDictTagged = typing.TypedDict('MrtransformFslgradParamsD
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+MrtransformFslgradParamsDict = _MrtransformFslgradParamsDictNoTag | MrtransformFslgradParamsDictTagged
 
 
-MrtransformExportGradFslParamsDict = typing.TypedDict('MrtransformExportGradFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+_MrtransformExportGradFslParamsDictNoTag = typing.TypedDict('_MrtransformExportGradFslParamsDictNoTag', {
     "bvecs_path": str,
     "bvals_path": str,
 })
@@ -35,30 +34,30 @@ MrtransformExportGradFslParamsDictTagged = typing.TypedDict('MrtransformExportGr
     "bvecs_path": str,
     "bvals_path": str,
 })
+MrtransformExportGradFslParamsDict = _MrtransformExportGradFslParamsDictNoTag | MrtransformExportGradFslParamsDictTagged
 
 
-MrtransformVariousStringParamsDict = typing.TypedDict('MrtransformVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MrtransformVariousStringParamsDictNoTag = typing.TypedDict('_MrtransformVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MrtransformVariousStringParamsDictTagged = typing.TypedDict('MrtransformVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MrtransformVariousStringParamsDict = _MrtransformVariousStringParamsDictNoTag | MrtransformVariousStringParamsDictTagged
 
 
-MrtransformVariousFileParamsDict = typing.TypedDict('MrtransformVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MrtransformVariousFileParamsDictNoTag = typing.TypedDict('_MrtransformVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrtransformVariousFileParamsDictTagged = typing.TypedDict('MrtransformVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MrtransformVariousFileParamsDict = _MrtransformVariousFileParamsDictNoTag | MrtransformVariousFileParamsDictTagged
 
 
-MrtransformConfigParamsDict = typing.TypedDict('MrtransformConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrtransformConfigParamsDictNoTag = typing.TypedDict('_MrtransformConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -67,10 +66,10 @@ MrtransformConfigParamsDictTagged = typing.TypedDict('MrtransformConfigParamsDic
     "key": str,
     "value": str,
 })
+MrtransformConfigParamsDict = _MrtransformConfigParamsDictNoTag | MrtransformConfigParamsDictTagged
 
 
-MrtransformParamsDict = typing.TypedDict('MrtransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrtransform"]],
+_MrtransformParamsDictNoTag = typing.TypedDict('_MrtransformParamsDictNoTag', {
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
     "inverse": bool,
@@ -143,6 +142,7 @@ MrtransformParamsDictTagged = typing.TypedDict('MrtransformParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+MrtransformParamsDict = _MrtransformParamsDictNoTag | MrtransformParamsDictTagged
 
 
 def mrtransform_strides_cargs_dyn_fn(

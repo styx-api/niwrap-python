@@ -13,8 +13,7 @@ V_3D_LOMB_SCARGLE_METADATA = Metadata(
 )
 
 
-V3dLombScargleParamsDict = typing.TypedDict('V3dLombScargleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLombScargle"]],
+_V3dLombScargleParamsDictNoTag = typing.TypedDict('_V3dLombScargleParamsDictNoTag', {
     "prefix": str,
     "inset": InputPathType,
     "censor_1d": typing.NotRequired[InputPathType | None],
@@ -35,6 +34,7 @@ V3dLombScargleParamsDictTagged = typing.TypedDict('V3dLombScargleParamsDictTagge
     "nyquist_multiplier": typing.NotRequired[int | None],
     "nifti": bool,
 })
+V3dLombScargleParamsDict = _V3dLombScargleParamsDictNoTag | V3dLombScargleParamsDictTagged
 
 
 class V3dLombScargleOutputs(typing.NamedTuple):

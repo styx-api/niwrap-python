@@ -13,8 +13,7 @@ V_1D_MARRY_METADATA = Metadata(
 )
 
 
-V1dMarryParamsDict = typing.TypedDict('V1dMarryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dMarry"]],
+_V1dMarryParamsDictNoTag = typing.TypedDict('_V1dMarryParamsDictNoTag', {
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
     "files": list[InputPathType],
@@ -25,6 +24,7 @@ V1dMarryParamsDictTagged = typing.TypedDict('V1dMarryParamsDictTagged', {
     "divorce": bool,
     "files": list[InputPathType],
 })
+V1dMarryParamsDict = _V1dMarryParamsDictNoTag | V1dMarryParamsDictTagged
 
 
 class V1dMarryOutputs(typing.NamedTuple):

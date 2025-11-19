@@ -13,8 +13,7 @@ SIGLOSS_METADATA = Metadata(
 )
 
 
-SiglossParamsDict = typing.TypedDict('SiglossParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/sigloss"]],
+_SiglossParamsDictNoTag = typing.TypedDict('_SiglossParamsDictNoTag', {
     "input_b0map": InputPathType,
     "output_sigloss": str,
     "input_mask": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ SiglossParamsDictTagged = typing.TypedDict('SiglossParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+SiglossParamsDict = _SiglossParamsDictNoTag | SiglossParamsDictTagged
 
 
 class SiglossOutputs(typing.NamedTuple):

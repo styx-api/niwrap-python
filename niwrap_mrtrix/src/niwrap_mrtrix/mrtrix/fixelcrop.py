@@ -13,8 +13,7 @@ FIXELCROP_METADATA = Metadata(
 )
 
 
-FixelcropConfigParamsDict = typing.TypedDict('FixelcropConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelcropConfigParamsDictNoTag = typing.TypedDict('_FixelcropConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ FixelcropConfigParamsDictTagged = typing.TypedDict('FixelcropConfigParamsDictTag
     "key": str,
     "value": str,
 })
+FixelcropConfigParamsDict = _FixelcropConfigParamsDictNoTag | FixelcropConfigParamsDictTagged
 
 
-FixelcropParamsDict = typing.TypedDict('FixelcropParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcrop"]],
+_FixelcropParamsDictNoTag = typing.TypedDict('_FixelcropParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ FixelcropParamsDictTagged = typing.TypedDict('FixelcropParamsDictTagged', {
     "input_fixel_mask": InputPathType,
     "output_fixel_directory": str,
 })
+FixelcropParamsDict = _FixelcropParamsDictNoTag | FixelcropParamsDictTagged
 
 
 def fixelcrop_config(

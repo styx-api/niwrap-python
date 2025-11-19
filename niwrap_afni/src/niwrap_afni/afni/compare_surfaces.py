@@ -13,8 +13,7 @@ COMPARE_SURFACES_METADATA = Metadata(
 )
 
 
-CompareSurfacesParamsDict = typing.TypedDict('CompareSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/CompareSurfaces"]],
+_CompareSurfacesParamsDictNoTag = typing.TypedDict('_CompareSurfacesParamsDictNoTag', {
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
     "volume_parent_1": InputPathType,
@@ -49,6 +48,7 @@ CompareSurfacesParamsDictTagged = typing.TypedDict('CompareSurfacesParamsDictTag
     "no_memory_trace": bool,
     "yes_memory_trace": bool,
 })
+CompareSurfacesParamsDict = _CompareSurfacesParamsDictNoTag | CompareSurfacesParamsDictTagged
 
 
 class CompareSurfacesOutputs(typing.NamedTuple):

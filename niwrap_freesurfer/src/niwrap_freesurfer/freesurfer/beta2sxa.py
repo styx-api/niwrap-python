@@ -13,8 +13,7 @@ BETA2SXA_METADATA = Metadata(
 )
 
 
-Beta2sxaParamsDict = typing.TypedDict('Beta2sxaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/beta2sxa"]],
+_Beta2sxaParamsDictNoTag = typing.TypedDict('_Beta2sxaParamsDictNoTag', {
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
     "number_of_per_subjects": float,
@@ -27,6 +26,7 @@ Beta2sxaParamsDictTagged = typing.TypedDict('Beta2sxaParamsDictTagged', {
     "number_of_per_subjects": float,
     "sxa_output": typing.NotRequired[str | None],
 })
+Beta2sxaParamsDict = _Beta2sxaParamsDictNoTag | Beta2sxaParamsDictTagged
 
 
 class Beta2sxaOutputs(typing.NamedTuple):

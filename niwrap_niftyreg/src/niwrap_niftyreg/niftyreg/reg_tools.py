@@ -13,8 +13,7 @@ REG_TOOLS_METADATA = Metadata(
 )
 
 
-RegToolsParamsDict = typing.TypedDict('RegToolsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_tools"]],
+_RegToolsParamsDictNoTag = typing.TypedDict('_RegToolsParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "add_value_or_image": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ RegToolsParamsDictTagged = typing.TypedDict('RegToolsParamsDictTagged', {
     "threshold_value": typing.NotRequired[float | None],
     "nan_mask_image": typing.NotRequired[InputPathType | None],
 })
+RegToolsParamsDict = _RegToolsParamsDictNoTag | RegToolsParamsDictTagged
 
 
 class RegToolsOutputs(typing.NamedTuple):

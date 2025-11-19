@@ -13,8 +13,7 @@ FIRST_METADATA = Metadata(
 )
 
 
-FirstParamsDict = typing.TypedDict('FirstParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/first"]],
+_FirstParamsDictNoTag = typing.TypedDict('_FirstParamsDictNoTag', {
     "input_file": InputPathType,
     "output_name": str,
     "input_model": InputPathType,
@@ -49,6 +48,7 @@ FirstParamsDictTagged = typing.TypedDict('FirstParamsDictTagged', {
     "shcond": bool,
     "loadbvars": bool,
 })
+FirstParamsDict = _FirstParamsDictNoTag | FirstParamsDictTagged
 
 
 class FirstOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ CBLUMWMGYRI_METADATA = Metadata(
 )
 
 
-CblumwmgyriParamsDict = typing.TypedDict('CblumwmgyriParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/cblumwmgyri"]],
+_CblumwmgyriParamsDictNoTag = typing.TypedDict('_CblumwmgyriParamsDictNoTag', {
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
     "n_erodes_dilates": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ CblumwmgyriParamsDictTagged = typing.TypedDict('CblumwmgyriParamsDictTagged', {
     "no_segstats": bool,
     "subjects_dir": typing.NotRequired[str | None],
 })
+CblumwmgyriParamsDict = _CblumwmgyriParamsDictNoTag | CblumwmgyriParamsDictTagged
 
 
 class CblumwmgyriOutputs(typing.NamedTuple):

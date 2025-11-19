@@ -13,8 +13,7 @@ FILMBABESCRIPT_METADATA = Metadata(
 )
 
 
-FilmbabescriptParamsDict = typing.TypedDict('FilmbabescriptParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/filmbabescript"]],
+_FilmbabescriptParamsDictNoTag = typing.TypedDict('_FilmbabescriptParamsDictNoTag', {
     "feat_dir": str,
     "flobs_dir": str,
 })
@@ -23,6 +22,7 @@ FilmbabescriptParamsDictTagged = typing.TypedDict('FilmbabescriptParamsDictTagge
     "feat_dir": str,
     "flobs_dir": str,
 })
+FilmbabescriptParamsDict = _FilmbabescriptParamsDictNoTag | FilmbabescriptParamsDictTagged
 
 
 class FilmbabescriptOutputs(typing.NamedTuple):

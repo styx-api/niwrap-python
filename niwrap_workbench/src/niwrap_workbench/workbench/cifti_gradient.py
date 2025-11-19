@@ -12,8 +12,7 @@ CIFTI_GRADIENT_METADATA = Metadata(
 )
 
 
-CiftiGradientLeftSurfaceParamsDict = typing.TypedDict('CiftiGradientLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiGradientLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiGradientLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiGradientLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiGradientLeftSu
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiGradientLeftSurfaceParamsDict = _CiftiGradientLeftSurfaceParamsDictNoTag | CiftiGradientLeftSurfaceParamsDictTagged
 
 
-CiftiGradientRightSurfaceParamsDict = typing.TypedDict('CiftiGradientRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiGradientRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiGradientRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiGradientRightSurfaceParamsDictTagged = typing.TypedDict('CiftiGradientRight
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiGradientRightSurfaceParamsDict = _CiftiGradientRightSurfaceParamsDictNoTag | CiftiGradientRightSurfaceParamsDictTagged
 
 
-CiftiGradientCerebellumSurfaceParamsDict = typing.TypedDict('CiftiGradientCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiGradientCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiGradientCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiGradientCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiGradient
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiGradientCerebellumSurfaceParamsDict = _CiftiGradientCerebellumSurfaceParamsDictNoTag | CiftiGradientCerebellumSurfaceParamsDictTagged
 
 
-CiftiGradientSurfaceParamsDict = typing.TypedDict('CiftiGradientSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface"]],
+_CiftiGradientSurfaceParamsDictNoTag = typing.TypedDict('_CiftiGradientSurfaceParamsDictNoTag', {
     "structure": str,
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -60,10 +59,10 @@ CiftiGradientSurfaceParamsDictTagged = typing.TypedDict('CiftiGradientSurfacePar
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiGradientSurfaceParamsDict = _CiftiGradientSurfaceParamsDictNoTag | CiftiGradientSurfaceParamsDictTagged
 
 
-CiftiGradientParamsDict = typing.TypedDict('CiftiGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-gradient"]],
+_CiftiGradientParamsDictNoTag = typing.TypedDict('_CiftiGradientParamsDictNoTag', {
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiGradientRightSurfaceParamsDict | None],
@@ -92,6 +91,7 @@ CiftiGradientParamsDictTagged = typing.TypedDict('CiftiGradientParamsDictTagged'
     "cifti": InputPathType,
     "direction": str,
 })
+CiftiGradientParamsDict = _CiftiGradientParamsDictNoTag | CiftiGradientParamsDictTagged
 
 
 def cifti_gradient_left_surface(

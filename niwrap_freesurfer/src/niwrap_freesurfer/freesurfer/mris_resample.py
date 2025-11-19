@@ -13,8 +13,7 @@ MRIS_RESAMPLE_METADATA = Metadata(
 )
 
 
-MrisResampleParamsDict = typing.TypedDict('MrisResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_resample"]],
+_MrisResampleParamsDictNoTag = typing.TypedDict('_MrisResampleParamsDictNoTag', {
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
     "subject_surf": InputPathType,
@@ -31,6 +30,7 @@ MrisResampleParamsDictTagged = typing.TypedDict('MrisResampleParamsDictTagged', 
     "annot_in": typing.NotRequired[InputPathType | None],
     "annot_out": typing.NotRequired[str | None],
 })
+MrisResampleParamsDict = _MrisResampleParamsDictNoTag | MrisResampleParamsDictTagged
 
 
 class MrisResampleOutputs(typing.NamedTuple):

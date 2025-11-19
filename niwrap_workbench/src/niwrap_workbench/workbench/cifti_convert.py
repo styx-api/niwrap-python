@@ -12,8 +12,7 @@ CIFTI_CONVERT_METADATA = Metadata(
 )
 
 
-CiftiConvertToGiftiExtParamsDict = typing.TypedDict('CiftiConvertToGiftiExtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-gifti-ext"]],
+_CiftiConvertToGiftiExtParamsDictNoTag = typing.TypedDict('_CiftiConvertToGiftiExtParamsDictNoTag', {
     "cifti-in": InputPathType,
     "gifti-out": str,
 })
@@ -22,10 +21,10 @@ CiftiConvertToGiftiExtParamsDictTagged = typing.TypedDict('CiftiConvertToGiftiEx
     "cifti-in": InputPathType,
     "gifti-out": str,
 })
+CiftiConvertToGiftiExtParamsDict = _CiftiConvertToGiftiExtParamsDictNoTag | CiftiConvertToGiftiExtParamsDictTagged
 
 
-CiftiConvertResetTimepointsParamsDict = typing.TypedDict('CiftiConvertResetTimepointsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reset-timepoints"]],
+_CiftiConvertResetTimepointsParamsDictNoTag = typing.TypedDict('_CiftiConvertResetTimepointsParamsDictNoTag', {
     "timestep": float,
     "timestart": float,
     "unit": typing.NotRequired[str | None],
@@ -36,10 +35,10 @@ CiftiConvertResetTimepointsParamsDictTagged = typing.TypedDict('CiftiConvertRese
     "timestart": float,
     "unit": typing.NotRequired[str | None],
 })
+CiftiConvertResetTimepointsParamsDict = _CiftiConvertResetTimepointsParamsDictNoTag | CiftiConvertResetTimepointsParamsDictTagged
 
 
-CiftiConvertReplaceBinaryParamsDict = typing.TypedDict('CiftiConvertReplaceBinaryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["replace-binary"]],
+_CiftiConvertReplaceBinaryParamsDictNoTag = typing.TypedDict('_CiftiConvertReplaceBinaryParamsDictNoTag', {
     "binary-in": str,
     "flip-endian": bool,
     "transpose": bool,
@@ -50,10 +49,10 @@ CiftiConvertReplaceBinaryParamsDictTagged = typing.TypedDict('CiftiConvertReplac
     "flip-endian": bool,
     "transpose": bool,
 })
+CiftiConvertReplaceBinaryParamsDict = _CiftiConvertReplaceBinaryParamsDictNoTag | CiftiConvertReplaceBinaryParamsDictTagged
 
 
-CiftiConvertFromGiftiExtParamsDict = typing.TypedDict('CiftiConvertFromGiftiExtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-gifti-ext"]],
+_CiftiConvertFromGiftiExtParamsDictNoTag = typing.TypedDict('_CiftiConvertFromGiftiExtParamsDictNoTag', {
     "gifti-in": str,
     "cifti-out": str,
     "reset-timepoints": typing.NotRequired[CiftiConvertResetTimepointsParamsDict | None],
@@ -70,10 +69,10 @@ CiftiConvertFromGiftiExtParamsDictTagged = typing.TypedDict('CiftiConvertFromGif
     "column-reset-scalars": bool,
     "replace-binary": typing.NotRequired[CiftiConvertReplaceBinaryParamsDict | None],
 })
+CiftiConvertFromGiftiExtParamsDict = _CiftiConvertFromGiftiExtParamsDictNoTag | CiftiConvertFromGiftiExtParamsDictTagged
 
 
-CiftiConvertToNiftiParamsDict = typing.TypedDict('CiftiConvertToNiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-nifti"]],
+_CiftiConvertToNiftiParamsDictNoTag = typing.TypedDict('_CiftiConvertToNiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
     "nifti-out": str,
     "smaller-file": bool,
@@ -86,10 +85,10 @@ CiftiConvertToNiftiParamsDictTagged = typing.TypedDict('CiftiConvertToNiftiParam
     "smaller-file": bool,
     "smaller-dims": bool,
 })
+CiftiConvertToNiftiParamsDict = _CiftiConvertToNiftiParamsDictNoTag | CiftiConvertToNiftiParamsDictTagged
 
 
-CiftiConvertResetTimepointsParamsDict_ = typing.TypedDict('CiftiConvertResetTimepointsParamsDict_', {
-    "@type": typing.NotRequired[typing.Literal["reset-timepoints"]],
+_CiftiConvertResetTimepointsParamsDict_NoTag = typing.TypedDict('_CiftiConvertResetTimepointsParamsDict_NoTag', {
     "timestep": float,
     "timestart": float,
     "unit": typing.NotRequired[str | None],
@@ -100,10 +99,10 @@ CiftiConvertResetTimepointsParamsDictTagged_ = typing.TypedDict('CiftiConvertRes
     "timestart": float,
     "unit": typing.NotRequired[str | None],
 })
+CiftiConvertResetTimepointsParamsDict_ = _CiftiConvertResetTimepointsParamsDict_NoTag | CiftiConvertResetTimepointsParamsDictTagged_
 
 
-CiftiConvertFromNiftiParamsDict = typing.TypedDict('CiftiConvertFromNiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-nifti"]],
+_CiftiConvertFromNiftiParamsDictNoTag = typing.TypedDict('_CiftiConvertFromNiftiParamsDictNoTag', {
     "nifti-in": InputPathType,
     "cifti-template": InputPathType,
     "cifti-out": str,
@@ -118,10 +117,10 @@ CiftiConvertFromNiftiParamsDictTagged = typing.TypedDict('CiftiConvertFromNiftiP
     "reset-timepoints": typing.NotRequired[CiftiConvertResetTimepointsParamsDict_ | None],
     "reset-scalars": bool,
 })
+CiftiConvertFromNiftiParamsDict = _CiftiConvertFromNiftiParamsDictNoTag | CiftiConvertFromNiftiParamsDictTagged
 
 
-CiftiConvertToTextParamsDict = typing.TypedDict('CiftiConvertToTextParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-text"]],
+_CiftiConvertToTextParamsDictNoTag = typing.TypedDict('_CiftiConvertToTextParamsDictNoTag', {
     "cifti-in": InputPathType,
     "text-out": str,
     "delim-string": typing.NotRequired[str | None],
@@ -132,10 +131,10 @@ CiftiConvertToTextParamsDictTagged = typing.TypedDict('CiftiConvertToTextParamsD
     "text-out": str,
     "delim-string": typing.NotRequired[str | None],
 })
+CiftiConvertToTextParamsDict = _CiftiConvertToTextParamsDictNoTag | CiftiConvertToTextParamsDictTagged
 
 
-CiftiConvertResetTimepointsParamsDict_2 = typing.TypedDict('CiftiConvertResetTimepointsParamsDict_2', {
-    "@type": typing.NotRequired[typing.Literal["reset-timepoints"]],
+_CiftiConvertResetTimepointsParamsDict_2NoTag = typing.TypedDict('_CiftiConvertResetTimepointsParamsDict_2NoTag', {
     "timestep": float,
     "timestart": float,
     "unit": typing.NotRequired[str | None],
@@ -146,10 +145,10 @@ CiftiConvertResetTimepointsParamsDictTagged_2 = typing.TypedDict('CiftiConvertRe
     "timestart": float,
     "unit": typing.NotRequired[str | None],
 })
+CiftiConvertResetTimepointsParamsDict_2 = _CiftiConvertResetTimepointsParamsDict_2NoTag | CiftiConvertResetTimepointsParamsDictTagged_2
 
 
-CiftiConvertFromTextParamsDict = typing.TypedDict('CiftiConvertFromTextParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-text"]],
+_CiftiConvertFromTextParamsDictNoTag = typing.TypedDict('_CiftiConvertFromTextParamsDictNoTag', {
     "text-in": str,
     "cifti-template": InputPathType,
     "cifti-out": str,
@@ -166,10 +165,10 @@ CiftiConvertFromTextParamsDictTagged = typing.TypedDict('CiftiConvertFromTextPar
     "reset-timepoints": typing.NotRequired[CiftiConvertResetTimepointsParamsDict_2 | None],
     "reset-scalars": bool,
 })
+CiftiConvertFromTextParamsDict = _CiftiConvertFromTextParamsDictNoTag | CiftiConvertFromTextParamsDictTagged
 
 
-CiftiConvertParamsDict = typing.TypedDict('CiftiConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-convert"]],
+_CiftiConvertParamsDictNoTag = typing.TypedDict('_CiftiConvertParamsDictNoTag', {
     "to-gifti-ext": typing.NotRequired[CiftiConvertToGiftiExtParamsDict | None],
     "from-gifti-ext": typing.NotRequired[CiftiConvertFromGiftiExtParamsDict | None],
     "to-nifti": typing.NotRequired[CiftiConvertToNiftiParamsDict | None],
@@ -186,6 +185,7 @@ CiftiConvertParamsDictTagged = typing.TypedDict('CiftiConvertParamsDictTagged', 
     "to-text": typing.NotRequired[CiftiConvertToTextParamsDict | None],
     "from-text": typing.NotRequired[CiftiConvertFromTextParamsDict | None],
 })
+CiftiConvertParamsDict = _CiftiConvertParamsDictNoTag | CiftiConvertParamsDictTagged
 
 
 def cifti_convert_to_gifti_ext(

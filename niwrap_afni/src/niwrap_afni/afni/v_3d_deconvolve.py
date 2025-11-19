@@ -13,8 +13,7 @@ V_3D_DECONVOLVE_METADATA = Metadata(
 )
 
 
-V3dDeconvolveParamsDict = typing.TypedDict('V3dDeconvolveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDeconvolve"]],
+_V3dDeconvolveParamsDictNoTag = typing.TypedDict('_V3dDeconvolveParamsDictNoTag', {
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "num_stimts": typing.NotRequired[int | None],
@@ -49,6 +48,7 @@ V3dDeconvolveParamsDictTagged = typing.TypedDict('V3dDeconvolveParamsDictTagged'
     "x1D": typing.NotRequired[str | None],
     "jobs": typing.NotRequired[int | None],
 })
+V3dDeconvolveParamsDict = _V3dDeconvolveParamsDictNoTag | V3dDeconvolveParamsDictTagged
 
 
 class V3dDeconvolveOutputs(typing.NamedTuple):

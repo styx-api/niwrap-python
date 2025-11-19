@@ -13,8 +13,7 @@ MRI_SEG_DIFF_METADATA = Metadata(
 )
 
 
-MriSegDiffParamsDict = typing.TypedDict('MriSegDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_diff"]],
+_MriSegDiffParamsDictNoTag = typing.TypedDict('_MriSegDiffParamsDictNoTag', {
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ MriSegDiffParamsDictTagged = typing.TypedDict('MriSegDiffParamsDictTagged', {
     "checkopts": bool,
     "version": bool,
 })
+MriSegDiffParamsDict = _MriSegDiffParamsDictNoTag | MriSegDiffParamsDictTagged
 
 
 class MriSegDiffOutputs(typing.NamedTuple):

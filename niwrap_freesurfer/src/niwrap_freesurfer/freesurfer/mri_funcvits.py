@@ -13,8 +13,7 @@ MRI_FUNCVITS_METADATA = Metadata(
 )
 
 
-MriFuncvitsParamsDict = typing.TypedDict('MriFuncvitsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-funcvits"]],
+_MriFuncvitsParamsDictNoTag = typing.TypedDict('_MriFuncvitsParamsDictNoTag', {
     "stem": str,
     "outdir": str,
     "reg": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ MriFuncvitsParamsDictTagged = typing.TypedDict('MriFuncvitsParamsDictTagged', {
     "mail": typing.NotRequired[str | None],
     "noforce": bool,
 })
+MriFuncvitsParamsDict = _MriFuncvitsParamsDictNoTag | MriFuncvitsParamsDictTagged
 
 
 class MriFuncvitsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ BET2_METADATA = Metadata(
 )
 
 
-Bet2ParamsDict = typing.TypedDict('Bet2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bet2"]],
+_Bet2ParamsDictNoTag = typing.TypedDict('_Bet2ParamsDictNoTag', {
     "input_fileroot": str,
     "output_fileroot": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -49,6 +48,7 @@ Bet2ParamsDictTagged = typing.TypedDict('Bet2ParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+Bet2ParamsDict = _Bet2ParamsDictNoTag | Bet2ParamsDictTagged
 
 
 class Bet2Outputs(typing.NamedTuple):

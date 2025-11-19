@@ -13,8 +13,7 @@ P2DSETSTAT_METADATA = Metadata(
 )
 
 
-P2dsetstatParamsDict = typing.TypedDict('P2dsetstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/p2dsetstat"]],
+_P2dsetstatParamsDictNoTag = typing.TypedDict('_P2dsetstatParamsDictNoTag', {
     "dataset": str,
     "pvalue": float,
     "bisided": bool,
@@ -31,6 +30,7 @@ P2dsetstatParamsDictTagged = typing.TypedDict('P2dsetstatParamsDictTagged', {
     "onesided": bool,
     "quiet": bool,
 })
+P2dsetstatParamsDict = _P2dsetstatParamsDictNoTag | P2dsetstatParamsDictTagged
 
 
 class P2dsetstatOutputs(typing.NamedTuple):

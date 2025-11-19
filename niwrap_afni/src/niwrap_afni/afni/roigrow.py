@@ -13,8 +13,7 @@ ROIGROW_METADATA = Metadata(
 )
 
 
-RoigrowParamsDict = typing.TypedDict('RoigrowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ROIgrow"]],
+_RoigrowParamsDictNoTag = typing.TypedDict('_RoigrowParamsDictNoTag', {
     "input_surface": str,
     "roi_labels": str,
     "lim_distance": float,
@@ -35,6 +34,7 @@ RoigrowParamsDictTagged = typing.TypedDict('RoigrowParamsDictTagged', {
     "insphere_diameter": typing.NotRequired[float | None],
     "inbox_edges": typing.NotRequired[list[float] | None],
 })
+RoigrowParamsDict = _RoigrowParamsDictNoTag | RoigrowParamsDictTagged
 
 
 class RoigrowOutputs(typing.NamedTuple):

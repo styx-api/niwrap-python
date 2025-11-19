@@ -13,8 +13,7 @@ FSLHD_METADATA = Metadata(
 )
 
 
-FslhdParamsDict = typing.TypedDict('FslhdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslhd"]],
+_FslhdParamsDictNoTag = typing.TypedDict('_FslhdParamsDictNoTag', {
     "xml_flag": bool,
     "input_file": InputPathType,
 })
@@ -23,6 +22,7 @@ FslhdParamsDictTagged = typing.TypedDict('FslhdParamsDictTagged', {
     "xml_flag": bool,
     "input_file": InputPathType,
 })
+FslhdParamsDict = _FslhdParamsDictNoTag | FslhdParamsDictTagged
 
 
 class FslhdOutputs(typing.NamedTuple):

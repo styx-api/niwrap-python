@@ -13,8 +13,7 @@ ASEG2FEAT_METADATA = Metadata(
 )
 
 
-Aseg2featParamsDict = typing.TypedDict('Aseg2featParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/aseg2feat"]],
+_Aseg2featParamsDictNoTag = typing.TypedDict('_Aseg2featParamsDictNoTag', {
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ Aseg2featParamsDictTagged = typing.TypedDict('Aseg2featParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+Aseg2featParamsDict = _Aseg2featParamsDictNoTag | Aseg2featParamsDictTagged
 
 
 class Aseg2featOutputs(typing.NamedTuple):

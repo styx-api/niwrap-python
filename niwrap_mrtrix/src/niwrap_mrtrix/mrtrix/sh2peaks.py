@@ -13,8 +13,7 @@ SH2PEAKS_METADATA = Metadata(
 )
 
 
-Sh2peaksDirectionParamsDict = typing.TypedDict('Sh2peaksDirectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["direction"]],
+_Sh2peaksDirectionParamsDictNoTag = typing.TypedDict('_Sh2peaksDirectionParamsDictNoTag', {
     "phi": float,
     "theta": float,
 })
@@ -23,10 +22,10 @@ Sh2peaksDirectionParamsDictTagged = typing.TypedDict('Sh2peaksDirectionParamsDic
     "phi": float,
     "theta": float,
 })
+Sh2peaksDirectionParamsDict = _Sh2peaksDirectionParamsDictNoTag | Sh2peaksDirectionParamsDictTagged
 
 
-Sh2peaksConfigParamsDict = typing.TypedDict('Sh2peaksConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Sh2peaksConfigParamsDictNoTag = typing.TypedDict('_Sh2peaksConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ Sh2peaksConfigParamsDictTagged = typing.TypedDict('Sh2peaksConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+Sh2peaksConfigParamsDict = _Sh2peaksConfigParamsDictNoTag | Sh2peaksConfigParamsDictTagged
 
 
-Sh2peaksParamsDict = typing.TypedDict('Sh2peaksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2peaks"]],
+_Sh2peaksParamsDictNoTag = typing.TypedDict('_Sh2peaksParamsDictNoTag', {
     "num": typing.NotRequired[int | None],
     "direction": typing.NotRequired[list[Sh2peaksDirectionParamsDict] | None],
     "peaks": typing.NotRequired[InputPathType | None],
@@ -77,6 +76,7 @@ Sh2peaksParamsDictTagged = typing.TypedDict('Sh2peaksParamsDictTagged', {
     "SH": InputPathType,
     "output": str,
 })
+Sh2peaksParamsDict = _Sh2peaksParamsDictNoTag | Sh2peaksParamsDictTagged
 
 
 def sh2peaks_direction(

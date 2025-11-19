@@ -13,8 +13,7 @@ SURFACE_METRICS_METADATA = Metadata(
 )
 
 
-SurfaceMetricsParamsDict = typing.TypedDict('SurfaceMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfaceMetrics"]],
+_SurfaceMetricsParamsDictNoTag = typing.TypedDict('_SurfaceMetricsParamsDictNoTag', {
     "volume": bool,
     "convexity": bool,
     "closest_node": typing.NotRequired[InputPathType | None],
@@ -65,6 +64,7 @@ SurfaceMetricsParamsDictTagged = typing.TypedDict('SurfaceMetricsParamsDictTagge
     "tlrc": bool,
     "prefix": typing.NotRequired[str | None],
 })
+SurfaceMetricsParamsDict = _SurfaceMetricsParamsDictNoTag | SurfaceMetricsParamsDictTagged
 
 
 class SurfaceMetricsOutputs(typing.NamedTuple):

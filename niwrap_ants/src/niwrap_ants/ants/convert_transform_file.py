@@ -13,8 +13,7 @@ CONVERT_TRANSFORM_FILE_METADATA = Metadata(
 )
 
 
-ConvertTransformFileParamsDict = typing.TypedDict('ConvertTransformFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ConvertTransformFile"]],
+_ConvertTransformFileParamsDictNoTag = typing.TypedDict('_ConvertTransformFileParamsDictNoTag', {
     "dimensions": int,
     "input_transform_file": InputPathType,
     "output_transform_file": str,
@@ -33,6 +32,7 @@ ConvertTransformFileParamsDictTagged = typing.TypedDict('ConvertTransformFilePar
     "RAS": bool,
     "convert_to_affine_type": bool,
 })
+ConvertTransformFileParamsDict = _ConvertTransformFileParamsDictNoTag | ConvertTransformFileParamsDictTagged
 
 
 class ConvertTransformFileOutputs(typing.NamedTuple):

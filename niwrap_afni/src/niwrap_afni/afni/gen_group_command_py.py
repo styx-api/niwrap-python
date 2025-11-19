@@ -13,8 +13,7 @@ GEN_GROUP_COMMAND_PY_METADATA = Metadata(
 )
 
 
-GenGroupCommandPyParamsDict = typing.TypedDict('GenGroupCommandPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/gen_group_command.py"]],
+_GenGroupCommandPyParamsDictNoTag = typing.TypedDict('_GenGroupCommandPyParamsDictNoTag', {
     "command_name": str,
     "datasets": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ GenGroupCommandPyParamsDictTagged = typing.TypedDict('GenGroupCommandPyParamsDic
     "write_script": typing.NotRequired[str | None],
     "other_options": typing.NotRequired[list[str] | None],
 })
+GenGroupCommandPyParamsDict = _GenGroupCommandPyParamsDictNoTag | GenGroupCommandPyParamsDictTagged
 
 
 class GenGroupCommandPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MAKE_DYADIC_VECTORS_METADATA = Metadata(
 )
 
 
-MakeDyadicVectorsParamsDict = typing.TypedDict('MakeDyadicVectorsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/make_dyadic_vectors"]],
+_MakeDyadicVectorsParamsDictNoTag = typing.TypedDict('_MakeDyadicVectorsParamsDictNoTag', {
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ MakeDyadicVectorsParamsDictTagged = typing.TypedDict('MakeDyadicVectorsParamsDic
     "output": str,
     "perc": typing.NotRequired[float | None],
 })
+MakeDyadicVectorsParamsDict = _MakeDyadicVectorsParamsDictNoTag | MakeDyadicVectorsParamsDictTagged
 
 
 class MakeDyadicVectorsOutputs(typing.NamedTuple):

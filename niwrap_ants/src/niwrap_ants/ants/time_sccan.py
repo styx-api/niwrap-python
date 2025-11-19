@@ -13,8 +13,7 @@ TIME_SCCAN_METADATA = Metadata(
 )
 
 
-TimeSccanTimeseriesimageToMatrixParamsDict = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["timeseriesimage_to_matrix"]],
+_TimeSccanTimeseriesimageToMatrixParamsDictNoTag = typing.TypedDict('_TimeSccanTimeseriesimageToMatrixParamsDictNoTag', {
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
@@ -23,10 +22,10 @@ TimeSccanTimeseriesimageToMatrixParamsDictTagged = typing.TypedDict('TimeSccanTi
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
+TimeSccanTimeseriesimageToMatrixParamsDict = _TimeSccanTimeseriesimageToMatrixParamsDictNoTag | TimeSccanTimeseriesimageToMatrixParamsDictTagged
 
 
-TimeSccanNetworkSccaParamsDict = typing.TypedDict('TimeSccanNetworkSccaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["network_scca"]],
+_TimeSccanNetworkSccaParamsDictNoTag = typing.TypedDict('_TimeSccanNetworkSccaParamsDictNoTag', {
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
@@ -35,10 +34,10 @@ TimeSccanNetworkSccaParamsDictTagged = typing.TypedDict('TimeSccanNetworkSccaPar
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
+TimeSccanNetworkSccaParamsDict = _TimeSccanNetworkSccaParamsDictNoTag | TimeSccanNetworkSccaParamsDictTagged
 
 
-TimeSccanNetworkRegionAveragingParamsDict = typing.TypedDict('TimeSccanNetworkRegionAveragingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["network_region_averaging"]],
+_TimeSccanNetworkRegionAveragingParamsDictNoTag = typing.TypedDict('_TimeSccanNetworkRegionAveragingParamsDictNoTag', {
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
@@ -47,10 +46,10 @@ TimeSccanNetworkRegionAveragingParamsDictTagged = typing.TypedDict('TimeSccanNet
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
+TimeSccanNetworkRegionAveragingParamsDict = _TimeSccanNetworkRegionAveragingParamsDictNoTag | TimeSccanNetworkRegionAveragingParamsDictTagged
 
 
-TimeSccanParamsDict = typing.TypedDict('TimeSccanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/TimeSCCAN"]],
+_TimeSccanParamsDictNoTag = typing.TypedDict('_TimeSccanParamsDictNoTag', {
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
     "minimum_region_size": typing.NotRequired[int | None],
@@ -83,6 +82,7 @@ TimeSccanParamsDictTagged = typing.TypedDict('TimeSccanParamsDictTagged', {
     "labelsimage_to_matrix": typing.NotRequired[InputPathType | None],
     "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParamsDictTagged, TimeSccanNetworkRegionAveragingParamsDictTagged] | None],
 })
+TimeSccanParamsDict = _TimeSccanParamsDictNoTag | TimeSccanParamsDictTagged
 
 
 def time_sccan_network_cargs_dyn_fn(

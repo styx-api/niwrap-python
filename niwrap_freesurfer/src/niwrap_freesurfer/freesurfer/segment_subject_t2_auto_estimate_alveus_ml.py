@@ -13,14 +13,14 @@ SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 )
 
 
-SegmentSubjectT2AutoEstimateAlveusMlParamsDict = typing.TypedDict('SegmentSubjectT2AutoEstimateAlveusMlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentSubjectT2_autoEstimateAlveusML"]],
+_SegmentSubjectT2AutoEstimateAlveusMlParamsDictNoTag = typing.TypedDict('_SegmentSubjectT2AutoEstimateAlveusMlParamsDictNoTag', {
     "missing_library": str,
 })
 SegmentSubjectT2AutoEstimateAlveusMlParamsDictTagged = typing.TypedDict('SegmentSubjectT2AutoEstimateAlveusMlParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentSubjectT2_autoEstimateAlveusML"],
     "missing_library": str,
 })
+SegmentSubjectT2AutoEstimateAlveusMlParamsDict = _SegmentSubjectT2AutoEstimateAlveusMlParamsDictNoTag | SegmentSubjectT2AutoEstimateAlveusMlParamsDictTagged
 
 
 class SegmentSubjectT2AutoEstimateAlveusMlOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ CONVERTWARP_METADATA = Metadata(
 )
 
 
-ConvertwarpParamsDict = typing.TypedDict('ConvertwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/convertwarp"]],
+_ConvertwarpParamsDictNoTag = typing.TypedDict('_ConvertwarpParamsDictNoTag', {
     "abswarp": bool,
     "cons_jacobian": bool,
     "jacobian_max": typing.NotRequired[float | None],
@@ -51,6 +50,7 @@ ConvertwarpParamsDictTagged = typing.TypedDict('ConvertwarpParamsDictTagged', {
     "warp1": typing.NotRequired[InputPathType | None],
     "warp2": typing.NotRequired[InputPathType | None],
 })
+ConvertwarpParamsDict = _ConvertwarpParamsDictNoTag | ConvertwarpParamsDictTagged
 
 
 class ConvertwarpOutputs(typing.NamedTuple):

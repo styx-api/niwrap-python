@@ -13,8 +13,7 @@ V__DICE_METRIC_METADATA = Metadata(
 )
 
 
-VDiceMetricParamsDict = typing.TypedDict('VDiceMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@DiceMetric"]],
+_VDiceMetricParamsDictNoTag = typing.TypedDict('_VDiceMetricParamsDictNoTag', {
     "base": InputPathType,
     "dsets": list[InputPathType],
     "max_roi": typing.NotRequired[float | None],
@@ -45,6 +44,7 @@ VDiceMetricParamsDictTagged = typing.TypedDict('VDiceMetricParamsDictTagged', {
     "ignore_bad": bool,
     "keep_tmp": bool,
 })
+VDiceMetricParamsDict = _VDiceMetricParamsDictNoTag | VDiceMetricParamsDictTagged
 
 
 class VDiceMetricOutputs(typing.NamedTuple):

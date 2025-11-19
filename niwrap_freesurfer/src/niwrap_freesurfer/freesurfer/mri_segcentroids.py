@@ -13,8 +13,7 @@ MRI_SEGCENTROIDS_METADATA = Metadata(
 )
 
 
-MriSegcentroidsParamsDict = typing.TypedDict('MriSegcentroidsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segcentroids"]],
+_MriSegcentroidsParamsDictNoTag = typing.TypedDict('_MriSegcentroidsParamsDictNoTag', {
     "input_segmentation": InputPathType,
     "output_file": str,
     "pointset_flag": bool,
@@ -33,6 +32,7 @@ MriSegcentroidsParamsDictTagged = typing.TypedDict('MriSegcentroidsParamsDictTag
     "lut_file": typing.NotRequired[InputPathType | None],
     "default_lut_flag": bool,
 })
+MriSegcentroidsParamsDict = _MriSegcentroidsParamsDictNoTag | MriSegcentroidsParamsDictTagged
 
 
 class MriSegcentroidsOutputs(typing.NamedTuple):

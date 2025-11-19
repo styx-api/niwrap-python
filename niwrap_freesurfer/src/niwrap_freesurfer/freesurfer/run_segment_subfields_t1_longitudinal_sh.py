@@ -13,8 +13,7 @@ RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubfieldsT1LongitudinalShParamsDict = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubfieldsT1Longitudinal.sh"]],
+_RunSegmentSubfieldsT1LongitudinalShParamsDictNoTag = typing.TypedDict('_RunSegmentSubfieldsT1LongitudinalShParamsDictNoTag', {
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ RunSegmentSubfieldsT1LongitudinalShParamsDictTagged = typing.TypedDict('RunSegme
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
+RunSegmentSubfieldsT1LongitudinalShParamsDict = _RunSegmentSubfieldsT1LongitudinalShParamsDictNoTag | RunSegmentSubfieldsT1LongitudinalShParamsDictTagged
 
 
 class RunSegmentSubfieldsT1LongitudinalShOutputs(typing.NamedTuple):

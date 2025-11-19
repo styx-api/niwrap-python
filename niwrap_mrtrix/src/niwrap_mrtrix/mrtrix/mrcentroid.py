@@ -13,8 +13,7 @@ MRCENTROID_METADATA = Metadata(
 )
 
 
-MrcentroidConfigParamsDict = typing.TypedDict('MrcentroidConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrcentroidConfigParamsDictNoTag = typing.TypedDict('_MrcentroidConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrcentroidConfigParamsDictTagged = typing.TypedDict('MrcentroidConfigParamsDictT
     "key": str,
     "value": str,
 })
+MrcentroidConfigParamsDict = _MrcentroidConfigParamsDictNoTag | MrcentroidConfigParamsDictTagged
 
 
-MrcentroidParamsDict = typing.TypedDict('MrcentroidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcentroid"]],
+_MrcentroidParamsDictNoTag = typing.TypedDict('_MrcentroidParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "voxelspace": bool,
     "info": bool,
@@ -53,6 +52,7 @@ MrcentroidParamsDictTagged = typing.TypedDict('MrcentroidParamsDictTagged', {
     "version": bool,
     "input": InputPathType,
 })
+MrcentroidParamsDict = _MrcentroidParamsDictNoTag | MrcentroidParamsDictTagged
 
 
 def mrcentroid_config(

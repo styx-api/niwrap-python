@@ -13,8 +13,7 @@ MRI_SYNTHMORPH_METADATA = Metadata(
 )
 
 
-MriSynthmorphParamsDict = typing.TypedDict('MriSynthmorphParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthmorph"]],
+_MriSynthmorphParamsDictNoTag = typing.TypedDict('_MriSynthmorphParamsDictNoTag', {
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
     "moved_output": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ MriSynthmorphParamsDictTagged = typing.TypedDict('MriSynthmorphParamsDictTagged'
     "model_weights": typing.NotRequired[InputPathType | None],
     "inspect_directory": typing.NotRequired[str | None],
 })
+MriSynthmorphParamsDict = _MriSynthmorphParamsDictNoTag | MriSynthmorphParamsDictTagged
 
 
 class MriSynthmorphOutputs(typing.NamedTuple):

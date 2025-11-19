@@ -13,8 +13,7 @@ SURF_MEASURES_METADATA = Metadata(
 )
 
 
-SurfMeasuresParamsDict = typing.TypedDict('SurfMeasuresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfMeasures"]],
+_SurfMeasuresParamsDictNoTag = typing.TypedDict('_SurfMeasuresParamsDictNoTag', {
     "spec_file": InputPathType,
     "surf_A": str,
     "surf_B": typing.NotRequired[str | None],
@@ -55,6 +54,7 @@ SurfMeasuresParamsDictTagged = typing.TypedDict('SurfMeasuresParamsDictTagged', 
     "info_volg": bool,
     "ver": bool,
 })
+SurfMeasuresParamsDict = _SurfMeasuresParamsDictNoTag | SurfMeasuresParamsDictTagged
 
 
 class SurfMeasuresOutputs(typing.NamedTuple):

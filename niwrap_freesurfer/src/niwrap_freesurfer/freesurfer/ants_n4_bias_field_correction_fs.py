@@ -13,8 +13,7 @@ ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
 )
 
 
-AntsN4BiasFieldCorrectionFsParamsDict = typing.TypedDict('AntsN4BiasFieldCorrectionFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/AntsN4BiasFieldCorrectionFs"]],
+_AntsN4BiasFieldCorrectionFsParamsDictNoTag = typing.TypedDict('_AntsN4BiasFieldCorrectionFsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ AntsN4BiasFieldCorrectionFsParamsDictTagged = typing.TypedDict('AntsN4BiasFieldC
     "output_dtype": typing.NotRequired[str | None],
     "replace_zeros": typing.NotRequired[str | None],
 })
+AntsN4BiasFieldCorrectionFsParamsDict = _AntsN4BiasFieldCorrectionFsParamsDictNoTag | AntsN4BiasFieldCorrectionFsParamsDictTagged
 
 
 class AntsN4BiasFieldCorrectionFsOutputs(typing.NamedTuple):

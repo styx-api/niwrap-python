@@ -13,8 +13,7 @@ V_1DSVD_METADATA = Metadata(
 )
 
 
-V1dsvdParamsDict = typing.TypedDict('V1dsvdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dsvd"]],
+_V1dsvdParamsDictNoTag = typing.TypedDict('_V1dsvdParamsDictNoTag', {
     "one": bool,
     "vmean": bool,
     "vnorm": bool,
@@ -41,6 +40,7 @@ V1dsvdParamsDictTagged = typing.TypedDict('V1dsvdParamsDictTagged', {
     "num_eigenvectors": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
+V1dsvdParamsDict = _V1dsvdParamsDictNoTag | V1dsvdParamsDictTagged
 
 
 class V1dsvdOutputs(typing.NamedTuple):

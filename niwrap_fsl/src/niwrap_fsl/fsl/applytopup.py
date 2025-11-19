@@ -13,8 +13,7 @@ APPLYTOPUP_METADATA = Metadata(
 )
 
 
-ApplytopupParamsDict = typing.TypedDict('ApplytopupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/applytopup"]],
+_ApplytopupParamsDictNoTag = typing.TypedDict('_ApplytopupParamsDictNoTag', {
     "imain": list[InputPathType],
     "datain": InputPathType,
     "inindex": list[str],
@@ -37,6 +36,7 @@ ApplytopupParamsDictTagged = typing.TypedDict('ApplytopupParamsDictTagged', {
     "datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double"] | None],
     "verbose": bool,
 })
+ApplytopupParamsDict = _ApplytopupParamsDictNoTag | ApplytopupParamsDictTagged
 
 
 class ApplytopupOutputs(typing.NamedTuple):

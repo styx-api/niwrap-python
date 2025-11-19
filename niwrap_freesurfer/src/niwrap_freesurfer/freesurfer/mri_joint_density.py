@@ -13,8 +13,7 @@ MRI_JOINT_DENSITY_METADATA = Metadata(
 )
 
 
-MriJointDensityParamsDict = typing.TypedDict('MriJointDensityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_joint_density"]],
+_MriJointDensityParamsDictNoTag = typing.TypedDict('_MriJointDensityParamsDictNoTag', {
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_density_file": str,
@@ -25,6 +24,7 @@ MriJointDensityParamsDictTagged = typing.TypedDict('MriJointDensityParamsDictTag
     "vol2": InputPathType,
     "output_density_file": str,
 })
+MriJointDensityParamsDict = _MriJointDensityParamsDictNoTag | MriJointDensityParamsDictTagged
 
 
 class MriJointDensityOutputs(typing.NamedTuple):

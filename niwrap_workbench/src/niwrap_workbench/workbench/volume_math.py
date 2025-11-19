@@ -12,8 +12,7 @@ VOLUME_MATH_METADATA = Metadata(
 )
 
 
-VolumeMathVarParamsDict = typing.TypedDict('VolumeMathVarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["var"]],
+_VolumeMathVarParamsDictNoTag = typing.TypedDict('_VolumeMathVarParamsDictNoTag', {
     "name": str,
     "volume": InputPathType,
     "subvol": typing.NotRequired[str | None],
@@ -26,10 +25,10 @@ VolumeMathVarParamsDictTagged = typing.TypedDict('VolumeMathVarParamsDictTagged'
     "subvol": typing.NotRequired[str | None],
     "repeat": bool,
 })
+VolumeMathVarParamsDict = _VolumeMathVarParamsDictNoTag | VolumeMathVarParamsDictTagged
 
 
-VolumeMathParamsDict = typing.TypedDict('VolumeMathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-math"]],
+_VolumeMathParamsDictNoTag = typing.TypedDict('_VolumeMathParamsDictNoTag', {
     "volume-out": str,
     "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
@@ -42,6 +41,7 @@ VolumeMathParamsDictTagged = typing.TypedDict('VolumeMathParamsDictTagged', {
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
     "expression": str,
 })
+VolumeMathParamsDict = _VolumeMathParamsDictNoTag | VolumeMathParamsDictTagged
 
 
 def volume_math_var(

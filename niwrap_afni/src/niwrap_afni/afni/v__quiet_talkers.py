@@ -13,8 +13,7 @@ V__QUIET_TALKERS_METADATA = Metadata(
 )
 
 
-VQuietTalkersParamsDict = typing.TypedDict('VQuietTalkersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Quiet_Talkers"]],
+_VQuietTalkersParamsDictNoTag = typing.TypedDict('_VQuietTalkersParamsDictNoTag', {
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
     "npb_val": typing.NotRequired[list[float] | None],
@@ -35,6 +34,7 @@ VQuietTalkersParamsDictTagged = typing.TypedDict('VQuietTalkersParamsDictTagged'
     "list": bool,
     "quiet": bool,
 })
+VQuietTalkersParamsDict = _VQuietTalkersParamsDictNoTag | VQuietTalkersParamsDictTagged
 
 
 class VQuietTalkersOutputs(typing.NamedTuple):

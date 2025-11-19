@@ -13,8 +13,7 @@ BUILD_AFNI_PY_METADATA = Metadata(
 )
 
 
-BuildAfniPyParamsDict = typing.TypedDict('BuildAfniPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/build_afni.py"]],
+_BuildAfniPyParamsDictNoTag = typing.TypedDict('_BuildAfniPyParamsDictNoTag', {
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
     "git_branch": typing.NotRequired[str | None],
@@ -51,6 +50,7 @@ BuildAfniPyParamsDictTagged = typing.TypedDict('BuildAfniPyParamsDictTagged', {
     "show_valid_opts": bool,
     "version": bool,
 })
+BuildAfniPyParamsDict = _BuildAfniPyParamsDictNoTag | BuildAfniPyParamsDictTagged
 
 
 class BuildAfniPyOutputs(typing.NamedTuple):

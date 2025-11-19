@@ -13,8 +13,7 @@ MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
 )
 
 
-MriEditSegmentationWithSurfacesParamsDict = typing.TypedDict('MriEditSegmentationWithSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_segmentation_with_surfaces"]],
+_MriEditSegmentationWithSurfacesParamsDictNoTag = typing.TypedDict('_MriEditSegmentationWithSurfacesParamsDictNoTag', {
     "aseg_name": InputPathType,
     "surface_dir": str,
     "norm_volume": InputPathType,
@@ -37,6 +36,7 @@ MriEditSegmentationWithSurfacesParamsDictTagged = typing.TypedDict('MriEditSegme
     "cortex_flag": typing.NotRequired[bool | None],
     "annotation_file": typing.NotRequired[InputPathType | None],
 })
+MriEditSegmentationWithSurfacesParamsDict = _MriEditSegmentationWithSurfacesParamsDictNoTag | MriEditSegmentationWithSurfacesParamsDictTagged
 
 
 class MriEditSegmentationWithSurfacesOutputs(typing.NamedTuple):

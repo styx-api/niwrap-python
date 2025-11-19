@@ -12,8 +12,7 @@ VOLUME_CREATE_METADATA = Metadata(
 )
 
 
-VolumeCreatePlumbParamsDict = typing.TypedDict('VolumeCreatePlumbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["plumb"]],
+_VolumeCreatePlumbParamsDictNoTag = typing.TypedDict('_VolumeCreatePlumbParamsDictNoTag', {
     "axis-order": str,
     "x-spacing": float,
     "y-spacing": float,
@@ -32,10 +31,10 @@ VolumeCreatePlumbParamsDictTagged = typing.TypedDict('VolumeCreatePlumbParamsDic
     "y-offset": float,
     "z-offset": float,
 })
+VolumeCreatePlumbParamsDict = _VolumeCreatePlumbParamsDictNoTag | VolumeCreatePlumbParamsDictTagged
 
 
-VolumeCreateSformParamsDict = typing.TypedDict('VolumeCreateSformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sform"]],
+_VolumeCreateSformParamsDictNoTag = typing.TypedDict('_VolumeCreateSformParamsDictNoTag', {
     "xi-spacing": float,
     "xj-spacing": float,
     "xk-spacing": float,
@@ -64,10 +63,10 @@ VolumeCreateSformParamsDictTagged = typing.TypedDict('VolumeCreateSformParamsDic
     "zk-spacing": float,
     "z-offset": float,
 })
+VolumeCreateSformParamsDict = _VolumeCreateSformParamsDictNoTag | VolumeCreateSformParamsDictTagged
 
 
-VolumeCreateParamsDict = typing.TypedDict('VolumeCreateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-create"]],
+_VolumeCreateParamsDictNoTag = typing.TypedDict('_VolumeCreateParamsDictNoTag', {
     "volume-out": str,
     "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
     "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
@@ -84,6 +83,7 @@ VolumeCreateParamsDictTagged = typing.TypedDict('VolumeCreateParamsDictTagged', 
     "j-dim": int,
     "k-dim": int,
 })
+VolumeCreateParamsDict = _VolumeCreateParamsDictNoTag | VolumeCreateParamsDictTagged
 
 
 def volume_create_plumb(

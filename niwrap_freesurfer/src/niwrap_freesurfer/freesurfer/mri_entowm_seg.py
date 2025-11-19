@@ -13,8 +13,7 @@ MRI_ENTOWM_SEG_METADATA = Metadata(
 )
 
 
-MriEntowmSegParamsDict = typing.TypedDict('MriEntowmSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_entowm_seg"]],
+_MriEntowmSegParamsDictNoTag = typing.TypedDict('_MriEntowmSegParamsDictNoTag', {
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "recon_subjects": typing.NotRequired[list[str] | None],
@@ -69,6 +68,7 @@ MriEntowmSegParamsDictTagged = typing.TypedDict('MriEntowmSegParamsDictTagged', 
     "no_cite_sclimbic": bool,
     "nchannels": typing.NotRequired[float | None],
 })
+MriEntowmSegParamsDict = _MriEntowmSegParamsDictNoTag | MriEntowmSegParamsDictTagged
 
 
 class MriEntowmSegOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 )
 
 
-ZipSpecFileParamsDict = typing.TypedDict('ZipSpecFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/zip-spec-file"]],
+_ZipSpecFileParamsDictNoTag = typing.TypedDict('_ZipSpecFileParamsDictNoTag', {
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
     "spec-file": str,
@@ -28,6 +27,7 @@ ZipSpecFileParamsDictTagged = typing.TypedDict('ZipSpecFileParamsDictTagged', {
     "extract-folder": str,
     "zip-file": str,
 })
+ZipSpecFileParamsDict = _ZipSpecFileParamsDictNoTag | ZipSpecFileParamsDictTagged
 
 
 class ZipSpecFileOutputs(typing.NamedTuple):

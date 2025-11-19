@@ -13,8 +13,7 @@ OLD_BETALL_METADATA = Metadata(
 )
 
 
-OldBetallParamsDict = typing.TypedDict('OldBetallParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/old_betall"]],
+_OldBetallParamsDictNoTag = typing.TypedDict('_OldBetallParamsDictNoTag', {
     "t1_filerout": str,
     "t2_filerout": str,
 })
@@ -23,6 +22,7 @@ OldBetallParamsDictTagged = typing.TypedDict('OldBetallParamsDictTagged', {
     "t1_filerout": str,
     "t2_filerout": str,
 })
+OldBetallParamsDict = _OldBetallParamsDictNoTag | OldBetallParamsDictTagged
 
 
 class OldBetallOutputs(typing.NamedTuple):

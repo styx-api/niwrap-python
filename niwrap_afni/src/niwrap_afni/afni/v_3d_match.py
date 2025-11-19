@@ -13,8 +13,7 @@ V_3D_MATCH_METADATA = Metadata(
 )
 
 
-V3dMatchParamsDict = typing.TypedDict('V3dMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMatch"]],
+_V3dMatchParamsDictNoTag = typing.TypedDict('_V3dMatchParamsDictNoTag', {
     "inset": InputPathType,
     "refset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,6 +36,7 @@ V3dMatchParamsDictTagged = typing.TypedDict('V3dMatchParamsDictTagged', {
     "prefix": str,
     "only_dice_thr": bool,
 })
+V3dMatchParamsDict = _V3dMatchParamsDictNoTag | V3dMatchParamsDictTagged
 
 
 class V3dMatchOutputs(typing.NamedTuple):

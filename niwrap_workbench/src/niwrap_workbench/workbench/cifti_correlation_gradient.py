@@ -12,8 +12,7 @@ CIFTI_CORRELATION_GRADIENT_METADATA = Metadata(
 )
 
 
-CiftiCorrelationGradientLeftSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiCorrelationGradientLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiCorrelationGradientLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiCor
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCorrelationGradientLeftSurfaceParamsDict = _CiftiCorrelationGradientLeftSurfaceParamsDictNoTag | CiftiCorrelationGradientLeftSurfaceParamsDictTagged
 
 
-CiftiCorrelationGradientRightSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiCorrelationGradientRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiCorrelationGradientRightSurfaceParamsDictTagged = typing.TypedDict('CiftiCo
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCorrelationGradientRightSurfaceParamsDict = _CiftiCorrelationGradientRightSurfaceParamsDictNoTag | CiftiCorrelationGradientRightSurfaceParamsDictTagged
 
 
-CiftiCorrelationGradientCerebellumSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiCorrelationGradientCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged = typing.TypedDict('Ci
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCorrelationGradientCerebellumSurfaceParamsDict = _CiftiCorrelationGradientCerebellumSurfaceParamsDictNoTag | CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged
 
 
-CiftiCorrelationGradientDoubleCorrelationParamsDict = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["double-correlation"]],
+_CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag', {
     "fisher-z-first": bool,
     "no-demean-first": bool,
     "covariance-first": bool,
@@ -60,10 +59,10 @@ CiftiCorrelationGradientDoubleCorrelationParamsDictTagged = typing.TypedDict('Ci
     "no-demean-first": bool,
     "covariance-first": bool,
 })
+CiftiCorrelationGradientDoubleCorrelationParamsDict = _CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag | CiftiCorrelationGradientDoubleCorrelationParamsDictTagged
 
 
-CiftiCorrelationGradientParamsDict = typing.TypedDict('CiftiCorrelationGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation-gradient"]],
+_CiftiCorrelationGradientParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientParamsDictNoTag', {
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
@@ -98,6 +97,7 @@ CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGra
     "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParamsDict | None],
     "cifti": InputPathType,
 })
+CiftiCorrelationGradientParamsDict = _CiftiCorrelationGradientParamsDictNoTag | CiftiCorrelationGradientParamsDictTagged
 
 
 def cifti_correlation_gradient_left_surface(

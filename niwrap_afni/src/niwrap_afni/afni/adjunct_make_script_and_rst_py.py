@@ -13,8 +13,7 @@ ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
 )
 
 
-AdjunctMakeScriptAndRstPyParamsDict = typing.TypedDict('AdjunctMakeScriptAndRstPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_make_script_and_rst.py"]],
+_AdjunctMakeScriptAndRstPyParamsDictNoTag = typing.TypedDict('_AdjunctMakeScriptAndRstPyParamsDictNoTag', {
     "input_script": InputPathType,
     "prefix_rst": str,
     "prefix_script": str,
@@ -29,6 +28,7 @@ AdjunctMakeScriptAndRstPyParamsDictTagged = typing.TypedDict('AdjunctMakeScriptA
     "reflink": str,
     "execute_script": bool,
 })
+AdjunctMakeScriptAndRstPyParamsDict = _AdjunctMakeScriptAndRstPyParamsDictNoTag | AdjunctMakeScriptAndRstPyParamsDictTagged
 
 
 class AdjunctMakeScriptAndRstPyOutputs(typing.NamedTuple):

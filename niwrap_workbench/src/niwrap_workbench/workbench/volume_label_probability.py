@@ -12,8 +12,7 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-VolumeLabelProbabilityParamsDict = typing.TypedDict('VolumeLabelProbabilityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-probability"]],
+_VolumeLabelProbabilityParamsDictNoTag = typing.TypedDict('_VolumeLabelProbabilityParamsDictNoTag', {
     "probability-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
@@ -24,6 +23,7 @@ VolumeLabelProbabilityParamsDictTagged = typing.TypedDict('VolumeLabelProbabilit
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
+VolumeLabelProbabilityParamsDict = _VolumeLabelProbabilityParamsDictNoTag | VolumeLabelProbabilityParamsDictTagged
 
 
 class VolumeLabelProbabilityOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
 )
 
 
-AdjunctCombineStrPyParamsDict = typing.TypedDict('AdjunctCombineStrPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_combine_str.py"]],
+_AdjunctCombineStrPyParamsDictNoTag = typing.TypedDict('_AdjunctCombineStrPyParamsDictNoTag', {
     "output_file": str,
     "upper_index": float,
     "string_selectors": list[str],
@@ -25,6 +24,7 @@ AdjunctCombineStrPyParamsDictTagged = typing.TypedDict('AdjunctCombineStrPyParam
     "upper_index": float,
     "string_selectors": list[str],
 })
+AdjunctCombineStrPyParamsDict = _AdjunctCombineStrPyParamsDictNoTag | AdjunctCombineStrPyParamsDictTagged
 
 
 class AdjunctCombineStrPyOutputs(typing.NamedTuple):

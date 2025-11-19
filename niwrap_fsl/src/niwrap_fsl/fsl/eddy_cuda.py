@@ -13,8 +13,7 @@ EDDY_CUDA_METADATA = Metadata(
 )
 
 
-EddyCudaParamsDict = typing.TypedDict('EddyCudaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_cuda"]],
+_EddyCudaParamsDictNoTag = typing.TypedDict('_EddyCudaParamsDictNoTag', {
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -107,6 +106,7 @@ EddyCudaParamsDictTagged = typing.TypedDict('EddyCudaParamsDictTagged', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
+EddyCudaParamsDict = _EddyCudaParamsDictNoTag | EddyCudaParamsDictTagged
 
 
 class EddyCudaOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ABIDS_JSON_TOOL_PY_METADATA = Metadata(
 )
 
 
-AbidsJsonToolPyParamsDict = typing.TypedDict('AbidsJsonToolPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/abids_json_tool.py"]],
+_AbidsJsonToolPyParamsDictNoTag = typing.TypedDict('_AbidsJsonToolPyParamsDictNoTag', {
     "input_file": InputPathType,
     "prefix": str,
     "txt2json": bool,
@@ -45,6 +44,7 @@ AbidsJsonToolPyParamsDictTagged = typing.TypedDict('AbidsJsonToolPyParamsDictTag
     "literal_keys": bool,
     "values_stay_str": bool,
 })
+AbidsJsonToolPyParamsDict = _AbidsJsonToolPyParamsDictNoTag | AbidsJsonToolPyParamsDictTagged
 
 
 class AbidsJsonToolPyOutputs(typing.NamedTuple):

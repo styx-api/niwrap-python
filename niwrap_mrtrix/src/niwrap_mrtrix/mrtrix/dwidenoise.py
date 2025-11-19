@@ -13,8 +13,7 @@ DWIDENOISE_METADATA = Metadata(
 )
 
 
-DwidenoiseConfigParamsDict = typing.TypedDict('DwidenoiseConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DwidenoiseConfigParamsDictNoTag = typing.TypedDict('_DwidenoiseConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DwidenoiseConfigParamsDictTagged = typing.TypedDict('DwidenoiseConfigParamsDictT
     "key": str,
     "value": str,
 })
+DwidenoiseConfigParamsDict = _DwidenoiseConfigParamsDictNoTag | DwidenoiseConfigParamsDictTagged
 
 
-DwidenoiseParamsDict = typing.TypedDict('DwidenoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwidenoise"]],
+_DwidenoiseParamsDictNoTag = typing.TypedDict('_DwidenoiseParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
     "noise": typing.NotRequired[str | None],
@@ -61,6 +60,7 @@ DwidenoiseParamsDictTagged = typing.TypedDict('DwidenoiseParamsDictTagged', {
     "dwi": InputPathType,
     "out": str,
 })
+DwidenoiseParamsDict = _DwidenoiseParamsDictNoTag | DwidenoiseParamsDictTagged
 
 
 def dwidenoise_config(

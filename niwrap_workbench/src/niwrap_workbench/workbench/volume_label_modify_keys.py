@@ -12,8 +12,7 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-VolumeLabelModifyKeysParamsDict = typing.TypedDict('VolumeLabelModifyKeysParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-modify-keys"]],
+_VolumeLabelModifyKeysParamsDictNoTag = typing.TypedDict('_VolumeLabelModifyKeysParamsDictNoTag', {
     "volume-out": str,
     "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
@@ -26,6 +25,7 @@ VolumeLabelModifyKeysParamsDictTagged = typing.TypedDict('VolumeLabelModifyKeysP
     "volume-in": InputPathType,
     "remap-file": str,
 })
+VolumeLabelModifyKeysParamsDict = _VolumeLabelModifyKeysParamsDictNoTag | VolumeLabelModifyKeysParamsDictTagged
 
 
 class VolumeLabelModifyKeysOutputs(typing.NamedTuple):

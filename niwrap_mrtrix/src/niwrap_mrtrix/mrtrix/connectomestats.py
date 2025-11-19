@@ -13,18 +13,17 @@ CONNECTOMESTATS_METADATA = Metadata(
 )
 
 
-ConnectomestatsColumnParamsDict = typing.TypedDict('ConnectomestatsColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_ConnectomestatsColumnParamsDictNoTag = typing.TypedDict('_ConnectomestatsColumnParamsDictNoTag', {
     "path": InputPathType,
 })
 ConnectomestatsColumnParamsDictTagged = typing.TypedDict('ConnectomestatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
+ConnectomestatsColumnParamsDict = _ConnectomestatsColumnParamsDictNoTag | ConnectomestatsColumnParamsDictTagged
 
 
-ConnectomestatsConfigParamsDict = typing.TypedDict('ConnectomestatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_ConnectomestatsConfigParamsDictNoTag = typing.TypedDict('_ConnectomestatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ ConnectomestatsConfigParamsDictTagged = typing.TypedDict('ConnectomestatsConfigP
     "key": str,
     "value": str,
 })
+ConnectomestatsConfigParamsDict = _ConnectomestatsConfigParamsDictNoTag | ConnectomestatsConfigParamsDictTagged
 
 
-ConnectomestatsParamsDict = typing.TypedDict('ConnectomestatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/connectomestats"]],
+_ConnectomestatsParamsDictNoTag = typing.TypedDict('_ConnectomestatsParamsDictNoTag', {
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -105,6 +104,7 @@ ConnectomestatsParamsDictTagged = typing.TypedDict('ConnectomestatsParamsDictTag
     "contrast": InputPathType,
     "output": str,
 })
+ConnectomestatsParamsDict = _ConnectomestatsParamsDictNoTag | ConnectomestatsParamsDictTagged
 
 
 def connectomestats_column(

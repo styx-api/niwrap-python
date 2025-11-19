@@ -13,8 +13,7 @@ TKSURFERFV_METADATA = Metadata(
 )
 
 
-TksurferfvParamsDict = typing.TypedDict('TksurferfvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tksurferfv"]],
+_TksurferfvParamsDictNoTag = typing.TypedDict('_TksurferfvParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -41,6 +40,7 @@ TksurferfvParamsDictTagged = typing.TypedDict('TksurferfvParamsDictTagged', {
     "rotate_around_cursor": bool,
     "heat_scale": typing.NotRequired[str | None],
 })
+TksurferfvParamsDict = _TksurferfvParamsDictNoTag | TksurferfvParamsDictTagged
 
 
 class TksurferfvOutputs(typing.NamedTuple):

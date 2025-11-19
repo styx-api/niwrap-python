@@ -13,8 +13,7 @@ ICO_SUPERSAMPLE_METADATA = Metadata(
 )
 
 
-IcoSupersampleParamsDict = typing.TypedDict('IcoSupersampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/ico_supersample"]],
+_IcoSupersampleParamsDictNoTag = typing.TypedDict('_IcoSupersampleParamsDictNoTag', {
     "refine": bool,
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],
@@ -25,6 +24,7 @@ IcoSupersampleParamsDictTagged = typing.TypedDict('IcoSupersampleParamsDictTagge
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],
 })
+IcoSupersampleParamsDict = _IcoSupersampleParamsDictNoTag | IcoSupersampleParamsDictTagged
 
 
 class IcoSupersampleOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3DMASKDUMP_METADATA = Metadata(
 )
 
 
-V3dmaskdumpParamsDict = typing.TypedDict('V3dmaskdumpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmaskdump"]],
+_V3dmaskdumpParamsDictNoTag = typing.TypedDict('_V3dmaskdumpParamsDictNoTag', {
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "mask_range": typing.NotRequired[list[str] | None],
@@ -59,6 +58,7 @@ V3dmaskdumpParamsDictTagged = typing.TypedDict('V3dmaskdumpParamsDictTagged', {
     "output_niml": typing.NotRequired[str | None],
     "quiet_mode": bool,
 })
+V3dmaskdumpParamsDict = _V3dmaskdumpParamsDictNoTag | V3dmaskdumpParamsDictTagged
 
 
 class V3dmaskdumpOutputs(typing.NamedTuple):

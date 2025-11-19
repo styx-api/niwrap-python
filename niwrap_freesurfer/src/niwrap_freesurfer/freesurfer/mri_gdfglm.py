@@ -13,14 +13,14 @@ MRI_GDFGLM_METADATA = Metadata(
 )
 
 
-MriGdfglmParamsDict = typing.TypedDict('MriGdfglmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gdfglm"]],
+_MriGdfglmParamsDictNoTag = typing.TypedDict('_MriGdfglmParamsDictNoTag', {
     "inputs": typing.NotRequired[str | None],
 })
 MriGdfglmParamsDictTagged = typing.TypedDict('MriGdfglmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gdfglm"],
     "inputs": typing.NotRequired[str | None],
 })
+MriGdfglmParamsDict = _MriGdfglmParamsDictNoTag | MriGdfglmParamsDictTagged
 
 
 class MriGdfglmOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_GLMFIT_SIM_METADATA = Metadata(
 )
 
 
-MriGlmfitSimParamsDict = typing.TypedDict('MriGlmfitSimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_glmfit-sim"]],
+_MriGlmfitSimParamsDictNoTag = typing.TypedDict('_MriGlmfitSimParamsDictNoTag', {
     "glmdir": str,
     "cwp": typing.NotRequired[float | None],
     "mczsim": typing.NotRequired[str | None],
@@ -77,6 +76,7 @@ MriGlmfitSimParamsDictTagged = typing.TypedDict('MriGlmfitSimParamsDictTagged', 
     "spatial_sum": bool,
     "help": bool,
 })
+MriGlmfitSimParamsDict = _MriGlmfitSimParamsDictNoTag | MriGlmfitSimParamsDictTagged
 
 
 class MriGlmfitSimOutputs(typing.NamedTuple):

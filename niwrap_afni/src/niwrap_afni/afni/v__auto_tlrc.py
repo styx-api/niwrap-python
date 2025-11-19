@@ -13,8 +13,7 @@ V__AUTO_TLRC_METADATA = Metadata(
 )
 
 
-VAutoTlrcParamsDict = typing.TypedDict('VAutoTlrcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@auto_tlrc"]],
+_VAutoTlrcParamsDictNoTag = typing.TypedDict('_VAutoTlrcParamsDictNoTag', {
     "base_template": InputPathType,
     "input_anat": InputPathType,
     "no_ss": bool,
@@ -97,6 +96,7 @@ VAutoTlrcParamsDictTagged = typing.TypedDict('VAutoTlrcParamsDictTagged', {
     "use_gz": bool,
     "verb": bool,
 })
+VAutoTlrcParamsDict = _VAutoTlrcParamsDictNoTag | VAutoTlrcParamsDictTagged
 
 
 class VAutoTlrcOutputs(typing.NamedTuple):

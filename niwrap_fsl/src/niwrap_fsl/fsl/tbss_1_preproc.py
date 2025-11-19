@@ -13,14 +13,14 @@ TBSS_1_PREPROC_METADATA = Metadata(
 )
 
 
-Tbss1PreprocParamsDict = typing.TypedDict('Tbss1PreprocParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_1_preproc"]],
+_Tbss1PreprocParamsDictNoTag = typing.TypedDict('_Tbss1PreprocParamsDictNoTag', {
     "images": list[InputPathType],
 })
 Tbss1PreprocParamsDictTagged = typing.TypedDict('Tbss1PreprocParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_1_preproc"],
     "images": list[InputPathType],
 })
+Tbss1PreprocParamsDict = _Tbss1PreprocParamsDictNoTag | Tbss1PreprocParamsDictTagged
 
 
 class Tbss1PreprocOutputs(typing.NamedTuple):

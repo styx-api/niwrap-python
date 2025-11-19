@@ -13,8 +13,7 @@ V_1DSOUND_METADATA = Metadata(
 )
 
 
-V1dsoundParamsDict = typing.TypedDict('V1dsoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dsound"]],
+_V1dsoundParamsDictNoTag = typing.TypedDict('_V1dsoundParamsDictNoTag', {
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "encoding_16PCM": bool,
@@ -41,6 +40,7 @@ V1dsoundParamsDictTagged = typing.TypedDict('V1dsoundParamsDictTagged', {
     "despike_option": bool,
     "play_option": bool,
 })
+V1dsoundParamsDict = _V1dsoundParamsDictNoTag | V1dsoundParamsDictTagged
 
 
 class V1dsoundOutputs(typing.NamedTuple):

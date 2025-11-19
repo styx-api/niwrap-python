@@ -13,8 +13,7 @@ MRIS_TOPO_FIXER_METADATA = Metadata(
 )
 
 
-MrisTopoFixerParamsDict = typing.TypedDict('MrisTopoFixerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_topo_fixer"]],
+_MrisTopoFixerParamsDictNoTag = typing.TypedDict('_MrisTopoFixerParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -23,6 +22,7 @@ MrisTopoFixerParamsDictTagged = typing.TypedDict('MrisTopoFixerParamsDictTagged'
     "input_surface": InputPathType,
     "output_surface": str,
 })
+MrisTopoFixerParamsDict = _MrisTopoFixerParamsDictNoTag | MrisTopoFixerParamsDictTagged
 
 
 class MrisTopoFixerOutputs(typing.NamedTuple):

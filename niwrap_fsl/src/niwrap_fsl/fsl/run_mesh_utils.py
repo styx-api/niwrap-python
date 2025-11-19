@@ -13,8 +13,7 @@ RUN_MESH_UTILS_METADATA = Metadata(
 )
 
 
-RunMeshUtilsParamsDict = typing.TypedDict('RunMeshUtilsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/run_mesh_utils"]],
+_RunMeshUtilsParamsDictNoTag = typing.TypedDict('_RunMeshUtilsParamsDictNoTag', {
     "base_mesh": InputPathType,
     "output_image": str,
     "input_image": typing.NotRequired[InputPathType | None],
@@ -53,6 +52,7 @@ RunMeshUtilsParamsDictTagged = typing.TypedDict('RunMeshUtilsParamsDictTagged', 
     "verbose": bool,
     "help": bool,
 })
+RunMeshUtilsParamsDict = _RunMeshUtilsParamsDictNoTag | RunMeshUtilsParamsDictTagged
 
 
 class RunMeshUtilsOutputs(typing.NamedTuple):

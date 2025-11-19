@@ -13,8 +13,7 @@ V_3D_EDU_01_SCALE_METADATA = Metadata(
 )
 
 
-V3dEdu01ScaleParamsDict = typing.TypedDict('V3dEdu01ScaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dEdu_01_scale"]],
+_V3dEdu01ScaleParamsDictNoTag = typing.TypedDict('_V3dEdu01ScaleParamsDictNoTag', {
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mult_factors": typing.NotRequired[list[float] | None],
@@ -27,6 +26,7 @@ V3dEdu01ScaleParamsDictTagged = typing.TypedDict('V3dEdu01ScaleParamsDictTagged'
     "mult_factors": typing.NotRequired[list[float] | None],
     "option_flag": bool,
 })
+V3dEdu01ScaleParamsDict = _V3dEdu01ScaleParamsDictNoTag | V3dEdu01ScaleParamsDictTagged
 
 
 class V3dEdu01ScaleOutputs(typing.NamedTuple):

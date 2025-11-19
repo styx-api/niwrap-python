@@ -13,8 +13,7 @@ MRIS_APPLY_REG_METADATA = Metadata(
 )
 
 
-MrisApplyRegParamsDict = typing.TypedDict('MrisApplyRegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_apply_reg"]],
+_MrisApplyRegParamsDictNoTag = typing.TypedDict('_MrisApplyRegParamsDictNoTag', {
     "src_input": InputPathType,
     "trg_output": str,
     "streg_pair": str,
@@ -65,6 +64,7 @@ MrisApplyRegParamsDictTagged = typing.TypedDict('MrisApplyRegParamsDictTagged', 
     "debug_mode": bool,
     "check_options": bool,
 })
+MrisApplyRegParamsDict = _MrisApplyRegParamsDictNoTag | MrisApplyRegParamsDictTagged
 
 
 class MrisApplyRegOutputs(typing.NamedTuple):

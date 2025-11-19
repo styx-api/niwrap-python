@@ -13,8 +13,7 @@ V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
 )
 
 
-V3dBrainVoyagertoAfniParamsDict = typing.TypedDict('V3dBrainVoyagertoAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBRAIN_VOYAGERtoAFNI"]],
+_V3dBrainVoyagertoAfniParamsDictNoTag = typing.TypedDict('_V3dBrainVoyagertoAfniParamsDictNoTag', {
     "input_file": InputPathType,
     "force_byte_swap": bool,
     "brainvoyager_qx": bool,
@@ -47,6 +46,7 @@ V3dBrainVoyagertoAfniParamsDictTagged = typing.TypedDict('V3dBrainVoyagertoAfniP
     "turn_off_memory_tracing": bool,
     "turn_on_memory_tracing": bool,
 })
+V3dBrainVoyagertoAfniParamsDict = _V3dBrainVoyagertoAfniParamsDictNoTag | V3dBrainVoyagertoAfniParamsDictTagged
 
 
 class V3dBrainVoyagertoAfniOutputs(typing.NamedTuple):

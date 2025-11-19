@@ -13,8 +13,7 @@ MREDIT_METADATA = Metadata(
 )
 
 
-MreditPlaneParamsDict = typing.TypedDict('MreditPlaneParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["plane"]],
+_MreditPlaneParamsDictNoTag = typing.TypedDict('_MreditPlaneParamsDictNoTag', {
     "axis": int,
     "coord": list[int],
     "value": float,
@@ -25,10 +24,10 @@ MreditPlaneParamsDictTagged = typing.TypedDict('MreditPlaneParamsDictTagged', {
     "coord": list[int],
     "value": float,
 })
+MreditPlaneParamsDict = _MreditPlaneParamsDictNoTag | MreditPlaneParamsDictTagged
 
 
-MreditSphereParamsDict = typing.TypedDict('MreditSphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sphere"]],
+_MreditSphereParamsDictNoTag = typing.TypedDict('_MreditSphereParamsDictNoTag', {
     "position": list[float],
     "radius": float,
     "value": float,
@@ -39,10 +38,10 @@ MreditSphereParamsDictTagged = typing.TypedDict('MreditSphereParamsDictTagged', 
     "radius": float,
     "value": float,
 })
+MreditSphereParamsDict = _MreditSphereParamsDictNoTag | MreditSphereParamsDictTagged
 
 
-MreditVoxelParamsDict = typing.TypedDict('MreditVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel"]],
+_MreditVoxelParamsDictNoTag = typing.TypedDict('_MreditVoxelParamsDictNoTag', {
     "position": list[float],
     "value": float,
 })
@@ -51,10 +50,10 @@ MreditVoxelParamsDictTagged = typing.TypedDict('MreditVoxelParamsDictTagged', {
     "position": list[float],
     "value": float,
 })
+MreditVoxelParamsDict = _MreditVoxelParamsDictNoTag | MreditVoxelParamsDictTagged
 
 
-MreditConfigParamsDict = typing.TypedDict('MreditConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MreditConfigParamsDictNoTag = typing.TypedDict('_MreditConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -63,10 +62,10 @@ MreditConfigParamsDictTagged = typing.TypedDict('MreditConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MreditConfigParamsDict = _MreditConfigParamsDictNoTag | MreditConfigParamsDictTagged
 
 
-MreditParamsDict = typing.TypedDict('MreditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mredit"]],
+_MreditParamsDictNoTag = typing.TypedDict('_MreditParamsDictNoTag', {
     "plane": typing.NotRequired[list[MreditPlaneParamsDict] | None],
     "sphere": typing.NotRequired[list[MreditSphereParamsDict] | None],
     "voxel": typing.NotRequired[list[MreditVoxelParamsDict] | None],
@@ -99,6 +98,7 @@ MreditParamsDictTagged = typing.TypedDict('MreditParamsDictTagged', {
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
+MreditParamsDict = _MreditParamsDictNoTag | MreditParamsDictTagged
 
 
 def mredit_plane(

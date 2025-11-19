@@ -13,8 +13,7 @@ V_3DRENAME_METADATA = Metadata(
 )
 
 
-V3drenameParamsDict = typing.TypedDict('V3drenameParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3drename"]],
+_V3drenameParamsDictNoTag = typing.TypedDict('_V3drenameParamsDictNoTag', {
     "old_prefix": str,
     "new_prefix": str,
 })
@@ -23,6 +22,7 @@ V3drenameParamsDictTagged = typing.TypedDict('V3drenameParamsDictTagged', {
     "old_prefix": str,
     "new_prefix": str,
 })
+V3drenameParamsDict = _V3drenameParamsDictNoTag | V3drenameParamsDictTagged
 
 
 class V3drenameOutputs(typing.NamedTuple):

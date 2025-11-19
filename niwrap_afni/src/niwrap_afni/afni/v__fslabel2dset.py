@@ -13,8 +13,7 @@ V__FSLABEL2DSET_METADATA = Metadata(
 )
 
 
-VFslabel2dsetParamsDict = typing.TypedDict('VFslabel2dsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@FSlabel2dset"]],
+_VFslabel2dsetParamsDictNoTag = typing.TypedDict('_VFslabel2dsetParamsDictNoTag', {
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
     "help": bool,
@@ -29,6 +28,7 @@ VFslabel2dsetParamsDictTagged = typing.TypedDict('VFslabel2dsetParamsDictTagged'
     "echo": bool,
     "keep_tmp": bool,
 })
+VFslabel2dsetParamsDict = _VFslabel2dsetParamsDictNoTag | VFslabel2dsetParamsDictTagged
 
 
 class VFslabel2dsetOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRMETRIC_METADATA = Metadata(
 )
 
 
-MrmetricConfigParamsDict = typing.TypedDict('MrmetricConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrmetricConfigParamsDictNoTag = typing.TypedDict('_MrmetricConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrmetricConfigParamsDictTagged = typing.TypedDict('MrmetricConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+MrmetricConfigParamsDict = _MrmetricConfigParamsDictNoTag | MrmetricConfigParamsDictTagged
 
 
-MrmetricParamsDict = typing.TypedDict('MrmetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrmetric"]],
+_MrmetricParamsDictNoTag = typing.TypedDict('_MrmetricParamsDictNoTag', {
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
     "metric": typing.NotRequired[str | None],
@@ -65,6 +64,7 @@ MrmetricParamsDictTagged = typing.TypedDict('MrmetricParamsDictTagged', {
     "image1": InputPathType,
     "image2": InputPathType,
 })
+MrmetricParamsDict = _MrmetricParamsDictNoTag | MrmetricParamsDictTagged
 
 
 def mrmetric_config(

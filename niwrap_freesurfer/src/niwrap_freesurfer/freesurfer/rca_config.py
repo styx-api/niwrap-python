@@ -13,8 +13,7 @@ RCA_CONFIG_METADATA = Metadata(
 )
 
 
-RcaConfigParamsDict = typing.TypedDict('RcaConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config"]],
+_RcaConfigParamsDictNoTag = typing.TypedDict('_RcaConfigParamsDictNoTag', {
     "source_config": InputPathType,
     "updated_config": InputPathType,
     "unknown_args_file": InputPathType,
@@ -27,6 +26,7 @@ RcaConfigParamsDictTagged = typing.TypedDict('RcaConfigParamsDictTagged', {
     "unknown_args_file": InputPathType,
     "args": typing.NotRequired[list[str] | None],
 })
+RcaConfigParamsDict = _RcaConfigParamsDictNoTag | RcaConfigParamsDictTagged
 
 
 class RcaConfigOutputs(typing.NamedTuple):

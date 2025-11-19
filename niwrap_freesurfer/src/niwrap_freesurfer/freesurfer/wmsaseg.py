@@ -13,8 +13,7 @@ WMSASEG_METADATA = Metadata(
 )
 
 
-WmsasegParamsDict = typing.TypedDict('WmsasegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/wmsaseg"]],
+_WmsasegParamsDictNoTag = typing.TypedDict('_WmsasegParamsDictNoTag', {
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
     "source_long": bool,
@@ -41,6 +40,7 @@ WmsasegParamsDictTagged = typing.TypedDict('WmsasegParamsDictTagged', {
     "halo1": bool,
     "halo2": bool,
 })
+WmsasegParamsDict = _WmsasegParamsDictNoTag | WmsasegParamsDictTagged
 
 
 class WmsasegOutputs(typing.NamedTuple):

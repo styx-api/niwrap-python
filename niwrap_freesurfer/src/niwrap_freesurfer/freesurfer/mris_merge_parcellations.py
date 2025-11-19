@@ -13,8 +13,7 @@ MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
 )
 
 
-MrisMergeParcellationsParamsDict = typing.TypedDict('MrisMergeParcellationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_merge_parcellations"]],
+_MrisMergeParcellationsParamsDictNoTag = typing.TypedDict('_MrisMergeParcellationsParamsDictNoTag', {
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
@@ -27,6 +26,7 @@ MrisMergeParcellationsParamsDictTagged = typing.TypedDict('MrisMergeParcellation
     "label2": InputPathType,
     "annot_name": typing.NotRequired[str | None],
 })
+MrisMergeParcellationsParamsDict = _MrisMergeParcellationsParamsDictNoTag | MrisMergeParcellationsParamsDictTagged
 
 
 class MrisMergeParcellationsOutputs(typing.NamedTuple):

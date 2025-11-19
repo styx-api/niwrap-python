@@ -13,8 +13,7 @@ V_3D_EXCHANGE_METADATA = Metadata(
 )
 
 
-V3dExchangeParamsDict = typing.TypedDict('V3dExchangeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dExchange"]],
+_V3dExchangeParamsDictNoTag = typing.TypedDict('_V3dExchangeParamsDictNoTag', {
     "prefix": str,
     "infile": InputPathType,
     "mapfile": InputPathType,
@@ -29,6 +28,7 @@ V3dExchangeParamsDictTagged = typing.TypedDict('V3dExchangeParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+V3dExchangeParamsDict = _V3dExchangeParamsDictNoTag | V3dExchangeParamsDictTagged
 
 
 class V3dExchangeOutputs(typing.NamedTuple):

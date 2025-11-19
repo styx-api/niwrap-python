@@ -13,8 +13,7 @@ FLOAT_SCAN_METADATA = Metadata(
 )
 
 
-FloatScanParamsDict = typing.TypedDict('FloatScanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/float_scan"]],
+_FloatScanParamsDictNoTag = typing.TypedDict('_FloatScanParamsDictNoTag', {
     "fix_illegal_values": bool,
     "verbose_mode": bool,
     "skip_count": typing.NotRequired[int | None],
@@ -27,6 +26,7 @@ FloatScanParamsDictTagged = typing.TypedDict('FloatScanParamsDictTagged', {
     "skip_count": typing.NotRequired[int | None],
     "input_file": InputPathType,
 })
+FloatScanParamsDict = _FloatScanParamsDictNoTag | FloatScanParamsDictTagged
 
 
 class FloatScanOutputs(typing.NamedTuple):

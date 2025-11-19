@@ -13,8 +13,7 @@ V_3D_AFNITO_ANALYZE_METADATA = Metadata(
 )
 
 
-V3dAfnitoAnalyzeParamsDict = typing.TypedDict('V3dAfnitoAnalyzeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoANALYZE"]],
+_V3dAfnitoAnalyzeParamsDictNoTag = typing.TypedDict('_V3dAfnitoAnalyzeParamsDictNoTag', {
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
     "output_name": str,
@@ -27,6 +26,7 @@ V3dAfnitoAnalyzeParamsDictTagged = typing.TypedDict('V3dAfnitoAnalyzeParamsDictT
     "output_name": str,
     "afni_dataset": InputPathType,
 })
+V3dAfnitoAnalyzeParamsDict = _V3dAfnitoAnalyzeParamsDictNoTag | V3dAfnitoAnalyzeParamsDictTagged
 
 
 class V3dAfnitoAnalyzeOutputs(typing.NamedTuple):

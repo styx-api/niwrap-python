@@ -13,8 +13,7 @@ TRANSFORMCALC_METADATA = Metadata(
 )
 
 
-TransformcalcConfigParamsDict = typing.TypedDict('TransformcalcConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TransformcalcConfigParamsDictNoTag = typing.TypedDict('_TransformcalcConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TransformcalcConfigParamsDictTagged = typing.TypedDict('TransformcalcConfigParam
     "key": str,
     "value": str,
 })
+TransformcalcConfigParamsDict = _TransformcalcConfigParamsDictNoTag | TransformcalcConfigParamsDictTagged
 
 
-TransformcalcParamsDict = typing.TypedDict('TransformcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/transformcalc"]],
+_TransformcalcParamsDictNoTag = typing.TypedDict('_TransformcalcParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ TransformcalcParamsDictTagged = typing.TypedDict('TransformcalcParamsDictTagged'
     "operation": str,
     "output": str,
 })
+TransformcalcParamsDict = _TransformcalcParamsDictNoTag | TransformcalcParamsDictTagged
 
 
 def transformcalc_config(

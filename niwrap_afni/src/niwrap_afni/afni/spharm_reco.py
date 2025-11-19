@@ -13,8 +13,7 @@ SPHARM_RECO_METADATA = Metadata(
 )
 
 
-SpharmRecoParamsDict = typing.TypedDict('SpharmRecoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SpharmReco"]],
+_SpharmRecoParamsDictNoTag = typing.TypedDict('_SpharmRecoParamsDictNoTag', {
     "input_surface": str,
     "decomposition_order": float,
     "bases_prefix": str,
@@ -35,6 +34,7 @@ SpharmRecoParamsDictTagged = typing.TypedDict('SpharmRecoParamsDictTagged', {
     "debug": typing.NotRequired[float | None],
     "smoothing": typing.NotRequired[float | None],
 })
+SpharmRecoParamsDict = _SpharmRecoParamsDictNoTag | SpharmRecoParamsDictTagged
 
 
 class SpharmRecoOutputs(typing.NamedTuple):

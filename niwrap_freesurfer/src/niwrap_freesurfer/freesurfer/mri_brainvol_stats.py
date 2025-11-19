@@ -13,8 +13,7 @@ MRI_BRAINVOL_STATS_METADATA = Metadata(
 )
 
 
-MriBrainvolStatsParamsDict = typing.TypedDict('MriBrainvolStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brainvol_stats"]],
+_MriBrainvolStatsParamsDictNoTag = typing.TypedDict('_MriBrainvolStatsParamsDictNoTag', {
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
     "no_surface": bool,
@@ -29,6 +28,7 @@ MriBrainvolStatsParamsDictTagged = typing.TypedDict('MriBrainvolStatsParamsDictT
     "include_segmentation": bool,
     "output_file": typing.NotRequired[str | None],
 })
+MriBrainvolStatsParamsDict = _MriBrainvolStatsParamsDictNoTag | MriBrainvolStatsParamsDictTagged
 
 
 class MriBrainvolStatsOutputs(typing.NamedTuple):

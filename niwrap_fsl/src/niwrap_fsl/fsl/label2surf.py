@@ -13,8 +13,7 @@ LABEL2SURF_METADATA = Metadata(
 )
 
 
-Label2surfParamsDict = typing.TypedDict('Label2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/label2surf"]],
+_Label2surfParamsDictNoTag = typing.TypedDict('_Label2surfParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
     "labels": InputPathType,
@@ -29,6 +28,7 @@ Label2surfParamsDictTagged = typing.TypedDict('Label2surfParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+Label2surfParamsDict = _Label2surfParamsDictNoTag | Label2surfParamsDictTagged
 
 
 class Label2surfOutputs(typing.NamedTuple):

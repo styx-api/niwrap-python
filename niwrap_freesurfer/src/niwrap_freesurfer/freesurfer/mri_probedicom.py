@@ -13,8 +13,7 @@ MRI_PROBEDICOM_METADATA = Metadata(
 )
 
 
-MriProbedicomParamsDict = typing.TypedDict('MriProbedicomParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probedicom"]],
+_MriProbedicomParamsDictNoTag = typing.TypedDict('_MriProbedicomParamsDictNoTag', {
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ MriProbedicomParamsDictTagged = typing.TypedDict('MriProbedicomParamsDictTagged'
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],
 })
+MriProbedicomParamsDict = _MriProbedicomParamsDictNoTag | MriProbedicomParamsDictTagged
 
 
 class MriProbedicomOutputs(typing.NamedTuple):

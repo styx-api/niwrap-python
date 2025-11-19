@@ -13,8 +13,7 @@ V_3D_EMPTY_METADATA = Metadata(
 )
 
 
-V3dEmptyParamsDict = typing.TypedDict('V3dEmptyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dEmpty"]],
+_V3dEmptyParamsDictNoTag = typing.TypedDict('_V3dEmptyParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
     "nxyz": typing.NotRequired[list[float] | None],
@@ -27,6 +26,7 @@ V3dEmptyParamsDictTagged = typing.TypedDict('V3dEmptyParamsDictTagged', {
     "nxyz": typing.NotRequired[list[float] | None],
     "nt": typing.NotRequired[float | None],
 })
+V3dEmptyParamsDict = _V3dEmptyParamsDictNoTag | V3dEmptyParamsDictTagged
 
 
 class V3dEmptyOutputs(typing.NamedTuple):

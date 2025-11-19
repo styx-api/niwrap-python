@@ -13,8 +13,7 @@ MRIS_PMAKE_METADATA = Metadata(
 )
 
 
-MrisPmakeParamsDict = typing.TypedDict('MrisPmakeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_pmake"]],
+_MrisPmakeParamsDictNoTag = typing.TypedDict('_MrisPmakeParamsDictNoTag', {
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
     "listen_mode": bool,
@@ -45,6 +44,7 @@ MrisPmakeParamsDictTagged = typing.TypedDict('MrisPmakeParamsDictTagged', {
     "mpm_prog": typing.NotRequired[str | None],
     "mpm_args": typing.NotRequired[str | None],
 })
+MrisPmakeParamsDict = _MrisPmakeParamsDictNoTag | MrisPmakeParamsDictTagged
 
 
 class MrisPmakeOutputs(typing.NamedTuple):

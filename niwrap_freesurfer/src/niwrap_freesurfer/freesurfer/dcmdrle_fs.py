@@ -13,8 +13,7 @@ DCMDRLE_FS_METADATA = Metadata(
 )
 
 
-DcmdrleFsParamsDict = typing.TypedDict('DcmdrleFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdrle.fs"]],
+_DcmdrleFsParamsDictNoTag = typing.TypedDict('_DcmdrleFsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -83,6 +82,7 @@ DcmdrleFsParamsDictTagged = typing.TypedDict('DcmdrleFsParamsDictTagged', {
     "padding_off": bool,
     "padding_create": typing.NotRequired[str | None],
 })
+DcmdrleFsParamsDict = _DcmdrleFsParamsDictNoTag | DcmdrleFsParamsDictTagged
 
 
 class DcmdrleFsOutputs(typing.NamedTuple):

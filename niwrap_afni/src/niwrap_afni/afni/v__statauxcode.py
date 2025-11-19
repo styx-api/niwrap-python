@@ -13,14 +13,14 @@ V__STATAUXCODE_METADATA = Metadata(
 )
 
 
-VStatauxcodeParamsDict = typing.TypedDict('VStatauxcodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@statauxcode"]],
+_VStatauxcodeParamsDictNoTag = typing.TypedDict('_VStatauxcodeParamsDictNoTag', {
     "code": str,
 })
 VStatauxcodeParamsDictTagged = typing.TypedDict('VStatauxcodeParamsDictTagged', {
     "@type": typing.Literal["afni/@statauxcode"],
     "code": str,
 })
+VStatauxcodeParamsDict = _VStatauxcodeParamsDictNoTag | VStatauxcodeParamsDictTagged
 
 
 class VStatauxcodeOutputs(typing.NamedTuple):

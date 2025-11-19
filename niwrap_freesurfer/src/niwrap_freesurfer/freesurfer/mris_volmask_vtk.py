@@ -13,8 +13,7 @@ MRIS_VOLMASK_VTK_METADATA = Metadata(
 )
 
 
-MrisVolmaskVtkParamsDict = typing.TypedDict('MrisVolmaskVtkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask_vtk"]],
+_MrisVolmaskVtkParamsDictNoTag = typing.TypedDict('_MrisVolmaskVtkParamsDictNoTag', {
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
     "label_left_white": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ MrisVolmaskVtkParamsDictTagged = typing.TypedDict('MrisVolmaskVtkParamsDictTagge
     "save_ribbon": bool,
     "io_param": str,
 })
+MrisVolmaskVtkParamsDict = _MrisVolmaskVtkParamsDictNoTag | MrisVolmaskVtkParamsDictTagged
 
 
 class MrisVolmaskVtkOutputs(typing.NamedTuple):

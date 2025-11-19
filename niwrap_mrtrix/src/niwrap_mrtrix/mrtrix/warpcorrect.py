@@ -13,8 +13,7 @@ WARPCORRECT_METADATA = Metadata(
 )
 
 
-WarpcorrectConfigParamsDict = typing.TypedDict('WarpcorrectConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_WarpcorrectConfigParamsDictNoTag = typing.TypedDict('_WarpcorrectConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ WarpcorrectConfigParamsDictTagged = typing.TypedDict('WarpcorrectConfigParamsDic
     "key": str,
     "value": str,
 })
+WarpcorrectConfigParamsDict = _WarpcorrectConfigParamsDictNoTag | WarpcorrectConfigParamsDictTagged
 
 
-WarpcorrectParamsDict = typing.TypedDict('WarpcorrectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/warpcorrect"]],
+_WarpcorrectParamsDictNoTag = typing.TypedDict('_WarpcorrectParamsDictNoTag', {
     "marker": typing.NotRequired[list[float] | None],
     "tolerance": typing.NotRequired[float | None],
     "info": bool,
@@ -55,6 +54,7 @@ WarpcorrectParamsDictTagged = typing.TypedDict('WarpcorrectParamsDictTagged', {
     "in": InputPathType,
     "out": str,
 })
+WarpcorrectParamsDict = _WarpcorrectParamsDictNoTag | WarpcorrectParamsDictTagged
 
 
 def warpcorrect_config(

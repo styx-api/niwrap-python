@@ -12,8 +12,7 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-GiftiAllLabelsToRoisParamsDict = typing.TypedDict('GiftiAllLabelsToRoisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/gifti-all-labels-to-rois"]],
+_GiftiAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_GiftiAllLabelsToRoisParamsDictNoTag', {
     "metric-out": str,
     "label-in": InputPathType,
     "map": str,
@@ -24,6 +23,7 @@ GiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('GiftiAllLabelsToRoisPar
     "label-in": InputPathType,
     "map": str,
 })
+GiftiAllLabelsToRoisParamsDict = _GiftiAllLabelsToRoisParamsDictNoTag | GiftiAllLabelsToRoisParamsDictTagged
 
 
 class GiftiAllLabelsToRoisOutputs(typing.NamedTuple):

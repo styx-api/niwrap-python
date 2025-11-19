@@ -13,8 +13,7 @@ PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
 )
 
 
-PasteImageIntoImageParamsDict = typing.TypedDict('PasteImageIntoImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/PasteImageIntoImage"]],
+_PasteImageIntoImageParamsDictNoTag = typing.TypedDict('_PasteImageIntoImageParamsDictNoTag', {
     "image_dimension": int,
     "input_canvas_image": InputPathType,
     "input_image": InputPathType,
@@ -35,6 +34,7 @@ PasteImageIntoImageParamsDictTagged = typing.TypedDict('PasteImageIntoImageParam
     "paint_over_non_background_voxels": typing.NotRequired[typing.Literal[0, 1, 2] | None],
     "conflict_label": typing.NotRequired[int | None],
 })
+PasteImageIntoImageParamsDict = _PasteImageIntoImageParamsDictNoTag | PasteImageIntoImageParamsDictTagged
 
 
 class PasteImageIntoImageOutputs(typing.NamedTuple):

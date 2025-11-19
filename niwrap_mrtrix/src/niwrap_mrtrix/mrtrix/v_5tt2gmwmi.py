@@ -13,8 +13,7 @@ V_5TT2GMWMI_METADATA = Metadata(
 )
 
 
-V5tt2gmwmiConfigParamsDict = typing.TypedDict('V5tt2gmwmiConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_V5tt2gmwmiConfigParamsDictNoTag = typing.TypedDict('_V5tt2gmwmiConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ V5tt2gmwmiConfigParamsDictTagged = typing.TypedDict('V5tt2gmwmiConfigParamsDictT
     "key": str,
     "value": str,
 })
+V5tt2gmwmiConfigParamsDict = _V5tt2gmwmiConfigParamsDictNoTag | V5tt2gmwmiConfigParamsDictTagged
 
 
-V5tt2gmwmiParamsDict = typing.TypedDict('V5tt2gmwmiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/5tt2gmwmi"]],
+_V5tt2gmwmiParamsDictNoTag = typing.TypedDict('_V5tt2gmwmiParamsDictNoTag', {
     "mask_in": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ V5tt2gmwmiParamsDictTagged = typing.TypedDict('V5tt2gmwmiParamsDictTagged', {
     "5tt_in": InputPathType,
     "mask_out": str,
 })
+V5tt2gmwmiParamsDict = _V5tt2gmwmiParamsDictNoTag | V5tt2gmwmiParamsDictTagged
 
 
 def v_5tt2gmwmi_config(

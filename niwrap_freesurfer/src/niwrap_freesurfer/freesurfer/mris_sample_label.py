@@ -13,8 +13,7 @@ MRIS_SAMPLE_LABEL_METADATA = Metadata(
 )
 
 
-MrisSampleLabelParamsDict = typing.TypedDict('MrisSampleLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_label"]],
+_MrisSampleLabelParamsDictNoTag = typing.TypedDict('_MrisSampleLabelParamsDictNoTag', {
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_label_file": str,
@@ -25,6 +24,7 @@ MrisSampleLabelParamsDictTagged = typing.TypedDict('MrisSampleLabelParamsDictTag
     "input_surface_file": InputPathType,
     "output_label_file": str,
 })
+MrisSampleLabelParamsDict = _MrisSampleLabelParamsDictNoTag | MrisSampleLabelParamsDictTagged
 
 
 class MrisSampleLabelOutputs(typing.NamedTuple):

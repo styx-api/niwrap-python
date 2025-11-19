@@ -12,18 +12,17 @@ WBSPARSE_MERGE_DENSE_METADATA = Metadata(
 )
 
 
-WbsparseMergeDenseWbsparseParamsDict = typing.TypedDict('WbsparseMergeDenseWbsparseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["wbsparse"]],
+_WbsparseMergeDenseWbsparseParamsDictNoTag = typing.TypedDict('_WbsparseMergeDenseWbsparseParamsDictNoTag', {
     "wbsparse-in": str,
 })
 WbsparseMergeDenseWbsparseParamsDictTagged = typing.TypedDict('WbsparseMergeDenseWbsparseParamsDictTagged', {
     "@type": typing.Literal["wbsparse"],
     "wbsparse-in": str,
 })
+WbsparseMergeDenseWbsparseParamsDict = _WbsparseMergeDenseWbsparseParamsDictNoTag | WbsparseMergeDenseWbsparseParamsDictTagged
 
 
-WbsparseMergeDenseParamsDict = typing.TypedDict('WbsparseMergeDenseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/wbsparse-merge-dense"]],
+_WbsparseMergeDenseParamsDictNoTag = typing.TypedDict('_WbsparseMergeDenseParamsDictNoTag', {
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParamsDict] | None],
     "direction": str,
     "wbsparse-out": str,
@@ -34,6 +33,7 @@ WbsparseMergeDenseParamsDictTagged = typing.TypedDict('WbsparseMergeDenseParamsD
     "direction": str,
     "wbsparse-out": str,
 })
+WbsparseMergeDenseParamsDict = _WbsparseMergeDenseParamsDictNoTag | WbsparseMergeDenseParamsDictTagged
 
 
 def wbsparse_merge_dense_wbsparse(

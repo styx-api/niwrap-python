@@ -13,8 +13,7 @@ ISO_SURFACE_METADATA = Metadata(
 )
 
 
-IsoSurfaceParamsDict = typing.TypedDict('IsoSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/IsoSurface"]],
+_IsoSurfaceParamsDictNoTag = typing.TypedDict('_IsoSurfaceParamsDictNoTag', {
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
     "isorois": bool,
@@ -47,6 +46,7 @@ IsoSurfaceParamsDictTagged = typing.TypedDict('IsoSurfaceParamsDictTagged', {
     "novolreg": bool,
     "noxform": bool,
 })
+IsoSurfaceParamsDict = _IsoSurfaceParamsDictNoTag | IsoSurfaceParamsDictTagged
 
 
 class IsoSurfaceOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RUN_FIRST_ALL_METADATA = Metadata(
 )
 
 
-RunFirstAllParamsDict = typing.TypedDict('RunFirstAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/run_first_all"]],
+_RunFirstAllParamsDictNoTag = typing.TypedDict('_RunFirstAllParamsDictNoTag', {
     "method": typing.NotRequired[typing.Literal["auto", "fast", "none"] | None],
     "brainextract_flag": bool,
     "structure": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ RunFirstAllParamsDictTagged = typing.TypedDict('RunFirstAllParamsDictTagged', {
     "input_image": InputPathType,
     "output_image": str,
 })
+RunFirstAllParamsDict = _RunFirstAllParamsDictNoTag | RunFirstAllParamsDictTagged
 
 
 class RunFirstAllOutputs(typing.NamedTuple):

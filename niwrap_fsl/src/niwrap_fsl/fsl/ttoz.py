@@ -13,8 +13,7 @@ TTOZ_METADATA = Metadata(
 )
 
 
-TtozParamsDict = typing.TypedDict('TtozParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ttoz"]],
+_TtozParamsDictNoTag = typing.TypedDict('_TtozParamsDictNoTag', {
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": int,
@@ -29,6 +28,7 @@ TtozParamsDictTagged = typing.TypedDict('TtozParamsDictTagged', {
     "outputvol": typing.NotRequired[str | None],
     "help_flag": bool,
 })
+TtozParamsDict = _TtozParamsDictNoTag | TtozParamsDictTagged
 
 
 class TtozOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_CLUST_METADATA = Metadata(
 )
 
 
-SurfClustParamsDict = typing.TypedDict('SurfClustParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfClust"]],
+_SurfClustParamsDictNoTag = typing.TypedDict('_SurfClustParamsDictNoTag', {
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
     "input_surf_name": typing.NotRequired[InputPathType | None],
@@ -97,6 +96,7 @@ SurfClustParamsDictTagged = typing.TypedDict('SurfClustParamsDictTagged', {
     "spx_help": bool,
     "aspx_help": bool,
 })
+SurfClustParamsDict = _SurfClustParamsDictNoTag | SurfClustParamsDictTagged
 
 
 class SurfClustOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FABBER_METADATA = Metadata(
 )
 
 
-FabberOptfileParamsDict = typing.TypedDict('FabberOptfileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["optfile"]],
+_FabberOptfileParamsDictNoTag = typing.TypedDict('_FabberOptfileParamsDictNoTag', {
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
@@ -23,10 +22,10 @@ FabberOptfileParamsDictTagged = typing.TypedDict('FabberOptfileParamsDictTagged'
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
+FabberOptfileParamsDict = _FabberOptfileParamsDictNoTag | FabberOptfileParamsDictTagged
 
 
-FabberParamsDict = typing.TypedDict('FabberParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber"]],
+_FabberParamsDictNoTag = typing.TypedDict('_FabberParamsDictNoTag', {
     "output": str,
     "method": str,
     "model": str,
@@ -103,6 +102,7 @@ FabberParamsDictTagged = typing.TypedDict('FabberParamsDictTagged', {
     "list_outputs": bool,
     "old_optfile": typing.NotRequired[InputPathType | None],
 })
+FabberParamsDict = _FabberParamsDictNoTag | FabberParamsDictTagged
 
 
 def fabber_optfile(

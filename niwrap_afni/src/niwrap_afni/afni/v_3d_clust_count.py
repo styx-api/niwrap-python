@@ -13,8 +13,7 @@ V_3D_CLUST_COUNT_METADATA = Metadata(
 )
 
 
-V3dClustCountParamsDict = typing.TypedDict('V3dClustCountParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dClustCount"]],
+_V3dClustCountParamsDictNoTag = typing.TypedDict('_V3dClustCountParamsDictNoTag', {
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "final": bool,
@@ -27,6 +26,7 @@ V3dClustCountParamsDictTagged = typing.TypedDict('V3dClustCountParamsDictTagged'
     "final": bool,
     "quiet": bool,
 })
+V3dClustCountParamsDict = _V3dClustCountParamsDictNoTag | V3dClustCountParamsDictTagged
 
 
 class V3dClustCountOutputs(typing.NamedTuple):

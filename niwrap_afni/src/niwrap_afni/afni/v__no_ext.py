@@ -13,8 +13,7 @@ V__NO_EXT_METADATA = Metadata(
 )
 
 
-VNoExtParamsDict = typing.TypedDict('VNoExtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@NoExt"]],
+_VNoExtParamsDictNoTag = typing.TypedDict('_VNoExtParamsDictNoTag', {
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
@@ -23,6 +22,7 @@ VNoExtParamsDictTagged = typing.TypedDict('VNoExtParamsDictTagged', {
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
+VNoExtParamsDict = _VNoExtParamsDictNoTag | VNoExtParamsDictTagged
 
 
 class VNoExtOutputs(typing.NamedTuple):

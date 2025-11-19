@@ -13,8 +13,7 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 )
 
 
-VComputeOcWeightsParamsDict = typing.TypedDict('VComputeOcWeightsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@compute_OC_weights"]],
+_VComputeOcWeightsParamsDictNoTag = typing.TypedDict('_VComputeOcWeightsParamsDictNoTag', {
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
     "echo_dsets": list[str],
@@ -39,6 +38,7 @@ VComputeOcWeightsParamsDictTagged = typing.TypedDict('VComputeOcWeightsParamsDic
     "work_dir": typing.NotRequired[str | None],
     "verbosity": bool,
 })
+VComputeOcWeightsParamsDict = _VComputeOcWeightsParamsDictNoTag | VComputeOcWeightsParamsDictTagged
 
 
 class VComputeOcWeightsOutputs(typing.NamedTuple):

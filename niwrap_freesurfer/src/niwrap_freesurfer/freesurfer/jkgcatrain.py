@@ -13,8 +13,7 @@ JKGCATRAIN_METADATA = Metadata(
 )
 
 
-JkgcatrainParamsDict = typing.TypedDict('JkgcatrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/jkgcatrain"]],
+_JkgcatrainParamsDictNoTag = typing.TypedDict('_JkgcatrainParamsDictNoTag', {
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
     "num_threads": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ JkgcatrainParamsDictTagged = typing.TypedDict('JkgcatrainParamsDictTagged', {
     "no_submit": bool,
     "mail_flag": bool,
 })
+JkgcatrainParamsDict = _JkgcatrainParamsDictNoTag | JkgcatrainParamsDictTagged
 
 
 class JkgcatrainOutputs(typing.NamedTuple):

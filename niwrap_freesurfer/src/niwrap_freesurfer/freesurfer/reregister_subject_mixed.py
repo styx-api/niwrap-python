@@ -13,8 +13,7 @@ REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
 )
 
 
-ReregisterSubjectMixedParamsDict = typing.TypedDict('ReregisterSubjectMixedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reregister_subject_mixed"]],
+_ReregisterSubjectMixedParamsDictNoTag = typing.TypedDict('_ReregisterSubjectMixedParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_directory": str,
     "threads": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ ReregisterSubjectMixedParamsDictTagged = typing.TypedDict('ReregisterSubjectMixe
     "output_directory": str,
     "threads": typing.NotRequired[float | None],
 })
+ReregisterSubjectMixedParamsDict = _ReregisterSubjectMixedParamsDictNoTag | ReregisterSubjectMixedParamsDictTagged
 
 
 class ReregisterSubjectMixedOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3DDELAY_METADATA = Metadata(
 )
 
 
-V3ddelayParamsDict = typing.TypedDict('V3ddelayParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3ddelay"]],
+_V3ddelayParamsDictNoTag = typing.TypedDict('_V3ddelayParamsDictNoTag', {
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "sampling_freq": float,
@@ -67,6 +66,7 @@ V3ddelayParamsDictTagged = typing.TypedDict('V3ddelayParamsDictTagged', {
     "asc": typing.NotRequired[str | None],
     "ascts": typing.NotRequired[str | None],
 })
+V3ddelayParamsDict = _V3ddelayParamsDictNoTag | V3ddelayParamsDictTagged
 
 
 class V3ddelayOutputs(typing.NamedTuple):

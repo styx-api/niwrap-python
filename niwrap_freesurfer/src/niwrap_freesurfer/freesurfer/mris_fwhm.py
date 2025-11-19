@@ -13,8 +13,7 @@ MRIS_FWHM_METADATA = Metadata(
 )
 
 
-MrisFwhmParamsDict = typing.TypedDict('MrisFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fwhm"]],
+_MrisFwhmParamsDictNoTag = typing.TypedDict('_MrisFwhmParamsDictNoTag', {
     "input_file": InputPathType,
     "subject": str,
     "hemi": str,
@@ -81,6 +80,7 @@ MrisFwhmParamsDictTagged = typing.TypedDict('MrisFwhmParamsDictTagged', {
     "checkopts_flag": bool,
     "version_flag": bool,
 })
+MrisFwhmParamsDict = _MrisFwhmParamsDictNoTag | MrisFwhmParamsDictTagged
 
 
 class MrisFwhmOutputs(typing.NamedTuple):

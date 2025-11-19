@@ -13,8 +13,7 @@ ZEROPAD_METADATA = Metadata(
 )
 
 
-ZeropadParamsDict = typing.TypedDict('ZeropadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/zeropad"]],
+_ZeropadParamsDictNoTag = typing.TypedDict('_ZeropadParamsDictNoTag', {
     "input_number": str,
     "length": float,
 })
@@ -23,6 +22,7 @@ ZeropadParamsDictTagged = typing.TypedDict('ZeropadParamsDictTagged', {
     "input_number": str,
     "length": float,
 })
+ZeropadParamsDict = _ZeropadParamsDictNoTag | ZeropadParamsDictTagged
 
 
 class ZeropadOutputs(typing.NamedTuple):

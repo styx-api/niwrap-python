@@ -13,8 +13,7 @@ CREATE_MORPH_METADATA = Metadata(
 )
 
 
-CreateMorphParamsDict = typing.TypedDict('CreateMorphParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/createMorph"]],
+_CreateMorphParamsDictNoTag = typing.TypedDict('_CreateMorphParamsDictNoTag', {
     "input_transforms": list[str],
     "output_transform": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ CreateMorphParamsDictTagged = typing.TypedDict('CreateMorphParamsDictTagged', {
     "subject": typing.NotRequired[InputPathType | None],
     "debug_coordinates": typing.NotRequired[list[float] | None],
 })
+CreateMorphParamsDict = _CreateMorphParamsDictNoTag | CreateMorphParamsDictTagged
 
 
 class CreateMorphOutputs(typing.NamedTuple):

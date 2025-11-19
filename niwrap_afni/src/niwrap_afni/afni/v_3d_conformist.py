@@ -13,14 +13,14 @@ V_3D_CONFORMIST_METADATA = Metadata(
 )
 
 
-V3dConformistParamsDict = typing.TypedDict('V3dConformistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dConformist"]],
+_V3dConformistParamsDictNoTag = typing.TypedDict('_V3dConformistParamsDictNoTag', {
     "input_files": list[InputPathType],
 })
 V3dConformistParamsDictTagged = typing.TypedDict('V3dConformistParamsDictTagged', {
     "@type": typing.Literal["afni/3dConformist"],
     "input_files": list[InputPathType],
 })
+V3dConformistParamsDict = _V3dConformistParamsDictNoTag | V3dConformistParamsDictTagged
 
 
 class V3dConformistOutputs(typing.NamedTuple):

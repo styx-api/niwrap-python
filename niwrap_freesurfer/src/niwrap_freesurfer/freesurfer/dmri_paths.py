@@ -13,8 +13,7 @@ DMRI_PATHS_METADATA = Metadata(
 )
 
 
-DmriPathsParamsDict = typing.TypedDict('DmriPathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_paths"]],
+_DmriPathsParamsDictNoTag = typing.TypedDict('_DmriPathsParamsDictNoTag', {
     "indir": typing.NotRequired[str | None],
     "outdir": typing.NotRequired[str | None],
     "dwi": typing.NotRequired[InputPathType | None],
@@ -91,6 +90,7 @@ DmriPathsParamsDictTagged = typing.TypedDict('DmriPathsParamsDictTagged', {
     "checkopts": bool,
     "version": bool,
 })
+DmriPathsParamsDict = _DmriPathsParamsDictNoTag | DmriPathsParamsDictTagged
 
 
 class DmriPathsOutputs(typing.NamedTuple):

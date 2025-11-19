@@ -13,8 +13,7 @@ EPI_B0_CORRECT_PY_METADATA = Metadata(
 )
 
 
-EpiB0CorrectPyParamsDict = typing.TypedDict('EpiB0CorrectPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/epi_b0_correct.py"]],
+_EpiB0CorrectPyParamsDictNoTag = typing.TypedDict('_EpiB0CorrectPyParamsDictNoTag', {
     "prefix": str,
     "input_freq": InputPathType,
     "input_epi": InputPathType,
@@ -67,6 +66,7 @@ EpiB0CorrectPyParamsDictTagged = typing.TypedDict('EpiB0CorrectPyParamsDictTagge
     "ver": bool,
     "date": bool,
 })
+EpiB0CorrectPyParamsDict = _EpiB0CorrectPyParamsDictNoTag | EpiB0CorrectPyParamsDictTagged
 
 
 class EpiB0CorrectPyOutputs(typing.NamedTuple):

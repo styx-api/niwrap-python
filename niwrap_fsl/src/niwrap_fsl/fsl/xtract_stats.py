@@ -13,8 +13,7 @@ XTRACT_STATS_METADATA = Metadata(
 )
 
 
-XtractStatsParamsDict = typing.TypedDict('XtractStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/xtract_stats"]],
+_XtractStatsParamsDictNoTag = typing.TypedDict('_XtractStatsParamsDictNoTag', {
     "folder_basename": str,
     "XTRACT_dir": str,
     "xtract2diff": str,
@@ -37,6 +36,7 @@ XtractStatsParamsDictTagged = typing.TypedDict('XtractStatsParamsDictTagged', {
     "measurements": typing.NotRequired[str | None],
     "keep_temp_files": bool,
 })
+XtractStatsParamsDict = _XtractStatsParamsDictNoTag | XtractStatsParamsDictTagged
 
 
 class XtractStatsOutputs(typing.NamedTuple):

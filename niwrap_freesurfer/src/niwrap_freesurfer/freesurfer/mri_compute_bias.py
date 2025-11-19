@@ -13,8 +13,7 @@ MRI_COMPUTE_BIAS_METADATA = Metadata(
 )
 
 
-MriComputeBiasParamsDict = typing.TypedDict('MriComputeBiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_bias"]],
+_MriComputeBiasParamsDictNoTag = typing.TypedDict('_MriComputeBiasParamsDictNoTag', {
     "subjects": list[str],
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ MriComputeBiasParamsDictTagged = typing.TypedDict('MriComputeBiasParamsDictTagge
     "subjects": list[str],
     "output_volume": str,
 })
+MriComputeBiasParamsDict = _MriComputeBiasParamsDictNoTag | MriComputeBiasParamsDictTagged
 
 
 class MriComputeBiasOutputs(typing.NamedTuple):

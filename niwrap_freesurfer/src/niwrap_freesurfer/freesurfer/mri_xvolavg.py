@@ -13,8 +13,7 @@ MRI_XVOLAVG_METADATA = Metadata(
 )
 
 
-MriXvolavgParamsDict = typing.TypedDict('MriXvolavgParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_xvolavg"]],
+_MriXvolavgParamsDictNoTag = typing.TypedDict('_MriXvolavgParamsDictNoTag', {
     "input_volumes": list[InputPathType],
     "vol_type": str,
     "output_volume": str,
@@ -27,6 +26,7 @@ MriXvolavgParamsDictTagged = typing.TypedDict('MriXvolavgParamsDictTagged', {
     "output_volume": str,
     "output_type": typing.NotRequired[str | None],
 })
+MriXvolavgParamsDict = _MriXvolavgParamsDictNoTag | MriXvolavgParamsDictTagged
 
 
 class MriXvolavgOutputs(typing.NamedTuple):

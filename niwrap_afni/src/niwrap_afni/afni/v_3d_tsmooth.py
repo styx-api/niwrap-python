@@ -13,8 +13,7 @@ V_3D_TSMOOTH_METADATA = Metadata(
 )
 
 
-V3dTsmoothParamsDict = typing.TypedDict('V3dTsmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTsmooth"]],
+_V3dTsmoothParamsDictNoTag = typing.TypedDict('_V3dTsmoothParamsDictNoTag', {
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "datum_type": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ V3dTsmoothParamsDictTagged = typing.TypedDict('V3dTsmoothParamsDictTagged', {
     "trend": bool,
     "adaptive": typing.NotRequired[int | None],
 })
+V3dTsmoothParamsDict = _V3dTsmoothParamsDictNoTag | V3dTsmoothParamsDictTagged
 
 
 class V3dTsmoothOutputs(typing.NamedTuple):

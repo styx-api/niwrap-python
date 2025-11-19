@@ -13,8 +13,7 @@ V__TO_RAI_METADATA = Metadata(
 )
 
 
-VToRaiParamsDict = typing.TypedDict('VToRaiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ToRAI"]],
+_VToRaiParamsDictNoTag = typing.TypedDict('_VToRaiParamsDictNoTag', {
     "coordinates": list[float],
     "orientation": str,
 })
@@ -23,6 +22,7 @@ VToRaiParamsDictTagged = typing.TypedDict('VToRaiParamsDictTagged', {
     "coordinates": list[float],
     "orientation": str,
 })
+VToRaiParamsDict = _VToRaiParamsDictNoTag | VToRaiParamsDictTagged
 
 
 class VToRaiOutputs(typing.NamedTuple):

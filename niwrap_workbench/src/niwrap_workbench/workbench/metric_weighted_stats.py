@@ -12,8 +12,7 @@ METRIC_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-MetricWeightedStatsRoiParamsDict = typing.TypedDict('MetricWeightedStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_MetricWeightedStatsRoiParamsDictNoTag = typing.TypedDict('_MetricWeightedStatsRoiParamsDictNoTag', {
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
@@ -22,10 +21,10 @@ MetricWeightedStatsRoiParamsDictTagged = typing.TypedDict('MetricWeightedStatsRo
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
+MetricWeightedStatsRoiParamsDict = _MetricWeightedStatsRoiParamsDictNoTag | MetricWeightedStatsRoiParamsDictTagged
 
 
-MetricWeightedStatsParamsDict = typing.TypedDict('MetricWeightedStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-weighted-stats"]],
+_MetricWeightedStatsParamsDictNoTag = typing.TypedDict('_MetricWeightedStatsParamsDictNoTag', {
     "area-surface": typing.NotRequired[InputPathType | None],
     "weight-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -50,6 +49,7 @@ MetricWeightedStatsParamsDictTagged = typing.TypedDict('MetricWeightedStatsParam
     "show-map-name": bool,
     "metric-in": InputPathType,
 })
+MetricWeightedStatsParamsDict = _MetricWeightedStatsParamsDictNoTag | MetricWeightedStatsParamsDictTagged
 
 
 def metric_weighted_stats_roi(

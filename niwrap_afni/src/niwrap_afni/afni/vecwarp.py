@@ -13,8 +13,7 @@ VECWARP_METADATA = Metadata(
 )
 
 
-VecwarpParamsDict = typing.TypedDict('VecwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/Vecwarp"]],
+_VecwarpParamsDictNoTag = typing.TypedDict('_VecwarpParamsDictNoTag', {
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
     "forward": bool,
@@ -33,6 +32,7 @@ VecwarpParamsDictTagged = typing.TypedDict('VecwarpParamsDictTagged', {
     "output": typing.NotRequired[str | None],
     "force": bool,
 })
+VecwarpParamsDict = _VecwarpParamsDictNoTag | VecwarpParamsDictTagged
 
 
 class VecwarpOutputs(typing.NamedTuple):

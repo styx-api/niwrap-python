@@ -13,8 +13,7 @@ DCMUNPACK_METADATA = Metadata(
 )
 
 
-DcmunpackParamsDict = typing.TypedDict('DcmunpackParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmunpack"]],
+_DcmunpackParamsDictNoTag = typing.TypedDict('_DcmunpackParamsDictNoTag', {
     "src": str,
     "targ": typing.NotRequired[str | None],
     "run": typing.NotRequired[str | None],
@@ -95,6 +94,7 @@ DcmunpackParamsDictTagged = typing.TypedDict('DcmunpackParamsDictTagged', {
     "log": typing.NotRequired[str | None],
     "debug": bool,
 })
+DcmunpackParamsDict = _DcmunpackParamsDictNoTag | DcmunpackParamsDictTagged
 
 
 class DcmunpackOutputs(typing.NamedTuple):

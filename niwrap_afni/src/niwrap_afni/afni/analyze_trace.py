@@ -13,8 +13,7 @@ ANALYZE_TRACE_METADATA = Metadata(
 )
 
 
-AnalyzeTraceParamsDict = typing.TypedDict('AnalyzeTraceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/AnalyzeTrace"]],
+_AnalyzeTraceParamsDictNoTag = typing.TypedDict('_AnalyzeTraceParamsDictNoTag', {
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
     "suma_c": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ AnalyzeTraceParamsDictTagged = typing.TypedDict('AnalyzeTraceParamsDictTagged', 
     "nomall": bool,
     "yesmall": bool,
 })
+AnalyzeTraceParamsDict = _AnalyzeTraceParamsDictNoTag | AnalyzeTraceParamsDictTagged
 
 
 class AnalyzeTraceOutputs(typing.NamedTuple):

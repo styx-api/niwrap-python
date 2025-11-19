@@ -13,8 +13,7 @@ FSL2ASCII_METADATA = Metadata(
 )
 
 
-Fsl2asciiParamsDict = typing.TypedDict('Fsl2asciiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl2ascii"]],
+_Fsl2asciiParamsDictNoTag = typing.TypedDict('_Fsl2asciiParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ Fsl2asciiParamsDictTagged = typing.TypedDict('Fsl2asciiParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+Fsl2asciiParamsDict = _Fsl2asciiParamsDictNoTag | Fsl2asciiParamsDictTagged
 
 
 class Fsl2asciiOutputs(typing.NamedTuple):

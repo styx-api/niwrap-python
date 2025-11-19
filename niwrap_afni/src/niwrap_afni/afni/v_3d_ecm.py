@@ -13,8 +13,7 @@ V_3D_ECM_METADATA = Metadata(
 )
 
 
-V3dEcmParamsDict = typing.TypedDict('V3dEcmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dECM"]],
+_V3dEcmParamsDictNoTag = typing.TypedDict('_V3dEcmParamsDictNoTag', {
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -53,6 +52,7 @@ V3dEcmParamsDictTagged = typing.TypedDict('V3dEcmParamsDictTagged', {
     "sparsity": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
 })
+V3dEcmParamsDict = _V3dEcmParamsDictNoTag | V3dEcmParamsDictTagged
 
 
 class V3dEcmOutputs(typing.NamedTuple):

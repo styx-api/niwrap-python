@@ -13,8 +13,7 @@ MSM_METADATA = Metadata(
 )
 
 
-MsmParamsDict = typing.TypedDict('MsmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/msm"]],
+_MsmParamsDictNoTag = typing.TypedDict('_MsmParamsDictNoTag', {
     "inmesh": InputPathType,
     "out": str,
     "refmesh": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ MsmParamsDictTagged = typing.TypedDict('MsmParamsDictTagged', {
     "verbose": bool,
     "printoptions": bool,
 })
+MsmParamsDict = _MsmParamsDictNoTag | MsmParamsDictTagged
 
 
 class MsmOutputs(typing.NamedTuple):

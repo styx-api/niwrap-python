@@ -13,8 +13,7 @@ EXAMINE_XMAT_METADATA = Metadata(
 )
 
 
-ExamineXmatParamsDict = typing.TypedDict('ExamineXmatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ExamineXmat"]],
+_ExamineXmatParamsDictNoTag = typing.TypedDict('_ExamineXmatParamsDictNoTag', {
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
     "prefix": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ ExamineXmatParamsDictTagged = typing.TypedDict('ExamineXmatParamsDictTagged', {
     "msg_trace": bool,
     "verbosity": typing.NotRequired[float | None],
 })
+ExamineXmatParamsDict = _ExamineXmatParamsDictNoTag | ExamineXmatParamsDictTagged
 
 
 class ExamineXmatOutputs(typing.NamedTuple):

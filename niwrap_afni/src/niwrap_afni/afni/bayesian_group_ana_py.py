@@ -13,8 +13,7 @@ BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
 )
 
 
-BayesianGroupAnaPyParamsDict = typing.TypedDict('BayesianGroupAnaPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/BayesianGroupAna.py"]],
+_BayesianGroupAnaPyParamsDictNoTag = typing.TypedDict('_BayesianGroupAnaPyParamsDictNoTag', {
     "dataTable": InputPathType,
     "y_variable": str,
     "prefix": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ BayesianGroupAnaPyParamsDictTagged = typing.TypedDict('BayesianGroupAnaPyParamsD
     "overwrite": bool,
     "help": bool,
 })
+BayesianGroupAnaPyParamsDict = _BayesianGroupAnaPyParamsDictNoTag | BayesianGroupAnaPyParamsDictTagged
 
 
 class BayesianGroupAnaPyOutputs(typing.NamedTuple):

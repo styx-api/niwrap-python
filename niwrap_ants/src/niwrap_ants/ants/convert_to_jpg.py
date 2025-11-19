@@ -13,8 +13,7 @@ CONVERT_TO_JPG_METADATA = Metadata(
 )
 
 
-ConvertToJpgParamsDict = typing.TypedDict('ConvertToJpgParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ConvertToJpg"]],
+_ConvertToJpgParamsDictNoTag = typing.TypedDict('_ConvertToJpgParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
 })
@@ -23,6 +22,7 @@ ConvertToJpgParamsDictTagged = typing.TypedDict('ConvertToJpgParamsDictTagged', 
     "infile": InputPathType,
     "outfile": str,
 })
+ConvertToJpgParamsDict = _ConvertToJpgParamsDictNoTag | ConvertToJpgParamsDictTagged
 
 
 class ConvertToJpgOutputs(typing.NamedTuple):

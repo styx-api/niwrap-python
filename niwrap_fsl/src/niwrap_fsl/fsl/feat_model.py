@@ -13,8 +13,7 @@ FEAT_MODEL_METADATA = Metadata(
 )
 
 
-FeatModelParamsDict = typing.TypedDict('FeatModelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/feat_model"]],
+_FeatModelParamsDictNoTag = typing.TypedDict('_FeatModelParamsDictNoTag', {
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })
@@ -23,6 +22,7 @@ FeatModelParamsDictTagged = typing.TypedDict('FeatModelParamsDictTagged', {
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })
+FeatModelParamsDict = _FeatModelParamsDictNoTag | FeatModelParamsDictTagged
 
 
 class FeatModelOutputs(typing.NamedTuple):

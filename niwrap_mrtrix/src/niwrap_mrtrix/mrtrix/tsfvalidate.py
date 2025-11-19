@@ -13,8 +13,7 @@ TSFVALIDATE_METADATA = Metadata(
 )
 
 
-TsfvalidateConfigParamsDict = typing.TypedDict('TsfvalidateConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfvalidateConfigParamsDictNoTag = typing.TypedDict('_TsfvalidateConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfvalidateConfigParamsDictTagged = typing.TypedDict('TsfvalidateConfigParamsDic
     "key": str,
     "value": str,
 })
+TsfvalidateConfigParamsDict = _TsfvalidateConfigParamsDictNoTag | TsfvalidateConfigParamsDictTagged
 
 
-TsfvalidateParamsDict = typing.TypedDict('TsfvalidateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfvalidate"]],
+_TsfvalidateParamsDictNoTag = typing.TypedDict('_TsfvalidateParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -51,6 +50,7 @@ TsfvalidateParamsDictTagged = typing.TypedDict('TsfvalidateParamsDictTagged', {
     "tsf": InputPathType,
     "tracks": InputPathType,
 })
+TsfvalidateParamsDict = _TsfvalidateParamsDictNoTag | TsfvalidateParamsDictTagged
 
 
 def tsfvalidate_config(

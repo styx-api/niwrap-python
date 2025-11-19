@@ -13,8 +13,7 @@ V_3D_ZEROPAD_METADATA = Metadata(
 )
 
 
-V3dZeropadParamsDict = typing.TypedDict('V3dZeropadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dZeropad"]],
+_V3dZeropadParamsDictNoTag = typing.TypedDict('_V3dZeropadParamsDictNoTag', {
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
     "S": typing.NotRequired[float | None],
@@ -49,6 +48,7 @@ V3dZeropadParamsDictTagged = typing.TypedDict('V3dZeropadParamsDictTagged', {
     "master_dataset": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
 })
+V3dZeropadParamsDict = _V3dZeropadParamsDictNoTag | V3dZeropadParamsDictTagged
 
 
 class V3dZeropadOutputs(typing.NamedTuple):

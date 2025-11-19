@@ -13,8 +13,7 @@ V__VOL_CENTER_METADATA = Metadata(
 )
 
 
-VVolCenterParamsDict = typing.TypedDict('VVolCenterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@VolCenter"]],
+_VVolCenterParamsDictNoTag = typing.TypedDict('_VVolCenterParamsDictNoTag', {
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ VVolCenterParamsDictTagged = typing.TypedDict('VVolCenterParamsDictTagged', {
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })
+VVolCenterParamsDict = _VVolCenterParamsDictNoTag | VVolCenterParamsDictTagged
 
 
 class VVolCenterOutputs(typing.NamedTuple):

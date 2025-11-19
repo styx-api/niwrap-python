@@ -13,8 +13,7 @@ MRI_SYNTHSTRIP_METADATA = Metadata(
 )
 
 
-MriSynthstripParamsDict = typing.TypedDict('MriSynthstripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthstrip"]],
+_MriSynthstripParamsDictNoTag = typing.TypedDict('_MriSynthstripParamsDictNoTag', {
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ MriSynthstripParamsDictTagged = typing.TypedDict('MriSynthstripParamsDictTagged'
     "exclude_csf": bool,
     "model_weights": typing.NotRequired[InputPathType | None],
 })
+MriSynthstripParamsDict = _MriSynthstripParamsDictNoTag | MriSynthstripParamsDictTagged
 
 
 class MriSynthstripOutputs(typing.NamedTuple):

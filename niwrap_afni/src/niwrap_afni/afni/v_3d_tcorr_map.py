@@ -13,8 +13,7 @@ V_3D_TCORR_MAP_METADATA = Metadata(
 )
 
 
-V3dTcorrMapParamsDict = typing.TypedDict('V3dTcorrMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTcorrMap"]],
+_V3dTcorrMapParamsDictNoTag = typing.TypedDict('_V3dTcorrMapParamsDictNoTag', {
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -53,6 +52,7 @@ V3dTcorrMapParamsDictTagged = typing.TypedDict('V3dTcorrMapParamsDictTagged', {
     "sexpr": typing.NotRequired[str | None],
     "hist": typing.NotRequired[str | None],
 })
+V3dTcorrMapParamsDict = _V3dTcorrMapParamsDictNoTag | V3dTcorrMapParamsDictTagged
 
 
 class V3dTcorrMapOutputs(typing.NamedTuple):

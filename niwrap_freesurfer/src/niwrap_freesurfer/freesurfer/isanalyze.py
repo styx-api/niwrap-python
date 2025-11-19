@@ -13,14 +13,14 @@ ISANALYZE_METADATA = Metadata(
 )
 
 
-IsanalyzeParamsDict = typing.TypedDict('IsanalyzeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/isanalyze"]],
+_IsanalyzeParamsDictNoTag = typing.TypedDict('_IsanalyzeParamsDictNoTag', {
     "input_file": InputPathType,
 })
 IsanalyzeParamsDictTagged = typing.TypedDict('IsanalyzeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isanalyze"],
     "input_file": InputPathType,
 })
+IsanalyzeParamsDict = _IsanalyzeParamsDictNoTag | IsanalyzeParamsDictTagged
 
 
 class IsanalyzeOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
 )
 
 
-VolumeWarpfieldAffineRegressionFlirtOutParamsDict = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flirt-out"]],
+_VolumeWarpfieldAffineRegressionFlirtOutParamsDictNoTag = typing.TypedDict('_VolumeWarpfieldAffineRegressionFlirtOutParamsDictNoTag', {
     "source-volume": str,
     "target-volume": str,
 })
@@ -22,10 +21,10 @@ VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged = typing.TypedDict('Volu
     "source-volume": str,
     "target-volume": str,
 })
+VolumeWarpfieldAffineRegressionFlirtOutParamsDict = _VolumeWarpfieldAffineRegressionFlirtOutParamsDictNoTag | VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged
 
 
-VolumeWarpfieldAffineRegressionParamsDict = typing.TypedDict('VolumeWarpfieldAffineRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-warpfield-affine-regression"]],
+_VolumeWarpfieldAffineRegressionParamsDictNoTag = typing.TypedDict('_VolumeWarpfieldAffineRegressionParamsDictNoTag', {
     "roi-vol": typing.NotRequired[InputPathType | None],
     "source-volume": typing.NotRequired[str | None],
     "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None],
@@ -40,6 +39,7 @@ VolumeWarpfieldAffineRegressionParamsDictTagged = typing.TypedDict('VolumeWarpfi
     "warpfield": str,
     "affine-out": str,
 })
+VolumeWarpfieldAffineRegressionParamsDict = _VolumeWarpfieldAffineRegressionParamsDictNoTag | VolumeWarpfieldAffineRegressionParamsDictTagged
 
 
 def volume_warpfield_affine_regression_flirt_out(

@@ -13,8 +13,7 @@ MEDIANFILTER_METADATA = Metadata(
 )
 
 
-MedianfilterParamsDict = typing.TypedDict('MedianfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/medianfilter"]],
+_MedianfilterParamsDictNoTag = typing.TypedDict('_MedianfilterParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": InputPathType,
 })
@@ -23,6 +22,7 @@ MedianfilterParamsDictTagged = typing.TypedDict('MedianfilterParamsDictTagged', 
     "infile": InputPathType,
     "outfile": InputPathType,
 })
+MedianfilterParamsDict = _MedianfilterParamsDictNoTag | MedianfilterParamsDictTagged
 
 
 class MedianfilterOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ DMRI_AC_SH_METADATA = Metadata(
 )
 
 
-DmriAcShParamsDict = typing.TypedDict('DmriAcShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_ac.sh"]],
+_DmriAcShParamsDictNoTag = typing.TypedDict('_DmriAcShParamsDictNoTag', {
     "additional_args": typing.NotRequired[str | None],
 })
 DmriAcShParamsDictTagged = typing.TypedDict('DmriAcShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_ac.sh"],
     "additional_args": typing.NotRequired[str | None],
 })
+DmriAcShParamsDict = _DmriAcShParamsDictNoTag | DmriAcShParamsDictTagged
 
 
 class DmriAcShOutputs(typing.NamedTuple):

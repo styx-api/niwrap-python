@@ -13,8 +13,7 @@ MRIS_COMPUTE_OVERLAP_METADATA = Metadata(
 )
 
 
-MrisComputeOverlapParamsDict = typing.TypedDict('MrisComputeOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_overlap"]],
+_MrisComputeOverlapParamsDictNoTag = typing.TypedDict('_MrisComputeOverlapParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -35,6 +34,7 @@ MrisComputeOverlapParamsDictTagged = typing.TypedDict('MrisComputeOverlapParamsD
     "log_file": typing.NotRequired[str | None],
     "brain_volume": typing.NotRequired[InputPathType | None],
 })
+MrisComputeOverlapParamsDict = _MrisComputeOverlapParamsDictNoTag | MrisComputeOverlapParamsDictTagged
 
 
 class MrisComputeOverlapOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__AFNI_RUN_ME_METADATA = Metadata(
 )
 
 
-VAfniRunMeParamsDict = typing.TypedDict('VAfniRunMeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@afni.run.me"]],
+_VAfniRunMeParamsDictNoTag = typing.TypedDict('_VAfniRunMeParamsDictNoTag', {
     "go": bool,
     "curl": bool,
     "help": bool,
@@ -25,6 +24,7 @@ VAfniRunMeParamsDictTagged = typing.TypedDict('VAfniRunMeParamsDictTagged', {
     "curl": bool,
     "help": bool,
 })
+VAfniRunMeParamsDict = _VAfniRunMeParamsDictNoTag | VAfniRunMeParamsDictTagged
 
 
 class VAfniRunMeOutputs(typing.NamedTuple):

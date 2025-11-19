@@ -12,8 +12,7 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-CiftiVectorOperationParamsDict = typing.TypedDict('CiftiVectorOperationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-vector-operation"]],
+_CiftiVectorOperationParamsDictNoTag = typing.TypedDict('_CiftiVectorOperationParamsDictNoTag', {
     "cifti-out": str,
     "normalize-a": bool,
     "normalize-b": bool,
@@ -34,6 +33,7 @@ CiftiVectorOperationParamsDictTagged = typing.TypedDict('CiftiVectorOperationPar
     "vectors-b": InputPathType,
     "operation": str,
 })
+CiftiVectorOperationParamsDict = _CiftiVectorOperationParamsDictNoTag | CiftiVectorOperationParamsDictTagged
 
 
 class CiftiVectorOperationOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 )
 
 
-BackendAverageRoiCorrelationParamsDict = typing.TypedDict('BackendAverageRoiCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/backend-average-roi-correlation"]],
+_BackendAverageRoiCorrelationParamsDictNoTag = typing.TypedDict('_BackendAverageRoiCorrelationParamsDictNoTag', {
     "index-list": str,
     "out-file": str,
 })
@@ -22,6 +21,7 @@ BackendAverageRoiCorrelationParamsDictTagged = typing.TypedDict('BackendAverageR
     "index-list": str,
     "out-file": str,
 })
+BackendAverageRoiCorrelationParamsDict = _BackendAverageRoiCorrelationParamsDictNoTag | BackendAverageRoiCorrelationParamsDictTagged
 
 
 class BackendAverageRoiCorrelationOutputs(typing.NamedTuple):

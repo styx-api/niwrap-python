@@ -12,8 +12,7 @@ VOLUME_REORIENT_METADATA = Metadata(
 )
 
 
-VolumeReorientParamsDict = typing.TypedDict('VolumeReorientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-reorient"]],
+_VolumeReorientParamsDictNoTag = typing.TypedDict('_VolumeReorientParamsDictNoTag', {
     "volume": InputPathType,
     "orient-string": str,
     "volume-out": str,
@@ -24,6 +23,7 @@ VolumeReorientParamsDictTagged = typing.TypedDict('VolumeReorientParamsDictTagge
     "orient-string": str,
     "volume-out": str,
 })
+VolumeReorientParamsDict = _VolumeReorientParamsDictNoTag | VolumeReorientParamsDictTagged
 
 
 class VolumeReorientOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_ERRTS_CORMAT_METADATA = Metadata(
 )
 
 
-V3dErrtsCormatParamsDict = typing.TypedDict('V3dErrtsCormatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dErrtsCormat"]],
+_V3dErrtsCormatParamsDictNoTag = typing.TypedDict('_V3dErrtsCormatParamsDictNoTag', {
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
     "input": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ V3dErrtsCormatParamsDictTagged = typing.TypedDict('V3dErrtsCormatParamsDictTagge
     "maxlag": typing.NotRequired[float | None],
     "polort": typing.NotRequired[float | None],
 })
+V3dErrtsCormatParamsDict = _V3dErrtsCormatParamsDictNoTag | V3dErrtsCormatParamsDictTagged
 
 
 class V3dErrtsCormatOutputs(typing.NamedTuple):

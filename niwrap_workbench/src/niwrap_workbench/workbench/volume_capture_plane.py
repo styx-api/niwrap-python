@@ -12,8 +12,7 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
 )
 
 
-VolumeCapturePlaneParamsDict = typing.TypedDict('VolumeCapturePlaneParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-capture-plane"]],
+_VolumeCapturePlaneParamsDictNoTag = typing.TypedDict('_VolumeCapturePlaneParamsDictNoTag', {
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,
@@ -52,6 +51,7 @@ VolumeCapturePlaneParamsDictTagged = typing.TypedDict('VolumeCapturePlaneParamsD
     "top-left-z": float,
     "image": str,
 })
+VolumeCapturePlaneParamsDict = _VolumeCapturePlaneParamsDictNoTag | VolumeCapturePlaneParamsDictTagged
 
 
 class VolumeCapturePlaneOutputs(typing.NamedTuple):

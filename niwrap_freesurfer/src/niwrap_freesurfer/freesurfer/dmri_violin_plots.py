@@ -13,8 +13,7 @@ DMRI_VIOLIN_PLOTS_METADATA = Metadata(
 )
 
 
-DmriViolinPlotsParamsDict = typing.TypedDict('DmriViolinPlotsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_violinPlots"]],
+_DmriViolinPlotsParamsDictNoTag = typing.TypedDict('_DmriViolinPlotsParamsDictNoTag', {
     "input_directory": str,
     "labels": InputPathType,
     "structure": str,
@@ -25,6 +24,7 @@ DmriViolinPlotsParamsDictTagged = typing.TypedDict('DmriViolinPlotsParamsDictTag
     "labels": InputPathType,
     "structure": str,
 })
+DmriViolinPlotsParamsDict = _DmriViolinPlotsParamsDictNoTag | DmriViolinPlotsParamsDictTagged
 
 
 class DmriViolinPlotsOutputs(typing.NamedTuple):

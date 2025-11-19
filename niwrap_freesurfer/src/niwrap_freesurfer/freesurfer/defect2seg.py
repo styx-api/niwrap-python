@@ -13,8 +13,7 @@ DEFECT2SEG_METADATA = Metadata(
 )
 
 
-Defect2segParamsDict = typing.TypedDict('Defect2segParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/defect2seg"]],
+_Defect2segParamsDictNoTag = typing.TypedDict('_Defect2segParamsDictNoTag', {
     "output_seg": str,
     "template": InputPathType,
     "left_hemisphere": typing.NotRequired[list[str] | None],
@@ -37,6 +36,7 @@ Defect2segParamsDictTagged = typing.TypedDict('Defect2segParamsDictTagged', {
     "cortex": bool,
     "no_cortex": bool,
 })
+Defect2segParamsDict = _Defect2segParamsDictNoTag | Defect2segParamsDictTagged
 
 
 class Defect2segOutputs(typing.NamedTuple):

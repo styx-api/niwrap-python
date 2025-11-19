@@ -13,8 +13,7 @@ FEAT2SURF_METADATA = Metadata(
 )
 
 
-Feat2surfParamsDict = typing.TypedDict('Feat2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/feat2surf"]],
+_Feat2surfParamsDictNoTag = typing.TypedDict('_Feat2surfParamsDictNoTag', {
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
     "proj_frac": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ Feat2surfParamsDictTagged = typing.TypedDict('Feat2surfParamsDictTagged', {
     "nolog_flag": bool,
     "out_dir": typing.NotRequired[str | None],
 })
+Feat2surfParamsDict = _Feat2surfParamsDictNoTag | Feat2surfParamsDictTagged
 
 
 class Feat2surfOutputs(typing.NamedTuple):

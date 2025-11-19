@@ -13,8 +13,7 @@ CREATE_DTICOHORT_METADATA = Metadata(
 )
 
 
-CreateDticohortParamsDict = typing.TypedDict('CreateDticohortParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/CreateDTICohort"]],
+_CreateDticohortParamsDictNoTag = typing.TypedDict('_CreateDticohortParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
     "label_mask_image": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ CreateDticohortParamsDictTagged = typing.TypedDict('CreateDticohortParamsDictTag
     "registered_population": typing.NotRequired[InputPathType | None],
     "output": str,
 })
+CreateDticohortParamsDict = _CreateDticohortParamsDictNoTag | CreateDticohortParamsDictTagged
 
 
 class CreateDticohortOutputs(typing.NamedTuple):

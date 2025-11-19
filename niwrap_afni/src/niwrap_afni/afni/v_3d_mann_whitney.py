@@ -13,8 +13,7 @@ V_3D_MANN_WHITNEY_METADATA = Metadata(
 )
 
 
-V3dMannWhitneyParamsDict = typing.TypedDict('V3dMannWhitneyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMannWhitney"]],
+_V3dMannWhitneyParamsDictNoTag = typing.TypedDict('_V3dMannWhitneyParamsDictNoTag', {
     "dset1_x": list[str],
     "dset2_y": list[str],
     "output_prefix": str,
@@ -29,6 +28,7 @@ V3dMannWhitneyParamsDictTagged = typing.TypedDict('V3dMannWhitneyParamsDictTagge
     "workmem": typing.NotRequired[int | None],
     "voxel_num": typing.NotRequired[int | None],
 })
+V3dMannWhitneyParamsDict = _V3dMannWhitneyParamsDictNoTag | V3dMannWhitneyParamsDictTagged
 
 
 class V3dMannWhitneyOutputs(typing.NamedTuple):

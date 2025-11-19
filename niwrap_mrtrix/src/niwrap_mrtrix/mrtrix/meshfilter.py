@@ -13,8 +13,7 @@ MESHFILTER_METADATA = Metadata(
 )
 
 
-MeshfilterConfigParamsDict = typing.TypedDict('MeshfilterConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MeshfilterConfigParamsDictNoTag = typing.TypedDict('_MeshfilterConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MeshfilterConfigParamsDictTagged = typing.TypedDict('MeshfilterConfigParamsDictT
     "key": str,
     "value": str,
 })
+MeshfilterConfigParamsDict = _MeshfilterConfigParamsDictNoTag | MeshfilterConfigParamsDictTagged
 
 
-MeshfilterParamsDict = typing.TypedDict('MeshfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/meshfilter"]],
+_MeshfilterParamsDictNoTag = typing.TypedDict('_MeshfilterParamsDictNoTag', {
     "smooth_spatial": typing.NotRequired[float | None],
     "smooth_influence": typing.NotRequired[float | None],
     "info": bool,
@@ -57,6 +56,7 @@ MeshfilterParamsDictTagged = typing.TypedDict('MeshfilterParamsDictTagged', {
     "filter": str,
     "output": str,
 })
+MeshfilterParamsDict = _MeshfilterParamsDictNoTag | MeshfilterParamsDictTagged
 
 
 def meshfilter_config(

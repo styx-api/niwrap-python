@@ -13,8 +13,7 @@ MIDTRANS_METADATA = Metadata(
 )
 
 
-MidtransParamsDict = typing.TypedDict('MidtransParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/midtrans"]],
+_MidtransParamsDictNoTag = typing.TypedDict('_MidtransParamsDictNoTag', {
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
     "template_image": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ MidtransParamsDictTagged = typing.TypedDict('MidtransParamsDictTagged', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
+MidtransParamsDict = _MidtransParamsDictNoTag | MidtransParamsDictTagged
 
 
 class MidtransOutputs(typing.NamedTuple):

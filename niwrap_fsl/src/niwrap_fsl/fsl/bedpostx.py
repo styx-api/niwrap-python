@@ -13,8 +13,7 @@ BEDPOSTX_METADATA = Metadata(
 )
 
 
-BedpostxParamsDict = typing.TypedDict('BedpostxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx"]],
+_BedpostxParamsDictNoTag = typing.TypedDict('_BedpostxParamsDictNoTag', {
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ BedpostxParamsDictTagged = typing.TypedDict('BedpostxParamsDictTagged', {
     "model_type": typing.NotRequired[float | None],
     "grad_nonlinear": bool,
 })
+BedpostxParamsDict = _BedpostxParamsDictNoTag | BedpostxParamsDictTagged
 
 
 class BedpostxOutputs(typing.NamedTuple):

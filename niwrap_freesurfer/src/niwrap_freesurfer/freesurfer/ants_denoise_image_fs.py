@@ -13,8 +13,7 @@ ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
 )
 
 
-AntsDenoiseImageFsParamsDict = typing.TypedDict('AntsDenoiseImageFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/AntsDenoiseImageFs"]],
+_AntsDenoiseImageFsParamsDictNoTag = typing.TypedDict('_AntsDenoiseImageFsParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "rician_flag": bool,
@@ -25,6 +24,7 @@ AntsDenoiseImageFsParamsDictTagged = typing.TypedDict('AntsDenoiseImageFsParamsD
     "output_image": str,
     "rician_flag": bool,
 })
+AntsDenoiseImageFsParamsDict = _AntsDenoiseImageFsParamsDictNoTag | AntsDenoiseImageFsParamsDictTagged
 
 
 class AntsDenoiseImageFsOutputs(typing.NamedTuple):

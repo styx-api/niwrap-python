@@ -13,14 +13,14 @@ V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
 )
 
 
-VDjunct4dSlicesTo3dVolParamsDict = typing.TypedDict('VDjunct4dSlicesTo3dVolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_slices_to_3d_vol"]],
+_VDjunct4dSlicesTo3dVolParamsDictNoTag = typing.TypedDict('_VDjunct4dSlicesTo3dVolParamsDictNoTag', {
     "do_something": bool,
 })
 VDjunct4dSlicesTo3dVolParamsDictTagged = typing.TypedDict('VDjunct4dSlicesTo3dVolParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_4d_slices_to_3d_vol"],
     "do_something": bool,
 })
+VDjunct4dSlicesTo3dVolParamsDict = _VDjunct4dSlicesTo3dVolParamsDictNoTag | VDjunct4dSlicesTo3dVolParamsDictTagged
 
 
 class VDjunct4dSlicesTo3dVolOutputs(typing.NamedTuple):

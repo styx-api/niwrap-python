@@ -13,8 +13,7 @@ MRISP_PAINT_METADATA = Metadata(
 )
 
 
-MrispPaintParamsDict = typing.TypedDict('MrispPaintParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_paint"]],
+_MrispPaintParamsDictNoTag = typing.TypedDict('_MrispPaintParamsDictNoTag', {
     "template_file": InputPathType,
     "input_surface": InputPathType,
     "output_name": str,
@@ -51,6 +50,7 @@ MrispPaintParamsDictTagged = typing.TypedDict('MrispPaintParamsDictTagged', {
     "version_flag": bool,
     "diag_write_flag": bool,
 })
+MrispPaintParamsDict = _MrispPaintParamsDictNoTag | MrispPaintParamsDictTagged
 
 
 class MrispPaintOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TALAIRACH_METADATA = Metadata(
 )
 
 
-TalairachParamsDict = typing.TypedDict('TalairachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach"]],
+_TalairachParamsDictNoTag = typing.TypedDict('_TalairachParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_transform": str,
     "log_flag": bool,
@@ -27,6 +26,7 @@ TalairachParamsDictTagged = typing.TypedDict('TalairachParamsDictTagged', {
     "log_flag": bool,
     "debug_flag": bool,
 })
+TalairachParamsDict = _TalairachParamsDictNoTag | TalairachParamsDictTagged
 
 
 class TalairachOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FSL_GEN_3_D_METADATA = Metadata(
 )
 
 
-FslGen3DParamsDict = typing.TypedDict('FslGen3DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_gen_3D"]],
+_FslGen3DParamsDictNoTag = typing.TypedDict('_FslGen3DParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": InputPathType,
 })
@@ -23,6 +22,7 @@ FslGen3DParamsDictTagged = typing.TypedDict('FslGen3DParamsDictTagged', {
     "infile": InputPathType,
     "outfile": InputPathType,
 })
+FslGen3DParamsDict = _FslGen3DParamsDictNoTag | FslGen3DParamsDictTagged
 
 
 class FslGen3DOutputs(typing.NamedTuple):

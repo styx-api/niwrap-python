@@ -13,8 +13,7 @@ FSLSTATS_METADATA = Metadata(
 )
 
 
-FslstatsParamsDict = typing.TypedDict('FslstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslstats"]],
+_FslstatsParamsDictNoTag = typing.TypedDict('_FslstatsParamsDictNoTag', {
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
     "lower_threshold": typing.NotRequired[float | None],
@@ -75,6 +74,7 @@ FslstatsParamsDictTagged = typing.TypedDict('FslstatsParamsDictTagged', {
     "mean_entropy_flag": bool,
     "nonzero_mean_entropy_flag": bool,
 })
+FslstatsParamsDict = _FslstatsParamsDictNoTag | FslstatsParamsDictTagged
 
 
 class FslstatsOutputs(typing.NamedTuple):

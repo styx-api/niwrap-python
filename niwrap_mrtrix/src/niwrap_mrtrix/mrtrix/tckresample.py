@@ -13,8 +13,7 @@ TCKRESAMPLE_METADATA = Metadata(
 )
 
 
-TckresampleLineParamsDict = typing.TypedDict('TckresampleLineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["line"]],
+_TckresampleLineParamsDictNoTag = typing.TypedDict('_TckresampleLineParamsDictNoTag', {
     "num": int,
     "start": list[float],
     "end": list[float],
@@ -25,10 +24,10 @@ TckresampleLineParamsDictTagged = typing.TypedDict('TckresampleLineParamsDictTag
     "start": list[float],
     "end": list[float],
 })
+TckresampleLineParamsDict = _TckresampleLineParamsDictNoTag | TckresampleLineParamsDictTagged
 
 
-TckresampleArcParamsDict = typing.TypedDict('TckresampleArcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["arc"]],
+_TckresampleArcParamsDictNoTag = typing.TypedDict('_TckresampleArcParamsDictNoTag', {
     "num": int,
     "start": list[float],
     "mid": list[float],
@@ -41,10 +40,10 @@ TckresampleArcParamsDictTagged = typing.TypedDict('TckresampleArcParamsDictTagge
     "mid": list[float],
     "end": list[float],
 })
+TckresampleArcParamsDict = _TckresampleArcParamsDictNoTag | TckresampleArcParamsDictTagged
 
 
-TckresampleConfigParamsDict = typing.TypedDict('TckresampleConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckresampleConfigParamsDictNoTag = typing.TypedDict('_TckresampleConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -53,10 +52,10 @@ TckresampleConfigParamsDictTagged = typing.TypedDict('TckresampleConfigParamsDic
     "key": str,
     "value": str,
 })
+TckresampleConfigParamsDict = _TckresampleConfigParamsDictNoTag | TckresampleConfigParamsDictTagged
 
 
-TckresampleParamsDict = typing.TypedDict('TckresampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckresample"]],
+_TckresampleParamsDictNoTag = typing.TypedDict('_TckresampleParamsDictNoTag', {
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],
@@ -95,6 +94,7 @@ TckresampleParamsDictTagged = typing.TypedDict('TckresampleParamsDictTagged', {
     "in_tracks": InputPathType,
     "out_tracks": str,
 })
+TckresampleParamsDict = _TckresampleParamsDictNoTag | TckresampleParamsDictTagged
 
 
 def tckresample_line(

@@ -13,8 +13,7 @@ TOPUP_METADATA = Metadata(
 )
 
 
-TopupParamsDict = typing.TypedDict('TopupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/topup"]],
+_TopupParamsDictNoTag = typing.TypedDict('_TopupParamsDictNoTag', {
     "imain": InputPathType,
     "datain": InputPathType,
     "out": typing.NotRequired[str | None],
@@ -65,6 +64,7 @@ TopupParamsDictTagged = typing.TypedDict('TopupParamsDictTagged', {
     "nthr": typing.NotRequired[float | None],
     "verbose": bool,
 })
+TopupParamsDict = _TopupParamsDictNoTag | TopupParamsDictTagged
 
 
 class TopupOutputs(typing.NamedTuple):

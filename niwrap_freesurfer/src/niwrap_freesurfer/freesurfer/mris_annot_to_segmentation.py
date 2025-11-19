@@ -13,8 +13,7 @@ MRIS_ANNOT_TO_SEGMENTATION_METADATA = Metadata(
 )
 
 
-MrisAnnotToSegmentationParamsDict = typing.TypedDict('MrisAnnotToSegmentationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_annot_to_segmentation"]],
+_MrisAnnotToSegmentationParamsDictNoTag = typing.TypedDict('_MrisAnnotToSegmentationParamsDictNoTag', {
     "subject_name": str,
     "hemi": str,
     "surface": str,
@@ -31,6 +30,7 @@ MrisAnnotToSegmentationParamsDictTagged = typing.TypedDict('MrisAnnotToSegmentat
     "color_table": InputPathType,
     "output_volume": str,
 })
+MrisAnnotToSegmentationParamsDict = _MrisAnnotToSegmentationParamsDictNoTag | MrisAnnotToSegmentationParamsDictTagged
 
 
 class MrisAnnotToSegmentationOutputs(typing.NamedTuple):

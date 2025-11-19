@@ -13,8 +13,7 @@ MRI_BRAIN_VOLUME_METADATA = Metadata(
 )
 
 
-MriBrainVolumeParamsDict = typing.TypedDict('MriBrainVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brain_volume"]],
+_MriBrainVolumeParamsDictNoTag = typing.TypedDict('_MriBrainVolumeParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "force_param": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ MriBrainVolumeParamsDictTagged = typing.TypedDict('MriBrainVolumeParamsDictTagge
     "force_param": typing.NotRequired[float | None],
     "version": bool,
 })
+MriBrainVolumeParamsDict = _MriBrainVolumeParamsDictNoTag | MriBrainVolumeParamsDictTagged
 
 
 class MriBrainVolumeOutputs(typing.NamedTuple):

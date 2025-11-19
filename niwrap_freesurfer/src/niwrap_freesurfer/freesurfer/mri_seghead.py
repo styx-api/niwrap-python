@@ -13,8 +13,7 @@ MRI_SEGHEAD_METADATA = Metadata(
 )
 
 
-MriSegheadParamsDict = typing.TypedDict('MriSegheadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seghead"]],
+_MriSegheadParamsDictNoTag = typing.TypedDict('_MriSegheadParamsDictNoTag', {
     "input_volume": str,
     "output_volume": str,
     "fill_value": typing.NotRequired[float | None],
@@ -49,6 +48,7 @@ MriSegheadParamsDictTagged = typing.TypedDict('MriSegheadParamsDictTagged', {
     "or_mask_file": typing.NotRequired[InputPathType | None],
     "gdiag_option": typing.NotRequired[str | None],
 })
+MriSegheadParamsDict = _MriSegheadParamsDictNoTag | MriSegheadParamsDictTagged
 
 
 class MriSegheadOutputs(typing.NamedTuple):

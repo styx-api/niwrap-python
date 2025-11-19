@@ -12,8 +12,7 @@ METRIC_RESAMPLE_METADATA = Metadata(
 )
 
 
-MetricResampleAreaSurfsParamsDict = typing.TypedDict('MetricResampleAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+_MetricResampleAreaSurfsParamsDictNoTag = typing.TypedDict('_MetricResampleAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -22,10 +21,10 @@ MetricResampleAreaSurfsParamsDictTagged = typing.TypedDict('MetricResampleAreaSu
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+MetricResampleAreaSurfsParamsDict = _MetricResampleAreaSurfsParamsDictNoTag | MetricResampleAreaSurfsParamsDictTagged
 
 
-MetricResampleAreaMetricsParamsDict = typing.TypedDict('MetricResampleAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+_MetricResampleAreaMetricsParamsDictNoTag = typing.TypedDict('_MetricResampleAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -34,10 +33,10 @@ MetricResampleAreaMetricsParamsDictTagged = typing.TypedDict('MetricResampleArea
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+MetricResampleAreaMetricsParamsDict = _MetricResampleAreaMetricsParamsDictNoTag | MetricResampleAreaMetricsParamsDictTagged
 
 
-MetricResampleParamsDict = typing.TypedDict('MetricResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-resample"]],
+_MetricResampleParamsDictNoTag = typing.TypedDict('_MetricResampleParamsDictNoTag', {
     "metric-out": str,
     "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
@@ -64,6 +63,7 @@ MetricResampleParamsDictTagged = typing.TypedDict('MetricResampleParamsDictTagge
     "new-sphere": InputPathType,
     "method": str,
 })
+MetricResampleParamsDict = _MetricResampleParamsDictNoTag | MetricResampleParamsDictTagged
 
 
 def metric_resample_area_surfs(

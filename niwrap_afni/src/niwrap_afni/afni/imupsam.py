@@ -13,8 +13,7 @@ IMUPSAM_METADATA = Metadata(
 )
 
 
-ImupsamParamsDict = typing.TypedDict('ImupsamParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imupsam"]],
+_ImupsamParamsDictNoTag = typing.TypedDict('_ImupsamParamsDictNoTag', {
     "ascii_flag": bool,
     "factor": int,
     "input_image": InputPathType,
@@ -27,6 +26,7 @@ ImupsamParamsDictTagged = typing.TypedDict('ImupsamParamsDictTagged', {
     "input_image": InputPathType,
     "output_image": str,
 })
+ImupsamParamsDict = _ImupsamParamsDictNoTag | ImupsamParamsDictTagged
 
 
 class ImupsamOutputs(typing.NamedTuple):

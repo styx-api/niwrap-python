@@ -13,8 +13,7 @@ DMRI_COLORED_FA_METADATA = Metadata(
 )
 
 
-DmriColoredFaParamsDict = typing.TypedDict('DmriColoredFaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_coloredFA"]],
+_DmriColoredFaParamsDictNoTag = typing.TypedDict('_DmriColoredFaParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ DmriColoredFaParamsDictTagged = typing.TypedDict('DmriColoredFaParamsDictTagged'
     "input_volume": InputPathType,
     "output_volume": str,
 })
+DmriColoredFaParamsDict = _DmriColoredFaParamsDictNoTag | DmriColoredFaParamsDictTagged
 
 
 class DmriColoredFaOutputs(typing.NamedTuple):

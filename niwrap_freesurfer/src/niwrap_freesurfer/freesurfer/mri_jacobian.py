@@ -13,8 +13,7 @@ MRI_JACOBIAN_METADATA = Metadata(
 )
 
 
-MriJacobianParamsDict = typing.TypedDict('MriJacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_jacobian"]],
+_MriJacobianParamsDictNoTag = typing.TypedDict('_MriJacobianParamsDictNoTag', {
     "morph_file": InputPathType,
     "template_vol": InputPathType,
     "output_vol": str,
@@ -47,6 +46,7 @@ MriJacobianParamsDictTagged = typing.TypedDict('MriJacobianParamsDictTagged', {
     "debug_voxel": typing.NotRequired[list[float] | None],
     "remove": bool,
 })
+MriJacobianParamsDict = _MriJacobianParamsDictNoTag | MriJacobianParamsDictTagged
 
 
 class MriJacobianOutputs(typing.NamedTuple):

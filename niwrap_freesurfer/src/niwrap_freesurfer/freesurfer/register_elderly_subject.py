@@ -13,8 +13,7 @@ REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
 )
 
 
-RegisterElderlySubjectParamsDict = typing.TypedDict('RegisterElderlySubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/register_elderly_subject"]],
+_RegisterElderlySubjectParamsDictNoTag = typing.TypedDict('_RegisterElderlySubjectParamsDictNoTag', {
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
     "output_norm": str,
@@ -31,6 +30,7 @@ RegisterElderlySubjectParamsDictTagged = typing.TypedDict('RegisterElderlySubjec
     "gca_file": InputPathType,
     "transform_file": InputPathType,
 })
+RegisterElderlySubjectParamsDict = _RegisterElderlySubjectParamsDictNoTag | RegisterElderlySubjectParamsDictTagged
 
 
 class RegisterElderlySubjectOutputs(typing.NamedTuple):

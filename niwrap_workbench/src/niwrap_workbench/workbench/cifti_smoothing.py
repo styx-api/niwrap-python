@@ -12,8 +12,7 @@ CIFTI_SMOOTHING_METADATA = Metadata(
 )
 
 
-CiftiSmoothingLeftSurfaceParamsDict = typing.TypedDict('CiftiSmoothingLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiSmoothingLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiSmoothingLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiSmoothingLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingLeft
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiSmoothingLeftSurfaceParamsDict = _CiftiSmoothingLeftSurfaceParamsDictNoTag | CiftiSmoothingLeftSurfaceParamsDictTagged
 
 
-CiftiSmoothingRightSurfaceParamsDict = typing.TypedDict('CiftiSmoothingRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiSmoothingRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiSmoothingRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiSmoothingRightSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingRig
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiSmoothingRightSurfaceParamsDict = _CiftiSmoothingRightSurfaceParamsDictNoTag | CiftiSmoothingRightSurfaceParamsDictTagged
 
 
-CiftiSmoothingCerebellumSurfaceParamsDict = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiSmoothingCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiSmoothingCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiSmoothingCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothi
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiSmoothingCerebellumSurfaceParamsDict = _CiftiSmoothingCerebellumSurfaceParamsDictNoTag | CiftiSmoothingCerebellumSurfaceParamsDictTagged
 
 
-CiftiSmoothingSurfaceParamsDict = typing.TypedDict('CiftiSmoothingSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface"]],
+_CiftiSmoothingSurfaceParamsDictNoTag = typing.TypedDict('_CiftiSmoothingSurfaceParamsDictNoTag', {
     "structure": str,
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -60,10 +59,10 @@ CiftiSmoothingSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingSurfaceP
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiSmoothingSurfaceParamsDict = _CiftiSmoothingSurfaceParamsDictNoTag | CiftiSmoothingSurfaceParamsDictTagged
 
 
-CiftiSmoothingParamsDict = typing.TypedDict('CiftiSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-smoothing"]],
+_CiftiSmoothingParamsDictNoTag = typing.TypedDict('_CiftiSmoothingParamsDictNoTag', {
     "cifti-out": str,
     "fwhm": bool,
     "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
@@ -96,6 +95,7 @@ CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagge
     "volume-kernel": float,
     "direction": str,
 })
+CiftiSmoothingParamsDict = _CiftiSmoothingParamsDictNoTag | CiftiSmoothingParamsDictTagged
 
 
 def cifti_smoothing_left_surface(

@@ -13,8 +13,7 @@ ASEGSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Asegstats2tableParamsDict = typing.TypedDict('Asegstats2tableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/asegstats2table"]],
+_Asegstats2tableParamsDictNoTag = typing.TypedDict('_Asegstats2tableParamsDictNoTag', {
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
     "tablefile": str,
@@ -67,6 +66,7 @@ Asegstats2tableParamsDictTagged = typing.TypedDict('Asegstats2tableParamsDictTag
     "skip_missing_flag": bool,
     "replace53_flag": bool,
 })
+Asegstats2tableParamsDict = _Asegstats2tableParamsDictNoTag | Asegstats2tableParamsDictTagged
 
 
 class Asegstats2tableOutputs(typing.NamedTuple):

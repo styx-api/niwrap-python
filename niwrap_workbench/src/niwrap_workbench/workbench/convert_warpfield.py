@@ -12,8 +12,7 @@ CONVERT_WARPFIELD_METADATA = Metadata(
 )
 
 
-ConvertWarpfieldFromWorldParamsDict = typing.TypedDict('ConvertWarpfieldFromWorldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-world"]],
+_ConvertWarpfieldFromWorldParamsDictNoTag = typing.TypedDict('_ConvertWarpfieldFromWorldParamsDictNoTag', {
     "input": str,
     "absolute": bool,
 })
@@ -22,10 +21,10 @@ ConvertWarpfieldFromWorldParamsDictTagged = typing.TypedDict('ConvertWarpfieldFr
     "input": str,
     "absolute": bool,
 })
+ConvertWarpfieldFromWorldParamsDict = _ConvertWarpfieldFromWorldParamsDictNoTag | ConvertWarpfieldFromWorldParamsDictTagged
 
 
-ConvertWarpfieldFromFnirtParamsDict = typing.TypedDict('ConvertWarpfieldFromFnirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-fnirt"]],
+_ConvertWarpfieldFromFnirtParamsDictNoTag = typing.TypedDict('_ConvertWarpfieldFromFnirtParamsDictNoTag', {
     "input": str,
     "source-volume": str,
     "absolute": bool,
@@ -36,10 +35,10 @@ ConvertWarpfieldFromFnirtParamsDictTagged = typing.TypedDict('ConvertWarpfieldFr
     "source-volume": str,
     "absolute": bool,
 })
+ConvertWarpfieldFromFnirtParamsDict = _ConvertWarpfieldFromFnirtParamsDictNoTag | ConvertWarpfieldFromFnirtParamsDictTagged
 
 
-ConvertWarpfieldToFnirtParamsDict = typing.TypedDict('ConvertWarpfieldToFnirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-fnirt"]],
+_ConvertWarpfieldToFnirtParamsDictNoTag = typing.TypedDict('_ConvertWarpfieldToFnirtParamsDictNoTag', {
     "output": str,
     "source-volume": str,
 })
@@ -48,10 +47,10 @@ ConvertWarpfieldToFnirtParamsDictTagged = typing.TypedDict('ConvertWarpfieldToFn
     "output": str,
     "source-volume": str,
 })
+ConvertWarpfieldToFnirtParamsDict = _ConvertWarpfieldToFnirtParamsDictNoTag | ConvertWarpfieldToFnirtParamsDictTagged
 
 
-ConvertWarpfieldParamsDict = typing.TypedDict('ConvertWarpfieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/convert-warpfield"]],
+_ConvertWarpfieldParamsDictNoTag = typing.TypedDict('_ConvertWarpfieldParamsDictNoTag', {
     "from-world": typing.NotRequired[ConvertWarpfieldFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
     "from-fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParamsDict | None],
@@ -68,6 +67,7 @@ ConvertWarpfieldParamsDictTagged = typing.TypedDict('ConvertWarpfieldParamsDictT
     "output": typing.NotRequired[str | None],
     "to-fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParamsDict] | None],
 })
+ConvertWarpfieldParamsDict = _ConvertWarpfieldParamsDictNoTag | ConvertWarpfieldParamsDictTagged
 
 
 def convert_warpfield_from_world(

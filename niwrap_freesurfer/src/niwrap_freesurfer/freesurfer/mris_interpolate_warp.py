@@ -13,8 +13,7 @@ MRIS_INTERPOLATE_WARP_METADATA = Metadata(
 )
 
 
-MrisInterpolateWarpParamsDict = typing.TypedDict('MrisInterpolateWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_interpolate_warp"]],
+_MrisInterpolateWarpParamsDictNoTag = typing.TypedDict('_MrisInterpolateWarpParamsDictNoTag', {
     "start_surface": InputPathType,
     "end_surface": InputPathType,
     "warp_field": InputPathType,
@@ -25,6 +24,7 @@ MrisInterpolateWarpParamsDictTagged = typing.TypedDict('MrisInterpolateWarpParam
     "end_surface": InputPathType,
     "warp_field": InputPathType,
 })
+MrisInterpolateWarpParamsDict = _MrisInterpolateWarpParamsDictNoTag | MrisInterpolateWarpParamsDictTagged
 
 
 class MrisInterpolateWarpOutputs(typing.NamedTuple):

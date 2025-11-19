@@ -13,8 +13,7 @@ FIXEL2PEAKS_METADATA = Metadata(
 )
 
 
-Fixel2peaksConfigParamsDict = typing.TypedDict('Fixel2peaksConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fixel2peaksConfigParamsDictNoTag = typing.TypedDict('_Fixel2peaksConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,30 +22,30 @@ Fixel2peaksConfigParamsDictTagged = typing.TypedDict('Fixel2peaksConfigParamsDic
     "key": str,
     "value": str,
 })
+Fixel2peaksConfigParamsDict = _Fixel2peaksConfigParamsDictNoTag | Fixel2peaksConfigParamsDictTagged
 
 
-Fixel2peaksVariousStringParamsDict = typing.TypedDict('Fixel2peaksVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_Fixel2peaksVariousStringParamsDictNoTag = typing.TypedDict('_Fixel2peaksVariousStringParamsDictNoTag', {
     "obj": str,
 })
 Fixel2peaksVariousStringParamsDictTagged = typing.TypedDict('Fixel2peaksVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+Fixel2peaksVariousStringParamsDict = _Fixel2peaksVariousStringParamsDictNoTag | Fixel2peaksVariousStringParamsDictTagged
 
 
-Fixel2peaksVariousFileParamsDict = typing.TypedDict('Fixel2peaksVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_Fixel2peaksVariousFileParamsDictNoTag = typing.TypedDict('_Fixel2peaksVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 Fixel2peaksVariousFileParamsDictTagged = typing.TypedDict('Fixel2peaksVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+Fixel2peaksVariousFileParamsDict = _Fixel2peaksVariousFileParamsDictNoTag | Fixel2peaksVariousFileParamsDictTagged
 
 
-Fixel2peaksParamsDict = typing.TypedDict('Fixel2peaksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2peaks"]],
+_Fixel2peaksParamsDictNoTag = typing.TypedDict('_Fixel2peaksParamsDictNoTag', {
     "number": typing.NotRequired[int | None],
     "nan": bool,
     "info": bool,
@@ -75,6 +74,7 @@ Fixel2peaksParamsDictTagged = typing.TypedDict('Fixel2peaksParamsDictTagged', {
     "in": typing.Union[Fixel2peaksVariousStringParamsDictTagged, Fixel2peaksVariousFileParamsDictTagged],
     "out": str,
 })
+Fixel2peaksParamsDict = _Fixel2peaksParamsDictNoTag | Fixel2peaksParamsDictTagged
 
 
 def fixel2peaks_in_cargs_dyn_fn(

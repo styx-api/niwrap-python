@@ -13,8 +13,7 @@ MP_DIFFPOW_SH_METADATA = Metadata(
 )
 
 
-MpDiffpowShParamsDict = typing.TypedDict('MpDiffpowShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mp_diffpow.sh"]],
+_MpDiffpowShParamsDictNoTag = typing.TypedDict('_MpDiffpowShParamsDictNoTag', {
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
@@ -23,6 +22,7 @@ MpDiffpowShParamsDictTagged = typing.TypedDict('MpDiffpowShParamsDictTagged', {
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
+MpDiffpowShParamsDict = _MpDiffpowShParamsDictNoTag | MpDiffpowShParamsDictTagged
 
 
 class MpDiffpowShOutputs(typing.NamedTuple):

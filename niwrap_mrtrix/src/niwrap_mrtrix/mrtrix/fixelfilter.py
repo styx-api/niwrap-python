@@ -13,8 +13,7 @@ FIXELFILTER_METADATA = Metadata(
 )
 
 
-FixelfilterConfigParamsDict = typing.TypedDict('FixelfilterConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelfilterConfigParamsDictNoTag = typing.TypedDict('_FixelfilterConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,50 +22,50 @@ FixelfilterConfigParamsDictTagged = typing.TypedDict('FixelfilterConfigParamsDic
     "key": str,
     "value": str,
 })
+FixelfilterConfigParamsDict = _FixelfilterConfigParamsDictNoTag | FixelfilterConfigParamsDictTagged
 
 
-FixelfilterVariousStringParamsDict = typing.TypedDict('FixelfilterVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_FixelfilterVariousStringParamsDictNoTag = typing.TypedDict('_FixelfilterVariousStringParamsDictNoTag', {
     "obj": str,
 })
 FixelfilterVariousStringParamsDictTagged = typing.TypedDict('FixelfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+FixelfilterVariousStringParamsDict = _FixelfilterVariousStringParamsDictNoTag | FixelfilterVariousStringParamsDictTagged
 
 
-FixelfilterVariousFileParamsDict = typing.TypedDict('FixelfilterVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_FixelfilterVariousFileParamsDictNoTag = typing.TypedDict('_FixelfilterVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 FixelfilterVariousFileParamsDictTagged = typing.TypedDict('FixelfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+FixelfilterVariousFileParamsDict = _FixelfilterVariousFileParamsDictNoTag | FixelfilterVariousFileParamsDictTagged
 
 
-FixelfilterVariousString1ParamsDict = typing.TypedDict('FixelfilterVariousString1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+_FixelfilterVariousString1ParamsDictNoTag = typing.TypedDict('_FixelfilterVariousString1ParamsDictNoTag', {
     "obj": str,
 })
 FixelfilterVariousString1ParamsDictTagged = typing.TypedDict('FixelfilterVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
+FixelfilterVariousString1ParamsDict = _FixelfilterVariousString1ParamsDictNoTag | FixelfilterVariousString1ParamsDictTagged
 
 
-FixelfilterVariousFile1ParamsDict = typing.TypedDict('FixelfilterVariousFile1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+_FixelfilterVariousFile1ParamsDictNoTag = typing.TypedDict('_FixelfilterVariousFile1ParamsDictNoTag', {
     "obj": InputPathType,
 })
 FixelfilterVariousFile1ParamsDictTagged = typing.TypedDict('FixelfilterVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
+FixelfilterVariousFile1ParamsDict = _FixelfilterVariousFile1ParamsDictNoTag | FixelfilterVariousFile1ParamsDictTagged
 
 
-FixelfilterParamsDict = typing.TypedDict('FixelfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelfilter"]],
+_FixelfilterParamsDictNoTag = typing.TypedDict('_FixelfilterParamsDictNoTag', {
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
     "threshold_connectivity": typing.NotRequired[float | None],
@@ -105,6 +104,7 @@ FixelfilterParamsDictTagged = typing.TypedDict('FixelfilterParamsDictTagged', {
     "filter": str,
     "output": typing.Union[FixelfilterVariousString1ParamsDictTagged, FixelfilterVariousFile1ParamsDictTagged],
 })
+FixelfilterParamsDict = _FixelfilterParamsDictNoTag | FixelfilterParamsDictTagged
 
 
 def fixelfilter_input_cargs_dyn_fn(

@@ -13,8 +13,7 @@ ZERO_LT_4DFP_METADATA = Metadata(
 )
 
 
-ZeroLt4dfpParamsDict = typing.TypedDict('ZeroLt4dfpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/zero_lt_4dfp"]],
+_ZeroLt4dfpParamsDictNoTag = typing.TypedDict('_ZeroLt4dfpParamsDictNoTag', {
     "flt_value": float,
     "file_4dfp": InputPathType,
     "outroot": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ ZeroLt4dfpParamsDictTagged = typing.TypedDict('ZeroLt4dfpParamsDictTagged', {
     "outroot": typing.NotRequired[str | None],
     "endianness": typing.NotRequired[str | None],
 })
+ZeroLt4dfpParamsDict = _ZeroLt4dfpParamsDictNoTag | ZeroLt4dfpParamsDictTagged
 
 
 class ZeroLt4dfpOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ BRAIN_SKIN_METADATA = Metadata(
 )
 
 
-BrainSkinParamsDict = typing.TypedDict('BrainSkinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/BrainSkin"]],
+_BrainSkinParamsDictNoTag = typing.TypedDict('_BrainSkinParamsDictNoTag', {
     "surface": str,
     "skingrid_volume": InputPathType,
     "prefix": str,
@@ -45,6 +44,7 @@ BrainSkinParamsDictTagged = typing.TypedDict('BrainSkinParamsDictTagged', {
     "no_zero_attraction": bool,
     "node_dbg": typing.NotRequired[float | None],
 })
+BrainSkinParamsDict = _BrainSkinParamsDictNoTag | BrainSkinParamsDictTagged
 
 
 class BrainSkinOutputs(typing.NamedTuple):

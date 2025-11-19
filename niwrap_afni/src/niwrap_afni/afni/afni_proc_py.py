@@ -13,8 +13,7 @@ AFNI_PROC_PY_METADATA = Metadata(
 )
 
 
-AfniProcPyParamsDict = typing.TypedDict('AfniProcPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_proc.py"]],
+_AfniProcPyParamsDictNoTag = typing.TypedDict('_AfniProcPyParamsDictNoTag', {
     "dsets": list[InputPathType],
     "subj_id": str,
     "out_dir": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ AfniProcPyParamsDictTagged = typing.TypedDict('AfniProcPyParamsDictTagged', {
     "copy_anat": typing.NotRequired[InputPathType | None],
     "regress_params": typing.NotRequired[list[str] | None],
 })
+AfniProcPyParamsDict = _AfniProcPyParamsDictNoTag | AfniProcPyParamsDictTagged
 
 
 class AfniProcPyOutputs(typing.NamedTuple):

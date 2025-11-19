@@ -13,8 +13,7 @@ SURF_PATCH_METADATA = Metadata(
 )
 
 
-SurfPatchParamsDict = typing.TypedDict('SurfPatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfPatch"]],
+_SurfPatchParamsDictNoTag = typing.TypedDict('_SurfPatchParamsDictNoTag', {
     "spec_file": InputPathType,
     "surf_A": InputPathType,
     "surf_B": InputPathType,
@@ -61,6 +60,7 @@ SurfPatchParamsDictTagged = typing.TypedDict('SurfPatchParamsDictTagged', {
     "flip_orientation": bool,
     "verbosity": typing.NotRequired[float | None],
 })
+SurfPatchParamsDict = _SurfPatchParamsDictNoTag | SurfPatchParamsDictTagged
 
 
 class SurfPatchOutputs(typing.NamedTuple):

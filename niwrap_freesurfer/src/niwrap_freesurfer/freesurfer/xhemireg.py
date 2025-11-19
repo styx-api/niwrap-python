@@ -13,8 +13,7 @@ XHEMIREG_METADATA = Metadata(
 )
 
 
-XhemiregParamsDict = typing.TypedDict('XhemiregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xhemireg"]],
+_XhemiregParamsDictNoTag = typing.TypedDict('_XhemiregParamsDictNoTag', {
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
     "map_lh": bool,
@@ -45,6 +44,7 @@ XhemiregParamsDictTagged = typing.TypedDict('XhemiregParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+XhemiregParamsDict = _XhemiregParamsDictNoTag | XhemiregParamsDictTagged
 
 
 class XhemiregOutputs(typing.NamedTuple):

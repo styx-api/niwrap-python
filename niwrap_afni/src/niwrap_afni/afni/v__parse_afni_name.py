@@ -13,14 +13,14 @@ V__PARSE_AFNI_NAME_METADATA = Metadata(
 )
 
 
-VParseAfniNameParamsDict = typing.TypedDict('VParseAfniNameParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@parse_afni_name"]],
+_VParseAfniNameParamsDictNoTag = typing.TypedDict('_VParseAfniNameParamsDictNoTag', {
     "afni_name": str,
 })
 VParseAfniNameParamsDictTagged = typing.TypedDict('VParseAfniNameParamsDictTagged', {
     "@type": typing.Literal["afni/@parse_afni_name"],
     "afni_name": str,
 })
+VParseAfniNameParamsDict = _VParseAfniNameParamsDictNoTag | VParseAfniNameParamsDictTagged
 
 
 class VParseAfniNameOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FSLMEANTS_METADATA = Metadata(
 )
 
 
-FslmeantsParamsDict = typing.TypedDict('FslmeantsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslmeants"]],
+_FslmeantsParamsDictNoTag = typing.TypedDict('_FslmeantsParamsDictNoTag', {
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ FslmeantsParamsDictTagged = typing.TypedDict('FslmeantsParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+FslmeantsParamsDict = _FslmeantsParamsDictNoTag | FslmeantsParamsDictTagged
 
 
 class FslmeantsOutputs(typing.NamedTuple):

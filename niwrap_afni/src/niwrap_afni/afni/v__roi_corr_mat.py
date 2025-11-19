@@ -13,8 +13,7 @@ V__ROI_CORR_MAT_METADATA = Metadata(
 )
 
 
-VRoiCorrMatParamsDict = typing.TypedDict('VRoiCorrMatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ROI_Corr_Mat"]],
+_VRoiCorrMatParamsDictNoTag = typing.TypedDict('_VRoiCorrMatParamsDictNoTag', {
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
     "prefix": str,
@@ -39,6 +38,7 @@ VRoiCorrMatParamsDictTagged = typing.TypedDict('VRoiCorrMatParamsDictTagged', {
     "echo": bool,
     "verb": bool,
 })
+VRoiCorrMatParamsDict = _VRoiCorrMatParamsDictNoTag | VRoiCorrMatParamsDictTagged
 
 
 class VRoiCorrMatOutputs(typing.NamedTuple):

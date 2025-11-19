@@ -12,8 +12,7 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
 )
 
 
-CiftiExportDenseMappingVolumeAllParamsDict = typing.TypedDict('CiftiExportDenseMappingVolumeAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-all"]],
+_CiftiExportDenseMappingVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingVolumeAllParamsDictNoTag', {
     "text-out": str,
     "no-cifti-index": bool,
     "structure": bool,
@@ -24,10 +23,10 @@ CiftiExportDenseMappingVolumeAllParamsDictTagged = typing.TypedDict('CiftiExport
     "no-cifti-index": bool,
     "structure": bool,
 })
+CiftiExportDenseMappingVolumeAllParamsDict = _CiftiExportDenseMappingVolumeAllParamsDictNoTag | CiftiExportDenseMappingVolumeAllParamsDictTagged
 
 
-CiftiExportDenseMappingSurfaceParamsDict = typing.TypedDict('CiftiExportDenseMappingSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface"]],
+_CiftiExportDenseMappingSurfaceParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingSurfaceParamsDictNoTag', {
     "structure": str,
     "text-out": str,
     "no-cifti-index": bool,
@@ -38,10 +37,10 @@ CiftiExportDenseMappingSurfaceParamsDictTagged = typing.TypedDict('CiftiExportDe
     "text-out": str,
     "no-cifti-index": bool,
 })
+CiftiExportDenseMappingSurfaceParamsDict = _CiftiExportDenseMappingSurfaceParamsDictNoTag | CiftiExportDenseMappingSurfaceParamsDictTagged
 
 
-CiftiExportDenseMappingVolumeParamsDict = typing.TypedDict('CiftiExportDenseMappingVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiExportDenseMappingVolumeParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingVolumeParamsDictNoTag', {
     "structure": str,
     "text-out": str,
     "no-cifti-index": bool,
@@ -52,10 +51,10 @@ CiftiExportDenseMappingVolumeParamsDictTagged = typing.TypedDict('CiftiExportDen
     "text-out": str,
     "no-cifti-index": bool,
 })
+CiftiExportDenseMappingVolumeParamsDict = _CiftiExportDenseMappingVolumeParamsDictNoTag | CiftiExportDenseMappingVolumeParamsDictTagged
 
 
-CiftiExportDenseMappingParamsDict = typing.TypedDict('CiftiExportDenseMappingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-export-dense-mapping"]],
+_CiftiExportDenseMappingParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingParamsDictNoTag', {
     "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParamsDict | None],
     "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParamsDict] | None],
@@ -70,6 +69,7 @@ CiftiExportDenseMappingParamsDictTagged = typing.TypedDict('CiftiExportDenseMapp
     "cifti": InputPathType,
     "direction": str,
 })
+CiftiExportDenseMappingParamsDict = _CiftiExportDenseMappingParamsDictNoTag | CiftiExportDenseMappingParamsDictTagged
 
 
 def cifti_export_dense_mapping_volume_all(

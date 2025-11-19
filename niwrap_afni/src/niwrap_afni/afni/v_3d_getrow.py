@@ -13,8 +13,7 @@ V_3D_GETROW_METADATA = Metadata(
 )
 
 
-V3dGetrowParamsDict = typing.TypedDict('V3dGetrowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dGetrow"]],
+_V3dGetrowParamsDictNoTag = typing.TypedDict('_V3dGetrowParamsDictNoTag', {
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
     "zrow": typing.NotRequired[list[int] | None],
@@ -29,6 +28,7 @@ V3dGetrowParamsDictTagged = typing.TypedDict('V3dGetrowParamsDictTagged', {
     "input_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
 })
+V3dGetrowParamsDict = _V3dGetrowParamsDictNoTag | V3dGetrowParamsDictTagged
 
 
 class V3dGetrowOutputs(typing.NamedTuple):

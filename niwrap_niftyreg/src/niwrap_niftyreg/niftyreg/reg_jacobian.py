@@ -13,8 +13,7 @@ REG_JACOBIAN_METADATA = Metadata(
 )
 
 
-RegJacobianParamsDict = typing.TypedDict('RegJacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_jacobian"]],
+_RegJacobianParamsDictNoTag = typing.TypedDict('_RegJacobianParamsDictNoTag', {
     "reference_image": InputPathType,
     "deformation_field": typing.NotRequired[InputPathType | None],
     "control_point_lattice": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ RegJacobianParamsDictTagged = typing.TypedDict('RegJacobianParamsDictTagged', {
     "output_log_jacobian": typing.NotRequired[str | None],
     "affine_matrix": typing.NotRequired[InputPathType | None],
 })
+RegJacobianParamsDict = _RegJacobianParamsDictNoTag | RegJacobianParamsDictTagged
 
 
 class RegJacobianOutputs(typing.NamedTuple):

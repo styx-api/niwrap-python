@@ -13,8 +13,7 @@ BREC_METADATA = Metadata(
 )
 
 
-BrecParamsDict = typing.TypedDict('BrecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/brec"]],
+_BrecParamsDictNoTag = typing.TypedDict('_BrecParamsDictNoTag', {
     "my_file": str,
     "depth_limit": bool,
 })
@@ -23,6 +22,7 @@ BrecParamsDictTagged = typing.TypedDict('BrecParamsDictTagged', {
     "my_file": str,
     "depth_limit": bool,
 })
+BrecParamsDict = _BrecParamsDictNoTag | BrecParamsDictTagged
 
 
 class BrecOutputs(typing.NamedTuple):

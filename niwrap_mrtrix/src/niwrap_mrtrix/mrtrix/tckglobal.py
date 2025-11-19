@@ -13,18 +13,17 @@ TCKGLOBAL_METADATA = Metadata(
 )
 
 
-TckglobalRisoParamsDict = typing.TypedDict('TckglobalRisoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["riso"]],
+_TckglobalRisoParamsDictNoTag = typing.TypedDict('_TckglobalRisoParamsDictNoTag', {
     "response": InputPathType,
 })
 TckglobalRisoParamsDictTagged = typing.TypedDict('TckglobalRisoParamsDictTagged', {
     "@type": typing.Literal["riso"],
     "response": InputPathType,
 })
+TckglobalRisoParamsDict = _TckglobalRisoParamsDictNoTag | TckglobalRisoParamsDictTagged
 
 
-TckglobalConfigParamsDict = typing.TypedDict('TckglobalConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckglobalConfigParamsDictNoTag = typing.TypedDict('_TckglobalConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ TckglobalConfigParamsDictTagged = typing.TypedDict('TckglobalConfigParamsDictTag
     "key": str,
     "value": str,
 })
+TckglobalConfigParamsDict = _TckglobalConfigParamsDictNoTag | TckglobalConfigParamsDictTagged
 
 
-TckglobalParamsDict = typing.TypedDict('TckglobalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckglobal"]],
+_TckglobalParamsDictNoTag = typing.TypedDict('_TckglobalParamsDictNoTag', {
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
     "riso": typing.NotRequired[list[TckglobalRisoParamsDict] | None],
@@ -105,6 +104,7 @@ TckglobalParamsDictTagged = typing.TypedDict('TckglobalParamsDictTagged', {
     "response": InputPathType,
     "tracks": str,
 })
+TckglobalParamsDict = _TckglobalParamsDictNoTag | TckglobalParamsDictTagged
 
 
 def tckglobal_riso(

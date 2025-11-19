@@ -13,8 +13,7 @@ V_3D_DWUNCERT_METADATA = Metadata(
 )
 
 
-V3dDwuncertParamsDict = typing.TypedDict('V3dDwuncertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDWUncert"]],
+_V3dDwuncertParamsDictNoTag = typing.TypedDict('_V3dDwuncertParamsDictNoTag', {
     "input_file": InputPathType,
     "input_prefix": str,
     "output_prefix": str,
@@ -37,6 +36,7 @@ V3dDwuncertParamsDictTagged = typing.TypedDict('V3dDwuncertParamsDictTagged', {
     "calc_thr_fa": typing.NotRequired[float | None],
     "csf_fa": typing.NotRequired[float | None],
 })
+V3dDwuncertParamsDict = _V3dDwuncertParamsDictNoTag | V3dDwuncertParamsDictTagged
 
 
 class V3dDwuncertOutputs(typing.NamedTuple):

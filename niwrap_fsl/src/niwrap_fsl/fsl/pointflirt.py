@@ -13,8 +13,7 @@ POINTFLIRT_METADATA = Metadata(
 )
 
 
-PointflirtParamsDict = typing.TypedDict('PointflirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pointflirt"]],
+_PointflirtParamsDictNoTag = typing.TypedDict('_PointflirtParamsDictNoTag', {
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
     "out_matrix": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ PointflirtParamsDictTagged = typing.TypedDict('PointflirtParamsDictTagged', {
     "vol_ref": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
 })
+PointflirtParamsDict = _PointflirtParamsDictNoTag | PointflirtParamsDictTagged
 
 
 class PointflirtOutputs(typing.NamedTuple):

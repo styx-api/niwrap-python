@@ -12,8 +12,7 @@ METRIC_CONVERT_METADATA = Metadata(
 )
 
 
-MetricConvertToNiftiParamsDict = typing.TypedDict('MetricConvertToNiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-nifti"]],
+_MetricConvertToNiftiParamsDictNoTag = typing.TypedDict('_MetricConvertToNiftiParamsDictNoTag', {
     "metric-in": InputPathType,
     "nifti-out": str,
 })
@@ -22,10 +21,10 @@ MetricConvertToNiftiParamsDictTagged = typing.TypedDict('MetricConvertToNiftiPar
     "metric-in": InputPathType,
     "nifti-out": str,
 })
+MetricConvertToNiftiParamsDict = _MetricConvertToNiftiParamsDictNoTag | MetricConvertToNiftiParamsDictTagged
 
 
-MetricConvertFromNiftiParamsDict = typing.TypedDict('MetricConvertFromNiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-nifti"]],
+_MetricConvertFromNiftiParamsDictNoTag = typing.TypedDict('_MetricConvertFromNiftiParamsDictNoTag', {
     "nifti-in": InputPathType,
     "surface-in": InputPathType,
     "metric-out": str,
@@ -36,10 +35,10 @@ MetricConvertFromNiftiParamsDictTagged = typing.TypedDict('MetricConvertFromNift
     "surface-in": InputPathType,
     "metric-out": str,
 })
+MetricConvertFromNiftiParamsDict = _MetricConvertFromNiftiParamsDictNoTag | MetricConvertFromNiftiParamsDictTagged
 
 
-MetricConvertParamsDict = typing.TypedDict('MetricConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-convert"]],
+_MetricConvertParamsDictNoTag = typing.TypedDict('_MetricConvertParamsDictNoTag', {
     "to-nifti": typing.NotRequired[MetricConvertToNiftiParamsDict | None],
     "from-nifti": typing.NotRequired[MetricConvertFromNiftiParamsDict | None],
 })
@@ -48,6 +47,7 @@ MetricConvertParamsDictTagged = typing.TypedDict('MetricConvertParamsDictTagged'
     "to-nifti": typing.NotRequired[MetricConvertToNiftiParamsDict | None],
     "from-nifti": typing.NotRequired[MetricConvertFromNiftiParamsDict | None],
 })
+MetricConvertParamsDict = _MetricConvertParamsDictNoTag | MetricConvertParamsDictTagged
 
 
 class MetricConvertToNiftiOutputs(typing.NamedTuple):

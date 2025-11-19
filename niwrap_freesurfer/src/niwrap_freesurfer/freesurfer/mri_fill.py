@@ -13,8 +13,7 @@ MRI_FILL_METADATA = Metadata(
 )
 
 
-MriFillParamsDict = typing.TypedDict('MriFillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fill"]],
+_MriFillParamsDictNoTag = typing.TypedDict('_MriFillParamsDictNoTag', {
     "input_mr_dir": str,
     "output_mr_dir": str,
     "threshold": typing.NotRequired[float | None],
@@ -53,6 +52,7 @@ MriFillParamsDictTagged = typing.TypedDict('MriFillParamsDictTagged', {
     "pointset_args": typing.NotRequired[list[str] | None],
     "ctab_file": typing.NotRequired[InputPathType | None],
 })
+MriFillParamsDict = _MriFillParamsDictNoTag | MriFillParamsDictTagged
 
 
 class MriFillOutputs(typing.NamedTuple):

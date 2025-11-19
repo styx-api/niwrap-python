@@ -13,8 +13,7 @@ MORPH_TABLES_LH_METADATA = Metadata(
 )
 
 
-MorphTablesLhParamsDict = typing.TypedDict('MorphTablesLhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_tables-lh"]],
+_MorphTablesLhParamsDictNoTag = typing.TypedDict('_MorphTablesLhParamsDictNoTag', {
     "input_file": InputPathType,
     "some_flag": bool,
 })
@@ -23,6 +22,7 @@ MorphTablesLhParamsDictTagged = typing.TypedDict('MorphTablesLhParamsDictTagged'
     "input_file": InputPathType,
     "some_flag": bool,
 })
+MorphTablesLhParamsDict = _MorphTablesLhParamsDictNoTag | MorphTablesLhParamsDictTagged
 
 
 class MorphTablesLhOutputs(typing.NamedTuple):

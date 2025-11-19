@@ -13,8 +13,7 @@ VIENA_QUANT_METADATA = Metadata(
 )
 
 
-VienaQuantParamsDict = typing.TypedDict('VienaQuantParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/viena_quant"]],
+_VienaQuantParamsDictNoTag = typing.TypedDict('_VienaQuantParamsDictNoTag', {
     "input1": InputPathType,
     "input2": InputPathType,
     "ventricle_mask": InputPathType,
@@ -25,6 +24,7 @@ VienaQuantParamsDictTagged = typing.TypedDict('VienaQuantParamsDictTagged', {
     "input2": InputPathType,
     "ventricle_mask": InputPathType,
 })
+VienaQuantParamsDict = _VienaQuantParamsDictNoTag | VienaQuantParamsDictTagged
 
 
 class VienaQuantOutputs(typing.NamedTuple):

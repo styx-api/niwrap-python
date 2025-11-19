@@ -13,8 +13,7 @@ MRI_MERGELABELS_METADATA = Metadata(
 )
 
 
-MriMergelabelsParamsDict = typing.TypedDict('MriMergelabelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mergelabels"]],
+_MriMergelabelsParamsDictNoTag = typing.TypedDict('_MriMergelabelsParamsDictNoTag', {
     "input_labels": list[InputPathType],
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ MriMergelabelsParamsDictTagged = typing.TypedDict('MriMergelabelsParamsDictTagge
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],
 })
+MriMergelabelsParamsDict = _MriMergelabelsParamsDictNoTag | MriMergelabelsParamsDictTagged
 
 
 class MriMergelabelsOutputs(typing.NamedTuple):

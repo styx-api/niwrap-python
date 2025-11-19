@@ -13,8 +13,7 @@ GEN_EPI_REVIEW_PY_METADATA = Metadata(
 )
 
 
-GenEpiReviewPyParamsDict = typing.TypedDict('GenEpiReviewPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/gen_epi_review.py"]],
+_GenEpiReviewPyParamsDictNoTag = typing.TypedDict('_GenEpiReviewPyParamsDictNoTag', {
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
     "windows": typing.NotRequired[list[str] | None],
@@ -39,6 +38,7 @@ GenEpiReviewPyParamsDictTagged = typing.TypedDict('GenEpiReviewPyParamsDictTagge
     "graph_xoffset": typing.NotRequired[float | None],
     "graph_yoffset": typing.NotRequired[float | None],
 })
+GenEpiReviewPyParamsDict = _GenEpiReviewPyParamsDictNoTag | GenEpiReviewPyParamsDictTagged
 
 
 class GenEpiReviewPyOutputs(typing.NamedTuple):

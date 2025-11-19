@@ -13,8 +13,7 @@ MRIS_SMOOTH_METADATA = Metadata(
 )
 
 
-MrisSmoothParamsDict = typing.TypedDict('MrisSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth"]],
+_MrisSmoothParamsDictNoTag = typing.TypedDict('_MrisSmoothParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
     "average_iters": typing.NotRequired[float | None],
@@ -41,6 +40,7 @@ MrisSmoothParamsDictTagged = typing.TypedDict('MrisSmoothParamsDictTagged', {
     "momentum": typing.NotRequired[float | None],
     "snapshot_interval": typing.NotRequired[float | None],
 })
+MrisSmoothParamsDict = _MrisSmoothParamsDictNoTag | MrisSmoothParamsDictTagged
 
 
 class MrisSmoothOutputs(typing.NamedTuple):

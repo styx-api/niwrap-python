@@ -13,8 +13,7 @@ TRR_METADATA = Metadata(
 )
 
 
-TrrParamsDict = typing.TypedDict('TrrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/TRR"]],
+_TrrParamsDictNoTag = typing.TypedDict('_TrrParamsDictNoTag', {
     "prefix": str,
     "chains": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ TrrParamsDictTagged = typing.TypedDict('TrrParamsDictTagged', {
     "debug": bool,
     "verbose": typing.NotRequired[float | None],
 })
+TrrParamsDict = _TrrParamsDictNoTag | TrrParamsDictTagged
 
 
 class TrrOutputs(typing.NamedTuple):

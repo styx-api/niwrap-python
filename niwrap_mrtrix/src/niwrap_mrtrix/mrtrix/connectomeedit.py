@@ -13,8 +13,7 @@ CONNECTOMEEDIT_METADATA = Metadata(
 )
 
 
-ConnectomeeditConfigParamsDict = typing.TypedDict('ConnectomeeditConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_ConnectomeeditConfigParamsDictNoTag = typing.TypedDict('_ConnectomeeditConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ ConnectomeeditConfigParamsDictTagged = typing.TypedDict('ConnectomeeditConfigPar
     "key": str,
     "value": str,
 })
+ConnectomeeditConfigParamsDict = _ConnectomeeditConfigParamsDictNoTag | ConnectomeeditConfigParamsDictTagged
 
 
-ConnectomeeditParamsDict = typing.TypedDict('ConnectomeeditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/connectomeedit"]],
+_ConnectomeeditParamsDictNoTag = typing.TypedDict('_ConnectomeeditParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ ConnectomeeditParamsDictTagged = typing.TypedDict('ConnectomeeditParamsDictTagge
     "operation": str,
     "output": str,
 })
+ConnectomeeditParamsDict = _ConnectomeeditParamsDictNoTag | ConnectomeeditParamsDictTagged
 
 
 def connectomeedit_config(

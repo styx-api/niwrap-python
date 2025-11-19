@@ -13,8 +13,7 @@ V_3DDOT_BETA_METADATA = Metadata(
 )
 
 
-V3ddotBetaParamsDict = typing.TypedDict('V3ddotBetaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3ddot_beta"]],
+_V3ddotBetaParamsDictNoTag = typing.TypedDict('_V3ddotBetaParamsDictNoTag', {
     "input_file": InputPathType,
     "prefix": str,
     "doeta2": bool,
@@ -27,6 +26,7 @@ V3ddotBetaParamsDictTagged = typing.TypedDict('V3ddotBetaParamsDictTagged', {
     "doeta2": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
+V3ddotBetaParamsDict = _V3ddotBetaParamsDictNoTag | V3ddotBetaParamsDictTagged
 
 
 class V3ddotBetaOutputs(typing.NamedTuple):

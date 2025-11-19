@@ -13,8 +13,7 @@ MRI_LINEAR_ALIGN_BINARY_METADATA = Metadata(
 )
 
 
-MriLinearAlignBinaryParamsDict = typing.TypedDict('MriLinearAlignBinaryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_align_binary"]],
+_MriLinearAlignBinaryParamsDictNoTag = typing.TypedDict('_MriLinearAlignBinaryParamsDictNoTag', {
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -27,6 +26,7 @@ MriLinearAlignBinaryParamsDictTagged = typing.TypedDict('MriLinearAlignBinaryPar
     "output_xform": str,
     "target_label": typing.NotRequired[str | None],
 })
+MriLinearAlignBinaryParamsDict = _MriLinearAlignBinaryParamsDictNoTag | MriLinearAlignBinaryParamsDictTagged
 
 
 class MriLinearAlignBinaryOutputs(typing.NamedTuple):

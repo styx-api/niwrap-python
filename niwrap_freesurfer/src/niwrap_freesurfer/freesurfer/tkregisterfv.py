@@ -13,8 +13,7 @@ TKREGISTERFV_METADATA = Metadata(
 )
 
 
-TkregisterfvParamsDict = typing.TypedDict('TkregisterfvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregisterfv"]],
+_TkregisterfvParamsDictNoTag = typing.TypedDict('_TkregisterfvParamsDictNoTag', {
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
     "reg": InputPathType,
@@ -83,6 +82,7 @@ TkregisterfvParamsDictTagged = typing.TypedDict('TkregisterfvParamsDictTagged', 
     "fstal": bool,
     "aux": typing.NotRequired[InputPathType | None],
 })
+TkregisterfvParamsDict = _TkregisterfvParamsDictNoTag | TkregisterfvParamsDictTagged
 
 
 class TkregisterfvOutputs(typing.NamedTuple):

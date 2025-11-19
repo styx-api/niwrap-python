@@ -13,8 +13,7 @@ COLUMN_CAT_METADATA = Metadata(
 )
 
 
-ColumnCatParamsDict = typing.TypedDict('ColumnCatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/column_cat"]],
+_ColumnCatParamsDictNoTag = typing.TypedDict('_ColumnCatParamsDictNoTag', {
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
@@ -25,6 +24,7 @@ ColumnCatParamsDictTagged = typing.TypedDict('ColumnCatParamsDictTagged', {
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
+ColumnCatParamsDict = _ColumnCatParamsDictNoTag | ColumnCatParamsDictTagged
 
 
 class ColumnCatOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_QWARP_METADATA = Metadata(
 )
 
 
-V3dQwarpParamsDict = typing.TypedDict('V3dQwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dQwarp"]],
+_V3dQwarpParamsDictNoTag = typing.TypedDict('_V3dQwarpParamsDictNoTag', {
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
     "prefix": str,
@@ -59,6 +58,7 @@ V3dQwarpParamsDictTagged = typing.TypedDict('V3dQwarpParamsDictTagged', {
     "verbose": bool,
     "quiet": bool,
 })
+V3dQwarpParamsDict = _V3dQwarpParamsDictNoTag | V3dQwarpParamsDictTagged
 
 
 class V3dQwarpOutputs(typing.NamedTuple):

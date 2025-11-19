@@ -13,8 +13,7 @@ V__FAT_TRACT_COLORIZE_METADATA = Metadata(
 )
 
 
-VFatTractColorizeParamsDict = typing.TypedDict('VFatTractColorizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@fat_tract_colorize"]],
+_VFatTractColorizeParamsDictNoTag = typing.TypedDict('_VFatTractColorizeParamsDictNoTag', {
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "in_tracts": str,
@@ -33,6 +32,7 @@ VFatTractColorizeParamsDictTagged = typing.TypedDict('VFatTractColorizeParamsDic
     "no_view": bool,
     "only_view": bool,
 })
+VFatTractColorizeParamsDict = _VFatTractColorizeParamsDictNoTag | VFatTractColorizeParamsDictTagged
 
 
 class VFatTractColorizeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 )
 
 
-ConnectedComponentsParamsDict = typing.TypedDict('ConnectedComponentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/connected_components"]],
+_ConnectedComponentsParamsDictNoTag = typing.TypedDict('_ConnectedComponentsParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "threshold": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ ConnectedComponentsParamsDictTagged = typing.TypedDict('ConnectedComponentsParam
     "output_image": str,
     "threshold": typing.NotRequired[float | None],
 })
+ConnectedComponentsParamsDict = _ConnectedComponentsParamsDictNoTag | ConnectedComponentsParamsDictTagged
 
 
 class ConnectedComponentsOutputs(typing.NamedTuple):

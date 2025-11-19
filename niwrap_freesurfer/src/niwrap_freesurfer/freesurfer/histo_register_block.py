@@ -13,8 +13,7 @@ HISTO_REGISTER_BLOCK_METADATA = Metadata(
 )
 
 
-HistoRegisterBlockParamsDict = typing.TypedDict('HistoRegisterBlockParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_register_block"]],
+_HistoRegisterBlockParamsDictNoTag = typing.TypedDict('_HistoRegisterBlockParamsDictNoTag', {
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
     "transform1": InputPathType,
@@ -33,6 +32,7 @@ HistoRegisterBlockParamsDictTagged = typing.TypedDict('HistoRegisterBlockParamsD
     "out_like": typing.NotRequired[InputPathType | None],
     "invert_transform": bool,
 })
+HistoRegisterBlockParamsDict = _HistoRegisterBlockParamsDictNoTag | HistoRegisterBlockParamsDictTagged
 
 
 class HistoRegisterBlockOutputs(typing.NamedTuple):

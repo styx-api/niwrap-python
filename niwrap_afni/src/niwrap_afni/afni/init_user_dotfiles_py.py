@@ -13,8 +13,7 @@ INIT_USER_DOTFILES_PY_METADATA = Metadata(
 )
 
 
-InitUserDotfilesPyParamsDict = typing.TypedDict('InitUserDotfilesPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/init_user_dotfiles.py"]],
+_InitUserDotfilesPyParamsDictNoTag = typing.TypedDict('_InitUserDotfilesPyParamsDictNoTag', {
     "help": bool,
     "help_dotfiles_all": bool,
     "help_dotfiles_mod": bool,
@@ -53,6 +52,7 @@ InitUserDotfilesPyParamsDictTagged = typing.TypedDict('InitUserDotfilesPyParamsD
     "test": bool,
     "verbosity_level": typing.NotRequired[int | None],
 })
+InitUserDotfilesPyParamsDict = _InitUserDotfilesPyParamsDictNoTag | InitUserDotfilesPyParamsDictTagged
 
 
 class InitUserDotfilesPyOutputs(typing.NamedTuple):

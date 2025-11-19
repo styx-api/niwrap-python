@@ -13,8 +13,7 @@ MRI_SCLIMBIC_SEG_METADATA = Metadata(
 )
 
 
-MriSclimbicSegParamsDict = typing.TypedDict('MriSclimbicSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sclimbic_seg"]],
+_MriSclimbicSegParamsDictNoTag = typing.TypedDict('_MriSclimbicSegParamsDictNoTag', {
     "input_file": str,
     "output_file": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -69,6 +68,7 @@ MriSclimbicSegParamsDictTagged = typing.TypedDict('MriSclimbicSegParamsDictTagge
     "no_cite": bool,
     "nchannels": typing.NotRequired[int | None],
 })
+MriSclimbicSegParamsDict = _MriSclimbicSegParamsDictNoTag | MriSclimbicSegParamsDictTagged
 
 
 class MriSclimbicSegOutputs(typing.NamedTuple):

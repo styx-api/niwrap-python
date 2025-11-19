@@ -12,8 +12,7 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 )
 
 
-MetricFalseCorrelationParamsDict = typing.TypedDict('MetricFalseCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-false-correlation"]],
+_MetricFalseCorrelationParamsDictNoTag = typing.TypedDict('_MetricFalseCorrelationParamsDictNoTag', {
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "text-out": typing.NotRequired[str | None],
@@ -34,6 +33,7 @@ MetricFalseCorrelationParamsDictTagged = typing.TypedDict('MetricFalseCorrelatio
     "geo-outer": float,
     "geo-inner": float,
 })
+MetricFalseCorrelationParamsDict = _MetricFalseCorrelationParamsDictNoTag | MetricFalseCorrelationParamsDictTagged
 
 
 class MetricFalseCorrelationOutputs(typing.NamedTuple):

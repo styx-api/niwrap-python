@@ -13,8 +13,7 @@ STRBLAST_METADATA = Metadata(
 )
 
 
-StrblastParamsDict = typing.TypedDict('StrblastParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/strblast"]],
+_StrblastParamsDictNoTag = typing.TypedDict('_StrblastParamsDictNoTag', {
     "targetstring": str,
     "input_files": list[InputPathType],
     "new_char": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ StrblastParamsDictTagged = typing.TypedDict('StrblastParamsDictTagged', {
     "quiet": bool,
     "help": bool,
 })
+StrblastParamsDict = _StrblastParamsDictNoTag | StrblastParamsDictTagged
 
 
 class StrblastOutputs(typing.NamedTuple):

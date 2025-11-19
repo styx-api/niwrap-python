@@ -13,8 +13,7 @@ MRI_EASYWARP_METADATA = Metadata(
 )
 
 
-MriEasywarpParamsDict = typing.TypedDict('MriEasywarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easywarp"]],
+_MriEasywarpParamsDictNoTag = typing.TypedDict('_MriEasywarpParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "deformation_field": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ MriEasywarpParamsDictTagged = typing.TypedDict('MriEasywarpParamsDictTagged', {
     "nearest_neighbor": bool,
     "num_threads": typing.NotRequired[float | None],
 })
+MriEasywarpParamsDict = _MriEasywarpParamsDictNoTag | MriEasywarpParamsDictTagged
 
 
 class MriEasywarpOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ INVFEATREG_METADATA = Metadata(
 )
 
 
-InvfeatregParamsDict = typing.TypedDict('InvfeatregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/invfeatreg"]],
+_InvfeatregParamsDictNoTag = typing.TypedDict('_InvfeatregParamsDictNoTag', {
     "feat_directory": str,
 })
 InvfeatregParamsDictTagged = typing.TypedDict('InvfeatregParamsDictTagged', {
     "@type": typing.Literal["fsl/invfeatreg"],
     "feat_directory": str,
 })
+InvfeatregParamsDict = _InvfeatregParamsDictNoTag | InvfeatregParamsDictTagged
 
 
 class InvfeatregOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_1D_TSORT_METADATA = Metadata(
 )
 
 
-V1dTsortParamsDict = typing.TypedDict('V1dTsortParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dTsort"]],
+_V1dTsortParamsDictNoTag = typing.TypedDict('_V1dTsortParamsDictNoTag', {
     "inc_order": bool,
     "dec_order": bool,
     "transpose": bool,
@@ -31,6 +30,7 @@ V1dTsortParamsDictTagged = typing.TypedDict('V1dTsortParamsDictTagged', {
     "imode": bool,
     "infile": InputPathType,
 })
+V1dTsortParamsDict = _V1dTsortParamsDictNoTag | V1dTsortParamsDictTagged
 
 
 class V1dTsortOutputs(typing.NamedTuple):

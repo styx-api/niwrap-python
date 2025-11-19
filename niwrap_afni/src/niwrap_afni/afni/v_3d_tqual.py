@@ -13,8 +13,7 @@ V_3D_TQUAL_METADATA = Metadata(
 )
 
 
-V3dTqualParamsDict = typing.TypedDict('V3dTqualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTqual"]],
+_V3dTqualParamsDictNoTag = typing.TypedDict('_V3dTqualParamsDictNoTag', {
     "dataset": InputPathType,
     "spearman": bool,
     "quadrant": bool,
@@ -35,6 +34,7 @@ V3dTqualParamsDictTagged = typing.TypedDict('V3dTqualParamsDictTagged', {
     "mask": typing.NotRequired[InputPathType | None],
     "range": bool,
 })
+V3dTqualParamsDict = _V3dTqualParamsDictNoTag | V3dTqualParamsDictTagged
 
 
 class V3dTqualOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DCM2NIIX_METADATA = Metadata(
 )
 
 
-Dcm2niixParamsDict = typing.TypedDict('Dcm2niixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dcm2niix/dcm2niix"]],
+_Dcm2niixParamsDictNoTag = typing.TypedDict('_Dcm2niixParamsDictNoTag', {
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[bool | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
@@ -77,6 +76,7 @@ Dcm2niixParamsDictTagged = typing.TypedDict('Dcm2niixParamsDictTagged', {
     "xml": bool,
     "input_dir": InputPathType,
 })
+Dcm2niixParamsDict = _Dcm2niixParamsDictNoTag | Dcm2niixParamsDictTagged
 
 
 class Dcm2niixOutputs(typing.NamedTuple):

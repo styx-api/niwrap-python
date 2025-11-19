@@ -13,8 +13,7 @@ TEDANA_WRAPPER_PY_METADATA = Metadata(
 )
 
 
-TedanaWrapperPyParamsDict = typing.TypedDict('TedanaWrapperPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/tedana_wrapper.py"]],
+_TedanaWrapperPyParamsDictNoTag = typing.TypedDict('_TedanaWrapperPyParamsDictNoTag', {
     "input_files": list[InputPathType],
     "echo_times": list[float],
     "mask": InputPathType,
@@ -45,6 +44,7 @@ TedanaWrapperPyParamsDictTagged = typing.TypedDict('TedanaWrapperPyParamsDictTag
     "help": bool,
     "detailed_help": bool,
 })
+TedanaWrapperPyParamsDict = _TedanaWrapperPyParamsDictNoTag | TedanaWrapperPyParamsDictTagged
 
 
 class TedanaWrapperPyOutputs(typing.NamedTuple):

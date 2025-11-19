@@ -13,8 +13,7 @@ LABELS_DISJOINT_METADATA = Metadata(
 )
 
 
-LabelsDisjointParamsDict = typing.TypedDict('LabelsDisjointParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_disjoint"]],
+_LabelsDisjointParamsDictNoTag = typing.TypedDict('_LabelsDisjointParamsDictNoTag', {
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -25,6 +24,7 @@ LabelsDisjointParamsDictTagged = typing.TypedDict('LabelsDisjointParamsDictTagge
     "label2": InputPathType,
     "outputname": str,
 })
+LabelsDisjointParamsDict = _LabelsDisjointParamsDictNoTag | LabelsDisjointParamsDictTagged
 
 
 class LabelsDisjointOutputs(typing.NamedTuple):

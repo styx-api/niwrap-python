@@ -13,8 +13,7 @@ V_3D_DWITO_DT_METADATA = Metadata(
 )
 
 
-V3dDwitoDtParamsDict = typing.TypedDict('V3dDwitoDtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDWItoDT"]],
+_V3dDwitoDtParamsDictNoTag = typing.TypedDict('_V3dDwitoDtParamsDictNoTag', {
     "gradient_file": InputPathType,
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -71,6 +70,7 @@ V3dDwitoDtParamsDictTagged = typing.TypedDict('V3dDwitoDtParamsDictTagged', {
     "opt": typing.NotRequired[str | None],
     "mean_b0": bool,
 })
+V3dDwitoDtParamsDict = _V3dDwitoDtParamsDictNoTag | V3dDwitoDtParamsDictTagged
 
 
 class V3dDwitoDtOutputs(typing.NamedTuple):

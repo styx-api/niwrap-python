@@ -13,8 +13,7 @@ PEAKS2AMP_METADATA = Metadata(
 )
 
 
-Peaks2ampConfigParamsDict = typing.TypedDict('Peaks2ampConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Peaks2ampConfigParamsDictNoTag = typing.TypedDict('_Peaks2ampConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Peaks2ampConfigParamsDictTagged = typing.TypedDict('Peaks2ampConfigParamsDictTag
     "key": str,
     "value": str,
 })
+Peaks2ampConfigParamsDict = _Peaks2ampConfigParamsDictNoTag | Peaks2ampConfigParamsDictTagged
 
 
-Peaks2ampParamsDict = typing.TypedDict('Peaks2ampParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2amp"]],
+_Peaks2ampParamsDictNoTag = typing.TypedDict('_Peaks2ampParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -51,6 +50,7 @@ Peaks2ampParamsDictTagged = typing.TypedDict('Peaks2ampParamsDictTagged', {
     "directions": InputPathType,
     "amplitudes": str,
 })
+Peaks2ampParamsDict = _Peaks2ampParamsDictNoTag | Peaks2ampParamsDictTagged
 
 
 def peaks2amp_config(

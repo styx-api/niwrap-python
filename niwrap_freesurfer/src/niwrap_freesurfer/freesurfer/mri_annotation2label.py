@@ -13,8 +13,7 @@ MRI_ANNOTATION2LABEL_METADATA = Metadata(
 )
 
 
-MriAnnotation2labelParamsDict = typing.TypedDict('MriAnnotation2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_annotation2label"]],
+_MriAnnotation2labelParamsDictNoTag = typing.TypedDict('_MriAnnotation2labelParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "lobes": typing.NotRequired[InputPathType | None],
@@ -57,6 +56,7 @@ MriAnnotation2labelParamsDictTagged = typing.TypedDict('MriAnnotation2labelParam
     "help": bool,
     "version": bool,
 })
+MriAnnotation2labelParamsDict = _MriAnnotation2labelParamsDictNoTag | MriAnnotation2labelParamsDictTagged
 
 
 class MriAnnotation2labelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_SURF2VTK_METADATA = Metadata(
 )
 
 
-MrisSurf2vtkParamsDict = typing.TypedDict('MrisSurf2vtkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surf2vtk"]],
+_MrisSurf2vtkParamsDictNoTag = typing.TypedDict('_MrisSurf2vtkParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -23,6 +22,7 @@ MrisSurf2vtkParamsDictTagged = typing.TypedDict('MrisSurf2vtkParamsDictTagged', 
     "input_surface": InputPathType,
     "output_surface": str,
 })
+MrisSurf2vtkParamsDict = _MrisSurf2vtkParamsDictNoTag | MrisSurf2vtkParamsDictTagged
 
 
 class MrisSurf2vtkOutputs(typing.NamedTuple):

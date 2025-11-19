@@ -13,8 +13,7 @@ TOKENS_METADATA = Metadata(
 )
 
 
-TokensParamsDict = typing.TypedDict('TokensParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/tokens"]],
+_TokensParamsDictNoTag = typing.TypedDict('_TokensParamsDictNoTag', {
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })
@@ -23,6 +22,7 @@ TokensParamsDictTagged = typing.TypedDict('TokensParamsDictTagged', {
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })
+TokensParamsDict = _TokensParamsDictNoTag | TokensParamsDictTagged
 
 
 class TokensOutputs(typing.NamedTuple):

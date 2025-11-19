@@ -13,8 +13,7 @@ DMRI_STATS_AC_METADATA = Metadata(
 )
 
 
-DmriStatsAcParamsDict = typing.TypedDict('DmriStatsAcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_stats_ac"]],
+_DmriStatsAcParamsDictNoTag = typing.TypedDict('_DmriStatsAcParamsDictNoTag', {
     "anatomicuts_folder": str,
     "num_clusters": int,
     "correspondence_file": str,
@@ -29,6 +28,7 @@ DmriStatsAcParamsDictTagged = typing.TypedDict('DmriStatsAcParamsDictTagged', {
     "measures": list[str],
     "output_file": str,
 })
+DmriStatsAcParamsDict = _DmriStatsAcParamsDictNoTag | DmriStatsAcParamsDictTagged
 
 
 class DmriStatsAcOutputs(typing.NamedTuple):

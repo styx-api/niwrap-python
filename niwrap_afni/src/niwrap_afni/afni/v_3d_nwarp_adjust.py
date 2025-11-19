@@ -13,8 +13,7 @@ V_3D_NWARP_ADJUST_METADATA = Metadata(
 )
 
 
-V3dNwarpAdjustParamsDict = typing.TypedDict('V3dNwarpAdjustParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpAdjust"]],
+_V3dNwarpAdjustParamsDictNoTag = typing.TypedDict('_V3dNwarpAdjustParamsDictNoTag', {
     "input_warps": list[InputPathType],
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ V3dNwarpAdjustParamsDictTagged = typing.TypedDict('V3dNwarpAdjustParamsDictTagge
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
     "output_prefix": typing.NotRequired[str | None],
 })
+V3dNwarpAdjustParamsDict = _V3dNwarpAdjustParamsDictNoTag | V3dNwarpAdjustParamsDictTagged
 
 
 class V3dNwarpAdjustOutputs(typing.NamedTuple):

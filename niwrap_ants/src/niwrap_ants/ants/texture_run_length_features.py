@@ -13,8 +13,7 @@ TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
 )
 
 
-TextureRunLengthFeaturesParamsDict = typing.TypedDict('TextureRunLengthFeaturesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/TextureRunLengthFeatures"]],
+_TextureRunLengthFeaturesParamsDictNoTag = typing.TypedDict('_TextureRunLengthFeaturesParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],
@@ -29,6 +28,7 @@ TextureRunLengthFeaturesParamsDictTagged = typing.TypedDict('TextureRunLengthFea
     "mask_image": typing.NotRequired[InputPathType | None],
     "mask_label": typing.NotRequired[int | None],
 })
+TextureRunLengthFeaturesParamsDict = _TextureRunLengthFeaturesParamsDictNoTag | TextureRunLengthFeaturesParamsDictTagged
 
 
 class TextureRunLengthFeaturesOutputs(typing.NamedTuple):

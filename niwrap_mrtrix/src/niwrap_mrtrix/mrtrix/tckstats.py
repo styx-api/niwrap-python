@@ -13,18 +13,17 @@ TCKSTATS_METADATA = Metadata(
 )
 
 
-TckstatsOutputParamsDict = typing.TypedDict('TckstatsOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output"]],
+_TckstatsOutputParamsDictNoTag = typing.TypedDict('_TckstatsOutputParamsDictNoTag', {
     "field": str,
 })
 TckstatsOutputParamsDictTagged = typing.TypedDict('TckstatsOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "field": str,
 })
+TckstatsOutputParamsDict = _TckstatsOutputParamsDictNoTag | TckstatsOutputParamsDictTagged
 
 
-TckstatsConfigParamsDict = typing.TypedDict('TckstatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckstatsConfigParamsDictNoTag = typing.TypedDict('_TckstatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ TckstatsConfigParamsDictTagged = typing.TypedDict('TckstatsConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+TckstatsConfigParamsDict = _TckstatsConfigParamsDictNoTag | TckstatsConfigParamsDictTagged
 
 
-TckstatsParamsDict = typing.TypedDict('TckstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckstats"]],
+_TckstatsParamsDictNoTag = typing.TypedDict('_TckstatsParamsDictNoTag', {
     "output": typing.NotRequired[list[TckstatsOutputParamsDict] | None],
     "histogram": typing.NotRequired[str | None],
     "dump": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ TckstatsParamsDictTagged = typing.TypedDict('TckstatsParamsDictTagged', {
     "version": bool,
     "tracks_in": InputPathType,
 })
+TckstatsParamsDict = _TckstatsParamsDictNoTag | TckstatsParamsDictTagged
 
 
 def tckstats_output(

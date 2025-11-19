@@ -13,8 +13,7 @@ DCMEDIT_METADATA = Metadata(
 )
 
 
-DcmeditTagParamsDict = typing.TypedDict('DcmeditTagParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tag"]],
+_DcmeditTagParamsDictNoTag = typing.TypedDict('_DcmeditTagParamsDictNoTag', {
     "group": str,
     "element": str,
     "newvalue": str,
@@ -25,10 +24,10 @@ DcmeditTagParamsDictTagged = typing.TypedDict('DcmeditTagParamsDictTagged', {
     "element": str,
     "newvalue": str,
 })
+DcmeditTagParamsDict = _DcmeditTagParamsDictNoTag | DcmeditTagParamsDictTagged
 
 
-DcmeditConfigParamsDict = typing.TypedDict('DcmeditConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DcmeditConfigParamsDictNoTag = typing.TypedDict('_DcmeditConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -37,10 +36,10 @@ DcmeditConfigParamsDictTagged = typing.TypedDict('DcmeditConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+DcmeditConfigParamsDict = _DcmeditConfigParamsDictNoTag | DcmeditConfigParamsDictTagged
 
 
-DcmeditParamsDict = typing.TypedDict('DcmeditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dcmedit"]],
+_DcmeditParamsDictNoTag = typing.TypedDict('_DcmeditParamsDictNoTag', {
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
     "tag": typing.NotRequired[list[DcmeditTagParamsDict] | None],
@@ -69,6 +68,7 @@ DcmeditParamsDictTagged = typing.TypedDict('DcmeditParamsDictTagged', {
     "version": bool,
     "file": InputPathType,
 })
+DcmeditParamsDict = _DcmeditParamsDictNoTag | DcmeditParamsDictTagged
 
 
 def dcmedit_tag(

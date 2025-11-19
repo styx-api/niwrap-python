@@ -13,14 +13,14 @@ IM2NIML_METADATA = Metadata(
 )
 
 
-Im2nimlParamsDict = typing.TypedDict('Im2nimlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/im2niml"]],
+_Im2nimlParamsDictNoTag = typing.TypedDict('_Im2nimlParamsDictNoTag', {
     "input_files": list[InputPathType],
 })
 Im2nimlParamsDictTagged = typing.TypedDict('Im2nimlParamsDictTagged', {
     "@type": typing.Literal["afni/im2niml"],
     "input_files": list[InputPathType],
 })
+Im2nimlParamsDict = _Im2nimlParamsDictNoTag | Im2nimlParamsDictTagged
 
 
 class Im2nimlOutputs(typing.NamedTuple):

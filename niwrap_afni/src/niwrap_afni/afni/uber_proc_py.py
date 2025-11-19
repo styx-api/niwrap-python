@@ -13,14 +13,14 @@ UBER_PROC_PY_METADATA = Metadata(
 )
 
 
-UberProcPyParamsDict = typing.TypedDict('UberProcPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/uber_proc.py"]],
+_UberProcPyParamsDictNoTag = typing.TypedDict('_UberProcPyParamsDictNoTag', {
     "results_dir": typing.NotRequired[str | None],
 })
 UberProcPyParamsDictTagged = typing.TypedDict('UberProcPyParamsDictTagged', {
     "@type": typing.Literal["afni/uber_proc.py"],
     "results_dir": typing.NotRequired[str | None],
 })
+UberProcPyParamsDict = _UberProcPyParamsDictNoTag | UberProcPyParamsDictTagged
 
 
 class UberProcPyOutputs(typing.NamedTuple):

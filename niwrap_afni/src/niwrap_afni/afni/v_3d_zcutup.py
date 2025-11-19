@@ -13,8 +13,7 @@ V_3D_ZCUTUP_METADATA = Metadata(
 )
 
 
-V3dZcutupParamsDict = typing.TypedDict('V3dZcutupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dZcutup"]],
+_V3dZcutupParamsDictNoTag = typing.TypedDict('_V3dZcutupParamsDictNoTag', {
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,
@@ -25,6 +24,7 @@ V3dZcutupParamsDictTagged = typing.TypedDict('V3dZcutupParamsDictTagged', {
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,
 })
+V3dZcutupParamsDict = _V3dZcutupParamsDictNoTag | V3dZcutupParamsDictTagged
 
 
 class V3dZcutupOutputs(typing.NamedTuple):

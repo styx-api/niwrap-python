@@ -13,8 +13,7 @@ MRI_SEGMENT_METADATA = Metadata(
 )
 
 
-MriSegmentParamsDict = typing.TypedDict('MriSegmentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment"]],
+_MriSegmentParamsDictNoTag = typing.TypedDict('_MriSegmentParamsDictNoTag', {
     "in_vol": InputPathType,
     "out_vol": str,
     "no1d_remove": typing.NotRequired[float | None],
@@ -87,6 +86,7 @@ MriSegmentParamsDictTagged = typing.TypedDict('MriSegmentParamsDictTagged', {
     "diag_write": bool,
     "diag_verbose": bool,
 })
+MriSegmentParamsDict = _MriSegmentParamsDictNoTag | MriSegmentParamsDictTagged
 
 
 class MriSegmentOutputs(typing.NamedTuple):

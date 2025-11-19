@@ -13,8 +13,7 @@ DJPEG_METADATA = Metadata(
 )
 
 
-DjpegParamsDict = typing.TypedDict('DjpegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/djpeg"]],
+_DjpegParamsDictNoTag = typing.TypedDict('_DjpegParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "gray": bool,
@@ -33,6 +32,7 @@ DjpegParamsDictTagged = typing.TypedDict('DjpegParamsDictTagged', {
     "pseudo_pixel_ratio": bool,
     "crop_region": typing.NotRequired[str | None],
 })
+DjpegParamsDict = _DjpegParamsDictNoTag | DjpegParamsDictTagged
 
 
 class DjpegOutputs(typing.NamedTuple):

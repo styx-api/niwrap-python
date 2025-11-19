@@ -13,8 +13,7 @@ MELODIC_METADATA = Metadata(
 )
 
 
-MelodicParamsDict = typing.TypedDict('MelodicParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/melodic"]],
+_MelodicParamsDictNoTag = typing.TypedDict('_MelodicParamsDictNoTag', {
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -117,6 +116,7 @@ MelodicParamsDictTagged = typing.TypedDict('MelodicParamsDictTagged', {
     "report_maps": typing.NotRequired[str | None],
     "keep_meanvol": bool,
 })
+MelodicParamsDict = _MelodicParamsDictNoTag | MelodicParamsDictTagged
 
 
 class MelodicOutputs(typing.NamedTuple):

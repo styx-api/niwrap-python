@@ -13,14 +13,14 @@ STEM2FNAME_METADATA = Metadata(
 )
 
 
-Stem2fnameParamsDict = typing.TypedDict('Stem2fnameParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/stem2fname"]],
+_Stem2fnameParamsDictNoTag = typing.TypedDict('_Stem2fnameParamsDictNoTag', {
     "stem": str,
 })
 Stem2fnameParamsDictTagged = typing.TypedDict('Stem2fnameParamsDictTagged', {
     "@type": typing.Literal["freesurfer/stem2fname"],
     "stem": str,
 })
+Stem2fnameParamsDict = _Stem2fnameParamsDictNoTag | Stem2fnameParamsDictTagged
 
 
 class Stem2fnameOutputs(typing.NamedTuple):

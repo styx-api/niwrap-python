@@ -13,8 +13,7 @@ WHIRLGIF_METADATA = Metadata(
 )
 
 
-WhirlgifParamsDict = typing.TypedDict('WhirlgifParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/whirlgif"]],
+_WhirlgifParamsDictNoTag = typing.TypedDict('_WhirlgifParamsDictNoTag', {
     "verbose": bool,
     "loop": typing.NotRequired[str | None],
     "transparency_index": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ WhirlgifParamsDictTagged = typing.TypedDict('WhirlgifParamsDictTagged', {
     "infile": typing.NotRequired[InputPathType | None],
     "gif_files": list[InputPathType],
 })
+WhirlgifParamsDict = _WhirlgifParamsDictNoTag | WhirlgifParamsDictTagged
 
 
 class WhirlgifOutputs(typing.NamedTuple):

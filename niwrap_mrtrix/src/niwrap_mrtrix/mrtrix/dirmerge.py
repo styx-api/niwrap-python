@@ -13,8 +13,7 @@ DIRMERGE_METADATA = Metadata(
 )
 
 
-DirmergeConfigParamsDict = typing.TypedDict('DirmergeConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirmergeConfigParamsDictNoTag = typing.TypedDict('_DirmergeConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DirmergeConfigParamsDictTagged = typing.TypedDict('DirmergeConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+DirmergeConfigParamsDict = _DirmergeConfigParamsDictNoTag | DirmergeConfigParamsDictTagged
 
 
-DirmergeParamsDict = typing.TypedDict('DirmergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirmerge"]],
+_DirmergeParamsDictNoTag = typing.TypedDict('_DirmergeParamsDictNoTag', {
     "unipolar_weight": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -55,6 +54,7 @@ DirmergeParamsDictTagged = typing.TypedDict('DirmergeParamsDictTagged', {
     "bvalue_files": list[str],
     "out": str,
 })
+DirmergeParamsDict = _DirmergeParamsDictNoTag | DirmergeParamsDictTagged
 
 
 def dirmerge_config(

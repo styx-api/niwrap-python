@@ -13,8 +13,7 @@ V__TIME_DIFF_METADATA = Metadata(
 )
 
 
-VTimeDiffParamsDict = typing.TypedDict('VTimeDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@TimeDiff"]],
+_VTimeDiffParamsDictNoTag = typing.TypedDict('_VTimeDiffParamsDictNoTag', {
     "file1": InputPathType,
     "file2": InputPathType,
 })
@@ -23,6 +22,7 @@ VTimeDiffParamsDictTagged = typing.TypedDict('VTimeDiffParamsDictTagged', {
     "file1": InputPathType,
     "file2": InputPathType,
 })
+VTimeDiffParamsDict = _VTimeDiffParamsDictNoTag | VTimeDiffParamsDictTagged
 
 
 class VTimeDiffOutputs(typing.NamedTuple):

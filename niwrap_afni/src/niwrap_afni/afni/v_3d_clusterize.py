@@ -13,8 +13,7 @@ V_3D_CLUSTERIZE_METADATA = Metadata(
 )
 
 
-V3dClusterizeParamsDict = typing.TypedDict('V3dClusterizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dClusterize"]],
+_V3dClusterizeParamsDictNoTag = typing.TypedDict('_V3dClusterizeParamsDictNoTag', {
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mask_from_hdr": bool,
@@ -67,6 +66,7 @@ V3dClusterizeParamsDictTagged = typing.TypedDict('V3dClusterizeParamsDictTagged'
     "abs_table_data": bool,
     "binary": bool,
 })
+V3dClusterizeParamsDict = _V3dClusterizeParamsDictNoTag | V3dClusterizeParamsDictTagged
 
 
 class V3dClusterizeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_TO_SURF_METADATA = Metadata(
 )
 
 
-SurfToSurfParamsDict = typing.TypedDict('SurfToSurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfToSurf"]],
+_SurfToSurfParamsDictNoTag = typing.TypedDict('_SurfToSurfParamsDictNoTag', {
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
     "surface_volume": typing.NotRequired[InputPathType | None],
@@ -45,6 +44,7 @@ SurfToSurfParamsDictTagged = typing.TypedDict('SurfToSurfParamsDictTagged', {
     "dset": typing.NotRequired[InputPathType | None],
     "mapfile": typing.NotRequired[InputPathType | None],
 })
+SurfToSurfParamsDict = _SurfToSurfParamsDictNoTag | SurfToSurfParamsDictTagged
 
 
 class SurfToSurfOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_NOTES_METADATA = Metadata(
 )
 
 
-V3dNotesParamsDict = typing.TypedDict('V3dNotesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNotes"]],
+_V3dNotesParamsDictNoTag = typing.TypedDict('_V3dNotesParamsDictNoTag', {
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
     "replace_history": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ V3dNotesParamsDictTagged = typing.TypedDict('V3dNotesParamsDictTagged', {
     "help": bool,
     "dataset": InputPathType,
 })
+V3dNotesParamsDict = _V3dNotesParamsDictNoTag | V3dNotesParamsDictTagged
 
 
 class V3dNotesOutputs(typing.NamedTuple):

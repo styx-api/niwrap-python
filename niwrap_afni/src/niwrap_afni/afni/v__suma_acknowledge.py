@@ -13,8 +13,7 @@ V__SUMA_ACKNOWLEDGE_METADATA = Metadata(
 )
 
 
-VSumaAcknowledgeParamsDict = typing.TypedDict('VSumaAcknowledgeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@suma_acknowledge"]],
+_VSumaAcknowledgeParamsDictNoTag = typing.TypedDict('_VSumaAcknowledgeParamsDictNoTag', {
     "input_file": InputPathType,
     "surface_file": InputPathType,
     "output_prefix": str,
@@ -33,6 +32,7 @@ VSumaAcknowledgeParamsDictTagged = typing.TypedDict('VSumaAcknowledgeParamsDictT
     "scale_factor": typing.NotRequired[float | None],
     "reduce_factor": typing.NotRequired[float | None],
 })
+VSumaAcknowledgeParamsDict = _VSumaAcknowledgeParamsDictNoTag | VSumaAcknowledgeParamsDictTagged
 
 
 class VSumaAcknowledgeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DMRI_MATCH_METADATA = Metadata(
 )
 
 
-DmriMatchParamsDict = typing.TypedDict('DmriMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_match"]],
+_DmriMatchParamsDictNoTag = typing.TypedDict('_DmriMatchParamsDictNoTag', {
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
     "num_clusters": float,
@@ -41,6 +40,7 @@ DmriMatchParamsDictTagged = typing.TypedDict('DmriMatchParamsDictTagged', {
     "inter_hemi_ratio_removal": typing.NotRequired[str | None],
     "output": str,
 })
+DmriMatchParamsDict = _DmriMatchParamsDictNoTag | DmriMatchParamsDictTagged
 
 
 class DmriMatchOutputs(typing.NamedTuple):

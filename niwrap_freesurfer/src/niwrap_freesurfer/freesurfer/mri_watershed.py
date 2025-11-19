@@ -13,8 +13,7 @@ MRI_WATERSHED_METADATA = Metadata(
 )
 
 
-MriWatershedParamsDict = typing.TypedDict('MriWatershedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_watershed"]],
+_MriWatershedParamsDictNoTag = typing.TypedDict('_MriWatershedParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "weight": typing.NotRequired[float | None],
@@ -81,6 +80,7 @@ MriWatershedParamsDictTagged = typing.TypedDict('MriWatershedParamsDictTagged', 
     "xthresh": typing.NotRequired[float | None],
     "mask_flag": bool,
 })
+MriWatershedParamsDict = _MriWatershedParamsDictNoTag | MriWatershedParamsDictTagged
 
 
 class MriWatershedOutputs(typing.NamedTuple):

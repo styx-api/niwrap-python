@@ -13,8 +13,7 @@ SIENA_CAL_METADATA = Metadata(
 )
 
 
-SienaCalParamsDict = typing.TypedDict('SienaCalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/siena_cal"]],
+_SienaCalParamsDictNoTag = typing.TypedDict('_SienaCalParamsDictNoTag', {
     "input1_file": InputPathType,
     "input2_file": InputPathType,
     "scale": float,
@@ -27,6 +26,7 @@ SienaCalParamsDictTagged = typing.TypedDict('SienaCalParamsDictTagged', {
     "scale": float,
     "siena_diff_options": typing.NotRequired[str | None],
 })
+SienaCalParamsDict = _SienaCalParamsDictNoTag | SienaCalParamsDictTagged
 
 
 class SienaCalOutputs(typing.NamedTuple):

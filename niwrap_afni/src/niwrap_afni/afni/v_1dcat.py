@@ -13,8 +13,7 @@ V_1DCAT_METADATA = Metadata(
 )
 
 
-V1dcatParamsDict = typing.TypedDict('V1dcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dcat"]],
+_V1dcatParamsDictNoTag = typing.TypedDict('_V1dcatParamsDictNoTag', {
     "input_files": list[InputPathType],
     "tsv_output": bool,
     "csv_output": bool,
@@ -37,6 +36,7 @@ V1dcatParamsDictTagged = typing.TypedDict('V1dcatParamsDictTagged', {
     "column_row_selection": typing.NotRequired[str | None],
     "ok_empty": bool,
 })
+V1dcatParamsDict = _V1dcatParamsDictNoTag | V1dcatParamsDictTagged
 
 
 class V1dcatOutputs(typing.NamedTuple):

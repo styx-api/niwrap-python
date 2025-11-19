@@ -13,8 +13,7 @@ TEST_TUTORIALS_SH_METADATA = Metadata(
 )
 
 
-TestTutorialsShParamsDict = typing.TypedDict('TestTutorialsShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/test_tutorials.sh"]],
+_TestTutorialsShParamsDictNoTag = typing.TypedDict('_TestTutorialsShParamsDictNoTag', {
     "all_tutorials": bool,
     "quick_test": bool,
     "auto_quit_freeview": bool,
@@ -51,6 +50,7 @@ TestTutorialsShParamsDictTagged = typing.TypedDict('TestTutorialsShParamsDictTag
     "fsfast": bool,
     "multimodal": bool,
 })
+TestTutorialsShParamsDict = _TestTutorialsShParamsDictNoTag | TestTutorialsShParamsDictTagged
 
 
 class TestTutorialsShOutputs(typing.NamedTuple):

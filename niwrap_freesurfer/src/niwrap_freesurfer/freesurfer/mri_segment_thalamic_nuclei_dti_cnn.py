@@ -13,8 +13,7 @@ MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
 )
 
 
-MriSegmentThalamicNucleiDtiCnnParamsDict = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_thalamic_nuclei_dti_cnn"]],
+_MriSegmentThalamicNucleiDtiCnnParamsDictNoTag = typing.TypedDict('_MriSegmentThalamicNucleiDtiCnnParamsDictNoTag', {
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
     "fa": InputPathType,
@@ -39,6 +38,7 @@ MriSegmentThalamicNucleiDtiCnnParamsDictTagged = typing.TypedDict('MriSegmentTha
     "force_cpu": bool,
     "model": typing.NotRequired[InputPathType | None],
 })
+MriSegmentThalamicNucleiDtiCnnParamsDict = _MriSegmentThalamicNucleiDtiCnnParamsDictNoTag | MriSegmentThalamicNucleiDtiCnnParamsDictTagged
 
 
 class MriSegmentThalamicNucleiDtiCnnOutputs(typing.NamedTuple):

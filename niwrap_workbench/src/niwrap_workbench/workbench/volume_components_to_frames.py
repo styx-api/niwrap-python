@@ -12,8 +12,7 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 )
 
 
-VolumeComponentsToFramesParamsDict = typing.TypedDict('VolumeComponentsToFramesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-components-to-frames"]],
+_VolumeComponentsToFramesParamsDictNoTag = typing.TypedDict('_VolumeComponentsToFramesParamsDictNoTag', {
     "output": str,
     "input": InputPathType,
 })
@@ -22,6 +21,7 @@ VolumeComponentsToFramesParamsDictTagged = typing.TypedDict('VolumeComponentsToF
     "output": str,
     "input": InputPathType,
 })
+VolumeComponentsToFramesParamsDict = _VolumeComponentsToFramesParamsDictNoTag | VolumeComponentsToFramesParamsDictTagged
 
 
 class VolumeComponentsToFramesOutputs(typing.NamedTuple):

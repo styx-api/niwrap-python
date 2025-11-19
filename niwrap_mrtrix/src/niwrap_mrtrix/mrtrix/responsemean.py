@@ -13,8 +13,7 @@ RESPONSEMEAN_METADATA = Metadata(
 )
 
 
-ResponsemeanParamsDict = typing.TypedDict('ResponsemeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/responsemean"]],
+_ResponsemeanParamsDictNoTag = typing.TypedDict('_ResponsemeanParamsDictNoTag', {
     "input_response": list[InputPathType],
     "output_response": str,
     "legacy": bool,
@@ -47,6 +46,7 @@ ResponsemeanParamsDictTagged = typing.TypedDict('ResponsemeanParamsDictTagged', 
     "help": bool,
     "version": bool,
 })
+ResponsemeanParamsDict = _ResponsemeanParamsDictNoTag | ResponsemeanParamsDictTagged
 
 
 class ResponsemeanOutputs(typing.NamedTuple):

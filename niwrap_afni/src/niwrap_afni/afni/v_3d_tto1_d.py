@@ -13,8 +13,7 @@ V_3D_TTO1_D_METADATA = Metadata(
 )
 
 
-V3dTto1DParamsDict = typing.TypedDict('V3dTto1DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTto1D"]],
+_V3dTto1DParamsDictNoTag = typing.TypedDict('_V3dTto1DParamsDictNoTag', {
     "input_dataset": InputPathType,
     "method": str,
     "automask": bool,
@@ -31,6 +30,7 @@ V3dTto1DParamsDictTagged = typing.TypedDict('V3dTto1DParamsDictTagged', {
     "prefix": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[float | None],
 })
+V3dTto1DParamsDict = _V3dTto1DParamsDictNoTag | V3dTto1DParamsDictTagged
 
 
 class V3dTto1DOutputs(typing.NamedTuple):

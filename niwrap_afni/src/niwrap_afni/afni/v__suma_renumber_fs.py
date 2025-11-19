@@ -13,14 +13,14 @@ V__SUMA_RENUMBER_FS_METADATA = Metadata(
 )
 
 
-VSumaRenumberFsParamsDict = typing.TypedDict('VSumaRenumberFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_renumber_FS"]],
+_VSumaRenumberFsParamsDictNoTag = typing.TypedDict('_VSumaRenumberFsParamsDictNoTag', {
     "sumadir": str,
 })
 VSumaRenumberFsParamsDictTagged = typing.TypedDict('VSumaRenumberFsParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_renumber_FS"],
     "sumadir": str,
 })
+VSumaRenumberFsParamsDict = _VSumaRenumberFsParamsDictNoTag | VSumaRenumberFsParamsDictTagged
 
 
 class VSumaRenumberFsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DSETSTAT2P_METADATA = Metadata(
 )
 
 
-Dsetstat2pParamsDict = typing.TypedDict('Dsetstat2pParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/dsetstat2p"]],
+_Dsetstat2pParamsDictNoTag = typing.TypedDict('_Dsetstat2pParamsDictNoTag', {
     "dataset": str,
     "statval": float,
     "bisided": bool,
@@ -31,6 +30,7 @@ Dsetstat2pParamsDictTagged = typing.TypedDict('Dsetstat2pParamsDictTagged', {
     "one_sided": bool,
     "quiet": bool,
 })
+Dsetstat2pParamsDict = _Dsetstat2pParamsDictNoTag | Dsetstat2pParamsDictTagged
 
 
 class Dsetstat2pOutputs(typing.NamedTuple):

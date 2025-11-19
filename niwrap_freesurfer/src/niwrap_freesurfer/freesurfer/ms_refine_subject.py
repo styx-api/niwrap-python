@@ -13,14 +13,14 @@ MS_REFINE_SUBJECT_METADATA = Metadata(
 )
 
 
-MsRefineSubjectParamsDict = typing.TypedDict('MsRefineSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/ms_refine_subject"]],
+_MsRefineSubjectParamsDictNoTag = typing.TypedDict('_MsRefineSubjectParamsDictNoTag', {
     "subjects_dir": str,
 })
 MsRefineSubjectParamsDictTagged = typing.TypedDict('MsRefineSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/ms_refine_subject"],
     "subjects_dir": str,
 })
+MsRefineSubjectParamsDict = _MsRefineSubjectParamsDictNoTag | MsRefineSubjectParamsDictTagged
 
 
 class MsRefineSubjectOutputs(typing.NamedTuple):

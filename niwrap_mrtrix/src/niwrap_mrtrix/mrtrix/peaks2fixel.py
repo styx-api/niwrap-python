@@ -13,8 +13,7 @@ PEAKS2FIXEL_METADATA = Metadata(
 )
 
 
-Peaks2fixelConfigParamsDict = typing.TypedDict('Peaks2fixelConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Peaks2fixelConfigParamsDictNoTag = typing.TypedDict('_Peaks2fixelConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Peaks2fixelConfigParamsDictTagged = typing.TypedDict('Peaks2fixelConfigParamsDic
     "key": str,
     "value": str,
 })
+Peaks2fixelConfigParamsDict = _Peaks2fixelConfigParamsDictNoTag | Peaks2fixelConfigParamsDictTagged
 
 
-Peaks2fixelParamsDict = typing.TypedDict('Peaks2fixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2fixel"]],
+_Peaks2fixelParamsDictNoTag = typing.TypedDict('_Peaks2fixelParamsDictNoTag', {
     "dataname": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ Peaks2fixelParamsDictTagged = typing.TypedDict('Peaks2fixelParamsDictTagged', {
     "directions": InputPathType,
     "fixels": str,
 })
+Peaks2fixelParamsDict = _Peaks2fixelParamsDictNoTag | Peaks2fixelParamsDictTagged
 
 
 def peaks2fixel_config(

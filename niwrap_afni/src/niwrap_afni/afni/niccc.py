@@ -13,8 +13,7 @@ NICCC_METADATA = Metadata(
 )
 
 
-NicccParamsDict = typing.TypedDict('NicccParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/niccc"]],
+_NicccParamsDictNoTag = typing.TypedDict('_NicccParamsDictNoTag', {
     "streamspec": str,
     "duplicate": bool,
     "nodata": bool,
@@ -43,6 +42,7 @@ NicccParamsDictTagged = typing.TypedDict('NicccParamsDictTagged', {
     "find_attr": typing.NotRequired[list[str] | None],
     "skip_attr": typing.NotRequired[list[str] | None],
 })
+NicccParamsDict = _NicccParamsDictNoTag | NicccParamsDictTagged
 
 
 class NicccOutputs(typing.NamedTuple):

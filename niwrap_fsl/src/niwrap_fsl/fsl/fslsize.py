@@ -13,8 +13,7 @@ FSLSIZE_METADATA = Metadata(
 )
 
 
-FslsizeParamsDict = typing.TypedDict('FslsizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslsize"]],
+_FslsizeParamsDictNoTag = typing.TypedDict('_FslsizeParamsDictNoTag', {
     "input_file": InputPathType,
     "short_format_flag": bool,
 })
@@ -23,6 +22,7 @@ FslsizeParamsDictTagged = typing.TypedDict('FslsizeParamsDictTagged', {
     "input_file": InputPathType,
     "short_format_flag": bool,
 })
+FslsizeParamsDict = _FslsizeParamsDictNoTag | FslsizeParamsDictTagged
 
 
 class FslsizeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FILM_GLS_METADATA = Metadata(
 )
 
 
-FilmGlsParamsDict = typing.TypedDict('FilmGlsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/film_gls"]],
+_FilmGlsParamsDictNoTag = typing.TypedDict('_FilmGlsParamsDictNoTag', {
     "infile": InputPathType,
     "ac_flag": bool,
     "threshold": typing.NotRequired[float | None],
@@ -65,6 +64,7 @@ FilmGlsParamsDictTagged = typing.TypedDict('FilmGlsParamsDictTagged', {
     "ven": typing.NotRequired[list[str] | None],
     "vef": typing.NotRequired[list[InputPathType] | None],
 })
+FilmGlsParamsDict = _FilmGlsParamsDictNoTag | FilmGlsParamsDictTagged
 
 
 class FilmGlsOutputs(typing.NamedTuple):

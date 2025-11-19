@@ -13,8 +13,7 @@ WHIRLGIF_METADATA = Metadata(
 )
 
 
-WhirlgifParamsDict = typing.TypedDict('WhirlgifParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/whirlgif"]],
+_WhirlgifParamsDictNoTag = typing.TypedDict('_WhirlgifParamsDictNoTag', {
     "outfile": typing.NotRequired[InputPathType | None],
     "loop_count": typing.NotRequired[int | None],
     "delay_time": typing.NotRequired[int | None],
@@ -31,6 +30,7 @@ WhirlgifParamsDictTagged = typing.TypedDict('WhirlgifParamsDictTagged', {
     "list_file": typing.NotRequired[InputPathType | None],
     "input_files": list[InputPathType],
 })
+WhirlgifParamsDict = _WhirlgifParamsDictNoTag | WhirlgifParamsDictTagged
 
 
 class WhirlgifOutputs(typing.NamedTuple):

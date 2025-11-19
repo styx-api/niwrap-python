@@ -13,14 +13,14 @@ CSVPRINT_METADATA = Metadata(
 )
 
 
-CsvprintParamsDict = typing.TypedDict('CsvprintParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/csvprint"]],
+_CsvprintParamsDictNoTag = typing.TypedDict('_CsvprintParamsDictNoTag', {
     "infile": InputPathType,
 })
 CsvprintParamsDictTagged = typing.TypedDict('CsvprintParamsDictTagged', {
     "@type": typing.Literal["freesurfer/csvprint"],
     "infile": InputPathType,
 })
+CsvprintParamsDict = _CsvprintParamsDictNoTag | CsvprintParamsDictTagged
 
 
 class CsvprintOutputs(typing.NamedTuple):

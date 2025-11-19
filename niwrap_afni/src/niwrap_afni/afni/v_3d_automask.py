@@ -13,8 +13,7 @@ V_3D_AUTOMASK_METADATA = Metadata(
 )
 
 
-V3dAutomaskParamsDict = typing.TypedDict('V3dAutomaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAutomask"]],
+_V3dAutomaskParamsDictNoTag = typing.TypedDict('_V3dAutomaskParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
     "clfrac": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ V3dAutomaskParamsDictTagged = typing.TypedDict('V3dAutomaskParamsDictTagged', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "in_file": InputPathType,
 })
+V3dAutomaskParamsDict = _V3dAutomaskParamsDictNoTag | V3dAutomaskParamsDictTagged
 
 
 class V3dAutomaskOutputs(typing.NamedTuple):

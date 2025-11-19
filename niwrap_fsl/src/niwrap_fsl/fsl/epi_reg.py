@@ -13,8 +13,7 @@ EPI_REG_METADATA = Metadata(
 )
 
 
-EpiRegParamsDict = typing.TypedDict('EpiRegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/epi_reg"]],
+_EpiRegParamsDictNoTag = typing.TypedDict('_EpiRegParamsDictNoTag', {
     "epi": InputPathType,
     "t1_head": InputPathType,
     "t1_brain": InputPathType,
@@ -45,6 +44,7 @@ EpiRegParamsDictTagged = typing.TypedDict('EpiRegParamsDictTagged', {
     "weight_image": typing.NotRequired[InputPathType | None],
     "wmseg": typing.NotRequired[InputPathType | None],
 })
+EpiRegParamsDict = _EpiRegParamsDictNoTag | EpiRegParamsDictTagged
 
 
 class EpiRegOutputs(typing.NamedTuple):

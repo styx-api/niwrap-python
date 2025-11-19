@@ -13,8 +13,7 @@ RBBR_METADATA = Metadata(
 )
 
 
-RbbrParamsDict = typing.TypedDict('RbbrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rbbr"]],
+_RbbrParamsDictNoTag = typing.TypedDict('_RbbrParamsDictNoTag', {
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
     "t1_contrast": bool,
@@ -63,6 +62,7 @@ RbbrParamsDictTagged = typing.TypedDict('RbbrParamsDictTagged', {
     "output_template": typing.NotRequired[str | None],
     "no_merge": bool,
 })
+RbbrParamsDict = _RbbrParamsDictNoTag | RbbrParamsDictTagged
 
 
 class RbbrOutputs(typing.NamedTuple):

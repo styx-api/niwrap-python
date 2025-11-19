@@ -13,8 +13,7 @@ CCOPS_METADATA = Metadata(
 )
 
 
-CcopsParamsDict = typing.TypedDict('CcopsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ccops"]],
+_CcopsParamsDictNoTag = typing.TypedDict('_CcopsParamsDictNoTag', {
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
     "tract_dir": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ CcopsParamsDictTagged = typing.TypedDict('CcopsParamsDictTagged', {
     "nclusters": typing.NotRequired[float | None],
     "help": bool,
 })
+CcopsParamsDict = _CcopsParamsDictNoTag | CcopsParamsDictTagged
 
 
 class CcopsOutputs(typing.NamedTuple):

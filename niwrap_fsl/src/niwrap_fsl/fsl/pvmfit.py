@@ -13,8 +13,7 @@ PVMFIT_METADATA = Metadata(
 )
 
 
-PvmfitParamsDict = typing.TypedDict('PvmfitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pvmfit"]],
+_PvmfitParamsDictNoTag = typing.TypedDict('_PvmfitParamsDictNoTag', {
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvec_file": InputPathType,
@@ -49,6 +48,7 @@ PvmfitParamsDictTagged = typing.TypedDict('PvmfitParamsDictTagged', {
     "verbose": bool,
     "help": bool,
 })
+PvmfitParamsDict = _PvmfitParamsDictNoTag | PvmfitParamsDictTagged
 
 
 class PvmfitOutputs(typing.NamedTuple):

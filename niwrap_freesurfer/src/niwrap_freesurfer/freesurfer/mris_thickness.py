@@ -13,8 +13,7 @@ MRIS_THICKNESS_METADATA = Metadata(
 )
 
 
-MrisThicknessParamsDict = typing.TypedDict('MrisThicknessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness"]],
+_MrisThicknessParamsDictNoTag = typing.TypedDict('_MrisThicknessParamsDictNoTag', {
     "subject_name": str,
     "hemi": str,
     "thickness_file": str,
@@ -33,6 +32,7 @@ MrisThicknessParamsDictTagged = typing.TypedDict('MrisThicknessParamsDictTagged'
     "thickness_from_seg": typing.NotRequired[list[str] | None],
     "vector": bool,
 })
+MrisThicknessParamsDict = _MrisThicknessParamsDictNoTag | MrisThicknessParamsDictTagged
 
 
 class MrisThicknessOutputs(typing.NamedTuple):

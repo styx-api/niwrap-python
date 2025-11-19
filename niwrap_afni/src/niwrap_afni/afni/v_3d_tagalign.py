@@ -13,8 +13,7 @@ V_3D_TAGALIGN_METADATA = Metadata(
 )
 
 
-V3dTagalignParamsDict = typing.TypedDict('V3dTagalignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTagalign"]],
+_V3dTagalignParamsDictNoTag = typing.TypedDict('_V3dTagalignParamsDictNoTag', {
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
     "tagset_file": typing.NotRequired[InputPathType | None],
@@ -49,6 +48,7 @@ V3dTagalignParamsDictTagged = typing.TypedDict('V3dTagalignParamsDictTagged', {
     "nearest_neighbor_interpolation": bool,
     "quintic_interpolation": bool,
 })
+V3dTagalignParamsDict = _V3dTagalignParamsDictNoTag | V3dTagalignParamsDictTagged
 
 
 class V3dTagalignOutputs(typing.NamedTuple):

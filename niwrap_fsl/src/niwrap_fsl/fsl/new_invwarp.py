@@ -13,8 +13,7 @@ NEW_INVWARP_METADATA = Metadata(
 )
 
 
-NewInvwarpParamsDict = typing.TypedDict('NewInvwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/new_invwarp"]],
+_NewInvwarpParamsDictNoTag = typing.TypedDict('_NewInvwarpParamsDictNoTag', {
     "warpvol": InputPathType,
     "outvol": str,
     "refvol": InputPathType,
@@ -39,6 +38,7 @@ NewInvwarpParamsDictTagged = typing.TypedDict('NewInvwarpParamsDictTagged', {
     "debugflag": bool,
     "verboseflag": bool,
 })
+NewInvwarpParamsDict = _NewInvwarpParamsDictNoTag | NewInvwarpParamsDictTagged
 
 
 class NewInvwarpOutputs(typing.NamedTuple):

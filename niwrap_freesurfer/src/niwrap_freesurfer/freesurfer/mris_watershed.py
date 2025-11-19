@@ -13,8 +13,7 @@ MRIS_WATERSHED_METADATA = Metadata(
 )
 
 
-MrisWatershedParamsDict = typing.TypedDict('MrisWatershedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_watershed"]],
+_MrisWatershedParamsDictNoTag = typing.TypedDict('_MrisWatershedParamsDictNoTag', {
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
     "output_annotation": str,
@@ -29,6 +28,7 @@ MrisWatershedParamsDictTagged = typing.TypedDict('MrisWatershedParamsDictTagged'
     "max_clusters": typing.NotRequired[float | None],
     "mask_label": typing.NotRequired[str | None],
 })
+MrisWatershedParamsDict = _MrisWatershedParamsDictNoTag | MrisWatershedParamsDictTagged
 
 
 class MrisWatershedOutputs(typing.NamedTuple):

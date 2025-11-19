@@ -13,8 +13,7 @@ MRI_MI_METADATA = Metadata(
 )
 
 
-MriMiParamsDict = typing.TypedDict('MriMiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mi"]],
+_MriMiParamsDictNoTag = typing.TypedDict('_MriMiParamsDictNoTag', {
     "input_file1": InputPathType,
     "input_file2": InputPathType,
     "bins": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ MriMiParamsDictTagged = typing.TypedDict('MriMiParamsDictTagged', {
     "bins": typing.NotRequired[str | None],
     "silent": bool,
 })
+MriMiParamsDict = _MriMiParamsDictNoTag | MriMiParamsDictTagged
 
 
 class MriMiOutputs(typing.NamedTuple):

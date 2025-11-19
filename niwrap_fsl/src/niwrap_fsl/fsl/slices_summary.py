@@ -13,8 +13,7 @@ SLICES_SUMMARY_METADATA = Metadata(
 )
 
 
-SlicesSummaryParamsDict = typing.TypedDict('SlicesSummaryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slices_summary"]],
+_SlicesSummaryParamsDictNoTag = typing.TypedDict('_SlicesSummaryParamsDictNoTag', {
     "4d_input_file": InputPathType,
     "threshold": float,
     "background_image": InputPathType,
@@ -39,6 +38,7 @@ SlicesSummaryParamsDictTagged = typing.TypedDict('SlicesSummaryParamsDictTagged'
     "output_png": str,
     "timepoints": str,
 })
+SlicesSummaryParamsDict = _SlicesSummaryParamsDictNoTag | SlicesSummaryParamsDictTagged
 
 
 class SlicesSummaryOutputs(typing.NamedTuple):

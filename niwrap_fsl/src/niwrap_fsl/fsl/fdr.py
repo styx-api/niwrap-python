@@ -13,8 +13,7 @@ FDR_METADATA = Metadata(
 )
 
 
-FdrParamsDict = typing.TypedDict('FdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fdr"]],
+_FdrParamsDictNoTag = typing.TypedDict('_FdrParamsDictNoTag', {
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
     "qvalue": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ FdrParamsDictTagged = typing.TypedDict('FdrParamsDictTagged', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
+FdrParamsDict = _FdrParamsDictNoTag | FdrParamsDictTagged
 
 
 class FdrOutputs(typing.NamedTuple):

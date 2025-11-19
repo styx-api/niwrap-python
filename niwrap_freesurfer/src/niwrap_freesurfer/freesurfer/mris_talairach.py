@@ -13,14 +13,14 @@ MRIS_TALAIRACH_METADATA = Metadata(
 )
 
 
-MrisTalairachParamsDict = typing.TypedDict('MrisTalairachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_talairach"]],
+_MrisTalairachParamsDictNoTag = typing.TypedDict('_MrisTalairachParamsDictNoTag', {
     "input_image": InputPathType,
 })
 MrisTalairachParamsDictTagged = typing.TypedDict('MrisTalairachParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_talairach"],
     "input_image": InputPathType,
 })
+MrisTalairachParamsDict = _MrisTalairachParamsDictNoTag | MrisTalairachParamsDictTagged
 
 
 class MrisTalairachOutputs(typing.NamedTuple):

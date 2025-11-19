@@ -13,8 +13,7 @@ REBASE_TENSOR_IMAGE_METADATA = Metadata(
 )
 
 
-RebaseTensorImageParamsDict = typing.TypedDict('RebaseTensorImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/RebaseTensorImage"]],
+_RebaseTensorImageParamsDictNoTag = typing.TypedDict('_RebaseTensorImageParamsDictNoTag', {
     "dimension": int,
     "infile": InputPathType,
     "outfile": InputPathType,
@@ -29,6 +28,7 @@ RebaseTensorImageParamsDictTagged = typing.TypedDict('RebaseTensorImageParamsDic
     "method": typing.Literal["PHYSICAL", "LOCAL"],
     "reference": typing.NotRequired[InputPathType | None],
 })
+RebaseTensorImageParamsDict = _RebaseTensorImageParamsDictNoTag | RebaseTensorImageParamsDictTagged
 
 
 class RebaseTensorImageOutputs(typing.NamedTuple):

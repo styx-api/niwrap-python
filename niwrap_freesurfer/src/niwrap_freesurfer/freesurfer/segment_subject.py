@@ -13,8 +13,7 @@ SEGMENT_SUBJECT_METADATA = Metadata(
 )
 
 
-SegmentSubjectParamsDict = typing.TypedDict('SegmentSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject"]],
+_SegmentSubjectParamsDictNoTag = typing.TypedDict('_SegmentSubjectParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ SegmentSubjectParamsDictTagged = typing.TypedDict('SegmentSubjectParamsDictTagge
     "debug_flag": bool,
     "version_flag": bool,
 })
+SegmentSubjectParamsDict = _SegmentSubjectParamsDictNoTag | SegmentSubjectParamsDictTagged
 
 
 class SegmentSubjectOutputs(typing.NamedTuple):

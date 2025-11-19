@@ -13,8 +13,7 @@ TALAIRACH_MGH_METADATA = Metadata(
 )
 
 
-TalairachMghParamsDict = typing.TypedDict('TalairachMghParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_mgh"]],
+_TalairachMghParamsDictNoTag = typing.TypedDict('_TalairachMghParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ TalairachMghParamsDictTagged = typing.TypedDict('TalairachMghParamsDictTagged', 
     "input_volume": InputPathType,
     "output_volume": str,
 })
+TalairachMghParamsDict = _TalairachMghParamsDictNoTag | TalairachMghParamsDictTagged
 
 
 class TalairachMghOutputs(typing.NamedTuple):

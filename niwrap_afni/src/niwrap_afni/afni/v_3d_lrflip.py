@@ -13,8 +13,7 @@ V_3D_LRFLIP_METADATA = Metadata(
 )
 
 
-V3dLrflipParamsDict = typing.TypedDict('V3dLrflipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLRflip"]],
+_V3dLrflipParamsDictNoTag = typing.TypedDict('_V3dLrflipParamsDictNoTag', {
     "flip_lr": bool,
     "flip_ap": bool,
     "flip_is": bool,
@@ -35,6 +34,7 @@ V3dLrflipParamsDictTagged = typing.TypedDict('V3dLrflipParamsDictTagged', {
     "output_prefix": typing.NotRequired[str | None],
     "datasets": list[InputPathType],
 })
+V3dLrflipParamsDict = _V3dLrflipParamsDictNoTag | V3dLrflipParamsDictTagged
 
 
 class V3dLrflipOutputs(typing.NamedTuple):

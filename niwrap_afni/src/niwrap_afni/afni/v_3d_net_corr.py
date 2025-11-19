@@ -13,8 +13,7 @@ V_3D_NET_CORR_METADATA = Metadata(
 )
 
 
-V3dNetCorrParamsDict = typing.TypedDict('V3dNetCorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNetCorr"]],
+_V3dNetCorrParamsDictNoTag = typing.TypedDict('_V3dNetCorrParamsDictNoTag', {
     "prefix": str,
     "inset": InputPathType,
     "in_rois": InputPathType,
@@ -59,6 +58,7 @@ V3dNetCorrParamsDictTagged = typing.TypedDict('V3dNetCorrParamsDictTagged', {
     "automask_off": bool,
     "ignore_LT": bool,
 })
+V3dNetCorrParamsDict = _V3dNetCorrParamsDictNoTag | V3dNetCorrParamsDictTagged
 
 
 class V3dNetCorrOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_MEMA_METADATA = Metadata(
 )
 
 
-V3dMemaParamsDict = typing.TypedDict('V3dMemaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMEMA"]],
+_V3dMemaParamsDictNoTag = typing.TypedDict('_V3dMemaParamsDictNoTag', {
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "set": list[str],
@@ -73,6 +72,7 @@ V3dMemaParamsDictTagged = typing.TypedDict('V3dMemaParamsDictTagged', {
     "conditions": typing.NotRequired[list[str] | None],
     "no_tstat": bool,
 })
+V3dMemaParamsDict = _V3dMemaParamsDictNoTag | V3dMemaParamsDictTagged
 
 
 class V3dMemaOutputs(typing.NamedTuple):

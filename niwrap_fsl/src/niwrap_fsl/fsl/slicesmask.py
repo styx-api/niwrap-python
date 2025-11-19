@@ -13,8 +13,7 @@ SLICESMASK_METADATA = Metadata(
 )
 
 
-SlicesmaskParamsDict = typing.TypedDict('SlicesmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slicesmask"]],
+_SlicesmaskParamsDictNoTag = typing.TypedDict('_SlicesmaskParamsDictNoTag', {
     "image": InputPathType,
     "mask": InputPathType,
     "output": str,
@@ -25,6 +24,7 @@ SlicesmaskParamsDictTagged = typing.TypedDict('SlicesmaskParamsDictTagged', {
     "mask": InputPathType,
     "output": str,
 })
+SlicesmaskParamsDict = _SlicesmaskParamsDictNoTag | SlicesmaskParamsDictTagged
 
 
 class SlicesmaskOutputs(typing.NamedTuple):

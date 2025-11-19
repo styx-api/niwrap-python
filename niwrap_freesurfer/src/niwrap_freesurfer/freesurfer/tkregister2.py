@@ -13,8 +13,7 @@ TKREGISTER2_METADATA = Metadata(
 )
 
 
-Tkregister2ParamsDict = typing.TypedDict('Tkregister2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2"]],
+_Tkregister2ParamsDictNoTag = typing.TypedDict('_Tkregister2ParamsDictNoTag', {
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
     "reg_file": InputPathType,
@@ -35,6 +34,7 @@ Tkregister2ParamsDictTagged = typing.TypedDict('Tkregister2ParamsDictTagged', {
     "reg_only": bool,
     "help": bool,
 })
+Tkregister2ParamsDict = _Tkregister2ParamsDictNoTag | Tkregister2ParamsDictTagged
 
 
 class Tkregister2Outputs(typing.NamedTuple):

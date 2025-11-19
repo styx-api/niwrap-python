@@ -13,8 +13,7 @@ PERFUSION_SUBTRACT_METADATA = Metadata(
 )
 
 
-PerfusionSubtractParamsDict = typing.TypedDict('PerfusionSubtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/perfusion_subtract"]],
+_PerfusionSubtractParamsDictNoTag = typing.TypedDict('_PerfusionSubtractParamsDictNoTag', {
     "four_d_input": InputPathType,
     "four_d_output": str,
     "control_first_flag": bool,
@@ -25,6 +24,7 @@ PerfusionSubtractParamsDictTagged = typing.TypedDict('PerfusionSubtractParamsDic
     "four_d_output": str,
     "control_first_flag": bool,
 })
+PerfusionSubtractParamsDict = _PerfusionSubtractParamsDictNoTag | PerfusionSubtractParamsDictTagged
 
 
 class PerfusionSubtractOutputs(typing.NamedTuple):

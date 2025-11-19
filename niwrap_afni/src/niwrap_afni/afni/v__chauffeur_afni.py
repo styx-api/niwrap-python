@@ -13,8 +13,7 @@ V__CHAUFFEUR_AFNI_METADATA = Metadata(
 )
 
 
-VChauffeurAfniParamsDict = typing.TypedDict('VChauffeurAfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@chauffeur_afni"]],
+_VChauffeurAfniParamsDictNoTag = typing.TypedDict('_VChauffeurAfniParamsDictNoTag', {
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -55,6 +54,7 @@ VChauffeurAfniParamsDictTagged = typing.TypedDict('VChauffeurAfniParamsDictTagge
     "help": bool,
     "version": bool,
 })
+VChauffeurAfniParamsDict = _VChauffeurAfniParamsDictNoTag | VChauffeurAfniParamsDictTagged
 
 
 class VChauffeurAfniOutputs(typing.NamedTuple):

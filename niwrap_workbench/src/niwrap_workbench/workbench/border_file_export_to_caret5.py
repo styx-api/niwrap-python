@@ -12,18 +12,17 @@ BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
 )
 
 
-BorderFileExportToCaret5SurfaceParamsDict = typing.TypedDict('BorderFileExportToCaret5SurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface"]],
+_BorderFileExportToCaret5SurfaceParamsDictNoTag = typing.TypedDict('_BorderFileExportToCaret5SurfaceParamsDictNoTag', {
     "surface-in": InputPathType,
 })
 BorderFileExportToCaret5SurfaceParamsDictTagged = typing.TypedDict('BorderFileExportToCaret5SurfaceParamsDictTagged', {
     "@type": typing.Literal["surface"],
     "surface-in": InputPathType,
 })
+BorderFileExportToCaret5SurfaceParamsDict = _BorderFileExportToCaret5SurfaceParamsDictNoTag | BorderFileExportToCaret5SurfaceParamsDictTagged
 
 
-BorderFileExportToCaret5ParamsDict = typing.TypedDict('BorderFileExportToCaret5ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-file-export-to-caret5"]],
+_BorderFileExportToCaret5ParamsDictNoTag = typing.TypedDict('_BorderFileExportToCaret5ParamsDictNoTag', {
     "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
     "border-file": str,
     "output-file-prefix": str,
@@ -34,6 +33,7 @@ BorderFileExportToCaret5ParamsDictTagged = typing.TypedDict('BorderFileExportToC
     "border-file": str,
     "output-file-prefix": str,
 })
+BorderFileExportToCaret5ParamsDict = _BorderFileExportToCaret5ParamsDictNoTag | BorderFileExportToCaret5ParamsDictTagged
 
 
 def border_file_export_to_caret5_surface(

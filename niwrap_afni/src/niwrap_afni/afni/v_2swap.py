@@ -13,8 +13,7 @@ V_2SWAP_METADATA = Metadata(
 )
 
 
-V2swapParamsDict = typing.TypedDict('V2swapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/2swap"]],
+_V2swapParamsDictNoTag = typing.TypedDict('_V2swapParamsDictNoTag', {
     "quiet": bool,
     "input_files": list[InputPathType],
 })
@@ -23,6 +22,7 @@ V2swapParamsDictTagged = typing.TypedDict('V2swapParamsDictTagged', {
     "quiet": bool,
     "input_files": list[InputPathType],
 })
+V2swapParamsDict = _V2swapParamsDictNoTag | V2swapParamsDictTagged
 
 
 class V2swapOutputs(typing.NamedTuple):

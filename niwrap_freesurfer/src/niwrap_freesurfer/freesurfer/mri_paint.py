@@ -13,8 +13,7 @@ MRI_PAINT_METADATA = Metadata(
 )
 
 
-MriPaintParamsDict = typing.TypedDict('MriPaintParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_paint"]],
+_MriPaintParamsDictNoTag = typing.TypedDict('_MriPaintParamsDictNoTag', {
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "registration_file": InputPathType,
@@ -31,6 +30,7 @@ MriPaintParamsDictTagged = typing.TypedDict('MriPaintParamsDictTagged', {
     "image_offset": typing.NotRequired[float | None],
     "paint_surf_coords": bool,
 })
+MriPaintParamsDict = _MriPaintParamsDictNoTag | MriPaintParamsDictTagged
 
 
 class MriPaintOutputs(typing.NamedTuple):

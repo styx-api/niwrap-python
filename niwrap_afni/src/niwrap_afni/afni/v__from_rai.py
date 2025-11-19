@@ -13,8 +13,7 @@ V__FROM_RAI_METADATA = Metadata(
 )
 
 
-VFromRaiParamsDict = typing.TypedDict('VFromRaiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@FromRAI"]],
+_VFromRaiParamsDictNoTag = typing.TypedDict('_VFromRaiParamsDictNoTag', {
     "rai_coordinates": list[float],
     "orientation": str,
 })
@@ -23,6 +22,7 @@ VFromRaiParamsDictTagged = typing.TypedDict('VFromRaiParamsDictTagged', {
     "rai_coordinates": list[float],
     "orientation": str,
 })
+VFromRaiParamsDict = _VFromRaiParamsDictNoTag | VFromRaiParamsDictTagged
 
 
 class VFromRaiOutputs(typing.NamedTuple):

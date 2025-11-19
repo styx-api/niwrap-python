@@ -13,8 +13,7 @@ ADD_NOISE_TO_IMAGE_METADATA = Metadata(
 )
 
 
-AddNoiseToImageParamsDict = typing.TypedDict('AddNoiseToImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/AddNoiseToImage"]],
+_AddNoiseToImageParamsDictNoTag = typing.TypedDict('_AddNoiseToImageParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
@@ -29,6 +28,7 @@ AddNoiseToImageParamsDictTagged = typing.TypedDict('AddNoiseToImageParamsDictTag
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+AddNoiseToImageParamsDict = _AddNoiseToImageParamsDictNoTag | AddNoiseToImageParamsDictTagged
 
 
 class AddNoiseToImageOutputs(typing.NamedTuple):

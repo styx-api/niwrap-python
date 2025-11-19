@@ -13,8 +13,7 @@ NICAT_METADATA = Metadata(
 )
 
 
-NicatParamsDict = typing.TypedDict('NicatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/nicat"]],
+_NicatParamsDictNoTag = typing.TypedDict('_NicatParamsDictNoTag', {
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
     "copy_stream": bool,
@@ -27,6 +26,7 @@ NicatParamsDictTagged = typing.TypedDict('NicatParamsDictTagged', {
     "copy_stream": bool,
     "read_only": bool,
 })
+NicatParamsDict = _NicatParamsDictNoTag | NicatParamsDictTagged
 
 
 class NicatOutputs(typing.NamedTuple):

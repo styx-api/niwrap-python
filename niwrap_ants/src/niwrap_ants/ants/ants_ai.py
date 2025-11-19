@@ -13,8 +13,7 @@ ANTS_AI_METADATA = Metadata(
 )
 
 
-AntsAiParamsDict = typing.TypedDict('AntsAiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsAI"]],
+_AntsAiParamsDictNoTag = typing.TypedDict('_AntsAiParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
@@ -43,6 +42,7 @@ AntsAiParamsDictTagged = typing.TypedDict('AntsAiParamsDictTagged', {
     "random_seed": typing.NotRequired[int | None],
     "verbose": typing.NotRequired[bool | None],
 })
+AntsAiParamsDict = _AntsAiParamsDictNoTag | AntsAiParamsDictTagged
 
 
 class AntsAiOutputs(typing.NamedTuple):

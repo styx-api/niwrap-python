@@ -13,8 +13,7 @@ MRIS_AUTODET_GWSTATS_METADATA = Metadata(
 )
 
 
-MrisAutodetGwstatsParamsDict = typing.TypedDict('MrisAutodetGwstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_autodet_gwstats"]],
+_MrisAutodetGwstatsParamsDictNoTag = typing.TypedDict('_MrisAutodetGwstatsParamsDictNoTag', {
     "output_file": str,
     "t1w_volume": InputPathType,
     "wm_volume": InputPathType,
@@ -49,6 +48,7 @@ MrisAutodetGwstatsParamsDictTagged = typing.TypedDict('MrisAutodetGwstatsParamsD
     "min_gray_at_csf_border": typing.NotRequired[float | None],
     "max_csf": typing.NotRequired[float | None],
 })
+MrisAutodetGwstatsParamsDict = _MrisAutodetGwstatsParamsDictNoTag | MrisAutodetGwstatsParamsDictTagged
 
 
 class MrisAutodetGwstatsOutputs(typing.NamedTuple):

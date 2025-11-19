@@ -13,8 +13,7 @@ LABELS_INTERSECT_METADATA = Metadata(
 )
 
 
-LabelsIntersectParamsDict = typing.TypedDict('LabelsIntersectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_intersect"]],
+_LabelsIntersectParamsDictNoTag = typing.TypedDict('_LabelsIntersectParamsDictNoTag', {
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -25,6 +24,7 @@ LabelsIntersectParamsDictTagged = typing.TypedDict('LabelsIntersectParamsDictTag
     "label2": InputPathType,
     "outputname": str,
 })
+LabelsIntersectParamsDict = _LabelsIntersectParamsDictNoTag | LabelsIntersectParamsDictTagged
 
 
 class LabelsIntersectOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
 )
 
 
-MrisDivideParcellationParamsDict = typing.TypedDict('MrisDivideParcellationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_divide_parcellation"]],
+_MrisDivideParcellationParamsDictNoTag = typing.TypedDict('_MrisDivideParcellationParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "sourceannot": InputPathType,
@@ -33,6 +32,7 @@ MrisDivideParcellationParamsDictTagged = typing.TypedDict('MrisDivideParcellatio
     "scale": typing.NotRequired[float | None],
     "label_name": typing.NotRequired[str | None],
 })
+MrisDivideParcellationParamsDict = _MrisDivideParcellationParamsDictNoTag | MrisDivideParcellationParamsDictTagged
 
 
 class MrisDivideParcellationOutputs(typing.NamedTuple):

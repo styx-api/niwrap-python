@@ -13,8 +13,7 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 )
 
 
-MriRobustTemplateParamsDict = typing.TypedDict('MriRobustTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_template"]],
+_MriRobustTemplateParamsDictNoTag = typing.TypedDict('_MriRobustTemplateParamsDictNoTag', {
     "mov_files": list[InputPathType],
     "template_file": str,
     "sat_value": typing.NotRequired[float | None],
@@ -93,6 +92,7 @@ MriRobustTemplateParamsDictTagged = typing.TypedDict('MriRobustTemplateParamsDic
     "frobnorm_thresh": typing.NotRequired[float | None],
     "debug_flag": bool,
 })
+MriRobustTemplateParamsDict = _MriRobustTemplateParamsDictNoTag | MriRobustTemplateParamsDictTagged
 
 
 class MriRobustTemplateOutputs(typing.NamedTuple):

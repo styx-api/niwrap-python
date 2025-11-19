@@ -13,8 +13,7 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 )
 
 
-MergeStatsTablesParamsDict = typing.TypedDict('MergeStatsTablesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/merge_stats_tables"]],
+_MergeStatsTablesParamsDictNoTag = typing.TypedDict('_MergeStatsTablesParamsDictNoTag', {
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
@@ -49,6 +48,7 @@ MergeStatsTablesParamsDictTagged = typing.TypedDict('MergeStatsTablesParamsDictT
     "skip": bool,
     "debug": bool,
 })
+MergeStatsTablesParamsDict = _MergeStatsTablesParamsDictNoTag | MergeStatsTablesParamsDictTagged
 
 
 class MergeStatsTablesOutputs(typing.NamedTuple):

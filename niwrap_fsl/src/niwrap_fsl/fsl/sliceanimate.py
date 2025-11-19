@@ -13,8 +13,7 @@ SLICEANIMATE_METADATA = Metadata(
 )
 
 
-SliceanimateParamsDict = typing.TypedDict('SliceanimateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/sliceanimate"]],
+_SliceanimateParamsDictNoTag = typing.TypedDict('_SliceanimateParamsDictNoTag', {
     "output_file": str,
     "input_files": list[InputPathType],
 })
@@ -23,6 +22,7 @@ SliceanimateParamsDictTagged = typing.TypedDict('SliceanimateParamsDictTagged', 
     "output_file": str,
     "input_files": list[InputPathType],
 })
+SliceanimateParamsDict = _SliceanimateParamsDictNoTag | SliceanimateParamsDictTagged
 
 
 class SliceanimateOutputs(typing.NamedTuple):

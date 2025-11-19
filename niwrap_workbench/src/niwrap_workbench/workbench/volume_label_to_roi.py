@@ -12,8 +12,7 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
 )
 
 
-VolumeLabelToRoiParamsDict = typing.TypedDict('VolumeLabelToRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-to-roi"]],
+_VolumeLabelToRoiParamsDictNoTag = typing.TypedDict('_VolumeLabelToRoiParamsDictNoTag', {
     "volume-out": str,
     "label-name": typing.NotRequired[str | None],
     "label-key": typing.NotRequired[int | None],
@@ -28,6 +27,7 @@ VolumeLabelToRoiParamsDictTagged = typing.TypedDict('VolumeLabelToRoiParamsDictT
     "map": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
+VolumeLabelToRoiParamsDict = _VolumeLabelToRoiParamsDictNoTag | VolumeLabelToRoiParamsDictTagged
 
 
 class VolumeLabelToRoiOutputs(typing.NamedTuple):

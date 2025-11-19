@@ -13,8 +13,7 @@ V_3D_WINSOR_METADATA = Metadata(
 )
 
 
-V3dWinsorParamsDict = typing.TypedDict('V3dWinsorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dWinsor"]],
+_V3dWinsorParamsDictNoTag = typing.TypedDict('_V3dWinsorParamsDictNoTag', {
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
     "ctop": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ V3dWinsorParamsDictTagged = typing.TypedDict('V3dWinsorParamsDictTagged', {
     "mask": typing.NotRequired[InputPathType | None],
     "dataset": InputPathType,
 })
+V3dWinsorParamsDict = _V3dWinsorParamsDictNoTag | V3dWinsorParamsDictTagged
 
 
 class V3dWinsorOutputs(typing.NamedTuple):

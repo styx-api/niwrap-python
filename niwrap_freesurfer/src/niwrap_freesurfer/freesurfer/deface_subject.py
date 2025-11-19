@@ -13,8 +13,7 @@ DEFACE_SUBJECT_METADATA = Metadata(
 )
 
 
-DefaceSubjectParamsDict = typing.TypedDict('DefaceSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/deface_subject"]],
+_DefaceSubjectParamsDictNoTag = typing.TypedDict('_DefaceSubjectParamsDictNoTag', {
     "subjects_dir": str,
     "subject_id": str,
     "volume_input": InputPathType,
@@ -27,6 +26,7 @@ DefaceSubjectParamsDictTagged = typing.TypedDict('DefaceSubjectParamsDictTagged'
     "volume_input": InputPathType,
     "volume_output": str,
 })
+DefaceSubjectParamsDict = _DefaceSubjectParamsDictNoTag | DefaceSubjectParamsDictTagged
 
 
 class DefaceSubjectOutputs(typing.NamedTuple):

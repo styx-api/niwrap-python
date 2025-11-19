@@ -13,8 +13,7 @@ MRI_LABEL_VOLUME_METADATA = Metadata(
 )
 
 
-MriLabelVolumeParamsDict = typing.TypedDict('MriLabelVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_volume"]],
+_MriLabelVolumeParamsDictNoTag = typing.TypedDict('_MriLabelVolumeParamsDictNoTag', {
     "volume": InputPathType,
     "labels": list[str],
     "partial_volume_effects": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ MriLabelVolumeParamsDictTagged = typing.TypedDict('MriLabelVolumeParamsDictTagge
     "etiv_scalefactor": typing.NotRequired[float | None],
     "etiv_subject": typing.NotRequired[str | None],
 })
+MriLabelVolumeParamsDict = _MriLabelVolumeParamsDictNoTag | MriLabelVolumeParamsDictTagged
 
 
 class MriLabelVolumeOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ BORDER_RESAMPLE_METADATA = Metadata(
 )
 
 
-BorderResampleParamsDict = typing.TypedDict('BorderResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-resample"]],
+_BorderResampleParamsDictNoTag = typing.TypedDict('_BorderResampleParamsDictNoTag', {
     "border-out": str,
     "border-in": InputPathType,
     "current-sphere": InputPathType,
@@ -26,6 +25,7 @@ BorderResampleParamsDictTagged = typing.TypedDict('BorderResampleParamsDictTagge
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
 })
+BorderResampleParamsDict = _BorderResampleParamsDictNoTag | BorderResampleParamsDictTagged
 
 
 class BorderResampleOutputs(typing.NamedTuple):

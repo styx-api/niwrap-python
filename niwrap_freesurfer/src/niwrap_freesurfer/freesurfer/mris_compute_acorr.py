@@ -13,8 +13,7 @@ MRIS_COMPUTE_ACORR_METADATA = Metadata(
 )
 
 
-MrisComputeAcorrParamsDict = typing.TypedDict('MrisComputeAcorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_acorr"]],
+_MrisComputeAcorrParamsDictNoTag = typing.TypedDict('_MrisComputeAcorrParamsDictNoTag', {
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -31,6 +30,7 @@ MrisComputeAcorrParamsDictTagged = typing.TypedDict('MrisComputeAcorrParamsDictT
     "c1_subjects": list[str],
     "c2_subjects": list[str],
 })
+MrisComputeAcorrParamsDict = _MrisComputeAcorrParamsDictNoTag | MrisComputeAcorrParamsDictTagged
 
 
 class MrisComputeAcorrOutputs(typing.NamedTuple):

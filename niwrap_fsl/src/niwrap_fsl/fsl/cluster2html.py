@@ -13,8 +13,7 @@ CLUSTER2HTML_METADATA = Metadata(
 )
 
 
-Cluster2htmlParamsDict = typing.TypedDict('Cluster2htmlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/cluster2html"]],
+_Cluster2htmlParamsDictNoTag = typing.TypedDict('_Cluster2htmlParamsDictNoTag', {
     "featdir": str,
     "inroot": str,
     "std_flag": bool,
@@ -25,6 +24,7 @@ Cluster2htmlParamsDictTagged = typing.TypedDict('Cluster2htmlParamsDictTagged', 
     "inroot": str,
     "std_flag": bool,
 })
+Cluster2htmlParamsDict = _Cluster2htmlParamsDictNoTag | Cluster2htmlParamsDictTagged
 
 
 class Cluster2htmlOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ GAUSS_4DFP_METADATA = Metadata(
 )
 
 
-Gauss4dfpParamsDict = typing.TypedDict('Gauss4dfpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gauss_4dfp"]],
+_Gauss4dfpParamsDictNoTag = typing.TypedDict('_Gauss4dfpParamsDictNoTag', {
     "input_file": str,
     "f_half": float,
     "output_root": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ Gauss4dfpParamsDictTagged = typing.TypedDict('Gauss4dfpParamsDictTagged', {
     "wrap_flag": bool,
     "differentiate_flag": bool,
 })
+Gauss4dfpParamsDict = _Gauss4dfpParamsDictNoTag | Gauss4dfpParamsDictTagged
 
 
 class Gauss4dfpOutputs(typing.NamedTuple):

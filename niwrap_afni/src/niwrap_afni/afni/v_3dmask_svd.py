@@ -13,8 +13,7 @@ V_3DMASK_SVD_METADATA = Metadata(
 )
 
 
-V3dmaskSvdParamsDict = typing.TypedDict('V3dmaskSvdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmaskSVD"]],
+_V3dmaskSvdParamsDictNoTag = typing.TypedDict('_V3dmaskSvdParamsDictNoTag', {
     "input_dataset": InputPathType,
     "vnorm": bool,
     "sval": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ V3dmaskSvdParamsDictTagged = typing.TypedDict('V3dmaskSvdParamsDictTagged', {
     "ort": typing.NotRequired[list[InputPathType] | None],
     "alt_input": typing.NotRequired[InputPathType | None],
 })
+V3dmaskSvdParamsDict = _V3dmaskSvdParamsDictNoTag | V3dmaskSvdParamsDictTagged
 
 
 class V3dmaskSvdOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FABBER_T1_METADATA = Metadata(
 )
 
 
-FabberT1ParamsDict = typing.TypedDict('FabberT1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_t1"]],
+_FabberT1ParamsDictNoTag = typing.TypedDict('_FabberT1ParamsDictNoTag', {
     "output": str,
     "method": str,
     "model": str,
@@ -79,6 +78,7 @@ FabberT1ParamsDictTagged = typing.TypedDict('FabberT1ParamsDictTagged', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
+FabberT1ParamsDict = _FabberT1ParamsDictNoTag | FabberT1ParamsDictTagged
 
 
 class FabberT1Outputs(typing.NamedTuple):

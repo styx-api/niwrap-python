@@ -13,8 +13,7 @@ SPMREGISTER_METADATA = Metadata(
 )
 
 
-SpmregisterParamsDict = typing.TypedDict('SpmregisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/spmregister"]],
+_SpmregisterParamsDictNoTag = typing.TypedDict('_SpmregisterParamsDictNoTag', {
     "subjid": str,
     "mov": str,
     "reg": str,
@@ -45,6 +44,7 @@ SpmregisterParamsDictTagged = typing.TypedDict('SpmregisterParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+SpmregisterParamsDict = _SpmregisterParamsDictNoTag | SpmregisterParamsDictTagged
 
 
 class SpmregisterOutputs(typing.NamedTuple):

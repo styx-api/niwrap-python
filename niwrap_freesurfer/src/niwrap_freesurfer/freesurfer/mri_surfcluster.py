@@ -13,8 +13,7 @@ MRI_SURFCLUSTER_METADATA = Metadata(
 )
 
 
-MriSurfclusterParamsDict = typing.TypedDict('MriSurfclusterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surfcluster"]],
+_MriSurfclusterParamsDictNoTag = typing.TypedDict('_MriSurfclusterParamsDictNoTag', {
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
     "sign": typing.NotRequired[str | None],
@@ -101,6 +100,7 @@ MriSurfclusterParamsDictTagged = typing.TypedDict('MriSurfclusterParamsDictTagge
     "sd": typing.NotRequired[str | None],
     "thmax": typing.NotRequired[float | None],
 })
+MriSurfclusterParamsDict = _MriSurfclusterParamsDictNoTag | MriSurfclusterParamsDictTagged
 
 
 class MriSurfclusterOutputs(typing.NamedTuple):

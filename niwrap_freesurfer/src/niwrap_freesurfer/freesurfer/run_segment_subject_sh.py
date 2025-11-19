@@ -13,8 +13,7 @@ RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubjectShParamsDict = typing.TypedDict('RunSegmentSubjectShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubject.sh"]],
+_RunSegmentSubjectShParamsDictNoTag = typing.TypedDict('_RunSegmentSubjectShParamsDictNoTag', {
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ RunSegmentSubjectShParamsDictTagged = typing.TypedDict('RunSegmentSubjectShParam
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })
+RunSegmentSubjectShParamsDict = _RunSegmentSubjectShParamsDictNoTag | RunSegmentSubjectShParamsDictTagged
 
 
 class RunSegmentSubjectShOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DMRI_TRK2TRK_METADATA = Metadata(
 )
 
 
-DmriTrk2trkParamsDict = typing.TypedDict('DmriTrk2trkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_trk2trk"]],
+_DmriTrk2trkParamsDictNoTag = typing.TypedDict('_DmriTrk2trkParamsDictNoTag', {
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
     "in_dir": typing.NotRequired[str | None],
@@ -73,6 +72,7 @@ DmriTrk2trkParamsDictTagged = typing.TypedDict('DmriTrk2trkParamsDictTagged', {
     "debug_flag": bool,
     "check_opts": bool,
 })
+DmriTrk2trkParamsDict = _DmriTrk2trkParamsDictNoTag | DmriTrk2trkParamsDictTagged
 
 
 class DmriTrk2trkOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ LESION_FILLING_METADATA = Metadata(
 )
 
 
-LesionFillingParamsDict = typing.TypedDict('LesionFillingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/lesion_filling"]],
+_LesionFillingParamsDictNoTag = typing.TypedDict('_LesionFillingParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "lesionmask": InputPathType,
@@ -33,6 +32,7 @@ LesionFillingParamsDictTagged = typing.TypedDict('LesionFillingParamsDictTagged'
     "components_flag": bool,
     "help_flag": bool,
 })
+LesionFillingParamsDict = _LesionFillingParamsDictNoTag | LesionFillingParamsDictTagged
 
 
 class LesionFillingOutputs(typing.NamedTuple):

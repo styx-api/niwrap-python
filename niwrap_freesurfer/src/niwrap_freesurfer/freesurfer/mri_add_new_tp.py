@@ -13,8 +13,7 @@ MRI_ADD_NEW_TP_METADATA = Metadata(
 )
 
 
-MriAddNewTpParamsDict = typing.TypedDict('MriAddNewTpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_new_tp"]],
+_MriAddNewTpParamsDictNoTag = typing.TypedDict('_MriAddNewTpParamsDictNoTag', {
     "base_id": str,
     "newtp_id": str,
 })
@@ -23,6 +22,7 @@ MriAddNewTpParamsDictTagged = typing.TypedDict('MriAddNewTpParamsDictTagged', {
     "base_id": str,
     "newtp_id": str,
 })
+MriAddNewTpParamsDict = _MriAddNewTpParamsDictNoTag | MriAddNewTpParamsDictTagged
 
 
 class MriAddNewTpOutputs(typing.NamedTuple):

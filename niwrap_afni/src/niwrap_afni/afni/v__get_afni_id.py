@@ -13,14 +13,14 @@ V__GET_AFNI_ID_METADATA = Metadata(
 )
 
 
-VGetAfniIdParamsDict = typing.TypedDict('VGetAfniIdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniID"]],
+_VGetAfniIdParamsDictNoTag = typing.TypedDict('_VGetAfniIdParamsDictNoTag', {
     "dset": InputPathType,
 })
 VGetAfniIdParamsDictTagged = typing.TypedDict('VGetAfniIdParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniID"],
     "dset": InputPathType,
 })
+VGetAfniIdParamsDict = _VGetAfniIdParamsDictNoTag | VGetAfniIdParamsDictTagged
 
 
 class VGetAfniIdOutputs(typing.NamedTuple):

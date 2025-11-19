@@ -13,8 +13,7 @@ V__ADD_EDGE_METADATA = Metadata(
 )
 
 
-VAddEdgeParamsDict = typing.TypedDict('VAddEdgeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@AddEdge"]],
+_VAddEdgeParamsDictNoTag = typing.TypedDict('_VAddEdgeParamsDictNoTag', {
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
     "ax_mont": typing.NotRequired[str | None],
@@ -49,6 +48,7 @@ VAddEdgeParamsDictTagged = typing.TypedDict('VAddEdgeParamsDictTagged', {
     "auto": bool,
     "no_auto": bool,
 })
+VAddEdgeParamsDict = _VAddEdgeParamsDictNoTag | VAddEdgeParamsDictTagged
 
 
 class VAddEdgeOutputs(typing.NamedTuple):

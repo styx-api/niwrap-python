@@ -13,8 +13,7 @@ MRI_SYNTHSR_METADATA = Metadata(
 )
 
 
-MriSynthsrParamsDict = typing.TypedDict('MriSynthsrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthsr"]],
+_MriSynthsrParamsDictNoTag = typing.TypedDict('_MriSynthsrParamsDictNoTag', {
     "input": str,
     "output": str,
     "ct": bool,
@@ -39,6 +38,7 @@ MriSynthsrParamsDictTagged = typing.TypedDict('MriSynthsrParamsDictTagged', {
     "cpu": bool,
     "model": typing.NotRequired[str | None],
 })
+MriSynthsrParamsDict = _MriSynthsrParamsDictNoTag | MriSynthsrParamsDictTagged
 
 
 class MriSynthsrOutputs(typing.NamedTuple):

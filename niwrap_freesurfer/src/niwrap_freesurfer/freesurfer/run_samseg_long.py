@@ -13,8 +13,7 @@ RUN_SAMSEG_LONG_METADATA = Metadata(
 )
 
 
-RunSamsegLongParamsDict = typing.TypedDict('RunSamsegLongParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_samseg_long"]],
+_RunSamsegLongParamsDictNoTag = typing.TypedDict('_RunSamsegLongParamsDictNoTag', {
     "timepoint": list[InputPathType],
     "output": str,
     "lesion": bool,
@@ -63,6 +62,7 @@ RunSamsegLongParamsDictTagged = typing.TypedDict('RunSamsegLongParamsDictTagged'
     "showfigs": bool,
     "movie": bool,
 })
+RunSamsegLongParamsDict = _RunSamsegLongParamsDictNoTag | RunSamsegLongParamsDictTagged
 
 
 class RunSamsegLongOutputs(typing.NamedTuple):

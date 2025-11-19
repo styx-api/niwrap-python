@@ -12,8 +12,7 @@ CONVERT_AFFINE_METADATA = Metadata(
 )
 
 
-ConvertAffineFromWorldParamsDict = typing.TypedDict('ConvertAffineFromWorldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-world"]],
+_ConvertAffineFromWorldParamsDictNoTag = typing.TypedDict('_ConvertAffineFromWorldParamsDictNoTag', {
     "input": str,
     "inverse": bool,
 })
@@ -22,10 +21,10 @@ ConvertAffineFromWorldParamsDictTagged = typing.TypedDict('ConvertAffineFromWorl
     "input": str,
     "inverse": bool,
 })
+ConvertAffineFromWorldParamsDict = _ConvertAffineFromWorldParamsDictNoTag | ConvertAffineFromWorldParamsDictTagged
 
 
-ConvertAffineFromFlirtParamsDict = typing.TypedDict('ConvertAffineFromFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-flirt"]],
+_ConvertAffineFromFlirtParamsDictNoTag = typing.TypedDict('_ConvertAffineFromFlirtParamsDictNoTag', {
     "input": str,
     "source-volume": str,
     "target-volume": str,
@@ -36,10 +35,10 @@ ConvertAffineFromFlirtParamsDictTagged = typing.TypedDict('ConvertAffineFromFlir
     "source-volume": str,
     "target-volume": str,
 })
+ConvertAffineFromFlirtParamsDict = _ConvertAffineFromFlirtParamsDictNoTag | ConvertAffineFromFlirtParamsDictTagged
 
 
-ConvertAffineToWorldParamsDict = typing.TypedDict('ConvertAffineToWorldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-world"]],
+_ConvertAffineToWorldParamsDictNoTag = typing.TypedDict('_ConvertAffineToWorldParamsDictNoTag', {
     "output": str,
     "inverse": bool,
 })
@@ -48,10 +47,10 @@ ConvertAffineToWorldParamsDictTagged = typing.TypedDict('ConvertAffineToWorldPar
     "output": str,
     "inverse": bool,
 })
+ConvertAffineToWorldParamsDict = _ConvertAffineToWorldParamsDictNoTag | ConvertAffineToWorldParamsDictTagged
 
 
-ConvertAffineToFlirtParamsDict = typing.TypedDict('ConvertAffineToFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["to-flirt"]],
+_ConvertAffineToFlirtParamsDictNoTag = typing.TypedDict('_ConvertAffineToFlirtParamsDictNoTag', {
     "output": str,
     "source-volume": str,
     "target-volume": str,
@@ -62,10 +61,10 @@ ConvertAffineToFlirtParamsDictTagged = typing.TypedDict('ConvertAffineToFlirtPar
     "source-volume": str,
     "target-volume": str,
 })
+ConvertAffineToFlirtParamsDict = _ConvertAffineToFlirtParamsDictNoTag | ConvertAffineToFlirtParamsDictTagged
 
 
-ConvertAffineParamsDict = typing.TypedDict('ConvertAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/convert-affine"]],
+_ConvertAffineParamsDictNoTag = typing.TypedDict('_ConvertAffineParamsDictNoTag', {
     "from-world": typing.NotRequired[ConvertAffineFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
     "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParamsDict | None],
@@ -82,6 +81,7 @@ ConvertAffineParamsDictTagged = typing.TypedDict('ConvertAffineParamsDictTagged'
     "output": typing.NotRequired[str | None],
     "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParamsDict] | None],
 })
+ConvertAffineParamsDict = _ConvertAffineParamsDictNoTag | ConvertAffineParamsDictTagged
 
 
 def convert_affine_from_world(

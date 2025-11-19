@@ -13,8 +13,7 @@ V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
 )
 
 
-VDjunctEdgyAlignCheckParamsDict = typing.TypedDict('VDjunctEdgyAlignCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_edgy_align_check"]],
+_VDjunctEdgyAlignCheckParamsDictNoTag = typing.TypedDict('_VDjunctEdgyAlignCheckParamsDictNoTag', {
     "ULAY": str,
     "OLAY": str,
     "PREFIX": str,
@@ -71,6 +70,7 @@ VDjunctEdgyAlignCheckParamsDictTagged = typing.TypedDict('VDjunctEdgyAlignCheckP
     "ulay_range_nz": typing.NotRequired[list[float] | None],
     "ulay_range_am": typing.NotRequired[list[float] | None],
 })
+VDjunctEdgyAlignCheckParamsDict = _VDjunctEdgyAlignCheckParamsDictNoTag | VDjunctEdgyAlignCheckParamsDictTagged
 
 
 class VDjunctEdgyAlignCheckOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MKSURFATLAS_METADATA = Metadata(
 )
 
 
-MksurfatlasParamsDict = typing.TypedDict('MksurfatlasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mksurfatlas"]],
+_MksurfatlasParamsDictNoTag = typing.TypedDict('_MksurfatlasParamsDictNoTag', {
     "atlas": str,
     "hemi": str,
     "subjects": list[str],
@@ -37,6 +36,7 @@ MksurfatlasParamsDictTagged = typing.TypedDict('MksurfatlasParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+MksurfatlasParamsDict = _MksurfatlasParamsDictNoTag | MksurfatlasParamsDictTagged
 
 
 class MksurfatlasOutputs(typing.NamedTuple):

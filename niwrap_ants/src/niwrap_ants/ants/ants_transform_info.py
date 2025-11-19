@@ -13,14 +13,14 @@ ANTS_TRANSFORM_INFO_METADATA = Metadata(
 )
 
 
-AntsTransformInfoParamsDict = typing.TypedDict('AntsTransformInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsTransformInfo"]],
+_AntsTransformInfoParamsDictNoTag = typing.TypedDict('_AntsTransformInfoParamsDictNoTag', {
     "transform_file": InputPathType,
 })
 AntsTransformInfoParamsDictTagged = typing.TypedDict('AntsTransformInfoParamsDictTagged', {
     "@type": typing.Literal["ants/antsTransformInfo"],
     "transform_file": InputPathType,
 })
+AntsTransformInfoParamsDict = _AntsTransformInfoParamsDictNoTag | AntsTransformInfoParamsDictTagged
 
 
 class AntsTransformInfoOutputs(typing.NamedTuple):

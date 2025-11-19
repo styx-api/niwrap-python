@@ -13,8 +13,7 @@ FAST_METADATA = Metadata(
 )
 
 
-FastParamsDict = typing.TypedDict('FastParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fast"]],
+_FastParamsDictNoTag = typing.TypedDict('_FastParamsDictNoTag', {
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
     "bias_lowpass": typing.NotRequired[float | None],
@@ -63,6 +62,7 @@ FastParamsDictTagged = typing.TypedDict('FastParamsDictTagged', {
     "iters_afterbias": typing.NotRequired[int | None],
     "in_files": list[InputPathType],
 })
+FastParamsDict = _FastParamsDictNoTag | FastParamsDictTagged
 
 
 class FastOutputs(typing.NamedTuple):

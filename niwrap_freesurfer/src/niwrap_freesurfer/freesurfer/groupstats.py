@@ -13,8 +13,7 @@ GROUPSTATS_METADATA = Metadata(
 )
 
 
-GroupstatsParamsDict = typing.TypedDict('GroupstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/groupstats"]],
+_GroupstatsParamsDictNoTag = typing.TypedDict('_GroupstatsParamsDictNoTag', {
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
     "subjectfile": typing.NotRequired[InputPathType | None],
@@ -53,6 +52,7 @@ GroupstatsParamsDictTagged = typing.TypedDict('GroupstatsParamsDictTagged', {
     "base": bool,
     "keep53": bool,
 })
+GroupstatsParamsDict = _GroupstatsParamsDictNoTag | GroupstatsParamsDictTagged
 
 
 class GroupstatsOutputs(typing.NamedTuple):

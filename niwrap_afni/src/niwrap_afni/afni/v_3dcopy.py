@@ -13,8 +13,7 @@ V_3DCOPY_METADATA = Metadata(
 )
 
 
-V3dcopyParamsDict = typing.TypedDict('V3dcopyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dcopy"]],
+_V3dcopyParamsDictNoTag = typing.TypedDict('_V3dcopyParamsDictNoTag', {
     "verbose": bool,
     "denote": bool,
     "old_prefix": str,
@@ -29,6 +28,7 @@ V3dcopyParamsDictTagged = typing.TypedDict('V3dcopyParamsDictTagged', {
     "view": typing.NotRequired[str | None],
     "new_prefix": str,
 })
+V3dcopyParamsDict = _V3dcopyParamsDictNoTag | V3dcopyParamsDictTagged
 
 
 class V3dcopyOutputs(typing.NamedTuple):

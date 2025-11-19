@@ -13,8 +13,7 @@ MRIS_SEGMENT_VALS_METADATA = Metadata(
 )
 
 
-MrisSegmentValsParamsDict = typing.TypedDict('MrisSegmentValsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segment_vals"]],
+_MrisSegmentValsParamsDictNoTag = typing.TypedDict('_MrisSegmentValsParamsDictNoTag', {
     "input_surface": InputPathType,
     "input_curv_file": InputPathType,
     "output_curv_file": str,
@@ -29,6 +28,7 @@ MrisSegmentValsParamsDictTagged = typing.TypedDict('MrisSegmentValsParamsDictTag
     "threshold": typing.NotRequired[float | None],
     "area_thresh": typing.NotRequired[float | None],
 })
+MrisSegmentValsParamsDict = _MrisSegmentValsParamsDictNoTag | MrisSegmentValsParamsDictTagged
 
 
 class MrisSegmentValsOutputs(typing.NamedTuple):

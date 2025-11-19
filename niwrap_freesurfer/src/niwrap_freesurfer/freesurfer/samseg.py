@@ -13,8 +13,7 @@ SAMSEG_METADATA = Metadata(
 )
 
 
-SamsegParamsDict = typing.TypedDict('SamsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg"]],
+_SamsegParamsDictNoTag = typing.TypedDict('_SamsegParamsDictNoTag', {
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
     "t2w_files": typing.NotRequired[list[InputPathType] | None],
@@ -107,6 +106,7 @@ SamsegParamsDictTagged = typing.TypedDict('SamsegParamsDictTagged', {
     "smooth_wm_cortex": typing.NotRequired[float | None],
     "profile_file": typing.NotRequired[InputPathType | None],
 })
+SamsegParamsDict = _SamsegParamsDictNoTag | SamsegParamsDictTagged
 
 
 class SamsegOutputs(typing.NamedTuple):

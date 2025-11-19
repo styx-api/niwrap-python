@@ -13,8 +13,7 @@ FOD2DEC_METADATA = Metadata(
 )
 
 
-Fod2decConfigParamsDict = typing.TypedDict('Fod2decConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Fod2decConfigParamsDictNoTag = typing.TypedDict('_Fod2decConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Fod2decConfigParamsDictTagged = typing.TypedDict('Fod2decConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+Fod2decConfigParamsDict = _Fod2decConfigParamsDictNoTag | Fod2decConfigParamsDictTagged
 
 
-Fod2decParamsDict = typing.TypedDict('Fod2decParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fod2dec"]],
+_Fod2decParamsDictNoTag = typing.TypedDict('_Fod2decParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
     "lum": bool,
@@ -65,6 +64,7 @@ Fod2decParamsDictTagged = typing.TypedDict('Fod2decParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+Fod2decParamsDict = _Fod2decParamsDictNoTag | Fod2decParamsDictTagged
 
 
 def fod2dec_config(

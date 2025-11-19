@@ -13,8 +13,7 @@ RTFEEDME_METADATA = Metadata(
 )
 
 
-RtfeedmeParamsDict = typing.TypedDict('RtfeedmeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/rtfeedme"]],
+_RtfeedmeParamsDictNoTag = typing.TypedDict('_RtfeedmeParamsDictNoTag', {
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
     "interval_ms": typing.NotRequired[float | None],
@@ -41,6 +40,7 @@ RtfeedmeParamsDictTagged = typing.TypedDict('RtfeedmeParamsDictTagged', {
     "note": typing.NotRequired[list[str] | None],
     "yrange": typing.NotRequired[float | None],
 })
+RtfeedmeParamsDict = _RtfeedmeParamsDictNoTag | RtfeedmeParamsDictTagged
 
 
 class RtfeedmeOutputs(typing.NamedTuple):

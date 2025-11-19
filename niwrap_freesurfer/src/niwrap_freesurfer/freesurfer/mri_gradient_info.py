@@ -13,14 +13,14 @@ MRI_GRADIENT_INFO_METADATA = Metadata(
 )
 
 
-MriGradientInfoParamsDict = typing.TypedDict('MriGradientInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradient_info"]],
+_MriGradientInfoParamsDictNoTag = typing.TypedDict('_MriGradientInfoParamsDictNoTag', {
     "input_image": InputPathType,
 })
 MriGradientInfoParamsDictTagged = typing.TypedDict('MriGradientInfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gradient_info"],
     "input_image": InputPathType,
 })
+MriGradientInfoParamsDict = _MriGradientInfoParamsDictNoTag | MriGradientInfoParamsDictTagged
 
 
 class MriGradientInfoOutputs(typing.NamedTuple):

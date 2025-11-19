@@ -13,8 +13,7 @@ GEN_SS_REVIEW_TABLE_PY_METADATA = Metadata(
 )
 
 
-GenSsReviewTablePyParamsDict = typing.TypedDict('GenSsReviewTablePyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_table.py"]],
+_GenSsReviewTablePyParamsDictNoTag = typing.TypedDict('_GenSsReviewTablePyParamsDictNoTag', {
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
     "write_outliers": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ GenSsReviewTablePyParamsDictTagged = typing.TypedDict('GenSsReviewTablePyParamsD
     "show_missing": bool,
     "verbosity": typing.NotRequired[int | None],
 })
+GenSsReviewTablePyParamsDict = _GenSsReviewTablePyParamsDictNoTag | GenSsReviewTablePyParamsDictTagged
 
 
 class GenSsReviewTablePyOutputs(typing.NamedTuple):

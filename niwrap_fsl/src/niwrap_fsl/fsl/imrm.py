@@ -13,14 +13,14 @@ IMRM_METADATA = Metadata(
 )
 
 
-ImrmParamsDict = typing.TypedDict('ImrmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/imrm"]],
+_ImrmParamsDictNoTag = typing.TypedDict('_ImrmParamsDictNoTag', {
     "images_to_remove": list[str],
 })
 ImrmParamsDictTagged = typing.TypedDict('ImrmParamsDictTagged', {
     "@type": typing.Literal["fsl/imrm"],
     "images_to_remove": list[str],
 })
+ImrmParamsDict = _ImrmParamsDictNoTag | ImrmParamsDictTagged
 
 
 class ImrmOutputs(typing.NamedTuple):

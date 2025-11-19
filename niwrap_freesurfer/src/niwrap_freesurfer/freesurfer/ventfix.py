@@ -13,8 +13,7 @@ VENTFIX_METADATA = Metadata(
 )
 
 
-VentfixParamsDict = typing.TypedDict('VentfixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/ventfix"]],
+_VentfixParamsDictNoTag = typing.TypedDict('_VentfixParamsDictNoTag', {
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ VentfixParamsDictTagged = typing.TypedDict('VentfixParamsDictTagged', {
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })
+VentfixParamsDict = _VentfixParamsDictNoTag | VentfixParamsDictTagged
 
 
 class VentfixOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_SPHERE_METADATA = Metadata(
 )
 
 
-MrisSphereParamsDict = typing.TypedDict('MrisSphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sphere"]],
+_MrisSphereParamsDictNoTag = typing.TypedDict('_MrisSphereParamsDictNoTag', {
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
@@ -25,6 +24,7 @@ MrisSphereParamsDictTagged = typing.TypedDict('MrisSphereParamsDictTagged', {
     "patch_file": InputPathType,
     "output_patch": str,
 })
+MrisSphereParamsDict = _MrisSphereParamsDictNoTag | MrisSphereParamsDictTagged
 
 
 class MrisSphereOutputs(typing.NamedTuple):

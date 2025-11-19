@@ -13,8 +13,7 @@ IMCUTUP_METADATA = Metadata(
 )
 
 
-ImcutupParamsDict = typing.TypedDict('ImcutupParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imcutup"]],
+_ImcutupParamsDictNoTag = typing.TypedDict('_ImcutupParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
     "yxnum": bool,
@@ -35,6 +34,7 @@ ImcutupParamsDictTagged = typing.TypedDict('ImcutupParamsDictTagged', {
     "ny": int,
     "input_file": InputPathType,
 })
+ImcutupParamsDict = _ImcutupParamsDictNoTag | ImcutupParamsDictTagged
 
 
 class ImcutupOutputs(typing.NamedTuple):

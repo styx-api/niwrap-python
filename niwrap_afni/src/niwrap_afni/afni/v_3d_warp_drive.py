@@ -13,8 +13,7 @@ V_3D_WARP_DRIVE_METADATA = Metadata(
 )
 
 
-V3dWarpDriveParamsDict = typing.TypedDict('V3dWarpDriveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dWarpDrive"]],
+_V3dWarpDriveParamsDictNoTag = typing.TypedDict('_V3dWarpDriveParamsDictNoTag', {
     "dataset": InputPathType,
     "base_dataset": InputPathType,
     "prefix": str,
@@ -91,6 +90,7 @@ V3dWarpDriveParamsDictTagged = typing.TypedDict('V3dWarpDriveParamsDictTagged', 
     "ashift": bool,
     "bshift": bool,
 })
+V3dWarpDriveParamsDict = _V3dWarpDriveParamsDictNoTag | V3dWarpDriveParamsDictTagged
 
 
 class V3dWarpDriveOutputs(typing.NamedTuple):

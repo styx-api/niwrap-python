@@ -13,8 +13,7 @@ MRI_CA_NORMALIZE_METADATA = Metadata(
 )
 
 
-MriCaNormalizeParamsDict = typing.TypedDict('MriCaNormalizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_normalize"]],
+_MriCaNormalizeParamsDictNoTag = typing.TypedDict('_MriCaNormalizeParamsDictNoTag', {
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
     "xform_file": InputPathType,
@@ -73,6 +72,7 @@ MriCaNormalizeParamsDictTagged = typing.TypedDict('MriCaNormalizeParamsDictTagge
     "renorm_file": typing.NotRequired[InputPathType | None],
     "flash_flag": bool,
 })
+MriCaNormalizeParamsDict = _MriCaNormalizeParamsDictNoTag | MriCaNormalizeParamsDictTagged
 
 
 class MriCaNormalizeOutputs(typing.NamedTuple):

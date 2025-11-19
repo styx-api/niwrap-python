@@ -13,8 +13,7 @@ V_3D_ANOVA2_METADATA = Metadata(
 )
 
 
-V3dAnova2ParamsDict = typing.TypedDict('V3dAnova2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dANOVA2"]],
+_V3dAnova2ParamsDictNoTag = typing.TypedDict('_V3dAnova2ParamsDictNoTag', {
     "type": int,
     "alevels": int,
     "blevels": int,
@@ -67,6 +66,7 @@ V3dAnova2ParamsDictTagged = typing.TypedDict('V3dAnova2ParamsDictTagged', {
     "ok": bool,
     "assume_sph": bool,
 })
+V3dAnova2ParamsDict = _V3dAnova2ParamsDictNoTag | V3dAnova2ParamsDictTagged
 
 
 class V3dAnova2Outputs(typing.NamedTuple):

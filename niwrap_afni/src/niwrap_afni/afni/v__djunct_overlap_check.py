@@ -13,8 +13,7 @@ V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
 )
 
 
-VDjunctOverlapCheckParamsDict = typing.TypedDict('VDjunctOverlapCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_overlap_check"]],
+_VDjunctOverlapCheckParamsDictNoTag = typing.TypedDict('_VDjunctOverlapCheckParamsDictNoTag', {
     "ulay": InputPathType,
     "olay": InputPathType,
     "prefix": str,
@@ -67,6 +66,7 @@ VDjunctOverlapCheckParamsDictTagged = typing.TypedDict('VDjunctOverlapCheckParam
     "no_sag": bool,
     "no_clean": bool,
 })
+VDjunctOverlapCheckParamsDict = _VDjunctOverlapCheckParamsDictNoTag | VDjunctOverlapCheckParamsDictTagged
 
 
 class VDjunctOverlapCheckOutputs(typing.NamedTuple):

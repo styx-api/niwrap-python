@@ -13,8 +13,7 @@ SPHARM_DECO_METADATA = Metadata(
 )
 
 
-SpharmDecoParamsDict = typing.TypedDict('SpharmDecoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SpharmDeco"]],
+_SpharmDecoParamsDictNoTag = typing.TypedDict('_SpharmDecoParamsDictNoTag', {
     "i_type_s": InputPathType,
     "unit_sph_label": str,
     "order_l": float,
@@ -39,6 +38,7 @@ SpharmDecoParamsDictTagged = typing.TypedDict('SpharmDecoParamsDictTagged', {
     "debug": typing.NotRequired[float | None],
     "sigma": typing.NotRequired[float | None],
 })
+SpharmDecoParamsDict = _SpharmDecoParamsDictNoTag | SpharmDecoParamsDictTagged
 
 
 class SpharmDecoOutputs(typing.NamedTuple):

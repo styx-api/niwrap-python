@@ -13,8 +13,7 @@ MRI_GRADUNWARP_METADATA = Metadata(
 )
 
 
-MriGradunwarpParamsDict = typing.TypedDict('MriGradunwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradunwarp"]],
+_MriGradunwarpParamsDictNoTag = typing.TypedDict('_MriGradunwarpParamsDictNoTag', {
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
     "input_file": InputPathType,
@@ -41,6 +40,7 @@ MriGradunwarpParamsDictTagged = typing.TypedDict('MriGradunwarpParamsDictTagged'
     "version": bool,
     "help": bool,
 })
+MriGradunwarpParamsDict = _MriGradunwarpParamsDictNoTag | MriGradunwarpParamsDictTagged
 
 
 class MriGradunwarpOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__CLIP_VOLUME_METADATA = Metadata(
 )
 
 
-VClipVolumeParamsDict = typing.TypedDict('VClipVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@clip_volume"]],
+_VClipVolumeParamsDictNoTag = typing.TypedDict('_VClipVolumeParamsDictNoTag', {
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
     "above_zmm": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ VClipVolumeParamsDictTagged = typing.TypedDict('VClipVolumeParamsDictTagged', {
     "output_prefix": typing.NotRequired[str | None],
     "followers": typing.NotRequired[list[InputPathType] | None],
 })
+VClipVolumeParamsDict = _VClipVolumeParamsDictNoTag | VClipVolumeParamsDictTagged
 
 
 class VClipVolumeOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ GETFULLPATH_METADATA = Metadata(
 )
 
 
-GetfullpathParamsDict = typing.TypedDict('GetfullpathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/getfullpath"]],
+_GetfullpathParamsDictNoTag = typing.TypedDict('_GetfullpathParamsDictNoTag', {
     "filename": str,
 })
 GetfullpathParamsDictTagged = typing.TypedDict('GetfullpathParamsDictTagged', {
     "@type": typing.Literal["freesurfer/getfullpath"],
     "filename": str,
 })
+GetfullpathParamsDict = _GetfullpathParamsDictNoTag | GetfullpathParamsDictTagged
 
 
 class GetfullpathOutputs(typing.NamedTuple):

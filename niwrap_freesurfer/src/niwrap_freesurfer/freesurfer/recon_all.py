@@ -13,8 +13,7 @@ RECON_ALL_METADATA = Metadata(
 )
 
 
-ReconAllParamsDict = typing.TypedDict('ReconAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all"]],
+_ReconAllParamsDictNoTag = typing.TypedDict('_ReconAllParamsDictNoTag', {
     "subjid": str,
     "all_flag": bool,
     "autorecon_all_flag": bool,
@@ -157,6 +156,7 @@ ReconAllParamsDictTagged = typing.TypedDict('ReconAllParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+ReconAllParamsDict = _ReconAllParamsDictNoTag | ReconAllParamsDictTagged
 
 
 class ReconAllOutputs(typing.NamedTuple):

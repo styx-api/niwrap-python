@@ -13,8 +13,7 @@ MRIS_COMPUTE_LGI_METADATA = Metadata(
 )
 
 
-MrisComputeLgiParamsDict = typing.TypedDict('MrisComputeLgiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_lgi"]],
+_MrisComputeLgiParamsDictNoTag = typing.TypedDict('_MrisComputeLgiParamsDictNoTag', {
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
     "smooth_iters": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ MrisComputeLgiParamsDictTagged = typing.TypedDict('MrisComputeLgiParamsDictTagge
     "echo": bool,
     "dontrun": bool,
 })
+MrisComputeLgiParamsDict = _MrisComputeLgiParamsDictNoTag | MrisComputeLgiParamsDictTagged
 
 
 class MrisComputeLgiOutputs(typing.NamedTuple):

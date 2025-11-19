@@ -13,8 +13,7 @@ CUTOFFCALC_METADATA = Metadata(
 )
 
 
-CutoffcalcParamsDict = typing.TypedDict('CutoffcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/cutoffcalc"]],
+_CutoffcalcParamsDictNoTag = typing.TypedDict('_CutoffcalcParamsDictNoTag', {
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
     "tr": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ CutoffcalcParamsDictTagged = typing.TypedDict('CutoffcalcParamsDictTagged', {
     "verbose_flag": bool,
     "debug_flag": bool,
 })
+CutoffcalcParamsDict = _CutoffcalcParamsDictNoTag | CutoffcalcParamsDictTagged
 
 
 class CutoffcalcOutputs(typing.NamedTuple):

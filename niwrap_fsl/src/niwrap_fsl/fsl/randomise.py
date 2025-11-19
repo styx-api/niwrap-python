@@ -13,8 +13,7 @@ RANDOMISE_METADATA = Metadata(
 )
 
 
-RandomiseParamsDict = typing.TypedDict('RandomiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/randomise"]],
+_RandomiseParamsDictNoTag = typing.TypedDict('_RandomiseParamsDictNoTag', {
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
     "design_mat": typing.NotRequired[InputPathType | None],
@@ -75,6 +74,7 @@ RandomiseParamsDictTagged = typing.TypedDict('RandomiseParamsDictTagged', {
     "vox_p_values": bool,
     "x_block_labels": typing.NotRequired[InputPathType | None],
 })
+RandomiseParamsDict = _RandomiseParamsDictNoTag | RandomiseParamsDictTagged
 
 
 class RandomiseOutputs(typing.NamedTuple):

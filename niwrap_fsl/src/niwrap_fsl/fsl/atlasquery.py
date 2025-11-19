@@ -13,8 +13,7 @@ ATLASQUERY_METADATA = Metadata(
 )
 
 
-AtlasqueryParamsDict = typing.TypedDict('AtlasqueryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/atlasquery"]],
+_AtlasqueryParamsDictNoTag = typing.TypedDict('_AtlasqueryParamsDictNoTag', {
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
     "coord": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ AtlasqueryParamsDictTagged = typing.TypedDict('AtlasqueryParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+AtlasqueryParamsDict = _AtlasqueryParamsDictNoTag | AtlasqueryParamsDictTagged
 
 
 class AtlasqueryOutputs(typing.NamedTuple):

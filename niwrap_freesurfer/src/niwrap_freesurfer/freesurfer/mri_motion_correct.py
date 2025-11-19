@@ -13,8 +13,7 @@ MRI_MOTION_CORRECT_METADATA = Metadata(
 )
 
 
-MriMotionCorrectParamsDict = typing.TypedDict('MriMotionCorrectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_motion_correct"]],
+_MriMotionCorrectParamsDictNoTag = typing.TypedDict('_MriMotionCorrectParamsDictNoTag', {
     "outfile": str,
     "infiles": list[InputPathType],
 })
@@ -23,6 +22,7 @@ MriMotionCorrectParamsDictTagged = typing.TypedDict('MriMotionCorrectParamsDictT
     "outfile": str,
     "infiles": list[InputPathType],
 })
+MriMotionCorrectParamsDict = _MriMotionCorrectParamsDictNoTag | MriMotionCorrectParamsDictTagged
 
 
 class MriMotionCorrectOutputs(typing.NamedTuple):

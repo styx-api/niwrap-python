@@ -13,8 +13,7 @@ MRI_TRANSFORM_METADATA = Metadata(
 )
 
 
-MriTransformParamsDict = typing.TypedDict('MriTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_transform"]],
+_MriTransformParamsDictNoTag = typing.TypedDict('_MriTransformParamsDictNoTag', {
     "input_volume": InputPathType,
     "lta_file": InputPathType,
     "output_file": str,
@@ -29,6 +28,7 @@ MriTransformParamsDictTagged = typing.TypedDict('MriTransformParamsDictTagged', 
     "out_like": typing.NotRequired[InputPathType | None],
     "invert": bool,
 })
+MriTransformParamsDict = _MriTransformParamsDictNoTag | MriTransformParamsDictTagged
 
 
 class MriTransformOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ COMPUTE_VOX2VOX_METADATA = Metadata(
 )
 
 
-ComputeVox2voxParamsDict = typing.TypedDict('ComputeVox2voxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_vox2vox"]],
+_ComputeVox2voxParamsDictNoTag = typing.TypedDict('_ComputeVox2voxParamsDictNoTag', {
     "source": InputPathType,
     "t4file": InputPathType,
     "target": InputPathType,
@@ -25,6 +24,7 @@ ComputeVox2voxParamsDictTagged = typing.TypedDict('ComputeVox2voxParamsDictTagge
     "t4file": InputPathType,
     "target": InputPathType,
 })
+ComputeVox2voxParamsDict = _ComputeVox2voxParamsDictNoTag | ComputeVox2voxParamsDictTagged
 
 
 class ComputeVox2voxOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__GET_AFNI_RES_METADATA = Metadata(
 )
 
 
-VGetAfniResParamsDict = typing.TypedDict('VGetAfniResParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniRes"]],
+_VGetAfniResParamsDictNoTag = typing.TypedDict('_VGetAfniResParamsDictNoTag', {
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })
@@ -23,6 +22,7 @@ VGetAfniResParamsDictTagged = typing.TypedDict('VGetAfniResParamsDictTagged', {
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })
+VGetAfniResParamsDict = _VGetAfniResParamsDictNoTag | VGetAfniResParamsDictTagged
 
 
 class VGetAfniResOutputs(typing.NamedTuple):

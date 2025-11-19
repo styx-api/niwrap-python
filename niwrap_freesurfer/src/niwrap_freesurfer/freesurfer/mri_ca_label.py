@@ -13,8 +13,7 @@ MRI_CA_LABEL_METADATA = Metadata(
 )
 
 
-MriCaLabelParamsDict = typing.TypedDict('MriCaLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_label"]],
+_MriCaLabelParamsDictNoTag = typing.TypedDict('_MriCaLabelParamsDictNoTag', {
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
     "gca_file": InputPathType,
@@ -123,6 +122,7 @@ MriCaLabelParamsDictTagged = typing.TypedDict('MriCaLabelParamsDictTagged', {
     "sa_cblum_from_seg": typing.NotRequired[str | None],
     "threads": typing.NotRequired[int | None],
 })
+MriCaLabelParamsDict = _MriCaLabelParamsDictNoTag | MriCaLabelParamsDictTagged
 
 
 class MriCaLabelOutputs(typing.NamedTuple):

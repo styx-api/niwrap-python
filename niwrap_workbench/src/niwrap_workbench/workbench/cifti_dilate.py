@@ -12,8 +12,7 @@ CIFTI_DILATE_METADATA = Metadata(
 )
 
 
-CiftiDilateLeftSurfaceParamsDict = typing.TypedDict('CiftiDilateLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiDilateLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiDilateLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiDilateLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateLeftSurfac
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiDilateLeftSurfaceParamsDict = _CiftiDilateLeftSurfaceParamsDictNoTag | CiftiDilateLeftSurfaceParamsDictTagged
 
 
-CiftiDilateRightSurfaceParamsDict = typing.TypedDict('CiftiDilateRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiDilateRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiDilateRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiDilateRightSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateRightSurf
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiDilateRightSurfaceParamsDict = _CiftiDilateRightSurfaceParamsDictNoTag | CiftiDilateRightSurfaceParamsDictTagged
 
 
-CiftiDilateCerebellumSurfaceParamsDict = typing.TypedDict('CiftiDilateCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiDilateCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiDilateCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiDilateCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateCere
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiDilateCerebellumSurfaceParamsDict = _CiftiDilateCerebellumSurfaceParamsDictNoTag | CiftiDilateCerebellumSurfaceParamsDictTagged
 
 
-CiftiDilateParamsDict = typing.TypedDict('CiftiDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-dilate"]],
+_CiftiDilateParamsDictNoTag = typing.TypedDict('_CiftiDilateParamsDictNoTag', {
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
@@ -78,6 +77,7 @@ CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
     "surface-distance": float,
     "volume-distance": float,
 })
+CiftiDilateParamsDict = _CiftiDilateParamsDictNoTag | CiftiDilateParamsDictTagged
 
 
 def cifti_dilate_left_surface(

@@ -13,8 +13,7 @@ ORIENT_LAS_METADATA = Metadata(
 )
 
 
-OrientLasParamsDict = typing.TypedDict('OrientLasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/orientLAS"]],
+_OrientLasParamsDictNoTag = typing.TypedDict('_OrientLasParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "check": bool,
@@ -25,6 +24,7 @@ OrientLasParamsDictTagged = typing.TypedDict('OrientLasParamsDictTagged', {
     "output_image": str,
     "check": bool,
 })
+OrientLasParamsDict = _OrientLasParamsDictNoTag | OrientLasParamsDictTagged
 
 
 class OrientLasOutputs(typing.NamedTuple):

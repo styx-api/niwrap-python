@@ -13,14 +13,14 @@ V__GET_AFNI_VIEW_METADATA = Metadata(
 )
 
 
-VGetAfniViewParamsDict = typing.TypedDict('VGetAfniViewParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniView"]],
+_VGetAfniViewParamsDictNoTag = typing.TypedDict('_VGetAfniViewParamsDictNoTag', {
     "dataset_name": str,
 })
 VGetAfniViewParamsDictTagged = typing.TypedDict('VGetAfniViewParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniView"],
     "dataset_name": str,
 })
+VGetAfniViewParamsDict = _VGetAfniViewParamsDictNoTag | VGetAfniViewParamsDictTagged
 
 
 class VGetAfniViewOutputs(typing.NamedTuple):

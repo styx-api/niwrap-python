@@ -13,8 +13,7 @@ MRIS_MEF_SURFACES_METADATA = Metadata(
 )
 
 
-MrisMefSurfacesParamsDict = typing.TypedDict('MrisMefSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mef_surfaces"]],
+_MrisMefSurfacesParamsDictNoTag = typing.TypedDict('_MrisMefSurfacesParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -31,6 +30,7 @@ MrisMefSurfacesParamsDictTagged = typing.TypedDict('MrisMefSurfacesParamsDictTag
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
+MrisMefSurfacesParamsDict = _MrisMefSurfacesParamsDictNoTag | MrisMefSurfacesParamsDictTagged
 
 
 class MrisMefSurfacesOutputs(typing.NamedTuple):

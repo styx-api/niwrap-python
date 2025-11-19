@@ -13,8 +13,7 @@ MRI_LINEAR_REGISTER_METADATA = Metadata(
 )
 
 
-MriLinearRegisterParamsDict = typing.TypedDict('MriLinearRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_register"]],
+_MriLinearRegisterParamsDictNoTag = typing.TypedDict('_MriLinearRegisterParamsDictNoTag', {
     "input_brain": InputPathType,
     "template": InputPathType,
     "output_file": str,
@@ -25,6 +24,7 @@ MriLinearRegisterParamsDictTagged = typing.TypedDict('MriLinearRegisterParamsDic
     "template": InputPathType,
     "output_file": str,
 })
+MriLinearRegisterParamsDict = _MriLinearRegisterParamsDictNoTag | MriLinearRegisterParamsDictTagged
 
 
 class MriLinearRegisterOutputs(typing.NamedTuple):

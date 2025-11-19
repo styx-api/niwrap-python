@@ -13,8 +13,7 @@ DESIGN_TTEST2_METADATA = Metadata(
 )
 
 
-DesignTtest2ParamsDict = typing.TypedDict('DesignTtest2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/design_ttest2"]],
+_DesignTtest2ParamsDictNoTag = typing.TypedDict('_DesignTtest2ParamsDictNoTag', {
     "design_files_rootname": str,
     "ngroupa": float,
     "ngroupb": float,
@@ -27,6 +26,7 @@ DesignTtest2ParamsDictTagged = typing.TypedDict('DesignTtest2ParamsDictTagged', 
     "ngroupb": float,
     "include_mean_contrasts": bool,
 })
+DesignTtest2ParamsDict = _DesignTtest2ParamsDictNoTag | DesignTtest2ParamsDictTagged
 
 
 class DesignTtest2Outputs(typing.NamedTuple):

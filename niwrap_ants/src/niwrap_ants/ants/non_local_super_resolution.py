@@ -13,8 +13,7 @@ NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
 )
 
 
-NonLocalSuperResolutionParamsDict = typing.TypedDict('NonLocalSuperResolutionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/NonLocalSuperResolution"]],
+_NonLocalSuperResolutionParamsDictNoTag = typing.TypedDict('_NonLocalSuperResolutionParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "interpolated_image": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ NonLocalSuperResolutionParamsDictTagged = typing.TypedDict('NonLocalSuperResolut
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+NonLocalSuperResolutionParamsDict = _NonLocalSuperResolutionParamsDictNoTag | NonLocalSuperResolutionParamsDictTagged
 
 
 class NonLocalSuperResolutionOutputs(typing.NamedTuple):

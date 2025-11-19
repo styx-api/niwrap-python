@@ -12,8 +12,7 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 )
 
 
-SurfaceApplyWarpfieldParamsDict = typing.TypedDict('SurfaceApplyWarpfieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-warpfield"]],
+_SurfaceApplyWarpfieldParamsDictNoTag = typing.TypedDict('_SurfaceApplyWarpfieldParamsDictNoTag', {
     "out-surf": str,
     "forward-warp": typing.NotRequired[str | None],
     "in-surf": InputPathType,
@@ -26,6 +25,7 @@ SurfaceApplyWarpfieldParamsDictTagged = typing.TypedDict('SurfaceApplyWarpfieldP
     "in-surf": InputPathType,
     "warpfield": str,
 })
+SurfaceApplyWarpfieldParamsDict = _SurfaceApplyWarpfieldParamsDictNoTag | SurfaceApplyWarpfieldParamsDictTagged
 
 
 class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):

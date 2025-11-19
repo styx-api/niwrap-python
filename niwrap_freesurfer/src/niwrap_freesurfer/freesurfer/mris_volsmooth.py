@@ -13,8 +13,7 @@ MRIS_VOLSMOOTH_METADATA = Metadata(
 )
 
 
-MrisVolsmoothParamsDict = typing.TypedDict('MrisVolsmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volsmooth"]],
+_MrisVolsmoothParamsDictNoTag = typing.TypedDict('_MrisVolsmoothParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "registration": InputPathType,
@@ -45,6 +44,7 @@ MrisVolsmoothParamsDictTagged = typing.TypedDict('MrisVolsmoothParamsDictTagged'
     "nocleanup": bool,
     "debug": bool,
 })
+MrisVolsmoothParamsDict = _MrisVolsmoothParamsDictNoTag | MrisVolsmoothParamsDictTagged
 
 
 class MrisVolsmoothOutputs(typing.NamedTuple):

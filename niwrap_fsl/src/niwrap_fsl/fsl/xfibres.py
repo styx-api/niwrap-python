@@ -13,8 +13,7 @@ XFIBRES_METADATA = Metadata(
 )
 
 
-XfibresParamsDict = typing.TypedDict('XfibresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/xfibres"]],
+_XfibresParamsDictNoTag = typing.TypedDict('_XfibresParamsDictNoTag', {
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvecs": InputPathType,
@@ -73,6 +72,7 @@ XfibresParamsDictTagged = typing.TypedDict('XfibresParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+XfibresParamsDict = _XfibresParamsDictNoTag | XfibresParamsDictTagged
 
 
 class XfibresOutputs(typing.NamedTuple):

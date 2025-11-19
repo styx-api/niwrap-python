@@ -13,8 +13,7 @@ ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA = Metadata(
 )
 
 
-AntsSliceRegularizedRegistrationParamsDict = typing.TypedDict('AntsSliceRegularizedRegistrationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsSliceRegularizedRegistration"]],
+_AntsSliceRegularizedRegistrationParamsDictNoTag = typing.TypedDict('_AntsSliceRegularizedRegistrationParamsDictNoTag', {
     "polydegree": int,
     "output": str,
     "metric": str,
@@ -39,6 +38,7 @@ AntsSliceRegularizedRegistrationParamsDictTagged = typing.TypedDict('AntsSliceRe
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
     "verbose": typing.NotRequired[typing.Literal[0] | None],
 })
+AntsSliceRegularizedRegistrationParamsDict = _AntsSliceRegularizedRegistrationParamsDictNoTag | AntsSliceRegularizedRegistrationParamsDictTagged
 
 
 class AntsSliceRegularizedRegistrationOutputs(typing.NamedTuple):

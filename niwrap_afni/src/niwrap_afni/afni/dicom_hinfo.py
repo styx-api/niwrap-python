@@ -13,8 +13,7 @@ DICOM_HINFO_METADATA = Metadata(
 )
 
 
-DicomHinfoParamsDict = typing.TypedDict('DicomHinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/dicom_hinfo"]],
+_DicomHinfoParamsDictNoTag = typing.TypedDict('_DicomHinfoParamsDictNoTag', {
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
     "full_entry": bool,
@@ -31,6 +30,7 @@ DicomHinfoParamsDictTagged = typing.TypedDict('DicomHinfoParamsDictTagged', {
     "namelast": bool,
     "files": list[InputPathType],
 })
+DicomHinfoParamsDict = _DicomHinfoParamsDictNoTag | DicomHinfoParamsDictTagged
 
 
 class DicomHinfoOutputs(typing.NamedTuple):

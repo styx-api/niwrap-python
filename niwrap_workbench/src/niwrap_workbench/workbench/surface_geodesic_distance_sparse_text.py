@@ -12,8 +12,7 @@ SURFACE_GEODESIC_DISTANCE_SPARSE_TEXT_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceSparseTextParamsDict = typing.TypedDict('SurfaceGeodesicDistanceSparseTextParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-sparse-text"]],
+_SurfaceGeodesicDistanceSparseTextParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceSparseTextParamsDictNoTag', {
     "area-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
     "surface": InputPathType,
@@ -28,6 +27,7 @@ SurfaceGeodesicDistanceSparseTextParamsDictTagged = typing.TypedDict('SurfaceGeo
     "limit": float,
     "text-out": str,
 })
+SurfaceGeodesicDistanceSparseTextParamsDict = _SurfaceGeodesicDistanceSparseTextParamsDictNoTag | SurfaceGeodesicDistanceSparseTextParamsDictTagged
 
 
 class SurfaceGeodesicDistanceSparseTextOutputs(typing.NamedTuple):

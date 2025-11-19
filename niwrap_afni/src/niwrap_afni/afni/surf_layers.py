@@ -13,8 +13,7 @@ SURF_LAYERS_METADATA = Metadata(
 )
 
 
-SurfLayersParamsDict = typing.TypedDict('SurfLayersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfLayers"]],
+_SurfLayersParamsDictNoTag = typing.TypedDict('_SurfLayersParamsDictNoTag', {
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
     "states": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ SurfLayersParamsDictTagged = typing.TypedDict('SurfLayersParamsDictTagged', {
     "echo": bool,
     "no_clean": bool,
 })
+SurfLayersParamsDict = _SurfLayersParamsDictNoTag | SurfLayersParamsDictTagged
 
 
 class SurfLayersOutputs(typing.NamedTuple):

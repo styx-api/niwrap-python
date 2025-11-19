@@ -13,8 +13,7 @@ MRGRID_METADATA = Metadata(
 )
 
 
-MrgridAxisParamsDict = typing.TypedDict('MrgridAxisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["axis"]],
+_MrgridAxisParamsDictNoTag = typing.TypedDict('_MrgridAxisParamsDictNoTag', {
     "index": int,
     "spec": str,
 })
@@ -23,30 +22,30 @@ MrgridAxisParamsDictTagged = typing.TypedDict('MrgridAxisParamsDictTagged', {
     "index": int,
     "spec": str,
 })
+MrgridAxisParamsDict = _MrgridAxisParamsDictNoTag | MrgridAxisParamsDictTagged
 
 
-MrgridVariousStringParamsDict = typing.TypedDict('MrgridVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MrgridVariousStringParamsDictNoTag = typing.TypedDict('_MrgridVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MrgridVariousStringParamsDictTagged = typing.TypedDict('MrgridVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MrgridVariousStringParamsDict = _MrgridVariousStringParamsDictNoTag | MrgridVariousStringParamsDictTagged
 
 
-MrgridVariousFileParamsDict = typing.TypedDict('MrgridVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MrgridVariousFileParamsDictNoTag = typing.TypedDict('_MrgridVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrgridVariousFileParamsDictTagged = typing.TypedDict('MrgridVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MrgridVariousFileParamsDict = _MrgridVariousFileParamsDictNoTag | MrgridVariousFileParamsDictTagged
 
 
-MrgridConfigParamsDict = typing.TypedDict('MrgridConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrgridConfigParamsDictNoTag = typing.TypedDict('_MrgridConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -55,10 +54,10 @@ MrgridConfigParamsDictTagged = typing.TypedDict('MrgridConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MrgridConfigParamsDict = _MrgridConfigParamsDictNoTag | MrgridConfigParamsDictTagged
 
 
-MrgridParamsDict = typing.TypedDict('MrgridParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrgrid"]],
+_MrgridParamsDictNoTag = typing.TypedDict('_MrgridParamsDictNoTag', {
     "template": typing.NotRequired[InputPathType | None],
     "size": typing.NotRequired[list[int] | None],
     "voxel": typing.NotRequired[list[float] | None],
@@ -115,6 +114,7 @@ MrgridParamsDictTagged = typing.TypedDict('MrgridParamsDictTagged', {
     "operation": str,
     "output": str,
 })
+MrgridParamsDict = _MrgridParamsDictNoTag | MrgridParamsDictTagged
 
 
 def mrgrid_strides_cargs_dyn_fn(

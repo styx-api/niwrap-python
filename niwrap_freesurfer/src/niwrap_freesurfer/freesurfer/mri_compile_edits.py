@@ -13,8 +13,7 @@ MRI_COMPILE_EDITS_METADATA = Metadata(
 )
 
 
-MriCompileEditsParamsDict = typing.TypedDict('MriCompileEditsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compile_edits"]],
+_MriCompileEditsParamsDictNoTag = typing.TypedDict('_MriCompileEditsParamsDictNoTag', {
     "subject_name": str,
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ MriCompileEditsParamsDictTagged = typing.TypedDict('MriCompileEditsParamsDictTag
     "subject_name": str,
     "output_volume": str,
 })
+MriCompileEditsParamsDict = _MriCompileEditsParamsDictNoTag | MriCompileEditsParamsDictTagged
 
 
 class MriCompileEditsOutputs(typing.NamedTuple):

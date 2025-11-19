@@ -13,8 +13,7 @@ MBA_METADATA = Metadata(
 )
 
 
-MbaParamsDict = typing.TypedDict('MbaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/MBA"]],
+_MbaParamsDictNoTag = typing.TypedDict('_MbaParamsDictNoTag', {
     "prefix": str,
     "chains": typing.NotRequired[int | None],
     "iterations": typing.NotRequired[int | None],
@@ -49,6 +48,7 @@ MbaParamsDictTagged = typing.TypedDict('MbaParamsDictTagged', {
     "dbgArgs": bool,
     "help": bool,
 })
+MbaParamsDict = _MbaParamsDictNoTag | MbaParamsDictTagged
 
 
 class MbaOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CIFTI_MERGE_METADATA = Metadata(
 )
 
 
-CiftiMergeUpToParamsDict = typing.TypedDict('CiftiMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_CiftiMergeUpToParamsDictNoTag = typing.TypedDict('_CiftiMergeUpToParamsDictNoTag', {
     "last-index": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ CiftiMergeUpToParamsDictTagged = typing.TypedDict('CiftiMergeUpToParamsDictTagge
     "last-index": str,
     "reverse": bool,
 })
+CiftiMergeUpToParamsDict = _CiftiMergeUpToParamsDictNoTag | CiftiMergeUpToParamsDictTagged
 
 
-CiftiMergeIndexParamsDict = typing.TypedDict('CiftiMergeIndexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["index"]],
+_CiftiMergeIndexParamsDictNoTag = typing.TypedDict('_CiftiMergeIndexParamsDictNoTag', {
     "index": str,
     "up-to": typing.NotRequired[CiftiMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ CiftiMergeIndexParamsDictTagged = typing.TypedDict('CiftiMergeIndexParamsDictTag
     "index": str,
     "up-to": typing.NotRequired[CiftiMergeUpToParamsDict | None],
 })
+CiftiMergeIndexParamsDict = _CiftiMergeIndexParamsDictNoTag | CiftiMergeIndexParamsDictTagged
 
 
-CiftiMergeCiftiParamsDict = typing.TypedDict('CiftiMergeCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiMergeCiftiParamsDictNoTag = typing.TypedDict('_CiftiMergeCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
     "index": typing.NotRequired[list[CiftiMergeIndexParamsDict] | None],
 })
@@ -46,10 +45,10 @@ CiftiMergeCiftiParamsDictTagged = typing.TypedDict('CiftiMergeCiftiParamsDictTag
     "cifti-in": InputPathType,
     "index": typing.NotRequired[list[CiftiMergeIndexParamsDict] | None],
 })
+CiftiMergeCiftiParamsDict = _CiftiMergeCiftiParamsDictNoTag | CiftiMergeCiftiParamsDictTagged
 
 
-CiftiMergeParamsDict = typing.TypedDict('CiftiMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge"]],
+_CiftiMergeParamsDictNoTag = typing.TypedDict('_CiftiMergeParamsDictNoTag', {
     "cifti-out": str,
     "direction": typing.NotRequired[str | None],
     "limit-GB": typing.NotRequired[float | None],
@@ -62,6 +61,7 @@ CiftiMergeParamsDictTagged = typing.TypedDict('CiftiMergeParamsDictTagged', {
     "limit-GB": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiMergeCiftiParamsDict] | None],
 })
+CiftiMergeParamsDict = _CiftiMergeParamsDictNoTag | CiftiMergeParamsDictTagged
 
 
 def cifti_merge_up_to(

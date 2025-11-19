@@ -13,8 +13,7 @@ IMMV_METADATA = Metadata(
 )
 
 
-ImmvParamsDict = typing.TypedDict('ImmvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/immv"]],
+_ImmvParamsDictNoTag = typing.TypedDict('_ImmvParamsDictNoTag', {
     "source_files": list[InputPathType],
     "destination": str,
 })
@@ -23,6 +22,7 @@ ImmvParamsDictTagged = typing.TypedDict('ImmvParamsDictTagged', {
     "source_files": list[InputPathType],
     "destination": str,
 })
+ImmvParamsDict = _ImmvParamsDictNoTag | ImmvParamsDictTagged
 
 
 class ImmvOutputs(typing.NamedTuple):

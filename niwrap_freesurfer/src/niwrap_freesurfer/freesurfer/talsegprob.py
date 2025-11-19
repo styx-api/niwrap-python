@@ -13,8 +13,7 @@ TALSEGPROB_METADATA = Metadata(
 )
 
 
-TalsegprobParamsDict = typing.TypedDict('TalsegprobParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talsegprob"]],
+_TalsegprobParamsDictNoTag = typing.TypedDict('_TalsegprobParamsDictNoTag', {
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "segmentation_number": typing.NotRequired[float | None],
@@ -53,6 +52,7 @@ TalsegprobParamsDictTagged = typing.TypedDict('TalsegprobParamsDictTagged', {
     "version_flag": bool,
     "echo_flag": bool,
 })
+TalsegprobParamsDict = _TalsegprobParamsDictNoTag | TalsegprobParamsDictTagged
 
 
 class TalsegprobOutputs(typing.NamedTuple):

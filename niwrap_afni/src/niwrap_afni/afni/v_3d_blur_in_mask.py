@@ -13,8 +13,7 @@ V_3D_BLUR_IN_MASK_METADATA = Metadata(
 )
 
 
-V3dBlurInMaskParamsDict = typing.TypedDict('V3dBlurInMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBlurInMask"]],
+_V3dBlurInMaskParamsDictNoTag = typing.TypedDict('_V3dBlurInMaskParamsDictNoTag', {
     "input_file": InputPathType,
     "output_prefix": str,
     "fwhm": float,
@@ -41,6 +40,7 @@ V3dBlurInMaskParamsDictTagged = typing.TypedDict('V3dBlurInMaskParamsDictTagged'
     "float": bool,
     "fwhm_xyz": typing.NotRequired[list[float] | None],
 })
+V3dBlurInMaskParamsDict = _V3dBlurInMaskParamsDictNoTag | V3dBlurInMaskParamsDictTagged
 
 
 class V3dBlurInMaskOutputs(typing.NamedTuple):

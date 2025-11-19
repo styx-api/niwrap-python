@@ -13,8 +13,7 @@ MAKE_FOLDING_ATLAS_METADATA = Metadata(
 )
 
 
-MakeFoldingAtlasParamsDict = typing.TypedDict('MakeFoldingAtlasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_folding_atlas"]],
+_MakeFoldingAtlasParamsDictNoTag = typing.TypedDict('_MakeFoldingAtlasParamsDictNoTag', {
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
     "subjects": typing.NotRequired[list[str] | None],
@@ -59,6 +58,7 @@ MakeFoldingAtlasParamsDictTagged = typing.TypedDict('MakeFoldingAtlasParamsDictT
     "threads": typing.NotRequired[float | None],
     "slurm_account": typing.NotRequired[str | None],
 })
+MakeFoldingAtlasParamsDict = _MakeFoldingAtlasParamsDictNoTag | MakeFoldingAtlasParamsDictTagged
 
 
 class MakeFoldingAtlasOutputs(typing.NamedTuple):

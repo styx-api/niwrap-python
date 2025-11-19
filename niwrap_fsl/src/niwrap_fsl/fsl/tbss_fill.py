@@ -13,8 +13,7 @@ TBSS_FILL_METADATA = Metadata(
 )
 
 
-TbssFillParamsDict = typing.TypedDict('TbssFillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_fill"]],
+_TbssFillParamsDictNoTag = typing.TypedDict('_TbssFillParamsDictNoTag', {
     "stats_image": InputPathType,
     "threshold": float,
     "mean_fa": InputPathType,
@@ -29,6 +28,7 @@ TbssFillParamsDictTagged = typing.TypedDict('TbssFillParamsDictTagged', {
     "output": str,
     "include_negative_flag": bool,
 })
+TbssFillParamsDict = _TbssFillParamsDictNoTag | TbssFillParamsDictTagged
 
 
 class TbssFillOutputs(typing.NamedTuple):

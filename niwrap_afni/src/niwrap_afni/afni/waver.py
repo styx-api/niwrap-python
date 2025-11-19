@@ -13,8 +13,7 @@ WAVER_METADATA = Metadata(
 )
 
 
-WaverParamsDict = typing.TypedDict('WaverParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/waver"]],
+_WaverParamsDictNoTag = typing.TypedDict('_WaverParamsDictNoTag', {
     "wav": bool,
     "gam": bool,
     "expr": typing.NotRequired[str | None],
@@ -63,6 +62,7 @@ WaverParamsDictTagged = typing.TypedDict('WaverParamsDictTagged', {
     "numout": typing.NotRequired[int | None],
     "ver_flag": bool,
 })
+WaverParamsDict = _WaverParamsDictNoTag | WaverParamsDictTagged
 
 
 class WaverOutputs(typing.NamedTuple):

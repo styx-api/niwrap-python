@@ -13,8 +13,7 @@ MYGET_METADATA = Metadata(
 )
 
 
-MygetParamsDict = typing.TypedDict('MygetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/myget"]],
+_MygetParamsDictNoTag = typing.TypedDict('_MygetParamsDictNoTag', {
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
     "output_file": str,
@@ -25,6 +24,7 @@ MygetParamsDictTagged = typing.TypedDict('MygetParamsDictTagged', {
     "url": str,
     "output_file": str,
 })
+MygetParamsDict = _MygetParamsDictNoTag | MygetParamsDictTagged
 
 
 class MygetOutputs(typing.NamedTuple):

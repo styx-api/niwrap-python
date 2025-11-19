@@ -13,8 +13,7 @@ DT_RECON_METADATA = Metadata(
 )
 
 
-DtReconParamsDict = typing.TypedDict('DtReconParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dt_recon"]],
+_DtReconParamsDictNoTag = typing.TypedDict('_DtReconParamsDictNoTag', {
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
     "subject_id": str,
@@ -55,6 +54,7 @@ DtReconParamsDictTagged = typing.TypedDict('DtReconParamsDictTagged', {
     "debug_flag": bool,
     "version_flag": bool,
 })
+DtReconParamsDict = _DtReconParamsDictNoTag | DtReconParamsDictTagged
 
 
 class DtReconOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FABBER_DWI_METADATA = Metadata(
 )
 
 
-FabberDwiParamsDict = typing.TypedDict('FabberDwiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dwi"]],
+_FabberDwiParamsDictNoTag = typing.TypedDict('_FabberDwiParamsDictNoTag', {
     "output_dir": str,
     "method": str,
     "model": str,
@@ -91,6 +90,7 @@ FabberDwiParamsDictTagged = typing.TypedDict('FabberDwiParamsDictTagged', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug_flag": bool,
 })
+FabberDwiParamsDict = _FabberDwiParamsDictNoTag | FabberDwiParamsDictTagged
 
 
 class FabberDwiOutputs(typing.NamedTuple):

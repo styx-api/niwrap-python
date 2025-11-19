@@ -13,8 +13,7 @@ FILM_CIFTI_METADATA = Metadata(
 )
 
 
-FilmCiftiParamsDict = typing.TypedDict('FilmCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/film_cifti"]],
+_FilmCiftiParamsDictNoTag = typing.TypedDict('_FilmCiftiParamsDictNoTag', {
     "input_filename": InputPathType,
     "basename": str,
     "left_surface": InputPathType,
@@ -37,6 +36,7 @@ FilmCiftiParamsDictTagged = typing.TypedDict('FilmCiftiParamsDictTagged', {
     "surface_extent": typing.NotRequired[float | None],
     "film_options": typing.NotRequired[str | None],
 })
+FilmCiftiParamsDict = _FilmCiftiParamsDictNoTag | FilmCiftiParamsDictTagged
 
 
 class FilmCiftiOutputs(typing.NamedTuple):

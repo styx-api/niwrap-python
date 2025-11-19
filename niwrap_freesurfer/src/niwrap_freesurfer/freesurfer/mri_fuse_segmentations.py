@@ -13,8 +13,7 @@ MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
 )
 
 
-MriFuseSegmentationsParamsDict = typing.TypedDict('MriFuseSegmentationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_segmentations"]],
+_MriFuseSegmentationsParamsDictNoTag = typing.TypedDict('_MriFuseSegmentationsParamsDictNoTag', {
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
     "norm_volumes": list[InputPathType],
@@ -33,6 +32,7 @@ MriFuseSegmentationsParamsDictTagged = typing.TypedDict('MriFuseSegmentationsPar
     "input_file": InputPathType,
     "output_file": str,
 })
+MriFuseSegmentationsParamsDict = _MriFuseSegmentationsParamsDictNoTag | MriFuseSegmentationsParamsDictTagged
 
 
 class MriFuseSegmentationsOutputs(typing.NamedTuple):

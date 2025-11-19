@@ -13,8 +13,7 @@ V_3D_TSPLIT4_D_METADATA = Metadata(
 )
 
 
-V3dTsplit4DParamsDict = typing.TypedDict('V3dTsplit4DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTsplit4D"]],
+_V3dTsplit4DParamsDictNoTag = typing.TypedDict('_V3dTsplit4DParamsDictNoTag', {
     "prefix": str,
     "infile": InputPathType,
     "keep_datum": bool,
@@ -27,6 +26,7 @@ V3dTsplit4DParamsDictTagged = typing.TypedDict('V3dTsplit4DParamsDictTagged', {
     "keep_datum": bool,
     "digits": typing.NotRequired[float | None],
 })
+V3dTsplit4DParamsDict = _V3dTsplit4DParamsDictNoTag | V3dTsplit4DParamsDictTagged
 
 
 class V3dTsplit4DOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 )
 
 
-CiftiParcelMappingToLabelParamsDict = typing.TypedDict('CiftiParcelMappingToLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcel-mapping-to-label"]],
+_CiftiParcelMappingToLabelParamsDictNoTag = typing.TypedDict('_CiftiParcelMappingToLabelParamsDictNoTag', {
     "dlabel-out": str,
     "cifti-in": InputPathType,
     "direction": str,
@@ -26,6 +25,7 @@ CiftiParcelMappingToLabelParamsDictTagged = typing.TypedDict('CiftiParcelMapping
     "direction": str,
     "template-cifti": InputPathType,
 })
+CiftiParcelMappingToLabelParamsDict = _CiftiParcelMappingToLabelParamsDictNoTag | CiftiParcelMappingToLabelParamsDictTagged
 
 
 class CiftiParcelMappingToLabelOutputs(typing.NamedTuple):

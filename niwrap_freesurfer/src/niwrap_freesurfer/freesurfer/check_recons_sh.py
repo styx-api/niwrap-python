@@ -13,14 +13,14 @@ CHECK_RECONS_SH_METADATA = Metadata(
 )
 
 
-CheckReconsShParamsDict = typing.TypedDict('CheckReconsShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/check_recons.sh"]],
+_CheckReconsShParamsDictNoTag = typing.TypedDict('_CheckReconsShParamsDictNoTag', {
     "subject_directory": typing.NotRequired[str | None],
 })
 CheckReconsShParamsDictTagged = typing.TypedDict('CheckReconsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/check_recons.sh"],
     "subject_directory": typing.NotRequired[str | None],
 })
+CheckReconsShParamsDict = _CheckReconsShParamsDictNoTag | CheckReconsShParamsDictTagged
 
 
 class CheckReconsShOutputs(typing.NamedTuple):

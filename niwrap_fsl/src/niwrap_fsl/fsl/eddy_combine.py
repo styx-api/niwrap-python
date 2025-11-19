@@ -13,8 +13,7 @@ EDDY_COMBINE_METADATA = Metadata(
 )
 
 
-EddyCombineParamsDict = typing.TypedDict('EddyCombineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_combine"]],
+_EddyCombineParamsDictNoTag = typing.TypedDict('_EddyCombineParamsDictNoTag', {
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
     "pos_bvecs": InputPathType,
@@ -39,6 +38,7 @@ EddyCombineParamsDictTagged = typing.TypedDict('EddyCombineParamsDictTagged', {
     "output_path": str,
     "only_matched_flag": int,
 })
+EddyCombineParamsDict = _EddyCombineParamsDictNoTag | EddyCombineParamsDictTagged
 
 
 class EddyCombineOutputs(typing.NamedTuple):

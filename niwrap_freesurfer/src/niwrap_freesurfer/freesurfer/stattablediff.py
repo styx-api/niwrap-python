@@ -13,8 +13,7 @@ STATTABLEDIFF_METADATA = Metadata(
 )
 
 
-StattablediffParamsDict = typing.TypedDict('StattablediffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/stattablediff"]],
+_StattablediffParamsDictNoTag = typing.TypedDict('_StattablediffParamsDictNoTag', {
     "t1": InputPathType,
     "t2": InputPathType,
     "output": str,
@@ -43,6 +42,7 @@ StattablediffParamsDictTagged = typing.TypedDict('StattablediffParamsDictTagged'
     "diff_subjects": bool,
     "noreplace53": bool,
 })
+StattablediffParamsDict = _StattablediffParamsDictNoTag | StattablediffParamsDictTagged
 
 
 class StattablediffOutputs(typing.NamedTuple):

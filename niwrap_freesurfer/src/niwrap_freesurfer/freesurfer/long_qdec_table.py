@@ -13,8 +13,7 @@ LONG_QDEC_TABLE_METADATA = Metadata(
 )
 
 
-LongQdecTableParamsDict = typing.TypedDict('LongQdecTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_qdec_table"]],
+_LongQdecTableParamsDictNoTag = typing.TypedDict('_LongQdecTableParamsDictNoTag', {
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
     "cross_flag": bool,
@@ -29,6 +28,7 @@ LongQdecTableParamsDictTagged = typing.TypedDict('LongQdecTableParamsDictTagged'
     "sort": typing.NotRequired[str | None],
     "out": typing.NotRequired[str | None],
 })
+LongQdecTableParamsDict = _LongQdecTableParamsDictNoTag | LongQdecTableParamsDictTagged
 
 
 class LongQdecTableOutputs(typing.NamedTuple):

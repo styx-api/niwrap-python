@@ -12,8 +12,7 @@ VOLUME_STATS_METADATA = Metadata(
 )
 
 
-VolumeStatsRoiParamsDict = typing.TypedDict('VolumeStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_VolumeStatsRoiParamsDictNoTag = typing.TypedDict('_VolumeStatsRoiParamsDictNoTag', {
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
@@ -22,10 +21,10 @@ VolumeStatsRoiParamsDictTagged = typing.TypedDict('VolumeStatsRoiParamsDictTagge
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
+VolumeStatsRoiParamsDict = _VolumeStatsRoiParamsDictNoTag | VolumeStatsRoiParamsDictTagged
 
 
-VolumeStatsParamsDict = typing.TypedDict('VolumeStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-stats"]],
+_VolumeStatsParamsDictNoTag = typing.TypedDict('_VolumeStatsParamsDictNoTag', {
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "subvolume": typing.NotRequired[str | None],
@@ -42,6 +41,7 @@ VolumeStatsParamsDictTagged = typing.TypedDict('VolumeStatsParamsDictTagged', {
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
+VolumeStatsParamsDict = _VolumeStatsParamsDictNoTag | VolumeStatsParamsDictTagged
 
 
 def volume_stats_roi(

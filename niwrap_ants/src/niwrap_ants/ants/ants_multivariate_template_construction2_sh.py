@@ -13,8 +13,7 @@ ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
 )
 
 
-AntsMultivariateTemplateConstruction2ShParamsDict = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsMultivariateTemplateConstruction2.sh"]],
+_AntsMultivariateTemplateConstruction2ShParamsDictNoTag = typing.TypedDict('_AntsMultivariateTemplateConstruction2ShParamsDictNoTag', {
     "dimension": typing.Literal[2, 3, 4],
     "output_prefix": typing.NotRequired[str | None],
     "image_statistic": typing.NotRequired[typing.Literal[0, 1, 2] | None],
@@ -73,6 +72,7 @@ AntsMultivariateTemplateConstruction2ShParamsDictTagged = typing.TypedDict('Ants
     "target_volume": typing.NotRequired[list[InputPathType] | None],
     "input_images": list[InputPathType],
 })
+AntsMultivariateTemplateConstruction2ShParamsDict = _AntsMultivariateTemplateConstruction2ShParamsDictNoTag | AntsMultivariateTemplateConstruction2ShParamsDictTagged
 
 
 class AntsMultivariateTemplateConstruction2ShOutputs(typing.NamedTuple):

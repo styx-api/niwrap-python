@@ -13,8 +13,7 @@ HIST2PROB_METADATA = Metadata(
 )
 
 
-Hist2probParamsDict = typing.TypedDict('Hist2probParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/hist2prob"]],
+_Hist2probParamsDictNoTag = typing.TypedDict('_Hist2probParamsDictNoTag', {
     "image": InputPathType,
     "size": int,
     "low_threshold": float,
@@ -27,6 +26,7 @@ Hist2probParamsDictTagged = typing.TypedDict('Hist2probParamsDictTagged', {
     "low_threshold": float,
     "high_threshold": float,
 })
+Hist2probParamsDict = _Hist2probParamsDictNoTag | Hist2probParamsDictTagged
 
 
 class Hist2probOutputs(typing.NamedTuple):

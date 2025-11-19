@@ -13,14 +13,14 @@ HELP_FORMAT_METADATA = Metadata(
 )
 
 
-HelpFormatParamsDict = typing.TypedDict('HelpFormatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/help_format"]],
+_HelpFormatParamsDictNoTag = typing.TypedDict('_HelpFormatParamsDictNoTag', {
     "stdin": str,
 })
 HelpFormatParamsDictTagged = typing.TypedDict('HelpFormatParamsDictTagged', {
     "@type": typing.Literal["afni/help_format"],
     "stdin": str,
 })
+HelpFormatParamsDict = _HelpFormatParamsDictNoTag | HelpFormatParamsDictTagged
 
 
 class HelpFormatOutputs(typing.NamedTuple):

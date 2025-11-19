@@ -13,8 +13,7 @@ FROM3D_METADATA = Metadata(
 )
 
 
-From3dParamsDict = typing.TypedDict('From3dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/from3d"]],
+_From3dParamsDictNoTag = typing.TypedDict('_From3dParamsDictNoTag', {
     "verbose": bool,
     "nsize": bool,
     "raw": bool,
@@ -39,6 +38,7 @@ From3dParamsDictTagged = typing.TypedDict('From3dParamsDictTagged', {
     "input": InputPathType,
     "prefix": str,
 })
+From3dParamsDict = _From3dParamsDictNoTag | From3dParamsDictTagged
 
 
 class From3dOutputs(typing.NamedTuple):

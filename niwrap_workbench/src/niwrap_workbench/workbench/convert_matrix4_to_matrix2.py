@@ -12,8 +12,7 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
 )
 
 
-ConvertMatrix4ToMatrix2IndividualFibersParamsDict = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["individual-fibers"]],
+_ConvertMatrix4ToMatrix2IndividualFibersParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToMatrix2IndividualFibersParamsDictNoTag', {
     "fiber-1": str,
     "fiber-2": str,
     "fiber-3": str,
@@ -24,10 +23,10 @@ ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged = typing.TypedDict('Conv
     "fiber-2": str,
     "fiber-3": str,
 })
+ConvertMatrix4ToMatrix2IndividualFibersParamsDict = _ConvertMatrix4ToMatrix2IndividualFibersParamsDictNoTag | ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged
 
 
-ConvertMatrix4ToMatrix2ParamsDict = typing.TypedDict('ConvertMatrix4ToMatrix2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-matrix2"]],
+_ConvertMatrix4ToMatrix2ParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToMatrix2ParamsDictNoTag', {
     "counts-out": str,
     "distance-out": typing.NotRequired[str | None],
     "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
@@ -40,6 +39,7 @@ ConvertMatrix4ToMatrix2ParamsDictTagged = typing.TypedDict('ConvertMatrix4ToMatr
     "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
     "matrix4-wbsparse": str,
 })
+ConvertMatrix4ToMatrix2ParamsDict = _ConvertMatrix4ToMatrix2ParamsDictNoTag | ConvertMatrix4ToMatrix2ParamsDictTagged
 
 
 class ConvertMatrix4ToMatrix2IndividualFibersOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
 )
 
 
-ExtractSegWaveformParamsDict = typing.TypedDict('ExtractSegWaveformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/extract_seg_waveform"]],
+_ExtractSegWaveformParamsDictNoTag = typing.TypedDict('_ExtractSegWaveformParamsDictNoTag', {
     "seg_file": InputPathType,
     "seg_indices": list[float],
     "input_volume": InputPathType,
@@ -35,6 +34,7 @@ ExtractSegWaveformParamsDictTagged = typing.TypedDict('ExtractSegWaveformParamsD
     "demean_flag": bool,
     "output_file": str,
 })
+ExtractSegWaveformParamsDict = _ExtractSegWaveformParamsDictNoTag | ExtractSegWaveformParamsDictTagged
 
 
 class ExtractSegWaveformOutputs(typing.NamedTuple):

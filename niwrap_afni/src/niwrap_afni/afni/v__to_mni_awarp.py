@@ -13,8 +13,7 @@ V__TO_MNI_AWARP_METADATA = Metadata(
 )
 
 
-VToMniAwarpParamsDict = typing.TypedDict('VToMniAwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Awarp"]],
+_VToMniAwarpParamsDictNoTag = typing.TypedDict('_VToMniAwarpParamsDictNoTag', {
     "directory": str,
     "datasets": list[InputPathType],
 })
@@ -23,6 +22,7 @@ VToMniAwarpParamsDictTagged = typing.TypedDict('VToMniAwarpParamsDictTagged', {
     "directory": str,
     "datasets": list[InputPathType],
 })
+VToMniAwarpParamsDict = _VToMniAwarpParamsDictNoTag | VToMniAwarpParamsDictTagged
 
 
 class VToMniAwarpOutputs(typing.NamedTuple):

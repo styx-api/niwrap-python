@@ -13,8 +13,7 @@ MRI_CA_REGISTER_METADATA = Metadata(
 )
 
 
-MriCaRegisterParamsDict = typing.TypedDict('MriCaRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_register"]],
+_MriCaRegisterParamsDictNoTag = typing.TypedDict('_MriCaRegisterParamsDictNoTag', {
     "input_volume": InputPathType,
     "template": InputPathType,
     "output_volume": str,
@@ -97,6 +96,7 @@ MriCaRegisterParamsDictTagged = typing.TypedDict('MriCaRegisterParamsDictTagged'
     "second_pass_renorm": bool,
     "threads": typing.NotRequired[float | None],
 })
+MriCaRegisterParamsDict = _MriCaRegisterParamsDictNoTag | MriCaRegisterParamsDictTagged
 
 
 class MriCaRegisterOutputs(typing.NamedTuple):

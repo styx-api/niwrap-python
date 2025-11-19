@@ -12,8 +12,7 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
 )
 
 
-VolumeRemoveIslandsParamsDict = typing.TypedDict('VolumeRemoveIslandsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-remove-islands"]],
+_VolumeRemoveIslandsParamsDictNoTag = typing.TypedDict('_VolumeRemoveIslandsParamsDictNoTag', {
     "volume-out": str,
     "volume-in": InputPathType,
 })
@@ -22,6 +21,7 @@ VolumeRemoveIslandsParamsDictTagged = typing.TypedDict('VolumeRemoveIslandsParam
     "volume-out": str,
     "volume-in": InputPathType,
 })
+VolumeRemoveIslandsParamsDict = _VolumeRemoveIslandsParamsDictNoTag | VolumeRemoveIslandsParamsDictTagged
 
 
 class VolumeRemoveIslandsOutputs(typing.NamedTuple):

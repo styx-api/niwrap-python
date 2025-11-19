@@ -13,8 +13,7 @@ XCORR_METADATA = Metadata(
 )
 
 
-XcorrParamsDict = typing.TypedDict('XcorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xcorr"]],
+_XcorrParamsDictNoTag = typing.TypedDict('_XcorrParamsDictNoTag', {
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,
@@ -31,6 +30,7 @@ XcorrParamsDictTagged = typing.TypedDict('XcorrParamsDictTagged', {
     "tmp_dir": typing.NotRequired[str | None],
     "no_cleanup": bool,
 })
+XcorrParamsDict = _XcorrParamsDictNoTag | XcorrParamsDictTagged
 
 
 class XcorrOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ANTSINTEGRATE_VECTOR_FIELD_METADATA = Metadata(
 )
 
 
-AntsintegrateVectorFieldParamsDict = typing.TypedDict('AntsintegrateVectorFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ANTSIntegrateVectorField"]],
+_AntsintegrateVectorFieldParamsDictNoTag = typing.TypedDict('_AntsintegrateVectorFieldParamsDictNoTag', {
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
     "fibers_output": str,
@@ -27,6 +26,7 @@ AntsintegrateVectorFieldParamsDictTagged = typing.TypedDict('AntsintegrateVector
     "fibers_output": str,
     "length_image_output": str,
 })
+AntsintegrateVectorFieldParamsDict = _AntsintegrateVectorFieldParamsDictNoTag | AntsintegrateVectorFieldParamsDictTagged
 
 
 class AntsintegrateVectorFieldOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_THREETO_RGB_METADATA = Metadata(
 )
 
 
-V3dThreetoRgbParamsDict = typing.TypedDict('V3dThreetoRgbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dThreetoRGB"]],
+_V3dThreetoRgbParamsDictNoTag = typing.TypedDict('_V3dThreetoRgbParamsDictNoTag', {
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -35,6 +34,7 @@ V3dThreetoRgbParamsDictTagged = typing.TypedDict('V3dThreetoRgbParamsDictTagged'
     "input_dataset2": typing.NotRequired[InputPathType | None],
     "input_dataset3": typing.NotRequired[InputPathType | None],
 })
+V3dThreetoRgbParamsDict = _V3dThreetoRgbParamsDictNoTag | V3dThreetoRgbParamsDictTagged
 
 
 class V3dThreetoRgbOutputs(typing.NamedTuple):

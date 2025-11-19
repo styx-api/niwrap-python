@@ -13,8 +13,7 @@ CONCAT_BVARS_METADATA = Metadata(
 )
 
 
-ConcatBvarsParamsDict = typing.TypedDict('ConcatBvarsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/concat_bvars"]],
+_ConcatBvarsParamsDictNoTag = typing.TypedDict('_ConcatBvarsParamsDictNoTag', {
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })
@@ -23,6 +22,7 @@ ConcatBvarsParamsDictTagged = typing.TypedDict('ConcatBvarsParamsDictTagged', {
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })
+ConcatBvarsParamsDict = _ConcatBvarsParamsDictNoTag | ConcatBvarsParamsDictTagged
 
 
 class ConcatBvarsOutputs(typing.NamedTuple):

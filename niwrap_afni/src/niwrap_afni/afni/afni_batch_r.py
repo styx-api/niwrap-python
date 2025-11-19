@@ -13,8 +13,7 @@ AFNI_BATCH_R_METADATA = Metadata(
 )
 
 
-AfniBatchRParamsDict = typing.TypedDict('AfniBatchRParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/AFNI_Batch_R"]],
+_AfniBatchRParamsDictNoTag = typing.TypedDict('_AfniBatchRParamsDictNoTag', {
     "no_restore": bool,
     "save_workspace": bool,
     "no_readline": bool,
@@ -29,6 +28,7 @@ AfniBatchRParamsDictTagged = typing.TypedDict('AfniBatchRParamsDictTagged', {
     "vanilla_mode": bool,
     "help": bool,
 })
+AfniBatchRParamsDict = _AfniBatchRParamsDictNoTag | AfniBatchRParamsDictTagged
 
 
 class AfniBatchROutputs(typing.NamedTuple):

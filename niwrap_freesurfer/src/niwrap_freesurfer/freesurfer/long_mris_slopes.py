@@ -13,8 +13,7 @@ LONG_MRIS_SLOPES_METADATA = Metadata(
 )
 
 
-LongMrisSlopesParamsDict = typing.TypedDict('LongMrisSlopesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_mris_slopes"]],
+_LongMrisSlopesParamsDictNoTag = typing.TypedDict('_LongMrisSlopesParamsDictNoTag', {
     "qdec": InputPathType,
     "meas": str,
     "hemi": str,
@@ -87,6 +86,7 @@ LongMrisSlopesParamsDictTagged = typing.TypedDict('LongMrisSlopesParamsDictTagge
     "stack_spc": typing.NotRequired[str | None],
     "stack_resid": typing.NotRequired[str | None],
 })
+LongMrisSlopesParamsDict = _LongMrisSlopesParamsDictNoTag | LongMrisSlopesParamsDictTagged
 
 
 class LongMrisSlopesOutputs(typing.NamedTuple):

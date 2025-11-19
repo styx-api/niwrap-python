@@ -12,8 +12,7 @@ VOLUME_REDUCE_METADATA = Metadata(
 )
 
 
-VolumeReduceExcludeOutliersParamsDict = typing.TypedDict('VolumeReduceExcludeOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+_VolumeReduceExcludeOutliersParamsDictNoTag = typing.TypedDict('_VolumeReduceExcludeOutliersParamsDictNoTag', {
     "sigma-below": float,
     "sigma-above": float,
 })
@@ -22,10 +21,10 @@ VolumeReduceExcludeOutliersParamsDictTagged = typing.TypedDict('VolumeReduceExcl
     "sigma-below": float,
     "sigma-above": float,
 })
+VolumeReduceExcludeOutliersParamsDict = _VolumeReduceExcludeOutliersParamsDictNoTag | VolumeReduceExcludeOutliersParamsDictTagged
 
 
-VolumeReduceParamsDict = typing.TypedDict('VolumeReduceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-reduce"]],
+_VolumeReduceParamsDictNoTag = typing.TypedDict('_VolumeReduceParamsDictNoTag', {
     "volume-out": str,
     "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
@@ -40,6 +39,7 @@ VolumeReduceParamsDictTagged = typing.TypedDict('VolumeReduceParamsDictTagged', 
     "volume-in": InputPathType,
     "operation": str,
 })
+VolumeReduceParamsDict = _VolumeReduceParamsDictNoTag | VolumeReduceParamsDictTagged
 
 
 def volume_reduce_exclude_outliers(

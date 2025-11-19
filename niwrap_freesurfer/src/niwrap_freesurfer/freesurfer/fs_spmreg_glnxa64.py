@@ -13,8 +13,7 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 )
 
 
-FsSpmregGlnxa64ParamsDict = typing.TypedDict('FsSpmregGlnxa64ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_spmreg.glnxa64"]],
+_FsSpmregGlnxa64ParamsDictNoTag = typing.TypedDict('_FsSpmregGlnxa64ParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_matrix": str,
 })
@@ -23,6 +22,7 @@ FsSpmregGlnxa64ParamsDictTagged = typing.TypedDict('FsSpmregGlnxa64ParamsDictTag
     "input_volume": InputPathType,
     "output_matrix": str,
 })
+FsSpmregGlnxa64ParamsDict = _FsSpmregGlnxa64ParamsDictNoTag | FsSpmregGlnxa64ParamsDictTagged
 
 
 class FsSpmregGlnxa64Outputs(typing.NamedTuple):

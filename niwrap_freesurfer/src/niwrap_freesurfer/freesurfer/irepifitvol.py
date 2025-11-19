@@ -13,8 +13,7 @@ IREPIFITVOL_METADATA = Metadata(
 )
 
 
-IrepifitvolParamsDict = typing.TypedDict('IrepifitvolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol"]],
+_IrepifitvolParamsDictNoTag = typing.TypedDict('_IrepifitvolParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ IrepifitvolParamsDictTagged = typing.TypedDict('IrepifitvolParamsDictTagged', {
     "input_file": InputPathType,
     "output_file": str,
 })
+IrepifitvolParamsDict = _IrepifitvolParamsDictNoTag | IrepifitvolParamsDictTagged
 
 
 class IrepifitvolOutputs(typing.NamedTuple):

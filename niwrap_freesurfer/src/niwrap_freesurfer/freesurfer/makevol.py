@@ -13,8 +13,7 @@ MAKEVOL_METADATA = Metadata(
 )
 
 
-MakevolParamsDict = typing.TypedDict('MakevolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/makevol"]],
+_MakevolParamsDictNoTag = typing.TypedDict('_MakevolParamsDictNoTag', {
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
     "height": typing.NotRequired[int | None],
@@ -35,6 +34,7 @@ MakevolParamsDictTagged = typing.TypedDict('MakevolParamsDictTagged', {
     "sizez": typing.NotRequired[float | None],
     "set_method": typing.NotRequired[str | None],
 })
+MakevolParamsDict = _MakevolParamsDictNoTag | MakevolParamsDictTagged
 
 
 class MakevolOutputs(typing.NamedTuple):

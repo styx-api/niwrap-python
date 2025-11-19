@@ -13,28 +13,27 @@ MASKFILTER_METADATA = Metadata(
 )
 
 
-MaskfilterVariousStringParamsDict = typing.TypedDict('MaskfilterVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MaskfilterVariousStringParamsDictNoTag = typing.TypedDict('_MaskfilterVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MaskfilterVariousStringParamsDictTagged = typing.TypedDict('MaskfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MaskfilterVariousStringParamsDict = _MaskfilterVariousStringParamsDictNoTag | MaskfilterVariousStringParamsDictTagged
 
 
-MaskfilterVariousFileParamsDict = typing.TypedDict('MaskfilterVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MaskfilterVariousFileParamsDictNoTag = typing.TypedDict('_MaskfilterVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MaskfilterVariousFileParamsDictTagged = typing.TypedDict('MaskfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MaskfilterVariousFileParamsDict = _MaskfilterVariousFileParamsDictNoTag | MaskfilterVariousFileParamsDictTagged
 
 
-MaskfilterConfigParamsDict = typing.TypedDict('MaskfilterConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MaskfilterConfigParamsDictNoTag = typing.TypedDict('_MaskfilterConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -43,10 +42,10 @@ MaskfilterConfigParamsDictTagged = typing.TypedDict('MaskfilterConfigParamsDictT
     "key": str,
     "value": str,
 })
+MaskfilterConfigParamsDict = _MaskfilterConfigParamsDictNoTag | MaskfilterConfigParamsDictTagged
 
 
-MaskfilterParamsDict = typing.TypedDict('MaskfilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/maskfilter"]],
+_MaskfilterParamsDictNoTag = typing.TypedDict('_MaskfilterParamsDictNoTag', {
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
     "largest": bool,
@@ -87,6 +86,7 @@ MaskfilterParamsDictTagged = typing.TypedDict('MaskfilterParamsDictTagged', {
     "filter": str,
     "output": str,
 })
+MaskfilterParamsDict = _MaskfilterParamsDictNoTag | MaskfilterParamsDictTagged
 
 
 def maskfilter_strides_cargs_dyn_fn(

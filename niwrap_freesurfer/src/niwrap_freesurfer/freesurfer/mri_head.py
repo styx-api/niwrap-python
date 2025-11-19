@@ -13,8 +13,7 @@ MRI_HEAD_METADATA = Metadata(
 )
 
 
-MriHeadParamsDict = typing.TypedDict('MriHeadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_head"]],
+_MriHeadParamsDictNoTag = typing.TypedDict('_MriHeadParamsDictNoTag', {
     "identify": bool,
     "read": bool,
     "filename": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ MriHeadParamsDictTagged = typing.TypedDict('MriHeadParamsDictTagged', {
     "usage": bool,
     "question_mark_help": bool,
 })
+MriHeadParamsDict = _MriHeadParamsDictNoTag | MriHeadParamsDictTagged
 
 
 class MriHeadOutputs(typing.NamedTuple):

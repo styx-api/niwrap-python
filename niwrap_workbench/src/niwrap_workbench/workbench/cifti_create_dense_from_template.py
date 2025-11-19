@@ -12,8 +12,7 @@ CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseFromTemplateSeriesParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["series"]],
+_CiftiCreateDenseFromTemplateSeriesParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateSeriesParamsDictNoTag', {
     "step": float,
     "start": float,
     "unit": typing.NotRequired[str | None],
@@ -24,10 +23,10 @@ CiftiCreateDenseFromTemplateSeriesParamsDictTagged = typing.TypedDict('CiftiCrea
     "start": float,
     "unit": typing.NotRequired[str | None],
 })
+CiftiCreateDenseFromTemplateSeriesParamsDict = _CiftiCreateDenseFromTemplateSeriesParamsDictNoTag | CiftiCreateDenseFromTemplateSeriesParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateVolumeAllParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-all"]],
+_CiftiCreateDenseFromTemplateVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateVolumeAllParamsDictNoTag', {
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
@@ -36,20 +35,20 @@ CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged = typing.TypedDict('CiftiC
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
+CiftiCreateDenseFromTemplateVolumeAllParamsDict = _CiftiCreateDenseFromTemplateVolumeAllParamsDictNoTag | CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateCiftiParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiCreateDenseFromTemplateCiftiParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
 })
 CiftiCreateDenseFromTemplateCiftiParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
+CiftiCreateDenseFromTemplateCiftiParamsDict = _CiftiCreateDenseFromTemplateCiftiParamsDictNoTag | CiftiCreateDenseFromTemplateCiftiParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateMetricParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_CiftiCreateDenseFromTemplateMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateMetricParamsDictNoTag', {
     "structure": str,
     "metric-in": InputPathType,
 })
@@ -58,10 +57,10 @@ CiftiCreateDenseFromTemplateMetricParamsDictTagged = typing.TypedDict('CiftiCrea
     "structure": str,
     "metric-in": InputPathType,
 })
+CiftiCreateDenseFromTemplateMetricParamsDict = _CiftiCreateDenseFromTemplateMetricParamsDictNoTag | CiftiCreateDenseFromTemplateMetricParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateLabelParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_CiftiCreateDenseFromTemplateLabelParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateLabelParamsDictNoTag', {
     "structure": str,
     "label-in": InputPathType,
 })
@@ -70,10 +69,10 @@ CiftiCreateDenseFromTemplateLabelParamsDictTagged = typing.TypedDict('CiftiCreat
     "structure": str,
     "label-in": InputPathType,
 })
+CiftiCreateDenseFromTemplateLabelParamsDict = _CiftiCreateDenseFromTemplateLabelParamsDictNoTag | CiftiCreateDenseFromTemplateLabelParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateVolumeParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiCreateDenseFromTemplateVolumeParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateVolumeParamsDictNoTag', {
     "structure": str,
     "volume-in": InputPathType,
     "from-cropped": bool,
@@ -84,10 +83,10 @@ CiftiCreateDenseFromTemplateVolumeParamsDictTagged = typing.TypedDict('CiftiCrea
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
+CiftiCreateDenseFromTemplateVolumeParamsDict = _CiftiCreateDenseFromTemplateVolumeParamsDictNoTag | CiftiCreateDenseFromTemplateVolumeParamsDictTagged
 
 
-CiftiCreateDenseFromTemplateParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-from-template"]],
+_CiftiCreateDenseFromTemplateParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateParamsDictNoTag', {
     "cifti-out": str,
     "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParamsDict | None],
     "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParamsDict | None],
@@ -110,6 +109,7 @@ CiftiCreateDenseFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateDens
     "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None],
     "template-cifti": InputPathType,
 })
+CiftiCreateDenseFromTemplateParamsDict = _CiftiCreateDenseFromTemplateParamsDictNoTag | CiftiCreateDenseFromTemplateParamsDictTagged
 
 
 def cifti_create_dense_from_template_series(

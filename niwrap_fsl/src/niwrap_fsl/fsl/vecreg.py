@@ -13,8 +13,7 @@ VECREG_METADATA = Metadata(
 )
 
 
-VecregParamsDict = typing.TypedDict('VecregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/vecreg"]],
+_VecregParamsDictNoTag = typing.TypedDict('_VecregParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "reference_volume": InputPathType,
@@ -41,6 +40,7 @@ VecregParamsDictTagged = typing.TypedDict('VecregParamsDictTagged', {
     "brain_mask": typing.NotRequired[InputPathType | None],
     "ref_brain_mask": typing.NotRequired[InputPathType | None],
 })
+VecregParamsDict = _VecregParamsDictNoTag | VecregParamsDictTagged
 
 
 class VecregOutputs(typing.NamedTuple):

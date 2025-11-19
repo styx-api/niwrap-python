@@ -13,8 +13,7 @@ MULTIPLY_IMAGES_METADATA = Metadata(
 )
 
 
-MultiplyImagesParamsDict = typing.TypedDict('MultiplyImagesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/MultiplyImages"]],
+_MultiplyImagesParamsDictNoTag = typing.TypedDict('_MultiplyImagesParamsDictNoTag', {
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
     "second_input": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ MultiplyImagesParamsDictTagged = typing.TypedDict('MultiplyImagesParamsDictTagge
     "output_product_image": str,
     "num_threads": typing.NotRequired[int | None],
 })
+MultiplyImagesParamsDict = _MultiplyImagesParamsDictNoTag | MultiplyImagesParamsDictTagged
 
 
 class MultiplyImagesOutputs(typing.NamedTuple):

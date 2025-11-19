@@ -13,8 +13,7 @@ MRIS_SURFACE_STATS_METADATA = Metadata(
 )
 
 
-MrisSurfaceStatsParamsDict = typing.TypedDict('MrisSurfaceStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_stats"]],
+_MrisSurfaceStatsParamsDictNoTag = typing.TypedDict('_MrisSurfaceStatsParamsDictNoTag', {
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
     "mask_name": typing.NotRequired[InputPathType | None],
@@ -45,6 +44,7 @@ MrisSurfaceStatsParamsDictTagged = typing.TypedDict('MrisSurfaceStatsParamsDictT
     "debug": typing.NotRequired[float | None],
     "data_files": list[InputPathType],
 })
+MrisSurfaceStatsParamsDict = _MrisSurfaceStatsParamsDictNoTag | MrisSurfaceStatsParamsDictTagged
 
 
 class MrisSurfaceStatsOutputs(typing.NamedTuple):

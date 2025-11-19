@@ -13,8 +13,7 @@ V_1DFFT_METADATA = Metadata(
 )
 
 
-V1dfftParamsDict = typing.TypedDict('V1dfftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dfft"]],
+_V1dfftParamsDictNoTag = typing.TypedDict('_V1dfftParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "ignore": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ V1dfftParamsDictTagged = typing.TypedDict('V1dfftParamsDictTagged', {
     "hilbert": bool,
     "nodetrend": bool,
 })
+V1dfftParamsDict = _V1dfftParamsDictNoTag | V1dfftParamsDictTagged
 
 
 class V1dfftOutputs(typing.NamedTuple):

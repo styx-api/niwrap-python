@@ -13,8 +13,7 @@ MAP_TO_BASE_METADATA = Metadata(
 )
 
 
-MapToBaseParamsDict = typing.TypedDict('MapToBaseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/map_to_base"]],
+_MapToBaseParamsDictNoTag = typing.TypedDict('_MapToBaseParamsDictNoTag', {
     "baseid": str,
     "tpid": str,
     "input_image": str,
@@ -29,6 +28,7 @@ MapToBaseParamsDictTagged = typing.TypedDict('MapToBaseParamsDictTagged', {
     "resample_type": str,
     "cross": typing.NotRequired[str | None],
 })
+MapToBaseParamsDict = _MapToBaseParamsDictNoTag | MapToBaseParamsDictTagged
 
 
 class MapToBaseOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ IMAGE_SET_STATISTICS_METADATA = Metadata(
 )
 
 
-ImageSetStatisticsParamsDict = typing.TypedDict('ImageSetStatisticsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ImageSetStatistics"]],
+_ImageSetStatisticsParamsDictNoTag = typing.TypedDict('_ImageSetStatisticsParamsDictNoTag', {
     "image_dimension": int,
     "controls_list": InputPathType,
     "output_image": str,
@@ -31,6 +30,7 @@ ImageSetStatisticsParamsDictTagged = typing.TypedDict('ImageSetStatisticsParamsD
     "roi": typing.NotRequired[InputPathType | None],
     "imagelist2": typing.NotRequired[InputPathType | None],
 })
+ImageSetStatisticsParamsDict = _ImageSetStatisticsParamsDictNoTag | ImageSetStatisticsParamsDictTagged
 
 
 class ImageSetStatisticsOutputs(typing.NamedTuple):

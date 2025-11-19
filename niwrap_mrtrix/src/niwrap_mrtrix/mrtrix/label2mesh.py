@@ -13,8 +13,7 @@ LABEL2MESH_METADATA = Metadata(
 )
 
 
-Label2meshConfigParamsDict = typing.TypedDict('Label2meshConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Label2meshConfigParamsDictNoTag = typing.TypedDict('_Label2meshConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Label2meshConfigParamsDictTagged = typing.TypedDict('Label2meshConfigParamsDictT
     "key": str,
     "value": str,
 })
+Label2meshConfigParamsDict = _Label2meshConfigParamsDictNoTag | Label2meshConfigParamsDictTagged
 
 
-Label2meshParamsDict = typing.TypedDict('Label2meshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/label2mesh"]],
+_Label2meshParamsDictNoTag = typing.TypedDict('_Label2meshParamsDictNoTag', {
     "blocky": bool,
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ Label2meshParamsDictTagged = typing.TypedDict('Label2meshParamsDictTagged', {
     "nodes_in": InputPathType,
     "mesh_out": str,
 })
+Label2meshParamsDict = _Label2meshParamsDictNoTag | Label2meshParamsDictTagged
 
 
 def label2mesh_config(

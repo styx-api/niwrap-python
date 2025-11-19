@@ -13,8 +13,7 @@ EXTRACTTXT_METADATA = Metadata(
 )
 
 
-ExtracttxtParamsDict = typing.TypedDict('ExtracttxtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/extracttxt"]],
+_ExtracttxtParamsDictNoTag = typing.TypedDict('_ExtracttxtParamsDictNoTag', {
     "search_word": str,
     "file": InputPathType,
     "num_trailing_lines": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ ExtracttxtParamsDictTagged = typing.TypedDict('ExtracttxtParamsDictTagged', {
     "num_trailing_lines": typing.NotRequired[float | None],
     "relative_start": typing.NotRequired[float | None],
 })
+ExtracttxtParamsDict = _ExtracttxtParamsDictNoTag | ExtracttxtParamsDictTagged
 
 
 class ExtracttxtOutputs(typing.NamedTuple):

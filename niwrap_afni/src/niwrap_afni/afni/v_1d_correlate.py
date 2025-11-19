@@ -13,8 +13,7 @@ V_1D_CORRELATE_METADATA = Metadata(
 )
 
 
-V1dCorrelateParamsDict = typing.TypedDict('V1dCorrelateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dCorrelate"]],
+_V1dCorrelateParamsDictNoTag = typing.TypedDict('_V1dCorrelateParamsDictNoTag', {
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ V1dCorrelateParamsDictTagged = typing.TypedDict('V1dCorrelateParamsDictTagged', 
     "quadrant": bool,
     "input_files": list[InputPathType],
 })
+V1dCorrelateParamsDict = _V1dCorrelateParamsDictNoTag | V1dCorrelateParamsDictTagged
 
 
 class V1dCorrelateOutputs(typing.NamedTuple):

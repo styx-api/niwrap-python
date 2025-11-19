@@ -13,8 +13,7 @@ MRI_SBBR_METADATA = Metadata(
 )
 
 
-MriSbbrParamsDict = typing.TypedDict('MriSbbrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sbbr"]],
+_MriSbbrParamsDictNoTag = typing.TypedDict('_MriSbbrParamsDictNoTag', {
     "template_volume": InputPathType,
     "surface_file": InputPathType,
     "init_reg_file": InputPathType,
@@ -67,6 +66,7 @@ MriSbbrParamsDictTagged = typing.TypedDict('MriSbbrParamsDictTagged', {
     "diagnostic": bool,
     "check_options": bool,
 })
+MriSbbrParamsDict = _MriSbbrParamsDictNoTag | MriSbbrParamsDictTagged
 
 
 class MriSbbrOutputs(typing.NamedTuple):

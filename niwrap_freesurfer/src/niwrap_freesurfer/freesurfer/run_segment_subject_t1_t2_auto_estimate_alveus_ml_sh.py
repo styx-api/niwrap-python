@@ -13,8 +13,7 @@ RUN_SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDict = typing.TypedDict('RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_segmentSubjectT1T2_autoEstimateAlveusML.sh"]],
+_RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDictNoTag = typing.TypedDict('_RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDictNoTag', {
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDictTagged = typing.TypedDict('
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
+RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDict = _RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDictNoTag | RunSegmentSubjectT1T2AutoEstimateAlveusMlShParamsDictTagged
 
 
 class RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs(typing.NamedTuple):

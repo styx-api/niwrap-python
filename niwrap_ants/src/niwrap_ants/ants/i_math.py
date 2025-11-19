@@ -13,8 +13,7 @@ I_MATH_METADATA = Metadata(
 )
 
 
-IMathParamsDict = typing.TypedDict('IMathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/iMath"]],
+_IMathParamsDictNoTag = typing.TypedDict('_IMathParamsDictNoTag', {
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations": str,
@@ -29,6 +28,7 @@ IMathParamsDictTagged = typing.TypedDict('IMathParamsDictTagged', {
     "image1": InputPathType,
     "image2": typing.NotRequired[InputPathType | None],
 })
+IMathParamsDict = _IMathParamsDictNoTag | IMathParamsDictTagged
 
 
 class IMathOutputs(typing.NamedTuple):

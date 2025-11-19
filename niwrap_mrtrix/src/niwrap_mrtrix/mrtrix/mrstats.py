@@ -13,18 +13,17 @@ MRSTATS_METADATA = Metadata(
 )
 
 
-MrstatsOutputParamsDict = typing.TypedDict('MrstatsOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output"]],
+_MrstatsOutputParamsDictNoTag = typing.TypedDict('_MrstatsOutputParamsDictNoTag', {
     "field": str,
 })
 MrstatsOutputParamsDictTagged = typing.TypedDict('MrstatsOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "field": str,
 })
+MrstatsOutputParamsDict = _MrstatsOutputParamsDictNoTag | MrstatsOutputParamsDictTagged
 
 
-MrstatsConfigParamsDict = typing.TypedDict('MrstatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrstatsConfigParamsDictNoTag = typing.TypedDict('_MrstatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ MrstatsConfigParamsDictTagged = typing.TypedDict('MrstatsConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+MrstatsConfigParamsDict = _MrstatsConfigParamsDictNoTag | MrstatsConfigParamsDictTagged
 
 
-MrstatsParamsDict = typing.TypedDict('MrstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrstats"]],
+_MrstatsParamsDictNoTag = typing.TypedDict('_MrstatsParamsDictNoTag', {
     "output": typing.NotRequired[list[MrstatsOutputParamsDict] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,
@@ -67,6 +66,7 @@ MrstatsParamsDictTagged = typing.TypedDict('MrstatsParamsDictTagged', {
     "version": bool,
     "image": InputPathType,
 })
+MrstatsParamsDict = _MrstatsParamsDictNoTag | MrstatsParamsDictTagged
 
 
 def mrstats_output(

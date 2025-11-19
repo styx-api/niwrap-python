@@ -13,8 +13,7 @@ V_3D_LFCD_METADATA = Metadata(
 )
 
 
-V3dLfcdParamsDict = typing.TypedDict('V3dLfcdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLFCD"]],
+_V3dLfcdParamsDictNoTag = typing.TypedDict('_V3dLfcdParamsDictNoTag', {
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -37,6 +36,7 @@ V3dLfcdParamsDictTagged = typing.TypedDict('V3dLfcdParamsDictTagged', {
     "polort": typing.NotRequired[int | None],
     "thresh": typing.NotRequired[float | None],
 })
+V3dLfcdParamsDict = _V3dLfcdParamsDictNoTag | V3dLfcdParamsDictTagged
 
 
 class V3dLfcdOutputs(typing.NamedTuple):

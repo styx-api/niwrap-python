@@ -13,8 +13,7 @@ PTOZ_METADATA = Metadata(
 )
 
 
-PtozParamsDict = typing.TypedDict('PtozParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ptoz"]],
+_PtozParamsDictNoTag = typing.TypedDict('_PtozParamsDictNoTag', {
     "p_value": float,
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ PtozParamsDictTagged = typing.TypedDict('PtozParamsDictTagged', {
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],
 })
+PtozParamsDict = _PtozParamsDictNoTag | PtozParamsDictTagged
 
 
 class PtozOutputs(typing.NamedTuple):

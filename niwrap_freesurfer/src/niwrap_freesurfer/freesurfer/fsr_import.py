@@ -13,8 +13,7 @@ FSR_IMPORT_METADATA = Metadata(
 )
 
 
-FsrImportParamsDict = typing.TypedDict('FsrImportParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-import"]],
+_FsrImportParamsDictNoTag = typing.TypedDict('_FsrImportParamsDictNoTag', {
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
     "t2w_input": typing.NotRequired[list[InputPathType] | None],
@@ -35,6 +34,7 @@ FsrImportParamsDictTagged = typing.TypedDict('FsrImportParamsDictTagged', {
     "no_conform": bool,
     "hires": bool,
 })
+FsrImportParamsDict = _FsrImportParamsDictNoTag | FsrImportParamsDictTagged
 
 
 class FsrImportOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_CURVATURE2IMAGE_METADATA = Metadata(
 )
 
 
-MrisCurvature2imageParamsDict = typing.TypedDict('MrisCurvature2imageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature2image"]],
+_MrisCurvature2imageParamsDictNoTag = typing.TypedDict('_MrisCurvature2imageParamsDictNoTag', {
     "surface": InputPathType,
     "mask": InputPathType,
     "output_overlay": str,
@@ -35,6 +34,7 @@ MrisCurvature2imageParamsDictTagged = typing.TypedDict('MrisCurvature2imageParam
     "invert_flag": bool,
     "radius": float,
 })
+MrisCurvature2imageParamsDict = _MrisCurvature2imageParamsDictNoTag | MrisCurvature2imageParamsDictTagged
 
 
 class MrisCurvature2imageOutputs(typing.NamedTuple):

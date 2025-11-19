@@ -13,8 +13,7 @@ FSL_SCHURPROD_METADATA = Metadata(
 )
 
 
-FslSchurprodParamsDict = typing.TypedDict('FslSchurprodParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_schurprod"]],
+_FslSchurprodParamsDictNoTag = typing.TypedDict('_FslSchurprodParamsDictNoTag', {
     "input_file": InputPathType,
     "design_file": InputPathType,
     "output_file": str,
@@ -35,6 +34,7 @@ FslSchurprodParamsDictTagged = typing.TypedDict('FslSchurprodParamsDictTagged', 
     "verbose_flag": bool,
     "help_flag": bool,
 })
+FslSchurprodParamsDict = _FslSchurprodParamsDictNoTag | FslSchurprodParamsDictTagged
 
 
 class FslSchurprodOutputs(typing.NamedTuple):

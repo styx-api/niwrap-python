@@ -13,8 +13,7 @@ MKMNC_INDEX_TCL_METADATA = Metadata(
 )
 
 
-MkmncIndexTclParamsDict = typing.TypedDict('MkmncIndexTclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mkmnc_index.tcl"]],
+_MkmncIndexTclParamsDictNoTag = typing.TypedDict('_MkmncIndexTclParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
 })
@@ -23,6 +22,7 @@ MkmncIndexTclParamsDictTagged = typing.TypedDict('MkmncIndexTclParamsDictTagged'
     "infile": InputPathType,
     "outfile": str,
 })
+MkmncIndexTclParamsDict = _MkmncIndexTclParamsDictNoTag | MkmncIndexTclParamsDictTagged
 
 
 class MkmncIndexTclOutputs(typing.NamedTuple):

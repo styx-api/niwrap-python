@@ -13,8 +13,7 @@ V_3D_DETREND_METADATA = Metadata(
 )
 
 
-V3dDetrendParamsDict = typing.TypedDict('V3dDetrendParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDetrend"]],
+_V3dDetrendParamsDictNoTag = typing.TypedDict('_V3dDetrendParamsDictNoTag', {
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
@@ -23,6 +22,7 @@ V3dDetrendParamsDictTagged = typing.TypedDict('V3dDetrendParamsDictTagged', {
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
+V3dDetrendParamsDict = _V3dDetrendParamsDictNoTag | V3dDetrendParamsDictTagged
 
 
 class V3dDetrendOutputs(typing.NamedTuple):

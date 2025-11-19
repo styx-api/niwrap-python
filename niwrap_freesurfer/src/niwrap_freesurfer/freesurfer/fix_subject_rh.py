@@ -13,8 +13,7 @@ FIX_SUBJECT_RH_METADATA = Metadata(
 )
 
 
-FixSubjectRhParamsDict = typing.TypedDict('FixSubjectRhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject-rh"]],
+_FixSubjectRhParamsDictNoTag = typing.TypedDict('_FixSubjectRhParamsDictNoTag', {
     "input_directory": str,
     "help_flag": bool,
 })
@@ -23,6 +22,7 @@ FixSubjectRhParamsDictTagged = typing.TypedDict('FixSubjectRhParamsDictTagged', 
     "input_directory": str,
     "help_flag": bool,
 })
+FixSubjectRhParamsDict = _FixSubjectRhParamsDictNoTag | FixSubjectRhParamsDictTagged
 
 
 class FixSubjectRhOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ AFNI_RUN_R_METADATA = Metadata(
 )
 
 
-AfniRunRParamsDict = typing.TypedDict('AfniRunRParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_run_R"]],
+_AfniRunRParamsDictNoTag = typing.TypedDict('_AfniRunRParamsDictNoTag', {
     "r_script": InputPathType,
     "r_args": list[str],
 })
@@ -23,6 +22,7 @@ AfniRunRParamsDictTagged = typing.TypedDict('AfniRunRParamsDictTagged', {
     "r_script": InputPathType,
     "r_args": list[str],
 })
+AfniRunRParamsDict = _AfniRunRParamsDictNoTag | AfniRunRParamsDictTagged
 
 
 class AfniRunROutputs(typing.NamedTuple):

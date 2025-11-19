@@ -13,8 +13,7 @@ SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA = Metadata(
 )
 
 
-SegmentSubfieldsT1LongitudinalParamsDict = typing.TypedDict('SegmentSubfieldsT1LongitudinalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/SegmentSubfieldsT1Longitudinal"]],
+_SegmentSubfieldsT1LongitudinalParamsDictNoTag = typing.TypedDict('_SegmentSubfieldsT1LongitudinalParamsDictNoTag', {
     "subject_id": str,
     "input_image": InputPathType,
     "output_dir": str,
@@ -25,6 +24,7 @@ SegmentSubfieldsT1LongitudinalParamsDictTagged = typing.TypedDict('SegmentSubfie
     "input_image": InputPathType,
     "output_dir": str,
 })
+SegmentSubfieldsT1LongitudinalParamsDict = _SegmentSubfieldsT1LongitudinalParamsDictNoTag | SegmentSubfieldsT1LongitudinalParamsDictTagged
 
 
 class SegmentSubfieldsT1LongitudinalOutputs(typing.NamedTuple):

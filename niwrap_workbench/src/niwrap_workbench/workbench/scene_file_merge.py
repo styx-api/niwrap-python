@@ -12,8 +12,7 @@ SCENE_FILE_MERGE_METADATA = Metadata(
 )
 
 
-SceneFileMergeUpToParamsDict = typing.TypedDict('SceneFileMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_SceneFileMergeUpToParamsDictNoTag = typing.TypedDict('_SceneFileMergeUpToParamsDictNoTag', {
     "last-column": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ SceneFileMergeUpToParamsDictTagged = typing.TypedDict('SceneFileMergeUpToParamsD
     "last-column": str,
     "reverse": bool,
 })
+SceneFileMergeUpToParamsDict = _SceneFileMergeUpToParamsDictNoTag | SceneFileMergeUpToParamsDictTagged
 
 
-SceneFileMergeSceneParamsDict = typing.TypedDict('SceneFileMergeSceneParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scene"]],
+_SceneFileMergeSceneParamsDictNoTag = typing.TypedDict('_SceneFileMergeSceneParamsDictNoTag', {
     "scene": str,
     "up-to": typing.NotRequired[SceneFileMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ SceneFileMergeSceneParamsDictTagged = typing.TypedDict('SceneFileMergeSceneParam
     "scene": str,
     "up-to": typing.NotRequired[SceneFileMergeUpToParamsDict | None],
 })
+SceneFileMergeSceneParamsDict = _SceneFileMergeSceneParamsDictNoTag | SceneFileMergeSceneParamsDictTagged
 
 
-SceneFileMergeSceneFileParamsDict = typing.TypedDict('SceneFileMergeSceneFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scene-file"]],
+_SceneFileMergeSceneFileParamsDictNoTag = typing.TypedDict('_SceneFileMergeSceneFileParamsDictNoTag', {
     "scene-file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParamsDict] | None],
 })
@@ -46,10 +45,10 @@ SceneFileMergeSceneFileParamsDictTagged = typing.TypedDict('SceneFileMergeSceneF
     "scene-file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParamsDict] | None],
 })
+SceneFileMergeSceneFileParamsDict = _SceneFileMergeSceneFileParamsDictNoTag | SceneFileMergeSceneFileParamsDictTagged
 
 
-SceneFileMergeParamsDict = typing.TypedDict('SceneFileMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/scene-file-merge"]],
+_SceneFileMergeParamsDictNoTag = typing.TypedDict('_SceneFileMergeParamsDictNoTag', {
     "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
 })
@@ -58,6 +57,7 @@ SceneFileMergeParamsDictTagged = typing.TypedDict('SceneFileMergeParamsDictTagge
     "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
 })
+SceneFileMergeParamsDict = _SceneFileMergeParamsDictNoTag | SceneFileMergeParamsDictTagged
 
 
 def scene_file_merge_up_to(

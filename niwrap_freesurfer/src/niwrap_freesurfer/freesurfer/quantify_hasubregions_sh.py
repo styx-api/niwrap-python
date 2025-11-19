@@ -13,8 +13,7 @@ QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
 )
 
 
-QuantifyHasubregionsShParamsDict = typing.TypedDict('QuantifyHasubregionsShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyHAsubregions.sh"]],
+_QuantifyHasubregionsShParamsDictNoTag = typing.TypedDict('_QuantifyHasubregionsShParamsDictNoTag', {
     "prefix": str,
     "suffix": str,
     "output_file": str,
@@ -27,6 +26,7 @@ QuantifyHasubregionsShParamsDictTagged = typing.TypedDict('QuantifyHasubregionsS
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
+QuantifyHasubregionsShParamsDict = _QuantifyHasubregionsShParamsDictNoTag | QuantifyHasubregionsShParamsDictTagged
 
 
 class QuantifyHasubregionsShOutputs(typing.NamedTuple):

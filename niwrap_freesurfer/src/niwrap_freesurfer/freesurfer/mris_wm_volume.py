@@ -13,8 +13,7 @@ MRIS_WM_VOLUME_METADATA = Metadata(
 )
 
 
-MrisWmVolumeParamsDict = typing.TypedDict('MrisWmVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_wm_volume"]],
+_MrisWmVolumeParamsDictNoTag = typing.TypedDict('_MrisWmVolumeParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "subjects_dir": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ MrisWmVolumeParamsDictTagged = typing.TypedDict('MrisWmVolumeParamsDictTagged', 
     "asegname": typing.NotRequired[str | None],
     "verbose": bool,
 })
+MrisWmVolumeParamsDict = _MrisWmVolumeParamsDictNoTag | MrisWmVolumeParamsDictTagged
 
 
 class MrisWmVolumeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TENSOR2METRIC_METADATA = Metadata(
 )
 
 
-Tensor2metricConfigParamsDict = typing.TypedDict('Tensor2metricConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Tensor2metricConfigParamsDictNoTag = typing.TypedDict('_Tensor2metricConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Tensor2metricConfigParamsDictTagged = typing.TypedDict('Tensor2metricConfigParam
     "key": str,
     "value": str,
 })
+Tensor2metricConfigParamsDict = _Tensor2metricConfigParamsDictNoTag | Tensor2metricConfigParamsDictTagged
 
 
-Tensor2metricParamsDict = typing.TypedDict('Tensor2metricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tensor2metric"]],
+_Tensor2metricParamsDictNoTag = typing.TypedDict('_Tensor2metricParamsDictNoTag', {
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
     "ad": typing.NotRequired[str | None],
@@ -73,6 +72,7 @@ Tensor2metricParamsDictTagged = typing.TypedDict('Tensor2metricParamsDictTagged'
     "version": bool,
     "tensor": InputPathType,
 })
+Tensor2metricParamsDict = _Tensor2metricParamsDictNoTag | Tensor2metricParamsDictTagged
 
 
 def tensor2metric_config(

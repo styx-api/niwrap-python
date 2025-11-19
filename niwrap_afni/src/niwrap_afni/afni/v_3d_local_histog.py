@@ -13,8 +13,7 @@ V_3D_LOCAL_HISTOG_METADATA = Metadata(
 )
 
 
-V3dLocalHistogParamsDict = typing.TypedDict('V3dLocalHistogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalHistog"]],
+_V3dLocalHistogParamsDictNoTag = typing.TypedDict('_V3dLocalHistogParamsDictNoTag', {
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
     "hsave": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ V3dLocalHistogParamsDictTagged = typing.TypedDict('V3dLocalHistogParamsDictTagge
     "quiet": bool,
     "input_datasets": list[InputPathType],
 })
+V3dLocalHistogParamsDict = _V3dLocalHistogParamsDictNoTag | V3dLocalHistogParamsDictTagged
 
 
 class V3dLocalHistogOutputs(typing.NamedTuple):

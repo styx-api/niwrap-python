@@ -13,8 +13,7 @@ MRI_DEFACE_METADATA = Metadata(
 )
 
 
-MriDefaceParamsDict = typing.TypedDict('MriDefaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_deface"]],
+_MriDefaceParamsDictNoTag = typing.TypedDict('_MriDefaceParamsDictNoTag', {
     "input_volume": InputPathType,
     "brain_template": InputPathType,
     "face_template": InputPathType,
@@ -27,6 +26,7 @@ MriDefaceParamsDictTagged = typing.TypedDict('MriDefaceParamsDictTagged', {
     "face_template": InputPathType,
     "output_volume": str,
 })
+MriDefaceParamsDict = _MriDefaceParamsDictNoTag | MriDefaceParamsDictTagged
 
 
 class MriDefaceOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_CONCAT_METADATA = Metadata(
 )
 
 
-MriConcatParamsDict = typing.TypedDict('MriConcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concat"]],
+_MriConcatParamsDictNoTag = typing.TypedDict('_MriConcatParamsDictNoTag', {
     "input_files": list[InputPathType],
     "output_file": str,
     "file_list": typing.NotRequired[str | None],
@@ -115,6 +114,7 @@ MriConcatParamsDictTagged = typing.TypedDict('MriConcatParamsDictTagged', {
     "rms": bool,
     "no_check": bool,
 })
+MriConcatParamsDict = _MriConcatParamsDictNoTag | MriConcatParamsDictTagged
 
 
 class MriConcatOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ IMCALC_METADATA = Metadata(
 )
 
 
-ImcalcParamsDict = typing.TypedDict('ImcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imcalc"]],
+_ImcalcParamsDictNoTag = typing.TypedDict('_ImcalcParamsDictNoTag', {
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
     "expression": str,
@@ -27,6 +26,7 @@ ImcalcParamsDictTagged = typing.TypedDict('ImcalcParamsDictTagged', {
     "expression": str,
     "output_name": typing.NotRequired[str | None],
 })
+ImcalcParamsDict = _ImcalcParamsDictNoTag | ImcalcParamsDictTagged
 
 
 class ImcalcOutputs(typing.NamedTuple):

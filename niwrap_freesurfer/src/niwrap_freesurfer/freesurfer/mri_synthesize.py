@@ -13,8 +13,7 @@ MRI_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-MriSynthesizeParamsDict = typing.TypedDict('MriSynthesizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthesize"]],
+_MriSynthesizeParamsDictNoTag = typing.TypedDict('_MriSynthesizeParamsDictNoTag', {
     "tr": float,
     "alpha": float,
     "te": float,
@@ -33,6 +32,7 @@ MriSynthesizeParamsDictTagged = typing.TypedDict('MriSynthesizeParamsDictTagged'
     "output_volume": str,
     "fixed_weight": bool,
 })
+MriSynthesizeParamsDict = _MriSynthesizeParamsDictNoTag | MriSynthesizeParamsDictTagged
 
 
 class MriSynthesizeOutputs(typing.NamedTuple):

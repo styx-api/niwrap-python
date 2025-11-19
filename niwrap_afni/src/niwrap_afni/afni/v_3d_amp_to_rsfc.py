@@ -13,8 +13,7 @@ V_3D_AMP_TO_RSFC_METADATA = Metadata(
 )
 
 
-V3dAmpToRsfcParamsDict = typing.TypedDict('V3dAmpToRsfcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAmpToRSFC"]],
+_V3dAmpToRsfcParamsDictNoTag = typing.TypedDict('_V3dAmpToRsfcParamsDictNoTag', {
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -31,6 +30,7 @@ V3dAmpToRsfcParamsDictTagged = typing.TypedDict('V3dAmpToRsfcParamsDictTagged', 
     "mask": typing.NotRequired[InputPathType | None],
     "nifti": bool,
 })
+V3dAmpToRsfcParamsDict = _V3dAmpToRsfcParamsDictNoTag | V3dAmpToRsfcParamsDictTagged
 
 
 class V3dAmpToRsfcOutputs(typing.NamedTuple):

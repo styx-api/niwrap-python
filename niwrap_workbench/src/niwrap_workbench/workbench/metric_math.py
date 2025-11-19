@@ -12,8 +12,7 @@ METRIC_MATH_METADATA = Metadata(
 )
 
 
-MetricMathVarParamsDict = typing.TypedDict('MetricMathVarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["var"]],
+_MetricMathVarParamsDictNoTag = typing.TypedDict('_MetricMathVarParamsDictNoTag', {
     "name": str,
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
@@ -26,10 +25,10 @@ MetricMathVarParamsDictTagged = typing.TypedDict('MetricMathVarParamsDictTagged'
     "column": typing.NotRequired[str | None],
     "repeat": bool,
 })
+MetricMathVarParamsDict = _MetricMathVarParamsDictNoTag | MetricMathVarParamsDictTagged
 
 
-MetricMathParamsDict = typing.TypedDict('MetricMathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-math"]],
+_MetricMathParamsDictNoTag = typing.TypedDict('_MetricMathParamsDictNoTag', {
     "metric-out": str,
     "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
@@ -42,6 +41,7 @@ MetricMathParamsDictTagged = typing.TypedDict('MetricMathParamsDictTagged', {
     "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
     "expression": str,
 })
+MetricMathParamsDict = _MetricMathParamsDictNoTag | MetricMathParamsDictTagged
 
 
 def metric_math_var(

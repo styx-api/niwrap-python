@@ -13,8 +13,7 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 )
 
 
-V3dClipLevelParamsDict = typing.TypedDict('V3dClipLevelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dClipLevel"]],
+_V3dClipLevelParamsDictNoTag = typing.TypedDict('_V3dClipLevelParamsDictNoTag', {
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
     "doall": bool,
@@ -27,6 +26,7 @@ V3dClipLevelParamsDictTagged = typing.TypedDict('V3dClipLevelParamsDictTagged', 
     "doall": bool,
     "grad": typing.NotRequired[str | None],
 })
+V3dClipLevelParamsDict = _V3dClipLevelParamsDictNoTag | V3dClipLevelParamsDictTagged
 
 
 class V3dClipLevelOutputs(typing.NamedTuple):

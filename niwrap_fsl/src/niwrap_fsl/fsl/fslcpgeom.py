@@ -13,8 +13,7 @@ FSLCPGEOM_METADATA = Metadata(
 )
 
 
-FslcpgeomParamsDict = typing.TypedDict('FslcpgeomParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslcpgeom"]],
+_FslcpgeomParamsDictNoTag = typing.TypedDict('_FslcpgeomParamsDictNoTag', {
     "source_file": InputPathType,
     "destination_file": InputPathType,
     "dimensions_flag": bool,
@@ -25,6 +24,7 @@ FslcpgeomParamsDictTagged = typing.TypedDict('FslcpgeomParamsDictTagged', {
     "destination_file": InputPathType,
     "dimensions_flag": bool,
 })
+FslcpgeomParamsDict = _FslcpgeomParamsDictNoTag | FslcpgeomParamsDictTagged
 
 
 class FslcpgeomOutputs(typing.NamedTuple):

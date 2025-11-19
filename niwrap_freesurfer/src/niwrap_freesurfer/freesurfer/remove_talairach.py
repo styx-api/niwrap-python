@@ -13,8 +13,7 @@ REMOVE_TALAIRACH_METADATA = Metadata(
 )
 
 
-RemoveTalairachParamsDict = typing.TypedDict('RemoveTalairachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/remove_talairach"]],
+_RemoveTalairachParamsDictNoTag = typing.TypedDict('_RemoveTalairachParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ RemoveTalairachParamsDictTagged = typing.TypedDict('RemoveTalairachParamsDictTag
     "input_file": InputPathType,
     "output_file": str,
 })
+RemoveTalairachParamsDict = _RemoveTalairachParamsDictNoTag | RemoveTalairachParamsDictTagged
 
 
 class RemoveTalairachOutputs(typing.NamedTuple):

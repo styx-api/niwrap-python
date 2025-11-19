@@ -12,8 +12,7 @@ GIFTI_CONVERT_METADATA = Metadata(
 )
 
 
-GiftiConvertParamsDict = typing.TypedDict('GiftiConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/gifti-convert"]],
+_GiftiConvertParamsDictNoTag = typing.TypedDict('_GiftiConvertParamsDictNoTag', {
     "gifti-encoding": str,
     "input-gifti-file": str,
     "output-gifti-file": str,
@@ -24,6 +23,7 @@ GiftiConvertParamsDictTagged = typing.TypedDict('GiftiConvertParamsDictTagged', 
     "input-gifti-file": str,
     "output-gifti-file": str,
 })
+GiftiConvertParamsDict = _GiftiConvertParamsDictNoTag | GiftiConvertParamsDictTagged
 
 
 class GiftiConvertOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ METRIC_STATS_METADATA = Metadata(
 )
 
 
-MetricStatsRoiParamsDict = typing.TypedDict('MetricStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_MetricStatsRoiParamsDictNoTag = typing.TypedDict('_MetricStatsRoiParamsDictNoTag', {
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
@@ -22,10 +21,10 @@ MetricStatsRoiParamsDictTagged = typing.TypedDict('MetricStatsRoiParamsDictTagge
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
+MetricStatsRoiParamsDict = _MetricStatsRoiParamsDictNoTag | MetricStatsRoiParamsDictTagged
 
 
-MetricStatsParamsDict = typing.TypedDict('MetricStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-stats"]],
+_MetricStatsParamsDictNoTag = typing.TypedDict('_MetricStatsParamsDictNoTag', {
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
@@ -42,6 +41,7 @@ MetricStatsParamsDictTagged = typing.TypedDict('MetricStatsParamsDictTagged', {
     "show-map-name": bool,
     "metric-in": InputPathType,
 })
+MetricStatsParamsDict = _MetricStatsParamsDictNoTag | MetricStatsParamsDictTagged
 
 
 def metric_stats_roi(

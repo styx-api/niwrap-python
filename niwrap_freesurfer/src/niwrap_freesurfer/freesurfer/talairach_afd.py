@@ -13,8 +13,7 @@ TALAIRACH_AFD_METADATA = Metadata(
 )
 
 
-TalairachAfdParamsDict = typing.TypedDict('TalairachAfdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_afd"]],
+_TalairachAfdParamsDictNoTag = typing.TypedDict('_TalairachAfdParamsDictNoTag', {
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
     "p_value_threshold": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ TalairachAfdParamsDictTagged = typing.TypedDict('TalairachAfdParamsDictTagged', 
     "afd_directory": typing.NotRequired[str | None],
     "verbose": bool,
 })
+TalairachAfdParamsDict = _TalairachAfdParamsDictNoTag | TalairachAfdParamsDictTagged
 
 
 class TalairachAfdOutputs(typing.NamedTuple):

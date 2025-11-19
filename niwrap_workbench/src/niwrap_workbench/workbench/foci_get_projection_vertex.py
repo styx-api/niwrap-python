@@ -12,8 +12,7 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 )
 
 
-FociGetProjectionVertexParamsDict = typing.TypedDict('FociGetProjectionVertexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/foci-get-projection-vertex"]],
+_FociGetProjectionVertexParamsDictNoTag = typing.TypedDict('_FociGetProjectionVertexParamsDictNoTag', {
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "foci": InputPathType,
@@ -26,6 +25,7 @@ FociGetProjectionVertexParamsDictTagged = typing.TypedDict('FociGetProjectionVer
     "foci": InputPathType,
     "surface": InputPathType,
 })
+FociGetProjectionVertexParamsDict = _FociGetProjectionVertexParamsDictNoTag | FociGetProjectionVertexParamsDictTagged
 
 
 class FociGetProjectionVertexOutputs(typing.NamedTuple):

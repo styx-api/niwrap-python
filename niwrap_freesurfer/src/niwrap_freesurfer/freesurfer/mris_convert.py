@@ -13,8 +13,7 @@ MRIS_CONVERT_METADATA = Metadata(
 )
 
 
-MrisConvertParamsDict = typing.TypedDict('MrisConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_convert"]],
+_MrisConvertParamsDictNoTag = typing.TypedDict('_MrisConvertParamsDictNoTag', {
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
     "output_file": str,
@@ -95,6 +94,7 @@ MrisConvertParamsDictTagged = typing.TypedDict('MrisConvertParamsDictTagged', {
     "cras_add": bool,
     "cras_subtract": bool,
 })
+MrisConvertParamsDict = _MrisConvertParamsDictNoTag | MrisConvertParamsDictTagged
 
 
 class MrisConvertOutputs(typing.NamedTuple):

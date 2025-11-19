@@ -13,8 +13,7 @@ V__SHIFT_VOLUME_METADATA = Metadata(
 )
 
 
-VShiftVolumeParamsDict = typing.TypedDict('VShiftVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Shift_Volume"]],
+_VShiftVolumeParamsDictNoTag = typing.TypedDict('_VShiftVolumeParamsDictNoTag', {
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
     "mni_to_mni_anat": bool,
@@ -31,6 +30,7 @@ VShiftVolumeParamsDictTagged = typing.TypedDict('VShiftVolumeParamsDictTagged', 
     "no_cp": bool,
     "prefix": str,
 })
+VShiftVolumeParamsDict = _VShiftVolumeParamsDictNoTag | VShiftVolumeParamsDictTagged
 
 
 class VShiftVolumeOutputs(typing.NamedTuple):

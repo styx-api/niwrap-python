@@ -13,8 +13,7 @@ FSLREGISTER_METADATA = Metadata(
 )
 
 
-FslregisterParamsDict = typing.TypedDict('FslregisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fslregister"]],
+_FslregisterParamsDictNoTag = typing.TypedDict('_FslregisterParamsDictNoTag', {
     "subjid": str,
     "mov_vol": str,
     "reg_file": str,
@@ -79,6 +78,7 @@ FslregisterParamsDictTagged = typing.TypedDict('FslregisterParamsDictTagged', {
     "help": bool,
     "lta_format": typing.NotRequired[str | None],
 })
+FslregisterParamsDict = _FslregisterParamsDictNoTag | FslregisterParamsDictTagged
 
 
 class FslregisterOutputs(typing.NamedTuple):

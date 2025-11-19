@@ -13,8 +13,7 @@ FSLVBM_3_PROC_METADATA = Metadata(
 )
 
 
-Fslvbm3ProcParamsDict = typing.TypedDict('Fslvbm3ProcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_3_proc"]],
+_Fslvbm3ProcParamsDictNoTag = typing.TypedDict('_Fslvbm3ProcParamsDictNoTag', {
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],
@@ -83,6 +82,7 @@ Fslvbm3ProcParamsDictTagged = typing.TypedDict('Fslvbm3ProcParamsDictTagged', {
     "version": bool,
     "config_file": typing.NotRequired[InputPathType | None],
 })
+Fslvbm3ProcParamsDict = _Fslvbm3ProcParamsDictNoTag | Fslvbm3ProcParamsDictTagged
 
 
 class Fslvbm3ProcOutputs(typing.NamedTuple):

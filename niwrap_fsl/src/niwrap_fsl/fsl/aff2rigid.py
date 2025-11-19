@@ -13,8 +13,7 @@ AFF2RIGID_METADATA = Metadata(
 )
 
 
-Aff2rigidParamsDict = typing.TypedDict('Aff2rigidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/aff2rigid"]],
+_Aff2rigidParamsDictNoTag = typing.TypedDict('_Aff2rigidParamsDictNoTag', {
     "input_transform": InputPathType,
     "output_transform": str,
 })
@@ -23,6 +22,7 @@ Aff2rigidParamsDictTagged = typing.TypedDict('Aff2rigidParamsDictTagged', {
     "input_transform": InputPathType,
     "output_transform": str,
 })
+Aff2rigidParamsDict = _Aff2rigidParamsDictNoTag | Aff2rigidParamsDictTagged
 
 
 class Aff2rigidOutputs(typing.NamedTuple):

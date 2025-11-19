@@ -13,14 +13,14 @@ DIFFUSION_UTILS_METADATA = Metadata(
 )
 
 
-DiffusionUtilsParamsDict = typing.TypedDict('DiffusionUtilsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/diffusionUtils"]],
+_DiffusionUtilsParamsDictNoTag = typing.TypedDict('_DiffusionUtilsParamsDictNoTag', {
     "dummy_flag": bool,
 })
 DiffusionUtilsParamsDictTagged = typing.TypedDict('DiffusionUtilsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/diffusionUtils"],
     "dummy_flag": bool,
 })
+DiffusionUtilsParamsDict = _DiffusionUtilsParamsDictNoTag | DiffusionUtilsParamsDictTagged
 
 
 class DiffusionUtilsOutputs(typing.NamedTuple):

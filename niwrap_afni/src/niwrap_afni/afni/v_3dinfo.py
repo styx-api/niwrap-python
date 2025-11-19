@@ -13,8 +13,7 @@ V_3DINFO_METADATA = Metadata(
 )
 
 
-V3dinfoParamsDict = typing.TypedDict('V3dinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dinfo"]],
+_V3dinfoParamsDictNoTag = typing.TypedDict('_V3dinfoParamsDictNoTag', {
     "orient": bool,
     "Lextent": bool,
     "Rextent": bool,
@@ -245,6 +244,7 @@ V3dinfoParamsDictTagged = typing.TypedDict('V3dinfoParamsDictTagged', {
     "monog_pairs": bool,
     "dataset": list[InputPathType],
 })
+V3dinfoParamsDict = _V3dinfoParamsDictNoTag | V3dinfoParamsDictTagged
 
 
 class V3dinfoOutputs(typing.NamedTuple):

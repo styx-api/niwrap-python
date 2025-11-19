@@ -13,8 +13,7 @@ FIRST_FLIRT_METADATA = Metadata(
 )
 
 
-FirstFlirtParamsDict = typing.TypedDict('FirstFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/first_flirt"]],
+_FirstFlirtParamsDictNoTag = typing.TypedDict('_FirstFlirtParamsDictNoTag', {
     "input_image": InputPathType,
     "output_basename": str,
     "already_brain_extracted_flag": bool,
@@ -35,6 +34,7 @@ FirstFlirtParamsDictTagged = typing.TypedDict('FirstFlirtParamsDictTagged', {
     "cort_flag": bool,
     "cost_function": typing.NotRequired[str | None],
 })
+FirstFlirtParamsDict = _FirstFlirtParamsDictNoTag | FirstFlirtParamsDictTagged
 
 
 class FirstFlirtOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ DICOM_HDR_METADATA = Metadata(
 )
 
 
-DicomHdrParamsDict = typing.TypedDict('DicomHdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/dicom_hdr"]],
+_DicomHdrParamsDictNoTag = typing.TypedDict('_DicomHdrParamsDictNoTag', {
     "files": list[InputPathType],
     "hex": bool,
     "noname": bool,
@@ -39,6 +38,7 @@ DicomHdrParamsDictTagged = typing.TypedDict('DicomHdrParamsDictTagged', {
     "slice_times_verb": bool,
     "siemens_csa_data": bool,
 })
+DicomHdrParamsDict = _DicomHdrParamsDictNoTag | DicomHdrParamsDictTagged
 
 
 class DicomHdrOutputs(typing.NamedTuple):

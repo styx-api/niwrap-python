@@ -13,8 +13,7 @@ MRI_GCA_AMBIGUOUS_METADATA = Metadata(
 )
 
 
-MriGcaAmbiguousParamsDict = typing.TypedDict('MriGcaAmbiguousParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gca_ambiguous"]],
+_MriGcaAmbiguousParamsDictNoTag = typing.TypedDict('_MriGcaAmbiguousParamsDictNoTag', {
     "gca_file": InputPathType,
     "output_volume": str,
 })
@@ -23,6 +22,7 @@ MriGcaAmbiguousParamsDictTagged = typing.TypedDict('MriGcaAmbiguousParamsDictTag
     "gca_file": InputPathType,
     "output_volume": str,
 })
+MriGcaAmbiguousParamsDict = _MriGcaAmbiguousParamsDictNoTag | MriGcaAmbiguousParamsDictTagged
 
 
 class MriGcaAmbiguousOutputs(typing.NamedTuple):

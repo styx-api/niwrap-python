@@ -13,8 +13,7 @@ MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
 )
 
 
-MrisSmoothIntracorticalParamsDict = typing.TypedDict('MrisSmoothIntracorticalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth_intracortical"]],
+_MrisSmoothIntracorticalParamsDictNoTag = typing.TypedDict('_MrisSmoothIntracorticalParamsDictNoTag', {
     "surf_dir": str,
     "surf_name": str,
     "overlay_dir": str,
@@ -39,6 +38,7 @@ MrisSmoothIntracorticalParamsDictTagged = typing.TypedDict('MrisSmoothIntracorti
     "rad_start": typing.NotRequired[float | None],
     "tan_weights": typing.NotRequired[str | None],
 })
+MrisSmoothIntracorticalParamsDict = _MrisSmoothIntracorticalParamsDictNoTag | MrisSmoothIntracorticalParamsDictTagged
 
 
 class MrisSmoothIntracorticalOutputs(typing.NamedTuple):

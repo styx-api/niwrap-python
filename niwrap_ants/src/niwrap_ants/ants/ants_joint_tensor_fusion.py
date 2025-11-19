@@ -13,8 +13,7 @@ ANTS_JOINT_TENSOR_FUSION_METADATA = Metadata(
 )
 
 
-AntsJointTensorFusionParamsDict = typing.TypedDict('AntsJointTensorFusionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsJointTensorFusion"]],
+_AntsJointTensorFusionParamsDictNoTag = typing.TypedDict('_AntsJointTensorFusionParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[str],
     "atlas_image": list[str],
@@ -53,6 +52,7 @@ AntsJointTensorFusionParamsDictTagged = typing.TypedDict('AntsJointTensorFusionP
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+AntsJointTensorFusionParamsDict = _AntsJointTensorFusionParamsDictNoTag | AntsJointTensorFusionParamsDictTagged
 
 
 class AntsJointTensorFusionOutputs(typing.NamedTuple):

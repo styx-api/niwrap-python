@@ -12,8 +12,7 @@ CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA = Metadata(
 )
 
 
-ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-seeds"]],
+_ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictNoTag', {
     "cifti-template": InputPathType,
     "direction": str,
 })
@@ -22,10 +21,10 @@ ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged = typing.TypedDict('C
     "cifti-template": InputPathType,
     "direction": str,
 })
+ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict = _ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictNoTag | ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged
 
 
-ConvertMatrix4ToWorkbenchSparseParamsDict = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-workbench-sparse"]],
+_ConvertMatrix4ToWorkbenchSparseParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToWorkbenchSparseParamsDictNoTag', {
     "seed-roi": typing.NotRequired[InputPathType | None],
     "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
     "matrix4_1": str,
@@ -46,6 +45,7 @@ ConvertMatrix4ToWorkbenchSparseParamsDictTagged = typing.TypedDict('ConvertMatri
     "voxel-list": str,
     "wb-sparse-out": str,
 })
+ConvertMatrix4ToWorkbenchSparseParamsDict = _ConvertMatrix4ToWorkbenchSparseParamsDictNoTag | ConvertMatrix4ToWorkbenchSparseParamsDictTagged
 
 
 def convert_matrix4_to_workbench_sparse_volume_seeds(

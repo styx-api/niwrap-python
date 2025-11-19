@@ -12,8 +12,7 @@ SURFACE_FLIP_LR_METADATA = Metadata(
 )
 
 
-SurfaceFlipLrParamsDict = typing.TypedDict('SurfaceFlipLrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-lr"]],
+_SurfaceFlipLrParamsDictNoTag = typing.TypedDict('_SurfaceFlipLrParamsDictNoTag', {
     "surface-out": str,
     "surface": InputPathType,
 })
@@ -22,6 +21,7 @@ SurfaceFlipLrParamsDictTagged = typing.TypedDict('SurfaceFlipLrParamsDictTagged'
     "surface-out": str,
     "surface": InputPathType,
 })
+SurfaceFlipLrParamsDict = _SurfaceFlipLrParamsDictNoTag | SurfaceFlipLrParamsDictTagged
 
 
 class SurfaceFlipLrOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_ROW_FILLIN_METADATA = Metadata(
 )
 
 
-V3dRowFillinParamsDict = typing.TypedDict('V3dRowFillinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRowFillin"]],
+_V3dRowFillinParamsDictNoTag = typing.TypedDict('_V3dRowFillinParamsDictNoTag', {
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
     "binary": bool,
@@ -29,6 +28,7 @@ V3dRowFillinParamsDictTagged = typing.TypedDict('V3dRowFillinParamsDictTagged', 
     "prefix": typing.NotRequired[str | None],
     "input_dataset": InputPathType,
 })
+V3dRowFillinParamsDict = _V3dRowFillinParamsDictNoTag | V3dRowFillinParamsDictTagged
 
 
 class V3dRowFillinOutputs(typing.NamedTuple):

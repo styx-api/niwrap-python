@@ -12,8 +12,7 @@ METRIC_SMOOTHING_METADATA = Metadata(
 )
 
 
-MetricSmoothingRoiParamsDict = typing.TypedDict('MetricSmoothingRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_MetricSmoothingRoiParamsDictNoTag = typing.TypedDict('_MetricSmoothingRoiParamsDictNoTag', {
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
@@ -22,10 +21,10 @@ MetricSmoothingRoiParamsDictTagged = typing.TypedDict('MetricSmoothingRoiParamsD
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
+MetricSmoothingRoiParamsDict = _MetricSmoothingRoiParamsDictNoTag | MetricSmoothingRoiParamsDictTagged
 
 
-MetricSmoothingParamsDict = typing.TypedDict('MetricSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-smoothing"]],
+_MetricSmoothingParamsDictNoTag = typing.TypedDict('_MetricSmoothingParamsDictNoTag', {
     "metric-out": str,
     "fwhm": bool,
     "roi": typing.NotRequired[MetricSmoothingRoiParamsDict | None],
@@ -50,6 +49,7 @@ MetricSmoothingParamsDictTagged = typing.TypedDict('MetricSmoothingParamsDictTag
     "metric-in": InputPathType,
     "smoothing-kernel": float,
 })
+MetricSmoothingParamsDict = _MetricSmoothingParamsDictNoTag | MetricSmoothingParamsDictTagged
 
 
 def metric_smoothing_roi(

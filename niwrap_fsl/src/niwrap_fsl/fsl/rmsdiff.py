@@ -13,8 +13,7 @@ RMSDIFF_METADATA = Metadata(
 )
 
 
-RmsdiffParamsDict = typing.TypedDict('RmsdiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/rmsdiff"]],
+_RmsdiffParamsDictNoTag = typing.TypedDict('_RmsdiffParamsDictNoTag', {
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
     "refvol": InputPathType,
@@ -27,6 +26,7 @@ RmsdiffParamsDictTagged = typing.TypedDict('RmsdiffParamsDictTagged', {
     "refvol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
 })
+RmsdiffParamsDict = _RmsdiffParamsDictNoTag | RmsdiffParamsDictTagged
 
 
 class RmsdiffOutputs(typing.NamedTuple):

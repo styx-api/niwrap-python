@@ -13,8 +13,7 @@ MRIS_EULER_NUMBER_METADATA = Metadata(
 )
 
 
-MrisEulerNumberParamsDict = typing.TypedDict('MrisEulerNumberParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_euler_number"]],
+_MrisEulerNumberParamsDictNoTag = typing.TypedDict('_MrisEulerNumberParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ MrisEulerNumberParamsDictTagged = typing.TypedDict('MrisEulerNumberParamsDictTag
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })
+MrisEulerNumberParamsDict = _MrisEulerNumberParamsDictNoTag | MrisEulerNumberParamsDictTagged
 
 
 class MrisEulerNumberOutputs(typing.NamedTuple):

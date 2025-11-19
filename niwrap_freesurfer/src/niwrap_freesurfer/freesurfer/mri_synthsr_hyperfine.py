@@ -13,8 +13,7 @@ MRI_SYNTHSR_HYPERFINE_METADATA = Metadata(
 )
 
 
-MriSynthsrHyperfineParamsDict = typing.TypedDict('MriSynthsrHyperfineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthsr_hyperfine"]],
+_MriSynthsrHyperfineParamsDictNoTag = typing.TypedDict('_MriSynthsrHyperfineParamsDictNoTag', {
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "output": str,
@@ -29,6 +28,7 @@ MriSynthsrHyperfineParamsDictTagged = typing.TypedDict('MriSynthsrHyperfineParam
     "threads": typing.NotRequired[float | None],
     "cpu": bool,
 })
+MriSynthsrHyperfineParamsDict = _MriSynthsrHyperfineParamsDictNoTag | MriSynthsrHyperfineParamsDictTagged
 
 
 class MriSynthsrHyperfineOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MM_METADATA = Metadata(
 )
 
 
-MmParamsDict = typing.TypedDict('MmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mm"]],
+_MmParamsDictNoTag = typing.TypedDict('_MmParamsDictNoTag', {
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
     "verbose_flag": bool,
@@ -53,6 +52,7 @@ MmParamsDictTagged = typing.TypedDict('MmParamsDictTagged', {
     "niters": typing.NotRequired[float | None],
     "threshold": typing.NotRequired[float | None],
 })
+MmParamsDict = _MmParamsDictNoTag | MmParamsDictTagged
 
 
 class MmOutputs(typing.NamedTuple):

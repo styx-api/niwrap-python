@@ -13,8 +13,7 @@ V_3D_XCLUST_SIM_METADATA = Metadata(
 )
 
 
-V3dXclustSimParamsDict = typing.TypedDict('V3dXclustSimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dXClustSim"]],
+_V3dXclustSimParamsDictNoTag = typing.TypedDict('_V3dXclustSimParamsDictNoTag', {
     "inset": InputPathType,
     "insdat": typing.NotRequired[InputPathType | None],
     "nn": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ V3dXclustSimParamsDictTagged = typing.TypedDict('V3dXclustSimParamsDictTagged', 
     "verbose": bool,
     "quiet": bool,
 })
+V3dXclustSimParamsDict = _V3dXclustSimParamsDictNoTag | V3dXclustSimParamsDictTagged
 
 
 class V3dXclustSimOutputs(typing.NamedTuple):

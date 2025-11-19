@@ -13,8 +13,7 @@ PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
 )
 
 
-ParcAtlasJackknifeTestParamsDict = typing.TypedDict('ParcAtlasJackknifeTestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/parc_atlas_jackknife_test"]],
+_ParcAtlasJackknifeTestParamsDictNoTag = typing.TypedDict('_ParcAtlasJackknifeTestParamsDictNoTag', {
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
     "reg_append": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ ParcAtlasJackknifeTestParamsDictTagged = typing.TypedDict('ParcAtlasJackknifeTes
     "binaries_path": typing.NotRequired[str | None],
     "dontrun": bool,
 })
+ParcAtlasJackknifeTestParamsDict = _ParcAtlasJackknifeTestParamsDictNoTag | ParcAtlasJackknifeTestParamsDictTagged
 
 
 class ParcAtlasJackknifeTestOutputs(typing.NamedTuple):

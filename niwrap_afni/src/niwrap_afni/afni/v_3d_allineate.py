@@ -13,8 +13,7 @@ V_3D_ALLINEATE_METADATA = Metadata(
 )
 
 
-V3dAllineateParamsDict = typing.TypedDict('V3dAllineateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAllineate"]],
+_V3dAllineateParamsDictNoTag = typing.TypedDict('_V3dAllineateParamsDictNoTag', {
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -47,6 +46,7 @@ V3dAllineateParamsDictTagged = typing.TypedDict('V3dAllineateParamsDictTagged', 
     "verbose": bool,
     "quiet": bool,
 })
+V3dAllineateParamsDict = _V3dAllineateParamsDictNoTag | V3dAllineateParamsDictTagged
 
 
 class V3dAllineateOutputs(typing.NamedTuple):

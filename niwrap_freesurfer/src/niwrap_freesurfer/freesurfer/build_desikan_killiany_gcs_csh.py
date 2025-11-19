@@ -13,14 +13,14 @@ BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
 )
 
 
-BuildDesikanKillianyGcsCshParamsDict = typing.TypedDict('BuildDesikanKillianyGcsCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"]],
+_BuildDesikanKillianyGcsCshParamsDictNoTag = typing.TypedDict('_BuildDesikanKillianyGcsCshParamsDictNoTag', {
     "hemi": str,
 })
 BuildDesikanKillianyGcsCshParamsDictTagged = typing.TypedDict('BuildDesikanKillianyGcsCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"],
     "hemi": str,
 })
+BuildDesikanKillianyGcsCshParamsDict = _BuildDesikanKillianyGcsCshParamsDictNoTag | BuildDesikanKillianyGcsCshParamsDictTagged
 
 
 class BuildDesikanKillianyGcsCshOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SPEC_FILE_MERGE_METADATA = Metadata(
 )
 
 
-SpecFileMergeParamsDict = typing.TypedDict('SpecFileMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/spec-file-merge"]],
+_SpecFileMergeParamsDictNoTag = typing.TypedDict('_SpecFileMergeParamsDictNoTag', {
     "spec-1": str,
     "spec-2": str,
     "out-spec": str,
@@ -24,6 +23,7 @@ SpecFileMergeParamsDictTagged = typing.TypedDict('SpecFileMergeParamsDictTagged'
     "spec-2": str,
     "out-spec": str,
 })
+SpecFileMergeParamsDict = _SpecFileMergeParamsDictNoTag | SpecFileMergeParamsDictTagged
 
 
 class SpecFileMergeOutputs(typing.NamedTuple):

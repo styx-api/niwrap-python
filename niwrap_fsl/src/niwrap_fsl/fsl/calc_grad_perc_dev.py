@@ -13,8 +13,7 @@ CALC_GRAD_PERC_DEV_METADATA = Metadata(
 )
 
 
-CalcGradPercDevParamsDict = typing.TypedDict('CalcGradPercDevParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/calc_grad_perc_dev"]],
+_CalcGradPercDevParamsDictNoTag = typing.TypedDict('_CalcGradPercDevParamsDictNoTag', {
     "fullwarp_image": InputPathType,
     "out_basename": str,
     "verbose_flag": bool,
@@ -27,6 +26,7 @@ CalcGradPercDevParamsDictTagged = typing.TypedDict('CalcGradPercDevParamsDictTag
     "verbose_flag": bool,
     "help_flag": bool,
 })
+CalcGradPercDevParamsDict = _CalcGradPercDevParamsDictNoTag | CalcGradPercDevParamsDictTagged
 
 
 class CalcGradPercDevOutputs(typing.NamedTuple):

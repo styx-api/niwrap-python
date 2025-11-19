@@ -13,8 +13,7 @@ REALTIME_RECEIVER_PY_METADATA = Metadata(
 )
 
 
-RealtimeReceiverPyParamsDict = typing.TypedDict('RealtimeReceiverPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/realtime_receiver.py"]],
+_RealtimeReceiverPyParamsDictNoTag = typing.TypedDict('_RealtimeReceiverPyParamsDictNoTag', {
     "show_data": typing.NotRequired[bool | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
@@ -43,6 +42,7 @@ RealtimeReceiverPyParamsDictTagged = typing.TypedDict('RealtimeReceiverPyParamsD
     "tcp_port": typing.NotRequired[float | None],
     "verbosity": typing.NotRequired[float | None],
 })
+RealtimeReceiverPyParamsDict = _RealtimeReceiverPyParamsDictNoTag | RealtimeReceiverPyParamsDictTagged
 
 
 class RealtimeReceiverPyOutputs(typing.NamedTuple):

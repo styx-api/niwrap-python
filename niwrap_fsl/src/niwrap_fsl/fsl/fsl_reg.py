@@ -13,8 +13,7 @@ FSL_REG_METADATA = Metadata(
 )
 
 
-FslRegParamsDict = typing.TypedDict('FslRegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_reg"]],
+_FslRegParamsDictNoTag = typing.TypedDict('_FslRegParamsDictNoTag', {
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "output_file": str,
@@ -35,6 +34,7 @@ FslRegParamsDictTagged = typing.TypedDict('FslRegParamsDictTagged', {
     "flirt_options": typing.NotRequired[str | None],
     "fnirt_options": typing.NotRequired[str | None],
 })
+FslRegParamsDict = _FslRegParamsDictNoTag | FslRegParamsDictTagged
 
 
 class FslRegOutputs(typing.NamedTuple):

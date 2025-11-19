@@ -12,8 +12,7 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
 )
 
 
-SurfaceApplyAffineFlirtParamsDict = typing.TypedDict('SurfaceApplyAffineFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flirt"]],
+_SurfaceApplyAffineFlirtParamsDictNoTag = typing.TypedDict('_SurfaceApplyAffineFlirtParamsDictNoTag', {
     "source-volume": str,
     "target-volume": str,
 })
@@ -22,10 +21,10 @@ SurfaceApplyAffineFlirtParamsDictTagged = typing.TypedDict('SurfaceApplyAffineFl
     "source-volume": str,
     "target-volume": str,
 })
+SurfaceApplyAffineFlirtParamsDict = _SurfaceApplyAffineFlirtParamsDictNoTag | SurfaceApplyAffineFlirtParamsDictTagged
 
 
-SurfaceApplyAffineParamsDict = typing.TypedDict('SurfaceApplyAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-affine"]],
+_SurfaceApplyAffineParamsDictNoTag = typing.TypedDict('_SurfaceApplyAffineParamsDictNoTag', {
     "out-surf": str,
     "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
     "in-surf": InputPathType,
@@ -38,6 +37,7 @@ SurfaceApplyAffineParamsDictTagged = typing.TypedDict('SurfaceApplyAffineParamsD
     "in-surf": InputPathType,
     "affine": str,
 })
+SurfaceApplyAffineParamsDict = _SurfaceApplyAffineParamsDictNoTag | SurfaceApplyAffineParamsDictTagged
 
 
 def surface_apply_affine_flirt(

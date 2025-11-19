@@ -13,8 +13,7 @@ MRIS_INTENSITY_PROFILE_METADATA = Metadata(
 )
 
 
-MrisIntensityProfileParamsDict = typing.TypedDict('MrisIntensityProfileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_intensity_profile"]],
+_MrisIntensityProfileParamsDictNoTag = typing.TypedDict('_MrisIntensityProfileParamsDictNoTag', {
     "subject_name": str,
     "hemi": str,
     "volume": InputPathType,
@@ -47,6 +46,7 @@ MrisIntensityProfileParamsDictTagged = typing.TypedDict('MrisIntensityProfilePar
     "dst": typing.NotRequired[InputPathType | None],
     "invert_flag": bool,
 })
+MrisIntensityProfileParamsDict = _MrisIntensityProfileParamsDictNoTag | MrisIntensityProfileParamsDictTagged
 
 
 class MrisIntensityProfileOutputs(typing.NamedTuple):

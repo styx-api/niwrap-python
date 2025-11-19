@@ -12,18 +12,17 @@ CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
 )
 
 
-CiftiCreateParcellatedFromTemplateCiftiParamsDict = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiCreateParcellatedFromTemplateCiftiParamsDictNoTag = typing.TypedDict('_CiftiCreateParcellatedFromTemplateCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
 })
 CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
+CiftiCreateParcellatedFromTemplateCiftiParamsDict = _CiftiCreateParcellatedFromTemplateCiftiParamsDictNoTag | CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged
 
 
-CiftiCreateParcellatedFromTemplateParamsDict = typing.TypedDict('CiftiCreateParcellatedFromTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-parcellated-from-template"]],
+_CiftiCreateParcellatedFromTemplateParamsDictNoTag = typing.TypedDict('_CiftiCreateParcellatedFromTemplateParamsDictNoTag', {
     "cifti-out": str,
     "value": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None],
@@ -38,6 +37,7 @@ CiftiCreateParcellatedFromTemplateParamsDictTagged = typing.TypedDict('CiftiCrea
     "cifti-template": InputPathType,
     "modify-direction": str,
 })
+CiftiCreateParcellatedFromTemplateParamsDict = _CiftiCreateParcellatedFromTemplateParamsDictNoTag | CiftiCreateParcellatedFromTemplateParamsDictTagged
 
 
 def cifti_create_parcellated_from_template_cifti(

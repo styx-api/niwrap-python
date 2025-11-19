@@ -13,8 +13,7 @@ SURF2_VOL_COORD_METADATA = Metadata(
 )
 
 
-Surf2VolCoordParamsDict = typing.TypedDict('Surf2VolCoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/Surf2VolCoord"]],
+_Surf2VolCoordParamsDictNoTag = typing.TypedDict('_Surf2VolCoordParamsDictNoTag', {
     "surface": str,
     "grid_vol": InputPathType,
     "grid_subbrick": typing.NotRequired[float | None],
@@ -41,6 +40,7 @@ Surf2VolCoordParamsDictTagged = typing.TypedDict('Surf2VolCoordParamsDictTagged'
     "verb_level": typing.NotRequired[float | None],
     "prefix": str,
 })
+Surf2VolCoordParamsDict = _Surf2VolCoordParamsDictNoTag | Surf2VolCoordParamsDictTagged
 
 
 class Surf2VolCoordOutputs(typing.NamedTuple):

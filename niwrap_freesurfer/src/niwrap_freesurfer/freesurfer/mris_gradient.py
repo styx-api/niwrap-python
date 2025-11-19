@@ -13,8 +13,7 @@ MRIS_GRADIENT_METADATA = Metadata(
 )
 
 
-MrisGradientParamsDict = typing.TypedDict('MrisGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_gradient"]],
+_MrisGradientParamsDictNoTag = typing.TypedDict('_MrisGradientParamsDictNoTag', {
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
     "output_gradient_file": str,
@@ -25,6 +24,7 @@ MrisGradientParamsDictTagged = typing.TypedDict('MrisGradientParamsDictTagged', 
     "input_vector_field": InputPathType,
     "output_gradient_file": str,
 })
+MrisGradientParamsDict = _MrisGradientParamsDictNoTag | MrisGradientParamsDictTagged
 
 
 class MrisGradientOutputs(typing.NamedTuple):

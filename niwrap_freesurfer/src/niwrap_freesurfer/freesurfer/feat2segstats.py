@@ -13,8 +13,7 @@ FEAT2SEGSTATS_METADATA = Metadata(
 )
 
 
-Feat2segstatsParamsDict = typing.TypedDict('Feat2segstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/feat2segstats"]],
+_Feat2segstatsParamsDictNoTag = typing.TypedDict('_Feat2segstatsParamsDictNoTag', {
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg_vol": typing.NotRequired[str | None],
@@ -59,6 +58,7 @@ Feat2segstatsParamsDictTagged = typing.TypedDict('Feat2segstatsParamsDictTagged'
     "debug_flag": bool,
     "nolog_flag": bool,
 })
+Feat2segstatsParamsDict = _Feat2segstatsParamsDictNoTag | Feat2segstatsParamsDictTagged
 
 
 class Feat2segstatsOutputs(typing.NamedTuple):

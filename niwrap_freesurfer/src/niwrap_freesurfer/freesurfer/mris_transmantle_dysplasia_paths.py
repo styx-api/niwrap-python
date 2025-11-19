@@ -13,8 +13,7 @@ MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA = Metadata(
 )
 
 
-MrisTransmantleDysplasiaPathsParamsDict = typing.TypedDict('MrisTransmantleDysplasiaPathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_transmantle_dysplasia_paths"]],
+_MrisTransmantleDysplasiaPathsParamsDictNoTag = typing.TypedDict('_MrisTransmantleDysplasiaPathsParamsDictNoTag', {
     "surface": InputPathType,
     "aseg_volume": InputPathType,
     "intensity_volume": InputPathType,
@@ -33,6 +32,7 @@ MrisTransmantleDysplasiaPathsParamsDictTagged = typing.TypedDict('MrisTransmantl
     "filter": typing.NotRequired[list[float] | None],
     "noise_sensitivity": bool,
 })
+MrisTransmantleDysplasiaPathsParamsDict = _MrisTransmantleDysplasiaPathsParamsDictNoTag | MrisTransmantleDysplasiaPathsParamsDictTagged
 
 
 class MrisTransmantleDysplasiaPathsOutputs(typing.NamedTuple):

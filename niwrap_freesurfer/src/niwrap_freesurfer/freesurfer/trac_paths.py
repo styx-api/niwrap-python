@@ -13,8 +13,7 @@ TRAC_PATHS_METADATA = Metadata(
 )
 
 
-TracPathsParamsDict = typing.TypedDict('TracPathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-paths"]],
+_TracPathsParamsDictNoTag = typing.TypedDict('_TracPathsParamsDictNoTag', {
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "no_log": bool,
@@ -45,6 +44,7 @@ TracPathsParamsDictTagged = typing.TypedDict('TracPathsParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+TracPathsParamsDict = _TracPathsParamsDictNoTag | TracPathsParamsDictTagged
 
 
 class TracPathsOutputs(typing.NamedTuple):

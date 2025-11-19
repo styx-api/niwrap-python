@@ -13,8 +13,7 @@ V_3D_RE_HO_METADATA = Metadata(
 )
 
 
-V3dReHoParamsDict = typing.TypedDict('V3dReHoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dReHo"]],
+_V3dReHoParamsDictNoTag = typing.TypedDict('_V3dReHoParamsDictNoTag', {
     "prefix": str,
     "inset": InputPathType,
     "nneigh": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ V3dReHoParamsDictTagged = typing.TypedDict('V3dReHoParamsDictTagged', {
     "box_z": typing.NotRequired[float | None],
     "in_rois": typing.NotRequired[InputPathType | None],
 })
+V3dReHoParamsDict = _V3dReHoParamsDictNoTag | V3dReHoParamsDictTagged
 
 
 class V3dReHoOutputs(typing.NamedTuple):

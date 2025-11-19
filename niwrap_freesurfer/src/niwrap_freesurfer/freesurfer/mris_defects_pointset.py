@@ -13,8 +13,7 @@ MRIS_DEFECTS_POINTSET_METADATA = Metadata(
 )
 
 
-MrisDefectsPointsetParamsDict = typing.TypedDict('MrisDefectsPointsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_defects_pointset"]],
+_MrisDefectsPointsetParamsDictNoTag = typing.TypedDict('_MrisDefectsPointsetParamsDictNoTag', {
     "surface": InputPathType,
     "defects": InputPathType,
     "out": str,
@@ -29,6 +28,7 @@ MrisDefectsPointsetParamsDictTagged = typing.TypedDict('MrisDefectsPointsetParam
     "label": typing.NotRequired[InputPathType | None],
     "control": bool,
 })
+MrisDefectsPointsetParamsDict = _MrisDefectsPointsetParamsDictNoTag | MrisDefectsPointsetParamsDictTagged
 
 
 class MrisDefectsPointsetOutputs(typing.NamedTuple):

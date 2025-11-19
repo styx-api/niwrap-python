@@ -13,8 +13,7 @@ SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-SegmentSubjectOldSkullStripParamsDict = typing.TypedDict('SegmentSubjectOldSkullStripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_old_skull_strip"]],
+_SegmentSubjectOldSkullStripParamsDictNoTag = typing.TypedDict('_SegmentSubjectOldSkullStripParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ SegmentSubjectOldSkullStripParamsDictTagged = typing.TypedDict('SegmentSubjectOl
     "debug_flag": bool,
     "version_flag": bool,
 })
+SegmentSubjectOldSkullStripParamsDict = _SegmentSubjectOldSkullStripParamsDictNoTag | SegmentSubjectOldSkullStripParamsDictTagged
 
 
 class SegmentSubjectOldSkullStripOutputs(typing.NamedTuple):

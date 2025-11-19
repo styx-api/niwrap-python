@@ -13,8 +13,7 @@ MRI_CVS_REGISTER_METADATA = Metadata(
 )
 
 
-MriCvsRegisterParamsDict = typing.TypedDict('MriCvsRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_register"]],
+_MriCvsRegisterParamsDictNoTag = typing.TypedDict('_MriCvsRegisterParamsDictNoTag', {
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "templatedir": typing.NotRequired[str | None],
@@ -73,6 +72,7 @@ MriCvsRegisterParamsDictTagged = typing.TypedDict('MriCvsRegisterParamsDictTagge
     "version_flag": bool,
     "help_flag": bool,
 })
+MriCvsRegisterParamsDict = _MriCvsRegisterParamsDictNoTag | MriCvsRegisterParamsDictTagged
 
 
 class MriCvsRegisterOutputs(typing.NamedTuple):

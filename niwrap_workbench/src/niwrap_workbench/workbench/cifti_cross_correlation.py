@@ -12,8 +12,7 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiCrossCorrelationParamsDict = typing.TypedDict('CiftiCrossCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-cross-correlation"]],
+_CiftiCrossCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCrossCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
@@ -30,6 +29,7 @@ CiftiCrossCorrelationParamsDictTagged = typing.TypedDict('CiftiCrossCorrelationP
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
+CiftiCrossCorrelationParamsDict = _CiftiCrossCorrelationParamsDictNoTag | CiftiCrossCorrelationParamsDictTagged
 
 
 class CiftiCrossCorrelationOutputs(typing.NamedTuple):

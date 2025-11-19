@@ -13,8 +13,7 @@ IMAGES_EQUAL_METADATA = Metadata(
 )
 
 
-ImagesEqualParamsDict = typing.TypedDict('ImagesEqualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/images_equal"]],
+_ImagesEqualParamsDictNoTag = typing.TypedDict('_ImagesEqualParamsDictNoTag', {
     "file_a": InputPathType,
     "file_b": InputPathType,
     "all_flag": bool,
@@ -25,6 +24,7 @@ ImagesEqualParamsDictTagged = typing.TypedDict('ImagesEqualParamsDictTagged', {
     "file_b": InputPathType,
     "all_flag": bool,
 })
+ImagesEqualParamsDict = _ImagesEqualParamsDictNoTag | ImagesEqualParamsDictTagged
 
 
 class ImagesEqualOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 )
 
 
-CiftiRestrictDenseMapParamsDict = typing.TypedDict('CiftiRestrictDenseMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-restrict-dense-map"]],
+_CiftiRestrictDenseMapParamsDictNoTag = typing.TypedDict('_CiftiRestrictDenseMapParamsDictNoTag', {
     "cifti-out": str,
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -34,6 +33,7 @@ CiftiRestrictDenseMapParamsDictTagged = typing.TypedDict('CiftiRestrictDenseMapP
     "cifti-in": InputPathType,
     "direction": str,
 })
+CiftiRestrictDenseMapParamsDict = _CiftiRestrictDenseMapParamsDictNoTag | CiftiRestrictDenseMapParamsDictTagged
 
 
 class CiftiRestrictDenseMapOutputs(typing.NamedTuple):

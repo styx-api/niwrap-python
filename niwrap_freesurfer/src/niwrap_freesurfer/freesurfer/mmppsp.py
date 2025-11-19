@@ -13,8 +13,7 @@ MMPPSP_METADATA = Metadata(
 )
 
 
-MmppspParamsDict = typing.TypedDict('MmppspParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mmppsp"]],
+_MmppspParamsDictNoTag = typing.TypedDict('_MmppspParamsDictNoTag', {
     "samseg_dir": str,
     "outdir": str,
     "lh_flag": bool,
@@ -41,6 +40,7 @@ MmppspParamsDictTagged = typing.TypedDict('MmppspParamsDictTagged', {
     "stop_after": typing.NotRequired[str | None],
     "wexpanddist": typing.NotRequired[float | None],
 })
+MmppspParamsDict = _MmppspParamsDictNoTag | MmppspParamsDictTagged
 
 
 class MmppspOutputs(typing.NamedTuple):

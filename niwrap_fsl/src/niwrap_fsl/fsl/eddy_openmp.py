@@ -13,8 +13,7 @@ EDDY_OPENMP_METADATA = Metadata(
 )
 
 
-EddyOpenmpParamsDict = typing.TypedDict('EddyOpenmpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_openmp"]],
+_EddyOpenmpParamsDictNoTag = typing.TypedDict('_EddyOpenmpParamsDictNoTag', {
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -107,6 +106,7 @@ EddyOpenmpParamsDictTagged = typing.TypedDict('EddyOpenmpParamsDictTagged', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
+EddyOpenmpParamsDict = _EddyOpenmpParamsDictNoTag | EddyOpenmpParamsDictTagged
 
 
 class EddyOpenmpOutputs(typing.NamedTuple):

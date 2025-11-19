@@ -13,8 +13,7 @@ MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
 )
 
 
-MriRelabelNonwmHyposParamsDict = typing.TypedDict('MriRelabelNonwmHyposParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_nonwm_hypos"]],
+_MriRelabelNonwmHyposParamsDictNoTag = typing.TypedDict('_MriRelabelNonwmHyposParamsDictNoTag', {
     "inputseg": InputPathType,
     "outputseg": str,
     "segments": typing.NotRequired[list[str] | None],
@@ -31,6 +30,7 @@ MriRelabelNonwmHyposParamsDictTagged = typing.TypedDict('MriRelabelNonwmHyposPar
     "debug": bool,
     "checkopts": bool,
 })
+MriRelabelNonwmHyposParamsDict = _MriRelabelNonwmHyposParamsDictNoTag | MriRelabelNonwmHyposParamsDictTagged
 
 
 class MriRelabelNonwmHyposOutputs(typing.NamedTuple):

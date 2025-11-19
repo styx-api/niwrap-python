@@ -13,8 +13,7 @@ UBER_ALIGN_TEST_PY_METADATA = Metadata(
 )
 
 
-UberAlignTestPyParamsDict = typing.TypedDict('UberAlignTestPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/uber_align_test.py"]],
+_UberAlignTestPyParamsDictNoTag = typing.TypedDict('_UberAlignTestPyParamsDictNoTag', {
     "no_gui": bool,
     "print_script": bool,
     "save_script": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ UberAlignTestPyParamsDictTagged = typing.TypedDict('UberAlignTestPyParamsDictTag
     "show_valid_opts": bool,
     "version": bool,
 })
+UberAlignTestPyParamsDict = _UberAlignTestPyParamsDictNoTag | UberAlignTestPyParamsDictTagged
 
 
 class UberAlignTestPyOutputs(typing.NamedTuple):

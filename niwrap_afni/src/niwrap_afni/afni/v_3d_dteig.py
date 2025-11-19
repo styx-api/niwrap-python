@@ -13,8 +13,7 @@ V_3D_DTEIG_METADATA = Metadata(
 )
 
 
-V3dDteigParamsDict = typing.TypedDict('V3dDteigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDTeig"]],
+_V3dDteigParamsDictNoTag = typing.TypedDict('_V3dDteigParamsDictNoTag', {
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -29,6 +28,7 @@ V3dDteigParamsDictTagged = typing.TypedDict('V3dDteigParamsDictTagged', {
     "sep_dsets": bool,
     "uddata": bool,
 })
+V3dDteigParamsDict = _V3dDteigParamsDictNoTag | V3dDteigParamsDictTagged
 
 
 class V3dDteigOutputs(typing.NamedTuple):

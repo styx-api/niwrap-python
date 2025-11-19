@@ -13,8 +13,7 @@ POLYORDER_METADATA = Metadata(
 )
 
 
-PolyorderParamsDict = typing.TypedDict('PolyorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/polyorder"]],
+_PolyorderParamsDictNoTag = typing.TypedDict('_PolyorderParamsDictNoTag', {
     "ntp": float,
     "tr": float,
     "cutoff": float,
@@ -25,6 +24,7 @@ PolyorderParamsDictTagged = typing.TypedDict('PolyorderParamsDictTagged', {
     "tr": float,
     "cutoff": float,
 })
+PolyorderParamsDict = _PolyorderParamsDictNoTag | PolyorderParamsDictTagged
 
 
 class PolyorderOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_GLMFIT_METADATA = Metadata(
 )
 
 
-MriGlmfitParamsDict = typing.TypedDict('MriGlmfitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_glmfit"]],
+_MriGlmfitParamsDictNoTag = typing.TypedDict('_MriGlmfitParamsDictNoTag', {
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
     "table_input": typing.NotRequired[InputPathType | None],
@@ -163,6 +162,7 @@ MriGlmfitParamsDictTagged = typing.TypedDict('MriGlmfitParamsDictTagged', {
     "sim_done_file": typing.NotRequired[InputPathType | None],
     "no_sig_double_flag": bool,
 })
+MriGlmfitParamsDict = _MriGlmfitParamsDictNoTag | MriGlmfitParamsDictTagged
 
 
 class MriGlmfitOutputs(typing.NamedTuple):

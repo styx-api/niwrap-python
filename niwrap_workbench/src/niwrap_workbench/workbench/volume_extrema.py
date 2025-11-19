@@ -12,8 +12,7 @@ VOLUME_EXTREMA_METADATA = Metadata(
 )
 
 
-VolumeExtremaPresmoothParamsDict = typing.TypedDict('VolumeExtremaPresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_VolumeExtremaPresmoothParamsDictNoTag = typing.TypedDict('_VolumeExtremaPresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ VolumeExtremaPresmoothParamsDictTagged = typing.TypedDict('VolumeExtremaPresmoot
     "kernel": float,
     "fwhm": bool,
 })
+VolumeExtremaPresmoothParamsDict = _VolumeExtremaPresmoothParamsDictNoTag | VolumeExtremaPresmoothParamsDictTagged
 
 
-VolumeExtremaThresholdParamsDict = typing.TypedDict('VolumeExtremaThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_VolumeExtremaThresholdParamsDictNoTag = typing.TypedDict('_VolumeExtremaThresholdParamsDictNoTag', {
     "low": float,
     "high": float,
 })
@@ -34,10 +33,10 @@ VolumeExtremaThresholdParamsDictTagged = typing.TypedDict('VolumeExtremaThreshol
     "low": float,
     "high": float,
 })
+VolumeExtremaThresholdParamsDict = _VolumeExtremaThresholdParamsDictNoTag | VolumeExtremaThresholdParamsDictTagged
 
 
-VolumeExtremaParamsDict = typing.TypedDict('VolumeExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-extrema"]],
+_VolumeExtremaParamsDictNoTag = typing.TypedDict('_VolumeExtremaParamsDictNoTag', {
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -64,6 +63,7 @@ VolumeExtremaParamsDictTagged = typing.TypedDict('VolumeExtremaParamsDictTagged'
     "volume-in": InputPathType,
     "distance": float,
 })
+VolumeExtremaParamsDict = _VolumeExtremaParamsDictNoTag | VolumeExtremaParamsDictTagged
 
 
 def volume_extrema_presmooth(

@@ -13,8 +13,7 @@ MRIS_REFINE_SURFACES_METADATA = Metadata(
 )
 
 
-MrisRefineSurfacesParamsDict = typing.TypedDict('MrisRefineSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_refine_surfaces"]],
+_MrisRefineSurfacesParamsDictNoTag = typing.TypedDict('_MrisRefineSurfacesParamsDictNoTag', {
     "subject_name": str,
     "hemi": str,
     "hires_volume": str,
@@ -35,6 +34,7 @@ MrisRefineSurfacesParamsDictTagged = typing.TypedDict('MrisRefineSurfacesParamsD
     "use_mgz": bool,
     "suffix": typing.NotRequired[str | None],
 })
+MrisRefineSurfacesParamsDict = _MrisRefineSurfacesParamsDictNoTag | MrisRefineSurfacesParamsDictTagged
 
 
 class MrisRefineSurfacesOutputs(typing.NamedTuple):

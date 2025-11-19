@@ -13,8 +13,7 @@ FSLORIENT_METADATA = Metadata(
 )
 
 
-FslorientParamsDict = typing.TypedDict('FslorientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslorient"]],
+_FslorientParamsDictNoTag = typing.TypedDict('_FslorientParamsDictNoTag', {
     "get_orient": bool,
     "get_sform": bool,
     "get_qform": bool,
@@ -51,6 +50,7 @@ FslorientParamsDictTagged = typing.TypedDict('FslorientParamsDictTagged', {
     "swap_orient": bool,
     "filename": InputPathType,
 })
+FslorientParamsDict = _FslorientParamsDictNoTag | FslorientParamsDictTagged
 
 
 class FslorientOutputs(typing.NamedTuple):

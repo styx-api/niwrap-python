@@ -13,8 +13,7 @@ V_3DINFILL_METADATA = Metadata(
 )
 
 
-V3dinfillParamsDict = typing.TypedDict('V3dinfillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dinfill"]],
+_V3dinfillParamsDictNoTag = typing.TypedDict('_V3dinfillParamsDictNoTag', {
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "niter": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ V3dinfillParamsDictTagged = typing.TypedDict('V3dinfillParamsDictTagged', {
     "mrange": typing.NotRequired[list[float] | None],
     "cmask": typing.NotRequired[str | None],
 })
+V3dinfillParamsDict = _V3dinfillParamsDictNoTag | V3dinfillParamsDictTagged
 
 
 class V3dinfillOutputs(typing.NamedTuple):

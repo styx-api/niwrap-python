@@ -13,8 +13,7 @@ FSL_RIGID_REGISTER_METADATA = Metadata(
 )
 
 
-FslRigidRegisterParamsDict = typing.TypedDict('FslRigidRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_rigid_register"]],
+_FslRigidRegisterParamsDictNoTag = typing.TypedDict('_FslRigidRegisterParamsDictNoTag', {
     "refvol": InputPathType,
     "inputvol": InputPathType,
     "outputvol": str,
@@ -63,6 +62,7 @@ FslRigidRegisterParamsDictTagged = typing.TypedDict('FslRigidRegisterParamsDictT
     "version": bool,
     "help": bool,
 })
+FslRigidRegisterParamsDict = _FslRigidRegisterParamsDictNoTag | FslRigidRegisterParamsDictTagged
 
 
 class FslRigidRegisterOutputs(typing.NamedTuple):

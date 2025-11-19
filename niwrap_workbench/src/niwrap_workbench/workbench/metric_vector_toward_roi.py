@@ -12,8 +12,7 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 )
 
 
-MetricVectorTowardRoiParamsDict = typing.TypedDict('MetricVectorTowardRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-toward-roi"]],
+_MetricVectorTowardRoiParamsDictNoTag = typing.TypedDict('_MetricVectorTowardRoiParamsDictNoTag', {
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
@@ -26,6 +25,7 @@ MetricVectorTowardRoiParamsDictTagged = typing.TypedDict('MetricVectorTowardRoiP
     "surface": InputPathType,
     "target-roi": InputPathType,
 })
+MetricVectorTowardRoiParamsDict = _MetricVectorTowardRoiParamsDictNoTag | MetricVectorTowardRoiParamsDictTagged
 
 
 class MetricVectorTowardRoiOutputs(typing.NamedTuple):

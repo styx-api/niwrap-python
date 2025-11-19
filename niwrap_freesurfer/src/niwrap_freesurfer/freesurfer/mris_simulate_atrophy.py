@@ -13,8 +13,7 @@ MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
 )
 
 
-MrisSimulateAtrophyParamsDict = typing.TypedDict('MrisSimulateAtrophyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_simulate_atrophy"]],
+_MrisSimulateAtrophyParamsDictNoTag = typing.TypedDict('_MrisSimulateAtrophyParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "label": str,
@@ -33,6 +32,7 @@ MrisSimulateAtrophyParamsDictTagged = typing.TypedDict('MrisSimulateAtrophyParam
     "atrophy_percent": typing.NotRequired[float | None],
     "noise_level": typing.NotRequired[float | None],
 })
+MrisSimulateAtrophyParamsDict = _MrisSimulateAtrophyParamsDictNoTag | MrisSimulateAtrophyParamsDictTagged
 
 
 class MrisSimulateAtrophyOutputs(typing.NamedTuple):

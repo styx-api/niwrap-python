@@ -12,8 +12,7 @@ CIFTI_MATH_METADATA = Metadata(
 )
 
 
-CiftiMathSelectParamsDict = typing.TypedDict('CiftiMathSelectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["select"]],
+_CiftiMathSelectParamsDictNoTag = typing.TypedDict('_CiftiMathSelectParamsDictNoTag', {
     "dim": int,
     "index": str,
     "repeat": bool,
@@ -24,10 +23,10 @@ CiftiMathSelectParamsDictTagged = typing.TypedDict('CiftiMathSelectParamsDictTag
     "index": str,
     "repeat": bool,
 })
+CiftiMathSelectParamsDict = _CiftiMathSelectParamsDictNoTag | CiftiMathSelectParamsDictTagged
 
 
-CiftiMathVarParamsDict = typing.TypedDict('CiftiMathVarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["var"]],
+_CiftiMathVarParamsDictNoTag = typing.TypedDict('_CiftiMathVarParamsDictNoTag', {
     "name": str,
     "cifti": InputPathType,
     "select": typing.NotRequired[list[CiftiMathSelectParamsDict] | None],
@@ -38,10 +37,10 @@ CiftiMathVarParamsDictTagged = typing.TypedDict('CiftiMathVarParamsDictTagged', 
     "cifti": InputPathType,
     "select": typing.NotRequired[list[CiftiMathSelectParamsDict] | None],
 })
+CiftiMathVarParamsDict = _CiftiMathVarParamsDictNoTag | CiftiMathVarParamsDictTagged
 
 
-CiftiMathParamsDict = typing.TypedDict('CiftiMathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-math"]],
+_CiftiMathParamsDictNoTag = typing.TypedDict('_CiftiMathParamsDictNoTag', {
     "cifti-out": str,
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
@@ -56,6 +55,7 @@ CiftiMathParamsDictTagged = typing.TypedDict('CiftiMathParamsDictTagged', {
     "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "expression": str,
 })
+CiftiMathParamsDict = _CiftiMathParamsDictNoTag | CiftiMathParamsDictTagged
 
 
 def cifti_math_select(

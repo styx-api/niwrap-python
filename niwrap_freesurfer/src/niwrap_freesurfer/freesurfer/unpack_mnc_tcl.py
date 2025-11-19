@@ -13,8 +13,7 @@ UNPACK_MNC_TCL_METADATA = Metadata(
 )
 
 
-UnpackMncTclParamsDict = typing.TypedDict('UnpackMncTclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_mnc.tcl"]],
+_UnpackMncTclParamsDictNoTag = typing.TypedDict('_UnpackMncTclParamsDictNoTag', {
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],
@@ -25,6 +24,7 @@ UnpackMncTclParamsDictTagged = typing.TypedDict('UnpackMncTclParamsDictTagged', 
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],
 })
+UnpackMncTclParamsDict = _UnpackMncTclParamsDictNoTag | UnpackMncTclParamsDictTagged
 
 
 class UnpackMncTclOutputs(typing.NamedTuple):

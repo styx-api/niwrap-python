@@ -13,8 +13,7 @@ ANTSJACOBIAN_METADATA = Metadata(
 )
 
 
-AntsjacobianParamsDict = typing.TypedDict('AntsjacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ANTSJacobian"]],
+_AntsjacobianParamsDictNoTag = typing.TypedDict('_AntsjacobianParamsDictNoTag', {
     "imagedim": int,
     "gwarp": InputPathType,
     "outfile": str,
@@ -33,6 +32,7 @@ AntsjacobianParamsDictTagged = typing.TypedDict('AntsjacobianParamsDictTagged', 
     "normbytotalbool": int,
     "projectionvector": typing.NotRequired[str | None],
 })
+AntsjacobianParamsDict = _AntsjacobianParamsDictNoTag | AntsjacobianParamsDictTagged
 
 
 class AntsjacobianOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FIRDESIGN_METADATA = Metadata(
 )
 
 
-FirdesignParamsDict = typing.TypedDict('FirdesignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/FIRdesign"]],
+_FirdesignParamsDictNoTag = typing.TypedDict('_FirdesignParamsDictNoTag', {
     "fbot": float,
     "ftop": float,
     "ntap": float,
@@ -31,6 +30,7 @@ FirdesignParamsDictTagged = typing.TypedDict('FirdesignParamsDictTagged', {
     "alternative_band": typing.NotRequired[list[float] | None],
     "alternative_ntap": typing.NotRequired[float | None],
 })
+FirdesignParamsDict = _FirdesignParamsDictNoTag | FirdesignParamsDictTagged
 
 
 class FirdesignOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ LABELS_UNION_METADATA = Metadata(
 )
 
 
-LabelsUnionParamsDict = typing.TypedDict('LabelsUnionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_union"]],
+_LabelsUnionParamsDictNoTag = typing.TypedDict('_LabelsUnionParamsDictNoTag', {
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -25,6 +24,7 @@ LabelsUnionParamsDictTagged = typing.TypedDict('LabelsUnionParamsDictTagged', {
     "label2": InputPathType,
     "outputname": str,
 })
+LabelsUnionParamsDict = _LabelsUnionParamsDictNoTag | LabelsUnionParamsDictTagged
 
 
 class LabelsUnionOutputs(typing.NamedTuple):

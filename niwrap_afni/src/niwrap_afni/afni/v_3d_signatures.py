@@ -13,8 +13,7 @@ V_3D_SIGNATURES_METADATA = Metadata(
 )
 
 
-V3dSignaturesParamsDict = typing.TypedDict('V3dSignaturesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSignatures"]],
+_V3dSignaturesParamsDictNoTag = typing.TypedDict('_V3dSignaturesParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "segmentation": bool,
@@ -31,6 +30,7 @@ V3dSignaturesParamsDictTagged = typing.TypedDict('V3dSignaturesParamsDictTagged'
     "threshold": typing.NotRequired[float | None],
     "smoothing": typing.NotRequired[float | None],
 })
+V3dSignaturesParamsDict = _V3dSignaturesParamsDictNoTag | V3dSignaturesParamsDictTagged
 
 
 class V3dSignaturesOutputs(typing.NamedTuple):

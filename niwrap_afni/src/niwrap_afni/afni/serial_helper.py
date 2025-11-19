@@ -13,8 +13,7 @@ SERIAL_HELPER_METADATA = Metadata(
 )
 
 
-SerialHelperParamsDict = typing.TypedDict('SerialHelperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/serial_helper"]],
+_SerialHelperParamsDictNoTag = typing.TypedDict('_SerialHelperParamsDictNoTag', {
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
     "mp_max": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ SerialHelperParamsDictTagged = typing.TypedDict('SerialHelperParamsDictTagged', 
     "no_serial": bool,
     "version": bool,
 })
+SerialHelperParamsDict = _SerialHelperParamsDictNoTag | SerialHelperParamsDictTagged
 
 
 class SerialHelperOutputs(typing.NamedTuple):

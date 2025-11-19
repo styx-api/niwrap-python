@@ -13,8 +13,7 @@ DWI2RESPONSE_METADATA = Metadata(
 )
 
 
-Dwi2responseDhollanderParamsDict = typing.TypedDict('Dwi2responseDhollanderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dhollander"]],
+_Dwi2responseDhollanderParamsDictNoTag = typing.TypedDict('_Dwi2responseDhollanderParamsDictNoTag', {
     "input": InputPathType,
     "out_sfwm": str,
     "out_gm": str,
@@ -39,10 +38,10 @@ Dwi2responseDhollanderParamsDictTagged = typing.TypedDict('Dwi2responseDhollande
     "csf": typing.NotRequired[float | None],
     "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
 })
+Dwi2responseDhollanderParamsDict = _Dwi2responseDhollanderParamsDictNoTag | Dwi2responseDhollanderParamsDictTagged
 
 
-Dwi2responseFaParamsDict = typing.TypedDict('Dwi2responseFaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fa"]],
+_Dwi2responseFaParamsDictNoTag = typing.TypedDict('_Dwi2responseFaParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "erode": typing.NotRequired[int | None],
@@ -57,10 +56,10 @@ Dwi2responseFaParamsDictTagged = typing.TypedDict('Dwi2responseFaParamsDictTagge
     "number": typing.NotRequired[int | None],
     "threshold": typing.NotRequired[float | None],
 })
+Dwi2responseFaParamsDict = _Dwi2responseFaParamsDictNoTag | Dwi2responseFaParamsDictTagged
 
 
-Dwi2responseManualParamsDict = typing.TypedDict('Dwi2responseManualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["manual"]],
+_Dwi2responseManualParamsDictNoTag = typing.TypedDict('_Dwi2responseManualParamsDictNoTag', {
     "input": InputPathType,
     "in_voxels": InputPathType,
     "output": str,
@@ -73,10 +72,10 @@ Dwi2responseManualParamsDictTagged = typing.TypedDict('Dwi2responseManualParamsD
     "output": str,
     "dirs": typing.NotRequired[InputPathType | None],
 })
+Dwi2responseManualParamsDict = _Dwi2responseManualParamsDictNoTag | Dwi2responseManualParamsDictTagged
 
 
-Dwi2responseMsmt5ttParamsDict = typing.TypedDict('Dwi2responseMsmt5ttParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["msmt_5tt"]],
+_Dwi2responseMsmt5ttParamsDictNoTag = typing.TypedDict('_Dwi2responseMsmt5ttParamsDictNoTag', {
     "input": InputPathType,
     "in_5tt": InputPathType,
     "out_wm": str,
@@ -101,10 +100,10 @@ Dwi2responseMsmt5ttParamsDictTagged = typing.TypedDict('Dwi2responseMsmt5ttParam
     "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
     "sfwm_fa_threshold": typing.NotRequired[float | None],
 })
+Dwi2responseMsmt5ttParamsDict = _Dwi2responseMsmt5ttParamsDictNoTag | Dwi2responseMsmt5ttParamsDictTagged
 
 
-Dwi2responseTaxParamsDict = typing.TypedDict('Dwi2responseTaxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tax"]],
+_Dwi2responseTaxParamsDictNoTag = typing.TypedDict('_Dwi2responseTaxParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "peak_ratio": typing.NotRequired[float | None],
@@ -119,10 +118,10 @@ Dwi2responseTaxParamsDictTagged = typing.TypedDict('Dwi2responseTaxParamsDictTag
     "max_iters": typing.NotRequired[int | None],
     "convergence": typing.NotRequired[float | None],
 })
+Dwi2responseTaxParamsDict = _Dwi2responseTaxParamsDictNoTag | Dwi2responseTaxParamsDictTagged
 
 
-Dwi2responseTournierParamsDict = typing.TypedDict('Dwi2responseTournierParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tournier"]],
+_Dwi2responseTournierParamsDictNoTag = typing.TypedDict('_Dwi2responseTournierParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "number": typing.NotRequired[int | None],
@@ -139,10 +138,10 @@ Dwi2responseTournierParamsDictTagged = typing.TypedDict('Dwi2responseTournierPar
     "dilate": typing.NotRequired[int | None],
     "max_iters": typing.NotRequired[int | None],
 })
+Dwi2responseTournierParamsDict = _Dwi2responseTournierParamsDictNoTag | Dwi2responseTournierParamsDictTagged
 
 
-Dwi2responseFslgradParamsDict = typing.TypedDict('Dwi2responseFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_Dwi2responseFslgradParamsDictNoTag = typing.TypedDict('_Dwi2responseFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -151,10 +150,10 @@ Dwi2responseFslgradParamsDictTagged = typing.TypedDict('Dwi2responseFslgradParam
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+Dwi2responseFslgradParamsDict = _Dwi2responseFslgradParamsDictNoTag | Dwi2responseFslgradParamsDictTagged
 
 
-Dwi2responseConfigParamsDict = typing.TypedDict('Dwi2responseConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Dwi2responseConfigParamsDictNoTag = typing.TypedDict('_Dwi2responseConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -163,10 +162,10 @@ Dwi2responseConfigParamsDictTagged = typing.TypedDict('Dwi2responseConfigParamsD
     "key": str,
     "value": str,
 })
+Dwi2responseConfigParamsDict = _Dwi2responseConfigParamsDictNoTag | Dwi2responseConfigParamsDictTagged
 
 
-Dwi2responseParamsDict = typing.TypedDict('Dwi2responseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2response"]],
+_Dwi2responseParamsDictNoTag = typing.TypedDict('_Dwi2responseParamsDictNoTag', {
     "algorithm": typing.Union[Dwi2responseDhollanderParamsDictTagged, Dwi2responseFaParamsDictTagged, Dwi2responseManualParamsDictTagged, Dwi2responseMsmt5ttParamsDictTagged, Dwi2responseTaxParamsDictTagged, Dwi2responseTournierParamsDictTagged],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2responseFslgradParamsDict | None],
@@ -207,6 +206,7 @@ Dwi2responseParamsDictTagged = typing.TypedDict('Dwi2responseParamsDictTagged', 
     "help": bool,
     "version": bool,
 })
+Dwi2responseParamsDict = _Dwi2responseParamsDictNoTag | Dwi2responseParamsDictTagged
 
 
 def dwi2response_algorithm_cargs_dyn_fn(

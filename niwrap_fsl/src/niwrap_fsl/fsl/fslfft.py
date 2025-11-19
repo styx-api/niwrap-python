@@ -13,8 +13,7 @@ FSLFFT_METADATA = Metadata(
 )
 
 
-FslfftParamsDict = typing.TypedDict('FslfftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslfft"]],
+_FslfftParamsDictNoTag = typing.TypedDict('_FslfftParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "inverse_flag": bool,
@@ -25,6 +24,7 @@ FslfftParamsDictTagged = typing.TypedDict('FslfftParamsDictTagged', {
     "output_volume": str,
     "inverse_flag": bool,
 })
+FslfftParamsDict = _FslfftParamsDictNoTag | FslfftParamsDictTagged
 
 
 class FslfftOutputs(typing.NamedTuple):

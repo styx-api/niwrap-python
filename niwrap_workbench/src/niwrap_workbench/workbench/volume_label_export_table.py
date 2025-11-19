@@ -12,8 +12,7 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-VolumeLabelExportTableParamsDict = typing.TypedDict('VolumeLabelExportTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-export-table"]],
+_VolumeLabelExportTableParamsDictNoTag = typing.TypedDict('_VolumeLabelExportTableParamsDictNoTag', {
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
@@ -26,6 +25,7 @@ VolumeLabelExportTableParamsDictTagged = typing.TypedDict('VolumeLabelExportTabl
     "map": str,
     "table-out": str,
 })
+VolumeLabelExportTableParamsDict = _VolumeLabelExportTableParamsDictNoTag | VolumeLabelExportTableParamsDictTagged
 
 
 class VolumeLabelExportTableOutputs(typing.NamedTuple):

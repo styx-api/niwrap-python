@@ -13,8 +13,7 @@ TRACTSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Tractstats2tableParamsDict = typing.TypedDict('Tractstats2tableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tractstats2table"]],
+_Tractstats2tableParamsDictNoTag = typing.TypedDict('_Tractstats2tableParamsDictNoTag', {
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
     "overall": bool,
@@ -37,6 +36,7 @@ Tractstats2tableParamsDictTagged = typing.TypedDict('Tractstats2tableParamsDictT
     "transpose": bool,
     "debug": bool,
 })
+Tractstats2tableParamsDict = _Tractstats2tableParamsDictNoTag | Tractstats2tableParamsDictTagged
 
 
 class Tractstats2tableOutputs(typing.NamedTuple):

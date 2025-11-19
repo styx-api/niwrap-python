@@ -13,8 +13,7 @@ FIXELCORRESPONDENCE_METADATA = Metadata(
 )
 
 
-FixelcorrespondenceConfigParamsDict = typing.TypedDict('FixelcorrespondenceConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelcorrespondenceConfigParamsDictNoTag = typing.TypedDict('_FixelcorrespondenceConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ FixelcorrespondenceConfigParamsDictTagged = typing.TypedDict('Fixelcorrespondenc
     "key": str,
     "value": str,
 })
+FixelcorrespondenceConfigParamsDict = _FixelcorrespondenceConfigParamsDictNoTag | FixelcorrespondenceConfigParamsDictTagged
 
 
-FixelcorrespondenceParamsDict = typing.TypedDict('FixelcorrespondenceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcorrespondence"]],
+_FixelcorrespondenceParamsDictNoTag = typing.TypedDict('_FixelcorrespondenceParamsDictNoTag', {
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -57,6 +56,7 @@ FixelcorrespondenceParamsDictTagged = typing.TypedDict('FixelcorrespondenceParam
     "output_directory": str,
     "output_data": str,
 })
+FixelcorrespondenceParamsDict = _FixelcorrespondenceParamsDictNoTag | FixelcorrespondenceParamsDictTagged
 
 
 def fixelcorrespondence_config(

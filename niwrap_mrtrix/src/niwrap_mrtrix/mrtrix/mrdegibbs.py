@@ -13,8 +13,7 @@ MRDEGIBBS_METADATA = Metadata(
 )
 
 
-MrdegibbsConfigParamsDict = typing.TypedDict('MrdegibbsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrdegibbsConfigParamsDictNoTag = typing.TypedDict('_MrdegibbsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrdegibbsConfigParamsDictTagged = typing.TypedDict('MrdegibbsConfigParamsDictTag
     "key": str,
     "value": str,
 })
+MrdegibbsConfigParamsDict = _MrdegibbsConfigParamsDictNoTag | MrdegibbsConfigParamsDictTagged
 
 
-MrdegibbsParamsDict = typing.TypedDict('MrdegibbsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrdegibbs"]],
+_MrdegibbsParamsDictNoTag = typing.TypedDict('_MrdegibbsParamsDictNoTag', {
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
     "minW": typing.NotRequired[int | None],
@@ -61,6 +60,7 @@ MrdegibbsParamsDictTagged = typing.TypedDict('MrdegibbsParamsDictTagged', {
     "in": InputPathType,
     "out": str,
 })
+MrdegibbsParamsDict = _MrdegibbsParamsDictNoTag | MrdegibbsParamsDictTagged
 
 
 def mrdegibbs_config(

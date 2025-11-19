@@ -13,8 +13,7 @@ QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 )
 
 
-QuantifyThalamicNucleiShParamsDict = typing.TypedDict('QuantifyThalamicNucleiShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyThalamicNuclei.sh"]],
+_QuantifyThalamicNucleiShParamsDictNoTag = typing.TypedDict('_QuantifyThalamicNucleiShParamsDictNoTag', {
     "output_file": str,
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ QuantifyThalamicNucleiShParamsDictTagged = typing.TypedDict('QuantifyThalamicNuc
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
+QuantifyThalamicNucleiShParamsDict = _QuantifyThalamicNucleiShParamsDictNoTag | QuantifyThalamicNucleiShParamsDictTagged
 
 
 class QuantifyThalamicNucleiShOutputs(typing.NamedTuple):

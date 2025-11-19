@@ -13,8 +13,7 @@ POPP_METADATA = Metadata(
 )
 
 
-PoppParamsDict = typing.TypedDict('PoppParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/popp"]],
+_PoppParamsDictNoTag = typing.TypedDict('_PoppParamsDictNoTag', {
     "input_file": InputPathType,
     "output_basename": str,
     "sampling_rate": typing.NotRequired[float | None],
@@ -85,6 +84,7 @@ PoppParamsDictTagged = typing.TypedDict('PoppParamsDictTagged', {
     "debug_flag": bool,
     "help_flag": bool,
 })
+PoppParamsDict = _PoppParamsDictNoTag | PoppParamsDictTagged
 
 
 class PoppOutputs(typing.NamedTuple):

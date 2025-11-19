@@ -13,8 +13,7 @@ V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
 )
 
 
-VAlignPartialObliqueParamsDict = typing.TypedDict('VAlignPartialObliqueParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@align_partial_oblique"]],
+_VAlignPartialObliqueParamsDictNoTag = typing.TypedDict('_VAlignPartialObliqueParamsDictNoTag', {
     "base": InputPathType,
     "input": InputPathType,
     "suffix": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ VAlignPartialObliqueParamsDictTagged = typing.TypedDict('VAlignPartialObliquePar
     "dy": typing.NotRequired[float | None],
     "dz": typing.NotRequired[float | None],
 })
+VAlignPartialObliqueParamsDict = _VAlignPartialObliqueParamsDictNoTag | VAlignPartialObliqueParamsDictTagged
 
 
 class VAlignPartialObliqueOutputs(typing.NamedTuple):

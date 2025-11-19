@@ -13,8 +13,7 @@ ATROPOS_METADATA = Metadata(
 )
 
 
-AtroposParamsDict = typing.TypedDict('AtroposParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/Atropos"]],
+_AtroposParamsDictNoTag = typing.TypedDict('_AtroposParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
     "bspline": typing.NotRequired[str | None],
@@ -57,6 +56,7 @@ AtroposParamsDictTagged = typing.TypedDict('AtroposParamsDictTagged', {
     "label_propagation": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[bool | None],
 })
+AtroposParamsDict = _AtroposParamsDictNoTag | AtroposParamsDictTagged
 
 
 class AtroposOutputs(typing.NamedTuple):

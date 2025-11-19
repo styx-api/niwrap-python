@@ -13,8 +13,7 @@ AVSCALE_METADATA = Metadata(
 )
 
 
-AvscaleParamsDict = typing.TypedDict('AvscaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/avscale"]],
+_AvscaleParamsDictNoTag = typing.TypedDict('_AvscaleParamsDictNoTag', {
     "allparams_flag": bool,
     "inverteddies_flag": bool,
     "matrix_file": InputPathType,
@@ -27,6 +26,7 @@ AvscaleParamsDictTagged = typing.TypedDict('AvscaleParamsDictTagged', {
     "matrix_file": InputPathType,
     "non_reference_volume": typing.NotRequired[InputPathType | None],
 })
+AvscaleParamsDict = _AvscaleParamsDictNoTag | AvscaleParamsDictTagged
 
 
 class AvscaleOutputs(typing.NamedTuple):

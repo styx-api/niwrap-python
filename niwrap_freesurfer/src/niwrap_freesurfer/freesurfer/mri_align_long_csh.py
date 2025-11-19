@@ -13,14 +13,14 @@ MRI_ALIGN_LONG_CSH_METADATA = Metadata(
 )
 
 
-MriAlignLongCshParamsDict = typing.TypedDict('MriAlignLongCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_align_long.csh"]],
+_MriAlignLongCshParamsDictNoTag = typing.TypedDict('_MriAlignLongCshParamsDictNoTag', {
     "base_id": str,
 })
 MriAlignLongCshParamsDictTagged = typing.TypedDict('MriAlignLongCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_align_long.csh"],
     "base_id": str,
 })
+MriAlignLongCshParamsDict = _MriAlignLongCshParamsDictNoTag | MriAlignLongCshParamsDictTagged
 
 
 class MriAlignLongCshOutputs(typing.NamedTuple):

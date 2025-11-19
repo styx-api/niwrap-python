@@ -13,8 +13,7 @@ V_3D_CONVOLVE_METADATA = Metadata(
 )
 
 
-V3dConvolveParamsDict = typing.TypedDict('V3dConvolveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dConvolve"]],
+_V3dConvolveParamsDictNoTag = typing.TypedDict('_V3dConvolveParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "options": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ V3dConvolveParamsDictTagged = typing.TypedDict('V3dConvolveParamsDictTagged', {
     "outfile": str,
     "options": typing.NotRequired[str | None],
 })
+V3dConvolveParamsDict = _V3dConvolveParamsDictNoTag | V3dConvolveParamsDictTagged
 
 
 class V3dConvolveOutputs(typing.NamedTuple):

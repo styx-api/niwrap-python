@@ -13,8 +13,7 @@ MAKE_RANDOM_TIMING_PY_METADATA = Metadata(
 )
 
 
-MakeRandomTimingPyParamsDict = typing.TypedDict('MakeRandomTimingPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/make_random_timing.py"]],
+_MakeRandomTimingPyParamsDictNoTag = typing.TypedDict('_MakeRandomTimingPyParamsDictNoTag', {
     "num_runs": float,
     "run_time": list[float],
     "num_stim": float,
@@ -69,6 +68,7 @@ MakeRandomTimingPyParamsDictTagged = typing.TypedDict('MakeRandomTimingPyParamsD
     "verb": typing.NotRequired[float | None],
     "show_timing_stats": bool,
 })
+MakeRandomTimingPyParamsDict = _MakeRandomTimingPyParamsDictNoTag | MakeRandomTimingPyParamsDictTagged
 
 
 class MakeRandomTimingPyOutputs(typing.NamedTuple):

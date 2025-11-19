@@ -13,8 +13,7 @@ MRI_MC_METADATA = Metadata(
 )
 
 
-MriMcParamsDict = typing.TypedDict('MriMcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mc"]],
+_MriMcParamsDictNoTag = typing.TypedDict('_MriMcParamsDictNoTag', {
     "input_volume": InputPathType,
     "label_value": float,
     "output_surface": str,
@@ -27,6 +26,7 @@ MriMcParamsDictTagged = typing.TypedDict('MriMcParamsDictTagged', {
     "output_surface": str,
     "connectivity": typing.NotRequired[float | None],
 })
+MriMcParamsDict = _MriMcParamsDictNoTag | MriMcParamsDictTagged
 
 
 class MriMcOutputs(typing.NamedTuple):

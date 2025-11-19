@@ -13,8 +13,7 @@ V__UPDATE_AFNI_BINARIES_METADATA = Metadata(
 )
 
 
-VUpdateAfniBinariesParamsDict = typing.TypedDict('VUpdateAfniBinariesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@update.afni.binaries"]],
+_VUpdateAfniBinariesParamsDictNoTag = typing.TypedDict('_VUpdateAfniBinariesParamsDictNoTag', {
     "defaults_flag": bool,
     "help_flag": bool,
     "help_sys_progs_flag": bool,
@@ -67,6 +66,7 @@ VUpdateAfniBinariesParamsDictTagged = typing.TypedDict('VUpdateAfniBinariesParam
     "prog_list": typing.NotRequired[list[str] | None],
     "package": typing.NotRequired[str | None],
 })
+VUpdateAfniBinariesParamsDict = _VUpdateAfniBinariesParamsDictNoTag | VUpdateAfniBinariesParamsDictTagged
 
 
 class VUpdateAfniBinariesOutputs(typing.NamedTuple):

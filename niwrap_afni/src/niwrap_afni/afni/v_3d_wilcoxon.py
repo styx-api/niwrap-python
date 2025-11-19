@@ -13,8 +13,7 @@ V_3D_WILCOXON_METADATA = Metadata(
 )
 
 
-V3dWilcoxonParamsDict = typing.TypedDict('V3dWilcoxonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dWilcoxon"]],
+_V3dWilcoxonParamsDictNoTag = typing.TypedDict('_V3dWilcoxonParamsDictNoTag', {
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
     "dset1_x": list[InputPathType],
@@ -29,6 +28,7 @@ V3dWilcoxonParamsDictTagged = typing.TypedDict('V3dWilcoxonParamsDictTagged', {
     "dset2_y": list[InputPathType],
     "output_prefix": str,
 })
+V3dWilcoxonParamsDict = _V3dWilcoxonParamsDictNoTag | V3dWilcoxonParamsDictTagged
 
 
 class V3dWilcoxonOutputs(typing.NamedTuple):

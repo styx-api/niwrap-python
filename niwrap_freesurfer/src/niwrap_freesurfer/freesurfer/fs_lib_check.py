@@ -13,8 +13,7 @@ FS_LIB_CHECK_METADATA = Metadata(
 )
 
 
-FsLibCheckParamsDict = typing.TypedDict('FsLibCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_lib_check"]],
+_FsLibCheckParamsDictNoTag = typing.TypedDict('_FsLibCheckParamsDictNoTag', {
     "use_ldconfig": bool,
     "use_rpm": bool,
     "show_help": bool,
@@ -27,6 +26,7 @@ FsLibCheckParamsDictTagged = typing.TypedDict('FsLibCheckParamsDictTagged', {
     "show_help": bool,
     "show_version": bool,
 })
+FsLibCheckParamsDict = _FsLibCheckParamsDictNoTag | FsLibCheckParamsDictTagged
 
 
 class FsLibCheckOutputs(typing.NamedTuple):

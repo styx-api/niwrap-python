@@ -13,8 +13,7 @@ KELLY_KAPOWSKI_METADATA = Metadata(
 )
 
 
-KellyKapowskiParamsDict = typing.TypedDict('KellyKapowskiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/KellyKapowski"]],
+_KellyKapowskiParamsDictNoTag = typing.TypedDict('_KellyKapowskiParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
     "gray_matter_probability_image": typing.NotRequired[InputPathType | None],
@@ -55,6 +54,7 @@ KellyKapowskiParamsDictTagged = typing.TypedDict('KellyKapowskiParamsDictTagged'
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+KellyKapowskiParamsDict = _KellyKapowskiParamsDictNoTag | KellyKapowskiParamsDictTagged
 
 
 class KellyKapowskiOutputs(typing.NamedTuple):

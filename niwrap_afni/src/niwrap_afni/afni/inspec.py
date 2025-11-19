@@ -13,8 +13,7 @@ INSPEC_METADATA = Metadata(
 )
 
 
-InspecParamsDict = typing.TypedDict('InspecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/inspec"]],
+_InspecParamsDictNoTag = typing.TypedDict('_InspecParamsDictNoTag', {
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
     "detail": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ InspecParamsDictTagged = typing.TypedDict('InspecParamsDictTagged', {
     "state_rm": typing.NotRequired[str | None],
     "help": bool,
 })
+InspecParamsDict = _InspecParamsDictNoTag | InspecParamsDictTagged
 
 
 class InspecOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ FIXELREORIENT_METADATA = Metadata(
 )
 
 
-FixelreorientConfigParamsDict = typing.TypedDict('FixelreorientConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelreorientConfigParamsDictNoTag = typing.TypedDict('_FixelreorientConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ FixelreorientConfigParamsDictTagged = typing.TypedDict('FixelreorientConfigParam
     "key": str,
     "value": str,
 })
+FixelreorientConfigParamsDict = _FixelreorientConfigParamsDictNoTag | FixelreorientConfigParamsDictTagged
 
 
-FixelreorientParamsDict = typing.TypedDict('FixelreorientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelreorient"]],
+_FixelreorientParamsDictNoTag = typing.TypedDict('_FixelreorientParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ FixelreorientParamsDictTagged = typing.TypedDict('FixelreorientParamsDictTagged'
     "warp": InputPathType,
     "fixel_out": str,
 })
+FixelreorientParamsDict = _FixelreorientParamsDictNoTag | FixelreorientParamsDictTagged
 
 
 def fixelreorient_config(

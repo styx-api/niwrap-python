@@ -13,8 +13,7 @@ MRI_STOPMASK_METADATA = Metadata(
 )
 
 
-MriStopmaskParamsDict = typing.TypedDict('MriStopmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stopmask"]],
+_MriStopmaskParamsDictNoTag = typing.TypedDict('_MriStopmaskParamsDictNoTag', {
     "output_mask": str,
     "filled": list[InputPathType],
     "aseg_presurf": InputPathType,
@@ -43,6 +42,7 @@ MriStopmaskParamsDictTagged = typing.TypedDict('MriStopmaskParamsDictTagged', {
     "no_wm": bool,
     "no_bfs": bool,
 })
+MriStopmaskParamsDict = _MriStopmaskParamsDictNoTag | MriStopmaskParamsDictTagged
 
 
 class MriStopmaskOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ WMEDITS2SURF_METADATA = Metadata(
 )
 
 
-Wmedits2surfParamsDict = typing.TypedDict('Wmedits2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/wmedits2surf"]],
+_Wmedits2surfParamsDictNoTag = typing.TypedDict('_Wmedits2surfParamsDictNoTag', {
     "subject": str,
     "self": bool,
     "overwrite": bool,
@@ -39,6 +38,7 @@ Wmedits2surfParamsDictTagged = typing.TypedDict('Wmedits2surfParamsDictTagged', 
     "rh": bool,
     "no_surfs": bool,
 })
+Wmedits2surfParamsDict = _Wmedits2surfParamsDictNoTag | Wmedits2surfParamsDictTagged
 
 
 class Wmedits2surfOutputs(typing.NamedTuple):

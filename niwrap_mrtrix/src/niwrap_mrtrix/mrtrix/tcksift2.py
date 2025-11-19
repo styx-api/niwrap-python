@@ -13,8 +13,7 @@ TCKSIFT2_METADATA = Metadata(
 )
 
 
-Tcksift2ConfigParamsDict = typing.TypedDict('Tcksift2ConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Tcksift2ConfigParamsDictNoTag = typing.TypedDict('_Tcksift2ConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Tcksift2ConfigParamsDictTagged = typing.TypedDict('Tcksift2ConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+Tcksift2ConfigParamsDict = _Tcksift2ConfigParamsDictNoTag | Tcksift2ConfigParamsDictTagged
 
 
-Tcksift2ParamsDict = typing.TypedDict('Tcksift2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksift2"]],
+_Tcksift2ParamsDictNoTag = typing.TypedDict('_Tcksift2ParamsDictNoTag', {
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
     "fd_scale_gm": bool,
@@ -99,6 +98,7 @@ Tcksift2ParamsDictTagged = typing.TypedDict('Tcksift2ParamsDictTagged', {
     "in_fod": InputPathType,
     "out_weights": str,
 })
+Tcksift2ParamsDict = _Tcksift2ParamsDictNoTag | Tcksift2ParamsDictTagged
 
 
 def tcksift2_config(

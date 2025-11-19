@@ -13,8 +13,7 @@ CHECK_FEAT_METADATA = Metadata(
 )
 
 
-CheckFeatParamsDict = typing.TypedDict('CheckFeatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/checkFEAT"]],
+_CheckFeatParamsDictNoTag = typing.TypedDict('_CheckFeatParamsDictNoTag', {
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })
@@ -23,6 +22,7 @@ CheckFeatParamsDictTagged = typing.TypedDict('CheckFeatParamsDictTagged', {
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })
+CheckFeatParamsDict = _CheckFeatParamsDictNoTag | CheckFeatParamsDictTagged
 
 
 class CheckFeatOutputs(typing.NamedTuple):

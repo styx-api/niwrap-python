@@ -13,8 +13,7 @@ V_3D_TPROJECT_METADATA = Metadata(
 )
 
 
-V3dTprojectParamsDict = typing.TypedDict('V3dTprojectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTproject"]],
+_V3dTprojectParamsDictNoTag = typing.TypedDict('_V3dTprojectParamsDictNoTag', {
     "TR": typing.NotRequired[float | None],
     "automask": bool,
     "bandpass": typing.NotRequired[list[float] | None],
@@ -53,6 +52,7 @@ V3dTprojectParamsDictTagged = typing.TypedDict('V3dTprojectParamsDictTagged', {
     "stopband": typing.NotRequired[list[float] | None],
     "prefix": str,
 })
+V3dTprojectParamsDict = _V3dTprojectParamsDictNoTag | V3dTprojectParamsDictTagged
 
 
 class V3dTprojectOutputs(typing.NamedTuple):

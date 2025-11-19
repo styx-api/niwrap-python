@@ -13,8 +13,7 @@ MRI_MAKE_UCHAR_METADATA = Metadata(
 )
 
 
-MriMakeUcharParamsDict = typing.TypedDict('MriMakeUcharParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_uchar"]],
+_MriMakeUcharParamsDictNoTag = typing.TypedDict('_MriMakeUcharParamsDictNoTag', {
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
     "output_volume": str,
@@ -35,6 +34,7 @@ MriMakeUcharParamsDictTagged = typing.TypedDict('MriMakeUcharParamsDictTagged', 
     "cumulative_histo": typing.NotRequired[str | None],
     "vradvol": typing.NotRequired[str | None],
 })
+MriMakeUcharParamsDict = _MriMakeUcharParamsDictNoTag | MriMakeUcharParamsDictTagged
 
 
 class MriMakeUcharOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ LABEL_ERODE_METADATA = Metadata(
 )
 
 
-LabelErodeParamsDict = typing.TypedDict('LabelErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-erode"]],
+_LabelErodeParamsDictNoTag = typing.TypedDict('_LabelErodeParamsDictNoTag', {
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -32,6 +31,7 @@ LabelErodeParamsDictTagged = typing.TypedDict('LabelErodeParamsDictTagged', {
     "surface": InputPathType,
     "erode-dist": float,
 })
+LabelErodeParamsDict = _LabelErodeParamsDictNoTag | LabelErodeParamsDictTagged
 
 
 class LabelErodeOutputs(typing.NamedTuple):

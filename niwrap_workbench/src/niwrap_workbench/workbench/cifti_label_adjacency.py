@@ -12,8 +12,7 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 )
 
 
-CiftiLabelAdjacencyParamsDict = typing.TypedDict('CiftiLabelAdjacencyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-adjacency"]],
+_CiftiLabelAdjacencyParamsDictNoTag = typing.TypedDict('_CiftiLabelAdjacencyParamsDictNoTag', {
     "adjacency-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
@@ -28,6 +27,7 @@ CiftiLabelAdjacencyParamsDictTagged = typing.TypedDict('CiftiLabelAdjacencyParam
     "surface": typing.NotRequired[InputPathType | None],
     "label-in": InputPathType,
 })
+CiftiLabelAdjacencyParamsDict = _CiftiLabelAdjacencyParamsDictNoTag | CiftiLabelAdjacencyParamsDictTagged
 
 
 class CiftiLabelAdjacencyOutputs(typing.NamedTuple):

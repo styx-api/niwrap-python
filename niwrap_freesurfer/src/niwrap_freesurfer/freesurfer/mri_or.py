@@ -13,8 +13,7 @@ MRI_OR_METADATA = Metadata(
 )
 
 
-MriOrParamsDict = typing.TypedDict('MriOrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_or"]],
+_MriOrParamsDictNoTag = typing.TypedDict('_MriOrParamsDictNoTag', {
     "original_labels": bool,
     "input_files": list[InputPathType],
 })
@@ -23,6 +22,7 @@ MriOrParamsDictTagged = typing.TypedDict('MriOrParamsDictTagged', {
     "original_labels": bool,
     "input_files": list[InputPathType],
 })
+MriOrParamsDict = _MriOrParamsDictNoTag | MriOrParamsDictTagged
 
 
 class MriOrOutputs(typing.NamedTuple):

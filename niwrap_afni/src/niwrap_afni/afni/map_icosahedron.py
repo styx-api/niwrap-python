@@ -13,8 +13,7 @@ MAP_ICOSAHEDRON_METADATA = Metadata(
 )
 
 
-MapIcosahedronParamsDict = typing.TypedDict('MapIcosahedronParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/MapIcosahedron"]],
+_MapIcosahedronParamsDictNoTag = typing.TypedDict('_MapIcosahedronParamsDictNoTag', {
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -41,6 +40,7 @@ MapIcosahedronParamsDictTagged = typing.TypedDict('MapIcosahedronParamsDictTagge
     "verbosity": bool,
     "help": bool,
 })
+MapIcosahedronParamsDict = _MapIcosahedronParamsDictNoTag | MapIcosahedronParamsDictTagged
 
 
 class MapIcosahedronOutputs(typing.NamedTuple):

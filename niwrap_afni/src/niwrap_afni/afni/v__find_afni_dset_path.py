@@ -13,8 +13,7 @@ V__FIND_AFNI_DSET_PATH_METADATA = Metadata(
 )
 
 
-VFindAfniDsetPathParamsDict = typing.TypedDict('VFindAfniDsetPathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@FindAfniDsetPath"]],
+_VFindAfniDsetPathParamsDictNoTag = typing.TypedDict('_VFindAfniDsetPathParamsDictNoTag', {
     "dsetname": str,
     "append_file": bool,
     "full_path": bool,
@@ -27,6 +26,7 @@ VFindAfniDsetPathParamsDictTagged = typing.TypedDict('VFindAfniDsetPathParamsDic
     "full_path": bool,
     "help": bool,
 })
+VFindAfniDsetPathParamsDict = _VFindAfniDsetPathParamsDictNoTag | VFindAfniDsetPathParamsDictTagged
 
 
 class VFindAfniDsetPathOutputs(typing.NamedTuple):

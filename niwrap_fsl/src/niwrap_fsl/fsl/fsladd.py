@@ -13,8 +13,7 @@ FSLADD_METADATA = Metadata(
 )
 
 
-FsladdParamsDict = typing.TypedDict('FsladdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsladd"]],
+_FsladdParamsDictNoTag = typing.TypedDict('_FsladdParamsDictNoTag', {
     "output_file": str,
     "mean_flag": bool,
     "scale_flag": bool,
@@ -27,6 +26,7 @@ FsladdParamsDictTagged = typing.TypedDict('FsladdParamsDictTagged', {
     "scale_flag": bool,
     "volume_list": list[InputPathType],
 })
+FsladdParamsDict = _FsladdParamsDictNoTag | FsladdParamsDictTagged
 
 
 class FsladdOutputs(typing.NamedTuple):

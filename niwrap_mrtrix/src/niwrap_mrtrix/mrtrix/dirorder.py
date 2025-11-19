@@ -13,8 +13,7 @@ DIRORDER_METADATA = Metadata(
 )
 
 
-DirorderConfigParamsDict = typing.TypedDict('DirorderConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirorderConfigParamsDictNoTag = typing.TypedDict('_DirorderConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DirorderConfigParamsDictTagged = typing.TypedDict('DirorderConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+DirorderConfigParamsDict = _DirorderConfigParamsDictNoTag | DirorderConfigParamsDictTagged
 
 
-DirorderParamsDict = typing.TypedDict('DirorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirorder"]],
+_DirorderParamsDictNoTag = typing.TypedDict('_DirorderParamsDictNoTag', {
     "cartesian": bool,
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ DirorderParamsDictTagged = typing.TypedDict('DirorderParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+DirorderParamsDict = _DirorderParamsDictNoTag | DirorderParamsDictTagged
 
 
 def dirorder_config(

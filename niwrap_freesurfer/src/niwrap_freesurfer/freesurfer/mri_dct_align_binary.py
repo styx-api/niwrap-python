@@ -13,8 +13,7 @@ MRI_DCT_ALIGN_BINARY_METADATA = Metadata(
 )
 
 
-MriDctAlignBinaryParamsDict = typing.TypedDict('MriDctAlignBinaryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dct_align_binary"]],
+_MriDctAlignBinaryParamsDictNoTag = typing.TypedDict('_MriDctAlignBinaryParamsDictNoTag', {
     "source_image": InputPathType,
     "destination_image": InputPathType,
     "output_transformation": str,
@@ -25,6 +24,7 @@ MriDctAlignBinaryParamsDictTagged = typing.TypedDict('MriDctAlignBinaryParamsDic
     "destination_image": InputPathType,
     "output_transformation": str,
 })
+MriDctAlignBinaryParamsDict = _MriDctAlignBinaryParamsDictNoTag | MriDctAlignBinaryParamsDictTagged
 
 
 class MriDctAlignBinaryOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
 )
 
 
-VClustExpRunShinyParamsDict = typing.TypedDict('VClustExpRunShinyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_run_shiny"]],
+_VClustExpRunShinyParamsDictNoTag = typing.TypedDict('_VClustExpRunShinyParamsDictNoTag', {
     "directory": str,
     "help": bool,
 })
@@ -23,6 +22,7 @@ VClustExpRunShinyParamsDictTagged = typing.TypedDict('VClustExpRunShinyParamsDic
     "directory": str,
     "help": bool,
 })
+VClustExpRunShinyParamsDict = _VClustExpRunShinyParamsDictNoTag | VClustExpRunShinyParamsDictTagged
 
 
 class VClustExpRunShinyOutputs(typing.NamedTuple):

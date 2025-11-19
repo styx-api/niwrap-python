@@ -13,8 +13,7 @@ FIRST_UTILS_METADATA = Metadata(
 )
 
 
-FirstUtilsParamsDict = typing.TypedDict('FirstUtilsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/first_utils"]],
+_FirstUtilsParamsDictNoTag = typing.TypedDict('_FirstUtilsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_name": str,
     "norm_factors": typing.NotRequired[InputPathType | None],
@@ -83,6 +82,7 @@ FirstUtilsParamsDictTagged = typing.TypedDict('FirstUtilsParamsDictTagged', {
     "debug_mode": bool,
     "help": bool,
 })
+FirstUtilsParamsDict = _FirstUtilsParamsDictNoTag | FirstUtilsParamsDictTagged
 
 
 class FirstUtilsOutputs(typing.NamedTuple):

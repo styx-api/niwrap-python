@@ -13,8 +13,7 @@ MAKE_STIM_TIMES_PY_METADATA = Metadata(
 )
 
 
-MakeStimTimesPyParamsDict = typing.TypedDict('MakeStimTimesPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/make_stim_times.py"]],
+_MakeStimTimesPyParamsDictNoTag = typing.TypedDict('_MakeStimTimesPyParamsDictNoTag', {
     "files": list[InputPathType],
     "prefix": str,
     "tr": float,
@@ -43,6 +42,7 @@ MakeStimTimesPyParamsDictTagged = typing.TypedDict('MakeStimTimesPyParamsDictTag
     "show_valid_opts": bool,
     "verbose": typing.NotRequired[float | None],
 })
+MakeStimTimesPyParamsDict = _MakeStimTimesPyParamsDictNoTag | MakeStimTimesPyParamsDictTagged
 
 
 class MakeStimTimesPyOutputs(typing.NamedTuple):

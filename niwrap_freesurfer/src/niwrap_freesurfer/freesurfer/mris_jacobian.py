@@ -13,8 +13,7 @@ MRIS_JACOBIAN_METADATA = Metadata(
 )
 
 
-MrisJacobianParamsDict = typing.TypedDict('MrisJacobianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_jacobian"]],
+_MrisJacobianParamsDictNoTag = typing.TypedDict('_MrisJacobianParamsDictNoTag', {
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
     "jacobian_file": str,
@@ -31,6 +30,7 @@ MrisJacobianParamsDictTagged = typing.TypedDict('MrisJacobianParamsDictTagged', 
     "noscale": bool,
     "invert": bool,
 })
+MrisJacobianParamsDict = _MrisJacobianParamsDictNoTag | MrisJacobianParamsDictTagged
 
 
 class MrisJacobianOutputs(typing.NamedTuple):

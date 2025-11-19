@@ -13,8 +13,7 @@ VOL2SUBFIELD_METADATA = Metadata(
 )
 
 
-Vol2subfieldParamsDict = typing.TypedDict('Vol2subfieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2subfield"]],
+_Vol2subfieldParamsDictNoTag = typing.TypedDict('_Vol2subfieldParamsDictNoTag', {
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
     "registration_file": InputPathType,
@@ -57,6 +56,7 @@ Vol2subfieldParamsDictTagged = typing.TypedDict('Vol2subfieldParamsDictTagged', 
     "preset_subfield_thalamus": bool,
     "preset_subfield_brainstem": bool,
 })
+Vol2subfieldParamsDict = _Vol2subfieldParamsDictNoTag | Vol2subfieldParamsDictTagged
 
 
 class Vol2subfieldOutputs(typing.NamedTuple):

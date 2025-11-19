@@ -13,8 +13,7 @@ TBSS_X_METADATA = Metadata(
 )
 
 
-TbssXParamsDict = typing.TypedDict('TbssXParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tbss_x"]],
+_TbssXParamsDictNoTag = typing.TypedDict('_TbssXParamsDictNoTag', {
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })
@@ -23,6 +22,7 @@ TbssXParamsDictTagged = typing.TypedDict('TbssXParamsDictTagged', {
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })
+TbssXParamsDict = _TbssXParamsDictNoTag | TbssXParamsDictTagged
 
 
 class TbssXOutputs(typing.NamedTuple):

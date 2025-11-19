@@ -13,8 +13,7 @@ MRIS_REGISTER_LABEL_MAP_METADATA = Metadata(
 )
 
 
-MrisRegisterLabelMapParamsDict = typing.TypedDict('MrisRegisterLabelMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_label_map"]],
+_MrisRegisterLabelMapParamsDictNoTag = typing.TypedDict('_MrisRegisterLabelMapParamsDictNoTag', {
     "subjects_list": str,
     "target_subject": str,
     "prior": str,
@@ -41,6 +40,7 @@ MrisRegisterLabelMapParamsDictTagged = typing.TypedDict('MrisRegisterLabelMapPar
     "version": bool,
     "vno": typing.NotRequired[float | None],
 })
+MrisRegisterLabelMapParamsDict = _MrisRegisterLabelMapParamsDictNoTag | MrisRegisterLabelMapParamsDictTagged
 
 
 class MrisRegisterLabelMapOutputs(typing.NamedTuple):

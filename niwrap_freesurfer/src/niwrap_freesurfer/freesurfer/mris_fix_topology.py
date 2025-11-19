@@ -13,8 +13,7 @@ MRIS_FIX_TOPOLOGY_METADATA = Metadata(
 )
 
 
-MrisFixTopologyParamsDict = typing.TypedDict('MrisFixTopologyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fix_topology"]],
+_MrisFixTopologyParamsDictNoTag = typing.TypedDict('_MrisFixTopologyParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "orig_name": typing.NotRequired[str | None],
@@ -71,6 +70,7 @@ MrisFixTopologyParamsDictTagged = typing.TypedDict('MrisFixTopologyParamsDictTag
     "diagnostic_level": typing.NotRequired[float | None],
     "threads": typing.NotRequired[float | None],
 })
+MrisFixTopologyParamsDict = _MrisFixTopologyParamsDictNoTag | MrisFixTopologyParamsDictTagged
 
 
 class MrisFixTopologyOutputs(typing.NamedTuple):

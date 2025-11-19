@@ -13,8 +13,7 @@ RECONBATCHJOBS_METADATA = Metadata(
 )
 
 
-ReconbatchjobsParamsDict = typing.TypedDict('ReconbatchjobsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reconbatchjobs"]],
+_ReconbatchjobsParamsDictNoTag = typing.TypedDict('_ReconbatchjobsParamsDictNoTag', {
     "logfile": str,
     "cmdfiles": list[str],
 })
@@ -23,6 +22,7 @@ ReconbatchjobsParamsDictTagged = typing.TypedDict('ReconbatchjobsParamsDictTagge
     "logfile": str,
     "cmdfiles": list[str],
 })
+ReconbatchjobsParamsDict = _ReconbatchjobsParamsDictNoTag | ReconbatchjobsParamsDictTagged
 
 
 class ReconbatchjobsOutputs(typing.NamedTuple):

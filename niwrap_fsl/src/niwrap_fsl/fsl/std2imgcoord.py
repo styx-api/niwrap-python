@@ -13,8 +13,7 @@ STD2IMGCOORD_METADATA = Metadata(
 )
 
 
-Std2imgcoordParamsDict = typing.TypedDict('Std2imgcoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/std2imgcoord"]],
+_Std2imgcoordParamsDictNoTag = typing.TypedDict('_Std2imgcoordParamsDictNoTag', {
     "filename_coordinates": InputPathType,
     "standard_image": typing.NotRequired[InputPathType | None],
     "input_image": InputPathType,
@@ -39,6 +38,7 @@ Std2imgcoordParamsDictTagged = typing.TypedDict('Std2imgcoordParamsDictTagged', 
     "verbose": bool,
     "more_verbose": bool,
 })
+Std2imgcoordParamsDict = _Std2imgcoordParamsDictNoTag | Std2imgcoordParamsDictTagged
 
 
 class Std2imgcoordOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_INFO_METADATA = Metadata(
 )
 
 
-SurfInfoParamsDict = typing.TypedDict('SurfInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfInfo"]],
+_SurfInfoParamsDictNoTag = typing.TypedDict('_SurfInfoParamsDictNoTag', {
     "surface": InputPathType,
     "com": bool,
     "debug_level": typing.NotRequired[float | None],
@@ -59,6 +58,7 @@ SurfInfoParamsDictTagged = typing.TypedDict('SurfInfoParamsDictTagged', {
     "nomall": bool,
     "yesmall": bool,
 })
+SurfInfoParamsDict = _SurfInfoParamsDictNoTag | SurfInfoParamsDictTagged
 
 
 class SurfInfoOutputs(typing.NamedTuple):

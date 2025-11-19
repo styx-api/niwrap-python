@@ -12,8 +12,7 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
 )
 
 
-SurfaceAffineRegressionParamsDict = typing.TypedDict('SurfaceAffineRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-affine-regression"]],
+_SurfaceAffineRegressionParamsDictNoTag = typing.TypedDict('_SurfaceAffineRegressionParamsDictNoTag', {
     "source": InputPathType,
     "target": InputPathType,
     "affine-out": str,
@@ -24,6 +23,7 @@ SurfaceAffineRegressionParamsDictTagged = typing.TypedDict('SurfaceAffineRegress
     "target": InputPathType,
     "affine-out": str,
 })
+SurfaceAffineRegressionParamsDict = _SurfaceAffineRegressionParamsDictNoTag | SurfaceAffineRegressionParamsDictTagged
 
 
 class SurfaceAffineRegressionOutputs(typing.NamedTuple):

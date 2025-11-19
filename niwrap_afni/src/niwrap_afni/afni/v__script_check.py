@@ -13,8 +13,7 @@ V__SCRIPT_CHECK_METADATA = Metadata(
 )
 
 
-VScriptCheckParamsDict = typing.TypedDict('VScriptCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ScriptCheck"]],
+_VScriptCheckParamsDictNoTag = typing.TypedDict('_VScriptCheckParamsDictNoTag', {
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],
@@ -25,6 +24,7 @@ VScriptCheckParamsDictTagged = typing.TypedDict('VScriptCheckParamsDictTagged', 
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],
 })
+VScriptCheckParamsDict = _VScriptCheckParamsDictNoTag | VScriptCheckParamsDictTagged
 
 
 class VScriptCheckOutputs(typing.NamedTuple):

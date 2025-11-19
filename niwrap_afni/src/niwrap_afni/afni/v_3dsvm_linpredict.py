@@ -13,8 +13,7 @@ V_3DSVM_LINPREDICT_METADATA = Metadata(
 )
 
 
-V3dsvmLinpredictParamsDict = typing.TypedDict('V3dsvmLinpredictParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dsvm_linpredict"]],
+_V3dsvmLinpredictParamsDictNoTag = typing.TypedDict('_V3dsvmLinpredictParamsDictNoTag', {
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
     "input_dataset": str,
@@ -25,6 +24,7 @@ V3dsvmLinpredictParamsDictTagged = typing.TypedDict('V3dsvmLinpredictParamsDictT
     "weight_vector": InputPathType,
     "input_dataset": str,
 })
+V3dsvmLinpredictParamsDict = _V3dsvmLinpredictParamsDictNoTag | V3dsvmLinpredictParamsDictTagged
 
 
 class V3dsvmLinpredictOutputs(typing.NamedTuple):

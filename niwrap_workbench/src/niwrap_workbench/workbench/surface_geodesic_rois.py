@@ -12,8 +12,7 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicRoisParamsDict = typing.TypedDict('SurfaceGeodesicRoisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-rois"]],
+_SurfaceGeodesicRoisParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicRoisParamsDictNoTag', {
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
     "method": typing.NotRequired[str | None],
@@ -34,6 +33,7 @@ SurfaceGeodesicRoisParamsDictTagged = typing.TypedDict('SurfaceGeodesicRoisParam
     "limit": float,
     "vertex-list-file": str,
 })
+SurfaceGeodesicRoisParamsDict = _SurfaceGeodesicRoisParamsDictNoTag | SurfaceGeodesicRoisParamsDictTagged
 
 
 class SurfaceGeodesicRoisOutputs(typing.NamedTuple):

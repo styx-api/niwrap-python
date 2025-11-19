@@ -13,8 +13,7 @@ SWE_METADATA = Metadata(
 )
 
 
-SweParamsDict = typing.TypedDict('SweParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/swe"]],
+_SweParamsDictNoTag = typing.TypedDict('_SweParamsDictNoTag', {
     "input_file": InputPathType,
     "output_root": str,
     "design_mat": InputPathType,
@@ -87,6 +86,7 @@ SweParamsDictTagged = typing.TypedDict('SweParamsDictTagged', {
     "voxelwise_evs": typing.NotRequired[list[InputPathType] | None],
     "glm_output": bool,
 })
+SweParamsDict = _SweParamsDictNoTag | SweParamsDictTagged
 
 
 class SweOutputs(typing.NamedTuple):

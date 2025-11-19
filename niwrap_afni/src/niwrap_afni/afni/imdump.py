@@ -13,14 +13,14 @@ IMDUMP_METADATA = Metadata(
 )
 
 
-ImdumpParamsDict = typing.TypedDict('ImdumpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imdump"]],
+_ImdumpParamsDictNoTag = typing.TypedDict('_ImdumpParamsDictNoTag', {
     "input_image": InputPathType,
 })
 ImdumpParamsDictTagged = typing.TypedDict('ImdumpParamsDictTagged', {
     "@type": typing.Literal["afni/imdump"],
     "input_image": InputPathType,
 })
+ImdumpParamsDict = _ImdumpParamsDictNoTag | ImdumpParamsDictTagged
 
 
 class ImdumpOutputs(typing.NamedTuple):

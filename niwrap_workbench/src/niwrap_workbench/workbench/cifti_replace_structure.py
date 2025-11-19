@@ -12,8 +12,7 @@ CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
 )
 
 
-CiftiReplaceStructureVolumeAllParamsDict = typing.TypedDict('CiftiReplaceStructureVolumeAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-all"]],
+_CiftiReplaceStructureVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureVolumeAllParamsDictNoTag', {
     "volume": InputPathType,
     "from-cropped": bool,
 })
@@ -22,10 +21,10 @@ CiftiReplaceStructureVolumeAllParamsDictTagged = typing.TypedDict('CiftiReplaceS
     "volume": InputPathType,
     "from-cropped": bool,
 })
+CiftiReplaceStructureVolumeAllParamsDict = _CiftiReplaceStructureVolumeAllParamsDictNoTag | CiftiReplaceStructureVolumeAllParamsDictTagged
 
 
-CiftiReplaceStructureLabelParamsDict = typing.TypedDict('CiftiReplaceStructureLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label"]],
+_CiftiReplaceStructureLabelParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureLabelParamsDictNoTag', {
     "structure": str,
     "label": InputPathType,
 })
@@ -34,10 +33,10 @@ CiftiReplaceStructureLabelParamsDictTagged = typing.TypedDict('CiftiReplaceStruc
     "structure": str,
     "label": InputPathType,
 })
+CiftiReplaceStructureLabelParamsDict = _CiftiReplaceStructureLabelParamsDictNoTag | CiftiReplaceStructureLabelParamsDictTagged
 
 
-CiftiReplaceStructureMetricParamsDict = typing.TypedDict('CiftiReplaceStructureMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_CiftiReplaceStructureMetricParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureMetricParamsDictNoTag', {
     "structure": str,
     "metric": InputPathType,
 })
@@ -46,10 +45,10 @@ CiftiReplaceStructureMetricParamsDictTagged = typing.TypedDict('CiftiReplaceStru
     "structure": str,
     "metric": InputPathType,
 })
+CiftiReplaceStructureMetricParamsDict = _CiftiReplaceStructureMetricParamsDictNoTag | CiftiReplaceStructureMetricParamsDictTagged
 
 
-CiftiReplaceStructureVolumeParamsDict = typing.TypedDict('CiftiReplaceStructureVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiReplaceStructureVolumeParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureVolumeParamsDictNoTag', {
     "structure": str,
     "volume": InputPathType,
     "from-cropped": bool,
@@ -60,10 +59,10 @@ CiftiReplaceStructureVolumeParamsDictTagged = typing.TypedDict('CiftiReplaceStru
     "volume": InputPathType,
     "from-cropped": bool,
 })
+CiftiReplaceStructureVolumeParamsDict = _CiftiReplaceStructureVolumeParamsDictNoTag | CiftiReplaceStructureVolumeParamsDictTagged
 
 
-CiftiReplaceStructureParamsDict = typing.TypedDict('CiftiReplaceStructureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-replace-structure"]],
+_CiftiReplaceStructureParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureParamsDictNoTag', {
     "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
     "discard-unused-labels": bool,
     "action": typing.NotRequired[str | None],
@@ -84,6 +83,7 @@ CiftiReplaceStructureParamsDictTagged = typing.TypedDict('CiftiReplaceStructureP
     "cifti": str,
     "direction": str,
 })
+CiftiReplaceStructureParamsDict = _CiftiReplaceStructureParamsDictNoTag | CiftiReplaceStructureParamsDictTagged
 
 
 def cifti_replace_structure_volume_all(

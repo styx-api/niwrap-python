@@ -13,8 +13,7 @@ FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
 )
 
 
-FatProcMapToDtiParamsDict = typing.TypedDict('FatProcMapToDtiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_map_to_dti"]],
+_FatProcMapToDtiParamsDictNoTag = typing.TypedDict('_FatProcMapToDtiParamsDictNoTag', {
     "source": InputPathType,
     "base": InputPathType,
     "prefix": str,
@@ -43,6 +42,7 @@ FatProcMapToDtiParamsDictTagged = typing.TypedDict('FatProcMapToDtiParamsDictTag
     "no_cmd_out": bool,
     "no_clean": bool,
 })
+FatProcMapToDtiParamsDict = _FatProcMapToDtiParamsDictNoTag | FatProcMapToDtiParamsDictTagged
 
 
 class FatProcMapToDtiOutputs(typing.NamedTuple):

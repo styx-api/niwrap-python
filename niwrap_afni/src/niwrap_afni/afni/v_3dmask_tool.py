@@ -13,8 +13,7 @@ V_3DMASK_TOOL_METADATA = Metadata(
 )
 
 
-V3dmaskToolParamsDict = typing.TypedDict('V3dmaskToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmask_tool"]],
+_V3dmaskToolParamsDictNoTag = typing.TypedDict('_V3dmaskToolParamsDictNoTag', {
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "dilate_inputs": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ V3dmaskToolParamsDictTagged = typing.TypedDict('V3dmaskToolParamsDictTagged', {
     "union": bool,
     "verbose": typing.NotRequired[int | None],
 })
+V3dmaskToolParamsDict = _V3dmaskToolParamsDictNoTag | V3dmaskToolParamsDictTagged
 
 
 class V3dmaskToolOutputs(typing.NamedTuple):

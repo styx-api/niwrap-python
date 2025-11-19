@@ -13,8 +13,7 @@ V__MEASURE_IN2OUT_METADATA = Metadata(
 )
 
 
-VMeasureIn2outParamsDict = typing.TypedDict('VMeasureIn2outParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@measure_in2out"]],
+_VMeasureIn2outParamsDictNoTag = typing.TypedDict('_VMeasureIn2outParamsDictNoTag', {
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": str,
@@ -43,6 +42,7 @@ VMeasureIn2outParamsDictTagged = typing.TypedDict('VMeasureIn2outParamsDictTagge
     "surfsmooth_method": typing.NotRequired[str | None],
     "fs_cort_dir": typing.NotRequired[str | None],
 })
+VMeasureIn2outParamsDict = _VMeasureIn2outParamsDictNoTag | VMeasureIn2outParamsDictTagged
 
 
 class VMeasureIn2outOutputs(typing.NamedTuple):

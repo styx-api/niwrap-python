@@ -13,8 +13,7 @@ V_3D_EXTRACT_GROUP_IN_CORR_METADATA = Metadata(
 )
 
 
-V3dExtractGroupInCorrParamsDict = typing.TypedDict('V3dExtractGroupInCorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dExtractGroupInCorr"]],
+_V3dExtractGroupInCorrParamsDictNoTag = typing.TypedDict('_V3dExtractGroupInCorrParamsDictNoTag', {
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ V3dExtractGroupInCorrParamsDictTagged = typing.TypedDict('V3dExtractGroupInCorrP
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })
+V3dExtractGroupInCorrParamsDict = _V3dExtractGroupInCorrParamsDictNoTag | V3dExtractGroupInCorrParamsDictTagged
 
 
 class V3dExtractGroupInCorrOutputs(typing.NamedTuple):

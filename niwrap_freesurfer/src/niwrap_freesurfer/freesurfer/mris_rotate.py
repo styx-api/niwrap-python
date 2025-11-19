@@ -13,8 +13,7 @@ MRIS_ROTATE_METADATA = Metadata(
 )
 
 
-MrisRotateParamsDict = typing.TypedDict('MrisRotateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rotate"]],
+_MrisRotateParamsDictNoTag = typing.TypedDict('_MrisRotateParamsDictNoTag', {
     "input_surface": InputPathType,
     "alpha_deg": float,
     "beta_deg": float,
@@ -33,6 +32,7 @@ MrisRotateParamsDictTagged = typing.TypedDict('MrisRotateParamsDictTagged', {
     "regfile": typing.NotRequired[InputPathType | None],
     "invalidate_geometry": bool,
 })
+MrisRotateParamsDict = _MrisRotateParamsDictNoTag | MrisRotateParamsDictTagged
 
 
 class MrisRotateOutputs(typing.NamedTuple):

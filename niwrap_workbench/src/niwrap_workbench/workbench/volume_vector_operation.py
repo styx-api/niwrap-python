@@ -12,8 +12,7 @@ VOLUME_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-VolumeVectorOperationParamsDict = typing.TypedDict('VolumeVectorOperationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-vector-operation"]],
+_VolumeVectorOperationParamsDictNoTag = typing.TypedDict('_VolumeVectorOperationParamsDictNoTag', {
     "volume-out": str,
     "normalize-a": bool,
     "normalize-b": bool,
@@ -34,6 +33,7 @@ VolumeVectorOperationParamsDictTagged = typing.TypedDict('VolumeVectorOperationP
     "vectors-b": InputPathType,
     "operation": str,
 })
+VolumeVectorOperationParamsDict = _VolumeVectorOperationParamsDictNoTag | VolumeVectorOperationParamsDictTagged
 
 
 class VolumeVectorOperationOutputs(typing.NamedTuple):

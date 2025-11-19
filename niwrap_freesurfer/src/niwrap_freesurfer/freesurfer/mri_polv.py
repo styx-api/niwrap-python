@@ -13,8 +13,7 @@ MRI_POLV_METADATA = Metadata(
 )
 
 
-MriPolvParamsDict = typing.TypedDict('MriPolvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_polv"]],
+_MriPolvParamsDictNoTag = typing.TypedDict('_MriPolvParamsDictNoTag', {
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
     "output_image": InputPathType,
@@ -25,6 +24,7 @@ MriPolvParamsDictTagged = typing.TypedDict('MriPolvParamsDictTagged', {
     "input_image": InputPathType,
     "output_image": InputPathType,
 })
+MriPolvParamsDict = _MriPolvParamsDictNoTag | MriPolvParamsDictTagged
 
 
 class MriPolvOutputs(typing.NamedTuple):

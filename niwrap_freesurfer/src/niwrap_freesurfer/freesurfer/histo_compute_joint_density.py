@@ -13,8 +13,7 @@ HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
 )
 
 
-HistoComputeJointDensityParamsDict = typing.TypedDict('HistoComputeJointDensityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_compute_joint_density"]],
+_HistoComputeJointDensityParamsDictNoTag = typing.TypedDict('_HistoComputeJointDensityParamsDictNoTag', {
     "volume1": InputPathType,
     "volume2": InputPathType,
     "joint_density_file": str,
@@ -25,6 +24,7 @@ HistoComputeJointDensityParamsDictTagged = typing.TypedDict('HistoComputeJointDe
     "volume2": InputPathType,
     "joint_density_file": str,
 })
+HistoComputeJointDensityParamsDict = _HistoComputeJointDensityParamsDictNoTag | HistoComputeJointDensityParamsDictTagged
 
 
 class HistoComputeJointDensityOutputs(typing.NamedTuple):

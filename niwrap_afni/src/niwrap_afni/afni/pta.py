@@ -13,8 +13,7 @@ PTA_METADATA = Metadata(
 )
 
 
-PtaParamsDict = typing.TypedDict('PtaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/PTA"]],
+_PtaParamsDictNoTag = typing.TypedDict('_PtaParamsDictNoTag', {
     "prefix": str,
     "input_file": InputPathType,
     "model_formula": str,
@@ -35,6 +34,7 @@ PtaParamsDictTagged = typing.TypedDict('PtaParamsDictTagged', {
     "response_var": typing.NotRequired[str | None],
     "dbg_args": bool,
 })
+PtaParamsDict = _PtaParamsDictNoTag | PtaParamsDictTagged
 
 
 class PtaOutputs(typing.NamedTuple):

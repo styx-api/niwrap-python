@@ -13,8 +13,7 @@ ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
 )
 
 
-AntsIntermodalityIntrasubjectShParamsDict = typing.TypedDict('AntsIntermodalityIntrasubjectShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsIntermodalityIntrasubject.sh"]],
+_AntsIntermodalityIntrasubjectShParamsDictNoTag = typing.TypedDict('_AntsIntermodalityIntrasubjectShParamsDictNoTag', {
     "dimension": int,
     "anatomical_t1_image": InputPathType,
     "anatomical_reference_image": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ AntsIntermodalityIntrasubjectShParamsDictTagged = typing.TypedDict('AntsIntermod
     "auxiliary_scalar_images": typing.NotRequired[InputPathType | None],
     "auxiliary_dt_image": typing.NotRequired[InputPathType | None],
 })
+AntsIntermodalityIntrasubjectShParamsDict = _AntsIntermodalityIntrasubjectShParamsDictNoTag | AntsIntermodalityIntrasubjectShParamsDictTagged
 
 
 class AntsIntermodalityIntrasubjectShOutputs(typing.NamedTuple):

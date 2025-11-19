@@ -13,8 +13,7 @@ MRIS_SEGMENTATION_STATS_METADATA = Metadata(
 )
 
 
-MrisSegmentationStatsParamsDict = typing.TypedDict('MrisSegmentationStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segmentation_stats"]],
+_MrisSegmentationStatsParamsDictNoTag = typing.TypedDict('_MrisSegmentationStatsParamsDictNoTag', {
     "overlay_name": str,
     "segmentation_label_name": str,
     "subjects": list[str],
@@ -27,6 +26,7 @@ MrisSegmentationStatsParamsDictTagged = typing.TypedDict('MrisSegmentationStatsP
     "subjects": list[str],
     "roc_file": str,
 })
+MrisSegmentationStatsParamsDict = _MrisSegmentationStatsParamsDictNoTag | MrisSegmentationStatsParamsDictTagged
 
 
 class MrisSegmentationStatsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3DPC_METADATA = Metadata(
 )
 
 
-V3dpcParamsDict = typing.TypedDict('V3dpcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dpc"]],
+_V3dpcParamsDictNoTag = typing.TypedDict('_V3dpcParamsDictNoTag', {
     "datasets": list[InputPathType],
     "dmean": bool,
     "vmean": bool,
@@ -49,6 +48,7 @@ V3dpcParamsDictTagged = typing.TypedDict('V3dpcParamsDictTagged', {
     "float": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
+V3dpcParamsDict = _V3dpcParamsDictNoTag | V3dpcParamsDictTagged
 
 
 class V3dpcOutputs(typing.NamedTuple):

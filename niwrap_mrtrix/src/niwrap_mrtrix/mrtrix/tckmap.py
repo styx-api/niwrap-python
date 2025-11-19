@@ -13,28 +13,27 @@ TCKMAP_METADATA = Metadata(
 )
 
 
-TckmapVariousStringParamsDict = typing.TypedDict('TckmapVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_TckmapVariousStringParamsDictNoTag = typing.TypedDict('_TckmapVariousStringParamsDictNoTag', {
     "obj": str,
 })
 TckmapVariousStringParamsDictTagged = typing.TypedDict('TckmapVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+TckmapVariousStringParamsDict = _TckmapVariousStringParamsDictNoTag | TckmapVariousStringParamsDictTagged
 
 
-TckmapVariousFileParamsDict = typing.TypedDict('TckmapVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_TckmapVariousFileParamsDictNoTag = typing.TypedDict('_TckmapVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckmapVariousFileParamsDictTagged = typing.TypedDict('TckmapVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+TckmapVariousFileParamsDict = _TckmapVariousFileParamsDictNoTag | TckmapVariousFileParamsDictTagged
 
 
-TckmapConfigParamsDict = typing.TypedDict('TckmapConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckmapConfigParamsDictNoTag = typing.TypedDict('_TckmapConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -43,10 +42,10 @@ TckmapConfigParamsDictTagged = typing.TypedDict('TckmapConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+TckmapConfigParamsDict = _TckmapConfigParamsDictNoTag | TckmapConfigParamsDictTagged
 
 
-TckmapParamsDict = typing.TypedDict('TckmapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckmap"]],
+_TckmapParamsDictNoTag = typing.TypedDict('_TckmapParamsDictNoTag', {
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],
@@ -107,6 +106,7 @@ TckmapParamsDictTagged = typing.TypedDict('TckmapParamsDictTagged', {
     "tracks": InputPathType,
     "output": str,
 })
+TckmapParamsDict = _TckmapParamsDictNoTag | TckmapParamsDictTagged
 
 
 def tckmap_dixel_cargs_dyn_fn(

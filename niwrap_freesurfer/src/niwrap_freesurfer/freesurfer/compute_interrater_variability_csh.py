@@ -13,8 +13,7 @@ COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
 )
 
 
-ComputeInterraterVariabilityCshParamsDict = typing.TypedDict('ComputeInterraterVariabilityCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_interrater_variability.csh"]],
+_ComputeInterraterVariabilityCshParamsDictNoTag = typing.TypedDict('_ComputeInterraterVariabilityCshParamsDictNoTag', {
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
     "output_prefix": str,
@@ -29,6 +28,7 @@ ComputeInterraterVariabilityCshParamsDictTagged = typing.TypedDict('ComputeInter
     "version": bool,
     "help": bool,
 })
+ComputeInterraterVariabilityCshParamsDict = _ComputeInterraterVariabilityCshParamsDictNoTag | ComputeInterraterVariabilityCshParamsDictTagged
 
 
 class ComputeInterraterVariabilityCshOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TEST_RECON_ALL_CSH_METADATA = Metadata(
 )
 
 
-TestReconAllCshParamsDict = typing.TypedDict('TestReconAllCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/test_recon-all.csh"]],
+_TestReconAllCshParamsDictNoTag = typing.TypedDict('_TestReconAllCshParamsDictNoTag', {
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
     "test_subject_dest_dir": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ TestReconAllCshParamsDictTagged = typing.TypedDict('TestReconAllCshParamsDictTag
     "freesurfer_home": typing.NotRequired[str | None],
     "norecon": bool,
 })
+TestReconAllCshParamsDict = _TestReconAllCshParamsDictNoTag | TestReconAllCshParamsDictTagged
 
 
 class TestReconAllCshOutputs(typing.NamedTuple):

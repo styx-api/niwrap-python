@@ -13,8 +13,7 @@ FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
 )
 
 
-FatProcAxializeAnatParamsDict = typing.TypedDict('FatProcAxializeAnatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_axialize_anat"]],
+_FatProcAxializeAnatParamsDictNoTag = typing.TypedDict('_FatProcAxializeAnatParamsDictNoTag', {
     "in_file": InputPathType,
     "ref_file": InputPathType,
     "prefix": str,
@@ -63,6 +62,7 @@ FatProcAxializeAnatParamsDictTagged = typing.TypedDict('FatProcAxializeAnatParam
     "no_qc_view": bool,
     "qc_prefix": typing.NotRequired[str | None],
 })
+FatProcAxializeAnatParamsDict = _FatProcAxializeAnatParamsDictNoTag | FatProcAxializeAnatParamsDictTagged
 
 
 class FatProcAxializeAnatOutputs(typing.NamedTuple):

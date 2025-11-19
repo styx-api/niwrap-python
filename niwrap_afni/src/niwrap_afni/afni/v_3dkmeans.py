@@ -13,8 +13,7 @@ V_3DKMEANS_METADATA = Metadata(
 )
 
 
-V3dkmeansParamsDict = typing.TypedDict('V3dkmeansParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dkmeans"]],
+_V3dkmeansParamsDictNoTag = typing.TypedDict('_V3dkmeansParamsDictNoTag', {
     "version": bool,
     "input": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -57,6 +56,7 @@ V3dkmeansParamsDictTagged = typing.TypedDict('V3dkmeansParamsDictTagged', {
     "voxdbg": typing.NotRequired[list[float] | None],
     "seed": typing.NotRequired[float | None],
 })
+V3dkmeansParamsDict = _V3dkmeansParamsDictNoTag | V3dkmeansParamsDictTagged
 
 
 class V3dkmeansOutputs(typing.NamedTuple):

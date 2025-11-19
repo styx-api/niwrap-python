@@ -13,8 +13,7 @@ MRI_EVALUATE_MORPH_METADATA = Metadata(
 )
 
 
-MriEvaluateMorphParamsDict = typing.TypedDict('MriEvaluateMorphParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_evaluate_morph"]],
+_MriEvaluateMorphParamsDictNoTag = typing.TypedDict('_MriEvaluateMorphParamsDictNoTag', {
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
     "output_file": str,
@@ -25,6 +24,7 @@ MriEvaluateMorphParamsDictTagged = typing.TypedDict('MriEvaluateMorphParamsDictT
     "segmentation_files": list[InputPathType],
     "output_file": str,
 })
+MriEvaluateMorphParamsDict = _MriEvaluateMorphParamsDictNoTag | MriEvaluateMorphParamsDictTagged
 
 
 class MriEvaluateMorphOutputs(typing.NamedTuple):

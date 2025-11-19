@@ -13,8 +13,7 @@ MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
 )
 
 
-MrisFindFlatRegionsParamsDict = typing.TypedDict('MrisFindFlatRegionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_find_flat_regions"]],
+_MrisFindFlatRegionsParamsDictNoTag = typing.TypedDict('_MrisFindFlatRegionsParamsDictNoTag', {
     "surface": InputPathType,
     "wfile": str,
     "threshold": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ MrisFindFlatRegionsParamsDictTagged = typing.TypedDict('MrisFindFlatRegionsParam
     "wfile": str,
     "threshold": typing.NotRequired[float | None],
 })
+MrisFindFlatRegionsParamsDict = _MrisFindFlatRegionsParamsDictNoTag | MrisFindFlatRegionsParamsDictTagged
 
 
 class MrisFindFlatRegionsOutputs(typing.NamedTuple):

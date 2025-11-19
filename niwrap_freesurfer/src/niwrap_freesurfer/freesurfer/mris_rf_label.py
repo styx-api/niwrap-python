@@ -13,8 +13,7 @@ MRIS_RF_LABEL_METADATA = Metadata(
 )
 
 
-MrisRfLabelParamsDict = typing.TypedDict('MrisRfLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_label"]],
+_MrisRfLabelParamsDictNoTag = typing.TypedDict('_MrisRfLabelParamsDictNoTag', {
     "subject": str,
     "rf_classifier": str,
     "output_name": str,
@@ -29,6 +28,7 @@ MrisRfLabelParamsDictTagged = typing.TypedDict('MrisRfLabelParamsDictTagged', {
     "hemi": typing.NotRequired[str | None],
     "surf": typing.NotRequired[str | None],
 })
+MrisRfLabelParamsDict = _MrisRfLabelParamsDictNoTag | MrisRfLabelParamsDictTagged
 
 
 class MrisRfLabelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_4DFPTOANALYZE_METADATA = Metadata(
 )
 
 
-V4dfptoanalyzeParamsDict = typing.TypedDict('V4dfptoanalyzeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/4dfptoanalyze"]],
+_V4dfptoanalyzeParamsDictNoTag = typing.TypedDict('_V4dfptoanalyzeParamsDictNoTag', {
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
     "output_8bit": bool,
@@ -29,6 +28,7 @@ V4dfptoanalyzeParamsDictTagged = typing.TypedDict('V4dfptoanalyzeParamsDictTagge
     "spm99": bool,
     "endianness": typing.NotRequired[str | None],
 })
+V4dfptoanalyzeParamsDict = _V4dfptoanalyzeParamsDictNoTag | V4dfptoanalyzeParamsDictTagged
 
 
 class V4dfptoanalyzeOutputs(typing.NamedTuple):

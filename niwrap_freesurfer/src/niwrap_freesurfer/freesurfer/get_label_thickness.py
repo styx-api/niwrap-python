@@ -13,14 +13,14 @@ GET_LABEL_THICKNESS_METADATA = Metadata(
 )
 
 
-GetLabelThicknessParamsDict = typing.TypedDict('GetLabelThicknessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/get_label_thickness"]],
+_GetLabelThicknessParamsDictNoTag = typing.TypedDict('_GetLabelThicknessParamsDictNoTag', {
     "infile": InputPathType,
 })
 GetLabelThicknessParamsDictTagged = typing.TypedDict('GetLabelThicknessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/get_label_thickness"],
     "infile": InputPathType,
 })
+GetLabelThicknessParamsDict = _GetLabelThicknessParamsDictNoTag | GetLabelThicknessParamsDictTagged
 
 
 class GetLabelThicknessOutputs(typing.NamedTuple):

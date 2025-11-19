@@ -13,8 +13,7 @@ FSLSWAPDIM_METADATA = Metadata(
 )
 
 
-FslswapdimParamsDict = typing.TypedDict('FslswapdimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslswapdim"]],
+_FslswapdimParamsDictNoTag = typing.TypedDict('_FslswapdimParamsDictNoTag', {
     "input_file": InputPathType,
     "axis_a": str,
     "axis_b": str,
@@ -29,6 +28,7 @@ FslswapdimParamsDictTagged = typing.TypedDict('FslswapdimParamsDictTagged', {
     "axis_c": str,
     "output_file": typing.NotRequired[str | None],
 })
+FslswapdimParamsDict = _FslswapdimParamsDictNoTag | FslswapdimParamsDictTagged
 
 
 class FslswapdimOutputs(typing.NamedTuple):

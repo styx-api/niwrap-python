@@ -13,8 +13,7 @@ VERTEXVOL_METADATA = Metadata(
 )
 
 
-VertexvolParamsDict = typing.TypedDict('VertexvolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vertexvol"]],
+_VertexvolParamsDictNoTag = typing.TypedDict('_VertexvolParamsDictNoTag', {
     "subject": str,
     "left_hemisphere": bool,
     "right_hemisphere": bool,
@@ -31,6 +30,7 @@ VertexvolParamsDictTagged = typing.TypedDict('VertexvolParamsDictTagged', {
     "use_th3": bool,
     "no_th3": bool,
 })
+VertexvolParamsDict = _VertexvolParamsDictNoTag | VertexvolParamsDictTagged
 
 
 class VertexvolOutputs(typing.NamedTuple):

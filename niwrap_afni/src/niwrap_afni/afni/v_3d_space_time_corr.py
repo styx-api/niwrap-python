@@ -13,8 +13,7 @@ V_3D_SPACE_TIME_CORR_METADATA = Metadata(
 )
 
 
-V3dSpaceTimeCorrParamsDict = typing.TypedDict('V3dSpaceTimeCorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSpaceTimeCorr"]],
+_V3dSpaceTimeCorrParamsDictNoTag = typing.TypedDict('_V3dSpaceTimeCorrParamsDictNoTag', {
     "insetA": InputPathType,
     "insetB": InputPathType,
     "prefix": str,
@@ -33,6 +32,7 @@ V3dSpaceTimeCorrParamsDictTagged = typing.TypedDict('V3dSpaceTimeCorrParamsDictT
     "freeze_insetA_ijk": typing.NotRequired[list[float] | None],
     "freeze_insetA_xyz": typing.NotRequired[list[float] | None],
 })
+V3dSpaceTimeCorrParamsDict = _V3dSpaceTimeCorrParamsDictNoTag | V3dSpaceTimeCorrParamsDictTagged
 
 
 class V3dSpaceTimeCorrOutputs(typing.NamedTuple):

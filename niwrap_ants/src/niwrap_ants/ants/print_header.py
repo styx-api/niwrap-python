@@ -13,8 +13,7 @@ PRINT_HEADER_METADATA = Metadata(
 )
 
 
-PrintHeaderParamsDict = typing.TypedDict('PrintHeaderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/PrintHeader"]],
+_PrintHeaderParamsDictNoTag = typing.TypedDict('_PrintHeaderParamsDictNoTag', {
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })
@@ -23,6 +22,7 @@ PrintHeaderParamsDictTagged = typing.TypedDict('PrintHeaderParamsDictTagged', {
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })
+PrintHeaderParamsDict = _PrintHeaderParamsDictNoTag | PrintHeaderParamsDictTagged
 
 
 class PrintHeaderOutputs(typing.NamedTuple):

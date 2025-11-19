@@ -13,8 +13,7 @@ HIAM_MAKE_TEMPLATE_METADATA = Metadata(
 )
 
 
-HiamMakeTemplateParamsDict = typing.TypedDict('HiamMakeTemplateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_template"]],
+_HiamMakeTemplateParamsDictNoTag = typing.TypedDict('_HiamMakeTemplateParamsDictNoTag', {
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -27,6 +26,7 @@ HiamMakeTemplateParamsDictTagged = typing.TypedDict('HiamMakeTemplateParamsDictT
     "subjects": list[str],
     "output_name": str,
 })
+HiamMakeTemplateParamsDict = _HiamMakeTemplateParamsDictNoTag | HiamMakeTemplateParamsDictTagged
 
 
 class HiamMakeTemplateOutputs(typing.NamedTuple):

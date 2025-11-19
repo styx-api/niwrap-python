@@ -13,14 +13,14 @@ V__CHECK_FOR_AFNI_DSET_METADATA = Metadata(
 )
 
 
-VCheckForAfniDsetParamsDict = typing.TypedDict('VCheckForAfniDsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@CheckForAfniDset"]],
+_VCheckForAfniDsetParamsDictNoTag = typing.TypedDict('_VCheckForAfniDsetParamsDictNoTag', {
     "dataset_name": str,
 })
 VCheckForAfniDsetParamsDictTagged = typing.TypedDict('VCheckForAfniDsetParamsDictTagged', {
     "@type": typing.Literal["afni/@CheckForAfniDset"],
     "dataset_name": str,
 })
+VCheckForAfniDsetParamsDict = _VCheckForAfniDsetParamsDictNoTag | VCheckForAfniDsetParamsDictTagged
 
 
 class VCheckForAfniDsetOutputs(typing.NamedTuple):

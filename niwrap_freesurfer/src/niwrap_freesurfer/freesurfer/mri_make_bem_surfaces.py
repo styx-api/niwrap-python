@@ -13,8 +13,7 @@ MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
 )
 
 
-MriMakeBemSurfacesParamsDict = typing.TypedDict('MriMakeBemSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_bem_surfaces"]],
+_MriMakeBemSurfacesParamsDictNoTag = typing.TypedDict('_MriMakeBemSurfacesParamsDictNoTag', {
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })
@@ -23,6 +22,7 @@ MriMakeBemSurfacesParamsDictTagged = typing.TypedDict('MriMakeBemSurfacesParamsD
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })
+MriMakeBemSurfacesParamsDict = _MriMakeBemSurfacesParamsDictNoTag | MriMakeBemSurfacesParamsDictTagged
 
 
 class MriMakeBemSurfacesOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 )
 
 
-SurfaceCutResampleParamsDict = typing.TypedDict('SurfaceCutResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-cut-resample"]],
+_SurfaceCutResampleParamsDictNoTag = typing.TypedDict('_SurfaceCutResampleParamsDictNoTag', {
     "surface-out": str,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
@@ -26,6 +25,7 @@ SurfaceCutResampleParamsDictTagged = typing.TypedDict('SurfaceCutResampleParamsD
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
 })
+SurfaceCutResampleParamsDict = _SurfaceCutResampleParamsDictNoTag | SurfaceCutResampleParamsDictTagged
 
 
 class SurfaceCutResampleOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 )
 
 
-VToMniQwarparParamsDict = typing.TypedDict('VToMniQwarparParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Qwarpar"]],
+_VToMniQwarparParamsDictNoTag = typing.TypedDict('_VToMniQwarparParamsDictNoTag', {
     "numcpu": float,
     "numjob": float,
 })
@@ -23,6 +22,7 @@ VToMniQwarparParamsDictTagged = typing.TypedDict('VToMniQwarparParamsDictTagged'
     "numcpu": float,
     "numjob": float,
 })
+VToMniQwarparParamsDict = _VToMniQwarparParamsDictNoTag | VToMniQwarparParamsDictTagged
 
 
 class VToMniQwarparOutputs(typing.NamedTuple):

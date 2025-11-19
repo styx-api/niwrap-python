@@ -12,8 +12,7 @@ CIFTI_AVERAGE_METADATA = Metadata(
 )
 
 
-CiftiAverageExcludeOutliersParamsDict = typing.TypedDict('CiftiAverageExcludeOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+_CiftiAverageExcludeOutliersParamsDictNoTag = typing.TypedDict('_CiftiAverageExcludeOutliersParamsDictNoTag', {
     "sigma-below": float,
     "sigma-above": float,
 })
@@ -22,10 +21,10 @@ CiftiAverageExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiAverageExcl
     "sigma-below": float,
     "sigma-above": float,
 })
+CiftiAverageExcludeOutliersParamsDict = _CiftiAverageExcludeOutliersParamsDictNoTag | CiftiAverageExcludeOutliersParamsDictTagged
 
 
-CiftiAverageCiftiParamsDict = typing.TypedDict('CiftiAverageCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cifti"]],
+_CiftiAverageCiftiParamsDictNoTag = typing.TypedDict('_CiftiAverageCiftiParamsDictNoTag', {
     "cifti-in": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
@@ -34,10 +33,10 @@ CiftiAverageCiftiParamsDictTagged = typing.TypedDict('CiftiAverageCiftiParamsDic
     "cifti-in": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
+CiftiAverageCiftiParamsDict = _CiftiAverageCiftiParamsDictNoTag | CiftiAverageCiftiParamsDictTagged
 
 
-CiftiAverageParamsDict = typing.TypedDict('CiftiAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-average"]],
+_CiftiAverageParamsDictNoTag = typing.TypedDict('_CiftiAverageParamsDictNoTag', {
     "cifti-out": str,
     "exclude-outliers": typing.NotRequired[CiftiAverageExcludeOutliersParamsDict | None],
     "limit-GB": typing.NotRequired[float | None],
@@ -50,6 +49,7 @@ CiftiAverageParamsDictTagged = typing.TypedDict('CiftiAverageParamsDictTagged', 
     "limit-GB": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiAverageCiftiParamsDict] | None],
 })
+CiftiAverageParamsDict = _CiftiAverageParamsDictNoTag | CiftiAverageParamsDictTagged
 
 
 def cifti_average_exclude_outliers(

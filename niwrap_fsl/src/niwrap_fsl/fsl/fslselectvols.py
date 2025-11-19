@@ -13,8 +13,7 @@ FSLSELECTVOLS_METADATA = Metadata(
 )
 
 
-FslselectvolsParamsDict = typing.TypedDict('FslselectvolsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslselectvols"]],
+_FslselectvolsParamsDictNoTag = typing.TypedDict('_FslselectvolsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "vols_list": str,
@@ -31,6 +30,7 @@ FslselectvolsParamsDictTagged = typing.TypedDict('FslselectvolsParamsDictTagged'
     "output_variance_flag": bool,
     "help_flag": bool,
 })
+FslselectvolsParamsDict = _FslselectvolsParamsDictNoTag | FslselectvolsParamsDictTagged
 
 
 class FslselectvolsOutputs(typing.NamedTuple):

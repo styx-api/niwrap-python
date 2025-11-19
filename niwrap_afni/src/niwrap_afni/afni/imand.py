@@ -13,8 +13,7 @@ IMAND_METADATA = Metadata(
 )
 
 
-ImandParamsDict = typing.TypedDict('ImandParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imand"]],
+_ImandParamsDictNoTag = typing.TypedDict('_ImandParamsDictNoTag', {
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
     "output_image": str,
@@ -25,6 +24,7 @@ ImandParamsDictTagged = typing.TypedDict('ImandParamsDictTagged', {
     "input_images": list[InputPathType],
     "output_image": str,
 })
+ImandParamsDict = _ImandParamsDictNoTag | ImandParamsDictTagged
 
 
 class ImandOutputs(typing.NamedTuple):

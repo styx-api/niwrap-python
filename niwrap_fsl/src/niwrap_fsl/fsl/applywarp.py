@@ -13,8 +13,7 @@ APPLYWARP_METADATA = Metadata(
 )
 
 
-ApplywarpParamsDict = typing.TypedDict('ApplywarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/applywarp"]],
+_ApplywarpParamsDictNoTag = typing.TypedDict('_ApplywarpParamsDictNoTag', {
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
     "ref_file": InputPathType,
@@ -49,6 +48,7 @@ ApplywarpParamsDictTagged = typing.TypedDict('ApplywarpParamsDictTagged', {
     "superlevel_2": typing.NotRequired[int | None],
     "supersample": bool,
 })
+ApplywarpParamsDict = _ApplywarpParamsDictNoTag | ApplywarpParamsDictTagged
 
 
 class ApplywarpOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_CVS_CHECK_METADATA = Metadata(
 )
 
 
-MriCvsCheckParamsDict = typing.TypedDict('MriCvsCheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_check"]],
+_MriCvsCheckParamsDictNoTag = typing.TypedDict('_MriCvsCheckParamsDictNoTag', {
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[typing.Literal["lh", "rh"] | None],
@@ -29,6 +28,7 @@ MriCvsCheckParamsDictTagged = typing.TypedDict('MriCvsCheckParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MriCvsCheckParamsDict = _MriCvsCheckParamsDictNoTag | MriCvsCheckParamsDictTagged
 
 
 class MriCvsCheckOutputs(typing.NamedTuple):

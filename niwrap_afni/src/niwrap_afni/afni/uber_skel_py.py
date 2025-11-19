@@ -13,8 +13,7 @@ UBER_SKEL_PY_METADATA = Metadata(
 )
 
 
-UberSkelPyParamsDict = typing.TypedDict('UberSkelPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/uber_skel.py"]],
+_UberSkelPyParamsDictNoTag = typing.TypedDict('_UberSkelPyParamsDictNoTag', {
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
     "print_script": bool,
@@ -41,6 +40,7 @@ UberSkelPyParamsDictTagged = typing.TypedDict('UberSkelPyParamsDictTagged', {
     "show_valid_opts": bool,
     "version": bool,
 })
+UberSkelPyParamsDict = _UberSkelPyParamsDictNoTag | UberSkelPyParamsDictTagged
 
 
 class UberSkelPyOutputs(typing.NamedTuple):

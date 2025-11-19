@@ -13,8 +13,7 @@ LTA_CONVERT_METADATA = Metadata(
 )
 
 
-LtaConvertParamsDict = typing.TypedDict('LtaConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/lta_convert"]],
+_LtaConvertParamsDictNoTag = typing.TypedDict('_LtaConvertParamsDictNoTag', {
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
     "in_mni": typing.NotRequired[InputPathType | None],
@@ -61,6 +60,7 @@ LtaConvertParamsDictTagged = typing.TypedDict('LtaConvertParamsDictTagged', {
     "trg_conform": bool,
     "subject_name": typing.NotRequired[str | None],
 })
+LtaConvertParamsDict = _LtaConvertParamsDictNoTag | LtaConvertParamsDictTagged
 
 
 class LtaConvertOutputs(typing.NamedTuple):

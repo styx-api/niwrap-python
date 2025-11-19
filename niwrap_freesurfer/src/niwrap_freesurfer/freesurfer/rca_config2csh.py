@@ -13,14 +13,14 @@ RCA_CONFIG2CSH_METADATA = Metadata(
 )
 
 
-RcaConfig2cshParamsDict = typing.TypedDict('RcaConfig2cshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config2csh"]],
+_RcaConfig2cshParamsDictNoTag = typing.TypedDict('_RcaConfig2cshParamsDictNoTag', {
     "configfile": InputPathType,
 })
 RcaConfig2cshParamsDictTagged = typing.TypedDict('RcaConfig2cshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-config2csh"],
     "configfile": InputPathType,
 })
+RcaConfig2cshParamsDict = _RcaConfig2cshParamsDictNoTag | RcaConfig2cshParamsDictTagged
 
 
 class RcaConfig2cshOutputs(typing.NamedTuple):

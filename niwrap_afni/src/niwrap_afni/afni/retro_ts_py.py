@@ -13,8 +13,7 @@ RETRO_TS_PY_METADATA = Metadata(
 )
 
 
-RetroTsPyParamsDict = typing.TypedDict('RetroTsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/RetroTS.py"]],
+_RetroTsPyParamsDictNoTag = typing.TypedDict('_RetroTsPyParamsDictNoTag', {
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
     "phys_fs": typing.NotRequired[float | None],
@@ -69,6 +68,7 @@ RetroTsPyParamsDictTagged = typing.TypedDict('RetroTsPyParamsDictTagged', {
     "zero_phase_offset": bool,
     "legacy_transform": typing.NotRequired[float | None],
 })
+RetroTsPyParamsDict = _RetroTsPyParamsDictNoTag | RetroTsPyParamsDictTagged
 
 
 class RetroTsPyOutputs(typing.NamedTuple):

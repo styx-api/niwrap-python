@@ -13,8 +13,7 @@ MAP_CENTRAL_SULCUS_METADATA = Metadata(
 )
 
 
-MapCentralSulcusParamsDict = typing.TypedDict('MapCentralSulcusParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/map_central_sulcus"]],
+_MapCentralSulcusParamsDictNoTag = typing.TypedDict('_MapCentralSulcusParamsDictNoTag', {
     "subjid": str,
     "process_directive": str,
     "hemi_flag": typing.NotRequired[str | None],
@@ -91,6 +90,7 @@ MapCentralSulcusParamsDictTagged = typing.TypedDict('MapCentralSulcusParamsDictT
     "mail_username": typing.NotRequired[str | None],
     "threads": typing.NotRequired[float | None],
 })
+MapCentralSulcusParamsDict = _MapCentralSulcusParamsDictNoTag | MapCentralSulcusParamsDictTagged
 
 
 class MapCentralSulcusOutputs(typing.NamedTuple):

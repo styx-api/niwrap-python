@@ -13,8 +13,7 @@ FSREALPATH_METADATA = Metadata(
 )
 
 
-FsrealpathParamsDict = typing.TypedDict('FsrealpathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsrealpath"]],
+_FsrealpathParamsDictNoTag = typing.TypedDict('_FsrealpathParamsDictNoTag', {
     "path": str,
     "help": bool,
 })
@@ -23,6 +22,7 @@ FsrealpathParamsDictTagged = typing.TypedDict('FsrealpathParamsDictTagged', {
     "path": str,
     "help": bool,
 })
+FsrealpathParamsDict = _FsrealpathParamsDictNoTag | FsrealpathParamsDictTagged
 
 
 class FsrealpathOutputs(typing.NamedTuple):

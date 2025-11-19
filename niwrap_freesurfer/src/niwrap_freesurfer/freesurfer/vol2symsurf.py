@@ -13,8 +13,7 @@ VOL2SYMSURF_METADATA = Metadata(
 )
 
 
-Vol2symsurfParamsDict = typing.TypedDict('Vol2symsurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2symsurf"]],
+_Vol2symsurfParamsDictNoTag = typing.TypedDict('_Vol2symsurfParamsDictNoTag', {
     "registration_file": InputPathType,
     "input_volume": InputPathType,
     "fwhm": float,
@@ -35,6 +34,7 @@ Vol2symsurfParamsDictTagged = typing.TypedDict('Vol2symsurfParamsDictTagged', {
     "no_diff": bool,
     "laterality_index": bool,
 })
+Vol2symsurfParamsDict = _Vol2symsurfParamsDictNoTag | Vol2symsurfParamsDictTagged
 
 
 class Vol2symsurfOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_LOCAL_UNIFIZE_METADATA = Metadata(
 )
 
 
-V3dLocalUnifizeParamsDict = typing.TypedDict('V3dLocalUnifizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalUnifize"]],
+_V3dLocalUnifizeParamsDictNoTag = typing.TypedDict('_V3dLocalUnifizeParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "working_dir": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ V3dLocalUnifizeParamsDictTagged = typing.TypedDict('V3dLocalUnifizeParamsDictTag
     "local_mask": typing.NotRequired[str | None],
     "filter_thr": typing.NotRequired[float | None],
 })
+V3dLocalUnifizeParamsDict = _V3dLocalUnifizeParamsDictNoTag | V3dLocalUnifizeParamsDictTagged
 
 
 class V3dLocalUnifizeOutputs(typing.NamedTuple):

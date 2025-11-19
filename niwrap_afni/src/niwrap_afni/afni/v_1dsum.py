@@ -13,8 +13,7 @@ V_1DSUM_METADATA = Metadata(
 )
 
 
-V1dsumParamsDict = typing.TypedDict('V1dsumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dsum"]],
+_V1dsumParamsDictNoTag = typing.TypedDict('_V1dsumParamsDictNoTag', {
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
     "use_rows": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ V1dsumParamsDictTagged = typing.TypedDict('V1dsumParamsDictTagged', {
     "nocomment_flag": bool,
     "okempty_flag": bool,
 })
+V1dsumParamsDict = _V1dsumParamsDictNoTag | V1dsumParamsDictTagged
 
 
 class V1dsumOutputs(typing.NamedTuple):

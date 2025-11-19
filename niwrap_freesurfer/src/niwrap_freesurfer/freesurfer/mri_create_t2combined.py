@@ -13,8 +13,7 @@ MRI_CREATE_T2COMBINED_METADATA = Metadata(
 )
 
 
-MriCreateT2combinedParamsDict = typing.TypedDict('MriCreateT2combinedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_t2combined"]],
+_MriCreateT2combinedParamsDictNoTag = typing.TypedDict('_MriCreateT2combinedParamsDictNoTag', {
     "subjid": str,
     "t1wb": InputPathType,
     "t2upper": InputPathType,
@@ -33,6 +32,7 @@ MriCreateT2combinedParamsDictTagged = typing.TypedDict('MriCreateT2combinedParam
     "t2combined": str,
     "show": bool,
 })
+MriCreateT2combinedParamsDict = _MriCreateT2combinedParamsDictNoTag | MriCreateT2combinedParamsDictTagged
 
 
 class MriCreateT2combinedOutputs(typing.NamedTuple):

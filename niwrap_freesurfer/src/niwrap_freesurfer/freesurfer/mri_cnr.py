@@ -13,8 +13,7 @@ MRI_CNR_METADATA = Metadata(
 )
 
 
-MriCnrParamsDict = typing.TypedDict('MriCnrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cnr"]],
+_MriCnrParamsDictNoTag = typing.TypedDict('_MriCnrParamsDictNoTag', {
     "surf_dir": str,
     "volume_files": list[InputPathType],
     "slope": typing.NotRequired[list[str] | None],
@@ -35,6 +34,7 @@ MriCnrParamsDictTagged = typing.TypedDict('MriCnrParamsDictTagged', {
     "version_flag": bool,
     "help_flag": bool,
 })
+MriCnrParamsDict = _MriCnrParamsDictNoTag | MriCnrParamsDictTagged
 
 
 class MriCnrOutputs(typing.NamedTuple):

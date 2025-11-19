@@ -13,8 +13,7 @@ MRI_CA_TISSUE_PARMS_METADATA = Metadata(
 )
 
 
-MriCaTissueParmsParamsDict = typing.TypedDict('MriCaTissueParmsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_tissue_parms"]],
+_MriCaTissueParmsParamsDictNoTag = typing.TypedDict('_MriCaTissueParmsParamsDictNoTag', {
     "subjects": list[str],
     "output_file": str,
     "spacing_flag": bool,
@@ -27,6 +26,7 @@ MriCaTissueParmsParamsDictTagged = typing.TypedDict('MriCaTissueParmsParamsDictT
     "spacing_flag": bool,
     "gradient_flag": bool,
 })
+MriCaTissueParmsParamsDict = _MriCaTissueParmsParamsDictNoTag | MriCaTissueParmsParamsDictTagged
 
 
 class MriCaTissueParmsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__AFNI_R_PACKAGE_INSTALL_METADATA = Metadata(
 )
 
 
-VAfniRPackageInstallParamsDict = typing.TypedDict('VAfniRPackageInstallParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@afni_R_package_install"]],
+_VAfniRPackageInstallParamsDictNoTag = typing.TypedDict('_VAfniRPackageInstallParamsDictNoTag', {
     "afni": bool,
     "shiny": bool,
     "bayes_view": bool,
@@ -33,6 +32,7 @@ VAfniRPackageInstallParamsDictTagged = typing.TypedDict('VAfniRPackageInstallPar
     "mirror": typing.NotRequired[str | None],
     "help": bool,
 })
+VAfniRPackageInstallParamsDict = _VAfniRPackageInstallParamsDictNoTag | VAfniRPackageInstallParamsDictTagged
 
 
 class VAfniRPackageInstallOutputs(typing.NamedTuple):

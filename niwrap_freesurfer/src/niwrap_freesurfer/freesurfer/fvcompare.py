@@ -13,8 +13,7 @@ FVCOMPARE_METADATA = Metadata(
 )
 
 
-FvcompareParamsDict = typing.TypedDict('FvcompareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fvcompare"]],
+_FvcompareParamsDictNoTag = typing.TypedDict('_FvcompareParamsDictNoTag', {
     "subject1": str,
     "subject2": str,
     "subject_dir1": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ FvcompareParamsDictTagged = typing.TypedDict('FvcompareParamsDictTagged', {
     "pointset": typing.NotRequired[InputPathType | None],
     "wot2": bool,
 })
+FvcompareParamsDict = _FvcompareParamsDictNoTag | FvcompareParamsDictTagged
 
 
 class FvcompareOutputs(typing.NamedTuple):

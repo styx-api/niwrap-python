@@ -13,8 +13,7 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 )
 
 
-VSumaMakeSpecCaretParamsDict = typing.TypedDict('VSumaMakeSpecCaretParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_Caret"]],
+_VSumaMakeSpecCaretParamsDictNoTag = typing.TypedDict('_VSumaMakeSpecCaretParamsDictNoTag', {
     "subject_id": str,
     "help": bool,
     "debug": typing.NotRequired[int | None],
@@ -31,6 +30,7 @@ VSumaMakeSpecCaretParamsDictTagged = typing.TypedDict('VSumaMakeSpecCaretParamsD
     "surface_path": typing.NotRequired[str | None],
     "side_labels_style": typing.NotRequired[int | None],
 })
+VSumaMakeSpecCaretParamsDict = _VSumaMakeSpecCaretParamsDictNoTag | VSumaMakeSpecCaretParamsDictTagged
 
 
 class VSumaMakeSpecCaretOutputs(typing.NamedTuple):

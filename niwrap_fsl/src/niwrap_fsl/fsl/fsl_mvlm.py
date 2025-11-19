@@ -13,8 +13,7 @@ FSL_MVLM_METADATA = Metadata(
 )
 
 
-FslMvlmParamsDict = typing.TypedDict('FslMvlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_mvlm"]],
+_FslMvlmParamsDictNoTag = typing.TypedDict('_FslMvlmParamsDictNoTag', {
     "input_file": InputPathType,
     "basename_output_files": str,
     "algorithm": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ FslMvlmParamsDictTagged = typing.TypedDict('FslMvlmParamsDictTagged', {
     "out_data": typing.NotRequired[str | None],
     "out_vnscales": typing.NotRequired[str | None],
 })
+FslMvlmParamsDict = _FslMvlmParamsDictNoTag | FslMvlmParamsDictTagged
 
 
 class FslMvlmOutputs(typing.NamedTuple):

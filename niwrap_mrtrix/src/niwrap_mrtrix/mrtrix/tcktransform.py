@@ -13,8 +13,7 @@ TCKTRANSFORM_METADATA = Metadata(
 )
 
 
-TcktransformConfigParamsDict = typing.TypedDict('TcktransformConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TcktransformConfigParamsDictNoTag = typing.TypedDict('_TcktransformConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TcktransformConfigParamsDictTagged = typing.TypedDict('TcktransformConfigParamsD
     "key": str,
     "value": str,
 })
+TcktransformConfigParamsDict = _TcktransformConfigParamsDictNoTag | TcktransformConfigParamsDictTagged
 
 
-TcktransformParamsDict = typing.TypedDict('TcktransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tcktransform"]],
+_TcktransformParamsDictNoTag = typing.TypedDict('_TcktransformParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -53,6 +52,7 @@ TcktransformParamsDictTagged = typing.TypedDict('TcktransformParamsDictTagged', 
     "transform": InputPathType,
     "output": str,
 })
+TcktransformParamsDict = _TcktransformParamsDictNoTag | TcktransformParamsDictTagged
 
 
 def tcktransform_config(

@@ -12,8 +12,7 @@ CIFTI_CHANGE_MAPPING_METADATA = Metadata(
 )
 
 
-CiftiChangeMappingSeriesParamsDict = typing.TypedDict('CiftiChangeMappingSeriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["series"]],
+_CiftiChangeMappingSeriesParamsDictNoTag = typing.TypedDict('_CiftiChangeMappingSeriesParamsDictNoTag', {
     "step": float,
     "start": float,
     "unit": typing.NotRequired[str | None],
@@ -24,20 +23,20 @@ CiftiChangeMappingSeriesParamsDictTagged = typing.TypedDict('CiftiChangeMappingS
     "start": float,
     "unit": typing.NotRequired[str | None],
 })
+CiftiChangeMappingSeriesParamsDict = _CiftiChangeMappingSeriesParamsDictNoTag | CiftiChangeMappingSeriesParamsDictTagged
 
 
-CiftiChangeMappingScalarParamsDict = typing.TypedDict('CiftiChangeMappingScalarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scalar"]],
+_CiftiChangeMappingScalarParamsDictNoTag = typing.TypedDict('_CiftiChangeMappingScalarParamsDictNoTag', {
     "file": typing.NotRequired[str | None],
 })
 CiftiChangeMappingScalarParamsDictTagged = typing.TypedDict('CiftiChangeMappingScalarParamsDictTagged', {
     "@type": typing.Literal["scalar"],
     "file": typing.NotRequired[str | None],
 })
+CiftiChangeMappingScalarParamsDict = _CiftiChangeMappingScalarParamsDictNoTag | CiftiChangeMappingScalarParamsDictTagged
 
 
-CiftiChangeMappingFromCiftiParamsDict = typing.TypedDict('CiftiChangeMappingFromCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["from-cifti"]],
+_CiftiChangeMappingFromCiftiParamsDictNoTag = typing.TypedDict('_CiftiChangeMappingFromCiftiParamsDictNoTag', {
     "template-cifti": InputPathType,
     "direction": str,
 })
@@ -46,10 +45,10 @@ CiftiChangeMappingFromCiftiParamsDictTagged = typing.TypedDict('CiftiChangeMappi
     "template-cifti": InputPathType,
     "direction": str,
 })
+CiftiChangeMappingFromCiftiParamsDict = _CiftiChangeMappingFromCiftiParamsDictNoTag | CiftiChangeMappingFromCiftiParamsDictTagged
 
 
-CiftiChangeMappingParamsDict = typing.TypedDict('CiftiChangeMappingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-change-mapping"]],
+_CiftiChangeMappingParamsDictNoTag = typing.TypedDict('_CiftiChangeMappingParamsDictNoTag', {
     "cifti-out": str,
     "series": typing.NotRequired[CiftiChangeMappingSeriesParamsDict | None],
     "scalar": typing.NotRequired[CiftiChangeMappingScalarParamsDict | None],
@@ -66,6 +65,7 @@ CiftiChangeMappingParamsDictTagged = typing.TypedDict('CiftiChangeMappingParamsD
     "data-cifti": InputPathType,
     "direction": str,
 })
+CiftiChangeMappingParamsDict = _CiftiChangeMappingParamsDictNoTag | CiftiChangeMappingParamsDictTagged
 
 
 def cifti_change_mapping_series(

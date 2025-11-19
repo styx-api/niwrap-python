@@ -13,8 +13,7 @@ READ_MATLAB_FILES_PY_METADATA = Metadata(
 )
 
 
-ReadMatlabFilesPyParamsDict = typing.TypedDict('ReadMatlabFilesPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/read_matlab_files.py"]],
+_ReadMatlabFilesPyParamsDictNoTag = typing.TypedDict('_ReadMatlabFilesPyParamsDictNoTag', {
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
     "overwrite": bool,
@@ -31,6 +30,7 @@ ReadMatlabFilesPyParamsDictTagged = typing.TypedDict('ReadMatlabFilesPyParamsDic
     "history": bool,
     "version": bool,
 })
+ReadMatlabFilesPyParamsDict = _ReadMatlabFilesPyParamsDictNoTag | ReadMatlabFilesPyParamsDictTagged
 
 
 class ReadMatlabFilesPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_LOCAL_SVD_METADATA = Metadata(
 )
 
 
-V3dLocalSvdParamsDict = typing.TypedDict('V3dLocalSvdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalSVD"]],
+_V3dLocalSvdParamsDictNoTag = typing.TypedDict('_V3dLocalSvdParamsDictNoTag', {
     "auto_mask": bool,
     "input_file": InputPathType,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -35,6 +34,7 @@ V3dLocalSvdParamsDictTagged = typing.TypedDict('V3dLocalSvdParamsDictTagged', {
     "vnorm": bool,
     "vproj": typing.NotRequired[float | None],
 })
+V3dLocalSvdParamsDict = _V3dLocalSvdParamsDictNoTag | V3dLocalSvdParamsDictTagged
 
 
 class V3dLocalSvdOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_LABEL2LABEL_METADATA = Metadata(
 )
 
 
-MriLabel2labelParamsDict = typing.TypedDict('MriLabel2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label2label"]],
+_MriLabel2labelParamsDictNoTag = typing.TypedDict('_MriLabel2labelParamsDictNoTag', {
     "src_label": InputPathType,
     "trg_label": str,
     "erode": typing.NotRequired[float | None],
@@ -111,6 +110,7 @@ MriLabel2labelParamsDictTagged = typing.TypedDict('MriLabel2labelParamsDictTagge
     "to_tkr": typing.NotRequired[str | None],
     "scanner": bool,
 })
+MriLabel2labelParamsDict = _MriLabel2labelParamsDictNoTag | MriLabel2labelParamsDictTagged
 
 
 class MriLabel2labelOutputs(typing.NamedTuple):

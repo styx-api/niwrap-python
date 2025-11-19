@@ -13,8 +13,7 @@ V__4_DAVERAGE_METADATA = Metadata(
 )
 
 
-V4DaverageParamsDict = typing.TypedDict('V4DaverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@4Daverage"]],
+_V4DaverageParamsDictNoTag = typing.TypedDict('_V4DaverageParamsDictNoTag', {
     "output_prefix": str,
     "input_files": list[InputPathType],
 })
@@ -23,6 +22,7 @@ V4DaverageParamsDictTagged = typing.TypedDict('V4DaverageParamsDictTagged', {
     "output_prefix": str,
     "input_files": list[InputPathType],
 })
+V4DaverageParamsDict = _V4DaverageParamsDictNoTag | V4DaverageParamsDictTagged
 
 
 class V4DaverageOutputs(typing.NamedTuple):

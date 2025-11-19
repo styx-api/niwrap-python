@@ -13,8 +13,7 @@ FAT_PROC_SELECT_VOLS_METADATA = Metadata(
 )
 
 
-FatProcSelectVolsParamsDict = typing.TypedDict('FatProcSelectVolsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_select_vols"]],
+_FatProcSelectVolsParamsDictNoTag = typing.TypedDict('_FatProcSelectVolsParamsDictNoTag', {
     "dwi_input": InputPathType,
     "img_input": InputPathType,
     "prefix": str,
@@ -35,6 +34,7 @@ FatProcSelectVolsParamsDictTagged = typing.TypedDict('FatProcSelectVolsParamsDic
     "workdir": typing.NotRequired[str | None],
     "no_cmd_out": bool,
 })
+FatProcSelectVolsParamsDict = _FatProcSelectVolsParamsDictNoTag | FatProcSelectVolsParamsDictTagged
 
 
 class FatProcSelectVolsOutputs(typing.NamedTuple):

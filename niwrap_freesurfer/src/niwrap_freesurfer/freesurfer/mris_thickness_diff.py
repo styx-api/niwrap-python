@@ -13,8 +13,7 @@ MRIS_THICKNESS_DIFF_METADATA = Metadata(
 )
 
 
-MrisThicknessDiffParamsDict = typing.TypedDict('MrisThicknessDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_diff"]],
+_MrisThicknessDiffParamsDictNoTag = typing.TypedDict('_MrisThicknessDiffParamsDictNoTag', {
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
     "out_file": str,
@@ -45,6 +44,7 @@ MrisThicknessDiffParamsDictTagged = typing.TypedDict('MrisThicknessDiffParamsDic
     "log_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
 })
+MrisThicknessDiffParamsDict = _MrisThicknessDiffParamsDictNoTag | MrisThicknessDiffParamsDictTagged
 
 
 class MrisThicknessDiffOutputs(typing.NamedTuple):

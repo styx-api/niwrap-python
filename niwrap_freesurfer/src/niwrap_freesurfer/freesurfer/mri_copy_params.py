@@ -13,8 +13,7 @@ MRI_COPY_PARAMS_METADATA = Metadata(
 )
 
 
-MriCopyParamsParamsDict = typing.TypedDict('MriCopyParamsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_copy_params"]],
+_MriCopyParamsParamsDictNoTag = typing.TypedDict('_MriCopyParamsParamsDictNoTag', {
     "in_vol": InputPathType,
     "template_vol": InputPathType,
     "out_vol": str,
@@ -27,6 +26,7 @@ MriCopyParamsParamsDictTagged = typing.TypedDict('MriCopyParamsParamsDictTagged'
     "out_vol": str,
     "size_flag": bool,
 })
+MriCopyParamsParamsDict = _MriCopyParamsParamsDictNoTag | MriCopyParamsParamsDictTagged
 
 
 class MriCopyParamsOutputs(typing.NamedTuple):

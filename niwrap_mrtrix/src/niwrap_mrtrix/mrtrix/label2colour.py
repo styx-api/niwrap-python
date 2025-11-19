@@ -13,8 +13,7 @@ LABEL2COLOUR_METADATA = Metadata(
 )
 
 
-Label2colourConfigParamsDict = typing.TypedDict('Label2colourConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Label2colourConfigParamsDictNoTag = typing.TypedDict('_Label2colourConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Label2colourConfigParamsDictTagged = typing.TypedDict('Label2colourConfigParamsD
     "key": str,
     "value": str,
 })
+Label2colourConfigParamsDict = _Label2colourConfigParamsDictNoTag | Label2colourConfigParamsDictTagged
 
 
-Label2colourParamsDict = typing.TypedDict('Label2colourParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/label2colour"]],
+_Label2colourParamsDictNoTag = typing.TypedDict('_Label2colourParamsDictNoTag', {
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ Label2colourParamsDictTagged = typing.TypedDict('Label2colourParamsDictTagged', 
     "nodes_in": InputPathType,
     "colour_out": str,
 })
+Label2colourParamsDict = _Label2colourParamsDictNoTag | Label2colourParamsDictTagged
 
 
 def label2colour_config(

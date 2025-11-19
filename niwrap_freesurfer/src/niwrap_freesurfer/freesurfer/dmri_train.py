@@ -13,8 +13,7 @@ DMRI_TRAIN_METADATA = Metadata(
 )
 
 
-DmriTrainParamsDict = typing.TypedDict('DmriTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_train"]],
+_DmriTrainParamsDictNoTag = typing.TypedDict('_DmriTrainParamsDictNoTag', {
     "slist": InputPathType,
     "trk_files": list[InputPathType],
     "rois": typing.NotRequired[list[InputPathType] | None],
@@ -75,6 +74,7 @@ DmriTrainParamsDictTagged = typing.TypedDict('DmriTrainParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+DmriTrainParamsDict = _DmriTrainParamsDictNoTag | DmriTrainParamsDictTagged
 
 
 class DmriTrainOutputs(typing.NamedTuple):

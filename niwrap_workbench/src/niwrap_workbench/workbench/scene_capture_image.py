@@ -12,8 +12,7 @@ SCENE_CAPTURE_IMAGE_METADATA = Metadata(
 )
 
 
-SceneCaptureImageSizeWidthHeightParamsDict = typing.TypedDict('SceneCaptureImageSizeWidthHeightParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["size-width-height"]],
+_SceneCaptureImageSizeWidthHeightParamsDictNoTag = typing.TypedDict('_SceneCaptureImageSizeWidthHeightParamsDictNoTag', {
     "width": float,
     "height": float,
 })
@@ -22,10 +21,10 @@ SceneCaptureImageSizeWidthHeightParamsDictTagged = typing.TypedDict('SceneCaptur
     "width": float,
     "height": float,
 })
+SceneCaptureImageSizeWidthHeightParamsDict = _SceneCaptureImageSizeWidthHeightParamsDictNoTag | SceneCaptureImageSizeWidthHeightParamsDictTagged
 
 
-SceneCaptureImageResolutionParamsDict = typing.TypedDict('SceneCaptureImageResolutionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resolution"]],
+_SceneCaptureImageResolutionParamsDictNoTag = typing.TypedDict('_SceneCaptureImageResolutionParamsDictNoTag', {
     "Number of pixels": float,
     "Units Name": str,
 })
@@ -34,10 +33,10 @@ SceneCaptureImageResolutionParamsDictTagged = typing.TypedDict('SceneCaptureImag
     "Number of pixels": float,
     "Units Name": str,
 })
+SceneCaptureImageResolutionParamsDict = _SceneCaptureImageResolutionParamsDictNoTag | SceneCaptureImageResolutionParamsDictTagged
 
 
-SceneCaptureImageSetMapYokeParamsDict = typing.TypedDict('SceneCaptureImageSetMapYokeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set-map-yoke"]],
+_SceneCaptureImageSetMapYokeParamsDictNoTag = typing.TypedDict('_SceneCaptureImageSetMapYokeParamsDictNoTag', {
     "map yoking roman numeral": str,
     "map undex": int,
 })
@@ -46,10 +45,10 @@ SceneCaptureImageSetMapYokeParamsDictTagged = typing.TypedDict('SceneCaptureImag
     "map yoking roman numeral": str,
     "map undex": int,
 })
+SceneCaptureImageSetMapYokeParamsDict = _SceneCaptureImageSetMapYokeParamsDictNoTag | SceneCaptureImageSetMapYokeParamsDictTagged
 
 
-SceneCaptureImageConnDbLoginParamsDict = typing.TypedDict('SceneCaptureImageConnDbLoginParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["conn-db-login"]],
+_SceneCaptureImageConnDbLoginParamsDictNoTag = typing.TypedDict('_SceneCaptureImageConnDbLoginParamsDictNoTag', {
     "username": str,
     "password": str,
 })
@@ -58,10 +57,10 @@ SceneCaptureImageConnDbLoginParamsDictTagged = typing.TypedDict('SceneCaptureIma
     "username": str,
     "password": str,
 })
+SceneCaptureImageConnDbLoginParamsDict = _SceneCaptureImageConnDbLoginParamsDictNoTag | SceneCaptureImageConnDbLoginParamsDictTagged
 
 
-SceneCaptureImageParamsDict = typing.TypedDict('SceneCaptureImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/scene-capture-image"]],
+_SceneCaptureImageParamsDictNoTag = typing.TypedDict('_SceneCaptureImageParamsDictNoTag', {
     "size-window": bool,
     "size-capture": bool,
     "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParamsDict | None],
@@ -100,6 +99,7 @@ SceneCaptureImageParamsDictTagged = typing.TypedDict('SceneCaptureImageParamsDic
     "scene-name-or-number": str,
     "image-file-name": str,
 })
+SceneCaptureImageParamsDict = _SceneCaptureImageParamsDictNoTag | SceneCaptureImageParamsDictTagged
 
 
 def scene_capture_image_size_width_height(

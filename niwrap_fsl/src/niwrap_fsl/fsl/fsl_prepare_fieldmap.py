@@ -13,8 +13,7 @@ FSL_PREPARE_FIELDMAP_METADATA = Metadata(
 )
 
 
-FslPrepareFieldmapParamsDict = typing.TypedDict('FslPrepareFieldmapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_prepare_fieldmap"]],
+_FslPrepareFieldmapParamsDictNoTag = typing.TypedDict('_FslPrepareFieldmapParamsDictNoTag', {
     "scanner": str,
     "phase_image": InputPathType,
     "magnitude_image": InputPathType,
@@ -31,6 +30,7 @@ FslPrepareFieldmapParamsDictTagged = typing.TypedDict('FslPrepareFieldmapParamsD
     "delta_te": float,
     "nocheck_flag": bool,
 })
+FslPrepareFieldmapParamsDict = _FslPrepareFieldmapParamsDictNoTag | FslPrepareFieldmapParamsDictTagged
 
 
 class FslPrepareFieldmapOutputs(typing.NamedTuple):

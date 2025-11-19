@@ -13,8 +13,7 @@ V_3D_REG_ANA_METADATA = Metadata(
 )
 
 
-V3dRegAnaParamsDict = typing.TypedDict('V3dRegAnaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRegAna"]],
+_V3dRegAnaParamsDictNoTag = typing.TypedDict('_V3dRegAnaParamsDictNoTag', {
     "rows": float,
     "cols": float,
     "xydata": list[str],
@@ -49,6 +48,7 @@ V3dRegAnaParamsDictTagged = typing.TypedDict('V3dRegAnaParamsDictTagged', {
     "brick": typing.NotRequired[list[str] | None],
     "datum": typing.NotRequired[str | None],
 })
+V3dRegAnaParamsDict = _V3dRegAnaParamsDictNoTag | V3dRegAnaParamsDictTagged
 
 
 class V3dRegAnaOutputs(typing.NamedTuple):

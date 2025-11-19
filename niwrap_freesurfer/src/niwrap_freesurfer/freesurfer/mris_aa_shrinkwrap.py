@@ -13,8 +13,7 @@ MRIS_AA_SHRINKWRAP_METADATA = Metadata(
 )
 
 
-MrisAaShrinkwrapParamsDict = typing.TypedDict('MrisAaShrinkwrapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_AA_shrinkwrap"]],
+_MrisAaShrinkwrapParamsDictNoTag = typing.TypedDict('_MrisAaShrinkwrapParamsDictNoTag', {
     "t1_vol": InputPathType,
     "pd_vol": InputPathType,
     "output_dir": str,
@@ -33,6 +32,7 @@ MrisAaShrinkwrapParamsDictTagged = typing.TypedDict('MrisAaShrinkwrapParamsDictT
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
+MrisAaShrinkwrapParamsDict = _MrisAaShrinkwrapParamsDictNoTag | MrisAaShrinkwrapParamsDictTagged
 
 
 class MrisAaShrinkwrapOutputs(typing.NamedTuple):

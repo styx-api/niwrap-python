@@ -13,8 +13,7 @@ MRIS_LABEL_MODE_METADATA = Metadata(
 )
 
 
-MrisLabelModeParamsDict = typing.TypedDict('MrisLabelModeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_mode"]],
+_MrisLabelModeParamsDictNoTag = typing.TypedDict('_MrisLabelModeParamsDictNoTag', {
     "input_curv_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -35,6 +34,7 @@ MrisLabelModeParamsDictTagged = typing.TypedDict('MrisLabelModeParamsDictTagged'
     "statistics_cond": typing.NotRequired[str | None],
     "output_directory": typing.NotRequired[str | None],
 })
+MrisLabelModeParamsDict = _MrisLabelModeParamsDictNoTag | MrisLabelModeParamsDictTagged
 
 
 class MrisLabelModeOutputs(typing.NamedTuple):

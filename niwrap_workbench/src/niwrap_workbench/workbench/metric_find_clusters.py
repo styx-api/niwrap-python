@@ -12,8 +12,7 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-MetricFindClustersParamsDict = typing.TypedDict('MetricFindClustersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-find-clusters"]],
+_MetricFindClustersParamsDictNoTag = typing.TypedDict('_MetricFindClustersParamsDictNoTag', {
     "metric-out": str,
     "less-than": bool,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -42,6 +41,7 @@ MetricFindClustersParamsDictTagged = typing.TypedDict('MetricFindClustersParamsD
     "value-threshold": float,
     "minimum-area": float,
 })
+MetricFindClustersParamsDict = _MetricFindClustersParamsDictNoTag | MetricFindClustersParamsDictTagged
 
 
 class MetricFindClustersOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SURFACE_INFLATION_METADATA = Metadata(
 )
 
 
-SurfaceInflationParamsDict = typing.TypedDict('SurfaceInflationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-inflation"]],
+_SurfaceInflationParamsDictNoTag = typing.TypedDict('_SurfaceInflationParamsDictNoTag', {
     "surface-out": str,
     "anatomical-surface-in": InputPathType,
     "surface-in": InputPathType,
@@ -32,6 +31,7 @@ SurfaceInflationParamsDictTagged = typing.TypedDict('SurfaceInflationParamsDictT
     "smoothing-iterations": int,
     "inflation-factor": float,
 })
+SurfaceInflationParamsDict = _SurfaceInflationParamsDictNoTag | SurfaceInflationParamsDictTagged
 
 
 class SurfaceInflationOutputs(typing.NamedTuple):

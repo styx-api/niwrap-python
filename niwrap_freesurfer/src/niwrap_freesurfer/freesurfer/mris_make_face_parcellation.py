@@ -13,8 +13,7 @@ MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
 )
 
 
-MrisMakeFaceParcellationParamsDict = typing.TypedDict('MrisMakeFaceParcellationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_face_parcellation"]],
+_MrisMakeFaceParcellationParamsDictNoTag = typing.TypedDict('_MrisMakeFaceParcellationParamsDictNoTag', {
     "input_surface": InputPathType,
     "ico_file": InputPathType,
     "output_annot": str,
@@ -27,6 +26,7 @@ MrisMakeFaceParcellationParamsDictTagged = typing.TypedDict('MrisMakeFaceParcell
     "output_annot": str,
     "colortable": typing.NotRequired[InputPathType | None],
 })
+MrisMakeFaceParcellationParamsDict = _MrisMakeFaceParcellationParamsDictNoTag | MrisMakeFaceParcellationParamsDictTagged
 
 
 class MrisMakeFaceParcellationOutputs(typing.NamedTuple):

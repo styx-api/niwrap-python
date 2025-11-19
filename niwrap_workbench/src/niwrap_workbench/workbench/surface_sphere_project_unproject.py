@@ -12,8 +12,7 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 )
 
 
-SurfaceSphereProjectUnprojectParamsDict = typing.TypedDict('SurfaceSphereProjectUnprojectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-project-unproject"]],
+_SurfaceSphereProjectUnprojectParamsDictNoTag = typing.TypedDict('_SurfaceSphereProjectUnprojectParamsDictNoTag', {
     "sphere-out": str,
     "sphere-in": InputPathType,
     "sphere-project-to": InputPathType,
@@ -26,6 +25,7 @@ SurfaceSphereProjectUnprojectParamsDictTagged = typing.TypedDict('SurfaceSphereP
     "sphere-project-to": InputPathType,
     "sphere-unproject-from": InputPathType,
 })
+SurfaceSphereProjectUnprojectParamsDict = _SurfaceSphereProjectUnprojectParamsDictNoTag | SurfaceSphereProjectUnprojectParamsDictTagged
 
 
 class SurfaceSphereProjectUnprojectOutputs(typing.NamedTuple):

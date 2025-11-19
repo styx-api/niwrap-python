@@ -13,8 +13,7 @@ QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
 )
 
 
-QuantifyBrainstemStructuresShParamsDict = typing.TypedDict('QuantifyBrainstemStructuresShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyBrainstemStructures.sh"]],
+_QuantifyBrainstemStructuresShParamsDictNoTag = typing.TypedDict('_QuantifyBrainstemStructuresShParamsDictNoTag', {
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ QuantifyBrainstemStructuresShParamsDictTagged = typing.TypedDict('QuantifyBrains
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
+QuantifyBrainstemStructuresShParamsDict = _QuantifyBrainstemStructuresShParamsDictNoTag | QuantifyBrainstemStructuresShParamsDictTagged
 
 
 class QuantifyBrainstemStructuresShOutputs(typing.NamedTuple):

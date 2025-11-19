@@ -13,8 +13,7 @@ BEDPOSTX_MGH_METADATA = Metadata(
 )
 
 
-BedpostxMghParamsDict = typing.TypedDict('BedpostxMghParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/bedpostx_mgh"]],
+_BedpostxMghParamsDictNoTag = typing.TypedDict('_BedpostxMghParamsDictNoTag', {
     "subject_directory": str,
     "fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ BedpostxMghParamsDictTagged = typing.TypedDict('BedpostxMghParamsDictTagged', {
     "deconv_model": typing.NotRequired[float | None],
     "gradient_nonlin": bool,
 })
+BedpostxMghParamsDict = _BedpostxMghParamsDictNoTag | BedpostxMghParamsDictTagged
 
 
 class BedpostxMghOutputs(typing.NamedTuple):

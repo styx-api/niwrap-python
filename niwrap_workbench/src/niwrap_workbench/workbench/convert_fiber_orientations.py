@@ -12,8 +12,7 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
 )
 
 
-ConvertFiberOrientationsFiberParamsDict = typing.TypedDict('ConvertFiberOrientationsFiberParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fiber"]],
+_ConvertFiberOrientationsFiberParamsDictNoTag = typing.TypedDict('_ConvertFiberOrientationsFiberParamsDictNoTag', {
     "mean-f": InputPathType,
     "stdev-f": InputPathType,
     "theta": InputPathType,
@@ -32,10 +31,10 @@ ConvertFiberOrientationsFiberParamsDictTagged = typing.TypedDict('ConvertFiberOr
     "ka": InputPathType,
     "kb": InputPathType,
 })
+ConvertFiberOrientationsFiberParamsDict = _ConvertFiberOrientationsFiberParamsDictNoTag | ConvertFiberOrientationsFiberParamsDictTagged
 
 
-ConvertFiberOrientationsParamsDict = typing.TypedDict('ConvertFiberOrientationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/convert-fiber-orientations"]],
+_ConvertFiberOrientationsParamsDictNoTag = typing.TypedDict('_ConvertFiberOrientationsParamsDictNoTag', {
     "fiber-out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
     "label-volume": InputPathType,
@@ -46,6 +45,7 @@ ConvertFiberOrientationsParamsDictTagged = typing.TypedDict('ConvertFiberOrienta
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
     "label-volume": InputPathType,
 })
+ConvertFiberOrientationsParamsDict = _ConvertFiberOrientationsParamsDictNoTag | ConvertFiberOrientationsParamsDictTagged
 
 
 def convert_fiber_orientations_fiber(

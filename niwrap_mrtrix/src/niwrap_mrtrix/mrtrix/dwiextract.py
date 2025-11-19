@@ -13,8 +13,7 @@ DWIEXTRACT_METADATA = Metadata(
 )
 
 
-DwiextractFslgradParamsDict = typing.TypedDict('DwiextractFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_DwiextractFslgradParamsDictNoTag = typing.TypedDict('_DwiextractFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,10 +22,10 @@ DwiextractFslgradParamsDictTagged = typing.TypedDict('DwiextractFslgradParamsDic
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+DwiextractFslgradParamsDict = _DwiextractFslgradParamsDictNoTag | DwiextractFslgradParamsDictTagged
 
 
-DwiextractExportGradFslParamsDict = typing.TypedDict('DwiextractExportGradFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+_DwiextractExportGradFslParamsDictNoTag = typing.TypedDict('_DwiextractExportGradFslParamsDictNoTag', {
     "bvecs_path": str,
     "bvals_path": str,
 })
@@ -35,10 +34,10 @@ DwiextractExportGradFslParamsDictTagged = typing.TypedDict('DwiextractExportGrad
     "bvecs_path": str,
     "bvals_path": str,
 })
+DwiextractExportGradFslParamsDict = _DwiextractExportGradFslParamsDictNoTag | DwiextractExportGradFslParamsDictTagged
 
 
-DwiextractImportPeEddyParamsDict = typing.TypedDict('DwiextractImportPeEddyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["import_pe_eddy"]],
+_DwiextractImportPeEddyParamsDictNoTag = typing.TypedDict('_DwiextractImportPeEddyParamsDictNoTag', {
     "config": InputPathType,
     "indices": InputPathType,
 })
@@ -47,30 +46,30 @@ DwiextractImportPeEddyParamsDictTagged = typing.TypedDict('DwiextractImportPeEdd
     "config": InputPathType,
     "indices": InputPathType,
 })
+DwiextractImportPeEddyParamsDict = _DwiextractImportPeEddyParamsDictNoTag | DwiextractImportPeEddyParamsDictTagged
 
 
-DwiextractVariousStringParamsDict = typing.TypedDict('DwiextractVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_DwiextractVariousStringParamsDictNoTag = typing.TypedDict('_DwiextractVariousStringParamsDictNoTag', {
     "obj": str,
 })
 DwiextractVariousStringParamsDictTagged = typing.TypedDict('DwiextractVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+DwiextractVariousStringParamsDict = _DwiextractVariousStringParamsDictNoTag | DwiextractVariousStringParamsDictTagged
 
 
-DwiextractVariousFileParamsDict = typing.TypedDict('DwiextractVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_DwiextractVariousFileParamsDictNoTag = typing.TypedDict('_DwiextractVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 DwiextractVariousFileParamsDictTagged = typing.TypedDict('DwiextractVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+DwiextractVariousFileParamsDict = _DwiextractVariousFileParamsDictNoTag | DwiextractVariousFileParamsDictTagged
 
 
-DwiextractConfigParamsDict = typing.TypedDict('DwiextractConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DwiextractConfigParamsDictNoTag = typing.TypedDict('_DwiextractConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -79,10 +78,10 @@ DwiextractConfigParamsDictTagged = typing.TypedDict('DwiextractConfigParamsDictT
     "key": str,
     "value": str,
 })
+DwiextractConfigParamsDict = _DwiextractConfigParamsDictNoTag | DwiextractConfigParamsDictTagged
 
 
-DwiextractParamsDict = typing.TypedDict('DwiextractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dwiextract"]],
+_DwiextractParamsDictNoTag = typing.TypedDict('_DwiextractParamsDictNoTag', {
     "bzero": bool,
     "no_bzero": bool,
     "singleshell": bool,
@@ -131,6 +130,7 @@ DwiextractParamsDictTagged = typing.TypedDict('DwiextractParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+DwiextractParamsDict = _DwiextractParamsDictNoTag | DwiextractParamsDictTagged
 
 
 def dwiextract_strides_cargs_dyn_fn(

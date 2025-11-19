@@ -12,8 +12,7 @@ BORDER_LENGTH_METADATA = Metadata(
 )
 
 
-BorderLengthParamsDict = typing.TypedDict('BorderLengthParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-length"]],
+_BorderLengthParamsDictNoTag = typing.TypedDict('_BorderLengthParamsDictNoTag', {
     "area-metric": typing.NotRequired[InputPathType | None],
     "separate-pieces": bool,
     "hide-border-name": bool,
@@ -28,6 +27,7 @@ BorderLengthParamsDictTagged = typing.TypedDict('BorderLengthParamsDictTagged', 
     "border": InputPathType,
     "surface": InputPathType,
 })
+BorderLengthParamsDict = _BorderLengthParamsDictNoTag | BorderLengthParamsDictTagged
 
 
 class BorderLengthOutputs(typing.NamedTuple):

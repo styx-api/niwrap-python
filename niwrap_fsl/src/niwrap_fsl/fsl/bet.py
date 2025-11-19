@@ -13,8 +13,7 @@ BET_METADATA = Metadata(
 )
 
 
-BetParamsDict = typing.TypedDict('BetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bet"]],
+_BetParamsDictNoTag = typing.TypedDict('_BetParamsDictNoTag', {
     "infile": InputPathType,
     "maskfile": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -61,6 +60,7 @@ BetParamsDictTagged = typing.TypedDict('BetParamsDictTagged', {
     "verbose": bool,
     "debug": bool,
 })
+BetParamsDict = _BetParamsDictNoTag | BetParamsDictTagged
 
 
 class BetOutputs(typing.NamedTuple):

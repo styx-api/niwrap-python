@@ -13,8 +13,7 @@ MRIS_FILL_METADATA = Metadata(
 )
 
 
-MrisFillParamsDict = typing.TypedDict('MrisFillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fill"]],
+_MrisFillParamsDictNoTag = typing.TypedDict('_MrisFillParamsDictNoTag', {
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
     "input_surface": InputPathType,
@@ -27,6 +26,7 @@ MrisFillParamsDictTagged = typing.TypedDict('MrisFillParamsDictTagged', {
     "input_surface": InputPathType,
     "output_volume": str,
 })
+MrisFillParamsDict = _MrisFillParamsDictNoTag | MrisFillParamsDictTagged
 
 
 class MrisFillOutputs(typing.NamedTuple):

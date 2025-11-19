@@ -13,8 +13,7 @@ GRAD_UNWARP_METADATA = Metadata(
 )
 
 
-GradUnwarpParamsDict = typing.TypedDict('GradUnwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/grad_unwarp"]],
+_GradUnwarpParamsDictNoTag = typing.TypedDict('_GradUnwarpParamsDictNoTag', {
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
     "unwarp_type": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ GradUnwarpParamsDictTagged = typing.TypedDict('GradUnwarpParamsDictTagged', {
     "outfile": str,
     "matlab_binary": typing.NotRequired[str | None],
 })
+GradUnwarpParamsDict = _GradUnwarpParamsDictNoTag | GradUnwarpParamsDictTagged
 
 
 class GradUnwarpOutputs(typing.NamedTuple):

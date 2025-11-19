@@ -13,8 +13,7 @@ MRI_LONG_NORMALIZE_METADATA = Metadata(
 )
 
 
-MriLongNormalizeParamsDict = typing.TypedDict('MriLongNormalizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_long_normalize"]],
+_MriLongNormalizeParamsDictNoTag = typing.TypedDict('_MriLongNormalizeParamsDictNoTag', {
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
     "output_vol": str,
@@ -41,6 +40,7 @@ MriLongNormalizeParamsDictTagged = typing.TypedDict('MriLongNormalizeParamsDictT
     "reading": typing.NotRequired[list[str] | None],
     "print_usage": bool,
 })
+MriLongNormalizeParamsDict = _MriLongNormalizeParamsDictNoTag | MriLongNormalizeParamsDictTagged
 
 
 class MriLongNormalizeOutputs(typing.NamedTuple):

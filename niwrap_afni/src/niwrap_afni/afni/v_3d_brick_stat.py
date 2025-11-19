@@ -13,8 +13,7 @@ V_3D_BRICK_STAT_METADATA = Metadata(
 )
 
 
-V3dBrickStatParamsDict = typing.TypedDict('V3dBrickStatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBrickStat"]],
+_V3dBrickStatParamsDictNoTag = typing.TypedDict('_V3dBrickStatParamsDictNoTag', {
     "dataset": str,
     "quick": bool,
     "slow": bool,
@@ -79,6 +78,7 @@ V3dBrickStatParamsDictTagged = typing.TypedDict('V3dBrickStatParamsDictTagged', 
     "ver": bool,
     "help": bool,
 })
+V3dBrickStatParamsDict = _V3dBrickStatParamsDictNoTag | V3dBrickStatParamsDictTagged
 
 
 class V3dBrickStatOutputs(typing.NamedTuple):

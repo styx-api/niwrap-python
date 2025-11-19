@@ -13,8 +13,7 @@ V_3D_ROIMAKER_METADATA = Metadata(
 )
 
 
-V3dRoimakerParamsDict = typing.TypedDict('V3dRoimakerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dROIMaker"]],
+_V3dRoimakerParamsDictNoTag = typing.TypedDict('_V3dRoimakerParamsDictNoTag', {
     "inset": InputPathType,
     "thresh": float,
     "prefix": str,
@@ -59,6 +58,7 @@ V3dRoimakerParamsDictTagged = typing.TypedDict('V3dRoimakerParamsDictTagged', {
     "preinfl_inflate": typing.NotRequired[float | None],
     "dump_no_labtab": bool,
 })
+V3dRoimakerParamsDict = _V3dRoimakerParamsDictNoTag | V3dRoimakerParamsDictTagged
 
 
 class V3dRoimakerOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ LONGMC_METADATA = Metadata(
 )
 
 
-LongmcParamsDict = typing.TypedDict('LongmcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/longmc"]],
+_LongmcParamsDictNoTag = typing.TypedDict('_LongmcParamsDictNoTag', {
     "cross_tp_name": str,
     "base_name": str,
     "conform_to_hires": bool,
@@ -33,6 +32,7 @@ LongmcParamsDictTagged = typing.TypedDict('LongmcParamsDictTagged', {
     "subject_name": typing.NotRequired[str | None],
     "no_force_update": bool,
 })
+LongmcParamsDict = _LongmcParamsDictNoTag | LongmcParamsDictTagged
 
 
 class LongmcOutputs(typing.NamedTuple):

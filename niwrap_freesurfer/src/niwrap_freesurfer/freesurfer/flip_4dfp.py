@@ -13,8 +13,7 @@ FLIP_4DFP_METADATA = Metadata(
 )
 
 
-Flip4dfpParamsDict = typing.TypedDict('Flip4dfpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/flip_4dfp"]],
+_Flip4dfpParamsDictNoTag = typing.TypedDict('_Flip4dfpParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "flip_x": bool,
@@ -31,6 +30,7 @@ Flip4dfpParamsDictTagged = typing.TypedDict('Flip4dfpParamsDictTagged', {
     "flip_z": bool,
     "endianness": typing.NotRequired[typing.Literal["b", "l"] | None],
 })
+Flip4dfpParamsDict = _Flip4dfpParamsDictNoTag | Flip4dfpParamsDictTagged
 
 
 class Flip4dfpOutputs(typing.NamedTuple):

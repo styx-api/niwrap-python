@@ -13,8 +13,7 @@ V_3D_UNIFIZE_METADATA = Metadata(
 )
 
 
-V3dUnifizeParamsDict = typing.TypedDict('V3dUnifizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dUnifize"]],
+_V3dUnifizeParamsDictNoTag = typing.TypedDict('_V3dUnifizeParamsDictNoTag', {
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
     "gm": bool,
@@ -47,6 +46,7 @@ V3dUnifizeParamsDictTagged = typing.TypedDict('V3dUnifizeParamsDictTagged', {
     "urad": typing.NotRequired[float | None],
     "in_file": InputPathType,
 })
+V3dUnifizeParamsDict = _V3dUnifizeParamsDictNoTag | V3dUnifizeParamsDictTagged
 
 
 class V3dUnifizeOutputs(typing.NamedTuple):

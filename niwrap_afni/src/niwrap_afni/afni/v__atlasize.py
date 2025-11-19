@@ -13,8 +13,7 @@ V__ATLASIZE_METADATA = Metadata(
 )
 
 
-VAtlasizeParamsDict = typing.TypedDict('VAtlasizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Atlasize"]],
+_VAtlasizeParamsDictNoTag = typing.TypedDict('_VAtlasizeParamsDictNoTag', {
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[list[str] | None],
@@ -55,6 +54,7 @@ VAtlasizeParamsDictTagged = typing.TypedDict('VAtlasizeParamsDictTagged', {
     "all_opts": bool,
     "h_find": typing.NotRequired[str | None],
 })
+VAtlasizeParamsDict = _VAtlasizeParamsDictNoTag | VAtlasizeParamsDictTagged
 
 
 class VAtlasizeOutputs(typing.NamedTuple):

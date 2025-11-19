@@ -13,8 +13,7 @@ V__SPHARM_EXAMPLES_METADATA = Metadata(
 )
 
 
-VSpharmExamplesParamsDict = typing.TypedDict('VSpharmExamplesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Spharm.examples"]],
+_VSpharmExamplesParamsDictNoTag = typing.TypedDict('_VSpharmExamplesParamsDictNoTag', {
     "help_web": bool,
     "help_web_alias": bool,
     "help_view": bool,
@@ -31,6 +30,7 @@ VSpharmExamplesParamsDictTagged = typing.TypedDict('VSpharmExamplesParamsDictTag
     "all_opts": bool,
     "help_find": typing.NotRequired[str | None],
 })
+VSpharmExamplesParamsDict = _VSpharmExamplesParamsDictNoTag | VSpharmExamplesParamsDictTagged
 
 
 class VSpharmExamplesOutputs(typing.NamedTuple):

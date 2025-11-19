@@ -13,8 +13,7 @@ MRI_REFINE_SEG_METADATA = Metadata(
 )
 
 
-MriRefineSegParamsDict = typing.TypedDict('MriRefineSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_refine_seg"]],
+_MriRefineSegParamsDictNoTag = typing.TypedDict('_MriRefineSegParamsDictNoTag', {
     "input_segmentation": InputPathType,
     "output_segmentation": str,
     "debug": bool,
@@ -25,6 +24,7 @@ MriRefineSegParamsDictTagged = typing.TypedDict('MriRefineSegParamsDictTagged', 
     "output_segmentation": str,
     "debug": bool,
 })
+MriRefineSegParamsDict = _MriRefineSegParamsDictNoTag | MriRefineSegParamsDictTagged
 
 
 class MriRefineSegOutputs(typing.NamedTuple):

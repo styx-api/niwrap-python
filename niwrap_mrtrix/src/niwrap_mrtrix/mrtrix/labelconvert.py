@@ -13,8 +13,7 @@ LABELCONVERT_METADATA = Metadata(
 )
 
 
-LabelconvertConfigParamsDict = typing.TypedDict('LabelconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_LabelconvertConfigParamsDictNoTag = typing.TypedDict('_LabelconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ LabelconvertConfigParamsDictTagged = typing.TypedDict('LabelconvertConfigParamsD
     "key": str,
     "value": str,
 })
+LabelconvertConfigParamsDict = _LabelconvertConfigParamsDictNoTag | LabelconvertConfigParamsDictTagged
 
 
-LabelconvertParamsDict = typing.TypedDict('LabelconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/labelconvert"]],
+_LabelconvertParamsDictNoTag = typing.TypedDict('_LabelconvertParamsDictNoTag', {
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -57,6 +56,7 @@ LabelconvertParamsDictTagged = typing.TypedDict('LabelconvertParamsDictTagged', 
     "lut_out": InputPathType,
     "image_out": str,
 })
+LabelconvertParamsDict = _LabelconvertParamsDictNoTag | LabelconvertParamsDictTagged
 
 
 def labelconvert_config(

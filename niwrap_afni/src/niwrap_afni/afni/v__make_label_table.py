@@ -13,8 +13,7 @@ V__MAKE_LABEL_TABLE_METADATA = Metadata(
 )
 
 
-VMakeLabelTableParamsDict = typing.TypedDict('VMakeLabelTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@MakeLabelTable"]],
+_VMakeLabelTableParamsDictNoTag = typing.TypedDict('_VMakeLabelTableParamsDictNoTag', {
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
     "lab_r": typing.NotRequired[list[str] | None],
@@ -89,6 +88,7 @@ VMakeLabelTableParamsDictTagged = typing.TypedDict('VMakeLabelTableParamsDictTag
     "all_opts": bool,
     "h_find": typing.NotRequired[str | None],
 })
+VMakeLabelTableParamsDict = _VMakeLabelTableParamsDictNoTag | VMakeLabelTableParamsDictTagged
 
 
 class VMakeLabelTableOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ GET_AFNI_MODEL_PRF_METADATA = Metadata(
 )
 
 
-GetAfniModelPrfParamsDict = typing.TypedDict('GetAfniModelPrfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF"]],
+_GetAfniModelPrfParamsDictNoTag = typing.TypedDict('_GetAfniModelPrfParamsDictNoTag', {
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -27,6 +26,7 @@ GetAfniModelPrfParamsDictTagged = typing.TypedDict('GetAfniModelPrfParamsDictTag
     "y_coord": float,
     "sigma": float,
 })
+GetAfniModelPrfParamsDict = _GetAfniModelPrfParamsDictNoTag | GetAfniModelPrfParamsDictTagged
 
 
 class GetAfniModelPrfOutputs(typing.NamedTuple):

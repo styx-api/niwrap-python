@@ -12,8 +12,7 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 )
 
 
-SurfaceSetCoordinatesParamsDict = typing.TypedDict('SurfaceSetCoordinatesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-set-coordinates"]],
+_SurfaceSetCoordinatesParamsDictNoTag = typing.TypedDict('_SurfaceSetCoordinatesParamsDictNoTag', {
     "surface-out": str,
     "surface-in": InputPathType,
     "coord-metric": InputPathType,
@@ -24,6 +23,7 @@ SurfaceSetCoordinatesParamsDictTagged = typing.TypedDict('SurfaceSetCoordinatesP
     "surface-in": InputPathType,
     "coord-metric": InputPathType,
 })
+SurfaceSetCoordinatesParamsDict = _SurfaceSetCoordinatesParamsDictNoTag | SurfaceSetCoordinatesParamsDictTagged
 
 
 class SurfaceSetCoordinatesOutputs(typing.NamedTuple):

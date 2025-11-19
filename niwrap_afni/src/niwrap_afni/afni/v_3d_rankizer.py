@@ -13,8 +13,7 @@ V_3D_RANKIZER_METADATA = Metadata(
 )
 
 
-V3dRankizerParamsDict = typing.TypedDict('V3dRankizerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRankizer"]],
+_V3dRankizerParamsDictNoTag = typing.TypedDict('_V3dRankizerParamsDictNoTag', {
     "dataset": InputPathType,
     "base_rank": typing.NotRequired[float | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ V3dRankizerParamsDictTagged = typing.TypedDict('V3dRankizerParamsDictTagged', {
     "percentize": bool,
     "percentize_mask": bool,
 })
+V3dRankizerParamsDict = _V3dRankizerParamsDictNoTag | V3dRankizerParamsDictTagged
 
 
 class V3dRankizerOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 )
 
 
-SurfaceGenerateInflatedParamsDict = typing.TypedDict('SurfaceGenerateInflatedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-generate-inflated"]],
+_SurfaceGenerateInflatedParamsDictNoTag = typing.TypedDict('_SurfaceGenerateInflatedParamsDictNoTag', {
     "inflated-surface-out": str,
     "very-inflated-surface-out": str,
     "iterations-scale-value": typing.NotRequired[float | None],
@@ -26,6 +25,7 @@ SurfaceGenerateInflatedParamsDictTagged = typing.TypedDict('SurfaceGenerateInfla
     "iterations-scale-value": typing.NotRequired[float | None],
     "anatomical-surface-in": InputPathType,
 })
+SurfaceGenerateInflatedParamsDict = _SurfaceGenerateInflatedParamsDictNoTag | SurfaceGenerateInflatedParamsDictTagged
 
 
 class SurfaceGenerateInflatedOutputs(typing.NamedTuple):

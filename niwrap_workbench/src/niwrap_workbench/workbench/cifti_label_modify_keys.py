@@ -12,8 +12,7 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-CiftiLabelModifyKeysParamsDict = typing.TypedDict('CiftiLabelModifyKeysParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-modify-keys"]],
+_CiftiLabelModifyKeysParamsDictNoTag = typing.TypedDict('_CiftiLabelModifyKeysParamsDictNoTag', {
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
@@ -26,6 +25,7 @@ CiftiLabelModifyKeysParamsDictTagged = typing.TypedDict('CiftiLabelModifyKeysPar
     "cifti-in": InputPathType,
     "remap-file": str,
 })
+CiftiLabelModifyKeysParamsDict = _CiftiLabelModifyKeysParamsDictNoTag | CiftiLabelModifyKeysParamsDictTagged
 
 
 class CiftiLabelModifyKeysOutputs(typing.NamedTuple):

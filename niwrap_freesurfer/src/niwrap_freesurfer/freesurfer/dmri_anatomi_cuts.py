@@ -13,8 +13,7 @@ DMRI_ANATOMI_CUTS_METADATA = Metadata(
 )
 
 
-DmriAnatomiCutsParamsDict = typing.TypedDict('DmriAnatomiCutsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_AnatomiCuts"]],
+_DmriAnatomiCutsParamsDictNoTag = typing.TypedDict('_DmriAnatomiCutsParamsDictNoTag', {
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
     "clusters": float,
@@ -33,6 +32,7 @@ DmriAnatomiCutsParamsDictTagged = typing.TypedDict('DmriAnatomiCutsParamsDictTag
     "output_folder": str,
     "direction_flag": typing.Literal["s", "d", "a", "o"],
 })
+DmriAnatomiCutsParamsDict = _DmriAnatomiCutsParamsDictNoTag | DmriAnatomiCutsParamsDictTagged
 
 
 class DmriAnatomiCutsOutputs(typing.NamedTuple):

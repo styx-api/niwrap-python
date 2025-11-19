@@ -13,8 +13,7 @@ AFNI_OPEN_METADATA = Metadata(
 )
 
 
-AfniOpenParamsDict = typing.TypedDict('AfniOpenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni_open"]],
+_AfniOpenParamsDictNoTag = typing.TypedDict('_AfniOpenParamsDictNoTag', {
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
     "editor": bool,
@@ -49,6 +48,7 @@ AfniOpenParamsDictTagged = typing.TypedDict('AfniOpenParamsDictTagged', {
     "h_view": bool,
     "h_web": bool,
 })
+AfniOpenParamsDict = _AfniOpenParamsDictNoTag | AfniOpenParamsDictTagged
 
 
 class AfniOpenOutputs(typing.NamedTuple):

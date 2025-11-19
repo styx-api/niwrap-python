@@ -13,8 +13,7 @@ V_3DRESAMPLE_METADATA = Metadata(
 )
 
 
-V3dresampleParamsDict = typing.TypedDict('V3dresampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dresample"]],
+_V3dresampleParamsDictNoTag = typing.TypedDict('_V3dresampleParamsDictNoTag', {
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
     "orientation": typing.NotRequired[typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None],
@@ -33,6 +32,7 @@ V3dresampleParamsDictTagged = typing.TypedDict('V3dresampleParamsDictTagged', {
     "resample_mode": typing.NotRequired[typing.Literal["NN", "Li", "Cu", "Bk"] | None],
     "voxel_size": typing.NotRequired[list[float] | None],
 })
+V3dresampleParamsDict = _V3dresampleParamsDictNoTag | V3dresampleParamsDictTagged
 
 
 class V3dresampleOutputs(typing.NamedTuple):

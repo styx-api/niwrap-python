@@ -12,8 +12,7 @@ LABEL_TO_VOLUME_MAPPING_METADATA = Metadata(
 )
 
 
-LabelToVolumeMappingRibbonConstrainedParamsDict = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+_LabelToVolumeMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_LabelToVolumeMappingRibbonConstrainedParamsDictNoTag', {
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
     "subdiv-num": typing.NotRequired[int | None],
@@ -28,10 +27,10 @@ LabelToVolumeMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('LabelT
     "greedy": bool,
     "thick-columns": bool,
 })
+LabelToVolumeMappingRibbonConstrainedParamsDict = _LabelToVolumeMappingRibbonConstrainedParamsDictNoTag | LabelToVolumeMappingRibbonConstrainedParamsDictTagged
 
 
-LabelToVolumeMappingParamsDict = typing.TypedDict('LabelToVolumeMappingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-to-volume-mapping"]],
+_LabelToVolumeMappingParamsDictNoTag = typing.TypedDict('_LabelToVolumeMappingParamsDictNoTag', {
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
     "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParamsDict | None],
@@ -48,6 +47,7 @@ LabelToVolumeMappingParamsDictTagged = typing.TypedDict('LabelToVolumeMappingPar
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
+LabelToVolumeMappingParamsDict = _LabelToVolumeMappingParamsDictNoTag | LabelToVolumeMappingParamsDictTagged
 
 
 def label_to_volume_mapping_ribbon_constrained(

@@ -13,8 +13,7 @@ REGISTER_SUBJECT_METADATA = Metadata(
 )
 
 
-RegisterSubjectParamsDict = typing.TypedDict('RegisterSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject"]],
+_RegisterSubjectParamsDictNoTag = typing.TypedDict('_RegisterSubjectParamsDictNoTag', {
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
     "control_points": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ RegisterSubjectParamsDictTagged = typing.TypedDict('RegisterSubjectParamsDictTag
     "log_file": typing.NotRequired[InputPathType | None],
     "gca_file": typing.NotRequired[InputPathType | None],
 })
+RegisterSubjectParamsDict = _RegisterSubjectParamsDictNoTag | RegisterSubjectParamsDictTagged
 
 
 class RegisterSubjectOutputs(typing.NamedTuple):

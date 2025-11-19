@@ -13,8 +13,7 @@ MRI_AVERAGE_METADATA = Metadata(
 )
 
 
-MriAverageParamsDict = typing.TypedDict('MriAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_average"]],
+_MriAverageParamsDictNoTag = typing.TypedDict('_MriAverageParamsDictNoTag', {
     "input_volumes": list[InputPathType],
     "output_volume": str,
     "rigid_alignment": bool,
@@ -61,6 +60,7 @@ MriAverageParamsDictTagged = typing.TypedDict('MriAverageParamsDictTagged', {
     "binarize": typing.NotRequired[float | None],
     "absolute": bool,
 })
+MriAverageParamsDict = _MriAverageParamsDictNoTag | MriAverageParamsDictTagged
 
 
 class MriAverageOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MEAN_METADATA = Metadata(
 )
 
 
-MeanParamsDict = typing.TypedDict('MeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mean"]],
+_MeanParamsDictNoTag = typing.TypedDict('_MeanParamsDictNoTag', {
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "verbose_flag": bool,
@@ -57,6 +56,7 @@ MeanParamsDictTagged = typing.TypedDict('MeanParamsDictTagged', {
     "prior_std": typing.NotRequired[float | None],
     "help_flag": bool,
 })
+MeanParamsDict = _MeanParamsDictNoTag | MeanParamsDictTagged
 
 
 class MeanOutputs(typing.NamedTuple):

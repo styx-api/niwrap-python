@@ -13,8 +13,7 @@ FIRST_ROI_SLICESDIR_METADATA = Metadata(
 )
 
 
-FirstRoiSlicesdirParamsDict = typing.TypedDict('FirstRoiSlicesdirParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/first_roi_slicesdir"]],
+_FirstRoiSlicesdirParamsDictNoTag = typing.TypedDict('_FirstRoiSlicesdirParamsDictNoTag', {
     "input_t1_images": str,
     "input_label_images": str,
 })
@@ -23,6 +22,7 @@ FirstRoiSlicesdirParamsDictTagged = typing.TypedDict('FirstRoiSlicesdirParamsDic
     "input_t1_images": str,
     "input_label_images": str,
 })
+FirstRoiSlicesdirParamsDict = _FirstRoiSlicesdirParamsDictNoTag | FirstRoiSlicesdirParamsDictTagged
 
 
 class FirstRoiSlicesdirOutputs(typing.NamedTuple):

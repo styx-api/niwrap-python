@@ -13,8 +13,7 @@ ESTNOISE_METADATA = Metadata(
 )
 
 
-EstnoiseParamsDict = typing.TypedDict('EstnoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/estnoise"]],
+_EstnoiseParamsDictNoTag = typing.TypedDict('_EstnoiseParamsDictNoTag', {
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
     "temp_hp_sigma": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ EstnoiseParamsDictTagged = typing.TypedDict('EstnoiseParamsDictTagged', {
     "temp_hp_sigma": typing.NotRequired[float | None],
     "temp_lp_sigma": typing.NotRequired[float | None],
 })
+EstnoiseParamsDict = _EstnoiseParamsDictNoTag | EstnoiseParamsDictTagged
 
 
 class EstnoiseOutputs(typing.NamedTuple):

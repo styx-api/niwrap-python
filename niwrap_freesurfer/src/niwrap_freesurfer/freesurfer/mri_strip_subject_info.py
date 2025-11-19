@@ -13,8 +13,7 @@ MRI_STRIP_SUBJECT_INFO_METADATA = Metadata(
 )
 
 
-MriStripSubjectInfoParamsDict = typing.TypedDict('MriStripSubjectInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_subject_info"]],
+_MriStripSubjectInfoParamsDictNoTag = typing.TypedDict('_MriStripSubjectInfoParamsDictNoTag', {
     "input_files": list[InputPathType],
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ MriStripSubjectInfoParamsDictTagged = typing.TypedDict('MriStripSubjectInfoParam
     "input_files": list[InputPathType],
     "output_directory": str,
 })
+MriStripSubjectInfoParamsDict = _MriStripSubjectInfoParamsDictNoTag | MriStripSubjectInfoParamsDictTagged
 
 
 class MriStripSubjectInfoOutputs(typing.NamedTuple):

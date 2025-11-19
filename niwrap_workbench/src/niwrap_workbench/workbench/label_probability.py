@@ -12,8 +12,7 @@ LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-LabelProbabilityParamsDict = typing.TypedDict('LabelProbabilityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-probability"]],
+_LabelProbabilityParamsDictNoTag = typing.TypedDict('_LabelProbabilityParamsDictNoTag', {
     "probability-metric-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
@@ -24,6 +23,7 @@ LabelProbabilityParamsDictTagged = typing.TypedDict('LabelProbabilityParamsDictT
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
+LabelProbabilityParamsDict = _LabelProbabilityParamsDictNoTag | LabelProbabilityParamsDictTagged
 
 
 class LabelProbabilityOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
 )
 
 
-MorphOnlySubjectLhParamsDict = typing.TypedDict('MorphOnlySubjectLhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_only_subject-lh"]],
+_MorphOnlySubjectLhParamsDictNoTag = typing.TypedDict('_MorphOnlySubjectLhParamsDictNoTag', {
     "subject_dir": str,
 })
 MorphOnlySubjectLhParamsDictTagged = typing.TypedDict('MorphOnlySubjectLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_only_subject-lh"],
     "subject_dir": str,
 })
+MorphOnlySubjectLhParamsDict = _MorphOnlySubjectLhParamsDictNoTag | MorphOnlySubjectLhParamsDictTagged
 
 
 class MorphOnlySubjectLhOutputs(typing.NamedTuple):

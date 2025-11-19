@@ -13,8 +13,7 @@ HALFCOSBASIS_METADATA = Metadata(
 )
 
 
-HalfcosbasisParamsDict = typing.TypedDict('HalfcosbasisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/halfcosbasis"]],
+_HalfcosbasisParamsDictNoTag = typing.TypedDict('_HalfcosbasisParamsDictNoTag', {
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
     "verbose_flag": bool,
@@ -53,6 +52,7 @@ HalfcosbasisParamsDictTagged = typing.TypedDict('HalfcosbasisParamsDictTagged', 
     "help_flag": bool,
     "help_flag_long": bool,
 })
+HalfcosbasisParamsDict = _HalfcosbasisParamsDictNoTag | HalfcosbasisParamsDictTagged
 
 
 class HalfcosbasisOutputs(typing.NamedTuple):

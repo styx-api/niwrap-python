@@ -13,8 +13,7 @@ V_1D_BANDPASS_METADATA = Metadata(
 )
 
 
-V1dBandpassParamsDict = typing.TypedDict('V1dBandpassParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dBandpass"]],
+_V1dBandpassParamsDictNoTag = typing.TypedDict('_V1dBandpassParamsDictNoTag', {
     "fbot": float,
     "ftop": float,
     "infile": InputPathType,
@@ -33,6 +32,7 @@ V1dBandpassParamsDictTagged = typing.TypedDict('V1dBandpassParamsDictTagged', {
     "nodetrend": bool,
     "norm": bool,
 })
+V1dBandpassParamsDict = _V1dBandpassParamsDictNoTag | V1dBandpassParamsDictTagged
 
 
 class V1dBandpassOutputs(typing.NamedTuple):

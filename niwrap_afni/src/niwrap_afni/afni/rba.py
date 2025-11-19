@@ -13,8 +13,7 @@ RBA_METADATA = Metadata(
 )
 
 
-RbaParamsDict = typing.TypedDict('RbaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/RBA"]],
+_RbaParamsDictNoTag = typing.TypedDict('_RbaParamsDictNoTag', {
     "prefix": str,
     "dataTable": InputPathType,
     "chains": typing.NotRequired[float | None],
@@ -71,6 +70,7 @@ RbaParamsDictTagged = typing.TypedDict('RbaParamsDictTagged', {
     "md": bool,
     "r2z": bool,
 })
+RbaParamsDict = _RbaParamsDictNoTag | RbaParamsDictTagged
 
 
 class RbaOutputs(typing.NamedTuple):

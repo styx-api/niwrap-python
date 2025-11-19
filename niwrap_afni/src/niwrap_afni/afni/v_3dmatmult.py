@@ -13,8 +13,7 @@ V_3DMATMULT_METADATA = Metadata(
 )
 
 
-V3dmatmultParamsDict = typing.TypedDict('V3dmatmultParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmatmult"]],
+_V3dmatmultParamsDictNoTag = typing.TypedDict('_V3dmatmultParamsDictNoTag', {
     "inputA": InputPathType,
     "inputB": InputPathType,
     "prefix": str,
@@ -29,6 +28,7 @@ V3dmatmultParamsDictTagged = typing.TypedDict('V3dmatmultParamsDictTagged', {
     "datum": typing.NotRequired[str | None],
     "verb": typing.NotRequired[float | None],
 })
+V3dmatmultParamsDict = _V3dmatmultParamsDictNoTag | V3dmatmultParamsDictTagged
 
 
 class V3dmatmultOutputs(typing.NamedTuple):

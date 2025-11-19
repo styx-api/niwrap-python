@@ -13,8 +13,7 @@ V_3D_GEN_PRIORS_METADATA = Metadata(
 )
 
 
-V3dGenPriorsParamsDict = typing.TypedDict('V3dGenPriorsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dGenPriors"]],
+_V3dGenPriorsParamsDictNoTag = typing.TypedDict('_V3dGenPriorsParamsDictNoTag', {
     "sigs": InputPathType,
     "tdist": InputPathType,
     "cprefix": str,
@@ -71,6 +70,7 @@ V3dGenPriorsParamsDictTagged = typing.TypedDict('V3dGenPriorsParamsDictTagged', 
     "fast": bool,
     "slow": bool,
 })
+V3dGenPriorsParamsDict = _V3dGenPriorsParamsDictNoTag | V3dGenPriorsParamsDictTagged
 
 
 class V3dGenPriorsOutputs(typing.NamedTuple):

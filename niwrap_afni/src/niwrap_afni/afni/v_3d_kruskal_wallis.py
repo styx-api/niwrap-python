@@ -13,8 +13,7 @@ V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
 )
 
 
-V3dKruskalWallisParamsDict = typing.TypedDict('V3dKruskalWallisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dKruskalWallis"]],
+_V3dKruskalWallisParamsDictNoTag = typing.TypedDict('_V3dKruskalWallisParamsDictNoTag', {
     "levels": int,
     "datasets": list[str],
     "workmem": typing.NotRequired[int | None],
@@ -29,6 +28,7 @@ V3dKruskalWallisParamsDictTagged = typing.TypedDict('V3dKruskalWallisParamsDictT
     "voxel": typing.NotRequired[int | None],
     "output": str,
 })
+V3dKruskalWallisParamsDict = _V3dKruskalWallisParamsDictNoTag | V3dKruskalWallisParamsDictTagged
 
 
 class V3dKruskalWallisOutputs(typing.NamedTuple):

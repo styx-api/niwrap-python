@@ -13,8 +13,7 @@ SET_SPACING_METADATA = Metadata(
 )
 
 
-SetSpacingParamsDict = typing.TypedDict('SetSpacingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SetSpacing"]],
+_SetSpacingParamsDictNoTag = typing.TypedDict('_SetSpacingParamsDictNoTag', {
     "dimension": int,
     "input_file": InputPathType,
     "output_file": str,
@@ -27,6 +26,7 @@ SetSpacingParamsDictTagged = typing.TypedDict('SetSpacingParamsDictTagged', {
     "output_file": str,
     "spacing": list[float],
 })
+SetSpacingParamsDict = _SetSpacingParamsDictNoTag | SetSpacingParamsDictTagged
 
 
 class SetSpacingOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RUN_SAMSEG_METADATA = Metadata(
 )
 
 
-RunSamsegParamsDict = typing.TypedDict('RunSamsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run_samseg"]],
+_RunSamsegParamsDictNoTag = typing.TypedDict('_RunSamsegParamsDictNoTag', {
     "output_dir": str,
     "input_files": list[InputPathType],
     "input_mode": typing.NotRequired[list[str] | None],
@@ -83,6 +82,7 @@ RunSamsegParamsDictTagged = typing.TypedDict('RunSamsegParamsDictTagged', {
     "save_warp": bool,
     "movie": bool,
 })
+RunSamsegParamsDict = _RunSamsegParamsDictNoTag | RunSamsegParamsDictTagged
 
 
 class RunSamsegOutputs(typing.NamedTuple):

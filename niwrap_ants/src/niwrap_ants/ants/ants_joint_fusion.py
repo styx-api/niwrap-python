@@ -13,8 +13,7 @@ ANTS_JOINT_FUSION_METADATA = Metadata(
 )
 
 
-AntsJointFusionParamsDict = typing.TypedDict('AntsJointFusionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsJointFusion"]],
+_AntsJointFusionParamsDictNoTag = typing.TypedDict('_AntsJointFusionParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[InputPathType],
     "atlas_image": list[InputPathType],
@@ -47,6 +46,7 @@ AntsJointFusionParamsDictTagged = typing.TypedDict('AntsJointFusionParamsDictTag
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+AntsJointFusionParamsDict = _AntsJointFusionParamsDictNoTag | AntsJointFusionParamsDictTagged
 
 
 class AntsJointFusionOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_EXTRACT_FCD_FEATURES_METADATA = Metadata(
 )
 
 
-MriExtractFcdFeaturesParamsDict = typing.TypedDict('MriExtractFcdFeaturesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_fcd_features"]],
+_MriExtractFcdFeaturesParamsDictNoTag = typing.TypedDict('_MriExtractFcdFeaturesParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "output_file": InputPathType,
@@ -27,6 +26,7 @@ MriExtractFcdFeaturesParamsDictTagged = typing.TypedDict('MriExtractFcdFeaturesP
     "output_file": InputPathType,
     "subjects_dir": typing.NotRequired[str | None],
 })
+MriExtractFcdFeaturesParamsDict = _MriExtractFcdFeaturesParamsDictNoTag | MriExtractFcdFeaturesParamsDictTagged
 
 
 class MriExtractFcdFeaturesOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_TRANSFORM_METADATA = Metadata(
 )
 
 
-MrisTransformParamsDict = typing.TypedDict('MrisTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_transform"]],
+_MrisTransformParamsDictNoTag = typing.TypedDict('_MrisTransformParamsDictNoTag', {
     "input_surface": InputPathType,
     "transform": InputPathType,
     "output_surface": str,
@@ -31,6 +30,7 @@ MrisTransformParamsDictTagged = typing.TypedDict('MrisTransformParamsDictTagged'
     "trx_dst": typing.NotRequired[InputPathType | None],
     "is_inverse": bool,
 })
+MrisTransformParamsDict = _MrisTransformParamsDictNoTag | MrisTransformParamsDictTagged
 
 
 class MrisTransformOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_DIFF_METADATA = Metadata(
 )
 
 
-V3dDiffParamsDict = typing.TypedDict('V3dDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDiff"]],
+_V3dDiffParamsDictNoTag = typing.TypedDict('_V3dDiffParamsDictNoTag', {
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "tolerance": typing.NotRequired[float | None],
@@ -35,6 +34,7 @@ V3dDiffParamsDictTagged = typing.TypedDict('V3dDiffParamsDictTagged', {
     "brutalist_mode": bool,
     "long_report_mode": bool,
 })
+V3dDiffParamsDict = _V3dDiffParamsDictNoTag | V3dDiffParamsDictTagged
 
 
 class V3dDiffOutputs(typing.NamedTuple):

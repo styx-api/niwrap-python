@@ -12,18 +12,17 @@ FILE_INFORMATION_METADATA = Metadata(
 )
 
 
-FileInformationOnlyMetadataParamsDict = typing.TypedDict('FileInformationOnlyMetadataParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["only-metadata"]],
+_FileInformationOnlyMetadataParamsDictNoTag = typing.TypedDict('_FileInformationOnlyMetadataParamsDictNoTag', {
     "key": typing.NotRequired[str | None],
 })
 FileInformationOnlyMetadataParamsDictTagged = typing.TypedDict('FileInformationOnlyMetadataParamsDictTagged', {
     "@type": typing.Literal["only-metadata"],
     "key": typing.NotRequired[str | None],
 })
+FileInformationOnlyMetadataParamsDict = _FileInformationOnlyMetadataParamsDictNoTag | FileInformationOnlyMetadataParamsDictTagged
 
 
-FileInformationParamsDict = typing.TypedDict('FileInformationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/file-information"]],
+_FileInformationParamsDictNoTag = typing.TypedDict('_FileInformationParamsDictNoTag', {
     "no-map-info": bool,
     "only-step-interval": bool,
     "only-number-of-maps": bool,
@@ -48,6 +47,7 @@ FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTag
     "czi-xml": bool,
     "data-file": str,
 })
+FileInformationParamsDict = _FileInformationParamsDictNoTag | FileInformationParamsDictTagged
 
 
 def file_information_only_metadata(

@@ -13,8 +13,7 @@ LONG_STATS_TPS_METADATA = Metadata(
 )
 
 
-LongStatsTpsParamsDict = typing.TypedDict('LongStatsTpsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_tps"]],
+_LongStatsTpsParamsDictNoTag = typing.TypedDict('_LongStatsTpsParamsDictNoTag', {
     "qdec_table": InputPathType,
     "stats_file": str,
     "measure": str,
@@ -35,6 +34,7 @@ LongStatsTpsParamsDictTagged = typing.TypedDict('LongStatsTpsParamsDictTagged', 
     "qcolumn": typing.NotRequired[str | None],
     "cross_sectional": bool,
 })
+LongStatsTpsParamsDict = _LongStatsTpsParamsDictNoTag | LongStatsTpsParamsDictTagged
 
 
 class LongStatsTpsOutputs(typing.NamedTuple):

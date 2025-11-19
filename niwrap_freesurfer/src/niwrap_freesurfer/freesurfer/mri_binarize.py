@@ -13,8 +13,7 @@ MRI_BINARIZE_METADATA = Metadata(
 )
 
 
-MriBinarizeParamsDict = typing.TypedDict('MriBinarizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_binarize"]],
+_MriBinarizeParamsDictNoTag = typing.TypedDict('_MriBinarizeParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "min_threshold": typing.NotRequired[float | None],
@@ -87,6 +86,7 @@ MriBinarizeParamsDictTagged = typing.TypedDict('MriBinarizeParamsDictTagged', {
     "noverbose_flag": bool,
     "debug_flag": bool,
 })
+MriBinarizeParamsDict = _MriBinarizeParamsDictNoTag | MriBinarizeParamsDictTagged
 
 
 class MriBinarizeOutputs(typing.NamedTuple):

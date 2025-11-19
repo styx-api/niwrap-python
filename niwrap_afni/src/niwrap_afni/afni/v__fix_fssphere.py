@@ -13,8 +13,7 @@ V__FIX_FSSPHERE_METADATA = Metadata(
 )
 
 
-VFixFssphereParamsDict = typing.TypedDict('VFixFssphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@fix_FSsphere"]],
+_VFixFssphereParamsDictNoTag = typing.TypedDict('_VFixFssphereParamsDictNoTag', {
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
     "num_iterations": typing.NotRequired[int | None],
@@ -31,6 +30,7 @@ VFixFssphereParamsDictTagged = typing.TypedDict('VFixFssphereParamsDictTagged', 
     "project_first": bool,
     "keep_temp": bool,
 })
+VFixFssphereParamsDict = _VFixFssphereParamsDictNoTag | VFixFssphereParamsDictTagged
 
 
 class VFixFssphereOutputs(typing.NamedTuple):

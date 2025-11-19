@@ -13,8 +13,7 @@ R_PKGS_INSTALL_METADATA = Metadata(
 )
 
 
-RPkgsInstallParamsDict = typing.TypedDict('RPkgsInstallParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/rPkgsInstall"]],
+_RPkgsInstallParamsDictNoTag = typing.TypedDict('_RPkgsInstallParamsDictNoTag', {
     "packages": str,
     "download_site": typing.NotRequired[str | None],
     "check": bool,
@@ -29,6 +28,7 @@ RPkgsInstallParamsDictTagged = typing.TypedDict('RPkgsInstallParamsDictTagged', 
     "update": bool,
     "remove": bool,
 })
+RPkgsInstallParamsDict = _RPkgsInstallParamsDictNoTag | RPkgsInstallParamsDictTagged
 
 
 class RPkgsInstallOutputs(typing.NamedTuple):

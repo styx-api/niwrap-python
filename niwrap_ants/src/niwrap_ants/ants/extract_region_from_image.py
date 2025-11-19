@@ -13,8 +13,7 @@ EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
 )
 
 
-ExtractRegionFromImageRegionMinMaxIndexParamsDict = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region_min_max_index"]],
+_ExtractRegionFromImageRegionMinMaxIndexParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageRegionMinMaxIndexParamsDictNoTag', {
     "min_index": str,
     "max_index": str,
 })
@@ -23,30 +22,30 @@ ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged = typing.TypedDict('Extr
     "min_index": str,
     "max_index": str,
 })
+ExtractRegionFromImageRegionMinMaxIndexParamsDict = _ExtractRegionFromImageRegionMinMaxIndexParamsDictNoTag | ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged
 
 
-ExtractRegionFromImageRegionLabelParamsDict = typing.TypedDict('ExtractRegionFromImageRegionLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region_label"]],
+_ExtractRegionFromImageRegionLabelParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageRegionLabelParamsDictNoTag', {
     "label": str,
 })
 ExtractRegionFromImageRegionLabelParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelParamsDictTagged', {
     "@type": typing.Literal["region_label"],
     "label": str,
 })
+ExtractRegionFromImageRegionLabelParamsDict = _ExtractRegionFromImageRegionLabelParamsDictNoTag | ExtractRegionFromImageRegionLabelParamsDictTagged
 
 
-ExtractRegionFromImageRegionDomainImageParamsDict = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region_domain_image"]],
+_ExtractRegionFromImageRegionDomainImageParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageRegionDomainImageParamsDictNoTag', {
     "domain_image": InputPathType,
 })
 ExtractRegionFromImageRegionDomainImageParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParamsDictTagged', {
     "@type": typing.Literal["region_domain_image"],
     "domain_image": InputPathType,
 })
+ExtractRegionFromImageRegionDomainImageParamsDict = _ExtractRegionFromImageRegionDomainImageParamsDictNoTag | ExtractRegionFromImageRegionDomainImageParamsDictTagged
 
 
-ExtractRegionFromImageRegionLabelWithImageParamsDict = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region_label_with_image"]],
+_ExtractRegionFromImageRegionLabelWithImageParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageRegionLabelWithImageParamsDictNoTag', {
     "label": str,
     "label_image": InputPathType,
 })
@@ -55,10 +54,10 @@ ExtractRegionFromImageRegionLabelWithImageParamsDictTagged = typing.TypedDict('E
     "label": str,
     "label_image": InputPathType,
 })
+ExtractRegionFromImageRegionLabelWithImageParamsDict = _ExtractRegionFromImageRegionLabelWithImageParamsDictNoTag | ExtractRegionFromImageRegionLabelWithImageParamsDictTagged
 
 
-ExtractRegionFromImageParamsDict = typing.TypedDict('ExtractRegionFromImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImage"]],
+_ExtractRegionFromImageParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -71,6 +70,7 @@ ExtractRegionFromImageParamsDictTagged = typing.TypedDict('ExtractRegionFromImag
     "output_image": str,
     "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged, ExtractRegionFromImageRegionLabelParamsDictTagged, ExtractRegionFromImageRegionDomainImageParamsDictTagged, ExtractRegionFromImageRegionLabelWithImageParamsDictTagged],
 })
+ExtractRegionFromImageParamsDict = _ExtractRegionFromImageParamsDictNoTag | ExtractRegionFromImageParamsDictTagged
 
 
 def extract_region_from_image_region_specification_cargs_dyn_fn(

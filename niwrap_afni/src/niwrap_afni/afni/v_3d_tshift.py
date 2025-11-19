@@ -13,8 +13,7 @@ V_3D_TSHIFT_METADATA = Metadata(
 )
 
 
-V3dTshiftParamsDict = typing.TypedDict('V3dTshiftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTshift"]],
+_V3dTshiftParamsDictNoTag = typing.TypedDict('_V3dTshiftParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
     "in_file": InputPathType,
@@ -45,6 +44,7 @@ V3dTshiftParamsDictTagged = typing.TypedDict('V3dTshiftParamsDictTagged', {
     "tslice": typing.NotRequired[int | None],
     "tzero": typing.NotRequired[float | None],
 })
+V3dTshiftParamsDict = _V3dTshiftParamsDictNoTag | V3dTshiftParamsDictTagged
 
 
 class V3dTshiftOutputs(typing.NamedTuple):

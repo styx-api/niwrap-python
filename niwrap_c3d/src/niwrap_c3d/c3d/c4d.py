@@ -13,1798 +13,1797 @@ C4D_METADATA = Metadata(
 )
 
 
-C4dAccumParamsDict = typing.TypedDict('C4dAccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["accum"]],
+_C4dAccumParamsDictNoTag = typing.TypedDict('_C4dAccumParamsDictNoTag', {
     "accum": str,
 })
 C4dAccumParamsDictTagged = typing.TypedDict('C4dAccumParamsDictTagged', {
     "@type": typing.Literal["accum"],
     "accum": str,
 })
+C4dAccumParamsDict = _C4dAccumParamsDictNoTag | C4dAccumParamsDictTagged
 
 
-C4dAcosParamsDict = typing.TypedDict('C4dAcosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["acos"]],
+_C4dAcosParamsDictNoTag = typing.TypedDict('_C4dAcosParamsDictNoTag', {
     "acos": str,
 })
 C4dAcosParamsDictTagged = typing.TypedDict('C4dAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
     "acos": str,
 })
+C4dAcosParamsDict = _C4dAcosParamsDictNoTag | C4dAcosParamsDictTagged
 
 
-C4dAddParamsDict = typing.TypedDict('C4dAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["add"]],
+_C4dAddParamsDictNoTag = typing.TypedDict('_C4dAddParamsDictNoTag', {
     "add": str,
 })
 C4dAddParamsDictTagged = typing.TypedDict('C4dAddParamsDictTagged', {
     "@type": typing.Literal["add"],
     "add": str,
 })
+C4dAddParamsDict = _C4dAddParamsDictNoTag | C4dAddParamsDictTagged
 
 
-C4dAlignLandmarksParamsDict = typing.TypedDict('C4dAlignLandmarksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+_C4dAlignLandmarksParamsDictNoTag = typing.TypedDict('_C4dAlignLandmarksParamsDictNoTag', {
     "align_landmarks": str,
 })
 C4dAlignLandmarksParamsDictTagged = typing.TypedDict('C4dAlignLandmarksParamsDictTagged', {
     "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
+C4dAlignLandmarksParamsDict = _C4dAlignLandmarksParamsDictNoTag | C4dAlignLandmarksParamsDictTagged
 
 
-C4dAnisotropicDiffusionParamsDict = typing.TypedDict('C4dAnisotropicDiffusionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+_C4dAnisotropicDiffusionParamsDictNoTag = typing.TypedDict('_C4dAnisotropicDiffusionParamsDictNoTag', {
     "anisotropic_diffusion": str,
 })
 C4dAnisotropicDiffusionParamsDictTagged = typing.TypedDict('C4dAnisotropicDiffusionParamsDictTagged', {
     "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
+C4dAnisotropicDiffusionParamsDict = _C4dAnisotropicDiffusionParamsDictNoTag | C4dAnisotropicDiffusionParamsDictTagged
 
 
-C4dAntialiasParamsDict = typing.TypedDict('C4dAntialiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["antialias"]],
+_C4dAntialiasParamsDictNoTag = typing.TypedDict('_C4dAntialiasParamsDictNoTag', {
     "antialias": str,
 })
 C4dAntialiasParamsDictTagged = typing.TypedDict('C4dAntialiasParamsDictTagged', {
     "@type": typing.Literal["antialias"],
     "antialias": str,
 })
+C4dAntialiasParamsDict = _C4dAntialiasParamsDictNoTag | C4dAntialiasParamsDictTagged
 
 
-C4dSetParamsDict = typing.TypedDict('C4dSetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set"]],
+_C4dSetParamsDictNoTag = typing.TypedDict('_C4dSetParamsDictNoTag', {
     "set": str,
 })
 C4dSetParamsDictTagged = typing.TypedDict('C4dSetParamsDictTagged', {
     "@type": typing.Literal["set"],
     "set": str,
 })
+C4dSetParamsDict = _C4dSetParamsDictNoTag | C4dSetParamsDictTagged
 
 
-C4dAsinParamsDict = typing.TypedDict('C4dAsinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["asin"]],
+_C4dAsinParamsDictNoTag = typing.TypedDict('_C4dAsinParamsDictNoTag', {
     "asin": str,
 })
 C4dAsinParamsDictTagged = typing.TypedDict('C4dAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
     "asin": str,
 })
+C4dAsinParamsDict = _C4dAsinParamsDictNoTag | C4dAsinParamsDictTagged
 
 
-C4dAtan2ParamsDict = typing.TypedDict('C4dAtan2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["atan2"]],
+_C4dAtan2ParamsDictNoTag = typing.TypedDict('_C4dAtan2ParamsDictNoTag', {
     "atan2": str,
 })
 C4dAtan2ParamsDictTagged = typing.TypedDict('C4dAtan2ParamsDictTagged', {
     "@type": typing.Literal["atan2"],
     "atan2": str,
 })
+C4dAtan2ParamsDict = _C4dAtan2ParamsDictNoTag | C4dAtan2ParamsDictTagged
 
 
-C4dBackgroundParamsDict = typing.TypedDict('C4dBackgroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["background"]],
+_C4dBackgroundParamsDictNoTag = typing.TypedDict('_C4dBackgroundParamsDictNoTag', {
     "background": str,
 })
 C4dBackgroundParamsDictTagged = typing.TypedDict('C4dBackgroundParamsDictTagged', {
     "@type": typing.Literal["background"],
     "background": str,
 })
+C4dBackgroundParamsDict = _C4dBackgroundParamsDictNoTag | C4dBackgroundParamsDictTagged
 
 
-C4dN4BiasCorrectionParamsDict = typing.TypedDict('C4dN4BiasCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+_C4dN4BiasCorrectionParamsDictNoTag = typing.TypedDict('_C4dN4BiasCorrectionParamsDictNoTag', {
     "n4_bias_correction": str,
 })
 C4dN4BiasCorrectionParamsDictTagged = typing.TypedDict('C4dN4BiasCorrectionParamsDictTagged', {
     "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
+C4dN4BiasCorrectionParamsDict = _C4dN4BiasCorrectionParamsDictNoTag | C4dN4BiasCorrectionParamsDictTagged
 
 
-C4dBinarizeParamsDict = typing.TypedDict('C4dBinarizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["binarize"]],
+_C4dBinarizeParamsDictNoTag = typing.TypedDict('_C4dBinarizeParamsDictNoTag', {
     "binarize": str,
 })
 C4dBinarizeParamsDictTagged = typing.TypedDict('C4dBinarizeParamsDictTagged', {
     "@type": typing.Literal["binarize"],
     "binarize": str,
 })
+C4dBinarizeParamsDict = _C4dBinarizeParamsDictNoTag | C4dBinarizeParamsDictTagged
 
 
-C4dCannyParamsDict = typing.TypedDict('C4dCannyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["canny"]],
+_C4dCannyParamsDictNoTag = typing.TypedDict('_C4dCannyParamsDictNoTag', {
     "canny": str,
 })
 C4dCannyParamsDictTagged = typing.TypedDict('C4dCannyParamsDictTagged', {
     "@type": typing.Literal["canny"],
     "canny": str,
 })
+C4dCannyParamsDict = _C4dCannyParamsDictNoTag | C4dCannyParamsDictTagged
 
 
-C4dCeilParamsDict = typing.TypedDict('C4dCeilParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ceil"]],
+_C4dCeilParamsDictNoTag = typing.TypedDict('_C4dCeilParamsDictNoTag', {
     "ceil": str,
 })
 C4dCeilParamsDictTagged = typing.TypedDict('C4dCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
     "ceil": str,
 })
+C4dCeilParamsDict = _C4dCeilParamsDictNoTag | C4dCeilParamsDictTagged
 
 
-C4dCentroidParamsDict = typing.TypedDict('C4dCentroidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid"]],
+_C4dCentroidParamsDictNoTag = typing.TypedDict('_C4dCentroidParamsDictNoTag', {
     "centroid": str,
 })
 C4dCentroidParamsDictTagged = typing.TypedDict('C4dCentroidParamsDictTagged', {
     "@type": typing.Literal["centroid"],
     "centroid": str,
 })
+C4dCentroidParamsDict = _C4dCentroidParamsDictNoTag | C4dCentroidParamsDictTagged
 
 
-C4dCentroidMarkParamsDict = typing.TypedDict('C4dCentroidMarkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+_C4dCentroidMarkParamsDictNoTag = typing.TypedDict('_C4dCentroidMarkParamsDictNoTag', {
     "centroid_mark": str,
 })
 C4dCentroidMarkParamsDictTagged = typing.TypedDict('C4dCentroidMarkParamsDictTagged', {
     "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
+C4dCentroidMarkParamsDict = _C4dCentroidMarkParamsDictNoTag | C4dCentroidMarkParamsDictTagged
 
 
-C4dConnectedComponentsParamsDict = typing.TypedDict('C4dConnectedComponentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+_C4dConnectedComponentsParamsDictNoTag = typing.TypedDict('_C4dConnectedComponentsParamsDictNoTag', {
     "connected_components": str,
 })
 C4dConnectedComponentsParamsDictTagged = typing.TypedDict('C4dConnectedComponentsParamsDictTagged', {
     "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
+C4dConnectedComponentsParamsDict = _C4dConnectedComponentsParamsDictNoTag | C4dConnectedComponentsParamsDictTagged
 
 
-C4dClearParamsDict = typing.TypedDict('C4dClearParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clear"]],
+_C4dClearParamsDictNoTag = typing.TypedDict('_C4dClearParamsDictNoTag', {
     "clear": str,
 })
 C4dClearParamsDictTagged = typing.TypedDict('C4dClearParamsDictTagged', {
     "@type": typing.Literal["clear"],
     "clear": str,
 })
+C4dClearParamsDict = _C4dClearParamsDictNoTag | C4dClearParamsDictTagged
 
 
-C4dClipParamsDict = typing.TypedDict('C4dClipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clip"]],
+_C4dClipParamsDictNoTag = typing.TypedDict('_C4dClipParamsDictNoTag', {
     "clip": str,
 })
 C4dClipParamsDictTagged = typing.TypedDict('C4dClipParamsDictTagged', {
     "@type": typing.Literal["clip"],
     "clip": str,
 })
+C4dClipParamsDict = _C4dClipParamsDictNoTag | C4dClipParamsDictTagged
 
 
-C4dColorMapParamsDict = typing.TypedDict('C4dColorMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["color_map"]],
+_C4dColorMapParamsDictNoTag = typing.TypedDict('_C4dColorMapParamsDictNoTag', {
     "color_map": str,
 })
 C4dColorMapParamsDictTagged = typing.TypedDict('C4dColorMapParamsDictTagged', {
     "@type": typing.Literal["color_map"],
     "color_map": str,
 })
+C4dColorMapParamsDict = _C4dColorMapParamsDictNoTag | C4dColorMapParamsDictTagged
 
 
-C4dCompressParamsDict = typing.TypedDict('C4dCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["compress"]],
+_C4dCompressParamsDictNoTag = typing.TypedDict('_C4dCompressParamsDictNoTag', {
     "compress": str,
 })
 C4dCompressParamsDictTagged = typing.TypedDict('C4dCompressParamsDictTagged', {
     "@type": typing.Literal["compress"],
     "compress": str,
 })
+C4dCompressParamsDict = _C4dCompressParamsDictNoTag | C4dCompressParamsDictTagged
 
 
-C4dNoCompressParamsDict = typing.TypedDict('C4dNoCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+_C4dNoCompressParamsDictNoTag = typing.TypedDict('_C4dNoCompressParamsDictNoTag', {
     "no_compress": str,
 })
 C4dNoCompressParamsDictTagged = typing.TypedDict('C4dNoCompressParamsDictTagged', {
     "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
+C4dNoCompressParamsDict = _C4dNoCompressParamsDictNoTag | C4dNoCompressParamsDictTagged
 
 
-C4dConvParamsDict = typing.TypedDict('C4dConvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["conv"]],
+_C4dConvParamsDictNoTag = typing.TypedDict('_C4dConvParamsDictNoTag', {
     "conv": str,
 })
 C4dConvParamsDictTagged = typing.TypedDict('C4dConvParamsDictTagged', {
     "@type": typing.Literal["conv"],
     "conv": str,
 })
+C4dConvParamsDict = _C4dConvParamsDictNoTag | C4dConvParamsDictTagged
 
 
-C4dCoordinateMapVoxelParamsDict = typing.TypedDict('C4dCoordinateMapVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+_C4dCoordinateMapVoxelParamsDictNoTag = typing.TypedDict('_C4dCoordinateMapVoxelParamsDictNoTag', {
     "coordinate_map_voxel": str,
 })
 C4dCoordinateMapVoxelParamsDictTagged = typing.TypedDict('C4dCoordinateMapVoxelParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
+C4dCoordinateMapVoxelParamsDict = _C4dCoordinateMapVoxelParamsDictNoTag | C4dCoordinateMapVoxelParamsDictTagged
 
 
-C4dCoordinateMapPhysicalParamsDict = typing.TypedDict('C4dCoordinateMapPhysicalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+_C4dCoordinateMapPhysicalParamsDictNoTag = typing.TypedDict('_C4dCoordinateMapPhysicalParamsDictNoTag', {
     "coordinate_map_physical": str,
 })
 C4dCoordinateMapPhysicalParamsDictTagged = typing.TypedDict('C4dCoordinateMapPhysicalParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
+C4dCoordinateMapPhysicalParamsDict = _C4dCoordinateMapPhysicalParamsDictNoTag | C4dCoordinateMapPhysicalParamsDictTagged
 
 
-C4dCopyTransformParamsDict = typing.TypedDict('C4dCopyTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+_C4dCopyTransformParamsDictNoTag = typing.TypedDict('_C4dCopyTransformParamsDictNoTag', {
     "copy_transform": str,
 })
 C4dCopyTransformParamsDictTagged = typing.TypedDict('C4dCopyTransformParamsDictTagged', {
     "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
+C4dCopyTransformParamsDict = _C4dCopyTransformParamsDictNoTag | C4dCopyTransformParamsDictTagged
 
 
-C4dCosParamsDict = typing.TypedDict('C4dCosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cos"]],
+_C4dCosParamsDictNoTag = typing.TypedDict('_C4dCosParamsDictNoTag', {
     "cos": str,
 })
 C4dCosParamsDictTagged = typing.TypedDict('C4dCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
     "cos": str,
 })
+C4dCosParamsDict = _C4dCosParamsDictNoTag | C4dCosParamsDictTagged
 
 
-C4dCreateParamsDict = typing.TypedDict('C4dCreateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["create"]],
+_C4dCreateParamsDictNoTag = typing.TypedDict('_C4dCreateParamsDictNoTag', {
     "create": str,
 })
 C4dCreateParamsDictTagged = typing.TypedDict('C4dCreateParamsDictTagged', {
     "@type": typing.Literal["create"],
     "create": str,
 })
+C4dCreateParamsDict = _C4dCreateParamsDictNoTag | C4dCreateParamsDictTagged
 
 
-C4dDicomSeriesListParamsDict = typing.TypedDict('C4dDicomSeriesListParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+_C4dDicomSeriesListParamsDictNoTag = typing.TypedDict('_C4dDicomSeriesListParamsDictNoTag', {
     "dicom_series_list": str,
 })
 C4dDicomSeriesListParamsDictTagged = typing.TypedDict('C4dDicomSeriesListParamsDictTagged', {
     "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
+C4dDicomSeriesListParamsDict = _C4dDicomSeriesListParamsDictNoTag | C4dDicomSeriesListParamsDictTagged
 
 
-C4dDicomSeriesReadParamsDict = typing.TypedDict('C4dDicomSeriesReadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+_C4dDicomSeriesReadParamsDictNoTag = typing.TypedDict('_C4dDicomSeriesReadParamsDictNoTag', {
     "dicom_series_read": str,
 })
 C4dDicomSeriesReadParamsDictTagged = typing.TypedDict('C4dDicomSeriesReadParamsDictTagged', {
     "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
+C4dDicomSeriesReadParamsDict = _C4dDicomSeriesReadParamsDictNoTag | C4dDicomSeriesReadParamsDictTagged
 
 
-C4dDilateParamsDict = typing.TypedDict('C4dDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dilate"]],
+_C4dDilateParamsDictNoTag = typing.TypedDict('_C4dDilateParamsDictNoTag', {
     "dilate": str,
 })
 C4dDilateParamsDictTagged = typing.TypedDict('C4dDilateParamsDictTagged', {
     "@type": typing.Literal["dilate"],
     "dilate": str,
 })
+C4dDilateParamsDict = _C4dDilateParamsDictNoTag | C4dDilateParamsDictTagged
 
 
-C4dDivideParamsDict = typing.TypedDict('C4dDivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["divide"]],
+_C4dDivideParamsDictNoTag = typing.TypedDict('_C4dDivideParamsDictNoTag', {
     "divide": str,
 })
 C4dDivideParamsDictTagged = typing.TypedDict('C4dDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
     "divide": str,
 })
+C4dDivideParamsDict = _C4dDivideParamsDictNoTag | C4dDivideParamsDictTagged
 
 
-C4dDuplicateParamsDict = typing.TypedDict('C4dDuplicateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+_C4dDuplicateParamsDictNoTag = typing.TypedDict('_C4dDuplicateParamsDictNoTag', {
     "duplicate": str,
 })
 C4dDuplicateParamsDictTagged = typing.TypedDict('C4dDuplicateParamsDictTagged', {
     "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
+C4dDuplicateParamsDict = _C4dDuplicateParamsDictNoTag | C4dDuplicateParamsDictTagged
 
 
-C4dEndaccumParamsDict = typing.TypedDict('C4dEndaccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+_C4dEndaccumParamsDictNoTag = typing.TypedDict('_C4dEndaccumParamsDictNoTag', {
     "endaccum": str,
 })
 C4dEndaccumParamsDictTagged = typing.TypedDict('C4dEndaccumParamsDictTagged', {
     "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
+C4dEndaccumParamsDict = _C4dEndaccumParamsDictNoTag | C4dEndaccumParamsDictTagged
 
 
-C4dEndforParamsDict = typing.TypedDict('C4dEndforParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endfor"]],
+_C4dEndforParamsDictNoTag = typing.TypedDict('_C4dEndforParamsDictNoTag', {
     "endfor": str,
 })
 C4dEndforParamsDictTagged = typing.TypedDict('C4dEndforParamsDictTagged', {
     "@type": typing.Literal["endfor"],
     "endfor": str,
 })
+C4dEndforParamsDict = _C4dEndforParamsDictNoTag | C4dEndforParamsDictTagged
 
 
-C4dErodeParamsDict = typing.TypedDict('C4dErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erode"]],
+_C4dErodeParamsDictNoTag = typing.TypedDict('_C4dErodeParamsDictNoTag', {
     "erode": str,
 })
 C4dErodeParamsDictTagged = typing.TypedDict('C4dErodeParamsDictTagged', {
     "@type": typing.Literal["erode"],
     "erode": str,
 })
+C4dErodeParamsDict = _C4dErodeParamsDictNoTag | C4dErodeParamsDictTagged
 
 
-C4dErfParamsDict = typing.TypedDict('C4dErfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erf"]],
+_C4dErfParamsDictNoTag = typing.TypedDict('_C4dErfParamsDictNoTag', {
     "erf": str,
 })
 C4dErfParamsDictTagged = typing.TypedDict('C4dErfParamsDictTagged', {
     "@type": typing.Literal["erf"],
     "erf": str,
 })
+C4dErfParamsDict = _C4dErfParamsDictNoTag | C4dErfParamsDictTagged
 
 
-C4dExpParamsDict = typing.TypedDict('C4dExpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exp"]],
+_C4dExpParamsDictNoTag = typing.TypedDict('_C4dExpParamsDictNoTag', {
     "exp": str,
 })
 C4dExpParamsDictTagged = typing.TypedDict('C4dExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
     "exp": str,
 })
+C4dExpParamsDict = _C4dExpParamsDictNoTag | C4dExpParamsDictTagged
 
 
-C4dExportPatchesParamsDict = typing.TypedDict('C4dExportPatchesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+_C4dExportPatchesParamsDictNoTag = typing.TypedDict('_C4dExportPatchesParamsDictNoTag', {
     "export_patches": str,
 })
 C4dExportPatchesParamsDictTagged = typing.TypedDict('C4dExportPatchesParamsDictTagged', {
     "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
+C4dExportPatchesParamsDict = _C4dExportPatchesParamsDictNoTag | C4dExportPatchesParamsDictTagged
 
 
-C4dExportPatchesAugParamsDict = typing.TypedDict('C4dExportPatchesAugParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+_C4dExportPatchesAugParamsDictNoTag = typing.TypedDict('_C4dExportPatchesAugParamsDictNoTag', {
     "export_patches_aug": str,
 })
 C4dExportPatchesAugParamsDictTagged = typing.TypedDict('C4dExportPatchesAugParamsDictTagged', {
     "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
+C4dExportPatchesAugParamsDict = _C4dExportPatchesAugParamsDictNoTag | C4dExportPatchesAugParamsDictTagged
 
 
-C4dExtrudeSegParamsDict = typing.TypedDict('C4dExtrudeSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+_C4dExtrudeSegParamsDictNoTag = typing.TypedDict('_C4dExtrudeSegParamsDictNoTag', {
     "extrude_seg": str,
 })
 C4dExtrudeSegParamsDictTagged = typing.TypedDict('C4dExtrudeSegParamsDictTagged', {
     "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
+C4dExtrudeSegParamsDict = _C4dExtrudeSegParamsDictNoTag | C4dExtrudeSegParamsDictTagged
 
 
-C4dFillBackgroundWithNoiseParamsDict = typing.TypedDict('C4dFillBackgroundWithNoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+_C4dFillBackgroundWithNoiseParamsDictNoTag = typing.TypedDict('_C4dFillBackgroundWithNoiseParamsDictNoTag', {
     "fill_background_with_noise": str,
 })
 C4dFillBackgroundWithNoiseParamsDictTagged = typing.TypedDict('C4dFillBackgroundWithNoiseParamsDictTagged', {
     "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
+C4dFillBackgroundWithNoiseParamsDict = _C4dFillBackgroundWithNoiseParamsDictNoTag | C4dFillBackgroundWithNoiseParamsDictTagged
 
 
-C4dFftParamsDict = typing.TypedDict('C4dFftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fft"]],
+_C4dFftParamsDictNoTag = typing.TypedDict('_C4dFftParamsDictNoTag', {
     "fft": str,
 })
 C4dFftParamsDictTagged = typing.TypedDict('C4dFftParamsDictTagged', {
     "@type": typing.Literal["fft"],
     "fft": str,
 })
+C4dFftParamsDict = _C4dFftParamsDictNoTag | C4dFftParamsDictTagged
 
 
-C4dFlipParamsDict = typing.TypedDict('C4dFlipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flip"]],
+_C4dFlipParamsDictNoTag = typing.TypedDict('_C4dFlipParamsDictNoTag', {
     "flip": str,
 })
 C4dFlipParamsDictTagged = typing.TypedDict('C4dFlipParamsDictTagged', {
     "@type": typing.Literal["flip"],
     "flip": str,
 })
+C4dFlipParamsDict = _C4dFlipParamsDictNoTag | C4dFlipParamsDictTagged
 
 
-C4dFloorParamsDict = typing.TypedDict('C4dFloorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["floor"]],
+_C4dFloorParamsDictNoTag = typing.TypedDict('_C4dFloorParamsDictNoTag', {
     "floor": str,
 })
 C4dFloorParamsDictTagged = typing.TypedDict('C4dFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
     "floor": str,
 })
+C4dFloorParamsDict = _C4dFloorParamsDictNoTag | C4dFloorParamsDictTagged
 
 
-C4dForeachParamsDict = typing.TypedDict('C4dForeachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach"]],
+_C4dForeachParamsDictNoTag = typing.TypedDict('_C4dForeachParamsDictNoTag', {
     "foreach": str,
 })
 C4dForeachParamsDictTagged = typing.TypedDict('C4dForeachParamsDictTagged', {
     "@type": typing.Literal["foreach"],
     "foreach": str,
 })
+C4dForeachParamsDict = _C4dForeachParamsDictNoTag | C4dForeachParamsDictTagged
 
 
-C4dForeachCompParamsDict = typing.TypedDict('C4dForeachCompParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+_C4dForeachCompParamsDictNoTag = typing.TypedDict('_C4dForeachCompParamsDictNoTag', {
     "foreach_comp": str,
 })
 C4dForeachCompParamsDictTagged = typing.TypedDict('C4dForeachCompParamsDictTagged', {
     "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
+C4dForeachCompParamsDict = _C4dForeachCompParamsDictNoTag | C4dForeachCompParamsDictTagged
 
 
-C4dGlmParamsDict = typing.TypedDict('C4dGlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["glm"]],
+_C4dGlmParamsDictNoTag = typing.TypedDict('_C4dGlmParamsDictNoTag', {
     "glm": str,
 })
 C4dGlmParamsDictTagged = typing.TypedDict('C4dGlmParamsDictTagged', {
     "@type": typing.Literal["glm"],
     "glm": str,
 })
+C4dGlmParamsDict = _C4dGlmParamsDictNoTag | C4dGlmParamsDictTagged
 
 
-C4dGradientParamsDict = typing.TypedDict('C4dGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gradient"]],
+_C4dGradientParamsDictNoTag = typing.TypedDict('_C4dGradientParamsDictNoTag', {
     "gradient": str,
 })
 C4dGradientParamsDictTagged = typing.TypedDict('C4dGradientParamsDictTagged', {
     "@type": typing.Literal["gradient"],
     "gradient": str,
 })
+C4dGradientParamsDict = _C4dGradientParamsDictNoTag | C4dGradientParamsDictTagged
 
 
-C4dHelpParamsDict = typing.TypedDict('C4dHelpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["_help"]],
+_C4dHelpParamsDictNoTag = typing.TypedDict('_C4dHelpParamsDictNoTag', {
     "_help": str,
 })
 C4dHelpParamsDictTagged = typing.TypedDict('C4dHelpParamsDictTagged', {
     "@type": typing.Literal["_help"],
     "_help": str,
 })
+C4dHelpParamsDict = _C4dHelpParamsDictNoTag | C4dHelpParamsDictTagged
 
 
-C4dHolefillParamsDict = typing.TypedDict('C4dHolefillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["holefill"]],
+_C4dHolefillParamsDictNoTag = typing.TypedDict('_C4dHolefillParamsDictNoTag', {
     "holefill": str,
 })
 C4dHolefillParamsDictTagged = typing.TypedDict('C4dHolefillParamsDictTagged', {
     "@type": typing.Literal["holefill"],
     "holefill": str,
 })
+C4dHolefillParamsDict = _C4dHolefillParamsDictNoTag | C4dHolefillParamsDictTagged
 
 
-C4dHessianEigenvaluesParamsDict = typing.TypedDict('C4dHessianEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+_C4dHessianEigenvaluesParamsDictNoTag = typing.TypedDict('_C4dHessianEigenvaluesParamsDictNoTag', {
     "hessian_eigenvalues": str,
 })
 C4dHessianEigenvaluesParamsDictTagged = typing.TypedDict('C4dHessianEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
+C4dHessianEigenvaluesParamsDict = _C4dHessianEigenvaluesParamsDictNoTag | C4dHessianEigenvaluesParamsDictTagged
 
 
-C4dHessianObjectnessParamsDict = typing.TypedDict('C4dHessianObjectnessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+_C4dHessianObjectnessParamsDictNoTag = typing.TypedDict('_C4dHessianObjectnessParamsDictNoTag', {
     "hessian_objectness": str,
 })
 C4dHessianObjectnessParamsDictTagged = typing.TypedDict('C4dHessianObjectnessParamsDictTagged', {
     "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
+C4dHessianObjectnessParamsDict = _C4dHessianObjectnessParamsDictNoTag | C4dHessianObjectnessParamsDictTagged
 
 
-C4dHistogramMatchParamsDict = typing.TypedDict('C4dHistogramMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+_C4dHistogramMatchParamsDictNoTag = typing.TypedDict('_C4dHistogramMatchParamsDictNoTag', {
     "histogram_match": str,
 })
 C4dHistogramMatchParamsDictTagged = typing.TypedDict('C4dHistogramMatchParamsDictTagged', {
     "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
+C4dHistogramMatchParamsDict = _C4dHistogramMatchParamsDictNoTag | C4dHistogramMatchParamsDictTagged
 
 
-C4dInfoParamsDict = typing.TypedDict('C4dInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info"]],
+_C4dInfoParamsDictNoTag = typing.TypedDict('_C4dInfoParamsDictNoTag', {
     "info": str,
 })
 C4dInfoParamsDictTagged = typing.TypedDict('C4dInfoParamsDictTagged', {
     "@type": typing.Literal["info"],
     "info": str,
 })
+C4dInfoParamsDict = _C4dInfoParamsDictNoTag | C4dInfoParamsDictTagged
 
 
-C4dInfoFullParamsDict = typing.TypedDict('C4dInfoFullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info_full"]],
+_C4dInfoFullParamsDictNoTag = typing.TypedDict('_C4dInfoFullParamsDictNoTag', {
     "info_full": str,
 })
 C4dInfoFullParamsDictTagged = typing.TypedDict('C4dInfoFullParamsDictTagged', {
     "@type": typing.Literal["info_full"],
     "info_full": str,
 })
+C4dInfoFullParamsDict = _C4dInfoFullParamsDictNoTag | C4dInfoFullParamsDictTagged
 
 
-C4dInsertParamsDict = typing.TypedDict('C4dInsertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["insert"]],
+_C4dInsertParamsDictNoTag = typing.TypedDict('_C4dInsertParamsDictNoTag', {
     "insert": str,
 })
 C4dInsertParamsDictTagged = typing.TypedDict('C4dInsertParamsDictTagged', {
     "@type": typing.Literal["insert"],
     "insert": str,
 })
+C4dInsertParamsDict = _C4dInsertParamsDictNoTag | C4dInsertParamsDictTagged
 
 
-C4dInterpolationParamsDict = typing.TypedDict('C4dInterpolationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+_C4dInterpolationParamsDictNoTag = typing.TypedDict('_C4dInterpolationParamsDictNoTag', {
     "interpolation": str,
 })
 C4dInterpolationParamsDictTagged = typing.TypedDict('C4dInterpolationParamsDictTagged', {
     "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
+C4dInterpolationParamsDict = _C4dInterpolationParamsDictNoTag | C4dInterpolationParamsDictTagged
 
 
-C4dIterationsParamsDict = typing.TypedDict('C4dIterationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["iterations"]],
+_C4dIterationsParamsDictNoTag = typing.TypedDict('_C4dIterationsParamsDictNoTag', {
     "iterations": str,
 })
 C4dIterationsParamsDictTagged = typing.TypedDict('C4dIterationsParamsDictTagged', {
     "@type": typing.Literal["iterations"],
     "iterations": str,
 })
+C4dIterationsParamsDict = _C4dIterationsParamsDictNoTag | C4dIterationsParamsDictTagged
 
 
-C4dLabelOverlapParamsDict = typing.TypedDict('C4dLabelOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+_C4dLabelOverlapParamsDictNoTag = typing.TypedDict('_C4dLabelOverlapParamsDictNoTag', {
     "label_overlap": str,
 })
 C4dLabelOverlapParamsDictTagged = typing.TypedDict('C4dLabelOverlapParamsDictTagged', {
     "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
+C4dLabelOverlapParamsDict = _C4dLabelOverlapParamsDictNoTag | C4dLabelOverlapParamsDictTagged
 
 
-C4dLabelStatisticsParamsDict = typing.TypedDict('C4dLabelStatisticsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+_C4dLabelStatisticsParamsDictNoTag = typing.TypedDict('_C4dLabelStatisticsParamsDictNoTag', {
     "label_statistics": str,
 })
 C4dLabelStatisticsParamsDictTagged = typing.TypedDict('C4dLabelStatisticsParamsDictTagged', {
     "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
+C4dLabelStatisticsParamsDict = _C4dLabelStatisticsParamsDictNoTag | C4dLabelStatisticsParamsDictTagged
 
 
-C4dLandmarksToSpheresParamsDict = typing.TypedDict('C4dLandmarksToSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+_C4dLandmarksToSpheresParamsDictNoTag = typing.TypedDict('_C4dLandmarksToSpheresParamsDictNoTag', {
     "landmarks_to_spheres": str,
 })
 C4dLandmarksToSpheresParamsDictTagged = typing.TypedDict('C4dLandmarksToSpheresParamsDictTagged', {
     "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
+C4dLandmarksToSpheresParamsDict = _C4dLandmarksToSpheresParamsDictNoTag | C4dLandmarksToSpheresParamsDictTagged
 
 
-C4dLaplacianParamsDict = typing.TypedDict('C4dLaplacianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+_C4dLaplacianParamsDictNoTag = typing.TypedDict('_C4dLaplacianParamsDictNoTag', {
     "laplacian": str,
 })
 C4dLaplacianParamsDictTagged = typing.TypedDict('C4dLaplacianParamsDictTagged', {
     "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
+C4dLaplacianParamsDict = _C4dLaplacianParamsDictNoTag | C4dLaplacianParamsDictTagged
 
 
-C4dLevelsetParamsDict = typing.TypedDict('C4dLevelsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset"]],
+_C4dLevelsetParamsDictNoTag = typing.TypedDict('_C4dLevelsetParamsDictNoTag', {
     "levelset": str,
 })
 C4dLevelsetParamsDictTagged = typing.TypedDict('C4dLevelsetParamsDictTagged', {
     "@type": typing.Literal["levelset"],
     "levelset": str,
 })
+C4dLevelsetParamsDict = _C4dLevelsetParamsDictNoTag | C4dLevelsetParamsDictTagged
 
 
-C4dLevelsetCurvatureParamsDict = typing.TypedDict('C4dLevelsetCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+_C4dLevelsetCurvatureParamsDictNoTag = typing.TypedDict('_C4dLevelsetCurvatureParamsDictNoTag', {
     "levelset_curvature": str,
 })
 C4dLevelsetCurvatureParamsDictTagged = typing.TypedDict('C4dLevelsetCurvatureParamsDictTagged', {
     "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
+C4dLevelsetCurvatureParamsDict = _C4dLevelsetCurvatureParamsDictNoTag | C4dLevelsetCurvatureParamsDictTagged
 
 
-C4dLevelsetAdvectionParamsDict = typing.TypedDict('C4dLevelsetAdvectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+_C4dLevelsetAdvectionParamsDictNoTag = typing.TypedDict('_C4dLevelsetAdvectionParamsDictNoTag', {
     "levelset_advection": str,
 })
 C4dLevelsetAdvectionParamsDictTagged = typing.TypedDict('C4dLevelsetAdvectionParamsDictTagged', {
     "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
+C4dLevelsetAdvectionParamsDict = _C4dLevelsetAdvectionParamsDictNoTag | C4dLevelsetAdvectionParamsDictTagged
 
 
-C4dLogParamsDict = typing.TypedDict('C4dLogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log"]],
+_C4dLogParamsDictNoTag = typing.TypedDict('_C4dLogParamsDictNoTag', {
     "log": str,
 })
 C4dLogParamsDictTagged = typing.TypedDict('C4dLogParamsDictTagged', {
     "@type": typing.Literal["log"],
     "log": str,
 })
+C4dLogParamsDict = _C4dLogParamsDictNoTag | C4dLogParamsDictTagged
 
 
-C4dLog10ParamsDict = typing.TypedDict('C4dLog10ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log10"]],
+_C4dLog10ParamsDictNoTag = typing.TypedDict('_C4dLog10ParamsDictNoTag', {
     "log10": str,
 })
 C4dLog10ParamsDictTagged = typing.TypedDict('C4dLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
     "log10": str,
 })
+C4dLog10ParamsDict = _C4dLog10ParamsDictNoTag | C4dLog10ParamsDictTagged
 
 
-C4dManualParamsDict = typing.TypedDict('C4dManualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["manual"]],
+_C4dManualParamsDictNoTag = typing.TypedDict('_C4dManualParamsDictNoTag', {
     "manual": str,
 })
 C4dManualParamsDictTagged = typing.TypedDict('C4dManualParamsDictTagged', {
     "@type": typing.Literal["manual"],
     "manual": str,
 })
+C4dManualParamsDict = _C4dManualParamsDictNoTag | C4dManualParamsDictTagged
 
 
-C4dMatchBoundingBoxParamsDict = typing.TypedDict('C4dMatchBoundingBoxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+_C4dMatchBoundingBoxParamsDictNoTag = typing.TypedDict('_C4dMatchBoundingBoxParamsDictNoTag', {
     "match_bounding_box": str,
 })
 C4dMatchBoundingBoxParamsDictTagged = typing.TypedDict('C4dMatchBoundingBoxParamsDictTagged', {
     "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
+C4dMatchBoundingBoxParamsDict = _C4dMatchBoundingBoxParamsDictNoTag | C4dMatchBoundingBoxParamsDictTagged
 
 
-C4dMaximumParamsDict = typing.TypedDict('C4dMaximumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["maximum"]],
+_C4dMaximumParamsDictNoTag = typing.TypedDict('_C4dMaximumParamsDictNoTag', {
     "maximum": str,
 })
 C4dMaximumParamsDictTagged = typing.TypedDict('C4dMaximumParamsDictTagged', {
     "@type": typing.Literal["maximum"],
     "maximum": str,
 })
+C4dMaximumParamsDict = _C4dMaximumParamsDictNoTag | C4dMaximumParamsDictTagged
 
 
-C4dMulticomponentSplitParamsDict = typing.TypedDict('C4dMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+_C4dMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C4dMulticomponentSplitParamsDictNoTag', {
     "multicomponent_split": str,
 })
 C4dMulticomponentSplitParamsDictTagged = typing.TypedDict('C4dMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
+C4dMulticomponentSplitParamsDict = _C4dMulticomponentSplitParamsDictNoTag | C4dMulticomponentSplitParamsDictTagged
 
 
-C4dMeanParamsDict = typing.TypedDict('C4dMeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean"]],
+_C4dMeanParamsDictNoTag = typing.TypedDict('_C4dMeanParamsDictNoTag', {
     "mean": str,
 })
 C4dMeanParamsDictTagged = typing.TypedDict('C4dMeanParamsDictTagged', {
     "@type": typing.Literal["mean"],
     "mean": str,
 })
+C4dMeanParamsDict = _C4dMeanParamsDictNoTag | C4dMeanParamsDictTagged
 
 
-C4dMedianFilterParamsDict = typing.TypedDict('C4dMedianFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+_C4dMedianFilterParamsDictNoTag = typing.TypedDict('_C4dMedianFilterParamsDictNoTag', {
     "median_filter": str,
 })
 C4dMedianFilterParamsDictTagged = typing.TypedDict('C4dMedianFilterParamsDictTagged', {
     "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
+C4dMedianFilterParamsDict = _C4dMedianFilterParamsDictNoTag | C4dMedianFilterParamsDictTagged
 
 
-C4dMergeParamsDict = typing.TypedDict('C4dMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["merge"]],
+_C4dMergeParamsDictNoTag = typing.TypedDict('_C4dMergeParamsDictNoTag', {
     "merge": str,
 })
 C4dMergeParamsDictTagged = typing.TypedDict('C4dMergeParamsDictTagged', {
     "@type": typing.Literal["merge"],
     "merge": str,
 })
+C4dMergeParamsDict = _C4dMergeParamsDictNoTag | C4dMergeParamsDictTagged
 
 
-C4dMeanFilterParamsDict = typing.TypedDict('C4dMeanFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+_C4dMeanFilterParamsDictNoTag = typing.TypedDict('_C4dMeanFilterParamsDictNoTag', {
     "mean_filter": str,
 })
 C4dMeanFilterParamsDictTagged = typing.TypedDict('C4dMeanFilterParamsDictTagged', {
     "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
+C4dMeanFilterParamsDict = _C4dMeanFilterParamsDictNoTag | C4dMeanFilterParamsDictTagged
 
 
-C4dMutualInfoParamsDict = typing.TypedDict('C4dMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+_C4dMutualInfoParamsDictNoTag = typing.TypedDict('_C4dMutualInfoParamsDictNoTag', {
     "mutual_info": str,
 })
 C4dMutualInfoParamsDictTagged = typing.TypedDict('C4dMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
+C4dMutualInfoParamsDict = _C4dMutualInfoParamsDictNoTag | C4dMutualInfoParamsDictTagged
 
 
-C4dMinimumParamsDict = typing.TypedDict('C4dMinimumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["minimum"]],
+_C4dMinimumParamsDictNoTag = typing.TypedDict('_C4dMinimumParamsDictNoTag', {
     "minimum": str,
 })
 C4dMinimumParamsDictTagged = typing.TypedDict('C4dMinimumParamsDictTagged', {
     "@type": typing.Literal["minimum"],
     "minimum": str,
 })
+C4dMinimumParamsDict = _C4dMinimumParamsDictNoTag | C4dMinimumParamsDictTagged
 
 
-C4dMixtureModelParamsDict = typing.TypedDict('C4dMixtureModelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+_C4dMixtureModelParamsDictNoTag = typing.TypedDict('_C4dMixtureModelParamsDictNoTag', {
     "mixture_model": str,
 })
 C4dMixtureModelParamsDictTagged = typing.TypedDict('C4dMixtureModelParamsDictTagged', {
     "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
+C4dMixtureModelParamsDict = _C4dMixtureModelParamsDictNoTag | C4dMixtureModelParamsDictTagged
 
 
-C4dMomentsParamsDict = typing.TypedDict('C4dMomentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["moments"]],
+_C4dMomentsParamsDictNoTag = typing.TypedDict('_C4dMomentsParamsDictNoTag', {
     "moments": str,
 })
 C4dMomentsParamsDictTagged = typing.TypedDict('C4dMomentsParamsDictTagged', {
     "@type": typing.Literal["moments"],
     "moments": str,
 })
+C4dMomentsParamsDict = _C4dMomentsParamsDictNoTag | C4dMomentsParamsDictTagged
 
 
-C4dMattesMutualInfoParamsDict = typing.TypedDict('C4dMattesMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+_C4dMattesMutualInfoParamsDictNoTag = typing.TypedDict('_C4dMattesMutualInfoParamsDictNoTag', {
     "mattes_mutual_info": str,
 })
 C4dMattesMutualInfoParamsDictTagged = typing.TypedDict('C4dMattesMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
+C4dMattesMutualInfoParamsDict = _C4dMattesMutualInfoParamsDictNoTag | C4dMattesMutualInfoParamsDictTagged
 
 
-C4dMeanSquareParamsDict = typing.TypedDict('C4dMeanSquareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+_C4dMeanSquareParamsDictNoTag = typing.TypedDict('_C4dMeanSquareParamsDictNoTag', {
     "mean_square": str,
 })
 C4dMeanSquareParamsDictTagged = typing.TypedDict('C4dMeanSquareParamsDictTagged', {
     "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
+C4dMeanSquareParamsDict = _C4dMeanSquareParamsDictNoTag | C4dMeanSquareParamsDictTagged
 
 
-C4dMultiplyParamsDict = typing.TypedDict('C4dMultiplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiply"]],
+_C4dMultiplyParamsDictNoTag = typing.TypedDict('_C4dMultiplyParamsDictNoTag', {
     "multiply": str,
 })
 C4dMultiplyParamsDictTagged = typing.TypedDict('C4dMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
     "multiply": str,
 })
+C4dMultiplyParamsDict = _C4dMultiplyParamsDictNoTag | C4dMultiplyParamsDictTagged
 
 
-C4dNormalizedCrossCorrelationParamsDict = typing.TypedDict('C4dNormalizedCrossCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+_C4dNormalizedCrossCorrelationParamsDictNoTag = typing.TypedDict('_C4dNormalizedCrossCorrelationParamsDictNoTag', {
     "normalized_cross_correlation": str,
 })
 C4dNormalizedCrossCorrelationParamsDictTagged = typing.TypedDict('C4dNormalizedCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
+C4dNormalizedCrossCorrelationParamsDict = _C4dNormalizedCrossCorrelationParamsDictNoTag | C4dNormalizedCrossCorrelationParamsDictTagged
 
 
-C4dNormalizedCorrelationParamsDict = typing.TypedDict('C4dNormalizedCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+_C4dNormalizedCorrelationParamsDictNoTag = typing.TypedDict('_C4dNormalizedCorrelationParamsDictNoTag', {
     "normalized_correlation": str,
 })
 C4dNormalizedCorrelationParamsDictTagged = typing.TypedDict('C4dNormalizedCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
+C4dNormalizedCorrelationParamsDict = _C4dNormalizedCorrelationParamsDictNoTag | C4dNormalizedCorrelationParamsDictTagged
 
 
-C4dNormalizedMutualInfoParamsDict = typing.TypedDict('C4dNormalizedMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+_C4dNormalizedMutualInfoParamsDictNoTag = typing.TypedDict('_C4dNormalizedMutualInfoParamsDictNoTag', {
     "normalized_mutual_info": str,
 })
 C4dNormalizedMutualInfoParamsDictTagged = typing.TypedDict('C4dNormalizedMutualInfoParamsDictTagged', {
     "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
+C4dNormalizedMutualInfoParamsDict = _C4dNormalizedMutualInfoParamsDictNoTag | C4dNormalizedMutualInfoParamsDictTagged
 
 
-C4dNoiseGaussianParamsDict = typing.TypedDict('C4dNoiseGaussianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+_C4dNoiseGaussianParamsDictNoTag = typing.TypedDict('_C4dNoiseGaussianParamsDictNoTag', {
     "noise_gaussian": str,
 })
 C4dNoiseGaussianParamsDictTagged = typing.TypedDict('C4dNoiseGaussianParamsDictTagged', {
     "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
+C4dNoiseGaussianParamsDict = _C4dNoiseGaussianParamsDictNoTag | C4dNoiseGaussianParamsDictTagged
 
 
-C4dNoisePoissonParamsDict = typing.TypedDict('C4dNoisePoissonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+_C4dNoisePoissonParamsDictNoTag = typing.TypedDict('_C4dNoisePoissonParamsDictNoTag', {
     "noise_poisson": str,
 })
 C4dNoisePoissonParamsDictTagged = typing.TypedDict('C4dNoisePoissonParamsDictTagged', {
     "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
+C4dNoisePoissonParamsDict = _C4dNoisePoissonParamsDictNoTag | C4dNoisePoissonParamsDictTagged
 
 
-C4dNoiseSpeckleParamsDict = typing.TypedDict('C4dNoiseSpeckleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+_C4dNoiseSpeckleParamsDictNoTag = typing.TypedDict('_C4dNoiseSpeckleParamsDictNoTag', {
     "noise_speckle": str,
 })
 C4dNoiseSpeckleParamsDictTagged = typing.TypedDict('C4dNoiseSpeckleParamsDictTagged', {
     "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
+C4dNoiseSpeckleParamsDict = _C4dNoiseSpeckleParamsDictNoTag | C4dNoiseSpeckleParamsDictTagged
 
 
-C4dNoiseSaltPepperParamsDict = typing.TypedDict('C4dNoiseSaltPepperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+_C4dNoiseSaltPepperParamsDictNoTag = typing.TypedDict('_C4dNoiseSaltPepperParamsDictNoTag', {
     "noise_salt_pepper": str,
 })
 C4dNoiseSaltPepperParamsDictTagged = typing.TypedDict('C4dNoiseSaltPepperParamsDictTagged', {
     "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
+C4dNoiseSaltPepperParamsDict = _C4dNoiseSaltPepperParamsDictNoTag | C4dNoiseSaltPepperParamsDictTagged
 
 
-C4dNoMulticomponentSplitParamsDict = typing.TypedDict('C4dNoMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+_C4dNoMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C4dNoMulticomponentSplitParamsDictNoTag', {
     "no_multicomponent_split": str,
 })
 C4dNoMulticomponentSplitParamsDictTagged = typing.TypedDict('C4dNoMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
+C4dNoMulticomponentSplitParamsDict = _C4dNoMulticomponentSplitParamsDictNoTag | C4dNoMulticomponentSplitParamsDictTagged
 
 
-C4dNormalizeLocalWindowParamsDict = typing.TypedDict('C4dNormalizeLocalWindowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+_C4dNormalizeLocalWindowParamsDictNoTag = typing.TypedDict('_C4dNormalizeLocalWindowParamsDictNoTag', {
     "normalize_local_window": str,
 })
 C4dNormalizeLocalWindowParamsDictTagged = typing.TypedDict('C4dNormalizeLocalWindowParamsDictTagged', {
     "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
+C4dNormalizeLocalWindowParamsDict = _C4dNormalizeLocalWindowParamsDictNoTag | C4dNormalizeLocalWindowParamsDictTagged
 
 
-C4dNormpdfParamsDict = typing.TypedDict('C4dNormpdfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+_C4dNormpdfParamsDictNoTag = typing.TypedDict('_C4dNormpdfParamsDictNoTag', {
     "normpdf": str,
 })
 C4dNormpdfParamsDictTagged = typing.TypedDict('C4dNormpdfParamsDictTagged', {
     "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
+C4dNormpdfParamsDict = _C4dNormpdfParamsDictNoTag | C4dNormpdfParamsDictTagged
 
 
-C4dNoroundParamsDict = typing.TypedDict('C4dNoroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noround"]],
+_C4dNoroundParamsDictNoTag = typing.TypedDict('_C4dNoroundParamsDictNoTag', {
     "noround": str,
 })
 C4dNoroundParamsDictTagged = typing.TypedDict('C4dNoroundParamsDictTagged', {
     "@type": typing.Literal["noround"],
     "noround": str,
 })
+C4dNoroundParamsDict = _C4dNoroundParamsDictNoTag | C4dNoroundParamsDictTagged
 
 
-C4dNospmParamsDict = typing.TypedDict('C4dNospmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nospm"]],
+_C4dNospmParamsDictNoTag = typing.TypedDict('_C4dNospmParamsDictNoTag', {
     "nospm": str,
 })
 C4dNospmParamsDictTagged = typing.TypedDict('C4dNospmParamsDictTagged', {
     "@type": typing.Literal["nospm"],
     "nospm": str,
 })
+C4dNospmParamsDict = _C4dNospmParamsDictNoTag | C4dNospmParamsDictTagged
 
 
-C4dOutputParamsDict = typing.TypedDict('C4dOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output"]],
+_C4dOutputParamsDictNoTag = typing.TypedDict('_C4dOutputParamsDictNoTag', {
     "output": str,
 })
 C4dOutputParamsDictTagged = typing.TypedDict('C4dOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "output": str,
 })
+C4dOutputParamsDict = _C4dOutputParamsDictNoTag | C4dOutputParamsDictTagged
 
 
-C4dOutputMulticomponentParamsDict = typing.TypedDict('C4dOutputMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+_C4dOutputMulticomponentParamsDictNoTag = typing.TypedDict('_C4dOutputMulticomponentParamsDictNoTag', {
     "output_multicomponent": str,
 })
 C4dOutputMulticomponentParamsDictTagged = typing.TypedDict('C4dOutputMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
+C4dOutputMulticomponentParamsDict = _C4dOutputMulticomponentParamsDictNoTag | C4dOutputMulticomponentParamsDictTagged
 
 
-C4dOutputMultipleMulticomponentParamsDict = typing.TypedDict('C4dOutputMultipleMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+_C4dOutputMultipleMulticomponentParamsDictNoTag = typing.TypedDict('_C4dOutputMultipleMulticomponentParamsDictNoTag', {
     "output_multiple_multicomponent": str,
 })
 C4dOutputMultipleMulticomponentParamsDictTagged = typing.TypedDict('C4dOutputMultipleMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
+C4dOutputMultipleMulticomponentParamsDict = _C4dOutputMultipleMulticomponentParamsDictNoTag | C4dOutputMultipleMulticomponentParamsDictTagged
 
 
-C4dOrientParamsDict = typing.TypedDict('C4dOrientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient"]],
+_C4dOrientParamsDictNoTag = typing.TypedDict('_C4dOrientParamsDictNoTag', {
     "orient": str,
 })
 C4dOrientParamsDictTagged = typing.TypedDict('C4dOrientParamsDictTagged', {
     "@type": typing.Literal["orient"],
     "orient": str,
 })
+C4dOrientParamsDict = _C4dOrientParamsDictNoTag | C4dOrientParamsDictTagged
 
 
-C4dOutputMultipleParamsDict = typing.TypedDict('C4dOutputMultipleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+_C4dOutputMultipleParamsDictNoTag = typing.TypedDict('_C4dOutputMultipleParamsDictNoTag', {
     "output_multiple": str,
 })
 C4dOutputMultipleParamsDictTagged = typing.TypedDict('C4dOutputMultipleParamsDictTagged', {
     "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
+C4dOutputMultipleParamsDict = _C4dOutputMultipleParamsDictNoTag | C4dOutputMultipleParamsDictTagged
 
 
-C4dOrient1ParamsDict = typing.TypedDict('C4dOrient1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+_C4dOrient1ParamsDictNoTag = typing.TypedDict('_C4dOrient1ParamsDictNoTag', {
     "orient": str,
 })
 C4dOrient1ParamsDictTagged = typing.TypedDict('C4dOrient1ParamsDictTagged', {
     "@type": typing.Literal["orient_1"],
     "orient": str,
 })
+C4dOrient1ParamsDict = _C4dOrient1ParamsDictNoTag | C4dOrient1ParamsDictTagged
 
 
-C4dOriginParamsDict = typing.TypedDict('C4dOriginParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin"]],
+_C4dOriginParamsDictNoTag = typing.TypedDict('_C4dOriginParamsDictNoTag', {
     "origin": str,
 })
 C4dOriginParamsDictTagged = typing.TypedDict('C4dOriginParamsDictTagged', {
     "@type": typing.Literal["origin"],
     "origin": str,
 })
+C4dOriginParamsDict = _C4dOriginParamsDictNoTag | C4dOriginParamsDictTagged
 
 
-C4dOriginVoxelParamsDict = typing.TypedDict('C4dOriginVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+_C4dOriginVoxelParamsDictNoTag = typing.TypedDict('_C4dOriginVoxelParamsDictNoTag', {
     "origin_voxel": str,
 })
 C4dOriginVoxelParamsDictTagged = typing.TypedDict('C4dOriginVoxelParamsDictTagged', {
     "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
+C4dOriginVoxelParamsDict = _C4dOriginVoxelParamsDictNoTag | C4dOriginVoxelParamsDictTagged
 
 
-C4dOriginVoxelCoordParamsDict = typing.TypedDict('C4dOriginVoxelCoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+_C4dOriginVoxelCoordParamsDictNoTag = typing.TypedDict('_C4dOriginVoxelCoordParamsDictNoTag', {
     "origin_voxel_coord": str,
 })
 C4dOriginVoxelCoordParamsDictTagged = typing.TypedDict('C4dOriginVoxelCoordParamsDictTagged', {
     "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
+C4dOriginVoxelCoordParamsDict = _C4dOriginVoxelCoordParamsDictNoTag | C4dOriginVoxelCoordParamsDictTagged
 
 
-C4dOverlapParamsDict = typing.TypedDict('C4dOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlap"]],
+_C4dOverlapParamsDictNoTag = typing.TypedDict('_C4dOverlapParamsDictNoTag', {
     "overlap": str,
 })
 C4dOverlapParamsDictTagged = typing.TypedDict('C4dOverlapParamsDictTagged', {
     "@type": typing.Literal["overlap"],
     "overlap": str,
 })
+C4dOverlapParamsDict = _C4dOverlapParamsDictNoTag | C4dOverlapParamsDictTagged
 
 
-C4dOverlayLabelImageParamsDict = typing.TypedDict('C4dOverlayLabelImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+_C4dOverlayLabelImageParamsDictNoTag = typing.TypedDict('_C4dOverlayLabelImageParamsDictNoTag', {
     "overlay_label_image": str,
 })
 C4dOverlayLabelImageParamsDictTagged = typing.TypedDict('C4dOverlayLabelImageParamsDictTagged', {
     "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
+C4dOverlayLabelImageParamsDict = _C4dOverlayLabelImageParamsDictNoTag | C4dOverlayLabelImageParamsDictTagged
 
 
-C4dPadParamsDict = typing.TypedDict('C4dPadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad"]],
+_C4dPadParamsDictNoTag = typing.TypedDict('_C4dPadParamsDictNoTag', {
     "pad": str,
 })
 C4dPadParamsDictTagged = typing.TypedDict('C4dPadParamsDictTagged', {
     "@type": typing.Literal["pad"],
     "pad": str,
 })
+C4dPadParamsDict = _C4dPadParamsDictNoTag | C4dPadParamsDictTagged
 
 
-C4dPadToParamsDict = typing.TypedDict('C4dPadToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+_C4dPadToParamsDictNoTag = typing.TypedDict('_C4dPadToParamsDictNoTag', {
     "pad_to": str,
 })
 C4dPadToParamsDictTagged = typing.TypedDict('C4dPadToParamsDictTagged', {
     "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
+C4dPadToParamsDict = _C4dPadToParamsDictNoTag | C4dPadToParamsDictTagged
 
 
-C4dPcaParamsDict = typing.TypedDict('C4dPcaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pca"]],
+_C4dPcaParamsDictNoTag = typing.TypedDict('_C4dPcaParamsDictNoTag', {
     "pca": str,
 })
 C4dPcaParamsDictTagged = typing.TypedDict('C4dPcaParamsDictTagged', {
     "@type": typing.Literal["pca"],
     "pca": str,
 })
+C4dPcaParamsDict = _C4dPcaParamsDictNoTag | C4dPcaParamsDictTagged
 
 
-C4dPercentIntensityModeParamsDict = typing.TypedDict('C4dPercentIntensityModeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+_C4dPercentIntensityModeParamsDictNoTag = typing.TypedDict('_C4dPercentIntensityModeParamsDictNoTag', {
     "percent_intensity_mode": str,
 })
 C4dPercentIntensityModeParamsDictTagged = typing.TypedDict('C4dPercentIntensityModeParamsDictTagged', {
     "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
+C4dPercentIntensityModeParamsDict = _C4dPercentIntensityModeParamsDictNoTag | C4dPercentIntensityModeParamsDictTagged
 
 
-C4dPixelParamsDict = typing.TypedDict('C4dPixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pixel"]],
+_C4dPixelParamsDictNoTag = typing.TypedDict('_C4dPixelParamsDictNoTag', {
     "pixel": str,
 })
 C4dPixelParamsDictTagged = typing.TypedDict('C4dPixelParamsDictTagged', {
     "@type": typing.Literal["pixel"],
     "pixel": str,
 })
+C4dPixelParamsDict = _C4dPixelParamsDictNoTag | C4dPixelParamsDictTagged
 
 
-C4dPopParamsDict = typing.TypedDict('C4dPopParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pop"]],
+_C4dPopParamsDictNoTag = typing.TypedDict('_C4dPopParamsDictNoTag', {
     "pop": str,
 })
 C4dPopParamsDictTagged = typing.TypedDict('C4dPopParamsDictTagged', {
     "@type": typing.Literal["pop"],
     "pop": str,
 })
+C4dPopParamsDict = _C4dPopParamsDictNoTag | C4dPopParamsDictTagged
 
 
-C4dPopasParamsDict = typing.TypedDict('C4dPopasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["popas"]],
+_C4dPopasParamsDictNoTag = typing.TypedDict('_C4dPopasParamsDictNoTag', {
     "popas": str,
 })
 C4dPopasParamsDictTagged = typing.TypedDict('C4dPopasParamsDictTagged', {
     "@type": typing.Literal["popas"],
     "popas": str,
 })
+C4dPopasParamsDict = _C4dPopasParamsDictNoTag | C4dPopasParamsDictTagged
 
 
-C4dProbeParamsDict = typing.TypedDict('C4dProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["probe"]],
+_C4dProbeParamsDictNoTag = typing.TypedDict('_C4dProbeParamsDictNoTag', {
     "probe": str,
 })
 C4dProbeParamsDictTagged = typing.TypedDict('C4dProbeParamsDictTagged', {
     "@type": typing.Literal["probe"],
     "probe": str,
 })
+C4dProbeParamsDict = _C4dProbeParamsDictNoTag | C4dProbeParamsDictTagged
 
 
-C4dPushParamsDict = typing.TypedDict('C4dPushParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["push"]],
+_C4dPushParamsDictNoTag = typing.TypedDict('_C4dPushParamsDictNoTag', {
     "push": str,
 })
 C4dPushParamsDictTagged = typing.TypedDict('C4dPushParamsDictTagged', {
     "@type": typing.Literal["push"],
     "push": str,
 })
+C4dPushParamsDict = _C4dPushParamsDictNoTag | C4dPushParamsDictTagged
 
 
-C4dRankParamsDict = typing.TypedDict('C4dRankParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rank"]],
+_C4dRankParamsDictNoTag = typing.TypedDict('_C4dRankParamsDictNoTag', {
     "rank": str,
 })
 C4dRankParamsDictTagged = typing.TypedDict('C4dRankParamsDictTagged', {
     "@type": typing.Literal["rank"],
     "rank": str,
 })
+C4dRankParamsDict = _C4dRankParamsDictNoTag | C4dRankParamsDictTagged
 
 
-C4dReciprocalParamsDict = typing.TypedDict('C4dReciprocalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+_C4dReciprocalParamsDictNoTag = typing.TypedDict('_C4dReciprocalParamsDictNoTag', {
     "reciprocal": str,
 })
 C4dReciprocalParamsDictTagged = typing.TypedDict('C4dReciprocalParamsDictTagged', {
     "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
+C4dReciprocalParamsDict = _C4dReciprocalParamsDictNoTag | C4dReciprocalParamsDictTagged
 
 
-C4dRegionParamsDict = typing.TypedDict('C4dRegionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region"]],
+_C4dRegionParamsDictNoTag = typing.TypedDict('_C4dRegionParamsDictNoTag', {
     "region": str,
 })
 C4dRegionParamsDictTagged = typing.TypedDict('C4dRegionParamsDictTagged', {
     "@type": typing.Literal["region"],
     "region": str,
 })
+C4dRegionParamsDict = _C4dRegionParamsDictNoTag | C4dRegionParamsDictTagged
 
 
-C4dReorderParamsDict = typing.TypedDict('C4dReorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reorder"]],
+_C4dReorderParamsDictNoTag = typing.TypedDict('_C4dReorderParamsDictNoTag', {
     "reorder": str,
 })
 C4dReorderParamsDictTagged = typing.TypedDict('C4dReorderParamsDictTagged', {
     "@type": typing.Literal["reorder"],
     "reorder": str,
 })
+C4dReorderParamsDict = _C4dReorderParamsDictNoTag | C4dReorderParamsDictTagged
 
 
-C4dRetainLabelsParamsDict = typing.TypedDict('C4dRetainLabelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+_C4dRetainLabelsParamsDictNoTag = typing.TypedDict('_C4dRetainLabelsParamsDictNoTag', {
     "retain_labels": str,
 })
 C4dRetainLabelsParamsDictTagged = typing.TypedDict('C4dRetainLabelsParamsDictTagged', {
     "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
+C4dRetainLabelsParamsDict = _C4dRetainLabelsParamsDictNoTag | C4dRetainLabelsParamsDictTagged
 
 
-C4dRfApplyParamsDict = typing.TypedDict('C4dRfApplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+_C4dRfApplyParamsDictNoTag = typing.TypedDict('_C4dRfApplyParamsDictNoTag', {
     "rf_apply": str,
 })
 C4dRfApplyParamsDictTagged = typing.TypedDict('C4dRfApplyParamsDictTagged', {
     "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
+C4dRfApplyParamsDict = _C4dRfApplyParamsDictNoTag | C4dRfApplyParamsDictTagged
 
 
-C4dRfTrainParamsDict = typing.TypedDict('C4dRfTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+_C4dRfTrainParamsDictNoTag = typing.TypedDict('_C4dRfTrainParamsDictNoTag', {
     "rf_train": str,
 })
 C4dRfTrainParamsDictTagged = typing.TypedDict('C4dRfTrainParamsDictTagged', {
     "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
+C4dRfTrainParamsDict = _C4dRfTrainParamsDictNoTag | C4dRfTrainParamsDictTagged
 
 
-C4dRfParamPatchParamsDict = typing.TypedDict('C4dRfParamPatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+_C4dRfParamPatchParamsDictNoTag = typing.TypedDict('_C4dRfParamPatchParamsDictNoTag', {
     "rf_param_patch": str,
 })
 C4dRfParamPatchParamsDictTagged = typing.TypedDict('C4dRfParamPatchParamsDictTagged', {
     "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
+C4dRfParamPatchParamsDict = _C4dRfParamPatchParamsDictNoTag | C4dRfParamPatchParamsDictTagged
 
 
-C4dRfParamUsexyzParamsDict = typing.TypedDict('C4dRfParamUsexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+_C4dRfParamUsexyzParamsDictNoTag = typing.TypedDict('_C4dRfParamUsexyzParamsDictNoTag', {
     "rf_param_usexyz": str,
 })
 C4dRfParamUsexyzParamsDictTagged = typing.TypedDict('C4dRfParamUsexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
+C4dRfParamUsexyzParamsDict = _C4dRfParamUsexyzParamsDictNoTag | C4dRfParamUsexyzParamsDictTagged
 
 
-C4dRfParamNousexyzParamsDict = typing.TypedDict('C4dRfParamNousexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+_C4dRfParamNousexyzParamsDictNoTag = typing.TypedDict('_C4dRfParamNousexyzParamsDictNoTag', {
     "rf_param_nousexyz": str,
 })
 C4dRfParamNousexyzParamsDictTagged = typing.TypedDict('C4dRfParamNousexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
+C4dRfParamNousexyzParamsDict = _C4dRfParamNousexyzParamsDictNoTag | C4dRfParamNousexyzParamsDictTagged
 
 
-C4dRfParamNtreesParamsDict = typing.TypedDict('C4dRfParamNtreesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+_C4dRfParamNtreesParamsDictNoTag = typing.TypedDict('_C4dRfParamNtreesParamsDictNoTag', {
     "rf_param_ntrees": str,
 })
 C4dRfParamNtreesParamsDictTagged = typing.TypedDict('C4dRfParamNtreesParamsDictTagged', {
     "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
+C4dRfParamNtreesParamsDict = _C4dRfParamNtreesParamsDictNoTag | C4dRfParamNtreesParamsDictTagged
 
 
-C4dRfParamTreedepthParamsDict = typing.TypedDict('C4dRfParamTreedepthParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+_C4dRfParamTreedepthParamsDictNoTag = typing.TypedDict('_C4dRfParamTreedepthParamsDictNoTag', {
     "rf_param_treedepth": str,
 })
 C4dRfParamTreedepthParamsDictTagged = typing.TypedDict('C4dRfParamTreedepthParamsDictTagged', {
     "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
+C4dRfParamTreedepthParamsDict = _C4dRfParamTreedepthParamsDictNoTag | C4dRfParamTreedepthParamsDictTagged
 
 
-C4dSetSformParamsDict = typing.TypedDict('C4dSetSformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+_C4dSetSformParamsDictNoTag = typing.TypedDict('_C4dSetSformParamsDictNoTag', {
     "set_sform": str,
 })
 C4dSetSformParamsDictTagged = typing.TypedDict('C4dSetSformParamsDictTagged', {
     "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
+C4dSetSformParamsDict = _C4dSetSformParamsDictNoTag | C4dSetSformParamsDictTagged
 
 
-C4dReplaceParamsDict = typing.TypedDict('C4dReplaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["replace"]],
+_C4dReplaceParamsDictNoTag = typing.TypedDict('_C4dReplaceParamsDictNoTag', {
     "replace": str,
 })
 C4dReplaceParamsDictTagged = typing.TypedDict('C4dReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
     "replace": str,
 })
+C4dReplaceParamsDict = _C4dReplaceParamsDictNoTag | C4dReplaceParamsDictTagged
 
 
-C4dResampleParamsDict = typing.TypedDict('C4dResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample"]],
+_C4dResampleParamsDictNoTag = typing.TypedDict('_C4dResampleParamsDictNoTag', {
     "resample": str,
 })
 C4dResampleParamsDictTagged = typing.TypedDict('C4dResampleParamsDictTagged', {
     "@type": typing.Literal["resample"],
     "resample": str,
 })
+C4dResampleParamsDict = _C4dResampleParamsDictNoTag | C4dResampleParamsDictTagged
 
 
-C4dResampleIsoParamsDict = typing.TypedDict('C4dResampleIsoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+_C4dResampleIsoParamsDictNoTag = typing.TypedDict('_C4dResampleIsoParamsDictNoTag', {
     "resample_iso": str,
 })
 C4dResampleIsoParamsDictTagged = typing.TypedDict('C4dResampleIsoParamsDictTagged', {
     "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
+C4dResampleIsoParamsDict = _C4dResampleIsoParamsDictNoTag | C4dResampleIsoParamsDictTagged
 
 
-C4dResampleMmParamsDict = typing.TypedDict('C4dResampleMmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+_C4dResampleMmParamsDictNoTag = typing.TypedDict('_C4dResampleMmParamsDictNoTag', {
     "resample_mm": str,
 })
 C4dResampleMmParamsDictTagged = typing.TypedDict('C4dResampleMmParamsDictTagged', {
     "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
+C4dResampleMmParamsDict = _C4dResampleMmParamsDictNoTag | C4dResampleMmParamsDictTagged
 
 
-C4dResliceItkParamsDict = typing.TypedDict('C4dResliceItkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+_C4dResliceItkParamsDictNoTag = typing.TypedDict('_C4dResliceItkParamsDictNoTag', {
     "reslice_itk": str,
 })
 C4dResliceItkParamsDictTagged = typing.TypedDict('C4dResliceItkParamsDictTagged', {
     "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
+C4dResliceItkParamsDict = _C4dResliceItkParamsDictNoTag | C4dResliceItkParamsDictTagged
 
 
-C4dResliceMatrixParamsDict = typing.TypedDict('C4dResliceMatrixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+_C4dResliceMatrixParamsDictNoTag = typing.TypedDict('_C4dResliceMatrixParamsDictNoTag', {
     "reslice_matrix": str,
 })
 C4dResliceMatrixParamsDictTagged = typing.TypedDict('C4dResliceMatrixParamsDictTagged', {
     "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
+C4dResliceMatrixParamsDict = _C4dResliceMatrixParamsDictNoTag | C4dResliceMatrixParamsDictTagged
 
 
-C4dResliceIdentityParamsDict = typing.TypedDict('C4dResliceIdentityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+_C4dResliceIdentityParamsDictNoTag = typing.TypedDict('_C4dResliceIdentityParamsDictNoTag', {
     "reslice_identity": str,
 })
 C4dResliceIdentityParamsDictTagged = typing.TypedDict('C4dResliceIdentityParamsDictTagged', {
     "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
+C4dResliceIdentityParamsDict = _C4dResliceIdentityParamsDictNoTag | C4dResliceIdentityParamsDictTagged
 
 
-C4dRgb2hsvParamsDict = typing.TypedDict('C4dRgb2hsvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+_C4dRgb2hsvParamsDictNoTag = typing.TypedDict('_C4dRgb2hsvParamsDictNoTag', {
     "rgb2hsv": str,
 })
 C4dRgb2hsvParamsDictTagged = typing.TypedDict('C4dRgb2hsvParamsDictTagged', {
     "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
+C4dRgb2hsvParamsDict = _C4dRgb2hsvParamsDictNoTag | C4dRgb2hsvParamsDictTagged
 
 
-C4dRmsParamsDict = typing.TypedDict('C4dRmsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rms"]],
+_C4dRmsParamsDictNoTag = typing.TypedDict('_C4dRmsParamsDictNoTag', {
     "rms": str,
 })
 C4dRmsParamsDictTagged = typing.TypedDict('C4dRmsParamsDictTagged', {
     "@type": typing.Literal["rms"],
     "rms": str,
 })
+C4dRmsParamsDict = _C4dRmsParamsDictNoTag | C4dRmsParamsDictTagged
 
 
-C4dRoundParamsDict = typing.TypedDict('C4dRoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["round"]],
+_C4dRoundParamsDictNoTag = typing.TypedDict('_C4dRoundParamsDictNoTag', {
     "round": str,
 })
 C4dRoundParamsDictTagged = typing.TypedDict('C4dRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
     "round": str,
 })
+C4dRoundParamsDict = _C4dRoundParamsDictNoTag | C4dRoundParamsDictTagged
 
 
-C4dScaleParamsDict = typing.TypedDict('C4dScaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scale"]],
+_C4dScaleParamsDictNoTag = typing.TypedDict('_C4dScaleParamsDictNoTag', {
     "scale": str,
 })
 C4dScaleParamsDictTagged = typing.TypedDict('C4dScaleParamsDictTagged', {
     "@type": typing.Literal["scale"],
     "scale": str,
 })
+C4dScaleParamsDict = _C4dScaleParamsDictNoTag | C4dScaleParamsDictTagged
 
 
-C4dSetSform1ParamsDict = typing.TypedDict('C4dSetSform1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+_C4dSetSform1ParamsDictNoTag = typing.TypedDict('_C4dSetSform1ParamsDictNoTag', {
     "set_sform": str,
 })
 C4dSetSform1ParamsDictTagged = typing.TypedDict('C4dSetSform1ParamsDictTagged', {
     "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
+C4dSetSform1ParamsDict = _C4dSetSform1ParamsDictNoTag | C4dSetSform1ParamsDictTagged
 
 
-C4dSinParamsDict = typing.TypedDict('C4dSinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sin"]],
+_C4dSinParamsDictNoTag = typing.TypedDict('_C4dSinParamsDictNoTag', {
     "sin": str,
 })
 C4dSinParamsDictTagged = typing.TypedDict('C4dSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
     "sin": str,
 })
+C4dSinParamsDict = _C4dSinParamsDictNoTag | C4dSinParamsDictTagged
 
 
-C4dSliceParamsDict = typing.TypedDict('C4dSliceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice"]],
+_C4dSliceParamsDictNoTag = typing.TypedDict('_C4dSliceParamsDictNoTag', {
     "slice": str,
 })
 C4dSliceParamsDictTagged = typing.TypedDict('C4dSliceParamsDictTagged', {
     "@type": typing.Literal["slice"],
     "slice": str,
 })
+C4dSliceParamsDict = _C4dSliceParamsDictNoTag | C4dSliceParamsDictTagged
 
 
-C4dSliceAllParamsDict = typing.TypedDict('C4dSliceAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+_C4dSliceAllParamsDictNoTag = typing.TypedDict('_C4dSliceAllParamsDictNoTag', {
     "slice_all": str,
 })
 C4dSliceAllParamsDictTagged = typing.TypedDict('C4dSliceAllParamsDictTagged', {
     "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
+C4dSliceAllParamsDict = _C4dSliceAllParamsDictNoTag | C4dSliceAllParamsDictTagged
 
 
-C4dSharpenParamsDict = typing.TypedDict('C4dSharpenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+_C4dSharpenParamsDictNoTag = typing.TypedDict('_C4dSharpenParamsDictNoTag', {
     "sharpen": str,
 })
 C4dSharpenParamsDictTagged = typing.TypedDict('C4dSharpenParamsDictTagged', {
     "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
+C4dSharpenParamsDict = _C4dSharpenParamsDictNoTag | C4dSharpenParamsDictTagged
 
 
-C4dShiftParamsDict = typing.TypedDict('C4dShiftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["shift"]],
+_C4dShiftParamsDictNoTag = typing.TypedDict('_C4dShiftParamsDictNoTag', {
     "shift": str,
 })
 C4dShiftParamsDictTagged = typing.TypedDict('C4dShiftParamsDictTagged', {
     "@type": typing.Literal["shift"],
     "shift": str,
 })
+C4dShiftParamsDict = _C4dShiftParamsDictNoTag | C4dShiftParamsDictTagged
 
 
-C4dSignedDistanceTransformParamsDict = typing.TypedDict('C4dSignedDistanceTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+_C4dSignedDistanceTransformParamsDictNoTag = typing.TypedDict('_C4dSignedDistanceTransformParamsDictNoTag', {
     "signed_distance_transform": str,
 })
 C4dSignedDistanceTransformParamsDictTagged = typing.TypedDict('C4dSignedDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
+C4dSignedDistanceTransformParamsDict = _C4dSignedDistanceTransformParamsDictNoTag | C4dSignedDistanceTransformParamsDictTagged
 
 
-C4dSmoothParamsDict = typing.TypedDict('C4dSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth"]],
+_C4dSmoothParamsDictNoTag = typing.TypedDict('_C4dSmoothParamsDictNoTag', {
     "smooth": str,
 })
 C4dSmoothParamsDictTagged = typing.TypedDict('C4dSmoothParamsDictTagged', {
     "@type": typing.Literal["smooth"],
     "smooth": str,
 })
+C4dSmoothParamsDict = _C4dSmoothParamsDictNoTag | C4dSmoothParamsDictTagged
 
 
-C4dSmoothFastParamsDict = typing.TypedDict('C4dSmoothFastParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+_C4dSmoothFastParamsDictNoTag = typing.TypedDict('_C4dSmoothFastParamsDictNoTag', {
     "smooth_fast": str,
 })
 C4dSmoothFastParamsDictTagged = typing.TypedDict('C4dSmoothFastParamsDictTagged', {
     "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
+C4dSmoothFastParamsDict = _C4dSmoothFastParamsDictNoTag | C4dSmoothFastParamsDictTagged
 
 
-C4dSpacingParamsDict = typing.TypedDict('C4dSpacingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spacing"]],
+_C4dSpacingParamsDictNoTag = typing.TypedDict('_C4dSpacingParamsDictNoTag', {
     "spacing": str,
 })
 C4dSpacingParamsDictTagged = typing.TypedDict('C4dSpacingParamsDictTagged', {
     "@type": typing.Literal["spacing"],
     "spacing": str,
 })
+C4dSpacingParamsDict = _C4dSpacingParamsDictNoTag | C4dSpacingParamsDictTagged
 
 
-C4dSplitParamsDict = typing.TypedDict('C4dSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["split"]],
+_C4dSplitParamsDictNoTag = typing.TypedDict('_C4dSplitParamsDictNoTag', {
     "split": str,
 })
 C4dSplitParamsDictTagged = typing.TypedDict('C4dSplitParamsDictTagged', {
     "@type": typing.Literal["split"],
     "split": str,
 })
+C4dSplitParamsDict = _C4dSplitParamsDictNoTag | C4dSplitParamsDictTagged
 
 
-C4dSqrtParamsDict = typing.TypedDict('C4dSqrtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+_C4dSqrtParamsDictNoTag = typing.TypedDict('_C4dSqrtParamsDictNoTag', {
     "sqrt": str,
 })
 C4dSqrtParamsDictTagged = typing.TypedDict('C4dSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
+C4dSqrtParamsDict = _C4dSqrtParamsDictNoTag | C4dSqrtParamsDictTagged
 
 
-C4dStapleParamsDict = typing.TypedDict('C4dStapleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["staple"]],
+_C4dStapleParamsDictNoTag = typing.TypedDict('_C4dStapleParamsDictNoTag', {
     "staple": str,
 })
 C4dStapleParamsDictTagged = typing.TypedDict('C4dStapleParamsDictTagged', {
     "@type": typing.Literal["staple"],
     "staple": str,
 })
+C4dStapleParamsDict = _C4dStapleParamsDictNoTag | C4dStapleParamsDictTagged
 
 
-C4dStructureTensorEigenvaluesParamsDict = typing.TypedDict('C4dStructureTensorEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+_C4dStructureTensorEigenvaluesParamsDictNoTag = typing.TypedDict('_C4dStructureTensorEigenvaluesParamsDictNoTag', {
     "structure_tensor_eigenvalues": str,
 })
 C4dStructureTensorEigenvaluesParamsDictTagged = typing.TypedDict('C4dStructureTensorEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
+C4dStructureTensorEigenvaluesParamsDict = _C4dStructureTensorEigenvaluesParamsDictNoTag | C4dStructureTensorEigenvaluesParamsDictTagged
 
 
-C4dSpmParamsDict = typing.TypedDict('C4dSpmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spm"]],
+_C4dSpmParamsDictNoTag = typing.TypedDict('_C4dSpmParamsDictNoTag', {
     "spm": str,
 })
 C4dSpmParamsDictTagged = typing.TypedDict('C4dSpmParamsDictTagged', {
     "@type": typing.Literal["spm"],
     "spm": str,
 })
+C4dSpmParamsDict = _C4dSpmParamsDictNoTag | C4dSpmParamsDictTagged
 
 
-C4dSubtractParamsDict = typing.TypedDict('C4dSubtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["subtract"]],
+_C4dSubtractParamsDictNoTag = typing.TypedDict('_C4dSubtractParamsDictNoTag', {
     "subtract": str,
 })
 C4dSubtractParamsDictTagged = typing.TypedDict('C4dSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
     "subtract": str,
 })
+C4dSubtractParamsDict = _C4dSubtractParamsDictNoTag | C4dSubtractParamsDictTagged
 
 
-C4dSupervoxelParamsDict = typing.TypedDict('C4dSupervoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+_C4dSupervoxelParamsDictNoTag = typing.TypedDict('_C4dSupervoxelParamsDictNoTag', {
     "supervoxel": str,
 })
 C4dSupervoxelParamsDictTagged = typing.TypedDict('C4dSupervoxelParamsDictTagged', {
     "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
+C4dSupervoxelParamsDict = _C4dSupervoxelParamsDictNoTag | C4dSupervoxelParamsDictTagged
 
 
-C4dStretchParamsDict = typing.TypedDict('C4dStretchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["stretch"]],
+_C4dStretchParamsDictNoTag = typing.TypedDict('_C4dStretchParamsDictNoTag', {
     "stretch": str,
 })
 C4dStretchParamsDictTagged = typing.TypedDict('C4dStretchParamsDictTagged', {
     "@type": typing.Literal["stretch"],
     "stretch": str,
 })
+C4dStretchParamsDict = _C4dStretchParamsDictNoTag | C4dStretchParamsDictTagged
 
 
-C4dSwapdimParamsDict = typing.TypedDict('C4dSwapdimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+_C4dSwapdimParamsDictNoTag = typing.TypedDict('_C4dSwapdimParamsDictNoTag', {
     "swapdim": str,
 })
 C4dSwapdimParamsDictTagged = typing.TypedDict('C4dSwapdimParamsDictTagged', {
     "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
+C4dSwapdimParamsDict = _C4dSwapdimParamsDictNoTag | C4dSwapdimParamsDictTagged
 
 
-C4dTestImageParamsDict = typing.TypedDict('C4dTestImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_image"]],
+_C4dTestImageParamsDictNoTag = typing.TypedDict('_C4dTestImageParamsDictNoTag', {
     "test_image": str,
 })
 C4dTestImageParamsDictTagged = typing.TypedDict('C4dTestImageParamsDictTagged', {
     "@type": typing.Literal["test_image"],
     "test_image": str,
 })
+C4dTestImageParamsDict = _C4dTestImageParamsDictNoTag | C4dTestImageParamsDictTagged
 
 
-C4dTestProbeParamsDict = typing.TypedDict('C4dTestProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+_C4dTestProbeParamsDictNoTag = typing.TypedDict('_C4dTestProbeParamsDictNoTag', {
     "test_probe": str,
 })
 C4dTestProbeParamsDictTagged = typing.TypedDict('C4dTestProbeParamsDictTagged', {
     "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
+C4dTestProbeParamsDict = _C4dTestProbeParamsDictNoTag | C4dTestProbeParamsDictTagged
 
 
-C4dThresholdParamsDict = typing.TypedDict('C4dThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_C4dThresholdParamsDictNoTag = typing.TypedDict('_C4dThresholdParamsDictNoTag', {
     "threshold": str,
 })
 C4dThresholdParamsDictTagged = typing.TypedDict('C4dThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "threshold": str,
 })
+C4dThresholdParamsDict = _C4dThresholdParamsDictNoTag | C4dThresholdParamsDictTagged
 
 
-C4dTileParamsDict = typing.TypedDict('C4dTileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tile"]],
+_C4dTileParamsDictNoTag = typing.TypedDict('_C4dTileParamsDictNoTag', {
     "tile": str,
 })
 C4dTileParamsDictTagged = typing.TypedDict('C4dTileParamsDictTagged', {
     "@type": typing.Literal["tile"],
     "tile": str,
 })
+C4dTileParamsDict = _C4dTileParamsDictNoTag | C4dTileParamsDictTagged
 
 
-C4dTrimParamsDict = typing.TypedDict('C4dTrimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim"]],
+_C4dTrimParamsDictNoTag = typing.TypedDict('_C4dTrimParamsDictNoTag', {
     "trim": str,
 })
 C4dTrimParamsDictTagged = typing.TypedDict('C4dTrimParamsDictTagged', {
     "@type": typing.Literal["trim"],
     "trim": str,
 })
+C4dTrimParamsDict = _C4dTrimParamsDictNoTag | C4dTrimParamsDictTagged
 
 
-C4dTrimToSizeParamsDict = typing.TypedDict('C4dTrimToSizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+_C4dTrimToSizeParamsDictNoTag = typing.TypedDict('_C4dTrimToSizeParamsDictNoTag', {
     "trim_to_size": str,
 })
 C4dTrimToSizeParamsDictTagged = typing.TypedDict('C4dTrimToSizeParamsDictTagged', {
     "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
+C4dTrimToSizeParamsDict = _C4dTrimToSizeParamsDictNoTag | C4dTrimToSizeParamsDictTagged
 
 
-C4dTypeParamsDict = typing.TypedDict('C4dTypeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["type"]],
+_C4dTypeParamsDictNoTag = typing.TypedDict('_C4dTypeParamsDictNoTag', {
     "type": str,
 })
 C4dTypeParamsDictTagged = typing.TypedDict('C4dTypeParamsDictTagged', {
     "@type": typing.Literal["type"],
     "type": str,
 })
+C4dTypeParamsDict = _C4dTypeParamsDictNoTag | C4dTypeParamsDictTagged
 
 
-C4dVerboseParamsDict = typing.TypedDict('C4dVerboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["verbose"]],
+_C4dVerboseParamsDictNoTag = typing.TypedDict('_C4dVerboseParamsDictNoTag', {
     "verbose": str,
 })
 C4dVerboseParamsDictTagged = typing.TypedDict('C4dVerboseParamsDictTagged', {
     "@type": typing.Literal["verbose"],
     "verbose": str,
 })
+C4dVerboseParamsDict = _C4dVerboseParamsDictNoTag | C4dVerboseParamsDictTagged
 
 
-C4dNoverboseParamsDict = typing.TypedDict('C4dNoverboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+_C4dNoverboseParamsDictNoTag = typing.TypedDict('_C4dNoverboseParamsDictNoTag', {
     "noverbose": str,
 })
 C4dNoverboseParamsDictTagged = typing.TypedDict('C4dNoverboseParamsDictTagged', {
     "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
+C4dNoverboseParamsDict = _C4dNoverboseParamsDictNoTag | C4dNoverboseParamsDictTagged
 
 
-C4dVersionParamsDict = typing.TypedDict('C4dVersionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["version"]],
+_C4dVersionParamsDictNoTag = typing.TypedDict('_C4dVersionParamsDictNoTag', {
     "version": str,
 })
 C4dVersionParamsDictTagged = typing.TypedDict('C4dVersionParamsDictTagged', {
     "@type": typing.Literal["version"],
     "version": str,
 })
+C4dVersionParamsDict = _C4dVersionParamsDictNoTag | C4dVersionParamsDictTagged
 
 
-C4dVoteParamsDict = typing.TypedDict('C4dVoteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote"]],
+_C4dVoteParamsDictNoTag = typing.TypedDict('_C4dVoteParamsDictNoTag', {
     "vote": str,
 })
 C4dVoteParamsDictTagged = typing.TypedDict('C4dVoteParamsDictTagged', {
     "@type": typing.Literal["vote"],
     "vote": str,
 })
+C4dVoteParamsDict = _C4dVoteParamsDictNoTag | C4dVoteParamsDictTagged
 
 
-C4dVoteMrfParamsDict = typing.TypedDict('C4dVoteMrfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+_C4dVoteMrfParamsDictNoTag = typing.TypedDict('_C4dVoteMrfParamsDictNoTag', {
     "vote_mrf": str,
 })
 C4dVoteMrfParamsDictTagged = typing.TypedDict('C4dVoteMrfParamsDictTagged', {
     "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
+C4dVoteMrfParamsDict = _C4dVoteMrfParamsDictNoTag | C4dVoteMrfParamsDictTagged
 
 
-C4dVoteLabelParamsDict = typing.TypedDict('C4dVoteLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+_C4dVoteLabelParamsDictNoTag = typing.TypedDict('_C4dVoteLabelParamsDictNoTag', {
     "vote_label": str,
 })
 C4dVoteLabelParamsDictTagged = typing.TypedDict('C4dVoteLabelParamsDictTagged', {
     "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
+C4dVoteLabelParamsDict = _C4dVoteLabelParamsDictNoTag | C4dVoteLabelParamsDictTagged
 
 
-C4dVoxelSumParamsDict = typing.TypedDict('C4dVoxelSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+_C4dVoxelSumParamsDictNoTag = typing.TypedDict('_C4dVoxelSumParamsDictNoTag', {
     "voxel_sum": str,
 })
 C4dVoxelSumParamsDictTagged = typing.TypedDict('C4dVoxelSumParamsDictTagged', {
     "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
+C4dVoxelSumParamsDict = _C4dVoxelSumParamsDictNoTag | C4dVoxelSumParamsDictTagged
 
 
-C4dVoxelIntegralParamsDict = typing.TypedDict('C4dVoxelIntegralParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+_C4dVoxelIntegralParamsDictNoTag = typing.TypedDict('_C4dVoxelIntegralParamsDictNoTag', {
     "voxel_integral": str,
 })
 C4dVoxelIntegralParamsDictTagged = typing.TypedDict('C4dVoxelIntegralParamsDictTagged', {
     "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
+C4dVoxelIntegralParamsDict = _C4dVoxelIntegralParamsDictNoTag | C4dVoxelIntegralParamsDictTagged
 
 
-C4dVoxelwiseRegressionParamsDict = typing.TypedDict('C4dVoxelwiseRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+_C4dVoxelwiseRegressionParamsDictNoTag = typing.TypedDict('_C4dVoxelwiseRegressionParamsDictNoTag', {
     "voxelwise_regression": str,
 })
 C4dVoxelwiseRegressionParamsDictTagged = typing.TypedDict('C4dVoxelwiseRegressionParamsDictTagged', {
     "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
+C4dVoxelwiseRegressionParamsDict = _C4dVoxelwiseRegressionParamsDictNoTag | C4dVoxelwiseRegressionParamsDictTagged
 
 
-C4dWarpParamsDict = typing.TypedDict('C4dWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp"]],
+_C4dWarpParamsDictNoTag = typing.TypedDict('_C4dWarpParamsDictNoTag', {
     "warp": str,
 })
 C4dWarpParamsDictTagged = typing.TypedDict('C4dWarpParamsDictTagged', {
     "@type": typing.Literal["warp"],
     "warp": str,
 })
+C4dWarpParamsDict = _C4dWarpParamsDictNoTag | C4dWarpParamsDictTagged
 
 
-C4dWarpLabelParamsDict = typing.TypedDict('C4dWarpLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+_C4dWarpLabelParamsDictNoTag = typing.TypedDict('_C4dWarpLabelParamsDictNoTag', {
     "warp_label": str,
 })
 C4dWarpLabelParamsDictTagged = typing.TypedDict('C4dWarpLabelParamsDictTagged', {
     "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
+C4dWarpLabelParamsDict = _C4dWarpLabelParamsDictNoTag | C4dWarpLabelParamsDictTagged
 
 
-C4dWrapParamsDict = typing.TypedDict('C4dWrapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["wrap"]],
+_C4dWrapParamsDictNoTag = typing.TypedDict('_C4dWrapParamsDictNoTag', {
     "wrap": str,
 })
 C4dWrapParamsDictTagged = typing.TypedDict('C4dWrapParamsDictTagged', {
     "@type": typing.Literal["wrap"],
     "wrap": str,
 })
+C4dWrapParamsDict = _C4dWrapParamsDictNoTag | C4dWrapParamsDictTagged
 
 
-C4dWeightedSumParamsDict = typing.TypedDict('C4dWeightedSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+_C4dWeightedSumParamsDictNoTag = typing.TypedDict('_C4dWeightedSumParamsDictNoTag', {
     "weighted_sum": str,
 })
 C4dWeightedSumParamsDictTagged = typing.TypedDict('C4dWeightedSumParamsDictTagged', {
     "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
+C4dWeightedSumParamsDict = _C4dWeightedSumParamsDictNoTag | C4dWeightedSumParamsDictTagged
 
 
-C4dWeightedSumVoxelwiseParamsDict = typing.TypedDict('C4dWeightedSumVoxelwiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+_C4dWeightedSumVoxelwiseParamsDictNoTag = typing.TypedDict('_C4dWeightedSumVoxelwiseParamsDictNoTag', {
     "weighted_sum_voxelwise": str,
 })
 C4dWeightedSumVoxelwiseParamsDictTagged = typing.TypedDict('C4dWeightedSumVoxelwiseParamsDictTagged', {
     "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
+C4dWeightedSumVoxelwiseParamsDict = _C4dWeightedSumVoxelwiseParamsDictNoTag | C4dWeightedSumVoxelwiseParamsDictTagged
 
 
-C4dParamsDict = typing.TypedDict('C4dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["c3d/c4d"]],
+_C4dParamsDictNoTag = typing.TypedDict('_C4dParamsDictNoTag', {
     "input": list[InputPathType],
     "operations": list[typing.Union[C4dAccumParamsDictTagged, C4dAcosParamsDictTagged, C4dAddParamsDictTagged, C4dAlignLandmarksParamsDictTagged, C4dAnisotropicDiffusionParamsDictTagged, C4dAntialiasParamsDictTagged, C4dSetParamsDictTagged, C4dAsinParamsDictTagged, C4dAtan2ParamsDictTagged, C4dBackgroundParamsDictTagged, C4dN4BiasCorrectionParamsDictTagged, C4dBinarizeParamsDictTagged, C4dCannyParamsDictTagged, C4dCeilParamsDictTagged, C4dCentroidParamsDictTagged, C4dCentroidMarkParamsDictTagged, C4dConnectedComponentsParamsDictTagged, C4dClearParamsDictTagged, C4dClipParamsDictTagged, C4dColorMapParamsDictTagged, C4dCompressParamsDictTagged, C4dNoCompressParamsDictTagged, C4dConvParamsDictTagged, C4dCoordinateMapVoxelParamsDictTagged, C4dCoordinateMapPhysicalParamsDictTagged, C4dCopyTransformParamsDictTagged, C4dCosParamsDictTagged, C4dCreateParamsDictTagged, C4dDicomSeriesListParamsDictTagged, C4dDicomSeriesReadParamsDictTagged, C4dDilateParamsDictTagged, C4dDivideParamsDictTagged, C4dDuplicateParamsDictTagged, C4dEndaccumParamsDictTagged, C4dEndforParamsDictTagged, C4dErodeParamsDictTagged, C4dErfParamsDictTagged, C4dExpParamsDictTagged, C4dExportPatchesParamsDictTagged, C4dExportPatchesAugParamsDictTagged, C4dExtrudeSegParamsDictTagged, C4dFillBackgroundWithNoiseParamsDictTagged, C4dFftParamsDictTagged, C4dFlipParamsDictTagged, C4dFloorParamsDictTagged, C4dForeachParamsDictTagged, C4dForeachCompParamsDictTagged, C4dGlmParamsDictTagged, C4dGradientParamsDictTagged, C4dHelpParamsDictTagged, C4dHolefillParamsDictTagged, C4dHessianEigenvaluesParamsDictTagged, C4dHessianObjectnessParamsDictTagged, C4dHistogramMatchParamsDictTagged, C4dInfoParamsDictTagged, C4dInfoFullParamsDictTagged, C4dInsertParamsDictTagged, C4dInterpolationParamsDictTagged, C4dIterationsParamsDictTagged, C4dLabelOverlapParamsDictTagged, C4dLabelStatisticsParamsDictTagged, C4dLandmarksToSpheresParamsDictTagged, C4dLaplacianParamsDictTagged, C4dLevelsetParamsDictTagged, C4dLevelsetCurvatureParamsDictTagged, C4dLevelsetAdvectionParamsDictTagged, C4dLogParamsDictTagged, C4dLog10ParamsDictTagged, C4dManualParamsDictTagged, C4dMatchBoundingBoxParamsDictTagged, C4dMaximumParamsDictTagged, C4dMulticomponentSplitParamsDictTagged, C4dMeanParamsDictTagged, C4dMedianFilterParamsDictTagged, C4dMergeParamsDictTagged, C4dMeanFilterParamsDictTagged, C4dMutualInfoParamsDictTagged, C4dMinimumParamsDictTagged, C4dMixtureModelParamsDictTagged, C4dMomentsParamsDictTagged, C4dMattesMutualInfoParamsDictTagged, C4dMeanSquareParamsDictTagged, C4dMultiplyParamsDictTagged, C4dNormalizedCrossCorrelationParamsDictTagged, C4dNormalizedCorrelationParamsDictTagged, C4dNormalizedMutualInfoParamsDictTagged, C4dNoiseGaussianParamsDictTagged, C4dNoisePoissonParamsDictTagged, C4dNoiseSpeckleParamsDictTagged, C4dNoiseSaltPepperParamsDictTagged, C4dNoMulticomponentSplitParamsDictTagged, C4dNormalizeLocalWindowParamsDictTagged, C4dNormpdfParamsDictTagged, C4dNoroundParamsDictTagged, C4dNospmParamsDictTagged, C4dOutputParamsDictTagged, C4dOutputMulticomponentParamsDictTagged, C4dOutputMultipleMulticomponentParamsDictTagged, C4dOrientParamsDictTagged, C4dOutputMultipleParamsDictTagged, C4dOrient1ParamsDictTagged, C4dOriginParamsDictTagged, C4dOriginVoxelParamsDictTagged, C4dOriginVoxelCoordParamsDictTagged, C4dOverlapParamsDictTagged, C4dOverlayLabelImageParamsDictTagged, C4dPadParamsDictTagged, C4dPadToParamsDictTagged, C4dPcaParamsDictTagged, C4dPercentIntensityModeParamsDictTagged, C4dPixelParamsDictTagged, C4dPopParamsDictTagged, C4dPopasParamsDictTagged, C4dProbeParamsDictTagged, C4dPushParamsDictTagged, C4dRankParamsDictTagged, C4dReciprocalParamsDictTagged, C4dRegionParamsDictTagged, C4dReorderParamsDictTagged, C4dRetainLabelsParamsDictTagged, C4dRfApplyParamsDictTagged, C4dRfTrainParamsDictTagged, C4dRfParamPatchParamsDictTagged, C4dRfParamUsexyzParamsDictTagged, C4dRfParamNousexyzParamsDictTagged, C4dRfParamNtreesParamsDictTagged, C4dRfParamTreedepthParamsDictTagged, C4dSetSformParamsDictTagged, C4dReplaceParamsDictTagged, C4dResampleParamsDictTagged, C4dResampleIsoParamsDictTagged, C4dResampleMmParamsDictTagged, C4dResliceItkParamsDictTagged, C4dResliceMatrixParamsDictTagged, C4dResliceIdentityParamsDictTagged, C4dRgb2hsvParamsDictTagged, C4dRmsParamsDictTagged, C4dRoundParamsDictTagged, C4dScaleParamsDictTagged, C4dSetSform1ParamsDictTagged, C4dSinParamsDictTagged, C4dSliceParamsDictTagged, C4dSliceAllParamsDictTagged, C4dSharpenParamsDictTagged, C4dShiftParamsDictTagged, C4dSignedDistanceTransformParamsDictTagged, C4dSmoothParamsDictTagged, C4dSmoothFastParamsDictTagged, C4dSpacingParamsDictTagged, C4dSplitParamsDictTagged, C4dSqrtParamsDictTagged, C4dStapleParamsDictTagged, C4dStructureTensorEigenvaluesParamsDictTagged, C4dSpmParamsDictTagged, C4dSubtractParamsDictTagged, C4dSupervoxelParamsDictTagged, C4dStretchParamsDictTagged, C4dSwapdimParamsDictTagged, C4dTestImageParamsDictTagged, C4dTestProbeParamsDictTagged, C4dThresholdParamsDictTagged, C4dTileParamsDictTagged, C4dTrimParamsDictTagged, C4dTrimToSizeParamsDictTagged, C4dTypeParamsDictTagged, C4dVerboseParamsDictTagged, C4dNoverboseParamsDictTagged, C4dVersionParamsDictTagged, C4dVoteParamsDictTagged, C4dVoteMrfParamsDictTagged, C4dVoteLabelParamsDictTagged, C4dVoxelSumParamsDictTagged, C4dVoxelIntegralParamsDictTagged, C4dVoxelwiseRegressionParamsDictTagged, C4dWarpParamsDictTagged, C4dWarpLabelParamsDictTagged, C4dWrapParamsDictTagged, C4dWeightedSumParamsDictTagged, C4dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
@@ -1815,6 +1814,7 @@ C4dParamsDictTagged = typing.TypedDict('C4dParamsDictTagged', {
     "operations": list[typing.Union[C4dAccumParamsDictTagged, C4dAcosParamsDictTagged, C4dAddParamsDictTagged, C4dAlignLandmarksParamsDictTagged, C4dAnisotropicDiffusionParamsDictTagged, C4dAntialiasParamsDictTagged, C4dSetParamsDictTagged, C4dAsinParamsDictTagged, C4dAtan2ParamsDictTagged, C4dBackgroundParamsDictTagged, C4dN4BiasCorrectionParamsDictTagged, C4dBinarizeParamsDictTagged, C4dCannyParamsDictTagged, C4dCeilParamsDictTagged, C4dCentroidParamsDictTagged, C4dCentroidMarkParamsDictTagged, C4dConnectedComponentsParamsDictTagged, C4dClearParamsDictTagged, C4dClipParamsDictTagged, C4dColorMapParamsDictTagged, C4dCompressParamsDictTagged, C4dNoCompressParamsDictTagged, C4dConvParamsDictTagged, C4dCoordinateMapVoxelParamsDictTagged, C4dCoordinateMapPhysicalParamsDictTagged, C4dCopyTransformParamsDictTagged, C4dCosParamsDictTagged, C4dCreateParamsDictTagged, C4dDicomSeriesListParamsDictTagged, C4dDicomSeriesReadParamsDictTagged, C4dDilateParamsDictTagged, C4dDivideParamsDictTagged, C4dDuplicateParamsDictTagged, C4dEndaccumParamsDictTagged, C4dEndforParamsDictTagged, C4dErodeParamsDictTagged, C4dErfParamsDictTagged, C4dExpParamsDictTagged, C4dExportPatchesParamsDictTagged, C4dExportPatchesAugParamsDictTagged, C4dExtrudeSegParamsDictTagged, C4dFillBackgroundWithNoiseParamsDictTagged, C4dFftParamsDictTagged, C4dFlipParamsDictTagged, C4dFloorParamsDictTagged, C4dForeachParamsDictTagged, C4dForeachCompParamsDictTagged, C4dGlmParamsDictTagged, C4dGradientParamsDictTagged, C4dHelpParamsDictTagged, C4dHolefillParamsDictTagged, C4dHessianEigenvaluesParamsDictTagged, C4dHessianObjectnessParamsDictTagged, C4dHistogramMatchParamsDictTagged, C4dInfoParamsDictTagged, C4dInfoFullParamsDictTagged, C4dInsertParamsDictTagged, C4dInterpolationParamsDictTagged, C4dIterationsParamsDictTagged, C4dLabelOverlapParamsDictTagged, C4dLabelStatisticsParamsDictTagged, C4dLandmarksToSpheresParamsDictTagged, C4dLaplacianParamsDictTagged, C4dLevelsetParamsDictTagged, C4dLevelsetCurvatureParamsDictTagged, C4dLevelsetAdvectionParamsDictTagged, C4dLogParamsDictTagged, C4dLog10ParamsDictTagged, C4dManualParamsDictTagged, C4dMatchBoundingBoxParamsDictTagged, C4dMaximumParamsDictTagged, C4dMulticomponentSplitParamsDictTagged, C4dMeanParamsDictTagged, C4dMedianFilterParamsDictTagged, C4dMergeParamsDictTagged, C4dMeanFilterParamsDictTagged, C4dMutualInfoParamsDictTagged, C4dMinimumParamsDictTagged, C4dMixtureModelParamsDictTagged, C4dMomentsParamsDictTagged, C4dMattesMutualInfoParamsDictTagged, C4dMeanSquareParamsDictTagged, C4dMultiplyParamsDictTagged, C4dNormalizedCrossCorrelationParamsDictTagged, C4dNormalizedCorrelationParamsDictTagged, C4dNormalizedMutualInfoParamsDictTagged, C4dNoiseGaussianParamsDictTagged, C4dNoisePoissonParamsDictTagged, C4dNoiseSpeckleParamsDictTagged, C4dNoiseSaltPepperParamsDictTagged, C4dNoMulticomponentSplitParamsDictTagged, C4dNormalizeLocalWindowParamsDictTagged, C4dNormpdfParamsDictTagged, C4dNoroundParamsDictTagged, C4dNospmParamsDictTagged, C4dOutputParamsDictTagged, C4dOutputMulticomponentParamsDictTagged, C4dOutputMultipleMulticomponentParamsDictTagged, C4dOrientParamsDictTagged, C4dOutputMultipleParamsDictTagged, C4dOrient1ParamsDictTagged, C4dOriginParamsDictTagged, C4dOriginVoxelParamsDictTagged, C4dOriginVoxelCoordParamsDictTagged, C4dOverlapParamsDictTagged, C4dOverlayLabelImageParamsDictTagged, C4dPadParamsDictTagged, C4dPadToParamsDictTagged, C4dPcaParamsDictTagged, C4dPercentIntensityModeParamsDictTagged, C4dPixelParamsDictTagged, C4dPopParamsDictTagged, C4dPopasParamsDictTagged, C4dProbeParamsDictTagged, C4dPushParamsDictTagged, C4dRankParamsDictTagged, C4dReciprocalParamsDictTagged, C4dRegionParamsDictTagged, C4dReorderParamsDictTagged, C4dRetainLabelsParamsDictTagged, C4dRfApplyParamsDictTagged, C4dRfTrainParamsDictTagged, C4dRfParamPatchParamsDictTagged, C4dRfParamUsexyzParamsDictTagged, C4dRfParamNousexyzParamsDictTagged, C4dRfParamNtreesParamsDictTagged, C4dRfParamTreedepthParamsDictTagged, C4dSetSformParamsDictTagged, C4dReplaceParamsDictTagged, C4dResampleParamsDictTagged, C4dResampleIsoParamsDictTagged, C4dResampleMmParamsDictTagged, C4dResliceItkParamsDictTagged, C4dResliceMatrixParamsDictTagged, C4dResliceIdentityParamsDictTagged, C4dRgb2hsvParamsDictTagged, C4dRmsParamsDictTagged, C4dRoundParamsDictTagged, C4dScaleParamsDictTagged, C4dSetSform1ParamsDictTagged, C4dSinParamsDictTagged, C4dSliceParamsDictTagged, C4dSliceAllParamsDictTagged, C4dSharpenParamsDictTagged, C4dShiftParamsDictTagged, C4dSignedDistanceTransformParamsDictTagged, C4dSmoothParamsDictTagged, C4dSmoothFastParamsDictTagged, C4dSpacingParamsDictTagged, C4dSplitParamsDictTagged, C4dSqrtParamsDictTagged, C4dStapleParamsDictTagged, C4dStructureTensorEigenvaluesParamsDictTagged, C4dSpmParamsDictTagged, C4dSubtractParamsDictTagged, C4dSupervoxelParamsDictTagged, C4dStretchParamsDictTagged, C4dSwapdimParamsDictTagged, C4dTestImageParamsDictTagged, C4dTestProbeParamsDictTagged, C4dThresholdParamsDictTagged, C4dTileParamsDictTagged, C4dTrimParamsDictTagged, C4dTrimToSizeParamsDictTagged, C4dTypeParamsDictTagged, C4dVerboseParamsDictTagged, C4dNoverboseParamsDictTagged, C4dVersionParamsDictTagged, C4dVoteParamsDictTagged, C4dVoteMrfParamsDictTagged, C4dVoteLabelParamsDictTagged, C4dVoxelSumParamsDictTagged, C4dVoxelIntegralParamsDictTagged, C4dVoxelwiseRegressionParamsDictTagged, C4dWarpParamsDictTagged, C4dWarpLabelParamsDictTagged, C4dWrapParamsDictTagged, C4dWeightedSumParamsDictTagged, C4dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
 })
+C4dParamsDict = _C4dParamsDictNoTag | C4dParamsDictTagged
 
 
 def c4d_operations_cargs_dyn_fn(

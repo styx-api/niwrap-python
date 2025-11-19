@@ -12,8 +12,7 @@ CIFTI_PARCELLATE_METADATA = Metadata(
 )
 
 
-CiftiParcellateSpatialWeightsParamsDict = typing.TypedDict('CiftiParcellateSpatialWeightsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spatial-weights"]],
+_CiftiParcellateSpatialWeightsParamsDictNoTag = typing.TypedDict('_CiftiParcellateSpatialWeightsParamsDictNoTag', {
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
@@ -30,10 +29,10 @@ CiftiParcellateSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiParcellat
     "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiParcellateSpatialWeightsParamsDict = _CiftiParcellateSpatialWeightsParamsDictNoTag | CiftiParcellateSpatialWeightsParamsDictTagged
 
 
-CiftiParcellateExcludeOutliersParamsDict = typing.TypedDict('CiftiParcellateExcludeOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+_CiftiParcellateExcludeOutliersParamsDictNoTag = typing.TypedDict('_CiftiParcellateExcludeOutliersParamsDictNoTag', {
     "sigma-below": float,
     "sigma-above": float,
 })
@@ -42,10 +41,10 @@ CiftiParcellateExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiParcella
     "sigma-below": float,
     "sigma-above": float,
 })
+CiftiParcellateExcludeOutliersParamsDict = _CiftiParcellateExcludeOutliersParamsDictNoTag | CiftiParcellateExcludeOutliersParamsDictTagged
 
 
-CiftiParcellateParamsDict = typing.TypedDict('CiftiParcellateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcellate"]],
+_CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNoTag', {
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
@@ -76,6 +75,7 @@ CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTag
     "cifti-label": InputPathType,
     "direction": str,
 })
+CiftiParcellateParamsDict = _CiftiParcellateParamsDictNoTag | CiftiParcellateParamsDictTagged
 
 
 def cifti_parcellate_spatial_weights(

@@ -13,8 +13,7 @@ CLUSTER_METADATA = Metadata(
 )
 
 
-ClusterParamsDict = typing.TypedDict('ClusterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/cluster"]],
+_ClusterParamsDictNoTag = typing.TypedDict('_ClusterParamsDictNoTag', {
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
     "dlh": typing.NotRequired[float | None],
@@ -87,6 +86,7 @@ ClusterParamsDictTagged = typing.TypedDict('ClusterParamsDictTagged', {
     "warpfield_file": typing.NotRequired[InputPathType | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
 })
+ClusterParamsDict = _ClusterParamsDictNoTag | ClusterParamsDictTagged
 
 
 class ClusterOutputs(typing.NamedTuple):

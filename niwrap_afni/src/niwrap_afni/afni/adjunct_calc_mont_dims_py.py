@@ -13,14 +13,14 @@ ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
 )
 
 
-AdjunctCalcMontDimsPyParamsDict = typing.TypedDict('AdjunctCalcMontDimsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_calc_mont_dims.py"]],
+_AdjunctCalcMontDimsPyParamsDictNoTag = typing.TypedDict('_AdjunctCalcMontDimsPyParamsDictNoTag', {
     "help": bool,
 })
 AdjunctCalcMontDimsPyParamsDictTagged = typing.TypedDict('AdjunctCalcMontDimsPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_calc_mont_dims.py"],
     "help": bool,
 })
+AdjunctCalcMontDimsPyParamsDict = _AdjunctCalcMontDimsPyParamsDictNoTag | AdjunctCalcMontDimsPyParamsDictTagged
 
 
 class AdjunctCalcMontDimsPyOutputs(typing.NamedTuple):

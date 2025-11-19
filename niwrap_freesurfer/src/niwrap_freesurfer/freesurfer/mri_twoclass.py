@@ -13,8 +13,7 @@ MRI_TWOCLASS_METADATA = Metadata(
 )
 
 
-MriTwoclassParamsDict = typing.TypedDict('MriTwoclassParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_twoclass"]],
+_MriTwoclassParamsDictNoTag = typing.TypedDict('_MriTwoclassParamsDictNoTag', {
     "segmentation_volume": InputPathType,
     "output_subject": str,
     "output_volume": str,
@@ -33,6 +32,7 @@ MriTwoclassParamsDictTagged = typing.TypedDict('MriTwoclassParamsDictTagged', {
     "f_threshold": typing.NotRequired[float | None],
     "bonferroni_correction": bool,
 })
+MriTwoclassParamsDict = _MriTwoclassParamsDictNoTag | MriTwoclassParamsDictTagged
 
 
 class MriTwoclassOutputs(typing.NamedTuple):

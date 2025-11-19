@@ -13,8 +13,7 @@ FAT_MAT2D_PLOT_PY_METADATA = Metadata(
 )
 
 
-FatMat2dPlotPyParamsDict = typing.TypedDict('FatMat2dPlotPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mat2d_plot.py"]],
+_FatMat2dPlotPyParamsDictNoTag = typing.TypedDict('_FatMat2dPlotPyParamsDictNoTag', {
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
     "prefix": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ FatMat2dPlotPyParamsDictTagged = typing.TypedDict('FatMat2dPlotPyParamsDictTagge
     "help": bool,
     "help_view": bool,
 })
+FatMat2dPlotPyParamsDict = _FatMat2dPlotPyParamsDictNoTag | FatMat2dPlotPyParamsDictTagged
 
 
 class FatMat2dPlotPyOutputs(typing.NamedTuple):

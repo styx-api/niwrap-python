@@ -13,8 +13,7 @@ V_3D_AUTO_TCORRELATE_METADATA = Metadata(
 )
 
 
-V3dAutoTcorrelateParamsDict = typing.TypedDict('V3dAutoTcorrelateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAutoTcorrelate"]],
+_V3dAutoTcorrelateParamsDictNoTag = typing.TypedDict('_V3dAutoTcorrelateParamsDictNoTag', {
     "input_dataset": InputPathType,
     "pearson": bool,
     "eta2": bool,
@@ -45,6 +44,7 @@ V3dAutoTcorrelateParamsDictTagged = typing.TypedDict('V3dAutoTcorrelateParamsDic
     "time": bool,
     "mmap": bool,
 })
+V3dAutoTcorrelateParamsDict = _V3dAutoTcorrelateParamsDictNoTag | V3dAutoTcorrelateParamsDictTagged
 
 
 class V3dAutoTcorrelateOutputs(typing.NamedTuple):

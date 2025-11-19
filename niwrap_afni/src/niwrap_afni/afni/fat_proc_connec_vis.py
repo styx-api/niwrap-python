@@ -13,8 +13,7 @@ FAT_PROC_CONNEC_VIS_METADATA = Metadata(
 )
 
 
-FatProcConnecVisParamsDict = typing.TypedDict('FatProcConnecVisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_connec_vis"]],
+_FatProcConnecVisParamsDictNoTag = typing.TypedDict('_FatProcConnecVisParamsDictNoTag', {
     "in_rois": str,
     "prefix": str,
     "prefix_file": typing.NotRequired[str | None],
@@ -41,6 +40,7 @@ FatProcConnecVisParamsDictTagged = typing.TypedDict('FatProcConnecVisParamsDictT
     "wdir": typing.NotRequired[str | None],
     "no_clean": bool,
 })
+FatProcConnecVisParamsDict = _FatProcConnecVisParamsDictNoTag | FatProcConnecVisParamsDictTagged
 
 
 class FatProcConnecVisOutputs(typing.NamedTuple):

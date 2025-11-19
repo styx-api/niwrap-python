@@ -13,8 +13,7 @@ SWI_PREPROCESS_METADATA = Metadata(
 )
 
 
-SwiPreprocessParamsDict = typing.TypedDict('SwiPreprocessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/swi_preprocess"]],
+_SwiPreprocessParamsDictNoTag = typing.TypedDict('_SwiPreprocessParamsDictNoTag', {
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
     "philips_file": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ SwiPreprocessParamsDictTagged = typing.TypedDict('SwiPreprocessParamsDictTagged'
     "out_magnitude": str,
     "out_phase": str,
 })
+SwiPreprocessParamsDict = _SwiPreprocessParamsDictNoTag | SwiPreprocessParamsDictTagged
 
 
 class SwiPreprocessOutputs(typing.NamedTuple):

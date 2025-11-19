@@ -12,8 +12,7 @@ CIFTI_ERODE_METADATA = Metadata(
 )
 
 
-CiftiErodeLeftSurfaceParamsDict = typing.TypedDict('CiftiErodeLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiErodeLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiErodeLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -22,10 +21,10 @@ CiftiErodeLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeLeftSurfaceP
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiErodeLeftSurfaceParamsDict = _CiftiErodeLeftSurfaceParamsDictNoTag | CiftiErodeLeftSurfaceParamsDictTagged
 
 
-CiftiErodeRightSurfaceParamsDict = typing.TypedDict('CiftiErodeRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiErodeRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiErodeRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiErodeRightSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeRightSurfac
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiErodeRightSurfaceParamsDict = _CiftiErodeRightSurfaceParamsDictNoTag | CiftiErodeRightSurfaceParamsDictTagged
 
 
-CiftiErodeCerebellumSurfaceParamsDict = typing.TypedDict('CiftiErodeCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiErodeCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiErodeCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiErodeCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeCerebe
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiErodeCerebellumSurfaceParamsDict = _CiftiErodeCerebellumSurfaceParamsDictNoTag | CiftiErodeCerebellumSurfaceParamsDictTagged
 
 
-CiftiErodeParamsDict = typing.TypedDict('CiftiErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-erode"]],
+_CiftiErodeParamsDictNoTag = typing.TypedDict('_CiftiErodeParamsDictNoTag', {
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParamsDict | None],
@@ -72,6 +71,7 @@ CiftiErodeParamsDictTagged = typing.TypedDict('CiftiErodeParamsDictTagged', {
     "surface-distance": float,
     "volume-distance": float,
 })
+CiftiErodeParamsDict = _CiftiErodeParamsDictNoTag | CiftiErodeParamsDictTagged
 
 
 def cifti_erode_left_surface(

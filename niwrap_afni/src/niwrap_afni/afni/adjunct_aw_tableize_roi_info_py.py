@@ -13,8 +13,7 @@ ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
 )
 
 
-AdjunctAwTableizeRoiInfoPyParamsDict = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_aw_tableize_roi_info.py"]],
+_AdjunctAwTableizeRoiInfoPyParamsDictNoTag = typing.TypedDict('_AdjunctAwTableizeRoiInfoPyParamsDictNoTag', {
     "output_file": str,
     "warped_atlas": InputPathType,
     "warped_mask": InputPathType,
@@ -31,6 +30,7 @@ AdjunctAwTableizeRoiInfoPyParamsDictTagged = typing.TypedDict('AdjunctAwTableize
     "reference_mask": InputPathType,
     "modesmooth_value": float,
 })
+AdjunctAwTableizeRoiInfoPyParamsDict = _AdjunctAwTableizeRoiInfoPyParamsDictNoTag | AdjunctAwTableizeRoiInfoPyParamsDictTagged
 
 
 class AdjunctAwTableizeRoiInfoPyOutputs(typing.NamedTuple):

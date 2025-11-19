@@ -13,8 +13,7 @@ QUICKSPEC_SL_METADATA = Metadata(
 )
 
 
-QuickspecSlParamsDict = typing.TypedDict('QuickspecSlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/quickspecSL"]],
+_QuickspecSlParamsDictNoTag = typing.TypedDict('_QuickspecSlParamsDictNoTag', {
     "surf_A": InputPathType,
     "surf_B": InputPathType,
     "surf_intermed_pref": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ QuickspecSlParamsDictTagged = typing.TypedDict('QuickspecSlParamsDictTagged', {
     "both_lr_flag": bool,
     "out_spec": typing.NotRequired[str | None],
 })
+QuickspecSlParamsDict = _QuickspecSlParamsDictNoTag | QuickspecSlParamsDictTagged
 
 
 class QuickspecSlOutputs(typing.NamedTuple):

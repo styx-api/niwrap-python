@@ -13,8 +13,7 @@ V_3D_PAR2_AFNI_PL_METADATA = Metadata(
 )
 
 
-V3dPar2AfniPlParamsDict = typing.TypedDict('V3dPar2AfniPlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPAR2AFNI.pl"]],
+_V3dPar2AfniPlParamsDictNoTag = typing.TypedDict('_V3dPar2AfniPlParamsDictNoTag', {
     "input_file": InputPathType,
     "skip_outliers_test": bool,
     "output_nifti": bool,
@@ -39,6 +38,7 @@ V3dPar2AfniPlParamsDictTagged = typing.TypedDict('V3dPar2AfniPlParamsDictTagged'
     "byte_swap_4": bool,
     "help_flag": bool,
 })
+V3dPar2AfniPlParamsDict = _V3dPar2AfniPlParamsDictNoTag | V3dPar2AfniPlParamsDictTagged
 
 
 class V3dPar2AfniPlOutputs(typing.NamedTuple):

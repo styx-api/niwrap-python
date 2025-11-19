@@ -13,8 +13,7 @@ FIX_SUBJECT_CORRECTED_METADATA = Metadata(
 )
 
 
-FixSubjectCorrectedParamsDict = typing.TypedDict('FixSubjectCorrectedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected"]],
+_FixSubjectCorrectedParamsDictNoTag = typing.TypedDict('_FixSubjectCorrectedParamsDictNoTag', {
     "subject_directory": str,
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ FixSubjectCorrectedParamsDictTagged = typing.TypedDict('FixSubjectCorrectedParam
     "subject_directory": str,
     "output_directory": str,
 })
+FixSubjectCorrectedParamsDict = _FixSubjectCorrectedParamsDictNoTag | FixSubjectCorrectedParamsDictTagged
 
 
 class FixSubjectCorrectedOutputs(typing.NamedTuple):

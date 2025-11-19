@@ -13,18 +13,17 @@ FIXELCFESTATS_METADATA = Metadata(
 )
 
 
-FixelcfestatsColumnParamsDict = typing.TypedDict('FixelcfestatsColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_FixelcfestatsColumnParamsDictNoTag = typing.TypedDict('_FixelcfestatsColumnParamsDictNoTag', {
     "path": InputPathType,
 })
 FixelcfestatsColumnParamsDictTagged = typing.TypedDict('FixelcfestatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
+FixelcfestatsColumnParamsDict = _FixelcfestatsColumnParamsDictNoTag | FixelcfestatsColumnParamsDictTagged
 
 
-FixelcfestatsConfigParamsDict = typing.TypedDict('FixelcfestatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelcfestatsConfigParamsDictNoTag = typing.TypedDict('_FixelcfestatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,30 +32,30 @@ FixelcfestatsConfigParamsDictTagged = typing.TypedDict('FixelcfestatsConfigParam
     "key": str,
     "value": str,
 })
+FixelcfestatsConfigParamsDict = _FixelcfestatsConfigParamsDictNoTag | FixelcfestatsConfigParamsDictTagged
 
 
-FixelcfestatsVariousStringParamsDict = typing.TypedDict('FixelcfestatsVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_FixelcfestatsVariousStringParamsDictNoTag = typing.TypedDict('_FixelcfestatsVariousStringParamsDictNoTag', {
     "obj": str,
 })
 FixelcfestatsVariousStringParamsDictTagged = typing.TypedDict('FixelcfestatsVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+FixelcfestatsVariousStringParamsDict = _FixelcfestatsVariousStringParamsDictNoTag | FixelcfestatsVariousStringParamsDictTagged
 
 
-FixelcfestatsVariousFileParamsDict = typing.TypedDict('FixelcfestatsVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_FixelcfestatsVariousFileParamsDictNoTag = typing.TypedDict('_FixelcfestatsVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 FixelcfestatsVariousFileParamsDictTagged = typing.TypedDict('FixelcfestatsVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+FixelcfestatsVariousFileParamsDict = _FixelcfestatsVariousFileParamsDictNoTag | FixelcfestatsVariousFileParamsDictTagged
 
 
-FixelcfestatsParamsDict = typing.TypedDict('FixelcfestatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcfestats"]],
+_FixelcfestatsParamsDictNoTag = typing.TypedDict('_FixelcfestatsParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -131,6 +130,7 @@ FixelcfestatsParamsDictTagged = typing.TypedDict('FixelcfestatsParamsDictTagged'
     "connectivity": typing.Union[FixelcfestatsVariousStringParamsDictTagged, FixelcfestatsVariousFileParamsDictTagged],
     "out_fixel_directory": str,
 })
+FixelcfestatsParamsDict = _FixelcfestatsParamsDictNoTag | FixelcfestatsParamsDictTagged
 
 
 def fixelcfestats_connectivity_cargs_dyn_fn(

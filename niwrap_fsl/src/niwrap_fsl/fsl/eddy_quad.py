@@ -13,8 +13,7 @@ EDDY_QUAD_METADATA = Metadata(
 )
 
 
-EddyQuadParamsDict = typing.TypedDict('EddyQuadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/eddy_quad"]],
+_EddyQuadParamsDictNoTag = typing.TypedDict('_EddyQuadParamsDictNoTag', {
     "eddyBase": str,
     "eddyIndex": InputPathType,
     "eddyParams": InputPathType,
@@ -39,6 +38,7 @@ EddyQuadParamsDictTagged = typing.TypedDict('EddyQuadParamsDictTagged', {
     "slspec": typing.NotRequired[InputPathType | None],
     "verbose": bool,
 })
+EddyQuadParamsDict = _EddyQuadParamsDictNoTag | EddyQuadParamsDictTagged
 
 
 class EddyQuadOutputs(typing.NamedTuple):

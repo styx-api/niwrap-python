@@ -13,8 +13,7 @@ SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
 )
 
 
-SimpleSynRegistrationParamsDict = typing.TypedDict('SimpleSynRegistrationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/simpleSynRegistration"]],
+_SimpleSynRegistrationParamsDictNoTag = typing.TypedDict('_SimpleSynRegistrationParamsDictNoTag', {
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initial_transform": str,
@@ -27,6 +26,7 @@ SimpleSynRegistrationParamsDictTagged = typing.TypedDict('SimpleSynRegistrationP
     "initial_transform": str,
     "output_prefix": str,
 })
+SimpleSynRegistrationParamsDict = _SimpleSynRegistrationParamsDictNoTag | SimpleSynRegistrationParamsDictTagged
 
 
 class SimpleSynRegistrationOutputs(typing.NamedTuple):

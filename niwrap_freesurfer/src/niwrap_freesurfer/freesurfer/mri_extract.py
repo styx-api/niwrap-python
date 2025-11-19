@@ -13,8 +13,7 @@ MRI_EXTRACT_METADATA = Metadata(
 )
 
 
-MriExtractParamsDict = typing.TypedDict('MriExtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract"]],
+_MriExtractParamsDictNoTag = typing.TypedDict('_MriExtractParamsDictNoTag', {
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
     "dst_volume": InputPathType,
@@ -27,6 +26,7 @@ MriExtractParamsDictTagged = typing.TypedDict('MriExtractParamsDictTagged', {
     "dst_volume": InputPathType,
     "coordinates": typing.NotRequired[list[float] | None],
 })
+MriExtractParamsDict = _MriExtractParamsDictNoTag | MriExtractParamsDictTagged
 
 
 class MriExtractOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_EXTRACT_LABEL_METADATA = Metadata(
 )
 
 
-MriExtractLabelParamsDict = typing.TypedDict('MriExtractLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_label"]],
+_MriExtractLabelParamsDictNoTag = typing.TypedDict('_MriExtractLabelParamsDictNoTag', {
     "input_volume": InputPathType,
     "labels": list[str],
     "output_name": str,
@@ -35,6 +34,7 @@ MriExtractLabelParamsDictTagged = typing.TypedDict('MriExtractLabelParamsDictTag
     "dilate": typing.NotRequired[float | None],
     "erode": typing.NotRequired[float | None],
 })
+MriExtractLabelParamsDict = _MriExtractLabelParamsDictNoTag | MriExtractLabelParamsDictTagged
 
 
 class MriExtractLabelOutputs(typing.NamedTuple):

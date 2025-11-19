@@ -13,8 +13,7 @@ ANTS_ATROPOS_N4_SH_METADATA = Metadata(
 )
 
 
-AntsAtroposN4ShSegmentationPriorsParamsDict = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["segmentation_priors"]],
+_AntsAtroposN4ShSegmentationPriorsParamsDictNoTag = typing.TypedDict('_AntsAtroposN4ShSegmentationPriorsParamsDictNoTag', {
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
@@ -23,10 +22,10 @@ AntsAtroposN4ShSegmentationPriorsParamsDictTagged = typing.TypedDict('AntsAtropo
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
+AntsAtroposN4ShSegmentationPriorsParamsDict = _AntsAtroposN4ShSegmentationPriorsParamsDictNoTag | AntsAtroposN4ShSegmentationPriorsParamsDictTagged
 
 
-AntsAtroposN4ShParamsDict = typing.TypedDict('AntsAtroposN4ShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsAtroposN4.sh"]],
+_AntsAtroposN4ShParamsDictNoTag = typing.TypedDict('_AntsAtroposN4ShParamsDictNoTag', {
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
     "mask_image": InputPathType,
@@ -77,6 +76,7 @@ AntsAtroposN4ShParamsDictTagged = typing.TypedDict('AntsAtroposN4ShParamsDictTag
     "atropos_segmentation_use_euclidean_distance": typing.NotRequired[bool | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
+AntsAtroposN4ShParamsDict = _AntsAtroposN4ShParamsDictNoTag | AntsAtroposN4ShParamsDictTagged
 
 
 def ants_atropos_n4_sh_segmentation_priors(

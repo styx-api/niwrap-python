@@ -13,8 +13,7 @@ MAP_TRACK_ID_METADATA = Metadata(
 )
 
 
-MapTrackIdParamsDict = typing.TypedDict('MapTrackIdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/map_TrackID"]],
+_MapTrackIdParamsDictNoTag = typing.TypedDict('_MapTrackIdParamsDictNoTag', {
     "prefix": str,
     "in_trk": InputPathType,
     "in_map": InputPathType,
@@ -35,6 +34,7 @@ MapTrackIdParamsDictTagged = typing.TypedDict('MapTrackIdParamsDictTagged', {
     "line_only_num": bool,
     "already_inv": bool,
 })
+MapTrackIdParamsDict = _MapTrackIdParamsDictNoTag | MapTrackIdParamsDictTagged
 
 
 class MapTrackIdOutputs(typing.NamedTuple):

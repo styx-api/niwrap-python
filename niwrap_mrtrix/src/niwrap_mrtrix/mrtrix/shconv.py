@@ -13,28 +13,27 @@ SHCONV_METADATA = Metadata(
 )
 
 
-ShconvVariousStringParamsDict = typing.TypedDict('ShconvVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_ShconvVariousStringParamsDictNoTag = typing.TypedDict('_ShconvVariousStringParamsDictNoTag', {
     "obj": str,
 })
 ShconvVariousStringParamsDictTagged = typing.TypedDict('ShconvVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+ShconvVariousStringParamsDict = _ShconvVariousStringParamsDictNoTag | ShconvVariousStringParamsDictTagged
 
 
-ShconvVariousFileParamsDict = typing.TypedDict('ShconvVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_ShconvVariousFileParamsDictNoTag = typing.TypedDict('_ShconvVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 ShconvVariousFileParamsDictTagged = typing.TypedDict('ShconvVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+ShconvVariousFileParamsDict = _ShconvVariousFileParamsDictNoTag | ShconvVariousFileParamsDictTagged
 
 
-ShconvConfigParamsDict = typing.TypedDict('ShconvConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_ShconvConfigParamsDictNoTag = typing.TypedDict('_ShconvConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -43,10 +42,10 @@ ShconvConfigParamsDictTagged = typing.TypedDict('ShconvConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+ShconvConfigParamsDict = _ShconvConfigParamsDictNoTag | ShconvConfigParamsDictTagged
 
 
-ShconvParamsDict = typing.TypedDict('ShconvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/shconv"]],
+_ShconvParamsDictNoTag = typing.TypedDict('_ShconvParamsDictNoTag', {
     "datatype": typing.NotRequired[str | None],
     "strides": typing.NotRequired[typing.Union[ShconvVariousStringParamsDictTagged, ShconvVariousFileParamsDictTagged] | None],
     "info": bool,
@@ -75,6 +74,7 @@ ShconvParamsDictTagged = typing.TypedDict('ShconvParamsDictTagged', {
     "odf_response": list[str],
     "SH_out": str,
 })
+ShconvParamsDict = _ShconvParamsDictNoTag | ShconvParamsDictTagged
 
 
 def shconv_strides_cargs_dyn_fn(

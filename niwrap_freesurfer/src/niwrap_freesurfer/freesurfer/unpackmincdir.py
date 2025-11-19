@@ -13,8 +13,7 @@ UNPACKMINCDIR_METADATA = Metadata(
 )
 
 
-UnpackmincdirParamsDict = typing.TypedDict('UnpackmincdirParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/unpackmincdir"]],
+_UnpackmincdirParamsDictNoTag = typing.TypedDict('_UnpackmincdirParamsDictNoTag', {
     "source_directory": str,
     "target_directory": str,
     "scan_sequence_info": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ UnpackmincdirParamsDictTagged = typing.TypedDict('UnpackmincdirParamsDictTagged'
     "no_copy": bool,
     "umask": typing.NotRequired[str | None],
 })
+UnpackmincdirParamsDict = _UnpackmincdirParamsDictNoTag | UnpackmincdirParamsDictTagged
 
 
 class UnpackmincdirOutputs(typing.NamedTuple):

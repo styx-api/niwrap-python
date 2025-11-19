@@ -13,8 +13,7 @@ V_3D_BANDPASS_METADATA = Metadata(
 )
 
 
-V3dBandpassParamsDict = typing.TypedDict('V3dBandpassParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dBandpass"]],
+_V3dBandpassParamsDictNoTag = typing.TypedDict('_V3dBandpassParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
     "blur": typing.NotRequired[float | None],
@@ -53,6 +52,7 @@ V3dBandpassParamsDictTagged = typing.TypedDict('V3dBandpassParamsDictTagged', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "tr": typing.NotRequired[float | None],
 })
+V3dBandpassParamsDict = _V3dBandpassParamsDictNoTag | V3dBandpassParamsDictTagged
 
 
 class V3dBandpassOutputs(typing.NamedTuple):

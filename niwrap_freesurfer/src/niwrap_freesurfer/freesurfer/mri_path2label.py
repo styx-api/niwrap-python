@@ -13,8 +13,7 @@ MRI_PATH2LABEL_METADATA = Metadata(
 )
 
 
-MriPath2labelParamsDict = typing.TypedDict('MriPath2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_path2label"]],
+_MriPath2labelParamsDictNoTag = typing.TypedDict('_MriPath2labelParamsDictNoTag', {
     "input_file": str,
     "output_file": str,
     "single": bool,
@@ -41,6 +40,7 @@ MriPath2labelParamsDictTagged = typing.TypedDict('MriPath2labelParamsDictTagged'
     "source_file": typing.NotRequired[str | None],
     "dest_file": typing.NotRequired[str | None],
 })
+MriPath2labelParamsDict = _MriPath2labelParamsDictNoTag | MriPath2labelParamsDictTagged
 
 
 class MriPath2labelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ WARPCONVERT_METADATA = Metadata(
 )
 
 
-WarpconvertConfigParamsDict = typing.TypedDict('WarpconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_WarpconvertConfigParamsDictNoTag = typing.TypedDict('_WarpconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ WarpconvertConfigParamsDictTagged = typing.TypedDict('WarpconvertConfigParamsDic
     "key": str,
     "value": str,
 })
+WarpconvertConfigParamsDict = _WarpconvertConfigParamsDictNoTag | WarpconvertConfigParamsDictTagged
 
 
-WarpconvertParamsDict = typing.TypedDict('WarpconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/warpconvert"]],
+_WarpconvertParamsDictNoTag = typing.TypedDict('_WarpconvertParamsDictNoTag', {
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
     "from": typing.NotRequired[int | None],
@@ -59,6 +58,7 @@ WarpconvertParamsDictTagged = typing.TypedDict('WarpconvertParamsDictTagged', {
     "type": str,
     "out": str,
 })
+WarpconvertParamsDict = _WarpconvertParamsDictNoTag | WarpconvertParamsDictTagged
 
 
 def warpconvert_config(

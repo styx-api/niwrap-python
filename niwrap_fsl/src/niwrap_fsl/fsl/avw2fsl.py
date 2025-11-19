@@ -13,8 +13,7 @@ AVW2FSL_METADATA = Metadata(
 )
 
 
-Avw2fslParamsDict = typing.TypedDict('Avw2fslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/avw2fsl"]],
+_Avw2fslParamsDictNoTag = typing.TypedDict('_Avw2fslParamsDictNoTag', {
     "source": list[str],
     "destination": str,
     "archive": bool,
@@ -91,6 +90,7 @@ Avw2fslParamsDictTagged = typing.TypedDict('Avw2fslParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+Avw2fslParamsDict = _Avw2fslParamsDictNoTag | Avw2fslParamsDictTagged
 
 
 class Avw2fslOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ UNPACKSDCMDIR_METADATA = Metadata(
 )
 
 
-UnpacksdcmdirParamsDict = typing.TypedDict('UnpacksdcmdirParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/unpacksdcmdir"]],
+_UnpacksdcmdirParamsDictNoTag = typing.TypedDict('_UnpacksdcmdirParamsDictNoTag', {
     "input_directory": str,
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ UnpacksdcmdirParamsDictTagged = typing.TypedDict('UnpacksdcmdirParamsDictTagged'
     "input_directory": str,
     "output_directory": str,
 })
+UnpacksdcmdirParamsDict = _UnpacksdcmdirParamsDictNoTag | UnpacksdcmdirParamsDictTagged
 
 
 class UnpacksdcmdirOutputs(typing.NamedTuple):

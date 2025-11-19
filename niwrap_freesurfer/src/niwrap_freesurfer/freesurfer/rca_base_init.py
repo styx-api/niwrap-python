@@ -13,8 +13,7 @@ RCA_BASE_INIT_METADATA = Metadata(
 )
 
 
-RcaBaseInitParamsDict = typing.TypedDict('RcaBaseInitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-base-init"]],
+_RcaBaseInitParamsDictNoTag = typing.TypedDict('_RcaBaseInitParamsDictNoTag', {
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ RcaBaseInitParamsDictTagged = typing.TypedDict('RcaBaseInitParamsDictTagged', {
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],
 })
+RcaBaseInitParamsDict = _RcaBaseInitParamsDictNoTag | RcaBaseInitParamsDictTagged
 
 
 class RcaBaseInitOutputs(typing.NamedTuple):

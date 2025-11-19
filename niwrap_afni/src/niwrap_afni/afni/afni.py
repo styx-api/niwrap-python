@@ -13,8 +13,7 @@ AFNI_METADATA = Metadata(
 )
 
 
-AfniParamsDict = typing.TypedDict('AfniParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/afni"]],
+_AfniParamsDictNoTag = typing.TypedDict('_AfniParamsDictNoTag', {
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
     "all_dsets": bool,
@@ -69,6 +68,7 @@ AfniParamsDictTagged = typing.TypedDict('AfniParamsDictTagged', {
     "com": typing.NotRequired[str | None],
     "comsep": typing.NotRequired[str | None],
 })
+AfniParamsDict = _AfniParamsDictNoTag | AfniParamsDictTagged
 
 
 class AfniOutputs(typing.NamedTuple):

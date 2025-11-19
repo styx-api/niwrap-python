@@ -13,8 +13,7 @@ MRI_FIELDSIGN_METADATA = Metadata(
 )
 
 
-MriFieldsignParamsDict = typing.TypedDict('MriFieldsignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fieldsign"]],
+_MriFieldsignParamsDictNoTag = typing.TypedDict('_MriFieldsignParamsDictNoTag', {
     "fieldsign_file": str,
     "eccen_values": list[float],
     "polar_values": list[float],
@@ -67,6 +66,7 @@ MriFieldsignParamsDictTagged = typing.TypedDict('MriFieldsignParamsDictTagged', 
     "help_flag": bool,
     "version_flag": bool,
 })
+MriFieldsignParamsDict = _MriFieldsignParamsDictNoTag | MriFieldsignParamsDictTagged
 
 
 class MriFieldsignOutputs(typing.NamedTuple):

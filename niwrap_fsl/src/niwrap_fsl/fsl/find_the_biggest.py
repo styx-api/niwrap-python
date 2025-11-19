@@ -13,8 +13,7 @@ FIND_THE_BIGGEST_METADATA = Metadata(
 )
 
 
-FindTheBiggestParamsDict = typing.TypedDict('FindTheBiggestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/find_the_biggest"]],
+_FindTheBiggestParamsDictNoTag = typing.TypedDict('_FindTheBiggestParamsDictNoTag', {
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })
@@ -23,6 +22,7 @@ FindTheBiggestParamsDictTagged = typing.TypedDict('FindTheBiggestParamsDictTagge
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })
+FindTheBiggestParamsDict = _FindTheBiggestParamsDictNoTag | FindTheBiggestParamsDictTagged
 
 
 class FindTheBiggestOutputs(typing.NamedTuple):

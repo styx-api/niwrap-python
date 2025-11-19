@@ -13,14 +13,14 @@ V__GET_AFNI_VERSION_METADATA = Metadata(
 )
 
 
-VGetAfniVersionParamsDict = typing.TypedDict('VGetAfniVersionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@get.afni.version"]],
+_VGetAfniVersionParamsDictNoTag = typing.TypedDict('_VGetAfniVersionParamsDictNoTag', {
     "version": str,
 })
 VGetAfniVersionParamsDictTagged = typing.TypedDict('VGetAfniVersionParamsDictTagged', {
     "@type": typing.Literal["afni/@get.afni.version"],
     "version": str,
 })
+VGetAfniVersionParamsDict = _VGetAfniVersionParamsDictNoTag | VGetAfniVersionParamsDictTagged
 
 
 class VGetAfniVersionOutputs(typing.NamedTuple):

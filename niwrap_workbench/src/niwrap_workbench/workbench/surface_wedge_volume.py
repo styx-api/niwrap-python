@@ -12,8 +12,7 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 )
 
 
-SurfaceWedgeVolumeParamsDict = typing.TypedDict('SurfaceWedgeVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-wedge-volume"]],
+_SurfaceWedgeVolumeParamsDictNoTag = typing.TypedDict('_SurfaceWedgeVolumeParamsDictNoTag', {
     "metric": str,
     "inner-surface": InputPathType,
     "outer-surface": InputPathType,
@@ -24,6 +23,7 @@ SurfaceWedgeVolumeParamsDictTagged = typing.TypedDict('SurfaceWedgeVolumeParamsD
     "inner-surface": InputPathType,
     "outer-surface": InputPathType,
 })
+SurfaceWedgeVolumeParamsDict = _SurfaceWedgeVolumeParamsDictNoTag | SurfaceWedgeVolumeParamsDictTagged
 
 
 class SurfaceWedgeVolumeOutputs(typing.NamedTuple):

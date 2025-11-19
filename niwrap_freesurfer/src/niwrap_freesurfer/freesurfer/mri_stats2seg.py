@@ -13,8 +13,7 @@ MRI_STATS2SEG_METADATA = Metadata(
 )
 
 
-MriStats2segParamsDict = typing.TypedDict('MriStats2segParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stats2seg"]],
+_MriStats2segParamsDictNoTag = typing.TypedDict('_MriStats2segParamsDictNoTag', {
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
     "output_file": str,
@@ -29,6 +28,7 @@ MriStats2segParamsDictTagged = typing.TypedDict('MriStats2segParamsDictTagged', 
     "debug": bool,
     "check_opts": bool,
 })
+MriStats2segParamsDict = _MriStats2segParamsDictNoTag | MriStats2segParamsDictTagged
 
 
 class MriStats2segOutputs(typing.NamedTuple):

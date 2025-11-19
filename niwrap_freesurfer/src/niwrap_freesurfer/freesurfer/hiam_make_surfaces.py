@@ -13,8 +13,7 @@ HIAM_MAKE_SURFACES_METADATA = Metadata(
 )
 
 
-HiamMakeSurfacesParamsDict = typing.TypedDict('HiamMakeSurfacesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_surfaces"]],
+_HiamMakeSurfacesParamsDictNoTag = typing.TypedDict('_HiamMakeSurfacesParamsDictNoTag', {
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })
@@ -23,6 +22,7 @@ HiamMakeSurfacesParamsDictTagged = typing.TypedDict('HiamMakeSurfacesParamsDictT
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })
+HiamMakeSurfacesParamsDict = _HiamMakeSurfacesParamsDictNoTag | HiamMakeSurfacesParamsDictTagged
 
 
 class HiamMakeSurfacesOutputs(typing.NamedTuple):

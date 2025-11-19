@@ -13,8 +13,7 @@ MAKE_CORTEX_LABEL_METADATA = Metadata(
 )
 
 
-MakeCortexLabelParamsDict = typing.TypedDict('MakeCortexLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_cortex_label"]],
+_MakeCortexLabelParamsDictNoTag = typing.TypedDict('_MakeCortexLabelParamsDictNoTag', {
     "subject": str,
     "hemi": typing.NotRequired[str | None],
     "use_a2009s": bool,
@@ -27,6 +26,7 @@ MakeCortexLabelParamsDictTagged = typing.TypedDict('MakeCortexLabelParamsDictTag
     "use_a2009s": bool,
     "output_name": typing.NotRequired[str | None],
 })
+MakeCortexLabelParamsDict = _MakeCortexLabelParamsDictNoTag | MakeCortexLabelParamsDictTagged
 
 
 class MakeCortexLabelOutputs(typing.NamedTuple):

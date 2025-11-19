@@ -12,8 +12,7 @@ CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseTimeseriesVolumeParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_CiftiCreateDenseTimeseriesVolumeParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesVolumeParamsDictNoTag', {
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
@@ -22,10 +21,10 @@ CiftiCreateDenseTimeseriesVolumeParamsDictTagged = typing.TypedDict('CiftiCreate
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
+CiftiCreateDenseTimeseriesVolumeParamsDict = _CiftiCreateDenseTimeseriesVolumeParamsDictNoTag | CiftiCreateDenseTimeseriesVolumeParamsDictTagged
 
 
-CiftiCreateDenseTimeseriesLeftMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-metric"]],
+_CiftiCreateDenseTimeseriesLeftMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesLeftMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -34,10 +33,10 @@ CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged = typing.TypedDict('CiftiCr
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseTimeseriesLeftMetricParamsDict = _CiftiCreateDenseTimeseriesLeftMetricParamsDictNoTag | CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged
 
 
-CiftiCreateDenseTimeseriesRightMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-metric"]],
+_CiftiCreateDenseTimeseriesRightMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesRightMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -46,10 +45,10 @@ CiftiCreateDenseTimeseriesRightMetricParamsDictTagged = typing.TypedDict('CiftiC
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseTimeseriesRightMetricParamsDict = _CiftiCreateDenseTimeseriesRightMetricParamsDictNoTag | CiftiCreateDenseTimeseriesRightMetricParamsDictTagged
 
 
-CiftiCreateDenseTimeseriesCerebellumMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-metric"]],
+_CiftiCreateDenseTimeseriesCerebellumMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesCerebellumMetricParamsDictNoTag', {
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
@@ -58,10 +57,10 @@ CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged = typing.TypedDict('C
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseTimeseriesCerebellumMetricParamsDict = _CiftiCreateDenseTimeseriesCerebellumMetricParamsDictNoTag | CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged
 
 
-CiftiCreateDenseTimeseriesMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric"]],
+_CiftiCreateDenseTimeseriesMetricParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesMetricParamsDictNoTag', {
     "structure": str,
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -72,10 +71,10 @@ CiftiCreateDenseTimeseriesMetricParamsDictTagged = typing.TypedDict('CiftiCreate
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiCreateDenseTimeseriesMetricParamsDict = _CiftiCreateDenseTimeseriesMetricParamsDictNoTag | CiftiCreateDenseTimeseriesMetricParamsDictTagged
 
 
-CiftiCreateDenseTimeseriesParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-timeseries"]],
+_CiftiCreateDenseTimeseriesParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseTimeseriesParamsDictNoTag', {
     "cifti-out": str,
     "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParamsDict | None],
     "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParamsDict | None],
@@ -98,6 +97,7 @@ CiftiCreateDenseTimeseriesParamsDictTagged = typing.TypedDict('CiftiCreateDenseT
     "unit": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParamsDict] | None],
 })
+CiftiCreateDenseTimeseriesParamsDict = _CiftiCreateDenseTimeseriesParamsDictNoTag | CiftiCreateDenseTimeseriesParamsDictTagged
 
 
 def cifti_create_dense_timeseries_volume(

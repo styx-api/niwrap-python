@@ -12,8 +12,7 @@ SURFACE_DISTORTION_METADATA = Metadata(
 )
 
 
-SurfaceDistortionSmoothParamsDict = typing.TypedDict('SurfaceDistortionSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth"]],
+_SurfaceDistortionSmoothParamsDictNoTag = typing.TypedDict('_SurfaceDistortionSmoothParamsDictNoTag', {
     "sigma": float,
     "fwhm": bool,
 })
@@ -22,20 +21,20 @@ SurfaceDistortionSmoothParamsDictTagged = typing.TypedDict('SurfaceDistortionSmo
     "sigma": float,
     "fwhm": bool,
 })
+SurfaceDistortionSmoothParamsDict = _SurfaceDistortionSmoothParamsDictNoTag | SurfaceDistortionSmoothParamsDictTagged
 
 
-SurfaceDistortionMatchSurfaceAreaParamsDict = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["match-surface-area"]],
+_SurfaceDistortionMatchSurfaceAreaParamsDictNoTag = typing.TypedDict('_SurfaceDistortionMatchSurfaceAreaParamsDictNoTag', {
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 SurfaceDistortionMatchSurfaceAreaParamsDictTagged = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParamsDictTagged', {
     "@type": typing.Literal["match-surface-area"],
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
+SurfaceDistortionMatchSurfaceAreaParamsDict = _SurfaceDistortionMatchSurfaceAreaParamsDictNoTag | SurfaceDistortionMatchSurfaceAreaParamsDictTagged
 
 
-SurfaceDistortionParamsDict = typing.TypedDict('SurfaceDistortionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-distortion"]],
+_SurfaceDistortionParamsDictNoTag = typing.TypedDict('_SurfaceDistortionParamsDictNoTag', {
     "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
     "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
@@ -56,6 +55,7 @@ SurfaceDistortionParamsDictTagged = typing.TypedDict('SurfaceDistortionParamsDic
     "surface-reference": InputPathType,
     "surface-distorted": InputPathType,
 })
+SurfaceDistortionParamsDict = _SurfaceDistortionParamsDictNoTag | SurfaceDistortionParamsDictTagged
 
 
 def surface_distortion_smooth(

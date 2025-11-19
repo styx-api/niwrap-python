@@ -13,8 +13,7 @@ MRI_SURF2VOL_METADATA = Metadata(
 )
 
 
-MriSurf2volParamsDict = typing.TypedDict('MriSurf2volParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2vol"]],
+_MriSurf2volParamsDictNoTag = typing.TypedDict('_MriSurf2volParamsDictNoTag', {
     "surface_overlay": typing.NotRequired[list[str] | None],
     "ltafile": typing.NotRequired[InputPathType | None],
     "outfile": str,
@@ -77,6 +76,7 @@ MriSurf2volParamsDictTagged = typing.TypedDict('MriSurf2volParamsDictTagged', {
     "version": bool,
     "help": bool,
 })
+MriSurf2volParamsDict = _MriSurf2volParamsDictNoTag | MriSurf2volParamsDictTagged
 
 
 class MriSurf2volOutputs(typing.NamedTuple):

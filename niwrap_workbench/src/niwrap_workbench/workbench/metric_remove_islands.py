@@ -12,8 +12,7 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
 )
 
 
-MetricRemoveIslandsParamsDict = typing.TypedDict('MetricRemoveIslandsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-remove-islands"]],
+_MetricRemoveIslandsParamsDictNoTag = typing.TypedDict('_MetricRemoveIslandsParamsDictNoTag', {
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
@@ -26,6 +25,7 @@ MetricRemoveIslandsParamsDictTagged = typing.TypedDict('MetricRemoveIslandsParam
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
+MetricRemoveIslandsParamsDict = _MetricRemoveIslandsParamsDictNoTag | MetricRemoveIslandsParamsDictTagged
 
 
 class MetricRemoveIslandsOutputs(typing.NamedTuple):

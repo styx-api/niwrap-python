@@ -13,8 +13,7 @@ CLUST_EXP_HIST_TABLE_PY_METADATA = Metadata(
 )
 
 
-ClustExpHistTablePyParamsDict = typing.TypedDict('ClustExpHistTablePyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ClustExp_HistTable.py"]],
+_ClustExpHistTablePyParamsDictNoTag = typing.TypedDict('_ClustExpHistTablePyParamsDictNoTag', {
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ ClustExpHistTablePyParamsDictTagged = typing.TypedDict('ClustExpHistTablePyParam
     "session": typing.NotRequired[str | None],
     "overwrite": bool,
 })
+ClustExpHistTablePyParamsDict = _ClustExpHistTablePyParamsDictNoTag | ClustExpHistTablePyParamsDictTagged
 
 
 class ClustExpHistTablePyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURFMATHS_METADATA = Metadata(
 )
 
 
-SurfmathsParamsDict = typing.TypedDict('SurfmathsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/surfmaths"]],
+_SurfmathsParamsDictNoTag = typing.TypedDict('_SurfmathsParamsDictNoTag', {
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,
@@ -25,6 +24,7 @@ SurfmathsParamsDictTagged = typing.TypedDict('SurfmathsParamsDictTagged', {
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,
 })
+SurfmathsParamsDict = _SurfmathsParamsDictNoTag | SurfmathsParamsDictTagged
 
 
 class SurfmathsOutputs(typing.NamedTuple):

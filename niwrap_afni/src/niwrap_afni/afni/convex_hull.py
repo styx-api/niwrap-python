@@ -13,8 +13,7 @@ CONVEX_HULL_METADATA = Metadata(
 )
 
 
-ConvexHullParamsDict = typing.TypedDict('ConvexHullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ConvexHull"]],
+_ConvexHullParamsDictNoTag = typing.TypedDict('_ConvexHullParamsDictNoTag', {
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
     "isorange": typing.NotRequired[list[float] | None],
@@ -51,6 +50,7 @@ ConvexHullParamsDictTagged = typing.TypedDict('ConvexHullParamsDictTagged', {
     "novolreg": bool,
     "setenv": typing.NotRequired[str | None],
 })
+ConvexHullParamsDict = _ConvexHullParamsDictNoTag | ConvexHullParamsDictTagged
 
 
 class ConvexHullOutputs(typing.NamedTuple):

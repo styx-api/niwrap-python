@@ -13,8 +13,7 @@ BALLOON_METADATA = Metadata(
 )
 
 
-BalloonParamsDict = typing.TypedDict('BalloonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/balloon"]],
+_BalloonParamsDictNoTag = typing.TypedDict('_BalloonParamsDictNoTag', {
     "tr": float,
     "num_scans": int,
     "event_times": InputPathType,
@@ -31,6 +30,7 @@ BalloonParamsDictTagged = typing.TypedDict('BalloonParamsDictTagged', {
     "t_fall": typing.NotRequired[list[float] | None],
     "t_sustain": typing.NotRequired[list[float] | None],
 })
+BalloonParamsDict = _BalloonParamsDictNoTag | BalloonParamsDictTagged
 
 
 class BalloonOutputs(typing.NamedTuple):

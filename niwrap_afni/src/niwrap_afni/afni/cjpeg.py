@@ -13,8 +13,7 @@ CJPEG_METADATA = Metadata(
 )
 
 
-CjpegParamsDict = typing.TypedDict('CjpegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/cjpeg"]],
+_CjpegParamsDictNoTag = typing.TypedDict('_CjpegParamsDictNoTag', {
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
     "optimize": bool,
@@ -33,6 +32,7 @@ CjpegParamsDictTagged = typing.TypedDict('CjpegParamsDictTagged', {
     "outfile": str,
     "infile": InputPathType,
 })
+CjpegParamsDict = _CjpegParamsDictNoTag | CjpegParamsDictTagged
 
 
 class CjpegOutputs(typing.NamedTuple):

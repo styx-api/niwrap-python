@@ -13,8 +13,7 @@ MRIS_MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 )
 
 
-MrisMakeAverageSurfaceParamsDict = typing.TypedDict('MrisMakeAverageSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_average_surface"]],
+_MrisMakeAverageSurfaceParamsDictNoTag = typing.TypedDict('_MrisMakeAverageSurfaceParamsDictNoTag', {
     "hemi": str,
     "outsurfname": str,
     "cansurfname": str,
@@ -49,6 +48,7 @@ MrisMakeAverageSurfaceParamsDictTagged = typing.TypedDict('MrisMakeAverageSurfac
     "simple": typing.NotRequired[list[str] | None],
     "diagno": typing.NotRequired[float | None],
 })
+MrisMakeAverageSurfaceParamsDict = _MrisMakeAverageSurfaceParamsDictNoTag | MrisMakeAverageSurfaceParamsDictTagged
 
 
 class MrisMakeAverageSurfaceOutputs(typing.NamedTuple):

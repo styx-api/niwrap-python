@@ -13,8 +13,7 @@ MRIS_IMAGE2VTK_METADATA = Metadata(
 )
 
 
-MrisImage2vtkParamsDict = typing.TypedDict('MrisImage2vtkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_image2vtk"]],
+_MrisImage2vtkParamsDictNoTag = typing.TypedDict('_MrisImage2vtkParamsDictNoTag', {
     "input_filename": InputPathType,
     "output_filename": str,
     "lower_threshold": float,
@@ -33,6 +32,7 @@ MrisImage2vtkParamsDictTagged = typing.TypedDict('MrisImage2vtkParamsDictTagged'
     "image_smoothing_size": float,
     "reduction_percent": float,
 })
+MrisImage2vtkParamsDict = _MrisImage2vtkParamsDictNoTag | MrisImage2vtkParamsDictTagged
 
 
 class MrisImage2vtkOutputs(typing.NamedTuple):

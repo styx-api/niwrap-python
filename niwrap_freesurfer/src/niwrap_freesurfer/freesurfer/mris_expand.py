@@ -13,8 +13,7 @@ MRIS_EXPAND_METADATA = Metadata(
 )
 
 
-MrisExpandParamsDict = typing.TypedDict('MrisExpandParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_expand"]],
+_MrisExpandParamsDictNoTag = typing.TypedDict('_MrisExpandParamsDictNoTag', {
     "input_surface": InputPathType,
     "expansion_distance": float,
     "output_surface": str,
@@ -33,6 +32,7 @@ MrisExpandParamsDictTagged = typing.TypedDict('MrisExpandParamsDictTagged', {
     "tmap": typing.NotRequired[str | None],
     "tmap_random": typing.NotRequired[str | None],
 })
+MrisExpandParamsDict = _MrisExpandParamsDictNoTag | MrisExpandParamsDictTagged
 
 
 class MrisExpandOutputs(typing.NamedTuple):

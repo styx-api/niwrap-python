@@ -13,8 +13,7 @@ SS3T_CSD_BETA1_METADATA = Metadata(
 )
 
 
-Ss3tCsdBeta1ConfigParamsDict = typing.TypedDict('Ss3tCsdBeta1ConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Ss3tCsdBeta1ConfigParamsDictNoTag = typing.TypedDict('_Ss3tCsdBeta1ConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Ss3tCsdBeta1ConfigParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1ConfigParamsD
     "key": str,
     "value": str,
 })
+Ss3tCsdBeta1ConfigParamsDict = _Ss3tCsdBeta1ConfigParamsDictNoTag | Ss3tCsdBeta1ConfigParamsDictTagged
 
 
-Ss3tCsdBeta1ResponseOdfParamsDict = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["response_odf"]],
+_Ss3tCsdBeta1ResponseOdfParamsDictNoTag = typing.TypedDict('_Ss3tCsdBeta1ResponseOdfParamsDictNoTag', {
     "response": InputPathType,
     "odf": str,
 })
@@ -35,10 +34,10 @@ Ss3tCsdBeta1ResponseOdfParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1Response
     "response": InputPathType,
     "odf": str,
 })
+Ss3tCsdBeta1ResponseOdfParamsDict = _Ss3tCsdBeta1ResponseOdfParamsDictNoTag | Ss3tCsdBeta1ResponseOdfParamsDictTagged
 
 
-Ss3tCsdBeta1ParamsDict = typing.TypedDict('Ss3tCsdBeta1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix3tissue/ss3t_csd_beta1"]],
+_Ss3tCsdBeta1ParamsDictNoTag = typing.TypedDict('_Ss3tCsdBeta1ParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "bzero_pct": typing.NotRequired[float | None],
     "niter": typing.NotRequired[int | None],
@@ -69,6 +68,7 @@ Ss3tCsdBeta1ParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1ParamsDictTagged', 
     "dwi": InputPathType,
     "response_odf": list[Ss3tCsdBeta1ResponseOdfParamsDict],
 })
+Ss3tCsdBeta1ParamsDict = _Ss3tCsdBeta1ParamsDictNoTag | Ss3tCsdBeta1ParamsDictTagged
 
 
 def ss3t_csd_beta1_config(

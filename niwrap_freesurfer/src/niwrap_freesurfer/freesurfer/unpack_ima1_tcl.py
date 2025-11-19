@@ -13,8 +13,7 @@ UNPACK_IMA1_TCL_METADATA = Metadata(
 )
 
 
-UnpackIma1TclParamsDict = typing.TypedDict('UnpackIma1TclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_ima1.tcl"]],
+_UnpackIma1TclParamsDictNoTag = typing.TypedDict('_UnpackIma1TclParamsDictNoTag', {
     "input_directory": str,
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ UnpackIma1TclParamsDictTagged = typing.TypedDict('UnpackIma1TclParamsDictTagged'
     "input_directory": str,
     "output_directory": str,
 })
+UnpackIma1TclParamsDict = _UnpackIma1TclParamsDictNoTag | UnpackIma1TclParamsDictTagged
 
 
 class UnpackIma1TclOutputs(typing.NamedTuple):

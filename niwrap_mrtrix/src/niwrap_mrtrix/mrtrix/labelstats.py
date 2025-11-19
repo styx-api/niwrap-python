@@ -13,8 +13,7 @@ LABELSTATS_METADATA = Metadata(
 )
 
 
-LabelstatsConfigParamsDict = typing.TypedDict('LabelstatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_LabelstatsConfigParamsDictNoTag = typing.TypedDict('_LabelstatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ LabelstatsConfigParamsDictTagged = typing.TypedDict('LabelstatsConfigParamsDictT
     "key": str,
     "value": str,
 })
+LabelstatsConfigParamsDict = _LabelstatsConfigParamsDictNoTag | LabelstatsConfigParamsDictTagged
 
 
-LabelstatsParamsDict = typing.TypedDict('LabelstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/labelstats"]],
+_LabelstatsParamsDictNoTag = typing.TypedDict('_LabelstatsParamsDictNoTag', {
     "output": typing.NotRequired[str | None],
     "voxelspace": bool,
     "info": bool,
@@ -53,6 +52,7 @@ LabelstatsParamsDictTagged = typing.TypedDict('LabelstatsParamsDictTagged', {
     "version": bool,
     "input": InputPathType,
 })
+LabelstatsParamsDict = _LabelstatsParamsDictNoTag | LabelstatsParamsDictTagged
 
 
 def labelstats_config(

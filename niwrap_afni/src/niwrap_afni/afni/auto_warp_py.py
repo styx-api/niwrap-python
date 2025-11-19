@@ -13,8 +13,7 @@ AUTO_WARP_PY_METADATA = Metadata(
 )
 
 
-AutoWarpPyParamsDict = typing.TypedDict('AutoWarpPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/auto_warp.py"]],
+_AutoWarpPyParamsDictNoTag = typing.TypedDict('_AutoWarpPyParamsDictNoTag', {
     "base": InputPathType,
     "input": InputPathType,
     "skull_strip_input": bool,
@@ -85,6 +84,7 @@ AutoWarpPyParamsDictTagged = typing.TypedDict('AutoWarpPyParamsDictTagged', {
     "skullstrip_opts": typing.NotRequired[str | None],
     "at_opts": typing.NotRequired[str | None],
 })
+AutoWarpPyParamsDict = _AutoWarpPyParamsDictNoTag | AutoWarpPyParamsDictTagged
 
 
 class AutoWarpPyOutputs(typing.NamedTuple):

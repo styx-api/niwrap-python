@@ -13,8 +13,7 @@ V__RENAME_PANGA_METADATA = Metadata(
 )
 
 
-VRenamePangaParamsDict = typing.TypedDict('VRenamePangaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@RenamePanga"]],
+_VRenamePangaParamsDictNoTag = typing.TypedDict('_VRenamePangaParamsDictNoTag', {
     "dir_number": str,
     "first_image_number": str,
     "num_slices": float,
@@ -39,6 +38,7 @@ VRenamePangaParamsDictTagged = typing.TypedDict('VRenamePangaParamsDictTagged', 
     "slice_pattern": typing.NotRequired[str | None],
     "output_directory": typing.NotRequired[str | None],
 })
+VRenamePangaParamsDict = _VRenamePangaParamsDictNoTag | VRenamePangaParamsDictTagged
 
 
 class VRenamePangaOutputs(typing.NamedTuple):

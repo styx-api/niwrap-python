@@ -13,8 +13,7 @@ V_3D_INV_FMRI_METADATA = Metadata(
 )
 
 
-V3dInvFmriParamsDict = typing.TypedDict('V3dInvFmriParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dInvFMRI"]],
+_V3dInvFmriParamsDictNoTag = typing.TypedDict('_V3dInvFmriParamsDictNoTag', {
     "input_file": InputPathType,
     "activation_map": InputPathType,
     "map_weight": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ V3dInvFmriParamsDictTagged = typing.TypedDict('V3dInvFmriParamsDictTagged', {
     "smooth_fir": bool,
     "smooth_median": bool,
 })
+V3dInvFmriParamsDict = _V3dInvFmriParamsDictNoTag | V3dInvFmriParamsDictTagged
 
 
 class V3dInvFmriOutputs(typing.NamedTuple):

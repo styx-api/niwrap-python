@@ -13,8 +13,7 @@ CAT_MATVEC_METADATA = Metadata(
 )
 
 
-CatMatvecParamsDict = typing.TypedDict('CatMatvecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/cat_matvec"]],
+_CatMatvecParamsDictNoTag = typing.TypedDict('_CatMatvecParamsDictNoTag', {
     "matrix_format": bool,
     "oneline_format": bool,
     "four_by_four_format": bool,
@@ -27,6 +26,7 @@ CatMatvecParamsDictTagged = typing.TypedDict('CatMatvecParamsDictTagged', {
     "four_by_four_format": bool,
     "matvec_spec": list[str],
 })
+CatMatvecParamsDict = _CatMatvecParamsDictNoTag | CatMatvecParamsDictTagged
 
 
 class CatMatvecOutputs(typing.NamedTuple):

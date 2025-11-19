@@ -13,8 +13,7 @@ FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
 )
 
 
-FlirtNewdefault20080811SchParamsDict = typing.TypedDict('FlirtNewdefault20080811SchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/flirt.newdefault.20080811.sch"]],
+_FlirtNewdefault20080811SchParamsDictNoTag = typing.TypedDict('_FlirtNewdefault20080811SchParamsDictNoTag', {
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
     "scrollback_flag": bool,
@@ -25,6 +24,7 @@ FlirtNewdefault20080811SchParamsDictTagged = typing.TypedDict('FlirtNewdefault20
     "curses_flag": bool,
     "scrollback_flag": bool,
 })
+FlirtNewdefault20080811SchParamsDict = _FlirtNewdefault20080811SchParamsDictNoTag | FlirtNewdefault20080811SchParamsDictTagged
 
 
 class FlirtNewdefault20080811SchOutputs(typing.NamedTuple):

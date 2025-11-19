@@ -13,8 +13,7 @@ GLTSYMTEST_METADATA = Metadata(
 )
 
 
-GltsymtestParamsDict = typing.TypedDict('GltsymtestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/GLTsymtest"]],
+_GltsymtestParamsDictNoTag = typing.TypedDict('_GltsymtestParamsDictNoTag', {
     "badonly": bool,
     "varlist": str,
     "expr": list[str],
@@ -25,6 +24,7 @@ GltsymtestParamsDictTagged = typing.TypedDict('GltsymtestParamsDictTagged', {
     "varlist": str,
     "expr": list[str],
 })
+GltsymtestParamsDict = _GltsymtestParamsDictNoTag | GltsymtestParamsDictTagged
 
 
 class GltsymtestOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MKSUBJDIRS_METADATA = Metadata(
 )
 
 
-MksubjdirsParamsDict = typing.TypedDict('MksubjdirsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mksubjdirs"]],
+_MksubjdirsParamsDictNoTag = typing.TypedDict('_MksubjdirsParamsDictNoTag', {
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
     "parents": bool,
@@ -33,6 +32,7 @@ MksubjdirsParamsDictTagged = typing.TypedDict('MksubjdirsParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MksubjdirsParamsDict = _MksubjdirsParamsDictNoTag | MksubjdirsParamsDictTagged
 
 
 class MksubjdirsOutputs(typing.NamedTuple):

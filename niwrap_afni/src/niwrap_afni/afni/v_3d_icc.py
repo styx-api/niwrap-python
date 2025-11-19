@@ -13,8 +13,7 @@ V_3D_ICC_METADATA = Metadata(
 )
 
 
-V3dIccParamsDict = typing.TypedDict('V3dIccParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dICC"]],
+_V3dIccParamsDictNoTag = typing.TypedDict('_V3dIccParamsDictNoTag', {
     "model": str,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -47,6 +46,7 @@ V3dIccParamsDictTagged = typing.TypedDict('V3dIccParamsDictTagged', {
     "cio": bool,
     "rio": bool,
 })
+V3dIccParamsDict = _V3dIccParamsDictNoTag | V3dIccParamsDictTagged
 
 
 class V3dIccOutputs(typing.NamedTuple):

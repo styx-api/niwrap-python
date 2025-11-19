@@ -13,8 +13,7 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 )
 
 
-PlugoutDriveParamsDict = typing.TypedDict('PlugoutDriveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/plugout_drive"]],
+_PlugoutDriveParamsDictNoTag = typing.TypedDict('_PlugoutDriveParamsDictNoTag', {
     "host": typing.NotRequired[str | None],
     "shm": bool,
     "verbose": bool,
@@ -49,6 +48,7 @@ PlugoutDriveParamsDictTagged = typing.TypedDict('PlugoutDriveParamsDictTagged', 
     "num_assigned_ports": bool,
     "num_assigned_ports_quiet": bool,
 })
+PlugoutDriveParamsDict = _PlugoutDriveParamsDictNoTag | PlugoutDriveParamsDictTagged
 
 
 class PlugoutDriveOutputs(typing.NamedTuple):

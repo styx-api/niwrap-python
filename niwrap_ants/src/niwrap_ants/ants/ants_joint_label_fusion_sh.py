@@ -13,8 +13,7 @@ ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
 )
 
 
-AntsJointLabelFusionShParamsDict = typing.TypedDict('AntsJointLabelFusionShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsJointLabelFusion.sh"]],
+_AntsJointLabelFusionShParamsDictNoTag = typing.TypedDict('_AntsJointLabelFusionShParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
     "atlas_image_mrf": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ AntsJointLabelFusionShParamsDictTagged = typing.TypedDict('AntsJointLabelFusionS
     "rigid_transform_additional_options": typing.NotRequired[str | None],
     "similarity_metric_additional_options": typing.NotRequired[str | None],
 })
+AntsJointLabelFusionShParamsDict = _AntsJointLabelFusionShParamsDictNoTag | AntsJointLabelFusionShParamsDictTagged
 
 
 class AntsJointLabelFusionShOutputs(typing.NamedTuple):

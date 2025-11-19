@@ -13,8 +13,7 @@ SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-SimulateDisplacementFieldBsplineOptionsParamsDict = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["bspline_options"]],
+_SimulateDisplacementFieldBsplineOptionsParamsDictNoTag = typing.TypedDict('_SimulateDisplacementFieldBsplineOptionsParamsDictNoTag', {
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
@@ -23,20 +22,20 @@ SimulateDisplacementFieldBsplineOptionsParamsDictTagged = typing.TypedDict('Simu
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
+SimulateDisplacementFieldBsplineOptionsParamsDict = _SimulateDisplacementFieldBsplineOptionsParamsDictNoTag | SimulateDisplacementFieldBsplineOptionsParamsDictTagged
 
 
-SimulateDisplacementFieldExponentialOptionsParamsDict = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exponential_options"]],
+_SimulateDisplacementFieldExponentialOptionsParamsDictNoTag = typing.TypedDict('_SimulateDisplacementFieldExponentialOptionsParamsDictNoTag', {
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
 SimulateDisplacementFieldExponentialOptionsParamsDictTagged = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParamsDictTagged', {
     "@type": typing.Literal["exponential_options"],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
+SimulateDisplacementFieldExponentialOptionsParamsDict = _SimulateDisplacementFieldExponentialOptionsParamsDictNoTag | SimulateDisplacementFieldExponentialOptionsParamsDictTagged
 
 
-SimulateDisplacementFieldParamsDict = typing.TypedDict('SimulateDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SimulateDisplacementField"]],
+_SimulateDisplacementFieldParamsDictNoTag = typing.TypedDict('_SimulateDisplacementFieldParamsDictNoTag', {
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
     "domain_image": InputPathType,
@@ -57,6 +56,7 @@ SimulateDisplacementFieldParamsDictTagged = typing.TypedDict('SimulateDisplaceme
     "enforce_stationary_boundary": typing.NotRequired[int | None],
     "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParamsDictTagged, SimulateDisplacementFieldExponentialOptionsParamsDictTagged] | None],
 })
+SimulateDisplacementFieldParamsDict = _SimulateDisplacementFieldParamsDictNoTag | SimulateDisplacementFieldParamsDictTagged
 
 
 def simulate_displacement_field_displacement_specific_options_cargs_dyn_fn(

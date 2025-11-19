@@ -13,8 +13,7 @@ PLUGOUT_TT_METADATA = Metadata(
 )
 
 
-PlugoutTtParamsDict = typing.TypedDict('PlugoutTtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/plugout_tt"]],
+_PlugoutTtParamsDictNoTag = typing.TypedDict('_PlugoutTtParamsDictNoTag', {
     "host": typing.NotRequired[str | None],
     "ijk_option": bool,
     "verbose": bool,
@@ -43,6 +42,7 @@ PlugoutTtParamsDictTagged = typing.TypedDict('PlugoutTtParamsDictTagged', {
     "num_assigned_ports": bool,
     "num_assigned_ports_quiet": bool,
 })
+PlugoutTtParamsDict = _PlugoutTtParamsDictNoTag | PlugoutTtParamsDictTagged
 
 
 class PlugoutTtOutputs(typing.NamedTuple):

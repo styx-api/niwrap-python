@@ -13,8 +13,7 @@ MEANVAL_METADATA = Metadata(
 )
 
 
-MeanvalParamsDict = typing.TypedDict('MeanvalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/meanval"]],
+_MeanvalParamsDictNoTag = typing.TypedDict('_MeanvalParamsDictNoTag', {
     "input_file": InputPathType,
     "mask_file": InputPathType,
     "output_file": str,
@@ -27,6 +26,7 @@ MeanvalParamsDictTagged = typing.TypedDict('MeanvalParamsDictTagged', {
     "output_file": str,
     "avgwf_flag": bool,
 })
+MeanvalParamsDict = _MeanvalParamsDictNoTag | MeanvalParamsDictTagged
 
 
 class MeanvalOutputs(typing.NamedTuple):

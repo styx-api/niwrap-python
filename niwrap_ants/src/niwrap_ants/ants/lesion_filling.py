@@ -13,8 +13,7 @@ LESION_FILLING_METADATA = Metadata(
 )
 
 
-LesionFillingParamsDict = typing.TypedDict('LesionFillingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/LesionFilling"]],
+_LesionFillingParamsDictNoTag = typing.TypedDict('_LesionFillingParamsDictNoTag', {
     "image_dimension": int,
     "t1_image": InputPathType,
     "lesion_mask": InputPathType,
@@ -27,6 +26,7 @@ LesionFillingParamsDictTagged = typing.TypedDict('LesionFillingParamsDictTagged'
     "lesion_mask": InputPathType,
     "output_lesion_filled": str,
 })
+LesionFillingParamsDict = _LesionFillingParamsDictNoTag | LesionFillingParamsDictTagged
 
 
 class LesionFillingOutputs(typing.NamedTuple):

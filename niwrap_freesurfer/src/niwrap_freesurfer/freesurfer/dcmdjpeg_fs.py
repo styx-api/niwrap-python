@@ -13,8 +13,7 @@ DCMDJPEG_FS_METADATA = Metadata(
 )
 
 
-DcmdjpegFsParamsDict = typing.TypedDict('DcmdjpegFsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdjpeg.fs"]],
+_DcmdjpegFsParamsDictNoTag = typing.TypedDict('_DcmdjpegFsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -101,6 +100,7 @@ DcmdjpegFsParamsDictTagged = typing.TypedDict('DcmdjpegFsParamsDictTagged', {
     "padding_off": bool,
     "padding_create": typing.NotRequired[list[float] | None],
 })
+DcmdjpegFsParamsDict = _DcmdjpegFsParamsDictNoTag | DcmdjpegFsParamsDictTagged
 
 
 class DcmdjpegFsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ APARCSTATSDIFF_METADATA = Metadata(
 )
 
 
-AparcstatsdiffParamsDict = typing.TypedDict('AparcstatsdiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstatsdiff"]],
+_AparcstatsdiffParamsDictNoTag = typing.TypedDict('_AparcstatsdiffParamsDictNoTag', {
     "subj1": str,
     "subj2": str,
     "hemi": str,
@@ -31,6 +30,7 @@ AparcstatsdiffParamsDictTagged = typing.TypedDict('AparcstatsdiffParamsDictTagge
     "meas": str,
     "outdir": typing.NotRequired[str | None],
 })
+AparcstatsdiffParamsDict = _AparcstatsdiffParamsDictNoTag | AparcstatsdiffParamsDictTagged
 
 
 class AparcstatsdiffOutputs(typing.NamedTuple):

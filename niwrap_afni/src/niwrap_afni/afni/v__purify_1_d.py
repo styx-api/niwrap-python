@@ -13,8 +13,7 @@ V__PURIFY_1_D_METADATA = Metadata(
 )
 
 
-VPurify1DParamsDict = typing.TypedDict('VPurify1DParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Purify_1D"]],
+_VPurify1DParamsDictNoTag = typing.TypedDict('_VPurify1DParamsDictNoTag', {
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
@@ -25,6 +24,7 @@ VPurify1DParamsDictTagged = typing.TypedDict('VPurify1DParamsDictTagged', {
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
+VPurify1DParamsDict = _VPurify1DParamsDictNoTag | VPurify1DParamsDictTagged
 
 
 class VPurify1DOutputs(typing.NamedTuple):

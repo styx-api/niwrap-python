@@ -13,8 +13,7 @@ SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
 )
 
 
-SlowSurfClustsimPyParamsDict = typing.TypedDict('SlowSurfClustsimPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/slow_surf_clustsim.py"]],
+_SlowSurfClustsimPyParamsDictNoTag = typing.TypedDict('_SlowSurfClustsimPyParamsDictNoTag', {
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
     "print_script": bool,
@@ -41,6 +40,7 @@ SlowSurfClustsimPyParamsDictTagged = typing.TypedDict('SlowSurfClustsimPyParamsD
     "show_valid_opts": bool,
     "version": bool,
 })
+SlowSurfClustsimPyParamsDict = _SlowSurfClustsimPyParamsDictNoTag | SlowSurfClustsimPyParamsDictTagged
 
 
 class SlowSurfClustsimPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__CENTER_DISTANCE_METADATA = Metadata(
 )
 
 
-VCenterDistanceParamsDict = typing.TypedDict('VCenterDistanceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Center_Distance"]],
+_VCenterDistanceParamsDictNoTag = typing.TypedDict('_VCenterDistanceParamsDictNoTag', {
     "dset1": InputPathType,
     "dset2": InputPathType,
 })
@@ -23,6 +22,7 @@ VCenterDistanceParamsDictTagged = typing.TypedDict('VCenterDistanceParamsDictTag
     "dset1": InputPathType,
     "dset2": InputPathType,
 })
+VCenterDistanceParamsDict = _VCenterDistanceParamsDictNoTag | VCenterDistanceParamsDictTagged
 
 
 class VCenterDistanceOutputs(typing.NamedTuple):

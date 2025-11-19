@@ -13,8 +13,7 @@ TRAC_PREPROC_METADATA = Metadata(
 )
 
 
-TracPreprocParamsDict = typing.TypedDict('TracPreprocParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-preproc"]],
+_TracPreprocParamsDictNoTag = typing.TypedDict('_TracPreprocParamsDictNoTag', {
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "nolog": bool,
@@ -43,6 +42,7 @@ TracPreprocParamsDictTagged = typing.TypedDict('TracPreprocParamsDictTagged', {
     "dontrun": bool,
     "version": bool,
 })
+TracPreprocParamsDict = _TracPreprocParamsDictNoTag | TracPreprocParamsDictTagged
 
 
 class TracPreprocOutputs(typing.NamedTuple):

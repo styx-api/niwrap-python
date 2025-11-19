@@ -13,8 +13,7 @@ MAKE_AVERAGE_SUBJECT_METADATA = Metadata(
 )
 
 
-MakeAverageSubjectParamsDict = typing.TypedDict('MakeAverageSubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_subject"]],
+_MakeAverageSubjectParamsDictNoTag = typing.TypedDict('_MakeAverageSubjectParamsDictNoTag', {
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "subject_list_file": typing.NotRequired[InputPathType | None],
@@ -63,6 +62,7 @@ MakeAverageSubjectParamsDictTagged = typing.TypedDict('MakeAverageSubjectParamsD
     "echo": bool,
     "debug": bool,
 })
+MakeAverageSubjectParamsDict = _MakeAverageSubjectParamsDictNoTag | MakeAverageSubjectParamsDictTagged
 
 
 class MakeAverageSubjectOutputs(typing.NamedTuple):

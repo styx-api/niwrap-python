@@ -13,8 +13,7 @@ FSPALM_METADATA = Metadata(
 )
 
 
-FspalmParamsDict = typing.TypedDict('FspalmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fspalm"]],
+_FspalmParamsDictNoTag = typing.TypedDict('_FspalmParamsDictNoTag', {
     "glmdir": str,
     "cft": float,
     "cwp": float,
@@ -47,6 +46,7 @@ FspalmParamsDictTagged = typing.TypedDict('FspalmParamsDictTagged', {
     "3spaces": bool,
     "pargs": typing.NotRequired[str | None],
 })
+FspalmParamsDict = _FspalmParamsDictNoTag | FspalmParamsDictTagged
 
 
 class FspalmOutputs(typing.NamedTuple):

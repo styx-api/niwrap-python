@@ -13,8 +13,7 @@ V_3DMERGE_METADATA = Metadata(
 )
 
 
-V3dmergeParamsDict = typing.TypedDict('V3dmergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmerge"]],
+_V3dmergeParamsDictNoTag = typing.TypedDict('_V3dmergeParamsDictNoTag', {
     "input_files": list[InputPathType],
     "output_file": str,
     "blur_fwhm": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ V3dmergeParamsDictTagged = typing.TypedDict('V3dmergeParamsDictTagged', {
     "gmax": bool,
     "quiet": bool,
 })
+V3dmergeParamsDict = _V3dmergeParamsDictNoTag | V3dmergeParamsDictTagged
 
 
 class V3dmergeOutputs(typing.NamedTuple):

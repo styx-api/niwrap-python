@@ -13,8 +13,7 @@ POINTSET2LABEL_METADATA = Metadata(
 )
 
 
-Pointset2labelParamsDict = typing.TypedDict('Pointset2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/pointset2label"]],
+_Pointset2labelParamsDictNoTag = typing.TypedDict('_Pointset2labelParamsDictNoTag', {
     "waypoint_file": InputPathType,
     "input_volume": InputPathType,
     "label_value": float,
@@ -29,6 +28,7 @@ Pointset2labelParamsDictTagged = typing.TypedDict('Pointset2labelParamsDictTagge
     "output_volume": str,
     "clear_option": bool,
 })
+Pointset2labelParamsDict = _Pointset2labelParamsDictNoTag | Pointset2labelParamsDictTagged
 
 
 class Pointset2labelOutputs(typing.NamedTuple):

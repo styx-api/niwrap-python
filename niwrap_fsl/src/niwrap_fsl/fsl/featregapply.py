@@ -13,8 +13,7 @@ FEATREGAPPLY_METADATA = Metadata(
 )
 
 
-FeatregapplyParamsDict = typing.TypedDict('FeatregapplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/featregapply"]],
+_FeatregapplyParamsDictNoTag = typing.TypedDict('_FeatregapplyParamsDictNoTag', {
     "feat_directory": str,
     "force_flag": bool,
     "cleanup_flag": bool,
@@ -33,6 +32,7 @@ FeatregapplyParamsDictTagged = typing.TypedDict('FeatregapplyParamsDictTagged', 
     "standard_space_res": typing.NotRequired[float | None],
     "exclude_filtered_func_flag": bool,
 })
+FeatregapplyParamsDict = _FeatregapplyParamsDictNoTag | FeatregapplyParamsDictTagged
 
 
 class FeatregapplyOutputs(typing.NamedTuple):

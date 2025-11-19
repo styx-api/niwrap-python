@@ -13,8 +13,7 @@ ABIDS_TOOL_PY_METADATA = Metadata(
 )
 
 
-AbidsToolPyParamsDict = typing.TypedDict('AbidsToolPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/abids_tool.py"]],
+_AbidsToolPyParamsDictNoTag = typing.TypedDict('_AbidsToolPyParamsDictNoTag', {
     "input_files": list[InputPathType],
     "tr_match": bool,
     "add_tr": bool,
@@ -31,6 +30,7 @@ AbidsToolPyParamsDictTagged = typing.TypedDict('AbidsToolPyParamsDictTagged', {
     "copy_prefix": typing.NotRequired[list[str] | None],
     "help_flag": bool,
 })
+AbidsToolPyParamsDict = _AbidsToolPyParamsDictNoTag | AbidsToolPyParamsDictTagged
 
 
 class AbidsToolPyOutputs(typing.NamedTuple):

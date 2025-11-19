@@ -12,8 +12,7 @@ VOLUME_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-VolumeWeightedStatsWeightVolumeParamsDict = typing.TypedDict('VolumeWeightedStatsWeightVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weight-volume"]],
+_VolumeWeightedStatsWeightVolumeParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsWeightVolumeParamsDictNoTag', {
     "weight-volume": InputPathType,
     "match-maps": bool,
 })
@@ -22,10 +21,10 @@ VolumeWeightedStatsWeightVolumeParamsDictTagged = typing.TypedDict('VolumeWeight
     "weight-volume": InputPathType,
     "match-maps": bool,
 })
+VolumeWeightedStatsWeightVolumeParamsDict = _VolumeWeightedStatsWeightVolumeParamsDictNoTag | VolumeWeightedStatsWeightVolumeParamsDictTagged
 
 
-VolumeWeightedStatsRoiParamsDict = typing.TypedDict('VolumeWeightedStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_VolumeWeightedStatsRoiParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsRoiParamsDictNoTag', {
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
@@ -34,10 +33,10 @@ VolumeWeightedStatsRoiParamsDictTagged = typing.TypedDict('VolumeWeightedStatsRo
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
+VolumeWeightedStatsRoiParamsDict = _VolumeWeightedStatsRoiParamsDictNoTag | VolumeWeightedStatsRoiParamsDictTagged
 
 
-VolumeWeightedStatsParamsDict = typing.TypedDict('VolumeWeightedStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-weighted-stats"]],
+_VolumeWeightedStatsParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsParamsDictNoTag', {
     "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
@@ -60,6 +59,7 @@ VolumeWeightedStatsParamsDictTagged = typing.TypedDict('VolumeWeightedStatsParam
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
+VolumeWeightedStatsParamsDict = _VolumeWeightedStatsParamsDictNoTag | VolumeWeightedStatsParamsDictTagged
 
 
 def volume_weighted_stats_weight_volume(

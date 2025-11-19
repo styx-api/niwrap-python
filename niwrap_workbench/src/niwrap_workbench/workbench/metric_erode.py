@@ -12,8 +12,7 @@ METRIC_ERODE_METADATA = Metadata(
 )
 
 
-MetricErodeParamsDict = typing.TypedDict('MetricErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-erode"]],
+_MetricErodeParamsDictNoTag = typing.TypedDict('_MetricErodeParamsDictNoTag', {
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -32,6 +31,7 @@ MetricErodeParamsDictTagged = typing.TypedDict('MetricErodeParamsDictTagged', {
     "surface": InputPathType,
     "distance": float,
 })
+MetricErodeParamsDict = _MetricErodeParamsDictNoTag | MetricErodeParamsDictTagged
 
 
 class MetricErodeOutputs(typing.NamedTuple):

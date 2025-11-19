@@ -13,8 +13,7 @@ V_3D_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-V3dSkullStripParamsDict = typing.TypedDict('V3dSkullStripParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSkullStrip"]],
+_V3dSkullStripParamsDictNoTag = typing.TypedDict('_V3dSkullStripParamsDictNoTag', {
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -25,6 +24,7 @@ V3dSkullStripParamsDictTagged = typing.TypedDict('V3dSkullStripParamsDictTagged'
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
+V3dSkullStripParamsDict = _V3dSkullStripParamsDictNoTag | V3dSkullStripParamsDictTagged
 
 
 class V3dSkullStripOutputs(typing.NamedTuple):

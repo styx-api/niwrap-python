@@ -13,8 +13,7 @@ V__RETINO_PROC_METADATA = Metadata(
 )
 
 
-VRetinoProcParamsDict = typing.TypedDict('VRetinoProcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@RetinoProc"]],
+_VRetinoProcParamsDictNoTag = typing.TypedDict('_VRetinoProcParamsDictNoTag', {
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
     "exp": typing.NotRequired[list[InputPathType] | None],
@@ -99,6 +98,7 @@ VRetinoProcParamsDictTagged = typing.TypedDict('VRetinoProcParamsDictTagged', {
     "a2e_opts": typing.NotRequired[str | None],
     "aea_opts": typing.NotRequired[str | None],
 })
+VRetinoProcParamsDict = _VRetinoProcParamsDictNoTag | VRetinoProcParamsDictTagged
 
 
 class VRetinoProcOutputs(typing.NamedTuple):

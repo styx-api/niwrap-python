@@ -12,18 +12,17 @@ NIFTI_INFORMATION_METADATA = Metadata(
 )
 
 
-NiftiInformationPrintXmlParamsDict = typing.TypedDict('NiftiInformationPrintXmlParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["print-xml"]],
+_NiftiInformationPrintXmlParamsDictNoTag = typing.TypedDict('_NiftiInformationPrintXmlParamsDictNoTag', {
     "version": typing.NotRequired[str | None],
 })
 NiftiInformationPrintXmlParamsDictTagged = typing.TypedDict('NiftiInformationPrintXmlParamsDictTagged', {
     "@type": typing.Literal["print-xml"],
     "version": typing.NotRequired[str | None],
 })
+NiftiInformationPrintXmlParamsDict = _NiftiInformationPrintXmlParamsDictNoTag | NiftiInformationPrintXmlParamsDictTagged
 
 
-NiftiInformationParamsDict = typing.TypedDict('NiftiInformationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/nifti-information"]],
+_NiftiInformationParamsDictNoTag = typing.TypedDict('_NiftiInformationParamsDictNoTag', {
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
     "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
@@ -36,6 +35,7 @@ NiftiInformationParamsDictTagged = typing.TypedDict('NiftiInformationParamsDictT
     "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "nifti-file": str,
 })
+NiftiInformationParamsDict = _NiftiInformationParamsDictNoTag | NiftiInformationParamsDictTagged
 
 
 def nifti_information_print_xml(

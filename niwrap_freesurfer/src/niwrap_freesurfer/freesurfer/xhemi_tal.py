@@ -13,14 +13,14 @@ XHEMI_TAL_METADATA = Metadata(
 )
 
 
-XhemiTalParamsDict = typing.TypedDict('XhemiTalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/xhemi-tal"]],
+_XhemiTalParamsDictNoTag = typing.TypedDict('_XhemiTalParamsDictNoTag', {
     "subject": str,
 })
 XhemiTalParamsDictTagged = typing.TypedDict('XhemiTalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xhemi-tal"],
     "subject": str,
 })
+XhemiTalParamsDict = _XhemiTalParamsDictNoTag | XhemiTalParamsDictTagged
 
 
 class XhemiTalOutputs(typing.NamedTuple):

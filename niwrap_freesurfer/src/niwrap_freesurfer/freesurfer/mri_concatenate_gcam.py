@@ -13,8 +13,7 @@ MRI_CONCATENATE_GCAM_METADATA = Metadata(
 )
 
 
-MriConcatenateGcamParamsDict = typing.TypedDict('MriConcatenateGcamParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_gcam"]],
+_MriConcatenateGcamParamsDictNoTag = typing.TypedDict('_MriConcatenateGcamParamsDictNoTag', {
     "inputs": list[InputPathType],
     "output": str,
     "source_image": typing.NotRequired[InputPathType | None],
@@ -33,6 +32,7 @@ MriConcatenateGcamParamsDictTagged = typing.TypedDict('MriConcatenateGcamParamsD
     "invert": bool,
     "downsample": bool,
 })
+MriConcatenateGcamParamsDict = _MriConcatenateGcamParamsDictNoTag | MriConcatenateGcamParamsDictTagged
 
 
 class MriConcatenateGcamOutputs(typing.NamedTuple):

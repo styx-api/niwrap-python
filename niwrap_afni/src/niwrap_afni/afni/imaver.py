@@ -13,8 +13,7 @@ IMAVER_METADATA = Metadata(
 )
 
 
-ImaverParamsDict = typing.TypedDict('ImaverParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imaver"]],
+_ImaverParamsDictNoTag = typing.TypedDict('_ImaverParamsDictNoTag', {
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
@@ -25,6 +24,7 @@ ImaverParamsDictTagged = typing.TypedDict('ImaverParamsDictTagged', {
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
 })
+ImaverParamsDict = _ImaverParamsDictNoTag | ImaverParamsDictTagged
 
 
 class ImaverOutputs(typing.NamedTuple):

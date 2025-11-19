@@ -13,8 +13,7 @@ MRIS_MULTISCALE_STATS_METADATA = Metadata(
 )
 
 
-MrisMultiscaleStatsParamsDict = typing.TypedDict('MrisMultiscaleStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multiscale_stats"]],
+_MrisMultiscaleStatsParamsDictNoTag = typing.TypedDict('_MrisMultiscaleStatsParamsDictNoTag', {
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -31,6 +30,7 @@ MrisMultiscaleStatsParamsDictTagged = typing.TypedDict('MrisMultiscaleStatsParam
     "class1_subjects": list[str],
     "class2_subjects": list[str],
 })
+MrisMultiscaleStatsParamsDict = _MrisMultiscaleStatsParamsDictNoTag | MrisMultiscaleStatsParamsDictTagged
 
 
 class MrisMultiscaleStatsOutputs(typing.NamedTuple):

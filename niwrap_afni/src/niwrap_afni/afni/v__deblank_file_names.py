@@ -13,8 +13,7 @@ V__DEBLANK_FILE_NAMES_METADATA = Metadata(
 )
 
 
-VDeblankFileNamesParamsDict = typing.TypedDict('VDeblankFileNamesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@DeblankFileNames"]],
+_VDeblankFileNamesParamsDictNoTag = typing.TypedDict('_VDeblankFileNamesParamsDictNoTag', {
     "move": bool,
     "nobrac": bool,
     "demo_set": bool,
@@ -31,6 +30,7 @@ VDeblankFileNamesParamsDictTagged = typing.TypedDict('VDeblankFileNamesParamsDic
     "help": bool,
     "files": typing.NotRequired[list[InputPathType] | None],
 })
+VDeblankFileNamesParamsDict = _VDeblankFileNamesParamsDictNoTag | VDeblankFileNamesParamsDictTagged
 
 
 class VDeblankFileNamesOutputs(typing.NamedTuple):

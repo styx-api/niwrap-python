@@ -13,14 +13,14 @@ TAL_QC_AZS_METADATA = Metadata(
 )
 
 
-TalQcAzsParamsDict = typing.TypedDict('TalQcAzsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tal_QC_AZS"]],
+_TalQcAzsParamsDictNoTag = typing.TypedDict('_TalQcAzsParamsDictNoTag', {
     "logfile": InputPathType,
 })
 TalQcAzsParamsDictTagged = typing.TypedDict('TalQcAzsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tal_QC_AZS"],
     "logfile": InputPathType,
 })
+TalQcAzsParamsDict = _TalQcAzsParamsDictNoTag | TalQcAzsParamsDictTagged
 
 
 class TalQcAzsOutputs(typing.NamedTuple):

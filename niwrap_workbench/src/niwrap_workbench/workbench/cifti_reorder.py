@@ -12,8 +12,7 @@ CIFTI_REORDER_METADATA = Metadata(
 )
 
 
-CiftiReorderParamsDict = typing.TypedDict('CiftiReorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-reorder"]],
+_CiftiReorderParamsDictNoTag = typing.TypedDict('_CiftiReorderParamsDictNoTag', {
     "cifti-out": str,
     "cifti-in": InputPathType,
     "direction": str,
@@ -26,6 +25,7 @@ CiftiReorderParamsDictTagged = typing.TypedDict('CiftiReorderParamsDictTagged', 
     "direction": str,
     "reorder-list": str,
 })
+CiftiReorderParamsDict = _CiftiReorderParamsDictNoTag | CiftiReorderParamsDictTagged
 
 
 class CiftiReorderOutputs(typing.NamedTuple):

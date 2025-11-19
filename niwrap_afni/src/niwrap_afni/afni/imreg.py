@@ -13,8 +13,7 @@ IMREG_METADATA = Metadata(
 )
 
 
-ImregParamsDict = typing.TypedDict('ImregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imreg"]],
+_ImregParamsDictNoTag = typing.TypedDict('_ImregParamsDictNoTag', {
     "base_image": str,
     "image_sequence": list[InputPathType],
     "nowrite": bool,
@@ -59,6 +58,7 @@ ImregParamsDictTagged = typing.TypedDict('ImregParamsDictTagged', {
     "fine": typing.NotRequired[list[float] | None],
     "nofine": bool,
 })
+ImregParamsDict = _ImregParamsDictNoTag | ImregParamsDictTagged
 
 
 class ImregOutputs(typing.NamedTuple):

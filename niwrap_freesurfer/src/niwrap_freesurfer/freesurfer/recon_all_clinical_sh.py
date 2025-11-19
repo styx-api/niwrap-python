@@ -13,8 +13,7 @@ RECON_ALL_CLINICAL_SH_METADATA = Metadata(
 )
 
 
-ReconAllClinicalShParamsDict = typing.TypedDict('ReconAllClinicalShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-clinical.sh"]],
+_ReconAllClinicalShParamsDictNoTag = typing.TypedDict('_ReconAllClinicalShParamsDictNoTag', {
     "input_scan": InputPathType,
     "subject_id": str,
     "threads": int,
@@ -27,6 +26,7 @@ ReconAllClinicalShParamsDictTagged = typing.TypedDict('ReconAllClinicalShParamsD
     "threads": int,
     "subject_dir": typing.NotRequired[str | None],
 })
+ReconAllClinicalShParamsDict = _ReconAllClinicalShParamsDictNoTag | ReconAllClinicalShParamsDictTagged
 
 
 class ReconAllClinicalShOutputs(typing.NamedTuple):

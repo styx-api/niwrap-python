@@ -13,8 +13,7 @@ MAKE_SYMMETRIC_METADATA = Metadata(
 )
 
 
-MakeSymmetricParamsDict = typing.TypedDict('MakeSymmetricParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make_symmetric"]],
+_MakeSymmetricParamsDictNoTag = typing.TypedDict('_MakeSymmetricParamsDictNoTag', {
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -27,6 +26,7 @@ MakeSymmetricParamsDictTagged = typing.TypedDict('MakeSymmetricParamsDictTagged'
     "output_file": str,
     "transform_map": str,
 })
+MakeSymmetricParamsDict = _MakeSymmetricParamsDictNoTag | MakeSymmetricParamsDictTagged
 
 
 class MakeSymmetricOutputs(typing.NamedTuple):

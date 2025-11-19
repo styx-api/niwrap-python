@@ -13,8 +13,7 @@ LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
 )
 
 
-LongCreateBaseSigmaParamsDict = typing.TypedDict('LongCreateBaseSigmaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_base_sigma"]],
+_LongCreateBaseSigmaParamsDictNoTag = typing.TypedDict('_LongCreateBaseSigmaParamsDictNoTag', {
     "base_id": str,
     "sigma": int,
 })
@@ -23,6 +22,7 @@ LongCreateBaseSigmaParamsDictTagged = typing.TypedDict('LongCreateBaseSigmaParam
     "base_id": str,
     "sigma": int,
 })
+LongCreateBaseSigmaParamsDict = _LongCreateBaseSigmaParamsDictNoTag | LongCreateBaseSigmaParamsDictTagged
 
 
 class LongCreateBaseSigmaOutputs(typing.NamedTuple):

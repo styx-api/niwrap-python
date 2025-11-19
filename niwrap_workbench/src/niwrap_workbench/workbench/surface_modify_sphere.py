@@ -12,8 +12,7 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 )
 
 
-SurfaceModifySphereParamsDict = typing.TypedDict('SurfaceModifySphereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-modify-sphere"]],
+_SurfaceModifySphereParamsDictNoTag = typing.TypedDict('_SurfaceModifySphereParamsDictNoTag', {
     "sphere-out": str,
     "recenter": bool,
     "sphere-in": InputPathType,
@@ -26,6 +25,7 @@ SurfaceModifySphereParamsDictTagged = typing.TypedDict('SurfaceModifySphereParam
     "sphere-in": InputPathType,
     "radius": float,
 })
+SurfaceModifySphereParamsDict = _SurfaceModifySphereParamsDictNoTag | SurfaceModifySphereParamsDictTagged
 
 
 class SurfaceModifySphereOutputs(typing.NamedTuple):

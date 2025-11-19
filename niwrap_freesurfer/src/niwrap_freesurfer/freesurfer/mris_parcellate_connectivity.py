@@ -13,8 +13,7 @@ MRIS_PARCELLATE_CONNECTIVITY_METADATA = Metadata(
 )
 
 
-MrisParcellateConnectivityParamsDict = typing.TypedDict('MrisParcellateConnectivityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_parcellate_connectivity"]],
+_MrisParcellateConnectivityParamsDictNoTag = typing.TypedDict('_MrisParcellateConnectivityParamsDictNoTag', {
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
     "input_correlations": InputPathType,
@@ -27,6 +26,7 @@ MrisParcellateConnectivityParamsDictTagged = typing.TypedDict('MrisParcellateCon
     "input_correlations": InputPathType,
     "output_parcellation": str,
 })
+MrisParcellateConnectivityParamsDict = _MrisParcellateConnectivityParamsDictNoTag | MrisParcellateConnectivityParamsDictTagged
 
 
 class MrisParcellateConnectivityOutputs(typing.NamedTuple):

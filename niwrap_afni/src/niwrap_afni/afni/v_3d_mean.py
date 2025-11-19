@@ -13,8 +13,7 @@ V_3D_MEAN_METADATA = Metadata(
 )
 
 
-V3dMeanParamsDict = typing.TypedDict('V3dMeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMean"]],
+_V3dMeanParamsDictNoTag = typing.TypedDict('_V3dMeanParamsDictNoTag', {
     "input_files": list[InputPathType],
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -57,6 +56,7 @@ V3dMeanParamsDictTagged = typing.TypedDict('V3dMeanParamsDictTagged', {
     "mask_union": bool,
     "weightset": typing.NotRequired[InputPathType | None],
 })
+V3dMeanParamsDict = _V3dMeanParamsDictNoTag | V3dMeanParamsDictTagged
 
 
 class V3dMeanOutputs(typing.NamedTuple):

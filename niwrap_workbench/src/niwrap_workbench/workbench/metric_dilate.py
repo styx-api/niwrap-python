@@ -12,8 +12,7 @@ METRIC_DILATE_METADATA = Metadata(
 )
 
 
-MetricDilateParamsDict = typing.TypedDict('MetricDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-dilate"]],
+_MetricDilateParamsDictNoTag = typing.TypedDict('_MetricDilateParamsDictNoTag', {
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -42,6 +41,7 @@ MetricDilateParamsDictTagged = typing.TypedDict('MetricDilateParamsDictTagged', 
     "surface": InputPathType,
     "distance": float,
 })
+MetricDilateParamsDict = _MetricDilateParamsDictNoTag | MetricDilateParamsDictTagged
 
 
 class MetricDilateOutputs(typing.NamedTuple):

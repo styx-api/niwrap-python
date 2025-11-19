@@ -13,8 +13,7 @@ FSLPSPEC_METADATA = Metadata(
 )
 
 
-FslpspecParamsDict = typing.TypedDict('FslpspecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslpspec"]],
+_FslpspecParamsDictNoTag = typing.TypedDict('_FslpspecParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ FslpspecParamsDictTagged = typing.TypedDict('FslpspecParamsDictTagged', {
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
+FslpspecParamsDict = _FslpspecParamsDictNoTag | FslpspecParamsDictTagged
 
 
 class FslpspecOutputs(typing.NamedTuple):

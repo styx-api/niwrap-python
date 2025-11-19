@@ -13,8 +13,7 @@ PREWHITEN_METADATA = Metadata(
 )
 
 
-PrewhitenParamsDict = typing.TypedDict('PrewhitenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/prewhiten"]],
+_PrewhitenParamsDictNoTag = typing.TypedDict('_PrewhitenParamsDictNoTag', {
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ PrewhitenParamsDictTagged = typing.TypedDict('PrewhitenParamsDictTagged', {
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })
+PrewhitenParamsDict = _PrewhitenParamsDictNoTag | PrewhitenParamsDictTagged
 
 
 class PrewhitenOutputs(typing.NamedTuple):

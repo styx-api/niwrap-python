@@ -13,8 +13,7 @@ IMSTAT_METADATA = Metadata(
 )
 
 
-ImstatParamsDict = typing.TypedDict('ImstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imstat"]],
+_ImstatParamsDictNoTag = typing.TypedDict('_ImstatParamsDictNoTag', {
     "no_label": bool,
     "quiet": bool,
     "pixstat_prefix": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ ImstatParamsDictTagged = typing.TypedDict('ImstatParamsDictTagged', {
     "pixstat_prefix": typing.NotRequired[str | None],
     "image_files": list[InputPathType],
 })
+ImstatParamsDict = _ImstatParamsDictNoTag | ImstatParamsDictTagged
 
 
 class ImstatOutputs(typing.NamedTuple):

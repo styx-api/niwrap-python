@@ -12,8 +12,7 @@ VOLUME_PALETTE_METADATA = Metadata(
 )
 
 
-VolumePalettePosPercentParamsDict = typing.TypedDict('VolumePalettePosPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-percent"]],
+_VolumePalettePosPercentParamsDictNoTag = typing.TypedDict('_VolumePalettePosPercentParamsDictNoTag', {
     "pos-min-%": float,
     "pos-max-%": float,
 })
@@ -22,10 +21,10 @@ VolumePalettePosPercentParamsDictTagged = typing.TypedDict('VolumePalettePosPerc
     "pos-min-%": float,
     "pos-max-%": float,
 })
+VolumePalettePosPercentParamsDict = _VolumePalettePosPercentParamsDictNoTag | VolumePalettePosPercentParamsDictTagged
 
 
-VolumePaletteNegPercentParamsDict = typing.TypedDict('VolumePaletteNegPercentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-percent"]],
+_VolumePaletteNegPercentParamsDictNoTag = typing.TypedDict('_VolumePaletteNegPercentParamsDictNoTag', {
     "neg-min-%": float,
     "neg-max-%": float,
 })
@@ -34,10 +33,10 @@ VolumePaletteNegPercentParamsDictTagged = typing.TypedDict('VolumePaletteNegPerc
     "neg-min-%": float,
     "neg-max-%": float,
 })
+VolumePaletteNegPercentParamsDict = _VolumePaletteNegPercentParamsDictNoTag | VolumePaletteNegPercentParamsDictTagged
 
 
-VolumePalettePosUserParamsDict = typing.TypedDict('VolumePalettePosUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pos-user"]],
+_VolumePalettePosUserParamsDictNoTag = typing.TypedDict('_VolumePalettePosUserParamsDictNoTag', {
     "pos-min-user": float,
     "pos-max-user": float,
 })
@@ -46,10 +45,10 @@ VolumePalettePosUserParamsDictTagged = typing.TypedDict('VolumePalettePosUserPar
     "pos-min-user": float,
     "pos-max-user": float,
 })
+VolumePalettePosUserParamsDict = _VolumePalettePosUserParamsDictNoTag | VolumePalettePosUserParamsDictTagged
 
 
-VolumePaletteNegUserParamsDict = typing.TypedDict('VolumePaletteNegUserParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["neg-user"]],
+_VolumePaletteNegUserParamsDictNoTag = typing.TypedDict('_VolumePaletteNegUserParamsDictNoTag', {
     "neg-min-user": float,
     "neg-max-user": float,
 })
@@ -58,10 +57,10 @@ VolumePaletteNegUserParamsDictTagged = typing.TypedDict('VolumePaletteNegUserPar
     "neg-min-user": float,
     "neg-max-user": float,
 })
+VolumePaletteNegUserParamsDict = _VolumePaletteNegUserParamsDictNoTag | VolumePaletteNegUserParamsDictTagged
 
 
-VolumePaletteThresholdingParamsDict = typing.TypedDict('VolumePaletteThresholdingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["thresholding"]],
+_VolumePaletteThresholdingParamsDictNoTag = typing.TypedDict('_VolumePaletteThresholdingParamsDictNoTag', {
     "type": str,
     "test": str,
     "min": float,
@@ -74,10 +73,10 @@ VolumePaletteThresholdingParamsDictTagged = typing.TypedDict('VolumePaletteThres
     "min": float,
     "max": float,
 })
+VolumePaletteThresholdingParamsDict = _VolumePaletteThresholdingParamsDictNoTag | VolumePaletteThresholdingParamsDictTagged
 
 
-VolumePaletteParamsDict = typing.TypedDict('VolumePaletteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-palette"]],
+_VolumePaletteParamsDictNoTag = typing.TypedDict('_VolumePaletteParamsDictNoTag', {
     "subvolume": typing.NotRequired[str | None],
     "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
@@ -112,6 +111,7 @@ VolumePaletteParamsDictTagged = typing.TypedDict('VolumePaletteParamsDictTagged'
     "volume": str,
     "mode": str,
 })
+VolumePaletteParamsDict = _VolumePaletteParamsDictNoTag | VolumePaletteParamsDictTagged
 
 
 def volume_palette_pos_percent(

@@ -13,8 +13,7 @@ EXPORT_GCAM_METADATA = Metadata(
 )
 
 
-ExportGcamParamsDict = typing.TypedDict('ExportGcamParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/exportGcam"]],
+_ExportGcamParamsDictNoTag = typing.TypedDict('_ExportGcamParamsDictNoTag', {
     "fixed": InputPathType,
     "moving": InputPathType,
     "morph": InputPathType,
@@ -35,6 +34,7 @@ ExportGcamParamsDictTagged = typing.TypedDict('ExportGcamParamsDictTagged', {
     "interp_method": typing.NotRequired[typing.Literal["linear", "nearest"] | None],
     "test": bool,
 })
+ExportGcamParamsDict = _ExportGcamParamsDictNoTag | ExportGcamParamsDictTagged
 
 
 class ExportGcamOutputs(typing.NamedTuple):

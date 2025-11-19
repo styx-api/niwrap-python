@@ -13,8 +13,7 @@ V_3D_TSORT_METADATA = Metadata(
 )
 
 
-V3dTsortParamsDict = typing.TypedDict('V3dTsortParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTsort"]],
+_V3dTsortParamsDictNoTag = typing.TypedDict('_V3dTsortParamsDictNoTag', {
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "inc": bool,
@@ -41,6 +40,7 @@ V3dTsortParamsDictTagged = typing.TypedDict('V3dTsortParamsDictTagged', {
     "randft": bool,
     "datum": typing.NotRequired[str | None],
 })
+V3dTsortParamsDict = _V3dTsortParamsDictNoTag | V3dTsortParamsDictTagged
 
 
 class V3dTsortOutputs(typing.NamedTuple):

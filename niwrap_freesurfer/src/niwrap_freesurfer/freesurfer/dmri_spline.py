@@ -13,8 +13,7 @@ DMRI_SPLINE_METADATA = Metadata(
 )
 
 
-DmriSplineParamsDict = typing.TypedDict('DmriSplineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_spline"]],
+_DmriSplineParamsDictNoTag = typing.TypedDict('_DmriSplineParamsDictNoTag', {
     "control_points_file": InputPathType,
     "mask_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ DmriSplineParamsDictTagged = typing.TypedDict('DmriSplineParamsDictTagged', {
     "debug": bool,
     "check_options": bool,
 })
+DmriSplineParamsDict = _DmriSplineParamsDictNoTag | DmriSplineParamsDictTagged
 
 
 class DmriSplineOutputs(typing.NamedTuple):

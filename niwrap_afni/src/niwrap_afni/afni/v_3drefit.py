@@ -13,8 +13,7 @@ V_3DREFIT_METADATA = Metadata(
 )
 
 
-V3drefitParamsDict = typing.TypedDict('V3drefitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3drefit"]],
+_V3drefitParamsDictNoTag = typing.TypedDict('_V3drefitParamsDictNoTag', {
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
     "atrint": typing.NotRequired[list[str] | None],
@@ -53,6 +52,7 @@ V3drefitParamsDictTagged = typing.TypedDict('V3drefitParamsDictTagged', {
     "zdel": typing.NotRequired[float | None],
     "zorigin": typing.NotRequired[str | None],
 })
+V3drefitParamsDict = _V3drefitParamsDictNoTag | V3drefitParamsDictTagged
 
 
 class V3drefitOutputs(typing.NamedTuple):

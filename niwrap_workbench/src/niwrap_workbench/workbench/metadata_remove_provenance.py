@@ -12,8 +12,7 @@ METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
 )
 
 
-MetadataRemoveProvenanceParamsDict = typing.TypedDict('MetadataRemoveProvenanceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metadata-remove-provenance"]],
+_MetadataRemoveProvenanceParamsDictNoTag = typing.TypedDict('_MetadataRemoveProvenanceParamsDictNoTag', {
     "input-file": str,
     "output-file": str,
 })
@@ -22,6 +21,7 @@ MetadataRemoveProvenanceParamsDictTagged = typing.TypedDict('MetadataRemoveProve
     "input-file": str,
     "output-file": str,
 })
+MetadataRemoveProvenanceParamsDict = _MetadataRemoveProvenanceParamsDictNoTag | MetadataRemoveProvenanceParamsDictTagged
 
 
 class MetadataRemoveProvenanceOutputs(typing.NamedTuple):

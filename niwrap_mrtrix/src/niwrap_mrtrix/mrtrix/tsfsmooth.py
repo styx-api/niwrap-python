@@ -13,8 +13,7 @@ TSFSMOOTH_METADATA = Metadata(
 )
 
 
-TsfsmoothConfigParamsDict = typing.TypedDict('TsfsmoothConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfsmoothConfigParamsDictNoTag = typing.TypedDict('_TsfsmoothConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfsmoothConfigParamsDictTagged = typing.TypedDict('TsfsmoothConfigParamsDictTag
     "key": str,
     "value": str,
 })
+TsfsmoothConfigParamsDict = _TsfsmoothConfigParamsDictNoTag | TsfsmoothConfigParamsDictTagged
 
 
-TsfsmoothParamsDict = typing.TypedDict('TsfsmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfsmooth"]],
+_TsfsmoothParamsDictNoTag = typing.TypedDict('_TsfsmoothParamsDictNoTag', {
     "stdev": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ TsfsmoothParamsDictTagged = typing.TypedDict('TsfsmoothParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+TsfsmoothParamsDict = _TsfsmoothParamsDictNoTag | TsfsmoothParamsDictTagged
 
 
 def tsfsmooth_config(

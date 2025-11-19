@@ -13,8 +13,7 @@ CREATE_TILED_MOSAIC_METADATA = Metadata(
 )
 
 
-CreateTiledMosaicParamsDict = typing.TypedDict('CreateTiledMosaicParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/CreateTiledMosaic"]],
+_CreateTiledMosaicParamsDictNoTag = typing.TypedDict('_CreateTiledMosaicParamsDictNoTag', {
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ CreateTiledMosaicParamsDictTagged = typing.TypedDict('CreateTiledMosaicParamsDic
     "flip_slice": typing.NotRequired[str | None],
     "permute_axes": typing.NotRequired[bool | None],
 })
+CreateTiledMosaicParamsDict = _CreateTiledMosaicParamsDictNoTag | CreateTiledMosaicParamsDictTagged
 
 
 class CreateTiledMosaicOutputs(typing.NamedTuple):

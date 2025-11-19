@@ -13,8 +13,7 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 )
 
 
-V1dgenArma11ParamsDict = typing.TypedDict('V1dgenArma11ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dgenARMA11"]],
+_V1dgenArma11ParamsDictNoTag = typing.TypedDict('_V1dgenArma11ParamsDictNoTag', {
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
     "num_series": typing.NotRequired[float | None],
@@ -43,6 +42,7 @@ V1dgenArma11ParamsDictTagged = typing.TypedDict('V1dgenArma11ParamsDictTagged', 
     "arma31": typing.NotRequired[str | None],
     "arma51": typing.NotRequired[str | None],
 })
+V1dgenArma11ParamsDict = _V1dgenArma11ParamsDictNoTag | V1dgenArma11ParamsDictTagged
 
 
 class V1dgenArma11Outputs(typing.NamedTuple):

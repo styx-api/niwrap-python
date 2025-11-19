@@ -13,8 +13,7 @@ V_3D_EXTREMA_METADATA = Metadata(
 )
 
 
-V3dExtremaParamsDict = typing.TypedDict('V3dExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dExtrema"]],
+_V3dExtremaParamsDictNoTag = typing.TypedDict('_V3dExtremaParamsDictNoTag', {
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "output_session": typing.NotRequired[str | None],
@@ -59,6 +58,7 @@ V3dExtremaParamsDictTagged = typing.TypedDict('V3dExtremaParamsDictTagged', {
     "average": bool,
     "weight": bool,
 })
+V3dExtremaParamsDict = _V3dExtremaParamsDictNoTag | V3dExtremaParamsDictTagged
 
 
 class V3dExtremaOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_STAT_CLUST_METADATA = Metadata(
 )
 
 
-V3dStatClustParamsDict = typing.TypedDict('V3dStatClustParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dStatClust"]],
+_V3dStatClustParamsDictNoTag = typing.TypedDict('_V3dStatClustParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
     "verbose": bool,
@@ -37,6 +36,7 @@ V3dStatClustParamsDictTagged = typing.TypedDict('V3dStatClustParamsDictTagged', 
     "nclust": float,
     "datasets": list[str],
 })
+V3dStatClustParamsDict = _V3dStatClustParamsDictNoTag | V3dStatClustParamsDictTagged
 
 
 class V3dStatClustOutputs(typing.NamedTuple):

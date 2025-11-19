@@ -13,8 +13,7 @@ FIRST_MULT_BCORR_METADATA = Metadata(
 )
 
 
-FirstMultBcorrParamsDict = typing.TypedDict('FirstMultBcorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/first_mult_bcorr"]],
+_FirstMultBcorrParamsDictNoTag = typing.TypedDict('_FirstMultBcorrParamsDictNoTag', {
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
     "uncorrected_4d_labels": InputPathType,
@@ -31,6 +30,7 @@ FirstMultBcorrParamsDictTagged = typing.TypedDict('FirstMultBcorrParamsDictTagge
     "verbose_flag": bool,
     "help_flag": bool,
 })
+FirstMultBcorrParamsDict = _FirstMultBcorrParamsDictNoTag | FirstMultBcorrParamsDictTagged
 
 
 class FirstMultBcorrOutputs(typing.NamedTuple):

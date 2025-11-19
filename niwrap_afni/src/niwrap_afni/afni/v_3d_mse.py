@@ -13,8 +13,7 @@ V_3D_MSE_METADATA = Metadata(
 )
 
 
-V3dMseParamsDict = typing.TypedDict('V3dMseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMSE"]],
+_V3dMseParamsDictNoTag = typing.TypedDict('_V3dMseParamsDictNoTag', {
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
     "automask": bool,
@@ -37,6 +36,7 @@ V3dMseParamsDictTagged = typing.TypedDict('V3dMseParamsDictTagged', {
     "rthresh": typing.NotRequired[float | None],
     "dset": InputPathType,
 })
+V3dMseParamsDict = _V3dMseParamsDictNoTag | V3dMseParamsDictTagged
 
 
 class V3dMseOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_INTRACRANIAL_METADATA = Metadata(
 )
 
 
-V3dIntracranialParamsDict = typing.TypedDict('V3dIntracranialParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dIntracranial"]],
+_V3dIntracranialParamsDictNoTag = typing.TypedDict('_V3dIntracranialParamsDictNoTag', {
     "infile": InputPathType,
     "prefix": str,
     "min_val": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ V3dIntracranialParamsDictTagged = typing.TypedDict('V3dIntracranialParamsDictTag
     "mask": bool,
     "quiet": bool,
 })
+V3dIntracranialParamsDict = _V3dIntracranialParamsDictNoTag | V3dIntracranialParamsDictTagged
 
 
 class V3dIntracranialOutputs(typing.NamedTuple):

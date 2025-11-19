@@ -13,8 +13,7 @@ V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
 )
 
 
-VSkullStripTouchUpParamsDict = typing.TypedDict('VSkullStripTouchUpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@SkullStrip_TouchUp"]],
+_VSkullStripTouchUpParamsDictNoTag = typing.TypedDict('_VSkullStripTouchUpParamsDictNoTag', {
     "prefix": str,
     "brain_dataset": InputPathType,
     "head_dataset": InputPathType,
@@ -31,6 +30,7 @@ VSkullStripTouchUpParamsDictTagged = typing.TypedDict('VSkullStripTouchUpParamsD
     "orig_dim": bool,
     "help": bool,
 })
+VSkullStripTouchUpParamsDict = _VSkullStripTouchUpParamsDictNoTag | VSkullStripTouchUpParamsDictTagged
 
 
 class VSkullStripTouchUpOutputs(typing.NamedTuple):

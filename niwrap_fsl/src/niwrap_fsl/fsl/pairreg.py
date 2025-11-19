@@ -13,8 +13,7 @@ PAIRREG_METADATA = Metadata(
 )
 
 
-PairregParamsDict = typing.TypedDict('PairregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pairreg"]],
+_PairregParamsDictNoTag = typing.TypedDict('_PairregParamsDictNoTag', {
     "brain1": InputPathType,
     "brain2": InputPathType,
     "skull1": InputPathType,
@@ -31,6 +30,7 @@ PairregParamsDictTagged = typing.TypedDict('PairregParamsDictTagged', {
     "outputmatrix": InputPathType,
     "extra_flirt_args": typing.NotRequired[str | None],
 })
+PairregParamsDict = _PairregParamsDictNoTag | PairregParamsDictTagged
 
 
 class PairregOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_INFLATE_METADATA = Metadata(
 )
 
 
-MrisInflateParamsDict = typing.TypedDict('MrisInflateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_inflate"]],
+_MrisInflateParamsDictNoTag = typing.TypedDict('_MrisInflateParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
     "max_iterations": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ MrisInflateParamsDictTagged = typing.TypedDict('MrisInflateParamsDictTagged', {
     "mm_flag": bool,
     "scale_flag": typing.NotRequired[float | None],
 })
+MrisInflateParamsDict = _MrisInflateParamsDictNoTag | MrisInflateParamsDictTagged
 
 
 class MrisInflateOutputs(typing.NamedTuple):

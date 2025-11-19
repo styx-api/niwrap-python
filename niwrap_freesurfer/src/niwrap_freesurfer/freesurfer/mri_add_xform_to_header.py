@@ -13,8 +13,7 @@ MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
 )
 
 
-MriAddXformToHeaderParamsDict = typing.TypedDict('MriAddXformToHeaderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_xform_to_header"]],
+_MriAddXformToHeaderParamsDictNoTag = typing.TypedDict('_MriAddXformToHeaderParamsDictNoTag', {
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
     "output_volume": str,
@@ -29,6 +28,7 @@ MriAddXformToHeaderParamsDictTagged = typing.TypedDict('MriAddXformToHeaderParam
     "verbose": bool,
     "copy_name": bool,
 })
+MriAddXformToHeaderParamsDict = _MriAddXformToHeaderParamsDictNoTag | MriAddXformToHeaderParamsDictTagged
 
 
 class MriAddXformToHeaderOutputs(typing.NamedTuple):

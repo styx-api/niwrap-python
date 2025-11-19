@@ -13,8 +13,7 @@ ISOLATE_LABELS_CSH_METADATA = Metadata(
 )
 
 
-IsolateLabelsCshParamsDict = typing.TypedDict('IsolateLabelsCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/isolate_labels.csh"]],
+_IsolateLabelsCshParamsDictNoTag = typing.TypedDict('_IsolateLabelsCshParamsDictNoTag', {
     "label_volume": InputPathType,
     "output_prefix": str,
     "label_option": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ IsolateLabelsCshParamsDictTagged = typing.TypedDict('IsolateLabelsCshParamsDictT
     "keepval": bool,
     "help": bool,
 })
+IsolateLabelsCshParamsDict = _IsolateLabelsCshParamsDictNoTag | IsolateLabelsCshParamsDictTagged
 
 
 class IsolateLabelsCshOutputs(typing.NamedTuple):

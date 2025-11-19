@@ -13,8 +13,7 @@ HIAM_REGISTER_METADATA = Metadata(
 )
 
 
-HiamRegisterParamsDict = typing.TypedDict('HiamRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_register"]],
+_HiamRegisterParamsDictNoTag = typing.TypedDict('_HiamRegisterParamsDictNoTag', {
     "input_surface": InputPathType,
     "average_surface": InputPathType,
     "output_surface": str,
@@ -25,6 +24,7 @@ HiamRegisterParamsDictTagged = typing.TypedDict('HiamRegisterParamsDictTagged', 
     "average_surface": InputPathType,
     "output_surface": str,
 })
+HiamRegisterParamsDict = _HiamRegisterParamsDictNoTag | HiamRegisterParamsDictTagged
 
 
 class HiamRegisterOutputs(typing.NamedTuple):

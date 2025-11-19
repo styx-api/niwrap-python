@@ -13,8 +13,7 @@ ANATOMICAL_AVERAGE_METADATA = Metadata(
 )
 
 
-AnatomicalAverageParamsDict = typing.TypedDict('AnatomicalAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/AnatomicalAverage"]],
+_AnatomicalAverageParamsDictNoTag = typing.TypedDict('_AnatomicalAverageParamsDictNoTag', {
     "output_basename": str,
     "input_images": list[InputPathType],
     "standard_image": typing.NotRequired[InputPathType | None],
@@ -37,6 +36,7 @@ AnatomicalAverageParamsDictTagged = typing.TypedDict('AnatomicalAverageParamsDic
     "noclean_flag": bool,
     "verbose_flag": bool,
 })
+AnatomicalAverageParamsDict = _AnatomicalAverageParamsDictNoTag | AnatomicalAverageParamsDictTagged
 
 
 class AnatomicalAverageOutputs(typing.NamedTuple):

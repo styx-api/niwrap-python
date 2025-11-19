@@ -12,8 +12,7 @@ METRIC_EXTREMA_METADATA = Metadata(
 )
 
 
-MetricExtremaPresmoothParamsDict = typing.TypedDict('MetricExtremaPresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_MetricExtremaPresmoothParamsDictNoTag = typing.TypedDict('_MetricExtremaPresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ MetricExtremaPresmoothParamsDictTagged = typing.TypedDict('MetricExtremaPresmoot
     "kernel": float,
     "fwhm": bool,
 })
+MetricExtremaPresmoothParamsDict = _MetricExtremaPresmoothParamsDictNoTag | MetricExtremaPresmoothParamsDictTagged
 
 
-MetricExtremaThresholdParamsDict = typing.TypedDict('MetricExtremaThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_MetricExtremaThresholdParamsDictNoTag = typing.TypedDict('_MetricExtremaThresholdParamsDictNoTag', {
     "low": float,
     "high": float,
 })
@@ -34,10 +33,10 @@ MetricExtremaThresholdParamsDictTagged = typing.TypedDict('MetricExtremaThreshol
     "low": float,
     "high": float,
 })
+MetricExtremaThresholdParamsDict = _MetricExtremaThresholdParamsDictNoTag | MetricExtremaThresholdParamsDictTagged
 
 
-MetricExtremaParamsDict = typing.TypedDict('MetricExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-extrema"]],
+_MetricExtremaParamsDictNoTag = typing.TypedDict('_MetricExtremaParamsDictNoTag', {
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -66,6 +65,7 @@ MetricExtremaParamsDictTagged = typing.TypedDict('MetricExtremaParamsDictTagged'
     "metric-in": InputPathType,
     "distance": float,
 })
+MetricExtremaParamsDict = _MetricExtremaParamsDictNoTag | MetricExtremaParamsDictTagged
 
 
 def metric_extrema_presmooth(

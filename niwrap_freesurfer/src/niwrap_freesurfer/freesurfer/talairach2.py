@@ -13,8 +13,7 @@ TALAIRACH2_METADATA = Metadata(
 )
 
 
-Talairach2ParamsDict = typing.TypedDict('Talairach2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach2"]],
+_Talairach2ParamsDictNoTag = typing.TypedDict('_Talairach2ParamsDictNoTag', {
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ Talairach2ParamsDictTagged = typing.TypedDict('Talairach2ParamsDictTagged', {
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })
+Talairach2ParamsDict = _Talairach2ParamsDictNoTag | Talairach2ParamsDictTagged
 
 
 class Talairach2Outputs(typing.NamedTuple):

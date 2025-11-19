@@ -13,8 +13,7 @@ MRI_VOLDIFF_METADATA = Metadata(
 )
 
 
-MriVoldiffParamsDict = typing.TypedDict('MriVoldiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_voldiff"]],
+_MriVoldiffParamsDictNoTag = typing.TypedDict('_MriVoldiffParamsDictNoTag', {
     "volume1": InputPathType,
     "volume2": InputPathType,
     "vox2ras_thresh": typing.NotRequired[float | None],
@@ -37,6 +36,7 @@ MriVoldiffParamsDictTagged = typing.TypedDict('MriVoldiffParamsDictTagged', {
     "debug": bool,
     "checkopts": bool,
 })
+MriVoldiffParamsDict = _MriVoldiffParamsDictNoTag | MriVoldiffParamsDictTagged
 
 
 class MriVoldiffOutputs(typing.NamedTuple):

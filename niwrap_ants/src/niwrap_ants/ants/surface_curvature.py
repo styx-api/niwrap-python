@@ -13,8 +13,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 )
 
 
-SurfaceCurvatureParamsDict = typing.TypedDict('SurfaceCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SurfaceCurvature"]],
+_SurfaceCurvatureParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureParamsDictNoTag', {
     "filename_in": InputPathType,
     "filename_out": str,
     "sigma": float,
@@ -27,6 +26,7 @@ SurfaceCurvatureParamsDictTagged = typing.TypedDict('SurfaceCurvatureParamsDictT
     "sigma": float,
     "option": float,
 })
+SurfaceCurvatureParamsDict = _SurfaceCurvatureParamsDictNoTag | SurfaceCurvatureParamsDictTagged
 
 
 class SurfaceCurvatureOutputs(typing.NamedTuple):

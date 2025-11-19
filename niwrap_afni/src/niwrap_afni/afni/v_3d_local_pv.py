@@ -13,8 +13,7 @@ V_3D_LOCAL_PV_METADATA = Metadata(
 )
 
 
-V3dLocalPvParamsDict = typing.TypedDict('V3dLocalPvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalPV"]],
+_V3dLocalPvParamsDictNoTag = typing.TypedDict('_V3dLocalPvParamsDictNoTag', {
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -41,6 +40,7 @@ V3dLocalPvParamsDictTagged = typing.TypedDict('V3dLocalPvParamsDictTagged', {
     "vnorm": bool,
     "vproj": typing.NotRequired[str | None],
 })
+V3dLocalPvParamsDict = _V3dLocalPvParamsDictNoTag | V3dLocalPvParamsDictTagged
 
 
 class V3dLocalPvOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ VOLUME_GRADIENT_METADATA = Metadata(
 )
 
 
-VolumeGradientPresmoothParamsDict = typing.TypedDict('VolumeGradientPresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_VolumeGradientPresmoothParamsDictNoTag = typing.TypedDict('_VolumeGradientPresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ VolumeGradientPresmoothParamsDictTagged = typing.TypedDict('VolumeGradientPresmo
     "kernel": float,
     "fwhm": bool,
 })
+VolumeGradientPresmoothParamsDict = _VolumeGradientPresmoothParamsDictNoTag | VolumeGradientPresmoothParamsDictTagged
 
 
-VolumeGradientParamsDict = typing.TypedDict('VolumeGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-gradient"]],
+_VolumeGradientParamsDictNoTag = typing.TypedDict('_VolumeGradientParamsDictNoTag', {
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -42,6 +41,7 @@ VolumeGradientParamsDictTagged = typing.TypedDict('VolumeGradientParamsDictTagge
     "subvol": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
+VolumeGradientParamsDict = _VolumeGradientParamsDictNoTag | VolumeGradientParamsDictTagged
 
 
 def volume_gradient_presmooth(

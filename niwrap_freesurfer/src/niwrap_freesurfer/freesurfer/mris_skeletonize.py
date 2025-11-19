@@ -13,8 +13,7 @@ MRIS_SKELETONIZE_METADATA = Metadata(
 )
 
 
-MrisSkeletonizeParamsDict = typing.TypedDict('MrisSkeletonizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_skeletonize"]],
+_MrisSkeletonizeParamsDictNoTag = typing.TypedDict('_MrisSkeletonizeParamsDictNoTag', {
     "surface": str,
     "surfvals": str,
     "mask": str,
@@ -49,6 +48,7 @@ MrisSkeletonizeParamsDictTagged = typing.TypedDict('MrisSkeletonizeParamsDictTag
     "cluster": typing.NotRequired[float | None],
     "fwhm": typing.NotRequired[float | None],
 })
+MrisSkeletonizeParamsDict = _MrisSkeletonizeParamsDictNoTag | MrisSkeletonizeParamsDictTagged
 
 
 class MrisSkeletonizeOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_MORPH_STATS_METADATA = Metadata(
 )
 
 
-MrisMorphStatsParamsDict = typing.TypedDict('MrisMorphStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_morph_stats"]],
+_MrisMorphStatsParamsDictNoTag = typing.TypedDict('_MrisMorphStatsParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
     "morphed_surface": InputPathType,
@@ -27,6 +26,7 @@ MrisMorphStatsParamsDictTagged = typing.TypedDict('MrisMorphStatsParamsDictTagge
     "morphed_surface": InputPathType,
     "output_name": str,
 })
+MrisMorphStatsParamsDict = _MrisMorphStatsParamsDictNoTag | MrisMorphStatsParamsDictTagged
 
 
 class MrisMorphStatsOutputs(typing.NamedTuple):

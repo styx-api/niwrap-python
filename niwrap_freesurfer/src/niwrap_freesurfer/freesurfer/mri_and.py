@@ -13,14 +13,14 @@ MRI_AND_METADATA = Metadata(
 )
 
 
-MriAndParamsDict = typing.TypedDict('MriAndParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_and"]],
+_MriAndParamsDictNoTag = typing.TypedDict('_MriAndParamsDictNoTag', {
     "input_files": list[InputPathType],
 })
 MriAndParamsDictTagged = typing.TypedDict('MriAndParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_and"],
     "input_files": list[InputPathType],
 })
+MriAndParamsDict = _MriAndParamsDictNoTag | MriAndParamsDictTagged
 
 
 class MriAndOutputs(typing.NamedTuple):

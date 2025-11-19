@@ -13,14 +13,14 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 )
 
 
-MriGcabTrainParamsDict = typing.TypedDict('MriGcabTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcab_train"]],
+_MriGcabTrainParamsDictNoTag = typing.TypedDict('_MriGcabTrainParamsDictNoTag', {
     "removed_info": typing.NotRequired[str | None],
 })
 MriGcabTrainParamsDictTagged = typing.TypedDict('MriGcabTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gcab_train"],
     "removed_info": typing.NotRequired[str | None],
 })
+MriGcabTrainParamsDict = _MriGcabTrainParamsDictNoTag | MriGcabTrainParamsDictTagged
 
 
 class MriGcabTrainOutputs(typing.NamedTuple):

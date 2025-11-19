@@ -13,8 +13,7 @@ PROJ_THRESH_METADATA = Metadata(
 )
 
 
-ProjThreshParamsDict = typing.TypedDict('ProjThreshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/proj_thresh"]],
+_ProjThreshParamsDictNoTag = typing.TypedDict('_ProjThreshParamsDictNoTag', {
     "input_paths": list[InputPathType],
     "threshold": float,
 })
@@ -23,6 +22,7 @@ ProjThreshParamsDictTagged = typing.TypedDict('ProjThreshParamsDictTagged', {
     "input_paths": list[InputPathType],
     "threshold": float,
 })
+ProjThreshParamsDict = _ProjThreshParamsDictNoTag | ProjThreshParamsDictTagged
 
 
 class ProjThreshOutputs(typing.NamedTuple):

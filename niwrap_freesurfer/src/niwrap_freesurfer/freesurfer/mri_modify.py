@@ -13,8 +13,7 @@ MRI_MODIFY_METADATA = Metadata(
 )
 
 
-MriModifyParamsDict = typing.TypedDict('MriModifyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_modify"]],
+_MriModifyParamsDictNoTag = typing.TypedDict('_MriModifyParamsDictNoTag', {
     "x_ras": list[float],
     "y_ras": list[float],
     "z_ras": list[float],
@@ -47,6 +46,7 @@ MriModifyParamsDictTagged = typing.TypedDict('MriModifyParamsDictTagged', {
     "input_volume": InputPathType,
     "output_volume": str,
 })
+MriModifyParamsDict = _MriModifyParamsDictNoTag | MriModifyParamsDictTagged
 
 
 class MriModifyOutputs(typing.NamedTuple):

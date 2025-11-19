@@ -13,14 +13,14 @@ FSLNVOLS_METADATA = Metadata(
 )
 
 
-FslnvolsParamsDict = typing.TypedDict('FslnvolsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslnvols"]],
+_FslnvolsParamsDictNoTag = typing.TypedDict('_FslnvolsParamsDictNoTag', {
     "infile": InputPathType,
 })
 FslnvolsParamsDictTagged = typing.TypedDict('FslnvolsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslnvols"],
     "infile": InputPathType,
 })
+FslnvolsParamsDict = _FslnvolsParamsDictNoTag | FslnvolsParamsDictTagged
 
 
 class FslnvolsOutputs(typing.NamedTuple):

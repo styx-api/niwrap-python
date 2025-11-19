@@ -13,8 +13,7 @@ MRI_VOLCLUSTER_METADATA = Metadata(
 )
 
 
-MriVolclusterParamsDict = typing.TypedDict('MriVolclusterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volcluster"]],
+_MriVolclusterParamsDictNoTag = typing.TypedDict('_MriVolclusterParamsDictNoTag', {
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
     "output_volid": typing.NotRequired[str | None],
@@ -115,6 +114,7 @@ MriVolclusterParamsDictTagged = typing.TypedDict('MriVolclusterParamsDictTagged'
     "fill_params": typing.NotRequired[str | None],
     "help_flag": bool,
 })
+MriVolclusterParamsDict = _MriVolclusterParamsDictNoTag | MriVolclusterParamsDictTagged
 
 
 class MriVolclusterOutputs(typing.NamedTuple):

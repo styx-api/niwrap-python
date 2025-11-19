@@ -13,8 +13,7 @@ RMZ_METADATA = Metadata(
 )
 
 
-RmzParamsDict = typing.TypedDict('RmzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/rmz"]],
+_RmzParamsDictNoTag = typing.TypedDict('_RmzParamsDictNoTag', {
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
     "keep_flag": bool,
@@ -27,6 +26,7 @@ RmzParamsDictTagged = typing.TypedDict('RmzParamsDictTagged', {
     "keep_flag": bool,
     "filenames": list[InputPathType],
 })
+RmzParamsDict = _RmzParamsDictNoTag | RmzParamsDictTagged
 
 
 class RmzOutputs(typing.NamedTuple):

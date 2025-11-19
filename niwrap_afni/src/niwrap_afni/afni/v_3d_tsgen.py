@@ -13,8 +13,7 @@ V_3D_TSGEN_METADATA = Metadata(
 )
 
 
-V3dTsgenParamsDict = typing.TypedDict('V3dTsgenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTSgen"]],
+_V3dTsgenParamsDictNoTag = typing.TypedDict('_V3dTsgenParamsDictNoTag', {
     "input_file": InputPathType,
     "in_tr_flag": bool,
     "signal_label": str,
@@ -45,6 +44,7 @@ V3dTsgenParamsDictTagged = typing.TypedDict('V3dTsgenParamsDictTagged', {
     "bucket_config": typing.NotRequired[str | None],
     "brick_config": typing.NotRequired[str | None],
 })
+V3dTsgenParamsDict = _V3dTsgenParamsDictNoTag | V3dTsgenParamsDictTagged
 
 
 class V3dTsgenOutputs(typing.NamedTuple):

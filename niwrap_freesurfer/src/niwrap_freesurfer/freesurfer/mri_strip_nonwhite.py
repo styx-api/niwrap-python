@@ -13,8 +13,7 @@ MRI_STRIP_NONWHITE_METADATA = Metadata(
 )
 
 
-MriStripNonwhiteParamsDict = typing.TypedDict('MriStripNonwhiteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_nonwhite"]],
+_MriStripNonwhiteParamsDictNoTag = typing.TypedDict('_MriStripNonwhiteParamsDictNoTag', {
     "input_volume": InputPathType,
     "transform": InputPathType,
     "template_volume": InputPathType,
@@ -27,6 +26,7 @@ MriStripNonwhiteParamsDictTagged = typing.TypedDict('MriStripNonwhiteParamsDictT
     "template_volume": InputPathType,
     "output_volume": str,
 })
+MriStripNonwhiteParamsDict = _MriStripNonwhiteParamsDictNoTag | MriStripNonwhiteParamsDictTagged
 
 
 class MriStripNonwhiteOutputs(typing.NamedTuple):

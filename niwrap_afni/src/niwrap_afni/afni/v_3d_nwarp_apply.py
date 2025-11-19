@@ -13,8 +13,7 @@ V_3D_NWARP_APPLY_METADATA = Metadata(
 )
 
 
-V3dNwarpApplyParamsDict = typing.TypedDict('V3dNwarpApplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpApply"]],
+_V3dNwarpApplyParamsDictNoTag = typing.TypedDict('_V3dNwarpApplyParamsDictNoTag', {
     "nwarp": str,
     "iwarp": bool,
     "source": str,
@@ -47,6 +46,7 @@ V3dNwarpApplyParamsDictTagged = typing.TypedDict('V3dNwarpApplyParamsDictTagged'
     "quiet": bool,
     "verb": bool,
 })
+V3dNwarpApplyParamsDict = _V3dNwarpApplyParamsDictNoTag | V3dNwarpApplyParamsDictTagged
 
 
 class V3dNwarpApplyOutputs(typing.NamedTuple):

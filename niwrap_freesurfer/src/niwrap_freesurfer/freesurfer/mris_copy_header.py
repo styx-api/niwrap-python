@@ -13,8 +13,7 @@ MRIS_COPY_HEADER_METADATA = Metadata(
 )
 
 
-MrisCopyHeaderParamsDict = typing.TypedDict('MrisCopyHeaderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_copy_header"]],
+_MrisCopyHeaderParamsDictNoTag = typing.TypedDict('_MrisCopyHeaderParamsDictNoTag', {
     "input_surface": InputPathType,
     "template_surface": InputPathType,
     "output_surface": str,
@@ -25,6 +24,7 @@ MrisCopyHeaderParamsDictTagged = typing.TypedDict('MrisCopyHeaderParamsDictTagge
     "template_surface": InputPathType,
     "output_surface": str,
 })
+MrisCopyHeaderParamsDict = _MrisCopyHeaderParamsDictNoTag | MrisCopyHeaderParamsDictTagged
 
 
 class MrisCopyHeaderOutputs(typing.NamedTuple):

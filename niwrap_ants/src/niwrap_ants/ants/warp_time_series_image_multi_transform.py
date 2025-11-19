@@ -13,8 +13,7 @@ WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 )
 
 
-WarpTimeSeriesImageMultiTransformParamsDict = typing.TypedDict('WarpTimeSeriesImageMultiTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/WarpTimeSeriesImageMultiTransform"]],
+_WarpTimeSeriesImageMultiTransformParamsDictNoTag = typing.TypedDict('_WarpTimeSeriesImageMultiTransformParamsDictNoTag', {
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
     "output_image": str,
@@ -31,6 +30,7 @@ WarpTimeSeriesImageMultiTransformParamsDictTagged = typing.TypedDict('WarpTimeSe
     "transforms": list[str],
     "interpolation": typing.NotRequired[typing.Literal["NearestNeighbor", "BSpline"] | None],
 })
+WarpTimeSeriesImageMultiTransformParamsDict = _WarpTimeSeriesImageMultiTransformParamsDictNoTag | WarpTimeSeriesImageMultiTransformParamsDictTagged
 
 
 class WarpTimeSeriesImageMultiTransformOutputs(typing.NamedTuple):

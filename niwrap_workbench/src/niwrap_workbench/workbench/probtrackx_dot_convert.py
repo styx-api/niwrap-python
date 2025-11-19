@@ -12,8 +12,7 @@ PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
 )
 
 
-ProbtrackxDotConvertRowVoxelsParamsDict = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["row-voxels"]],
+_ProbtrackxDotConvertRowVoxelsParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertRowVoxelsParamsDictNoTag', {
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
@@ -22,10 +21,10 @@ ProbtrackxDotConvertRowVoxelsParamsDictTagged = typing.TypedDict('ProbtrackxDotC
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
+ProbtrackxDotConvertRowVoxelsParamsDict = _ProbtrackxDotConvertRowVoxelsParamsDictNoTag | ProbtrackxDotConvertRowVoxelsParamsDictTagged
 
 
-ProbtrackxDotConvertRowCiftiParamsDict = typing.TypedDict('ProbtrackxDotConvertRowCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["row-cifti"]],
+_ProbtrackxDotConvertRowCiftiParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertRowCiftiParamsDictNoTag', {
     "cifti": InputPathType,
     "direction": str,
 })
@@ -34,10 +33,10 @@ ProbtrackxDotConvertRowCiftiParamsDictTagged = typing.TypedDict('ProbtrackxDotCo
     "cifti": InputPathType,
     "direction": str,
 })
+ProbtrackxDotConvertRowCiftiParamsDict = _ProbtrackxDotConvertRowCiftiParamsDictNoTag | ProbtrackxDotConvertRowCiftiParamsDictTagged
 
 
-ProbtrackxDotConvertColVoxelsParamsDict = typing.TypedDict('ProbtrackxDotConvertColVoxelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["col-voxels"]],
+_ProbtrackxDotConvertColVoxelsParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertColVoxelsParamsDictNoTag', {
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
@@ -46,10 +45,10 @@ ProbtrackxDotConvertColVoxelsParamsDictTagged = typing.TypedDict('ProbtrackxDotC
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
+ProbtrackxDotConvertColVoxelsParamsDict = _ProbtrackxDotConvertColVoxelsParamsDictNoTag | ProbtrackxDotConvertColVoxelsParamsDictTagged
 
 
-ProbtrackxDotConvertColCiftiParamsDict = typing.TypedDict('ProbtrackxDotConvertColCiftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["col-cifti"]],
+_ProbtrackxDotConvertColCiftiParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertColCiftiParamsDictNoTag', {
     "cifti": InputPathType,
     "direction": str,
 })
@@ -58,10 +57,10 @@ ProbtrackxDotConvertColCiftiParamsDictTagged = typing.TypedDict('ProbtrackxDotCo
     "cifti": InputPathType,
     "direction": str,
 })
+ProbtrackxDotConvertColCiftiParamsDict = _ProbtrackxDotConvertColCiftiParamsDictNoTag | ProbtrackxDotConvertColCiftiParamsDictTagged
 
 
-ProbtrackxDotConvertParamsDict = typing.TypedDict('ProbtrackxDotConvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/probtrackx-dot-convert"]],
+_ProbtrackxDotConvertParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertParamsDictNoTag', {
     "cifti-out": str,
     "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -86,6 +85,7 @@ ProbtrackxDotConvertParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertPar
     "make-symmetric": bool,
     "dot-file": str,
 })
+ProbtrackxDotConvertParamsDict = _ProbtrackxDotConvertParamsDictNoTag | ProbtrackxDotConvertParamsDictTagged
 
 
 def probtrackx_dot_convert_row_voxels(

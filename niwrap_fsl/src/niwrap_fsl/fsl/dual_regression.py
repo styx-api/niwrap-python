@@ -13,8 +13,7 @@ DUAL_REGRESSION_METADATA = Metadata(
 )
 
 
-DualRegressionParamsDict = typing.TypedDict('DualRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/dual_regression"]],
+_DualRegressionParamsDictNoTag = typing.TypedDict('_DualRegressionParamsDictNoTag', {
     "group_ic_maps": InputPathType,
     "des_norm": float,
     "design_mat": InputPathType,
@@ -35,6 +34,7 @@ DualRegressionParamsDictTagged = typing.TypedDict('DualRegressionParamsDictTagge
     "output_directory": str,
     "input_files": list[InputPathType],
 })
+DualRegressionParamsDict = _DualRegressionParamsDictNoTag | DualRegressionParamsDictTagged
 
 
 class DualRegressionOutputs(typing.NamedTuple):

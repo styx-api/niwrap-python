@@ -13,8 +13,7 @@ V_3D_TORTOISETO_HERE_METADATA = Metadata(
 )
 
 
-V3dTortoisetoHereParamsDict = typing.TypedDict('V3dTortoisetoHereParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTORTOISEtoHere"]],
+_V3dTortoisetoHereParamsDictNoTag = typing.TypedDict('_V3dTortoisetoHereParamsDictNoTag', {
     "dt_tort": InputPathType,
     "prefix": str,
     "scale_factor": typing.NotRequired[float | None],
@@ -31,6 +30,7 @@ V3dTortoisetoHereParamsDictTagged = typing.TypedDict('V3dTortoisetoHereParamsDic
     "flip_y": bool,
     "flip_z": bool,
 })
+V3dTortoisetoHereParamsDict = _V3dTortoisetoHereParamsDictNoTag | V3dTortoisetoHereParamsDictTagged
 
 
 class V3dTortoisetoHereOutputs(typing.NamedTuple):

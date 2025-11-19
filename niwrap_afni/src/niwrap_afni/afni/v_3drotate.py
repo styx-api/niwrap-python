@@ -13,8 +13,7 @@ V_3DROTATE_METADATA = Metadata(
 )
 
 
-V3drotateParamsDict = typing.TypedDict('V3drotateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3drotate"]],
+_V3drotateParamsDictNoTag = typing.TypedDict('_V3drotateParamsDictNoTag', {
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -69,6 +68,7 @@ V3drotateParamsDictTagged = typing.TypedDict('V3drotateParamsDictTagged', {
     "noclip": bool,
     "zpad": typing.NotRequired[float | None],
 })
+V3drotateParamsDict = _V3drotateParamsDictNoTag | V3drotateParamsDictTagged
 
 
 class V3drotateOutputs(typing.NamedTuple):

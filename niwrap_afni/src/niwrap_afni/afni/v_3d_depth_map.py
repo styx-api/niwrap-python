@@ -13,8 +13,7 @@ V_3D_DEPTH_MAP_METADATA = Metadata(
 )
 
 
-V3dDepthMapParamsDict = typing.TypedDict('V3dDepthMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDepthMap"]],
+_V3dDepthMapParamsDictNoTag = typing.TypedDict('_V3dDepthMapParamsDictNoTag', {
     "input_dataset": InputPathType,
     "output_prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -45,6 +44,7 @@ V3dDepthMapParamsDictTagged = typing.TypedDict('V3dDepthMapParamsDictTagged', {
     "binary_only": bool,
     "verbosity": typing.NotRequired[float | None],
 })
+V3dDepthMapParamsDict = _V3dDepthMapParamsDictNoTag | V3dDepthMapParamsDictTagged
 
 
 class V3dDepthMapOutputs(typing.NamedTuple):

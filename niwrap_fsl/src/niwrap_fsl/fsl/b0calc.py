@@ -13,8 +13,7 @@ B0CALC_METADATA = Metadata(
 )
 
 
-B0calcParamsDict = typing.TypedDict('B0calcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/b0calc"]],
+_B0calcParamsDictNoTag = typing.TypedDict('_B0calcParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "zero_order_x": typing.NotRequired[float | None],
@@ -49,6 +48,7 @@ B0calcParamsDictTagged = typing.TypedDict('B0calcParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+B0calcParamsDict = _B0calcParamsDictNoTag | B0calcParamsDictTagged
 
 
 class B0calcOutputs(typing.NamedTuple):

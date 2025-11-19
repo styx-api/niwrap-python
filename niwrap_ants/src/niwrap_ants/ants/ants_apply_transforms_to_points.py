@@ -13,26 +13,24 @@ ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
 )
 
 
-AntsApplyTransformsToPointsSingleTransformParamsDict = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["single_transform"]],
-})
+_AntsApplyTransformsToPointsSingleTransformParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsToPointsSingleTransformParamsDictNoTag', {})
 AntsApplyTransformsToPointsSingleTransformParamsDictTagged = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParamsDictTagged', {
     "@type": typing.Literal["single_transform"],
 })
+AntsApplyTransformsToPointsSingleTransformParamsDict = _AntsApplyTransformsToPointsSingleTransformParamsDictNoTag | AntsApplyTransformsToPointsSingleTransformParamsDictTagged
 
 
-AntsApplyTransformsToPointsInverseTransformParamsDict = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["inverse_transform"]],
+_AntsApplyTransformsToPointsInverseTransformParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsToPointsInverseTransformParamsDictNoTag', {
     "transform_file": InputPathType,
 })
 AntsApplyTransformsToPointsInverseTransformParamsDictTagged = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParamsDictTagged', {
     "@type": typing.Literal["inverse_transform"],
     "transform_file": InputPathType,
 })
+AntsApplyTransformsToPointsInverseTransformParamsDict = _AntsApplyTransformsToPointsInverseTransformParamsDictNoTag | AntsApplyTransformsToPointsInverseTransformParamsDictTagged
 
 
-AntsApplyTransformsToPointsParamsDict = typing.TypedDict('AntsApplyTransformsToPointsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransformsToPoints"]],
+_AntsApplyTransformsToPointsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsToPointsParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[bool | None],
     "forantsr": typing.NotRequired[bool | None],
@@ -49,6 +47,7 @@ AntsApplyTransformsToPointsParamsDictTagged = typing.TypedDict('AntsApplyTransfo
     "output": str,
     "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParamsDictTagged, AntsApplyTransformsToPointsInverseTransformParamsDictTagged] | None],
 })
+AntsApplyTransformsToPointsParamsDict = _AntsApplyTransformsToPointsParamsDictNoTag | AntsApplyTransformsToPointsParamsDictTagged
 
 
 def ants_apply_transforms_to_points_transform_cargs_dyn_fn(

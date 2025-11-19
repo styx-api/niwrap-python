@@ -12,8 +12,7 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 )
 
 
-FociListCoordsParamsDict = typing.TypedDict('FociListCoordsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/foci-list-coords"]],
+_FociListCoordsParamsDictNoTag = typing.TypedDict('_FociListCoordsParamsDictNoTag', {
     "names-file-out": typing.NotRequired[str | None],
     "foci-file": InputPathType,
     "coord-file-out": str,
@@ -24,6 +23,7 @@ FociListCoordsParamsDictTagged = typing.TypedDict('FociListCoordsParamsDictTagge
     "foci-file": InputPathType,
     "coord-file-out": str,
 })
+FociListCoordsParamsDict = _FociListCoordsParamsDictNoTag | FociListCoordsParamsDictTagged
 
 
 class FociListCoordsOutputs(typing.NamedTuple):

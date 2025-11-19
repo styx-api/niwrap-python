@@ -13,8 +13,7 @@ FAT_MVM_PREP_PY_METADATA = Metadata(
 )
 
 
-FatMvmPrepPyParamsDict = typing.TypedDict('FatMvmPrepPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_prep.py"]],
+_FatMvmPrepPyParamsDictNoTag = typing.TypedDict('_FatMvmPrepPyParamsDictNoTag', {
     "prefix": str,
     "csv_file": InputPathType,
     "matrix_files": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ FatMvmPrepPyParamsDictTagged = typing.TypedDict('FatMvmPrepPyParamsDictTagged', 
     "na_warn_off": bool,
     "extern_labels_no": bool,
 })
+FatMvmPrepPyParamsDict = _FatMvmPrepPyParamsDictNoTag | FatMvmPrepPyParamsDictTagged
 
 
 class FatMvmPrepPyOutputs(typing.NamedTuple):

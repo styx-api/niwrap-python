@@ -13,8 +13,7 @@ V__RADIAL_CORRELATE_METADATA = Metadata(
 )
 
 
-VRadialCorrelateParamsDict = typing.TypedDict('VRadialCorrelateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@radial_correlate"]],
+_VRadialCorrelateParamsDictNoTag = typing.TypedDict('_VRadialCorrelateParamsDictNoTag', {
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
     "do_corr": typing.NotRequired[str | None],
@@ -59,6 +58,7 @@ VRadialCorrelateParamsDictTagged = typing.TypedDict('VRadialCorrelateParamsDictT
     "polort": typing.NotRequired[float | None],
     "merge_frad": typing.NotRequired[float | None],
 })
+VRadialCorrelateParamsDict = _VRadialCorrelateParamsDictNoTag | VRadialCorrelateParamsDictTagged
 
 
 class VRadialCorrelateOutputs(typing.NamedTuple):

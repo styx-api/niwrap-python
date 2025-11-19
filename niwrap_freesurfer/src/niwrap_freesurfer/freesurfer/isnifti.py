@@ -13,14 +13,14 @@ ISNIFTI_METADATA = Metadata(
 )
 
 
-IsniftiParamsDict = typing.TypedDict('IsniftiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/isnifti"]],
+_IsniftiParamsDictNoTag = typing.TypedDict('_IsniftiParamsDictNoTag', {
     "infile": InputPathType,
 })
 IsniftiParamsDictTagged = typing.TypedDict('IsniftiParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isnifti"],
     "infile": InputPathType,
 })
+IsniftiParamsDict = _IsniftiParamsDictNoTag | IsniftiParamsDictTagged
 
 
 class IsniftiOutputs(typing.NamedTuple):

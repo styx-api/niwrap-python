@@ -13,8 +13,7 @@ FSREAD_ANNOT_METADATA = Metadata(
 )
 
 
-FsreadAnnotParamsDict = typing.TypedDict('FsreadAnnotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/FSread_annot"]],
+_FsreadAnnotParamsDictNoTag = typing.TypedDict('_FsreadAnnotParamsDictNoTag', {
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
     "fscmap": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ FsreadAnnotParamsDictTagged = typing.TypedDict('FsreadAnnotParamsDictTagged', {
     "dset": typing.NotRequired[str | None],
     "help": bool,
 })
+FsreadAnnotParamsDict = _FsreadAnnotParamsDictNoTag | FsreadAnnotParamsDictTagged
 
 
 class FsreadAnnotOutputs(typing.NamedTuple):

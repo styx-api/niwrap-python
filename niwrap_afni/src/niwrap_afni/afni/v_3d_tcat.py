@@ -13,8 +13,7 @@ V_3D_TCAT_METADATA = Metadata(
 )
 
 
-V3dTcatParamsDict = typing.TypedDict('V3dTcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTcat"]],
+_V3dTcatParamsDictNoTag = typing.TypedDict('_V3dTcatParamsDictNoTag', {
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ V3dTcatParamsDictTagged = typing.TypedDict('V3dTcatParamsDictTagged', {
     "num_threads": typing.NotRequired[int | None],
     "verbose": bool,
 })
+V3dTcatParamsDict = _V3dTcatParamsDictNoTag | V3dTcatParamsDictTagged
 
 
 class V3dTcatOutputs(typing.NamedTuple):

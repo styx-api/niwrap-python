@@ -13,8 +13,7 @@ MRIS_REMOVE_NEGATIVE_VERTICES_METADATA = Metadata(
 )
 
 
-MrisRemoveNegativeVerticesParamsDict = typing.TypedDict('MrisRemoveNegativeVerticesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_negative_vertices"]],
+_MrisRemoveNegativeVerticesParamsDictNoTag = typing.TypedDict('_MrisRemoveNegativeVerticesParamsDictNoTag', {
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
@@ -25,6 +24,7 @@ MrisRemoveNegativeVerticesParamsDictTagged = typing.TypedDict('MrisRemoveNegativ
     "patch_file": InputPathType,
     "output_patch": str,
 })
+MrisRemoveNegativeVerticesParamsDict = _MrisRemoveNegativeVerticesParamsDictNoTag | MrisRemoveNegativeVerticesParamsDictTagged
 
 
 class MrisRemoveNegativeVerticesOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ ROTCOM_METADATA = Metadata(
 )
 
 
-RotcomParamsDict = typing.TypedDict('RotcomParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/rotcom"]],
+_RotcomParamsDictNoTag = typing.TypedDict('_RotcomParamsDictNoTag', {
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })
@@ -23,6 +22,7 @@ RotcomParamsDictTagged = typing.TypedDict('RotcomParamsDictTagged', {
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })
+RotcomParamsDict = _RotcomParamsDictNoTag | RotcomParamsDictTagged
 
 
 class RotcomOutputs(typing.NamedTuple):

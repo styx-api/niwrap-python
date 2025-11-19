@@ -13,8 +13,7 @@ MRI_GTMPVC_METADATA = Metadata(
 )
 
 
-MriGtmpvcParamsDict = typing.TypedDict('MriGtmpvcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmpvc"]],
+_MriGtmpvcParamsDictNoTag = typing.TypedDict('_MriGtmpvcParamsDictNoTag', {
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
     "psf": float,
@@ -143,6 +142,7 @@ MriGtmpvcParamsDictTagged = typing.TypedDict('MriGtmpvcParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MriGtmpvcParamsDict = _MriGtmpvcParamsDictNoTag | MriGtmpvcParamsDictTagged
 
 
 class MriGtmpvcOutputs(typing.NamedTuple):

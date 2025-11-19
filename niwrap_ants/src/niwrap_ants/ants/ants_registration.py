@@ -13,18 +13,17 @@ ANTS_REGISTRATION_METADATA = Metadata(
 )
 
 
-AntsRegistrationInitialMovingTransformParamsDict = typing.TypedDict('AntsRegistrationInitialMovingTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["initial_moving_transform"]],
+_AntsRegistrationInitialMovingTransformParamsDictNoTag = typing.TypedDict('_AntsRegistrationInitialMovingTransformParamsDictNoTag', {
     "initial_moving_transform": InputPathType,
 })
 AntsRegistrationInitialMovingTransformParamsDictTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformParamsDictTagged', {
     "@type": typing.Literal["initial_moving_transform"],
     "initial_moving_transform": InputPathType,
 })
+AntsRegistrationInitialMovingTransformParamsDict = _AntsRegistrationInitialMovingTransformParamsDictNoTag | AntsRegistrationInitialMovingTransformParamsDictTagged
 
 
-AntsRegistrationInitialMovingTransformUseInverseParamsDict = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["initial_moving_transform_use_inverse"]],
+_AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag = typing.TypedDict('_AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag', {
     "initial_moving_transform": InputPathType,
     "use_inverse": typing.NotRequired[bool | None],
 })
@@ -33,10 +32,10 @@ AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged = typing.TypedD
     "initial_moving_transform": InputPathType,
     "use_inverse": typing.NotRequired[bool | None],
 })
+AntsRegistrationInitialMovingTransformUseInverseParamsDict = _AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag | AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged
 
 
-AntsRegistrationInitialMovingTransformInitializationFeatureParamsDict = typing.TypedDict('AntsRegistrationInitialMovingTransformInitializationFeatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["initial_moving_transform_initialization_feature"]],
+_AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictNoTag = typing.TypedDict('_AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictNoTag', {
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initialization_feature": typing.Literal[0, 1, 2],
@@ -47,60 +46,60 @@ AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictTagged = ty
     "moving_image": InputPathType,
     "initialization_feature": typing.Literal[0, 1, 2],
 })
+AntsRegistrationInitialMovingTransformInitializationFeatureParamsDict = _AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictNoTag | AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictTagged
 
 
-AntsRegistrationTransformRigidParamsDict = typing.TypedDict('AntsRegistrationTransformRigidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_rigid"]],
+_AntsRegistrationTransformRigidParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformRigidParamsDictNoTag', {
     "gradient_step": float,
 })
 AntsRegistrationTransformRigidParamsDictTagged = typing.TypedDict('AntsRegistrationTransformRigidParamsDictTagged', {
     "@type": typing.Literal["transform_rigid"],
     "gradient_step": float,
 })
+AntsRegistrationTransformRigidParamsDict = _AntsRegistrationTransformRigidParamsDictNoTag | AntsRegistrationTransformRigidParamsDictTagged
 
 
-AntsRegistrationTransformAffineParamsDict = typing.TypedDict('AntsRegistrationTransformAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_affine"]],
+_AntsRegistrationTransformAffineParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformAffineParamsDictNoTag', {
     "gradient_step": float,
 })
 AntsRegistrationTransformAffineParamsDictTagged = typing.TypedDict('AntsRegistrationTransformAffineParamsDictTagged', {
     "@type": typing.Literal["transform_affine"],
     "gradient_step": float,
 })
+AntsRegistrationTransformAffineParamsDict = _AntsRegistrationTransformAffineParamsDictNoTag | AntsRegistrationTransformAffineParamsDictTagged
 
 
-AntsRegistrationTransformCompositeAffineParamsDict = typing.TypedDict('AntsRegistrationTransformCompositeAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_composite_affine"]],
+_AntsRegistrationTransformCompositeAffineParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformCompositeAffineParamsDictNoTag', {
     "gradient_step": float,
 })
 AntsRegistrationTransformCompositeAffineParamsDictTagged = typing.TypedDict('AntsRegistrationTransformCompositeAffineParamsDictTagged', {
     "@type": typing.Literal["transform_composite_affine"],
     "gradient_step": float,
 })
+AntsRegistrationTransformCompositeAffineParamsDict = _AntsRegistrationTransformCompositeAffineParamsDictNoTag | AntsRegistrationTransformCompositeAffineParamsDictTagged
 
 
-AntsRegistrationTransformSimilarityParamsDict = typing.TypedDict('AntsRegistrationTransformSimilarityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_similarity"]],
+_AntsRegistrationTransformSimilarityParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformSimilarityParamsDictNoTag', {
     "gradient_step": float,
 })
 AntsRegistrationTransformSimilarityParamsDictTagged = typing.TypedDict('AntsRegistrationTransformSimilarityParamsDictTagged', {
     "@type": typing.Literal["transform_similarity"],
     "gradient_step": float,
 })
+AntsRegistrationTransformSimilarityParamsDict = _AntsRegistrationTransformSimilarityParamsDictNoTag | AntsRegistrationTransformSimilarityParamsDictTagged
 
 
-AntsRegistrationTransformTranslationParamsDict = typing.TypedDict('AntsRegistrationTransformTranslationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_translation"]],
+_AntsRegistrationTransformTranslationParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformTranslationParamsDictNoTag', {
     "gradient_step": float,
 })
 AntsRegistrationTransformTranslationParamsDictTagged = typing.TypedDict('AntsRegistrationTransformTranslationParamsDictTagged', {
     "@type": typing.Literal["transform_translation"],
     "gradient_step": float,
 })
+AntsRegistrationTransformTranslationParamsDict = _AntsRegistrationTransformTranslationParamsDictNoTag | AntsRegistrationTransformTranslationParamsDictTagged
 
 
-AntsRegistrationTransformBsplineParamsDict = typing.TypedDict('AntsRegistrationTransformBsplineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_bspline"]],
+_AntsRegistrationTransformBsplineParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineParamsDictNoTag', {
     "gradient_step": float,
     "mesh_size_at_base_level": float,
 })
@@ -109,10 +108,10 @@ AntsRegistrationTransformBsplineParamsDictTagged = typing.TypedDict('AntsRegistr
     "gradient_step": float,
     "mesh_size_at_base_level": float,
 })
+AntsRegistrationTransformBsplineParamsDict = _AntsRegistrationTransformBsplineParamsDictNoTag | AntsRegistrationTransformBsplineParamsDictTagged
 
 
-AntsRegistrationTransformGaussianDisplacementFieldParamsDict = typing.TypedDict('AntsRegistrationTransformGaussianDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_gaussian_displacement_field"]],
+_AntsRegistrationTransformGaussianDisplacementFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformGaussianDisplacementFieldParamsDictNoTag', {
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -123,10 +122,10 @@ AntsRegistrationTransformGaussianDisplacementFieldParamsDictTagged = typing.Type
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
 })
+AntsRegistrationTransformGaussianDisplacementFieldParamsDict = _AntsRegistrationTransformGaussianDisplacementFieldParamsDictNoTag | AntsRegistrationTransformGaussianDisplacementFieldParamsDictTagged
 
 
-AntsRegistrationTransformBsplineDisplacementFieldParamsDict = typing.TypedDict('AntsRegistrationTransformBsplineDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_bspline_displacement_field"]],
+_AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -139,10 +138,10 @@ AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged = typing.Typed
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
     "spline_order": typing.NotRequired[float | None],
 })
+AntsRegistrationTransformBsplineDisplacementFieldParamsDict = _AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag | AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged
 
 
-AntsRegistrationTransformTimeVaryingVelocityFieldParamsDict = typing.TypedDict('AntsRegistrationTransformTimeVaryingVelocityFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_time_varying_velocity_field"]],
+_AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictNoTag', {
     "gradient_step": float,
     "number_of_time_indices": float,
     "update_field_variance_in_voxel_space": float,
@@ -159,10 +158,10 @@ AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged = typing.Typed
     "total_field_variance_in_voxel_space": float,
     "total_field_time_variance": float,
 })
+AntsRegistrationTransformTimeVaryingVelocityFieldParamsDict = _AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictNoTag | AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged
 
 
-AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDict = typing.TypedDict('AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_time_varying_bspline_velocity_field"]],
+_AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag', {
     "gradient_step": float,
     "velocity_field_mesh_size": float,
     "number_of_time_point_samples": typing.NotRequired[float | None],
@@ -175,10 +174,10 @@ AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged = typin
     "number_of_time_point_samples": typing.NotRequired[float | None],
     "spline_order": typing.NotRequired[float | None],
 })
+AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDict = _AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag | AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged
 
 
-AntsRegistrationTransformSynParamsDict = typing.TypedDict('AntsRegistrationTransformSynParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_syn"]],
+_AntsRegistrationTransformSynParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformSynParamsDictNoTag', {
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -189,10 +188,10 @@ AntsRegistrationTransformSynParamsDictTagged = typing.TypedDict('AntsRegistratio
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
 })
+AntsRegistrationTransformSynParamsDict = _AntsRegistrationTransformSynParamsDictNoTag | AntsRegistrationTransformSynParamsDictTagged
 
 
-AntsRegistrationTransformBsplineSynParamsDict = typing.TypedDict('AntsRegistrationTransformBsplineSynParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_bspline_syn"]],
+_AntsRegistrationTransformBsplineSynParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineSynParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -205,10 +204,10 @@ AntsRegistrationTransformBsplineSynParamsDictTagged = typing.TypedDict('AntsRegi
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
     "spline_order": typing.NotRequired[float | None],
 })
+AntsRegistrationTransformBsplineSynParamsDict = _AntsRegistrationTransformBsplineSynParamsDictNoTag | AntsRegistrationTransformBsplineSynParamsDictTagged
 
 
-AntsRegistrationTransformExponentialParamsDict = typing.TypedDict('AntsRegistrationTransformExponentialParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_exponential"]],
+_AntsRegistrationTransformExponentialParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformExponentialParamsDictNoTag', {
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "velocity_field_variance_in_voxel_space": float,
@@ -221,10 +220,10 @@ AntsRegistrationTransformExponentialParamsDictTagged = typing.TypedDict('AntsReg
     "velocity_field_variance_in_voxel_space": float,
     "number_of_integration_steps": float,
 })
+AntsRegistrationTransformExponentialParamsDict = _AntsRegistrationTransformExponentialParamsDictNoTag | AntsRegistrationTransformExponentialParamsDictTagged
 
 
-AntsRegistrationTransformBsplineExponentialParamsDict = typing.TypedDict('AntsRegistrationTransformBsplineExponentialParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform_bspline_exponential"]],
+_AntsRegistrationTransformBsplineExponentialParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineExponentialParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -239,10 +238,10 @@ AntsRegistrationTransformBsplineExponentialParamsDictTagged = typing.TypedDict('
     "number_of_integration_steps": typing.NotRequired[float | None],
     "spline_order": typing.NotRequired[float | None],
 })
+AntsRegistrationTransformBsplineExponentialParamsDict = _AntsRegistrationTransformBsplineExponentialParamsDictNoTag | AntsRegistrationTransformBsplineExponentialParamsDictTagged
 
 
-AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDict = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_ants_neighbourhood_cross_correlation"]],
+_AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -261,10 +260,10 @@ AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged = typing
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDict = _AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag | AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged
 
 
-AntsRegistrationMetricMutualInformationParamsDict = typing.TypedDict('AntsRegistrationMetricMutualInformationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_mutual_information"]],
+_AntsRegistrationMetricMutualInformationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMutualInformationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -283,10 +282,10 @@ AntsRegistrationMetricMutualInformationParamsDictTagged = typing.TypedDict('Ants
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricMutualInformationParamsDict = _AntsRegistrationMetricMutualInformationParamsDictNoTag | AntsRegistrationMetricMutualInformationParamsDictTagged
 
 
-AntsRegistrationMetricMattesParamsDict = typing.TypedDict('AntsRegistrationMetricMattesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_mattes"]],
+_AntsRegistrationMetricMattesParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMattesParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -305,10 +304,10 @@ AntsRegistrationMetricMattesParamsDictTagged = typing.TypedDict('AntsRegistratio
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricMattesParamsDict = _AntsRegistrationMetricMattesParamsDictNoTag | AntsRegistrationMetricMattesParamsDictTagged
 
 
-AntsRegistrationMetricMeanSquaresParamsDict = typing.TypedDict('AntsRegistrationMetricMeanSquaresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_mean_squares"]],
+_AntsRegistrationMetricMeanSquaresParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMeanSquaresParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -327,10 +326,10 @@ AntsRegistrationMetricMeanSquaresParamsDictTagged = typing.TypedDict('AntsRegist
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricMeanSquaresParamsDict = _AntsRegistrationMetricMeanSquaresParamsDictNoTag | AntsRegistrationMetricMeanSquaresParamsDictTagged
 
 
-AntsRegistrationMetricDemonsParamsDict = typing.TypedDict('AntsRegistrationMetricDemonsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_demons"]],
+_AntsRegistrationMetricDemonsParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricDemonsParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -349,10 +348,10 @@ AntsRegistrationMetricDemonsParamsDictTagged = typing.TypedDict('AntsRegistratio
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricDemonsParamsDict = _AntsRegistrationMetricDemonsParamsDictNoTag | AntsRegistrationMetricDemonsParamsDictTagged
 
 
-AntsRegistrationMetricGlobalCorrelationParamsDict = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_global_correlation"]],
+_AntsRegistrationMetricGlobalCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricGlobalCorrelationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -371,10 +370,10 @@ AntsRegistrationMetricGlobalCorrelationParamsDictTagged = typing.TypedDict('Ants
     "sampling_percentage": typing.NotRequired[float | None],
     "use_gradient_filter": typing.NotRequired[bool | None],
 })
+AntsRegistrationMetricGlobalCorrelationParamsDict = _AntsRegistrationMetricGlobalCorrelationParamsDictNoTag | AntsRegistrationMetricGlobalCorrelationParamsDictTagged
 
 
-AntsRegistrationMetricEuclideanIcpParamsDict = typing.TypedDict('AntsRegistrationMetricEuclideanIcpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_euclidean_icp"]],
+_AntsRegistrationMetricEuclideanIcpParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricEuclideanIcpParamsDictNoTag', {
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -389,10 +388,10 @@ AntsRegistrationMetricEuclideanIcpParamsDictTagged = typing.TypedDict('AntsRegis
     "sampling_percentage": typing.NotRequired[float | None],
     "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
 })
+AntsRegistrationMetricEuclideanIcpParamsDict = _AntsRegistrationMetricEuclideanIcpParamsDictNoTag | AntsRegistrationMetricEuclideanIcpParamsDictTagged
 
 
-AntsRegistrationMetricPointSetExpectationParamsDict = typing.TypedDict('AntsRegistrationMetricPointSetExpectationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_point_set_expectation"]],
+_AntsRegistrationMetricPointSetExpectationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricPointSetExpectationParamsDictNoTag', {
     "metric_weight": float,
     "point_set_sigma": typing.NotRequired[float | None],
     "sampling_percentage": typing.NotRequired[float | None],
@@ -403,10 +402,10 @@ AntsRegistrationMetricPointSetExpectationParamsDictTagged = typing.TypedDict('An
     "point_set_sigma": typing.NotRequired[float | None],
     "sampling_percentage": typing.NotRequired[float | None],
 })
+AntsRegistrationMetricPointSetExpectationParamsDict = _AntsRegistrationMetricPointSetExpectationParamsDictNoTag | AntsRegistrationMetricPointSetExpectationParamsDictTagged
 
 
-AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDict = typing.TypedDict('AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_jensen_havrda_charvet_tsallis"]],
+_AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag', {
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -425,18 +424,17 @@ AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged = typing.TypedD
     "point_set_sigma": typing.NotRequired[float | None],
     "k_neighborhood": typing.NotRequired[float | None],
 })
+AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDict = _AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag | AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged
 
 
-AntsRegistrationMetricIgdmParamsDict = typing.TypedDict('AntsRegistrationMetricIgdmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["metric_igdm"]],
-})
+_AntsRegistrationMetricIgdmParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricIgdmParamsDictNoTag', {})
 AntsRegistrationMetricIgdmParamsDictTagged = typing.TypedDict('AntsRegistrationMetricIgdmParamsDictTagged', {
     "@type": typing.Literal["metric_igdm"],
 })
+AntsRegistrationMetricIgdmParamsDict = _AntsRegistrationMetricIgdmParamsDictNoTag | AntsRegistrationMetricIgdmParamsDictTagged
 
 
-AntsRegistrationConvergenceParamsDict = typing.TypedDict('AntsRegistrationConvergenceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["convergence"]],
+_AntsRegistrationConvergenceParamsDictNoTag = typing.TypedDict('_AntsRegistrationConvergenceParamsDictNoTag', {
     "convergence": str,
     "convergence_threshold": float,
     "convergence_window_size": int,
@@ -447,10 +445,10 @@ AntsRegistrationConvergenceParamsDictTagged = typing.TypedDict('AntsRegistration
     "convergence_threshold": float,
     "convergence_window_size": int,
 })
+AntsRegistrationConvergenceParamsDict = _AntsRegistrationConvergenceParamsDictNoTag | AntsRegistrationConvergenceParamsDictTagged
 
 
-AntsRegistrationStageParamsDict = typing.TypedDict('AntsRegistrationStageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["stage"]],
+_AntsRegistrationStageParamsDictNoTag = typing.TypedDict('_AntsRegistrationStageParamsDictNoTag', {
     "transform": typing.Union[AntsRegistrationTransformRigidParamsDictTagged, AntsRegistrationTransformAffineParamsDictTagged, AntsRegistrationTransformCompositeAffineParamsDictTagged, AntsRegistrationTransformSimilarityParamsDictTagged, AntsRegistrationTransformTranslationParamsDictTagged, AntsRegistrationTransformBsplineParamsDictTagged, AntsRegistrationTransformGaussianDisplacementFieldParamsDictTagged, AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged, AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged, AntsRegistrationTransformSynParamsDictTagged, AntsRegistrationTransformBsplineSynParamsDictTagged, AntsRegistrationTransformExponentialParamsDictTagged, AntsRegistrationTransformBsplineExponentialParamsDictTagged],
     "metric": typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged, AntsRegistrationMetricMutualInformationParamsDictTagged, AntsRegistrationMetricMattesParamsDictTagged, AntsRegistrationMetricMeanSquaresParamsDictTagged, AntsRegistrationMetricDemonsParamsDictTagged, AntsRegistrationMetricGlobalCorrelationParamsDictTagged, AntsRegistrationMetricEuclideanIcpParamsDictTagged, AntsRegistrationMetricPointSetExpectationParamsDictTagged, AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged, AntsRegistrationMetricIgdmParamsDictTagged],
     "convergence": AntsRegistrationConvergenceParamsDict,
@@ -467,10 +465,10 @@ AntsRegistrationStageParamsDictTagged = typing.TypedDict('AntsRegistrationStageP
     "shrink_factors": str,
     "use_histogram_matching": typing.NotRequired[bool | None],
 })
+AntsRegistrationStageParamsDict = _AntsRegistrationStageParamsDictNoTag | AntsRegistrationStageParamsDictTagged
 
 
-AntsRegistrationWinsorizeImageIntensitiesParamsDict = typing.TypedDict('AntsRegistrationWinsorizeImageIntensitiesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["winsorize_image_intensities"]],
+_AntsRegistrationWinsorizeImageIntensitiesParamsDictNoTag = typing.TypedDict('_AntsRegistrationWinsorizeImageIntensitiesParamsDictNoTag', {
     "lower_quantile": float,
     "upper_quantile": float,
 })
@@ -479,10 +477,10 @@ AntsRegistrationWinsorizeImageIntensitiesParamsDictTagged = typing.TypedDict('An
     "lower_quantile": float,
     "upper_quantile": float,
 })
+AntsRegistrationWinsorizeImageIntensitiesParamsDict = _AntsRegistrationWinsorizeImageIntensitiesParamsDictNoTag | AntsRegistrationWinsorizeImageIntensitiesParamsDictTagged
 
 
-AntsRegistrationMasksParamsDict = typing.TypedDict('AntsRegistrationMasksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["masks"]],
+_AntsRegistrationMasksParamsDictNoTag = typing.TypedDict('_AntsRegistrationMasksParamsDictNoTag', {
     "fixed_mask": typing.NotRequired[str | None],
     "moving_mask": typing.NotRequired[str | None],
 })
@@ -491,10 +489,10 @@ AntsRegistrationMasksParamsDictTagged = typing.TypedDict('AntsRegistrationMasksP
     "fixed_mask": typing.NotRequired[str | None],
     "moving_mask": typing.NotRequired[str | None],
 })
+AntsRegistrationMasksParamsDict = _AntsRegistrationMasksParamsDictNoTag | AntsRegistrationMasksParamsDictTagged
 
 
-AntsRegistrationParamsDict = typing.TypedDict('AntsRegistrationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsRegistration"]],
+_AntsRegistrationParamsDictNoTag = typing.TypedDict('_AntsRegistrationParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "output": typing.NotRequired[str | None],
     "save_state": typing.NotRequired[str | None],
@@ -539,6 +537,7 @@ AntsRegistrationParamsDictTagged = typing.TypedDict('AntsRegistrationParamsDictT
     "verbose": typing.NotRequired[bool | None],
     "float": typing.NotRequired[bool | None],
 })
+AntsRegistrationParamsDict = _AntsRegistrationParamsDictNoTag | AntsRegistrationParamsDictTagged
 
 
 def ants_registration_initial_moving_transform_cargs_dyn_fn(

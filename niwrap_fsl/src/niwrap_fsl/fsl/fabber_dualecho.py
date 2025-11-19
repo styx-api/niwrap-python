@@ -13,8 +13,7 @@ FABBER_DUALECHO_METADATA = Metadata(
 )
 
 
-FabberDualechoParamsDict = typing.TypedDict('FabberDualechoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dualecho"]],
+_FabberDualechoParamsDictNoTag = typing.TypedDict('_FabberDualechoParamsDictNoTag', {
     "output_directory": str,
     "method": str,
     "model": str,
@@ -89,6 +88,7 @@ FabberDualechoParamsDictTagged = typing.TypedDict('FabberDualechoParamsDictTagge
     "save_free_energy_flag": bool,
     "debug_flag": bool,
 })
+FabberDualechoParamsDict = _FabberDualechoParamsDictNoTag | FabberDualechoParamsDictTagged
 
 
 class FabberDualechoOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 )
 
 
-MriComputeVolumeFractionsParamsDict = typing.TypedDict('MriComputeVolumeFractionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_volume_fractions"]],
+_MriComputeVolumeFractionsParamsDictNoTag = typing.TypedDict('_MriComputeVolumeFractionsParamsDictNoTag', {
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
     "regheader": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ MriComputeVolumeFractionsParamsDictTagged = typing.TypedDict('MriComputeVolumeFr
     "debug": bool,
     "checkopts": bool,
 })
+MriComputeVolumeFractionsParamsDict = _MriComputeVolumeFractionsParamsDictNoTag | MriComputeVolumeFractionsParamsDictTagged
 
 
 class MriComputeVolumeFractionsOutputs(typing.NamedTuple):

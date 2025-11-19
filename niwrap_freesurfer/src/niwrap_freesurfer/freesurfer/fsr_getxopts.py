@@ -13,14 +13,14 @@ FSR_GETXOPTS_METADATA = Metadata(
 )
 
 
-FsrGetxoptsParamsDict = typing.TypedDict('FsrGetxoptsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-getxopts"]],
+_FsrGetxoptsParamsDictNoTag = typing.TypedDict('_FsrGetxoptsParamsDictNoTag', {
     "help": bool,
 })
 FsrGetxoptsParamsDictTagged = typing.TypedDict('FsrGetxoptsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsr-getxopts"],
     "help": bool,
 })
+FsrGetxoptsParamsDict = _FsrGetxoptsParamsDictNoTag | FsrGetxoptsParamsDictTagged
 
 
 class FsrGetxoptsOutputs(typing.NamedTuple):

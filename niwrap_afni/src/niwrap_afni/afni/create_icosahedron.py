@@ -13,8 +13,7 @@ CREATE_ICOSAHEDRON_METADATA = Metadata(
 )
 
 
-CreateIcosahedronParamsDict = typing.TypedDict('CreateIcosahedronParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/CreateIcosahedron"]],
+_CreateIcosahedronParamsDictNoTag = typing.TypedDict('_CreateIcosahedronParamsDictNoTag', {
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ CreateIcosahedronParamsDictTagged = typing.TypedDict('CreateIcosahedronParamsDic
     "output_prefix": typing.NotRequired[str | None],
     "help": bool,
 })
+CreateIcosahedronParamsDict = _CreateIcosahedronParamsDictNoTag | CreateIcosahedronParamsDictTagged
 
 
 class CreateIcosahedronOutputs(typing.NamedTuple):

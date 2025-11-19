@@ -13,14 +13,14 @@ V__FLOAT_FIX_METADATA = Metadata(
 )
 
 
-VFloatFixParamsDict = typing.TypedDict('VFloatFixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@float_fix"]],
+_VFloatFixParamsDictNoTag = typing.TypedDict('_VFloatFixParamsDictNoTag', {
     "input_files": list[InputPathType],
 })
 VFloatFixParamsDictTagged = typing.TypedDict('VFloatFixParamsDictTagged', {
     "@type": typing.Literal["afni/@float_fix"],
     "input_files": list[InputPathType],
 })
+VFloatFixParamsDict = _VFloatFixParamsDictNoTag | VFloatFixParamsDictTagged
 
 
 class VFloatFixOutputs(typing.NamedTuple):

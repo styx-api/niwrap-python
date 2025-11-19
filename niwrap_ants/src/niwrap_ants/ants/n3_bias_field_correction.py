@@ -13,8 +13,7 @@ N3_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 )
 
 
-N3BiasFieldCorrectionParamsDict = typing.TypedDict('N3BiasFieldCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/N3BiasFieldCorrection"]],
+_N3BiasFieldCorrectionParamsDictNoTag = typing.TypedDict('_N3BiasFieldCorrectionParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -41,6 +40,7 @@ N3BiasFieldCorrectionParamsDictTagged = typing.TypedDict('N3BiasFieldCorrectionP
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
+N3BiasFieldCorrectionParamsDict = _N3BiasFieldCorrectionParamsDictNoTag | N3BiasFieldCorrectionParamsDictTagged
 
 
 class N3BiasFieldCorrectionOutputs(typing.NamedTuple):

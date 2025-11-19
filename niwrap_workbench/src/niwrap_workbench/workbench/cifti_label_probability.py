@@ -12,8 +12,7 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-CiftiLabelProbabilityParamsDict = typing.TypedDict('CiftiLabelProbabilityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-probability"]],
+_CiftiLabelProbabilityParamsDictNoTag = typing.TypedDict('_CiftiLabelProbabilityParamsDictNoTag', {
     "probability-dscalar-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
@@ -24,6 +23,7 @@ CiftiLabelProbabilityParamsDictTagged = typing.TypedDict('CiftiLabelProbabilityP
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
+CiftiLabelProbabilityParamsDict = _CiftiLabelProbabilityParamsDictNoTag | CiftiLabelProbabilityParamsDictTagged
 
 
 class CiftiLabelProbabilityOutputs(typing.NamedTuple):

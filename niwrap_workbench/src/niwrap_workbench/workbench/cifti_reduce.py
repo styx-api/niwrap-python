@@ -12,8 +12,7 @@ CIFTI_REDUCE_METADATA = Metadata(
 )
 
 
-CiftiReduceExcludeOutliersParamsDict = typing.TypedDict('CiftiReduceExcludeOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+_CiftiReduceExcludeOutliersParamsDictNoTag = typing.TypedDict('_CiftiReduceExcludeOutliersParamsDictNoTag', {
     "sigma-below": float,
     "sigma-above": float,
 })
@@ -22,10 +21,10 @@ CiftiReduceExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiReduceExclud
     "sigma-below": float,
     "sigma-above": float,
 })
+CiftiReduceExcludeOutliersParamsDict = _CiftiReduceExcludeOutliersParamsDictNoTag | CiftiReduceExcludeOutliersParamsDictTagged
 
 
-CiftiReduceParamsDict = typing.TypedDict('CiftiReduceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-reduce"]],
+_CiftiReduceParamsDictNoTag = typing.TypedDict('_CiftiReduceParamsDictNoTag', {
     "cifti-out": str,
     "direction": typing.NotRequired[str | None],
     "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParamsDict | None],
@@ -42,6 +41,7 @@ CiftiReduceParamsDictTagged = typing.TypedDict('CiftiReduceParamsDictTagged', {
     "cifti-in": InputPathType,
     "operation": str,
 })
+CiftiReduceParamsDict = _CiftiReduceParamsDictNoTag | CiftiReduceParamsDictTagged
 
 
 def cifti_reduce_exclude_outliers(

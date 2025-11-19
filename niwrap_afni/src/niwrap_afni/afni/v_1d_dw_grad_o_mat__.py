@@ -13,8 +13,7 @@ V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
 )
 
 
-V1dDwGradOMatParamsDict = typing.TypedDict('V1dDwGradOMatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dDW_Grad_o_Mat++"]],
+_V1dDwGradOMatParamsDictNoTag = typing.TypedDict('_V1dDwGradOMatParamsDictNoTag', {
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
     "in_col_matA": InputPathType,
@@ -61,6 +60,7 @@ V1dDwGradOMatParamsDictTagged = typing.TypedDict('V1dDwGradOMatParamsDictTagged'
     "put_zeros_top": bool,
     "bmax_ref": typing.NotRequired[float | None],
 })
+V1dDwGradOMatParamsDict = _V1dDwGradOMatParamsDictNoTag | V1dDwGradOMatParamsDictTagged
 
 
 class V1dDwGradOMatOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ GET_AFNI_MODEL_PRF_6_METADATA = Metadata(
 )
 
 
-GetAfniModelPrf6ParamsDict = typing.TypedDict('GetAfniModelPrf6ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF_6"]],
+_GetAfniModelPrf6ParamsDictNoTag = typing.TypedDict('_GetAfniModelPrf6ParamsDictNoTag', {
     "NT": float,
     "AMP": float,
     "X": float,
@@ -33,6 +32,7 @@ GetAfniModelPrf6ParamsDictTagged = typing.TypedDict('GetAfniModelPrf6ParamsDictT
     "SIGRAT": float,
     "THETA": float,
 })
+GetAfniModelPrf6ParamsDict = _GetAfniModelPrf6ParamsDictNoTag | GetAfniModelPrf6ParamsDictTagged
 
 
 class GetAfniModelPrf6Outputs(typing.NamedTuple):

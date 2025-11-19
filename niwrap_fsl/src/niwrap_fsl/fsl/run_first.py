@@ -13,8 +13,7 @@ RUN_FIRST_METADATA = Metadata(
 )
 
 
-RunFirstParamsDict = typing.TypedDict('RunFirstParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/run_first"]],
+_RunFirstParamsDictNoTag = typing.TypedDict('_RunFirstParamsDictNoTag', {
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
     "n_modes": float,
@@ -37,6 +36,7 @@ RunFirstParamsDictTagged = typing.TypedDict('RunFirstParamsDictTagged', {
     "load_bvars": typing.NotRequired[InputPathType | None],
     "multiple_images_flag": bool,
 })
+RunFirstParamsDict = _RunFirstParamsDictNoTag | RunFirstParamsDictTagged
 
 
 class RunFirstOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ LABEL2FLAT_METADATA = Metadata(
 )
 
 
-Label2flatParamsDict = typing.TypedDict('Label2flatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label2flat"]],
+_Label2flatParamsDictNoTag = typing.TypedDict('_Label2flatParamsDictNoTag', {
     "subject_name": str,
     "label_file": InputPathType,
     "patch_file": InputPathType,
@@ -27,6 +26,7 @@ Label2flatParamsDictTagged = typing.TypedDict('Label2flatParamsDictTagged', {
     "patch_file": InputPathType,
     "output_file": str,
 })
+Label2flatParamsDict = _Label2flatParamsDictNoTag | Label2flatParamsDictTagged
 
 
 class Label2flatOutputs(typing.NamedTuple):

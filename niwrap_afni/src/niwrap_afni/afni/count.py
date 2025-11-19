@@ -13,8 +13,7 @@ COUNT_METADATA = Metadata(
 )
 
 
-CountParamsDict = typing.TypedDict('CountParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/count"]],
+_CountParamsDictNoTag = typing.TypedDict('_CountParamsDictNoTag', {
     "bot": str,
     "top": str,
     "step": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ CountParamsDictTagged = typing.TypedDict('CountParamsDictTagged', {
     "comma": bool,
     "skipnmodm": typing.NotRequired[str | None],
 })
+CountParamsDict = _CountParamsDictNoTag | CountParamsDictTagged
 
 
 class CountOutputs(typing.NamedTuple):

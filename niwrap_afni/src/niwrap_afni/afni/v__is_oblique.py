@@ -13,14 +13,14 @@ V__IS_OBLIQUE_METADATA = Metadata(
 )
 
 
-VIsObliqueParamsDict = typing.TypedDict('VIsObliqueParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@isOblique"]],
+_VIsObliqueParamsDictNoTag = typing.TypedDict('_VIsObliqueParamsDictNoTag', {
     "infile": InputPathType,
 })
 VIsObliqueParamsDictTagged = typing.TypedDict('VIsObliqueParamsDictTagged', {
     "@type": typing.Literal["afni/@isOblique"],
     "infile": InputPathType,
 })
+VIsObliqueParamsDict = _VIsObliqueParamsDictNoTag | VIsObliqueParamsDictTagged
 
 
 class VIsObliqueOutputs(typing.NamedTuple):

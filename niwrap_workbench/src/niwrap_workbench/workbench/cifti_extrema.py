@@ -12,8 +12,7 @@ CIFTI_EXTREMA_METADATA = Metadata(
 )
 
 
-CiftiExtremaThresholdParamsDict = typing.TypedDict('CiftiExtremaThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_CiftiExtremaThresholdParamsDictNoTag = typing.TypedDict('_CiftiExtremaThresholdParamsDictNoTag', {
     "low": float,
     "high": float,
 })
@@ -22,10 +21,10 @@ CiftiExtremaThresholdParamsDictTagged = typing.TypedDict('CiftiExtremaThresholdP
     "low": float,
     "high": float,
 })
+CiftiExtremaThresholdParamsDict = _CiftiExtremaThresholdParamsDictNoTag | CiftiExtremaThresholdParamsDictTagged
 
 
-CiftiExtremaParamsDict = typing.TypedDict('CiftiExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-extrema"]],
+_CiftiExtremaParamsDictNoTag = typing.TypedDict('_CiftiExtremaParamsDictNoTag', {
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
@@ -64,6 +63,7 @@ CiftiExtremaParamsDictTagged = typing.TypedDict('CiftiExtremaParamsDictTagged', 
     "volume-distance": float,
     "direction": str,
 })
+CiftiExtremaParamsDict = _CiftiExtremaParamsDictNoTag | CiftiExtremaParamsDictTagged
 
 
 def cifti_extrema_threshold(

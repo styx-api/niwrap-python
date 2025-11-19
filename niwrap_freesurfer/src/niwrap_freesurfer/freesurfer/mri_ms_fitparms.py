@@ -13,8 +13,7 @@ MRI_MS_FITPARMS_METADATA = Metadata(
 )
 
 
-MriMsFitparmsParamsDict = typing.TypedDict('MriMsFitparmsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ms_fitparms"]],
+_MriMsFitparmsParamsDictNoTag = typing.TypedDict('_MriMsFitparmsParamsDictNoTag', {
     "volumes": list[InputPathType],
     "output_dir": str,
     "afi_flag": bool,
@@ -91,6 +90,7 @@ MriMsFitparmsParamsDictTagged = typing.TypedDict('MriMsFitparmsParamsDictTagged'
     "extract_subimage": typing.NotRequired[list[float] | None],
     "window_flag": bool,
 })
+MriMsFitparmsParamsDict = _MriMsFitparmsParamsDictNoTag | MriMsFitparmsParamsDictTagged
 
 
 class MriMsFitparmsOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRIS_ANNOT_DIFF_METADATA = Metadata(
 )
 
 
-MrisAnnotDiffParamsDict = typing.TypedDict('MrisAnnotDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_annot_diff"]],
+_MrisAnnotDiffParamsDictNoTag = typing.TypedDict('_MrisAnnotDiffParamsDictNoTag', {
     "annot1": InputPathType,
     "annot2": InputPathType,
     "diff_ctab": bool,
@@ -27,6 +26,7 @@ MrisAnnotDiffParamsDictTagged = typing.TypedDict('MrisAnnotDiffParamsDictTagged'
     "diff_ctab": bool,
     "verbose": bool,
 })
+MrisAnnotDiffParamsDict = _MrisAnnotDiffParamsDictNoTag | MrisAnnotDiffParamsDictTagged
 
 
 class MrisAnnotDiffOutputs(typing.NamedTuple):

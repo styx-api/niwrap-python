@@ -13,8 +13,7 @@ V_3D_PERIODOGRAM_METADATA = Metadata(
 )
 
 
-V3dPeriodogramParamsDict = typing.TypedDict('V3dPeriodogramParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPeriodogram"]],
+_V3dPeriodogramParamsDictNoTag = typing.TypedDict('_V3dPeriodogramParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
     "nfft": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ V3dPeriodogramParamsDictTagged = typing.TypedDict('V3dPeriodogramParamsDictTagge
     "nfft": typing.NotRequired[float | None],
     "dataset": InputPathType,
 })
+V3dPeriodogramParamsDict = _V3dPeriodogramParamsDictNoTag | V3dPeriodogramParamsDictTagged
 
 
 class V3dPeriodogramOutputs(typing.NamedTuple):

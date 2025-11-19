@@ -13,8 +13,7 @@ MAKE_BIANCA_MASK_METADATA = Metadata(
 )
 
 
-MakeBiancaMaskParamsDict = typing.TypedDict('MakeBiancaMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/make_bianca_mask"]],
+_MakeBiancaMaskParamsDictNoTag = typing.TypedDict('_MakeBiancaMaskParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": str,
     "overlay_flag": bool,
@@ -61,6 +60,7 @@ MakeBiancaMaskParamsDictTagged = typing.TypedDict('MakeBiancaMaskParamsDictTagge
     "verbose_flag": bool,
     "debug_flag": bool,
 })
+MakeBiancaMaskParamsDict = _MakeBiancaMaskParamsDictNoTag | MakeBiancaMaskParamsDictTagged
 
 
 class MakeBiancaMaskOutputs(typing.NamedTuple):

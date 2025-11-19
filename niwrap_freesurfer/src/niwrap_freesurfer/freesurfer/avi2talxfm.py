@@ -13,8 +13,7 @@ AVI2TALXFM_METADATA = Metadata(
 )
 
 
-Avi2talxfmParamsDict = typing.TypedDict('Avi2talxfmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/avi2talxfm"]],
+_Avi2talxfmParamsDictNoTag = typing.TypedDict('_Avi2talxfmParamsDictNoTag', {
     "input_volume": InputPathType,
     "target_volume": InputPathType,
     "vox2vox_transform": InputPathType,
@@ -27,6 +26,7 @@ Avi2talxfmParamsDictTagged = typing.TypedDict('Avi2talxfmParamsDictTagged', {
     "vox2vox_transform": InputPathType,
     "output_xfm": str,
 })
+Avi2talxfmParamsDict = _Avi2talxfmParamsDictNoTag | Avi2talxfmParamsDictTagged
 
 
 class Avi2talxfmOutputs(typing.NamedTuple):

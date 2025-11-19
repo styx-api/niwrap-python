@@ -13,8 +13,7 @@ FS_UPDATE_METADATA = Metadata(
 )
 
 
-FsUpdateParamsDict = typing.TypedDict('FsUpdateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_update"]],
+_FsUpdateParamsDictNoTag = typing.TypedDict('_FsUpdateParamsDictNoTag', {
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
     "help_medium": bool,
@@ -27,6 +26,7 @@ FsUpdateParamsDictTagged = typing.TypedDict('FsUpdateParamsDictTagged', {
     "help_medium": bool,
     "help_long": bool,
 })
+FsUpdateParamsDict = _FsUpdateParamsDictNoTag | FsUpdateParamsDictTagged
 
 
 class FsUpdateOutputs(typing.NamedTuple):

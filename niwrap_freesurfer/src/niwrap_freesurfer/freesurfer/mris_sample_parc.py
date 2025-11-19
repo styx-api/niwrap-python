@@ -13,8 +13,7 @@ MRIS_SAMPLE_PARC_METADATA = Metadata(
 )
 
 
-MrisSampleParcParamsDict = typing.TypedDict('MrisSampleParcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_parc"]],
+_MrisSampleParcParamsDictNoTag = typing.TypedDict('_MrisSampleParcParamsDictNoTag', {
     "subject_name": str,
     "hemisphere": str,
     "parc_name": str,
@@ -65,6 +64,7 @@ MrisSampleParcParamsDictTagged = typing.TypedDict('MrisSampleParcParamsDictTagge
     "help": bool,
     "version": bool,
 })
+MrisSampleParcParamsDict = _MrisSampleParcParamsDictNoTag | MrisSampleParcParamsDictTagged
 
 
 class MrisSampleParcOutputs(typing.NamedTuple):

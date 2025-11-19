@@ -13,8 +13,7 @@ MRIS_LABEL_CALC_METADATA = Metadata(
 )
 
 
-MrisLabelCalcParamsDict = typing.TypedDict('MrisLabelCalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_calc"]],
+_MrisLabelCalcParamsDictNoTag = typing.TypedDict('_MrisLabelCalcParamsDictNoTag', {
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -29,6 +28,7 @@ MrisLabelCalcParamsDictTagged = typing.TypedDict('MrisLabelCalcParamsDictTagged'
     "output": str,
     "iterations": typing.NotRequired[int | None],
 })
+MrisLabelCalcParamsDict = _MrisLabelCalcParamsDictNoTag | MrisLabelCalcParamsDictTagged
 
 
 class MrisLabelCalcOutputs(typing.NamedTuple):

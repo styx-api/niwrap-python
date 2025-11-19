@@ -13,8 +13,7 @@ REGISTER_CSH_METADATA = Metadata(
 )
 
 
-RegisterCshParamsDict = typing.TypedDict('RegisterCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/register.csh"]],
+_RegisterCshParamsDictNoTag = typing.TypedDict('_RegisterCshParamsDictNoTag', {
     "base_image": InputPathType,
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ RegisterCshParamsDictTagged = typing.TypedDict('RegisterCshParamsDictTagged', {
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],
 })
+RegisterCshParamsDict = _RegisterCshParamsDictNoTag | RegisterCshParamsDictTagged
 
 
 class RegisterCshOutputs(typing.NamedTuple):

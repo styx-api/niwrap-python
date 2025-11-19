@@ -13,8 +13,7 @@ MRI_COREG_METADATA = Metadata(
 )
 
 
-MriCoregParamsDict = typing.TypedDict('MriCoregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_coreg"]],
+_MriCoregParamsDictNoTag = typing.TypedDict('_MriCoregParamsDictNoTag', {
     "movvol": InputPathType,
     "refvol": InputPathType,
     "reg": str,
@@ -125,6 +124,7 @@ MriCoregParamsDictTagged = typing.TypedDict('MriCoregParamsDictTagged', {
     "checkopts": bool,
     "version": bool,
 })
+MriCoregParamsDict = _MriCoregParamsDictNoTag | MriCoregParamsDictTagged
 
 
 class MriCoregOutputs(typing.NamedTuple):

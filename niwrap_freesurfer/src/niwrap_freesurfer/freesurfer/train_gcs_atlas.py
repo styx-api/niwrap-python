@@ -13,8 +13,7 @@ TRAIN_GCS_ATLAS_METADATA = Metadata(
 )
 
 
-TrainGcsAtlasParamsDict = typing.TypedDict('TrainGcsAtlasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/train-gcs-atlas"]],
+_TrainGcsAtlasParamsDictNoTag = typing.TypedDict('_TrainGcsAtlasParamsDictNoTag', {
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
     "left_hemi": bool,
@@ -43,6 +42,7 @@ TrainGcsAtlasParamsDictTagged = typing.TypedDict('TrainGcsAtlasParamsDictTagged'
     "aseg_filename": typing.NotRequired[str | None],
     "threads": typing.NotRequired[float | None],
 })
+TrainGcsAtlasParamsDict = _TrainGcsAtlasParamsDictNoTag | TrainGcsAtlasParamsDictTagged
 
 
 class TrainGcsAtlasOutputs(typing.NamedTuple):

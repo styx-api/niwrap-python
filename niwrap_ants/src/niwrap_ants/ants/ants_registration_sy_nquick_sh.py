@@ -13,8 +13,7 @@ ANTS_REGISTRATION_SY_NQUICK_SH_METADATA = Metadata(
 )
 
 
-AntsRegistrationSyNquickShParamsDict = typing.TypedDict('AntsRegistrationSyNquickShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyNQuick.sh"]],
+_AntsRegistrationSyNquickShParamsDictNoTag = typing.TypedDict('_AntsRegistrationSyNquickShParamsDictNoTag', {
     "dimensionality": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -29,6 +28,7 @@ AntsRegistrationSyNquickShParamsDictTagged = typing.TypedDict('AntsRegistrationS
     "output_prefix": str,
     "transform_type": typing.NotRequired[typing.Literal["s", "b"] | None],
 })
+AntsRegistrationSyNquickShParamsDict = _AntsRegistrationSyNquickShParamsDictNoTag | AntsRegistrationSyNquickShParamsDictTagged
 
 
 class AntsRegistrationSyNquickShOutputs(typing.NamedTuple):

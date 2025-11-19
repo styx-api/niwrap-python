@@ -13,8 +13,7 @@ VSM_SMOOTH_METADATA = Metadata(
 )
 
 
-VsmSmoothParamsDict = typing.TypedDict('VsmSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/vsm-smooth"]],
+_VsmSmoothParamsDictNoTag = typing.TypedDict('_VsmSmoothParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "fwhm_value": float,
@@ -27,6 +26,7 @@ VsmSmoothParamsDictTagged = typing.TypedDict('VsmSmoothParamsDictTagged', {
     "fwhm_value": float,
     "temp_dir": str,
 })
+VsmSmoothParamsDict = _VsmSmoothParamsDictNoTag | VsmSmoothParamsDictTagged
 
 
 class VsmSmoothOutputs(typing.NamedTuple):

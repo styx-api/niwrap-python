@@ -13,8 +13,7 @@ MRI_GCUT_METADATA = Metadata(
 )
 
 
-MriGcutParamsDict = typing.TypedDict('MriGcutParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcut"]],
+_MriGcutParamsDictNoTag = typing.TypedDict('_MriGcutParamsDictNoTag', {
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
     "threshold_value": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ MriGcutParamsDictTagged = typing.TypedDict('MriGcutParamsDictTagged', {
     "infile": InputPathType,
     "outfile": str,
 })
+MriGcutParamsDict = _MriGcutParamsDictNoTag | MriGcutParamsDictTagged
 
 
 class MriGcutOutputs(typing.NamedTuple):

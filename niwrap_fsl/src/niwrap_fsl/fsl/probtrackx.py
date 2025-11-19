@@ -13,8 +13,7 @@ PROBTRACKX_METADATA = Metadata(
 )
 
 
-ProbtrackxParamsDict = typing.TypedDict('ProbtrackxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/probtrackx"]],
+_ProbtrackxParamsDictNoTag = typing.TypedDict('_ProbtrackxParamsDictNoTag', {
     "samples": InputPathType,
     "mask": InputPathType,
     "seed": InputPathType,
@@ -87,6 +86,7 @@ ProbtrackxParamsDictTagged = typing.TypedDict('ProbtrackxParamsDictTagged', {
     "rseed": typing.NotRequired[int | None],
     "s2tastext": bool,
 })
+ProbtrackxParamsDict = _ProbtrackxParamsDictNoTag | ProbtrackxParamsDictTagged
 
 
 class ProbtrackxOutputs(typing.NamedTuple):

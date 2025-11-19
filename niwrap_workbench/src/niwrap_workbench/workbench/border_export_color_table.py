@@ -12,8 +12,7 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
 )
 
 
-BorderExportColorTableParamsDict = typing.TypedDict('BorderExportColorTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/border-export-color-table"]],
+_BorderExportColorTableParamsDictNoTag = typing.TypedDict('_BorderExportColorTableParamsDictNoTag', {
     "class-colors": bool,
     "border-file": InputPathType,
     "table-out": str,
@@ -24,6 +23,7 @@ BorderExportColorTableParamsDictTagged = typing.TypedDict('BorderExportColorTabl
     "border-file": InputPathType,
     "table-out": str,
 })
+BorderExportColorTableParamsDict = _BorderExportColorTableParamsDictNoTag | BorderExportColorTableParamsDictTagged
 
 
 class BorderExportColorTableOutputs(typing.NamedTuple):

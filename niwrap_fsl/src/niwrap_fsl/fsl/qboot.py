@@ -13,8 +13,7 @@ QBOOT_METADATA = Metadata(
 )
 
 
-QbootParamsDict = typing.TypedDict('QbootParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/qboot"]],
+_QbootParamsDictNoTag = typing.TypedDict('_QbootParamsDictNoTag', {
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvecs_file": InputPathType,
@@ -61,6 +60,7 @@ QbootParamsDictTagged = typing.TypedDict('QbootParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+QbootParamsDict = _QbootParamsDictNoTag | QbootParamsDictTagged
 
 
 class QbootOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ POSSUM_SUM_METADATA = Metadata(
 )
 
 
-PossumSumParamsDict = typing.TypedDict('PossumSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/possum_sum"]],
+_PossumSumParamsDictNoTag = typing.TypedDict('_PossumSumParamsDictNoTag', {
     "input_signal": InputPathType,
     "output_signal": str,
     "num_processors": typing.NotRequired[int | None],
@@ -27,6 +26,7 @@ PossumSumParamsDictTagged = typing.TypedDict('PossumSumParamsDictTagged', {
     "num_processors": typing.NotRequired[int | None],
     "verbose_flag": bool,
 })
+PossumSumParamsDict = _PossumSumParamsDictNoTag | PossumSumParamsDictTagged
 
 
 class PossumSumOutputs(typing.NamedTuple):

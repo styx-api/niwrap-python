@@ -13,8 +13,7 @@ V_3DMASKAVE_METADATA = Metadata(
 )
 
 
-V3dmaskaveParamsDict = typing.TypedDict('V3dmaskaveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dmaskave"]],
+_V3dmaskaveParamsDictNoTag = typing.TypedDict('_V3dmaskaveParamsDictNoTag', {
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -29,6 +28,7 @@ V3dmaskaveParamsDictTagged = typing.TypedDict('V3dmaskaveParamsDictTagged', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "quiet": bool,
 })
+V3dmaskaveParamsDict = _V3dmaskaveParamsDictNoTag | V3dmaskaveParamsDictTagged
 
 
 class V3dmaskaveOutputs(typing.NamedTuple):

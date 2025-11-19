@@ -12,8 +12,7 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
 )
 
 
-BackendAverageDenseRoiParamsDict = typing.TypedDict('BackendAverageDenseRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/backend-average-dense-roi"]],
+_BackendAverageDenseRoiParamsDictNoTag = typing.TypedDict('_BackendAverageDenseRoiParamsDictNoTag', {
     "index-list": str,
     "out-file": str,
 })
@@ -22,6 +21,7 @@ BackendAverageDenseRoiParamsDictTagged = typing.TypedDict('BackendAverageDenseRo
     "index-list": str,
     "out-file": str,
 })
+BackendAverageDenseRoiParamsDict = _BackendAverageDenseRoiParamsDictNoTag | BackendAverageDenseRoiParamsDictTagged
 
 
 class BackendAverageDenseRoiOutputs(typing.NamedTuple):

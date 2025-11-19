@@ -13,8 +13,7 @@ V__ALIGN_CENTERS_METADATA = Metadata(
 )
 
 
-VAlignCentersParamsDict = typing.TypedDict('VAlignCentersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Align_Centers"]],
+_VAlignCentersParamsDictNoTag = typing.TypedDict('_VAlignCentersParamsDictNoTag', {
     "base": InputPathType,
     "dset": InputPathType,
     "children": typing.NotRequired[list[InputPathType] | None],
@@ -47,6 +46,7 @@ VAlignCentersParamsDictTagged = typing.TypedDict('VAlignCentersParamsDictTagged'
     "shift_xform": typing.NotRequired[InputPathType | None],
     "shift_xform_inv": typing.NotRequired[InputPathType | None],
 })
+VAlignCentersParamsDict = _VAlignCentersParamsDictNoTag | VAlignCentersParamsDictTagged
 
 
 class VAlignCentersOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ PRELUDE_METADATA = Metadata(
 )
 
 
-PreludeParamsDict = typing.TypedDict('PreludeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/prelude"]],
+_PreludeParamsDictNoTag = typing.TypedDict('_PreludeParamsDictNoTag', {
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
     "complex_phase": typing.NotRequired[InputPathType | None],
@@ -79,6 +78,7 @@ PreludeParamsDictTagged = typing.TypedDict('PreludeParamsDictTagged', {
     "help": bool,
     "help_alias": bool,
 })
+PreludeParamsDict = _PreludeParamsDictNoTag | PreludeParamsDictTagged
 
 
 class PreludeOutputs(typing.NamedTuple):

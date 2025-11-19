@@ -13,8 +13,7 @@ MRI_COR2LABEL_METADATA = Metadata(
 )
 
 
-MriCor2labelParamsDict = typing.TypedDict('MriCor2labelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cor2label"]],
+_MriCor2labelParamsDictNoTag = typing.TypedDict('_MriCor2labelParamsDictNoTag', {
     "input_file": InputPathType,
     "label_id": float,
     "label_file": str,
@@ -43,6 +42,7 @@ MriCor2labelParamsDictTagged = typing.TypedDict('MriCor2labelParamsDictTagged', 
     "erode": typing.NotRequired[float | None],
     "help": bool,
 })
+MriCor2labelParamsDict = _MriCor2labelParamsDictNoTag | MriCor2labelParamsDictTagged
 
 
 class MriCor2labelOutputs(typing.NamedTuple):

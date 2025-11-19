@@ -13,8 +13,7 @@ MRI_RIGID_REGISTER_METADATA = Metadata(
 )
 
 
-MriRigidRegisterParamsDict = typing.TypedDict('MriRigidRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rigid_register"]],
+_MriRigidRegisterParamsDictNoTag = typing.TypedDict('_MriRigidRegisterParamsDictNoTag', {
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "transform_output": str,
@@ -25,6 +24,7 @@ MriRigidRegisterParamsDictTagged = typing.TypedDict('MriRigidRegisterParamsDictT
     "target_volume": InputPathType,
     "transform_output": str,
 })
+MriRigidRegisterParamsDict = _MriRigidRegisterParamsDictNoTag | MriRigidRegisterParamsDictTagged
 
 
 class MriRigidRegisterOutputs(typing.NamedTuple):

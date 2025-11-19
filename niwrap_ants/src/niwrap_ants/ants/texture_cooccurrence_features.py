@@ -13,8 +13,7 @@ TEXTURE_COOCCURRENCE_FEATURES_METADATA = Metadata(
 )
 
 
-TextureCooccurrenceFeaturesParamsDict = typing.TypedDict('TextureCooccurrenceFeaturesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/TextureCooccurrenceFeatures"]],
+_TextureCooccurrenceFeaturesParamsDictNoTag = typing.TypedDict('_TextureCooccurrenceFeaturesParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],
@@ -29,6 +28,7 @@ TextureCooccurrenceFeaturesParamsDictTagged = typing.TypedDict('TextureCooccurre
     "mask_image": typing.NotRequired[InputPathType | None],
     "mask_label": typing.NotRequired[int | None],
 })
+TextureCooccurrenceFeaturesParamsDict = _TextureCooccurrenceFeaturesParamsDictNoTag | TextureCooccurrenceFeaturesParamsDictTagged
 
 
 class TextureCooccurrenceFeaturesOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ UNCONFOUND_METADATA = Metadata(
 )
 
 
-UnconfoundParamsDict = typing.TypedDict('UnconfoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/unconfound"]],
+_UnconfoundParamsDictNoTag = typing.TypedDict('_UnconfoundParamsDictNoTag', {
     "in4d": InputPathType,
     "out4d": str,
     "confound_mat": InputPathType,
@@ -25,6 +24,7 @@ UnconfoundParamsDictTagged = typing.TypedDict('UnconfoundParamsDictTagged', {
     "out4d": str,
     "confound_mat": InputPathType,
 })
+UnconfoundParamsDict = _UnconfoundParamsDictNoTag | UnconfoundParamsDictTagged
 
 
 class UnconfoundOutputs(typing.NamedTuple):

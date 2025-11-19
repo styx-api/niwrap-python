@@ -13,8 +13,7 @@ V_3D_PVMAP_METADATA = Metadata(
 )
 
 
-V3dPvmapParamsDict = typing.TypedDict('V3dPvmapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPVmap"]],
+_V3dPvmapParamsDictNoTag = typing.TypedDict('_V3dPvmapParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -27,6 +26,7 @@ V3dPvmapParamsDictTagged = typing.TypedDict('V3dPvmapParamsDictTagged', {
     "automask": bool,
     "inputdataset": InputPathType,
 })
+V3dPvmapParamsDict = _V3dPvmapParamsDictNoTag | V3dPvmapParamsDictTagged
 
 
 class V3dPvmapOutputs(typing.NamedTuple):

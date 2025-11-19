@@ -13,8 +13,7 @@ V__T1SCALE_METADATA = Metadata(
 )
 
 
-VT1scaleParamsDict = typing.TypedDict('VT1scaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@T1scale"]],
+_VT1scaleParamsDictNoTag = typing.TypedDict('_VT1scaleParamsDictNoTag', {
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
     "output_directory": typing.NotRequired[str | None],
@@ -47,6 +46,7 @@ VT1scaleParamsDictTagged = typing.TypedDict('VT1scaleParamsDictTagged', {
     "all_opts": bool,
     "h_find_word": typing.NotRequired[str | None],
 })
+VT1scaleParamsDict = _VT1scaleParamsDictNoTag | VT1scaleParamsDictTagged
 
 
 class VT1scaleOutputs(typing.NamedTuple):

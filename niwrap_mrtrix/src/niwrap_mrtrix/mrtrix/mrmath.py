@@ -13,8 +13,7 @@ MRMATH_METADATA = Metadata(
 )
 
 
-MrmathConfigParamsDict = typing.TypedDict('MrmathConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrmathConfigParamsDictNoTag = typing.TypedDict('_MrmathConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrmathConfigParamsDictTagged = typing.TypedDict('MrmathConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MrmathConfigParamsDict = _MrmathConfigParamsDictNoTag | MrmathConfigParamsDictTagged
 
 
-MrmathParamsDict = typing.TypedDict('MrmathParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrmath"]],
+_MrmathParamsDictNoTag = typing.TypedDict('_MrmathParamsDictNoTag', {
     "axis": typing.NotRequired[int | None],
     "keep_unary_axes": bool,
     "datatype": typing.NotRequired[str | None],
@@ -59,6 +58,7 @@ MrmathParamsDictTagged = typing.TypedDict('MrmathParamsDictTagged', {
     "operation": str,
     "output": str,
 })
+MrmathParamsDict = _MrmathParamsDictNoTag | MrmathParamsDictTagged
 
 
 def mrmath_config(

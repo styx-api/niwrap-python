@@ -13,8 +13,7 @@ FSL_ENTS_METADATA = Metadata(
 )
 
 
-FslEntsParamsDict = typing.TypedDict('FslEntsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_ents"]],
+_FslEntsParamsDictNoTag = typing.TypedDict('_FslEntsParamsDictNoTag', {
     "icadir": str,
     "components": list[str],
     "outfile": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ FslEntsParamsDictTagged = typing.TypedDict('FslEntsParamsDictTagged', {
     "overwrite": bool,
     "conffile": typing.NotRequired[list[InputPathType] | None],
 })
+FslEntsParamsDict = _FslEntsParamsDictNoTag | FslEntsParamsDictTagged
 
 
 class FslEntsOutputs(typing.NamedTuple):

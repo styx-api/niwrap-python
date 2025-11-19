@@ -13,8 +13,7 @@ FSLREORIENT2STD_METADATA = Metadata(
 )
 
 
-Fslreorient2stdParamsDict = typing.TypedDict('Fslreorient2stdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslreorient2std"]],
+_Fslreorient2stdParamsDictNoTag = typing.TypedDict('_Fslreorient2stdParamsDictNoTag', {
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ Fslreorient2stdParamsDictTagged = typing.TypedDict('Fslreorient2stdParamsDictTag
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],
 })
+Fslreorient2stdParamsDict = _Fslreorient2stdParamsDictNoTag | Fslreorient2stdParamsDictTagged
 
 
 class Fslreorient2stdOutputs(typing.NamedTuple):

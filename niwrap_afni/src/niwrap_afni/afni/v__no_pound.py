@@ -13,14 +13,14 @@ V__NO_POUND_METADATA = Metadata(
 )
 
 
-VNoPoundParamsDict = typing.TypedDict('VNoPoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@NoPound"]],
+_VNoPoundParamsDictNoTag = typing.TypedDict('_VNoPoundParamsDictNoTag', {
     "afni_files": list[str],
 })
 VNoPoundParamsDictTagged = typing.TypedDict('VNoPoundParamsDictTagged', {
     "@type": typing.Literal["afni/@NoPound"],
     "afni_files": list[str],
 })
+VNoPoundParamsDict = _VNoPoundParamsDictNoTag | VNoPoundParamsDictTagged
 
 
 class VNoPoundOutputs(typing.NamedTuple):

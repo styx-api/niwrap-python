@@ -13,8 +13,7 @@ V__THICKNESS_MASTER_METADATA = Metadata(
 )
 
 
-VThicknessMasterParamsDict = typing.TypedDict('VThicknessMasterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@thickness_master"]],
+_VThicknessMasterParamsDictNoTag = typing.TypedDict('_VThicknessMasterParamsDictNoTag', {
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ VThicknessMasterParamsDictTagged = typing.TypedDict('VThicknessMasterParamsDictT
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
 })
+VThicknessMasterParamsDict = _VThicknessMasterParamsDictNoTag | VThicknessMasterParamsDictTagged
 
 
 class VThicknessMasterOutputs(typing.NamedTuple):

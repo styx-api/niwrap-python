@@ -13,8 +13,7 @@ SAMSEG_LONG_METADATA = Metadata(
 )
 
 
-SamsegLongParamsDict = typing.TypedDict('SamsegLongParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg-long"]],
+_SamsegLongParamsDictNoTag = typing.TypedDict('_SamsegLongParamsDictNoTag', {
     "output_dir": str,
     "input_files": list[InputPathType],
     "align_mc": bool,
@@ -33,6 +32,7 @@ SamsegLongParamsDictTagged = typing.TypedDict('SamsegLongParamsDictTagged', {
     "save_posteriors": bool,
     "force_update": bool,
 })
+SamsegLongParamsDict = _SamsegLongParamsDictNoTag | SamsegLongParamsDictTagged
 
 
 class SamsegLongOutputs(typing.NamedTuple):

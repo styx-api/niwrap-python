@@ -13,8 +13,7 @@ SH2POWER_METADATA = Metadata(
 )
 
 
-Sh2powerConfigParamsDict = typing.TypedDict('Sh2powerConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Sh2powerConfigParamsDictNoTag = typing.TypedDict('_Sh2powerConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Sh2powerConfigParamsDictTagged = typing.TypedDict('Sh2powerConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+Sh2powerConfigParamsDict = _Sh2powerConfigParamsDictNoTag | Sh2powerConfigParamsDictTagged
 
 
-Sh2powerParamsDict = typing.TypedDict('Sh2powerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2power"]],
+_Sh2powerParamsDictNoTag = typing.TypedDict('_Sh2powerParamsDictNoTag', {
     "spectrum": bool,
     "info": bool,
     "quiet": bool,
@@ -53,6 +52,7 @@ Sh2powerParamsDictTagged = typing.TypedDict('Sh2powerParamsDictTagged', {
     "SH": InputPathType,
     "power": str,
 })
+Sh2powerParamsDict = _Sh2powerParamsDictNoTag | Sh2powerParamsDictTagged
 
 
 def sh2power_config(

@@ -13,8 +13,7 @@ MRI_PARSE_SDCMDIR_METADATA = Metadata(
 )
 
 
-MriParseSdcmdirParamsDict = typing.TypedDict('MriParseSdcmdirParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_parse_sdcmdir"]],
+_MriParseSdcmdirParamsDictNoTag = typing.TypedDict('_MriParseSdcmdirParamsDictNoTag', {
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
     "sortbyrun": bool,
@@ -29,6 +28,7 @@ MriParseSdcmdirParamsDictTagged = typing.TypedDict('MriParseSdcmdirParamsDictTag
     "summarize": bool,
     "dwi": bool,
 })
+MriParseSdcmdirParamsDict = _MriParseSdcmdirParamsDictNoTag | MriParseSdcmdirParamsDictTagged
 
 
 class MriParseSdcmdirOutputs(typing.NamedTuple):

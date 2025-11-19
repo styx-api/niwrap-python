@@ -13,8 +13,7 @@ MRI_SPH2SURF_METADATA = Metadata(
 )
 
 
-MriSph2surfParamsDict = typing.TypedDict('MriSph2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-sph2surf"]],
+_MriSph2surfParamsDictNoTag = typing.TypedDict('_MriSph2surfParamsDictNoTag', {
     "instem": str,
     "outstem": str,
     "hemi": str,
@@ -37,6 +36,7 @@ MriSph2surfParamsDictTagged = typing.TypedDict('MriSph2surfParamsDictTagged', {
     "verbose": bool,
     "version": bool,
 })
+MriSph2surfParamsDict = _MriSph2surfParamsDictNoTag | MriSph2surfParamsDictTagged
 
 
 class MriSph2surfOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-MetricEstimateFwhmParamsDict = typing.TypedDict('MetricEstimateFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-estimate-fwhm"]],
+_MetricEstimateFwhmParamsDictNoTag = typing.TypedDict('_MetricEstimateFwhmParamsDictNoTag', {
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
     "demean": typing.NotRequired[bool | None],
@@ -28,6 +27,7 @@ MetricEstimateFwhmParamsDictTagged = typing.TypedDict('MetricEstimateFwhmParamsD
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
+MetricEstimateFwhmParamsDict = _MetricEstimateFwhmParamsDictNoTag | MetricEstimateFwhmParamsDictTagged
 
 
 class MetricEstimateFwhmOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SH2AMP_METADATA = Metadata(
 )
 
 
-Sh2ampFslgradParamsDict = typing.TypedDict('Sh2ampFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_Sh2ampFslgradParamsDictNoTag = typing.TypedDict('_Sh2ampFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -23,30 +22,30 @@ Sh2ampFslgradParamsDictTagged = typing.TypedDict('Sh2ampFslgradParamsDictTagged'
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+Sh2ampFslgradParamsDict = _Sh2ampFslgradParamsDictNoTag | Sh2ampFslgradParamsDictTagged
 
 
-Sh2ampVariousStringParamsDict = typing.TypedDict('Sh2ampVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_Sh2ampVariousStringParamsDictNoTag = typing.TypedDict('_Sh2ampVariousStringParamsDictNoTag', {
     "obj": str,
 })
 Sh2ampVariousStringParamsDictTagged = typing.TypedDict('Sh2ampVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+Sh2ampVariousStringParamsDict = _Sh2ampVariousStringParamsDictNoTag | Sh2ampVariousStringParamsDictTagged
 
 
-Sh2ampVariousFileParamsDict = typing.TypedDict('Sh2ampVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_Sh2ampVariousFileParamsDictNoTag = typing.TypedDict('_Sh2ampVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 Sh2ampVariousFileParamsDictTagged = typing.TypedDict('Sh2ampVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+Sh2ampVariousFileParamsDict = _Sh2ampVariousFileParamsDictNoTag | Sh2ampVariousFileParamsDictTagged
 
 
-Sh2ampConfigParamsDict = typing.TypedDict('Sh2ampConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Sh2ampConfigParamsDictNoTag = typing.TypedDict('_Sh2ampConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -55,10 +54,10 @@ Sh2ampConfigParamsDictTagged = typing.TypedDict('Sh2ampConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+Sh2ampConfigParamsDict = _Sh2ampConfigParamsDictNoTag | Sh2ampConfigParamsDictTagged
 
 
-Sh2ampParamsDict = typing.TypedDict('Sh2ampParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2amp"]],
+_Sh2ampParamsDictNoTag = typing.TypedDict('_Sh2ampParamsDictNoTag', {
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Sh2ampFslgradParamsDict | None],
@@ -95,6 +94,7 @@ Sh2ampParamsDictTagged = typing.TypedDict('Sh2ampParamsDictTagged', {
     "directions": InputPathType,
     "output": str,
 })
+Sh2ampParamsDict = _Sh2ampParamsDictNoTag | Sh2ampParamsDictTagged
 
 
 def sh2amp_strides_cargs_dyn_fn(

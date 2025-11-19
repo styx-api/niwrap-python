@@ -13,8 +13,7 @@ V__SIMULATE_MOTION_METADATA = Metadata(
 )
 
 
-VSimulateMotionParamsDict = typing.TypedDict('VSimulateMotionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@simulate_motion"]],
+_VSimulateMotionParamsDictNoTag = typing.TypedDict('_VSimulateMotionParamsDictNoTag', {
     "epi": InputPathType,
     "motion_file": InputPathType,
     "epi_timing": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ VSimulateMotionParamsDictTagged = typing.TypedDict('VSimulateMotionParamsDictTag
     "todo": bool,
     "ver": bool,
 })
+VSimulateMotionParamsDict = _VSimulateMotionParamsDictNoTag | VSimulateMotionParamsDictTagged
 
 
 class VSimulateMotionOutputs(typing.NamedTuple):

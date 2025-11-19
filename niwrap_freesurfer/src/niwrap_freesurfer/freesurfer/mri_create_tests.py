@@ -13,8 +13,7 @@ MRI_CREATE_TESTS_METADATA = Metadata(
 )
 
 
-MriCreateTestsParamsDict = typing.TypedDict('MriCreateTestsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_tests"]],
+_MriCreateTestsParamsDictNoTag = typing.TypedDict('_MriCreateTestsParamsDictNoTag', {
     "input_file": InputPathType,
     "out_src": str,
     "out_target": str,
@@ -57,6 +56,7 @@ MriCreateTestsParamsDictTagged = typing.TypedDict('MriCreateTestsParamsDictTagge
     "lta_outt": typing.NotRequired[str | None],
     "iscale_out": typing.NotRequired[str | None],
 })
+MriCreateTestsParamsDict = _MriCreateTestsParamsDictNoTag | MriCreateTestsParamsDictTagged
 
 
 class MriCreateTestsOutputs(typing.NamedTuple):

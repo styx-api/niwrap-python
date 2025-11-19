@@ -13,8 +13,7 @@ IS_LTA_METADATA = Metadata(
 )
 
 
-IsLtaParamsDict = typing.TypedDict('IsLtaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/IsLTA"]],
+_IsLtaParamsDictNoTag = typing.TypedDict('_IsLtaParamsDictNoTag', {
     "candidate_file": InputPathType,
     "outfile": str,
 })
@@ -23,6 +22,7 @@ IsLtaParamsDictTagged = typing.TypedDict('IsLtaParamsDictTagged', {
     "candidate_file": InputPathType,
     "outfile": str,
 })
+IsLtaParamsDict = _IsLtaParamsDictNoTag | IsLtaParamsDictTagged
 
 
 class IsLtaOutputs(typing.NamedTuple):

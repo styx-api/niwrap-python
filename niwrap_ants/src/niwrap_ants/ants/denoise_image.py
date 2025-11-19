@@ -13,18 +13,17 @@ DENOISE_IMAGE_METADATA = Metadata(
 )
 
 
-DenoiseImageCorrectedOutputParamsDict = typing.TypedDict('DenoiseImageCorrectedOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["correctedOutput"]],
+_DenoiseImageCorrectedOutputParamsDictNoTag = typing.TypedDict('_DenoiseImageCorrectedOutputParamsDictNoTag', {
     "correctedOutputFileName": str,
 })
 DenoiseImageCorrectedOutputParamsDictTagged = typing.TypedDict('DenoiseImageCorrectedOutputParamsDictTagged', {
     "@type": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
+DenoiseImageCorrectedOutputParamsDict = _DenoiseImageCorrectedOutputParamsDictNoTag | DenoiseImageCorrectedOutputParamsDictTagged
 
 
-DenoiseImageCorrectedOutputNoiseParamsDict = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["correctedOutputNoise"]],
+_DenoiseImageCorrectedOutputNoiseParamsDictNoTag = typing.TypedDict('_DenoiseImageCorrectedOutputNoiseParamsDictNoTag', {
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
@@ -33,10 +32,10 @@ DenoiseImageCorrectedOutputNoiseParamsDictTagged = typing.TypedDict('DenoiseImag
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
+DenoiseImageCorrectedOutputNoiseParamsDict = _DenoiseImageCorrectedOutputNoiseParamsDictNoTag | DenoiseImageCorrectedOutputNoiseParamsDictTagged
 
 
-DenoiseImageParamsDict = typing.TypedDict('DenoiseImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/DenoiseImage"]],
+_DenoiseImageParamsDictNoTag = typing.TypedDict('_DenoiseImageParamsDictNoTag', {
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
     "shrink_factor": typing.NotRequired[int | None],
@@ -59,6 +58,7 @@ DenoiseImageParamsDictTagged = typing.TypedDict('DenoiseImageParamsDictTagged', 
     "input_image": InputPathType,
     "output": typing.Union[DenoiseImageCorrectedOutputParamsDictTagged, DenoiseImageCorrectedOutputNoiseParamsDictTagged],
 })
+DenoiseImageParamsDict = _DenoiseImageParamsDictNoTag | DenoiseImageParamsDictTagged
 
 
 def denoise_image_output_cargs_dyn_fn(

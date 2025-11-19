@@ -13,8 +13,7 @@ V_3DDOT_METADATA = Metadata(
 )
 
 
-V3ddotParamsDict = typing.TypedDict('V3ddotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3ddot"]],
+_V3ddotParamsDictNoTag = typing.TypedDict('_V3ddotParamsDictNoTag', {
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "mrange": typing.NotRequired[list[float] | None],
@@ -49,6 +48,7 @@ V3ddotParamsDictTagged = typing.TypedDict('V3ddotParamsDictTagged', {
     "1D": bool,
     "NIML": bool,
 })
+V3ddotParamsDict = _V3ddotParamsDictNoTag | V3ddotParamsDictTagged
 
 
 class V3ddotOutputs(typing.NamedTuple):

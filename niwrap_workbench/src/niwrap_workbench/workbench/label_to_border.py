@@ -12,8 +12,7 @@ LABEL_TO_BORDER_METADATA = Metadata(
 )
 
 
-LabelToBorderParamsDict = typing.TypedDict('LabelToBorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-to-border"]],
+_LabelToBorderParamsDictNoTag = typing.TypedDict('_LabelToBorderParamsDictNoTag', {
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
@@ -28,6 +27,7 @@ LabelToBorderParamsDictTagged = typing.TypedDict('LabelToBorderParamsDictTagged'
     "surface": InputPathType,
     "label-in": InputPathType,
 })
+LabelToBorderParamsDict = _LabelToBorderParamsDictNoTag | LabelToBorderParamsDictTagged
 
 
 class LabelToBorderOutputs(typing.NamedTuple):

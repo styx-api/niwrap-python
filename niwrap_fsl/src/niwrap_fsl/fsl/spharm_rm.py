@@ -13,8 +13,7 @@ SPHARM_RM_METADATA = Metadata(
 )
 
 
-SpharmRmParamsDict = typing.TypedDict('SpharmRmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/spharm_rm"]],
+_SpharmRmParamsDictNoTag = typing.TypedDict('_SpharmRmParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ SpharmRmParamsDictTagged = typing.TypedDict('SpharmRmParamsDictTagged', {
     "number_of_terms": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
+SpharmRmParamsDict = _SpharmRmParamsDictNoTag | SpharmRmParamsDictTagged
 
 
 class SpharmRmOutputs(typing.NamedTuple):

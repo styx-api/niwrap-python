@@ -13,8 +13,7 @@ DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
 )
 
 
-DtistudioFibertoSegmentsParamsDict = typing.TypedDict('DtistudioFibertoSegmentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/DTIStudioFibertoSegments"]],
+_DtistudioFibertoSegmentsParamsDictNoTag = typing.TypedDict('_DtistudioFibertoSegmentsParamsDictNoTag', {
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,
@@ -25,6 +24,7 @@ DtistudioFibertoSegmentsParamsDictTagged = typing.TypedDict('DtistudioFibertoSeg
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,
 })
+DtistudioFibertoSegmentsParamsDict = _DtistudioFibertoSegmentsParamsDictNoTag | DtistudioFibertoSegmentsParamsDictTagged
 
 
 class DtistudioFibertoSegmentsOutputs(typing.NamedTuple):

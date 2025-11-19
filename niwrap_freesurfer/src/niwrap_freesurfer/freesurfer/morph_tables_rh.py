@@ -13,14 +13,14 @@ MORPH_TABLES_RH_METADATA = Metadata(
 )
 
 
-MorphTablesRhParamsDict = typing.TypedDict('MorphTablesRhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_tables-rh"]],
+_MorphTablesRhParamsDictNoTag = typing.TypedDict('_MorphTablesRhParamsDictNoTag', {
     "options": typing.NotRequired[str | None],
 })
 MorphTablesRhParamsDictTagged = typing.TypedDict('MorphTablesRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_tables-rh"],
     "options": typing.NotRequired[str | None],
 })
+MorphTablesRhParamsDict = _MorphTablesRhParamsDictNoTag | MorphTablesRhParamsDictTagged
 
 
 class MorphTablesRhOutputs(typing.NamedTuple):

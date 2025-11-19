@@ -13,8 +13,7 @@ MRCONVERT_METADATA = Metadata(
 )
 
 
-MrconvertCoordParamsDict = typing.TypedDict('MrconvertCoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coord"]],
+_MrconvertCoordParamsDictNoTag = typing.TypedDict('_MrconvertCoordParamsDictNoTag', {
     "axis": int,
     "selection": list[int],
 })
@@ -23,20 +22,20 @@ MrconvertCoordParamsDictTagged = typing.TypedDict('MrconvertCoordParamsDictTagge
     "axis": int,
     "selection": list[int],
 })
+MrconvertCoordParamsDict = _MrconvertCoordParamsDictNoTag | MrconvertCoordParamsDictTagged
 
 
-MrconvertClearPropertyParamsDict = typing.TypedDict('MrconvertClearPropertyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clear_property"]],
+_MrconvertClearPropertyParamsDictNoTag = typing.TypedDict('_MrconvertClearPropertyParamsDictNoTag', {
     "key": str,
 })
 MrconvertClearPropertyParamsDictTagged = typing.TypedDict('MrconvertClearPropertyParamsDictTagged', {
     "@type": typing.Literal["clear_property"],
     "key": str,
 })
+MrconvertClearPropertyParamsDict = _MrconvertClearPropertyParamsDictNoTag | MrconvertClearPropertyParamsDictTagged
 
 
-MrconvertSetPropertyParamsDict = typing.TypedDict('MrconvertSetPropertyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_property"]],
+_MrconvertSetPropertyParamsDictNoTag = typing.TypedDict('_MrconvertSetPropertyParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -45,10 +44,10 @@ MrconvertSetPropertyParamsDictTagged = typing.TypedDict('MrconvertSetPropertyPar
     "key": str,
     "value": str,
 })
+MrconvertSetPropertyParamsDict = _MrconvertSetPropertyParamsDictNoTag | MrconvertSetPropertyParamsDictTagged
 
 
-MrconvertAppendPropertyParamsDict = typing.TypedDict('MrconvertAppendPropertyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["append_property"]],
+_MrconvertAppendPropertyParamsDictNoTag = typing.TypedDict('_MrconvertAppendPropertyParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -57,50 +56,50 @@ MrconvertAppendPropertyParamsDictTagged = typing.TypedDict('MrconvertAppendPrope
     "key": str,
     "value": str,
 })
+MrconvertAppendPropertyParamsDict = _MrconvertAppendPropertyParamsDictNoTag | MrconvertAppendPropertyParamsDictTagged
 
 
-MrconvertVariousStringParamsDict = typing.TypedDict('MrconvertVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_MrconvertVariousStringParamsDictNoTag = typing.TypedDict('_MrconvertVariousStringParamsDictNoTag', {
     "obj": str,
 })
 MrconvertVariousStringParamsDictTagged = typing.TypedDict('MrconvertVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+MrconvertVariousStringParamsDict = _MrconvertVariousStringParamsDictNoTag | MrconvertVariousStringParamsDictTagged
 
 
-MrconvertVariousFileParamsDict = typing.TypedDict('MrconvertVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_MrconvertVariousFileParamsDictNoTag = typing.TypedDict('_MrconvertVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrconvertVariousFileParamsDictTagged = typing.TypedDict('MrconvertVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+MrconvertVariousFileParamsDict = _MrconvertVariousFileParamsDictNoTag | MrconvertVariousFileParamsDictTagged
 
 
-MrconvertVariousString1ParamsDict = typing.TypedDict('MrconvertVariousString1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+_MrconvertVariousString1ParamsDictNoTag = typing.TypedDict('_MrconvertVariousString1ParamsDictNoTag', {
     "obj": str,
 })
 MrconvertVariousString1ParamsDictTagged = typing.TypedDict('MrconvertVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
+MrconvertVariousString1ParamsDict = _MrconvertVariousString1ParamsDictNoTag | MrconvertVariousString1ParamsDictTagged
 
 
-MrconvertVariousFile1ParamsDict = typing.TypedDict('MrconvertVariousFile1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+_MrconvertVariousFile1ParamsDictNoTag = typing.TypedDict('_MrconvertVariousFile1ParamsDictNoTag', {
     "obj": InputPathType,
 })
 MrconvertVariousFile1ParamsDictTagged = typing.TypedDict('MrconvertVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
+MrconvertVariousFile1ParamsDict = _MrconvertVariousFile1ParamsDictNoTag | MrconvertVariousFile1ParamsDictTagged
 
 
-MrconvertFslgradParamsDict = typing.TypedDict('MrconvertFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_MrconvertFslgradParamsDictNoTag = typing.TypedDict('_MrconvertFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -109,10 +108,10 @@ MrconvertFslgradParamsDictTagged = typing.TypedDict('MrconvertFslgradParamsDictT
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+MrconvertFslgradParamsDict = _MrconvertFslgradParamsDictNoTag | MrconvertFslgradParamsDictTagged
 
 
-MrconvertExportGradFslParamsDict = typing.TypedDict('MrconvertExportGradFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+_MrconvertExportGradFslParamsDictNoTag = typing.TypedDict('_MrconvertExportGradFslParamsDictNoTag', {
     "bvecs_path": str,
     "bvals_path": str,
 })
@@ -121,10 +120,10 @@ MrconvertExportGradFslParamsDictTagged = typing.TypedDict('MrconvertExportGradFs
     "bvecs_path": str,
     "bvals_path": str,
 })
+MrconvertExportGradFslParamsDict = _MrconvertExportGradFslParamsDictNoTag | MrconvertExportGradFslParamsDictTagged
 
 
-MrconvertImportPeEddyParamsDict = typing.TypedDict('MrconvertImportPeEddyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["import_pe_eddy"]],
+_MrconvertImportPeEddyParamsDictNoTag = typing.TypedDict('_MrconvertImportPeEddyParamsDictNoTag', {
     "config": InputPathType,
     "indices": InputPathType,
 })
@@ -133,10 +132,10 @@ MrconvertImportPeEddyParamsDictTagged = typing.TypedDict('MrconvertImportPeEddyP
     "config": InputPathType,
     "indices": InputPathType,
 })
+MrconvertImportPeEddyParamsDict = _MrconvertImportPeEddyParamsDictNoTag | MrconvertImportPeEddyParamsDictTagged
 
 
-MrconvertExportPeEddyParamsDict = typing.TypedDict('MrconvertExportPeEddyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_pe_eddy"]],
+_MrconvertExportPeEddyParamsDictNoTag = typing.TypedDict('_MrconvertExportPeEddyParamsDictNoTag', {
     "config": str,
     "indices": str,
 })
@@ -145,10 +144,10 @@ MrconvertExportPeEddyParamsDictTagged = typing.TypedDict('MrconvertExportPeEddyP
     "config": str,
     "indices": str,
 })
+MrconvertExportPeEddyParamsDict = _MrconvertExportPeEddyParamsDictNoTag | MrconvertExportPeEddyParamsDictTagged
 
 
-MrconvertConfigParamsDict = typing.TypedDict('MrconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrconvertConfigParamsDictNoTag = typing.TypedDict('_MrconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -157,10 +156,10 @@ MrconvertConfigParamsDictTagged = typing.TypedDict('MrconvertConfigParamsDictTag
     "key": str,
     "value": str,
 })
+MrconvertConfigParamsDict = _MrconvertConfigParamsDictNoTag | MrconvertConfigParamsDictTagged
 
 
-MrconvertParamsDict = typing.TypedDict('MrconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrconvert"]],
+_MrconvertParamsDictNoTag = typing.TypedDict('_MrconvertParamsDictNoTag', {
     "coord": typing.NotRequired[list[MrconvertCoordParamsDict] | None],
     "vox": typing.NotRequired[list[float] | None],
     "axes": typing.NotRequired[list[int] | None],
@@ -227,6 +226,7 @@ MrconvertParamsDictTagged = typing.TypedDict('MrconvertParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+MrconvertParamsDict = _MrconvertParamsDictNoTag | MrconvertParamsDictTagged
 
 
 def mrconvert_copy_properties_cargs_dyn_fn(

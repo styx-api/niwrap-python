@@ -13,8 +13,7 @@ V_3DFIM__METADATA = Metadata(
 )
 
 
-V3dfimParamsDict = typing.TypedDict('V3dfimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dfim+"]],
+_V3dfimParamsDictNoTag = typing.TypedDict('_V3dfimParamsDictNoTag', {
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
     "maskfile": typing.NotRequired[InputPathType | None],
@@ -43,6 +42,7 @@ V3dfimParamsDictTagged = typing.TypedDict('V3dfimParamsDictTagged', {
     "output_params": typing.NotRequired[list[str] | None],
     "output_bucket": typing.NotRequired[str | None],
 })
+V3dfimParamsDict = _V3dfimParamsDictNoTag | V3dfimParamsDictTagged
 
 
 class V3dfimOutputs(typing.NamedTuple):

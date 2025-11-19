@@ -13,8 +13,7 @@ OVERLAY_METADATA = Metadata(
 )
 
 
-OverlayParamsDict = typing.TypedDict('OverlayParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/overlay"]],
+_OverlayParamsDictNoTag = typing.TypedDict('_OverlayParamsDictNoTag', {
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
     "bg_thresh": list[float],
@@ -43,6 +42,7 @@ OverlayParamsDictTagged = typing.TypedDict('OverlayParamsDictTagged', {
     "stat_thresh2": typing.NotRequired[list[float] | None],
     "use_checkerboard": bool,
 })
+OverlayParamsDict = _OverlayParamsDictNoTag | OverlayParamsDictTagged
 
 
 class OverlayOutputs(typing.NamedTuple):

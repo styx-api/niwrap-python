@@ -13,8 +13,7 @@ FSLINTERLEAVE_METADATA = Metadata(
 )
 
 
-FslinterleaveParamsDict = typing.TypedDict('FslinterleaveParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslinterleave"]],
+_FslinterleaveParamsDictNoTag = typing.TypedDict('_FslinterleaveParamsDictNoTag', {
     "infile1": InputPathType,
     "infile2": InputPathType,
     "outfile": str,
@@ -27,6 +26,7 @@ FslinterleaveParamsDictTagged = typing.TypedDict('FslinterleaveParamsDictTagged'
     "outfile": str,
     "reverse_slice_order_flag": bool,
 })
+FslinterleaveParamsDict = _FslinterleaveParamsDictNoTag | FslinterleaveParamsDictTagged
 
 
 class FslinterleaveOutputs(typing.NamedTuple):

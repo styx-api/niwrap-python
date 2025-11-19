@@ -13,8 +13,7 @@ EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
 )
 
 
-ExtractRegionFromImageByMaskParamsDict = typing.TypedDict('ExtractRegionFromImageByMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImageByMask"]],
+_ExtractRegionFromImageByMaskParamsDictNoTag = typing.TypedDict('_ExtractRegionFromImageByMaskParamsDictNoTag', {
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": InputPathType,
@@ -31,6 +30,7 @@ ExtractRegionFromImageByMaskParamsDictTagged = typing.TypedDict('ExtractRegionFr
     "label": typing.NotRequired[int | None],
     "pad_radius": typing.NotRequired[int | None],
 })
+ExtractRegionFromImageByMaskParamsDict = _ExtractRegionFromImageByMaskParamsDictNoTag | ExtractRegionFromImageByMaskParamsDictTagged
 
 
 class ExtractRegionFromImageByMaskOutputs(typing.NamedTuple):

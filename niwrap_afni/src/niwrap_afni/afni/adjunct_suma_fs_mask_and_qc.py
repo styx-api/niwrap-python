@@ -13,8 +13,7 @@ ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
 )
 
 
-AdjunctSumaFsMaskAndQcParamsDict = typing.TypedDict('AdjunctSumaFsMaskAndQcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_mask_and_qc"]],
+_AdjunctSumaFsMaskAndQcParamsDictNoTag = typing.TypedDict('_AdjunctSumaFsMaskAndQcParamsDictNoTag', {
     "subj_id": str,
     "suma_dir": str,
     "no_clean": bool,
@@ -31,6 +30,7 @@ AdjunctSumaFsMaskAndQcParamsDictTagged = typing.TypedDict('AdjunctSumaFsMaskAndQ
     "hview": bool,
     "version": bool,
 })
+AdjunctSumaFsMaskAndQcParamsDict = _AdjunctSumaFsMaskAndQcParamsDictNoTag | AdjunctSumaFsMaskAndQcParamsDictTagged
 
 
 class AdjunctSumaFsMaskAndQcOutputs(typing.NamedTuple):

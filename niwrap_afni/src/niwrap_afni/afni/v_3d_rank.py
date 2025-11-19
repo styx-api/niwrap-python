@@ -13,8 +13,7 @@ V_3D_RANK_METADATA = Metadata(
 )
 
 
-V3dRankParamsDict = typing.TypedDict('V3dRankParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dRank"]],
+_V3dRankParamsDictNoTag = typing.TypedDict('_V3dRankParamsDictNoTag', {
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
     "version_info": bool,
@@ -27,6 +26,7 @@ V3dRankParamsDictTagged = typing.TypedDict('V3dRankParamsDictTagged', {
     "version_info": bool,
     "help_info": bool,
 })
+V3dRankParamsDict = _V3dRankParamsDictNoTag | V3dRankParamsDictTagged
 
 
 class V3dRankOutputs(typing.NamedTuple):

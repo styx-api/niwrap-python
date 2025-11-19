@@ -13,14 +13,14 @@ V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
 )
 
 
-VShowDynamicRangeParamsDict = typing.TypedDict('VShowDynamicRangeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ShowDynamicRange"]],
+_VShowDynamicRangeParamsDictNoTag = typing.TypedDict('_VShowDynamicRangeParamsDictNoTag', {
     "infile": InputPathType,
 })
 VShowDynamicRangeParamsDictTagged = typing.TypedDict('VShowDynamicRangeParamsDictTagged', {
     "@type": typing.Literal["afni/@ShowDynamicRange"],
     "infile": InputPathType,
 })
+VShowDynamicRangeParamsDict = _VShowDynamicRangeParamsDictNoTag | VShowDynamicRangeParamsDictTagged
 
 
 class VShowDynamicRangeOutputs(typing.NamedTuple):

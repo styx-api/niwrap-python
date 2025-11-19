@@ -13,8 +13,7 @@ V_1DTRANSPOSE_METADATA = Metadata(
 )
 
 
-V1dtransposeParamsDict = typing.TypedDict('V1dtransposeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dtranspose"]],
+_V1dtransposeParamsDictNoTag = typing.TypedDict('_V1dtransposeParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ V1dtransposeParamsDictTagged = typing.TypedDict('V1dtransposeParamsDictTagged', 
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
+V1dtransposeParamsDict = _V1dtransposeParamsDictNoTag | V1dtransposeParamsDictTagged
 
 
 class V1dtransposeOutputs(typing.NamedTuple):

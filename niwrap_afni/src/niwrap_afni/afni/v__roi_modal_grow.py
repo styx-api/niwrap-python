@@ -13,8 +13,7 @@ V__ROI_MODAL_GROW_METADATA = Metadata(
 )
 
 
-VRoiModalGrowParamsDict = typing.TypedDict('VRoiModalGrowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ROI_modal_grow"]],
+_VRoiModalGrowParamsDictNoTag = typing.TypedDict('_VRoiModalGrowParamsDictNoTag', {
     "input_dset": InputPathType,
     "niters": float,
     "outdir": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ VRoiModalGrowParamsDictTagged = typing.TypedDict('VRoiModalGrowParamsDictTagged'
     "prefix": typing.NotRequired[str | None],
     "neighborhood_type": typing.NotRequired[int | None],
 })
+VRoiModalGrowParamsDict = _VRoiModalGrowParamsDictNoTag | VRoiModalGrowParamsDictTagged
 
 
 class VRoiModalGrowOutputs(typing.NamedTuple):

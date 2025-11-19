@@ -13,8 +13,7 @@ MRI_MCSIM_METADATA = Metadata(
 )
 
 
-MriMcsimParamsDict = typing.TypedDict('MriMcsimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mcsim"]],
+_MriMcsimParamsDictNoTag = typing.TypedDict('_MriMcsimParamsDictNoTag', {
     "top_output_dir": str,
     "base_name": str,
     "surface": list[str],
@@ -65,6 +64,7 @@ MriMcsimParamsDictTagged = typing.TypedDict('MriMcsimParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MriMcsimParamsDict = _MriMcsimParamsDictNoTag | MriMcsimParamsDictTagged
 
 
 class MriMcsimOutputs(typing.NamedTuple):

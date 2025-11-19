@@ -13,8 +13,7 @@ MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
 )
 
 
-MriValidateSkullStrippedParamsDict = typing.TypedDict('MriValidateSkullStrippedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_validate_skull_stripped"]],
+_MriValidateSkullStrippedParamsDictNoTag = typing.TypedDict('_MriValidateSkullStrippedParamsDictNoTag', {
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
     "weight": float,
@@ -25,6 +24,7 @@ MriValidateSkullStrippedParamsDictTagged = typing.TypedDict('MriValidateSkullStr
     "mri_test": InputPathType,
     "weight": float,
 })
+MriValidateSkullStrippedParamsDict = _MriValidateSkullStrippedParamsDictNoTag | MriValidateSkullStrippedParamsDictTagged
 
 
 class MriValidateSkullStrippedOutputs(typing.NamedTuple):

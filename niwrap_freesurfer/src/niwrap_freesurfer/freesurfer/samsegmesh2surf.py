@@ -13,8 +13,7 @@ SAMSEGMESH2SURF_METADATA = Metadata(
 )
 
 
-Samsegmesh2surfParamsDict = typing.TypedDict('Samsegmesh2surfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/samsegmesh2surf"]],
+_Samsegmesh2surfParamsDictNoTag = typing.TypedDict('_Samsegmesh2surfParamsDictNoTag', {
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
     "lta_transform": typing.NotRequired[InputPathType | None],
@@ -31,6 +30,7 @@ Samsegmesh2surfParamsDictTagged = typing.TypedDict('Samsegmesh2surfParamsDictTag
     "output_priors": typing.NotRequired[str | None],
     "invert_flag": bool,
 })
+Samsegmesh2surfParamsDict = _Samsegmesh2surfParamsDictNoTag | Samsegmesh2surfParamsDictTagged
 
 
 class Samsegmesh2surfOutputs(typing.NamedTuple):

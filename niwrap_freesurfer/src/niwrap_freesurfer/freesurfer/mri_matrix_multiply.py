@@ -13,8 +13,7 @@ MRI_MATRIX_MULTIPLY_METADATA = Metadata(
 )
 
 
-MriMatrixMultiplyParamsDict = typing.TypedDict('MriMatrixMultiplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_matrix_multiply"]],
+_MriMatrixMultiplyParamsDictNoTag = typing.TypedDict('_MriMatrixMultiplyParamsDictNoTag', {
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
     "output_matrix": str,
@@ -33,6 +32,7 @@ MriMatrixMultiplyParamsDictTagged = typing.TypedDict('MriMatrixMultiplyParamsDic
     "binarize": bool,
     "subject_name": typing.NotRequired[str | None],
 })
+MriMatrixMultiplyParamsDict = _MriMatrixMultiplyParamsDictNoTag | MriMatrixMultiplyParamsDictTagged
 
 
 class MriMatrixMultiplyOutputs(typing.NamedTuple):

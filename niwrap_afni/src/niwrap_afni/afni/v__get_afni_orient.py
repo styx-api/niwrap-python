@@ -13,8 +13,7 @@ V__GET_AFNI_ORIENT_METADATA = Metadata(
 )
 
 
-VGetAfniOrientParamsDict = typing.TypedDict('VGetAfniOrientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniOrient"]],
+_VGetAfniOrientParamsDictNoTag = typing.TypedDict('_VGetAfniOrientParamsDictNoTag', {
     "exploratory": bool,
     "infile": InputPathType,
 })
@@ -23,6 +22,7 @@ VGetAfniOrientParamsDictTagged = typing.TypedDict('VGetAfniOrientParamsDictTagge
     "exploratory": bool,
     "infile": InputPathType,
 })
+VGetAfniOrientParamsDict = _VGetAfniOrientParamsDictNoTag | VGetAfniOrientParamsDictTagged
 
 
 class VGetAfniOrientOutputs(typing.NamedTuple):

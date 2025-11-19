@@ -13,14 +13,14 @@ V__1D_DIFF_MAG_METADATA = Metadata(
 )
 
 
-V1dDiffMagParamsDict = typing.TypedDict('V1dDiffMagParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@1dDiffMag"]],
+_V1dDiffMagParamsDictNoTag = typing.TypedDict('_V1dDiffMagParamsDictNoTag', {
     "infile": InputPathType,
 })
 V1dDiffMagParamsDictTagged = typing.TypedDict('V1dDiffMagParamsDictTagged', {
     "@type": typing.Literal["afni/@1dDiffMag"],
     "infile": InputPathType,
 })
+V1dDiffMagParamsDict = _V1dDiffMagParamsDictNoTag | V1dDiffMagParamsDictTagged
 
 
 class V1dDiffMagOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ SURF_PROJ_METADATA = Metadata(
 )
 
 
-SurfProjParamsDict = typing.TypedDict('SurfProjParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/surf_proj"]],
+_SurfProjParamsDictNoTag = typing.TypedDict('_SurfProjParamsDictNoTag', {
     "data": InputPathType,
     "surface": InputPathType,
     "output_file": str,
@@ -39,6 +38,7 @@ SurfProjParamsDictTagged = typing.TypedDict('SurfProjParamsDictTagged', {
     "operation": typing.NotRequired[str | None],
     "surface_output": typing.NotRequired[str | None],
 })
+SurfProjParamsDict = _SurfProjParamsDictNoTag | SurfProjParamsDictTagged
 
 
 class SurfProjOutputs(typing.NamedTuple):

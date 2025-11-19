@@ -13,8 +13,7 @@ SURFREG_METADATA = Metadata(
 )
 
 
-SurfregParamsDict = typing.TypedDict('SurfregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/surfreg"]],
+_SurfregParamsDictNoTag = typing.TypedDict('_SurfregParamsDictNoTag', {
     "subject": str,
     "target": str,
     "cross_hemi": bool,
@@ -51,6 +50,7 @@ SurfregParamsDictTagged = typing.TypedDict('SurfregParamsDictTagged', {
     "no_set_vol_geom": bool,
     "threads": typing.NotRequired[float | None],
 })
+SurfregParamsDict = _SurfregParamsDictNoTag | SurfregParamsDictTagged
 
 
 class SurfregOutputs(typing.NamedTuple):

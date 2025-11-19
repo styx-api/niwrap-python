@@ -12,8 +12,7 @@ METRIC_REDUCE_METADATA = Metadata(
 )
 
 
-MetricReduceExcludeOutliersParamsDict = typing.TypedDict('MetricReduceExcludeOutliersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+_MetricReduceExcludeOutliersParamsDictNoTag = typing.TypedDict('_MetricReduceExcludeOutliersParamsDictNoTag', {
     "sigma-below": float,
     "sigma-above": float,
 })
@@ -22,10 +21,10 @@ MetricReduceExcludeOutliersParamsDictTagged = typing.TypedDict('MetricReduceExcl
     "sigma-below": float,
     "sigma-above": float,
 })
+MetricReduceExcludeOutliersParamsDict = _MetricReduceExcludeOutliersParamsDictNoTag | MetricReduceExcludeOutliersParamsDictTagged
 
 
-MetricReduceParamsDict = typing.TypedDict('MetricReduceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-reduce"]],
+_MetricReduceParamsDictNoTag = typing.TypedDict('_MetricReduceParamsDictNoTag', {
     "metric-out": str,
     "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
@@ -40,6 +39,7 @@ MetricReduceParamsDictTagged = typing.TypedDict('MetricReduceParamsDictTagged', 
     "metric-in": InputPathType,
     "operation": str,
 })
+MetricReduceParamsDict = _MetricReduceParamsDictNoTag | MetricReduceParamsDictTagged
 
 
 def metric_reduce_exclude_outliers(

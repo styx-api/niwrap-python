@@ -13,8 +13,7 @@ MRI_HISTO_EQ_METADATA = Metadata(
 )
 
 
-MriHistoEqParamsDict = typing.TypedDict('MriHistoEqParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_histo_eq"]],
+_MriHistoEqParamsDictNoTag = typing.TypedDict('_MriHistoEqParamsDictNoTag', {
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })
@@ -23,6 +22,7 @@ MriHistoEqParamsDictTagged = typing.TypedDict('MriHistoEqParamsDictTagged', {
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })
+MriHistoEqParamsDict = _MriHistoEqParamsDictNoTag | MriHistoEqParamsDictTagged
 
 
 class MriHistoEqOutputs(typing.NamedTuple):

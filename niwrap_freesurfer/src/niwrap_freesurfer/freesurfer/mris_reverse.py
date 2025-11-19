@@ -13,8 +13,7 @@ MRIS_REVERSE_METADATA = Metadata(
 )
 
 
-MrisReverseParamsDict = typing.TypedDict('MrisReverseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_reverse"]],
+_MrisReverseParamsDictNoTag = typing.TypedDict('_MrisReverseParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -23,6 +22,7 @@ MrisReverseParamsDictTagged = typing.TypedDict('MrisReverseParamsDictTagged', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
+MrisReverseParamsDict = _MrisReverseParamsDictNoTag | MrisReverseParamsDictTagged
 
 
 class MrisReverseOutputs(typing.NamedTuple):

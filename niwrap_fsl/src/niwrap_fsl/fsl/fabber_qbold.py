@@ -13,8 +13,7 @@ FABBER_QBOLD_METADATA = Metadata(
 )
 
 
-FabberQboldParamsDict = typing.TypedDict('FabberQboldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_qbold"]],
+_FabberQboldParamsDictNoTag = typing.TypedDict('_FabberQboldParamsDictNoTag', {
     "output_dir": str,
     "method": str,
     "model": str,
@@ -89,6 +88,7 @@ FabberQboldParamsDictTagged = typing.TypedDict('FabberQboldParamsDictTagged', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
+FabberQboldParamsDict = _FabberQboldParamsDictNoTag | FabberQboldParamsDictTagged
 
 
 class FabberQboldOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ LABEL_DILATE_METADATA = Metadata(
 )
 
 
-LabelDilateParamsDict = typing.TypedDict('LabelDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-dilate"]],
+_LabelDilateParamsDictNoTag = typing.TypedDict('_LabelDilateParamsDictNoTag', {
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -32,6 +31,7 @@ LabelDilateParamsDictTagged = typing.TypedDict('LabelDilateParamsDictTagged', {
     "surface": InputPathType,
     "dilate-dist": float,
 })
+LabelDilateParamsDict = _LabelDilateParamsDictNoTag | LabelDilateParamsDictTagged
 
 
 class LabelDilateOutputs(typing.NamedTuple):

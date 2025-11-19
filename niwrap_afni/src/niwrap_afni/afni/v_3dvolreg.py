@@ -13,8 +13,7 @@ V_3DVOLREG_METADATA = Metadata(
 )
 
 
-V3dvolregParamsDict = typing.TypedDict('V3dvolregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dvolreg"]],
+_V3dvolregParamsDictNoTag = typing.TypedDict('_V3dvolregParamsDictNoTag', {
     "copyorigin": bool,
     "twopass": bool,
     "Fourier": bool,
@@ -49,6 +48,7 @@ V3dvolregParamsDictTagged = typing.TypedDict('V3dvolregParamsDictTagged', {
     "Maxdisp1d": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
+V3dvolregParamsDict = _V3dvolregParamsDictNoTag | V3dvolregParamsDictTagged
 
 
 class V3dvolregOutputs(typing.NamedTuple):

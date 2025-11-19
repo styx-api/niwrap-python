@@ -13,8 +13,7 @@ TCKDFC_METADATA = Metadata(
 )
 
 
-TckdfcDynamicParamsDict = typing.TypedDict('TckdfcDynamicParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dynamic"]],
+_TckdfcDynamicParamsDictNoTag = typing.TypedDict('_TckdfcDynamicParamsDictNoTag', {
     "shape": str,
     "width": int,
 })
@@ -23,10 +22,10 @@ TckdfcDynamicParamsDictTagged = typing.TypedDict('TckdfcDynamicParamsDictTagged'
     "shape": str,
     "width": int,
 })
+TckdfcDynamicParamsDict = _TckdfcDynamicParamsDictNoTag | TckdfcDynamicParamsDictTagged
 
 
-TckdfcConfigParamsDict = typing.TypedDict('TckdfcConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckdfcConfigParamsDictNoTag = typing.TypedDict('_TckdfcConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ TckdfcConfigParamsDictTagged = typing.TypedDict('TckdfcConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+TckdfcConfigParamsDict = _TckdfcConfigParamsDictNoTag | TckdfcConfigParamsDictTagged
 
 
-TckdfcParamsDict = typing.TypedDict('TckdfcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckdfc"]],
+_TckdfcParamsDictNoTag = typing.TypedDict('_TckdfcParamsDictNoTag', {
     "static": bool,
     "dynamic": typing.NotRequired[TckdfcDynamicParamsDict | None],
     "template": typing.NotRequired[InputPathType | None],
@@ -79,6 +78,7 @@ TckdfcParamsDictTagged = typing.TypedDict('TckdfcParamsDictTagged', {
     "fmri": InputPathType,
     "output": str,
 })
+TckdfcParamsDict = _TckdfcParamsDictNoTag | TckdfcParamsDictTagged
 
 
 def tckdfc_dynamic(

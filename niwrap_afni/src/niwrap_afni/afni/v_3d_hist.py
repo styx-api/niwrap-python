@@ -13,8 +13,7 @@ V_3D_HIST_METADATA = Metadata(
 )
 
 
-V3dHistParamsDict = typing.TypedDict('V3dHistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dHist"]],
+_V3dHistParamsDictNoTag = typing.TypedDict('_V3dHistParamsDictNoTag', {
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
     "mask_dset": typing.NotRequired[InputPathType | None],
@@ -59,6 +58,7 @@ V3dHistParamsDictTagged = typing.TypedDict('V3dHistParamsDictTagged', {
     "val_at": typing.NotRequired[str | None],
     "quiet": bool,
 })
+V3dHistParamsDict = _V3dHistParamsDictNoTag | V3dHistParamsDictTagged
 
 
 class V3dHistOutputs(typing.NamedTuple):

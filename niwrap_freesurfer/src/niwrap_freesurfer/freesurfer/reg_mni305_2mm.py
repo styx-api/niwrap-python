@@ -13,8 +13,7 @@ REG_MNI305_2MM_METADATA = Metadata(
 )
 
 
-RegMni3052mmParamsDict = typing.TypedDict('RegMni3052mmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reg-mni305.2mm"]],
+_RegMni3052mmParamsDictNoTag = typing.TypedDict('_RegMni3052mmParamsDictNoTag', {
     "subject_id": str,
     "regfile": InputPathType,
 })
@@ -23,6 +22,7 @@ RegMni3052mmParamsDictTagged = typing.TypedDict('RegMni3052mmParamsDictTagged', 
     "subject_id": str,
     "regfile": InputPathType,
 })
+RegMni3052mmParamsDict = _RegMni3052mmParamsDictNoTag | RegMni3052mmParamsDictTagged
 
 
 class RegMni3052mmOutputs(typing.NamedTuple):

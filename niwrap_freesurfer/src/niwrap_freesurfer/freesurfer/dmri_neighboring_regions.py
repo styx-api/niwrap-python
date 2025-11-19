@@ -13,8 +13,7 @@ DMRI_NEIGHBORING_REGIONS_METADATA = Metadata(
 )
 
 
-DmriNeighboringRegionsParamsDict = typing.TypedDict('DmriNeighboringRegionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_neighboringRegions"]],
+_DmriNeighboringRegionsParamsDictNoTag = typing.TypedDict('_DmriNeighboringRegionsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -23,6 +22,7 @@ DmriNeighboringRegionsParamsDictTagged = typing.TypedDict('DmriNeighboringRegion
     "input_file": InputPathType,
     "output_file": str,
 })
+DmriNeighboringRegionsParamsDict = _DmriNeighboringRegionsParamsDictNoTag | DmriNeighboringRegionsParamsDictTagged
 
 
 class DmriNeighboringRegionsOutputs(typing.NamedTuple):

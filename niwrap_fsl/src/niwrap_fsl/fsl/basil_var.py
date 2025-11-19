@@ -13,8 +13,7 @@ BASIL_VAR_METADATA = Metadata(
 )
 
 
-BasilVarParamsDict = typing.TypedDict('BasilVarParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/basil_var"]],
+_BasilVarParamsDictNoTag = typing.TypedDict('_BasilVarParamsDictNoTag', {
     "results_dir": str,
     "mask_image": InputPathType,
 })
@@ -23,6 +22,7 @@ BasilVarParamsDictTagged = typing.TypedDict('BasilVarParamsDictTagged', {
     "results_dir": str,
     "mask_image": InputPathType,
 })
+BasilVarParamsDict = _BasilVarParamsDictNoTag | BasilVarParamsDictTagged
 
 
 class BasilVarOutputs(typing.NamedTuple):

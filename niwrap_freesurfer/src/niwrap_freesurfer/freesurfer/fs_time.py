@@ -13,8 +13,7 @@ FS_TIME_METADATA = Metadata(
 )
 
 
-FsTimeParamsDict = typing.TypedDict('FsTimeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_time"]],
+_FsTimeParamsDictNoTag = typing.TypedDict('_FsTimeParamsDictNoTag', {
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
     "load_avg": bool,
@@ -29,6 +28,7 @@ FsTimeParamsDictTagged = typing.TypedDict('FsTimeParamsDictTagged', {
     "command": str,
     "args": typing.NotRequired[list[str] | None],
 })
+FsTimeParamsDict = _FsTimeParamsDictNoTag | FsTimeParamsDictTagged
 
 
 class FsTimeOutputs(typing.NamedTuple):

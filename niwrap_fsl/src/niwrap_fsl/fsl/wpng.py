@@ -13,8 +13,7 @@ WPNG_METADATA = Metadata(
 )
 
 
-WpngParamsDict = typing.TypedDict('WpngParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/wpng"]],
+_WpngParamsDictNoTag = typing.TypedDict('_WpngParamsDictNoTag', {
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
     "bgcolor": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ WpngParamsDictTagged = typing.TypedDict('WpngParamsDictTagged', {
     "time_flag": bool,
     "interlace_flag": bool,
 })
+WpngParamsDict = _WpngParamsDictNoTag | WpngParamsDictTagged
 
 
 class WpngOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ CIFTI_LABEL_TO_ROI_METADATA = Metadata(
 )
 
 
-CiftiLabelToRoiParamsDict = typing.TypedDict('CiftiLabelToRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-roi"]],
+_CiftiLabelToRoiParamsDictNoTag = typing.TypedDict('_CiftiLabelToRoiParamsDictNoTag', {
     "scalar-out": str,
     "label-name": typing.NotRequired[str | None],
     "label-key": typing.NotRequired[int | None],
@@ -28,6 +27,7 @@ CiftiLabelToRoiParamsDictTagged = typing.TypedDict('CiftiLabelToRoiParamsDictTag
     "map": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
+CiftiLabelToRoiParamsDict = _CiftiLabelToRoiParamsDictNoTag | CiftiLabelToRoiParamsDictTagged
 
 
 class CiftiLabelToRoiOutputs(typing.NamedTuple):

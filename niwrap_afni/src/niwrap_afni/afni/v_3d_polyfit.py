@@ -13,8 +13,7 @@ V_3D_POLYFIT_METADATA = Metadata(
 )
 
 
-V3dPolyfitParamsDict = typing.TypedDict('V3dPolyfitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPolyfit"]],
+_V3dPolyfitParamsDictNoTag = typing.TypedDict('_V3dPolyfitParamsDictNoTag', {
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
     "blur": typing.NotRequired[float | None],
@@ -47,6 +46,7 @@ V3dPolyfitParamsDictTagged = typing.TypedDict('V3dPolyfitParamsDictTagged', {
     "base_dataset": typing.NotRequired[InputPathType | None],
     "verbose": bool,
 })
+V3dPolyfitParamsDict = _V3dPolyfitParamsDictNoTag | V3dPolyfitParamsDictTagged
 
 
 class V3dPolyfitOutputs(typing.NamedTuple):

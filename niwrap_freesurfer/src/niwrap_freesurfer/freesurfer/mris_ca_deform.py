@@ -13,8 +13,7 @@ MRIS_CA_DEFORM_METADATA = Metadata(
 )
 
 
-MrisCaDeformParamsDict = typing.TypedDict('MrisCaDeformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_deform"]],
+_MrisCaDeformParamsDictNoTag = typing.TypedDict('_MrisCaDeformParamsDictNoTag', {
     "input_surface": InputPathType,
     "label_vol": InputPathType,
     "transform": InputPathType,
@@ -29,6 +28,7 @@ MrisCaDeformParamsDictTagged = typing.TypedDict('MrisCaDeformParamsDictTagged', 
     "intensity_vol": InputPathType,
     "output_surface": str,
 })
+MrisCaDeformParamsDict = _MrisCaDeformParamsDictNoTag | MrisCaDeformParamsDictTagged
 
 
 class MrisCaDeformOutputs(typing.NamedTuple):

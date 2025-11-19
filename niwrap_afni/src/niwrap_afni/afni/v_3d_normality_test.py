@@ -13,8 +13,7 @@ V_3D_NORMALITY_TEST_METADATA = Metadata(
 )
 
 
-V3dNormalityTestParamsDict = typing.TypedDict('V3dNormalityTestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dNormalityTest"]],
+_V3dNormalityTestParamsDictNoTag = typing.TypedDict('_V3dNormalityTestParamsDictNoTag', {
     "input": InputPathType,
     "prefix": str,
     "noexp": bool,
@@ -27,6 +26,7 @@ V3dNormalityTestParamsDictTagged = typing.TypedDict('V3dNormalityTestParamsDictT
     "noexp": bool,
     "pval": bool,
 })
+V3dNormalityTestParamsDict = _V3dNormalityTestParamsDictNoTag | V3dNormalityTestParamsDictTagged
 
 
 class V3dNormalityTestOutputs(typing.NamedTuple):

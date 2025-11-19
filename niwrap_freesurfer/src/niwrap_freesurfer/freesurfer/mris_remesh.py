@@ -13,8 +13,7 @@ MRIS_REMESH_METADATA = Metadata(
 )
 
 
-MrisRemeshParamsDict = typing.TypedDict('MrisRemeshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remesh"]],
+_MrisRemeshParamsDictNoTag = typing.TypedDict('_MrisRemeshParamsDictNoTag', {
     "input": InputPathType,
     "output": str,
     "edge_length": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ MrisRemeshParamsDictTagged = typing.TypedDict('MrisRemeshParamsDictTagged', {
     "remesh": bool,
     "iterations": typing.NotRequired[float | None],
 })
+MrisRemeshParamsDict = _MrisRemeshParamsDictNoTag | MrisRemeshParamsDictTagged
 
 
 class MrisRemeshOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ RCBF_PREP_METADATA = Metadata(
 )
 
 
-RcbfPrepParamsDict = typing.TypedDict('RcbfPrepParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/rcbf-prep"]],
+_RcbfPrepParamsDictNoTag = typing.TypedDict('_RcbfPrepParamsDictNoTag', {
     "outdir": str,
     "rcbfvol": InputPathType,
     "subject": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ RcbfPrepParamsDictTagged = typing.TypedDict('RcbfPrepParamsDictTagged', {
     "register": typing.NotRequired[InputPathType | None],
     "template": typing.NotRequired[InputPathType | None],
 })
+RcbfPrepParamsDict = _RcbfPrepParamsDictNoTag | RcbfPrepParamsDictTagged
 
 
 class RcbfPrepOutputs(typing.NamedTuple):

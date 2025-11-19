@@ -13,8 +13,7 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 )
 
 
-AntsBrainExtractionShParamsDict = typing.TypedDict('AntsBrainExtractionShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsBrainExtraction.sh"]],
+_AntsBrainExtractionShParamsDictNoTag = typing.TypedDict('_AntsBrainExtractionShParamsDictNoTag', {
     "image_dimension": int,
     "anatomical_image": InputPathType,
     "template": InputPathType,
@@ -49,6 +48,7 @@ AntsBrainExtractionShParamsDictTagged = typing.TypedDict('AntsBrainExtractionShP
     "debug_mode": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
+AntsBrainExtractionShParamsDict = _AntsBrainExtractionShParamsDictNoTag | AntsBrainExtractionShParamsDictTagged
 
 
 class AntsBrainExtractionShOutputs(typing.NamedTuple):

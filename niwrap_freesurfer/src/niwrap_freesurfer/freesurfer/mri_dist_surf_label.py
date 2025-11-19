@@ -13,8 +13,7 @@ MRI_DIST_SURF_LABEL_METADATA = Metadata(
 )
 
 
-MriDistSurfLabelParamsDict = typing.TypedDict('MriDistSurfLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dist_surf_label"]],
+_MriDistSurfLabelParamsDictNoTag = typing.TypedDict('_MriDistSurfLabelParamsDictNoTag', {
     "surface": InputPathType,
     "label_file": InputPathType,
     "output": str,
@@ -25,6 +24,7 @@ MriDistSurfLabelParamsDictTagged = typing.TypedDict('MriDistSurfLabelParamsDictT
     "label_file": InputPathType,
     "output": str,
 })
+MriDistSurfLabelParamsDict = _MriDistSurfLabelParamsDictNoTag | MriDistSurfLabelParamsDictTagged
 
 
 class MriDistSurfLabelOutputs(typing.NamedTuple):

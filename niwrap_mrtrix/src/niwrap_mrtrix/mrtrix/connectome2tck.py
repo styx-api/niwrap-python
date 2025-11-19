@@ -13,8 +13,7 @@ CONNECTOME2TCK_METADATA = Metadata(
 )
 
 
-Connectome2tckConfigParamsDict = typing.TypedDict('Connectome2tckConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_Connectome2tckConfigParamsDictNoTag = typing.TypedDict('_Connectome2tckConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ Connectome2tckConfigParamsDictTagged = typing.TypedDict('Connectome2tckConfigPar
     "key": str,
     "value": str,
 })
+Connectome2tckConfigParamsDict = _Connectome2tckConfigParamsDictNoTag | Connectome2tckConfigParamsDictTagged
 
 
-Connectome2tckParamsDict = typing.TypedDict('Connectome2tckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/connectome2tck"]],
+_Connectome2tckParamsDictNoTag = typing.TypedDict('_Connectome2tckParamsDictNoTag', {
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
     "files": typing.NotRequired[str | None],
@@ -69,6 +68,7 @@ Connectome2tckParamsDictTagged = typing.TypedDict('Connectome2tckParamsDictTagge
     "assignments_in": InputPathType,
     "prefix_out": str,
 })
+Connectome2tckParamsDict = _Connectome2tckParamsDictNoTag | Connectome2tckParamsDictTagged
 
 
 def connectome2tck_config(

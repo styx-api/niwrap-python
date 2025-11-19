@@ -13,8 +13,7 @@ V_1D_UPSAMPLE_METADATA = Metadata(
 )
 
 
-V1dUpsampleParamsDict = typing.TypedDict('V1dUpsampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dUpsample"]],
+_V1dUpsampleParamsDictNoTag = typing.TypedDict('_V1dUpsampleParamsDictNoTag', {
     "upsample_factor": float,
     "input_file": InputPathType,
     "linear_interpolation": bool,
@@ -25,6 +24,7 @@ V1dUpsampleParamsDictTagged = typing.TypedDict('V1dUpsampleParamsDictTagged', {
     "input_file": InputPathType,
     "linear_interpolation": bool,
 })
+V1dUpsampleParamsDict = _V1dUpsampleParamsDictNoTag | V1dUpsampleParamsDictTagged
 
 
 class V1dUpsampleOutputs(typing.NamedTuple):

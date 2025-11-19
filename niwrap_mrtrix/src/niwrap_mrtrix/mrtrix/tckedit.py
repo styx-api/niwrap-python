@@ -13,108 +13,107 @@ TCKEDIT_METADATA = Metadata(
 )
 
 
-TckeditVariousStringParamsDict = typing.TypedDict('TckeditVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_TckeditVariousStringParamsDictNoTag = typing.TypedDict('_TckeditVariousStringParamsDictNoTag', {
     "obj": str,
 })
 TckeditVariousStringParamsDictTagged = typing.TypedDict('TckeditVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+TckeditVariousStringParamsDict = _TckeditVariousStringParamsDictNoTag | TckeditVariousStringParamsDictTagged
 
 
-TckeditVariousFileParamsDict = typing.TypedDict('TckeditVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_TckeditVariousFileParamsDictNoTag = typing.TypedDict('_TckeditVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckeditVariousFileParamsDictTagged = typing.TypedDict('TckeditVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+TckeditVariousFileParamsDict = _TckeditVariousFileParamsDictNoTag | TckeditVariousFileParamsDictTagged
 
 
-TckeditIncludeParamsDict = typing.TypedDict('TckeditIncludeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["include"]],
+_TckeditIncludeParamsDictNoTag = typing.TypedDict('_TckeditIncludeParamsDictNoTag', {
     "spec": typing.Union[TckeditVariousStringParamsDictTagged, TckeditVariousFileParamsDictTagged],
 })
 TckeditIncludeParamsDictTagged = typing.TypedDict('TckeditIncludeParamsDictTagged', {
     "@type": typing.Literal["include"],
     "spec": typing.Union[TckeditVariousStringParamsDictTagged, TckeditVariousFileParamsDictTagged],
 })
+TckeditIncludeParamsDict = _TckeditIncludeParamsDictNoTag | TckeditIncludeParamsDictTagged
 
 
-TckeditIncludeOrderedParamsDict = typing.TypedDict('TckeditIncludeOrderedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["include_ordered"]],
+_TckeditIncludeOrderedParamsDictNoTag = typing.TypedDict('_TckeditIncludeOrderedParamsDictNoTag', {
     "image": str,
 })
 TckeditIncludeOrderedParamsDictTagged = typing.TypedDict('TckeditIncludeOrderedParamsDictTagged', {
     "@type": typing.Literal["include_ordered"],
     "image": str,
 })
+TckeditIncludeOrderedParamsDict = _TckeditIncludeOrderedParamsDictNoTag | TckeditIncludeOrderedParamsDictTagged
 
 
-TckeditVariousString1ParamsDict = typing.TypedDict('TckeditVariousString1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+_TckeditVariousString1ParamsDictNoTag = typing.TypedDict('_TckeditVariousString1ParamsDictNoTag', {
     "obj": str,
 })
 TckeditVariousString1ParamsDictTagged = typing.TypedDict('TckeditVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
+TckeditVariousString1ParamsDict = _TckeditVariousString1ParamsDictNoTag | TckeditVariousString1ParamsDictTagged
 
 
-TckeditVariousFile1ParamsDict = typing.TypedDict('TckeditVariousFile1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+_TckeditVariousFile1ParamsDictNoTag = typing.TypedDict('_TckeditVariousFile1ParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckeditVariousFile1ParamsDictTagged = typing.TypedDict('TckeditVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
+TckeditVariousFile1ParamsDict = _TckeditVariousFile1ParamsDictNoTag | TckeditVariousFile1ParamsDictTagged
 
 
-TckeditExcludeParamsDict = typing.TypedDict('TckeditExcludeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exclude"]],
+_TckeditExcludeParamsDictNoTag = typing.TypedDict('_TckeditExcludeParamsDictNoTag', {
     "spec": typing.Union[TckeditVariousString1ParamsDictTagged, TckeditVariousFile1ParamsDictTagged],
 })
 TckeditExcludeParamsDictTagged = typing.TypedDict('TckeditExcludeParamsDictTagged', {
     "@type": typing.Literal["exclude"],
     "spec": typing.Union[TckeditVariousString1ParamsDictTagged, TckeditVariousFile1ParamsDictTagged],
 })
+TckeditExcludeParamsDict = _TckeditExcludeParamsDictNoTag | TckeditExcludeParamsDictTagged
 
 
-TckeditVariousString2ParamsDict = typing.TypedDict('TckeditVariousString2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
+_TckeditVariousString2ParamsDictNoTag = typing.TypedDict('_TckeditVariousString2ParamsDictNoTag', {
     "obj": str,
 })
 TckeditVariousString2ParamsDictTagged = typing.TypedDict('TckeditVariousString2ParamsDictTagged', {
     "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
+TckeditVariousString2ParamsDict = _TckeditVariousString2ParamsDictNoTag | TckeditVariousString2ParamsDictTagged
 
 
-TckeditVariousFile2ParamsDict = typing.TypedDict('TckeditVariousFile2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
+_TckeditVariousFile2ParamsDictNoTag = typing.TypedDict('_TckeditVariousFile2ParamsDictNoTag', {
     "obj": InputPathType,
 })
 TckeditVariousFile2ParamsDictTagged = typing.TypedDict('TckeditVariousFile2ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
+TckeditVariousFile2ParamsDict = _TckeditVariousFile2ParamsDictNoTag | TckeditVariousFile2ParamsDictTagged
 
 
-TckeditMaskParamsDict = typing.TypedDict('TckeditMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mask"]],
+_TckeditMaskParamsDictNoTag = typing.TypedDict('_TckeditMaskParamsDictNoTag', {
     "spec": typing.Union[TckeditVariousString2ParamsDictTagged, TckeditVariousFile2ParamsDictTagged],
 })
 TckeditMaskParamsDictTagged = typing.TypedDict('TckeditMaskParamsDictTagged', {
     "@type": typing.Literal["mask"],
     "spec": typing.Union[TckeditVariousString2ParamsDictTagged, TckeditVariousFile2ParamsDictTagged],
 })
+TckeditMaskParamsDict = _TckeditMaskParamsDictNoTag | TckeditMaskParamsDictTagged
 
 
-TckeditConfigParamsDict = typing.TypedDict('TckeditConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TckeditConfigParamsDictNoTag = typing.TypedDict('_TckeditConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -123,10 +122,10 @@ TckeditConfigParamsDictTagged = typing.TypedDict('TckeditConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+TckeditConfigParamsDict = _TckeditConfigParamsDictNoTag | TckeditConfigParamsDictTagged
 
 
-TckeditParamsDict = typing.TypedDict('TckeditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tckedit"]],
+_TckeditParamsDictNoTag = typing.TypedDict('_TckeditParamsDictNoTag', {
     "include": typing.NotRequired[list[TckeditIncludeParamsDict] | None],
     "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParamsDict] | None],
     "exclude": typing.NotRequired[list[TckeditExcludeParamsDict] | None],
@@ -179,6 +178,7 @@ TckeditParamsDictTagged = typing.TypedDict('TckeditParamsDictTagged', {
     "tracks_in": list[InputPathType],
     "tracks_out": str,
 })
+TckeditParamsDict = _TckeditParamsDictNoTag | TckeditParamsDictTagged
 
 
 def tckedit_spec_cargs_dyn_fn(

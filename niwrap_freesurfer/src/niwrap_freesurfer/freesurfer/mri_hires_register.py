@@ -13,8 +13,7 @@ MRI_HIRES_REGISTER_METADATA = Metadata(
 )
 
 
-MriHiresRegisterParamsDict = typing.TypedDict('MriHiresRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hires_register"]],
+_MriHiresRegisterParamsDictNoTag = typing.TypedDict('_MriHiresRegisterParamsDictNoTag', {
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
     "input_aseg": InputPathType,
@@ -27,6 +26,7 @@ MriHiresRegisterParamsDictTagged = typing.TypedDict('MriHiresRegisterParamsDictT
     "input_aseg": InputPathType,
     "output_xform": str,
 })
+MriHiresRegisterParamsDict = _MriHiresRegisterParamsDictNoTag | MriHiresRegisterParamsDictTagged
 
 
 class MriHiresRegisterOutputs(typing.NamedTuple):

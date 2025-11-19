@@ -13,8 +13,7 @@ SURF_QUAL_METADATA = Metadata(
 )
 
 
-SurfQualParamsDict = typing.TypedDict('SurfQualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfQual"]],
+_SurfQualParamsDictNoTag = typing.TypedDict('_SurfQualParamsDictNoTag', {
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
     "sphere_flag": bool,
@@ -31,6 +30,7 @@ SurfQualParamsDictTagged = typing.TypedDict('SurfQualParamsDictTagged', {
     "self_intersect_flag": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
+SurfQualParamsDict = _SurfQualParamsDictNoTag | SurfQualParamsDictTagged
 
 
 class SurfQualOutputs(typing.NamedTuple):

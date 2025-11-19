@@ -13,8 +13,7 @@ MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
 )
 
 
-MrisAverageCurvatureParamsDict = typing.TypedDict('MrisAverageCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_average_curvature"]],
+_MrisAverageCurvatureParamsDictNoTag = typing.TypedDict('_MrisAverageCurvatureParamsDictNoTag', {
     "input_curvature_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -33,6 +32,7 @@ MrisAverageCurvatureParamsDictTagged = typing.TypedDict('MrisAverageCurvaturePar
     "summary_stats_flag": bool,
     "output_surface_flag": bool,
 })
+MrisAverageCurvatureParamsDict = _MrisAverageCurvatureParamsDictNoTag | MrisAverageCurvatureParamsDictTagged
 
 
 class MrisAverageCurvatureOutputs(typing.NamedTuple):

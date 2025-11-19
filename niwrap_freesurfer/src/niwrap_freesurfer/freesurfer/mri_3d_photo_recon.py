@@ -13,8 +13,7 @@ MRI_3D_PHOTO_RECON_METADATA = Metadata(
 )
 
 
-Mri3dPhotoReconParamsDict = typing.TypedDict('Mri3dPhotoReconParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_3d_photo_recon"]],
+_Mri3dPhotoReconParamsDictNoTag = typing.TypedDict('_Mri3dPhotoReconParamsDictNoTag', {
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
     "slice_thickness": float,
@@ -47,6 +46,7 @@ Mri3dPhotoReconParamsDictTagged = typing.TypedDict('Mri3dPhotoReconParamsDictTag
     "rigid_only_for_photos": bool,
     "gpu_index": typing.NotRequired[float | None],
 })
+Mri3dPhotoReconParamsDict = _Mri3dPhotoReconParamsDictNoTag | Mri3dPhotoReconParamsDictTagged
 
 
 class Mri3dPhotoReconOutputs(typing.NamedTuple):

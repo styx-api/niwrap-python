@@ -13,8 +13,7 @@ CIFTI_TOOL_METADATA = Metadata(
 )
 
 
-CiftiToolParamsDict = typing.TypedDict('CiftiToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/cifti_tool"]],
+_CiftiToolParamsDictNoTag = typing.TypedDict('_CiftiToolParamsDictNoTag', {
     "input_file": InputPathType,
     "as_cext": bool,
     "disp_cext": bool,
@@ -37,6 +36,7 @@ CiftiToolParamsDictTagged = typing.TypedDict('CiftiToolParamsDictTagged', {
     "verbose_read_level": typing.NotRequired[float | None],
     "both_verbose_levels": typing.NotRequired[float | None],
 })
+CiftiToolParamsDict = _CiftiToolParamsDictNoTag | CiftiToolParamsDictTagged
 
 
 class CiftiToolOutputs(typing.NamedTuple):

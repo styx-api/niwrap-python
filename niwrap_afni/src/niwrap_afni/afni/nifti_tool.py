@@ -13,8 +13,7 @@ NIFTI_TOOL_METADATA = Metadata(
 )
 
 
-NiftiToolParamsDict = typing.TypedDict('NiftiToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/nifti_tool"]],
+_NiftiToolParamsDictNoTag = typing.TypedDict('_NiftiToolParamsDictNoTag', {
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
     "field": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ NiftiToolParamsDictTagged = typing.TypedDict('NiftiToolParamsDictTagged', {
     "add_comment_ext": typing.NotRequired[str | None],
     "rm_ext": typing.NotRequired[str | None],
 })
+NiftiToolParamsDict = _NiftiToolParamsDictNoTag | NiftiToolParamsDictTagged
 
 
 class NiftiToolOutputs(typing.NamedTuple):

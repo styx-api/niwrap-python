@@ -13,8 +13,7 @@ MESHCONVERT_METADATA = Metadata(
 )
 
 
-MeshconvertTransformParamsDict = typing.TypedDict('MeshconvertTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["transform"]],
+_MeshconvertTransformParamsDictNoTag = typing.TypedDict('_MeshconvertTransformParamsDictNoTag', {
     "mode": str,
     "image": InputPathType,
 })
@@ -23,10 +22,10 @@ MeshconvertTransformParamsDictTagged = typing.TypedDict('MeshconvertTransformPar
     "mode": str,
     "image": InputPathType,
 })
+MeshconvertTransformParamsDict = _MeshconvertTransformParamsDictNoTag | MeshconvertTransformParamsDictTagged
 
 
-MeshconvertConfigParamsDict = typing.TypedDict('MeshconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MeshconvertConfigParamsDictNoTag = typing.TypedDict('_MeshconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -35,10 +34,10 @@ MeshconvertConfigParamsDictTagged = typing.TypedDict('MeshconvertConfigParamsDic
     "key": str,
     "value": str,
 })
+MeshconvertConfigParamsDict = _MeshconvertConfigParamsDictNoTag | MeshconvertConfigParamsDictTagged
 
 
-MeshconvertParamsDict = typing.TypedDict('MeshconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/meshconvert"]],
+_MeshconvertParamsDictNoTag = typing.TypedDict('_MeshconvertParamsDictNoTag', {
     "binary": bool,
     "transform": typing.NotRequired[MeshconvertTransformParamsDict | None],
     "info": bool,
@@ -67,6 +66,7 @@ MeshconvertParamsDictTagged = typing.TypedDict('MeshconvertParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+MeshconvertParamsDict = _MeshconvertParamsDictNoTag | MeshconvertParamsDictTagged
 
 
 def meshconvert_transform(

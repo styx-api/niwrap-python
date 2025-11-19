@@ -13,8 +13,7 @@ FS_CHECK_VERSION_METADATA = Metadata(
 )
 
 
-FsCheckVersionParamsDict = typing.TypedDict('FsCheckVersionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs-check-version"]],
+_FsCheckVersionParamsDictNoTag = typing.TypedDict('_FsCheckVersionParamsDictNoTag', {
     "subjects_dir": str,
     "outfile": str,
     "subject": typing.NotRequired[str | None],
@@ -33,6 +32,7 @@ FsCheckVersionParamsDictTagged = typing.TypedDict('FsCheckVersionParamsDictTagge
     "test": bool,
     "test_debug": bool,
 })
+FsCheckVersionParamsDict = _FsCheckVersionParamsDictNoTag | FsCheckVersionParamsDictTagged
 
 
 class FsCheckVersionOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MAP_ALL_LABELS_LH_METADATA = Metadata(
 )
 
 
-MapAllLabelsLhParamsDict = typing.TypedDict('MapAllLabelsLhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/map_all_labels-lh"]],
+_MapAllLabelsLhParamsDictNoTag = typing.TypedDict('_MapAllLabelsLhParamsDictNoTag', {
     "which": str,
     "fname": str,
     "hemi": str,
@@ -31,6 +30,7 @@ MapAllLabelsLhParamsDictTagged = typing.TypedDict('MapAllLabelsLhParamsDictTagge
     "subjects": list[str],
     "output": str,
 })
+MapAllLabelsLhParamsDict = _MapAllLabelsLhParamsDictNoTag | MapAllLabelsLhParamsDictTagged
 
 
 class MapAllLabelsLhOutputs(typing.NamedTuple):

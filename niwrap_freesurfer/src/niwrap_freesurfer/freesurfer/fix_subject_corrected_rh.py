@@ -13,14 +13,14 @@ FIX_SUBJECT_CORRECTED_RH_METADATA = Metadata(
 )
 
 
-FixSubjectCorrectedRhParamsDict = typing.TypedDict('FixSubjectCorrectedRhParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected-rh"]],
+_FixSubjectCorrectedRhParamsDictNoTag = typing.TypedDict('_FixSubjectCorrectedRhParamsDictNoTag', {
     "subject_dir": str,
 })
 FixSubjectCorrectedRhParamsDictTagged = typing.TypedDict('FixSubjectCorrectedRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fix_subject_corrected-rh"],
     "subject_dir": str,
 })
+FixSubjectCorrectedRhParamsDict = _FixSubjectCorrectedRhParamsDictNoTag | FixSubjectCorrectedRhParamsDictTagged
 
 
 class FixSubjectCorrectedRhOutputs(typing.NamedTuple):

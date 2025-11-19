@@ -12,8 +12,7 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 )
 
 
-VolumeCopyExtensionsParamsDict = typing.TypedDict('VolumeCopyExtensionsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-copy-extensions"]],
+_VolumeCopyExtensionsParamsDictNoTag = typing.TypedDict('_VolumeCopyExtensionsParamsDictNoTag', {
     "volume-out": str,
     "drop-unknown": bool,
     "data-volume": InputPathType,
@@ -26,6 +25,7 @@ VolumeCopyExtensionsParamsDictTagged = typing.TypedDict('VolumeCopyExtensionsPar
     "data-volume": InputPathType,
     "extension-volume": InputPathType,
 })
+VolumeCopyExtensionsParamsDict = _VolumeCopyExtensionsParamsDictNoTag | VolumeCopyExtensionsParamsDictTagged
 
 
 class VolumeCopyExtensionsOutputs(typing.NamedTuple):

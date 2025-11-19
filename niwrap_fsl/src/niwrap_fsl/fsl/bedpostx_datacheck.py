@@ -13,14 +13,14 @@ BEDPOSTX_DATACHECK_METADATA = Metadata(
 )
 
 
-BedpostxDatacheckParamsDict = typing.TypedDict('BedpostxDatacheckParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_datacheck"]],
+_BedpostxDatacheckParamsDictNoTag = typing.TypedDict('_BedpostxDatacheckParamsDictNoTag', {
     "data_dir": str,
 })
 BedpostxDatacheckParamsDictTagged = typing.TypedDict('BedpostxDatacheckParamsDictTagged', {
     "@type": typing.Literal["fsl/bedpostx_datacheck"],
     "data_dir": str,
 })
+BedpostxDatacheckParamsDict = _BedpostxDatacheckParamsDictNoTag | BedpostxDatacheckParamsDictTagged
 
 
 class BedpostxDatacheckOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ QUICKSPEC_METADATA = Metadata(
 )
 
 
-QuickspecParamsDict = typing.TypedDict('QuickspecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/quickspec"]],
+_QuickspecParamsDictNoTag = typing.TypedDict('_QuickspecParamsDictNoTag', {
     "tn": list[str],
     "tsn": list[str],
     "tsnad": typing.NotRequired[list[str] | None],
@@ -33,6 +32,7 @@ QuickspecParamsDictTagged = typing.TypedDict('QuickspecParamsDictTagged', {
     "spec": typing.NotRequired[str | None],
     "help": bool,
 })
+QuickspecParamsDict = _QuickspecParamsDictNoTag | QuickspecParamsDictTagged
 
 
 class QuickspecOutputs(typing.NamedTuple):

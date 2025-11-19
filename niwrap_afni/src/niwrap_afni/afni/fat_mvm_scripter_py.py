@@ -13,8 +13,7 @@ FAT_MVM_SCRIPTER_PY_METADATA = Metadata(
 )
 
 
-FatMvmScripterPyParamsDict = typing.TypedDict('FatMvmScripterPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_scripter.py"]],
+_FatMvmScripterPyParamsDictNoTag = typing.TypedDict('_FatMvmScripterPyParamsDictNoTag', {
     "prefix": str,
     "table": InputPathType,
     "log": InputPathType,
@@ -45,6 +44,7 @@ FatMvmScripterPyParamsDictTagged = typing.TypedDict('FatMvmScripterPyParamsDictT
     "subnet_pref": typing.NotRequired[str | None],
     "cat_pair_off": bool,
 })
+FatMvmScripterPyParamsDict = _FatMvmScripterPyParamsDictNoTag | FatMvmScripterPyParamsDictTagged
 
 
 class FatMvmScripterPyOutputs(typing.NamedTuple):

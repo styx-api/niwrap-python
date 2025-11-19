@@ -13,8 +13,7 @@ V_1D_TOOL_PY_METADATA = Metadata(
 )
 
 
-V1dToolPyParamsDict = typing.TypedDict('V1dToolPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1d_tool.py"]],
+_V1dToolPyParamsDictNoTag = typing.TypedDict('_V1dToolPyParamsDictNoTag', {
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
     "select_cols": typing.NotRequired[str | None],
@@ -45,6 +44,7 @@ V1dToolPyParamsDictTagged = typing.TypedDict('V1dToolPyParamsDictTagged', {
     "reverse": bool,
     "show_max_displace": bool,
 })
+V1dToolPyParamsDict = _V1dToolPyParamsDictNoTag | V1dToolPyParamsDictTagged
 
 
 class V1dToolPyOutputs(typing.NamedTuple):

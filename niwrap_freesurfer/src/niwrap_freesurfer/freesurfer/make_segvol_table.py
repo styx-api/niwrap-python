@@ -13,8 +13,7 @@ MAKE_SEGVOL_TABLE_METADATA = Metadata(
 )
 
 
-MakeSegvolTableParamsDict = typing.TypedDict('MakeSegvolTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/make-segvol-table"]],
+_MakeSegvolTableParamsDictNoTag = typing.TypedDict('_MakeSegvolTableParamsDictNoTag', {
     "subjects": list[str],
     "subject_file": InputPathType,
     "outfile": str,
@@ -39,6 +38,7 @@ MakeSegvolTableParamsDictTagged = typing.TypedDict('MakeSegvolTableParamsDictTag
     "version": bool,
     "help": bool,
 })
+MakeSegvolTableParamsDict = _MakeSegvolTableParamsDictNoTag | MakeSegvolTableParamsDictTagged
 
 
 class MakeSegvolTableOutputs(typing.NamedTuple):

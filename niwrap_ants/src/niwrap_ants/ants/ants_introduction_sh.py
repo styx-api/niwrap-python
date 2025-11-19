@@ -13,8 +13,7 @@ ANTS_INTRODUCTION_SH_METADATA = Metadata(
 )
 
 
-AntsIntroductionShParamsDict = typing.TypedDict('AntsIntroductionShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsIntroduction.sh"]],
+_AntsIntroductionShParamsDictNoTag = typing.TypedDict('_AntsIntroductionShParamsDictNoTag', {
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,
@@ -41,6 +40,7 @@ AntsIntroductionShParamsDictTagged = typing.TypedDict('AntsIntroductionShParamsD
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_model": typing.NotRequired[str | None],
 })
+AntsIntroductionShParamsDict = _AntsIntroductionShParamsDictNoTag | AntsIntroductionShParamsDictTagged
 
 
 class AntsIntroductionShOutputs(typing.NamedTuple):

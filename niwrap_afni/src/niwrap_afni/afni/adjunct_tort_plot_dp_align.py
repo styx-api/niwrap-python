@@ -13,8 +13,7 @@ ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
 )
 
 
-AdjunctTortPlotDpAlignParamsDict = typing.TypedDict('AdjunctTortPlotDpAlignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_tort_plot_dp_align"]],
+_AdjunctTortPlotDpAlignParamsDictNoTag = typing.TypedDict('_AdjunctTortPlotDpAlignParamsDictNoTag', {
     "input_file": InputPathType,
     "output_prefix": str,
     "enorm_max": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ AdjunctTortPlotDpAlignParamsDictTagged = typing.TypedDict('AdjunctTortPlotDpAlig
     "enorm_hline": typing.NotRequired[float | None],
     "no_svg": bool,
 })
+AdjunctTortPlotDpAlignParamsDict = _AdjunctTortPlotDpAlignParamsDictNoTag | AdjunctTortPlotDpAlignParamsDictTagged
 
 
 class AdjunctTortPlotDpAlignOutputs(typing.NamedTuple):

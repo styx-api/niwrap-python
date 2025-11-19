@@ -13,8 +13,7 @@ V_1DDOT_METADATA = Metadata(
 )
 
 
-V1ddotParamsDict = typing.TypedDict('V1ddotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1ddot"]],
+_V1ddotParamsDictNoTag = typing.TypedDict('_V1ddotParamsDictNoTag', {
     "one_flag": bool,
     "dem_flag": bool,
     "cov_flag": bool,
@@ -35,6 +34,7 @@ V1ddotParamsDictTagged = typing.TypedDict('V1ddotParamsDictTagged', {
     "okzero_flag": bool,
     "input_files": list[InputPathType],
 })
+V1ddotParamsDict = _V1ddotParamsDictNoTag | V1ddotParamsDictTagged
 
 
 class V1ddotOutputs(typing.NamedTuple):

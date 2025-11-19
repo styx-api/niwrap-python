@@ -13,8 +13,7 @@ MRI_FWHM_METADATA = Metadata(
 )
 
 
-MriFwhmParamsDict = typing.TypedDict('MriFwhmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fwhm"]],
+_MriFwhmParamsDictNoTag = typing.TypedDict('_MriFwhmParamsDictNoTag', {
     "inputvol": InputPathType,
     "outputvol": str,
     "save_detrended": bool,
@@ -89,6 +88,7 @@ MriFwhmParamsDictTagged = typing.TypedDict('MriFwhmParamsDictTagged', {
     "checkopts": bool,
     "version": bool,
 })
+MriFwhmParamsDict = _MriFwhmParamsDictNoTag | MriFwhmParamsDictTagged
 
 
 class MriFwhmOutputs(typing.NamedTuple):

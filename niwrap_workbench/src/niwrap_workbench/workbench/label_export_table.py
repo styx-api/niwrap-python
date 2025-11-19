@@ -12,8 +12,7 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-LabelExportTableParamsDict = typing.TypedDict('LabelExportTableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/label-export-table"]],
+_LabelExportTableParamsDictNoTag = typing.TypedDict('_LabelExportTableParamsDictNoTag', {
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "table-out": str,
@@ -24,6 +23,7 @@ LabelExportTableParamsDictTagged = typing.TypedDict('LabelExportTableParamsDictT
     "label-in": InputPathType,
     "table-out": str,
 })
+LabelExportTableParamsDict = _LabelExportTableParamsDictNoTag | LabelExportTableParamsDictTagged
 
 
 class LabelExportTableOutputs(typing.NamedTuple):

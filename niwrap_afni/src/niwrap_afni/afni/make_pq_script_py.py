@@ -13,8 +13,7 @@ MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
 )
 
 
-MakePqScriptPyParamsDict = typing.TypedDict('MakePqScriptPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/make_pq_script.py"]],
+_MakePqScriptPyParamsDictNoTag = typing.TypedDict('_MakePqScriptPyParamsDictNoTag', {
     "dataset": InputPathType,
     "brick_index": float,
     "mask": InputPathType,
@@ -27,6 +26,7 @@ MakePqScriptPyParamsDictTagged = typing.TypedDict('MakePqScriptPyParamsDictTagge
     "mask": InputPathType,
     "out_script": str,
 })
+MakePqScriptPyParamsDict = _MakePqScriptPyParamsDictNoTag | MakePqScriptPyParamsDictTagged
 
 
 class MakePqScriptPyOutputs(typing.NamedTuple):

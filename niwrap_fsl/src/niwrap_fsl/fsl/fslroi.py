@@ -13,8 +13,7 @@ FSLROI_METADATA = Metadata(
 )
 
 
-FslroiParamsDict = typing.TypedDict('FslroiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslroi"]],
+_FslroiParamsDictNoTag = typing.TypedDict('_FslroiParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "xmin": typing.NotRequired[float | None],
@@ -39,6 +38,7 @@ FslroiParamsDictTagged = typing.TypedDict('FslroiParamsDictTagged', {
     "tmin": typing.NotRequired[float | None],
     "tsize": typing.NotRequired[float | None],
 })
+FslroiParamsDict = _FslroiParamsDictNoTag | FslroiParamsDictTagged
 
 
 class FslroiOutputs(typing.NamedTuple):

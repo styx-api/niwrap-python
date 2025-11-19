@@ -13,8 +13,7 @@ GCATRAIN_METADATA = Metadata(
 )
 
 
-GcatrainParamsDict = typing.TypedDict('GcatrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrain"]],
+_GcatrainParamsDictNoTag = typing.TypedDict('_GcatrainParamsDictNoTag', {
     "gcadir": str,
     "subjectlistfile": InputPathType,
     "init_subject_transform": list[str],
@@ -57,6 +56,7 @@ GcatrainParamsDictTagged = typing.TypedDict('GcatrainParamsDictTagged', {
     "nu12_flag": bool,
     "no_emreg": bool,
 })
+GcatrainParamsDict = _GcatrainParamsDictNoTag | GcatrainParamsDictTagged
 
 
 class GcatrainOutputs(typing.NamedTuple):

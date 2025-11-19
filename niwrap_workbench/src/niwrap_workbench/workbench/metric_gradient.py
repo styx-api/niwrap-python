@@ -12,8 +12,7 @@ METRIC_GRADIENT_METADATA = Metadata(
 )
 
 
-MetricGradientPresmoothParamsDict = typing.TypedDict('MetricGradientPresmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+_MetricGradientPresmoothParamsDictNoTag = typing.TypedDict('_MetricGradientPresmoothParamsDictNoTag', {
     "kernel": float,
     "fwhm": bool,
 })
@@ -22,10 +21,10 @@ MetricGradientPresmoothParamsDictTagged = typing.TypedDict('MetricGradientPresmo
     "kernel": float,
     "fwhm": bool,
 })
+MetricGradientPresmoothParamsDict = _MetricGradientPresmoothParamsDictNoTag | MetricGradientPresmoothParamsDictTagged
 
 
-MetricGradientRoiParamsDict = typing.TypedDict('MetricGradientRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_MetricGradientRoiParamsDictNoTag = typing.TypedDict('_MetricGradientRoiParamsDictNoTag', {
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
@@ -34,10 +33,10 @@ MetricGradientRoiParamsDictTagged = typing.TypedDict('MetricGradientRoiParamsDic
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
+MetricGradientRoiParamsDict = _MetricGradientRoiParamsDictNoTag | MetricGradientRoiParamsDictTagged
 
 
-MetricGradientParamsDict = typing.TypedDict('MetricGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-gradient"]],
+_MetricGradientParamsDictNoTag = typing.TypedDict('_MetricGradientParamsDictNoTag', {
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricGradientPresmoothParamsDict | None],
     "roi": typing.NotRequired[MetricGradientRoiParamsDict | None],
@@ -60,6 +59,7 @@ MetricGradientParamsDictTagged = typing.TypedDict('MetricGradientParamsDictTagge
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
+MetricGradientParamsDict = _MetricGradientParamsDictNoTag | MetricGradientParamsDictTagged
 
 
 def metric_gradient_presmooth(

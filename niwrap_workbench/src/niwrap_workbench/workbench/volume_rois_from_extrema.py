@@ -12,8 +12,7 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-VolumeRoisFromExtremaParamsDict = typing.TypedDict('VolumeRoisFromExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-rois-from-extrema"]],
+_VolumeRoisFromExtremaParamsDictNoTag = typing.TypedDict('_VolumeRoisFromExtremaParamsDictNoTag', {
     "volume-out": str,
     "sigma": typing.NotRequired[float | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -32,6 +31,7 @@ VolumeRoisFromExtremaParamsDictTagged = typing.TypedDict('VolumeRoisFromExtremaP
     "volume-in": InputPathType,
     "limit": float,
 })
+VolumeRoisFromExtremaParamsDict = _VolumeRoisFromExtremaParamsDictNoTag | VolumeRoisFromExtremaParamsDictTagged
 
 
 class VolumeRoisFromExtremaOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ SEGMENT_BS_SH_METADATA = Metadata(
 )
 
 
-SegmentBsShParamsDict = typing.TypedDict('SegmentBsShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentBS.sh"]],
+_SegmentBsShParamsDictNoTag = typing.TypedDict('_SegmentBsShParamsDictNoTag', {
     "matlab_runtime": typing.NotRequired[str | None],
 })
 SegmentBsShParamsDictTagged = typing.TypedDict('SegmentBsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentBS.sh"],
     "matlab_runtime": typing.NotRequired[str | None],
 })
+SegmentBsShParamsDict = _SegmentBsShParamsDictNoTag | SegmentBsShParamsDictTagged
 
 
 class SegmentBsShOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ GPS_METADATA = Metadata(
 )
 
 
-GpsParamsDict = typing.TypedDict('GpsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/gps"]],
+_GpsParamsDictNoTag = typing.TypedDict('_GpsParamsDictNoTag', {
     "ndir": float,
     "optws": bool,
     "output": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ GpsParamsDictTagged = typing.TypedDict('GpsParamsDictTagged', {
     "verbose": bool,
     "help": bool,
 })
+GpsParamsDict = _GpsParamsDictNoTag | GpsParamsDictTagged
 
 
 class GpsOutputs(typing.NamedTuple):

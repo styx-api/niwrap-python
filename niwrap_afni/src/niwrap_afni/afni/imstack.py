@@ -13,8 +13,7 @@ IMSTACK_METADATA = Metadata(
 )
 
 
-ImstackParamsDict = typing.TypedDict('ImstackParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/imstack"]],
+_ImstackParamsDictNoTag = typing.TypedDict('_ImstackParamsDictNoTag', {
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ ImstackParamsDictTagged = typing.TypedDict('ImstackParamsDictTagged', {
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],
 })
+ImstackParamsDict = _ImstackParamsDictNoTag | ImstackParamsDictTagged
 
 
 class ImstackOutputs(typing.NamedTuple):

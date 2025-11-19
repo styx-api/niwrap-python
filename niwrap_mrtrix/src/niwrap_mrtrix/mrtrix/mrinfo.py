@@ -13,18 +13,17 @@ MRINFO_METADATA = Metadata(
 )
 
 
-MrinfoPropertyParamsDict = typing.TypedDict('MrinfoPropertyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["property"]],
+_MrinfoPropertyParamsDictNoTag = typing.TypedDict('_MrinfoPropertyParamsDictNoTag', {
     "key": str,
 })
 MrinfoPropertyParamsDictTagged = typing.TypedDict('MrinfoPropertyParamsDictTagged', {
     "@type": typing.Literal["property"],
     "key": str,
 })
+MrinfoPropertyParamsDict = _MrinfoPropertyParamsDictNoTag | MrinfoPropertyParamsDictTagged
 
 
-MrinfoFslgradParamsDict = typing.TypedDict('MrinfoFslgradParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+_MrinfoFslgradParamsDictNoTag = typing.TypedDict('_MrinfoFslgradParamsDictNoTag', {
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
@@ -33,10 +32,10 @@ MrinfoFslgradParamsDictTagged = typing.TypedDict('MrinfoFslgradParamsDictTagged'
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
+MrinfoFslgradParamsDict = _MrinfoFslgradParamsDictNoTag | MrinfoFslgradParamsDictTagged
 
 
-MrinfoExportGradFslParamsDict = typing.TypedDict('MrinfoExportGradFslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+_MrinfoExportGradFslParamsDictNoTag = typing.TypedDict('_MrinfoExportGradFslParamsDictNoTag', {
     "bvecs_path": str,
     "bvals_path": str,
 })
@@ -45,10 +44,10 @@ MrinfoExportGradFslParamsDictTagged = typing.TypedDict('MrinfoExportGradFslParam
     "bvecs_path": str,
     "bvals_path": str,
 })
+MrinfoExportGradFslParamsDict = _MrinfoExportGradFslParamsDictNoTag | MrinfoExportGradFslParamsDictTagged
 
 
-MrinfoExportPeEddyParamsDict = typing.TypedDict('MrinfoExportPeEddyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_pe_eddy"]],
+_MrinfoExportPeEddyParamsDictNoTag = typing.TypedDict('_MrinfoExportPeEddyParamsDictNoTag', {
     "config": str,
     "indices": str,
 })
@@ -57,10 +56,10 @@ MrinfoExportPeEddyParamsDictTagged = typing.TypedDict('MrinfoExportPeEddyParamsD
     "config": str,
     "indices": str,
 })
+MrinfoExportPeEddyParamsDict = _MrinfoExportPeEddyParamsDictNoTag | MrinfoExportPeEddyParamsDictTagged
 
 
-MrinfoConfigParamsDict = typing.TypedDict('MrinfoConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrinfoConfigParamsDictNoTag = typing.TypedDict('_MrinfoConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -69,10 +68,10 @@ MrinfoConfigParamsDictTagged = typing.TypedDict('MrinfoConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+MrinfoConfigParamsDict = _MrinfoConfigParamsDictNoTag | MrinfoConfigParamsDictTagged
 
 
-MrinfoParamsDict = typing.TypedDict('MrinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrinfo"]],
+_MrinfoParamsDictNoTag = typing.TypedDict('_MrinfoParamsDictNoTag', {
     "all": bool,
     "name": bool,
     "format": bool,
@@ -149,6 +148,7 @@ MrinfoParamsDictTagged = typing.TypedDict('MrinfoParamsDictTagged', {
     "version": bool,
     "image": list[InputPathType],
 })
+MrinfoParamsDict = _MrinfoParamsDictNoTag | MrinfoParamsDictTagged
 
 
 def mrinfo_property(

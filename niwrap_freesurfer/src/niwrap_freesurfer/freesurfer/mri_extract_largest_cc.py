@@ -13,8 +13,7 @@ MRI_EXTRACT_LARGEST_CC_METADATA = Metadata(
 )
 
 
-MriExtractLargestCcParamsDict = typing.TypedDict('MriExtractLargestCcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_largest_CC"]],
+_MriExtractLargestCcParamsDictNoTag = typing.TypedDict('_MriExtractLargestCcParamsDictNoTag', {
     "input_volume": InputPathType,
     "output_volume": str,
     "threshold": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ MriExtractLargestCcParamsDictTagged = typing.TypedDict('MriExtractLargestCcParam
     "original_volume": typing.NotRequired[InputPathType | None],
     "label_value": typing.NotRequired[float | None],
 })
+MriExtractLargestCcParamsDict = _MriExtractLargestCcParamsDictNoTag | MriExtractLargestCcParamsDictTagged
 
 
 class MriExtractLargestCcOutputs(typing.NamedTuple):

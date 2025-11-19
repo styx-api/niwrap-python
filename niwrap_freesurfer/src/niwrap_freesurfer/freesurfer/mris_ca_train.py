@@ -13,8 +13,7 @@ MRIS_CA_TRAIN_METADATA = Metadata(
 )
 
 
-MrisCaTrainParamsDict = typing.TypedDict('MrisCaTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_train"]],
+_MrisCaTrainParamsDictNoTag = typing.TypedDict('_MrisCaTrainParamsDictNoTag', {
     "hemi": str,
     "canonsurf": InputPathType,
     "annot_file": InputPathType,
@@ -71,6 +70,7 @@ MrisCaTrainParamsDictTagged = typing.TypedDict('MrisCaTrainParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MrisCaTrainParamsDict = _MrisCaTrainParamsDictNoTag | MrisCaTrainParamsDictTagged
 
 
 class MrisCaTrainOutputs(typing.NamedTuple):

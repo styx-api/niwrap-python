@@ -13,8 +13,7 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-CreateDisplacementFieldParamsDict = typing.TypedDict('CreateDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/CreateDisplacementField"]],
+_CreateDisplacementFieldParamsDictNoTag = typing.TypedDict('_CreateDisplacementFieldParamsDictNoTag', {
     "image_dimension": int,
     "enforce_zero_boundary_flag": bool,
     "component_images": list[InputPathType],
@@ -27,6 +26,7 @@ CreateDisplacementFieldParamsDictTagged = typing.TypedDict('CreateDisplacementFi
     "component_images": list[InputPathType],
     "output_image": str,
 })
+CreateDisplacementFieldParamsDict = _CreateDisplacementFieldParamsDictNoTag | CreateDisplacementFieldParamsDictTagged
 
 
 class CreateDisplacementFieldOutputs(typing.NamedTuple):

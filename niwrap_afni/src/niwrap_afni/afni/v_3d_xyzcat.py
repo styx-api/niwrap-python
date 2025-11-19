@@ -13,8 +13,7 @@ V_3D_XYZCAT_METADATA = Metadata(
 )
 
 
-V3dXyzcatParamsDict = typing.TypedDict('V3dXyzcatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dXYZcat"]],
+_V3dXyzcatParamsDictNoTag = typing.TypedDict('_V3dXyzcatParamsDictNoTag', {
     "direction": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -27,6 +26,7 @@ V3dXyzcatParamsDictTagged = typing.TypedDict('V3dXyzcatParamsDictTagged', {
     "verbose": bool,
     "datasets": list[InputPathType],
 })
+V3dXyzcatParamsDict = _V3dXyzcatParamsDictNoTag | V3dXyzcatParamsDictTagged
 
 
 class V3dXyzcatOutputs(typing.NamedTuple):

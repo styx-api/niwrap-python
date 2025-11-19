@@ -13,14 +13,14 @@ RUN_QDEC_GLM_METADATA = Metadata(
 )
 
 
-RunQdecGlmParamsDict = typing.TypedDict('RunQdecGlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/run-qdec-glm"]],
+_RunQdecGlmParamsDictNoTag = typing.TypedDict('_RunQdecGlmParamsDictNoTag', {
     "qdec_directory": str,
 })
 RunQdecGlmParamsDictTagged = typing.TypedDict('RunQdecGlmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run-qdec-glm"],
     "qdec_directory": str,
 })
+RunQdecGlmParamsDict = _RunQdecGlmParamsDictNoTag | RunQdecGlmParamsDictTagged
 
 
 class RunQdecGlmOutputs(typing.NamedTuple):

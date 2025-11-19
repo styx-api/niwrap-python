@@ -13,8 +13,7 @@ SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-SmoothDisplacementFieldParamsDict = typing.TypedDict('SmoothDisplacementFieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/SmoothDisplacementField"]],
+_SmoothDisplacementFieldParamsDictNoTag = typing.TypedDict('_SmoothDisplacementFieldParamsDictNoTag', {
     "image_dimension": int,
     "input_field": InputPathType,
     "output_field": str,
@@ -35,6 +34,7 @@ SmoothDisplacementFieldParamsDictTagged = typing.TypedDict('SmoothDisplacementFi
     "estimate_inverse": typing.NotRequired[bool | None],
     "confidence_image": typing.NotRequired[InputPathType | None],
 })
+SmoothDisplacementFieldParamsDict = _SmoothDisplacementFieldParamsDictNoTag | SmoothDisplacementFieldParamsDictTagged
 
 
 class SmoothDisplacementFieldOutputs(typing.NamedTuple):

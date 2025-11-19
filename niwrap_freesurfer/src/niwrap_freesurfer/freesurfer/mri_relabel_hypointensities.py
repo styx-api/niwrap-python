@@ -13,8 +13,7 @@ MRI_RELABEL_HYPOINTENSITIES_METADATA = Metadata(
 )
 
 
-MriRelabelHypointensitiesParamsDict = typing.TypedDict('MriRelabelHypointensitiesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_hypointensities"]],
+_MriRelabelHypointensitiesParamsDictNoTag = typing.TypedDict('_MriRelabelHypointensitiesParamsDictNoTag', {
     "input_aseg": InputPathType,
     "surface_directory": str,
     "output_aseg": str,
@@ -25,6 +24,7 @@ MriRelabelHypointensitiesParamsDictTagged = typing.TypedDict('MriRelabelHypointe
     "surface_directory": str,
     "output_aseg": str,
 })
+MriRelabelHypointensitiesParamsDict = _MriRelabelHypointensitiesParamsDictNoTag | MriRelabelHypointensitiesParamsDictTagged
 
 
 class MriRelabelHypointensitiesOutputs(typing.NamedTuple):

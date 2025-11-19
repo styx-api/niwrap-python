@@ -13,14 +13,14 @@ BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
 )
 
 
-BrowseMincHeaderTclParamsDict = typing.TypedDict('BrowseMincHeaderTclParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/browse-minc-header.tcl"]],
+_BrowseMincHeaderTclParamsDictNoTag = typing.TypedDict('_BrowseMincHeaderTclParamsDictNoTag', {
     "infile": InputPathType,
 })
 BrowseMincHeaderTclParamsDictTagged = typing.TypedDict('BrowseMincHeaderTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/browse-minc-header.tcl"],
     "infile": InputPathType,
 })
+BrowseMincHeaderTclParamsDict = _BrowseMincHeaderTclParamsDictNoTag | BrowseMincHeaderTclParamsDictTagged
 
 
 class BrowseMincHeaderTclOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V__DJUNCT_4D_IMAGER_METADATA = Metadata(
 )
 
 
-VDjunct4dImagerParamsDict = typing.TypedDict('VDjunct4dImagerParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_imager"]],
+_VDjunct4dImagerParamsDictNoTag = typing.TypedDict('_VDjunct4dImagerParamsDictNoTag', {
     "inset": InputPathType,
     "prefix": str,
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
@@ -27,6 +26,7 @@ VDjunct4dImagerParamsDictTagged = typing.TypedDict('VDjunct4dImagerParamsDictTag
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
     "no_clean": bool,
 })
+VDjunct4dImagerParamsDict = _VDjunct4dImagerParamsDictNoTag | VDjunct4dImagerParamsDictTagged
 
 
 class VDjunct4dImagerOutputs(typing.NamedTuple):

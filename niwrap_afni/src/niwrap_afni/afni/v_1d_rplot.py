@@ -13,8 +13,7 @@ V_1D_RPLOT_METADATA = Metadata(
 )
 
 
-V1dRplotParamsDict = typing.TypedDict('V1dRplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dRplot"]],
+_V1dRplotParamsDictNoTag = typing.TypedDict('_V1dRplotParamsDictNoTag', {
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "save_size": typing.NotRequired[list[float] | None],
@@ -57,6 +56,7 @@ V1dRplotParamsDictTagged = typing.TypedDict('V1dRplotParamsDictTagged', {
     "save_plot": bool,
     "column_name_show": bool,
 })
+V1dRplotParamsDict = _V1dRplotParamsDictNoTag | V1dRplotParamsDictTagged
 
 
 class V1dRplotOutputs(typing.NamedTuple):

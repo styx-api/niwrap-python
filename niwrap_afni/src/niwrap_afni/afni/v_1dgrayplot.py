@@ -13,8 +13,7 @@ V_1DGRAYPLOT_METADATA = Metadata(
 )
 
 
-V1dgrayplotParamsDict = typing.TypedDict('V1dgrayplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dgrayplot"]],
+_V1dgrayplotParamsDictNoTag = typing.TypedDict('_V1dgrayplotParamsDictNoTag', {
     "tsfile": InputPathType,
     "install": bool,
     "ignore": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ V1dgrayplotParamsDictTagged = typing.TypedDict('V1dgrayplotParamsDictTagged', {
     "use": typing.NotRequired[float | None],
     "ps": bool,
 })
+V1dgrayplotParamsDict = _V1dgrayplotParamsDictNoTag | V1dgrayplotParamsDictTagged
 
 
 class V1dgrayplotOutputs(typing.NamedTuple):

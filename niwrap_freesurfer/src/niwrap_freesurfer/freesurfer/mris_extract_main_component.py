@@ -13,8 +13,7 @@ MRIS_EXTRACT_MAIN_COMPONENT_METADATA = Metadata(
 )
 
 
-MrisExtractMainComponentParamsDict = typing.TypedDict('MrisExtractMainComponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_main_component"]],
+_MrisExtractMainComponentParamsDictNoTag = typing.TypedDict('_MrisExtractMainComponentParamsDictNoTag', {
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -23,6 +22,7 @@ MrisExtractMainComponentParamsDictTagged = typing.TypedDict('MrisExtractMainComp
     "input_surface": InputPathType,
     "output_surface": str,
 })
+MrisExtractMainComponentParamsDict = _MrisExtractMainComponentParamsDictNoTag | MrisExtractMainComponentParamsDictTagged
 
 
 class MrisExtractMainComponentOutputs(typing.NamedTuple):

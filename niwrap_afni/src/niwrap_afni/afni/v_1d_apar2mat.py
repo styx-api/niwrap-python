@@ -13,8 +13,7 @@ V_1D_APAR2MAT_METADATA = Metadata(
 )
 
 
-V1dApar2matParamsDict = typing.TypedDict('V1dApar2matParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dApar2mat"]],
+_V1dApar2matParamsDictNoTag = typing.TypedDict('_V1dApar2matParamsDictNoTag', {
     "x_shift": float,
     "y_shift": float,
     "z_shift": float,
@@ -43,6 +42,7 @@ V1dApar2matParamsDictTagged = typing.TypedDict('V1dApar2matParamsDictTagged', {
     "z_x_shear": float,
     "z_y_shear": float,
 })
+V1dApar2matParamsDict = _V1dApar2matParamsDictNoTag | V1dApar2matParamsDictTagged
 
 
 class V1dApar2matOutputs(typing.NamedTuple):

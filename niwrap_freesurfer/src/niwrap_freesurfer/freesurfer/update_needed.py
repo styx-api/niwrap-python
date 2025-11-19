@@ -13,8 +13,7 @@ UPDATE_NEEDED_METADATA = Metadata(
 )
 
 
-UpdateNeededParamsDict = typing.TypedDict('UpdateNeededParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/UpdateNeeded"]],
+_UpdateNeededParamsDictNoTag = typing.TypedDict('_UpdateNeededParamsDictNoTag', {
     "target_file": InputPathType,
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],
@@ -25,6 +24,7 @@ UpdateNeededParamsDictTagged = typing.TypedDict('UpdateNeededParamsDictTagged', 
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],
 })
+UpdateNeededParamsDict = _UpdateNeededParamsDictNoTag | UpdateNeededParamsDictTagged
 
 
 class UpdateNeededOutputs(typing.NamedTuple):

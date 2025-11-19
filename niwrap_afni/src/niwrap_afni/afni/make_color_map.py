@@ -13,8 +13,7 @@ MAKE_COLOR_MAP_METADATA = Metadata(
 )
 
 
-MakeColorMapParamsDict = typing.TypedDict('MakeColorMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/MakeColorMap"]],
+_MakeColorMapParamsDictNoTag = typing.TypedDict('_MakeColorMapParamsDictNoTag', {
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
     "num_colors": typing.NotRequired[float | None],
@@ -59,6 +58,7 @@ MakeColorMapParamsDictTagged = typing.TypedDict('MakeColorMapParamsDictTagged', 
     "help_full_flag": bool,
     "flip_map_updside_down": bool,
 })
+MakeColorMapParamsDict = _MakeColorMapParamsDictNoTag | MakeColorMapParamsDictTagged
 
 
 class MakeColorMapOutputs(typing.NamedTuple):

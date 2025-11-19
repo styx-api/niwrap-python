@@ -13,8 +13,7 @@ V_3D_TNORM_METADATA = Metadata(
 )
 
 
-V3dTnormParamsDict = typing.TypedDict('V3dTnormParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTnorm"]],
+_V3dTnormParamsDictNoTag = typing.TypedDict('_V3dTnormParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
     "normR": bool,
@@ -35,6 +34,7 @@ V3dTnormParamsDictTagged = typing.TypedDict('V3dTnormParamsDictTagged', {
     "L1fit": bool,
     "input_dataset": InputPathType,
 })
+V3dTnormParamsDict = _V3dTnormParamsDictNoTag | V3dTnormParamsDictTagged
 
 
 class V3dTnormOutputs(typing.NamedTuple):

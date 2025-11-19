@@ -13,8 +13,7 @@ V_3D_LOCALSTAT_METADATA = Metadata(
 )
 
 
-V3dLocalstatParamsDict = typing.TypedDict('V3dLocalstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLocalstat"]],
+_V3dLocalstatParamsDictNoTag = typing.TypedDict('_V3dLocalstatParamsDictNoTag', {
     "dataset": InputPathType,
     "nbhd": str,
     "stat": typing.NotRequired[list[str] | None],
@@ -59,6 +58,7 @@ V3dLocalstatParamsDictTagged = typing.TypedDict('V3dLocalstatParamsDictTagged', 
     "maskvalue": typing.NotRequired[float | None],
     "maskvalue2": typing.NotRequired[float | None],
 })
+V3dLocalstatParamsDict = _V3dLocalstatParamsDictNoTag | V3dLocalstatParamsDictTagged
 
 
 class V3dLocalstatOutputs(typing.NamedTuple):

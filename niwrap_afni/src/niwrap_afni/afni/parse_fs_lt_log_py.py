@@ -13,8 +13,7 @@ PARSE_FS_LT_LOG_PY_METADATA = Metadata(
 )
 
 
-ParseFsLtLogPyParamsDict = typing.TypedDict('ParseFsLtLogPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/parse_fs_lt_log.py"]],
+_ParseFsLtLogPyParamsDictNoTag = typing.TypedDict('_ParseFsLtLogPyParamsDictNoTag', {
     "logfile": InputPathType,
     "labels": list[str],
     "show_orig": bool,
@@ -29,6 +28,7 @@ ParseFsLtLogPyParamsDictTagged = typing.TypedDict('ParseFsLtLogPyParamsDictTagge
     "show_all_orig": bool,
     "verbosity": typing.NotRequired[float | None],
 })
+ParseFsLtLogPyParamsDict = _ParseFsLtLogPyParamsDictNoTag | ParseFsLtLogPyParamsDictTagged
 
 
 class ParseFsLtLogPyOutputs(typing.NamedTuple):

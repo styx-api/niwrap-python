@@ -13,8 +13,7 @@ DRIVE_SUMA_METADATA = Metadata(
 )
 
 
-DriveSumaParamsDict = typing.TypedDict('DriveSumaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/DriveSuma"]],
+_DriveSumaParamsDictNoTag = typing.TypedDict('_DriveSumaParamsDictNoTag', {
     "command": str,
     "surf_label": typing.NotRequired[str | None],
     "surface_file": typing.NotRequired[InputPathType | None],
@@ -81,6 +80,7 @@ DriveSumaParamsDictTagged = typing.TypedDict('DriveSumaParamsDictTagged', {
     "c_demo": bool,
     "viewer_cont": bool,
 })
+DriveSumaParamsDict = _DriveSumaParamsDictNoTag | DriveSumaParamsDictTagged
 
 
 class DriveSumaOutputs(typing.NamedTuple):

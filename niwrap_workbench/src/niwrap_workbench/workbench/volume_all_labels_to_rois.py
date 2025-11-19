@@ -12,8 +12,7 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-VolumeAllLabelsToRoisParamsDict = typing.TypedDict('VolumeAllLabelsToRoisParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-all-labels-to-rois"]],
+_VolumeAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_VolumeAllLabelsToRoisParamsDictNoTag', {
     "volume-out": str,
     "label-in": InputPathType,
     "map": str,
@@ -24,6 +23,7 @@ VolumeAllLabelsToRoisParamsDictTagged = typing.TypedDict('VolumeAllLabelsToRoisP
     "label-in": InputPathType,
     "map": str,
 })
+VolumeAllLabelsToRoisParamsDict = _VolumeAllLabelsToRoisParamsDictNoTag | VolumeAllLabelsToRoisParamsDictTagged
 
 
 class VolumeAllLabelsToRoisOutputs(typing.NamedTuple):

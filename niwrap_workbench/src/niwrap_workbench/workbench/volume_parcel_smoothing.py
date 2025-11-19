@@ -12,8 +12,7 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 )
 
 
-VolumeParcelSmoothingParamsDict = typing.TypedDict('VolumeParcelSmoothingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-smoothing"]],
+_VolumeParcelSmoothingParamsDictNoTag = typing.TypedDict('_VolumeParcelSmoothingParamsDictNoTag', {
     "volume-out": str,
     "fwhm": bool,
     "fix-zeros": bool,
@@ -32,6 +31,7 @@ VolumeParcelSmoothingParamsDictTagged = typing.TypedDict('VolumeParcelSmoothingP
     "label-volume": InputPathType,
     "kernel": float,
 })
+VolumeParcelSmoothingParamsDict = _VolumeParcelSmoothingParamsDictNoTag | VolumeParcelSmoothingParamsDictTagged
 
 
 class VolumeParcelSmoothingOutputs(typing.NamedTuple):

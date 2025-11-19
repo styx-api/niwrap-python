@@ -13,8 +13,7 @@ TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
 )
 
 
-TestOrientationPlanesFromParcellationParamsDict = typing.TypedDict('TestOrientationPlanesFromParcellationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/testOrientationPlanesFromParcellation"]],
+_TestOrientationPlanesFromParcellationParamsDictNoTag = typing.TypedDict('_TestOrientationPlanesFromParcellationParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "bb_flag": bool,
@@ -25,6 +24,7 @@ TestOrientationPlanesFromParcellationParamsDictTagged = typing.TypedDict('TestOr
     "output_file": str,
     "bb_flag": bool,
 })
+TestOrientationPlanesFromParcellationParamsDict = _TestOrientationPlanesFromParcellationParamsDictNoTag | TestOrientationPlanesFromParcellationParamsDictTagged
 
 
 class TestOrientationPlanesFromParcellationOutputs(typing.NamedTuple):

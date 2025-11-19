@@ -13,8 +13,7 @@ FAT_ROI_ROW_PY_METADATA = Metadata(
 )
 
 
-FatRoiRowPyParamsDict = typing.TypedDict('FatRoiRowPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_roi_row.py"]],
+_FatRoiRowPyParamsDictNoTag = typing.TypedDict('_FatRoiRowPyParamsDictNoTag', {
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
@@ -27,6 +26,7 @@ FatRoiRowPyParamsDictTagged = typing.TypedDict('FatRoiRowPyParamsDictTagged', {
     "list_file": typing.NotRequired[InputPathType | None],
     "extern_labs_no": bool,
 })
+FatRoiRowPyParamsDict = _FatRoiRowPyParamsDictNoTag | FatRoiRowPyParamsDictTagged
 
 
 class FatRoiRowPyOutputs(typing.NamedTuple):

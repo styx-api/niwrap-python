@@ -12,8 +12,7 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-CiftiWeightedStatsSpatialWeightsParamsDict = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spatial-weights"]],
+_CiftiWeightedStatsSpatialWeightsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsSpatialWeightsParamsDictNoTag', {
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
@@ -30,10 +29,10 @@ CiftiWeightedStatsSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiWeight
     "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
+CiftiWeightedStatsSpatialWeightsParamsDict = _CiftiWeightedStatsSpatialWeightsParamsDictNoTag | CiftiWeightedStatsSpatialWeightsParamsDictTagged
 
 
-CiftiWeightedStatsRoiParamsDict = typing.TypedDict('CiftiWeightedStatsRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["roi"]],
+_CiftiWeightedStatsRoiParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsRoiParamsDictNoTag', {
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
@@ -42,10 +41,10 @@ CiftiWeightedStatsRoiParamsDictTagged = typing.TypedDict('CiftiWeightedStatsRoiP
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
+CiftiWeightedStatsRoiParamsDict = _CiftiWeightedStatsRoiParamsDictNoTag | CiftiWeightedStatsRoiParamsDictTagged
 
 
-CiftiWeightedStatsParamsDict = typing.TypedDict('CiftiWeightedStatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-weighted-stats"]],
+_CiftiWeightedStatsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsParamsDictNoTag', {
     "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[int | None],
@@ -70,6 +69,7 @@ CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsD
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
+CiftiWeightedStatsParamsDict = _CiftiWeightedStatsParamsDictNoTag | CiftiWeightedStatsParamsDictTagged
 
 
 def cifti_weighted_stats_spatial_weights(

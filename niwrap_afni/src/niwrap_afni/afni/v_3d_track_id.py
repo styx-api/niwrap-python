@@ -13,8 +13,7 @@ V_3D_TRACK_ID_METADATA = Metadata(
 )
 
 
-V3dTrackIdParamsDict = typing.TypedDict('V3dTrackIdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTrackID"]],
+_V3dTrackIdParamsDictNoTag = typing.TypedDict('_V3dTrackIdParamsDictNoTag', {
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
     "prefix": str,
@@ -107,6 +106,7 @@ V3dTrackIdParamsDictTagged = typing.TypedDict('V3dTrackIdParamsDictTagged', {
     "pair_out_power": bool,
     "verb": typing.NotRequired[float | None],
 })
+V3dTrackIdParamsDict = _V3dTrackIdParamsDictNoTag | V3dTrackIdParamsDictTagged
 
 
 class V3dTrackIdOutputs(typing.NamedTuple):

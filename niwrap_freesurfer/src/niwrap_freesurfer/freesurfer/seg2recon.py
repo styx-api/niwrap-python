@@ -13,8 +13,7 @@ SEG2RECON_METADATA = Metadata(
 )
 
 
-Seg2reconParamsDict = typing.TypedDict('Seg2reconParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/seg2recon"]],
+_Seg2reconParamsDictNoTag = typing.TypedDict('_Seg2reconParamsDictNoTag', {
     "subject": str,
     "segvol": InputPathType,
     "inputvol": InputPathType,
@@ -47,6 +46,7 @@ Seg2reconParamsDictTagged = typing.TypedDict('Seg2reconParamsDictTagged', {
     "rca": bool,
     "no_bias_field_cor": bool,
 })
+Seg2reconParamsDict = _Seg2reconParamsDictNoTag | Seg2reconParamsDictTagged
 
 
 class Seg2reconOutputs(typing.NamedTuple):

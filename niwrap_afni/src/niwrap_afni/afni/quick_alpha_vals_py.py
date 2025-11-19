@@ -13,8 +13,7 @@ QUICK_ALPHA_VALS_PY_METADATA = Metadata(
 )
 
 
-QuickAlphaValsPyParamsDict = typing.TypedDict('QuickAlphaValsPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/quick.alpha.vals.py"]],
+_QuickAlphaValsPyParamsDictNoTag = typing.TypedDict('_QuickAlphaValsPyParamsDictNoTag', {
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })
@@ -23,6 +22,7 @@ QuickAlphaValsPyParamsDictTagged = typing.TypedDict('QuickAlphaValsPyParamsDictT
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })
+QuickAlphaValsPyParamsDict = _QuickAlphaValsPyParamsDictNoTag | QuickAlphaValsPyParamsDictTagged
 
 
 class QuickAlphaValsPyOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ STIMBAND_METADATA = Metadata(
 )
 
 
-StimbandParamsDict = typing.TypedDict('StimbandParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/stimband"]],
+_StimbandParamsDictNoTag = typing.TypedDict('_StimbandParamsDictNoTag', {
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
     "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],
@@ -31,6 +30,7 @@ StimbandParamsDictTagged = typing.TypedDict('StimbandParamsDictTagged', {
     "min_bwidth": typing.NotRequired[float | None],
     "min_pow": typing.NotRequired[float | None],
 })
+StimbandParamsDict = _StimbandParamsDictNoTag | StimbandParamsDictTagged
 
 
 class StimbandOutputs(typing.NamedTuple):

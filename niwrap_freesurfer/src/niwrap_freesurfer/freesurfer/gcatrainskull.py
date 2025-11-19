@@ -13,14 +13,14 @@ GCATRAINSKULL_METADATA = Metadata(
 )
 
 
-GcatrainskullParamsDict = typing.TypedDict('GcatrainskullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrainskull"]],
+_GcatrainskullParamsDictNoTag = typing.TypedDict('_GcatrainskullParamsDictNoTag', {
     "gcatrain_dir": str,
 })
 GcatrainskullParamsDictTagged = typing.TypedDict('GcatrainskullParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcatrainskull"],
     "gcatrain_dir": str,
 })
+GcatrainskullParamsDict = _GcatrainskullParamsDictNoTag | GcatrainskullParamsDictTagged
 
 
 class GcatrainskullOutputs(typing.NamedTuple):

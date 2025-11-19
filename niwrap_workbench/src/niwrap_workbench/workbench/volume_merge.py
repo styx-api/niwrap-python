@@ -12,8 +12,7 @@ VOLUME_MERGE_METADATA = Metadata(
 )
 
 
-VolumeMergeUpToParamsDict = typing.TypedDict('VolumeMergeUpToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["up-to"]],
+_VolumeMergeUpToParamsDictNoTag = typing.TypedDict('_VolumeMergeUpToParamsDictNoTag', {
     "last-subvol": str,
     "reverse": bool,
 })
@@ -22,10 +21,10 @@ VolumeMergeUpToParamsDictTagged = typing.TypedDict('VolumeMergeUpToParamsDictTag
     "last-subvol": str,
     "reverse": bool,
 })
+VolumeMergeUpToParamsDict = _VolumeMergeUpToParamsDictNoTag | VolumeMergeUpToParamsDictTagged
 
 
-VolumeMergeSubvolumeParamsDict = typing.TypedDict('VolumeMergeSubvolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["subvolume"]],
+_VolumeMergeSubvolumeParamsDictNoTag = typing.TypedDict('_VolumeMergeSubvolumeParamsDictNoTag', {
     "subvol": str,
     "up-to": typing.NotRequired[VolumeMergeUpToParamsDict | None],
 })
@@ -34,10 +33,10 @@ VolumeMergeSubvolumeParamsDictTagged = typing.TypedDict('VolumeMergeSubvolumePar
     "subvol": str,
     "up-to": typing.NotRequired[VolumeMergeUpToParamsDict | None],
 })
+VolumeMergeSubvolumeParamsDict = _VolumeMergeSubvolumeParamsDictNoTag | VolumeMergeSubvolumeParamsDictTagged
 
 
-VolumeMergeVolumeParamsDict = typing.TypedDict('VolumeMergeVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume"]],
+_VolumeMergeVolumeParamsDictNoTag = typing.TypedDict('_VolumeMergeVolumeParamsDictNoTag', {
     "volume-in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParamsDict] | None],
 })
@@ -46,10 +45,10 @@ VolumeMergeVolumeParamsDictTagged = typing.TypedDict('VolumeMergeVolumeParamsDic
     "volume-in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParamsDict] | None],
 })
+VolumeMergeVolumeParamsDict = _VolumeMergeVolumeParamsDictNoTag | VolumeMergeVolumeParamsDictTagged
 
 
-VolumeMergeParamsDict = typing.TypedDict('VolumeMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-merge"]],
+_VolumeMergeParamsDictNoTag = typing.TypedDict('_VolumeMergeParamsDictNoTag', {
     "volume-out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParamsDict] | None],
 })
@@ -58,6 +57,7 @@ VolumeMergeParamsDictTagged = typing.TypedDict('VolumeMergeParamsDictTagged', {
     "volume-out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParamsDict] | None],
 })
+VolumeMergeParamsDict = _VolumeMergeParamsDictNoTag | VolumeMergeParamsDictTagged
 
 
 def volume_merge_up_to(

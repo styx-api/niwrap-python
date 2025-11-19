@@ -13,8 +13,7 @@ V_3D_TFITTER_METADATA = Metadata(
 )
 
 
-V3dTfitterParamsDict = typing.TypedDict('V3dTfitterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTfitter"]],
+_V3dTfitterParamsDictNoTag = typing.TypedDict('_V3dTfitterParamsDictNoTag', {
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
     "polort": typing.NotRequired[float | None],
@@ -55,6 +54,7 @@ V3dTfitterParamsDictTagged = typing.TypedDict('V3dTfitterParamsDictTagged', {
     "mask": typing.NotRequired[str | None],
     "quiet": bool,
 })
+V3dTfitterParamsDict = _V3dTfitterParamsDictNoTag | V3dTfitterParamsDictTagged
 
 
 class V3dTfitterOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_SPAT_NORM_METADATA = Metadata(
 )
 
 
-V3dSpatNormParamsDict = typing.TypedDict('V3dSpatNormParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSpatNorm"]],
+_V3dSpatNormParamsDictNoTag = typing.TypedDict('_V3dSpatNormParamsDictNoTag', {
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "orig_space": bool,
@@ -37,6 +36,7 @@ V3dSpatNormParamsDictTagged = typing.TypedDict('V3dSpatNormParamsDictTagged', {
     "human": bool,
     "bottom_cuts": typing.NotRequired[str | None],
 })
+V3dSpatNormParamsDict = _V3dSpatNormParamsDictNoTag | V3dSpatNormParamsDictTagged
 
 
 class V3dSpatNormOutputs(typing.NamedTuple):

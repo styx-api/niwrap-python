@@ -13,8 +13,7 @@ FFTEST_METADATA = Metadata(
 )
 
 
-FftestParamsDict = typing.TypedDict('FftestParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fftest"]],
+_FftestParamsDictNoTag = typing.TypedDict('_FftestParamsDictNoTag', {
     "length": float,
     "num_tests": float,
     "vector_size": float,
@@ -27,6 +26,7 @@ FftestParamsDictTagged = typing.TypedDict('FftestParamsDictTagged', {
     "vector_size": float,
     "quiet_mode": bool,
 })
+FftestParamsDict = _FftestParamsDictNoTag | FftestParamsDictTagged
 
 
 class FftestOutputs(typing.NamedTuple):

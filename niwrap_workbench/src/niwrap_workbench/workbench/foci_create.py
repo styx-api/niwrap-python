@@ -12,8 +12,7 @@ FOCI_CREATE_METADATA = Metadata(
 )
 
 
-FociCreateClassParamsDict = typing.TypedDict('FociCreateClassParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["class"]],
+_FociCreateClassParamsDictNoTag = typing.TypedDict('_FociCreateClassParamsDictNoTag', {
     "class-name": str,
     "foci-list-file": str,
     "surface": InputPathType,
@@ -24,10 +23,10 @@ FociCreateClassParamsDictTagged = typing.TypedDict('FociCreateClassParamsDictTag
     "foci-list-file": str,
     "surface": InputPathType,
 })
+FociCreateClassParamsDict = _FociCreateClassParamsDictNoTag | FociCreateClassParamsDictTagged
 
 
-FociCreateParamsDict = typing.TypedDict('FociCreateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/foci-create"]],
+_FociCreateParamsDictNoTag = typing.TypedDict('_FociCreateParamsDictNoTag', {
     "output": str,
     "class": typing.NotRequired[list[FociCreateClassParamsDict] | None],
 })
@@ -36,6 +35,7 @@ FociCreateParamsDictTagged = typing.TypedDict('FociCreateParamsDictTagged', {
     "output": str,
     "class": typing.NotRequired[list[FociCreateClassParamsDict] | None],
 })
+FociCreateParamsDict = _FociCreateParamsDictNoTag | FociCreateParamsDictTagged
 
 
 def foci_create_class(

@@ -12,8 +12,7 @@ VOLUME_RESAMPLE_METADATA = Metadata(
 )
 
 
-VolumeResampleFlirtParamsDict = typing.TypedDict('VolumeResampleFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flirt"]],
+_VolumeResampleFlirtParamsDictNoTag = typing.TypedDict('_VolumeResampleFlirtParamsDictNoTag', {
     "source-volume": str,
     "target-volume": str,
 })
@@ -22,10 +21,10 @@ VolumeResampleFlirtParamsDictTagged = typing.TypedDict('VolumeResampleFlirtParam
     "source-volume": str,
     "target-volume": str,
 })
+VolumeResampleFlirtParamsDict = _VolumeResampleFlirtParamsDictNoTag | VolumeResampleFlirtParamsDictTagged
 
 
-VolumeResampleAffineParamsDict = typing.TypedDict('VolumeResampleAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["affine"]],
+_VolumeResampleAffineParamsDictNoTag = typing.TypedDict('_VolumeResampleAffineParamsDictNoTag', {
     "affine": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict | None],
 })
@@ -34,10 +33,10 @@ VolumeResampleAffineParamsDictTagged = typing.TypedDict('VolumeResampleAffinePar
     "affine": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict | None],
 })
+VolumeResampleAffineParamsDict = _VolumeResampleAffineParamsDictNoTag | VolumeResampleAffineParamsDictTagged
 
 
-VolumeResampleFlirtParamsDict_ = typing.TypedDict('VolumeResampleFlirtParamsDict_', {
-    "@type": typing.NotRequired[typing.Literal["flirt"]],
+_VolumeResampleFlirtParamsDict_NoTag = typing.TypedDict('_VolumeResampleFlirtParamsDict_NoTag', {
     "source-volume": str,
     "target-volume": str,
 })
@@ -46,10 +45,10 @@ VolumeResampleFlirtParamsDictTagged_ = typing.TypedDict('VolumeResampleFlirtPara
     "source-volume": str,
     "target-volume": str,
 })
+VolumeResampleFlirtParamsDict_ = _VolumeResampleFlirtParamsDict_NoTag | VolumeResampleFlirtParamsDictTagged_
 
 
-VolumeResampleAffineSeriesParamsDict = typing.TypedDict('VolumeResampleAffineSeriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["affine-series"]],
+_VolumeResampleAffineSeriesParamsDictNoTag = typing.TypedDict('_VolumeResampleAffineSeriesParamsDictNoTag', {
     "affine-series": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict_ | None],
 })
@@ -58,10 +57,10 @@ VolumeResampleAffineSeriesParamsDictTagged = typing.TypedDict('VolumeResampleAff
     "affine-series": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict_ | None],
 })
+VolumeResampleAffineSeriesParamsDict = _VolumeResampleAffineSeriesParamsDictNoTag | VolumeResampleAffineSeriesParamsDictTagged
 
 
-VolumeResampleWarpParamsDict = typing.TypedDict('VolumeResampleWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp"]],
+_VolumeResampleWarpParamsDictNoTag = typing.TypedDict('_VolumeResampleWarpParamsDictNoTag', {
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
@@ -70,10 +69,10 @@ VolumeResampleWarpParamsDictTagged = typing.TypedDict('VolumeResampleWarpParamsD
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
+VolumeResampleWarpParamsDict = _VolumeResampleWarpParamsDictNoTag | VolumeResampleWarpParamsDictTagged
 
 
-VolumeResampleParamsDict = typing.TypedDict('VolumeResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-resample"]],
+_VolumeResampleParamsDictNoTag = typing.TypedDict('_VolumeResampleParamsDictNoTag', {
     "volume-out": str,
     "value": typing.NotRequired[float | None],
     "affine": typing.NotRequired[list[VolumeResampleAffineParamsDict] | None],
@@ -94,6 +93,7 @@ VolumeResampleParamsDictTagged = typing.TypedDict('VolumeResampleParamsDictTagge
     "volume-space": str,
     "method": str,
 })
+VolumeResampleParamsDict = _VolumeResampleParamsDictNoTag | VolumeResampleParamsDictTagged
 
 
 def volume_resample_flirt(

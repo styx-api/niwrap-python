@@ -13,8 +13,7 @@ V_3D_VOL2_SURF_METADATA = Metadata(
 )
 
 
-V3dVol2SurfParamsDict = typing.TypedDict('V3dVol2SurfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dVol2Surf"]],
+_V3dVol2SurfParamsDictNoTag = typing.TypedDict('_V3dVol2SurfParamsDictNoTag', {
     "spec_file": InputPathType,
     "sv": InputPathType,
     "grid_parent": InputPathType,
@@ -103,6 +102,7 @@ V3dVol2SurfParamsDictTagged = typing.TypedDict('V3dVol2SurfParamsDictTagged', {
     "keep_norm_dir": bool,
     "reverse_norm_dir": bool,
 })
+V3dVol2SurfParamsDict = _V3dVol2SurfParamsDictNoTag | V3dVol2SurfParamsDictTagged
 
 
 class V3dVol2SurfOutputs(typing.NamedTuple):

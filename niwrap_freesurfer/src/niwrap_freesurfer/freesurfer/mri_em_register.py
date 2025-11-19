@@ -13,8 +13,7 @@ MRI_EM_REGISTER_METADATA = Metadata(
 )
 
 
-MriEmRegisterParamsDict = typing.TypedDict('MriEmRegisterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_em_register"]],
+_MriEmRegisterParamsDictNoTag = typing.TypedDict('_MriEmRegisterParamsDictNoTag', {
     "input_volume": InputPathType,
     "template_gca": InputPathType,
     "output_transform": str,
@@ -131,6 +130,7 @@ MriEmRegisterParamsDictTagged = typing.TypedDict('MriEmRegisterParamsDictTagged'
     "momentum": typing.NotRequired[float | None],
     "threads": typing.NotRequired[float | None],
 })
+MriEmRegisterParamsDict = _MriEmRegisterParamsDictNoTag | MriEmRegisterParamsDictTagged
 
 
 class MriEmRegisterOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TTOLOGP_METADATA = Metadata(
 )
 
 
-TtologpParamsDict = typing.TypedDict('TtologpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/ttologp"]],
+_TtologpParamsDictNoTag = typing.TypedDict('_TtologpParamsDictNoTag', {
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": str,
@@ -29,6 +28,7 @@ TtologpParamsDictTagged = typing.TypedDict('TtologpParamsDictTagged', {
     "outputvol": typing.NotRequired[str | None],
     "help_flag": bool,
 })
+TtologpParamsDict = _TtologpParamsDictNoTag | TtologpParamsDictTagged
 
 
 class TtologpOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3D_PVAL_METADATA = Metadata(
 )
 
 
-V3dPvalParamsDict = typing.TypedDict('V3dPvalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPval"]],
+_V3dPvalParamsDictNoTag = typing.TypedDict('_V3dPvalParamsDictNoTag', {
     "input_dataset": InputPathType,
     "zscore": bool,
     "log2": bool,
@@ -31,6 +30,7 @@ V3dPvalParamsDictTagged = typing.TypedDict('V3dPvalParamsDictTagged', {
     "qval": bool,
     "prefix": typing.NotRequired[str | None],
 })
+V3dPvalParamsDict = _V3dPvalParamsDictNoTag | V3dPvalParamsDictTagged
 
 
 class V3dPvalOutputs(typing.NamedTuple):

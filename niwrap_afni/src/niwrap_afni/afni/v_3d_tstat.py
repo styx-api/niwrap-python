@@ -13,8 +13,7 @@ V_3D_TSTAT_METADATA = Metadata(
 )
 
 
-V3dTstatParamsDict = typing.TypedDict('V3dTstatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dTstat"]],
+_V3dTstatParamsDictNoTag = typing.TypedDict('_V3dTstatParamsDictNoTag', {
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -141,6 +140,7 @@ V3dTstatParamsDictTagged = typing.TypedDict('V3dTstatParamsDictTagged', {
     "mrange": typing.NotRequired[str | None],
     "cmask": typing.NotRequired[str | None],
 })
+V3dTstatParamsDict = _V3dTstatParamsDictNoTag | V3dTstatParamsDictTagged
 
 
 class V3dTstatOutputs(typing.NamedTuple):

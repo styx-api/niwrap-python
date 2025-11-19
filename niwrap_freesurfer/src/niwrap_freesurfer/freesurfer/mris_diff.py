@@ -13,8 +13,7 @@ MRIS_DIFF_METADATA = Metadata(
 )
 
 
-MrisDiffParamsDict = typing.TypedDict('MrisDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_diff"]],
+_MrisDiffParamsDictNoTag = typing.TypedDict('_MrisDiffParamsDictNoTag', {
     "surface1": InputPathType,
     "surface2": InputPathType,
     "subject1": str,
@@ -77,6 +76,7 @@ MrisDiffParamsDictTagged = typing.TypedDict('MrisDiffParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MrisDiffParamsDict = _MrisDiffParamsDictNoTag | MrisDiffParamsDictTagged
 
 
 class MrisDiffOutputs(typing.NamedTuple):

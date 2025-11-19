@@ -13,8 +13,7 @@ SURF_SMOOTH_METADATA = Metadata(
 )
 
 
-SurfSmoothParamsDict = typing.TypedDict('SurfSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SurfSmooth"]],
+_SurfSmoothParamsDictNoTag = typing.TypedDict('_SurfSmoothParamsDictNoTag', {
     "surface": str,
     "method": str,
     "input_data": typing.NotRequired[InputPathType | None],
@@ -51,6 +50,7 @@ SurfSmoothParamsDictTagged = typing.TypedDict('SurfSmoothParamsDictTagged', {
     "talk_suma": bool,
     "refresh_rate": typing.NotRequired[float | None],
 })
+SurfSmoothParamsDict = _SurfSmoothParamsDictNoTag | SurfSmoothParamsDictTagged
 
 
 class SurfSmoothOutputs(typing.NamedTuple):

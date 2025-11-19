@@ -13,8 +13,7 @@ V_5TT2VIS_METADATA = Metadata(
 )
 
 
-V5tt2visConfigParamsDict = typing.TypedDict('V5tt2visConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_V5tt2visConfigParamsDictNoTag = typing.TypedDict('_V5tt2visConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ V5tt2visConfigParamsDictTagged = typing.TypedDict('V5tt2visConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+V5tt2visConfigParamsDict = _V5tt2visConfigParamsDictNoTag | V5tt2visConfigParamsDictTagged
 
 
-V5tt2visParamsDict = typing.TypedDict('V5tt2visParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/5tt2vis"]],
+_V5tt2visParamsDictNoTag = typing.TypedDict('_V5tt2visParamsDictNoTag', {
     "bg": typing.NotRequired[float | None],
     "cgm": typing.NotRequired[float | None],
     "sgm": typing.NotRequired[float | None],
@@ -63,6 +62,7 @@ V5tt2visParamsDictTagged = typing.TypedDict('V5tt2visParamsDictTagged', {
     "input": InputPathType,
     "output": str,
 })
+V5tt2visParamsDict = _V5tt2visParamsDictNoTag | V5tt2visParamsDictTagged
 
 
 def v_5tt2vis_config(

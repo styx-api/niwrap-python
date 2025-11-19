@@ -13,8 +13,7 @@ V_3D_ISC_METADATA = Metadata(
 )
 
 
-V3dIscParamsDict = typing.TypedDict('V3dIscParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dISC"]],
+_V3dIscParamsDictNoTag = typing.TypedDict('_V3dIscParamsDictNoTag', {
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -37,6 +36,7 @@ V3dIscParamsDictTagged = typing.TypedDict('V3dIscParamsDictTagged', {
     "io_functions": typing.NotRequired[typing.Literal["AFNI", "R"] | None],
     "data_table": str,
 })
+V3dIscParamsDict = _V3dIscParamsDictNoTag | V3dIscParamsDictTagged
 
 
 class V3dIscOutputs(typing.NamedTuple):

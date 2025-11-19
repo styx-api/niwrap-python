@@ -13,8 +13,7 @@ MASKDYADS_METADATA = Metadata(
 )
 
 
-MaskdyadsParamsDict = typing.TypedDict('MaskdyadsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/maskdyads"]],
+_MaskdyadsParamsDictNoTag = typing.TypedDict('_MaskdyadsParamsDictNoTag', {
     "dyads": InputPathType,
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],
@@ -25,6 +24,7 @@ MaskdyadsParamsDictTagged = typing.TypedDict('MaskdyadsParamsDictTagged', {
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],
 })
+MaskdyadsParamsDict = _MaskdyadsParamsDictNoTag | MaskdyadsParamsDictTagged
 
 
 class MaskdyadsOutputs(typing.NamedTuple):

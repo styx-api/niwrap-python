@@ -12,8 +12,7 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
 )
 
 
-AnnotationResampleSurfacePairParamsDict = typing.TypedDict('AnnotationResampleSurfacePairParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface-pair"]],
+_AnnotationResampleSurfacePairParamsDictNoTag = typing.TypedDict('_AnnotationResampleSurfacePairParamsDictNoTag', {
     "source-surface": InputPathType,
     "target-surface": InputPathType,
 })
@@ -22,10 +21,10 @@ AnnotationResampleSurfacePairParamsDictTagged = typing.TypedDict('AnnotationResa
     "source-surface": InputPathType,
     "target-surface": InputPathType,
 })
+AnnotationResampleSurfacePairParamsDict = _AnnotationResampleSurfacePairParamsDictNoTag | AnnotationResampleSurfacePairParamsDictTagged
 
 
-AnnotationResampleParamsDict = typing.TypedDict('AnnotationResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/annotation-resample"]],
+_AnnotationResampleParamsDictNoTag = typing.TypedDict('_AnnotationResampleParamsDictNoTag', {
     "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParamsDict] | None],
     "annotation-in": InputPathType,
     "annotation-out": str,
@@ -36,6 +35,7 @@ AnnotationResampleParamsDictTagged = typing.TypedDict('AnnotationResampleParamsD
     "annotation-in": InputPathType,
     "annotation-out": str,
 })
+AnnotationResampleParamsDict = _AnnotationResampleParamsDictNoTag | AnnotationResampleParamsDictTagged
 
 
 def annotation_resample_surface_pair(

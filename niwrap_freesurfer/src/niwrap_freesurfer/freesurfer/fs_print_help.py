@@ -13,14 +13,14 @@ FS_PRINT_HELP_METADATA = Metadata(
 )
 
 
-FsPrintHelpParamsDict = typing.TypedDict('FsPrintHelpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsPrintHelp"]],
+_FsPrintHelpParamsDictNoTag = typing.TypedDict('_FsPrintHelpParamsDictNoTag', {
     "arguments": typing.NotRequired[str | None],
 })
 FsPrintHelpParamsDictTagged = typing.TypedDict('FsPrintHelpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsPrintHelp"],
     "arguments": typing.NotRequired[str | None],
 })
+FsPrintHelpParamsDict = _FsPrintHelpParamsDictNoTag | FsPrintHelpParamsDictTagged
 
 
 class FsPrintHelpOutputs(typing.NamedTuple):

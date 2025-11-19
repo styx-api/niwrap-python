@@ -13,8 +13,7 @@ V_3D_MVM_METADATA = Metadata(
 )
 
 
-V3dMvmParamsDict = typing.TypedDict('V3dMvmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMVM"]],
+_V3dMvmParamsDictNoTag = typing.TypedDict('_V3dMvmParamsDictNoTag', {
     "dbgArgs": typing.NotRequired[str | None],
     "prefix": str,
     "jobs": typing.NotRequired[int | None],
@@ -49,6 +48,7 @@ V3dMvmParamsDictTagged = typing.TypedDict('V3dMvmParamsDictTagged', {
     "glfCode": typing.NotRequired[str | None],
     "dataTable": str,
 })
+V3dMvmParamsDict = _V3dMvmParamsDictNoTag | V3dMvmParamsDictTagged
 
 
 class V3dMvmOutputs(typing.NamedTuple):

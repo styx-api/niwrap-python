@@ -13,8 +13,7 @@ MRCOLOUR_METADATA = Metadata(
 )
 
 
-MrcolourConfigParamsDict = typing.TypedDict('MrcolourConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrcolourConfigParamsDictNoTag = typing.TypedDict('_MrcolourConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MrcolourConfigParamsDictTagged = typing.TypedDict('MrcolourConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+MrcolourConfigParamsDict = _MrcolourConfigParamsDictNoTag | MrcolourConfigParamsDictTagged
 
 
-MrcolourParamsDict = typing.TypedDict('MrcolourParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcolour"]],
+_MrcolourParamsDictNoTag = typing.TypedDict('_MrcolourParamsDictNoTag', {
     "upper": typing.NotRequired[float | None],
     "lower": typing.NotRequired[float | None],
     "colour": typing.NotRequired[list[float] | None],
@@ -59,6 +58,7 @@ MrcolourParamsDictTagged = typing.TypedDict('MrcolourParamsDictTagged', {
     "map": str,
     "output": str,
 })
+MrcolourParamsDict = _MrcolourParamsDictNoTag | MrcolourParamsDictTagged
 
 
 def mrcolour_config(

@@ -13,8 +13,7 @@ FSL_LABEL2VOXEL_METADATA = Metadata(
 )
 
 
-FslLabel2voxelParamsDict = typing.TypedDict('FslLabel2voxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_label2voxel"]],
+_FslLabel2voxelParamsDictNoTag = typing.TypedDict('_FslLabel2voxelParamsDictNoTag', {
     "label_value": float,
     "labeled_volume": InputPathType,
     "src_volume": InputPathType,
@@ -27,6 +26,7 @@ FslLabel2voxelParamsDictTagged = typing.TypedDict('FslLabel2voxelParamsDictTagge
     "src_volume": InputPathType,
     "output_filename": str,
 })
+FslLabel2voxelParamsDict = _FslLabel2voxelParamsDictNoTag | FslLabel2voxelParamsDictTagged
 
 
 class FslLabel2voxelOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_CONCATENATE_LTA_METADATA = Metadata(
 )
 
 
-MriConcatenateLtaParamsDict = typing.TypedDict('MriConcatenateLtaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_lta"]],
+_MriConcatenateLtaParamsDictNoTag = typing.TypedDict('_MriConcatenateLtaParamsDictNoTag', {
     "lta_1": InputPathType,
     "lta_2": InputPathType,
     "lta_final": str,
@@ -43,6 +42,7 @@ MriConcatenateLtaParamsDictTagged = typing.TypedDict('MriConcatenateLtaParamsDic
     "rmsdiff_radius": typing.NotRequired[float | None],
     "rmsdiff_outputfile": typing.NotRequired[str | None],
 })
+MriConcatenateLtaParamsDict = _MriConcatenateLtaParamsDictNoTag | MriConcatenateLtaParamsDictTagged
 
 
 class MriConcatenateLtaOutputs(typing.NamedTuple):

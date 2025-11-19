@@ -13,8 +13,7 @@ LTA_DIFF_METADATA = Metadata(
 )
 
 
-LtaDiffParamsDict = typing.TypedDict('LtaDiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/lta_diff"]],
+_LtaDiffParamsDictNoTag = typing.TypedDict('_LtaDiffParamsDictNoTag', {
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
     "dist_type": typing.NotRequired[int | None],
@@ -35,6 +34,7 @@ LtaDiffParamsDictTagged = typing.TypedDict('LtaDiffParamsDictTagged', {
     "normdiv": typing.NotRequired[float | None],
     "radius": typing.NotRequired[float | None],
 })
+LtaDiffParamsDict = _LtaDiffParamsDictNoTag | LtaDiffParamsDictTagged
 
 
 class LtaDiffOutputs(typing.NamedTuple):

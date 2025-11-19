@@ -13,8 +13,7 @@ V_3D_SURF2_VOL_METADATA = Metadata(
 )
 
 
-V3dSurf2VolParamsDict = typing.TypedDict('V3dSurf2VolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dSurf2Vol"]],
+_V3dSurf2VolParamsDictNoTag = typing.TypedDict('_V3dSurf2VolParamsDictNoTag', {
     "spec": InputPathType,
     "surface_volume": InputPathType,
     "surf_a": str,
@@ -69,6 +68,7 @@ V3dSurf2VolParamsDictTagged = typing.TypedDict('V3dSurf2VolParamsDictTagged', {
     "noscale": bool,
     "sxyz_orient_as_gpar": bool,
 })
+V3dSurf2VolParamsDict = _V3dSurf2VolParamsDictNoTag | V3dSurf2VolParamsDictTagged
 
 
 class V3dSurf2VolOutputs(typing.NamedTuple):

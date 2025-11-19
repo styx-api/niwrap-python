@@ -13,8 +13,7 @@ V__GET_AFNI_PREFIX_METADATA = Metadata(
 )
 
 
-VGetAfniPrefixParamsDict = typing.TypedDict('VGetAfniPrefixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniPrefix"]],
+_VGetAfniPrefixParamsDictNoTag = typing.TypedDict('_VGetAfniPrefixParamsDictNoTag', {
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ VGetAfniPrefixParamsDictTagged = typing.TypedDict('VGetAfniPrefixParamsDictTagge
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })
+VGetAfniPrefixParamsDict = _VGetAfniPrefixParamsDictNoTag | VGetAfniPrefixParamsDictTagged
 
 
 class VGetAfniPrefixOutputs(typing.NamedTuple):

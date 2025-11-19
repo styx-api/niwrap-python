@@ -13,8 +13,7 @@ FABBER_ASL_METADATA = Metadata(
 )
 
 
-FabberAslParamsDict = typing.TypedDict('FabberAslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fabber_asl"]],
+_FabberAslParamsDictNoTag = typing.TypedDict('_FabberAslParamsDictNoTag', {
     "listmethods": bool,
     "listmodels": bool,
     "listparams": bool,
@@ -83,6 +82,7 @@ FabberAslParamsDictTagged = typing.TypedDict('FabberAslParamsDictTagged', {
     "optfile": typing.NotRequired[str | None],
     "debug": bool,
 })
+FabberAslParamsDict = _FabberAslParamsDictNoTag | FabberAslParamsDictTagged
 
 
 class FabberAslOutputs(typing.NamedTuple):

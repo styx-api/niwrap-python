@@ -13,8 +13,7 @@ DCMDIR_INFO_MGH_METADATA = Metadata(
 )
 
 
-DcmdirInfoMghParamsDict = typing.TypedDict('DcmdirInfoMghParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdir-info-mgh"]],
+_DcmdirInfoMghParamsDictNoTag = typing.TypedDict('_DcmdirInfoMghParamsDictNoTag', {
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
     "version": bool,
@@ -29,6 +28,7 @@ DcmdirInfoMghParamsDictTagged = typing.TypedDict('DcmdirInfoMghParamsDictTagged'
     "help": bool,
     "nopre": bool,
 })
+DcmdirInfoMghParamsDict = _DcmdirInfoMghParamsDictNoTag | DcmdirInfoMghParamsDictTagged
 
 
 class DcmdirInfoMghOutputs(typing.NamedTuple):

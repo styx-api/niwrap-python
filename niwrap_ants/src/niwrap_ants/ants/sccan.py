@@ -13,8 +13,7 @@ SCCAN_METADATA = Metadata(
 )
 
 
-SccanParamsDict = typing.TypedDict('SccanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/sccan"]],
+_SccanParamsDictNoTag = typing.TypedDict('_SccanParamsDictNoTag', {
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
     "smoother": typing.NotRequired[int | None],
@@ -73,6 +72,7 @@ SccanParamsDictTagged = typing.TypedDict('SccanParamsDictTagged', {
     "scca": typing.NotRequired[str | None],
     "svd": typing.NotRequired[str | None],
 })
+SccanParamsDict = _SccanParamsDictNoTag | SccanParamsDictTagged
 
 
 class SccanOutputs(typing.NamedTuple):

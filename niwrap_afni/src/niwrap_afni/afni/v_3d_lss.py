@@ -13,8 +13,7 @@ V_3D_LSS_METADATA = Metadata(
 )
 
 
-V3dLssParamsDict = typing.TypedDict('V3dLssParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dLSS"]],
+_V3dLssParamsDictNoTag = typing.TypedDict('_V3dLssParamsDictNoTag', {
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
     "nodata": bool,
@@ -35,6 +34,7 @@ V3dLssParamsDictTagged = typing.TypedDict('V3dLssParamsDictTagged', {
     "save1D": typing.NotRequired[str | None],
     "verbose": bool,
 })
+V3dLssParamsDict = _V3dLssParamsDictNoTag | V3dLssParamsDictTagged
 
 
 class V3dLssOutputs(typing.NamedTuple):

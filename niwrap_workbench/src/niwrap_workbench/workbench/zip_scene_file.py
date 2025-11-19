@@ -12,8 +12,7 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 )
 
 
-ZipSceneFileParamsDict = typing.TypedDict('ZipSceneFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/zip-scene-file"]],
+_ZipSceneFileParamsDictNoTag = typing.TypedDict('_ZipSceneFileParamsDictNoTag', {
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
     "write-scene-file": bool,
@@ -30,6 +29,7 @@ ZipSceneFileParamsDictTagged = typing.TypedDict('ZipSceneFileParamsDictTagged', 
     "extract-folder": str,
     "zip-file": str,
 })
+ZipSceneFileParamsDict = _ZipSceneFileParamsDictNoTag | ZipSceneFileParamsDictTagged
 
 
 class ZipSceneFileOutputs(typing.NamedTuple):

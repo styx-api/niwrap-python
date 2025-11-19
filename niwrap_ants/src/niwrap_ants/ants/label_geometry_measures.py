@@ -13,8 +13,7 @@ LABEL_GEOMETRY_MEASURES_METADATA = Metadata(
 )
 
 
-LabelGeometryMeasuresParamsDict = typing.TypedDict('LabelGeometryMeasuresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/LabelGeometryMeasures"]],
+_LabelGeometryMeasuresParamsDictNoTag = typing.TypedDict('_LabelGeometryMeasuresParamsDictNoTag', {
     "image_dimension": int,
     "label_image": InputPathType,
     "intensity_image": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ LabelGeometryMeasuresParamsDictTagged = typing.TypedDict('LabelGeometryMeasuresP
     "intensity_image": typing.NotRequired[str | None],
     "csv_file": typing.NotRequired[InputPathType | None],
 })
+LabelGeometryMeasuresParamsDict = _LabelGeometryMeasuresParamsDictNoTag | LabelGeometryMeasuresParamsDictTagged
 
 
 class LabelGeometryMeasuresOutputs(typing.NamedTuple):

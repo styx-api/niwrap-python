@@ -13,8 +13,7 @@ MRI_FUSE_INTENSITY_IMAGES_METADATA = Metadata(
 )
 
 
-MriFuseIntensityImagesParamsDict = typing.TypedDict('MriFuseIntensityImagesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_intensity_images"]],
+_MriFuseIntensityImagesParamsDictNoTag = typing.TypedDict('_MriFuseIntensityImagesParamsDictNoTag', {
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
     "transform_file": InputPathType,
@@ -27,6 +26,7 @@ MriFuseIntensityImagesParamsDictTagged = typing.TypedDict('MriFuseIntensityImage
     "transform_file": InputPathType,
     "output_volume": str,
 })
+MriFuseIntensityImagesParamsDict = _MriFuseIntensityImagesParamsDictNoTag | MriFuseIntensityImagesParamsDictTagged
 
 
 class MriFuseIntensityImagesOutputs(typing.NamedTuple):

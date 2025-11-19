@@ -13,18 +13,17 @@ VECTORSTATS_METADATA = Metadata(
 )
 
 
-VectorstatsColumnParamsDict = typing.TypedDict('VectorstatsColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_VectorstatsColumnParamsDictNoTag = typing.TypedDict('_VectorstatsColumnParamsDictNoTag', {
     "path": InputPathType,
 })
 VectorstatsColumnParamsDictTagged = typing.TypedDict('VectorstatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
+VectorstatsColumnParamsDict = _VectorstatsColumnParamsDictNoTag | VectorstatsColumnParamsDictTagged
 
 
-VectorstatsConfigParamsDict = typing.TypedDict('VectorstatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_VectorstatsConfigParamsDictNoTag = typing.TypedDict('_VectorstatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ VectorstatsConfigParamsDictTagged = typing.TypedDict('VectorstatsConfigParamsDic
     "key": str,
     "value": str,
 })
+VectorstatsConfigParamsDict = _VectorstatsConfigParamsDictNoTag | VectorstatsConfigParamsDictTagged
 
 
-VectorstatsParamsDict = typing.TypedDict('VectorstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/vectorstats"]],
+_VectorstatsParamsDictNoTag = typing.TypedDict('_VectorstatsParamsDictNoTag', {
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -87,6 +86,7 @@ VectorstatsParamsDictTagged = typing.TypedDict('VectorstatsParamsDictTagged', {
     "contrast": InputPathType,
     "output": str,
 })
+VectorstatsParamsDict = _VectorstatsParamsDictNoTag | VectorstatsParamsDictTagged
 
 
 def vectorstats_column(

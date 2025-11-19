@@ -12,8 +12,7 @@ CIFTI_FALSE_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiFalseCorrelationLeftSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-surface"]],
+_CiftiFalseCorrelationLeftSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFalseCorrelationLeftSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
@@ -22,10 +21,10 @@ CiftiFalseCorrelationLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiFalseC
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
+CiftiFalseCorrelationLeftSurfaceParamsDict = _CiftiFalseCorrelationLeftSurfaceParamsDictNoTag | CiftiFalseCorrelationLeftSurfaceParamsDictTagged
 
 
-CiftiFalseCorrelationRightSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-surface"]],
+_CiftiFalseCorrelationRightSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFalseCorrelationRightSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
@@ -34,10 +33,10 @@ CiftiFalseCorrelationRightSurfaceParamsDictTagged = typing.TypedDict('CiftiFalse
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
+CiftiFalseCorrelationRightSurfaceParamsDict = _CiftiFalseCorrelationRightSurfaceParamsDictNoTag | CiftiFalseCorrelationRightSurfaceParamsDictTagged
 
 
-CiftiFalseCorrelationCerebellumSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
+_CiftiFalseCorrelationCerebellumSurfaceParamsDictNoTag = typing.TypedDict('_CiftiFalseCorrelationCerebellumSurfaceParamsDictNoTag', {
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
@@ -46,10 +45,10 @@ CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged = typing.TypedDict('Cifti
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
+CiftiFalseCorrelationCerebellumSurfaceParamsDict = _CiftiFalseCorrelationCerebellumSurfaceParamsDictNoTag | CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged
 
 
-CiftiFalseCorrelationParamsDict = typing.TypedDict('CiftiFalseCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-false-correlation"]],
+_CiftiFalseCorrelationParamsDictNoTag = typing.TypedDict('_CiftiFalseCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
@@ -70,6 +69,7 @@ CiftiFalseCorrelationParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationP
     "geo-outer": float,
     "geo-inner": float,
 })
+CiftiFalseCorrelationParamsDict = _CiftiFalseCorrelationParamsDictNoTag | CiftiFalseCorrelationParamsDictTagged
 
 
 def cifti_false_correlation_left_surface(

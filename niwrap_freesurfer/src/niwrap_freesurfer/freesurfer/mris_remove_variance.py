@@ -13,8 +13,7 @@ MRIS_REMOVE_VARIANCE_METADATA = Metadata(
 )
 
 
-MrisRemoveVarianceParamsDict = typing.TypedDict('MrisRemoveVarianceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_variance"]],
+_MrisRemoveVarianceParamsDictNoTag = typing.TypedDict('_MrisRemoveVarianceParamsDictNoTag', {
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
     "curvature_file_to_remove": InputPathType,
@@ -27,6 +26,7 @@ MrisRemoveVarianceParamsDictTagged = typing.TypedDict('MrisRemoveVarianceParamsD
     "curvature_file_to_remove": InputPathType,
     "output_curvature_file": str,
 })
+MrisRemoveVarianceParamsDict = _MrisRemoveVarianceParamsDictNoTag | MrisRemoveVarianceParamsDictTagged
 
 
 class MrisRemoveVarianceOutputs(typing.NamedTuple):

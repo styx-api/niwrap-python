@@ -13,8 +13,7 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 )
 
 
-PrintUniqueLabelsCshParamsDict = typing.TypedDict('PrintUniqueLabelsCshParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/print_unique_labels.csh"]],
+_PrintUniqueLabelsCshParamsDictNoTag = typing.TypedDict('_PrintUniqueLabelsCshParamsDictNoTag', {
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "list_only": bool,
@@ -29,6 +28,7 @@ PrintUniqueLabelsCshParamsDictTagged = typing.TypedDict('PrintUniqueLabelsCshPar
     "version": bool,
     "help": bool,
 })
+PrintUniqueLabelsCshParamsDict = _PrintUniqueLabelsCshParamsDictNoTag | PrintUniqueLabelsCshParamsDictTagged
 
 
 class PrintUniqueLabelsCshOutputs(typing.NamedTuple):

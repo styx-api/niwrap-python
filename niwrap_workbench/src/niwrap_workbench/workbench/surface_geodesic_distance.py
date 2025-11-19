@@ -12,8 +12,7 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceParamsDict = typing.TypedDict('SurfaceGeodesicDistanceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance"]],
+_SurfaceGeodesicDistanceParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceParamsDictNoTag', {
     "metric-out": str,
     "naive": bool,
     "limit-mm": typing.NotRequired[float | None],
@@ -30,6 +29,7 @@ SurfaceGeodesicDistanceParamsDictTagged = typing.TypedDict('SurfaceGeodesicDista
     "surface": InputPathType,
     "vertex": int,
 })
+SurfaceGeodesicDistanceParamsDict = _SurfaceGeodesicDistanceParamsDictNoTag | SurfaceGeodesicDistanceParamsDictTagged
 
 
 class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):

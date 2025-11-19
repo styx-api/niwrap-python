@@ -13,8 +13,7 @@ FSLMERGE_METADATA = Metadata(
 )
 
 
-FslmergeParamsDict = typing.TypedDict('FslmergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslmerge"]],
+_FslmergeParamsDictNoTag = typing.TypedDict('_FslmergeParamsDictNoTag', {
     "merge_time": bool,
     "merge_x": bool,
     "merge_y": bool,
@@ -39,6 +38,7 @@ FslmergeParamsDictTagged = typing.TypedDict('FslmergeParamsDictTagged', {
     "volume_number": typing.NotRequired[float | None],
     "tr_value": typing.NotRequired[float | None],
 })
+FslmergeParamsDict = _FslmergeParamsDictNoTag | FslmergeParamsDictTagged
 
 
 class FslmergeOutputs(typing.NamedTuple):

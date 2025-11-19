@@ -13,8 +13,7 @@ FSL_GLM_METADATA = Metadata(
 )
 
 
-FslGlmParamsDict = typing.TypedDict('FslGlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fsl_glm"]],
+_FslGlmParamsDictNoTag = typing.TypedDict('_FslGlmParamsDictNoTag', {
     "input_file": InputPathType,
     "design_matrix": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -67,6 +66,7 @@ FslGlmParamsDictTagged = typing.TypedDict('FslGlmParamsDictTagged', {
     "vx_images": typing.NotRequired[list[InputPathType] | None],
     "help_flag": bool,
 })
+FslGlmParamsDict = _FslGlmParamsDictNoTag | FslGlmParamsDictTagged
 
 
 class FslGlmOutputs(typing.NamedTuple):

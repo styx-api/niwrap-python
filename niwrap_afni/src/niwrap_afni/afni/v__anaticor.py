@@ -13,8 +13,7 @@ V__ANATICOR_METADATA = Metadata(
 )
 
 
-VAnaticorParamsDict = typing.TypedDict('VAnaticorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ANATICOR"]],
+_VAnaticorParamsDictNoTag = typing.TypedDict('_VAnaticorParamsDictNoTag', {
     "ts": InputPathType,
     "polort": str,
     "motion": InputPathType,
@@ -47,6 +46,7 @@ VAnaticorParamsDictTagged = typing.TypedDict('VAnaticorParamsDictTagged', {
     "dirty": bool,
     "echo": bool,
 })
+VAnaticorParamsDict = _VAnaticorParamsDictNoTag | VAnaticorParamsDictTagged
 
 
 class VAnaticorOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
 )
 
 
-MetricToVolumeMappingRibbonConstrainedParamsDict = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+_MetricToVolumeMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_MetricToVolumeMappingRibbonConstrainedParamsDictNoTag', {
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
     "subdiv-num": typing.NotRequired[int | None],
@@ -28,10 +27,10 @@ MetricToVolumeMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('Metri
     "greedy": bool,
     "thick-columns": bool,
 })
+MetricToVolumeMappingRibbonConstrainedParamsDict = _MetricToVolumeMappingRibbonConstrainedParamsDictNoTag | MetricToVolumeMappingRibbonConstrainedParamsDictTagged
 
 
-MetricToVolumeMappingParamsDict = typing.TypedDict('MetricToVolumeMappingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-to-volume-mapping"]],
+_MetricToVolumeMappingParamsDictNoTag = typing.TypedDict('_MetricToVolumeMappingParamsDictNoTag', {
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
     "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
@@ -48,6 +47,7 @@ MetricToVolumeMappingParamsDictTagged = typing.TypedDict('MetricToVolumeMappingP
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
+MetricToVolumeMappingParamsDict = _MetricToVolumeMappingParamsDictNoTag | MetricToVolumeMappingParamsDictTagged
 
 
 def metric_to_volume_mapping_ribbon_constrained(

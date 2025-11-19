@@ -13,8 +13,7 @@ MRI_LOG_LIKELIHOOD_METADATA = Metadata(
 )
 
 
-MriLogLikelihoodParamsDict = typing.TypedDict('MriLogLikelihoodParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_log_likelihood"]],
+_MriLogLikelihoodParamsDictNoTag = typing.TypedDict('_MriLogLikelihoodParamsDictNoTag', {
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
     "transform_file": InputPathType,
@@ -25,6 +24,7 @@ MriLogLikelihoodParamsDictTagged = typing.TypedDict('MriLogLikelihoodParamsDictT
     "atlas_file": InputPathType,
     "transform_file": InputPathType,
 })
+MriLogLikelihoodParamsDict = _MriLogLikelihoodParamsDictNoTag | MriLogLikelihoodParamsDictTagged
 
 
 class MriLogLikelihoodOutputs(typing.NamedTuple):

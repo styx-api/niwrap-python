@@ -13,8 +13,7 @@ SUMA_CHANGE_SPEC_METADATA = Metadata(
 )
 
 
-SumaChangeSpecParamsDict = typing.TypedDict('SumaChangeSpecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/suma_change_spec"]],
+_SumaChangeSpecParamsDictNoTag = typing.TypedDict('_SumaChangeSpecParamsDictNoTag', {
     "input": InputPathType,
     "state": str,
     "domainparent": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ SumaChangeSpecParamsDictTagged = typing.TypedDict('SumaChangeSpecParamsDictTagge
     "remove": bool,
     "anatomical": bool,
 })
+SumaChangeSpecParamsDict = _SumaChangeSpecParamsDictNoTag | SumaChangeSpecParamsDictTagged
 
 
 class SumaChangeSpecOutputs(typing.NamedTuple):

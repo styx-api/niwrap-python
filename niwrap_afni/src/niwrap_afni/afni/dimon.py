@@ -13,8 +13,7 @@ DIMON_METADATA = Metadata(
 )
 
 
-DimonParamsDict = typing.TypedDict('DimonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/Dimon"]],
+_DimonParamsDictNoTag = typing.TypedDict('_DimonParamsDictNoTag', {
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
     "infile_list": typing.NotRequired[InputPathType | None],
@@ -37,6 +36,7 @@ DimonParamsDictTagged = typing.TypedDict('DimonParamsDictTagged', {
     "te_list": typing.NotRequired[str | None],
     "sort_method": typing.NotRequired[str | None],
 })
+DimonParamsDict = _DimonParamsDictNoTag | DimonParamsDictTagged
 
 
 class DimonOutputs(typing.NamedTuple):

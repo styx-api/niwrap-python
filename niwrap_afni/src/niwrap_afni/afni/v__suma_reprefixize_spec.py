@@ -13,8 +13,7 @@ V__SUMA_REPREFIXIZE_SPEC_METADATA = Metadata(
 )
 
 
-VSumaReprefixizeSpecParamsDict = typing.TypedDict('VSumaReprefixizeSpecParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@suma_reprefixize_spec"]],
+_VSumaReprefixizeSpecParamsDictNoTag = typing.TypedDict('_VSumaReprefixizeSpecParamsDictNoTag', {
     "input_file": InputPathType,
     "prefix": str,
     "output_dir": str,
@@ -29,6 +28,7 @@ VSumaReprefixizeSpecParamsDictTagged = typing.TypedDict('VSumaReprefixizeSpecPar
     "work_dir": str,
     "no_clean": bool,
 })
+VSumaReprefixizeSpecParamsDict = _VSumaReprefixizeSpecParamsDictNoTag | VSumaReprefixizeSpecParamsDictTagged
 
 
 class VSumaReprefixizeSpecOutputs(typing.NamedTuple):

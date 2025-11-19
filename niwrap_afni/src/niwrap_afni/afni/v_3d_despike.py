@@ -13,8 +13,7 @@ V_3D_DESPIKE_METADATA = Metadata(
 )
 
 
-V3dDespikeParamsDict = typing.TypedDict('V3dDespikeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDespike"]],
+_V3dDespikeParamsDictNoTag = typing.TypedDict('_V3dDespikeParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
@@ -23,6 +22,7 @@ V3dDespikeParamsDictTagged = typing.TypedDict('V3dDespikeParamsDictTagged', {
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
+V3dDespikeParamsDict = _V3dDespikeParamsDictNoTag | V3dDespikeParamsDictTagged
 
 
 class V3dDespikeOutputs(typing.NamedTuple):

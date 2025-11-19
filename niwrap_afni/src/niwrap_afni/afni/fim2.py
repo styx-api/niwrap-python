@@ -13,8 +13,7 @@ FIM2_METADATA = Metadata(
 )
 
 
-Fim2ParamsDict = typing.TypedDict('Fim2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fim2"]],
+_Fim2ParamsDictNoTag = typing.TypedDict('_Fim2ParamsDictNoTag', {
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
     "pcthresh": typing.NotRequired[float | None],
@@ -65,6 +64,7 @@ Fim2ParamsDictTagged = typing.TypedDict('Fim2ParamsDictTagged', {
     "dfspace": bool,
     "regbase": typing.NotRequired[str | None],
 })
+Fim2ParamsDict = _Fim2ParamsDictNoTag | Fim2ParamsDictTagged
 
 
 class Fim2Outputs(typing.NamedTuple):

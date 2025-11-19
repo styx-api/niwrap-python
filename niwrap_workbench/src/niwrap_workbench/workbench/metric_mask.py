@@ -12,8 +12,7 @@ METRIC_MASK_METADATA = Metadata(
 )
 
 
-MetricMaskParamsDict = typing.TypedDict('MetricMaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-mask"]],
+_MetricMaskParamsDictNoTag = typing.TypedDict('_MetricMaskParamsDictNoTag', {
     "metric-out": str,
     "column": typing.NotRequired[str | None],
     "metric": InputPathType,
@@ -26,6 +25,7 @@ MetricMaskParamsDictTagged = typing.TypedDict('MetricMaskParamsDictTagged', {
     "metric": InputPathType,
     "mask": InputPathType,
 })
+MetricMaskParamsDict = _MetricMaskParamsDictNoTag | MetricMaskParamsDictTagged
 
 
 class MetricMaskOutputs(typing.NamedTuple):

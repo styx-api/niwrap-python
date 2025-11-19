@@ -13,8 +13,7 @@ FSLSPLIT_METADATA = Metadata(
 )
 
 
-FslsplitParamsDict = typing.TypedDict('FslsplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslsplit"]],
+_FslsplitParamsDictNoTag = typing.TypedDict('_FslsplitParamsDictNoTag', {
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
     "separation_x": bool,
@@ -31,6 +30,7 @@ FslsplitParamsDictTagged = typing.TypedDict('FslsplitParamsDictTagged', {
     "separation_z": bool,
     "separation_time": bool,
 })
+FslsplitParamsDict = _FslsplitParamsDictNoTag | FslsplitParamsDictTagged
 
 
 class FslsplitOutputs(typing.NamedTuple):

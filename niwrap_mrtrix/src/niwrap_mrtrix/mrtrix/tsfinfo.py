@@ -13,8 +13,7 @@ TSFINFO_METADATA = Metadata(
 )
 
 
-TsfinfoConfigParamsDict = typing.TypedDict('TsfinfoConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TsfinfoConfigParamsDictNoTag = typing.TypedDict('_TsfinfoConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TsfinfoConfigParamsDictTagged = typing.TypedDict('TsfinfoConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+TsfinfoConfigParamsDict = _TsfinfoConfigParamsDictNoTag | TsfinfoConfigParamsDictTagged
 
 
-TsfinfoParamsDict = typing.TypedDict('TsfinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfinfo"]],
+_TsfinfoParamsDictNoTag = typing.TypedDict('_TsfinfoParamsDictNoTag', {
     "count": bool,
     "ascii": typing.NotRequired[str | None],
     "info": bool,
@@ -53,6 +52,7 @@ TsfinfoParamsDictTagged = typing.TypedDict('TsfinfoParamsDictTagged', {
     "version": bool,
     "tracks": list[InputPathType],
 })
+TsfinfoParamsDict = _TsfinfoParamsDictNoTag | TsfinfoParamsDictTagged
 
 
 def tsfinfo_config(

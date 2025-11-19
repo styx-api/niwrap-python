@@ -13,8 +13,7 @@ V_3D_GROUP_IN_CORR_METADATA = Metadata(
 )
 
 
-V3dGroupInCorrParamsDict = typing.TypedDict('V3dGroupInCorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dGroupInCorr"]],
+_V3dGroupInCorrParamsDictNoTag = typing.TypedDict('_V3dGroupInCorrParamsDictNoTag', {
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
     "apair": bool,
@@ -75,6 +74,7 @@ V3dGroupInCorrParamsDictTagged = typing.TypedDict('V3dGroupInCorrParamsDictTagge
     "debug": bool,
     "batch": typing.NotRequired[str | None],
 })
+V3dGroupInCorrParamsDict = _V3dGroupInCorrParamsDictNoTag | V3dGroupInCorrParamsDictTagged
 
 
 class V3dGroupInCorrOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
 )
 
 
-GemsComputeAtlasProbsParamsDict = typing.TypedDict('GemsComputeAtlasProbsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/gems_compute_atlas_probs"]],
+_GemsComputeAtlasProbsParamsDictNoTag = typing.TypedDict('_GemsComputeAtlasProbsParamsDictNoTag', {
     "subjects_dir": str,
     "mesh_collections": list[str],
     "out_dir": str,
@@ -51,6 +50,7 @@ GemsComputeAtlasProbsParamsDictTagged = typing.TypedDict('GemsComputeAtlasProbsP
     "labels_file": typing.NotRequired[str | None],
     "samseg_subdir": typing.NotRequired[str | None],
 })
+GemsComputeAtlasProbsParamsDict = _GemsComputeAtlasProbsParamsDictNoTag | GemsComputeAtlasProbsParamsDictTagged
 
 
 class GemsComputeAtlasProbsOutputs(typing.NamedTuple):

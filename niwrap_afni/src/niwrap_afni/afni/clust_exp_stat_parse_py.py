@@ -13,8 +13,7 @@ CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
 )
 
 
-ClustExpStatParsePyParamsDict = typing.TypedDict('ClustExpStatParsePyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ClustExp_StatParse.py"]],
+_ClustExpStatParsePyParamsDictNoTag = typing.TypedDict('_ClustExpStatParsePyParamsDictNoTag', {
     "statdset": InputPathType,
     "meanbrik": float,
     "threshbrik": float,
@@ -45,6 +44,7 @@ ClustExpStatParsePyParamsDictTagged = typing.TypedDict('ClustExpStatParsePyParam
     "noshiny": bool,
     "overwrite": bool,
 })
+ClustExpStatParsePyParamsDict = _ClustExpStatParsePyParamsDictNoTag | ClustExpStatParsePyParamsDictTagged
 
 
 class ClustExpStatParsePyOutputs(typing.NamedTuple):

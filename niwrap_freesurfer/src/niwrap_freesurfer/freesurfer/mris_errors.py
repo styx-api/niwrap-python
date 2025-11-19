@@ -13,14 +13,14 @@ MRIS_ERRORS_METADATA = Metadata(
 )
 
 
-MrisErrorsParamsDict = typing.TypedDict('MrisErrorsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_errors"]],
+_MrisErrorsParamsDictNoTag = typing.TypedDict('_MrisErrorsParamsDictNoTag', {
     "input_image_file": InputPathType,
 })
 MrisErrorsParamsDictTagged = typing.TypedDict('MrisErrorsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_errors"],
     "input_image_file": InputPathType,
 })
+MrisErrorsParamsDict = _MrisErrorsParamsDictNoTag | MrisErrorsParamsDictTagged
 
 
 class MrisErrorsOutputs(typing.NamedTuple):

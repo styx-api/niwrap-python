@@ -13,8 +13,7 @@ V_3D_PFM_METADATA = Metadata(
 )
 
 
-V3dPfmParamsDict = typing.TypedDict('V3dPfmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dPFM"]],
+_V3dPfmParamsDictNoTag = typing.TypedDict('_V3dPfmParamsDictNoTag', {
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "algorithm": typing.NotRequired[str | None],
@@ -49,6 +48,7 @@ V3dPfmParamsDictTagged = typing.TypedDict('V3dPfmParamsDictTagged', {
     "nSeg": typing.NotRequired[float | None],
     "verb": typing.NotRequired[float | None],
 })
+V3dPfmParamsDict = _V3dPfmParamsDictNoTag | V3dPfmParamsDictTagged
 
 
 class V3dPfmOutputs(typing.NamedTuple):

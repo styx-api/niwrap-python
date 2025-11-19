@@ -13,8 +13,7 @@ STANDARD_SPACE_ROI_METADATA = Metadata(
 )
 
 
-StandardSpaceRoiParamsDict = typing.TypedDict('StandardSpaceRoiParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/standard_space_roi"]],
+_StandardSpaceRoiParamsDictNoTag = typing.TypedDict('_StandardSpaceRoiParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "mask_fov_flag": bool,
@@ -43,6 +42,7 @@ StandardSpaceRoiParamsDictTagged = typing.TypedDict('StandardSpaceRoiParamsDictT
     "debug_flag": bool,
     "bet_premask_flag": bool,
 })
+StandardSpaceRoiParamsDict = _StandardSpaceRoiParamsDictNoTag | StandardSpaceRoiParamsDictTagged
 
 
 class StandardSpaceRoiOutputs(typing.NamedTuple):

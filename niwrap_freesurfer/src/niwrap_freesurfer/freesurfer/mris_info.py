@@ -13,8 +13,7 @@ MRIS_INFO_METADATA = Metadata(
 )
 
 
-MrisInfoParamsDict = typing.TypedDict('MrisInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_info"]],
+_MrisInfoParamsDictNoTag = typing.TypedDict('_MrisInfoParamsDictNoTag', {
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "subject_hemi_surfname": typing.NotRequired[str | None],
@@ -65,6 +64,7 @@ MrisInfoParamsDictTagged = typing.TypedDict('MrisInfoParamsDictTagged', {
     "version_flag": bool,
     "help_flag": bool,
 })
+MrisInfoParamsDict = _MrisInfoParamsDictNoTag | MrisInfoParamsDictTagged
 
 
 class MrisInfoOutputs(typing.NamedTuple):

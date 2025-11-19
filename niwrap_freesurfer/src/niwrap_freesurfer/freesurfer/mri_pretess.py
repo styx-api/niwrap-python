@@ -13,8 +13,7 @@ MRI_PRETESS_METADATA = Metadata(
 )
 
 
-MriPretessParamsDict = typing.TypedDict('MriPretessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_pretess"]],
+_MriPretessParamsDictNoTag = typing.TypedDict('_MriPretessParamsDictNoTag', {
     "filledvol": InputPathType,
     "labelstring": str,
     "normvol": InputPathType,
@@ -37,6 +36,7 @@ MriPretessParamsDictTagged = typing.TypedDict('MriPretessParamsDictTagged', {
     "keep": bool,
     "test": bool,
 })
+MriPretessParamsDict = _MriPretessParamsDictNoTag | MriPretessParamsDictTagged
 
 
 class MriPretessOutputs(typing.NamedTuple):

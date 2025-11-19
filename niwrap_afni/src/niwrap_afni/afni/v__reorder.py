@@ -13,8 +13,7 @@ V__REORDER_METADATA = Metadata(
 )
 
 
-VReorderParamsDict = typing.TypedDict('VReorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@Reorder"]],
+_VReorderParamsDictNoTag = typing.TypedDict('_VReorderParamsDictNoTag', {
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
     "prefix": str,
@@ -33,6 +32,7 @@ VReorderParamsDictTagged = typing.TypedDict('VReorderParamsDictTagged', {
     "test": bool,
     "help": bool,
 })
+VReorderParamsDict = _VReorderParamsDictNoTag | VReorderParamsDictTagged
 
 
 class VReorderOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ TFIM_METADATA = Metadata(
 )
 
 
-TfimParamsDict = typing.TypedDict('TfimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/tfim"]],
+_TfimParamsDictNoTag = typing.TypedDict('_TfimParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
     "eqcorr": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ TfimParamsDictTagged = typing.TypedDict('TfimParamsDictTagged', {
     "set2_images": list[InputPathType],
     "base1_value": typing.NotRequired[float | None],
 })
+TfimParamsDict = _TfimParamsDictNoTag | TfimParamsDictTagged
 
 
 class TfimOutputs(typing.NamedTuple):

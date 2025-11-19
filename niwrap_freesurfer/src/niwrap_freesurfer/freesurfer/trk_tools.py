@@ -13,8 +13,7 @@ TRK_TOOLS_METADATA = Metadata(
 )
 
 
-TrkToolsParamsDict = typing.TypedDict('TrkToolsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/trk_tools"]],
+_TrkToolsParamsDictNoTag = typing.TypedDict('_TrkToolsParamsDictNoTag', {
     "reference_image": InputPathType,
     "input_trk": InputPathType,
     "output_trk": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ TrkToolsParamsDictTagged = typing.TypedDict('TrkToolsParamsDictTagged', {
     "update_header": bool,
     "output_vtk": typing.NotRequired[str | None],
 })
+TrkToolsParamsDict = _TrkToolsParamsDictNoTag | TrkToolsParamsDictTagged
 
 
 class TrkToolsOutputs(typing.NamedTuple):

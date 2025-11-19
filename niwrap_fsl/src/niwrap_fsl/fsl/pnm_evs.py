@@ -13,8 +13,7 @@ PNM_EVS_METADATA = Metadata(
 )
 
 
-PnmEvsParamsDict = typing.TypedDict('PnmEvsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/pnm_evs"]],
+_PnmEvsParamsDictNoTag = typing.TypedDict('_PnmEvsParamsDictNoTag', {
     "input_file": InputPathType,
     "output_file": str,
     "tr_value": float,
@@ -59,6 +58,7 @@ PnmEvsParamsDictTagged = typing.TypedDict('PnmEvsParamsDictTagged', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
+PnmEvsParamsDict = _PnmEvsParamsDictNoTag | PnmEvsParamsDictTagged
 
 
 class PnmEvsOutputs(typing.NamedTuple):

@@ -13,14 +13,14 @@ RENORMALIZE_T1_SUBJECT_METADATA = Metadata(
 )
 
 
-RenormalizeT1SubjectParamsDict = typing.TypedDict('RenormalizeT1SubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_T1_subject"]],
+_RenormalizeT1SubjectParamsDictNoTag = typing.TypedDict('_RenormalizeT1SubjectParamsDictNoTag', {
     "subject_dir": str,
 })
 RenormalizeT1SubjectParamsDictTagged = typing.TypedDict('RenormalizeT1SubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/renormalize_T1_subject"],
     "subject_dir": str,
 })
+RenormalizeT1SubjectParamsDict = _RenormalizeT1SubjectParamsDictNoTag | RenormalizeT1SubjectParamsDictTagged
 
 
 class RenormalizeT1SubjectOutputs(typing.NamedTuple):

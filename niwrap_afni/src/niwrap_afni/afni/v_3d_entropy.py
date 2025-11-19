@@ -13,8 +13,7 @@ V_3D_ENTROPY_METADATA = Metadata(
 )
 
 
-V3dEntropyParamsDict = typing.TypedDict('V3dEntropyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dEntropy"]],
+_V3dEntropyParamsDictNoTag = typing.TypedDict('_V3dEntropyParamsDictNoTag', {
     "zskip": bool,
     "input_dataset": InputPathType,
 })
@@ -23,6 +22,7 @@ V3dEntropyParamsDictTagged = typing.TypedDict('V3dEntropyParamsDictTagged', {
     "zskip": bool,
     "input_dataset": InputPathType,
 })
+V3dEntropyParamsDict = _V3dEntropyParamsDictNoTag | V3dEntropyParamsDictTagged
 
 
 class V3dEntropyOutputs(typing.NamedTuple):

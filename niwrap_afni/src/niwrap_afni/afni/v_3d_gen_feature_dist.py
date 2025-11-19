@@ -13,8 +13,7 @@ V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
 )
 
 
-V3dGenFeatureDistParamsDict = typing.TypedDict('V3dGenFeatureDistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dGenFeatureDist"]],
+_V3dGenFeatureDistParamsDictNoTag = typing.TypedDict('_V3dGenFeatureDistParamsDictNoTag', {
     "features_string": str,
     "class_string": str,
     "prefix": typing.NotRequired[str | None],
@@ -43,6 +42,7 @@ V3dGenFeatureDistParamsDictTagged = typing.TypedDict('V3dGenFeatureDistParamsDic
     "labeltable": typing.NotRequired[InputPathType | None],
     "show_histograms": typing.NotRequired[str | None],
 })
+V3dGenFeatureDistParamsDict = _V3dGenFeatureDistParamsDictNoTag | V3dGenFeatureDistParamsDictTagged
 
 
 class V3dGenFeatureDistOutputs(typing.NamedTuple):

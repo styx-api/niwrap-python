@@ -13,8 +13,7 @@ V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
 )
 
 
-V3dVecRgbToHslParamsDict = typing.TypedDict('V3dVecRgbToHslParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dVecRGB_to_HSL"]],
+_V3dVecRgbToHslParamsDictNoTag = typing.TypedDict('_V3dVecRgbToHslParamsDictNoTag', {
     "prefix": str,
     "in_vec": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -27,6 +26,7 @@ V3dVecRgbToHslParamsDictTagged = typing.TypedDict('V3dVecRgbToHslParamsDictTagge
     "mask": typing.NotRequired[InputPathType | None],
     "in_scal": typing.NotRequired[InputPathType | None],
 })
+V3dVecRgbToHslParamsDict = _V3dVecRgbToHslParamsDictNoTag | V3dVecRgbToHslParamsDictTagged
 
 
 class V3dVecRgbToHslOutputs(typing.NamedTuple):

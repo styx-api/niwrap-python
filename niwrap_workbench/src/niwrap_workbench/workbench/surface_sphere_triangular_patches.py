@@ -12,8 +12,7 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
 )
 
 
-SurfaceSphereTriangularPatchesParamsDict = typing.TypedDict('SurfaceSphereTriangularPatchesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-triangular-patches"]],
+_SurfaceSphereTriangularPatchesParamsDictNoTag = typing.TypedDict('_SurfaceSphereTriangularPatchesParamsDictNoTag', {
     "sphere": InputPathType,
     "divisions": int,
     "text-out": str,
@@ -24,6 +23,7 @@ SurfaceSphereTriangularPatchesParamsDictTagged = typing.TypedDict('SurfaceSphere
     "divisions": int,
     "text-out": str,
 })
+SurfaceSphereTriangularPatchesParamsDict = _SurfaceSphereTriangularPatchesParamsDictNoTag | SurfaceSphereTriangularPatchesParamsDictTagged
 
 
 class SurfaceSphereTriangularPatchesOutputs(typing.NamedTuple):

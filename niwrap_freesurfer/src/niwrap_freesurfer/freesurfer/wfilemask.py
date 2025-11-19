@@ -13,8 +13,7 @@ WFILEMASK_METADATA = Metadata(
 )
 
 
-WfilemaskParamsDict = typing.TypedDict('WfilemaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/wfilemask"]],
+_WfilemaskParamsDictNoTag = typing.TypedDict('_WfilemaskParamsDictNoTag', {
     "w_file": InputPathType,
     "label_file": InputPathType,
     "output_file": str,
@@ -31,6 +30,7 @@ WfilemaskParamsDictTagged = typing.TypedDict('WfilemaskParamsDictTagged', {
     "help_flag": bool,
     "version_flag": bool,
 })
+WfilemaskParamsDict = _WfilemaskParamsDictNoTag | WfilemaskParamsDictTagged
 
 
 class WfilemaskOutputs(typing.NamedTuple):

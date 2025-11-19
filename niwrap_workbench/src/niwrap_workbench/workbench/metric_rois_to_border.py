@@ -12,8 +12,7 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 )
 
 
-MetricRoisToBorderParamsDict = typing.TypedDict('MetricRoisToBorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-to-border"]],
+_MetricRoisToBorderParamsDictNoTag = typing.TypedDict('_MetricRoisToBorderParamsDictNoTag', {
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
@@ -30,6 +29,7 @@ MetricRoisToBorderParamsDictTagged = typing.TypedDict('MetricRoisToBorderParamsD
     "metric": InputPathType,
     "class-name": str,
 })
+MetricRoisToBorderParamsDict = _MetricRoisToBorderParamsDictNoTag | MetricRoisToBorderParamsDictTagged
 
 
 class MetricRoisToBorderOutputs(typing.NamedTuple):

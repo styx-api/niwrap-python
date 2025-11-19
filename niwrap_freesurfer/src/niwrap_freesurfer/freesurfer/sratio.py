@@ -13,8 +13,7 @@ SRATIO_METADATA = Metadata(
 )
 
 
-SratioParamsDict = typing.TypedDict('SratioParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/sratio"]],
+_SratioParamsDictNoTag = typing.TypedDict('_SratioParamsDictNoTag', {
     "value_a": float,
     "value_b": float,
     "abs_flag": bool,
@@ -27,6 +26,7 @@ SratioParamsDictTagged = typing.TypedDict('SratioParamsDictTagged', {
     "abs_flag": bool,
     "mask_threshold": typing.NotRequired[float | None],
 })
+SratioParamsDict = _SratioParamsDictNoTag | SratioParamsDictTagged
 
 
 class SratioOutputs(typing.NamedTuple):

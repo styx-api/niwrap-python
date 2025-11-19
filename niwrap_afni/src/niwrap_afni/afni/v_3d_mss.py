@@ -13,8 +13,7 @@ V_3D_MSS_METADATA = Metadata(
 )
 
 
-V3dMssParamsDict = typing.TypedDict('V3dMssParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMSS"]],
+_V3dMssParamsDictNoTag = typing.TypedDict('_V3dMssParamsDictNoTag', {
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "mrr_formula": typing.NotRequired[str | None],
@@ -55,6 +54,7 @@ V3dMssParamsDictTagged = typing.TypedDict('V3dMssParamsDictTagged', {
     "sdiff_vars": typing.NotRequired[str | None],
     "vt_formula": typing.NotRequired[str | None],
 })
+V3dMssParamsDict = _V3dMssParamsDictNoTag | V3dMssParamsDictTagged
 
 
 class V3dMssOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ MRI_TESSELLATE_METADATA = Metadata(
 )
 
 
-MriTessellateParamsDict = typing.TypedDict('MriTessellateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_tessellate"]],
+_MriTessellateParamsDictNoTag = typing.TypedDict('_MriTessellateParamsDictNoTag', {
     "input_volume": InputPathType,
     "label_value": int,
     "output_surf": str,
@@ -31,6 +30,7 @@ MriTessellateParamsDictTagged = typing.TypedDict('MriTessellateParamsDictTagged'
     "max_vertices": typing.NotRequired[int | None],
     "real_ras": bool,
 })
+MriTessellateParamsDict = _MriTessellateParamsDictNoTag | MriTessellateParamsDictTagged
 
 
 class MriTessellateOutputs(typing.NamedTuple):

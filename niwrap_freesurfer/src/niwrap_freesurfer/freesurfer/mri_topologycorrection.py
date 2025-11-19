@@ -13,8 +13,7 @@ MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
 )
 
 
-MriTopologycorrectionParamsDict = typing.TypedDict('MriTopologycorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_topologycorrection"]],
+_MriTopologycorrectionParamsDictNoTag = typing.TypedDict('_MriTopologycorrectionParamsDictNoTag', {
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })
@@ -23,6 +22,7 @@ MriTopologycorrectionParamsDictTagged = typing.TypedDict('MriTopologycorrectionP
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })
+MriTopologycorrectionParamsDict = _MriTopologycorrectionParamsDictNoTag | MriTopologycorrectionParamsDictTagged
 
 
 class MriTopologycorrectionOutputs(typing.NamedTuple):

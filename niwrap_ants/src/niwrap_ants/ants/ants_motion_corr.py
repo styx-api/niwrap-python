@@ -13,8 +13,7 @@ ANTS_MOTION_CORR_METADATA = Metadata(
 )
 
 
-AntsMotionCorrParamsDict = typing.TypedDict('AntsMotionCorrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorr"]],
+_AntsMotionCorrParamsDictNoTag = typing.TypedDict('_AntsMotionCorrParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
     "metric": typing.NotRequired[str | None],
@@ -51,6 +50,7 @@ AntsMotionCorrParamsDictTagged = typing.TypedDict('AntsMotionCorrParamsDictTagge
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
     "verbose": typing.NotRequired[bool | None],
 })
+AntsMotionCorrParamsDict = _AntsMotionCorrParamsDictNoTag | AntsMotionCorrParamsDictTagged
 
 
 class AntsMotionCorrOutputs(typing.NamedTuple):

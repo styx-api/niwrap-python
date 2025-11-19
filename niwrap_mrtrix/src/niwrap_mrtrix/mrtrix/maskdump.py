@@ -13,8 +13,7 @@ MASKDUMP_METADATA = Metadata(
 )
 
 
-MaskdumpConfigParamsDict = typing.TypedDict('MaskdumpConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MaskdumpConfigParamsDictNoTag = typing.TypedDict('_MaskdumpConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ MaskdumpConfigParamsDictTagged = typing.TypedDict('MaskdumpConfigParamsDictTagge
     "key": str,
     "value": str,
 })
+MaskdumpConfigParamsDict = _MaskdumpConfigParamsDictNoTag | MaskdumpConfigParamsDictTagged
 
 
-MaskdumpParamsDict = typing.TypedDict('MaskdumpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/maskdump"]],
+_MaskdumpParamsDictNoTag = typing.TypedDict('_MaskdumpParamsDictNoTag', {
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -51,6 +50,7 @@ MaskdumpParamsDictTagged = typing.TypedDict('MaskdumpParamsDictTagged', {
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
+MaskdumpParamsDict = _MaskdumpParamsDictNoTag | MaskdumpParamsDictTagged
 
 
 def maskdump_config(

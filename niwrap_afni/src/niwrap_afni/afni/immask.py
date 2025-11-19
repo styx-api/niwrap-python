@@ -13,8 +13,7 @@ IMMASK_METADATA = Metadata(
 )
 
 
-ImmaskParamsDict = typing.TypedDict('ImmaskParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/immask"]],
+_ImmaskParamsDictNoTag = typing.TypedDict('_ImmaskParamsDictNoTag', {
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "positive_only": bool,
@@ -29,6 +28,7 @@ ImmaskParamsDictTagged = typing.TypedDict('ImmaskParamsDictTagged', {
     "input_image": InputPathType,
     "output_image": str,
 })
+ImmaskParamsDict = _ImmaskParamsDictNoTag | ImmaskParamsDictTagged
 
 
 class ImmaskOutputs(typing.NamedTuple):

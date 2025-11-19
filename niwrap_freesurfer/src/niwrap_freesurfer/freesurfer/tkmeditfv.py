@@ -13,8 +13,7 @@ TKMEDITFV_METADATA = Metadata(
 )
 
 
-TkmeditfvParamsDict = typing.TypedDict('TkmeditfvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tkmeditfv"]],
+_TkmeditfvParamsDictNoTag = typing.TypedDict('_TkmeditfvParamsDictNoTag', {
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
     "aux_volume": typing.NotRequired[InputPathType | None],
@@ -83,6 +82,7 @@ TkmeditfvParamsDictTagged = typing.TypedDict('TkmeditfvParamsDictTagged', {
     "use_tkmedit": bool,
     "load_aparc_aseg": bool,
 })
+TkmeditfvParamsDict = _TkmeditfvParamsDictNoTag | TkmeditfvParamsDictTagged
 
 
 class TkmeditfvOutputs(typing.NamedTuple):

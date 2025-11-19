@@ -13,8 +13,7 @@ MRIS_DISTANCE_MAP_METADATA = Metadata(
 )
 
 
-MrisDistanceMapParamsDict = typing.TypedDict('MrisDistanceMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_map"]],
+_MrisDistanceMapParamsDictNoTag = typing.TypedDict('_MrisDistanceMapParamsDictNoTag', {
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })
@@ -23,6 +22,7 @@ MrisDistanceMapParamsDictTagged = typing.TypedDict('MrisDistanceMapParamsDictTag
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })
+MrisDistanceMapParamsDict = _MrisDistanceMapParamsDictNoTag | MrisDistanceMapParamsDictTagged
 
 
 class MrisDistanceMapOutputs(typing.NamedTuple):

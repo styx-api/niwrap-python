@@ -13,8 +13,7 @@ TCKSAMPLE_METADATA = Metadata(
 )
 
 
-TcksampleConfigParamsDict = typing.TypedDict('TcksampleConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TcksampleConfigParamsDictNoTag = typing.TypedDict('_TcksampleConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ TcksampleConfigParamsDictTagged = typing.TypedDict('TcksampleConfigParamsDictTag
     "key": str,
     "value": str,
 })
+TcksampleConfigParamsDict = _TcksampleConfigParamsDictNoTag | TcksampleConfigParamsDictTagged
 
 
-TcksampleParamsDict = typing.TypedDict('TcksampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksample"]],
+_TcksampleParamsDictNoTag = typing.TypedDict('_TcksampleParamsDictNoTag', {
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
     "precise": bool,
@@ -61,6 +60,7 @@ TcksampleParamsDictTagged = typing.TypedDict('TcksampleParamsDictTagged', {
     "image": InputPathType,
     "values": str,
 })
+TcksampleParamsDict = _TcksampleParamsDictNoTag | TcksampleParamsDictTagged
 
 
 def tcksample_config(

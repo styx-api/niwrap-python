@@ -13,8 +13,7 @@ V__CLUST_EXP_CAT_LAB_METADATA = Metadata(
 )
 
 
-VClustExpCatLabParamsDict = typing.TypedDict('VClustExpCatLabParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_CatLab"]],
+_VClustExpCatLabParamsDictNoTag = typing.TypedDict('_VClustExpCatLabParamsDictNoTag', {
     "prefix": str,
     "input_file": InputPathType,
     "help": bool,
@@ -25,6 +24,7 @@ VClustExpCatLabParamsDictTagged = typing.TypedDict('VClustExpCatLabParamsDictTag
     "input_file": InputPathType,
     "help": bool,
 })
+VClustExpCatLabParamsDict = _VClustExpCatLabParamsDictNoTag | VClustExpCatLabParamsDictTagged
 
 
 class VClustExpCatLabOutputs(typing.NamedTuple):

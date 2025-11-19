@@ -13,8 +13,7 @@ V_3D_FWHMX_METADATA = Metadata(
 )
 
 
-V3dFwhmxParamsDict = typing.TypedDict('V3dFwhmxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dFWHMx"]],
+_V3dFwhmxParamsDictNoTag = typing.TypedDict('_V3dFwhmxParamsDictNoTag', {
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
     "demed": bool,
@@ -45,6 +44,7 @@ V3dFwhmxParamsDictTagged = typing.TypedDict('V3dFwhmxParamsDictTagged', {
     "acf": typing.NotRequired[str | None],
     "infile": InputPathType,
 })
+V3dFwhmxParamsDict = _V3dFwhmxParamsDictNoTag | V3dFwhmxParamsDictTagged
 
 
 class V3dFwhmxOutputs(typing.NamedTuple):

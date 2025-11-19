@@ -13,8 +13,7 @@ V__ELECTRO_GRID_METADATA = Metadata(
 )
 
 
-VElectroGridParamsDict = typing.TypedDict('VElectroGridParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@ElectroGrid"]],
+_VElectroGridParamsDictNoTag = typing.TypedDict('_VElectroGridParamsDictNoTag', {
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
     "prefix": typing.NotRequired[str | None],
@@ -31,6 +30,7 @@ VElectroGridParamsDictTagged = typing.TypedDict('VElectroGridParamsDictTagged', 
     "with_markers": bool,
     "echo": bool,
 })
+VElectroGridParamsDict = _VElectroGridParamsDictNoTag | VElectroGridParamsDictTagged
 
 
 class VElectroGridOutputs(typing.NamedTuple):

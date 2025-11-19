@@ -13,8 +13,7 @@ LABEL_ELDERLY_SUBJECT_METADATA = Metadata(
 )
 
 
-LabelElderlySubjectParamsDict = typing.TypedDict('LabelElderlySubjectParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label_elderly_subject"]],
+_LabelElderlySubjectParamsDictNoTag = typing.TypedDict('_LabelElderlySubjectParamsDictNoTag', {
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
     "classifier_array": typing.NotRequired[InputPathType | None],
@@ -27,6 +26,7 @@ LabelElderlySubjectParamsDictTagged = typing.TypedDict('LabelElderlySubjectParam
     "classifier_array": typing.NotRequired[InputPathType | None],
     "aseg_volume": InputPathType,
 })
+LabelElderlySubjectParamsDict = _LabelElderlySubjectParamsDictNoTag | LabelElderlySubjectParamsDictTagged
 
 
 class LabelElderlySubjectOutputs(typing.NamedTuple):

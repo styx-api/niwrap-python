@@ -13,8 +13,7 @@ RBOX_METADATA = Metadata(
 )
 
 
-RboxParamsDict = typing.TypedDict('RboxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/rbox"]],
+_RboxParamsDictNoTag = typing.TypedDict('_RboxParamsDictNoTag', {
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
     "unit_cube": bool,
@@ -61,6 +60,7 @@ RboxParamsDictTagged = typing.TypedDict('RboxParamsDictTagged', {
     "user_seed": typing.NotRequired[float | None],
     "mesh_lattice": typing.NotRequired[list[str] | None],
 })
+RboxParamsDict = _RboxParamsDictNoTag | RboxParamsDictTagged
 
 
 class RboxOutputs(typing.NamedTuple):

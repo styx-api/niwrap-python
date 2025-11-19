@@ -12,8 +12,7 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 )
 
 
-SignedDistanceToSurfaceParamsDict = typing.TypedDict('SignedDistanceToSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/signed-distance-to-surface"]],
+_SignedDistanceToSurfaceParamsDictNoTag = typing.TypedDict('_SignedDistanceToSurfaceParamsDictNoTag', {
     "metric": str,
     "method": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
@@ -26,6 +25,7 @@ SignedDistanceToSurfaceParamsDictTagged = typing.TypedDict('SignedDistanceToSurf
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
 })
+SignedDistanceToSurfaceParamsDict = _SignedDistanceToSurfaceParamsDictNoTag | SignedDistanceToSurfaceParamsDictTagged
 
 
 class SignedDistanceToSurfaceOutputs(typing.NamedTuple):

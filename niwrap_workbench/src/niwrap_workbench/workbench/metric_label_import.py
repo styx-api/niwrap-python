@@ -12,8 +12,7 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-MetricLabelImportParamsDict = typing.TypedDict('MetricLabelImportParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-label-import"]],
+_MetricLabelImportParamsDictNoTag = typing.TypedDict('_MetricLabelImportParamsDictNoTag', {
     "output": str,
     "discard-others": bool,
     "value": typing.NotRequired[int | None],
@@ -34,6 +33,7 @@ MetricLabelImportParamsDictTagged = typing.TypedDict('MetricLabelImportParamsDic
     "input": InputPathType,
     "label-list-file": str,
 })
+MetricLabelImportParamsDict = _MetricLabelImportParamsDictNoTag | MetricLabelImportParamsDictTagged
 
 
 class MetricLabelImportOutputs(typing.NamedTuple):

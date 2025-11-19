@@ -13,8 +13,7 @@ TSPLOT_METADATA = Metadata(
 )
 
 
-TsplotParamsDict = typing.TypedDict('TsplotParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/tsplot"]],
+_TsplotParamsDictNoTag = typing.TypedDict('_TsplotParamsDictNoTag', {
     "input_directory": str,
     "main_filtered_data": typing.NotRequired[InputPathType | None],
     "coordinates": typing.NotRequired[list[float] | None],
@@ -37,6 +36,7 @@ TsplotParamsDictTagged = typing.TypedDict('TsplotParamsDictTagged', {
     "prewhiten_flag": bool,
     "no_raw_flag": bool,
 })
+TsplotParamsDict = _TsplotParamsDictNoTag | TsplotParamsDictTagged
 
 
 class TsplotOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ APARCSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Aparcstats2tableParamsDict = typing.TypedDict('Aparcstats2tableParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstats2table"]],
+_Aparcstats2tableParamsDictNoTag = typing.TypedDict('_Aparcstats2tableParamsDictNoTag', {
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
     "qdec": typing.NotRequired[InputPathType | None],
@@ -55,6 +54,7 @@ Aparcstats2tableParamsDictTagged = typing.TypedDict('Aparcstats2tableParamsDictT
     "etiv": bool,
     "scale": typing.NotRequired[float | None],
 })
+Aparcstats2tableParamsDict = _Aparcstats2tableParamsDictNoTag | Aparcstats2tableParamsDictTagged
 
 
 class Aparcstats2tableOutputs(typing.NamedTuple):

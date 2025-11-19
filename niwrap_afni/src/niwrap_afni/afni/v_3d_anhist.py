@@ -13,8 +13,7 @@ V_3D_ANHIST_METADATA = Metadata(
 )
 
 
-V3dAnhistParamsDict = typing.TypedDict('V3dAnhistParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dAnhist"]],
+_V3dAnhistParamsDictNoTag = typing.TypedDict('_V3dAnhistParamsDictNoTag', {
     "dataset": InputPathType,
     "quiet": bool,
     "dump_histogram": bool,
@@ -35,6 +34,7 @@ V3dAnhistParamsDictTagged = typing.TypedDict('V3dAnhistParamsDictTagged', {
     "label": typing.NotRequired[str | None],
     "filename": typing.NotRequired[str | None],
 })
+V3dAnhistParamsDict = _V3dAnhistParamsDictNoTag | V3dAnhistParamsDictTagged
 
 
 class V3dAnhistOutputs(typing.NamedTuple):

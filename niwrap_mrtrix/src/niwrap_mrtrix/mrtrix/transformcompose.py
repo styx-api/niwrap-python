@@ -13,8 +13,7 @@ TRANSFORMCOMPOSE_METADATA = Metadata(
 )
 
 
-TransformcomposeConfigParamsDict = typing.TypedDict('TransformcomposeConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_TransformcomposeConfigParamsDictNoTag = typing.TypedDict('_TransformcomposeConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,30 +22,30 @@ TransformcomposeConfigParamsDictTagged = typing.TypedDict('TransformcomposeConfi
     "key": str,
     "value": str,
 })
+TransformcomposeConfigParamsDict = _TransformcomposeConfigParamsDictNoTag | TransformcomposeConfigParamsDictTagged
 
 
-TransformcomposeVariousStringParamsDict = typing.TypedDict('TransformcomposeVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_TransformcomposeVariousStringParamsDictNoTag = typing.TypedDict('_TransformcomposeVariousStringParamsDictNoTag', {
     "obj": str,
 })
 TransformcomposeVariousStringParamsDictTagged = typing.TypedDict('TransformcomposeVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+TransformcomposeVariousStringParamsDict = _TransformcomposeVariousStringParamsDictNoTag | TransformcomposeVariousStringParamsDictTagged
 
 
-TransformcomposeVariousFileParamsDict = typing.TypedDict('TransformcomposeVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_TransformcomposeVariousFileParamsDictNoTag = typing.TypedDict('_TransformcomposeVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 TransformcomposeVariousFileParamsDictTagged = typing.TypedDict('TransformcomposeVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+TransformcomposeVariousFileParamsDict = _TransformcomposeVariousFileParamsDictNoTag | TransformcomposeVariousFileParamsDictTagged
 
 
-TransformcomposeParamsDict = typing.TypedDict('TransformcomposeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/transformcompose"]],
+_TransformcomposeParamsDictNoTag = typing.TypedDict('_TransformcomposeParamsDictNoTag', {
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -73,6 +72,7 @@ TransformcomposeParamsDictTagged = typing.TypedDict('TransformcomposeParamsDictT
     "input": list[InputPathType],
     "output": typing.Union[TransformcomposeVariousStringParamsDictTagged, TransformcomposeVariousFileParamsDictTagged],
 })
+TransformcomposeParamsDict = _TransformcomposeParamsDictNoTag | TransformcomposeParamsDictTagged
 
 
 def transformcompose_output_cargs_dyn_fn(

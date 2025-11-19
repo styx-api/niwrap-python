@@ -13,8 +13,7 @@ ANTS_REGISTRATION_SY_N_SH_METADATA = Metadata(
 )
 
 
-AntsRegistrationSyNShParamsDict = typing.TypedDict('AntsRegistrationSyNShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyN.sh"]],
+_AntsRegistrationSyNShParamsDictNoTag = typing.TypedDict('_AntsRegistrationSyNShParamsDictNoTag', {
     "image_dimension": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -51,6 +50,7 @@ AntsRegistrationSyNShParamsDictTagged = typing.TypedDict('AntsRegistrationSyNShP
     "collapse_output_transforms": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
 })
+AntsRegistrationSyNShParamsDict = _AntsRegistrationSyNShParamsDictNoTag | AntsRegistrationSyNShParamsDictTagged
 
 
 class AntsRegistrationSyNShOutputs(typing.NamedTuple):

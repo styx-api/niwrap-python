@@ -13,8 +13,7 @@ V_1DNORM_METADATA = Metadata(
 )
 
 
-V1dnormParamsDict = typing.TypedDict('V1dnormParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dnorm"]],
+_V1dnormParamsDictNoTag = typing.TypedDict('_V1dnormParamsDictNoTag', {
     "infile": InputPathType,
     "outfile": str,
     "norm1": bool,
@@ -31,6 +30,7 @@ V1dnormParamsDictTagged = typing.TypedDict('V1dnormParamsDictTagged', {
     "demean": bool,
     "demed": bool,
 })
+V1dnormParamsDict = _V1dnormParamsDictNoTag | V1dnormParamsDictTagged
 
 
 class V1dnormOutputs(typing.NamedTuple):

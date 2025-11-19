@@ -13,8 +13,7 @@ MRIS_DEFORM_METADATA = Metadata(
 )
 
 
-MrisDeformParamsDict = typing.TypedDict('MrisDeformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_deform"]],
+_MrisDeformParamsDictNoTag = typing.TypedDict('_MrisDeformParamsDictNoTag', {
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "xform": InputPathType,
@@ -27,6 +26,7 @@ MrisDeformParamsDictTagged = typing.TypedDict('MrisDeformParamsDictTagged', {
     "xform": InputPathType,
     "output_surface": str,
 })
+MrisDeformParamsDict = _MrisDeformParamsDictNoTag | MrisDeformParamsDictTagged
 
 
 class MrisDeformOutputs(typing.NamedTuple):

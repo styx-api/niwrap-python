@@ -12,8 +12,7 @@ CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
 )
 
 
-CiftiResampleDconnMemoryWeightedParamsDict = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted"]],
+_CiftiResampleDconnMemoryWeightedParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryWeightedParamsDictNoTag', {
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
@@ -22,10 +21,10 @@ CiftiResampleDconnMemoryWeightedParamsDictTagged = typing.TypedDict('CiftiResamp
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
+CiftiResampleDconnMemoryWeightedParamsDict = _CiftiResampleDconnMemoryWeightedParamsDictNoTag | CiftiResampleDconnMemoryWeightedParamsDictTagged
 
 
-CiftiResampleDconnMemoryVolumePredilateParamsDict = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["volume-predilate"]],
+_CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag', {
     "dilate-mm": float,
     "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
@@ -36,10 +35,10 @@ CiftiResampleDconnMemoryVolumePredilateParamsDictTagged = typing.TypedDict('Cift
     "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
 })
+CiftiResampleDconnMemoryVolumePredilateParamsDict = _CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag | CiftiResampleDconnMemoryVolumePredilateParamsDictTagged
 
 
-CiftiResampleDconnMemoryWeightedParamsDict_ = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDict_', {
-    "@type": typing.NotRequired[typing.Literal["weighted"]],
+_CiftiResampleDconnMemoryWeightedParamsDict_NoTag = typing.TypedDict('_CiftiResampleDconnMemoryWeightedParamsDict_NoTag', {
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
@@ -48,10 +47,10 @@ CiftiResampleDconnMemoryWeightedParamsDictTagged_ = typing.TypedDict('CiftiResam
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
+CiftiResampleDconnMemoryWeightedParamsDict_ = _CiftiResampleDconnMemoryWeightedParamsDict_NoTag | CiftiResampleDconnMemoryWeightedParamsDictTagged_
 
 
-CiftiResampleDconnMemorySurfacePostdilateParamsDict = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["surface-postdilate"]],
+_CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag', {
     "dilate-mm": float,
     "nearest": bool,
     "linear": bool,
@@ -64,10 +63,10 @@ CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged = typing.TypedDict('Ci
     "linear": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict_ | None],
 })
+CiftiResampleDconnMemorySurfacePostdilateParamsDict = _CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag | CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged
 
 
-CiftiResampleDconnMemoryFlirtParamsDict = typing.TypedDict('CiftiResampleDconnMemoryFlirtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flirt"]],
+_CiftiResampleDconnMemoryFlirtParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryFlirtParamsDictNoTag', {
     "source-volume": str,
     "target-volume": str,
 })
@@ -76,10 +75,10 @@ CiftiResampleDconnMemoryFlirtParamsDictTagged = typing.TypedDict('CiftiResampleD
     "source-volume": str,
     "target-volume": str,
 })
+CiftiResampleDconnMemoryFlirtParamsDict = _CiftiResampleDconnMemoryFlirtParamsDictNoTag | CiftiResampleDconnMemoryFlirtParamsDictTagged
 
 
-CiftiResampleDconnMemoryAffineParamsDict = typing.TypedDict('CiftiResampleDconnMemoryAffineParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["affine"]],
+_CiftiResampleDconnMemoryAffineParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryAffineParamsDictNoTag', {
     "affine-file": str,
     "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParamsDict | None],
 })
@@ -88,10 +87,10 @@ CiftiResampleDconnMemoryAffineParamsDictTagged = typing.TypedDict('CiftiResample
     "affine-file": str,
     "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParamsDict | None],
 })
+CiftiResampleDconnMemoryAffineParamsDict = _CiftiResampleDconnMemoryAffineParamsDictNoTag | CiftiResampleDconnMemoryAffineParamsDictTagged
 
 
-CiftiResampleDconnMemoryWarpfieldParamsDict = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warpfield"]],
+_CiftiResampleDconnMemoryWarpfieldParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryWarpfieldParamsDictNoTag', {
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
@@ -100,10 +99,10 @@ CiftiResampleDconnMemoryWarpfieldParamsDictTagged = typing.TypedDict('CiftiResam
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
+CiftiResampleDconnMemoryWarpfieldParamsDict = _CiftiResampleDconnMemoryWarpfieldParamsDictNoTag | CiftiResampleDconnMemoryWarpfieldParamsDictTagged
 
 
-CiftiResampleDconnMemoryLeftAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-area-surfs"]],
+_CiftiResampleDconnMemoryLeftAreaSurfsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryLeftAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -112,10 +111,10 @@ CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged = typing.TypedDict('CiftiR
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryLeftAreaSurfsParamsDict = _CiftiResampleDconnMemoryLeftAreaSurfsParamsDictNoTag | CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged
 
 
-CiftiResampleDconnMemoryLeftAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-area-metrics"]],
+_CiftiResampleDconnMemoryLeftAreaMetricsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryLeftAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -124,10 +123,10 @@ CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged = typing.TypedDict('Cift
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryLeftAreaMetricsParamsDict = _CiftiResampleDconnMemoryLeftAreaMetricsParamsDictNoTag | CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged
 
 
-CiftiResampleDconnMemoryLeftSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["left-spheres"]],
+_CiftiResampleDconnMemoryLeftSpheresParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryLeftSpheresParamsDictNoTag', {
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParamsDict | None],
@@ -140,10 +139,10 @@ CiftiResampleDconnMemoryLeftSpheresParamsDictTagged = typing.TypedDict('CiftiRes
     "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParamsDict | None],
     "left-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaMetricsParamsDict | None],
 })
+CiftiResampleDconnMemoryLeftSpheresParamsDict = _CiftiResampleDconnMemoryLeftSpheresParamsDictNoTag | CiftiResampleDconnMemoryLeftSpheresParamsDictTagged
 
 
-CiftiResampleDconnMemoryRightAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-area-surfs"]],
+_CiftiResampleDconnMemoryRightAreaSurfsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryRightAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -152,10 +151,10 @@ CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged = typing.TypedDict('Cifti
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryRightAreaSurfsParamsDict = _CiftiResampleDconnMemoryRightAreaSurfsParamsDictNoTag | CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged
 
 
-CiftiResampleDconnMemoryRightAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-area-metrics"]],
+_CiftiResampleDconnMemoryRightAreaMetricsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryRightAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -164,10 +163,10 @@ CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged = typing.TypedDict('Cif
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryRightAreaMetricsParamsDict = _CiftiResampleDconnMemoryRightAreaMetricsParamsDictNoTag | CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged
 
 
-CiftiResampleDconnMemoryRightSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["right-spheres"]],
+_CiftiResampleDconnMemoryRightSpheresParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryRightSpheresParamsDictNoTag', {
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParamsDict | None],
@@ -180,10 +179,10 @@ CiftiResampleDconnMemoryRightSpheresParamsDictTagged = typing.TypedDict('CiftiRe
     "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParamsDict | None],
     "right-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryRightAreaMetricsParamsDict | None],
 })
+CiftiResampleDconnMemoryRightSpheresParamsDict = _CiftiResampleDconnMemoryRightSpheresParamsDictNoTag | CiftiResampleDconnMemoryRightSpheresParamsDictTagged
 
 
-CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-area-surfs"]],
+_CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -192,10 +191,10 @@ CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged = typing.TypedDict('
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict = _CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictNoTag | CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged
 
 
-CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-area-metrics"]],
+_CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictNoTag', {
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
@@ -204,10 +203,10 @@ CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged = typing.TypedDict
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
+CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict = _CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictNoTag | CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged
 
 
-CiftiResampleDconnMemoryCerebellumSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum-spheres"]],
+_CiftiResampleDconnMemoryCerebellumSpheresParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryCerebellumSpheresParamsDictNoTag', {
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict | None],
@@ -220,10 +219,10 @@ CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged = typing.TypedDict('Ci
     "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict | None],
     "cerebellum-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict | None],
 })
+CiftiResampleDconnMemoryCerebellumSpheresParamsDict = _CiftiResampleDconnMemoryCerebellumSpheresParamsDictNoTag | CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged
 
 
-CiftiResampleDconnMemoryParamsDict = typing.TypedDict('CiftiResampleDconnMemoryParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-resample-dconn-memory"]],
+_CiftiResampleDconnMemoryParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryParamsDictNoTag', {
     "cifti-out": str,
     "surface-largest": bool,
     "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParamsDict | None],
@@ -256,6 +255,7 @@ CiftiResampleDconnMemoryParamsDictTagged = typing.TypedDict('CiftiResampleDconnM
     "surface-method": str,
     "volume-method": str,
 })
+CiftiResampleDconnMemoryParamsDict = _CiftiResampleDconnMemoryParamsDictNoTag | CiftiResampleDconnMemoryParamsDictTagged
 
 
 def cifti_resample_dconn_memory_weighted(

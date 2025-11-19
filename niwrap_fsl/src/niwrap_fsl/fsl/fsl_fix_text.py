@@ -13,8 +13,7 @@ FSL_FIX_TEXT_METADATA = Metadata(
 )
 
 
-FslFixTextParamsDict = typing.TypedDict('FslFixTextParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslFixText"]],
+_FslFixTextParamsDictNoTag = typing.TypedDict('_FslFixTextParamsDictNoTag', {
     "input_text_file": InputPathType,
     "output_text_file": str,
 })
@@ -23,6 +22,7 @@ FslFixTextParamsDictTagged = typing.TypedDict('FslFixTextParamsDictTagged', {
     "input_text_file": InputPathType,
     "output_text_file": str,
 })
+FslFixTextParamsDict = _FslFixTextParamsDictNoTag | FslFixTextParamsDictTagged
 
 
 class FslFixTextOutputs(typing.NamedTuple):

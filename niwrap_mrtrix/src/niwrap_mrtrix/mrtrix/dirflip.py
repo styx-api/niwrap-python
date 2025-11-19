@@ -13,8 +13,7 @@ DIRFLIP_METADATA = Metadata(
 )
 
 
-DirflipConfigParamsDict = typing.TypedDict('DirflipConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirflipConfigParamsDictNoTag = typing.TypedDict('_DirflipConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DirflipConfigParamsDictTagged = typing.TypedDict('DirflipConfigParamsDictTagged'
     "key": str,
     "value": str,
 })
+DirflipConfigParamsDict = _DirflipConfigParamsDictNoTag | DirflipConfigParamsDictTagged
 
 
-DirflipParamsDict = typing.TypedDict('DirflipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirflip"]],
+_DirflipParamsDictNoTag = typing.TypedDict('_DirflipParamsDictNoTag', {
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,
@@ -55,6 +54,7 @@ DirflipParamsDictTagged = typing.TypedDict('DirflipParamsDictTagged', {
     "in": InputPathType,
     "out": str,
 })
+DirflipParamsDict = _DirflipParamsDictNoTag | DirflipParamsDictTagged
 
 
 def dirflip_config(

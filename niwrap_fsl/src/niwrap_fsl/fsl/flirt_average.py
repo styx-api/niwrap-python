@@ -13,8 +13,7 @@ FLIRT_AVERAGE_METADATA = Metadata(
 )
 
 
-FlirtAverageParamsDict = typing.TypedDict('FlirtAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/flirt_average"]],
+_FlirtAverageParamsDictNoTag = typing.TypedDict('_FlirtAverageParamsDictNoTag', {
     "ninputs": int,
     "input1": InputPathType,
     "input2": InputPathType,
@@ -33,6 +32,7 @@ FlirtAverageParamsDictTagged = typing.TypedDict('FlirtAverageParamsDictTagged', 
     "reference_image": typing.NotRequired[InputPathType | None],
     "flirt_options": typing.NotRequired[str | None],
 })
+FlirtAverageParamsDict = _FlirtAverageParamsDictNoTag | FlirtAverageParamsDictTagged
 
 
 class FlirtAverageOutputs(typing.NamedTuple):

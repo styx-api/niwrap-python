@@ -13,8 +13,7 @@ GIFTI_TOOL_METADATA = Metadata(
 )
 
 
-GiftiToolParamsDict = typing.TypedDict('GiftiToolParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/gifti_tool"]],
+_GiftiToolParamsDictNoTag = typing.TypedDict('_GiftiToolParamsDictNoTag', {
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
     "new_dtype": typing.NotRequired[str | None],
@@ -63,6 +62,7 @@ GiftiToolParamsDictTagged = typing.TypedDict('GiftiToolParamsDictTagged', {
     "compare_verb": typing.NotRequired[float | None],
     "approx_gifti": bool,
 })
+GiftiToolParamsDict = _GiftiToolParamsDictNoTag | GiftiToolParamsDictTagged
 
 
 class GiftiToolOutputs(typing.NamedTuple):

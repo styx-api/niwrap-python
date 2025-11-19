@@ -13,8 +13,7 @@ FAT_MAT_TABLEIZE_PY_METADATA = Metadata(
 )
 
 
-FatMatTableizePyParamsDict = typing.TypedDict('FatMatTableizePyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/fat_mat_tableize.py"]],
+_FatMatTableizePyParamsDictNoTag = typing.TypedDict('_FatMatTableizePyParamsDictNoTag', {
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
     "input_list": typing.NotRequired[InputPathType | None],
@@ -39,6 +38,7 @@ FatMatTableizePyParamsDictTagged = typing.TypedDict('FatMatTableizePyParamsDictT
     "help_short": bool,
     "help_view": bool,
 })
+FatMatTableizePyParamsDict = _FatMatTableizePyParamsDictNoTag | FatMatTableizePyParamsDictTagged
 
 
 class FatMatTableizePyOutputs(typing.NamedTuple):

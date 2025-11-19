@@ -13,8 +13,7 @@ V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
 )
 
 
-VDjunctMontageCoordinatorParamsDict = typing.TypedDict('VDjunctMontageCoordinatorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@djunct_montage_coordinator"]],
+_VDjunctMontageCoordinatorParamsDictNoTag = typing.TypedDict('_VDjunctMontageCoordinatorParamsDictNoTag', {
     "input_file": InputPathType,
     "montx": float,
     "monty": float,
@@ -33,6 +32,7 @@ VDjunctMontageCoordinatorParamsDictTagged = typing.TypedDict('VDjunctMontageCoor
     "help": bool,
     "version": bool,
 })
+VDjunctMontageCoordinatorParamsDict = _VDjunctMontageCoordinatorParamsDictNoTag | VDjunctMontageCoordinatorParamsDictTagged
 
 
 class VDjunctMontageCoordinatorOutputs(typing.NamedTuple):

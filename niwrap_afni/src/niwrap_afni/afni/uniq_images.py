@@ -13,14 +13,14 @@ UNIQ_IMAGES_METADATA = Metadata(
 )
 
 
-UniqImagesParamsDict = typing.TypedDict('UniqImagesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/uniq_images"]],
+_UniqImagesParamsDictNoTag = typing.TypedDict('_UniqImagesParamsDictNoTag', {
     "input_files": list[InputPathType],
 })
 UniqImagesParamsDictTagged = typing.TypedDict('UniqImagesParamsDictTagged', {
     "@type": typing.Literal["afni/uniq_images"],
     "input_files": list[InputPathType],
 })
+UniqImagesParamsDict = _UniqImagesParamsDictNoTag | UniqImagesParamsDictTagged
 
 
 class UniqImagesOutputs(typing.NamedTuple):

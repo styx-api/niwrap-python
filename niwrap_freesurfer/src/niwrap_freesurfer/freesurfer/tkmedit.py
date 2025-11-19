@@ -13,8 +13,7 @@ TKMEDIT_METADATA = Metadata(
 )
 
 
-TkmeditParamsDict = typing.TypedDict('TkmeditParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/tkmedit"]],
+_TkmeditParamsDictNoTag = typing.TypedDict('_TkmeditParamsDictNoTag', {
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ TkmeditParamsDictTagged = typing.TypedDict('TkmeditParamsDictTagged', {
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })
+TkmeditParamsDict = _TkmeditParamsDictNoTag | TkmeditParamsDictTagged
 
 
 class TkmeditOutputs(typing.NamedTuple):

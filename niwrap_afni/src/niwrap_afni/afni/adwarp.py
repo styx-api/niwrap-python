@@ -13,8 +13,7 @@ ADWARP_METADATA = Metadata(
 )
 
 
-AdwarpParamsDict = typing.TypedDict('AdwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adwarp"]],
+_AdwarpParamsDictNoTag = typing.TypedDict('_AdwarpParamsDictNoTag', {
     "apar": InputPathType,
     "dpar": str,
     "prefix": typing.NotRequired[str | None],
@@ -37,6 +36,7 @@ AdwarpParamsDictTagged = typing.TypedDict('AdwarpParamsDictTagged', {
     "thr": typing.NotRequired[str | None],
     "func": typing.NotRequired[str | None],
 })
+AdwarpParamsDict = _AdwarpParamsDictNoTag | AdwarpParamsDictTagged
 
 
 class AdwarpOutputs(typing.NamedTuple):

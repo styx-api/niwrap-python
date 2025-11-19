@@ -13,8 +13,7 @@ V_3D_MVM_VALIDATOR_METADATA = Metadata(
 )
 
 
-V3dMvmValidatorParamsDict = typing.TypedDict('V3dMvmValidatorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dMVM_validator"]],
+_V3dMvmValidatorParamsDictNoTag = typing.TypedDict('_V3dMvmValidatorParamsDictNoTag', {
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ V3dMvmValidatorParamsDictTagged = typing.TypedDict('V3dMvmValidatorParamsDictTag
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })
+V3dMvmValidatorParamsDict = _V3dMvmValidatorParamsDictNoTag | V3dMvmValidatorParamsDictTagged
 
 
 class V3dMvmValidatorOutputs(typing.NamedTuple):

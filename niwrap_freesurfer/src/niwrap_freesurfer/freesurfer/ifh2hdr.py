@@ -13,8 +13,7 @@ IFH2HDR_METADATA = Metadata(
 )
 
 
-Ifh2hdrParamsDict = typing.TypedDict('Ifh2hdrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/ifh2hdr"]],
+_Ifh2hdrParamsDictNoTag = typing.TypedDict('_Ifh2hdrParamsDictNoTag', {
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })
@@ -23,6 +22,7 @@ Ifh2hdrParamsDictTagged = typing.TypedDict('Ifh2hdrParamsDictTagged', {
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })
+Ifh2hdrParamsDict = _Ifh2hdrParamsDictNoTag | Ifh2hdrParamsDictTagged
 
 
 class Ifh2hdrOutputs(typing.NamedTuple):

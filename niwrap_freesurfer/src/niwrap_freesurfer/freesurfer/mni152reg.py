@@ -13,8 +13,7 @@ MNI152REG_METADATA = Metadata(
 )
 
 
-Mni152regParamsDict = typing.TypedDict('Mni152regParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mni152reg"]],
+_Mni152regParamsDictNoTag = typing.TypedDict('_Mni152regParamsDictNoTag', {
     "subject": str,
     "register_1mm": bool,
     "output": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ Mni152regParamsDictTagged = typing.TypedDict('Mni152regParamsDictTagged', {
     "symmetric": bool,
     "save_volume": bool,
 })
+Mni152regParamsDict = _Mni152regParamsDictNoTag | Mni152regParamsDictTagged
 
 
 class Mni152regOutputs(typing.NamedTuple):

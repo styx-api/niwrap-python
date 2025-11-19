@@ -13,8 +13,7 @@ MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
 )
 
 
-MriDistanceTransformParamsDict = typing.TypedDict('MriDistanceTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_distance_transform"]],
+_MriDistanceTransformParamsDictNoTag = typing.TypedDict('_MriDistanceTransformParamsDictNoTag', {
     "input_volume": InputPathType,
     "label": int,
     "max_distance": int,
@@ -29,6 +28,7 @@ MriDistanceTransformParamsDictTagged = typing.TypedDict('MriDistanceTransformPar
     "mode": typing.NotRequired[int | None],
     "output_volume": str,
 })
+MriDistanceTransformParamsDict = _MriDistanceTransformParamsDictNoTag | MriDistanceTransformParamsDictTagged
 
 
 class MriDistanceTransformOutputs(typing.NamedTuple):

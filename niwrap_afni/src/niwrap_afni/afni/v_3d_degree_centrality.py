@@ -13,8 +13,7 @@ V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
 )
 
 
-V3dDegreeCentralityParamsDict = typing.TypedDict('V3dDegreeCentralityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dDegreeCentrality"]],
+_V3dDegreeCentralityParamsDictNoTag = typing.TypedDict('_V3dDegreeCentralityParamsDictNoTag', {
     "autoclip": bool,
     "automask": bool,
     "in_file": InputPathType,
@@ -35,6 +34,7 @@ V3dDegreeCentralityParamsDictTagged = typing.TypedDict('V3dDegreeCentralityParam
     "sparsity": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
 })
+V3dDegreeCentralityParamsDict = _V3dDegreeCentralityParamsDictNoTag | V3dDegreeCentralityParamsDictTagged
 
 
 class V3dDegreeCentralityOutputs(typing.NamedTuple):

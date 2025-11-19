@@ -13,18 +13,17 @@ MRCLUSTERSTATS_METADATA = Metadata(
 )
 
 
-MrclusterstatsColumnParamsDict = typing.TypedDict('MrclusterstatsColumnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["column"]],
+_MrclusterstatsColumnParamsDictNoTag = typing.TypedDict('_MrclusterstatsColumnParamsDictNoTag', {
     "path": InputPathType,
 })
 MrclusterstatsColumnParamsDictTagged = typing.TypedDict('MrclusterstatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
+MrclusterstatsColumnParamsDict = _MrclusterstatsColumnParamsDictNoTag | MrclusterstatsColumnParamsDictTagged
 
 
-MrclusterstatsConfigParamsDict = typing.TypedDict('MrclusterstatsConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_MrclusterstatsConfigParamsDictNoTag = typing.TypedDict('_MrclusterstatsConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -33,10 +32,10 @@ MrclusterstatsConfigParamsDictTagged = typing.TypedDict('MrclusterstatsConfigPar
     "key": str,
     "value": str,
 })
+MrclusterstatsConfigParamsDict = _MrclusterstatsConfigParamsDictNoTag | MrclusterstatsConfigParamsDictTagged
 
 
-MrclusterstatsParamsDict = typing.TypedDict('MrclusterstatsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/mrclusterstats"]],
+_MrclusterstatsParamsDictNoTag = typing.TypedDict('_MrclusterstatsParamsDictNoTag', {
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -107,6 +106,7 @@ MrclusterstatsParamsDictTagged = typing.TypedDict('MrclusterstatsParamsDictTagge
     "mask": InputPathType,
     "output": str,
 })
+MrclusterstatsParamsDict = _MrclusterstatsParamsDictNoTag | MrclusterstatsParamsDictTagged
 
 
 def mrclusterstats_column(

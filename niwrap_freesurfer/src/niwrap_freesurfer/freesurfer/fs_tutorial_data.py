@@ -13,14 +13,14 @@ FS_TUTORIAL_DATA_METADATA = Metadata(
 )
 
 
-FsTutorialDataParamsDict = typing.TypedDict('FsTutorialDataParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_tutorial_data"]],
+_FsTutorialDataParamsDictNoTag = typing.TypedDict('_FsTutorialDataParamsDictNoTag', {
     "rsync_options": typing.NotRequired[list[str] | None],
 })
 FsTutorialDataParamsDictTagged = typing.TypedDict('FsTutorialDataParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_tutorial_data"],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
+FsTutorialDataParamsDict = _FsTutorialDataParamsDictNoTag | FsTutorialDataParamsDictTagged
 
 
 class FsTutorialDataOutputs(typing.NamedTuple):

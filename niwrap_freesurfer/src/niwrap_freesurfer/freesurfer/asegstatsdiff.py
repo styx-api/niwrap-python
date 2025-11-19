@@ -13,8 +13,7 @@ ASEGSTATSDIFF_METADATA = Metadata(
 )
 
 
-AsegstatsdiffParamsDict = typing.TypedDict('AsegstatsdiffParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/asegstatsdiff"]],
+_AsegstatsdiffParamsDictNoTag = typing.TypedDict('_AsegstatsdiffParamsDictNoTag', {
     "subject1": str,
     "subject2": str,
     "outdir": typing.NotRequired[str | None],
@@ -25,6 +24,7 @@ AsegstatsdiffParamsDictTagged = typing.TypedDict('AsegstatsdiffParamsDictTagged'
     "subject2": str,
     "outdir": typing.NotRequired[str | None],
 })
+AsegstatsdiffParamsDict = _AsegstatsdiffParamsDictNoTag | AsegstatsdiffParamsDictTagged
 
 
 class AsegstatsdiffOutputs(typing.NamedTuple):

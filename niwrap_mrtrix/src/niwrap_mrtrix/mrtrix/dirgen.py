@@ -13,8 +13,7 @@ DIRGEN_METADATA = Metadata(
 )
 
 
-DirgenConfigParamsDict = typing.TypedDict('DirgenConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_DirgenConfigParamsDictNoTag = typing.TypedDict('_DirgenConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,10 +22,10 @@ DirgenConfigParamsDictTagged = typing.TypedDict('DirgenConfigParamsDictTagged', 
     "key": str,
     "value": str,
 })
+DirgenConfigParamsDict = _DirgenConfigParamsDictNoTag | DirgenConfigParamsDictTagged
 
 
-DirgenParamsDict = typing.TypedDict('DirgenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/dirgen"]],
+_DirgenParamsDictNoTag = typing.TypedDict('_DirgenParamsDictNoTag', {
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
     "restarts": typing.NotRequired[int | None],
@@ -61,6 +60,7 @@ DirgenParamsDictTagged = typing.TypedDict('DirgenParamsDictTagged', {
     "ndir": int,
     "dirs": str,
 })
+DirgenParamsDict = _DirgenParamsDictNoTag | DirgenParamsDictTagged
 
 
 def dirgen_config(

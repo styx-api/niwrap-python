@@ -13,8 +13,7 @@ LONG_STATS_SLOPES_METADATA = Metadata(
 )
 
 
-LongStatsSlopesParamsDict = typing.TypedDict('LongStatsSlopesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_slopes"]],
+_LongStatsSlopesParamsDictNoTag = typing.TypedDict('_LongStatsSlopesParamsDictNoTag', {
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
     "measure": str,
@@ -73,6 +72,7 @@ LongStatsSlopesParamsDictTagged = typing.TypedDict('LongStatsSlopesParamsDictTag
     "stack_spc": typing.NotRequired[str | None],
     "stack_resid": typing.NotRequired[str | None],
 })
+LongStatsSlopesParamsDict = _LongStatsSlopesParamsDictNoTag | LongStatsSlopesParamsDictTagged
 
 
 class LongStatsSlopesOutputs(typing.NamedTuple):

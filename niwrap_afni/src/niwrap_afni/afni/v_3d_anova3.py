@@ -13,8 +13,7 @@ V_3D_ANOVA3_METADATA = Metadata(
 )
 
 
-V3dAnova3OutfileAbcontrParamsDict = typing.TypedDict('V3dAnova3OutfileAbcontrParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["outfile_abcontr"]],
+_V3dAnova3OutfileAbcontrParamsDictNoTag = typing.TypedDict('_V3dAnova3OutfileAbcontrParamsDictNoTag', {
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
@@ -23,10 +22,10 @@ V3dAnova3OutfileAbcontrParamsDictTagged = typing.TypedDict('V3dAnova3OutfileAbco
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
+V3dAnova3OutfileAbcontrParamsDict = _V3dAnova3OutfileAbcontrParamsDictNoTag | V3dAnova3OutfileAbcontrParamsDictTagged
 
 
-V3dAnova3OutfileAbcontr1ParamsDict = typing.TypedDict('V3dAnova3OutfileAbcontr1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["outfile_abcontr_1"]],
+_V3dAnova3OutfileAbcontr1ParamsDictNoTag = typing.TypedDict('_V3dAnova3OutfileAbcontr1ParamsDictNoTag', {
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
@@ -35,10 +34,10 @@ V3dAnova3OutfileAbcontr1ParamsDictTagged = typing.TypedDict('V3dAnova3OutfileAbc
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
+V3dAnova3OutfileAbcontr1ParamsDict = _V3dAnova3OutfileAbcontr1ParamsDictNoTag | V3dAnova3OutfileAbcontr1ParamsDictTagged
 
 
-V3dAnova3ParamsDict = typing.TypedDict('V3dAnova3ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dANOVA3"]],
+_V3dAnova3ParamsDictNoTag = typing.TypedDict('_V3dAnova3ParamsDictNoTag', {
     "type": int,
     "alevels": int,
     "blevels": int,
@@ -105,6 +104,7 @@ V3dAnova3ParamsDictTagged = typing.TypedDict('V3dAnova3ParamsDictTagged', {
     "outfile_bucket": typing.NotRequired[str | None],
     "anova_options": typing.NotRequired[list[str] | None],
 })
+V3dAnova3ParamsDict = _V3dAnova3ParamsDictNoTag | V3dAnova3ParamsDictTagged
 
 
 def v_3d_anova3_outfile_abcontr(

@@ -13,8 +13,7 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 )
 
 
-MrisSphericalAverageParamsDict = typing.TypedDict('MrisSphericalAverageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_spherical_average"]],
+_MrisSphericalAverageParamsDictNoTag = typing.TypedDict('_MrisSphericalAverageParamsDictNoTag', {
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
     "hemi": typing.Literal["lh", "rh"],
@@ -47,6 +46,7 @@ MrisSphericalAverageParamsDictTagged = typing.TypedDict('MrisSphericalAveragePar
     "average_area": bool,
     "summary_statistics": typing.NotRequired[str | None],
 })
+MrisSphericalAverageParamsDict = _MrisSphericalAverageParamsDictNoTag | MrisSphericalAverageParamsDictTagged
 
 
 class MrisSphericalAverageOutputs(typing.NamedTuple):

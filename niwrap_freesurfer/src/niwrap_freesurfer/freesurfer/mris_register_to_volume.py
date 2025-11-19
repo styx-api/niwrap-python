@@ -13,8 +13,7 @@ MRIS_REGISTER_TO_VOLUME_METADATA = Metadata(
 )
 
 
-MrisRegisterToVolumeParamsDict = typing.TypedDict('MrisRegisterToVolumeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_volume"]],
+_MrisRegisterToVolumeParamsDictNoTag = typing.TypedDict('_MrisRegisterToVolumeParamsDictNoTag', {
     "surface": str,
     "pial": str,
     "pial_only": typing.NotRequired[str | None],
@@ -75,6 +74,7 @@ MrisRegisterToVolumeParamsDictTagged = typing.TypedDict('MrisRegisterToVolumePar
     "label": typing.NotRequired[str | None],
     "out_reg": typing.NotRequired[str | None],
 })
+MrisRegisterToVolumeParamsDict = _MrisRegisterToVolumeParamsDictNoTag | MrisRegisterToVolumeParamsDictTagged
 
 
 class MrisRegisterToVolumeOutputs(typing.NamedTuple):

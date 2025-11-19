@@ -13,8 +13,7 @@ V__BUILD_AFNI_XLIB_METADATA = Metadata(
 )
 
 
-VBuildAfniXlibParamsDict = typing.TypedDict('VBuildAfniXlibParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@build_afni_Xlib"]],
+_VBuildAfniXlibParamsDictNoTag = typing.TypedDict('_VBuildAfniXlibParamsDictNoTag', {
     "afniX": bool,
     "localinstall": bool,
     "debug_symbols": bool,
@@ -31,6 +30,7 @@ VBuildAfniXlibParamsDictTagged = typing.TypedDict('VBuildAfniXlibParamsDictTagge
     "lib64": bool,
     "packages": list[str],
 })
+VBuildAfniXlibParamsDict = _VBuildAfniXlibParamsDictNoTag | VBuildAfniXlibParamsDictTagged
 
 
 class VBuildAfniXlibOutputs(typing.NamedTuple):

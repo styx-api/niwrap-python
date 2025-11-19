@@ -13,8 +13,7 @@ CONVERT_SURFACE_METADATA = Metadata(
 )
 
 
-ConvertSurfaceParamsDict = typing.TypedDict('ConvertSurfaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ConvertSurface"]],
+_ConvertSurfaceParamsDictNoTag = typing.TypedDict('_ConvertSurfaceParamsDictNoTag', {
     "input_surface": str,
     "output_surface": str,
     "surface_volume": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ ConvertSurfaceParamsDictTagged = typing.TypedDict('ConvertSurfaceParamsDictTagge
     "seed": typing.NotRequired[str | None],
     "native": bool,
 })
+ConvertSurfaceParamsDict = _ConvertSurfaceParamsDictNoTag | ConvertSurfaceParamsDictTagged
 
 
 class ConvertSurfaceOutputs(typing.NamedTuple):

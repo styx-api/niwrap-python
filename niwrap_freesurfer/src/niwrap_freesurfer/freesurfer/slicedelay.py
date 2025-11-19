@@ -13,8 +13,7 @@ SLICEDELAY_METADATA = Metadata(
 )
 
 
-SlicedelayParamsDict = typing.TypedDict('SlicedelayParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/slicedelay"]],
+_SlicedelayParamsDictNoTag = typing.TypedDict('_SlicedelayParamsDictNoTag', {
     "slicedelayfile": str,
     "nslices": float,
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],
@@ -27,6 +26,7 @@ SlicedelayParamsDictTagged = typing.TypedDict('SlicedelayParamsDictTagged', {
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],
     "ngroups": float,
 })
+SlicedelayParamsDict = _SlicedelayParamsDictNoTag | SlicedelayParamsDictTagged
 
 
 class SlicedelayOutputs(typing.NamedTuple):

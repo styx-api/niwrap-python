@@ -13,8 +13,7 @@ IMLN_METADATA = Metadata(
 )
 
 
-ImlnParamsDict = typing.TypedDict('ImlnParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/imln"]],
+_ImlnParamsDictNoTag = typing.TypedDict('_ImlnParamsDictNoTag', {
     "input_file": InputPathType,
     "link_name": str,
 })
@@ -23,6 +22,7 @@ ImlnParamsDictTagged = typing.TypedDict('ImlnParamsDictTagged', {
     "input_file": InputPathType,
     "link_name": str,
 })
+ImlnParamsDict = _ImlnParamsDictNoTag | ImlnParamsDictTagged
 
 
 class ImlnOutputs(typing.NamedTuple):

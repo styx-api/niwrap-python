@@ -13,8 +13,7 @@ SURF2VOL_METADATA = Metadata(
 )
 
 
-Surf2volParamsDict = typing.TypedDict('Surf2volParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/surf2vol"]],
+_Surf2volParamsDictNoTag = typing.TypedDict('_Surf2volParamsDictNoTag', {
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
     "fixed_mri": InputPathType,
@@ -53,6 +52,7 @@ Surf2volParamsDictTagged = typing.TypedDict('Surf2volParamsDictTagged', {
     "debug_output": bool,
     "cache_transform": typing.NotRequired[str | None],
 })
+Surf2volParamsDict = _Surf2volParamsDictNoTag | Surf2volParamsDictTagged
 
 
 class Surf2volOutputs(typing.NamedTuple):

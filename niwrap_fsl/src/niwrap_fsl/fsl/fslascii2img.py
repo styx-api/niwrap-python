@@ -13,8 +13,7 @@ FSLASCII2IMG_METADATA = Metadata(
 )
 
 
-Fslascii2imgParamsDict = typing.TypedDict('Fslascii2imgParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslascii2img"]],
+_Fslascii2imgParamsDictNoTag = typing.TypedDict('_Fslascii2imgParamsDictNoTag', {
     "infile": InputPathType,
     "xsize": int,
     "ysize": int,
@@ -39,6 +38,7 @@ Fslascii2imgParamsDictTagged = typing.TypedDict('Fslascii2imgParamsDictTagged', 
     "tr": float,
     "outfile": str,
 })
+Fslascii2imgParamsDict = _Fslascii2imgParamsDictNoTag | Fslascii2imgParamsDictTagged
 
 
 class Fslascii2imgOutputs(typing.NamedTuple):

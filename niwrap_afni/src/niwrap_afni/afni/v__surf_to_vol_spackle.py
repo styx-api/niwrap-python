@@ -13,8 +13,7 @@ V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
 )
 
 
-VSurfToVolSpackleParamsDict = typing.TypedDict('VSurfToVolSpackleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@surf_to_vol_spackle"]],
+_VSurfToVolSpackleParamsDictNoTag = typing.TypedDict('_VSurfToVolSpackleParamsDictNoTag', {
     "maskset": InputPathType,
     "spec": InputPathType,
     "surfA": str,
@@ -47,6 +46,7 @@ VSurfToVolSpackleParamsDictTagged = typing.TypedDict('VSurfToVolSpackleParamsDic
     "datum_type": typing.NotRequired[str | None],
     "ignore_unknown_options": bool,
 })
+VSurfToVolSpackleParamsDict = _VSurfToVolSpackleParamsDictNoTag | VSurfToVolSpackleParamsDictTagged
 
 
 class VSurfToVolSpackleOutputs(typing.NamedTuple):

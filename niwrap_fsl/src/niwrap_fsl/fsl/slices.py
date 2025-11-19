@@ -13,8 +13,7 @@ SLICES_METADATA = Metadata(
 )
 
 
-SlicesParamsDict = typing.TypedDict('SlicesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/slices"]],
+_SlicesParamsDictNoTag = typing.TypedDict('_SlicesParamsDictNoTag', {
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
     "scale_factor": typing.NotRequired[float | None],
@@ -29,6 +28,7 @@ SlicesParamsDictTagged = typing.TypedDict('SlicesParamsDictTagged', {
     "intensity_range": typing.NotRequired[list[float] | None],
     "output_gif": typing.NotRequired[str | None],
 })
+SlicesParamsDict = _SlicesParamsDictNoTag | SlicesParamsDictTagged
 
 
 class SlicesOutputs(typing.NamedTuple):

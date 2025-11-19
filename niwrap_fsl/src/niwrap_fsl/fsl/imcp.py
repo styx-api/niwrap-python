@@ -13,8 +13,7 @@ IMCP_METADATA = Metadata(
 )
 
 
-ImcpParamsDict = typing.TypedDict('ImcpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/imcp"]],
+_ImcpParamsDictNoTag = typing.TypedDict('_ImcpParamsDictNoTag', {
     "infiles": list[InputPathType],
     "output_location": str,
 })
@@ -23,6 +22,7 @@ ImcpParamsDictTagged = typing.TypedDict('ImcpParamsDictTagged', {
     "infiles": list[InputPathType],
     "output_location": str,
 })
+ImcpParamsDict = _ImcpParamsDictNoTag | ImcpParamsDictTagged
 
 
 class ImcpOutputs(typing.NamedTuple):

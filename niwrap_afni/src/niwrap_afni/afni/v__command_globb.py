@@ -13,8 +13,7 @@ V__COMMAND_GLOBB_METADATA = Metadata(
 )
 
 
-VCommandGlobbParamsDict = typing.TypedDict('VCommandGlobbParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@CommandGlobb"]],
+_VCommandGlobbParamsDictNoTag = typing.TypedDict('_VCommandGlobbParamsDictNoTag', {
     "program_command": str,
     "output_dir": str,
     "extension": typing.NotRequired[str | None],
@@ -27,6 +26,7 @@ VCommandGlobbParamsDictTagged = typing.TypedDict('VCommandGlobbParamsDictTagged'
     "extension": typing.NotRequired[str | None],
     "brick_list": list[str],
 })
+VCommandGlobbParamsDict = _VCommandGlobbParamsDictNoTag | VCommandGlobbParamsDictTagged
 
 
 class VCommandGlobbOutputs(typing.NamedTuple):

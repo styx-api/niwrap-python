@@ -12,8 +12,7 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 )
 
 
-GiftiLabelAddPrefixParamsDict = typing.TypedDict('GiftiLabelAddPrefixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-add-prefix"]],
+_GiftiLabelAddPrefixParamsDictNoTag = typing.TypedDict('_GiftiLabelAddPrefixParamsDictNoTag', {
     "label-out": str,
     "label-in": InputPathType,
     "prefix": str,
@@ -24,6 +23,7 @@ GiftiLabelAddPrefixParamsDictTagged = typing.TypedDict('GiftiLabelAddPrefixParam
     "label-in": InputPathType,
     "prefix": str,
 })
+GiftiLabelAddPrefixParamsDict = _GiftiLabelAddPrefixParamsDictNoTag | GiftiLabelAddPrefixParamsDictTagged
 
 
 class GiftiLabelAddPrefixOutputs(typing.NamedTuple):

@@ -12,8 +12,7 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-MetricRoisFromExtremaParamsDict = typing.TypedDict('MetricRoisFromExtremaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-from-extrema"]],
+_MetricRoisFromExtremaParamsDictNoTag = typing.TypedDict('_MetricRoisFromExtremaParamsDictNoTag', {
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -34,6 +33,7 @@ MetricRoisFromExtremaParamsDictTagged = typing.TypedDict('MetricRoisFromExtremaP
     "metric": InputPathType,
     "limit": float,
 })
+MetricRoisFromExtremaParamsDict = _MetricRoisFromExtremaParamsDictNoTag | MetricRoisFromExtremaParamsDictTagged
 
 
 class MetricRoisFromExtremaOutputs(typing.NamedTuple):

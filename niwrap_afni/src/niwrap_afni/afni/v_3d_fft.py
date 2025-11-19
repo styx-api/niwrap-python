@@ -13,8 +13,7 @@ V_3D_FFT_METADATA = Metadata(
 )
 
 
-V3dFftParamsDict = typing.TypedDict('V3dFftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dFFT"]],
+_V3dFftParamsDictNoTag = typing.TypedDict('_V3dFftParamsDictNoTag', {
     "dataset": InputPathType,
     "abs": bool,
     "phase": bool,
@@ -43,6 +42,7 @@ V3dFftParamsDictTagged = typing.TypedDict('V3dFftParamsDictTagged', {
     "input": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
 })
+V3dFftParamsDict = _V3dFftParamsDictNoTag | V3dFftParamsDictTagged
 
 
 class V3dFftOutputs(typing.NamedTuple):

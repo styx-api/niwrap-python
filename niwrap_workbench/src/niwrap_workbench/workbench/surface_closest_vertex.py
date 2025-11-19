@@ -12,8 +12,7 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
 )
 
 
-SurfaceClosestVertexParamsDict = typing.TypedDict('SurfaceClosestVertexParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-closest-vertex"]],
+_SurfaceClosestVertexParamsDictNoTag = typing.TypedDict('_SurfaceClosestVertexParamsDictNoTag', {
     "surface": InputPathType,
     "coord-list-file": str,
     "vertex-list-out": str,
@@ -24,6 +23,7 @@ SurfaceClosestVertexParamsDictTagged = typing.TypedDict('SurfaceClosestVertexPar
     "coord-list-file": str,
     "vertex-list-out": str,
 })
+SurfaceClosestVertexParamsDict = _SurfaceClosestVertexParamsDictNoTag | SurfaceClosestVertexParamsDictTagged
 
 
 class SurfaceClosestVertexOutputs(typing.NamedTuple):

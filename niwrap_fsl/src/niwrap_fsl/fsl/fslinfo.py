@@ -13,14 +13,14 @@ FSLINFO_METADATA = Metadata(
 )
 
 
-FslinfoParamsDict = typing.TypedDict('FslinfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/fslinfo"]],
+_FslinfoParamsDictNoTag = typing.TypedDict('_FslinfoParamsDictNoTag', {
     "filename": InputPathType,
 })
 FslinfoParamsDictTagged = typing.TypedDict('FslinfoParamsDictTagged', {
     "@type": typing.Literal["fsl/fslinfo"],
     "filename": InputPathType,
 })
+FslinfoParamsDict = _FslinfoParamsDictNoTag | FslinfoParamsDictTagged
 
 
 class FslinfoOutputs(typing.NamedTuple):

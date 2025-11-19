@@ -13,8 +13,7 @@ TALAIRACH_AVI_METADATA = Metadata(
 )
 
 
-TalairachAviParamsDict = typing.TypedDict('TalairachAviParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_avi"]],
+_TalairachAviParamsDictNoTag = typing.TypedDict('_TalairachAviParamsDictNoTag', {
     "input_file": InputPathType,
     "output_xfm": str,
     "atlas": typing.NotRequired[str | None],
@@ -29,6 +28,7 @@ TalairachAviParamsDictTagged = typing.TypedDict('TalairachAviParamsDictTagged', 
     "log": typing.NotRequired[str | None],
     "debug": bool,
 })
+TalairachAviParamsDict = _TalairachAviParamsDictNoTag | TalairachAviParamsDictTagged
 
 
 class TalairachAviOutputs(typing.NamedTuple):

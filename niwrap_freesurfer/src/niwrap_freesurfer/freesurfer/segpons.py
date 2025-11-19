@@ -13,8 +13,7 @@ SEGPONS_METADATA = Metadata(
 )
 
 
-SegponsParamsDict = typing.TypedDict('SegponsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segpons"]],
+_SegponsParamsDictNoTag = typing.TypedDict('_SegponsParamsDictNoTag', {
     "subject": str,
     "aseg": bool,
     "apas": bool,
@@ -31,6 +30,7 @@ SegponsParamsDictTagged = typing.TypedDict('SegponsParamsDictTagged', {
     "no_refine": bool,
     "pons152_mask": typing.NotRequired[InputPathType | None],
 })
+SegponsParamsDict = _SegponsParamsDictNoTag | SegponsParamsDictTagged
 
 
 class SegponsOutputs(typing.NamedTuple):

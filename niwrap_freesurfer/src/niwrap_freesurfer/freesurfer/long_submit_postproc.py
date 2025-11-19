@@ -13,8 +13,7 @@ LONG_SUBMIT_POSTPROC_METADATA = Metadata(
 )
 
 
-LongSubmitPostprocParamsDict = typing.TypedDict('LongSubmitPostprocParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_postproc"]],
+_LongSubmitPostprocParamsDictNoTag = typing.TypedDict('_LongSubmitPostprocParamsDictNoTag', {
     "qdec": InputPathType,
     "prog": str,
     "flags": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ LongSubmitPostprocParamsDictTagged = typing.TypedDict('LongSubmitPostprocParamsD
     "max": typing.NotRequired[float | None],
     "queue": typing.NotRequired[str | None],
 })
+LongSubmitPostprocParamsDict = _LongSubmitPostprocParamsDictNoTag | LongSubmitPostprocParamsDictTagged
 
 
 class LongSubmitPostprocOutputs(typing.NamedTuple):

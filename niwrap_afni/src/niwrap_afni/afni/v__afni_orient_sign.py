@@ -13,14 +13,14 @@ V__AFNI_ORIENT_SIGN_METADATA = Metadata(
 )
 
 
-VAfniOrientSignParamsDict = typing.TypedDict('VAfniOrientSignParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/@AfniOrientSign"]],
+_VAfniOrientSignParamsDictNoTag = typing.TypedDict('_VAfniOrientSignParamsDictNoTag', {
     "infile": InputPathType,
 })
 VAfniOrientSignParamsDictTagged = typing.TypedDict('VAfniOrientSignParamsDictTagged', {
     "@type": typing.Literal["afni/@AfniOrientSign"],
     "infile": InputPathType,
 })
+VAfniOrientSignParamsDict = _VAfniOrientSignParamsDictNoTag | VAfniOrientSignParamsDictTagged
 
 
 class VAfniOrientSignOutputs(typing.NamedTuple):

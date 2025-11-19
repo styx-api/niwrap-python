@@ -13,8 +13,7 @@ ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
 )
 
 
-AdjunctIsLabelPyParamsDict = typing.TypedDict('AdjunctIsLabelPyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/adjunct_is_label.py"]],
+_AdjunctIsLabelPyParamsDictNoTag = typing.TypedDict('_AdjunctIsLabelPyParamsDictNoTag', {
     "infile": InputPathType,
     "label": str,
 })
@@ -23,6 +22,7 @@ AdjunctIsLabelPyParamsDictTagged = typing.TypedDict('AdjunctIsLabelPyParamsDictT
     "infile": InputPathType,
     "label": str,
 })
+AdjunctIsLabelPyParamsDict = _AdjunctIsLabelPyParamsDictNoTag | AdjunctIsLabelPyParamsDictTagged
 
 
 class AdjunctIsLabelPyOutputs(typing.NamedTuple):

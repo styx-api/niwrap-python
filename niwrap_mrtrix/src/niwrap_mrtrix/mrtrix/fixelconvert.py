@@ -13,8 +13,7 @@ FIXELCONVERT_METADATA = Metadata(
 )
 
 
-FixelconvertConfigParamsDict = typing.TypedDict('FixelconvertConfigParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["config"]],
+_FixelconvertConfigParamsDictNoTag = typing.TypedDict('_FixelconvertConfigParamsDictNoTag', {
     "key": str,
     "value": str,
 })
@@ -23,50 +22,50 @@ FixelconvertConfigParamsDictTagged = typing.TypedDict('FixelconvertConfigParamsD
     "key": str,
     "value": str,
 })
+FixelconvertConfigParamsDict = _FixelconvertConfigParamsDictNoTag | FixelconvertConfigParamsDictTagged
 
 
-FixelconvertVariousStringParamsDict = typing.TypedDict('FixelconvertVariousStringParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+_FixelconvertVariousStringParamsDictNoTag = typing.TypedDict('_FixelconvertVariousStringParamsDictNoTag', {
     "obj": str,
 })
 FixelconvertVariousStringParamsDictTagged = typing.TypedDict('FixelconvertVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
+FixelconvertVariousStringParamsDict = _FixelconvertVariousStringParamsDictNoTag | FixelconvertVariousStringParamsDictTagged
 
 
-FixelconvertVariousFileParamsDict = typing.TypedDict('FixelconvertVariousFileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+_FixelconvertVariousFileParamsDictNoTag = typing.TypedDict('_FixelconvertVariousFileParamsDictNoTag', {
     "obj": InputPathType,
 })
 FixelconvertVariousFileParamsDictTagged = typing.TypedDict('FixelconvertVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
+FixelconvertVariousFileParamsDict = _FixelconvertVariousFileParamsDictNoTag | FixelconvertVariousFileParamsDictTagged
 
 
-FixelconvertVariousString1ParamsDict = typing.TypedDict('FixelconvertVariousString1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+_FixelconvertVariousString1ParamsDictNoTag = typing.TypedDict('_FixelconvertVariousString1ParamsDictNoTag', {
     "obj": str,
 })
 FixelconvertVariousString1ParamsDictTagged = typing.TypedDict('FixelconvertVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
+FixelconvertVariousString1ParamsDict = _FixelconvertVariousString1ParamsDictNoTag | FixelconvertVariousString1ParamsDictTagged
 
 
-FixelconvertVariousFile1ParamsDict = typing.TypedDict('FixelconvertVariousFile1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+_FixelconvertVariousFile1ParamsDictNoTag = typing.TypedDict('_FixelconvertVariousFile1ParamsDictNoTag', {
     "obj": InputPathType,
 })
 FixelconvertVariousFile1ParamsDictTagged = typing.TypedDict('FixelconvertVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
+FixelconvertVariousFile1ParamsDict = _FixelconvertVariousFile1ParamsDictNoTag | FixelconvertVariousFile1ParamsDictTagged
 
 
-FixelconvertParamsDict = typing.TypedDict('FixelconvertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelconvert"]],
+_FixelconvertParamsDictNoTag = typing.TypedDict('_FixelconvertParamsDictNoTag', {
     "name": typing.NotRequired[str | None],
     "nii": bool,
     "out_size": bool,
@@ -103,6 +102,7 @@ FixelconvertParamsDictTagged = typing.TypedDict('FixelconvertParamsDictTagged', 
     "fixel_in": typing.Union[FixelconvertVariousStringParamsDictTagged, FixelconvertVariousFileParamsDictTagged],
     "fixel_out": typing.Union[FixelconvertVariousString1ParamsDictTagged, FixelconvertVariousFile1ParamsDictTagged],
 })
+FixelconvertParamsDict = _FixelconvertParamsDictNoTag | FixelconvertParamsDictTagged
 
 
 def fixelconvert_fixel_in_cargs_dyn_fn(

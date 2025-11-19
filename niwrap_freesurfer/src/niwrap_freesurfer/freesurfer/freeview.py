@@ -13,14 +13,14 @@ FREEVIEW_METADATA = Metadata(
 )
 
 
-FreeviewParamsDict = typing.TypedDict('FreeviewParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/freeview"]],
+_FreeviewParamsDictNoTag = typing.TypedDict('_FreeviewParamsDictNoTag', {
     "args": typing.NotRequired[str | None],
 })
 FreeviewParamsDictTagged = typing.TypedDict('FreeviewParamsDictTagged', {
     "@type": typing.Literal["freesurfer/freeview"],
     "args": typing.NotRequired[str | None],
 })
+FreeviewParamsDict = _FreeviewParamsDictNoTag | FreeviewParamsDictTagged
 
 
 class FreeviewOutputs(typing.NamedTuple):

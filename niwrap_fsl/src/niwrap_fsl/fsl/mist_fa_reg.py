@@ -13,8 +13,7 @@ MIST_FA_REG_METADATA = Metadata(
 )
 
 
-MistFaRegParamsDict = typing.TypedDict('MistFaRegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/mist_FA_reg"]],
+_MistFaRegParamsDictNoTag = typing.TypedDict('_MistFaRegParamsDictNoTag', {
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
     "reference_t1_volume": InputPathType,
@@ -27,6 +26,7 @@ MistFaRegParamsDictTagged = typing.TypedDict('MistFaRegParamsDictTagged', {
     "reference_t1_volume": InputPathType,
     "output_filename": str,
 })
+MistFaRegParamsDict = _MistFaRegParamsDictNoTag | MistFaRegParamsDictTagged
 
 
 class MistFaRegOutputs(typing.NamedTuple):

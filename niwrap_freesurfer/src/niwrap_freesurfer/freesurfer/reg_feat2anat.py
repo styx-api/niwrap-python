@@ -13,8 +13,7 @@ REG_FEAT2ANAT_METADATA = Metadata(
 )
 
 
-RegFeat2anatParamsDict = typing.TypedDict('RegFeat2anatParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/reg-feat2anat"]],
+_RegFeat2anatParamsDictNoTag = typing.TypedDict('_RegFeat2anatParamsDictNoTag', {
     "feat_dir": str,
     "subject_id": str,
     "overwrite_exf2std": bool,
@@ -51,6 +50,7 @@ RegFeat2anatParamsDictTagged = typing.TypedDict('RegFeat2anatParamsDictTagged', 
     "fmov": typing.NotRequired[str | None],
     "debug": bool,
 })
+RegFeat2anatParamsDict = _RegFeat2anatParamsDictNoTag | RegFeat2anatParamsDictTagged
 
 
 class RegFeat2anatOutputs(typing.NamedTuple):

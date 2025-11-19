@@ -13,8 +13,7 @@ LABEL_SUBJECT_FLASH_METADATA = Metadata(
 )
 
 
-LabelSubjectFlashParamsDict = typing.TypedDict('LabelSubjectFlashParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_flash"]],
+_LabelSubjectFlashParamsDictNoTag = typing.TypedDict('_LabelSubjectFlashParamsDictNoTag', {
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
     "transform_file": InputPathType,
@@ -29,6 +28,7 @@ LabelSubjectFlashParamsDictTagged = typing.TypedDict('LabelSubjectFlashParamsDic
     "classifier_array": InputPathType,
     "aseg_output": str,
 })
+LabelSubjectFlashParamsDict = _LabelSubjectFlashParamsDictNoTag | LabelSubjectFlashParamsDictTagged
 
 
 class LabelSubjectFlashOutputs(typing.NamedTuple):

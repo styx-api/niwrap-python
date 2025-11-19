@@ -12,8 +12,7 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 )
 
 
-EstimateFiberBinghamsParamsDict = typing.TypedDict('EstimateFiberBinghamsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/estimate-fiber-binghams"]],
+_EstimateFiberBinghamsParamsDictNoTag = typing.TypedDict('_EstimateFiberBinghamsParamsDictNoTag', {
     "cifti-out": str,
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
@@ -40,6 +39,7 @@ EstimateFiberBinghamsParamsDictTagged = typing.TypedDict('EstimateFiberBinghamsP
     "merged_ph3samples": InputPathType,
     "label-volume": InputPathType,
 })
+EstimateFiberBinghamsParamsDict = _EstimateFiberBinghamsParamsDictNoTag | EstimateFiberBinghamsParamsDictTagged
 
 
 class EstimateFiberBinghamsOutputs(typing.NamedTuple):

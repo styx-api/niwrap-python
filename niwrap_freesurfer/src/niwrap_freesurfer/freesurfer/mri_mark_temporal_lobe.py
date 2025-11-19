@@ -13,8 +13,7 @@ MRI_MARK_TEMPORAL_LOBE_METADATA = Metadata(
 )
 
 
-MriMarkTemporalLobeParamsDict = typing.TypedDict('MriMarkTemporalLobeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mark_temporal_lobe"]],
+_MriMarkTemporalLobeParamsDictNoTag = typing.TypedDict('_MriMarkTemporalLobeParamsDictNoTag', {
     "spacing": typing.NotRequired[str | None],
     "use_gradient": bool,
     "subjects": list[InputPathType],
@@ -27,6 +26,7 @@ MriMarkTemporalLobeParamsDictTagged = typing.TypedDict('MriMarkTemporalLobeParam
     "subjects": list[InputPathType],
     "output_file": str,
 })
+MriMarkTemporalLobeParamsDict = _MriMarkTemporalLobeParamsDictNoTag | MriMarkTemporalLobeParamsDictTagged
 
 
 class MriMarkTemporalLobeOutputs(typing.NamedTuple):

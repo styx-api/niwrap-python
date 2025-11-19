@@ -12,8 +12,7 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-VolumeFindClustersParamsDict = typing.TypedDict('VolumeFindClustersParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/volume-find-clusters"]],
+_VolumeFindClustersParamsDictNoTag = typing.TypedDict('_VolumeFindClustersParamsDictNoTag', {
     "volume-out": str,
     "less-than": bool,
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -38,6 +37,7 @@ VolumeFindClustersParamsDictTagged = typing.TypedDict('VolumeFindClustersParamsD
     "value-threshold": float,
     "minimum-volume": float,
 })
+VolumeFindClustersParamsDict = _VolumeFindClustersParamsDictNoTag | VolumeFindClustersParamsDictTagged
 
 
 class VolumeFindClustersOutputs(typing.NamedTuple):

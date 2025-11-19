@@ -13,8 +13,7 @@ MRIS_ENTROPY_METADATA = Metadata(
 )
 
 
-MrisEntropyParamsDict = typing.TypedDict('MrisEntropyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_entropy"]],
+_MrisEntropyParamsDictNoTag = typing.TypedDict('_MrisEntropyParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "wfile": InputPathType,
@@ -31,6 +30,7 @@ MrisEntropyParamsDictTagged = typing.TypedDict('MrisEntropyParamsDictTagged', {
     "average_iterations": typing.NotRequired[float | None],
     "normalize": bool,
 })
+MrisEntropyParamsDict = _MrisEntropyParamsDictNoTag | MrisEntropyParamsDictTagged
 
 
 class MrisEntropyOutputs(typing.NamedTuple):

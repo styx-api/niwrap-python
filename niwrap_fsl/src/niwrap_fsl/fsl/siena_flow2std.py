@@ -13,8 +13,7 @@ SIENA_FLOW2STD_METADATA = Metadata(
 )
 
 
-SienaFlow2stdParamsDict = typing.TypedDict('SienaFlow2stdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/siena_flow2std"]],
+_SienaFlow2stdParamsDictNoTag = typing.TypedDict('_SienaFlow2stdParamsDictNoTag', {
     "fileroot1": str,
     "fileroot2": str,
     "sigma": typing.NotRequired[float | None],
@@ -27,6 +26,7 @@ SienaFlow2stdParamsDictTagged = typing.TypedDict('SienaFlow2stdParamsDictTagged'
     "sigma": typing.NotRequired[float | None],
     "debug_flag": bool,
 })
+SienaFlow2stdParamsDict = _SienaFlow2stdParamsDictNoTag | SienaFlow2stdParamsDictTagged
 
 
 class SienaFlow2stdOutputs(typing.NamedTuple):

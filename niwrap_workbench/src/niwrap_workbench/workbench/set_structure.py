@@ -12,8 +12,7 @@ SET_STRUCTURE_METADATA = Metadata(
 )
 
 
-SetStructureParamsDict = typing.TypedDict('SetStructureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/set-structure"]],
+_SetStructureParamsDictNoTag = typing.TypedDict('_SetStructureParamsDictNoTag', {
     "type": typing.NotRequired[str | None],
     "secondary type": typing.NotRequired[str | None],
     "data-file": str,
@@ -26,6 +25,7 @@ SetStructureParamsDictTagged = typing.TypedDict('SetStructureParamsDictTagged', 
     "data-file": str,
     "structure": str,
 })
+SetStructureParamsDict = _SetStructureParamsDictNoTag | SetStructureParamsDictTagged
 
 
 class SetStructureOutputs(typing.NamedTuple):

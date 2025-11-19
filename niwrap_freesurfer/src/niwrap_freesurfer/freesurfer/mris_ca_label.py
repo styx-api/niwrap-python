@@ -13,8 +13,7 @@ MRIS_CA_LABEL_METADATA = Metadata(
 )
 
 
-MrisCaLabelParamsDict = typing.TypedDict('MrisCaLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_label"]],
+_MrisCaLabelParamsDictNoTag = typing.TypedDict('_MrisCaLabelParamsDictNoTag', {
     "subject": str,
     "hemi": str,
     "canonsurf": InputPathType,
@@ -57,6 +56,7 @@ MrisCaLabelParamsDictTagged = typing.TypedDict('MrisCaLabelParamsDictTagged', {
     "help_flag": bool,
     "version_flag": bool,
 })
+MrisCaLabelParamsDict = _MrisCaLabelParamsDictNoTag | MrisCaLabelParamsDictTagged
 
 
 class MrisCaLabelOutputs(typing.NamedTuple):

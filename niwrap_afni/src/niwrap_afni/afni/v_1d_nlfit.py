@@ -13,8 +13,7 @@ V_1D_NLFIT_METADATA = Metadata(
 )
 
 
-V1dNlfitParamsDict = typing.TypedDict('V1dNlfitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/1dNLfit"]],
+_V1dNlfitParamsDictNoTag = typing.TypedDict('_V1dNlfitParamsDictNoTag', {
     "expression": str,
     "independent_variable": str,
     "parameters": list[str],
@@ -29,6 +28,7 @@ V1dNlfitParamsDictTagged = typing.TypedDict('V1dNlfitParamsDictTagged', {
     "dependent_data": InputPathType,
     "method": typing.NotRequired[int | None],
 })
+V1dNlfitParamsDict = _V1dNlfitParamsDictNoTag | V1dNlfitParamsDictTagged
 
 
 class V1dNlfitOutputs(typing.NamedTuple):

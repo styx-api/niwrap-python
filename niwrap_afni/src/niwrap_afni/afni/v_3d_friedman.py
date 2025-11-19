@@ -13,8 +13,7 @@ V_3D_FRIEDMAN_METADATA = Metadata(
 )
 
 
-V3dFriedmanParamsDict = typing.TypedDict('V3dFriedmanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dFriedman"]],
+_V3dFriedmanParamsDictNoTag = typing.TypedDict('_V3dFriedmanParamsDictNoTag', {
     "levels": int,
     "datasets": list[InputPathType],
     "workmem": typing.NotRequired[int | None],
@@ -29,6 +28,7 @@ V3dFriedmanParamsDictTagged = typing.TypedDict('V3dFriedmanParamsDictTagged', {
     "voxel_num": typing.NotRequired[int | None],
     "output_prefix": str,
 })
+V3dFriedmanParamsDict = _V3dFriedmanParamsDictNoTag | V3dFriedmanParamsDictTagged
 
 
 class V3dFriedmanOutputs(typing.NamedTuple):

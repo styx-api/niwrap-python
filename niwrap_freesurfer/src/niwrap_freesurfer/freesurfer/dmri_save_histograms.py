@@ -13,8 +13,7 @@ DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
 )
 
 
-DmriSaveHistogramsParamsDict = typing.TypedDict('DmriSaveHistogramsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_saveHistograms"]],
+_DmriSaveHistogramsParamsDictNoTag = typing.TypedDict('_DmriSaveHistogramsParamsDictNoTag', {
     "parcellation": InputPathType,
     "number_of_bundles": float,
     "vtk_bundle_list": list[InputPathType],
@@ -29,6 +28,7 @@ DmriSaveHistogramsParamsDictTagged = typing.TypedDict('DmriSaveHistogramsParamsD
     "output_csv": str,
     "brain_bundle_flag": bool,
 })
+DmriSaveHistogramsParamsDict = _DmriSaveHistogramsParamsDictNoTag | DmriSaveHistogramsParamsDictTagged
 
 
 class DmriSaveHistogramsOutputs(typing.NamedTuple):

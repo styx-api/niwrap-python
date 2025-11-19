@@ -13,8 +13,7 @@ SEGMENT_HA_T2_SH_METADATA = Metadata(
 )
 
 
-SegmentHaT2ShParamsDict = typing.TypedDict('SegmentHaT2ShParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T2.sh"]],
+_SegmentHaT2ShParamsDictNoTag = typing.TypedDict('_SegmentHaT2ShParamsDictNoTag', {
     "input_image": InputPathType,
     "output_directory": str,
 })
@@ -23,6 +22,7 @@ SegmentHaT2ShParamsDictTagged = typing.TypedDict('SegmentHaT2ShParamsDictTagged'
     "input_image": InputPathType,
     "output_directory": str,
 })
+SegmentHaT2ShParamsDict = _SegmentHaT2ShParamsDictNoTag | SegmentHaT2ShParamsDictTagged
 
 
 class SegmentHaT2ShOutputs(typing.NamedTuple):

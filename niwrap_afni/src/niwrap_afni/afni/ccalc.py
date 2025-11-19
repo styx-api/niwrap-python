@@ -13,8 +13,7 @@ CCALC_METADATA = Metadata(
 )
 
 
-CcalcParamsDict = typing.TypedDict('CcalcParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/ccalc"]],
+_CcalcParamsDictNoTag = typing.TypedDict('_CcalcParamsDictNoTag', {
     "format": typing.NotRequired[str | None],
     "expr": str,
 })
@@ -23,6 +22,7 @@ CcalcParamsDictTagged = typing.TypedDict('CcalcParamsDictTagged', {
     "format": typing.NotRequired[str | None],
     "expr": str,
 })
+CcalcParamsDict = _CcalcParamsDictNoTag | CcalcParamsDictTagged
 
 
 class CcalcOutputs(typing.NamedTuple):

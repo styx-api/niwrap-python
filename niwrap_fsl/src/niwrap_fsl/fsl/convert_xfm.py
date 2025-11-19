@@ -13,8 +13,7 @@ CONVERT_XFM_METADATA = Metadata(
 )
 
 
-ConvertXfmParamsDict = typing.TypedDict('ConvertXfmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/convert_xfm"]],
+_ConvertXfmParamsDictNoTag = typing.TypedDict('_ConvertXfmParamsDictNoTag', {
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
     "concat_xfm": typing.NotRequired[InputPathType | None],
@@ -29,6 +28,7 @@ ConvertXfmParamsDictTagged = typing.TypedDict('ConvertXfmParamsDictTagged', {
     "fix_scale_skew": typing.NotRequired[InputPathType | None],
     "in_file": InputPathType,
 })
+ConvertXfmParamsDict = _ConvertXfmParamsDictNoTag | ConvertXfmParamsDictTagged
 
 
 class ConvertXfmOutputs(typing.NamedTuple):

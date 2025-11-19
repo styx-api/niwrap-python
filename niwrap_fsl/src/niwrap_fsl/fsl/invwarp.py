@@ -13,8 +13,7 @@ INVWARP_METADATA = Metadata(
 )
 
 
-InvwarpParamsDict = typing.TypedDict('InvwarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fsl/invwarp"]],
+_InvwarpParamsDictNoTag = typing.TypedDict('_InvwarpParamsDictNoTag', {
     "warp": InputPathType,
     "out_img": str,
     "ref_img": InputPathType,
@@ -37,6 +36,7 @@ InvwarpParamsDictTagged = typing.TypedDict('InvwarpParamsDictTagged', {
     "jacobian_max": typing.NotRequired[float | None],
     "debug": bool,
 })
+InvwarpParamsDict = _InvwarpParamsDictNoTag | InvwarpParamsDictTagged
 
 
 class InvwarpOutputs(typing.NamedTuple):

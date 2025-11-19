@@ -13,8 +13,7 @@ MRIS_EXTRACT_PATCHES_METADATA = Metadata(
 )
 
 
-MrisExtractPatchesParamsDict = typing.TypedDict('MrisExtractPatchesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_patches"]],
+_MrisExtractPatchesParamsDictNoTag = typing.TypedDict('_MrisExtractPatchesParamsDictNoTag', {
     "subject": str,
     "output_dir": str,
 })
@@ -23,6 +22,7 @@ MrisExtractPatchesParamsDictTagged = typing.TypedDict('MrisExtractPatchesParamsD
     "subject": str,
     "output_dir": str,
 })
+MrisExtractPatchesParamsDict = _MrisExtractPatchesParamsDictNoTag | MrisExtractPatchesParamsDictTagged
 
 
 class MrisExtractPatchesOutputs(typing.NamedTuple):

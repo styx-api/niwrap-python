@@ -13,14 +13,14 @@ SUMA_GLXDINO_METADATA = Metadata(
 )
 
 
-SumaGlxdinoParamsDict = typing.TypedDict('SumaGlxdinoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SUMA_glxdino"]],
+_SumaGlxdinoParamsDictNoTag = typing.TypedDict('_SumaGlxdinoParamsDictNoTag', {
     "verbose": bool,
 })
 SumaGlxdinoParamsDictTagged = typing.TypedDict('SumaGlxdinoParamsDictTagged', {
     "@type": typing.Literal["afni/SUMA_glxdino"],
     "verbose": bool,
 })
+SumaGlxdinoParamsDict = _SumaGlxdinoParamsDictNoTag | SumaGlxdinoParamsDictTagged
 
 
 class SumaGlxdinoOutputs(typing.NamedTuple):

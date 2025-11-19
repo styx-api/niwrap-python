@@ -13,1798 +13,1797 @@ C3D_METADATA = Metadata(
 )
 
 
-C3dAccumParamsDict = typing.TypedDict('C3dAccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["accum"]],
+_C3dAccumParamsDictNoTag = typing.TypedDict('_C3dAccumParamsDictNoTag', {
     "accum": str,
 })
 C3dAccumParamsDictTagged = typing.TypedDict('C3dAccumParamsDictTagged', {
     "@type": typing.Literal["accum"],
     "accum": str,
 })
+C3dAccumParamsDict = _C3dAccumParamsDictNoTag | C3dAccumParamsDictTagged
 
 
-C3dAcosParamsDict = typing.TypedDict('C3dAcosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["acos"]],
+_C3dAcosParamsDictNoTag = typing.TypedDict('_C3dAcosParamsDictNoTag', {
     "acos": str,
 })
 C3dAcosParamsDictTagged = typing.TypedDict('C3dAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
     "acos": str,
 })
+C3dAcosParamsDict = _C3dAcosParamsDictNoTag | C3dAcosParamsDictTagged
 
 
-C3dAddParamsDict = typing.TypedDict('C3dAddParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["add"]],
+_C3dAddParamsDictNoTag = typing.TypedDict('_C3dAddParamsDictNoTag', {
     "add": str,
 })
 C3dAddParamsDictTagged = typing.TypedDict('C3dAddParamsDictTagged', {
     "@type": typing.Literal["add"],
     "add": str,
 })
+C3dAddParamsDict = _C3dAddParamsDictNoTag | C3dAddParamsDictTagged
 
 
-C3dAlignLandmarksParamsDict = typing.TypedDict('C3dAlignLandmarksParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+_C3dAlignLandmarksParamsDictNoTag = typing.TypedDict('_C3dAlignLandmarksParamsDictNoTag', {
     "align_landmarks": str,
 })
 C3dAlignLandmarksParamsDictTagged = typing.TypedDict('C3dAlignLandmarksParamsDictTagged', {
     "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
+C3dAlignLandmarksParamsDict = _C3dAlignLandmarksParamsDictNoTag | C3dAlignLandmarksParamsDictTagged
 
 
-C3dAnisotropicDiffusionParamsDict = typing.TypedDict('C3dAnisotropicDiffusionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+_C3dAnisotropicDiffusionParamsDictNoTag = typing.TypedDict('_C3dAnisotropicDiffusionParamsDictNoTag', {
     "anisotropic_diffusion": str,
 })
 C3dAnisotropicDiffusionParamsDictTagged = typing.TypedDict('C3dAnisotropicDiffusionParamsDictTagged', {
     "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
+C3dAnisotropicDiffusionParamsDict = _C3dAnisotropicDiffusionParamsDictNoTag | C3dAnisotropicDiffusionParamsDictTagged
 
 
-C3dAntialiasParamsDict = typing.TypedDict('C3dAntialiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["antialias"]],
+_C3dAntialiasParamsDictNoTag = typing.TypedDict('_C3dAntialiasParamsDictNoTag', {
     "antialias": str,
 })
 C3dAntialiasParamsDictTagged = typing.TypedDict('C3dAntialiasParamsDictTagged', {
     "@type": typing.Literal["antialias"],
     "antialias": str,
 })
+C3dAntialiasParamsDict = _C3dAntialiasParamsDictNoTag | C3dAntialiasParamsDictTagged
 
 
-C3dSetParamsDict = typing.TypedDict('C3dSetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set"]],
+_C3dSetParamsDictNoTag = typing.TypedDict('_C3dSetParamsDictNoTag', {
     "set": str,
 })
 C3dSetParamsDictTagged = typing.TypedDict('C3dSetParamsDictTagged', {
     "@type": typing.Literal["set"],
     "set": str,
 })
+C3dSetParamsDict = _C3dSetParamsDictNoTag | C3dSetParamsDictTagged
 
 
-C3dAsinParamsDict = typing.TypedDict('C3dAsinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["asin"]],
+_C3dAsinParamsDictNoTag = typing.TypedDict('_C3dAsinParamsDictNoTag', {
     "asin": str,
 })
 C3dAsinParamsDictTagged = typing.TypedDict('C3dAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
     "asin": str,
 })
+C3dAsinParamsDict = _C3dAsinParamsDictNoTag | C3dAsinParamsDictTagged
 
 
-C3dAtan2ParamsDict = typing.TypedDict('C3dAtan2ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["atan2"]],
+_C3dAtan2ParamsDictNoTag = typing.TypedDict('_C3dAtan2ParamsDictNoTag', {
     "atan2": str,
 })
 C3dAtan2ParamsDictTagged = typing.TypedDict('C3dAtan2ParamsDictTagged', {
     "@type": typing.Literal["atan2"],
     "atan2": str,
 })
+C3dAtan2ParamsDict = _C3dAtan2ParamsDictNoTag | C3dAtan2ParamsDictTagged
 
 
-C3dBackgroundParamsDict = typing.TypedDict('C3dBackgroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["background"]],
+_C3dBackgroundParamsDictNoTag = typing.TypedDict('_C3dBackgroundParamsDictNoTag', {
     "background": str,
 })
 C3dBackgroundParamsDictTagged = typing.TypedDict('C3dBackgroundParamsDictTagged', {
     "@type": typing.Literal["background"],
     "background": str,
 })
+C3dBackgroundParamsDict = _C3dBackgroundParamsDictNoTag | C3dBackgroundParamsDictTagged
 
 
-C3dN4BiasCorrectionParamsDict = typing.TypedDict('C3dN4BiasCorrectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+_C3dN4BiasCorrectionParamsDictNoTag = typing.TypedDict('_C3dN4BiasCorrectionParamsDictNoTag', {
     "n4_bias_correction": str,
 })
 C3dN4BiasCorrectionParamsDictTagged = typing.TypedDict('C3dN4BiasCorrectionParamsDictTagged', {
     "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
+C3dN4BiasCorrectionParamsDict = _C3dN4BiasCorrectionParamsDictNoTag | C3dN4BiasCorrectionParamsDictTagged
 
 
-C3dBinarizeParamsDict = typing.TypedDict('C3dBinarizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["binarize"]],
+_C3dBinarizeParamsDictNoTag = typing.TypedDict('_C3dBinarizeParamsDictNoTag', {
     "binarize": str,
 })
 C3dBinarizeParamsDictTagged = typing.TypedDict('C3dBinarizeParamsDictTagged', {
     "@type": typing.Literal["binarize"],
     "binarize": str,
 })
+C3dBinarizeParamsDict = _C3dBinarizeParamsDictNoTag | C3dBinarizeParamsDictTagged
 
 
-C3dCannyParamsDict = typing.TypedDict('C3dCannyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["canny"]],
+_C3dCannyParamsDictNoTag = typing.TypedDict('_C3dCannyParamsDictNoTag', {
     "canny": str,
 })
 C3dCannyParamsDictTagged = typing.TypedDict('C3dCannyParamsDictTagged', {
     "@type": typing.Literal["canny"],
     "canny": str,
 })
+C3dCannyParamsDict = _C3dCannyParamsDictNoTag | C3dCannyParamsDictTagged
 
 
-C3dCeilParamsDict = typing.TypedDict('C3dCeilParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["ceil"]],
+_C3dCeilParamsDictNoTag = typing.TypedDict('_C3dCeilParamsDictNoTag', {
     "ceil": str,
 })
 C3dCeilParamsDictTagged = typing.TypedDict('C3dCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
     "ceil": str,
 })
+C3dCeilParamsDict = _C3dCeilParamsDictNoTag | C3dCeilParamsDictTagged
 
 
-C3dCentroidParamsDict = typing.TypedDict('C3dCentroidParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid"]],
+_C3dCentroidParamsDictNoTag = typing.TypedDict('_C3dCentroidParamsDictNoTag', {
     "centroid": str,
 })
 C3dCentroidParamsDictTagged = typing.TypedDict('C3dCentroidParamsDictTagged', {
     "@type": typing.Literal["centroid"],
     "centroid": str,
 })
+C3dCentroidParamsDict = _C3dCentroidParamsDictNoTag | C3dCentroidParamsDictTagged
 
 
-C3dCentroidMarkParamsDict = typing.TypedDict('C3dCentroidMarkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+_C3dCentroidMarkParamsDictNoTag = typing.TypedDict('_C3dCentroidMarkParamsDictNoTag', {
     "centroid_mark": str,
 })
 C3dCentroidMarkParamsDictTagged = typing.TypedDict('C3dCentroidMarkParamsDictTagged', {
     "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
+C3dCentroidMarkParamsDict = _C3dCentroidMarkParamsDictNoTag | C3dCentroidMarkParamsDictTagged
 
 
-C3dConnectedComponentsParamsDict = typing.TypedDict('C3dConnectedComponentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+_C3dConnectedComponentsParamsDictNoTag = typing.TypedDict('_C3dConnectedComponentsParamsDictNoTag', {
     "connected_components": str,
 })
 C3dConnectedComponentsParamsDictTagged = typing.TypedDict('C3dConnectedComponentsParamsDictTagged', {
     "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
+C3dConnectedComponentsParamsDict = _C3dConnectedComponentsParamsDictNoTag | C3dConnectedComponentsParamsDictTagged
 
 
-C3dClearParamsDict = typing.TypedDict('C3dClearParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clear"]],
+_C3dClearParamsDictNoTag = typing.TypedDict('_C3dClearParamsDictNoTag', {
     "clear": str,
 })
 C3dClearParamsDictTagged = typing.TypedDict('C3dClearParamsDictTagged', {
     "@type": typing.Literal["clear"],
     "clear": str,
 })
+C3dClearParamsDict = _C3dClearParamsDictNoTag | C3dClearParamsDictTagged
 
 
-C3dClipParamsDict = typing.TypedDict('C3dClipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["clip"]],
+_C3dClipParamsDictNoTag = typing.TypedDict('_C3dClipParamsDictNoTag', {
     "clip": str,
 })
 C3dClipParamsDictTagged = typing.TypedDict('C3dClipParamsDictTagged', {
     "@type": typing.Literal["clip"],
     "clip": str,
 })
+C3dClipParamsDict = _C3dClipParamsDictNoTag | C3dClipParamsDictTagged
 
 
-C3dColorMapParamsDict = typing.TypedDict('C3dColorMapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["color_map"]],
+_C3dColorMapParamsDictNoTag = typing.TypedDict('_C3dColorMapParamsDictNoTag', {
     "color_map": str,
 })
 C3dColorMapParamsDictTagged = typing.TypedDict('C3dColorMapParamsDictTagged', {
     "@type": typing.Literal["color_map"],
     "color_map": str,
 })
+C3dColorMapParamsDict = _C3dColorMapParamsDictNoTag | C3dColorMapParamsDictTagged
 
 
-C3dCompressParamsDict = typing.TypedDict('C3dCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["compress"]],
+_C3dCompressParamsDictNoTag = typing.TypedDict('_C3dCompressParamsDictNoTag', {
     "compress": str,
 })
 C3dCompressParamsDictTagged = typing.TypedDict('C3dCompressParamsDictTagged', {
     "@type": typing.Literal["compress"],
     "compress": str,
 })
+C3dCompressParamsDict = _C3dCompressParamsDictNoTag | C3dCompressParamsDictTagged
 
 
-C3dNoCompressParamsDict = typing.TypedDict('C3dNoCompressParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+_C3dNoCompressParamsDictNoTag = typing.TypedDict('_C3dNoCompressParamsDictNoTag', {
     "no_compress": str,
 })
 C3dNoCompressParamsDictTagged = typing.TypedDict('C3dNoCompressParamsDictTagged', {
     "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
+C3dNoCompressParamsDict = _C3dNoCompressParamsDictNoTag | C3dNoCompressParamsDictTagged
 
 
-C3dConvParamsDict = typing.TypedDict('C3dConvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["conv"]],
+_C3dConvParamsDictNoTag = typing.TypedDict('_C3dConvParamsDictNoTag', {
     "conv": str,
 })
 C3dConvParamsDictTagged = typing.TypedDict('C3dConvParamsDictTagged', {
     "@type": typing.Literal["conv"],
     "conv": str,
 })
+C3dConvParamsDict = _C3dConvParamsDictNoTag | C3dConvParamsDictTagged
 
 
-C3dCoordinateMapVoxelParamsDict = typing.TypedDict('C3dCoordinateMapVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+_C3dCoordinateMapVoxelParamsDictNoTag = typing.TypedDict('_C3dCoordinateMapVoxelParamsDictNoTag', {
     "coordinate_map_voxel": str,
 })
 C3dCoordinateMapVoxelParamsDictTagged = typing.TypedDict('C3dCoordinateMapVoxelParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
+C3dCoordinateMapVoxelParamsDict = _C3dCoordinateMapVoxelParamsDictNoTag | C3dCoordinateMapVoxelParamsDictTagged
 
 
-C3dCoordinateMapPhysicalParamsDict = typing.TypedDict('C3dCoordinateMapPhysicalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+_C3dCoordinateMapPhysicalParamsDictNoTag = typing.TypedDict('_C3dCoordinateMapPhysicalParamsDictNoTag', {
     "coordinate_map_physical": str,
 })
 C3dCoordinateMapPhysicalParamsDictTagged = typing.TypedDict('C3dCoordinateMapPhysicalParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
+C3dCoordinateMapPhysicalParamsDict = _C3dCoordinateMapPhysicalParamsDictNoTag | C3dCoordinateMapPhysicalParamsDictTagged
 
 
-C3dCopyTransformParamsDict = typing.TypedDict('C3dCopyTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+_C3dCopyTransformParamsDictNoTag = typing.TypedDict('_C3dCopyTransformParamsDictNoTag', {
     "copy_transform": str,
 })
 C3dCopyTransformParamsDictTagged = typing.TypedDict('C3dCopyTransformParamsDictTagged', {
     "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
+C3dCopyTransformParamsDict = _C3dCopyTransformParamsDictNoTag | C3dCopyTransformParamsDictTagged
 
 
-C3dCosParamsDict = typing.TypedDict('C3dCosParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["cos"]],
+_C3dCosParamsDictNoTag = typing.TypedDict('_C3dCosParamsDictNoTag', {
     "cos": str,
 })
 C3dCosParamsDictTagged = typing.TypedDict('C3dCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
     "cos": str,
 })
+C3dCosParamsDict = _C3dCosParamsDictNoTag | C3dCosParamsDictTagged
 
 
-C3dCreateParamsDict = typing.TypedDict('C3dCreateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["create"]],
+_C3dCreateParamsDictNoTag = typing.TypedDict('_C3dCreateParamsDictNoTag', {
     "create": str,
 })
 C3dCreateParamsDictTagged = typing.TypedDict('C3dCreateParamsDictTagged', {
     "@type": typing.Literal["create"],
     "create": str,
 })
+C3dCreateParamsDict = _C3dCreateParamsDictNoTag | C3dCreateParamsDictTagged
 
 
-C3dDicomSeriesListParamsDict = typing.TypedDict('C3dDicomSeriesListParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+_C3dDicomSeriesListParamsDictNoTag = typing.TypedDict('_C3dDicomSeriesListParamsDictNoTag', {
     "dicom_series_list": str,
 })
 C3dDicomSeriesListParamsDictTagged = typing.TypedDict('C3dDicomSeriesListParamsDictTagged', {
     "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
+C3dDicomSeriesListParamsDict = _C3dDicomSeriesListParamsDictNoTag | C3dDicomSeriesListParamsDictTagged
 
 
-C3dDicomSeriesReadParamsDict = typing.TypedDict('C3dDicomSeriesReadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+_C3dDicomSeriesReadParamsDictNoTag = typing.TypedDict('_C3dDicomSeriesReadParamsDictNoTag', {
     "dicom_series_read": str,
 })
 C3dDicomSeriesReadParamsDictTagged = typing.TypedDict('C3dDicomSeriesReadParamsDictTagged', {
     "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
+C3dDicomSeriesReadParamsDict = _C3dDicomSeriesReadParamsDictNoTag | C3dDicomSeriesReadParamsDictTagged
 
 
-C3dDilateParamsDict = typing.TypedDict('C3dDilateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["dilate"]],
+_C3dDilateParamsDictNoTag = typing.TypedDict('_C3dDilateParamsDictNoTag', {
     "dilate": str,
 })
 C3dDilateParamsDictTagged = typing.TypedDict('C3dDilateParamsDictTagged', {
     "@type": typing.Literal["dilate"],
     "dilate": str,
 })
+C3dDilateParamsDict = _C3dDilateParamsDictNoTag | C3dDilateParamsDictTagged
 
 
-C3dDivideParamsDict = typing.TypedDict('C3dDivideParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["divide"]],
+_C3dDivideParamsDictNoTag = typing.TypedDict('_C3dDivideParamsDictNoTag', {
     "divide": str,
 })
 C3dDivideParamsDictTagged = typing.TypedDict('C3dDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
     "divide": str,
 })
+C3dDivideParamsDict = _C3dDivideParamsDictNoTag | C3dDivideParamsDictTagged
 
 
-C3dDuplicateParamsDict = typing.TypedDict('C3dDuplicateParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+_C3dDuplicateParamsDictNoTag = typing.TypedDict('_C3dDuplicateParamsDictNoTag', {
     "duplicate": str,
 })
 C3dDuplicateParamsDictTagged = typing.TypedDict('C3dDuplicateParamsDictTagged', {
     "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
+C3dDuplicateParamsDict = _C3dDuplicateParamsDictNoTag | C3dDuplicateParamsDictTagged
 
 
-C3dEndaccumParamsDict = typing.TypedDict('C3dEndaccumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+_C3dEndaccumParamsDictNoTag = typing.TypedDict('_C3dEndaccumParamsDictNoTag', {
     "endaccum": str,
 })
 C3dEndaccumParamsDictTagged = typing.TypedDict('C3dEndaccumParamsDictTagged', {
     "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
+C3dEndaccumParamsDict = _C3dEndaccumParamsDictNoTag | C3dEndaccumParamsDictTagged
 
 
-C3dEndforParamsDict = typing.TypedDict('C3dEndforParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["endfor"]],
+_C3dEndforParamsDictNoTag = typing.TypedDict('_C3dEndforParamsDictNoTag', {
     "endfor": str,
 })
 C3dEndforParamsDictTagged = typing.TypedDict('C3dEndforParamsDictTagged', {
     "@type": typing.Literal["endfor"],
     "endfor": str,
 })
+C3dEndforParamsDict = _C3dEndforParamsDictNoTag | C3dEndforParamsDictTagged
 
 
-C3dErodeParamsDict = typing.TypedDict('C3dErodeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erode"]],
+_C3dErodeParamsDictNoTag = typing.TypedDict('_C3dErodeParamsDictNoTag', {
     "erode": str,
 })
 C3dErodeParamsDictTagged = typing.TypedDict('C3dErodeParamsDictTagged', {
     "@type": typing.Literal["erode"],
     "erode": str,
 })
+C3dErodeParamsDict = _C3dErodeParamsDictNoTag | C3dErodeParamsDictTagged
 
 
-C3dErfParamsDict = typing.TypedDict('C3dErfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["erf"]],
+_C3dErfParamsDictNoTag = typing.TypedDict('_C3dErfParamsDictNoTag', {
     "erf": str,
 })
 C3dErfParamsDictTagged = typing.TypedDict('C3dErfParamsDictTagged', {
     "@type": typing.Literal["erf"],
     "erf": str,
 })
+C3dErfParamsDict = _C3dErfParamsDictNoTag | C3dErfParamsDictTagged
 
 
-C3dExpParamsDict = typing.TypedDict('C3dExpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["exp"]],
+_C3dExpParamsDictNoTag = typing.TypedDict('_C3dExpParamsDictNoTag', {
     "exp": str,
 })
 C3dExpParamsDictTagged = typing.TypedDict('C3dExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
     "exp": str,
 })
+C3dExpParamsDict = _C3dExpParamsDictNoTag | C3dExpParamsDictTagged
 
 
-C3dExportPatchesParamsDict = typing.TypedDict('C3dExportPatchesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+_C3dExportPatchesParamsDictNoTag = typing.TypedDict('_C3dExportPatchesParamsDictNoTag', {
     "export_patches": str,
 })
 C3dExportPatchesParamsDictTagged = typing.TypedDict('C3dExportPatchesParamsDictTagged', {
     "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
+C3dExportPatchesParamsDict = _C3dExportPatchesParamsDictNoTag | C3dExportPatchesParamsDictTagged
 
 
-C3dExportPatchesAugParamsDict = typing.TypedDict('C3dExportPatchesAugParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+_C3dExportPatchesAugParamsDictNoTag = typing.TypedDict('_C3dExportPatchesAugParamsDictNoTag', {
     "export_patches_aug": str,
 })
 C3dExportPatchesAugParamsDictTagged = typing.TypedDict('C3dExportPatchesAugParamsDictTagged', {
     "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
+C3dExportPatchesAugParamsDict = _C3dExportPatchesAugParamsDictNoTag | C3dExportPatchesAugParamsDictTagged
 
 
-C3dExtrudeSegParamsDict = typing.TypedDict('C3dExtrudeSegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+_C3dExtrudeSegParamsDictNoTag = typing.TypedDict('_C3dExtrudeSegParamsDictNoTag', {
     "extrude_seg": str,
 })
 C3dExtrudeSegParamsDictTagged = typing.TypedDict('C3dExtrudeSegParamsDictTagged', {
     "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
+C3dExtrudeSegParamsDict = _C3dExtrudeSegParamsDictNoTag | C3dExtrudeSegParamsDictTagged
 
 
-C3dFillBackgroundWithNoiseParamsDict = typing.TypedDict('C3dFillBackgroundWithNoiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+_C3dFillBackgroundWithNoiseParamsDictNoTag = typing.TypedDict('_C3dFillBackgroundWithNoiseParamsDictNoTag', {
     "fill_background_with_noise": str,
 })
 C3dFillBackgroundWithNoiseParamsDictTagged = typing.TypedDict('C3dFillBackgroundWithNoiseParamsDictTagged', {
     "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
+C3dFillBackgroundWithNoiseParamsDict = _C3dFillBackgroundWithNoiseParamsDictNoTag | C3dFillBackgroundWithNoiseParamsDictTagged
 
 
-C3dFftParamsDict = typing.TypedDict('C3dFftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["fft"]],
+_C3dFftParamsDictNoTag = typing.TypedDict('_C3dFftParamsDictNoTag', {
     "fft": str,
 })
 C3dFftParamsDictTagged = typing.TypedDict('C3dFftParamsDictTagged', {
     "@type": typing.Literal["fft"],
     "fft": str,
 })
+C3dFftParamsDict = _C3dFftParamsDictNoTag | C3dFftParamsDictTagged
 
 
-C3dFlipParamsDict = typing.TypedDict('C3dFlipParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["flip"]],
+_C3dFlipParamsDictNoTag = typing.TypedDict('_C3dFlipParamsDictNoTag', {
     "flip": str,
 })
 C3dFlipParamsDictTagged = typing.TypedDict('C3dFlipParamsDictTagged', {
     "@type": typing.Literal["flip"],
     "flip": str,
 })
+C3dFlipParamsDict = _C3dFlipParamsDictNoTag | C3dFlipParamsDictTagged
 
 
-C3dFloorParamsDict = typing.TypedDict('C3dFloorParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["floor"]],
+_C3dFloorParamsDictNoTag = typing.TypedDict('_C3dFloorParamsDictNoTag', {
     "floor": str,
 })
 C3dFloorParamsDictTagged = typing.TypedDict('C3dFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
     "floor": str,
 })
+C3dFloorParamsDict = _C3dFloorParamsDictNoTag | C3dFloorParamsDictTagged
 
 
-C3dForeachParamsDict = typing.TypedDict('C3dForeachParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach"]],
+_C3dForeachParamsDictNoTag = typing.TypedDict('_C3dForeachParamsDictNoTag', {
     "foreach": str,
 })
 C3dForeachParamsDictTagged = typing.TypedDict('C3dForeachParamsDictTagged', {
     "@type": typing.Literal["foreach"],
     "foreach": str,
 })
+C3dForeachParamsDict = _C3dForeachParamsDictNoTag | C3dForeachParamsDictTagged
 
 
-C3dForeachCompParamsDict = typing.TypedDict('C3dForeachCompParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+_C3dForeachCompParamsDictNoTag = typing.TypedDict('_C3dForeachCompParamsDictNoTag', {
     "foreach_comp": str,
 })
 C3dForeachCompParamsDictTagged = typing.TypedDict('C3dForeachCompParamsDictTagged', {
     "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
+C3dForeachCompParamsDict = _C3dForeachCompParamsDictNoTag | C3dForeachCompParamsDictTagged
 
 
-C3dGlmParamsDict = typing.TypedDict('C3dGlmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["glm"]],
+_C3dGlmParamsDictNoTag = typing.TypedDict('_C3dGlmParamsDictNoTag', {
     "glm": str,
 })
 C3dGlmParamsDictTagged = typing.TypedDict('C3dGlmParamsDictTagged', {
     "@type": typing.Literal["glm"],
     "glm": str,
 })
+C3dGlmParamsDict = _C3dGlmParamsDictNoTag | C3dGlmParamsDictTagged
 
 
-C3dGradientParamsDict = typing.TypedDict('C3dGradientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["gradient"]],
+_C3dGradientParamsDictNoTag = typing.TypedDict('_C3dGradientParamsDictNoTag', {
     "gradient": str,
 })
 C3dGradientParamsDictTagged = typing.TypedDict('C3dGradientParamsDictTagged', {
     "@type": typing.Literal["gradient"],
     "gradient": str,
 })
+C3dGradientParamsDict = _C3dGradientParamsDictNoTag | C3dGradientParamsDictTagged
 
 
-C3dHelpParamsDict = typing.TypedDict('C3dHelpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["_help"]],
+_C3dHelpParamsDictNoTag = typing.TypedDict('_C3dHelpParamsDictNoTag', {
     "_help": str,
 })
 C3dHelpParamsDictTagged = typing.TypedDict('C3dHelpParamsDictTagged', {
     "@type": typing.Literal["_help"],
     "_help": str,
 })
+C3dHelpParamsDict = _C3dHelpParamsDictNoTag | C3dHelpParamsDictTagged
 
 
-C3dHolefillParamsDict = typing.TypedDict('C3dHolefillParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["holefill"]],
+_C3dHolefillParamsDictNoTag = typing.TypedDict('_C3dHolefillParamsDictNoTag', {
     "holefill": str,
 })
 C3dHolefillParamsDictTagged = typing.TypedDict('C3dHolefillParamsDictTagged', {
     "@type": typing.Literal["holefill"],
     "holefill": str,
 })
+C3dHolefillParamsDict = _C3dHolefillParamsDictNoTag | C3dHolefillParamsDictTagged
 
 
-C3dHessianEigenvaluesParamsDict = typing.TypedDict('C3dHessianEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+_C3dHessianEigenvaluesParamsDictNoTag = typing.TypedDict('_C3dHessianEigenvaluesParamsDictNoTag', {
     "hessian_eigenvalues": str,
 })
 C3dHessianEigenvaluesParamsDictTagged = typing.TypedDict('C3dHessianEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
+C3dHessianEigenvaluesParamsDict = _C3dHessianEigenvaluesParamsDictNoTag | C3dHessianEigenvaluesParamsDictTagged
 
 
-C3dHessianObjectnessParamsDict = typing.TypedDict('C3dHessianObjectnessParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+_C3dHessianObjectnessParamsDictNoTag = typing.TypedDict('_C3dHessianObjectnessParamsDictNoTag', {
     "hessian_objectness": str,
 })
 C3dHessianObjectnessParamsDictTagged = typing.TypedDict('C3dHessianObjectnessParamsDictTagged', {
     "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
+C3dHessianObjectnessParamsDict = _C3dHessianObjectnessParamsDictNoTag | C3dHessianObjectnessParamsDictTagged
 
 
-C3dHistogramMatchParamsDict = typing.TypedDict('C3dHistogramMatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+_C3dHistogramMatchParamsDictNoTag = typing.TypedDict('_C3dHistogramMatchParamsDictNoTag', {
     "histogram_match": str,
 })
 C3dHistogramMatchParamsDictTagged = typing.TypedDict('C3dHistogramMatchParamsDictTagged', {
     "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
+C3dHistogramMatchParamsDict = _C3dHistogramMatchParamsDictNoTag | C3dHistogramMatchParamsDictTagged
 
 
-C3dInfoParamsDict = typing.TypedDict('C3dInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info"]],
+_C3dInfoParamsDictNoTag = typing.TypedDict('_C3dInfoParamsDictNoTag', {
     "info": str,
 })
 C3dInfoParamsDictTagged = typing.TypedDict('C3dInfoParamsDictTagged', {
     "@type": typing.Literal["info"],
     "info": str,
 })
+C3dInfoParamsDict = _C3dInfoParamsDictNoTag | C3dInfoParamsDictTagged
 
 
-C3dInfoFullParamsDict = typing.TypedDict('C3dInfoFullParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["info_full"]],
+_C3dInfoFullParamsDictNoTag = typing.TypedDict('_C3dInfoFullParamsDictNoTag', {
     "info_full": str,
 })
 C3dInfoFullParamsDictTagged = typing.TypedDict('C3dInfoFullParamsDictTagged', {
     "@type": typing.Literal["info_full"],
     "info_full": str,
 })
+C3dInfoFullParamsDict = _C3dInfoFullParamsDictNoTag | C3dInfoFullParamsDictTagged
 
 
-C3dInsertParamsDict = typing.TypedDict('C3dInsertParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["insert"]],
+_C3dInsertParamsDictNoTag = typing.TypedDict('_C3dInsertParamsDictNoTag', {
     "insert": str,
 })
 C3dInsertParamsDictTagged = typing.TypedDict('C3dInsertParamsDictTagged', {
     "@type": typing.Literal["insert"],
     "insert": str,
 })
+C3dInsertParamsDict = _C3dInsertParamsDictNoTag | C3dInsertParamsDictTagged
 
 
-C3dInterpolationParamsDict = typing.TypedDict('C3dInterpolationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+_C3dInterpolationParamsDictNoTag = typing.TypedDict('_C3dInterpolationParamsDictNoTag', {
     "interpolation": str,
 })
 C3dInterpolationParamsDictTagged = typing.TypedDict('C3dInterpolationParamsDictTagged', {
     "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
+C3dInterpolationParamsDict = _C3dInterpolationParamsDictNoTag | C3dInterpolationParamsDictTagged
 
 
-C3dIterationsParamsDict = typing.TypedDict('C3dIterationsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["iterations"]],
+_C3dIterationsParamsDictNoTag = typing.TypedDict('_C3dIterationsParamsDictNoTag', {
     "iterations": str,
 })
 C3dIterationsParamsDictTagged = typing.TypedDict('C3dIterationsParamsDictTagged', {
     "@type": typing.Literal["iterations"],
     "iterations": str,
 })
+C3dIterationsParamsDict = _C3dIterationsParamsDictNoTag | C3dIterationsParamsDictTagged
 
 
-C3dLabelOverlapParamsDict = typing.TypedDict('C3dLabelOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+_C3dLabelOverlapParamsDictNoTag = typing.TypedDict('_C3dLabelOverlapParamsDictNoTag', {
     "label_overlap": str,
 })
 C3dLabelOverlapParamsDictTagged = typing.TypedDict('C3dLabelOverlapParamsDictTagged', {
     "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
+C3dLabelOverlapParamsDict = _C3dLabelOverlapParamsDictNoTag | C3dLabelOverlapParamsDictTagged
 
 
-C3dLabelStatisticsParamsDict = typing.TypedDict('C3dLabelStatisticsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+_C3dLabelStatisticsParamsDictNoTag = typing.TypedDict('_C3dLabelStatisticsParamsDictNoTag', {
     "label_statistics": str,
 })
 C3dLabelStatisticsParamsDictTagged = typing.TypedDict('C3dLabelStatisticsParamsDictTagged', {
     "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
+C3dLabelStatisticsParamsDict = _C3dLabelStatisticsParamsDictNoTag | C3dLabelStatisticsParamsDictTagged
 
 
-C3dLandmarksToSpheresParamsDict = typing.TypedDict('C3dLandmarksToSpheresParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+_C3dLandmarksToSpheresParamsDictNoTag = typing.TypedDict('_C3dLandmarksToSpheresParamsDictNoTag', {
     "landmarks_to_spheres": str,
 })
 C3dLandmarksToSpheresParamsDictTagged = typing.TypedDict('C3dLandmarksToSpheresParamsDictTagged', {
     "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
+C3dLandmarksToSpheresParamsDict = _C3dLandmarksToSpheresParamsDictNoTag | C3dLandmarksToSpheresParamsDictTagged
 
 
-C3dLaplacianParamsDict = typing.TypedDict('C3dLaplacianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+_C3dLaplacianParamsDictNoTag = typing.TypedDict('_C3dLaplacianParamsDictNoTag', {
     "laplacian": str,
 })
 C3dLaplacianParamsDictTagged = typing.TypedDict('C3dLaplacianParamsDictTagged', {
     "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
+C3dLaplacianParamsDict = _C3dLaplacianParamsDictNoTag | C3dLaplacianParamsDictTagged
 
 
-C3dLevelsetParamsDict = typing.TypedDict('C3dLevelsetParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset"]],
+_C3dLevelsetParamsDictNoTag = typing.TypedDict('_C3dLevelsetParamsDictNoTag', {
     "levelset": str,
 })
 C3dLevelsetParamsDictTagged = typing.TypedDict('C3dLevelsetParamsDictTagged', {
     "@type": typing.Literal["levelset"],
     "levelset": str,
 })
+C3dLevelsetParamsDict = _C3dLevelsetParamsDictNoTag | C3dLevelsetParamsDictTagged
 
 
-C3dLevelsetCurvatureParamsDict = typing.TypedDict('C3dLevelsetCurvatureParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+_C3dLevelsetCurvatureParamsDictNoTag = typing.TypedDict('_C3dLevelsetCurvatureParamsDictNoTag', {
     "levelset_curvature": str,
 })
 C3dLevelsetCurvatureParamsDictTagged = typing.TypedDict('C3dLevelsetCurvatureParamsDictTagged', {
     "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
+C3dLevelsetCurvatureParamsDict = _C3dLevelsetCurvatureParamsDictNoTag | C3dLevelsetCurvatureParamsDictTagged
 
 
-C3dLevelsetAdvectionParamsDict = typing.TypedDict('C3dLevelsetAdvectionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+_C3dLevelsetAdvectionParamsDictNoTag = typing.TypedDict('_C3dLevelsetAdvectionParamsDictNoTag', {
     "levelset_advection": str,
 })
 C3dLevelsetAdvectionParamsDictTagged = typing.TypedDict('C3dLevelsetAdvectionParamsDictTagged', {
     "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
+C3dLevelsetAdvectionParamsDict = _C3dLevelsetAdvectionParamsDictNoTag | C3dLevelsetAdvectionParamsDictTagged
 
 
-C3dLogParamsDict = typing.TypedDict('C3dLogParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log"]],
+_C3dLogParamsDictNoTag = typing.TypedDict('_C3dLogParamsDictNoTag', {
     "log": str,
 })
 C3dLogParamsDictTagged = typing.TypedDict('C3dLogParamsDictTagged', {
     "@type": typing.Literal["log"],
     "log": str,
 })
+C3dLogParamsDict = _C3dLogParamsDictNoTag | C3dLogParamsDictTagged
 
 
-C3dLog10ParamsDict = typing.TypedDict('C3dLog10ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["log10"]],
+_C3dLog10ParamsDictNoTag = typing.TypedDict('_C3dLog10ParamsDictNoTag', {
     "log10": str,
 })
 C3dLog10ParamsDictTagged = typing.TypedDict('C3dLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
     "log10": str,
 })
+C3dLog10ParamsDict = _C3dLog10ParamsDictNoTag | C3dLog10ParamsDictTagged
 
 
-C3dManualParamsDict = typing.TypedDict('C3dManualParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["manual"]],
+_C3dManualParamsDictNoTag = typing.TypedDict('_C3dManualParamsDictNoTag', {
     "manual": str,
 })
 C3dManualParamsDictTagged = typing.TypedDict('C3dManualParamsDictTagged', {
     "@type": typing.Literal["manual"],
     "manual": str,
 })
+C3dManualParamsDict = _C3dManualParamsDictNoTag | C3dManualParamsDictTagged
 
 
-C3dMatchBoundingBoxParamsDict = typing.TypedDict('C3dMatchBoundingBoxParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+_C3dMatchBoundingBoxParamsDictNoTag = typing.TypedDict('_C3dMatchBoundingBoxParamsDictNoTag', {
     "match_bounding_box": str,
 })
 C3dMatchBoundingBoxParamsDictTagged = typing.TypedDict('C3dMatchBoundingBoxParamsDictTagged', {
     "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
+C3dMatchBoundingBoxParamsDict = _C3dMatchBoundingBoxParamsDictNoTag | C3dMatchBoundingBoxParamsDictTagged
 
 
-C3dMaximumParamsDict = typing.TypedDict('C3dMaximumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["maximum"]],
+_C3dMaximumParamsDictNoTag = typing.TypedDict('_C3dMaximumParamsDictNoTag', {
     "maximum": str,
 })
 C3dMaximumParamsDictTagged = typing.TypedDict('C3dMaximumParamsDictTagged', {
     "@type": typing.Literal["maximum"],
     "maximum": str,
 })
+C3dMaximumParamsDict = _C3dMaximumParamsDictNoTag | C3dMaximumParamsDictTagged
 
 
-C3dMulticomponentSplitParamsDict = typing.TypedDict('C3dMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+_C3dMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C3dMulticomponentSplitParamsDictNoTag', {
     "multicomponent_split": str,
 })
 C3dMulticomponentSplitParamsDictTagged = typing.TypedDict('C3dMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
+C3dMulticomponentSplitParamsDict = _C3dMulticomponentSplitParamsDictNoTag | C3dMulticomponentSplitParamsDictTagged
 
 
-C3dMeanParamsDict = typing.TypedDict('C3dMeanParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean"]],
+_C3dMeanParamsDictNoTag = typing.TypedDict('_C3dMeanParamsDictNoTag', {
     "mean": str,
 })
 C3dMeanParamsDictTagged = typing.TypedDict('C3dMeanParamsDictTagged', {
     "@type": typing.Literal["mean"],
     "mean": str,
 })
+C3dMeanParamsDict = _C3dMeanParamsDictNoTag | C3dMeanParamsDictTagged
 
 
-C3dMedianFilterParamsDict = typing.TypedDict('C3dMedianFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+_C3dMedianFilterParamsDictNoTag = typing.TypedDict('_C3dMedianFilterParamsDictNoTag', {
     "median_filter": str,
 })
 C3dMedianFilterParamsDictTagged = typing.TypedDict('C3dMedianFilterParamsDictTagged', {
     "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
+C3dMedianFilterParamsDict = _C3dMedianFilterParamsDictNoTag | C3dMedianFilterParamsDictTagged
 
 
-C3dMergeParamsDict = typing.TypedDict('C3dMergeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["merge"]],
+_C3dMergeParamsDictNoTag = typing.TypedDict('_C3dMergeParamsDictNoTag', {
     "merge": str,
 })
 C3dMergeParamsDictTagged = typing.TypedDict('C3dMergeParamsDictTagged', {
     "@type": typing.Literal["merge"],
     "merge": str,
 })
+C3dMergeParamsDict = _C3dMergeParamsDictNoTag | C3dMergeParamsDictTagged
 
 
-C3dMeanFilterParamsDict = typing.TypedDict('C3dMeanFilterParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+_C3dMeanFilterParamsDictNoTag = typing.TypedDict('_C3dMeanFilterParamsDictNoTag', {
     "mean_filter": str,
 })
 C3dMeanFilterParamsDictTagged = typing.TypedDict('C3dMeanFilterParamsDictTagged', {
     "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
+C3dMeanFilterParamsDict = _C3dMeanFilterParamsDictNoTag | C3dMeanFilterParamsDictTagged
 
 
-C3dMutualInfoParamsDict = typing.TypedDict('C3dMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+_C3dMutualInfoParamsDictNoTag = typing.TypedDict('_C3dMutualInfoParamsDictNoTag', {
     "mutual_info": str,
 })
 C3dMutualInfoParamsDictTagged = typing.TypedDict('C3dMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
+C3dMutualInfoParamsDict = _C3dMutualInfoParamsDictNoTag | C3dMutualInfoParamsDictTagged
 
 
-C3dMinimumParamsDict = typing.TypedDict('C3dMinimumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["minimum"]],
+_C3dMinimumParamsDictNoTag = typing.TypedDict('_C3dMinimumParamsDictNoTag', {
     "minimum": str,
 })
 C3dMinimumParamsDictTagged = typing.TypedDict('C3dMinimumParamsDictTagged', {
     "@type": typing.Literal["minimum"],
     "minimum": str,
 })
+C3dMinimumParamsDict = _C3dMinimumParamsDictNoTag | C3dMinimumParamsDictTagged
 
 
-C3dMixtureModelParamsDict = typing.TypedDict('C3dMixtureModelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+_C3dMixtureModelParamsDictNoTag = typing.TypedDict('_C3dMixtureModelParamsDictNoTag', {
     "mixture_model": str,
 })
 C3dMixtureModelParamsDictTagged = typing.TypedDict('C3dMixtureModelParamsDictTagged', {
     "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
+C3dMixtureModelParamsDict = _C3dMixtureModelParamsDictNoTag | C3dMixtureModelParamsDictTagged
 
 
-C3dMomentsParamsDict = typing.TypedDict('C3dMomentsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["moments"]],
+_C3dMomentsParamsDictNoTag = typing.TypedDict('_C3dMomentsParamsDictNoTag', {
     "moments": str,
 })
 C3dMomentsParamsDictTagged = typing.TypedDict('C3dMomentsParamsDictTagged', {
     "@type": typing.Literal["moments"],
     "moments": str,
 })
+C3dMomentsParamsDict = _C3dMomentsParamsDictNoTag | C3dMomentsParamsDictTagged
 
 
-C3dMattesMutualInfoParamsDict = typing.TypedDict('C3dMattesMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+_C3dMattesMutualInfoParamsDictNoTag = typing.TypedDict('_C3dMattesMutualInfoParamsDictNoTag', {
     "mattes_mutual_info": str,
 })
 C3dMattesMutualInfoParamsDictTagged = typing.TypedDict('C3dMattesMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
+C3dMattesMutualInfoParamsDict = _C3dMattesMutualInfoParamsDictNoTag | C3dMattesMutualInfoParamsDictTagged
 
 
-C3dMeanSquareParamsDict = typing.TypedDict('C3dMeanSquareParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+_C3dMeanSquareParamsDictNoTag = typing.TypedDict('_C3dMeanSquareParamsDictNoTag', {
     "mean_square": str,
 })
 C3dMeanSquareParamsDictTagged = typing.TypedDict('C3dMeanSquareParamsDictTagged', {
     "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
+C3dMeanSquareParamsDict = _C3dMeanSquareParamsDictNoTag | C3dMeanSquareParamsDictTagged
 
 
-C3dMultiplyParamsDict = typing.TypedDict('C3dMultiplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["multiply"]],
+_C3dMultiplyParamsDictNoTag = typing.TypedDict('_C3dMultiplyParamsDictNoTag', {
     "multiply": str,
 })
 C3dMultiplyParamsDictTagged = typing.TypedDict('C3dMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
     "multiply": str,
 })
+C3dMultiplyParamsDict = _C3dMultiplyParamsDictNoTag | C3dMultiplyParamsDictTagged
 
 
-C3dNormalizedCrossCorrelationParamsDict = typing.TypedDict('C3dNormalizedCrossCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+_C3dNormalizedCrossCorrelationParamsDictNoTag = typing.TypedDict('_C3dNormalizedCrossCorrelationParamsDictNoTag', {
     "normalized_cross_correlation": str,
 })
 C3dNormalizedCrossCorrelationParamsDictTagged = typing.TypedDict('C3dNormalizedCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
+C3dNormalizedCrossCorrelationParamsDict = _C3dNormalizedCrossCorrelationParamsDictNoTag | C3dNormalizedCrossCorrelationParamsDictTagged
 
 
-C3dNormalizedCorrelationParamsDict = typing.TypedDict('C3dNormalizedCorrelationParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+_C3dNormalizedCorrelationParamsDictNoTag = typing.TypedDict('_C3dNormalizedCorrelationParamsDictNoTag', {
     "normalized_correlation": str,
 })
 C3dNormalizedCorrelationParamsDictTagged = typing.TypedDict('C3dNormalizedCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
+C3dNormalizedCorrelationParamsDict = _C3dNormalizedCorrelationParamsDictNoTag | C3dNormalizedCorrelationParamsDictTagged
 
 
-C3dNormalizedMutualInfoParamsDict = typing.TypedDict('C3dNormalizedMutualInfoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+_C3dNormalizedMutualInfoParamsDictNoTag = typing.TypedDict('_C3dNormalizedMutualInfoParamsDictNoTag', {
     "normalized_mutual_info": str,
 })
 C3dNormalizedMutualInfoParamsDictTagged = typing.TypedDict('C3dNormalizedMutualInfoParamsDictTagged', {
     "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
+C3dNormalizedMutualInfoParamsDict = _C3dNormalizedMutualInfoParamsDictNoTag | C3dNormalizedMutualInfoParamsDictTagged
 
 
-C3dNoiseGaussianParamsDict = typing.TypedDict('C3dNoiseGaussianParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+_C3dNoiseGaussianParamsDictNoTag = typing.TypedDict('_C3dNoiseGaussianParamsDictNoTag', {
     "noise_gaussian": str,
 })
 C3dNoiseGaussianParamsDictTagged = typing.TypedDict('C3dNoiseGaussianParamsDictTagged', {
     "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
+C3dNoiseGaussianParamsDict = _C3dNoiseGaussianParamsDictNoTag | C3dNoiseGaussianParamsDictTagged
 
 
-C3dNoisePoissonParamsDict = typing.TypedDict('C3dNoisePoissonParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+_C3dNoisePoissonParamsDictNoTag = typing.TypedDict('_C3dNoisePoissonParamsDictNoTag', {
     "noise_poisson": str,
 })
 C3dNoisePoissonParamsDictTagged = typing.TypedDict('C3dNoisePoissonParamsDictTagged', {
     "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
+C3dNoisePoissonParamsDict = _C3dNoisePoissonParamsDictNoTag | C3dNoisePoissonParamsDictTagged
 
 
-C3dNoiseSpeckleParamsDict = typing.TypedDict('C3dNoiseSpeckleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+_C3dNoiseSpeckleParamsDictNoTag = typing.TypedDict('_C3dNoiseSpeckleParamsDictNoTag', {
     "noise_speckle": str,
 })
 C3dNoiseSpeckleParamsDictTagged = typing.TypedDict('C3dNoiseSpeckleParamsDictTagged', {
     "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
+C3dNoiseSpeckleParamsDict = _C3dNoiseSpeckleParamsDictNoTag | C3dNoiseSpeckleParamsDictTagged
 
 
-C3dNoiseSaltPepperParamsDict = typing.TypedDict('C3dNoiseSaltPepperParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+_C3dNoiseSaltPepperParamsDictNoTag = typing.TypedDict('_C3dNoiseSaltPepperParamsDictNoTag', {
     "noise_salt_pepper": str,
 })
 C3dNoiseSaltPepperParamsDictTagged = typing.TypedDict('C3dNoiseSaltPepperParamsDictTagged', {
     "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
+C3dNoiseSaltPepperParamsDict = _C3dNoiseSaltPepperParamsDictNoTag | C3dNoiseSaltPepperParamsDictTagged
 
 
-C3dNoMulticomponentSplitParamsDict = typing.TypedDict('C3dNoMulticomponentSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+_C3dNoMulticomponentSplitParamsDictNoTag = typing.TypedDict('_C3dNoMulticomponentSplitParamsDictNoTag', {
     "no_multicomponent_split": str,
 })
 C3dNoMulticomponentSplitParamsDictTagged = typing.TypedDict('C3dNoMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
+C3dNoMulticomponentSplitParamsDict = _C3dNoMulticomponentSplitParamsDictNoTag | C3dNoMulticomponentSplitParamsDictTagged
 
 
-C3dNormalizeLocalWindowParamsDict = typing.TypedDict('C3dNormalizeLocalWindowParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+_C3dNormalizeLocalWindowParamsDictNoTag = typing.TypedDict('_C3dNormalizeLocalWindowParamsDictNoTag', {
     "normalize_local_window": str,
 })
 C3dNormalizeLocalWindowParamsDictTagged = typing.TypedDict('C3dNormalizeLocalWindowParamsDictTagged', {
     "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
+C3dNormalizeLocalWindowParamsDict = _C3dNormalizeLocalWindowParamsDictNoTag | C3dNormalizeLocalWindowParamsDictTagged
 
 
-C3dNormpdfParamsDict = typing.TypedDict('C3dNormpdfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+_C3dNormpdfParamsDictNoTag = typing.TypedDict('_C3dNormpdfParamsDictNoTag', {
     "normpdf": str,
 })
 C3dNormpdfParamsDictTagged = typing.TypedDict('C3dNormpdfParamsDictTagged', {
     "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
+C3dNormpdfParamsDict = _C3dNormpdfParamsDictNoTag | C3dNormpdfParamsDictTagged
 
 
-C3dNoroundParamsDict = typing.TypedDict('C3dNoroundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noround"]],
+_C3dNoroundParamsDictNoTag = typing.TypedDict('_C3dNoroundParamsDictNoTag', {
     "noround": str,
 })
 C3dNoroundParamsDictTagged = typing.TypedDict('C3dNoroundParamsDictTagged', {
     "@type": typing.Literal["noround"],
     "noround": str,
 })
+C3dNoroundParamsDict = _C3dNoroundParamsDictNoTag | C3dNoroundParamsDictTagged
 
 
-C3dNospmParamsDict = typing.TypedDict('C3dNospmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["nospm"]],
+_C3dNospmParamsDictNoTag = typing.TypedDict('_C3dNospmParamsDictNoTag', {
     "nospm": str,
 })
 C3dNospmParamsDictTagged = typing.TypedDict('C3dNospmParamsDictTagged', {
     "@type": typing.Literal["nospm"],
     "nospm": str,
 })
+C3dNospmParamsDict = _C3dNospmParamsDictNoTag | C3dNospmParamsDictTagged
 
 
-C3dOutputParamsDict = typing.TypedDict('C3dOutputParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output"]],
+_C3dOutputParamsDictNoTag = typing.TypedDict('_C3dOutputParamsDictNoTag', {
     "output": str,
 })
 C3dOutputParamsDictTagged = typing.TypedDict('C3dOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "output": str,
 })
+C3dOutputParamsDict = _C3dOutputParamsDictNoTag | C3dOutputParamsDictTagged
 
 
-C3dOutputMulticomponentParamsDict = typing.TypedDict('C3dOutputMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+_C3dOutputMulticomponentParamsDictNoTag = typing.TypedDict('_C3dOutputMulticomponentParamsDictNoTag', {
     "output_multicomponent": str,
 })
 C3dOutputMulticomponentParamsDictTagged = typing.TypedDict('C3dOutputMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
+C3dOutputMulticomponentParamsDict = _C3dOutputMulticomponentParamsDictNoTag | C3dOutputMulticomponentParamsDictTagged
 
 
-C3dOutputMultipleMulticomponentParamsDict = typing.TypedDict('C3dOutputMultipleMulticomponentParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+_C3dOutputMultipleMulticomponentParamsDictNoTag = typing.TypedDict('_C3dOutputMultipleMulticomponentParamsDictNoTag', {
     "output_multiple_multicomponent": str,
 })
 C3dOutputMultipleMulticomponentParamsDictTagged = typing.TypedDict('C3dOutputMultipleMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
+C3dOutputMultipleMulticomponentParamsDict = _C3dOutputMultipleMulticomponentParamsDictNoTag | C3dOutputMultipleMulticomponentParamsDictTagged
 
 
-C3dOrientParamsDict = typing.TypedDict('C3dOrientParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient"]],
+_C3dOrientParamsDictNoTag = typing.TypedDict('_C3dOrientParamsDictNoTag', {
     "orient": str,
 })
 C3dOrientParamsDictTagged = typing.TypedDict('C3dOrientParamsDictTagged', {
     "@type": typing.Literal["orient"],
     "orient": str,
 })
+C3dOrientParamsDict = _C3dOrientParamsDictNoTag | C3dOrientParamsDictTagged
 
 
-C3dOutputMultipleParamsDict = typing.TypedDict('C3dOutputMultipleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+_C3dOutputMultipleParamsDictNoTag = typing.TypedDict('_C3dOutputMultipleParamsDictNoTag', {
     "output_multiple": str,
 })
 C3dOutputMultipleParamsDictTagged = typing.TypedDict('C3dOutputMultipleParamsDictTagged', {
     "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
+C3dOutputMultipleParamsDict = _C3dOutputMultipleParamsDictNoTag | C3dOutputMultipleParamsDictTagged
 
 
-C3dOrient1ParamsDict = typing.TypedDict('C3dOrient1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+_C3dOrient1ParamsDictNoTag = typing.TypedDict('_C3dOrient1ParamsDictNoTag', {
     "orient": str,
 })
 C3dOrient1ParamsDictTagged = typing.TypedDict('C3dOrient1ParamsDictTagged', {
     "@type": typing.Literal["orient_1"],
     "orient": str,
 })
+C3dOrient1ParamsDict = _C3dOrient1ParamsDictNoTag | C3dOrient1ParamsDictTagged
 
 
-C3dOriginParamsDict = typing.TypedDict('C3dOriginParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin"]],
+_C3dOriginParamsDictNoTag = typing.TypedDict('_C3dOriginParamsDictNoTag', {
     "origin": str,
 })
 C3dOriginParamsDictTagged = typing.TypedDict('C3dOriginParamsDictTagged', {
     "@type": typing.Literal["origin"],
     "origin": str,
 })
+C3dOriginParamsDict = _C3dOriginParamsDictNoTag | C3dOriginParamsDictTagged
 
 
-C3dOriginVoxelParamsDict = typing.TypedDict('C3dOriginVoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+_C3dOriginVoxelParamsDictNoTag = typing.TypedDict('_C3dOriginVoxelParamsDictNoTag', {
     "origin_voxel": str,
 })
 C3dOriginVoxelParamsDictTagged = typing.TypedDict('C3dOriginVoxelParamsDictTagged', {
     "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
+C3dOriginVoxelParamsDict = _C3dOriginVoxelParamsDictNoTag | C3dOriginVoxelParamsDictTagged
 
 
-C3dOriginVoxelCoordParamsDict = typing.TypedDict('C3dOriginVoxelCoordParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+_C3dOriginVoxelCoordParamsDictNoTag = typing.TypedDict('_C3dOriginVoxelCoordParamsDictNoTag', {
     "origin_voxel_coord": str,
 })
 C3dOriginVoxelCoordParamsDictTagged = typing.TypedDict('C3dOriginVoxelCoordParamsDictTagged', {
     "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
+C3dOriginVoxelCoordParamsDict = _C3dOriginVoxelCoordParamsDictNoTag | C3dOriginVoxelCoordParamsDictTagged
 
 
-C3dOverlapParamsDict = typing.TypedDict('C3dOverlapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlap"]],
+_C3dOverlapParamsDictNoTag = typing.TypedDict('_C3dOverlapParamsDictNoTag', {
     "overlap": str,
 })
 C3dOverlapParamsDictTagged = typing.TypedDict('C3dOverlapParamsDictTagged', {
     "@type": typing.Literal["overlap"],
     "overlap": str,
 })
+C3dOverlapParamsDict = _C3dOverlapParamsDictNoTag | C3dOverlapParamsDictTagged
 
 
-C3dOverlayLabelImageParamsDict = typing.TypedDict('C3dOverlayLabelImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+_C3dOverlayLabelImageParamsDictNoTag = typing.TypedDict('_C3dOverlayLabelImageParamsDictNoTag', {
     "overlay_label_image": str,
 })
 C3dOverlayLabelImageParamsDictTagged = typing.TypedDict('C3dOverlayLabelImageParamsDictTagged', {
     "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
+C3dOverlayLabelImageParamsDict = _C3dOverlayLabelImageParamsDictNoTag | C3dOverlayLabelImageParamsDictTagged
 
 
-C3dPadParamsDict = typing.TypedDict('C3dPadParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad"]],
+_C3dPadParamsDictNoTag = typing.TypedDict('_C3dPadParamsDictNoTag', {
     "pad": str,
 })
 C3dPadParamsDictTagged = typing.TypedDict('C3dPadParamsDictTagged', {
     "@type": typing.Literal["pad"],
     "pad": str,
 })
+C3dPadParamsDict = _C3dPadParamsDictNoTag | C3dPadParamsDictTagged
 
 
-C3dPadToParamsDict = typing.TypedDict('C3dPadToParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+_C3dPadToParamsDictNoTag = typing.TypedDict('_C3dPadToParamsDictNoTag', {
     "pad_to": str,
 })
 C3dPadToParamsDictTagged = typing.TypedDict('C3dPadToParamsDictTagged', {
     "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
+C3dPadToParamsDict = _C3dPadToParamsDictNoTag | C3dPadToParamsDictTagged
 
 
-C3dPcaParamsDict = typing.TypedDict('C3dPcaParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pca"]],
+_C3dPcaParamsDictNoTag = typing.TypedDict('_C3dPcaParamsDictNoTag', {
     "pca": str,
 })
 C3dPcaParamsDictTagged = typing.TypedDict('C3dPcaParamsDictTagged', {
     "@type": typing.Literal["pca"],
     "pca": str,
 })
+C3dPcaParamsDict = _C3dPcaParamsDictNoTag | C3dPcaParamsDictTagged
 
 
-C3dPercentIntensityModeParamsDict = typing.TypedDict('C3dPercentIntensityModeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+_C3dPercentIntensityModeParamsDictNoTag = typing.TypedDict('_C3dPercentIntensityModeParamsDictNoTag', {
     "percent_intensity_mode": str,
 })
 C3dPercentIntensityModeParamsDictTagged = typing.TypedDict('C3dPercentIntensityModeParamsDictTagged', {
     "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
+C3dPercentIntensityModeParamsDict = _C3dPercentIntensityModeParamsDictNoTag | C3dPercentIntensityModeParamsDictTagged
 
 
-C3dPixelParamsDict = typing.TypedDict('C3dPixelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pixel"]],
+_C3dPixelParamsDictNoTag = typing.TypedDict('_C3dPixelParamsDictNoTag', {
     "pixel": str,
 })
 C3dPixelParamsDictTagged = typing.TypedDict('C3dPixelParamsDictTagged', {
     "@type": typing.Literal["pixel"],
     "pixel": str,
 })
+C3dPixelParamsDict = _C3dPixelParamsDictNoTag | C3dPixelParamsDictTagged
 
 
-C3dPopParamsDict = typing.TypedDict('C3dPopParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["pop"]],
+_C3dPopParamsDictNoTag = typing.TypedDict('_C3dPopParamsDictNoTag', {
     "pop": str,
 })
 C3dPopParamsDictTagged = typing.TypedDict('C3dPopParamsDictTagged', {
     "@type": typing.Literal["pop"],
     "pop": str,
 })
+C3dPopParamsDict = _C3dPopParamsDictNoTag | C3dPopParamsDictTagged
 
 
-C3dPopasParamsDict = typing.TypedDict('C3dPopasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["popas"]],
+_C3dPopasParamsDictNoTag = typing.TypedDict('_C3dPopasParamsDictNoTag', {
     "popas": str,
 })
 C3dPopasParamsDictTagged = typing.TypedDict('C3dPopasParamsDictTagged', {
     "@type": typing.Literal["popas"],
     "popas": str,
 })
+C3dPopasParamsDict = _C3dPopasParamsDictNoTag | C3dPopasParamsDictTagged
 
 
-C3dProbeParamsDict = typing.TypedDict('C3dProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["probe"]],
+_C3dProbeParamsDictNoTag = typing.TypedDict('_C3dProbeParamsDictNoTag', {
     "probe": str,
 })
 C3dProbeParamsDictTagged = typing.TypedDict('C3dProbeParamsDictTagged', {
     "@type": typing.Literal["probe"],
     "probe": str,
 })
+C3dProbeParamsDict = _C3dProbeParamsDictNoTag | C3dProbeParamsDictTagged
 
 
-C3dPushParamsDict = typing.TypedDict('C3dPushParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["push"]],
+_C3dPushParamsDictNoTag = typing.TypedDict('_C3dPushParamsDictNoTag', {
     "push": str,
 })
 C3dPushParamsDictTagged = typing.TypedDict('C3dPushParamsDictTagged', {
     "@type": typing.Literal["push"],
     "push": str,
 })
+C3dPushParamsDict = _C3dPushParamsDictNoTag | C3dPushParamsDictTagged
 
 
-C3dRankParamsDict = typing.TypedDict('C3dRankParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rank"]],
+_C3dRankParamsDictNoTag = typing.TypedDict('_C3dRankParamsDictNoTag', {
     "rank": str,
 })
 C3dRankParamsDictTagged = typing.TypedDict('C3dRankParamsDictTagged', {
     "@type": typing.Literal["rank"],
     "rank": str,
 })
+C3dRankParamsDict = _C3dRankParamsDictNoTag | C3dRankParamsDictTagged
 
 
-C3dReciprocalParamsDict = typing.TypedDict('C3dReciprocalParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+_C3dReciprocalParamsDictNoTag = typing.TypedDict('_C3dReciprocalParamsDictNoTag', {
     "reciprocal": str,
 })
 C3dReciprocalParamsDictTagged = typing.TypedDict('C3dReciprocalParamsDictTagged', {
     "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
+C3dReciprocalParamsDict = _C3dReciprocalParamsDictNoTag | C3dReciprocalParamsDictTagged
 
 
-C3dRegionParamsDict = typing.TypedDict('C3dRegionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["region"]],
+_C3dRegionParamsDictNoTag = typing.TypedDict('_C3dRegionParamsDictNoTag', {
     "region": str,
 })
 C3dRegionParamsDictTagged = typing.TypedDict('C3dRegionParamsDictTagged', {
     "@type": typing.Literal["region"],
     "region": str,
 })
+C3dRegionParamsDict = _C3dRegionParamsDictNoTag | C3dRegionParamsDictTagged
 
 
-C3dReorderParamsDict = typing.TypedDict('C3dReorderParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reorder"]],
+_C3dReorderParamsDictNoTag = typing.TypedDict('_C3dReorderParamsDictNoTag', {
     "reorder": str,
 })
 C3dReorderParamsDictTagged = typing.TypedDict('C3dReorderParamsDictTagged', {
     "@type": typing.Literal["reorder"],
     "reorder": str,
 })
+C3dReorderParamsDict = _C3dReorderParamsDictNoTag | C3dReorderParamsDictTagged
 
 
-C3dRetainLabelsParamsDict = typing.TypedDict('C3dRetainLabelsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+_C3dRetainLabelsParamsDictNoTag = typing.TypedDict('_C3dRetainLabelsParamsDictNoTag', {
     "retain_labels": str,
 })
 C3dRetainLabelsParamsDictTagged = typing.TypedDict('C3dRetainLabelsParamsDictTagged', {
     "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
+C3dRetainLabelsParamsDict = _C3dRetainLabelsParamsDictNoTag | C3dRetainLabelsParamsDictTagged
 
 
-C3dRfApplyParamsDict = typing.TypedDict('C3dRfApplyParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+_C3dRfApplyParamsDictNoTag = typing.TypedDict('_C3dRfApplyParamsDictNoTag', {
     "rf_apply": str,
 })
 C3dRfApplyParamsDictTagged = typing.TypedDict('C3dRfApplyParamsDictTagged', {
     "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
+C3dRfApplyParamsDict = _C3dRfApplyParamsDictNoTag | C3dRfApplyParamsDictTagged
 
 
-C3dRfTrainParamsDict = typing.TypedDict('C3dRfTrainParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+_C3dRfTrainParamsDictNoTag = typing.TypedDict('_C3dRfTrainParamsDictNoTag', {
     "rf_train": str,
 })
 C3dRfTrainParamsDictTagged = typing.TypedDict('C3dRfTrainParamsDictTagged', {
     "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
+C3dRfTrainParamsDict = _C3dRfTrainParamsDictNoTag | C3dRfTrainParamsDictTagged
 
 
-C3dRfParamPatchParamsDict = typing.TypedDict('C3dRfParamPatchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+_C3dRfParamPatchParamsDictNoTag = typing.TypedDict('_C3dRfParamPatchParamsDictNoTag', {
     "rf_param_patch": str,
 })
 C3dRfParamPatchParamsDictTagged = typing.TypedDict('C3dRfParamPatchParamsDictTagged', {
     "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
+C3dRfParamPatchParamsDict = _C3dRfParamPatchParamsDictNoTag | C3dRfParamPatchParamsDictTagged
 
 
-C3dRfParamUsexyzParamsDict = typing.TypedDict('C3dRfParamUsexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+_C3dRfParamUsexyzParamsDictNoTag = typing.TypedDict('_C3dRfParamUsexyzParamsDictNoTag', {
     "rf_param_usexyz": str,
 })
 C3dRfParamUsexyzParamsDictTagged = typing.TypedDict('C3dRfParamUsexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
+C3dRfParamUsexyzParamsDict = _C3dRfParamUsexyzParamsDictNoTag | C3dRfParamUsexyzParamsDictTagged
 
 
-C3dRfParamNousexyzParamsDict = typing.TypedDict('C3dRfParamNousexyzParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+_C3dRfParamNousexyzParamsDictNoTag = typing.TypedDict('_C3dRfParamNousexyzParamsDictNoTag', {
     "rf_param_nousexyz": str,
 })
 C3dRfParamNousexyzParamsDictTagged = typing.TypedDict('C3dRfParamNousexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
+C3dRfParamNousexyzParamsDict = _C3dRfParamNousexyzParamsDictNoTag | C3dRfParamNousexyzParamsDictTagged
 
 
-C3dRfParamNtreesParamsDict = typing.TypedDict('C3dRfParamNtreesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+_C3dRfParamNtreesParamsDictNoTag = typing.TypedDict('_C3dRfParamNtreesParamsDictNoTag', {
     "rf_param_ntrees": str,
 })
 C3dRfParamNtreesParamsDictTagged = typing.TypedDict('C3dRfParamNtreesParamsDictTagged', {
     "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
+C3dRfParamNtreesParamsDict = _C3dRfParamNtreesParamsDictNoTag | C3dRfParamNtreesParamsDictTagged
 
 
-C3dRfParamTreedepthParamsDict = typing.TypedDict('C3dRfParamTreedepthParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+_C3dRfParamTreedepthParamsDictNoTag = typing.TypedDict('_C3dRfParamTreedepthParamsDictNoTag', {
     "rf_param_treedepth": str,
 })
 C3dRfParamTreedepthParamsDictTagged = typing.TypedDict('C3dRfParamTreedepthParamsDictTagged', {
     "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
+C3dRfParamTreedepthParamsDict = _C3dRfParamTreedepthParamsDictNoTag | C3dRfParamTreedepthParamsDictTagged
 
 
-C3dSetSformParamsDict = typing.TypedDict('C3dSetSformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+_C3dSetSformParamsDictNoTag = typing.TypedDict('_C3dSetSformParamsDictNoTag', {
     "set_sform": str,
 })
 C3dSetSformParamsDictTagged = typing.TypedDict('C3dSetSformParamsDictTagged', {
     "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
+C3dSetSformParamsDict = _C3dSetSformParamsDictNoTag | C3dSetSformParamsDictTagged
 
 
-C3dReplaceParamsDict = typing.TypedDict('C3dReplaceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["replace"]],
+_C3dReplaceParamsDictNoTag = typing.TypedDict('_C3dReplaceParamsDictNoTag', {
     "replace": str,
 })
 C3dReplaceParamsDictTagged = typing.TypedDict('C3dReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
     "replace": str,
 })
+C3dReplaceParamsDict = _C3dReplaceParamsDictNoTag | C3dReplaceParamsDictTagged
 
 
-C3dResampleParamsDict = typing.TypedDict('C3dResampleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample"]],
+_C3dResampleParamsDictNoTag = typing.TypedDict('_C3dResampleParamsDictNoTag', {
     "resample": str,
 })
 C3dResampleParamsDictTagged = typing.TypedDict('C3dResampleParamsDictTagged', {
     "@type": typing.Literal["resample"],
     "resample": str,
 })
+C3dResampleParamsDict = _C3dResampleParamsDictNoTag | C3dResampleParamsDictTagged
 
 
-C3dResampleIsoParamsDict = typing.TypedDict('C3dResampleIsoParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+_C3dResampleIsoParamsDictNoTag = typing.TypedDict('_C3dResampleIsoParamsDictNoTag', {
     "resample_iso": str,
 })
 C3dResampleIsoParamsDictTagged = typing.TypedDict('C3dResampleIsoParamsDictTagged', {
     "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
+C3dResampleIsoParamsDict = _C3dResampleIsoParamsDictNoTag | C3dResampleIsoParamsDictTagged
 
 
-C3dResampleMmParamsDict = typing.TypedDict('C3dResampleMmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+_C3dResampleMmParamsDictNoTag = typing.TypedDict('_C3dResampleMmParamsDictNoTag', {
     "resample_mm": str,
 })
 C3dResampleMmParamsDictTagged = typing.TypedDict('C3dResampleMmParamsDictTagged', {
     "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
+C3dResampleMmParamsDict = _C3dResampleMmParamsDictNoTag | C3dResampleMmParamsDictTagged
 
 
-C3dResliceItkParamsDict = typing.TypedDict('C3dResliceItkParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+_C3dResliceItkParamsDictNoTag = typing.TypedDict('_C3dResliceItkParamsDictNoTag', {
     "reslice_itk": str,
 })
 C3dResliceItkParamsDictTagged = typing.TypedDict('C3dResliceItkParamsDictTagged', {
     "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
+C3dResliceItkParamsDict = _C3dResliceItkParamsDictNoTag | C3dResliceItkParamsDictTagged
 
 
-C3dResliceMatrixParamsDict = typing.TypedDict('C3dResliceMatrixParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+_C3dResliceMatrixParamsDictNoTag = typing.TypedDict('_C3dResliceMatrixParamsDictNoTag', {
     "reslice_matrix": str,
 })
 C3dResliceMatrixParamsDictTagged = typing.TypedDict('C3dResliceMatrixParamsDictTagged', {
     "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
+C3dResliceMatrixParamsDict = _C3dResliceMatrixParamsDictNoTag | C3dResliceMatrixParamsDictTagged
 
 
-C3dResliceIdentityParamsDict = typing.TypedDict('C3dResliceIdentityParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+_C3dResliceIdentityParamsDictNoTag = typing.TypedDict('_C3dResliceIdentityParamsDictNoTag', {
     "reslice_identity": str,
 })
 C3dResliceIdentityParamsDictTagged = typing.TypedDict('C3dResliceIdentityParamsDictTagged', {
     "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
+C3dResliceIdentityParamsDict = _C3dResliceIdentityParamsDictNoTag | C3dResliceIdentityParamsDictTagged
 
 
-C3dRgb2hsvParamsDict = typing.TypedDict('C3dRgb2hsvParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+_C3dRgb2hsvParamsDictNoTag = typing.TypedDict('_C3dRgb2hsvParamsDictNoTag', {
     "rgb2hsv": str,
 })
 C3dRgb2hsvParamsDictTagged = typing.TypedDict('C3dRgb2hsvParamsDictTagged', {
     "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
+C3dRgb2hsvParamsDict = _C3dRgb2hsvParamsDictNoTag | C3dRgb2hsvParamsDictTagged
 
 
-C3dRmsParamsDict = typing.TypedDict('C3dRmsParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["rms"]],
+_C3dRmsParamsDictNoTag = typing.TypedDict('_C3dRmsParamsDictNoTag', {
     "rms": str,
 })
 C3dRmsParamsDictTagged = typing.TypedDict('C3dRmsParamsDictTagged', {
     "@type": typing.Literal["rms"],
     "rms": str,
 })
+C3dRmsParamsDict = _C3dRmsParamsDictNoTag | C3dRmsParamsDictTagged
 
 
-C3dRoundParamsDict = typing.TypedDict('C3dRoundParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["round"]],
+_C3dRoundParamsDictNoTag = typing.TypedDict('_C3dRoundParamsDictNoTag', {
     "round": str,
 })
 C3dRoundParamsDictTagged = typing.TypedDict('C3dRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
     "round": str,
 })
+C3dRoundParamsDict = _C3dRoundParamsDictNoTag | C3dRoundParamsDictTagged
 
 
-C3dScaleParamsDict = typing.TypedDict('C3dScaleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["scale"]],
+_C3dScaleParamsDictNoTag = typing.TypedDict('_C3dScaleParamsDictNoTag', {
     "scale": str,
 })
 C3dScaleParamsDictTagged = typing.TypedDict('C3dScaleParamsDictTagged', {
     "@type": typing.Literal["scale"],
     "scale": str,
 })
+C3dScaleParamsDict = _C3dScaleParamsDictNoTag | C3dScaleParamsDictTagged
 
 
-C3dSetSform1ParamsDict = typing.TypedDict('C3dSetSform1ParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+_C3dSetSform1ParamsDictNoTag = typing.TypedDict('_C3dSetSform1ParamsDictNoTag', {
     "set_sform": str,
 })
 C3dSetSform1ParamsDictTagged = typing.TypedDict('C3dSetSform1ParamsDictTagged', {
     "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
+C3dSetSform1ParamsDict = _C3dSetSform1ParamsDictNoTag | C3dSetSform1ParamsDictTagged
 
 
-C3dSinParamsDict = typing.TypedDict('C3dSinParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sin"]],
+_C3dSinParamsDictNoTag = typing.TypedDict('_C3dSinParamsDictNoTag', {
     "sin": str,
 })
 C3dSinParamsDictTagged = typing.TypedDict('C3dSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
     "sin": str,
 })
+C3dSinParamsDict = _C3dSinParamsDictNoTag | C3dSinParamsDictTagged
 
 
-C3dSliceParamsDict = typing.TypedDict('C3dSliceParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice"]],
+_C3dSliceParamsDictNoTag = typing.TypedDict('_C3dSliceParamsDictNoTag', {
     "slice": str,
 })
 C3dSliceParamsDictTagged = typing.TypedDict('C3dSliceParamsDictTagged', {
     "@type": typing.Literal["slice"],
     "slice": str,
 })
+C3dSliceParamsDict = _C3dSliceParamsDictNoTag | C3dSliceParamsDictTagged
 
 
-C3dSliceAllParamsDict = typing.TypedDict('C3dSliceAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+_C3dSliceAllParamsDictNoTag = typing.TypedDict('_C3dSliceAllParamsDictNoTag', {
     "slice_all": str,
 })
 C3dSliceAllParamsDictTagged = typing.TypedDict('C3dSliceAllParamsDictTagged', {
     "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
+C3dSliceAllParamsDict = _C3dSliceAllParamsDictNoTag | C3dSliceAllParamsDictTagged
 
 
-C3dSharpenParamsDict = typing.TypedDict('C3dSharpenParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+_C3dSharpenParamsDictNoTag = typing.TypedDict('_C3dSharpenParamsDictNoTag', {
     "sharpen": str,
 })
 C3dSharpenParamsDictTagged = typing.TypedDict('C3dSharpenParamsDictTagged', {
     "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
+C3dSharpenParamsDict = _C3dSharpenParamsDictNoTag | C3dSharpenParamsDictTagged
 
 
-C3dShiftParamsDict = typing.TypedDict('C3dShiftParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["shift"]],
+_C3dShiftParamsDictNoTag = typing.TypedDict('_C3dShiftParamsDictNoTag', {
     "shift": str,
 })
 C3dShiftParamsDictTagged = typing.TypedDict('C3dShiftParamsDictTagged', {
     "@type": typing.Literal["shift"],
     "shift": str,
 })
+C3dShiftParamsDict = _C3dShiftParamsDictNoTag | C3dShiftParamsDictTagged
 
 
-C3dSignedDistanceTransformParamsDict = typing.TypedDict('C3dSignedDistanceTransformParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+_C3dSignedDistanceTransformParamsDictNoTag = typing.TypedDict('_C3dSignedDistanceTransformParamsDictNoTag', {
     "signed_distance_transform": str,
 })
 C3dSignedDistanceTransformParamsDictTagged = typing.TypedDict('C3dSignedDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
+C3dSignedDistanceTransformParamsDict = _C3dSignedDistanceTransformParamsDictNoTag | C3dSignedDistanceTransformParamsDictTagged
 
 
-C3dSmoothParamsDict = typing.TypedDict('C3dSmoothParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth"]],
+_C3dSmoothParamsDictNoTag = typing.TypedDict('_C3dSmoothParamsDictNoTag', {
     "smooth": str,
 })
 C3dSmoothParamsDictTagged = typing.TypedDict('C3dSmoothParamsDictTagged', {
     "@type": typing.Literal["smooth"],
     "smooth": str,
 })
+C3dSmoothParamsDict = _C3dSmoothParamsDictNoTag | C3dSmoothParamsDictTagged
 
 
-C3dSmoothFastParamsDict = typing.TypedDict('C3dSmoothFastParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+_C3dSmoothFastParamsDictNoTag = typing.TypedDict('_C3dSmoothFastParamsDictNoTag', {
     "smooth_fast": str,
 })
 C3dSmoothFastParamsDictTagged = typing.TypedDict('C3dSmoothFastParamsDictTagged', {
     "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
+C3dSmoothFastParamsDict = _C3dSmoothFastParamsDictNoTag | C3dSmoothFastParamsDictTagged
 
 
-C3dSpacingParamsDict = typing.TypedDict('C3dSpacingParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spacing"]],
+_C3dSpacingParamsDictNoTag = typing.TypedDict('_C3dSpacingParamsDictNoTag', {
     "spacing": str,
 })
 C3dSpacingParamsDictTagged = typing.TypedDict('C3dSpacingParamsDictTagged', {
     "@type": typing.Literal["spacing"],
     "spacing": str,
 })
+C3dSpacingParamsDict = _C3dSpacingParamsDictNoTag | C3dSpacingParamsDictTagged
 
 
-C3dSplitParamsDict = typing.TypedDict('C3dSplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["split"]],
+_C3dSplitParamsDictNoTag = typing.TypedDict('_C3dSplitParamsDictNoTag', {
     "split": str,
 })
 C3dSplitParamsDictTagged = typing.TypedDict('C3dSplitParamsDictTagged', {
     "@type": typing.Literal["split"],
     "split": str,
 })
+C3dSplitParamsDict = _C3dSplitParamsDictNoTag | C3dSplitParamsDictTagged
 
 
-C3dSqrtParamsDict = typing.TypedDict('C3dSqrtParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+_C3dSqrtParamsDictNoTag = typing.TypedDict('_C3dSqrtParamsDictNoTag', {
     "sqrt": str,
 })
 C3dSqrtParamsDictTagged = typing.TypedDict('C3dSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
+C3dSqrtParamsDict = _C3dSqrtParamsDictNoTag | C3dSqrtParamsDictTagged
 
 
-C3dStapleParamsDict = typing.TypedDict('C3dStapleParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["staple"]],
+_C3dStapleParamsDictNoTag = typing.TypedDict('_C3dStapleParamsDictNoTag', {
     "staple": str,
 })
 C3dStapleParamsDictTagged = typing.TypedDict('C3dStapleParamsDictTagged', {
     "@type": typing.Literal["staple"],
     "staple": str,
 })
+C3dStapleParamsDict = _C3dStapleParamsDictNoTag | C3dStapleParamsDictTagged
 
 
-C3dStructureTensorEigenvaluesParamsDict = typing.TypedDict('C3dStructureTensorEigenvaluesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+_C3dStructureTensorEigenvaluesParamsDictNoTag = typing.TypedDict('_C3dStructureTensorEigenvaluesParamsDictNoTag', {
     "structure_tensor_eigenvalues": str,
 })
 C3dStructureTensorEigenvaluesParamsDictTagged = typing.TypedDict('C3dStructureTensorEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
+C3dStructureTensorEigenvaluesParamsDict = _C3dStructureTensorEigenvaluesParamsDictNoTag | C3dStructureTensorEigenvaluesParamsDictTagged
 
 
-C3dSpmParamsDict = typing.TypedDict('C3dSpmParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["spm"]],
+_C3dSpmParamsDictNoTag = typing.TypedDict('_C3dSpmParamsDictNoTag', {
     "spm": str,
 })
 C3dSpmParamsDictTagged = typing.TypedDict('C3dSpmParamsDictTagged', {
     "@type": typing.Literal["spm"],
     "spm": str,
 })
+C3dSpmParamsDict = _C3dSpmParamsDictNoTag | C3dSpmParamsDictTagged
 
 
-C3dSubtractParamsDict = typing.TypedDict('C3dSubtractParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["subtract"]],
+_C3dSubtractParamsDictNoTag = typing.TypedDict('_C3dSubtractParamsDictNoTag', {
     "subtract": str,
 })
 C3dSubtractParamsDictTagged = typing.TypedDict('C3dSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
     "subtract": str,
 })
+C3dSubtractParamsDict = _C3dSubtractParamsDictNoTag | C3dSubtractParamsDictTagged
 
 
-C3dSupervoxelParamsDict = typing.TypedDict('C3dSupervoxelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+_C3dSupervoxelParamsDictNoTag = typing.TypedDict('_C3dSupervoxelParamsDictNoTag', {
     "supervoxel": str,
 })
 C3dSupervoxelParamsDictTagged = typing.TypedDict('C3dSupervoxelParamsDictTagged', {
     "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
+C3dSupervoxelParamsDict = _C3dSupervoxelParamsDictNoTag | C3dSupervoxelParamsDictTagged
 
 
-C3dStretchParamsDict = typing.TypedDict('C3dStretchParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["stretch"]],
+_C3dStretchParamsDictNoTag = typing.TypedDict('_C3dStretchParamsDictNoTag', {
     "stretch": str,
 })
 C3dStretchParamsDictTagged = typing.TypedDict('C3dStretchParamsDictTagged', {
     "@type": typing.Literal["stretch"],
     "stretch": str,
 })
+C3dStretchParamsDict = _C3dStretchParamsDictNoTag | C3dStretchParamsDictTagged
 
 
-C3dSwapdimParamsDict = typing.TypedDict('C3dSwapdimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+_C3dSwapdimParamsDictNoTag = typing.TypedDict('_C3dSwapdimParamsDictNoTag', {
     "swapdim": str,
 })
 C3dSwapdimParamsDictTagged = typing.TypedDict('C3dSwapdimParamsDictTagged', {
     "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
+C3dSwapdimParamsDict = _C3dSwapdimParamsDictNoTag | C3dSwapdimParamsDictTagged
 
 
-C3dTestImageParamsDict = typing.TypedDict('C3dTestImageParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_image"]],
+_C3dTestImageParamsDictNoTag = typing.TypedDict('_C3dTestImageParamsDictNoTag', {
     "test_image": str,
 })
 C3dTestImageParamsDictTagged = typing.TypedDict('C3dTestImageParamsDictTagged', {
     "@type": typing.Literal["test_image"],
     "test_image": str,
 })
+C3dTestImageParamsDict = _C3dTestImageParamsDictNoTag | C3dTestImageParamsDictTagged
 
 
-C3dTestProbeParamsDict = typing.TypedDict('C3dTestProbeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+_C3dTestProbeParamsDictNoTag = typing.TypedDict('_C3dTestProbeParamsDictNoTag', {
     "test_probe": str,
 })
 C3dTestProbeParamsDictTagged = typing.TypedDict('C3dTestProbeParamsDictTagged', {
     "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
+C3dTestProbeParamsDict = _C3dTestProbeParamsDictNoTag | C3dTestProbeParamsDictTagged
 
 
-C3dThresholdParamsDict = typing.TypedDict('C3dThresholdParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["threshold"]],
+_C3dThresholdParamsDictNoTag = typing.TypedDict('_C3dThresholdParamsDictNoTag', {
     "threshold": str,
 })
 C3dThresholdParamsDictTagged = typing.TypedDict('C3dThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "threshold": str,
 })
+C3dThresholdParamsDict = _C3dThresholdParamsDictNoTag | C3dThresholdParamsDictTagged
 
 
-C3dTileParamsDict = typing.TypedDict('C3dTileParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["tile"]],
+_C3dTileParamsDictNoTag = typing.TypedDict('_C3dTileParamsDictNoTag', {
     "tile": str,
 })
 C3dTileParamsDictTagged = typing.TypedDict('C3dTileParamsDictTagged', {
     "@type": typing.Literal["tile"],
     "tile": str,
 })
+C3dTileParamsDict = _C3dTileParamsDictNoTag | C3dTileParamsDictTagged
 
 
-C3dTrimParamsDict = typing.TypedDict('C3dTrimParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim"]],
+_C3dTrimParamsDictNoTag = typing.TypedDict('_C3dTrimParamsDictNoTag', {
     "trim": str,
 })
 C3dTrimParamsDictTagged = typing.TypedDict('C3dTrimParamsDictTagged', {
     "@type": typing.Literal["trim"],
     "trim": str,
 })
+C3dTrimParamsDict = _C3dTrimParamsDictNoTag | C3dTrimParamsDictTagged
 
 
-C3dTrimToSizeParamsDict = typing.TypedDict('C3dTrimToSizeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+_C3dTrimToSizeParamsDictNoTag = typing.TypedDict('_C3dTrimToSizeParamsDictNoTag', {
     "trim_to_size": str,
 })
 C3dTrimToSizeParamsDictTagged = typing.TypedDict('C3dTrimToSizeParamsDictTagged', {
     "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
+C3dTrimToSizeParamsDict = _C3dTrimToSizeParamsDictNoTag | C3dTrimToSizeParamsDictTagged
 
 
-C3dTypeParamsDict = typing.TypedDict('C3dTypeParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["type"]],
+_C3dTypeParamsDictNoTag = typing.TypedDict('_C3dTypeParamsDictNoTag', {
     "type": str,
 })
 C3dTypeParamsDictTagged = typing.TypedDict('C3dTypeParamsDictTagged', {
     "@type": typing.Literal["type"],
     "type": str,
 })
+C3dTypeParamsDict = _C3dTypeParamsDictNoTag | C3dTypeParamsDictTagged
 
 
-C3dVerboseParamsDict = typing.TypedDict('C3dVerboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["verbose"]],
+_C3dVerboseParamsDictNoTag = typing.TypedDict('_C3dVerboseParamsDictNoTag', {
     "verbose": str,
 })
 C3dVerboseParamsDictTagged = typing.TypedDict('C3dVerboseParamsDictTagged', {
     "@type": typing.Literal["verbose"],
     "verbose": str,
 })
+C3dVerboseParamsDict = _C3dVerboseParamsDictNoTag | C3dVerboseParamsDictTagged
 
 
-C3dNoverboseParamsDict = typing.TypedDict('C3dNoverboseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+_C3dNoverboseParamsDictNoTag = typing.TypedDict('_C3dNoverboseParamsDictNoTag', {
     "noverbose": str,
 })
 C3dNoverboseParamsDictTagged = typing.TypedDict('C3dNoverboseParamsDictTagged', {
     "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
+C3dNoverboseParamsDict = _C3dNoverboseParamsDictNoTag | C3dNoverboseParamsDictTagged
 
 
-C3dVersionParamsDict = typing.TypedDict('C3dVersionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["version"]],
+_C3dVersionParamsDictNoTag = typing.TypedDict('_C3dVersionParamsDictNoTag', {
     "version": str,
 })
 C3dVersionParamsDictTagged = typing.TypedDict('C3dVersionParamsDictTagged', {
     "@type": typing.Literal["version"],
     "version": str,
 })
+C3dVersionParamsDict = _C3dVersionParamsDictNoTag | C3dVersionParamsDictTagged
 
 
-C3dVoteParamsDict = typing.TypedDict('C3dVoteParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote"]],
+_C3dVoteParamsDictNoTag = typing.TypedDict('_C3dVoteParamsDictNoTag', {
     "vote": str,
 })
 C3dVoteParamsDictTagged = typing.TypedDict('C3dVoteParamsDictTagged', {
     "@type": typing.Literal["vote"],
     "vote": str,
 })
+C3dVoteParamsDict = _C3dVoteParamsDictNoTag | C3dVoteParamsDictTagged
 
 
-C3dVoteMrfParamsDict = typing.TypedDict('C3dVoteMrfParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+_C3dVoteMrfParamsDictNoTag = typing.TypedDict('_C3dVoteMrfParamsDictNoTag', {
     "vote_mrf": str,
 })
 C3dVoteMrfParamsDictTagged = typing.TypedDict('C3dVoteMrfParamsDictTagged', {
     "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
+C3dVoteMrfParamsDict = _C3dVoteMrfParamsDictNoTag | C3dVoteMrfParamsDictTagged
 
 
-C3dVoteLabelParamsDict = typing.TypedDict('C3dVoteLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+_C3dVoteLabelParamsDictNoTag = typing.TypedDict('_C3dVoteLabelParamsDictNoTag', {
     "vote_label": str,
 })
 C3dVoteLabelParamsDictTagged = typing.TypedDict('C3dVoteLabelParamsDictTagged', {
     "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
+C3dVoteLabelParamsDict = _C3dVoteLabelParamsDictNoTag | C3dVoteLabelParamsDictTagged
 
 
-C3dVoxelSumParamsDict = typing.TypedDict('C3dVoxelSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+_C3dVoxelSumParamsDictNoTag = typing.TypedDict('_C3dVoxelSumParamsDictNoTag', {
     "voxel_sum": str,
 })
 C3dVoxelSumParamsDictTagged = typing.TypedDict('C3dVoxelSumParamsDictTagged', {
     "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
+C3dVoxelSumParamsDict = _C3dVoxelSumParamsDictNoTag | C3dVoxelSumParamsDictTagged
 
 
-C3dVoxelIntegralParamsDict = typing.TypedDict('C3dVoxelIntegralParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+_C3dVoxelIntegralParamsDictNoTag = typing.TypedDict('_C3dVoxelIntegralParamsDictNoTag', {
     "voxel_integral": str,
 })
 C3dVoxelIntegralParamsDictTagged = typing.TypedDict('C3dVoxelIntegralParamsDictTagged', {
     "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
+C3dVoxelIntegralParamsDict = _C3dVoxelIntegralParamsDictNoTag | C3dVoxelIntegralParamsDictTagged
 
 
-C3dVoxelwiseRegressionParamsDict = typing.TypedDict('C3dVoxelwiseRegressionParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+_C3dVoxelwiseRegressionParamsDictNoTag = typing.TypedDict('_C3dVoxelwiseRegressionParamsDictNoTag', {
     "voxelwise_regression": str,
 })
 C3dVoxelwiseRegressionParamsDictTagged = typing.TypedDict('C3dVoxelwiseRegressionParamsDictTagged', {
     "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
+C3dVoxelwiseRegressionParamsDict = _C3dVoxelwiseRegressionParamsDictNoTag | C3dVoxelwiseRegressionParamsDictTagged
 
 
-C3dWarpParamsDict = typing.TypedDict('C3dWarpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp"]],
+_C3dWarpParamsDictNoTag = typing.TypedDict('_C3dWarpParamsDictNoTag', {
     "warp": str,
 })
 C3dWarpParamsDictTagged = typing.TypedDict('C3dWarpParamsDictTagged', {
     "@type": typing.Literal["warp"],
     "warp": str,
 })
+C3dWarpParamsDict = _C3dWarpParamsDictNoTag | C3dWarpParamsDictTagged
 
 
-C3dWarpLabelParamsDict = typing.TypedDict('C3dWarpLabelParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+_C3dWarpLabelParamsDictNoTag = typing.TypedDict('_C3dWarpLabelParamsDictNoTag', {
     "warp_label": str,
 })
 C3dWarpLabelParamsDictTagged = typing.TypedDict('C3dWarpLabelParamsDictTagged', {
     "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
+C3dWarpLabelParamsDict = _C3dWarpLabelParamsDictNoTag | C3dWarpLabelParamsDictTagged
 
 
-C3dWrapParamsDict = typing.TypedDict('C3dWrapParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["wrap"]],
+_C3dWrapParamsDictNoTag = typing.TypedDict('_C3dWrapParamsDictNoTag', {
     "wrap": str,
 })
 C3dWrapParamsDictTagged = typing.TypedDict('C3dWrapParamsDictTagged', {
     "@type": typing.Literal["wrap"],
     "wrap": str,
 })
+C3dWrapParamsDict = _C3dWrapParamsDictNoTag | C3dWrapParamsDictTagged
 
 
-C3dWeightedSumParamsDict = typing.TypedDict('C3dWeightedSumParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+_C3dWeightedSumParamsDictNoTag = typing.TypedDict('_C3dWeightedSumParamsDictNoTag', {
     "weighted_sum": str,
 })
 C3dWeightedSumParamsDictTagged = typing.TypedDict('C3dWeightedSumParamsDictTagged', {
     "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
+C3dWeightedSumParamsDict = _C3dWeightedSumParamsDictNoTag | C3dWeightedSumParamsDictTagged
 
 
-C3dWeightedSumVoxelwiseParamsDict = typing.TypedDict('C3dWeightedSumVoxelwiseParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+_C3dWeightedSumVoxelwiseParamsDictNoTag = typing.TypedDict('_C3dWeightedSumVoxelwiseParamsDictNoTag', {
     "weighted_sum_voxelwise": str,
 })
 C3dWeightedSumVoxelwiseParamsDictTagged = typing.TypedDict('C3dWeightedSumVoxelwiseParamsDictTagged', {
     "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
+C3dWeightedSumVoxelwiseParamsDict = _C3dWeightedSumVoxelwiseParamsDictNoTag | C3dWeightedSumVoxelwiseParamsDictTagged
 
 
-C3dParamsDict = typing.TypedDict('C3dParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["c3d/c3d"]],
+_C3dParamsDictNoTag = typing.TypedDict('_C3dParamsDictNoTag', {
     "input": list[InputPathType],
     "operations": list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
@@ -1815,6 +1814,7 @@ C3dParamsDictTagged = typing.TypedDict('C3dParamsDictTagged', {
     "operations": list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
 })
+C3dParamsDict = _C3dParamsDictNoTag | C3dParamsDictTagged
 
 
 def c3d_operations_cargs_dyn_fn(

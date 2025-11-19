@@ -13,8 +13,7 @@ MKXSUBJREG_METADATA = Metadata(
 )
 
 
-MkxsubjregParamsDict = typing.TypedDict('MkxsubjregParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mkxsubjreg"]],
+_MkxsubjregParamsDictNoTag = typing.TypedDict('_MkxsubjregParamsDictNoTag', {
     "srcreg": InputPathType,
     "targreg": InputPathType,
     "targsubj": typing.NotRequired[str | None],
@@ -35,6 +34,7 @@ MkxsubjregParamsDictTagged = typing.TypedDict('MkxsubjregParamsDictTagged', {
     "help": bool,
     "version": bool,
 })
+MkxsubjregParamsDict = _MkxsubjregParamsDictNoTag | MkxsubjregParamsDictTagged
 
 
 class MkxsubjregOutputs(typing.NamedTuple):

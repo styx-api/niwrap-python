@@ -13,8 +13,7 @@ T4IMGS_4DFP_METADATA = Metadata(
 )
 
 
-T4imgs4dfpParamsDict = typing.TypedDict('T4imgs4dfpParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/t4imgs_4dfp"]],
+_T4imgs4dfpParamsDictNoTag = typing.TypedDict('_T4imgs4dfpParamsDictNoTag', {
     "sqrt_normalize": bool,
     "cubic_spline": bool,
     "output_nan": bool,
@@ -45,6 +44,7 @@ T4imgs4dfpParamsDictTagged = typing.TypedDict('T4imgs4dfpParamsDictTagged', {
     "input_images": list[InputPathType],
     "output_image": str,
 })
+T4imgs4dfpParamsDict = _T4imgs4dfpParamsDictNoTag | T4imgs4dfpParamsDictTagged
 
 
 class T4imgs4dfpOutputs(typing.NamedTuple):

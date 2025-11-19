@@ -13,8 +13,7 @@ SAMP_BIAS_METADATA = Metadata(
 )
 
 
-SampBiasParamsDict = typing.TypedDict('SampBiasParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/SampBias"]],
+_SampBiasParamsDictNoTag = typing.TypedDict('_SampBiasParamsDictNoTag', {
     "specfile": InputPathType,
     "surfname": str,
     "plimit": typing.NotRequired[float | None],
@@ -33,6 +32,7 @@ SampBiasParamsDictTagged = typing.TypedDict('SampBiasParamsDictTagged', {
     "prefix": typing.NotRequired[str | None],
     "segdo": typing.NotRequired[str | None],
 })
+SampBiasParamsDict = _SampBiasParamsDictNoTag | SampBiasParamsDictTagged
 
 
 class SampBiasOutputs(typing.NamedTuple):

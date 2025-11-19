@@ -13,8 +13,7 @@ MRI_SURF2VOLSEG_METADATA = Metadata(
 )
 
 
-MriSurf2volsegParamsDict = typing.TypedDict('MriSurf2volsegParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2volseg"]],
+_MriSurf2volsegParamsDictNoTag = typing.TypedDict('_MriSurf2volsegParamsDictNoTag', {
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "source_segmentation": typing.NotRequired[InputPathType | None],
@@ -69,6 +68,7 @@ MriSurf2volsegParamsDictTagged = typing.TypedDict('MriSurf2volsegParamsDictTagge
     "ctab_file": typing.NotRequired[InputPathType | None],
     "threads_number": typing.NotRequired[float | None],
 })
+MriSurf2volsegParamsDict = _MriSurf2volsegParamsDictNoTag | MriSurf2volsegParamsDictTagged
 
 
 class MriSurf2volsegOutputs(typing.NamedTuple):

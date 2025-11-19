@@ -12,8 +12,7 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceAllToAllParamsDict = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-all-to-all"]],
+_SurfaceGeodesicDistanceAllToAllParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceAllToAllParamsDictNoTag', {
     "cifti-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "limit-mm": typing.NotRequired[float | None],
@@ -30,6 +29,7 @@ SurfaceGeodesicDistanceAllToAllParamsDictTagged = typing.TypedDict('SurfaceGeode
     "naive": bool,
     "surface": InputPathType,
 })
+SurfaceGeodesicDistanceAllToAllParamsDict = _SurfaceGeodesicDistanceAllToAllParamsDictNoTag | SurfaceGeodesicDistanceAllToAllParamsDictTagged
 
 
 class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):

@@ -13,8 +13,7 @@ V_3DBUCKET_METADATA = Metadata(
 )
 
 
-V3dbucketParamsDict = typing.TypedDict('V3dbucketParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["afni/3dbucket"]],
+_V3dbucketParamsDictNoTag = typing.TypedDict('_V3dbucketParamsDictNoTag', {
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -39,6 +38,7 @@ V3dbucketParamsDictTagged = typing.TypedDict('V3dbucketParamsDictTagged', {
     "abuc": bool,
     "input_files": list[str],
 })
+V3dbucketParamsDict = _V3dbucketParamsDictNoTag | V3dbucketParamsDictTagged
 
 
 class V3dbucketOutputs(typing.NamedTuple):

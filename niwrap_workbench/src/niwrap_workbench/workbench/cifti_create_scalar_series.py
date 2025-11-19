@@ -12,8 +12,7 @@ CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
 )
 
 
-CiftiCreateScalarSeriesSeriesParamsDict = typing.TypedDict('CiftiCreateScalarSeriesSeriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["series"]],
+_CiftiCreateScalarSeriesSeriesParamsDictNoTag = typing.TypedDict('_CiftiCreateScalarSeriesSeriesParamsDictNoTag', {
     "unit": str,
     "start": float,
     "step": float,
@@ -24,10 +23,10 @@ CiftiCreateScalarSeriesSeriesParamsDictTagged = typing.TypedDict('CiftiCreateSca
     "start": float,
     "step": float,
 })
+CiftiCreateScalarSeriesSeriesParamsDict = _CiftiCreateScalarSeriesSeriesParamsDictNoTag | CiftiCreateScalarSeriesSeriesParamsDictTagged
 
 
-CiftiCreateScalarSeriesParamsDict = typing.TypedDict('CiftiCreateScalarSeriesParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-scalar-series"]],
+_CiftiCreateScalarSeriesParamsDictNoTag = typing.TypedDict('_CiftiCreateScalarSeriesParamsDictNoTag', {
     "cifti-out": str,
     "transpose": bool,
     "file": typing.NotRequired[str | None],
@@ -42,6 +41,7 @@ CiftiCreateScalarSeriesParamsDictTagged = typing.TypedDict('CiftiCreateScalarSer
     "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParamsDict | None],
     "input": str,
 })
+CiftiCreateScalarSeriesParamsDict = _CiftiCreateScalarSeriesParamsDictNoTag | CiftiCreateScalarSeriesParamsDictTagged
 
 
 def cifti_create_scalar_series_series(

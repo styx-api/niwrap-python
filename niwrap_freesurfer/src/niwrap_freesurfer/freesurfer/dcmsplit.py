@@ -13,8 +13,7 @@ DCMSPLIT_METADATA = Metadata(
 )
 
 
-DcmsplitParamsDict = typing.TypedDict('DcmsplitParamsDict', {
-    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmsplit"]],
+_DcmsplitParamsDictNoTag = typing.TypedDict('_DcmsplitParamsDictNoTag', {
     "dcm_dir": str,
     "out_dir": str,
     "copy": bool,
@@ -39,6 +38,7 @@ DcmsplitParamsDictTagged = typing.TypedDict('DcmsplitParamsDictTagged', {
     "dicom_tag": typing.NotRequired[str | None],
     "study_description": bool,
 })
+DcmsplitParamsDict = _DcmsplitParamsDictNoTag | DcmsplitParamsDictTagged
 
 
 class DcmsplitOutputs(typing.NamedTuple):
