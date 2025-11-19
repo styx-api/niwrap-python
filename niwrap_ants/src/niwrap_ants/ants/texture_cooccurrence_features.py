@@ -13,7 +13,7 @@ TEXTURE_COOCCURRENCE_FEATURES_METADATA = Metadata(
 )
 
 
-TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFeaturesParameters', {
+TextureCooccurrenceFeaturesParamsDict = typing.TypedDict('TextureCooccurrenceFeaturesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/TextureCooccurrenceFeatures"]],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -21,7 +21,7 @@ TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFea
     "mask_image": typing.NotRequired[InputPathType | None],
     "mask_label": typing.NotRequired[int | None],
 })
-TextureCooccurrenceFeaturesParametersTagged = typing.TypedDict('TextureCooccurrenceFeaturesParametersTagged', {
+TextureCooccurrenceFeaturesParamsDictTagged = typing.TypedDict('TextureCooccurrenceFeaturesParamsDictTagged', {
     "@type": typing.Literal["ants/TextureCooccurrenceFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -33,7 +33,7 @@ TextureCooccurrenceFeaturesParametersTagged = typing.TypedDict('TextureCooccurre
 
 class TextureCooccurrenceFeaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TextureCooccurrenceFeaturesParameters(...)`.
+    Output object returned when calling `TextureCooccurrenceFeaturesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def texture_cooccurrence_features_params(
     number_of_bins_per_axis: int | None = None,
     mask_image: InputPathType | None = None,
     mask_label: int | None = None,
-) -> TextureCooccurrenceFeaturesParametersTagged:
+) -> TextureCooccurrenceFeaturesParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def texture_cooccurrence_features_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TextureCooccurrenceFeaturesParameters` object.
+    `TextureCooccurrenceFeaturesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def texture_cooccurrence_features_validate(
 
 
 def texture_cooccurrence_features_cargs(
-    params: TextureCooccurrenceFeaturesParameters,
+    params: TextureCooccurrenceFeaturesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def texture_cooccurrence_features_cargs(
 
 
 def texture_cooccurrence_features_outputs(
-    params: TextureCooccurrenceFeaturesParameters,
+    params: TextureCooccurrenceFeaturesParamsDict,
     execution: Execution,
 ) -> TextureCooccurrenceFeaturesOutputs:
     """
@@ -158,7 +158,7 @@ def texture_cooccurrence_features_outputs(
 
 
 def texture_cooccurrence_features_execute(
-    params: TextureCooccurrenceFeaturesParameters,
+    params: TextureCooccurrenceFeaturesParamsDict,
     runner: Runner | None = None,
 ) -> TextureCooccurrenceFeaturesOutputs:
     """
@@ -235,6 +235,8 @@ def texture_cooccurrence_features(
 __all__ = [
     "TEXTURE_COOCCURRENCE_FEATURES_METADATA",
     "TextureCooccurrenceFeaturesOutputs",
+    "TextureCooccurrenceFeaturesParamsDict",
+    "TextureCooccurrenceFeaturesParamsDictTagged",
     "texture_cooccurrence_features",
     "texture_cooccurrence_features_execute",
     "texture_cooccurrence_features_params",

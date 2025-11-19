@@ -12,14 +12,14 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 )
 
 
-VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameters', {
+VolumeCopyExtensionsParamsDict = typing.TypedDict('VolumeCopyExtensionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-copy-extensions"]],
     "volume-out": str,
     "drop-unknown": bool,
     "data-volume": InputPathType,
     "extension-volume": InputPathType,
 })
-VolumeCopyExtensionsParametersTagged = typing.TypedDict('VolumeCopyExtensionsParametersTagged', {
+VolumeCopyExtensionsParamsDictTagged = typing.TypedDict('VolumeCopyExtensionsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-copy-extensions"],
     "volume-out": str,
     "drop-unknown": bool,
@@ -30,7 +30,7 @@ VolumeCopyExtensionsParametersTagged = typing.TypedDict('VolumeCopyExtensionsPar
 
 class VolumeCopyExtensionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeCopyExtensionsParameters(...)`.
+    Output object returned when calling `VolumeCopyExtensionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def volume_copy_extensions_params(
     data_volume: InputPathType,
     extension_volume: InputPathType,
     drop_unknown: bool = False,
-) -> VolumeCopyExtensionsParametersTagged:
+) -> VolumeCopyExtensionsParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def volume_copy_extensions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeCopyExtensionsParameters` object.
+    `VolumeCopyExtensionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def volume_copy_extensions_validate(
 
 
 def volume_copy_extensions_cargs(
-    params: VolumeCopyExtensionsParameters,
+    params: VolumeCopyExtensionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def volume_copy_extensions_cargs(
 
 
 def volume_copy_extensions_outputs(
-    params: VolumeCopyExtensionsParameters,
+    params: VolumeCopyExtensionsParamsDict,
     execution: Execution,
 ) -> VolumeCopyExtensionsOutputs:
     """
@@ -142,7 +142,7 @@ def volume_copy_extensions_outputs(
 
 
 def volume_copy_extensions_execute(
-    params: VolumeCopyExtensionsParameters,
+    params: VolumeCopyExtensionsParamsDict,
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
@@ -205,6 +205,8 @@ def volume_copy_extensions(
 __all__ = [
     "VOLUME_COPY_EXTENSIONS_METADATA",
     "VolumeCopyExtensionsOutputs",
+    "VolumeCopyExtensionsParamsDict",
+    "VolumeCopyExtensionsParamsDictTagged",
     "volume_copy_extensions",
     "volume_copy_extensions_execute",
     "volume_copy_extensions_params",

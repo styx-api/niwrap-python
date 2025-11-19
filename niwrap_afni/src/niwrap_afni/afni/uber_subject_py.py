@@ -13,7 +13,7 @@ UBER_SUBJECT_PY_METADATA = Metadata(
 )
 
 
-UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
+UberSubjectPyParamsDict = typing.TypedDict('UberSubjectPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/uber_subject.py"]],
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
     "volreg_base": typing.NotRequired[str | None],
     "verb": typing.NotRequired[str | None],
 })
-UberSubjectPyParametersTagged = typing.TypedDict('UberSubjectPyParametersTagged', {
+UberSubjectPyParamsDictTagged = typing.TypedDict('UberSubjectPyParamsDictTagged', {
     "@type": typing.Literal["afni/uber_subject.py"],
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
@@ -109,7 +109,7 @@ UberSubjectPyParametersTagged = typing.TypedDict('UberSubjectPyParametersTagged'
 
 class UberSubjectPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UberSubjectPyParameters(...)`.
+    Output object returned when calling `UberSubjectPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -159,7 +159,7 @@ def uber_subject_py_params(
     tlrc_opts_at: str | None = None,
     volreg_base: str | None = None,
     verb: str | None = None,
-) -> UberSubjectPyParametersTagged:
+) -> UberSubjectPyParamsDictTagged:
     """
     Build parameters.
     
@@ -303,7 +303,7 @@ def uber_subject_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UberSubjectPyParameters` object.
+    `UberSubjectPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -446,7 +446,7 @@ def uber_subject_py_validate(
 
 
 def uber_subject_py_cargs(
-    params: UberSubjectPyParameters,
+    params: UberSubjectPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -667,7 +667,7 @@ def uber_subject_py_cargs(
 
 
 def uber_subject_py_outputs(
-    params: UberSubjectPyParameters,
+    params: UberSubjectPyParamsDict,
     execution: Execution,
 ) -> UberSubjectPyOutputs:
     """
@@ -686,7 +686,7 @@ def uber_subject_py_outputs(
 
 
 def uber_subject_py_execute(
-    params: UberSubjectPyParameters,
+    params: UberSubjectPyParamsDict,
     runner: Runner | None = None,
 ) -> UberSubjectPyOutputs:
     """
@@ -868,6 +868,8 @@ def uber_subject_py(
 __all__ = [
     "UBER_SUBJECT_PY_METADATA",
     "UberSubjectPyOutputs",
+    "UberSubjectPyParamsDict",
+    "UberSubjectPyParamsDictTagged",
     "uber_subject_py",
     "uber_subject_py_execute",
     "uber_subject_py_params",

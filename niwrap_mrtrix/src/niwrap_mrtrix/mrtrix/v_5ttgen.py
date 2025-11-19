@@ -13,13 +13,13 @@ V_5TTGEN_METADATA = Metadata(
 )
 
 
-V5ttgenFreesurferParameters = typing.TypedDict('V5ttgenFreesurferParameters', {
+V5ttgenFreesurferParamsDict = typing.TypedDict('V5ttgenFreesurferParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer"]],
     "input": InputPathType,
     "output": str,
     "lut": typing.NotRequired[InputPathType | None],
 })
-V5ttgenFreesurferParametersTagged = typing.TypedDict('V5ttgenFreesurferParametersTagged', {
+V5ttgenFreesurferParamsDictTagged = typing.TypedDict('V5ttgenFreesurferParamsDictTagged', {
     "@type": typing.Literal["freesurfer"],
     "input": InputPathType,
     "output": str,
@@ -27,7 +27,7 @@ V5ttgenFreesurferParametersTagged = typing.TypedDict('V5ttgenFreesurferParameter
 })
 
 
-V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
+V5ttgenFslParamsDict = typing.TypedDict('V5ttgenFslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl"]],
     "input": InputPathType,
     "output": str,
@@ -35,7 +35,7 @@ V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "premasked": bool,
 })
-V5ttgenFslParametersTagged = typing.TypedDict('V5ttgenFslParametersTagged', {
+V5ttgenFslParamsDictTagged = typing.TypedDict('V5ttgenFslParamsDictTagged', {
     "@type": typing.Literal["fsl"],
     "input": InputPathType,
     "output": str,
@@ -45,19 +45,19 @@ V5ttgenFslParametersTagged = typing.TypedDict('V5ttgenFslParametersTagged', {
 })
 
 
-V5ttgenGifParameters = typing.TypedDict('V5ttgenGifParameters', {
+V5ttgenGifParamsDict = typing.TypedDict('V5ttgenGifParamsDict', {
     "@type": typing.NotRequired[typing.Literal["gif"]],
     "input": InputPathType,
     "output": str,
 })
-V5ttgenGifParametersTagged = typing.TypedDict('V5ttgenGifParametersTagged', {
+V5ttgenGifParamsDictTagged = typing.TypedDict('V5ttgenGifParamsDictTagged', {
     "@type": typing.Literal["gif"],
     "input": InputPathType,
     "output": str,
 })
 
 
-V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
+V5ttgenHsvsParamsDict = typing.TypedDict('V5ttgenHsvsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["hsvs"]],
     "input": InputPathType,
     "output": str,
@@ -66,7 +66,7 @@ V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
     "thalami": typing.NotRequired[typing.Literal["nuclei", "first", "aseg"] | None],
     "white_stem": bool,
 })
-V5ttgenHsvsParametersTagged = typing.TypedDict('V5ttgenHsvsParametersTagged', {
+V5ttgenHsvsParamsDictTagged = typing.TypedDict('V5ttgenHsvsParamsDictTagged', {
     "@type": typing.Literal["hsvs"],
     "input": InputPathType,
     "output": str,
@@ -77,21 +77,21 @@ V5ttgenHsvsParametersTagged = typing.TypedDict('V5ttgenHsvsParametersTagged', {
 })
 
 
-V5ttgenConfigParameters = typing.TypedDict('V5ttgenConfigParameters', {
+V5ttgenConfigParamsDict = typing.TypedDict('V5ttgenConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-V5ttgenConfigParametersTagged = typing.TypedDict('V5ttgenConfigParametersTagged', {
+V5ttgenConfigParamsDictTagged = typing.TypedDict('V5ttgenConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-V5ttgenParameters = typing.TypedDict('V5ttgenParameters', {
+V5ttgenParamsDict = typing.TypedDict('V5ttgenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/5ttgen"]],
-    "algorithm": typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
+    "algorithm": typing.Union[V5ttgenFreesurferParamsDictTagged, V5ttgenFslParamsDictTagged, V5ttgenGifParamsDictTagged, V5ttgenHsvsParamsDictTagged],
     "nocrop": bool,
     "sgm_amyg_hipp": bool,
     "nocleanup": bool,
@@ -102,13 +102,13 @@ V5ttgenParameters = typing.TypedDict('V5ttgenParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5ttgenConfigParameters] | None],
+    "config": typing.NotRequired[list[V5ttgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
 })
-V5ttgenParametersTagged = typing.TypedDict('V5ttgenParametersTagged', {
+V5ttgenParamsDictTagged = typing.TypedDict('V5ttgenParamsDictTagged', {
     "@type": typing.Literal["mrtrix/5ttgen"],
-    "algorithm": typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
+    "algorithm": typing.Union[V5ttgenFreesurferParamsDictTagged, V5ttgenFslParamsDictTagged, V5ttgenGifParamsDictTagged, V5ttgenHsvsParamsDictTagged],
     "nocrop": bool,
     "sgm_amyg_hipp": bool,
     "nocleanup": bool,
@@ -119,7 +119,7 @@ V5ttgenParametersTagged = typing.TypedDict('V5ttgenParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5ttgenConfigParameters] | None],
+    "config": typing.NotRequired[list[V5ttgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
 })
@@ -165,7 +165,7 @@ def v_5ttgen_algorithm_validate_dyn_fn(
 
 class V5ttgenFreesurferOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttgenFreesurferParameters(...)`.
+    Output object returned when calling `V5ttgenFreesurferParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -173,11 +173,11 @@ class V5ttgenFreesurferOutputs(typing.NamedTuple):
     """The output 5TT image"""
 
 
-def v_5ttgen_freesurfer_params(
+def v_5ttgen_freesurfer(
     input_: InputPathType,
     output: str,
     lut: InputPathType | None = None,
-) -> V5ttgenFreesurferParametersTagged:
+) -> V5ttgenFreesurferParamsDictTagged:
     """
     Build parameters.
     
@@ -205,7 +205,7 @@ def v_5ttgen_freesurfer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenFreesurferParameters` object.
+    `V5ttgenFreesurferParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def v_5ttgen_freesurfer_validate(
 
 
 def v_5ttgen_freesurfer_cargs(
-    params: V5ttgenFreesurferParameters,
+    params: V5ttgenFreesurferParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -251,7 +251,7 @@ def v_5ttgen_freesurfer_cargs(
 
 
 def v_5ttgen_freesurfer_outputs(
-    params: V5ttgenFreesurferParameters,
+    params: V5ttgenFreesurferParamsDict,
     execution: Execution,
 ) -> V5ttgenFreesurferOutputs:
     """
@@ -272,7 +272,7 @@ def v_5ttgen_freesurfer_outputs(
 
 class V5ttgenFslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttgenFslParameters(...)`.
+    Output object returned when calling `V5ttgenFslParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -280,13 +280,13 @@ class V5ttgenFslOutputs(typing.NamedTuple):
     """The output 5TT image"""
 
 
-def v_5ttgen_fsl_params(
+def v_5ttgen_fsl(
     input_: InputPathType,
     output: str,
     t2: InputPathType | None = None,
     mask: InputPathType | None = None,
     premasked: bool = False,
-) -> V5ttgenFslParametersTagged:
+) -> V5ttgenFslParamsDictTagged:
     """
     Build parameters.
     
@@ -320,7 +320,7 @@ def v_5ttgen_fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenFslParameters` object.
+    `V5ttgenFslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -348,7 +348,7 @@ def v_5ttgen_fsl_validate(
 
 
 def v_5ttgen_fsl_cargs(
-    params: V5ttgenFslParameters,
+    params: V5ttgenFslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -380,7 +380,7 @@ def v_5ttgen_fsl_cargs(
 
 
 def v_5ttgen_fsl_outputs(
-    params: V5ttgenFslParameters,
+    params: V5ttgenFslParamsDict,
     execution: Execution,
 ) -> V5ttgenFslOutputs:
     """
@@ -401,7 +401,7 @@ def v_5ttgen_fsl_outputs(
 
 class V5ttgenGifOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttgenGifParameters(...)`.
+    Output object returned when calling `V5ttgenGifParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -409,10 +409,10 @@ class V5ttgenGifOutputs(typing.NamedTuple):
     """The output 5TT image"""
 
 
-def v_5ttgen_gif_params(
+def v_5ttgen_gif(
     input_: InputPathType,
     output: str,
-) -> V5ttgenGifParametersTagged:
+) -> V5ttgenGifParamsDictTagged:
     """
     Build parameters.
     
@@ -435,7 +435,7 @@ def v_5ttgen_gif_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenGifParameters` object.
+    `V5ttgenGifParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -453,7 +453,7 @@ def v_5ttgen_gif_validate(
 
 
 def v_5ttgen_gif_cargs(
-    params: V5ttgenGifParameters,
+    params: V5ttgenGifParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -473,7 +473,7 @@ def v_5ttgen_gif_cargs(
 
 
 def v_5ttgen_gif_outputs(
-    params: V5ttgenGifParameters,
+    params: V5ttgenGifParamsDict,
     execution: Execution,
 ) -> V5ttgenGifOutputs:
     """
@@ -494,7 +494,7 @@ def v_5ttgen_gif_outputs(
 
 class V5ttgenHsvsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttgenHsvsParameters(...)`.
+    Output object returned when calling `V5ttgenHsvsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -502,14 +502,14 @@ class V5ttgenHsvsOutputs(typing.NamedTuple):
     """The output 5TT image"""
 
 
-def v_5ttgen_hsvs_params(
+def v_5ttgen_hsvs(
     input_: InputPathType,
     output: str,
     template: InputPathType | None = None,
     hippocampi: typing.Literal["subfields", "first", "aseg"] | None = None,
     thalami: typing.Literal["nuclei", "first", "aseg"] | None = None,
     white_stem: bool = False,
-) -> V5ttgenHsvsParametersTagged:
+) -> V5ttgenHsvsParamsDictTagged:
     """
     Build parameters.
     
@@ -546,7 +546,7 @@ def v_5ttgen_hsvs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenHsvsParameters` object.
+    `V5ttgenHsvsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -581,7 +581,7 @@ def v_5ttgen_hsvs_validate(
 
 
 def v_5ttgen_hsvs_cargs(
-    params: V5ttgenHsvsParameters,
+    params: V5ttgenHsvsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -618,7 +618,7 @@ def v_5ttgen_hsvs_cargs(
 
 
 def v_5ttgen_hsvs_outputs(
-    params: V5ttgenHsvsParameters,
+    params: V5ttgenHsvsParamsDict,
     execution: Execution,
 ) -> V5ttgenHsvsOutputs:
     """
@@ -637,10 +637,10 @@ def v_5ttgen_hsvs_outputs(
     return ret
 
 
-def v_5ttgen_config_params(
+def v_5ttgen_config(
     key: str,
     value: str,
-) -> V5ttgenConfigParametersTagged:
+) -> V5ttgenConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -663,7 +663,7 @@ def v_5ttgen_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenConfigParameters` object.
+    `V5ttgenConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -681,7 +681,7 @@ def v_5ttgen_config_validate(
 
 
 def v_5ttgen_config_cargs(
-    params: V5ttgenConfigParameters,
+    params: V5ttgenConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -702,17 +702,17 @@ def v_5ttgen_config_cargs(
 
 class V5ttgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttgenParameters(...)`.
+    Output object returned when calling `V5ttgenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     algorithm: typing.Union[V5ttgenFreesurferOutputs, V5ttgenFslOutputs, V5ttgenGifOutputs, V5ttgenHsvsOutputs]
-    """Outputs from `V5ttgenFreesurferParameters` or `V5ttgenFslParameters` or
-    `V5ttgenGifParameters` or `V5ttgenHsvsParameters`."""
+    """Outputs from `V5ttgenFreesurferParamsDict` or `V5ttgenFslParamsDict` or
+    `V5ttgenGifParamsDict` or `V5ttgenHsvsParamsDict`."""
 
 
 def v_5ttgen_params(
-    algorithm: typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
+    algorithm: typing.Union[V5ttgenFreesurferParamsDictTagged, V5ttgenFslParamsDictTagged, V5ttgenGifParamsDictTagged, V5ttgenHsvsParamsDictTagged],
     nocrop: bool = False,
     sgm_amyg_hipp: bool = False,
     nocleanup: bool = False,
@@ -723,10 +723,10 @@ def v_5ttgen_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5ttgenConfigParameters] | None = None,
+    config: list[V5ttgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5ttgenParametersTagged:
+) -> V5ttgenParamsDictTagged:
     """
     Build parameters.
     
@@ -789,7 +789,7 @@ def v_5ttgen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttgenParameters` object.
+    `V5ttgenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -802,6 +802,8 @@ def v_5ttgen_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["algorithm"])}\'')
     if "@type" not in params["algorithm"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["algorithm"]["@type"] not in ["freesurfer", "fsl", "gif", "hsvs"]:
+        raise StyxValidationError("Parameter `algorithm`s `@type` must be one of [\"freesurfer\", \"fsl\", \"gif\", \"hsvs\"]")
     v_5ttgen_algorithm_validate_dyn_fn(params["algorithm"]["@type"])(params["algorithm"])
     if params.get("nocrop", False) is None:
         raise StyxValidationError("`nocrop` must not be None")
@@ -842,7 +844,7 @@ def v_5ttgen_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5ttgenConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5ttgenConfigParamsDict] | None`')
         for e in params["config"]:
             v_5ttgen_config_validate(e)
     if params.get("help", False) is None:
@@ -856,7 +858,7 @@ def v_5ttgen_validate(
 
 
 def v_5ttgen_cargs(
-    params: V5ttgenParameters,
+    params: V5ttgenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -910,7 +912,7 @@ def v_5ttgen_cargs(
 
 
 def v_5ttgen_outputs(
-    params: V5ttgenParameters,
+    params: V5ttgenParamsDict,
     execution: Execution,
 ) -> V5ttgenOutputs:
     """
@@ -930,7 +932,7 @@ def v_5ttgen_outputs(
 
 
 def v_5ttgen_execute(
-    params: V5ttgenParameters,
+    params: V5ttgenParamsDict,
     runner: Runner | None = None,
 ) -> V5ttgenOutputs:
     """
@@ -970,7 +972,7 @@ def v_5ttgen_execute(
 
 
 def v_5ttgen(
-    algorithm: typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
+    algorithm: typing.Union[V5ttgenFreesurferParamsDictTagged, V5ttgenFslParamsDictTagged, V5ttgenGifParamsDictTagged, V5ttgenHsvsParamsDictTagged],
     nocrop: bool = False,
     sgm_amyg_hipp: bool = False,
     nocleanup: bool = False,
@@ -981,7 +983,7 @@ def v_5ttgen(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5ttgenConfigParameters] | None = None,
+    config: list[V5ttgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1057,18 +1059,30 @@ def v_5ttgen(
 
 
 __all__ = [
+    "V5ttgenConfigParamsDict",
+    "V5ttgenConfigParamsDictTagged",
     "V5ttgenFreesurferOutputs",
+    "V5ttgenFreesurferParamsDict",
+    "V5ttgenFreesurferParamsDictTagged",
     "V5ttgenFslOutputs",
+    "V5ttgenFslParamsDict",
+    "V5ttgenFslParamsDictTagged",
     "V5ttgenGifOutputs",
+    "V5ttgenGifParamsDict",
+    "V5ttgenGifParamsDictTagged",
     "V5ttgenHsvsOutputs",
+    "V5ttgenHsvsParamsDict",
+    "V5ttgenHsvsParamsDictTagged",
     "V5ttgenOutputs",
+    "V5ttgenParamsDict",
+    "V5ttgenParamsDictTagged",
     "V_5TTGEN_METADATA",
     "v_5ttgen",
-    "v_5ttgen_config_params",
+    "v_5ttgen_config",
     "v_5ttgen_execute",
-    "v_5ttgen_freesurfer_params",
-    "v_5ttgen_fsl_params",
-    "v_5ttgen_gif_params",
-    "v_5ttgen_hsvs_params",
+    "v_5ttgen_freesurfer",
+    "v_5ttgen_fsl",
+    "v_5ttgen_gif",
+    "v_5ttgen_hsvs",
     "v_5ttgen_params",
 ]

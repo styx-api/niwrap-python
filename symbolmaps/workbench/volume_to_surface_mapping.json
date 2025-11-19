@@ -15,7 +15,7 @@
     },
     "ribbon-constrained": {
       "var_param": "ribbon_constrained",
-      "fn_struct_make_params": "volume_to_surface_mapping_ribbon_constrained_params",
+      "fn_struct_make_params": "volume_to_surface_mapping_ribbon_constrained",
       "properties": {
         "inner-surf": {
           "var_param": "inner_surf"
@@ -25,7 +25,7 @@
         },
         "volume-roi": {
           "var_param": "volume_roi",
-          "fn_struct_make_params": "volume_to_surface_mapping_volume_roi_params",
+          "fn_struct_make_params": "volume_to_surface_mapping_volume_roi",
           "properties": {
             "roi-volume": {
               "var_param": "roi_volume"
@@ -37,7 +37,7 @@
         },
         "dilate-missing": {
           "var_param": "dilate_missing",
-          "fn_struct_make_params": "volume_to_surface_mapping_dilate_missing_params",
+          "fn_struct_make_params": "volume_to_surface_mapping_dilate_missing",
           "properties": {
             "dist": {
               "var_param": "dist"
@@ -64,7 +64,7 @@
         },
         "output-weights": {
           "var_param": "output_weights",
-          "fn_struct_make_params": "volume_to_surface_mapping_output_weights_params",
+          "fn_struct_make_params": "volume_to_surface_mapping_output_weights",
           "properties": {
             "vertex": {
               "var_param": "vertex"
@@ -81,7 +81,7 @@
     },
     "myelin-style": {
       "var_param": "myelin_style",
-      "fn_struct_make_params": "volume_to_surface_mapping_myelin_style_params",
+      "fn_struct_make_params": "volume_to_surface_mapping_myelin_style",
       "properties": {
         "ribbon-roi": {
           "var_param": "ribbon_roi"

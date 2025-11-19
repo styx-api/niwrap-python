@@ -13,7 +13,7 @@ FSL_MVLM_METADATA = Metadata(
 )
 
 
-FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
+FslMvlmParamsDict = typing.TypedDict('FslMvlmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_mvlm"]],
     "input_file": InputPathType,
     "basename_output_files": str,
@@ -29,7 +29,7 @@ FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
     "out_data": typing.NotRequired[str | None],
     "out_vnscales": typing.NotRequired[str | None],
 })
-FslMvlmParametersTagged = typing.TypedDict('FslMvlmParametersTagged', {
+FslMvlmParamsDictTagged = typing.TypedDict('FslMvlmParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_mvlm"],
     "input_file": InputPathType,
     "basename_output_files": str,
@@ -49,7 +49,7 @@ FslMvlmParametersTagged = typing.TypedDict('FslMvlmParametersTagged', {
 
 class FslMvlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslMvlmParameters(...)`.
+    Output object returned when calling `FslMvlmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def fsl_mvlm_params(
     verbose: bool = False,
     out_data: str | None = None,
     out_vnscales: str | None = None,
-) -> FslMvlmParametersTagged:
+) -> FslMvlmParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def fsl_mvlm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslMvlmParameters` object.
+    `FslMvlmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def fsl_mvlm_validate(
 
 
 def fsl_mvlm_cargs(
-    params: FslMvlmParameters,
+    params: FslMvlmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -255,7 +255,7 @@ def fsl_mvlm_cargs(
 
 
 def fsl_mvlm_outputs(
-    params: FslMvlmParameters,
+    params: FslMvlmParamsDict,
     execution: Execution,
 ) -> FslMvlmOutputs:
     """
@@ -277,7 +277,7 @@ def fsl_mvlm_outputs(
 
 
 def fsl_mvlm_execute(
-    params: FslMvlmParameters,
+    params: FslMvlmParamsDict,
     runner: Runner | None = None,
 ) -> FslMvlmOutputs:
     """
@@ -375,6 +375,8 @@ def fsl_mvlm(
 __all__ = [
     "FSL_MVLM_METADATA",
     "FslMvlmOutputs",
+    "FslMvlmParamsDict",
+    "FslMvlmParamsDictTagged",
     "fsl_mvlm",
     "fsl_mvlm_execute",
     "fsl_mvlm_params",

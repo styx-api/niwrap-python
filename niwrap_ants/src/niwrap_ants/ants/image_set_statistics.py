@@ -13,7 +13,7 @@ IMAGE_SET_STATISTICS_METADATA = Metadata(
 )
 
 
-ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', {
+ImageSetStatisticsParamsDict = typing.TypedDict('ImageSetStatisticsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ImageSetStatistics"]],
     "image_dimension": int,
     "controls_list": InputPathType,
@@ -22,7 +22,7 @@ ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', 
     "roi": typing.NotRequired[InputPathType | None],
     "imagelist2": typing.NotRequired[InputPathType | None],
 })
-ImageSetStatisticsParametersTagged = typing.TypedDict('ImageSetStatisticsParametersTagged', {
+ImageSetStatisticsParamsDictTagged = typing.TypedDict('ImageSetStatisticsParamsDictTagged', {
     "@type": typing.Literal["ants/ImageSetStatistics"],
     "image_dimension": int,
     "controls_list": InputPathType,
@@ -35,7 +35,7 @@ ImageSetStatisticsParametersTagged = typing.TypedDict('ImageSetStatisticsParamet
 
 class ImageSetStatisticsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImageSetStatisticsParameters(...)`.
+    Output object returned when calling `ImageSetStatisticsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def image_set_statistics_params(
     which_stat: typing.Literal[0, 1, 2, 3, 4, 5, 6, 7],
     roi: InputPathType | None = None,
     imagelist2: InputPathType | None = None,
-) -> ImageSetStatisticsParametersTagged:
+) -> ImageSetStatisticsParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def image_set_statistics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImageSetStatisticsParameters` object.
+    `ImageSetStatisticsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def image_set_statistics_validate(
 
 
 def image_set_statistics_cargs(
-    params: ImageSetStatisticsParameters,
+    params: ImageSetStatisticsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,7 +165,7 @@ def image_set_statistics_cargs(
 
 
 def image_set_statistics_outputs(
-    params: ImageSetStatisticsParameters,
+    params: ImageSetStatisticsParamsDict,
     execution: Execution,
 ) -> ImageSetStatisticsOutputs:
     """
@@ -185,7 +185,7 @@ def image_set_statistics_outputs(
 
 
 def image_set_statistics_execute(
-    params: ImageSetStatisticsParameters,
+    params: ImageSetStatisticsParamsDict,
     runner: Runner | None = None,
 ) -> ImageSetStatisticsOutputs:
     """
@@ -267,6 +267,8 @@ def image_set_statistics(
 __all__ = [
     "IMAGE_SET_STATISTICS_METADATA",
     "ImageSetStatisticsOutputs",
+    "ImageSetStatisticsParamsDict",
+    "ImageSetStatisticsParamsDictTagged",
     "image_set_statistics",
     "image_set_statistics_execute",
     "image_set_statistics_params",

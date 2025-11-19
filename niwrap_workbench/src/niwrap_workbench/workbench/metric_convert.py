@@ -12,25 +12,25 @@ METRIC_CONVERT_METADATA = Metadata(
 )
 
 
-MetricConvertToNiftiParameters = typing.TypedDict('MetricConvertToNiftiParameters', {
+MetricConvertToNiftiParamsDict = typing.TypedDict('MetricConvertToNiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["to-nifti"]],
     "metric-in": InputPathType,
     "nifti-out": str,
 })
-MetricConvertToNiftiParametersTagged = typing.TypedDict('MetricConvertToNiftiParametersTagged', {
+MetricConvertToNiftiParamsDictTagged = typing.TypedDict('MetricConvertToNiftiParamsDictTagged', {
     "@type": typing.Literal["to-nifti"],
     "metric-in": InputPathType,
     "nifti-out": str,
 })
 
 
-MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParameters', {
+MetricConvertFromNiftiParamsDict = typing.TypedDict('MetricConvertFromNiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-nifti"]],
     "nifti-in": InputPathType,
     "surface-in": InputPathType,
     "metric-out": str,
 })
-MetricConvertFromNiftiParametersTagged = typing.TypedDict('MetricConvertFromNiftiParametersTagged', {
+MetricConvertFromNiftiParamsDictTagged = typing.TypedDict('MetricConvertFromNiftiParamsDictTagged', {
     "@type": typing.Literal["from-nifti"],
     "nifti-in": InputPathType,
     "surface-in": InputPathType,
@@ -38,21 +38,21 @@ MetricConvertFromNiftiParametersTagged = typing.TypedDict('MetricConvertFromNift
 })
 
 
-MetricConvertParameters = typing.TypedDict('MetricConvertParameters', {
+MetricConvertParamsDict = typing.TypedDict('MetricConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-convert"]],
-    "to-nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
-    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
+    "to-nifti": typing.NotRequired[MetricConvertToNiftiParamsDict | None],
+    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParamsDict | None],
 })
-MetricConvertParametersTagged = typing.TypedDict('MetricConvertParametersTagged', {
+MetricConvertParamsDictTagged = typing.TypedDict('MetricConvertParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-convert"],
-    "to-nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
-    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
+    "to-nifti": typing.NotRequired[MetricConvertToNiftiParamsDict | None],
+    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParamsDict | None],
 })
 
 
 class MetricConvertToNiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricConvertToNiftiParameters | None(...)`.
+    Output object returned when calling `MetricConvertToNiftiParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,10 +60,10 @@ class MetricConvertToNiftiOutputs(typing.NamedTuple):
     """the output nifti file"""
 
 
-def metric_convert_to_nifti_params(
+def metric_convert_to_nifti(
     metric_in: InputPathType,
     nifti_out: str,
-) -> MetricConvertToNiftiParametersTagged:
+) -> MetricConvertToNiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def metric_convert_to_nifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricConvertToNiftiParameters` object.
+    `MetricConvertToNiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def metric_convert_to_nifti_validate(
 
 
 def metric_convert_to_nifti_cargs(
-    params: MetricConvertToNiftiParameters,
+    params: MetricConvertToNiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def metric_convert_to_nifti_cargs(
 
 
 def metric_convert_to_nifti_outputs(
-    params: MetricConvertToNiftiParameters,
+    params: MetricConvertToNiftiParamsDict,
     execution: Execution,
 ) -> MetricConvertToNiftiOutputs:
     """
@@ -147,7 +147,7 @@ def metric_convert_to_nifti_outputs(
 
 class MetricConvertFromNiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricConvertFromNiftiParameters | None(...)`.
+    Output object returned when calling `MetricConvertFromNiftiParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,11 +155,11 @@ class MetricConvertFromNiftiOutputs(typing.NamedTuple):
     """the output metric file"""
 
 
-def metric_convert_from_nifti_params(
+def metric_convert_from_nifti(
     nifti_in: InputPathType,
     surface_in: InputPathType,
     metric_out: str,
-) -> MetricConvertFromNiftiParametersTagged:
+) -> MetricConvertFromNiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -184,7 +184,7 @@ def metric_convert_from_nifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricConvertFromNiftiParameters` object.
+    `MetricConvertFromNiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def metric_convert_from_nifti_validate(
 
 
 def metric_convert_from_nifti_cargs(
-    params: MetricConvertFromNiftiParameters,
+    params: MetricConvertFromNiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,7 +229,7 @@ def metric_convert_from_nifti_cargs(
 
 
 def metric_convert_from_nifti_outputs(
-    params: MetricConvertFromNiftiParameters,
+    params: MetricConvertFromNiftiParamsDict,
     execution: Execution,
 ) -> MetricConvertFromNiftiOutputs:
     """
@@ -250,7 +250,7 @@ def metric_convert_from_nifti_outputs(
 
 class MetricConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricConvertParameters(...)`.
+    Output object returned when calling `MetricConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -261,9 +261,9 @@ class MetricConvertOutputs(typing.NamedTuple):
 
 
 def metric_convert_params(
-    to_nifti: MetricConvertToNiftiParameters | None = None,
-    from_nifti: MetricConvertFromNiftiParameters | None = None,
-) -> MetricConvertParametersTagged:
+    to_nifti: MetricConvertToNiftiParamsDict | None = None,
+    from_nifti: MetricConvertFromNiftiParamsDict | None = None,
+) -> MetricConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -288,7 +288,7 @@ def metric_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricConvertParameters` object.
+    `MetricConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -302,7 +302,7 @@ def metric_convert_validate(
 
 
 def metric_convert_cargs(
-    params: MetricConvertParameters,
+    params: MetricConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -326,7 +326,7 @@ def metric_convert_cargs(
 
 
 def metric_convert_outputs(
-    params: MetricConvertParameters,
+    params: MetricConvertParamsDict,
     execution: Execution,
 ) -> MetricConvertOutputs:
     """
@@ -347,7 +347,7 @@ def metric_convert_outputs(
 
 
 def metric_convert_execute(
-    params: MetricConvertParameters,
+    params: MetricConvertParamsDict,
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
@@ -374,8 +374,8 @@ def metric_convert_execute(
 
 
 def metric_convert(
-    to_nifti: MetricConvertToNiftiParameters | None = None,
-    from_nifti: MetricConvertFromNiftiParameters | None = None,
+    to_nifti: MetricConvertToNiftiParamsDict | None = None,
+    from_nifti: MetricConvertFromNiftiParamsDict | None = None,
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
@@ -402,11 +402,17 @@ def metric_convert(
 __all__ = [
     "METRIC_CONVERT_METADATA",
     "MetricConvertFromNiftiOutputs",
+    "MetricConvertFromNiftiParamsDict",
+    "MetricConvertFromNiftiParamsDictTagged",
     "MetricConvertOutputs",
+    "MetricConvertParamsDict",
+    "MetricConvertParamsDictTagged",
     "MetricConvertToNiftiOutputs",
+    "MetricConvertToNiftiParamsDict",
+    "MetricConvertToNiftiParamsDictTagged",
     "metric_convert",
     "metric_convert_execute",
-    "metric_convert_from_nifti_params",
+    "metric_convert_from_nifti",
     "metric_convert_params",
-    "metric_convert_to_nifti_params",
+    "metric_convert_to_nifti",
 ]

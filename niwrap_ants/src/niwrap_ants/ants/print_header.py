@@ -13,12 +13,12 @@ PRINT_HEADER_METADATA = Metadata(
 )
 
 
-PrintHeaderParameters = typing.TypedDict('PrintHeaderParameters', {
+PrintHeaderParamsDict = typing.TypedDict('PrintHeaderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/PrintHeader"]],
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })
-PrintHeaderParametersTagged = typing.TypedDict('PrintHeaderParametersTagged', {
+PrintHeaderParamsDictTagged = typing.TypedDict('PrintHeaderParamsDictTagged', {
     "@type": typing.Literal["ants/PrintHeader"],
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
@@ -27,7 +27,7 @@ PrintHeaderParametersTagged = typing.TypedDict('PrintHeaderParametersTagged', {
 
 class PrintHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PrintHeaderParameters(...)`.
+    Output object returned when calling `PrintHeaderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class PrintHeaderOutputs(typing.NamedTuple):
 def print_header_params(
     image: InputPathType,
     what_information: typing.Literal[0, 1, 2, 3, 4] | None = None,
-) -> PrintHeaderParametersTagged:
+) -> PrintHeaderParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def print_header_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PrintHeaderParameters` object.
+    `PrintHeaderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def print_header_validate(
 
 
 def print_header_cargs(
-    params: PrintHeaderParameters,
+    params: PrintHeaderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def print_header_cargs(
 
 
 def print_header_outputs(
-    params: PrintHeaderParameters,
+    params: PrintHeaderParamsDict,
     execution: Execution,
 ) -> PrintHeaderOutputs:
     """
@@ -124,7 +124,7 @@ def print_header_outputs(
 
 
 def print_header_execute(
-    params: PrintHeaderParameters,
+    params: PrintHeaderParamsDict,
     runner: Runner | None = None,
 ) -> PrintHeaderOutputs:
     """
@@ -185,6 +185,8 @@ def print_header(
 __all__ = [
     "PRINT_HEADER_METADATA",
     "PrintHeaderOutputs",
+    "PrintHeaderParamsDict",
+    "PrintHeaderParamsDictTagged",
     "print_header",
     "print_header_execute",
     "print_header_params",

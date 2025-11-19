@@ -13,7 +13,7 @@ ANTS_AI_METADATA = Metadata(
 )
 
 
-AntsAiParameters = typing.TypedDict('AntsAiParameters', {
+AntsAiParamsDict = typing.TypedDict('AntsAiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsAI"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
@@ -28,7 +28,7 @@ AntsAiParameters = typing.TypedDict('AntsAiParameters', {
     "random_seed": typing.NotRequired[int | None],
     "verbose": typing.NotRequired[bool | None],
 })
-AntsAiParametersTagged = typing.TypedDict('AntsAiParametersTagged', {
+AntsAiParamsDictTagged = typing.TypedDict('AntsAiParamsDictTagged', {
     "@type": typing.Literal["ants/antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
@@ -47,7 +47,7 @@ AntsAiParametersTagged = typing.TypedDict('AntsAiParametersTagged', {
 
 class AntsAiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsAiParameters(...)`.
+    Output object returned when calling `AntsAiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def ants_ai_params(
     masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
     random_seed: int | None = None,
     verbose: bool | None = None,
-) -> AntsAiParametersTagged:
+) -> AntsAiParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def ants_ai_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsAiParameters` object.
+    `AntsAiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def ants_ai_validate(
 
 
 def ants_ai_cargs(
-    params: AntsAiParameters,
+    params: AntsAiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def ants_ai_cargs(
 
 
 def ants_ai_outputs(
-    params: AntsAiParameters,
+    params: AntsAiParamsDict,
     execution: Execution,
 ) -> AntsAiOutputs:
     """
@@ -293,7 +293,7 @@ def ants_ai_outputs(
 
 
 def ants_ai_execute(
-    params: AntsAiParameters,
+    params: AntsAiParamsDict,
     runner: Runner | None = None,
 ) -> AntsAiOutputs:
     """
@@ -395,6 +395,8 @@ def ants_ai(
 __all__ = [
     "ANTS_AI_METADATA",
     "AntsAiOutputs",
+    "AntsAiParamsDict",
+    "AntsAiParamsDictTagged",
     "ants_ai",
     "ants_ai_execute",
     "ants_ai_params",

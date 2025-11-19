@@ -13,11 +13,11 @@ GCATRAINSKULL_METADATA = Metadata(
 )
 
 
-GcatrainskullParameters = typing.TypedDict('GcatrainskullParameters', {
+GcatrainskullParamsDict = typing.TypedDict('GcatrainskullParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrainskull"]],
     "gcatrain_dir": str,
 })
-GcatrainskullParametersTagged = typing.TypedDict('GcatrainskullParametersTagged', {
+GcatrainskullParamsDictTagged = typing.TypedDict('GcatrainskullParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcatrainskull"],
     "gcatrain_dir": str,
 })
@@ -25,7 +25,7 @@ GcatrainskullParametersTagged = typing.TypedDict('GcatrainskullParametersTagged'
 
 class GcatrainskullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GcatrainskullParameters(...)`.
+    Output object returned when calling `GcatrainskullParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class GcatrainskullOutputs(typing.NamedTuple):
 
 def gcatrainskull_params(
     gcatrain_dir: str,
-) -> GcatrainskullParametersTagged:
+) -> GcatrainskullParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def gcatrainskull_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GcatrainskullParameters` object.
+    `GcatrainskullParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def gcatrainskull_validate(
 
 
 def gcatrainskull_cargs(
-    params: GcatrainskullParameters,
+    params: GcatrainskullParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def gcatrainskull_cargs(
 
 
 def gcatrainskull_outputs(
-    params: GcatrainskullParameters,
+    params: GcatrainskullParamsDict,
     execution: Execution,
 ) -> GcatrainskullOutputs:
     """
@@ -109,7 +109,7 @@ def gcatrainskull_outputs(
 
 
 def gcatrainskull_execute(
-    params: GcatrainskullParameters,
+    params: GcatrainskullParamsDict,
     runner: Runner | None = None,
 ) -> GcatrainskullOutputs:
     """
@@ -165,6 +165,8 @@ def gcatrainskull(
 __all__ = [
     "GCATRAINSKULL_METADATA",
     "GcatrainskullOutputs",
+    "GcatrainskullParamsDict",
+    "GcatrainskullParamsDictTagged",
     "gcatrainskull",
     "gcatrainskull_execute",
     "gcatrainskull_params",

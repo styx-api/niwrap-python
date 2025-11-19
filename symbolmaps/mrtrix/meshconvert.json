@@ -6,7 +6,7 @@
     },
     "transform": {
       "var_param": "transform",
-      "fn_struct_make_params": "meshconvert_transform_params",
+      "fn_struct_make_params": "meshconvert_transform",
       "properties": {
         "mode": {
           "var_param": "mode"
@@ -33,7 +33,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "meshconvert_config_params",
+      "fn_struct_make_params": "meshconvert_config",
       "properties": {
         "key": {
           "var_param": "key"

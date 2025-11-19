@@ -13,7 +13,7 @@ FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
 )
 
 
-FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameters', {
+FatProcImit2wFromT1wParamsDict = typing.TypedDict('FatProcImit2wFromT1wParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_imit2w_from_t1w"]],
     "t1_file": InputPathType,
     "prefix": str,
@@ -24,7 +24,7 @@ FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameter
     "no_qc_view": bool,
     "qc_prefix": typing.NotRequired[str | None],
 })
-FatProcImit2wFromT1wParametersTagged = typing.TypedDict('FatProcImit2wFromT1wParametersTagged', {
+FatProcImit2wFromT1wParamsDictTagged = typing.TypedDict('FatProcImit2wFromT1wParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_imit2w_from_t1w"],
     "t1_file": InputPathType,
     "prefix": str,
@@ -39,7 +39,7 @@ FatProcImit2wFromT1wParametersTagged = typing.TypedDict('FatProcImit2wFromT1wPar
 
 class FatProcImit2wFromT1wOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcImit2wFromT1wParameters(...)`.
+    Output object returned when calling `FatProcImit2wFromT1wParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def fat_proc_imit2w_from_t1w_params(
     no_clean: bool = False,
     no_qc_view: bool = False,
     qc_prefix: str | None = None,
-) -> FatProcImit2wFromT1wParametersTagged:
+) -> FatProcImit2wFromT1wParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def fat_proc_imit2w_from_t1w_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcImit2wFromT1wParameters` object.
+    `FatProcImit2wFromT1wParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def fat_proc_imit2w_from_t1w_validate(
 
 
 def fat_proc_imit2w_from_t1w_cargs(
-    params: FatProcImit2wFromT1wParameters,
+    params: FatProcImit2wFromT1wParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def fat_proc_imit2w_from_t1w_cargs(
 
 
 def fat_proc_imit2w_from_t1w_outputs(
-    params: FatProcImit2wFromT1wParameters,
+    params: FatProcImit2wFromT1wParamsDict,
     execution: Execution,
 ) -> FatProcImit2wFromT1wOutputs:
     """
@@ -216,7 +216,7 @@ def fat_proc_imit2w_from_t1w_outputs(
 
 
 def fat_proc_imit2w_from_t1w_execute(
-    params: FatProcImit2wFromT1wParameters,
+    params: FatProcImit2wFromT1wParamsDict,
     runner: Runner | None = None,
 ) -> FatProcImit2wFromT1wOutputs:
     """
@@ -299,6 +299,8 @@ def fat_proc_imit2w_from_t1w(
 __all__ = [
     "FAT_PROC_IMIT2W_FROM_T1W_METADATA",
     "FatProcImit2wFromT1wOutputs",
+    "FatProcImit2wFromT1wParamsDict",
+    "FatProcImit2wFromT1wParamsDictTagged",
     "fat_proc_imit2w_from_t1w",
     "fat_proc_imit2w_from_t1w_execute",
     "fat_proc_imit2w_from_t1w_params",

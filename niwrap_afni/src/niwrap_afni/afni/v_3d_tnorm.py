@@ -13,7 +13,7 @@ V_3D_TNORM_METADATA = Metadata(
 )
 
 
-V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
+V3dTnormParamsDict = typing.TypedDict('V3dTnormParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTnorm"]],
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
@@ -24,7 +24,7 @@ V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
     "L1fit": bool,
     "input_dataset": InputPathType,
 })
-V3dTnormParametersTagged = typing.TypedDict('V3dTnormParametersTagged', {
+V3dTnormParamsDictTagged = typing.TypedDict('V3dTnormParamsDictTagged', {
     "@type": typing.Literal["afni/3dTnorm"],
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
@@ -39,7 +39,7 @@ V3dTnormParametersTagged = typing.TypedDict('V3dTnormParametersTagged', {
 
 class V3dTnormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTnormParameters(...)`.
+    Output object returned when calling `V3dTnormParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_tnorm_params(
     normx: bool = False,
     polort: float | None = None,
     l1fit: bool = False,
-) -> V3dTnormParametersTagged:
+) -> V3dTnormParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def v_3d_tnorm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTnormParameters` object.
+    `V3dTnormParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def v_3d_tnorm_validate(
 
 
 def v_3d_tnorm_cargs(
-    params: V3dTnormParameters,
+    params: V3dTnormParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def v_3d_tnorm_cargs(
 
 
 def v_3d_tnorm_outputs(
-    params: V3dTnormParameters,
+    params: V3dTnormParamsDict,
     execution: Execution,
 ) -> V3dTnormOutputs:
     """
@@ -192,7 +192,7 @@ def v_3d_tnorm_outputs(
 
 
 def v_3d_tnorm_execute(
-    params: V3dTnormParameters,
+    params: V3dTnormParamsDict,
     runner: Runner | None = None,
 ) -> V3dTnormOutputs:
     """
@@ -268,6 +268,8 @@ def v_3d_tnorm(
 
 __all__ = [
     "V3dTnormOutputs",
+    "V3dTnormParamsDict",
+    "V3dTnormParamsDictTagged",
     "V_3D_TNORM_METADATA",
     "v_3d_tnorm",
     "v_3d_tnorm_execute",

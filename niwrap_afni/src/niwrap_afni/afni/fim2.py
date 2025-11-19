@@ -13,7 +13,7 @@ FIM2_METADATA = Metadata(
 )
 
 
-Fim2Parameters = typing.TypedDict('Fim2Parameters', {
+Fim2ParamsDict = typing.TypedDict('Fim2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fim2"]],
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ Fim2Parameters = typing.TypedDict('Fim2Parameters', {
     "dfspace": bool,
     "regbase": typing.NotRequired[str | None],
 })
-Fim2ParametersTagged = typing.TypedDict('Fim2ParametersTagged', {
+Fim2ParamsDictTagged = typing.TypedDict('Fim2ParamsDictTagged', {
     "@type": typing.Literal["afni/fim2"],
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
@@ -69,7 +69,7 @@ Fim2ParametersTagged = typing.TypedDict('Fim2ParametersTagged', {
 
 class Fim2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fim2Parameters(...)`.
+    Output object returned when calling `Fim2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +111,7 @@ def fim2_params(
     q: bool = False,
     dfspace: bool = False,
     regbase: str | None = None,
-) -> Fim2ParametersTagged:
+) -> Fim2ParamsDictTagged:
     """
     Build parameters.
     
@@ -198,7 +198,7 @@ def fim2_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `Fim2Parameters`
+    Validate parameters. Throws an error if `params` is not a valid `Fim2ParamsDict`
     object.
     
     Args:
@@ -295,7 +295,7 @@ def fim2_validate(
 
 
 def fim2_cargs(
-    params: Fim2Parameters,
+    params: Fim2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -403,7 +403,7 @@ def fim2_cargs(
 
 
 def fim2_outputs(
-    params: Fim2Parameters,
+    params: Fim2ParamsDict,
     execution: Execution,
 ) -> Fim2Outputs:
     """
@@ -428,7 +428,7 @@ def fim2_outputs(
 
 
 def fim2_execute(
-    params: Fim2Parameters,
+    params: Fim2ParamsDict,
     runner: Runner | None = None,
 ) -> Fim2Outputs:
     """
@@ -558,6 +558,8 @@ def fim2(
 __all__ = [
     "FIM2_METADATA",
     "Fim2Outputs",
+    "Fim2ParamsDict",
+    "Fim2ParamsDictTagged",
     "fim2",
     "fim2_execute",
     "fim2_params",

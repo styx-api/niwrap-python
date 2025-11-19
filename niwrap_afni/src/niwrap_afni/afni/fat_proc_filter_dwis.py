@@ -13,7 +13,7 @@ FAT_PROC_FILTER_DWIS_METADATA = Metadata(
 )
 
 
-FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
+FatProcFilterDwisParamsDict = typing.TypedDict('FatProcFilterDwisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_filter_dwis"]],
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
@@ -27,7 +27,7 @@ FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
     "no_cmd_out": bool,
     "do_movie": typing.NotRequired[typing.Literal["AGIF", "MPEG"] | None],
 })
-FatProcFilterDwisParametersTagged = typing.TypedDict('FatProcFilterDwisParametersTagged', {
+FatProcFilterDwisParamsDictTagged = typing.TypedDict('FatProcFilterDwisParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_filter_dwis"],
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
@@ -45,7 +45,7 @@ FatProcFilterDwisParametersTagged = typing.TypedDict('FatProcFilterDwisParameter
 
 class FatProcFilterDwisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcFilterDwisParameters(...)`.
+    Output object returned when calling `FatProcFilterDwisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def fat_proc_filter_dwis_params(
     no_qc_view: bool = False,
     no_cmd_out: bool = False,
     do_movie: typing.Literal["AGIF", "MPEG"] | None = None,
-) -> FatProcFilterDwisParametersTagged:
+) -> FatProcFilterDwisParamsDictTagged:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def fat_proc_filter_dwis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcFilterDwisParameters` object.
+    `FatProcFilterDwisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def fat_proc_filter_dwis_validate(
 
 
 def fat_proc_filter_dwis_cargs(
-    params: FatProcFilterDwisParameters,
+    params: FatProcFilterDwisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,7 +238,7 @@ def fat_proc_filter_dwis_cargs(
 
 
 def fat_proc_filter_dwis_outputs(
-    params: FatProcFilterDwisParameters,
+    params: FatProcFilterDwisParamsDict,
     execution: Execution,
 ) -> FatProcFilterDwisOutputs:
     """
@@ -260,7 +260,7 @@ def fat_proc_filter_dwis_outputs(
 
 
 def fat_proc_filter_dwis_execute(
-    params: FatProcFilterDwisParameters,
+    params: FatProcFilterDwisParamsDict,
     runner: Runner | None = None,
 ) -> FatProcFilterDwisOutputs:
     """
@@ -358,6 +358,8 @@ def fat_proc_filter_dwis(
 __all__ = [
     "FAT_PROC_FILTER_DWIS_METADATA",
     "FatProcFilterDwisOutputs",
+    "FatProcFilterDwisParamsDict",
+    "FatProcFilterDwisParamsDictTagged",
     "fat_proc_filter_dwis",
     "fat_proc_filter_dwis_execute",
     "fat_proc_filter_dwis_params",

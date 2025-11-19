@@ -13,12 +13,12 @@ V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
 )
 
 
-VSumaFsvolToBrikParameters = typing.TypedDict('VSumaFsvolToBrikParameters', {
+VSumaFsvolToBrikParamsDict = typing.TypedDict('VSumaFsvolToBrikParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_FSvolToBRIK"]],
     "fs_vol_data": InputPathType,
     "prefix": str,
 })
-VSumaFsvolToBrikParametersTagged = typing.TypedDict('VSumaFsvolToBrikParametersTagged', {
+VSumaFsvolToBrikParamsDictTagged = typing.TypedDict('VSumaFsvolToBrikParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_FSvolToBRIK"],
     "fs_vol_data": InputPathType,
     "prefix": str,
@@ -27,7 +27,7 @@ VSumaFsvolToBrikParametersTagged = typing.TypedDict('VSumaFsvolToBrikParametersT
 
 class VSumaFsvolToBrikOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaFsvolToBrikParameters(...)`.
+    Output object returned when calling `VSumaFsvolToBrikParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class VSumaFsvolToBrikOutputs(typing.NamedTuple):
 def v__suma_fsvol_to_brik_params(
     fs_vol_data: InputPathType,
     prefix: str,
-) -> VSumaFsvolToBrikParametersTagged:
+) -> VSumaFsvolToBrikParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def v__suma_fsvol_to_brik_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaFsvolToBrikParameters` object.
+    `VSumaFsvolToBrikParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def v__suma_fsvol_to_brik_validate(
 
 
 def v__suma_fsvol_to_brik_cargs(
-    params: VSumaFsvolToBrikParameters,
+    params: VSumaFsvolToBrikParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def v__suma_fsvol_to_brik_cargs(
 
 
 def v__suma_fsvol_to_brik_outputs(
-    params: VSumaFsvolToBrikParameters,
+    params: VSumaFsvolToBrikParamsDict,
     execution: Execution,
 ) -> VSumaFsvolToBrikOutputs:
     """
@@ -123,7 +123,7 @@ def v__suma_fsvol_to_brik_outputs(
 
 
 def v__suma_fsvol_to_brik_execute(
-    params: VSumaFsvolToBrikParameters,
+    params: VSumaFsvolToBrikParamsDict,
     runner: Runner | None = None,
 ) -> VSumaFsvolToBrikOutputs:
     """
@@ -182,6 +182,8 @@ def v__suma_fsvol_to_brik(
 
 __all__ = [
     "VSumaFsvolToBrikOutputs",
+    "VSumaFsvolToBrikParamsDict",
+    "VSumaFsvolToBrikParamsDictTagged",
     "V__SUMA_FSVOL_TO_BRIK_METADATA",
     "v__suma_fsvol_to_brik",
     "v__suma_fsvol_to_brik_execute",

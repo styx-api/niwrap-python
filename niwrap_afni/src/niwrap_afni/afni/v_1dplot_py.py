@@ -13,7 +13,7 @@ V_1DPLOT_PY_METADATA = Metadata(
 )
 
 
-V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
+V1dplotPyParamsDict = typing.TypedDict('V1dplotPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dplot.py"]],
     "infiles": list[InputPathType],
     "prefix": str,
@@ -48,7 +48,7 @@ V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
     "censor_rgb": typing.NotRequired[str | None],
     "bkgd_color": typing.NotRequired[str | None],
 })
-V1dplotPyParametersTagged = typing.TypedDict('V1dplotPyParametersTagged', {
+V1dplotPyParamsDictTagged = typing.TypedDict('V1dplotPyParamsDictTagged', {
     "@type": typing.Literal["afni/1dplot.py"],
     "infiles": list[InputPathType],
     "prefix": str,
@@ -87,7 +87,7 @@ V1dplotPyParametersTagged = typing.TypedDict('V1dplotPyParametersTagged', {
 
 class V1dplotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dplotPyParameters(...)`.
+    Output object returned when calling `V1dplotPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +128,7 @@ def v_1dplot_py_params(
     censor_hline: list[str] | None = None,
     censor_rgb: str | None = None,
     bkgd_color: str | None = None,
-) -> V1dplotPyParametersTagged:
+) -> V1dplotPyParamsDictTagged:
     """
     Build parameters.
     
@@ -246,7 +246,7 @@ def v_1dplot_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dplotPyParameters` object.
+    `V1dplotPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -404,7 +404,7 @@ def v_1dplot_py_validate(
 
 
 def v_1dplot_py_cargs(
-    params: V1dplotPyParameters,
+    params: V1dplotPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -559,7 +559,7 @@ def v_1dplot_py_cargs(
 
 
 def v_1dplot_py_outputs(
-    params: V1dplotPyParameters,
+    params: V1dplotPyParamsDict,
     execution: Execution,
 ) -> V1dplotPyOutputs:
     """
@@ -579,7 +579,7 @@ def v_1dplot_py_outputs(
 
 
 def v_1dplot_py_execute(
-    params: V1dplotPyParameters,
+    params: V1dplotPyParamsDict,
     runner: Runner | None = None,
 ) -> V1dplotPyOutputs:
     """
@@ -741,6 +741,8 @@ def v_1dplot_py(
 
 __all__ = [
     "V1dplotPyOutputs",
+    "V1dplotPyParamsDict",
+    "V1dplotPyParamsDictTagged",
     "V_1DPLOT_PY_METADATA",
     "v_1dplot_py",
     "v_1dplot_py_execute",

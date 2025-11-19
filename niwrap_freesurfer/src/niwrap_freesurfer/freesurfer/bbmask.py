@@ -13,7 +13,7 @@ BBMASK_METADATA = Metadata(
 )
 
 
-BbmaskParameters = typing.TypedDict('BbmaskParameters', {
+BbmaskParamsDict = typing.TypedDict('BbmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bbmask"]],
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
@@ -22,7 +22,7 @@ BbmaskParameters = typing.TypedDict('BbmaskParameters', {
     "regheader": typing.NotRequired[InputPathType | None],
     "sub2src": typing.NotRequired[InputPathType | None],
 })
-BbmaskParametersTagged = typing.TypedDict('BbmaskParametersTagged', {
+BbmaskParamsDictTagged = typing.TypedDict('BbmaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bbmask"],
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
@@ -35,7 +35,7 @@ BbmaskParametersTagged = typing.TypedDict('BbmaskParametersTagged', {
 
 class BbmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BbmaskParameters(...)`.
+    Output object returned when calling `BbmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def bbmask_params(
     registration: list[InputPathType] | None = None,
     regheader: InputPathType | None = None,
     sub2src: InputPathType | None = None,
-) -> BbmaskParametersTagged:
+) -> BbmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def bbmask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BbmaskParameters` object.
+    `BbmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def bbmask_validate(
 
 
 def bbmask_cargs(
-    params: BbmaskParameters,
+    params: BbmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,7 +186,7 @@ def bbmask_cargs(
 
 
 def bbmask_outputs(
-    params: BbmaskParameters,
+    params: BbmaskParamsDict,
     execution: Execution,
 ) -> BbmaskOutputs:
     """
@@ -210,7 +210,7 @@ def bbmask_outputs(
 
 
 def bbmask_execute(
-    params: BbmaskParameters,
+    params: BbmaskParamsDict,
     runner: Runner | None = None,
 ) -> BbmaskOutputs:
     """
@@ -284,6 +284,8 @@ def bbmask(
 __all__ = [
     "BBMASK_METADATA",
     "BbmaskOutputs",
+    "BbmaskParamsDict",
+    "BbmaskParamsDictTagged",
     "bbmask",
     "bbmask_execute",
     "bbmask_params",

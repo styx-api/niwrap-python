@@ -12,42 +12,42 @@ METRIC_STATS_METADATA = Metadata(
 )
 
 
-MetricStatsRoiParameters = typing.TypedDict('MetricStatsRoiParameters', {
+MetricStatsRoiParamsDict = typing.TypedDict('MetricStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
-MetricStatsRoiParametersTagged = typing.TypedDict('MetricStatsRoiParametersTagged', {
+MetricStatsRoiParamsDictTagged = typing.TypedDict('MetricStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
 
 
-MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
+MetricStatsParamsDict = typing.TypedDict('MetricStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-stats"]],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[MetricStatsRoiParameters | None],
+    "roi": typing.NotRequired[MetricStatsRoiParamsDict | None],
     "show-map-name": bool,
     "metric-in": InputPathType,
 })
-MetricStatsParametersTagged = typing.TypedDict('MetricStatsParametersTagged', {
+MetricStatsParamsDictTagged = typing.TypedDict('MetricStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-stats"],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[MetricStatsRoiParameters | None],
+    "roi": typing.NotRequired[MetricStatsRoiParamsDict | None],
     "show-map-name": bool,
     "metric-in": InputPathType,
 })
 
 
-def metric_stats_roi_params(
+def metric_stats_roi(
     roi_metric: InputPathType,
     match_maps: bool = False,
-) -> MetricStatsRoiParametersTagged:
+) -> MetricStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def metric_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricStatsRoiParameters` object.
+    `MetricStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def metric_stats_roi_validate(
 
 
 def metric_stats_roi_cargs(
-    params: MetricStatsRoiParameters,
+    params: MetricStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def metric_stats_roi_cargs(
 
 class MetricStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricStatsParameters(...)`.
+    Output object returned when calling `MetricStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,9 +124,9 @@ def metric_stats_params(
     percent: float | None,
     column: str | None,
     metric_in: InputPathType,
-    roi: MetricStatsRoiParameters | None = None,
+    roi: MetricStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
-) -> MetricStatsParametersTagged:
+) -> MetricStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def metric_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricStatsParameters` object.
+    `MetricStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def metric_stats_validate(
 
 
 def metric_stats_cargs(
-    params: MetricStatsParameters,
+    params: MetricStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -227,7 +227,7 @@ def metric_stats_cargs(
 
 
 def metric_stats_outputs(
-    params: MetricStatsParameters,
+    params: MetricStatsParamsDict,
     execution: Execution,
 ) -> MetricStatsOutputs:
     """
@@ -246,7 +246,7 @@ def metric_stats_outputs(
 
 
 def metric_stats_execute(
-    params: MetricStatsParameters,
+    params: MetricStatsParamsDict,
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
@@ -300,7 +300,7 @@ def metric_stats(
     percent: float | None,
     column: str | None,
     metric_in: InputPathType,
-    roi: MetricStatsRoiParameters | None = None,
+    roi: MetricStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
@@ -365,8 +365,12 @@ def metric_stats(
 __all__ = [
     "METRIC_STATS_METADATA",
     "MetricStatsOutputs",
+    "MetricStatsParamsDict",
+    "MetricStatsParamsDictTagged",
+    "MetricStatsRoiParamsDict",
+    "MetricStatsRoiParamsDictTagged",
     "metric_stats",
     "metric_stats_execute",
     "metric_stats_params",
-    "metric_stats_roi_params",
+    "metric_stats_roi",
 ]

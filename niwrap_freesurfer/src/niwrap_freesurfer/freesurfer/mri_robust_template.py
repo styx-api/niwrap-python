@@ -13,7 +13,7 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 )
 
 
-MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
+MriRobustTemplateParamsDict = typing.TypedDict('MriRobustTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_template"]],
     "mov_files": list[InputPathType],
     "template_file": str,
@@ -53,7 +53,7 @@ MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
     "frobnorm_thresh": typing.NotRequired[float | None],
     "debug_flag": bool,
 })
-MriRobustTemplateParametersTagged = typing.TypedDict('MriRobustTemplateParametersTagged', {
+MriRobustTemplateParamsDictTagged = typing.TypedDict('MriRobustTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_robust_template"],
     "mov_files": list[InputPathType],
     "template_file": str,
@@ -97,7 +97,7 @@ MriRobustTemplateParametersTagged = typing.TypedDict('MriRobustTemplateParameter
 
 class MriRobustTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRobustTemplateParameters(...)`.
+    Output object returned when calling `MriRobustTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,7 +149,7 @@ def mri_robust_template_params(
     res_thresh: float | None = None,
     frobnorm_thresh: float | None = None,
     debug_flag: bool = False,
-) -> MriRobustTemplateParametersTagged:
+) -> MriRobustTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -276,7 +276,7 @@ def mri_robust_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRobustTemplateParameters` object.
+    `MriRobustTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -442,7 +442,7 @@ def mri_robust_template_validate(
 
 
 def mri_robust_template_cargs(
-    params: MriRobustTemplateParameters,
+    params: MriRobustTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -595,7 +595,7 @@ def mri_robust_template_cargs(
 
 
 def mri_robust_template_outputs(
-    params: MriRobustTemplateParameters,
+    params: MriRobustTemplateParamsDict,
     execution: Execution,
 ) -> MriRobustTemplateOutputs:
     """
@@ -618,7 +618,7 @@ def mri_robust_template_outputs(
 
 
 def mri_robust_template_execute(
-    params: MriRobustTemplateParameters,
+    params: MriRobustTemplateParamsDict,
     runner: Runner | None = None,
 ) -> MriRobustTemplateOutputs:
     """
@@ -799,6 +799,8 @@ def mri_robust_template(
 __all__ = [
     "MRI_ROBUST_TEMPLATE_METADATA",
     "MriRobustTemplateOutputs",
+    "MriRobustTemplateParamsDict",
+    "MriRobustTemplateParamsDictTagged",
     "mri_robust_template",
     "mri_robust_template_execute",
     "mri_robust_template_params",

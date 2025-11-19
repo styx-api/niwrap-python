@@ -13,7 +13,7 @@ SIENA_METADATA = Metadata(
 )
 
 
-SienaParameters = typing.TypedDict('SienaParameters', {
+SienaParamsDict = typing.TypedDict('SienaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/siena"]],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -29,7 +29,7 @@ SienaParameters = typing.TypedDict('SienaParameters', {
     "ventricle_analysis_flag": bool,
     "ventricle_mask": typing.NotRequired[InputPathType | None],
 })
-SienaParametersTagged = typing.TypedDict('SienaParametersTagged', {
+SienaParamsDictTagged = typing.TypedDict('SienaParamsDictTagged', {
     "@type": typing.Literal["fsl/siena"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -49,7 +49,7 @@ SienaParametersTagged = typing.TypedDict('SienaParametersTagged', {
 
 class SienaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaParameters(...)`.
+    Output object returned when calling `SienaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def siena_params(
     sienadiff_options: str | None = None,
     ventricle_analysis_flag: bool = False,
     ventricle_mask: InputPathType | None = None,
-) -> SienaParametersTagged:
+) -> SienaParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def siena_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaParameters` object.
+    `SienaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def siena_validate(
 
 
 def siena_cargs(
-    params: SienaParameters,
+    params: SienaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -246,7 +246,7 @@ def siena_cargs(
 
 
 def siena_outputs(
-    params: SienaParameters,
+    params: SienaParamsDict,
     execution: Execution,
 ) -> SienaOutputs:
     """
@@ -267,7 +267,7 @@ def siena_outputs(
 
 
 def siena_execute(
-    params: SienaParameters,
+    params: SienaParamsDict,
     runner: Runner | None = None,
 ) -> SienaOutputs:
     """
@@ -367,6 +367,8 @@ def siena(
 __all__ = [
     "SIENA_METADATA",
     "SienaOutputs",
+    "SienaParamsDict",
+    "SienaParamsDictTagged",
     "siena",
     "siena_execute",
     "siena_params",

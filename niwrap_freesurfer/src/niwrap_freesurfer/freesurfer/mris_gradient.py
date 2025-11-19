@@ -13,13 +13,13 @@ MRIS_GRADIENT_METADATA = Metadata(
 )
 
 
-MrisGradientParameters = typing.TypedDict('MrisGradientParameters', {
+MrisGradientParamsDict = typing.TypedDict('MrisGradientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_gradient"]],
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
     "output_gradient_file": str,
 })
-MrisGradientParametersTagged = typing.TypedDict('MrisGradientParametersTagged', {
+MrisGradientParamsDictTagged = typing.TypedDict('MrisGradientParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_gradient"],
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
@@ -29,7 +29,7 @@ MrisGradientParametersTagged = typing.TypedDict('MrisGradientParametersTagged', 
 
 class MrisGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisGradientParameters(...)`.
+    Output object returned when calling `MrisGradientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_gradient_params(
     input_surface: InputPathType,
     input_vector_field: InputPathType,
     output_gradient_file: str,
-) -> MrisGradientParametersTagged:
+) -> MrisGradientParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mris_gradient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisGradientParameters` object.
+    `MrisGradientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mris_gradient_validate(
 
 
 def mris_gradient_cargs(
-    params: MrisGradientParameters,
+    params: MrisGradientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mris_gradient_cargs(
 
 
 def mris_gradient_outputs(
-    params: MrisGradientParameters,
+    params: MrisGradientParamsDict,
     execution: Execution,
 ) -> MrisGradientOutputs:
     """
@@ -130,7 +130,7 @@ def mris_gradient_outputs(
 
 
 def mris_gradient_execute(
-    params: MrisGradientParameters,
+    params: MrisGradientParamsDict,
     runner: Runner | None = None,
 ) -> MrisGradientOutputs:
     """
@@ -195,6 +195,8 @@ def mris_gradient(
 __all__ = [
     "MRIS_GRADIENT_METADATA",
     "MrisGradientOutputs",
+    "MrisGradientParamsDict",
+    "MrisGradientParamsDictTagged",
     "mris_gradient",
     "mris_gradient_execute",
     "mris_gradient_params",

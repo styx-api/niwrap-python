@@ -13,7 +13,7 @@ MRI_SURF2VOLSEG_METADATA = Metadata(
 )
 
 
-MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
+MriSurf2volsegParamsDict = typing.TypedDict('MriSurf2volsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2volseg"]],
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
     "ctab_file": typing.NotRequired[InputPathType | None],
     "threads_number": typing.NotRequired[float | None],
 })
-MriSurf2volsegParametersTagged = typing.TypedDict('MriSurf2volsegParametersTagged', {
+MriSurf2volsegParamsDictTagged = typing.TypedDict('MriSurf2volsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_surf2volseg"],
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
@@ -73,7 +73,7 @@ MriSurf2volsegParametersTagged = typing.TypedDict('MriSurf2volsegParametersTagge
 
 class MriSurf2volsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSurf2volsegParameters(...)`.
+    Output object returned when calling `MriSurf2volsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def mri_surf2volseg_params(
     crs_test: list[float] | None = None,
     ctab_file: InputPathType | None = None,
     threads_number: float | None = None,
-) -> MriSurf2volsegParametersTagged:
+) -> MriSurf2volsegParamsDictTagged:
     """
     Build parameters.
     
@@ -203,7 +203,7 @@ def mri_surf2volseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSurf2volsegParameters` object.
+    `MriSurf2volsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -304,7 +304,7 @@ def mri_surf2volseg_validate(
 
 
 def mri_surf2volseg_cargs(
-    params: MriSurf2volsegParameters,
+    params: MriSurf2volsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -429,7 +429,7 @@ def mri_surf2volseg_cargs(
 
 
 def mri_surf2volseg_outputs(
-    params: MriSurf2volsegParameters,
+    params: MriSurf2volsegParamsDict,
     execution: Execution,
 ) -> MriSurf2volsegOutputs:
     """
@@ -448,7 +448,7 @@ def mri_surf2volseg_outputs(
 
 
 def mri_surf2volseg_execute(
-    params: MriSurf2volsegParameters,
+    params: MriSurf2volsegParamsDict,
     runner: Runner | None = None,
 ) -> MriSurf2volsegOutputs:
     """
@@ -590,6 +590,8 @@ def mri_surf2volseg(
 __all__ = [
     "MRI_SURF2VOLSEG_METADATA",
     "MriSurf2volsegOutputs",
+    "MriSurf2volsegParamsDict",
+    "MriSurf2volsegParamsDictTagged",
     "mri_surf2volseg",
     "mri_surf2volseg_execute",
     "mri_surf2volseg_params",

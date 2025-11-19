@@ -13,7 +13,7 @@ BAYCEST_METADATA = Metadata(
 )
 
 
-BaycestParameters = typing.TypedDict('BaycestParameters', {
+BaycestParamsDict = typing.TypedDict('BaycestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/baycest"]],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -24,7 +24,7 @@ BaycestParameters = typing.TypedDict('BaycestParameters', {
     "spatial_flag": bool,
     "t12prior_flag": bool,
 })
-BaycestParametersTagged = typing.TypedDict('BaycestParametersTagged', {
+BaycestParamsDictTagged = typing.TypedDict('BaycestParamsDictTagged', {
     "@type": typing.Literal["fsl/baycest"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -39,7 +39,7 @@ BaycestParametersTagged = typing.TypedDict('BaycestParametersTagged', {
 
 class BaycestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BaycestParameters(...)`.
+    Output object returned when calling `BaycestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def baycest_params(
     ptrain_file: InputPathType,
     spatial_flag: bool = False,
     t12prior_flag: bool = False,
-) -> BaycestParametersTagged:
+) -> BaycestParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def baycest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BaycestParameters` object.
+    `BaycestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def baycest_validate(
 
 
 def baycest_cargs(
-    params: BaycestParameters,
+    params: BaycestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def baycest_cargs(
 
 
 def baycest_outputs(
-    params: BaycestParameters,
+    params: BaycestParamsDict,
     execution: Execution,
 ) -> BaycestOutputs:
     """
@@ -181,7 +181,7 @@ def baycest_outputs(
 
 
 def baycest_execute(
-    params: BaycestParameters,
+    params: BaycestParamsDict,
     runner: Runner | None = None,
 ) -> BaycestOutputs:
     """
@@ -258,6 +258,8 @@ def baycest(
 __all__ = [
     "BAYCEST_METADATA",
     "BaycestOutputs",
+    "BaycestParamsDict",
+    "BaycestParamsDictTagged",
     "baycest",
     "baycest_execute",
     "baycest_params",

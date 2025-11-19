@@ -13,7 +13,7 @@ XFIBRES_METADATA = Metadata(
 )
 
 
-XfibresParameters = typing.TypedDict('XfibresParameters', {
+XfibresParamsDict = typing.TypedDict('XfibresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/xfibres"]],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -43,7 +43,7 @@ XfibresParameters = typing.TypedDict('XfibresParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-XfibresParametersTagged = typing.TypedDict('XfibresParametersTagged', {
+XfibresParamsDictTagged = typing.TypedDict('XfibresParamsDictTagged', {
     "@type": typing.Literal["fsl/xfibres"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -77,7 +77,7 @@ XfibresParametersTagged = typing.TypedDict('XfibresParametersTagged', {
 
 class XfibresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XfibresParameters(...)`.
+    Output object returned when calling `XfibresParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def xfibres_params(
     rstd: float | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> XfibresParametersTagged:
+) -> XfibresParamsDictTagged:
     """
     Build parameters.
     
@@ -203,7 +203,7 @@ def xfibres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XfibresParameters` object.
+    `XfibresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -311,7 +311,7 @@ def xfibres_validate(
 
 
 def xfibres_cargs(
-    params: XfibresParameters,
+    params: XfibresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -427,7 +427,7 @@ def xfibres_cargs(
 
 
 def xfibres_outputs(
-    params: XfibresParameters,
+    params: XfibresParamsDict,
     execution: Execution,
 ) -> XfibresOutputs:
     """
@@ -447,7 +447,7 @@ def xfibres_outputs(
 
 
 def xfibres_execute(
-    params: XfibresParameters,
+    params: XfibresParamsDict,
     runner: Runner | None = None,
 ) -> XfibresOutputs:
     """
@@ -586,6 +586,8 @@ def xfibres(
 __all__ = [
     "XFIBRES_METADATA",
     "XfibresOutputs",
+    "XfibresParamsDict",
+    "XfibresParamsDictTagged",
     "xfibres",
     "xfibres_execute",
     "xfibres_params",

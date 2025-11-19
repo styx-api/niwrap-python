@@ -13,14 +13,14 @@ MRIS_REMOVE_VARIANCE_METADATA = Metadata(
 )
 
 
-MrisRemoveVarianceParameters = typing.TypedDict('MrisRemoveVarianceParameters', {
+MrisRemoveVarianceParamsDict = typing.TypedDict('MrisRemoveVarianceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_variance"]],
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
     "curvature_file_to_remove": InputPathType,
     "output_curvature_file": str,
 })
-MrisRemoveVarianceParametersTagged = typing.TypedDict('MrisRemoveVarianceParametersTagged', {
+MrisRemoveVarianceParamsDictTagged = typing.TypedDict('MrisRemoveVarianceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_remove_variance"],
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
@@ -31,7 +31,7 @@ MrisRemoveVarianceParametersTagged = typing.TypedDict('MrisRemoveVarianceParamet
 
 class MrisRemoveVarianceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRemoveVarianceParameters(...)`.
+    Output object returned when calling `MrisRemoveVarianceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_remove_variance_params(
     curvature_file: InputPathType,
     curvature_file_to_remove: InputPathType,
     output_curvature_file: str,
-) -> MrisRemoveVarianceParametersTagged:
+) -> MrisRemoveVarianceParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mris_remove_variance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRemoveVarianceParameters` object.
+    `MrisRemoveVarianceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mris_remove_variance_validate(
 
 
 def mris_remove_variance_cargs(
-    params: MrisRemoveVarianceParameters,
+    params: MrisRemoveVarianceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mris_remove_variance_cargs(
 
 
 def mris_remove_variance_outputs(
-    params: MrisRemoveVarianceParameters,
+    params: MrisRemoveVarianceParamsDict,
     execution: Execution,
 ) -> MrisRemoveVarianceOutputs:
     """
@@ -140,7 +140,7 @@ def mris_remove_variance_outputs(
 
 
 def mris_remove_variance_execute(
-    params: MrisRemoveVarianceParameters,
+    params: MrisRemoveVarianceParamsDict,
     runner: Runner | None = None,
 ) -> MrisRemoveVarianceOutputs:
     """
@@ -208,6 +208,8 @@ def mris_remove_variance(
 __all__ = [
     "MRIS_REMOVE_VARIANCE_METADATA",
     "MrisRemoveVarianceOutputs",
+    "MrisRemoveVarianceParamsDict",
+    "MrisRemoveVarianceParamsDictTagged",
     "mris_remove_variance",
     "mris_remove_variance_execute",
     "mris_remove_variance_params",

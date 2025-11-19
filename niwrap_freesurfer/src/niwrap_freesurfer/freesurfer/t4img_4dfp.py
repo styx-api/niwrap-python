@@ -13,13 +13,13 @@ T4IMG_4DFP_METADATA = Metadata(
 )
 
 
-T4img4dfpParameters = typing.TypedDict('T4img4dfpParameters', {
+T4img4dfpParamsDict = typing.TypedDict('T4img4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/t4img_4dfp"]],
     "t4file": InputPathType,
     "imgfile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
-T4img4dfpParametersTagged = typing.TypedDict('T4img4dfpParametersTagged', {
+T4img4dfpParamsDictTagged = typing.TypedDict('T4img4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/t4img_4dfp"],
     "t4file": InputPathType,
     "imgfile": InputPathType,
@@ -29,7 +29,7 @@ T4img4dfpParametersTagged = typing.TypedDict('T4img4dfpParametersTagged', {
 
 class T4img4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `T4img4dfpParameters(...)`.
+    Output object returned when calling `T4img4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def t4img_4dfp_params(
     t4file: InputPathType,
     imgfile: InputPathType,
     outfile: str | None = None,
-) -> T4img4dfpParametersTagged:
+) -> T4img4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def t4img_4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `T4img4dfpParameters` object.
+    `T4img4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def t4img_4dfp_validate(
 
 
 def t4img_4dfp_cargs(
-    params: T4img4dfpParameters,
+    params: T4img4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def t4img_4dfp_cargs(
 
 
 def t4img_4dfp_outputs(
-    params: T4img4dfpParameters,
+    params: T4img4dfpParamsDict,
     execution: Execution,
 ) -> T4img4dfpOutputs:
     """
@@ -131,7 +131,7 @@ def t4img_4dfp_outputs(
 
 
 def t4img_4dfp_execute(
-    params: T4img4dfpParameters,
+    params: T4img4dfpParamsDict,
     runner: Runner | None = None,
 ) -> T4img4dfpOutputs:
     """
@@ -194,6 +194,8 @@ def t4img_4dfp(
 __all__ = [
     "T4IMG_4DFP_METADATA",
     "T4img4dfpOutputs",
+    "T4img4dfpParamsDict",
+    "T4img4dfpParamsDictTagged",
     "t4img_4dfp",
     "t4img_4dfp_execute",
     "t4img_4dfp_params",

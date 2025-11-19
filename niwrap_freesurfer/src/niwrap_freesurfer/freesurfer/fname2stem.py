@@ -13,11 +13,11 @@ FNAME2STEM_METADATA = Metadata(
 )
 
 
-Fname2stemParameters = typing.TypedDict('Fname2stemParameters', {
+Fname2stemParamsDict = typing.TypedDict('Fname2stemParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fname2stem"]],
     "filename": str,
 })
-Fname2stemParametersTagged = typing.TypedDict('Fname2stemParametersTagged', {
+Fname2stemParamsDictTagged = typing.TypedDict('Fname2stemParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fname2stem"],
     "filename": str,
 })
@@ -25,7 +25,7 @@ Fname2stemParametersTagged = typing.TypedDict('Fname2stemParametersTagged', {
 
 class Fname2stemOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fname2stemParameters(...)`.
+    Output object returned when calling `Fname2stemParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Fname2stemOutputs(typing.NamedTuple):
 
 def fname2stem_params(
     filename: str,
-) -> Fname2stemParametersTagged:
+) -> Fname2stemParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def fname2stem_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fname2stemParameters` object.
+    `Fname2stemParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def fname2stem_validate(
 
 
 def fname2stem_cargs(
-    params: Fname2stemParameters,
+    params: Fname2stemParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def fname2stem_cargs(
 
 
 def fname2stem_outputs(
-    params: Fname2stemParameters,
+    params: Fname2stemParamsDict,
     execution: Execution,
 ) -> Fname2stemOutputs:
     """
@@ -107,7 +107,7 @@ def fname2stem_outputs(
 
 
 def fname2stem_execute(
-    params: Fname2stemParameters,
+    params: Fname2stemParamsDict,
     runner: Runner | None = None,
 ) -> Fname2stemOutputs:
     """
@@ -166,6 +166,8 @@ def fname2stem(
 __all__ = [
     "FNAME2STEM_METADATA",
     "Fname2stemOutputs",
+    "Fname2stemParamsDict",
+    "Fname2stemParamsDictTagged",
     "fname2stem",
     "fname2stem_execute",
     "fname2stem_params",

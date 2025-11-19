@@ -12,42 +12,42 @@ VOLUME_STATS_METADATA = Metadata(
 )
 
 
-VolumeStatsRoiParameters = typing.TypedDict('VolumeStatsRoiParameters', {
+VolumeStatsRoiParamsDict = typing.TypedDict('VolumeStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
-VolumeStatsRoiParametersTagged = typing.TypedDict('VolumeStatsRoiParametersTagged', {
+VolumeStatsRoiParamsDictTagged = typing.TypedDict('VolumeStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
 
 
-VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
+VolumeStatsParamsDict = typing.TypedDict('VolumeStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-stats"]],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "subvolume": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[VolumeStatsRoiParameters | None],
+    "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
-VolumeStatsParametersTagged = typing.TypedDict('VolumeStatsParametersTagged', {
+VolumeStatsParamsDictTagged = typing.TypedDict('VolumeStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-stats"],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "subvolume": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[VolumeStatsRoiParameters | None],
+    "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
 
 
-def volume_stats_roi_params(
+def volume_stats_roi(
     roi_volume: InputPathType,
     match_maps: bool = False,
-) -> VolumeStatsRoiParametersTagged:
+) -> VolumeStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def volume_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeStatsRoiParameters` object.
+    `VolumeStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def volume_stats_roi_validate(
 
 
 def volume_stats_roi_cargs(
-    params: VolumeStatsRoiParameters,
+    params: VolumeStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def volume_stats_roi_cargs(
 
 class VolumeStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeStatsParameters(...)`.
+    Output object returned when calling `VolumeStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,9 +124,9 @@ def volume_stats_params(
     percent: float | None,
     subvolume: str | None,
     volume_in: InputPathType,
-    roi: VolumeStatsRoiParameters | None = None,
+    roi: VolumeStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
-) -> VolumeStatsParametersTagged:
+) -> VolumeStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def volume_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeStatsParameters` object.
+    `VolumeStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def volume_stats_validate(
 
 
 def volume_stats_cargs(
-    params: VolumeStatsParameters,
+    params: VolumeStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -227,7 +227,7 @@ def volume_stats_cargs(
 
 
 def volume_stats_outputs(
-    params: VolumeStatsParameters,
+    params: VolumeStatsParamsDict,
     execution: Execution,
 ) -> VolumeStatsOutputs:
     """
@@ -246,7 +246,7 @@ def volume_stats_outputs(
 
 
 def volume_stats_execute(
-    params: VolumeStatsParameters,
+    params: VolumeStatsParamsDict,
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
@@ -300,7 +300,7 @@ def volume_stats(
     percent: float | None,
     subvolume: str | None,
     volume_in: InputPathType,
-    roi: VolumeStatsRoiParameters | None = None,
+    roi: VolumeStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
@@ -365,8 +365,12 @@ def volume_stats(
 __all__ = [
     "VOLUME_STATS_METADATA",
     "VolumeStatsOutputs",
+    "VolumeStatsParamsDict",
+    "VolumeStatsParamsDictTagged",
+    "VolumeStatsRoiParamsDict",
+    "VolumeStatsRoiParamsDictTagged",
     "volume_stats",
     "volume_stats_execute",
     "volume_stats_params",
-    "volume_stats_roi_params",
+    "volume_stats_roi",
 ]

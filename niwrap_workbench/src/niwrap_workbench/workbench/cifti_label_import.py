@@ -12,7 +12,7 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
+CiftiLabelImportParamsDict = typing.TypedDict('CiftiLabelImportParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-import"]],
     "output": str,
     "discard-others": bool,
@@ -22,7 +22,7 @@ CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
     "input": InputPathType,
     "label-list-file": str,
 })
-CiftiLabelImportParametersTagged = typing.TypedDict('CiftiLabelImportParametersTagged', {
+CiftiLabelImportParamsDictTagged = typing.TypedDict('CiftiLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-import"],
     "output": str,
     "discard-others": bool,
@@ -36,7 +36,7 @@ CiftiLabelImportParametersTagged = typing.TypedDict('CiftiLabelImportParametersT
 
 class CiftiLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelImportParameters(...)`.
+    Output object returned when calling `CiftiLabelImportParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def cifti_label_import_params(
     label_list_file: str,
     discard_others: bool = False,
     drop_unused_labels: bool = False,
-) -> CiftiLabelImportParametersTagged:
+) -> CiftiLabelImportParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def cifti_label_import_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelImportParameters` object.
+    `CiftiLabelImportParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def cifti_label_import_validate(
 
 
 def cifti_label_import_cargs(
-    params: CiftiLabelImportParameters,
+    params: CiftiLabelImportParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def cifti_label_import_cargs(
 
 
 def cifti_label_import_outputs(
-    params: CiftiLabelImportParameters,
+    params: CiftiLabelImportParamsDict,
     execution: Execution,
 ) -> CiftiLabelImportOutputs:
     """
@@ -179,7 +179,7 @@ def cifti_label_import_outputs(
 
 
 def cifti_label_import_execute(
-    params: CiftiLabelImportParameters,
+    params: CiftiLabelImportParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
@@ -294,6 +294,8 @@ def cifti_label_import(
 __all__ = [
     "CIFTI_LABEL_IMPORT_METADATA",
     "CiftiLabelImportOutputs",
+    "CiftiLabelImportParamsDict",
+    "CiftiLabelImportParamsDictTagged",
     "cifti_label_import",
     "cifti_label_import_execute",
     "cifti_label_import_params",

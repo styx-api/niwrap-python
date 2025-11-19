@@ -12,7 +12,7 @@ VOLUME_DISTORTION_METADATA = Metadata(
 )
 
 
-VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
+VolumeDistortionParamsDict = typing.TypedDict('VolumeDistortionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-distortion"]],
     "volume-out": str,
     "source-volume": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
     "log2": bool,
     "warpfield": str,
 })
-VolumeDistortionParametersTagged = typing.TypedDict('VolumeDistortionParametersTagged', {
+VolumeDistortionParamsDictTagged = typing.TypedDict('VolumeDistortionParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-distortion"],
     "volume-out": str,
     "source-volume": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ VolumeDistortionParametersTagged = typing.TypedDict('VolumeDistortionParametersT
 
 class VolumeDistortionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeDistortionParameters(...)`.
+    Output object returned when calling `VolumeDistortionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def volume_distortion_params(
     warpfield: str,
     circular: bool = False,
     log2: bool = False,
-) -> VolumeDistortionParametersTagged:
+) -> VolumeDistortionParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def volume_distortion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeDistortionParameters` object.
+    `VolumeDistortionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def volume_distortion_validate(
 
 
 def volume_distortion_cargs(
-    params: VolumeDistortionParameters,
+    params: VolumeDistortionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def volume_distortion_cargs(
 
 
 def volume_distortion_outputs(
-    params: VolumeDistortionParameters,
+    params: VolumeDistortionParamsDict,
     execution: Execution,
 ) -> VolumeDistortionOutputs:
     """
@@ -155,7 +155,7 @@ def volume_distortion_outputs(
 
 
 def volume_distortion_execute(
-    params: VolumeDistortionParameters,
+    params: VolumeDistortionParamsDict,
     runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
@@ -239,6 +239,8 @@ def volume_distortion(
 __all__ = [
     "VOLUME_DISTORTION_METADATA",
     "VolumeDistortionOutputs",
+    "VolumeDistortionParamsDict",
+    "VolumeDistortionParamsDictTagged",
     "volume_distortion",
     "volume_distortion_execute",
     "volume_distortion_params",

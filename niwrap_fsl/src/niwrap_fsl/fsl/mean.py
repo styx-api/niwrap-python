@@ -13,7 +13,7 @@ MEAN_METADATA = Metadata(
 )
 
 
-MeanParameters = typing.TypedDict('MeanParameters', {
+MeanParamsDict = typing.TypedDict('MeanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mean"]],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -35,7 +35,7 @@ MeanParameters = typing.TypedDict('MeanParameters', {
     "prior_std": typing.NotRequired[float | None],
     "help_flag": bool,
 })
-MeanParametersTagged = typing.TypedDict('MeanParametersTagged', {
+MeanParamsDictTagged = typing.TypedDict('MeanParamsDictTagged', {
     "@type": typing.Literal["fsl/mean"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -61,7 +61,7 @@ MeanParametersTagged = typing.TypedDict('MeanParametersTagged', {
 
 class MeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MeanParameters(...)`.
+    Output object returned when calling `MeanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def mean_params(
     prior_mean: float | None = None,
     prior_std: float | None = None,
     help_flag: bool = False,
-) -> MeanParametersTagged:
+) -> MeanParamsDictTagged:
     """
     Build parameters.
     
@@ -161,7 +161,7 @@ def mean_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `MeanParameters`
+    Validate parameters. Throws an error if `params` is not a valid `MeanParamsDict`
     object.
     
     Args:
@@ -236,7 +236,7 @@ def mean_validate(
 
 
 def mean_cargs(
-    params: MeanParameters,
+    params: MeanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -332,7 +332,7 @@ def mean_cargs(
 
 
 def mean_outputs(
-    params: MeanParameters,
+    params: MeanParamsDict,
     execution: Execution,
 ) -> MeanOutputs:
     """
@@ -352,7 +352,7 @@ def mean_outputs(
 
 
 def mean_execute(
-    params: MeanParameters,
+    params: MeanParamsDict,
     runner: Runner | None = None,
 ) -> MeanOutputs:
     """
@@ -466,6 +466,8 @@ def mean(
 __all__ = [
     "MEAN_METADATA",
     "MeanOutputs",
+    "MeanParamsDict",
+    "MeanParamsDictTagged",
     "mean",
     "mean_execute",
     "mean_params",

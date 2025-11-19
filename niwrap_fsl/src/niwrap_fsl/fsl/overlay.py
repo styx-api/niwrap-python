@@ -13,7 +13,7 @@ OVERLAY_METADATA = Metadata(
 )
 
 
-OverlayParameters = typing.TypedDict('OverlayParameters', {
+OverlayParamsDict = typing.TypedDict('OverlayParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/overlay"]],
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
@@ -28,7 +28,7 @@ OverlayParameters = typing.TypedDict('OverlayParameters', {
     "stat_thresh2": typing.NotRequired[list[float] | None],
     "use_checkerboard": bool,
 })
-OverlayParametersTagged = typing.TypedDict('OverlayParametersTagged', {
+OverlayParamsDictTagged = typing.TypedDict('OverlayParamsDictTagged', {
     "@type": typing.Literal["fsl/overlay"],
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
@@ -47,7 +47,7 @@ OverlayParametersTagged = typing.TypedDict('OverlayParametersTagged', {
 
 class OverlayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `OverlayParameters(...)`.
+    Output object returned when calling `OverlayParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def overlay_params(
     stat_image2: InputPathType | None = None,
     stat_thresh2: list[float] | None = None,
     use_checkerboard: bool = False,
-) -> OverlayParametersTagged:
+) -> OverlayParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def overlay_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `OverlayParameters` object.
+    `OverlayParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def overlay_validate(
 
 
 def overlay_cargs(
-    params: OverlayParameters,
+    params: OverlayParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def overlay_cargs(
 
 
 def overlay_outputs(
-    params: OverlayParameters,
+    params: OverlayParamsDict,
     execution: Execution,
 ) -> OverlayOutputs:
     """
@@ -250,7 +250,7 @@ def overlay_outputs(
 
 
 def overlay_execute(
-    params: OverlayParameters,
+    params: OverlayParamsDict,
     runner: Runner | None = None,
 ) -> OverlayOutputs:
     """
@@ -345,6 +345,8 @@ def overlay(
 __all__ = [
     "OVERLAY_METADATA",
     "OverlayOutputs",
+    "OverlayParamsDict",
+    "OverlayParamsDictTagged",
     "overlay",
     "overlay_execute",
     "overlay_params",

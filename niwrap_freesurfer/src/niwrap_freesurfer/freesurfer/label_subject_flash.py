@@ -13,7 +13,7 @@ LABEL_SUBJECT_FLASH_METADATA = Metadata(
 )
 
 
-LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
+LabelSubjectFlashParamsDict = typing.TypedDict('LabelSubjectFlashParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_flash"]],
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
@@ -21,7 +21,7 @@ LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
     "classifier_array": InputPathType,
     "aseg_output": str,
 })
-LabelSubjectFlashParametersTagged = typing.TypedDict('LabelSubjectFlashParametersTagged', {
+LabelSubjectFlashParamsDictTagged = typing.TypedDict('LabelSubjectFlashParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label_subject_flash"],
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
@@ -33,7 +33,7 @@ LabelSubjectFlashParametersTagged = typing.TypedDict('LabelSubjectFlashParameter
 
 class LabelSubjectFlashOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelSubjectFlashParameters(...)`.
+    Output object returned when calling `LabelSubjectFlashParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def label_subject_flash_params(
     transform_file: InputPathType,
     classifier_array: InputPathType,
     aseg_output: str,
-) -> LabelSubjectFlashParametersTagged:
+) -> LabelSubjectFlashParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def label_subject_flash_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelSubjectFlashParameters` object.
+    `LabelSubjectFlashParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def label_subject_flash_validate(
 
 
 def label_subject_flash_cargs(
-    params: LabelSubjectFlashParameters,
+    params: LabelSubjectFlashParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def label_subject_flash_cargs(
 
 
 def label_subject_flash_outputs(
-    params: LabelSubjectFlashParameters,
+    params: LabelSubjectFlashParamsDict,
     execution: Execution,
 ) -> LabelSubjectFlashOutputs:
     """
@@ -152,7 +152,7 @@ def label_subject_flash_outputs(
 
 
 def label_subject_flash_execute(
-    params: LabelSubjectFlashParameters,
+    params: LabelSubjectFlashParamsDict,
     runner: Runner | None = None,
 ) -> LabelSubjectFlashOutputs:
     """
@@ -222,6 +222,8 @@ def label_subject_flash(
 __all__ = [
     "LABEL_SUBJECT_FLASH_METADATA",
     "LabelSubjectFlashOutputs",
+    "LabelSubjectFlashParamsDict",
+    "LabelSubjectFlashParamsDictTagged",
     "label_subject_flash",
     "label_subject_flash_execute",
     "label_subject_flash_params",

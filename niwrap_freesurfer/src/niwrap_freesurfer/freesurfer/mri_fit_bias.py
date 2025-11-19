@@ -13,7 +13,7 @@ MRI_FIT_BIAS_METADATA = Metadata(
 )
 
 
-MriFitBiasParameters = typing.TypedDict('MriFitBiasParameters', {
+MriFitBiasParamsDict = typing.TypedDict('MriFitBiasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fit_bias"]],
     "inputvol": InputPathType,
     "lpf_cutoff": typing.NotRequired[float | None],
@@ -28,7 +28,7 @@ MriFitBiasParameters = typing.TypedDict('MriFitBiasParameters', {
     "debug": bool,
     "checkopts": bool,
 })
-MriFitBiasParametersTagged = typing.TypedDict('MriFitBiasParametersTagged', {
+MriFitBiasParamsDictTagged = typing.TypedDict('MriFitBiasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fit_bias"],
     "inputvol": InputPathType,
     "lpf_cutoff": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ MriFitBiasParametersTagged = typing.TypedDict('MriFitBiasParametersTagged', {
 
 class MriFitBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFitBiasParameters(...)`.
+    Output object returned when calling `MriFitBiasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ def mri_fit_bias_params(
     nthreads: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriFitBiasParametersTagged:
+) -> MriFitBiasParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def mri_fit_bias_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFitBiasParameters` object.
+    `MriFitBiasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -173,7 +173,7 @@ def mri_fit_bias_validate(
 
 
 def mri_fit_bias_cargs(
-    params: MriFitBiasParameters,
+    params: MriFitBiasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,7 +240,7 @@ def mri_fit_bias_cargs(
 
 
 def mri_fit_bias_outputs(
-    params: MriFitBiasParameters,
+    params: MriFitBiasParamsDict,
     execution: Execution,
 ) -> MriFitBiasOutputs:
     """
@@ -261,7 +261,7 @@ def mri_fit_bias_outputs(
 
 
 def mri_fit_bias_execute(
-    params: MriFitBiasParameters,
+    params: MriFitBiasParamsDict,
     runner: Runner | None = None,
 ) -> MriFitBiasOutputs:
     """
@@ -352,6 +352,8 @@ def mri_fit_bias(
 __all__ = [
     "MRI_FIT_BIAS_METADATA",
     "MriFitBiasOutputs",
+    "MriFitBiasParamsDict",
+    "MriFitBiasParamsDictTagged",
     "mri_fit_bias",
     "mri_fit_bias_execute",
     "mri_fit_bias_params",

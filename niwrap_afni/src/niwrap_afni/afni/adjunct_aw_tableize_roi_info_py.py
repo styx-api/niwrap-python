@@ -13,7 +13,7 @@ ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
 )
 
 
-AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParameters', {
+AdjunctAwTableizeRoiInfoPyParamsDict = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_aw_tableize_roi_info.py"]],
     "output_file": str,
     "warped_atlas": InputPathType,
@@ -22,7 +22,7 @@ AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInf
     "reference_mask": InputPathType,
     "modesmooth_value": float,
 })
-AdjunctAwTableizeRoiInfoPyParametersTagged = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParametersTagged', {
+AdjunctAwTableizeRoiInfoPyParamsDictTagged = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_aw_tableize_roi_info.py"],
     "output_file": str,
     "warped_atlas": InputPathType,
@@ -35,7 +35,7 @@ AdjunctAwTableizeRoiInfoPyParametersTagged = typing.TypedDict('AdjunctAwTableize
 
 class AdjunctAwTableizeRoiInfoPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctAwTableizeRoiInfoPyParameters(...)`.
+    Output object returned when calling `AdjunctAwTableizeRoiInfoPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def adjunct_aw_tableize_roi_info_py_params(
     reference_atlas: InputPathType,
     reference_mask: InputPathType,
     modesmooth_value: float,
-) -> AdjunctAwTableizeRoiInfoPyParametersTagged:
+) -> AdjunctAwTableizeRoiInfoPyParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def adjunct_aw_tableize_roi_info_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctAwTableizeRoiInfoPyParameters` object.
+    `AdjunctAwTableizeRoiInfoPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def adjunct_aw_tableize_roi_info_py_validate(
 
 
 def adjunct_aw_tableize_roi_info_py_cargs(
-    params: AdjunctAwTableizeRoiInfoPyParameters,
+    params: AdjunctAwTableizeRoiInfoPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def adjunct_aw_tableize_roi_info_py_cargs(
 
 
 def adjunct_aw_tableize_roi_info_py_outputs(
-    params: AdjunctAwTableizeRoiInfoPyParameters,
+    params: AdjunctAwTableizeRoiInfoPyParamsDict,
     execution: Execution,
 ) -> AdjunctAwTableizeRoiInfoPyOutputs:
     """
@@ -162,7 +162,7 @@ def adjunct_aw_tableize_roi_info_py_outputs(
 
 
 def adjunct_aw_tableize_roi_info_py_execute(
-    params: AdjunctAwTableizeRoiInfoPyParameters,
+    params: AdjunctAwTableizeRoiInfoPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctAwTableizeRoiInfoPyOutputs:
     """
@@ -238,6 +238,8 @@ def adjunct_aw_tableize_roi_info_py(
 __all__ = [
     "ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA",
     "AdjunctAwTableizeRoiInfoPyOutputs",
+    "AdjunctAwTableizeRoiInfoPyParamsDict",
+    "AdjunctAwTableizeRoiInfoPyParamsDictTagged",
     "adjunct_aw_tableize_roi_info_py",
     "adjunct_aw_tableize_roi_info_py_execute",
     "adjunct_aw_tableize_roi_info_py_params",

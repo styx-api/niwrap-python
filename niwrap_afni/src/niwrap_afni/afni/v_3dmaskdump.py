@@ -13,7 +13,7 @@ V_3DMASKDUMP_METADATA = Metadata(
 )
 
 
-V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
+V3dmaskdumpParamsDict = typing.TypedDict('V3dmaskdumpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmaskdump"]],
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
     "output_niml": typing.NotRequired[str | None],
     "quiet_mode": bool,
 })
-V3dmaskdumpParametersTagged = typing.TypedDict('V3dmaskdumpParametersTagged', {
+V3dmaskdumpParamsDictTagged = typing.TypedDict('V3dmaskdumpParamsDictTagged', {
     "@type": typing.Literal["afni/3dmaskdump"],
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -63,7 +63,7 @@ V3dmaskdumpParametersTagged = typing.TypedDict('V3dmaskdumpParametersTagged', {
 
 class V3dmaskdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaskdumpParameters(...)`.
+    Output object returned when calling `V3dmaskdumpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def v_3dmaskdump_params(
     random_seed: float | None = None,
     output_niml: str | None = None,
     quiet_mode: bool = False,
-) -> V3dmaskdumpParametersTagged:
+) -> V3dmaskdumpParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def v_3dmaskdump_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaskdumpParameters` object.
+    `V3dmaskdumpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -259,7 +259,7 @@ def v_3dmaskdump_validate(
 
 
 def v_3dmaskdump_cargs(
-    params: V3dmaskdumpParameters,
+    params: V3dmaskdumpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -358,7 +358,7 @@ def v_3dmaskdump_cargs(
 
 
 def v_3dmaskdump_outputs(
-    params: V3dmaskdumpParameters,
+    params: V3dmaskdumpParamsDict,
     execution: Execution,
 ) -> V3dmaskdumpOutputs:
     """
@@ -378,7 +378,7 @@ def v_3dmaskdump_outputs(
 
 
 def v_3dmaskdump_execute(
-    params: V3dmaskdumpParameters,
+    params: V3dmaskdumpParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaskdumpOutputs:
     """
@@ -502,6 +502,8 @@ def v_3dmaskdump(
 
 __all__ = [
     "V3dmaskdumpOutputs",
+    "V3dmaskdumpParamsDict",
+    "V3dmaskdumpParamsDictTagged",
     "V_3DMASKDUMP_METADATA",
     "v_3dmaskdump",
     "v_3dmaskdump_execute",

@@ -13,7 +13,7 @@ DICOM_HINFO_METADATA = Metadata(
 )
 
 
-DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
+DicomHinfoParamsDict = typing.TypedDict('DicomHinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/dicom_hinfo"]],
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
     "namelast": bool,
     "files": list[InputPathType],
 })
-DicomHinfoParametersTagged = typing.TypedDict('DicomHinfoParametersTagged', {
+DicomHinfoParamsDictTagged = typing.TypedDict('DicomHinfoParamsDictTagged', {
     "@type": typing.Literal["afni/dicom_hinfo"],
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ DicomHinfoParametersTagged = typing.TypedDict('DicomHinfoParametersTagged', {
 
 class DicomHinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DicomHinfoParameters(...)`.
+    Output object returned when calling `DicomHinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def dicom_hinfo_params(
     full_entry: bool = False,
     no_name: bool = False,
     namelast: bool = False,
-) -> DicomHinfoParametersTagged:
+) -> DicomHinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def dicom_hinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DicomHinfoParameters` object.
+    `DicomHinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def dicom_hinfo_validate(
 
 
 def dicom_hinfo_cargs(
-    params: DicomHinfoParameters,
+    params: DicomHinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def dicom_hinfo_cargs(
 
 
 def dicom_hinfo_outputs(
-    params: DicomHinfoParameters,
+    params: DicomHinfoParamsDict,
     execution: Execution,
 ) -> DicomHinfoOutputs:
     """
@@ -174,7 +174,7 @@ def dicom_hinfo_outputs(
 
 
 def dicom_hinfo_execute(
-    params: DicomHinfoParameters,
+    params: DicomHinfoParamsDict,
     runner: Runner | None = None,
 ) -> DicomHinfoOutputs:
     """
@@ -247,6 +247,8 @@ def dicom_hinfo(
 __all__ = [
     "DICOM_HINFO_METADATA",
     "DicomHinfoOutputs",
+    "DicomHinfoParamsDict",
+    "DicomHinfoParamsDictTagged",
     "dicom_hinfo",
     "dicom_hinfo_execute",
     "dicom_hinfo_params",

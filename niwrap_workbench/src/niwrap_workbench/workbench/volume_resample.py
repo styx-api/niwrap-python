@@ -12,94 +12,94 @@ VOLUME_RESAMPLE_METADATA = Metadata(
 )
 
 
-VolumeResampleFlirtParameters = typing.TypedDict('VolumeResampleFlirtParameters', {
+VolumeResampleFlirtParamsDict = typing.TypedDict('VolumeResampleFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
     "source-volume": str,
     "target-volume": str,
 })
-VolumeResampleFlirtParametersTagged = typing.TypedDict('VolumeResampleFlirtParametersTagged', {
+VolumeResampleFlirtParamsDictTagged = typing.TypedDict('VolumeResampleFlirtParamsDictTagged', {
     "@type": typing.Literal["flirt"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-VolumeResampleAffineParameters = typing.TypedDict('VolumeResampleAffineParameters', {
+VolumeResampleAffineParamsDict = typing.TypedDict('VolumeResampleAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["affine"]],
     "affine": str,
-    "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
+    "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict | None],
 })
-VolumeResampleAffineParametersTagged = typing.TypedDict('VolumeResampleAffineParametersTagged', {
+VolumeResampleAffineParamsDictTagged = typing.TypedDict('VolumeResampleAffineParamsDictTagged', {
     "@type": typing.Literal["affine"],
     "affine": str,
-    "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
+    "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict | None],
 })
 
 
-VolumeResampleFlirtParameters_ = typing.TypedDict('VolumeResampleFlirtParameters_', {
+VolumeResampleFlirtParamsDict_ = typing.TypedDict('VolumeResampleFlirtParamsDict_', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
     "source-volume": str,
     "target-volume": str,
 })
-VolumeResampleFlirtParametersTagged_ = typing.TypedDict('VolumeResampleFlirtParametersTagged_', {
+VolumeResampleFlirtParamsDictTagged_ = typing.TypedDict('VolumeResampleFlirtParamsDictTagged_', {
     "@type": typing.Literal["flirt"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-VolumeResampleAffineSeriesParameters = typing.TypedDict('VolumeResampleAffineSeriesParameters', {
+VolumeResampleAffineSeriesParamsDict = typing.TypedDict('VolumeResampleAffineSeriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["affine-series"]],
     "affine-series": str,
-    "flirt": typing.NotRequired[VolumeResampleFlirtParameters_ | None],
+    "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict_ | None],
 })
-VolumeResampleAffineSeriesParametersTagged = typing.TypedDict('VolumeResampleAffineSeriesParametersTagged', {
+VolumeResampleAffineSeriesParamsDictTagged = typing.TypedDict('VolumeResampleAffineSeriesParamsDictTagged', {
     "@type": typing.Literal["affine-series"],
     "affine-series": str,
-    "flirt": typing.NotRequired[VolumeResampleFlirtParameters_ | None],
+    "flirt": typing.NotRequired[VolumeResampleFlirtParamsDict_ | None],
 })
 
 
-VolumeResampleWarpParameters = typing.TypedDict('VolumeResampleWarpParameters', {
+VolumeResampleWarpParamsDict = typing.TypedDict('VolumeResampleWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warp"]],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
-VolumeResampleWarpParametersTagged = typing.TypedDict('VolumeResampleWarpParametersTagged', {
+VolumeResampleWarpParamsDictTagged = typing.TypedDict('VolumeResampleWarpParamsDictTagged', {
     "@type": typing.Literal["warp"],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
 
 
-VolumeResampleParameters = typing.TypedDict('VolumeResampleParameters', {
+VolumeResampleParamsDict = typing.TypedDict('VolumeResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-resample"]],
     "volume-out": str,
     "value": typing.NotRequired[float | None],
-    "affine": typing.NotRequired[list[VolumeResampleAffineParameters] | None],
-    "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParameters] | None],
-    "warp": typing.NotRequired[list[VolumeResampleWarpParameters] | None],
+    "affine": typing.NotRequired[list[VolumeResampleAffineParamsDict] | None],
+    "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParamsDict] | None],
+    "warp": typing.NotRequired[list[VolumeResampleWarpParamsDict] | None],
     "volume-in": InputPathType,
     "volume-space": str,
     "method": str,
 })
-VolumeResampleParametersTagged = typing.TypedDict('VolumeResampleParametersTagged', {
+VolumeResampleParamsDictTagged = typing.TypedDict('VolumeResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-resample"],
     "volume-out": str,
     "value": typing.NotRequired[float | None],
-    "affine": typing.NotRequired[list[VolumeResampleAffineParameters] | None],
-    "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParameters] | None],
-    "warp": typing.NotRequired[list[VolumeResampleWarpParameters] | None],
+    "affine": typing.NotRequired[list[VolumeResampleAffineParamsDict] | None],
+    "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParamsDict] | None],
+    "warp": typing.NotRequired[list[VolumeResampleWarpParamsDict] | None],
     "volume-in": InputPathType,
     "volume-space": str,
     "method": str,
 })
 
 
-def volume_resample_flirt_params(
+def volume_resample_flirt(
     source_volume: str,
     target_volume: str,
-) -> VolumeResampleFlirtParametersTagged:
+) -> VolumeResampleFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def volume_resample_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleFlirtParameters` object.
+    `VolumeResampleFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def volume_resample_flirt_validate(
 
 
 def volume_resample_flirt_cargs(
-    params: VolumeResampleFlirtParameters,
+    params: VolumeResampleFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,10 +161,10 @@ def volume_resample_flirt_cargs(
     return cargs
 
 
-def volume_resample_affine_params(
+def volume_resample_affine(
     affine: str,
-    flirt: VolumeResampleFlirtParameters | None = None,
-) -> VolumeResampleAffineParametersTagged:
+    flirt: VolumeResampleFlirtParamsDict | None = None,
+) -> VolumeResampleAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def volume_resample_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleAffineParameters` object.
+    `VolumeResampleAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def volume_resample_affine_validate(
 
 
 def volume_resample_affine_cargs(
-    params: VolumeResampleAffineParameters,
+    params: VolumeResampleAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,10 +226,10 @@ def volume_resample_affine_cargs(
     return cargs
 
 
-def volume_resample_flirt_params_(
+def volume_resample_flirt_(
     source_volume: str,
     target_volume: str,
-) -> VolumeResampleFlirtParametersTagged_:
+) -> VolumeResampleFlirtParamsDictTagged_:
     """
     Build parameters.
     
@@ -252,7 +252,7 @@ def volume_resample_flirt_validate_(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleFlirtParameters_` object.
+    `VolumeResampleFlirtParamsDict_` object.
     
     Args:
         params: The parameters object to validate.
@@ -270,7 +270,7 @@ def volume_resample_flirt_validate_(
 
 
 def volume_resample_flirt_cargs_(
-    params: VolumeResampleFlirtParameters_,
+    params: VolumeResampleFlirtParamsDict_,
     execution: Execution,
 ) -> list[str]:
     """
@@ -291,10 +291,10 @@ def volume_resample_flirt_cargs_(
     return cargs
 
 
-def volume_resample_affine_series_params(
+def volume_resample_affine_series(
     affine_series: str,
-    flirt: VolumeResampleFlirtParameters_ | None = None,
-) -> VolumeResampleAffineSeriesParametersTagged:
+    flirt: VolumeResampleFlirtParamsDict_ | None = None,
+) -> VolumeResampleAffineSeriesParamsDictTagged:
     """
     Build parameters.
     
@@ -319,7 +319,7 @@ def volume_resample_affine_series_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleAffineSeriesParameters` object.
+    `VolumeResampleAffineSeriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -335,7 +335,7 @@ def volume_resample_affine_series_validate(
 
 
 def volume_resample_affine_series_cargs(
-    params: VolumeResampleAffineSeriesParameters,
+    params: VolumeResampleAffineSeriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -357,10 +357,10 @@ def volume_resample_affine_series_cargs(
     return cargs
 
 
-def volume_resample_warp_params(
+def volume_resample_warp(
     warpfield: str,
     source_volume: str | None,
-) -> VolumeResampleWarpParametersTagged:
+) -> VolumeResampleWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -386,7 +386,7 @@ def volume_resample_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleWarpParameters` object.
+    `VolumeResampleWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -403,7 +403,7 @@ def volume_resample_warp_validate(
 
 
 def volume_resample_warp_cargs(
-    params: VolumeResampleWarpParameters,
+    params: VolumeResampleWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -428,7 +428,7 @@ def volume_resample_warp_cargs(
 
 class VolumeResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeResampleParameters(...)`.
+    Output object returned when calling `VolumeResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -442,10 +442,10 @@ def volume_resample_params(
     volume_in: InputPathType,
     volume_space: str,
     method: str,
-    affine: list[VolumeResampleAffineParameters] | None = None,
-    affine_series: list[VolumeResampleAffineSeriesParameters] | None = None,
-    warp: list[VolumeResampleWarpParameters] | None = None,
-) -> VolumeResampleParametersTagged:
+    affine: list[VolumeResampleAffineParamsDict] | None = None,
+    affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
+    warp: list[VolumeResampleWarpParamsDict] | None = None,
+) -> VolumeResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -487,7 +487,7 @@ def volume_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeResampleParameters` object.
+    `VolumeResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -503,17 +503,17 @@ def volume_resample_validate(
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
     if params.get("affine", None) is not None:
         if not isinstance(params["affine"], list):
-            raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `list[VolumeResampleAffineParameters] | None`')
+            raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `list[VolumeResampleAffineParamsDict] | None`')
         for e in params["affine"]:
             volume_resample_affine_validate(e)
     if params.get("affine-series", None) is not None:
         if not isinstance(params["affine-series"], list):
-            raise StyxValidationError(f'`affine-series` has the wrong type: Received `{type(params.get("affine-series", None))}` expected `list[VolumeResampleAffineSeriesParameters] | None`')
+            raise StyxValidationError(f'`affine-series` has the wrong type: Received `{type(params.get("affine-series", None))}` expected `list[VolumeResampleAffineSeriesParamsDict] | None`')
         for e in params["affine-series"]:
             volume_resample_affine_series_validate(e)
     if params.get("warp", None) is not None:
         if not isinstance(params["warp"], list):
-            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `list[VolumeResampleWarpParameters] | None`')
+            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `list[VolumeResampleWarpParamsDict] | None`')
         for e in params["warp"]:
             volume_resample_warp_validate(e)
     if params.get("volume-in", None) is None:
@@ -531,7 +531,7 @@ def volume_resample_validate(
 
 
 def volume_resample_cargs(
-    params: VolumeResampleParameters,
+    params: VolumeResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -562,7 +562,7 @@ def volume_resample_cargs(
 
 
 def volume_resample_outputs(
-    params: VolumeResampleParameters,
+    params: VolumeResampleParamsDict,
     execution: Execution,
 ) -> VolumeResampleOutputs:
     """
@@ -582,7 +582,7 @@ def volume_resample_outputs(
 
 
 def volume_resample_execute(
-    params: VolumeResampleParameters,
+    params: VolumeResampleParamsDict,
     runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
@@ -622,9 +622,9 @@ def volume_resample(
     volume_in: InputPathType,
     volume_space: str,
     method: str,
-    affine: list[VolumeResampleAffineParameters] | None = None,
-    affine_series: list[VolumeResampleAffineSeriesParameters] | None = None,
-    warp: list[VolumeResampleWarpParameters] | None = None,
+    affine: list[VolumeResampleAffineParamsDict] | None = None,
+    affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
+    warp: list[VolumeResampleWarpParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
@@ -673,13 +673,25 @@ def volume_resample(
 
 __all__ = [
     "VOLUME_RESAMPLE_METADATA",
+    "VolumeResampleAffineParamsDict",
+    "VolumeResampleAffineParamsDictTagged",
+    "VolumeResampleAffineSeriesParamsDict",
+    "VolumeResampleAffineSeriesParamsDictTagged",
+    "VolumeResampleFlirtParamsDict",
+    "VolumeResampleFlirtParamsDictTagged",
+    "VolumeResampleFlirtParamsDictTagged_",
+    "VolumeResampleFlirtParamsDict_",
     "VolumeResampleOutputs",
+    "VolumeResampleParamsDict",
+    "VolumeResampleParamsDictTagged",
+    "VolumeResampleWarpParamsDict",
+    "VolumeResampleWarpParamsDictTagged",
     "volume_resample",
-    "volume_resample_affine_params",
-    "volume_resample_affine_series_params",
+    "volume_resample_affine",
+    "volume_resample_affine_series",
     "volume_resample_execute",
-    "volume_resample_flirt_params",
-    "volume_resample_flirt_params_",
+    "volume_resample_flirt",
+    "volume_resample_flirt_",
     "volume_resample_params",
-    "volume_resample_warp_params",
+    "volume_resample_warp",
 ]

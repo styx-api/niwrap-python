@@ -13,7 +13,7 @@ SYSTEMNOISE_METADATA = Metadata(
 )
 
 
-SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
+SystemnoiseParamsDict = typing.TypedDict('SystemnoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/systemnoise"]],
     "input_signal": InputPathType,
     "output_signal": str,
@@ -22,7 +22,7 @@ SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-SystemnoiseParametersTagged = typing.TypedDict('SystemnoiseParametersTagged', {
+SystemnoiseParamsDictTagged = typing.TypedDict('SystemnoiseParamsDictTagged', {
     "@type": typing.Literal["fsl/systemnoise"],
     "input_signal": InputPathType,
     "output_signal": str,
@@ -35,7 +35,7 @@ SystemnoiseParametersTagged = typing.TypedDict('SystemnoiseParametersTagged', {
 
 class SystemnoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SystemnoiseParameters(...)`.
+    Output object returned when calling `SystemnoiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def systemnoise_params(
     seed: float | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> SystemnoiseParametersTagged:
+) -> SystemnoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def systemnoise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SystemnoiseParameters` object.
+    `SystemnoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def systemnoise_validate(
 
 
 def systemnoise_cargs(
-    params: SystemnoiseParameters,
+    params: SystemnoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def systemnoise_cargs(
 
 
 def systemnoise_outputs(
-    params: SystemnoiseParameters,
+    params: SystemnoiseParamsDict,
     execution: Execution,
 ) -> SystemnoiseOutputs:
     """
@@ -175,7 +175,7 @@ def systemnoise_outputs(
 
 
 def systemnoise_execute(
-    params: SystemnoiseParameters,
+    params: SystemnoiseParamsDict,
     runner: Runner | None = None,
 ) -> SystemnoiseOutputs:
     """
@@ -247,6 +247,8 @@ def systemnoise(
 __all__ = [
     "SYSTEMNOISE_METADATA",
     "SystemnoiseOutputs",
+    "SystemnoiseParamsDict",
+    "SystemnoiseParamsDictTagged",
     "systemnoise",
     "systemnoise_execute",
     "systemnoise_params",

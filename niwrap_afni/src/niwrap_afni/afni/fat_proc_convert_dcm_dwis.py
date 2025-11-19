@@ -13,7 +13,7 @@ FAT_PROC_CONVERT_DCM_DWIS_METADATA = Metadata(
 )
 
 
-FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParameters', {
+FatProcConvertDcmDwisParamsDict = typing.TypedDict('FatProcConvertDcmDwisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_dwis"]],
     "dicom_dir": str,
     "output_prefix": str,
@@ -34,7 +34,7 @@ FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParamet
     "no_qc_view": bool,
     "do_movie": typing.NotRequired[str | None],
 })
-FatProcConvertDcmDwisParametersTagged = typing.TypedDict('FatProcConvertDcmDwisParametersTagged', {
+FatProcConvertDcmDwisParamsDictTagged = typing.TypedDict('FatProcConvertDcmDwisParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_convert_dcm_dwis"],
     "dicom_dir": str,
     "output_prefix": str,
@@ -59,7 +59,7 @@ FatProcConvertDcmDwisParametersTagged = typing.TypedDict('FatProcConvertDcmDwisP
 
 class FatProcConvertDcmDwisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcConvertDcmDwisParameters(...)`.
+    Output object returned when calling `FatProcConvertDcmDwisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -100,7 +100,7 @@ def fat_proc_convert_dcm_dwis_params(
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
     do_movie: str | None = None,
-) -> FatProcConvertDcmDwisParametersTagged:
+) -> FatProcConvertDcmDwisParamsDictTagged:
     """
     Build parameters.
     
@@ -170,7 +170,7 @@ def fat_proc_convert_dcm_dwis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcConvertDcmDwisParameters` object.
+    `FatProcConvertDcmDwisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -258,7 +258,7 @@ def fat_proc_convert_dcm_dwis_validate(
 
 
 def fat_proc_convert_dcm_dwis_cargs(
-    params: FatProcConvertDcmDwisParameters,
+    params: FatProcConvertDcmDwisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -313,7 +313,7 @@ def fat_proc_convert_dcm_dwis_cargs(
 
 
 def fat_proc_convert_dcm_dwis_outputs(
-    params: FatProcConvertDcmDwisParameters,
+    params: FatProcConvertDcmDwisParamsDict,
     execution: Execution,
 ) -> FatProcConvertDcmDwisOutputs:
     """
@@ -338,7 +338,7 @@ def fat_proc_convert_dcm_dwis_outputs(
 
 
 def fat_proc_convert_dcm_dwis_execute(
-    params: FatProcConvertDcmDwisParameters,
+    params: FatProcConvertDcmDwisParamsDict,
     runner: Runner | None = None,
 ) -> FatProcConvertDcmDwisOutputs:
     """
@@ -456,6 +456,8 @@ def fat_proc_convert_dcm_dwis(
 __all__ = [
     "FAT_PROC_CONVERT_DCM_DWIS_METADATA",
     "FatProcConvertDcmDwisOutputs",
+    "FatProcConvertDcmDwisParamsDict",
+    "FatProcConvertDcmDwisParamsDictTagged",
     "fat_proc_convert_dcm_dwis",
     "fat_proc_convert_dcm_dwis_execute",
     "fat_proc_convert_dcm_dwis_params",

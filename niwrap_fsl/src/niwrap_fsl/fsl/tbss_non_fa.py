@@ -13,7 +13,7 @@ TBSS_NON_FA_METADATA = Metadata(
 )
 
 
-TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
+TbssNonFaParamsDict = typing.TypedDict('TbssNonFaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_non_FA"]],
     "concat_auto": bool,
     "output_file": str,
@@ -25,7 +25,7 @@ TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
     "concat_tr": typing.NotRequired[float | None],
     "volume_number": typing.NotRequired[float | None],
 })
-TbssNonFaParametersTagged = typing.TypedDict('TbssNonFaParametersTagged', {
+TbssNonFaParamsDictTagged = typing.TypedDict('TbssNonFaParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_non_FA"],
     "concat_auto": bool,
     "output_file": str,
@@ -41,7 +41,7 @@ TbssNonFaParametersTagged = typing.TypedDict('TbssNonFaParametersTagged', {
 
 class TbssNonFaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TbssNonFaParameters(...)`.
+    Output object returned when calling `TbssNonFaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def tbss_non_fa_params(
     concat_t: bool = False,
     concat_tr: float | None = None,
     volume_number: float | None = None,
-) -> TbssNonFaParametersTagged:
+) -> TbssNonFaParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def tbss_non_fa_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TbssNonFaParameters` object.
+    `TbssNonFaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -148,7 +148,7 @@ def tbss_non_fa_validate(
 
 
 def tbss_non_fa_cargs(
-    params: TbssNonFaParameters,
+    params: TbssNonFaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def tbss_non_fa_cargs(
 
 
 def tbss_non_fa_outputs(
-    params: TbssNonFaParameters,
+    params: TbssNonFaParamsDict,
     execution: Execution,
 ) -> TbssNonFaOutputs:
     """
@@ -208,7 +208,7 @@ def tbss_non_fa_outputs(
 
 
 def tbss_non_fa_execute(
-    params: TbssNonFaParameters,
+    params: TbssNonFaParamsDict,
     runner: Runner | None = None,
 ) -> TbssNonFaOutputs:
     """
@@ -291,6 +291,8 @@ def tbss_non_fa(
 __all__ = [
     "TBSS_NON_FA_METADATA",
     "TbssNonFaOutputs",
+    "TbssNonFaParamsDict",
+    "TbssNonFaParamsDictTagged",
     "tbss_non_fa",
     "tbss_non_fa_execute",
     "tbss_non_fa_params",

@@ -13,12 +13,12 @@ REGDAT2XFM_METADATA = Metadata(
 )
 
 
-Regdat2xfmParameters = typing.TypedDict('Regdat2xfmParameters', {
+Regdat2xfmParamsDict = typing.TypedDict('Regdat2xfmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/regdat2xfm"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-Regdat2xfmParametersTagged = typing.TypedDict('Regdat2xfmParametersTagged', {
+Regdat2xfmParamsDictTagged = typing.TypedDict('Regdat2xfmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/regdat2xfm"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ Regdat2xfmParametersTagged = typing.TypedDict('Regdat2xfmParametersTagged', {
 
 class Regdat2xfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Regdat2xfmParameters(...)`.
+    Output object returned when calling `Regdat2xfmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class Regdat2xfmOutputs(typing.NamedTuple):
 def regdat2xfm_params(
     input_file: InputPathType,
     output_file: str,
-) -> Regdat2xfmParametersTagged:
+) -> Regdat2xfmParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def regdat2xfm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Regdat2xfmParameters` object.
+    `Regdat2xfmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def regdat2xfm_validate(
 
 
 def regdat2xfm_cargs(
-    params: Regdat2xfmParameters,
+    params: Regdat2xfmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def regdat2xfm_cargs(
 
 
 def regdat2xfm_outputs(
-    params: Regdat2xfmParameters,
+    params: Regdat2xfmParamsDict,
     execution: Execution,
 ) -> Regdat2xfmOutputs:
     """
@@ -116,7 +116,7 @@ def regdat2xfm_outputs(
 
 
 def regdat2xfm_execute(
-    params: Regdat2xfmParameters,
+    params: Regdat2xfmParamsDict,
     runner: Runner | None = None,
 ) -> Regdat2xfmOutputs:
     """
@@ -175,6 +175,8 @@ def regdat2xfm(
 __all__ = [
     "REGDAT2XFM_METADATA",
     "Regdat2xfmOutputs",
+    "Regdat2xfmParamsDict",
+    "Regdat2xfmParamsDictTagged",
     "regdat2xfm",
     "regdat2xfm_execute",
     "regdat2xfm_params",

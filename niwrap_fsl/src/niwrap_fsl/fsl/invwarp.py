@@ -13,7 +13,7 @@ INVWARP_METADATA = Metadata(
 )
 
 
-InvwarpParameters = typing.TypedDict('InvwarpParameters', {
+InvwarpParamsDict = typing.TypedDict('InvwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/invwarp"]],
     "warp": InputPathType,
     "out_img": str,
@@ -25,7 +25,7 @@ InvwarpParameters = typing.TypedDict('InvwarpParameters', {
     "jacobian_max": typing.NotRequired[float | None],
     "debug": bool,
 })
-InvwarpParametersTagged = typing.TypedDict('InvwarpParametersTagged', {
+InvwarpParamsDictTagged = typing.TypedDict('InvwarpParamsDictTagged', {
     "@type": typing.Literal["fsl/invwarp"],
     "warp": InputPathType,
     "out_img": str,
@@ -41,7 +41,7 @@ InvwarpParametersTagged = typing.TypedDict('InvwarpParametersTagged', {
 
 class InvwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InvwarpParameters(...)`.
+    Output object returned when calling `InvwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def invwarp_params(
     jacobian_min: float | None = None,
     jacobian_max: float | None = None,
     debug: bool = False,
-) -> InvwarpParametersTagged:
+) -> InvwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def invwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InvwarpParameters` object.
+    `InvwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def invwarp_validate(
 
 
 def invwarp_cargs(
-    params: InvwarpParameters,
+    params: InvwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def invwarp_cargs(
 
 
 def invwarp_outputs(
-    params: InvwarpParameters,
+    params: InvwarpParamsDict,
     execution: Execution,
 ) -> InvwarpOutputs:
     """
@@ -200,7 +200,7 @@ def invwarp_outputs(
 
 
 def invwarp_execute(
-    params: InvwarpParameters,
+    params: InvwarpParamsDict,
     runner: Runner | None = None,
 ) -> InvwarpOutputs:
     """
@@ -284,6 +284,8 @@ def invwarp(
 __all__ = [
     "INVWARP_METADATA",
     "InvwarpOutputs",
+    "InvwarpParamsDict",
+    "InvwarpParamsDictTagged",
     "invwarp",
     "invwarp_execute",
     "invwarp_params",

@@ -13,7 +13,7 @@ FAT_PROC_SELECT_VOLS_METADATA = Metadata(
 )
 
 
-FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
+FatProcSelectVolsParamsDict = typing.TypedDict('FatProcSelectVolsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_select_vols"]],
     "dwi_input": InputPathType,
     "img_input": InputPathType,
@@ -24,7 +24,7 @@ FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
     "workdir": typing.NotRequired[str | None],
     "no_cmd_out": bool,
 })
-FatProcSelectVolsParametersTagged = typing.TypedDict('FatProcSelectVolsParametersTagged', {
+FatProcSelectVolsParamsDictTagged = typing.TypedDict('FatProcSelectVolsParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_select_vols"],
     "dwi_input": InputPathType,
     "img_input": InputPathType,
@@ -39,7 +39,7 @@ FatProcSelectVolsParametersTagged = typing.TypedDict('FatProcSelectVolsParameter
 
 class FatProcSelectVolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcSelectVolsParameters(...)`.
+    Output object returned when calling `FatProcSelectVolsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def fat_proc_select_vols_params(
     do_movie: str | None = None,
     workdir: str | None = None,
     no_cmd_out: bool = False,
-) -> FatProcSelectVolsParametersTagged:
+) -> FatProcSelectVolsParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def fat_proc_select_vols_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcSelectVolsParameters` object.
+    `FatProcSelectVolsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def fat_proc_select_vols_validate(
 
 
 def fat_proc_select_vols_cargs(
-    params: FatProcSelectVolsParameters,
+    params: FatProcSelectVolsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,7 +186,7 @@ def fat_proc_select_vols_cargs(
 
 
 def fat_proc_select_vols_outputs(
-    params: FatProcSelectVolsParameters,
+    params: FatProcSelectVolsParamsDict,
     execution: Execution,
 ) -> FatProcSelectVolsOutputs:
     """
@@ -206,7 +206,7 @@ def fat_proc_select_vols_outputs(
 
 
 def fat_proc_select_vols_execute(
-    params: FatProcSelectVolsParameters,
+    params: FatProcSelectVolsParamsDict,
     runner: Runner | None = None,
 ) -> FatProcSelectVolsOutputs:
     """
@@ -287,6 +287,8 @@ def fat_proc_select_vols(
 __all__ = [
     "FAT_PROC_SELECT_VOLS_METADATA",
     "FatProcSelectVolsOutputs",
+    "FatProcSelectVolsParamsDict",
+    "FatProcSelectVolsParamsDictTagged",
     "fat_proc_select_vols",
     "fat_proc_select_vols_execute",
     "fat_proc_select_vols_params",

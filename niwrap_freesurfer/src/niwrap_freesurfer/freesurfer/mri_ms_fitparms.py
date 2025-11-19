@@ -13,7 +13,7 @@ MRI_MS_FITPARMS_METADATA = Metadata(
 )
 
 
-MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
+MriMsFitparmsParamsDict = typing.TypedDict('MriMsFitparmsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ms_fitparms"]],
     "volumes": list[InputPathType],
     "output_dir": str,
@@ -52,7 +52,7 @@ MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
     "extract_subimage": typing.NotRequired[list[float] | None],
     "window_flag": bool,
 })
-MriMsFitparmsParametersTagged = typing.TypedDict('MriMsFitparmsParametersTagged', {
+MriMsFitparmsParamsDictTagged = typing.TypedDict('MriMsFitparmsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ms_fitparms"],
     "volumes": list[InputPathType],
     "output_dir": str,
@@ -95,7 +95,7 @@ MriMsFitparmsParametersTagged = typing.TypedDict('MriMsFitparmsParametersTagged'
 
 class MriMsFitparmsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMsFitparmsParameters(...)`.
+    Output object returned when calling `MriMsFitparmsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +150,7 @@ def mri_ms_fitparms_params(
     write_intermediate: float | None = None,
     extract_subimage: list[float] | None = None,
     window_flag: bool = False,
-) -> MriMsFitparmsParametersTagged:
+) -> MriMsFitparmsParamsDictTagged:
     """
     Build parameters.
     
@@ -260,7 +260,7 @@ def mri_ms_fitparms_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMsFitparmsParameters` object.
+    `MriMsFitparmsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -404,7 +404,7 @@ def mri_ms_fitparms_validate(
 
 
 def mri_ms_fitparms_cargs(
-    params: MriMsFitparmsParameters,
+    params: MriMsFitparmsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -540,7 +540,7 @@ def mri_ms_fitparms_cargs(
 
 
 def mri_ms_fitparms_outputs(
-    params: MriMsFitparmsParameters,
+    params: MriMsFitparmsParamsDict,
     execution: Execution,
 ) -> MriMsFitparmsOutputs:
     """
@@ -565,7 +565,7 @@ def mri_ms_fitparms_outputs(
 
 
 def mri_ms_fitparms_execute(
-    params: MriMsFitparmsParameters,
+    params: MriMsFitparmsParamsDict,
     runner: Runner | None = None,
 ) -> MriMsFitparmsOutputs:
     """
@@ -731,6 +731,8 @@ def mri_ms_fitparms(
 __all__ = [
     "MRI_MS_FITPARMS_METADATA",
     "MriMsFitparmsOutputs",
+    "MriMsFitparmsParamsDict",
+    "MriMsFitparmsParamsDictTagged",
     "mri_ms_fitparms",
     "mri_ms_fitparms_execute",
     "mri_ms_fitparms_params",

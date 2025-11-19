@@ -13,7 +13,7 @@ KELLY_KAPOWSKI_METADATA = Metadata(
 )
 
 
-KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
+KellyKapowskiParamsDict = typing.TypedDict('KellyKapowskiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/KellyKapowski"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-KellyKapowskiParametersTagged = typing.TypedDict('KellyKapowskiParametersTagged', {
+KellyKapowskiParamsDictTagged = typing.TypedDict('KellyKapowskiParamsDictTagged', {
     "@type": typing.Literal["ants/KellyKapowski"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ KellyKapowskiParametersTagged = typing.TypedDict('KellyKapowskiParametersTagged'
 
 class KellyKapowskiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `KellyKapowskiParameters(...)`.
+    Output object returned when calling `KellyKapowskiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def kelly_kapowski_params(
     number_of_integration_points: int | None = None,
     maximum_number_of_invert_displacement_field_iterations: int | None = None,
     verbose: bool | None = None,
-) -> KellyKapowskiParametersTagged:
+) -> KellyKapowskiParamsDictTagged:
     """
     Build parameters.
     
@@ -185,7 +185,7 @@ def kelly_kapowski_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `KellyKapowskiParameters` object.
+    `KellyKapowskiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -252,7 +252,7 @@ def kelly_kapowski_validate(
 
 
 def kelly_kapowski_cargs(
-    params: KellyKapowskiParameters,
+    params: KellyKapowskiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -359,7 +359,7 @@ def kelly_kapowski_cargs(
 
 
 def kelly_kapowski_outputs(
-    params: KellyKapowskiParameters,
+    params: KellyKapowskiParamsDict,
     execution: Execution,
 ) -> KellyKapowskiOutputs:
     """
@@ -379,7 +379,7 @@ def kelly_kapowski_outputs(
 
 
 def kelly_kapowski_execute(
-    params: KellyKapowskiParameters,
+    params: KellyKapowskiParamsDict,
     runner: Runner | None = None,
 ) -> KellyKapowskiOutputs:
     """
@@ -519,6 +519,8 @@ def kelly_kapowski(
 __all__ = [
     "KELLY_KAPOWSKI_METADATA",
     "KellyKapowskiOutputs",
+    "KellyKapowskiParamsDict",
+    "KellyKapowskiParamsDictTagged",
     "kelly_kapowski",
     "kelly_kapowski_execute",
     "kelly_kapowski_params",

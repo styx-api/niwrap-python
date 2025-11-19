@@ -27,7 +27,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "ss3t_csd_beta1_config_params",
+      "fn_struct_make_params": "ss3t_csd_beta1_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -48,7 +48,7 @@
     },
     "response_odf": {
       "var_param": "response_odf",
-      "fn_struct_make_params": "ss3t_csd_beta1_response_odf_params",
+      "fn_struct_make_params": "ss3t_csd_beta1_response_odf",
       "properties": {
         "response": {
           "var_param": "response"

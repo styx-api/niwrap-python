@@ -13,12 +13,12 @@ SIENA_FLIRT_METADATA = Metadata(
 )
 
 
-SienaFlirtParameters = typing.TypedDict('SienaFlirtParameters', {
+SienaFlirtParamsDict = typing.TypedDict('SienaFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/siena_flirt"]],
     "input1_fileroot": str,
     "input2_fileroot": str,
 })
-SienaFlirtParametersTagged = typing.TypedDict('SienaFlirtParametersTagged', {
+SienaFlirtParamsDictTagged = typing.TypedDict('SienaFlirtParamsDictTagged', {
     "@type": typing.Literal["fsl/siena_flirt"],
     "input1_fileroot": str,
     "input2_fileroot": str,
@@ -27,7 +27,7 @@ SienaFlirtParametersTagged = typing.TypedDict('SienaFlirtParametersTagged', {
 
 class SienaFlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaFlirtParameters(...)`.
+    Output object returned when calling `SienaFlirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class SienaFlirtOutputs(typing.NamedTuple):
 def siena_flirt_params(
     input1_fileroot: str,
     input2_fileroot: str,
-) -> SienaFlirtParametersTagged:
+) -> SienaFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def siena_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaFlirtParameters` object.
+    `SienaFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def siena_flirt_validate(
 
 
 def siena_flirt_cargs(
-    params: SienaFlirtParameters,
+    params: SienaFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def siena_flirt_cargs(
 
 
 def siena_flirt_outputs(
-    params: SienaFlirtParameters,
+    params: SienaFlirtParamsDict,
     execution: Execution,
 ) -> SienaFlirtOutputs:
     """
@@ -124,7 +124,7 @@ def siena_flirt_outputs(
 
 
 def siena_flirt_execute(
-    params: SienaFlirtParameters,
+    params: SienaFlirtParamsDict,
     runner: Runner | None = None,
 ) -> SienaFlirtOutputs:
     """
@@ -185,6 +185,8 @@ def siena_flirt(
 __all__ = [
     "SIENA_FLIRT_METADATA",
     "SienaFlirtOutputs",
+    "SienaFlirtParamsDict",
+    "SienaFlirtParamsDictTagged",
     "siena_flirt",
     "siena_flirt_execute",
     "siena_flirt_params",

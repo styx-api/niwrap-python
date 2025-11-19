@@ -13,14 +13,14 @@ V__COMMAND_GLOBB_METADATA = Metadata(
 )
 
 
-VCommandGlobbParameters = typing.TypedDict('VCommandGlobbParameters', {
+VCommandGlobbParamsDict = typing.TypedDict('VCommandGlobbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@CommandGlobb"]],
     "program_command": str,
     "output_dir": str,
     "extension": typing.NotRequired[str | None],
     "brick_list": list[str],
 })
-VCommandGlobbParametersTagged = typing.TypedDict('VCommandGlobbParametersTagged', {
+VCommandGlobbParamsDictTagged = typing.TypedDict('VCommandGlobbParamsDictTagged', {
     "@type": typing.Literal["afni/@CommandGlobb"],
     "program_command": str,
     "output_dir": str,
@@ -31,7 +31,7 @@ VCommandGlobbParametersTagged = typing.TypedDict('VCommandGlobbParametersTagged'
 
 class VCommandGlobbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VCommandGlobbParameters(...)`.
+    Output object returned when calling `VCommandGlobbParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v__command_globb_params(
     output_dir: str,
     brick_list: list[str],
     extension: str | None = None,
-) -> VCommandGlobbParametersTagged:
+) -> VCommandGlobbParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def v__command_globb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VCommandGlobbParameters` object.
+    `VCommandGlobbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def v__command_globb_validate(
 
 
 def v__command_globb_cargs(
-    params: VCommandGlobbParameters,
+    params: VCommandGlobbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def v__command_globb_cargs(
 
 
 def v__command_globb_outputs(
-    params: VCommandGlobbParameters,
+    params: VCommandGlobbParamsDict,
     execution: Execution,
 ) -> VCommandGlobbOutputs:
     """
@@ -157,7 +157,7 @@ def v__command_globb_outputs(
 
 
 def v__command_globb_execute(
-    params: VCommandGlobbParameters,
+    params: VCommandGlobbParamsDict,
     runner: Runner | None = None,
 ) -> VCommandGlobbOutputs:
     """
@@ -228,6 +228,8 @@ def v__command_globb(
 
 __all__ = [
     "VCommandGlobbOutputs",
+    "VCommandGlobbParamsDict",
+    "VCommandGlobbParamsDictTagged",
     "V__COMMAND_GLOBB_METADATA",
     "v__command_globb",
     "v__command_globb_execute",

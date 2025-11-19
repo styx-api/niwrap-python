@@ -26,7 +26,7 @@
       "var_param": "displacement_specific_options",
       "variants": {
         "bspline_options": {
-          "fn_struct_make_params": "simulate_displacement_field_bspline_options_params",
+          "fn_struct_make_params": "simulate_displacement_field_bspline_options",
           "properties": {
             "number_of_fitting_levels": {
               "var_param": "number_of_fitting_levels"
@@ -37,7 +37,7 @@
           }
         },
         "exponential_options": {
-          "fn_struct_make_params": "simulate_displacement_field_exponential_options_params",
+          "fn_struct_make_params": "simulate_displacement_field_exponential_options",
           "properties": {
             "smoothing_standard_deviation": {
               "var_param": "smoothing_standard_deviation"

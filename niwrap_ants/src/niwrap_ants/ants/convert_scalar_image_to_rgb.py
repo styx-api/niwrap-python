@@ -13,7 +13,7 @@ CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
 )
 
 
-ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbParameters', {
+ConvertScalarImageToRgbParamsDict = typing.TypedDict('ConvertScalarImageToRgbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ConvertScalarImageToRGB"]],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -27,7 +27,7 @@ ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbPar
     "maximum_rgb_output": typing.NotRequired[int | None],
     "vtk_lookup_table": typing.NotRequired[str | None],
 })
-ConvertScalarImageToRgbParametersTagged = typing.TypedDict('ConvertScalarImageToRgbParametersTagged', {
+ConvertScalarImageToRgbParamsDictTagged = typing.TypedDict('ConvertScalarImageToRgbParamsDictTagged', {
     "@type": typing.Literal["ants/ConvertScalarImageToRGB"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -45,7 +45,7 @@ ConvertScalarImageToRgbParametersTagged = typing.TypedDict('ConvertScalarImageTo
 
 class ConvertScalarImageToRgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertScalarImageToRgbParameters(...)`.
+    Output object returned when calling `ConvertScalarImageToRgbParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def convert_scalar_image_to_rgb_params(
     minimum_rgb_output: int | None = None,
     maximum_rgb_output: int | None = None,
     vtk_lookup_table: str | None = None,
-) -> ConvertScalarImageToRgbParametersTagged:
+) -> ConvertScalarImageToRgbParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def convert_scalar_image_to_rgb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertScalarImageToRgbParameters` object.
+    `ConvertScalarImageToRgbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def convert_scalar_image_to_rgb_validate(
 
 
 def convert_scalar_image_to_rgb_cargs(
-    params: ConvertScalarImageToRgbParameters,
+    params: ConvertScalarImageToRgbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def convert_scalar_image_to_rgb_cargs(
 
 
 def convert_scalar_image_to_rgb_outputs(
-    params: ConvertScalarImageToRgbParameters,
+    params: ConvertScalarImageToRgbParamsDict,
     execution: Execution,
 ) -> ConvertScalarImageToRgbOutputs:
     """
@@ -221,7 +221,7 @@ def convert_scalar_image_to_rgb_outputs(
 
 
 def convert_scalar_image_to_rgb_execute(
-    params: ConvertScalarImageToRgbParameters,
+    params: ConvertScalarImageToRgbParamsDict,
     runner: Runner | None = None,
 ) -> ConvertScalarImageToRgbOutputs:
     """
@@ -313,6 +313,8 @@ def convert_scalar_image_to_rgb(
 __all__ = [
     "CONVERT_SCALAR_IMAGE_TO_RGB_METADATA",
     "ConvertScalarImageToRgbOutputs",
+    "ConvertScalarImageToRgbParamsDict",
+    "ConvertScalarImageToRgbParamsDictTagged",
     "convert_scalar_image_to_rgb",
     "convert_scalar_image_to_rgb_execute",
     "convert_scalar_image_to_rgb_params",

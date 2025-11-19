@@ -13,39 +13,39 @@ MRFILTER_METADATA = Metadata(
 )
 
 
-MrfilterVariousStringParameters = typing.TypedDict('MrfilterVariousStringParameters', {
+MrfilterVariousStringParamsDict = typing.TypedDict('MrfilterVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-MrfilterVariousStringParametersTagged = typing.TypedDict('MrfilterVariousStringParametersTagged', {
+MrfilterVariousStringParamsDictTagged = typing.TypedDict('MrfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-MrfilterVariousFileParameters = typing.TypedDict('MrfilterVariousFileParameters', {
+MrfilterVariousFileParamsDict = typing.TypedDict('MrfilterVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-MrfilterVariousFileParametersTagged = typing.TypedDict('MrfilterVariousFileParametersTagged', {
+MrfilterVariousFileParamsDictTagged = typing.TypedDict('MrfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-MrfilterConfigParameters = typing.TypedDict('MrfilterConfigParameters', {
+MrfilterConfigParamsDict = typing.TypedDict('MrfilterConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrfilterConfigParametersTagged = typing.TypedDict('MrfilterConfigParametersTagged', {
+MrfilterConfigParamsDictTagged = typing.TypedDict('MrfilterConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrfilterParameters = typing.TypedDict('MrfilterParameters', {
+MrfilterParamsDict = typing.TypedDict('MrfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrfilter"]],
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
@@ -64,20 +64,20 @@ MrfilterParameters = typing.TypedDict('MrfilterParameters', {
     "bridge": typing.NotRequired[int | None],
     "maskin": typing.NotRequired[InputPathType | None],
     "maskout": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParamsDictTagged, MrfilterVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MrfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "filter": str,
     "output": str,
 })
-MrfilterParametersTagged = typing.TypedDict('MrfilterParametersTagged', {
+MrfilterParamsDictTagged = typing.TypedDict('MrfilterParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrfilter"],
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
@@ -96,13 +96,13 @@ MrfilterParametersTagged = typing.TypedDict('MrfilterParametersTagged', {
     "bridge": typing.NotRequired[int | None],
     "maskin": typing.NotRequired[InputPathType | None],
     "maskout": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParamsDictTagged, MrfilterVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MrfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -145,9 +145,9 @@ def mrfilter_strides_validate_dyn_fn(
     }.get(t)
 
 
-def mrfilter_various_string_params(
+def mrfilter_various_string(
     obj: str,
-) -> MrfilterVariousStringParametersTagged:
+) -> MrfilterVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -168,7 +168,7 @@ def mrfilter_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrfilterVariousStringParameters` object.
+    `MrfilterVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def mrfilter_various_string_validate(
 
 
 def mrfilter_various_string_cargs(
-    params: MrfilterVariousStringParameters,
+    params: MrfilterVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -199,9 +199,9 @@ def mrfilter_various_string_cargs(
     return cargs
 
 
-def mrfilter_various_file_params(
+def mrfilter_various_file(
     obj: InputPathType,
-) -> MrfilterVariousFileParametersTagged:
+) -> MrfilterVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def mrfilter_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrfilterVariousFileParameters` object.
+    `MrfilterVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def mrfilter_various_file_validate(
 
 
 def mrfilter_various_file_cargs(
-    params: MrfilterVariousFileParameters,
+    params: MrfilterVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -253,10 +253,10 @@ def mrfilter_various_file_cargs(
     return cargs
 
 
-def mrfilter_config_params(
+def mrfilter_config(
     key: str,
     value: str,
-) -> MrfilterConfigParametersTagged:
+) -> MrfilterConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -279,7 +279,7 @@ def mrfilter_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrfilterConfigParameters` object.
+    `MrfilterConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -297,7 +297,7 @@ def mrfilter_config_validate(
 
 
 def mrfilter_config_cargs(
-    params: MrfilterConfigParameters,
+    params: MrfilterConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -318,7 +318,7 @@ def mrfilter_config_cargs(
 
 class MrfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrfilterParameters(...)`.
+    Output object returned when calling `MrfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -350,16 +350,16 @@ def mrfilter_params(
     bridge: int | None = None,
     maskin: InputPathType | None = None,
     maskout: str | None = None,
-    strides: typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrfilterVariousStringParamsDictTagged, MrfilterVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrfilterConfigParameters] | None = None,
+    config: list[MrfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrfilterParametersTagged:
+) -> MrfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -485,7 +485,7 @@ def mrfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrfilterParameters` object.
+    `MrfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -574,6 +574,8 @@ def mrfilter_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         mrfilter_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -596,7 +598,7 @@ def mrfilter_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrfilterConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrfilterConfigParamsDict] | None`')
         for e in params["config"]:
             mrfilter_config_validate(e)
     if params.get("help", False) is None:
@@ -622,7 +624,7 @@ def mrfilter_validate(
 
 
 def mrfilter_cargs(
-    params: MrfilterParameters,
+    params: MrfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -737,7 +739,7 @@ def mrfilter_cargs(
 
 
 def mrfilter_outputs(
-    params: MrfilterParameters,
+    params: MrfilterParamsDict,
     execution: Execution,
 ) -> MrfilterOutputs:
     """
@@ -758,7 +760,7 @@ def mrfilter_outputs(
 
 
 def mrfilter_execute(
-    params: MrfilterParameters,
+    params: MrfilterParamsDict,
     runner: Runner | None = None,
 ) -> MrfilterOutputs:
     """
@@ -817,13 +819,13 @@ def mrfilter(
     bridge: int | None = None,
     maskin: InputPathType | None = None,
     maskout: str | None = None,
-    strides: typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrfilterVariousStringParamsDictTagged, MrfilterVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrfilterConfigParameters] | None = None,
+    config: list[MrfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -951,11 +953,19 @@ def mrfilter(
 
 __all__ = [
     "MRFILTER_METADATA",
+    "MrfilterConfigParamsDict",
+    "MrfilterConfigParamsDictTagged",
     "MrfilterOutputs",
+    "MrfilterParamsDict",
+    "MrfilterParamsDictTagged",
+    "MrfilterVariousFileParamsDict",
+    "MrfilterVariousFileParamsDictTagged",
+    "MrfilterVariousStringParamsDict",
+    "MrfilterVariousStringParamsDictTagged",
     "mrfilter",
-    "mrfilter_config_params",
+    "mrfilter_config",
     "mrfilter_execute",
     "mrfilter_params",
-    "mrfilter_various_file_params",
-    "mrfilter_various_string_params",
+    "mrfilter_various_file",
+    "mrfilter_various_string",
 ]

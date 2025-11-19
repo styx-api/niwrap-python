@@ -13,13 +13,13 @@ DMRI_VIOLIN_PLOTS_METADATA = Metadata(
 )
 
 
-DmriViolinPlotsParameters = typing.TypedDict('DmriViolinPlotsParameters', {
+DmriViolinPlotsParamsDict = typing.TypedDict('DmriViolinPlotsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_violinPlots"]],
     "input_directory": str,
     "labels": InputPathType,
     "structure": str,
 })
-DmriViolinPlotsParametersTagged = typing.TypedDict('DmriViolinPlotsParametersTagged', {
+DmriViolinPlotsParamsDictTagged = typing.TypedDict('DmriViolinPlotsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_violinPlots"],
     "input_directory": str,
     "labels": InputPathType,
@@ -29,7 +29,7 @@ DmriViolinPlotsParametersTagged = typing.TypedDict('DmriViolinPlotsParametersTag
 
 class DmriViolinPlotsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriViolinPlotsParameters(...)`.
+    Output object returned when calling `DmriViolinPlotsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def dmri_violin_plots_params(
     input_directory: str,
     labels: InputPathType,
     structure: str,
-) -> DmriViolinPlotsParametersTagged:
+) -> DmriViolinPlotsParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def dmri_violin_plots_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriViolinPlotsParameters` object.
+    `DmriViolinPlotsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def dmri_violin_plots_validate(
 
 
 def dmri_violin_plots_cargs(
-    params: DmriViolinPlotsParameters,
+    params: DmriViolinPlotsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def dmri_violin_plots_cargs(
 
 
 def dmri_violin_plots_outputs(
-    params: DmriViolinPlotsParameters,
+    params: DmriViolinPlotsParamsDict,
     execution: Execution,
 ) -> DmriViolinPlotsOutputs:
     """
@@ -135,7 +135,7 @@ def dmri_violin_plots_outputs(
 
 
 def dmri_violin_plots_execute(
-    params: DmriViolinPlotsParameters,
+    params: DmriViolinPlotsParamsDict,
     runner: Runner | None = None,
 ) -> DmriViolinPlotsOutputs:
     """
@@ -197,6 +197,8 @@ def dmri_violin_plots(
 __all__ = [
     "DMRI_VIOLIN_PLOTS_METADATA",
     "DmriViolinPlotsOutputs",
+    "DmriViolinPlotsParamsDict",
+    "DmriViolinPlotsParamsDictTagged",
     "dmri_violin_plots",
     "dmri_violin_plots_execute",
     "dmri_violin_plots_params",

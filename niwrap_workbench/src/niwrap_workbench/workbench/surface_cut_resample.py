@@ -12,14 +12,14 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 )
 
 
-SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', {
+SurfaceCutResampleParamsDict = typing.TypedDict('SurfaceCutResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-cut-resample"]],
     "surface-out": str,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
 })
-SurfaceCutResampleParametersTagged = typing.TypedDict('SurfaceCutResampleParametersTagged', {
+SurfaceCutResampleParamsDictTagged = typing.TypedDict('SurfaceCutResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-cut-resample"],
     "surface-out": str,
     "surface-in": InputPathType,
@@ -30,7 +30,7 @@ SurfaceCutResampleParametersTagged = typing.TypedDict('SurfaceCutResampleParamet
 
 class SurfaceCutResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceCutResampleParameters(...)`.
+    Output object returned when calling `SurfaceCutResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_cut_resample_params(
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-) -> SurfaceCutResampleParametersTagged:
+) -> SurfaceCutResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def surface_cut_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceCutResampleParameters` object.
+    `SurfaceCutResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def surface_cut_resample_validate(
 
 
 def surface_cut_resample_cargs(
-    params: SurfaceCutResampleParameters,
+    params: SurfaceCutResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def surface_cut_resample_cargs(
 
 
 def surface_cut_resample_outputs(
-    params: SurfaceCutResampleParameters,
+    params: SurfaceCutResampleParamsDict,
     execution: Execution,
 ) -> SurfaceCutResampleOutputs:
     """
@@ -143,7 +143,7 @@ def surface_cut_resample_outputs(
 
 
 def surface_cut_resample_execute(
-    params: SurfaceCutResampleParameters,
+    params: SurfaceCutResampleParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
@@ -206,6 +206,8 @@ def surface_cut_resample(
 __all__ = [
     "SURFACE_CUT_RESAMPLE_METADATA",
     "SurfaceCutResampleOutputs",
+    "SurfaceCutResampleParamsDict",
+    "SurfaceCutResampleParamsDictTagged",
     "surface_cut_resample",
     "surface_cut_resample_execute",
     "surface_cut_resample_params",

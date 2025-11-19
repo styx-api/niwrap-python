@@ -13,7 +13,7 @@ V_3DCOPY_METADATA = Metadata(
 )
 
 
-V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
+V3dcopyParamsDict = typing.TypedDict('V3dcopyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dcopy"]],
     "verbose": bool,
     "denote": bool,
@@ -21,7 +21,7 @@ V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
     "view": typing.NotRequired[str | None],
     "new_prefix": str,
 })
-V3dcopyParametersTagged = typing.TypedDict('V3dcopyParametersTagged', {
+V3dcopyParamsDictTagged = typing.TypedDict('V3dcopyParamsDictTagged', {
     "@type": typing.Literal["afni/3dcopy"],
     "verbose": bool,
     "denote": bool,
@@ -33,7 +33,7 @@ V3dcopyParametersTagged = typing.TypedDict('V3dcopyParametersTagged', {
 
 class V3dcopyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dcopyParameters(...)`.
+    Output object returned when calling `V3dcopyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v_3dcopy_params(
     verbose: bool = False,
     denote: bool = False,
     view: str | None = None,
-) -> V3dcopyParametersTagged:
+) -> V3dcopyParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def v_3dcopy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dcopyParameters` object.
+    `V3dcopyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def v_3dcopy_validate(
 
 
 def v_3dcopy_cargs(
-    params: V3dcopyParameters,
+    params: V3dcopyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def v_3dcopy_cargs(
 
 
 def v_3dcopy_outputs(
-    params: V3dcopyParameters,
+    params: V3dcopyParamsDict,
     execution: Execution,
 ) -> V3dcopyOutputs:
     """
@@ -152,7 +152,7 @@ def v_3dcopy_outputs(
 
 
 def v_3dcopy_execute(
-    params: V3dcopyParameters,
+    params: V3dcopyParamsDict,
     runner: Runner | None = None,
 ) -> V3dcopyOutputs:
     """
@@ -222,6 +222,8 @@ def v_3dcopy(
 
 __all__ = [
     "V3dcopyOutputs",
+    "V3dcopyParamsDict",
+    "V3dcopyParamsDictTagged",
     "V_3DCOPY_METADATA",
     "v_3dcopy",
     "v_3dcopy_execute",

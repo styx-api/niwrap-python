@@ -13,11 +13,11 @@ MRIS_TALAIRACH_METADATA = Metadata(
 )
 
 
-MrisTalairachParameters = typing.TypedDict('MrisTalairachParameters', {
+MrisTalairachParamsDict = typing.TypedDict('MrisTalairachParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_talairach"]],
     "input_image": InputPathType,
 })
-MrisTalairachParametersTagged = typing.TypedDict('MrisTalairachParametersTagged', {
+MrisTalairachParamsDictTagged = typing.TypedDict('MrisTalairachParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_talairach"],
     "input_image": InputPathType,
 })
@@ -25,7 +25,7 @@ MrisTalairachParametersTagged = typing.TypedDict('MrisTalairachParametersTagged'
 
 class MrisTalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTalairachParameters(...)`.
+    Output object returned when calling `MrisTalairachParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MrisTalairachOutputs(typing.NamedTuple):
 
 def mris_talairach_params(
     input_image: InputPathType,
-) -> MrisTalairachParametersTagged:
+) -> MrisTalairachParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def mris_talairach_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTalairachParameters` object.
+    `MrisTalairachParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def mris_talairach_validate(
 
 
 def mris_talairach_cargs(
-    params: MrisTalairachParameters,
+    params: MrisTalairachParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def mris_talairach_cargs(
 
 
 def mris_talairach_outputs(
-    params: MrisTalairachParameters,
+    params: MrisTalairachParamsDict,
     execution: Execution,
 ) -> MrisTalairachOutputs:
     """
@@ -106,7 +106,7 @@ def mris_talairach_outputs(
 
 
 def mris_talairach_execute(
-    params: MrisTalairachParameters,
+    params: MrisTalairachParamsDict,
     runner: Runner | None = None,
 ) -> MrisTalairachOutputs:
     """
@@ -162,6 +162,8 @@ def mris_talairach(
 __all__ = [
     "MRIS_TALAIRACH_METADATA",
     "MrisTalairachOutputs",
+    "MrisTalairachParamsDict",
+    "MrisTalairachParamsDictTagged",
     "mris_talairach",
     "mris_talairach_execute",
     "mris_talairach_params",

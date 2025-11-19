@@ -13,13 +13,13 @@ MRIS_SEGMENT_METADATA = Metadata(
 )
 
 
-MrisSegmentParameters = typing.TypedDict('MrisSegmentParameters', {
+MrisSegmentParamsDict = typing.TypedDict('MrisSegmentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segment"]],
     "subjects": list[str],
     "output_subject": str,
     "output_file": str,
 })
-MrisSegmentParametersTagged = typing.TypedDict('MrisSegmentParametersTagged', {
+MrisSegmentParamsDictTagged = typing.TypedDict('MrisSegmentParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_segment"],
     "subjects": list[str],
     "output_subject": str,
@@ -29,7 +29,7 @@ MrisSegmentParametersTagged = typing.TypedDict('MrisSegmentParametersTagged', {
 
 class MrisSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSegmentParameters(...)`.
+    Output object returned when calling `MrisSegmentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_segment_params(
     subjects: list[str],
     output_subject: str,
     output_file: str,
-) -> MrisSegmentParametersTagged:
+) -> MrisSegmentParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mris_segment_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSegmentParameters` object.
+    `MrisSegmentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def mris_segment_validate(
 
 
 def mris_segment_cargs(
-    params: MrisSegmentParameters,
+    params: MrisSegmentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def mris_segment_cargs(
 
 
 def mris_segment_outputs(
-    params: MrisSegmentParameters,
+    params: MrisSegmentParamsDict,
     execution: Execution,
 ) -> MrisSegmentOutputs:
     """
@@ -132,7 +132,7 @@ def mris_segment_outputs(
 
 
 def mris_segment_execute(
-    params: MrisSegmentParameters,
+    params: MrisSegmentParamsDict,
     runner: Runner | None = None,
 ) -> MrisSegmentOutputs:
     """
@@ -194,6 +194,8 @@ def mris_segment(
 __all__ = [
     "MRIS_SEGMENT_METADATA",
     "MrisSegmentOutputs",
+    "MrisSegmentParamsDict",
+    "MrisSegmentParamsDictTagged",
     "mris_segment",
     "mris_segment_execute",
     "mris_segment_params",

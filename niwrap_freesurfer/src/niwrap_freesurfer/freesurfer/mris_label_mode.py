@@ -13,7 +13,7 @@ MRIS_LABEL_MODE_METADATA = Metadata(
 )
 
 
-MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
+MrisLabelModeParamsDict = typing.TypedDict('MrisLabelModeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_mode"]],
     "input_curv_file": InputPathType,
     "hemi": str,
@@ -24,7 +24,7 @@ MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
     "statistics_cond": typing.NotRequired[str | None],
     "output_directory": typing.NotRequired[str | None],
 })
-MrisLabelModeParametersTagged = typing.TypedDict('MrisLabelModeParametersTagged', {
+MrisLabelModeParamsDictTagged = typing.TypedDict('MrisLabelModeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_label_mode"],
     "input_curv_file": InputPathType,
     "hemi": str,
@@ -39,7 +39,7 @@ MrisLabelModeParametersTagged = typing.TypedDict('MrisLabelModeParametersTagged'
 
 class MrisLabelModeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisLabelModeParameters(...)`.
+    Output object returned when calling `MrisLabelModeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def mris_label_mode_params(
     summary_statistics: bool = False,
     statistics_cond: str | None = None,
     output_directory: str | None = None,
-) -> MrisLabelModeParametersTagged:
+) -> MrisLabelModeParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def mris_label_mode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisLabelModeParameters` object.
+    `MrisLabelModeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def mris_label_mode_validate(
 
 
 def mris_label_mode_cargs(
-    params: MrisLabelModeParameters,
+    params: MrisLabelModeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def mris_label_mode_cargs(
 
 
 def mris_label_mode_outputs(
-    params: MrisLabelModeParameters,
+    params: MrisLabelModeParamsDict,
     execution: Execution,
 ) -> MrisLabelModeOutputs:
     """
@@ -185,7 +185,7 @@ def mris_label_mode_outputs(
 
 
 def mris_label_mode_execute(
-    params: MrisLabelModeParameters,
+    params: MrisLabelModeParamsDict,
     runner: Runner | None = None,
 ) -> MrisLabelModeOutputs:
     """
@@ -262,6 +262,8 @@ def mris_label_mode(
 __all__ = [
     "MRIS_LABEL_MODE_METADATA",
     "MrisLabelModeOutputs",
+    "MrisLabelModeParamsDict",
+    "MrisLabelModeParamsDictTagged",
     "mris_label_mode",
     "mris_label_mode_execute",
     "mris_label_mode_params",

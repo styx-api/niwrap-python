@@ -13,7 +13,7 @@ MRI_SBBR_METADATA = Metadata(
 )
 
 
-MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
+MriSbbrParamsDict = typing.TypedDict('MriSbbrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sbbr"]],
     "template_volume": InputPathType,
     "surface_file": InputPathType,
@@ -40,7 +40,7 @@ MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
     "diagnostic": bool,
     "check_options": bool,
 })
-MriSbbrParametersTagged = typing.TypedDict('MriSbbrParametersTagged', {
+MriSbbrParamsDictTagged = typing.TypedDict('MriSbbrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_sbbr"],
     "template_volume": InputPathType,
     "surface_file": InputPathType,
@@ -71,7 +71,7 @@ MriSbbrParametersTagged = typing.TypedDict('MriSbbrParametersTagged', {
 
 class MriSbbrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSbbrParameters(...)`.
+    Output object returned when calling `MriSbbrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def mri_sbbr_params(
     debug: bool = False,
     diagnostic: bool = False,
     check_options: bool = False,
-) -> MriSbbrParametersTagged:
+) -> MriSbbrParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def mri_sbbr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSbbrParameters` object.
+    `MriSbbrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -276,7 +276,7 @@ def mri_sbbr_validate(
 
 
 def mri_sbbr_cargs(
-    params: MriSbbrParameters,
+    params: MriSbbrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -396,7 +396,7 @@ def mri_sbbr_cargs(
 
 
 def mri_sbbr_outputs(
-    params: MriSbbrParameters,
+    params: MriSbbrParamsDict,
     execution: Execution,
 ) -> MriSbbrOutputs:
     """
@@ -415,7 +415,7 @@ def mri_sbbr_outputs(
 
 
 def mri_sbbr_execute(
-    params: MriSbbrParameters,
+    params: MriSbbrParamsDict,
     runner: Runner | None = None,
 ) -> MriSbbrOutputs:
     """
@@ -541,6 +541,8 @@ def mri_sbbr(
 __all__ = [
     "MRI_SBBR_METADATA",
     "MriSbbrOutputs",
+    "MriSbbrParamsDict",
+    "MriSbbrParamsDictTagged",
     "mri_sbbr",
     "mri_sbbr_execute",
     "mri_sbbr_params",

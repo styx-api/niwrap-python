@@ -13,7 +13,7 @@ SIENA_DIFF_METADATA = Metadata(
 )
 
 
-SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
+SienaDiffParamsDict = typing.TypedDict('SienaDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/siena_diff"]],
     "input1_basename": str,
     "input2_basename": str,
@@ -24,7 +24,7 @@ SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
     "apply_std_mask_flag": bool,
     "segment_options": typing.NotRequired[str | None],
 })
-SienaDiffParametersTagged = typing.TypedDict('SienaDiffParametersTagged', {
+SienaDiffParamsDictTagged = typing.TypedDict('SienaDiffParamsDictTagged', {
     "@type": typing.Literal["fsl/siena_diff"],
     "input1_basename": str,
     "input2_basename": str,
@@ -39,7 +39,7 @@ SienaDiffParametersTagged = typing.TypedDict('SienaDiffParametersTagged', {
 
 class SienaDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaDiffParameters(...)`.
+    Output object returned when calling `SienaDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def siena_diff_params(
     ignore_z_flow_flag: bool = False,
     apply_std_mask_flag: bool = False,
     segment_options: str | None = None,
-) -> SienaDiffParametersTagged:
+) -> SienaDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def siena_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaDiffParameters` object.
+    `SienaDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def siena_diff_validate(
 
 
 def siena_diff_cargs(
-    params: SienaDiffParameters,
+    params: SienaDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,7 +174,7 @@ def siena_diff_cargs(
 
 
 def siena_diff_outputs(
-    params: SienaDiffParameters,
+    params: SienaDiffParamsDict,
     execution: Execution,
 ) -> SienaDiffOutputs:
     """
@@ -193,7 +193,7 @@ def siena_diff_outputs(
 
 
 def siena_diff_execute(
-    params: SienaDiffParameters,
+    params: SienaDiffParamsDict,
     runner: Runner | None = None,
 ) -> SienaDiffOutputs:
     """
@@ -275,6 +275,8 @@ def siena_diff(
 __all__ = [
     "SIENA_DIFF_METADATA",
     "SienaDiffOutputs",
+    "SienaDiffParamsDict",
+    "SienaDiffParamsDictTagged",
     "siena_diff",
     "siena_diff_execute",
     "siena_diff_params",

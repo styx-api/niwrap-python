@@ -9,7 +9,7 @@
     },
     "print-xml": {
       "var_param": "print_xml",
-      "fn_struct_make_params": "nifti_information_print_xml_params",
+      "fn_struct_make_params": "nifti_information_print_xml",
       "properties": {
         "version": {
           "var_param": "version"

@@ -13,13 +13,13 @@ UPDATE_NEEDED_METADATA = Metadata(
 )
 
 
-UpdateNeededParameters = typing.TypedDict('UpdateNeededParameters', {
+UpdateNeededParamsDict = typing.TypedDict('UpdateNeededParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/UpdateNeeded"]],
     "target_file": InputPathType,
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],
 })
-UpdateNeededParametersTagged = typing.TypedDict('UpdateNeededParametersTagged', {
+UpdateNeededParamsDictTagged = typing.TypedDict('UpdateNeededParamsDictTagged', {
     "@type": typing.Literal["freesurfer/UpdateNeeded"],
     "target_file": InputPathType,
     "source_file": InputPathType,
@@ -29,7 +29,7 @@ UpdateNeededParametersTagged = typing.TypedDict('UpdateNeededParametersTagged', 
 
 class UpdateNeededOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UpdateNeededParameters(...)`.
+    Output object returned when calling `UpdateNeededParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def update_needed_params(
     target_file: InputPathType,
     source_file: InputPathType,
     additional_source_files: list[InputPathType] | None = None,
-) -> UpdateNeededParametersTagged:
+) -> UpdateNeededParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def update_needed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UpdateNeededParameters` object.
+    `UpdateNeededParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def update_needed_validate(
 
 
 def update_needed_cargs(
-    params: UpdateNeededParameters,
+    params: UpdateNeededParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def update_needed_cargs(
 
 
 def update_needed_outputs(
-    params: UpdateNeededParameters,
+    params: UpdateNeededParamsDict,
     execution: Execution,
 ) -> UpdateNeededOutputs:
     """
@@ -131,7 +131,7 @@ def update_needed_outputs(
 
 
 def update_needed_execute(
-    params: UpdateNeededParameters,
+    params: UpdateNeededParamsDict,
     runner: Runner | None = None,
 ) -> UpdateNeededOutputs:
     """
@@ -196,6 +196,8 @@ def update_needed(
 __all__ = [
     "UPDATE_NEEDED_METADATA",
     "UpdateNeededOutputs",
+    "UpdateNeededParamsDict",
+    "UpdateNeededParamsDictTagged",
     "update_needed",
     "update_needed_execute",
     "update_needed_params",

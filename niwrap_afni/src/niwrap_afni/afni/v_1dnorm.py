@@ -13,7 +13,7 @@ V_1DNORM_METADATA = Metadata(
 )
 
 
-V1dnormParameters = typing.TypedDict('V1dnormParameters', {
+V1dnormParamsDict = typing.TypedDict('V1dnormParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dnorm"]],
     "infile": InputPathType,
     "outfile": str,
@@ -22,7 +22,7 @@ V1dnormParameters = typing.TypedDict('V1dnormParameters', {
     "demean": bool,
     "demed": bool,
 })
-V1dnormParametersTagged = typing.TypedDict('V1dnormParametersTagged', {
+V1dnormParamsDictTagged = typing.TypedDict('V1dnormParamsDictTagged', {
     "@type": typing.Literal["afni/1dnorm"],
     "infile": InputPathType,
     "outfile": str,
@@ -35,7 +35,7 @@ V1dnormParametersTagged = typing.TypedDict('V1dnormParametersTagged', {
 
 class V1dnormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dnormParameters(...)`.
+    Output object returned when calling `V1dnormParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_1dnorm_params(
     normx: bool = False,
     demean: bool = False,
     demed: bool = False,
-) -> V1dnormParametersTagged:
+) -> V1dnormParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def v_1dnorm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dnormParameters` object.
+    `V1dnormParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def v_1dnorm_validate(
 
 
 def v_1dnorm_cargs(
-    params: V1dnormParameters,
+    params: V1dnormParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def v_1dnorm_cargs(
 
 
 def v_1dnorm_outputs(
-    params: V1dnormParameters,
+    params: V1dnormParamsDict,
     execution: Execution,
 ) -> V1dnormOutputs:
     """
@@ -165,7 +165,7 @@ def v_1dnorm_outputs(
 
 
 def v_1dnorm_execute(
-    params: V1dnormParameters,
+    params: V1dnormParamsDict,
     runner: Runner | None = None,
 ) -> V1dnormOutputs:
     """
@@ -237,6 +237,8 @@ def v_1dnorm(
 
 __all__ = [
     "V1dnormOutputs",
+    "V1dnormParamsDict",
+    "V1dnormParamsDictTagged",
     "V_1DNORM_METADATA",
     "v_1dnorm",
     "v_1dnorm_execute",

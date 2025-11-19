@@ -13,7 +13,7 @@ MAKE_AVERAGE_VOLUME_METADATA = Metadata(
 )
 
 
-MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
+MakeAverageVolumeParamsDict = typing.TypedDict('MakeAverageVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_volume"]],
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
     "debug_flag": bool,
     "nocleanup_flag": bool,
 })
-MakeAverageVolumeParametersTagged = typing.TypedDict('MakeAverageVolumeParametersTagged', {
+MakeAverageVolumeParamsDictTagged = typing.TypedDict('MakeAverageVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_average_volume"],
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ MakeAverageVolumeParametersTagged = typing.TypedDict('MakeAverageVolumeParameter
 
 class MakeAverageVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeAverageVolumeParameters(...)`.
+    Output object returned when calling `MakeAverageVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def make_average_volume_params(
     echo_flag: bool = False,
     debug_flag: bool = False,
     nocleanup_flag: bool = False,
-) -> MakeAverageVolumeParametersTagged:
+) -> MakeAverageVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def make_average_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeAverageVolumeParameters` object.
+    `MakeAverageVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def make_average_volume_validate(
 
 
 def make_average_volume_cargs(
-    params: MakeAverageVolumeParameters,
+    params: MakeAverageVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -266,7 +266,7 @@ def make_average_volume_cargs(
 
 
 def make_average_volume_outputs(
-    params: MakeAverageVolumeParameters,
+    params: MakeAverageVolumeParamsDict,
     execution: Execution,
 ) -> MakeAverageVolumeOutputs:
     """
@@ -285,7 +285,7 @@ def make_average_volume_outputs(
 
 
 def make_average_volume_execute(
-    params: MakeAverageVolumeParameters,
+    params: MakeAverageVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MakeAverageVolumeOutputs:
     """
@@ -384,6 +384,8 @@ def make_average_volume(
 __all__ = [
     "MAKE_AVERAGE_VOLUME_METADATA",
     "MakeAverageVolumeOutputs",
+    "MakeAverageVolumeParamsDict",
+    "MakeAverageVolumeParamsDictTagged",
     "make_average_volume",
     "make_average_volume_execute",
     "make_average_volume_params",

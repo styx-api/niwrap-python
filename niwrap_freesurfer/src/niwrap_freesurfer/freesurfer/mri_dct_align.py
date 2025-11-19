@@ -13,13 +13,13 @@ MRI_DCT_ALIGN_METADATA = Metadata(
 )
 
 
-MriDctAlignParameters = typing.TypedDict('MriDctAlignParameters', {
+MriDctAlignParamsDict = typing.TypedDict('MriDctAlignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dct_align"]],
     "source": InputPathType,
     "destination": InputPathType,
     "output_xform": str,
 })
-MriDctAlignParametersTagged = typing.TypedDict('MriDctAlignParametersTagged', {
+MriDctAlignParamsDictTagged = typing.TypedDict('MriDctAlignParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_dct_align"],
     "source": InputPathType,
     "destination": InputPathType,
@@ -29,7 +29,7 @@ MriDctAlignParametersTagged = typing.TypedDict('MriDctAlignParametersTagged', {
 
 class MriDctAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDctAlignParameters(...)`.
+    Output object returned when calling `MriDctAlignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_dct_align_params(
     source: InputPathType,
     destination: InputPathType,
     output_xform: str,
-) -> MriDctAlignParametersTagged:
+) -> MriDctAlignParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_dct_align_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDctAlignParameters` object.
+    `MriDctAlignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_dct_align_validate(
 
 
 def mri_dct_align_cargs(
-    params: MriDctAlignParameters,
+    params: MriDctAlignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_dct_align_cargs(
 
 
 def mri_dct_align_outputs(
-    params: MriDctAlignParameters,
+    params: MriDctAlignParamsDict,
     execution: Execution,
 ) -> MriDctAlignOutputs:
     """
@@ -129,7 +129,7 @@ def mri_dct_align_outputs(
 
 
 def mri_dct_align_execute(
-    params: MriDctAlignParameters,
+    params: MriDctAlignParamsDict,
     runner: Runner | None = None,
 ) -> MriDctAlignOutputs:
     """
@@ -191,6 +191,8 @@ def mri_dct_align(
 __all__ = [
     "MRI_DCT_ALIGN_METADATA",
     "MriDctAlignOutputs",
+    "MriDctAlignParamsDict",
+    "MriDctAlignParamsDictTagged",
     "mri_dct_align",
     "mri_dct_align_execute",
     "mri_dct_align_params",

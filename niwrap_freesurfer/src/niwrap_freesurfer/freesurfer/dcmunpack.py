@@ -13,7 +13,7 @@ DCMUNPACK_METADATA = Metadata(
 )
 
 
-DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
+DcmunpackParamsDict = typing.TypedDict('DcmunpackParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dcmunpack"]],
     "src": str,
     "targ": typing.NotRequired[str | None],
@@ -54,7 +54,7 @@ DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
     "log": typing.NotRequired[str | None],
     "debug": bool,
 })
-DcmunpackParametersTagged = typing.TypedDict('DcmunpackParametersTagged', {
+DcmunpackParamsDictTagged = typing.TypedDict('DcmunpackParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dcmunpack"],
     "src": str,
     "targ": typing.NotRequired[str | None],
@@ -99,7 +99,7 @@ DcmunpackParametersTagged = typing.TypedDict('DcmunpackParametersTagged', {
 
 class DcmunpackOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmunpackParameters(...)`.
+    Output object returned when calling `DcmunpackParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +144,7 @@ def dcmunpack_params(
     xml_only: bool = False,
     log: str | None = None,
     debug: bool = False,
-) -> DcmunpackParametersTagged:
+) -> DcmunpackParamsDictTagged:
     """
     Build parameters.
     
@@ -264,7 +264,7 @@ def dcmunpack_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmunpackParameters` object.
+    `DcmunpackParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -418,7 +418,7 @@ def dcmunpack_validate(
 
 
 def dcmunpack_cargs(
-    params: DcmunpackParameters,
+    params: DcmunpackParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -565,7 +565,7 @@ def dcmunpack_cargs(
 
 
 def dcmunpack_outputs(
-    params: DcmunpackParameters,
+    params: DcmunpackParamsDict,
     execution: Execution,
 ) -> DcmunpackOutputs:
     """
@@ -584,7 +584,7 @@ def dcmunpack_outputs(
 
 
 def dcmunpack_execute(
-    params: DcmunpackParameters,
+    params: DcmunpackParamsDict,
     runner: Runner | None = None,
 ) -> DcmunpackOutputs:
     """
@@ -761,6 +761,8 @@ def dcmunpack(
 __all__ = [
     "DCMUNPACK_METADATA",
     "DcmunpackOutputs",
+    "DcmunpackParamsDict",
+    "DcmunpackParamsDictTagged",
     "dcmunpack",
     "dcmunpack_execute",
     "dcmunpack_params",

@@ -13,12 +13,12 @@ FIRST_ROI_SLICESDIR_METADATA = Metadata(
 )
 
 
-FirstRoiSlicesdirParameters = typing.TypedDict('FirstRoiSlicesdirParameters', {
+FirstRoiSlicesdirParamsDict = typing.TypedDict('FirstRoiSlicesdirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/first_roi_slicesdir"]],
     "input_t1_images": str,
     "input_label_images": str,
 })
-FirstRoiSlicesdirParametersTagged = typing.TypedDict('FirstRoiSlicesdirParametersTagged', {
+FirstRoiSlicesdirParamsDictTagged = typing.TypedDict('FirstRoiSlicesdirParamsDictTagged', {
     "@type": typing.Literal["fsl/first_roi_slicesdir"],
     "input_t1_images": str,
     "input_label_images": str,
@@ -27,7 +27,7 @@ FirstRoiSlicesdirParametersTagged = typing.TypedDict('FirstRoiSlicesdirParameter
 
 class FirstRoiSlicesdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirstRoiSlicesdirParameters(...)`.
+    Output object returned when calling `FirstRoiSlicesdirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class FirstRoiSlicesdirOutputs(typing.NamedTuple):
 def first_roi_slicesdir_params(
     input_t1_images: str,
     input_label_images: str,
-) -> FirstRoiSlicesdirParametersTagged:
+) -> FirstRoiSlicesdirParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def first_roi_slicesdir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirstRoiSlicesdirParameters` object.
+    `FirstRoiSlicesdirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def first_roi_slicesdir_validate(
 
 
 def first_roi_slicesdir_cargs(
-    params: FirstRoiSlicesdirParameters,
+    params: FirstRoiSlicesdirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def first_roi_slicesdir_cargs(
 
 
 def first_roi_slicesdir_outputs(
-    params: FirstRoiSlicesdirParameters,
+    params: FirstRoiSlicesdirParamsDict,
     execution: Execution,
 ) -> FirstRoiSlicesdirOutputs:
     """
@@ -124,7 +124,7 @@ def first_roi_slicesdir_outputs(
 
 
 def first_roi_slicesdir_execute(
-    params: FirstRoiSlicesdirParameters,
+    params: FirstRoiSlicesdirParamsDict,
     runner: Runner | None = None,
 ) -> FirstRoiSlicesdirOutputs:
     """
@@ -185,6 +185,8 @@ def first_roi_slicesdir(
 __all__ = [
     "FIRST_ROI_SLICESDIR_METADATA",
     "FirstRoiSlicesdirOutputs",
+    "FirstRoiSlicesdirParamsDict",
+    "FirstRoiSlicesdirParamsDictTagged",
     "first_roi_slicesdir",
     "first_roi_slicesdir_execute",
     "first_roi_slicesdir_params",

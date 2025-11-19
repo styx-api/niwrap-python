@@ -13,7 +13,7 @@ V_3D_HIST_METADATA = Metadata(
 )
 
 
-V3dHistParameters = typing.TypedDict('V3dHistParameters', {
+V3dHistParamsDict = typing.TypedDict('V3dHistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dHist"]],
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ V3dHistParameters = typing.TypedDict('V3dHistParameters', {
     "val_at": typing.NotRequired[str | None],
     "quiet": bool,
 })
-V3dHistParametersTagged = typing.TypedDict('V3dHistParametersTagged', {
+V3dHistParamsDictTagged = typing.TypedDict('V3dHistParamsDictTagged', {
     "@type": typing.Literal["afni/3dHist"],
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
@@ -63,7 +63,7 @@ V3dHistParametersTagged = typing.TypedDict('V3dHistParametersTagged', {
 
 class V3dHistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dHistParameters(...)`.
+    Output object returned when calling `V3dHistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def v_3d_hist_params(
     voxvol: float | None = None,
     val_at: str | None = None,
     quiet: bool = False,
-) -> V3dHistParametersTagged:
+) -> V3dHistParamsDictTagged:
     """
     Build parameters.
     
@@ -171,7 +171,7 @@ def v_3d_hist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dHistParameters` object.
+    `V3dHistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -250,7 +250,7 @@ def v_3d_hist_validate(
 
 
 def v_3d_hist_cargs(
-    params: V3dHistParameters,
+    params: V3dHistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def v_3d_hist_cargs(
 
 
 def v_3d_hist_outputs(
-    params: V3dHistParameters,
+    params: V3dHistParamsDict,
     execution: Execution,
 ) -> V3dHistOutputs:
     """
@@ -374,7 +374,7 @@ def v_3d_hist_outputs(
 
 
 def v_3d_hist_execute(
-    params: V3dHistParameters,
+    params: V3dHistParamsDict,
     runner: Runner | None = None,
 ) -> V3dHistOutputs:
     """
@@ -492,6 +492,8 @@ def v_3d_hist(
 
 __all__ = [
     "V3dHistOutputs",
+    "V3dHistParamsDict",
+    "V3dHistParamsDictTagged",
     "V_3D_HIST_METADATA",
     "v_3d_hist",
     "v_3d_hist_execute",

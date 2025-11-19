@@ -13,7 +13,7 @@ TSPLOT_METADATA = Metadata(
 )
 
 
-TsplotParameters = typing.TypedDict('TsplotParameters', {
+TsplotParamsDict = typing.TypedDict('TsplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tsplot"]],
     "input_directory": str,
     "main_filtered_data": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ TsplotParameters = typing.TypedDict('TsplotParameters', {
     "prewhiten_flag": bool,
     "no_raw_flag": bool,
 })
-TsplotParametersTagged = typing.TypedDict('TsplotParametersTagged', {
+TsplotParamsDictTagged = typing.TypedDict('TsplotParamsDictTagged', {
     "@type": typing.Literal["fsl/tsplot"],
     "input_directory": str,
     "main_filtered_data": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ TsplotParametersTagged = typing.TypedDict('TsplotParametersTagged', {
 
 class TsplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsplotParameters(...)`.
+    Output object returned when calling `TsplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def tsplot_params(
     no_weight_flag: bool = False,
     prewhiten_flag: bool = False,
     no_raw_flag: bool = False,
-) -> TsplotParametersTagged:
+) -> TsplotParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def tsplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsplotParameters` object.
+    `TsplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def tsplot_validate(
 
 
 def tsplot_cargs(
-    params: TsplotParameters,
+    params: TsplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def tsplot_cargs(
 
 
 def tsplot_outputs(
-    params: TsplotParameters,
+    params: TsplotParamsDict,
     execution: Execution,
 ) -> TsplotOutputs:
     """
@@ -225,7 +225,7 @@ def tsplot_outputs(
 
 
 def tsplot_execute(
-    params: TsplotParameters,
+    params: TsplotParamsDict,
     runner: Runner | None = None,
 ) -> TsplotOutputs:
     """
@@ -308,6 +308,8 @@ def tsplot(
 __all__ = [
     "TSPLOT_METADATA",
     "TsplotOutputs",
+    "TsplotParamsDict",
+    "TsplotParamsDictTagged",
     "tsplot",
     "tsplot_execute",
     "tsplot_params",

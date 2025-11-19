@@ -13,11 +13,11 @@ V__AFNI_ORIENT_SIGN_METADATA = Metadata(
 )
 
 
-VAfniOrientSignParameters = typing.TypedDict('VAfniOrientSignParameters', {
+VAfniOrientSignParamsDict = typing.TypedDict('VAfniOrientSignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@AfniOrientSign"]],
     "infile": InputPathType,
 })
-VAfniOrientSignParametersTagged = typing.TypedDict('VAfniOrientSignParametersTagged', {
+VAfniOrientSignParamsDictTagged = typing.TypedDict('VAfniOrientSignParamsDictTagged', {
     "@type": typing.Literal["afni/@AfniOrientSign"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ VAfniOrientSignParametersTagged = typing.TypedDict('VAfniOrientSignParametersTag
 
 class VAfniOrientSignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniOrientSignParameters(...)`.
+    Output object returned when calling `VAfniOrientSignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VAfniOrientSignOutputs(typing.NamedTuple):
 
 def v__afni_orient_sign_params(
     infile: InputPathType,
-) -> VAfniOrientSignParametersTagged:
+) -> VAfniOrientSignParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__afni_orient_sign_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniOrientSignParameters` object.
+    `VAfniOrientSignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__afni_orient_sign_validate(
 
 
 def v__afni_orient_sign_cargs(
-    params: VAfniOrientSignParameters,
+    params: VAfniOrientSignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def v__afni_orient_sign_cargs(
 
 
 def v__afni_orient_sign_outputs(
-    params: VAfniOrientSignParameters,
+    params: VAfniOrientSignParamsDict,
     execution: Execution,
 ) -> VAfniOrientSignOutputs:
     """
@@ -112,7 +112,7 @@ def v__afni_orient_sign_outputs(
 
 
 def v__afni_orient_sign_execute(
-    params: VAfniOrientSignParameters,
+    params: VAfniOrientSignParamsDict,
     runner: Runner | None = None,
 ) -> VAfniOrientSignOutputs:
     """
@@ -167,6 +167,8 @@ def v__afni_orient_sign(
 
 __all__ = [
     "VAfniOrientSignOutputs",
+    "VAfniOrientSignParamsDict",
+    "VAfniOrientSignParamsDictTagged",
     "V__AFNI_ORIENT_SIGN_METADATA",
     "v__afni_orient_sign",
     "v__afni_orient_sign_execute",

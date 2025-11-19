@@ -13,12 +13,12 @@ NSIZE_METADATA = Metadata(
 )
 
 
-NsizeParameters = typing.TypedDict('NsizeParameters', {
+NsizeParamsDict = typing.TypedDict('NsizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/nsize"]],
     "image_in": InputPathType,
     "image_out": str,
 })
-NsizeParametersTagged = typing.TypedDict('NsizeParametersTagged', {
+NsizeParamsDictTagged = typing.TypedDict('NsizeParamsDictTagged', {
     "@type": typing.Literal["afni/nsize"],
     "image_in": InputPathType,
     "image_out": str,
@@ -27,7 +27,7 @@ NsizeParametersTagged = typing.TypedDict('NsizeParametersTagged', {
 
 class NsizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NsizeParameters(...)`.
+    Output object returned when calling `NsizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class NsizeOutputs(typing.NamedTuple):
 def nsize_params(
     image_in: InputPathType,
     image_out: str,
-) -> NsizeParametersTagged:
+) -> NsizeParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def nsize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NsizeParameters` object.
+    `NsizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def nsize_validate(
 
 
 def nsize_cargs(
-    params: NsizeParameters,
+    params: NsizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def nsize_cargs(
 
 
 def nsize_outputs(
-    params: NsizeParameters,
+    params: NsizeParamsDict,
     execution: Execution,
 ) -> NsizeOutputs:
     """
@@ -119,7 +119,7 @@ def nsize_outputs(
 
 
 def nsize_execute(
-    params: NsizeParameters,
+    params: NsizeParamsDict,
     runner: Runner | None = None,
 ) -> NsizeOutputs:
     """
@@ -178,6 +178,8 @@ def nsize(
 __all__ = [
     "NSIZE_METADATA",
     "NsizeOutputs",
+    "NsizeParamsDict",
+    "NsizeParamsDictTagged",
     "nsize",
     "nsize_execute",
     "nsize_params",

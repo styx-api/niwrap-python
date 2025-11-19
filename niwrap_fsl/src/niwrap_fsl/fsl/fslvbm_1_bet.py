@@ -13,13 +13,13 @@ FSLVBM_1_BET_METADATA = Metadata(
 )
 
 
-Fslvbm1BetParameters = typing.TypedDict('Fslvbm1BetParameters', {
+Fslvbm1BetParamsDict = typing.TypedDict('Fslvbm1BetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_1_bet"]],
     "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
 })
-Fslvbm1BetParametersTagged = typing.TypedDict('Fslvbm1BetParametersTagged', {
+Fslvbm1BetParamsDictTagged = typing.TypedDict('Fslvbm1BetParamsDictTagged', {
     "@type": typing.Literal["fsl/fslvbm_1_bet"],
     "default_bet": bool,
     "increased_robustness": bool,
@@ -29,7 +29,7 @@ Fslvbm1BetParametersTagged = typing.TypedDict('Fslvbm1BetParametersTagged', {
 
 class Fslvbm1BetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fslvbm1BetParameters(...)`.
+    Output object returned when calling `Fslvbm1BetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def fslvbm_1_bet_params(
     default_bet: bool = False,
     increased_robustness: bool = False,
     bet_parameters: str | None = None,
-) -> Fslvbm1BetParametersTagged:
+) -> Fslvbm1BetParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def fslvbm_1_bet_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fslvbm1BetParameters` object.
+    `Fslvbm1BetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def fslvbm_1_bet_validate(
 
 
 def fslvbm_1_bet_cargs(
-    params: Fslvbm1BetParameters,
+    params: Fslvbm1BetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def fslvbm_1_bet_cargs(
 
 
 def fslvbm_1_bet_outputs(
-    params: Fslvbm1BetParameters,
+    params: Fslvbm1BetParamsDict,
     execution: Execution,
 ) -> Fslvbm1BetOutputs:
     """
@@ -130,7 +130,7 @@ def fslvbm_1_bet_outputs(
 
 
 def fslvbm_1_bet_execute(
-    params: Fslvbm1BetParameters,
+    params: Fslvbm1BetParamsDict,
     runner: Runner | None = None,
 ) -> Fslvbm1BetOutputs:
     """
@@ -193,6 +193,8 @@ def fslvbm_1_bet(
 __all__ = [
     "FSLVBM_1_BET_METADATA",
     "Fslvbm1BetOutputs",
+    "Fslvbm1BetParamsDict",
+    "Fslvbm1BetParamsDictTagged",
     "fslvbm_1_bet",
     "fslvbm_1_bet_execute",
     "fslvbm_1_bet_params",

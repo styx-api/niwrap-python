@@ -12,12 +12,12 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 )
 
 
-SurfaceVertexAreasParameters = typing.TypedDict('SurfaceVertexAreasParameters', {
+SurfaceVertexAreasParamsDict = typing.TypedDict('SurfaceVertexAreasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-vertex-areas"]],
     "metric": str,
     "surface": InputPathType,
 })
-SurfaceVertexAreasParametersTagged = typing.TypedDict('SurfaceVertexAreasParametersTagged', {
+SurfaceVertexAreasParamsDictTagged = typing.TypedDict('SurfaceVertexAreasParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-vertex-areas"],
     "metric": str,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfaceVertexAreasParametersTagged = typing.TypedDict('SurfaceVertexAreasParamet
 
 class SurfaceVertexAreasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceVertexAreasParameters(...)`.
+    Output object returned when calling `SurfaceVertexAreasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceVertexAreasOutputs(typing.NamedTuple):
 def surface_vertex_areas_params(
     metric: str,
     surface: InputPathType,
-) -> SurfaceVertexAreasParametersTagged:
+) -> SurfaceVertexAreasParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_vertex_areas_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceVertexAreasParameters` object.
+    `SurfaceVertexAreasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_vertex_areas_validate(
 
 
 def surface_vertex_areas_cargs(
-    params: SurfaceVertexAreasParameters,
+    params: SurfaceVertexAreasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_vertex_areas_cargs(
 
 
 def surface_vertex_areas_outputs(
-    params: SurfaceVertexAreasParameters,
+    params: SurfaceVertexAreasParamsDict,
     execution: Execution,
 ) -> SurfaceVertexAreasOutputs:
     """
@@ -121,7 +121,7 @@ def surface_vertex_areas_outputs(
 
 
 def surface_vertex_areas_execute(
-    params: SurfaceVertexAreasParameters,
+    params: SurfaceVertexAreasParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
@@ -174,6 +174,8 @@ def surface_vertex_areas(
 __all__ = [
     "SURFACE_VERTEX_AREAS_METADATA",
     "SurfaceVertexAreasOutputs",
+    "SurfaceVertexAreasParamsDict",
+    "SurfaceVertexAreasParamsDictTagged",
     "surface_vertex_areas",
     "surface_vertex_areas_execute",
     "surface_vertex_areas_params",

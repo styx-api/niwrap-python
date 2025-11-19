@@ -13,13 +13,13 @@ PROMPT_USER_METADATA = Metadata(
 )
 
 
-PromptUserParameters = typing.TypedDict('PromptUserParameters', {
+PromptUserParamsDict = typing.TypedDict('PromptUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/prompt_user"]],
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
 })
-PromptUserParametersTagged = typing.TypedDict('PromptUserParametersTagged', {
+PromptUserParamsDictTagged = typing.TypedDict('PromptUserParamsDictTagged', {
     "@type": typing.Literal["afni/prompt_user"],
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
@@ -29,7 +29,7 @@ PromptUserParametersTagged = typing.TypedDict('PromptUserParametersTagged', {
 
 class PromptUserOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PromptUserParameters(...)`.
+    Output object returned when calling `PromptUserParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def prompt_user_params(
     pause_message: str,
     timeout: float | None = None,
     timeout_alias: float | None = None,
-) -> PromptUserParametersTagged:
+) -> PromptUserParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def prompt_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PromptUserParameters` object.
+    `PromptUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def prompt_user_validate(
 
 
 def prompt_user_cargs(
-    params: PromptUserParameters,
+    params: PromptUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def prompt_user_cargs(
 
 
 def prompt_user_outputs(
-    params: PromptUserParameters,
+    params: PromptUserParamsDict,
     execution: Execution,
 ) -> PromptUserOutputs:
     """
@@ -139,7 +139,7 @@ def prompt_user_outputs(
 
 
 def prompt_user_execute(
-    params: PromptUserParameters,
+    params: PromptUserParamsDict,
     runner: Runner | None = None,
 ) -> PromptUserOutputs:
     """
@@ -203,6 +203,8 @@ def prompt_user(
 __all__ = [
     "PROMPT_USER_METADATA",
     "PromptUserOutputs",
+    "PromptUserParamsDict",
+    "PromptUserParamsDictTagged",
     "prompt_user",
     "prompt_user_execute",
     "prompt_user_params",

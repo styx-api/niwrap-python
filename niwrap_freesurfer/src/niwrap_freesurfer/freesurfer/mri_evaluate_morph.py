@@ -13,13 +13,13 @@ MRI_EVALUATE_MORPH_METADATA = Metadata(
 )
 
 
-MriEvaluateMorphParameters = typing.TypedDict('MriEvaluateMorphParameters', {
+MriEvaluateMorphParamsDict = typing.TypedDict('MriEvaluateMorphParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_evaluate_morph"]],
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
     "output_file": str,
 })
-MriEvaluateMorphParametersTagged = typing.TypedDict('MriEvaluateMorphParametersTagged', {
+MriEvaluateMorphParamsDictTagged = typing.TypedDict('MriEvaluateMorphParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_evaluate_morph"],
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
@@ -29,7 +29,7 @@ MriEvaluateMorphParametersTagged = typing.TypedDict('MriEvaluateMorphParametersT
 
 class MriEvaluateMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEvaluateMorphParameters(...)`.
+    Output object returned when calling `MriEvaluateMorphParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_evaluate_morph_params(
     xform_name: InputPathType,
     segmentation_files: list[InputPathType],
     output_file: str,
-) -> MriEvaluateMorphParametersTagged:
+) -> MriEvaluateMorphParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_evaluate_morph_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEvaluateMorphParameters` object.
+    `MriEvaluateMorphParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def mri_evaluate_morph_validate(
 
 
 def mri_evaluate_morph_cargs(
-    params: MriEvaluateMorphParameters,
+    params: MriEvaluateMorphParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def mri_evaluate_morph_cargs(
 
 
 def mri_evaluate_morph_outputs(
-    params: MriEvaluateMorphParameters,
+    params: MriEvaluateMorphParamsDict,
     execution: Execution,
 ) -> MriEvaluateMorphOutputs:
     """
@@ -132,7 +132,7 @@ def mri_evaluate_morph_outputs(
 
 
 def mri_evaluate_morph_execute(
-    params: MriEvaluateMorphParameters,
+    params: MriEvaluateMorphParamsDict,
     runner: Runner | None = None,
 ) -> MriEvaluateMorphOutputs:
     """
@@ -196,6 +196,8 @@ def mri_evaluate_morph(
 __all__ = [
     "MRI_EVALUATE_MORPH_METADATA",
     "MriEvaluateMorphOutputs",
+    "MriEvaluateMorphParamsDict",
+    "MriEvaluateMorphParamsDictTagged",
     "mri_evaluate_morph",
     "mri_evaluate_morph_execute",
     "mri_evaluate_morph_params",

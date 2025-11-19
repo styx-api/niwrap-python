@@ -13,11 +13,11 @@ TAL_QC_AZS_METADATA = Metadata(
 )
 
 
-TalQcAzsParameters = typing.TypedDict('TalQcAzsParameters', {
+TalQcAzsParamsDict = typing.TypedDict('TalQcAzsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tal_QC_AZS"]],
     "logfile": InputPathType,
 })
-TalQcAzsParametersTagged = typing.TypedDict('TalQcAzsParametersTagged', {
+TalQcAzsParamsDictTagged = typing.TypedDict('TalQcAzsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tal_QC_AZS"],
     "logfile": InputPathType,
 })
@@ -25,7 +25,7 @@ TalQcAzsParametersTagged = typing.TypedDict('TalQcAzsParametersTagged', {
 
 class TalQcAzsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalQcAzsParameters(...)`.
+    Output object returned when calling `TalQcAzsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class TalQcAzsOutputs(typing.NamedTuple):
 
 def tal_qc_azs_params(
     logfile: InputPathType,
-) -> TalQcAzsParametersTagged:
+) -> TalQcAzsParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def tal_qc_azs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalQcAzsParameters` object.
+    `TalQcAzsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def tal_qc_azs_validate(
 
 
 def tal_qc_azs_cargs(
-    params: TalQcAzsParameters,
+    params: TalQcAzsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def tal_qc_azs_cargs(
 
 
 def tal_qc_azs_outputs(
-    params: TalQcAzsParameters,
+    params: TalQcAzsParamsDict,
     execution: Execution,
 ) -> TalQcAzsOutputs:
     """
@@ -106,7 +106,7 @@ def tal_qc_azs_outputs(
 
 
 def tal_qc_azs_execute(
-    params: TalQcAzsParameters,
+    params: TalQcAzsParamsDict,
     runner: Runner | None = None,
 ) -> TalQcAzsOutputs:
     """
@@ -162,6 +162,8 @@ def tal_qc_azs(
 __all__ = [
     "TAL_QC_AZS_METADATA",
     "TalQcAzsOutputs",
+    "TalQcAzsParamsDict",
+    "TalQcAzsParamsDictTagged",
     "tal_qc_azs",
     "tal_qc_azs_execute",
     "tal_qc_azs_params",

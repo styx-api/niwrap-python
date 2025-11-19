@@ -13,7 +13,7 @@ MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
 )
 
 
-MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalParameters', {
+MrisSmoothIntracorticalParamsDict = typing.TypedDict('MrisSmoothIntracorticalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth_intracortical"]],
     "surf_dir": str,
     "surf_name": str,
@@ -26,7 +26,7 @@ MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalPar
     "rad_start": typing.NotRequired[float | None],
     "tan_weights": typing.NotRequired[str | None],
 })
-MrisSmoothIntracorticalParametersTagged = typing.TypedDict('MrisSmoothIntracorticalParametersTagged', {
+MrisSmoothIntracorticalParamsDictTagged = typing.TypedDict('MrisSmoothIntracorticalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_smooth_intracortical"],
     "surf_dir": str,
     "surf_name": str,
@@ -43,7 +43,7 @@ MrisSmoothIntracorticalParametersTagged = typing.TypedDict('MrisSmoothIntracorti
 
 class MrisSmoothIntracorticalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSmoothIntracorticalParameters(...)`.
+    Output object returned when calling `MrisSmoothIntracorticalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def mris_smooth_intracortical_params(
     rad_size: float | None = None,
     rad_start: float | None = None,
     tan_weights: str | None = None,
-) -> MrisSmoothIntracorticalParametersTagged:
+) -> MrisSmoothIntracorticalParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def mris_smooth_intracortical_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSmoothIntracorticalParameters` object.
+    `MrisSmoothIntracorticalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def mris_smooth_intracortical_validate(
 
 
 def mris_smooth_intracortical_cargs(
-    params: MrisSmoothIntracorticalParameters,
+    params: MrisSmoothIntracorticalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -223,7 +223,7 @@ def mris_smooth_intracortical_cargs(
 
 
 def mris_smooth_intracortical_outputs(
-    params: MrisSmoothIntracorticalParameters,
+    params: MrisSmoothIntracorticalParamsDict,
     execution: Execution,
 ) -> MrisSmoothIntracorticalOutputs:
     """
@@ -243,7 +243,7 @@ def mris_smooth_intracortical_outputs(
 
 
 def mris_smooth_intracortical_execute(
-    params: MrisSmoothIntracorticalParameters,
+    params: MrisSmoothIntracorticalParamsDict,
     runner: Runner | None = None,
 ) -> MrisSmoothIntracorticalOutputs:
     """
@@ -334,6 +334,8 @@ def mris_smooth_intracortical(
 __all__ = [
     "MRIS_SMOOTH_INTRACORTICAL_METADATA",
     "MrisSmoothIntracorticalOutputs",
+    "MrisSmoothIntracorticalParamsDict",
+    "MrisSmoothIntracorticalParamsDictTagged",
     "mris_smooth_intracortical",
     "mris_smooth_intracortical_execute",
     "mris_smooth_intracortical_params",

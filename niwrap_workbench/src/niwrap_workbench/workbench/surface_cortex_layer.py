@@ -12,7 +12,7 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 )
 
 
-SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', {
+SurfaceCortexLayerParamsDict = typing.TypedDict('SurfaceCortexLayerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-cortex-layer"]],
     "out-surface": str,
     "placement-metric": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', 
     "pial-surface": InputPathType,
     "location": float,
 })
-SurfaceCortexLayerParametersTagged = typing.TypedDict('SurfaceCortexLayerParametersTagged', {
+SurfaceCortexLayerParamsDictTagged = typing.TypedDict('SurfaceCortexLayerParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-cortex-layer"],
     "out-surface": str,
     "placement-metric": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ SurfaceCortexLayerParametersTagged = typing.TypedDict('SurfaceCortexLayerParamet
 
 class SurfaceCortexLayerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceCortexLayerParameters(...)`.
+    Output object returned when calling `SurfaceCortexLayerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def surface_cortex_layer_params(
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
-) -> SurfaceCortexLayerParametersTagged:
+) -> SurfaceCortexLayerParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def surface_cortex_layer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceCortexLayerParameters` object.
+    `SurfaceCortexLayerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def surface_cortex_layer_validate(
 
 
 def surface_cortex_layer_cargs(
-    params: SurfaceCortexLayerParameters,
+    params: SurfaceCortexLayerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def surface_cortex_layer_cargs(
 
 
 def surface_cortex_layer_outputs(
-    params: SurfaceCortexLayerParameters,
+    params: SurfaceCortexLayerParamsDict,
     execution: Execution,
 ) -> SurfaceCortexLayerOutputs:
     """
@@ -156,7 +156,7 @@ def surface_cortex_layer_outputs(
 
 
 def surface_cortex_layer_execute(
-    params: SurfaceCortexLayerParameters,
+    params: SurfaceCortexLayerParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
@@ -229,6 +229,8 @@ def surface_cortex_layer(
 __all__ = [
     "SURFACE_CORTEX_LAYER_METADATA",
     "SurfaceCortexLayerOutputs",
+    "SurfaceCortexLayerParamsDict",
+    "SurfaceCortexLayerParamsDictTagged",
     "surface_cortex_layer",
     "surface_cortex_layer_execute",
     "surface_cortex_layer_params",

@@ -13,37 +13,37 @@ N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 )
 
 
-N4BiasFieldCorrectionConvergenceParameters = typing.TypedDict('N4BiasFieldCorrectionConvergenceParameters', {
+N4BiasFieldCorrectionConvergenceParamsDict = typing.TypedDict('N4BiasFieldCorrectionConvergenceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["convergence"]],
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
-N4BiasFieldCorrectionConvergenceParametersTagged = typing.TypedDict('N4BiasFieldCorrectionConvergenceParametersTagged', {
+N4BiasFieldCorrectionConvergenceParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionConvergenceParamsDictTagged', {
     "@type": typing.Literal["convergence"],
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
 
 
-N4BiasFieldCorrectionBsplineFittingParameters = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParameters', {
+N4BiasFieldCorrectionBsplineFittingParamsDict = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["bspline_fitting"]],
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
-N4BiasFieldCorrectionBsplineFittingParametersTagged = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParametersTagged', {
+N4BiasFieldCorrectionBsplineFittingParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParamsDictTagged', {
     "@type": typing.Literal["bspline_fitting"],
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
 
 
-N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParameters', {
+N4BiasFieldCorrectionHistogramSharpeningParamsDict = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParamsDict', {
     "@type": typing.NotRequired[typing.Literal["histogram_sharpening"]],
     "fwhm": typing.NotRequired[float | None],
     "wiener_noise": typing.NotRequired[float | None],
     "number_of_histogram_bins": typing.NotRequired[int | None],
 })
-N4BiasFieldCorrectionHistogramSharpeningParametersTagged = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParametersTagged', {
+N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged', {
     "@type": typing.Literal["histogram_sharpening"],
     "fwhm": typing.NotRequired[float | None],
     "wiener_noise": typing.NotRequired[float | None],
@@ -51,55 +51,55 @@ N4BiasFieldCorrectionHistogramSharpeningParametersTagged = typing.TypedDict('N4B
 })
 
 
-N4BiasFieldCorrectionCorrectedOutputParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParameters', {
+N4BiasFieldCorrectionCorrectedOutputParamsDict = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["correctedOutput"]],
     "correctedOutputFileName": str,
 })
-N4BiasFieldCorrectionCorrectedOutputParametersTagged = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParametersTagged', {
+N4BiasFieldCorrectionCorrectedOutputParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParamsDictTagged', {
     "@type": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
-N4BiasFieldCorrectionCorrectedOutputNoiseParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParameters', {
+N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["correctedOutputNoise"]],
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
-N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged', {
+N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged', {
     "@type": typing.Literal["correctedOutputNoise"],
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
 
 
-N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParameters', {
+N4BiasFieldCorrectionParamsDict = typing.TypedDict('N4BiasFieldCorrectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/N4BiasFieldCorrection"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
-    "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParameters | None],
-    "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParameters | None],
-    "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParameters | None],
+    "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParamsDict | None],
+    "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParamsDict | None],
+    "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParamsDict | None],
     "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
-    "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
+    "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParamsDictTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged],
 })
-N4BiasFieldCorrectionParametersTagged = typing.TypedDict('N4BiasFieldCorrectionParametersTagged', {
+N4BiasFieldCorrectionParamsDictTagged = typing.TypedDict('N4BiasFieldCorrectionParamsDictTagged', {
     "@type": typing.Literal["ants/N4BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
-    "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParameters | None],
-    "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParameters | None],
-    "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParameters | None],
+    "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParamsDict | None],
+    "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParamsDict | None],
+    "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParamsDict | None],
     "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
-    "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
+    "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParamsDictTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged],
 })
 
 
@@ -137,10 +137,10 @@ def n4_bias_field_correction_output_validate_dyn_fn(
     }.get(t)
 
 
-def n4_bias_field_correction_convergence_params(
+def n4_bias_field_correction_convergence(
     convergence: list[int],
     convergence_threshold: float | None = None,
-) -> N4BiasFieldCorrectionConvergenceParametersTagged:
+) -> N4BiasFieldCorrectionConvergenceParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def n4_bias_field_correction_convergence_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionConvergenceParameters` object.
+    `N4BiasFieldCorrectionConvergenceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def n4_bias_field_correction_convergence_validate(
 
 
 def n4_bias_field_correction_convergence_cargs(
-    params: N4BiasFieldCorrectionConvergenceParameters,
+    params: N4BiasFieldCorrectionConvergenceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -202,10 +202,10 @@ def n4_bias_field_correction_convergence_cargs(
     return cargs
 
 
-def n4_bias_field_correction_bspline_fitting_params(
+def n4_bias_field_correction_bspline_fitting(
     spline_distance: list[float],
     spline_order: int | None = None,
-) -> N4BiasFieldCorrectionBsplineFittingParametersTagged:
+) -> N4BiasFieldCorrectionBsplineFittingParamsDictTagged:
     """
     Build parameters.
     
@@ -229,7 +229,7 @@ def n4_bias_field_correction_bspline_fitting_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionBsplineFittingParameters` object.
+    `N4BiasFieldCorrectionBsplineFittingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -249,7 +249,7 @@ def n4_bias_field_correction_bspline_fitting_validate(
 
 
 def n4_bias_field_correction_bspline_fitting_cargs(
-    params: N4BiasFieldCorrectionBsplineFittingParameters,
+    params: N4BiasFieldCorrectionBsplineFittingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,11 +267,11 @@ def n4_bias_field_correction_bspline_fitting_cargs(
     return cargs
 
 
-def n4_bias_field_correction_histogram_sharpening_params(
+def n4_bias_field_correction_histogram_sharpening(
     fwhm: float | None = None,
     wiener_noise: float | None = None,
     number_of_histogram_bins: int | None = None,
-) -> N4BiasFieldCorrectionHistogramSharpeningParametersTagged:
+) -> N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged:
     """
     Build parameters.
     
@@ -299,7 +299,7 @@ def n4_bias_field_correction_histogram_sharpening_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionHistogramSharpeningParameters` object.
+    `N4BiasFieldCorrectionHistogramSharpeningParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -318,7 +318,7 @@ def n4_bias_field_correction_histogram_sharpening_validate(
 
 
 def n4_bias_field_correction_histogram_sharpening_cargs(
-    params: N4BiasFieldCorrectionHistogramSharpeningParameters,
+    params: N4BiasFieldCorrectionHistogramSharpeningParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -338,7 +338,7 @@ def n4_bias_field_correction_histogram_sharpening_cargs(
 
 class N4BiasFieldCorrectionCorrectedOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputParameters(...)`.
+    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -346,9 +346,9 @@ class N4BiasFieldCorrectionCorrectedOutputOutputs(typing.NamedTuple):
     """Bias corrected image."""
 
 
-def n4_bias_field_correction_corrected_output_params(
+def n4_bias_field_correction_corrected_output(
     corrected_output_file_name: str,
-) -> N4BiasFieldCorrectionCorrectedOutputParametersTagged:
+) -> N4BiasFieldCorrectionCorrectedOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -369,7 +369,7 @@ def n4_bias_field_correction_corrected_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionCorrectedOutputParameters` object.
+    `N4BiasFieldCorrectionCorrectedOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -383,7 +383,7 @@ def n4_bias_field_correction_corrected_output_validate(
 
 
 def n4_bias_field_correction_corrected_output_cargs(
-    params: N4BiasFieldCorrectionCorrectedOutputParameters,
+    params: N4BiasFieldCorrectionCorrectedOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -401,7 +401,7 @@ def n4_bias_field_correction_corrected_output_cargs(
 
 
 def n4_bias_field_correction_corrected_output_outputs(
-    params: N4BiasFieldCorrectionCorrectedOutputParameters,
+    params: N4BiasFieldCorrectionCorrectedOutputParamsDict,
     execution: Execution,
 ) -> N4BiasFieldCorrectionCorrectedOutputOutputs:
     """
@@ -422,7 +422,7 @@ def n4_bias_field_correction_corrected_output_outputs(
 
 class N4BiasFieldCorrectionCorrectedOutputNoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputNoiseParameters(...)`.
+    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -432,10 +432,10 @@ class N4BiasFieldCorrectionCorrectedOutputNoiseOutputs(typing.NamedTuple):
     """Bias field image."""
 
 
-def n4_bias_field_correction_corrected_output_noise_params(
+def n4_bias_field_correction_corrected_output_noise(
     corrected_output_file_name: str,
     bias_file: str | None = None,
-) -> N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged:
+) -> N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -459,7 +459,7 @@ def n4_bias_field_correction_corrected_output_noise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionCorrectedOutputNoiseParameters` object.
+    `N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -476,7 +476,7 @@ def n4_bias_field_correction_corrected_output_noise_validate(
 
 
 def n4_bias_field_correction_corrected_output_noise_cargs(
-    params: N4BiasFieldCorrectionCorrectedOutputNoiseParameters,
+    params: N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -495,7 +495,7 @@ def n4_bias_field_correction_corrected_output_noise_cargs(
 
 
 def n4_bias_field_correction_corrected_output_noise_outputs(
-    params: N4BiasFieldCorrectionCorrectedOutputNoiseParameters,
+    params: N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict,
     execution: Execution,
 ) -> N4BiasFieldCorrectionCorrectedOutputNoiseOutputs:
     """
@@ -517,28 +517,28 @@ def n4_bias_field_correction_corrected_output_noise_outputs(
 
 class N4BiasFieldCorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `N4BiasFieldCorrectionParameters(...)`.
+    Output object returned when calling `N4BiasFieldCorrectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     output: typing.Union[N4BiasFieldCorrectionCorrectedOutputOutputs, N4BiasFieldCorrectionCorrectedOutputNoiseOutputs]
-    """Outputs from `N4BiasFieldCorrectionCorrectedOutputParameters` or
-    `N4BiasFieldCorrectionCorrectedOutputNoiseParameters`."""
+    """Outputs from `N4BiasFieldCorrectionCorrectedOutputParamsDict` or
+    `N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict`."""
 
 
 def n4_bias_field_correction_params(
     input_image: InputPathType,
-    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
+    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParamsDictTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
     rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
-    convergence: N4BiasFieldCorrectionConvergenceParameters | None = None,
-    bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
-    histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
+    convergence: N4BiasFieldCorrectionConvergenceParamsDict | None = None,
+    bspline_fitting: N4BiasFieldCorrectionBsplineFittingParamsDict | None = None,
+    histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParamsDict | None = None,
     verbose: bool | None = None,
-) -> N4BiasFieldCorrectionParametersTagged:
+) -> N4BiasFieldCorrectionParamsDictTagged:
     """
     Build parameters.
     
@@ -646,7 +646,7 @@ def n4_bias_field_correction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N4BiasFieldCorrectionParameters` object.
+    `N4BiasFieldCorrectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -689,11 +689,13 @@ def n4_bias_field_correction_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
     if "@type" not in params["output"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["output"]["@type"] not in ["correctedOutput", "correctedOutputNoise"]:
+        raise StyxValidationError("Parameter `output`s `@type` must be one of [\"correctedOutput\", \"correctedOutputNoise\"]")
     n4_bias_field_correction_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
 
 
 def n4_bias_field_correction_cargs(
-    params: N4BiasFieldCorrectionParameters,
+    params: N4BiasFieldCorrectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -764,7 +766,7 @@ def n4_bias_field_correction_cargs(
 
 
 def n4_bias_field_correction_outputs(
-    params: N4BiasFieldCorrectionParameters,
+    params: N4BiasFieldCorrectionParamsDict,
     execution: Execution,
 ) -> N4BiasFieldCorrectionOutputs:
     """
@@ -784,7 +786,7 @@ def n4_bias_field_correction_outputs(
 
 
 def n4_bias_field_correction_execute(
-    params: N4BiasFieldCorrectionParameters,
+    params: N4BiasFieldCorrectionParamsDict,
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """
@@ -820,15 +822,15 @@ def n4_bias_field_correction_execute(
 
 def n4_bias_field_correction(
     input_image: InputPathType,
-    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
+    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParamsDictTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
     rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
-    convergence: N4BiasFieldCorrectionConvergenceParameters | None = None,
-    bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
-    histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
+    convergence: N4BiasFieldCorrectionConvergenceParamsDict | None = None,
+    bspline_fitting: N4BiasFieldCorrectionBsplineFittingParamsDict | None = None,
+    histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParamsDict | None = None,
     verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
@@ -938,16 +940,28 @@ def n4_bias_field_correction(
 
 
 __all__ = [
+    "N4BiasFieldCorrectionBsplineFittingParamsDict",
+    "N4BiasFieldCorrectionBsplineFittingParamsDictTagged",
+    "N4BiasFieldCorrectionConvergenceParamsDict",
+    "N4BiasFieldCorrectionConvergenceParamsDictTagged",
     "N4BiasFieldCorrectionCorrectedOutputNoiseOutputs",
+    "N4BiasFieldCorrectionCorrectedOutputNoiseParamsDict",
+    "N4BiasFieldCorrectionCorrectedOutputNoiseParamsDictTagged",
     "N4BiasFieldCorrectionCorrectedOutputOutputs",
+    "N4BiasFieldCorrectionCorrectedOutputParamsDict",
+    "N4BiasFieldCorrectionCorrectedOutputParamsDictTagged",
+    "N4BiasFieldCorrectionHistogramSharpeningParamsDict",
+    "N4BiasFieldCorrectionHistogramSharpeningParamsDictTagged",
     "N4BiasFieldCorrectionOutputs",
+    "N4BiasFieldCorrectionParamsDict",
+    "N4BiasFieldCorrectionParamsDictTagged",
     "N4_BIAS_FIELD_CORRECTION_METADATA",
     "n4_bias_field_correction",
-    "n4_bias_field_correction_bspline_fitting_params",
-    "n4_bias_field_correction_convergence_params",
-    "n4_bias_field_correction_corrected_output_noise_params",
-    "n4_bias_field_correction_corrected_output_params",
+    "n4_bias_field_correction_bspline_fitting",
+    "n4_bias_field_correction_convergence",
+    "n4_bias_field_correction_corrected_output",
+    "n4_bias_field_correction_corrected_output_noise",
     "n4_bias_field_correction_execute",
-    "n4_bias_field_correction_histogram_sharpening_params",
+    "n4_bias_field_correction_histogram_sharpening",
     "n4_bias_field_correction_params",
 ]

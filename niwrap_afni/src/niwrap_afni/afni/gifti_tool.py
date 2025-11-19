@@ -13,7 +13,7 @@ GIFTI_TOOL_METADATA = Metadata(
 )
 
 
-GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
+GiftiToolParamsDict = typing.TypedDict('GiftiToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/gifti_tool"]],
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
     "compare_verb": typing.NotRequired[float | None],
     "approx_gifti": bool,
 })
-GiftiToolParametersTagged = typing.TypedDict('GiftiToolParametersTagged', {
+GiftiToolParamsDictTagged = typing.TypedDict('GiftiToolParamsDictTagged', {
     "@type": typing.Literal["afni/gifti_tool"],
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
@@ -67,7 +67,7 @@ GiftiToolParametersTagged = typing.TypedDict('GiftiToolParametersTagged', {
 
 class GiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GiftiToolParameters(...)`.
+    Output object returned when calling `GiftiToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +98,7 @@ def gifti_tool_params(
     compare_data: bool = False,
     compare_verb: float | None = None,
     approx_gifti: bool = False,
-) -> GiftiToolParametersTagged:
+) -> GiftiToolParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def gifti_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GiftiToolParameters` object.
+    `GiftiToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def gifti_tool_validate(
 
 
 def gifti_tool_cargs(
-    params: GiftiToolParameters,
+    params: GiftiToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -391,7 +391,7 @@ def gifti_tool_cargs(
 
 
 def gifti_tool_outputs(
-    params: GiftiToolParameters,
+    params: GiftiToolParamsDict,
     execution: Execution,
 ) -> GiftiToolOutputs:
     """
@@ -411,7 +411,7 @@ def gifti_tool_outputs(
 
 
 def gifti_tool_execute(
-    params: GiftiToolParameters,
+    params: GiftiToolParamsDict,
     runner: Runner | None = None,
 ) -> GiftiToolOutputs:
     """
@@ -530,6 +530,8 @@ def gifti_tool(
 __all__ = [
     "GIFTI_TOOL_METADATA",
     "GiftiToolOutputs",
+    "GiftiToolParamsDict",
+    "GiftiToolParamsDictTagged",
     "gifti_tool",
     "gifti_tool_execute",
     "gifti_tool_params",

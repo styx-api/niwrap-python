@@ -13,19 +13,19 @@ FABBER_METADATA = Metadata(
 )
 
 
-FabberOptfileParameters = typing.TypedDict('FabberOptfileParameters', {
+FabberOptfileParamsDict = typing.TypedDict('FabberOptfileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["optfile"]],
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
-FabberOptfileParametersTagged = typing.TypedDict('FabberOptfileParametersTagged', {
+FabberOptfileParamsDictTagged = typing.TypedDict('FabberOptfileParamsDictTagged', {
     "@type": typing.Literal["optfile"],
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
 
 
-FabberParameters = typing.TypedDict('FabberParameters', {
+FabberParamsDict = typing.TypedDict('FabberParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber"]],
     "output": str,
     "method": str,
@@ -44,7 +44,7 @@ FabberParameters = typing.TypedDict('FabberParameters', {
     "link_to_latest": bool,
     "load_models": typing.NotRequired[InputPathType | None],
     "debug": bool,
-    "optfile": typing.NotRequired[FabberOptfileParameters | None],
+    "optfile": typing.NotRequired[FabberOptfileParamsDict | None],
     "save_model_fit": bool,
     "save_residuals": bool,
     "save_model_extras": bool,
@@ -64,7 +64,7 @@ FabberParameters = typing.TypedDict('FabberParameters', {
     "list_outputs": bool,
     "old_optfile": typing.NotRequired[InputPathType | None],
 })
-FabberParametersTagged = typing.TypedDict('FabberParametersTagged', {
+FabberParamsDictTagged = typing.TypedDict('FabberParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber"],
     "output": str,
     "method": str,
@@ -83,7 +83,7 @@ FabberParametersTagged = typing.TypedDict('FabberParametersTagged', {
     "link_to_latest": bool,
     "load_models": typing.NotRequired[InputPathType | None],
     "debug": bool,
-    "optfile": typing.NotRequired[FabberOptfileParameters | None],
+    "optfile": typing.NotRequired[FabberOptfileParamsDict | None],
     "save_model_fit": bool,
     "save_residuals": bool,
     "save_model_extras": bool,
@@ -105,10 +105,10 @@ FabberParametersTagged = typing.TypedDict('FabberParametersTagged', {
 })
 
 
-def fabber_optfile_params(
+def fabber_optfile(
     optfile_short: InputPathType | None = None,
     optfile_long: InputPathType | None = None,
-) -> FabberOptfileParametersTagged:
+) -> FabberOptfileParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def fabber_optfile_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberOptfileParameters` object.
+    `FabberOptfileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def fabber_optfile_validate(
 
 
 def fabber_optfile_cargs(
-    params: FabberOptfileParameters,
+    params: FabberOptfileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def fabber_optfile_cargs(
 
 class FabberOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberParameters(...)`.
+    Output object returned when calling `FabberParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -227,7 +227,7 @@ def fabber_params(
     link_to_latest: bool = False,
     load_models: InputPathType | None = None,
     debug: bool = False,
-    optfile: FabberOptfileParameters | None = None,
+    optfile: FabberOptfileParamsDict | None = None,
     save_model_fit: bool = False,
     save_residuals: bool = False,
     save_model_extras: bool = False,
@@ -246,7 +246,7 @@ def fabber_params(
     desc_params: bool = False,
     list_outputs: bool = False,
     old_optfile: InputPathType | None = None,
-) -> FabberParametersTagged:
+) -> FabberParamsDictTagged:
     """
     Build parameters.
     
@@ -368,7 +368,7 @@ def fabber_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberParameters` object.
+    `FabberParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -510,7 +510,7 @@ def fabber_validate(
 
 
 def fabber_cargs(
-    params: FabberParameters,
+    params: FabberParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -638,7 +638,7 @@ def fabber_cargs(
 
 
 def fabber_outputs(
-    params: FabberParameters,
+    params: FabberParamsDict,
     execution: Execution,
 ) -> FabberOutputs:
     """
@@ -669,7 +669,7 @@ def fabber_outputs(
 
 
 def fabber_execute(
-    params: FabberParameters,
+    params: FabberParamsDict,
     runner: Runner | None = None,
 ) -> FabberOutputs:
     """
@@ -715,7 +715,7 @@ def fabber(
     link_to_latest: bool = False,
     load_models: InputPathType | None = None,
     debug: bool = False,
-    optfile: FabberOptfileParameters | None = None,
+    optfile: FabberOptfileParamsDict | None = None,
     save_model_fit: bool = False,
     save_residuals: bool = False,
     save_model_extras: bool = False,
@@ -849,9 +849,13 @@ def fabber(
 
 __all__ = [
     "FABBER_METADATA",
+    "FabberOptfileParamsDict",
+    "FabberOptfileParamsDictTagged",
     "FabberOutputs",
+    "FabberParamsDict",
+    "FabberParamsDictTagged",
     "fabber",
     "fabber_execute",
-    "fabber_optfile_params",
+    "fabber_optfile",
     "fabber_params",
 ]

@@ -13,13 +13,13 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 )
 
 
-ConnectedComponentsParameters = typing.TypedDict('ConnectedComponentsParameters', {
+ConnectedComponentsParamsDict = typing.TypedDict('ConnectedComponentsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/connected_components"]],
     "input_image": InputPathType,
     "output_image": str,
     "threshold": typing.NotRequired[float | None],
 })
-ConnectedComponentsParametersTagged = typing.TypedDict('ConnectedComponentsParametersTagged', {
+ConnectedComponentsParamsDictTagged = typing.TypedDict('ConnectedComponentsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/connected_components"],
     "input_image": InputPathType,
     "output_image": str,
@@ -29,7 +29,7 @@ ConnectedComponentsParametersTagged = typing.TypedDict('ConnectedComponentsParam
 
 class ConnectedComponentsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConnectedComponentsParameters(...)`.
+    Output object returned when calling `ConnectedComponentsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def connected_components_params(
     input_image: InputPathType,
     output_image: str = "output_labelled_image",
     threshold: float | None = None,
-) -> ConnectedComponentsParametersTagged:
+) -> ConnectedComponentsParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def connected_components_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectedComponentsParameters` object.
+    `ConnectedComponentsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def connected_components_validate(
 
 
 def connected_components_cargs(
-    params: ConnectedComponentsParameters,
+    params: ConnectedComponentsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def connected_components_cargs(
 
 
 def connected_components_outputs(
-    params: ConnectedComponentsParameters,
+    params: ConnectedComponentsParamsDict,
     execution: Execution,
 ) -> ConnectedComponentsOutputs:
     """
@@ -136,7 +136,7 @@ def connected_components_outputs(
 
 
 def connected_components_execute(
-    params: ConnectedComponentsParameters,
+    params: ConnectedComponentsParamsDict,
     runner: Runner | None = None,
 ) -> ConnectedComponentsOutputs:
     """
@@ -198,6 +198,8 @@ def connected_components(
 __all__ = [
     "CONNECTED_COMPONENTS_METADATA",
     "ConnectedComponentsOutputs",
+    "ConnectedComponentsParamsDict",
+    "ConnectedComponentsParamsDictTagged",
     "connected_components",
     "connected_components_execute",
     "connected_components_params",

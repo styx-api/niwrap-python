@@ -13,7 +13,7 @@ DICOM_HDR_METADATA = Metadata(
 )
 
 
-DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
+DicomHdrParamsDict = typing.TypedDict('DicomHdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/dicom_hdr"]],
     "files": list[InputPathType],
     "hex": bool,
@@ -26,7 +26,7 @@ DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
     "slice_times_verb": bool,
     "siemens_csa_data": bool,
 })
-DicomHdrParametersTagged = typing.TypedDict('DicomHdrParametersTagged', {
+DicomHdrParamsDictTagged = typing.TypedDict('DicomHdrParamsDictTagged', {
     "@type": typing.Literal["afni/dicom_hdr"],
     "files": list[InputPathType],
     "hex": bool,
@@ -43,7 +43,7 @@ DicomHdrParametersTagged = typing.TypedDict('DicomHdrParametersTagged', {
 
 class DicomHdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DicomHdrParameters(...)`.
+    Output object returned when calling `DicomHdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def dicom_hdr_params(
     slice_times: bool = False,
     slice_times_verb: bool = False,
     siemens_csa_data: bool = False,
-) -> DicomHdrParametersTagged:
+) -> DicomHdrParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def dicom_hdr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DicomHdrParameters` object.
+    `DicomHdrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def dicom_hdr_validate(
 
 
 def dicom_hdr_cargs(
-    params: DicomHdrParameters,
+    params: DicomHdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def dicom_hdr_cargs(
 
 
 def dicom_hdr_outputs(
-    params: DicomHdrParameters,
+    params: DicomHdrParamsDict,
     execution: Execution,
 ) -> DicomHdrOutputs:
     """
@@ -214,7 +214,7 @@ def dicom_hdr_outputs(
 
 
 def dicom_hdr_execute(
-    params: DicomHdrParameters,
+    params: DicomHdrParamsDict,
     runner: Runner | None = None,
 ) -> DicomHdrOutputs:
     """
@@ -300,6 +300,8 @@ def dicom_hdr(
 __all__ = [
     "DICOM_HDR_METADATA",
     "DicomHdrOutputs",
+    "DicomHdrParamsDict",
+    "DicomHdrParamsDictTagged",
     "dicom_hdr",
     "dicom_hdr_execute",
     "dicom_hdr_params",

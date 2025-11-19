@@ -13,13 +13,13 @@ HIAM_REGISTER_METADATA = Metadata(
 )
 
 
-HiamRegisterParameters = typing.TypedDict('HiamRegisterParameters', {
+HiamRegisterParamsDict = typing.TypedDict('HiamRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_register"]],
     "input_surface": InputPathType,
     "average_surface": InputPathType,
     "output_surface": str,
 })
-HiamRegisterParametersTagged = typing.TypedDict('HiamRegisterParametersTagged', {
+HiamRegisterParamsDictTagged = typing.TypedDict('HiamRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/hiam_register"],
     "input_surface": InputPathType,
     "average_surface": InputPathType,
@@ -29,7 +29,7 @@ HiamRegisterParametersTagged = typing.TypedDict('HiamRegisterParametersTagged', 
 
 class HiamRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HiamRegisterParameters(...)`.
+    Output object returned when calling `HiamRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def hiam_register_params(
     input_surface: InputPathType,
     average_surface: InputPathType,
     output_surface: str,
-) -> HiamRegisterParametersTagged:
+) -> HiamRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def hiam_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HiamRegisterParameters` object.
+    `HiamRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def hiam_register_validate(
 
 
 def hiam_register_cargs(
-    params: HiamRegisterParameters,
+    params: HiamRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def hiam_register_cargs(
 
 
 def hiam_register_outputs(
-    params: HiamRegisterParameters,
+    params: HiamRegisterParamsDict,
     execution: Execution,
 ) -> HiamRegisterOutputs:
     """
@@ -130,7 +130,7 @@ def hiam_register_outputs(
 
 
 def hiam_register_execute(
-    params: HiamRegisterParameters,
+    params: HiamRegisterParamsDict,
     runner: Runner | None = None,
 ) -> HiamRegisterOutputs:
     """
@@ -193,6 +193,8 @@ def hiam_register(
 __all__ = [
     "HIAM_REGISTER_METADATA",
     "HiamRegisterOutputs",
+    "HiamRegisterParamsDict",
+    "HiamRegisterParamsDictTagged",
     "hiam_register",
     "hiam_register_execute",
     "hiam_register_params",

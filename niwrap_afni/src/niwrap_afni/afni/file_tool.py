@@ -13,7 +13,7 @@ FILE_TOOL_METADATA = Metadata(
 )
 
 
-FileToolParameters = typing.TypedDict('FileToolParameters', {
+FileToolParamsDict = typing.TypedDict('FileToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/file_tool"]],
     "help": bool,
     "version": bool,
@@ -58,7 +58,7 @@ FileToolParameters = typing.TypedDict('FileToolParameters', {
     "disp_real4": bool,
     "swap_bytes": bool,
 })
-FileToolParametersTagged = typing.TypedDict('FileToolParametersTagged', {
+FileToolParamsDictTagged = typing.TypedDict('FileToolParamsDictTagged', {
     "@type": typing.Literal["afni/file_tool"],
     "help": bool,
     "version": bool,
@@ -107,7 +107,7 @@ FileToolParametersTagged = typing.TypedDict('FileToolParametersTagged', {
 
 class FileToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FileToolParameters(...)`.
+    Output object returned when calling `FileToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -158,7 +158,7 @@ def file_tool_params(
     disp_int4: bool = False,
     disp_real4: bool = False,
     swap_bytes: bool = False,
-) -> FileToolParametersTagged:
+) -> FileToolParamsDictTagged:
     """
     Build parameters.
     
@@ -269,7 +269,7 @@ def file_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileToolParameters` object.
+    `FileToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -442,7 +442,7 @@ def file_tool_validate(
 
 
 def file_tool_cargs(
-    params: FileToolParameters,
+    params: FileToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -570,7 +570,7 @@ def file_tool_cargs(
 
 
 def file_tool_outputs(
-    params: FileToolParameters,
+    params: FileToolParamsDict,
     execution: Execution,
 ) -> FileToolOutputs:
     """
@@ -590,7 +590,7 @@ def file_tool_outputs(
 
 
 def file_tool_execute(
-    params: FileToolParameters,
+    params: FileToolParamsDict,
     runner: Runner | None = None,
 ) -> FileToolOutputs:
     """
@@ -769,6 +769,8 @@ def file_tool(
 __all__ = [
     "FILE_TOOL_METADATA",
     "FileToolOutputs",
+    "FileToolParamsDict",
+    "FileToolParamsDictTagged",
     "file_tool",
     "file_tool_execute",
     "file_tool_params",

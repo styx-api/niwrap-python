@@ -13,7 +13,7 @@ FROM3D_METADATA = Metadata(
 )
 
 
-From3dParameters = typing.TypedDict('From3dParameters', {
+From3dParamsDict = typing.TypedDict('From3dParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/from3d"]],
     "verbose": bool,
     "nsize": bool,
@@ -26,7 +26,7 @@ From3dParameters = typing.TypedDict('From3dParameters', {
     "input": InputPathType,
     "prefix": str,
 })
-From3dParametersTagged = typing.TypedDict('From3dParametersTagged', {
+From3dParamsDictTagged = typing.TypedDict('From3dParamsDictTagged', {
     "@type": typing.Literal["afni/from3d"],
     "verbose": bool,
     "nsize": bool,
@@ -43,7 +43,7 @@ From3dParametersTagged = typing.TypedDict('From3dParametersTagged', {
 
 class From3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `From3dParameters(...)`.
+    Output object returned when calling `From3dParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def from3d_params(
     zlast: float | None = None,
     tfirst: float | None = None,
     tlast: float | None = None,
-) -> From3dParametersTagged:
+) -> From3dParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def from3d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `From3dParameters` object.
+    `From3dParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def from3d_validate(
 
 
 def from3d_cargs(
-    params: From3dParameters,
+    params: From3dParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def from3d_cargs(
 
 
 def from3d_outputs(
-    params: From3dParameters,
+    params: From3dParamsDict,
     execution: Execution,
 ) -> From3dOutputs:
     """
@@ -229,7 +229,7 @@ def from3d_outputs(
 
 
 def from3d_execute(
-    params: From3dParameters,
+    params: From3dParamsDict,
     runner: Runner | None = None,
 ) -> From3dOutputs:
     """
@@ -319,6 +319,8 @@ def from3d(
 __all__ = [
     "FROM3D_METADATA",
     "From3dOutputs",
+    "From3dParamsDict",
+    "From3dParamsDictTagged",
     "from3d",
     "from3d_execute",
     "from3d_params",

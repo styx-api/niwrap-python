@@ -13,11 +13,11 @@ LIST_OTL_LABELS_METADATA = Metadata(
 )
 
 
-ListOtlLabelsParameters = typing.TypedDict('ListOtlLabelsParameters', {
+ListOtlLabelsParamsDict = typing.TypedDict('ListOtlLabelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/list_otl_labels"]],
     "input_file": InputPathType,
 })
-ListOtlLabelsParametersTagged = typing.TypedDict('ListOtlLabelsParametersTagged', {
+ListOtlLabelsParamsDictTagged = typing.TypedDict('ListOtlLabelsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/list_otl_labels"],
     "input_file": InputPathType,
 })
@@ -25,7 +25,7 @@ ListOtlLabelsParametersTagged = typing.TypedDict('ListOtlLabelsParametersTagged'
 
 class ListOtlLabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ListOtlLabelsParameters(...)`.
+    Output object returned when calling `ListOtlLabelsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class ListOtlLabelsOutputs(typing.NamedTuple):
 
 def list_otl_labels_params(
     input_file: InputPathType,
-) -> ListOtlLabelsParametersTagged:
+) -> ListOtlLabelsParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def list_otl_labels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ListOtlLabelsParameters` object.
+    `ListOtlLabelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def list_otl_labels_validate(
 
 
 def list_otl_labels_cargs(
-    params: ListOtlLabelsParameters,
+    params: ListOtlLabelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def list_otl_labels_cargs(
 
 
 def list_otl_labels_outputs(
-    params: ListOtlLabelsParameters,
+    params: ListOtlLabelsParamsDict,
     execution: Execution,
 ) -> ListOtlLabelsOutputs:
     """
@@ -109,7 +109,7 @@ def list_otl_labels_outputs(
 
 
 def list_otl_labels_execute(
-    params: ListOtlLabelsParameters,
+    params: ListOtlLabelsParamsDict,
     runner: Runner | None = None,
 ) -> ListOtlLabelsOutputs:
     """
@@ -165,6 +165,8 @@ def list_otl_labels(
 __all__ = [
     "LIST_OTL_LABELS_METADATA",
     "ListOtlLabelsOutputs",
+    "ListOtlLabelsParamsDict",
+    "ListOtlLabelsParamsDictTagged",
     "list_otl_labels",
     "list_otl_labels_execute",
     "list_otl_labels_params",

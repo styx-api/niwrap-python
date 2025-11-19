@@ -13,13 +13,13 @@ IMAND_METADATA = Metadata(
 )
 
 
-ImandParameters = typing.TypedDict('ImandParameters', {
+ImandParamsDict = typing.TypedDict('ImandParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imand"]],
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
     "output_image": str,
 })
-ImandParametersTagged = typing.TypedDict('ImandParametersTagged', {
+ImandParamsDictTagged = typing.TypedDict('ImandParamsDictTagged', {
     "@type": typing.Literal["afni/imand"],
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
@@ -29,7 +29,7 @@ ImandParametersTagged = typing.TypedDict('ImandParametersTagged', {
 
 class ImandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImandParameters(...)`.
+    Output object returned when calling `ImandParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def imand_params(
     input_images: list[InputPathType],
     output_image: str,
     threshold: float | None = None,
-) -> ImandParametersTagged:
+) -> ImandParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def imand_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImandParameters` object.
+    `ImandParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def imand_validate(
 
 
 def imand_cargs(
-    params: ImandParameters,
+    params: ImandParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def imand_cargs(
 
 
 def imand_outputs(
-    params: ImandParameters,
+    params: ImandParamsDict,
     execution: Execution,
 ) -> ImandOutputs:
     """
@@ -138,7 +138,7 @@ def imand_outputs(
 
 
 def imand_execute(
-    params: ImandParameters,
+    params: ImandParamsDict,
     runner: Runner | None = None,
 ) -> ImandOutputs:
     """
@@ -204,6 +204,8 @@ def imand(
 __all__ = [
     "IMAND_METADATA",
     "ImandOutputs",
+    "ImandParamsDict",
+    "ImandParamsDictTagged",
     "imand",
     "imand_execute",
     "imand_params",

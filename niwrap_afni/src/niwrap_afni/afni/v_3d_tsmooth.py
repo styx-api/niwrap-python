@@ -13,7 +13,7 @@ V_3D_TSMOOTH_METADATA = Metadata(
 )
 
 
-V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
+V3dTsmoothParamsDict = typing.TypedDict('V3dTsmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTsmooth"]],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
     "trend": bool,
     "adaptive": typing.NotRequired[int | None],
 })
-V3dTsmoothParametersTagged = typing.TypedDict('V3dTsmoothParametersTagged', {
+V3dTsmoothParamsDictTagged = typing.TypedDict('V3dTsmoothParamsDictTagged', {
     "@type": typing.Literal["afni/3dTsmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ V3dTsmoothParametersTagged = typing.TypedDict('V3dTsmoothParametersTagged', {
 
 class V3dTsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTsmoothParameters(...)`.
+    Output object returned when calling `V3dTsmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v_3d_tsmooth_params(
     zero: bool = False,
     trend: bool = False,
     adaptive: int | None = None,
-) -> V3dTsmoothParametersTagged:
+) -> V3dTsmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def v_3d_tsmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTsmoothParameters` object.
+    `V3dTsmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -193,7 +193,7 @@ def v_3d_tsmooth_validate(
 
 
 def v_3d_tsmooth_cargs(
-    params: V3dTsmoothParameters,
+    params: V3dTsmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -259,7 +259,7 @@ def v_3d_tsmooth_cargs(
 
 
 def v_3d_tsmooth_outputs(
-    params: V3dTsmoothParameters,
+    params: V3dTsmoothParamsDict,
     execution: Execution,
 ) -> V3dTsmoothOutputs:
     """
@@ -279,7 +279,7 @@ def v_3d_tsmooth_outputs(
 
 
 def v_3d_tsmooth_execute(
-    params: V3dTsmoothParameters,
+    params: V3dTsmoothParamsDict,
     runner: Runner | None = None,
 ) -> V3dTsmoothOutputs:
     """
@@ -379,6 +379,8 @@ def v_3d_tsmooth(
 
 __all__ = [
     "V3dTsmoothOutputs",
+    "V3dTsmoothParamsDict",
+    "V3dTsmoothParamsDictTagged",
     "V_3D_TSMOOTH_METADATA",
     "v_3d_tsmooth",
     "v_3d_tsmooth_execute",

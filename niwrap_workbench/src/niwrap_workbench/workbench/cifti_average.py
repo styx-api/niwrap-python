@@ -12,50 +12,50 @@ CIFTI_AVERAGE_METADATA = Metadata(
 )
 
 
-CiftiAverageExcludeOutliersParameters = typing.TypedDict('CiftiAverageExcludeOutliersParameters', {
+CiftiAverageExcludeOutliersParamsDict = typing.TypedDict('CiftiAverageExcludeOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
     "sigma-below": float,
     "sigma-above": float,
 })
-CiftiAverageExcludeOutliersParametersTagged = typing.TypedDict('CiftiAverageExcludeOutliersParametersTagged', {
+CiftiAverageExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiAverageExcludeOutliersParamsDictTagged', {
     "@type": typing.Literal["exclude-outliers"],
     "sigma-below": float,
     "sigma-above": float,
 })
 
 
-CiftiAverageCiftiParameters = typing.TypedDict('CiftiAverageCiftiParameters', {
+CiftiAverageCiftiParamsDict = typing.TypedDict('CiftiAverageCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
-CiftiAverageCiftiParametersTagged = typing.TypedDict('CiftiAverageCiftiParametersTagged', {
+CiftiAverageCiftiParamsDictTagged = typing.TypedDict('CiftiAverageCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
 
 
-CiftiAverageParameters = typing.TypedDict('CiftiAverageParameters', {
+CiftiAverageParamsDict = typing.TypedDict('CiftiAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-average"]],
     "cifti-out": str,
-    "exclude-outliers": typing.NotRequired[CiftiAverageExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiAverageExcludeOutliersParamsDict | None],
     "limit-GB": typing.NotRequired[float | None],
-    "cifti": typing.NotRequired[list[CiftiAverageCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageCiftiParamsDict] | None],
 })
-CiftiAverageParametersTagged = typing.TypedDict('CiftiAverageParametersTagged', {
+CiftiAverageParamsDictTagged = typing.TypedDict('CiftiAverageParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-average"],
     "cifti-out": str,
-    "exclude-outliers": typing.NotRequired[CiftiAverageExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiAverageExcludeOutliersParamsDict | None],
     "limit-GB": typing.NotRequired[float | None],
-    "cifti": typing.NotRequired[list[CiftiAverageCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageCiftiParamsDict] | None],
 })
 
 
-def cifti_average_exclude_outliers_params(
+def cifti_average_exclude_outliers(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiAverageExcludeOutliersParametersTagged:
+) -> CiftiAverageExcludeOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def cifti_average_exclude_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageExcludeOutliersParameters` object.
+    `CiftiAverageExcludeOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def cifti_average_exclude_outliers_validate(
 
 
 def cifti_average_exclude_outliers_cargs(
-    params: CiftiAverageExcludeOutliersParameters,
+    params: CiftiAverageExcludeOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,10 +117,10 @@ def cifti_average_exclude_outliers_cargs(
     return cargs
 
 
-def cifti_average_cifti_params(
+def cifti_average_cifti(
     cifti_in: InputPathType,
     weight: float | None,
-) -> CiftiAverageCiftiParametersTagged:
+) -> CiftiAverageCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def cifti_average_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageCiftiParameters` object.
+    `CiftiAverageCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def cifti_average_cifti_validate(
 
 
 def cifti_average_cifti_cargs(
-    params: CiftiAverageCiftiParameters,
+    params: CiftiAverageCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def cifti_average_cifti_cargs(
 
 class CiftiAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiAverageParameters(...)`.
+    Output object returned when calling `CiftiAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -199,9 +199,9 @@ class CiftiAverageOutputs(typing.NamedTuple):
 def cifti_average_params(
     cifti_out: str,
     limit_gb: float | None,
-    exclude_outliers: CiftiAverageExcludeOutliersParameters | None = None,
-    cifti: list[CiftiAverageCiftiParameters] | None = None,
-) -> CiftiAverageParametersTagged:
+    exclude_outliers: CiftiAverageExcludeOutliersParamsDict | None = None,
+    cifti: list[CiftiAverageCiftiParamsDict] | None = None,
+) -> CiftiAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -234,7 +234,7 @@ def cifti_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageParameters` object.
+    `CiftiAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -252,13 +252,13 @@ def cifti_average_validate(
             raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_average_cifti_validate(e)
 
 
 def cifti_average_cargs(
-    params: CiftiAverageParameters,
+    params: CiftiAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def cifti_average_cargs(
 
 
 def cifti_average_outputs(
-    params: CiftiAverageParameters,
+    params: CiftiAverageParamsDict,
     execution: Execution,
 ) -> CiftiAverageOutputs:
     """
@@ -305,7 +305,7 @@ def cifti_average_outputs(
 
 
 def cifti_average_execute(
-    params: CiftiAverageParameters,
+    params: CiftiAverageParamsDict,
     runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
     """
@@ -337,8 +337,8 @@ def cifti_average_execute(
 def cifti_average(
     cifti_out: str,
     limit_gb: float | None,
-    exclude_outliers: CiftiAverageExcludeOutliersParameters | None = None,
-    cifti: list[CiftiAverageCiftiParameters] | None = None,
+    exclude_outliers: CiftiAverageExcludeOutliersParamsDict | None = None,
+    cifti: list[CiftiAverageCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
     """
@@ -374,10 +374,16 @@ def cifti_average(
 
 __all__ = [
     "CIFTI_AVERAGE_METADATA",
+    "CiftiAverageCiftiParamsDict",
+    "CiftiAverageCiftiParamsDictTagged",
+    "CiftiAverageExcludeOutliersParamsDict",
+    "CiftiAverageExcludeOutliersParamsDictTagged",
     "CiftiAverageOutputs",
+    "CiftiAverageParamsDict",
+    "CiftiAverageParamsDictTagged",
     "cifti_average",
-    "cifti_average_cifti_params",
-    "cifti_average_exclude_outliers_params",
+    "cifti_average_cifti",
+    "cifti_average_exclude_outliers",
     "cifti_average_execute",
     "cifti_average_params",
 ]

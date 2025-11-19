@@ -13,11 +13,11 @@ UNIQ_IMAGES_METADATA = Metadata(
 )
 
 
-UniqImagesParameters = typing.TypedDict('UniqImagesParameters', {
+UniqImagesParamsDict = typing.TypedDict('UniqImagesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/uniq_images"]],
     "input_files": list[InputPathType],
 })
-UniqImagesParametersTagged = typing.TypedDict('UniqImagesParametersTagged', {
+UniqImagesParamsDictTagged = typing.TypedDict('UniqImagesParamsDictTagged', {
     "@type": typing.Literal["afni/uniq_images"],
     "input_files": list[InputPathType],
 })
@@ -25,7 +25,7 @@ UniqImagesParametersTagged = typing.TypedDict('UniqImagesParametersTagged', {
 
 class UniqImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UniqImagesParameters(...)`.
+    Output object returned when calling `UniqImagesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class UniqImagesOutputs(typing.NamedTuple):
 
 def uniq_images_params(
     input_files: list[InputPathType],
-) -> UniqImagesParametersTagged:
+) -> UniqImagesParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def uniq_images_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UniqImagesParameters` object.
+    `UniqImagesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def uniq_images_validate(
 
 
 def uniq_images_cargs(
-    params: UniqImagesParameters,
+    params: UniqImagesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def uniq_images_cargs(
 
 
 def uniq_images_outputs(
-    params: UniqImagesParameters,
+    params: UniqImagesParamsDict,
     execution: Execution,
 ) -> UniqImagesOutputs:
     """
@@ -112,7 +112,7 @@ def uniq_images_outputs(
 
 
 def uniq_images_execute(
-    params: UniqImagesParameters,
+    params: UniqImagesParamsDict,
     runner: Runner | None = None,
 ) -> UniqImagesOutputs:
     """
@@ -172,6 +172,8 @@ def uniq_images(
 __all__ = [
     "UNIQ_IMAGES_METADATA",
     "UniqImagesOutputs",
+    "UniqImagesParamsDict",
+    "UniqImagesParamsDictTagged",
     "uniq_images",
     "uniq_images_execute",
     "uniq_images_params",

@@ -13,87 +13,87 @@ AMP2SH_METADATA = Metadata(
 )
 
 
-Amp2shFslgradParameters = typing.TypedDict('Amp2shFslgradParameters', {
+Amp2shFslgradParamsDict = typing.TypedDict('Amp2shFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Amp2shFslgradParametersTagged = typing.TypedDict('Amp2shFslgradParametersTagged', {
+Amp2shFslgradParamsDictTagged = typing.TypedDict('Amp2shFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Amp2shVariousStringParameters = typing.TypedDict('Amp2shVariousStringParameters', {
+Amp2shVariousStringParamsDict = typing.TypedDict('Amp2shVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-Amp2shVariousStringParametersTagged = typing.TypedDict('Amp2shVariousStringParametersTagged', {
+Amp2shVariousStringParamsDictTagged = typing.TypedDict('Amp2shVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-Amp2shVariousFileParameters = typing.TypedDict('Amp2shVariousFileParameters', {
+Amp2shVariousFileParamsDict = typing.TypedDict('Amp2shVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-Amp2shVariousFileParametersTagged = typing.TypedDict('Amp2shVariousFileParametersTagged', {
+Amp2shVariousFileParamsDictTagged = typing.TypedDict('Amp2shVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-Amp2shConfigParameters = typing.TypedDict('Amp2shConfigParameters', {
+Amp2shConfigParamsDict = typing.TypedDict('Amp2shConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Amp2shConfigParametersTagged = typing.TypedDict('Amp2shConfigParametersTagged', {
+Amp2shConfigParamsDictTagged = typing.TypedDict('Amp2shConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Amp2shParameters = typing.TypedDict('Amp2shParameters', {
+Amp2shParamsDict = typing.TypedDict('Amp2shParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/amp2sh"]],
     "lmax": typing.NotRequired[int | None],
     "normalise": bool,
     "directions": typing.NotRequired[InputPathType | None],
     "rician": typing.NotRequired[InputPathType | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Amp2shFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Amp2shFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
-    "strides": typing.NotRequired[typing.Union[Amp2shVariousStringParametersTagged, Amp2shVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[Amp2shVariousStringParamsDictTagged, Amp2shVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Amp2shConfigParameters] | None],
+    "config": typing.NotRequired[list[Amp2shConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "amp": InputPathType,
     "SH": str,
 })
-Amp2shParametersTagged = typing.TypedDict('Amp2shParametersTagged', {
+Amp2shParamsDictTagged = typing.TypedDict('Amp2shParamsDictTagged', {
     "@type": typing.Literal["mrtrix/amp2sh"],
     "lmax": typing.NotRequired[int | None],
     "normalise": bool,
     "directions": typing.NotRequired[InputPathType | None],
     "rician": typing.NotRequired[InputPathType | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Amp2shFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Amp2shFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
-    "strides": typing.NotRequired[typing.Union[Amp2shVariousStringParametersTagged, Amp2shVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[Amp2shVariousStringParamsDictTagged, Amp2shVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Amp2shConfigParameters] | None],
+    "config": typing.NotRequired[list[Amp2shConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "amp": InputPathType,
@@ -135,10 +135,10 @@ def amp2sh_strides_validate_dyn_fn(
     }.get(t)
 
 
-def amp2sh_fslgrad_params(
+def amp2sh_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Amp2shFslgradParametersTagged:
+) -> Amp2shFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def amp2sh_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2shFslgradParameters` object.
+    `Amp2shFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def amp2sh_fslgrad_validate(
 
 
 def amp2sh_fslgrad_cargs(
-    params: Amp2shFslgradParameters,
+    params: Amp2shFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,9 +204,9 @@ def amp2sh_fslgrad_cargs(
     return cargs
 
 
-def amp2sh_various_string_params(
+def amp2sh_various_string(
     obj: str,
-) -> Amp2shVariousStringParametersTagged:
+) -> Amp2shVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -227,7 +227,7 @@ def amp2sh_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2shVariousStringParameters` object.
+    `Amp2shVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,7 +241,7 @@ def amp2sh_various_string_validate(
 
 
 def amp2sh_various_string_cargs(
-    params: Amp2shVariousStringParameters,
+    params: Amp2shVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,9 +258,9 @@ def amp2sh_various_string_cargs(
     return cargs
 
 
-def amp2sh_various_file_params(
+def amp2sh_various_file(
     obj: InputPathType,
-) -> Amp2shVariousFileParametersTagged:
+) -> Amp2shVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -281,7 +281,7 @@ def amp2sh_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2shVariousFileParameters` object.
+    `Amp2shVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -295,7 +295,7 @@ def amp2sh_various_file_validate(
 
 
 def amp2sh_various_file_cargs(
-    params: Amp2shVariousFileParameters,
+    params: Amp2shVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -312,10 +312,10 @@ def amp2sh_various_file_cargs(
     return cargs
 
 
-def amp2sh_config_params(
+def amp2sh_config(
     key: str,
     value: str,
-) -> Amp2shConfigParametersTagged:
+) -> Amp2shConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -338,7 +338,7 @@ def amp2sh_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2shConfigParameters` object.
+    `Amp2shConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -356,7 +356,7 @@ def amp2sh_config_validate(
 
 
 def amp2sh_config_cargs(
-    params: Amp2shConfigParameters,
+    params: Amp2shConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -377,7 +377,7 @@ def amp2sh_config_cargs(
 
 class Amp2shOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Amp2shParameters(...)`.
+    Output object returned when calling `Amp2shParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -393,18 +393,18 @@ def amp2sh_params(
     directions: InputPathType | None = None,
     rician: InputPathType | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Amp2shFslgradParameters | None = None,
+    fslgrad: Amp2shFslgradParamsDict | None = None,
     shells: list[float] | None = None,
-    strides: typing.Union[Amp2shVariousStringParametersTagged, Amp2shVariousFileParametersTagged] | None = None,
+    strides: typing.Union[Amp2shVariousStringParamsDictTagged, Amp2shVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Amp2shConfigParameters] | None = None,
+    config: list[Amp2shConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Amp2shParametersTagged:
+) -> Amp2shParamsDictTagged:
     """
     Build parameters.
     
@@ -498,7 +498,7 @@ def amp2sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2shParameters` object.
+    `Amp2shParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -534,6 +534,8 @@ def amp2sh_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         amp2sh_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -556,7 +558,7 @@ def amp2sh_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Amp2shConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Amp2shConfigParamsDict] | None`')
         for e in params["config"]:
             amp2sh_config_validate(e)
     if params.get("help", False) is None:
@@ -578,7 +580,7 @@ def amp2sh_validate(
 
 
 def amp2sh_cargs(
-    params: Amp2shParameters,
+    params: Amp2shParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -651,7 +653,7 @@ def amp2sh_cargs(
 
 
 def amp2sh_outputs(
-    params: Amp2shParameters,
+    params: Amp2shParamsDict,
     execution: Execution,
 ) -> Amp2shOutputs:
     """
@@ -671,7 +673,7 @@ def amp2sh_outputs(
 
 
 def amp2sh_execute(
-    params: Amp2shParameters,
+    params: Amp2shParamsDict,
     runner: Runner | None = None,
 ) -> Amp2shOutputs:
     """
@@ -727,15 +729,15 @@ def amp2sh(
     directions: InputPathType | None = None,
     rician: InputPathType | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Amp2shFslgradParameters | None = None,
+    fslgrad: Amp2shFslgradParamsDict | None = None,
     shells: list[float] | None = None,
-    strides: typing.Union[Amp2shVariousStringParametersTagged, Amp2shVariousFileParametersTagged] | None = None,
+    strides: typing.Union[Amp2shVariousStringParamsDictTagged, Amp2shVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Amp2shConfigParameters] | None = None,
+    config: list[Amp2shConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -847,12 +849,22 @@ def amp2sh(
 
 __all__ = [
     "AMP2SH_METADATA",
+    "Amp2shConfigParamsDict",
+    "Amp2shConfigParamsDictTagged",
+    "Amp2shFslgradParamsDict",
+    "Amp2shFslgradParamsDictTagged",
     "Amp2shOutputs",
+    "Amp2shParamsDict",
+    "Amp2shParamsDictTagged",
+    "Amp2shVariousFileParamsDict",
+    "Amp2shVariousFileParamsDictTagged",
+    "Amp2shVariousStringParamsDict",
+    "Amp2shVariousStringParamsDictTagged",
     "amp2sh",
-    "amp2sh_config_params",
+    "amp2sh_config",
     "amp2sh_execute",
-    "amp2sh_fslgrad_params",
+    "amp2sh_fslgrad",
     "amp2sh_params",
-    "amp2sh_various_file_params",
-    "amp2sh_various_string_params",
+    "amp2sh_various_file",
+    "amp2sh_various_string",
 ]

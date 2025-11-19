@@ -12,12 +12,12 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 )
 
 
-SurfaceCoordinatesToMetricParameters = typing.TypedDict('SurfaceCoordinatesToMetricParameters', {
+SurfaceCoordinatesToMetricParamsDict = typing.TypedDict('SurfaceCoordinatesToMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-coordinates-to-metric"]],
     "metric-out": str,
     "surface": InputPathType,
 })
-SurfaceCoordinatesToMetricParametersTagged = typing.TypedDict('SurfaceCoordinatesToMetricParametersTagged', {
+SurfaceCoordinatesToMetricParamsDictTagged = typing.TypedDict('SurfaceCoordinatesToMetricParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-coordinates-to-metric"],
     "metric-out": str,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfaceCoordinatesToMetricParametersTagged = typing.TypedDict('SurfaceCoordinate
 
 class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceCoordinatesToMetricParameters(...)`.
+    Output object returned when calling `SurfaceCoordinatesToMetricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
 def surface_coordinates_to_metric_params(
     metric_out: str,
     surface: InputPathType,
-) -> SurfaceCoordinatesToMetricParametersTagged:
+) -> SurfaceCoordinatesToMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_coordinates_to_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceCoordinatesToMetricParameters` object.
+    `SurfaceCoordinatesToMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_coordinates_to_metric_validate(
 
 
 def surface_coordinates_to_metric_cargs(
-    params: SurfaceCoordinatesToMetricParameters,
+    params: SurfaceCoordinatesToMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_coordinates_to_metric_cargs(
 
 
 def surface_coordinates_to_metric_outputs(
-    params: SurfaceCoordinatesToMetricParameters,
+    params: SurfaceCoordinatesToMetricParamsDict,
     execution: Execution,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
@@ -121,7 +121,7 @@ def surface_coordinates_to_metric_outputs(
 
 
 def surface_coordinates_to_metric_execute(
-    params: SurfaceCoordinatesToMetricParameters,
+    params: SurfaceCoordinatesToMetricParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
@@ -172,6 +172,8 @@ def surface_coordinates_to_metric(
 __all__ = [
     "SURFACE_COORDINATES_TO_METRIC_METADATA",
     "SurfaceCoordinatesToMetricOutputs",
+    "SurfaceCoordinatesToMetricParamsDict",
+    "SurfaceCoordinatesToMetricParamsDictTagged",
     "surface_coordinates_to_metric",
     "surface_coordinates_to_metric_execute",
     "surface_coordinates_to_metric_params",

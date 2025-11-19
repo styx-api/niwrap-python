@@ -6,7 +6,7 @@
     },
     "presmooth": {
       "var_param": "presmooth",
-      "fn_struct_make_params": "metric_gradient_presmooth_params",
+      "fn_struct_make_params": "metric_gradient_presmooth",
       "properties": {
         "kernel": {
           "var_param": "kernel"
@@ -18,7 +18,7 @@
     },
     "roi": {
       "var_param": "roi",
-      "fn_struct_make_params": "metric_gradient_roi_params",
+      "fn_struct_make_params": "metric_gradient_roi",
       "properties": {
         "roi-metric": {
           "var_param": "roi_metric"

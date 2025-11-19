@@ -13,7 +13,7 @@ V_3D_WARP_DRIVE_METADATA = Metadata(
 )
 
 
-V3dWarpDriveParameters = typing.TypedDict('V3dWarpDriveParameters', {
+V3dWarpDriveParamsDict = typing.TypedDict('V3dWarpDriveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dWarpDrive"]],
     "dataset": InputPathType,
     "base_dataset": InputPathType,
@@ -52,7 +52,7 @@ V3dWarpDriveParameters = typing.TypedDict('V3dWarpDriveParameters', {
     "ashift": bool,
     "bshift": bool,
 })
-V3dWarpDriveParametersTagged = typing.TypedDict('V3dWarpDriveParametersTagged', {
+V3dWarpDriveParamsDictTagged = typing.TypedDict('V3dWarpDriveParamsDictTagged', {
     "@type": typing.Literal["afni/3dWarpDrive"],
     "dataset": InputPathType,
     "base_dataset": InputPathType,
@@ -95,7 +95,7 @@ V3dWarpDriveParametersTagged = typing.TypedDict('V3dWarpDriveParametersTagged', 
 
 class V3dWarpDriveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dWarpDriveParameters(...)`.
+    Output object returned when calling `V3dWarpDriveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,7 +146,7 @@ def v_3d_warp_drive_params(
     slower_s_matrix: bool = False,
     ashift: bool = False,
     bshift: bool = False,
-) -> V3dWarpDriveParametersTagged:
+) -> V3dWarpDriveParamsDictTagged:
     """
     Build parameters.
     
@@ -273,7 +273,7 @@ def v_3d_warp_drive_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dWarpDriveParameters` object.
+    `V3dWarpDriveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -420,7 +420,7 @@ def v_3d_warp_drive_validate(
 
 
 def v_3d_warp_drive_cargs(
-    params: V3dWarpDriveParameters,
+    params: V3dWarpDriveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -543,7 +543,7 @@ def v_3d_warp_drive_cargs(
 
 
 def v_3d_warp_drive_outputs(
-    params: V3dWarpDriveParameters,
+    params: V3dWarpDriveParamsDict,
     execution: Execution,
 ) -> V3dWarpDriveOutputs:
     """
@@ -566,7 +566,7 @@ def v_3d_warp_drive_outputs(
 
 
 def v_3d_warp_drive_execute(
-    params: V3dWarpDriveParameters,
+    params: V3dWarpDriveParamsDict,
     runner: Runner | None = None,
 ) -> V3dWarpDriveOutputs:
     """
@@ -754,6 +754,8 @@ def v_3d_warp_drive(
 
 __all__ = [
     "V3dWarpDriveOutputs",
+    "V3dWarpDriveParamsDict",
+    "V3dWarpDriveParamsDictTagged",
     "V_3D_WARP_DRIVE_METADATA",
     "v_3d_warp_drive",
     "v_3d_warp_drive_execute",

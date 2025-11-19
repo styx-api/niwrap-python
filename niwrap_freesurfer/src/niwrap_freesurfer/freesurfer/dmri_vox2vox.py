@@ -13,7 +13,7 @@ DMRI_VOX2VOX_METADATA = Metadata(
 )
 
 
-DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
+DmriVox2voxParamsDict = typing.TypedDict('DmriVox2voxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_vox2vox"]],
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
     "help": bool,
     "version": bool,
 })
-DmriVox2voxParametersTagged = typing.TypedDict('DmriVox2voxParametersTagged', {
+DmriVox2voxParamsDictTagged = typing.TypedDict('DmriVox2voxParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_vox2vox"],
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ DmriVox2voxParametersTagged = typing.TypedDict('DmriVox2voxParametersTagged', {
 
 class DmriVox2voxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriVox2voxParameters(...)`.
+    Output object returned when calling `DmriVox2voxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def dmri_vox2vox_params(
     check_options: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriVox2voxParametersTagged:
+) -> DmriVox2voxParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def dmri_vox2vox_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriVox2voxParameters` object.
+    `DmriVox2voxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def dmri_vox2vox_validate(
 
 
 def dmri_vox2vox_cargs(
-    params: DmriVox2voxParameters,
+    params: DmriVox2voxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def dmri_vox2vox_cargs(
 
 
 def dmri_vox2vox_outputs(
-    params: DmriVox2voxParameters,
+    params: DmriVox2voxParamsDict,
     execution: Execution,
 ) -> DmriVox2voxOutputs:
     """
@@ -267,7 +267,7 @@ def dmri_vox2vox_outputs(
 
 
 def dmri_vox2vox_execute(
-    params: DmriVox2voxParameters,
+    params: DmriVox2voxParamsDict,
     runner: Runner | None = None,
 ) -> DmriVox2voxOutputs:
     """
@@ -363,6 +363,8 @@ def dmri_vox2vox(
 __all__ = [
     "DMRI_VOX2VOX_METADATA",
     "DmriVox2voxOutputs",
+    "DmriVox2voxParamsDict",
+    "DmriVox2voxParamsDictTagged",
     "dmri_vox2vox",
     "dmri_vox2vox_execute",
     "dmri_vox2vox_params",

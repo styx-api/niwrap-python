@@ -12,7 +12,7 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', {
+MetricFindClustersParamsDict = typing.TypedDict('MetricFindClustersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-find-clusters"]],
     "metric-out": str,
     "less-than": bool,
@@ -27,7 +27,7 @@ MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', 
     "value-threshold": float,
     "minimum-area": float,
 })
-MetricFindClustersParametersTagged = typing.TypedDict('MetricFindClustersParametersTagged', {
+MetricFindClustersParamsDictTagged = typing.TypedDict('MetricFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-find-clusters"],
     "metric-out": str,
     "less-than": bool,
@@ -46,7 +46,7 @@ MetricFindClustersParametersTagged = typing.TypedDict('MetricFindClustersParamet
 
 class MetricFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricFindClustersParameters(...)`.
+    Output object returned when calling `MetricFindClustersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def metric_find_clusters_params(
     value_threshold: float,
     minimum_area: float,
     less_than: bool = False,
-) -> MetricFindClustersParametersTagged:
+) -> MetricFindClustersParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def metric_find_clusters_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricFindClustersParameters` object.
+    `MetricFindClustersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def metric_find_clusters_validate(
 
 
 def metric_find_clusters_cargs(
-    params: MetricFindClustersParameters,
+    params: MetricFindClustersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -224,7 +224,7 @@ def metric_find_clusters_cargs(
 
 
 def metric_find_clusters_outputs(
-    params: MetricFindClustersParameters,
+    params: MetricFindClustersParamsDict,
     execution: Execution,
 ) -> MetricFindClustersOutputs:
     """
@@ -244,7 +244,7 @@ def metric_find_clusters_outputs(
 
 
 def metric_find_clusters_execute(
-    params: MetricFindClustersParameters,
+    params: MetricFindClustersParamsDict,
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
@@ -355,6 +355,8 @@ def metric_find_clusters(
 __all__ = [
     "METRIC_FIND_CLUSTERS_METADATA",
     "MetricFindClustersOutputs",
+    "MetricFindClustersParamsDict",
+    "MetricFindClustersParamsDictTagged",
     "metric_find_clusters",
     "metric_find_clusters_execute",
     "metric_find_clusters_params",

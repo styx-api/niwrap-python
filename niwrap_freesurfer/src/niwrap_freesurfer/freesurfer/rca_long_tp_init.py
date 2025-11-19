@@ -13,7 +13,7 @@ RCA_LONG_TP_INIT_METADATA = Metadata(
 )
 
 
-RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
+RcaLongTpInitParamsDict = typing.TypedDict('RcaLongTpInitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rca-long-tp-init"]],
     "timepoint": str,
     "base": str,
@@ -22,7 +22,7 @@ RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
     "expert_opts": typing.NotRequired[InputPathType | None],
     "subject": typing.NotRequired[str | None],
 })
-RcaLongTpInitParametersTagged = typing.TypedDict('RcaLongTpInitParametersTagged', {
+RcaLongTpInitParamsDictTagged = typing.TypedDict('RcaLongTpInitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-long-tp-init"],
     "timepoint": str,
     "base": str,
@@ -35,7 +35,7 @@ RcaLongTpInitParametersTagged = typing.TypedDict('RcaLongTpInitParametersTagged'
 
 class RcaLongTpInitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcaLongTpInitParameters(...)`.
+    Output object returned when calling `RcaLongTpInitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def rca_long_tp_init_params(
     hemisphere: typing.Literal["lh", "rh"] | None = None,
     expert_opts: InputPathType | None = None,
     subject: str | None = None,
-) -> RcaLongTpInitParametersTagged:
+) -> RcaLongTpInitParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def rca_long_tp_init_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcaLongTpInitParameters` object.
+    `RcaLongTpInitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def rca_long_tp_init_validate(
 
 
 def rca_long_tp_init_cargs(
-    params: RcaLongTpInitParameters,
+    params: RcaLongTpInitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def rca_long_tp_init_cargs(
 
 
 def rca_long_tp_init_outputs(
-    params: RcaLongTpInitParameters,
+    params: RcaLongTpInitParamsDict,
     execution: Execution,
 ) -> RcaLongTpInitOutputs:
     """
@@ -174,7 +174,7 @@ def rca_long_tp_init_outputs(
 
 
 def rca_long_tp_init_execute(
-    params: RcaLongTpInitParameters,
+    params: RcaLongTpInitParamsDict,
     runner: Runner | None = None,
 ) -> RcaLongTpInitOutputs:
     """
@@ -245,6 +245,8 @@ def rca_long_tp_init(
 __all__ = [
     "RCA_LONG_TP_INIT_METADATA",
     "RcaLongTpInitOutputs",
+    "RcaLongTpInitParamsDict",
+    "RcaLongTpInitParamsDictTagged",
     "rca_long_tp_init",
     "rca_long_tp_init_execute",
     "rca_long_tp_init_params",

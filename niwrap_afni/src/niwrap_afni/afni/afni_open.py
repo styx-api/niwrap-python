@@ -13,7 +13,7 @@ AFNI_OPEN_METADATA = Metadata(
 )
 
 
-AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
+AfniOpenParamsDict = typing.TypedDict('AfniOpenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_open"]],
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
     "h_view": bool,
     "h_web": bool,
 })
-AfniOpenParametersTagged = typing.TypedDict('AfniOpenParametersTagged', {
+AfniOpenParamsDictTagged = typing.TypedDict('AfniOpenParamsDictTagged', {
     "@type": typing.Literal["afni/afni_open"],
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ AfniOpenParametersTagged = typing.TypedDict('AfniOpenParametersTagged', {
 
 class AfniOpenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniOpenParameters(...)`.
+    Output object returned when calling `AfniOpenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def afni_open_params(
     extreme_help: bool = False,
     h_view: bool = False,
     h_web: bool = False,
-) -> AfniOpenParametersTagged:
+) -> AfniOpenParamsDictTagged:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def afni_open_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniOpenParameters` object.
+    `AfniOpenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def afni_open_validate(
 
 
 def afni_open_cargs(
-    params: AfniOpenParameters,
+    params: AfniOpenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def afni_open_cargs(
 
 
 def afni_open_outputs(
-    params: AfniOpenParameters,
+    params: AfniOpenParamsDict,
     execution: Execution,
 ) -> AfniOpenOutputs:
     """
@@ -267,7 +267,7 @@ def afni_open_outputs(
 
 
 def afni_open_execute(
-    params: AfniOpenParameters,
+    params: AfniOpenParamsDict,
     runner: Runner | None = None,
 ) -> AfniOpenOutputs:
     """
@@ -366,6 +366,8 @@ def afni_open(
 __all__ = [
     "AFNI_OPEN_METADATA",
     "AfniOpenOutputs",
+    "AfniOpenParamsDict",
+    "AfniOpenParamsDictTagged",
     "afni_open",
     "afni_open_execute",
     "afni_open_params",

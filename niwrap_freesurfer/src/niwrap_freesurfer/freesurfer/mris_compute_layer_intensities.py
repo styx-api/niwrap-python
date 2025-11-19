@@ -13,14 +13,14 @@ MRIS_COMPUTE_LAYER_INTENSITIES_METADATA = Metadata(
 )
 
 
-MrisComputeLayerIntensitiesParameters = typing.TypedDict('MrisComputeLayerIntensitiesParameters', {
+MrisComputeLayerIntensitiesParamsDict = typing.TypedDict('MrisComputeLayerIntensitiesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_layer_intensities"]],
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
     "input_surface": InputPathType,
     "output_overlay": str,
 })
-MrisComputeLayerIntensitiesParametersTagged = typing.TypedDict('MrisComputeLayerIntensitiesParametersTagged', {
+MrisComputeLayerIntensitiesParamsDictTagged = typing.TypedDict('MrisComputeLayerIntensitiesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_compute_layer_intensities"],
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
@@ -31,7 +31,7 @@ MrisComputeLayerIntensitiesParametersTagged = typing.TypedDict('MrisComputeLayer
 
 class MrisComputeLayerIntensitiesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisComputeLayerIntensitiesParameters(...)`.
+    Output object returned when calling `MrisComputeLayerIntensitiesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_compute_layer_intensities_params(
     layer_volume_fractions_file: InputPathType,
     input_surface: InputPathType,
     output_overlay: str,
-) -> MrisComputeLayerIntensitiesParametersTagged:
+) -> MrisComputeLayerIntensitiesParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mris_compute_layer_intensities_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisComputeLayerIntensitiesParameters` object.
+    `MrisComputeLayerIntensitiesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mris_compute_layer_intensities_validate(
 
 
 def mris_compute_layer_intensities_cargs(
-    params: MrisComputeLayerIntensitiesParameters,
+    params: MrisComputeLayerIntensitiesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mris_compute_layer_intensities_cargs(
 
 
 def mris_compute_layer_intensities_outputs(
-    params: MrisComputeLayerIntensitiesParameters,
+    params: MrisComputeLayerIntensitiesParamsDict,
     execution: Execution,
 ) -> MrisComputeLayerIntensitiesOutputs:
     """
@@ -139,7 +139,7 @@ def mris_compute_layer_intensities_outputs(
 
 
 def mris_compute_layer_intensities_execute(
-    params: MrisComputeLayerIntensitiesParameters,
+    params: MrisComputeLayerIntensitiesParamsDict,
     runner: Runner | None = None,
 ) -> MrisComputeLayerIntensitiesOutputs:
     """
@@ -206,6 +206,8 @@ def mris_compute_layer_intensities(
 __all__ = [
     "MRIS_COMPUTE_LAYER_INTENSITIES_METADATA",
     "MrisComputeLayerIntensitiesOutputs",
+    "MrisComputeLayerIntensitiesParamsDict",
+    "MrisComputeLayerIntensitiesParamsDictTagged",
     "mris_compute_layer_intensities",
     "mris_compute_layer_intensities_execute",
     "mris_compute_layer_intensities_params",

@@ -9,7 +9,7 @@
     },
     "operations": {
       "var_param": "operations",
-      "fn_struct_make_params": "fslmaths_operation_params",
+      "fn_struct_make_params": "fslmaths_operation",
       "properties": {
         "add": {
           "var_param": "add"

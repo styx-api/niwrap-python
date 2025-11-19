@@ -13,7 +13,7 @@ FS_CHECK_VERSION_METADATA = Metadata(
 )
 
 
-FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
+FsCheckVersionParamsDict = typing.TypedDict('FsCheckVersionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs-check-version"]],
     "subjects_dir": str,
     "outfile": str,
@@ -23,7 +23,7 @@ FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
     "test": bool,
     "test_debug": bool,
 })
-FsCheckVersionParametersTagged = typing.TypedDict('FsCheckVersionParametersTagged', {
+FsCheckVersionParamsDictTagged = typing.TypedDict('FsCheckVersionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs-check-version"],
     "subjects_dir": str,
     "outfile": str,
@@ -37,7 +37,7 @@ FsCheckVersionParametersTagged = typing.TypedDict('FsCheckVersionParametersTagge
 
 class FsCheckVersionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsCheckVersionParameters(...)`.
+    Output object returned when calling `FsCheckVersionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def fs_check_version_params(
     no_require_match: bool = False,
     test: bool = False,
     test_debug: bool = False,
-) -> FsCheckVersionParametersTagged:
+) -> FsCheckVersionParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def fs_check_version_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsCheckVersionParameters` object.
+    `FsCheckVersionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def fs_check_version_validate(
 
 
 def fs_check_version_cargs(
-    params: FsCheckVersionParameters,
+    params: FsCheckVersionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def fs_check_version_cargs(
 
 
 def fs_check_version_outputs(
-    params: FsCheckVersionParameters,
+    params: FsCheckVersionParamsDict,
     execution: Execution,
 ) -> FsCheckVersionOutputs:
     """
@@ -183,7 +183,7 @@ def fs_check_version_outputs(
 
 
 def fs_check_version_execute(
-    params: FsCheckVersionParameters,
+    params: FsCheckVersionParamsDict,
     runner: Runner | None = None,
 ) -> FsCheckVersionOutputs:
     """
@@ -259,6 +259,8 @@ def fs_check_version(
 __all__ = [
     "FS_CHECK_VERSION_METADATA",
     "FsCheckVersionOutputs",
+    "FsCheckVersionParamsDict",
+    "FsCheckVersionParamsDictTagged",
     "fs_check_version",
     "fs_check_version_execute",
     "fs_check_version_params",

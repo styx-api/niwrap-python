@@ -13,7 +13,7 @@ V__COMPUTE_GCOR_METADATA = Metadata(
 )
 
 
-VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
+VComputeGcorParamsDict = typing.TypedDict('VComputeGcorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@compute_gcor"]],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
     "save_tmp": bool,
     "verbose": typing.NotRequired[float | None],
 })
-VComputeGcorParametersTagged = typing.TypedDict('VComputeGcorParametersTagged', {
+VComputeGcorParamsDictTagged = typing.TypedDict('VComputeGcorParamsDictTagged', {
     "@type": typing.Literal["afni/@compute_gcor"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ VComputeGcorParametersTagged = typing.TypedDict('VComputeGcorParametersTagged', 
 
 class VComputeGcorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VComputeGcorParameters(...)`.
+    Output object returned when calling `VComputeGcorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def v__compute_gcor_params(
     no_demean: bool = False,
     save_tmp: bool = False,
     verbose: float | None = None,
-) -> VComputeGcorParametersTagged:
+) -> VComputeGcorParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def v__compute_gcor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VComputeGcorParameters` object.
+    `VComputeGcorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def v__compute_gcor_validate(
 
 
 def v__compute_gcor_cargs(
-    params: VComputeGcorParameters,
+    params: VComputeGcorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def v__compute_gcor_cargs(
 
 
 def v__compute_gcor_outputs(
-    params: VComputeGcorParameters,
+    params: VComputeGcorParamsDict,
     execution: Execution,
 ) -> VComputeGcorOutputs:
     """
@@ -189,7 +189,7 @@ def v__compute_gcor_outputs(
 
 
 def v__compute_gcor_execute(
-    params: VComputeGcorParameters,
+    params: VComputeGcorParamsDict,
     runner: Runner | None = None,
 ) -> VComputeGcorOutputs:
     """
@@ -262,6 +262,8 @@ def v__compute_gcor(
 
 __all__ = [
     "VComputeGcorOutputs",
+    "VComputeGcorParamsDict",
+    "VComputeGcorParamsDictTagged",
     "V__COMPUTE_GCOR_METADATA",
     "v__compute_gcor",
     "v__compute_gcor_execute",

@@ -13,7 +13,7 @@ LONG_SUBMIT_POSTPROC_METADATA = Metadata(
 )
 
 
-LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', {
+LongSubmitPostprocParamsDict = typing.TypedDict('LongSubmitPostprocParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_postproc"]],
     "qdec": InputPathType,
     "prog": str,
@@ -24,7 +24,7 @@ LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', 
     "max": typing.NotRequired[float | None],
     "queue": typing.NotRequired[str | None],
 })
-LongSubmitPostprocParametersTagged = typing.TypedDict('LongSubmitPostprocParametersTagged', {
+LongSubmitPostprocParamsDictTagged = typing.TypedDict('LongSubmitPostprocParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_submit_postproc"],
     "qdec": InputPathType,
     "prog": str,
@@ -39,7 +39,7 @@ LongSubmitPostprocParametersTagged = typing.TypedDict('LongSubmitPostprocParamet
 
 class LongSubmitPostprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongSubmitPostprocParameters(...)`.
+    Output object returned when calling `LongSubmitPostprocParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def long_submit_postproc_params(
     pause: float | None = None,
     max_: float | None = None,
     queue_: str | None = None,
-) -> LongSubmitPostprocParametersTagged:
+) -> LongSubmitPostprocParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def long_submit_postproc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongSubmitPostprocParameters` object.
+    `LongSubmitPostprocParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def long_submit_postproc_validate(
 
 
 def long_submit_postproc_cargs(
-    params: LongSubmitPostprocParameters,
+    params: LongSubmitPostprocParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -184,7 +184,7 @@ def long_submit_postproc_cargs(
 
 
 def long_submit_postproc_outputs(
-    params: LongSubmitPostprocParameters,
+    params: LongSubmitPostprocParamsDict,
     execution: Execution,
 ) -> LongSubmitPostprocOutputs:
     """
@@ -203,7 +203,7 @@ def long_submit_postproc_outputs(
 
 
 def long_submit_postproc_execute(
-    params: LongSubmitPostprocParameters,
+    params: LongSubmitPostprocParamsDict,
     runner: Runner | None = None,
 ) -> LongSubmitPostprocOutputs:
     """
@@ -282,6 +282,8 @@ def long_submit_postproc(
 __all__ = [
     "LONG_SUBMIT_POSTPROC_METADATA",
     "LongSubmitPostprocOutputs",
+    "LongSubmitPostprocParamsDict",
+    "LongSubmitPostprocParamsDictTagged",
     "long_submit_postproc",
     "long_submit_postproc_execute",
     "long_submit_postproc_params",

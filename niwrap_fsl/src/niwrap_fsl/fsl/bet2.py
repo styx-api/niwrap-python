@@ -13,7 +13,7 @@ BET2_METADATA = Metadata(
 )
 
 
-Bet2Parameters = typing.TypedDict('Bet2Parameters', {
+Bet2ParamsDict = typing.TypedDict('Bet2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bet2"]],
     "input_fileroot": str,
     "output_fileroot": str,
@@ -31,7 +31,7 @@ Bet2Parameters = typing.TypedDict('Bet2Parameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-Bet2ParametersTagged = typing.TypedDict('Bet2ParametersTagged', {
+Bet2ParamsDictTagged = typing.TypedDict('Bet2ParamsDictTagged', {
     "@type": typing.Literal["fsl/bet2"],
     "input_fileroot": str,
     "output_fileroot": str,
@@ -53,7 +53,7 @@ Bet2ParametersTagged = typing.TypedDict('Bet2ParametersTagged', {
 
 class Bet2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Bet2Parameters(...)`.
+    Output object returned when calling `Bet2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def bet2_params(
     threshold_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> Bet2ParametersTagged:
+) -> Bet2ParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def bet2_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `Bet2Parameters`
+    Validate parameters. Throws an error if `params` is not a valid `Bet2ParamsDict`
     object.
     
     Args:
@@ -221,7 +221,7 @@ def bet2_validate(
 
 
 def bet2_cargs(
-    params: Bet2Parameters,
+    params: Bet2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def bet2_cargs(
 
 
 def bet2_outputs(
-    params: Bet2Parameters,
+    params: Bet2ParamsDict,
     execution: Execution,
 ) -> Bet2Outputs:
     """
@@ -305,7 +305,7 @@ def bet2_outputs(
 
 
 def bet2_execute(
-    params: Bet2Parameters,
+    params: Bet2ParamsDict,
     runner: Runner | None = None,
 ) -> Bet2Outputs:
     """
@@ -412,6 +412,8 @@ def bet2(
 __all__ = [
     "BET2_METADATA",
     "Bet2Outputs",
+    "Bet2ParamsDict",
+    "Bet2ParamsDictTagged",
     "bet2",
     "bet2_execute",
     "bet2_params",

@@ -13,7 +13,7 @@ CONVEX_HULL_METADATA = Metadata(
 )
 
 
-ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
+ConvexHullParamsDict = typing.TypedDict('ConvexHullParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ConvexHull"]],
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
@@ -32,7 +32,7 @@ ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
     "novolreg": bool,
     "setenv": typing.NotRequired[str | None],
 })
-ConvexHullParametersTagged = typing.TypedDict('ConvexHullParametersTagged', {
+ConvexHullParamsDictTagged = typing.TypedDict('ConvexHullParamsDictTagged', {
     "@type": typing.Literal["afni/ConvexHull"],
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
@@ -55,7 +55,7 @@ ConvexHullParametersTagged = typing.TypedDict('ConvexHullParametersTagged', {
 
 class ConvexHullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvexHullParameters(...)`.
+    Output object returned when calling `ConvexHullParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def convex_hull_params(
     debug: str | None = None,
     novolreg: bool = False,
     setenv: str | None = None,
-) -> ConvexHullParametersTagged:
+) -> ConvexHullParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def convex_hull_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvexHullParameters` object.
+    `ConvexHullParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def convex_hull_validate(
 
 
 def convex_hull_cargs(
-    params: ConvexHullParameters,
+    params: ConvexHullParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -309,7 +309,7 @@ def convex_hull_cargs(
 
 
 def convex_hull_outputs(
-    params: ConvexHullParameters,
+    params: ConvexHullParamsDict,
     execution: Execution,
 ) -> ConvexHullOutputs:
     """
@@ -329,7 +329,7 @@ def convex_hull_outputs(
 
 
 def convex_hull_execute(
-    params: ConvexHullParameters,
+    params: ConvexHullParamsDict,
     runner: Runner | None = None,
 ) -> ConvexHullOutputs:
     """
@@ -442,6 +442,8 @@ def convex_hull(
 __all__ = [
     "CONVEX_HULL_METADATA",
     "ConvexHullOutputs",
+    "ConvexHullParamsDict",
+    "ConvexHullParamsDictTagged",
     "convex_hull",
     "convex_hull_execute",
     "convex_hull_params",

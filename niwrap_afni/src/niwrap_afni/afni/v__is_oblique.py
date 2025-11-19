@@ -13,11 +13,11 @@ V__IS_OBLIQUE_METADATA = Metadata(
 )
 
 
-VIsObliqueParameters = typing.TypedDict('VIsObliqueParameters', {
+VIsObliqueParamsDict = typing.TypedDict('VIsObliqueParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@isOblique"]],
     "infile": InputPathType,
 })
-VIsObliqueParametersTagged = typing.TypedDict('VIsObliqueParametersTagged', {
+VIsObliqueParamsDictTagged = typing.TypedDict('VIsObliqueParamsDictTagged', {
     "@type": typing.Literal["afni/@isOblique"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ VIsObliqueParametersTagged = typing.TypedDict('VIsObliqueParametersTagged', {
 
 class VIsObliqueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VIsObliqueParameters(...)`.
+    Output object returned when calling `VIsObliqueParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VIsObliqueOutputs(typing.NamedTuple):
 
 def v__is_oblique_params(
     infile: InputPathType,
-) -> VIsObliqueParametersTagged:
+) -> VIsObliqueParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__is_oblique_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VIsObliqueParameters` object.
+    `VIsObliqueParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__is_oblique_validate(
 
 
 def v__is_oblique_cargs(
-    params: VIsObliqueParameters,
+    params: VIsObliqueParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__is_oblique_cargs(
 
 
 def v__is_oblique_outputs(
-    params: VIsObliqueParameters,
+    params: VIsObliqueParamsDict,
     execution: Execution,
 ) -> VIsObliqueOutputs:
     """
@@ -109,7 +109,7 @@ def v__is_oblique_outputs(
 
 
 def v__is_oblique_execute(
-    params: VIsObliqueParameters,
+    params: VIsObliqueParamsDict,
     runner: Runner | None = None,
 ) -> VIsObliqueOutputs:
     """
@@ -164,6 +164,8 @@ def v__is_oblique(
 
 __all__ = [
     "VIsObliqueOutputs",
+    "VIsObliqueParamsDict",
+    "VIsObliqueParamsDictTagged",
     "V__IS_OBLIQUE_METADATA",
     "v__is_oblique",
     "v__is_oblique_execute",

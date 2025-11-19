@@ -12,62 +12,62 @@ VOLUME_PALETTE_METADATA = Metadata(
 )
 
 
-VolumePalettePosPercentParameters = typing.TypedDict('VolumePalettePosPercentParameters', {
+VolumePalettePosPercentParamsDict = typing.TypedDict('VolumePalettePosPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-percent"]],
     "pos-min-%": float,
     "pos-max-%": float,
 })
-VolumePalettePosPercentParametersTagged = typing.TypedDict('VolumePalettePosPercentParametersTagged', {
+VolumePalettePosPercentParamsDictTagged = typing.TypedDict('VolumePalettePosPercentParamsDictTagged', {
     "@type": typing.Literal["pos-percent"],
     "pos-min-%": float,
     "pos-max-%": float,
 })
 
 
-VolumePaletteNegPercentParameters = typing.TypedDict('VolumePaletteNegPercentParameters', {
+VolumePaletteNegPercentParamsDict = typing.TypedDict('VolumePaletteNegPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-percent"]],
     "neg-min-%": float,
     "neg-max-%": float,
 })
-VolumePaletteNegPercentParametersTagged = typing.TypedDict('VolumePaletteNegPercentParametersTagged', {
+VolumePaletteNegPercentParamsDictTagged = typing.TypedDict('VolumePaletteNegPercentParamsDictTagged', {
     "@type": typing.Literal["neg-percent"],
     "neg-min-%": float,
     "neg-max-%": float,
 })
 
 
-VolumePalettePosUserParameters = typing.TypedDict('VolumePalettePosUserParameters', {
+VolumePalettePosUserParamsDict = typing.TypedDict('VolumePalettePosUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-user"]],
     "pos-min-user": float,
     "pos-max-user": float,
 })
-VolumePalettePosUserParametersTagged = typing.TypedDict('VolumePalettePosUserParametersTagged', {
+VolumePalettePosUserParamsDictTagged = typing.TypedDict('VolumePalettePosUserParamsDictTagged', {
     "@type": typing.Literal["pos-user"],
     "pos-min-user": float,
     "pos-max-user": float,
 })
 
 
-VolumePaletteNegUserParameters = typing.TypedDict('VolumePaletteNegUserParameters', {
+VolumePaletteNegUserParamsDict = typing.TypedDict('VolumePaletteNegUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-user"]],
     "neg-min-user": float,
     "neg-max-user": float,
 })
-VolumePaletteNegUserParametersTagged = typing.TypedDict('VolumePaletteNegUserParametersTagged', {
+VolumePaletteNegUserParamsDictTagged = typing.TypedDict('VolumePaletteNegUserParamsDictTagged', {
     "@type": typing.Literal["neg-user"],
     "neg-min-user": float,
     "neg-max-user": float,
 })
 
 
-VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdingParameters', {
+VolumePaletteThresholdingParamsDict = typing.TypedDict('VolumePaletteThresholdingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["thresholding"]],
     "type": str,
     "test": str,
     "min": float,
     "max": float,
 })
-VolumePaletteThresholdingParametersTagged = typing.TypedDict('VolumePaletteThresholdingParametersTagged', {
+VolumePaletteThresholdingParamsDictTagged = typing.TypedDict('VolumePaletteThresholdingParamsDictTagged', {
     "@type": typing.Literal["thresholding"],
     "type": str,
     "test": str,
@@ -76,37 +76,37 @@ VolumePaletteThresholdingParametersTagged = typing.TypedDict('VolumePaletteThres
 })
 
 
-VolumePaletteParameters = typing.TypedDict('VolumePaletteParameters', {
+VolumePaletteParamsDict = typing.TypedDict('VolumePaletteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-palette"]],
     "subvolume": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[VolumePalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[VolumePaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[VolumePalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[VolumePaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[VolumePaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[VolumePaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[VolumePaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "volume": str,
     "mode": str,
 })
-VolumePaletteParametersTagged = typing.TypedDict('VolumePaletteParametersTagged', {
+VolumePaletteParamsDictTagged = typing.TypedDict('VolumePaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-palette"],
     "subvolume": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[VolumePalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[VolumePaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[VolumePalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[VolumePaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[VolumePaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[VolumePaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[VolumePaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "volume": str,
@@ -114,10 +114,10 @@ VolumePaletteParametersTagged = typing.TypedDict('VolumePaletteParametersTagged'
 })
 
 
-def volume_palette_pos_percent_params(
+def volume_palette_pos_percent(
     pos_min__: float,
     pos_max__: float,
-) -> VolumePalettePosPercentParametersTagged:
+) -> VolumePalettePosPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def volume_palette_pos_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePalettePosPercentParameters` object.
+    `VolumePalettePosPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def volume_palette_pos_percent_validate(
 
 
 def volume_palette_pos_percent_cargs(
-    params: VolumePalettePosPercentParameters,
+    params: VolumePalettePosPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,10 +179,10 @@ def volume_palette_pos_percent_cargs(
     return cargs
 
 
-def volume_palette_neg_percent_params(
+def volume_palette_neg_percent(
     neg_min__: float,
     neg_max__: float,
-) -> VolumePaletteNegPercentParametersTagged:
+) -> VolumePaletteNegPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -205,7 +205,7 @@ def volume_palette_neg_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePaletteNegPercentParameters` object.
+    `VolumePaletteNegPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -223,7 +223,7 @@ def volume_palette_neg_percent_validate(
 
 
 def volume_palette_neg_percent_cargs(
-    params: VolumePaletteNegPercentParameters,
+    params: VolumePaletteNegPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,10 +244,10 @@ def volume_palette_neg_percent_cargs(
     return cargs
 
 
-def volume_palette_pos_user_params(
+def volume_palette_pos_user(
     pos_min_user: float,
     pos_max_user: float,
-) -> VolumePalettePosUserParametersTagged:
+) -> VolumePalettePosUserParamsDictTagged:
     """
     Build parameters.
     
@@ -270,7 +270,7 @@ def volume_palette_pos_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePalettePosUserParameters` object.
+    `VolumePalettePosUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -288,7 +288,7 @@ def volume_palette_pos_user_validate(
 
 
 def volume_palette_pos_user_cargs(
-    params: VolumePalettePosUserParameters,
+    params: VolumePalettePosUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -309,10 +309,10 @@ def volume_palette_pos_user_cargs(
     return cargs
 
 
-def volume_palette_neg_user_params(
+def volume_palette_neg_user(
     neg_min_user: float,
     neg_max_user: float,
-) -> VolumePaletteNegUserParametersTagged:
+) -> VolumePaletteNegUserParamsDictTagged:
     """
     Build parameters.
     
@@ -335,7 +335,7 @@ def volume_palette_neg_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePaletteNegUserParameters` object.
+    `VolumePaletteNegUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -353,7 +353,7 @@ def volume_palette_neg_user_validate(
 
 
 def volume_palette_neg_user_cargs(
-    params: VolumePaletteNegUserParameters,
+    params: VolumePaletteNegUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -374,12 +374,12 @@ def volume_palette_neg_user_cargs(
     return cargs
 
 
-def volume_palette_thresholding_params(
+def volume_palette_thresholding(
     type_: str,
     test: str,
     min_: float,
     max_: float,
-) -> VolumePaletteThresholdingParametersTagged:
+) -> VolumePaletteThresholdingParamsDictTagged:
     """
     Build parameters.
     
@@ -406,7 +406,7 @@ def volume_palette_thresholding_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePaletteThresholdingParameters` object.
+    `VolumePaletteThresholdingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -432,7 +432,7 @@ def volume_palette_thresholding_validate(
 
 
 def volume_palette_thresholding_cargs(
-    params: VolumePaletteThresholdingParameters,
+    params: VolumePaletteThresholdingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +457,7 @@ def volume_palette_thresholding_cargs(
 
 class VolumePaletteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumePaletteParameters(...)`.
+    Output object returned when calling `VolumePaletteParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -474,12 +474,12 @@ def volume_palette_params(
     type_2: str | None,
     volume: str,
     mode: str,
-    pos_percent: VolumePalettePosPercentParameters | None = None,
-    neg_percent: VolumePaletteNegPercentParameters | None = None,
-    pos_user: VolumePalettePosUserParameters | None = None,
-    neg_user: VolumePaletteNegUserParameters | None = None,
-    thresholding: VolumePaletteThresholdingParameters | None = None,
-) -> VolumePaletteParametersTagged:
+    pos_percent: VolumePalettePosPercentParamsDict | None = None,
+    neg_percent: VolumePaletteNegPercentParamsDict | None = None,
+    pos_user: VolumePalettePosUserParamsDict | None = None,
+    neg_user: VolumePaletteNegUserParamsDict | None = None,
+    thresholding: VolumePaletteThresholdingParamsDict | None = None,
+) -> VolumePaletteParamsDictTagged:
     """
     Build parameters.
     
@@ -558,7 +558,7 @@ def volume_palette_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumePaletteParameters` object.
+    `VolumePaletteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -610,7 +610,7 @@ def volume_palette_validate(
 
 
 def volume_palette_cargs(
-    params: VolumePaletteParameters,
+    params: VolumePaletteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -655,7 +655,7 @@ def volume_palette_cargs(
 
 
 def volume_palette_outputs(
-    params: VolumePaletteParameters,
+    params: VolumePaletteParamsDict,
     execution: Execution,
 ) -> VolumePaletteOutputs:
     """
@@ -674,7 +674,7 @@ def volume_palette_outputs(
 
 
 def volume_palette_execute(
-    params: VolumePaletteParameters,
+    params: VolumePaletteParamsDict,
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
@@ -788,11 +788,11 @@ def volume_palette(
     type_2: str | None,
     volume: str,
     mode: str,
-    pos_percent: VolumePalettePosPercentParameters | None = None,
-    neg_percent: VolumePaletteNegPercentParameters | None = None,
-    pos_user: VolumePalettePosUserParameters | None = None,
-    neg_user: VolumePaletteNegUserParameters | None = None,
-    thresholding: VolumePaletteThresholdingParameters | None = None,
+    pos_percent: VolumePalettePosPercentParamsDict | None = None,
+    neg_percent: VolumePaletteNegPercentParamsDict | None = None,
+    pos_user: VolumePalettePosUserParamsDict | None = None,
+    neg_user: VolumePaletteNegUserParamsDict | None = None,
+    thresholding: VolumePaletteThresholdingParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
@@ -938,13 +938,25 @@ def volume_palette(
 
 __all__ = [
     "VOLUME_PALETTE_METADATA",
+    "VolumePaletteNegPercentParamsDict",
+    "VolumePaletteNegPercentParamsDictTagged",
+    "VolumePaletteNegUserParamsDict",
+    "VolumePaletteNegUserParamsDictTagged",
     "VolumePaletteOutputs",
+    "VolumePaletteParamsDict",
+    "VolumePaletteParamsDictTagged",
+    "VolumePalettePosPercentParamsDict",
+    "VolumePalettePosPercentParamsDictTagged",
+    "VolumePalettePosUserParamsDict",
+    "VolumePalettePosUserParamsDictTagged",
+    "VolumePaletteThresholdingParamsDict",
+    "VolumePaletteThresholdingParamsDictTagged",
     "volume_palette",
     "volume_palette_execute",
-    "volume_palette_neg_percent_params",
-    "volume_palette_neg_user_params",
+    "volume_palette_neg_percent",
+    "volume_palette_neg_user",
     "volume_palette_params",
-    "volume_palette_pos_percent_params",
-    "volume_palette_pos_user_params",
-    "volume_palette_thresholding_params",
+    "volume_palette_pos_percent",
+    "volume_palette_pos_user",
+    "volume_palette_thresholding",
 ]

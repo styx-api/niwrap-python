@@ -13,7 +13,7 @@ QUICKSPEC_SL_METADATA = Metadata(
 )
 
 
-QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
+QuickspecSlParamsDict = typing.TypedDict('QuickspecSlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/quickspecSL"]],
     "surf_A": InputPathType,
     "surf_B": InputPathType,
@@ -24,7 +24,7 @@ QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
     "both_lr_flag": bool,
     "out_spec": typing.NotRequired[str | None],
 })
-QuickspecSlParametersTagged = typing.TypedDict('QuickspecSlParametersTagged', {
+QuickspecSlParamsDictTagged = typing.TypedDict('QuickspecSlParamsDictTagged', {
     "@type": typing.Literal["afni/quickspecSL"],
     "surf_A": InputPathType,
     "surf_B": InputPathType,
@@ -39,7 +39,7 @@ QuickspecSlParametersTagged = typing.TypedDict('QuickspecSlParametersTagged', {
 
 class QuickspecSlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuickspecSlParameters(...)`.
+    Output object returned when calling `QuickspecSlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def quickspec_sl_params(
     infl_surf_intermed_pref: str | None = None,
     both_lr_flag: bool = False,
     out_spec: str | None = None,
-) -> QuickspecSlParametersTagged:
+) -> QuickspecSlParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def quickspec_sl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuickspecSlParameters` object.
+    `QuickspecSlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def quickspec_sl_validate(
 
 
 def quickspec_sl_cargs(
-    params: QuickspecSlParameters,
+    params: QuickspecSlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -193,7 +193,7 @@ def quickspec_sl_cargs(
 
 
 def quickspec_sl_outputs(
-    params: QuickspecSlParameters,
+    params: QuickspecSlParamsDict,
     execution: Execution,
 ) -> QuickspecSlOutputs:
     """
@@ -213,7 +213,7 @@ def quickspec_sl_outputs(
 
 
 def quickspec_sl_execute(
-    params: QuickspecSlParameters,
+    params: QuickspecSlParamsDict,
     runner: Runner | None = None,
 ) -> QuickspecSlOutputs:
     """
@@ -301,6 +301,8 @@ def quickspec_sl(
 __all__ = [
     "QUICKSPEC_SL_METADATA",
     "QuickspecSlOutputs",
+    "QuickspecSlParamsDict",
+    "QuickspecSlParamsDictTagged",
     "quickspec_sl",
     "quickspec_sl_execute",
     "quickspec_sl_params",

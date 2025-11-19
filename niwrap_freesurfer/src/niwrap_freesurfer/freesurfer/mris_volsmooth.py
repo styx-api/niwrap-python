@@ -13,7 +13,7 @@ MRIS_VOLSMOOTH_METADATA = Metadata(
 )
 
 
-MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
+MrisVolsmoothParamsDict = typing.TypedDict('MrisVolsmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volsmooth"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -29,7 +29,7 @@ MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
     "nocleanup": bool,
     "debug": bool,
 })
-MrisVolsmoothParametersTagged = typing.TypedDict('MrisVolsmoothParametersTagged', {
+MrisVolsmoothParamsDictTagged = typing.TypedDict('MrisVolsmoothParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_volsmooth"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -49,7 +49,7 @@ MrisVolsmoothParametersTagged = typing.TypedDict('MrisVolsmoothParametersTagged'
 
 class MrisVolsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisVolsmoothParameters(...)`.
+    Output object returned when calling `MrisVolsmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def mris_volsmooth_params(
     log: str | None = None,
     nocleanup: bool = False,
     debug: bool = False,
-) -> MrisVolsmoothParametersTagged:
+) -> MrisVolsmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def mris_volsmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisVolsmoothParameters` object.
+    `MrisVolsmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def mris_volsmooth_validate(
 
 
 def mris_volsmooth_cargs(
-    params: MrisVolsmoothParameters,
+    params: MrisVolsmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def mris_volsmooth_cargs(
 
 
 def mris_volsmooth_outputs(
-    params: MrisVolsmoothParameters,
+    params: MrisVolsmoothParamsDict,
     execution: Execution,
 ) -> MrisVolsmoothOutputs:
     """
@@ -280,7 +280,7 @@ def mris_volsmooth_outputs(
 
 
 def mris_volsmooth_execute(
-    params: MrisVolsmoothParameters,
+    params: MrisVolsmoothParamsDict,
     runner: Runner | None = None,
 ) -> MrisVolsmoothOutputs:
     """
@@ -381,6 +381,8 @@ def mris_volsmooth(
 __all__ = [
     "MRIS_VOLSMOOTH_METADATA",
     "MrisVolsmoothOutputs",
+    "MrisVolsmoothParamsDict",
+    "MrisVolsmoothParamsDictTagged",
     "mris_volsmooth",
     "mris_volsmooth_execute",
     "mris_volsmooth_params",

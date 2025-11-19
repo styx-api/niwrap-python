@@ -13,7 +13,7 @@ FSLSWAPDIM_METADATA = Metadata(
 )
 
 
-FslswapdimParameters = typing.TypedDict('FslswapdimParameters', {
+FslswapdimParamsDict = typing.TypedDict('FslswapdimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslswapdim"]],
     "input_file": InputPathType,
     "axis_a": str,
@@ -21,7 +21,7 @@ FslswapdimParameters = typing.TypedDict('FslswapdimParameters', {
     "axis_c": str,
     "output_file": typing.NotRequired[str | None],
 })
-FslswapdimParametersTagged = typing.TypedDict('FslswapdimParametersTagged', {
+FslswapdimParamsDictTagged = typing.TypedDict('FslswapdimParamsDictTagged', {
     "@type": typing.Literal["fsl/fslswapdim"],
     "input_file": InputPathType,
     "axis_a": str,
@@ -33,7 +33,7 @@ FslswapdimParametersTagged = typing.TypedDict('FslswapdimParametersTagged', {
 
 class FslswapdimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslswapdimParameters(...)`.
+    Output object returned when calling `FslswapdimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def fslswapdim_params(
     axis_b: str,
     axis_c: str,
     output_file: str | None = None,
-) -> FslswapdimParametersTagged:
+) -> FslswapdimParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def fslswapdim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslswapdimParameters` object.
+    `FslswapdimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def fslswapdim_validate(
 
 
 def fslswapdim_cargs(
-    params: FslswapdimParameters,
+    params: FslswapdimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def fslswapdim_cargs(
 
 
 def fslswapdim_outputs(
-    params: FslswapdimParameters,
+    params: FslswapdimParamsDict,
     execution: Execution,
 ) -> FslswapdimOutputs:
     """
@@ -151,7 +151,7 @@ def fslswapdim_outputs(
 
 
 def fslswapdim_execute(
-    params: FslswapdimParameters,
+    params: FslswapdimParamsDict,
     runner: Runner | None = None,
 ) -> FslswapdimOutputs:
     """
@@ -220,6 +220,8 @@ def fslswapdim(
 __all__ = [
     "FSLSWAPDIM_METADATA",
     "FslswapdimOutputs",
+    "FslswapdimParamsDict",
+    "FslswapdimParamsDictTagged",
     "fslswapdim",
     "fslswapdim_execute",
     "fslswapdim_params",

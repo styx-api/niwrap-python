@@ -13,7 +13,7 @@ ADD_NOISE_TO_IMAGE_METADATA = Metadata(
 )
 
 
-AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
+AddNoiseToImageParamsDict = typing.TypedDict('AddNoiseToImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/AddNoiseToImage"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -21,7 +21,7 @@ AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-AddNoiseToImageParametersTagged = typing.TypedDict('AddNoiseToImageParametersTagged', {
+AddNoiseToImageParamsDictTagged = typing.TypedDict('AddNoiseToImageParamsDictTagged', {
     "@type": typing.Literal["ants/AddNoiseToImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -33,7 +33,7 @@ AddNoiseToImageParametersTagged = typing.TypedDict('AddNoiseToImageParametersTag
 
 class AddNoiseToImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AddNoiseToImageParameters(...)`.
+    Output object returned when calling `AddNoiseToImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def add_noise_to_image_params(
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     verbose: bool | None = None,
-) -> AddNoiseToImageParametersTagged:
+) -> AddNoiseToImageParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def add_noise_to_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AddNoiseToImageParameters` object.
+    `AddNoiseToImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -114,7 +114,7 @@ def add_noise_to_image_validate(
 
 
 def add_noise_to_image_cargs(
-    params: AddNoiseToImageParameters,
+    params: AddNoiseToImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def add_noise_to_image_cargs(
 
 
 def add_noise_to_image_outputs(
-    params: AddNoiseToImageParameters,
+    params: AddNoiseToImageParamsDict,
     execution: Execution,
 ) -> AddNoiseToImageOutputs:
     """
@@ -174,7 +174,7 @@ def add_noise_to_image_outputs(
 
 
 def add_noise_to_image_execute(
-    params: AddNoiseToImageParameters,
+    params: AddNoiseToImageParamsDict,
     runner: Runner | None = None,
 ) -> AddNoiseToImageOutputs:
     """
@@ -246,6 +246,8 @@ def add_noise_to_image(
 __all__ = [
     "ADD_NOISE_TO_IMAGE_METADATA",
     "AddNoiseToImageOutputs",
+    "AddNoiseToImageParamsDict",
+    "AddNoiseToImageParamsDictTagged",
     "add_noise_to_image",
     "add_noise_to_image_execute",
     "add_noise_to_image_params",

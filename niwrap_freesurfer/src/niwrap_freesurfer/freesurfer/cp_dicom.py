@@ -13,13 +13,13 @@ CP_DICOM_METADATA = Metadata(
 )
 
 
-CpDicomParameters = typing.TypedDict('CpDicomParameters', {
+CpDicomParamsDict = typing.TypedDict('CpDicomParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/cp-dicom"]],
     "dicom_dir": str,
     "output_dir": str,
     "debug": bool,
 })
-CpDicomParametersTagged = typing.TypedDict('CpDicomParametersTagged', {
+CpDicomParamsDictTagged = typing.TypedDict('CpDicomParamsDictTagged', {
     "@type": typing.Literal["freesurfer/cp-dicom"],
     "dicom_dir": str,
     "output_dir": str,
@@ -29,7 +29,7 @@ CpDicomParametersTagged = typing.TypedDict('CpDicomParametersTagged', {
 
 class CpDicomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CpDicomParameters(...)`.
+    Output object returned when calling `CpDicomParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def cp_dicom_params(
     dicom_dir: str,
     output_dir: str,
     debug: bool = False,
-) -> CpDicomParametersTagged:
+) -> CpDicomParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def cp_dicom_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CpDicomParameters` object.
+    `CpDicomParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def cp_dicom_validate(
 
 
 def cp_dicom_cargs(
-    params: CpDicomParameters,
+    params: CpDicomParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def cp_dicom_cargs(
 
 
 def cp_dicom_outputs(
-    params: CpDicomParameters,
+    params: CpDicomParamsDict,
     execution: Execution,
 ) -> CpDicomOutputs:
     """
@@ -133,7 +133,7 @@ def cp_dicom_outputs(
 
 
 def cp_dicom_execute(
-    params: CpDicomParameters,
+    params: CpDicomParamsDict,
     runner: Runner | None = None,
 ) -> CpDicomOutputs:
     """
@@ -197,6 +197,8 @@ def cp_dicom(
 __all__ = [
     "CP_DICOM_METADATA",
     "CpDicomOutputs",
+    "CpDicomParamsDict",
+    "CpDicomParamsDictTagged",
     "cp_dicom",
     "cp_dicom_execute",
     "cp_dicom_params",

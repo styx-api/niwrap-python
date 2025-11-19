@@ -3,13 +3,13 @@
   "properties": {
     "include": {
       "var_param": "include",
-      "fn_struct_make_params": "tckedit_include_params",
+      "fn_struct_make_params": "tckedit_include",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString": {
-              "fn_struct_make_params": "tckedit_various_string_params",
+              "fn_struct_make_params": "tckedit_various_string",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -17,7 +17,7 @@
               }
             },
             "VariousFile": {
-              "fn_struct_make_params": "tckedit_various_file_params",
+              "fn_struct_make_params": "tckedit_various_file",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -30,7 +30,7 @@
     },
     "include_ordered": {
       "var_param": "include_ordered",
-      "fn_struct_make_params": "tckedit_include_ordered_params",
+      "fn_struct_make_params": "tckedit_include_ordered",
       "properties": {
         "image": {
           "var_param": "image"
@@ -39,13 +39,13 @@
     },
     "exclude": {
       "var_param": "exclude",
-      "fn_struct_make_params": "tckedit_exclude_params",
+      "fn_struct_make_params": "tckedit_exclude",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString_1": {
-              "fn_struct_make_params": "tckedit_various_string_1_params",
+              "fn_struct_make_params": "tckedit_various_string_1",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -53,7 +53,7 @@
               }
             },
             "VariousFile_1": {
-              "fn_struct_make_params": "tckedit_various_file_1_params",
+              "fn_struct_make_params": "tckedit_various_file_1",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -66,13 +66,13 @@
     },
     "mask": {
       "var_param": "mask",
-      "fn_struct_make_params": "tckedit_mask_params",
+      "fn_struct_make_params": "tckedit_mask",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString_2": {
-              "fn_struct_make_params": "tckedit_various_string_2_params",
+              "fn_struct_make_params": "tckedit_various_string_2",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -80,7 +80,7 @@
               }
             },
             "VariousFile_2": {
-              "fn_struct_make_params": "tckedit_various_file_2_params",
+              "fn_struct_make_params": "tckedit_various_file_2",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -138,7 +138,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "tckedit_config_params",
+      "fn_struct_make_params": "tckedit_config",
       "properties": {
         "key": {
           "var_param": "key"

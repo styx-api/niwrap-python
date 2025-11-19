@@ -13,7 +13,7 @@ MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
 )
 
 
-MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentationWithSurfacesParameters', {
+MriEditSegmentationWithSurfacesParamsDict = typing.TypedDict('MriEditSegmentationWithSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_segmentation_with_surfaces"]],
     "aseg_name": InputPathType,
     "surface_dir": str,
@@ -25,7 +25,7 @@ MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentatio
     "cortex_flag": typing.NotRequired[bool | None],
     "annotation_file": typing.NotRequired[InputPathType | None],
 })
-MriEditSegmentationWithSurfacesParametersTagged = typing.TypedDict('MriEditSegmentationWithSurfacesParametersTagged', {
+MriEditSegmentationWithSurfacesParamsDictTagged = typing.TypedDict('MriEditSegmentationWithSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_edit_segmentation_with_surfaces"],
     "aseg_name": InputPathType,
     "surface_dir": str,
@@ -41,7 +41,7 @@ MriEditSegmentationWithSurfacesParametersTagged = typing.TypedDict('MriEditSegme
 
 class MriEditSegmentationWithSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEditSegmentationWithSurfacesParameters(...)`.
+    Output object returned when calling `MriEditSegmentationWithSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mri_edit_segmentation_with_surfaces_params(
     cerebellum_flag: bool | None = None,
     cortex_flag: bool | None = None,
     annotation_file: InputPathType | None = None,
-) -> MriEditSegmentationWithSurfacesParametersTagged:
+) -> MriEditSegmentationWithSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def mri_edit_segmentation_with_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEditSegmentationWithSurfacesParameters` object.
+    `MriEditSegmentationWithSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def mri_edit_segmentation_with_surfaces_validate(
 
 
 def mri_edit_segmentation_with_surfaces_cargs(
-    params: MriEditSegmentationWithSurfacesParameters,
+    params: MriEditSegmentationWithSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def mri_edit_segmentation_with_surfaces_cargs(
 
 
 def mri_edit_segmentation_with_surfaces_outputs(
-    params: MriEditSegmentationWithSurfacesParameters,
+    params: MriEditSegmentationWithSurfacesParamsDict,
     execution: Execution,
 ) -> MriEditSegmentationWithSurfacesOutputs:
     """
@@ -210,7 +210,7 @@ def mri_edit_segmentation_with_surfaces_outputs(
 
 
 def mri_edit_segmentation_with_surfaces_execute(
-    params: MriEditSegmentationWithSurfacesParameters,
+    params: MriEditSegmentationWithSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MriEditSegmentationWithSurfacesOutputs:
     """
@@ -291,6 +291,8 @@ def mri_edit_segmentation_with_surfaces(
 __all__ = [
     "MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA",
     "MriEditSegmentationWithSurfacesOutputs",
+    "MriEditSegmentationWithSurfacesParamsDict",
+    "MriEditSegmentationWithSurfacesParamsDictTagged",
     "mri_edit_segmentation_with_surfaces",
     "mri_edit_segmentation_with_surfaces_execute",
     "mri_edit_segmentation_with_surfaces_params",

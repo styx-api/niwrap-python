@@ -12,7 +12,7 @@
     },
     "roi": {
       "var_param": "roi",
-      "fn_struct_make_params": "metric_stats_roi_params",
+      "fn_struct_make_params": "metric_stats_roi",
       "properties": {
         "roi-metric": {
           "var_param": "roi_metric"

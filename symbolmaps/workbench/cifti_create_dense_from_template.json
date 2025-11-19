@@ -6,7 +6,7 @@
     },
     "series": {
       "var_param": "series",
-      "fn_struct_make_params": "cifti_create_dense_from_template_series_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_series",
       "properties": {
         "step": {
           "var_param": "step"
@@ -21,7 +21,7 @@
     },
     "volume-all": {
       "var_param": "volume_all",
-      "fn_struct_make_params": "cifti_create_dense_from_template_volume_all_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_volume_all",
       "properties": {
         "volume-in": {
           "var_param": "volume_in"
@@ -36,7 +36,7 @@
     },
     "cifti": {
       "var_param": "cifti",
-      "fn_struct_make_params": "cifti_create_dense_from_template_cifti_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_cifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"
@@ -45,7 +45,7 @@
     },
     "metric": {
       "var_param": "metric",
-      "fn_struct_make_params": "cifti_create_dense_from_template_metric_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_metric",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -57,7 +57,7 @@
     },
     "label": {
       "var_param": "label",
-      "fn_struct_make_params": "cifti_create_dense_from_template_label_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_label",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -69,7 +69,7 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "cifti_create_dense_from_template_volume_params",
+      "fn_struct_make_params": "cifti_create_dense_from_template_volume",
       "properties": {
         "structure": {
           "var_param": "structure"

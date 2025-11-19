@@ -13,40 +13,40 @@ TRANSFORMCONVERT_METADATA = Metadata(
 )
 
 
-TransformconvertConfigParameters = typing.TypedDict('TransformconvertConfigParameters', {
+TransformconvertConfigParamsDict = typing.TypedDict('TransformconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TransformconvertConfigParametersTagged = typing.TypedDict('TransformconvertConfigParametersTagged', {
+TransformconvertConfigParamsDictTagged = typing.TypedDict('TransformconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TransformconvertParameters = typing.TypedDict('TransformconvertParameters', {
+TransformconvertParamsDict = typing.TypedDict('TransformconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/transformconvert"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[str],
     "operation": str,
     "output": str,
 })
-TransformconvertParametersTagged = typing.TypedDict('TransformconvertParametersTagged', {
+TransformconvertParamsDictTagged = typing.TypedDict('TransformconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/transformconvert"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[str],
@@ -55,10 +55,10 @@ TransformconvertParametersTagged = typing.TypedDict('TransformconvertParametersT
 })
 
 
-def transformconvert_config_params(
+def transformconvert_config(
     key: str,
     value: str,
-) -> TransformconvertConfigParametersTagged:
+) -> TransformconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def transformconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformconvertConfigParameters` object.
+    `TransformconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def transformconvert_config_validate(
 
 
 def transformconvert_config_cargs(
-    params: TransformconvertConfigParameters,
+    params: TransformconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def transformconvert_config_cargs(
 
 class TransformconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TransformconvertParameters(...)`.
+    Output object returned when calling `TransformconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def transformconvert_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformconvertConfigParameters] | None = None,
+    config: list[TransformconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TransformconvertParametersTagged:
+) -> TransformconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def transformconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformconvertParameters` object.
+    `TransformconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -216,7 +216,7 @@ def transformconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformconvertConfigParamsDict] | None`')
         for e in params["config"]:
             transformconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -245,7 +245,7 @@ def transformconvert_validate(
 
 
 def transformconvert_cargs(
-    params: TransformconvertParameters,
+    params: TransformconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def transformconvert_cargs(
 
 
 def transformconvert_outputs(
-    params: TransformconvertParameters,
+    params: TransformconvertParamsDict,
     execution: Execution,
 ) -> TransformconvertOutputs:
     """
@@ -305,7 +305,7 @@ def transformconvert_outputs(
 
 
 def transformconvert_execute(
-    params: TransformconvertParameters,
+    params: TransformconvertParamsDict,
     runner: Runner | None = None,
 ) -> TransformconvertOutputs:
     """
@@ -350,7 +350,7 @@ def transformconvert(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformconvertConfigParameters] | None = None,
+    config: list[TransformconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -411,9 +411,13 @@ def transformconvert(
 
 __all__ = [
     "TRANSFORMCONVERT_METADATA",
+    "TransformconvertConfigParamsDict",
+    "TransformconvertConfigParamsDictTagged",
     "TransformconvertOutputs",
+    "TransformconvertParamsDict",
+    "TransformconvertParamsDictTagged",
     "transformconvert",
-    "transformconvert_config_params",
+    "transformconvert_config",
     "transformconvert_execute",
     "transformconvert_params",
 ]

@@ -13,7 +13,7 @@ EDDY_CUDA8_0_METADATA = Metadata(
 )
 
 
-EddyCuda80Parameters = typing.TypedDict('EddyCuda80Parameters', {
+EddyCuda80ParamsDict = typing.TypedDict('EddyCuda80ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_cuda8.0"]],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -60,7 +60,7 @@ EddyCuda80Parameters = typing.TypedDict('EddyCuda80Parameters', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
-EddyCuda80ParametersTagged = typing.TypedDict('EddyCuda80ParametersTagged', {
+EddyCuda80ParamsDictTagged = typing.TypedDict('EddyCuda80ParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_cuda8.0"],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -111,7 +111,7 @@ EddyCuda80ParametersTagged = typing.TypedDict('EddyCuda80ParametersTagged', {
 
 class EddyCuda80Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyCuda80Parameters(...)`.
+    Output object returned when calling `EddyCuda80ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ def eddy_cuda8_0_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyCuda80ParametersTagged:
+) -> EddyCuda80ParamsDictTagged:
     """
     Build parameters.
     
@@ -355,7 +355,7 @@ def eddy_cuda8_0_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyCuda80Parameters` object.
+    `EddyCuda80ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -527,7 +527,7 @@ def eddy_cuda8_0_validate(
 
 
 def eddy_cuda8_0_cargs(
-    params: EddyCuda80Parameters,
+    params: EddyCuda80ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -626,7 +626,7 @@ def eddy_cuda8_0_cargs(
 
 
 def eddy_cuda8_0_outputs(
-    params: EddyCuda80Parameters,
+    params: EddyCuda80ParamsDict,
     execution: Execution,
 ) -> EddyCuda80Outputs:
     """
@@ -664,7 +664,7 @@ def eddy_cuda8_0_outputs(
 
 
 def eddy_cuda8_0_execute(
-    params: EddyCuda80Parameters,
+    params: EddyCuda80ParamsDict,
     runner: Runner | None = None,
 ) -> EddyCuda80Outputs:
     """
@@ -868,6 +868,8 @@ def eddy_cuda8_0(
 __all__ = [
     "EDDY_CUDA8_0_METADATA",
     "EddyCuda80Outputs",
+    "EddyCuda80ParamsDict",
+    "EddyCuda80ParamsDictTagged",
     "eddy_cuda8_0",
     "eddy_cuda8_0_execute",
     "eddy_cuda8_0_params",

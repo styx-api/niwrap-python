@@ -13,40 +13,40 @@ CONNECTOMEEDIT_METADATA = Metadata(
 )
 
 
-ConnectomeeditConfigParameters = typing.TypedDict('ConnectomeeditConfigParameters', {
+ConnectomeeditConfigParamsDict = typing.TypedDict('ConnectomeeditConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-ConnectomeeditConfigParametersTagged = typing.TypedDict('ConnectomeeditConfigParametersTagged', {
+ConnectomeeditConfigParamsDictTagged = typing.TypedDict('ConnectomeeditConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-ConnectomeeditParameters = typing.TypedDict('ConnectomeeditParameters', {
+ConnectomeeditParamsDict = typing.TypedDict('ConnectomeeditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/connectomeedit"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ConnectomeeditConfigParameters] | None],
+    "config": typing.NotRequired[list[ConnectomeeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": str,
     "operation": str,
     "output": str,
 })
-ConnectomeeditParametersTagged = typing.TypedDict('ConnectomeeditParametersTagged', {
+ConnectomeeditParamsDictTagged = typing.TypedDict('ConnectomeeditParamsDictTagged', {
     "@type": typing.Literal["mrtrix/connectomeedit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ConnectomeeditConfigParameters] | None],
+    "config": typing.NotRequired[list[ConnectomeeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": str,
@@ -55,10 +55,10 @@ ConnectomeeditParametersTagged = typing.TypedDict('ConnectomeeditParametersTagge
 })
 
 
-def connectomeedit_config_params(
+def connectomeedit_config(
     key: str,
     value: str,
-) -> ConnectomeeditConfigParametersTagged:
+) -> ConnectomeeditConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def connectomeedit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectomeeditConfigParameters` object.
+    `ConnectomeeditConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def connectomeedit_config_validate(
 
 
 def connectomeedit_config_cargs(
-    params: ConnectomeeditConfigParameters,
+    params: ConnectomeeditConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def connectomeedit_config_cargs(
 
 class ConnectomeeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConnectomeeditParameters(...)`.
+    Output object returned when calling `ConnectomeeditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,10 +135,10 @@ def connectomeedit_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ConnectomeeditConfigParameters] | None = None,
+    config: list[ConnectomeeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ConnectomeeditParametersTagged:
+) -> ConnectomeeditParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def connectomeedit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectomeeditParameters` object.
+    `ConnectomeeditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def connectomeedit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ConnectomeeditConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ConnectomeeditConfigParamsDict] | None`')
         for e in params["config"]:
             connectomeedit_config_validate(e)
     if params.get("help", False) is None:
@@ -240,7 +240,7 @@ def connectomeedit_validate(
 
 
 def connectomeedit_cargs(
-    params: ConnectomeeditParameters,
+    params: ConnectomeeditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def connectomeedit_cargs(
 
 
 def connectomeedit_outputs(
-    params: ConnectomeeditParameters,
+    params: ConnectomeeditParamsDict,
     execution: Execution,
 ) -> ConnectomeeditOutputs:
     """
@@ -299,7 +299,7 @@ def connectomeedit_outputs(
 
 
 def connectomeedit_execute(
-    params: ConnectomeeditParameters,
+    params: ConnectomeeditParamsDict,
     runner: Runner | None = None,
 ) -> ConnectomeeditOutputs:
     """
@@ -342,7 +342,7 @@ def connectomeedit(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ConnectomeeditConfigParameters] | None = None,
+    config: list[ConnectomeeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -401,9 +401,13 @@ def connectomeedit(
 
 __all__ = [
     "CONNECTOMEEDIT_METADATA",
+    "ConnectomeeditConfigParamsDict",
+    "ConnectomeeditConfigParamsDictTagged",
     "ConnectomeeditOutputs",
+    "ConnectomeeditParamsDict",
+    "ConnectomeeditParamsDictTagged",
     "connectomeedit",
-    "connectomeedit_config_params",
+    "connectomeedit_config",
     "connectomeedit_execute",
     "connectomeedit_params",
 ]

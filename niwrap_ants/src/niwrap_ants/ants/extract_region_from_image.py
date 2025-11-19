@@ -13,63 +13,63 @@ EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
 )
 
 
-ExtractRegionFromImageRegionMinMaxIndexParameters = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParameters', {
+ExtractRegionFromImageRegionMinMaxIndexParamsDict = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["region_min_max_index"]],
     "min_index": str,
     "max_index": str,
 })
-ExtractRegionFromImageRegionMinMaxIndexParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParametersTagged', {
+ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged', {
     "@type": typing.Literal["region_min_max_index"],
     "min_index": str,
     "max_index": str,
 })
 
 
-ExtractRegionFromImageRegionLabelParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelParameters', {
+ExtractRegionFromImageRegionLabelParamsDict = typing.TypedDict('ExtractRegionFromImageRegionLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["region_label"]],
     "label": str,
 })
-ExtractRegionFromImageRegionLabelParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelParametersTagged', {
+ExtractRegionFromImageRegionLabelParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelParamsDictTagged', {
     "@type": typing.Literal["region_label"],
     "label": str,
 })
 
 
-ExtractRegionFromImageRegionDomainImageParameters = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParameters', {
+ExtractRegionFromImageRegionDomainImageParamsDict = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["region_domain_image"]],
     "domain_image": InputPathType,
 })
-ExtractRegionFromImageRegionDomainImageParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParametersTagged', {
+ExtractRegionFromImageRegionDomainImageParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParamsDictTagged', {
     "@type": typing.Literal["region_domain_image"],
     "domain_image": InputPathType,
 })
 
 
-ExtractRegionFromImageRegionLabelWithImageParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParameters', {
+ExtractRegionFromImageRegionLabelWithImageParamsDict = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["region_label_with_image"]],
     "label": str,
     "label_image": InputPathType,
 })
-ExtractRegionFromImageRegionLabelWithImageParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParametersTagged', {
+ExtractRegionFromImageRegionLabelWithImageParamsDictTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParamsDictTagged', {
     "@type": typing.Literal["region_label_with_image"],
     "label": str,
     "label_image": InputPathType,
 })
 
 
-ExtractRegionFromImageParameters = typing.TypedDict('ExtractRegionFromImageParameters', {
+ExtractRegionFromImageParamsDict = typing.TypedDict('ExtractRegionFromImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImage"]],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
-    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
+    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged, ExtractRegionFromImageRegionLabelParamsDictTagged, ExtractRegionFromImageRegionDomainImageParamsDictTagged, ExtractRegionFromImageRegionLabelWithImageParamsDictTagged],
 })
-ExtractRegionFromImageParametersTagged = typing.TypedDict('ExtractRegionFromImageParametersTagged', {
+ExtractRegionFromImageParamsDictTagged = typing.TypedDict('ExtractRegionFromImageParamsDictTagged', {
     "@type": typing.Literal["ants/ExtractRegionFromImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
-    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
+    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged, ExtractRegionFromImageRegionLabelParamsDictTagged, ExtractRegionFromImageRegionDomainImageParamsDictTagged, ExtractRegionFromImageRegionLabelWithImageParamsDictTagged],
 })
 
 
@@ -111,10 +111,10 @@ def extract_region_from_image_region_specification_validate_dyn_fn(
     }.get(t)
 
 
-def extract_region_from_image_region_min_max_index_params(
+def extract_region_from_image_region_min_max_index(
     min_index: str,
     max_index: str,
-) -> ExtractRegionFromImageRegionMinMaxIndexParametersTagged:
+) -> ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def extract_region_from_image_region_min_max_index_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageRegionMinMaxIndexParameters` object.
+    `ExtractRegionFromImageRegionMinMaxIndexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def extract_region_from_image_region_min_max_index_validate(
 
 
 def extract_region_from_image_region_min_max_index_cargs(
-    params: ExtractRegionFromImageRegionMinMaxIndexParameters,
+    params: ExtractRegionFromImageRegionMinMaxIndexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,9 +173,9 @@ def extract_region_from_image_region_min_max_index_cargs(
     return cargs
 
 
-def extract_region_from_image_region_label_params(
+def extract_region_from_image_region_label(
     label: str,
-) -> ExtractRegionFromImageRegionLabelParametersTagged:
+) -> ExtractRegionFromImageRegionLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -197,7 +197,7 @@ def extract_region_from_image_region_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageRegionLabelParameters` object.
+    `ExtractRegionFromImageRegionLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def extract_region_from_image_region_label_validate(
 
 
 def extract_region_from_image_region_label_cargs(
-    params: ExtractRegionFromImageRegionLabelParameters,
+    params: ExtractRegionFromImageRegionLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,9 +228,9 @@ def extract_region_from_image_region_label_cargs(
     return cargs
 
 
-def extract_region_from_image_region_domain_image_params(
+def extract_region_from_image_region_domain_image(
     domain_image: InputPathType,
-) -> ExtractRegionFromImageRegionDomainImageParametersTagged:
+) -> ExtractRegionFromImageRegionDomainImageParamsDictTagged:
     """
     Build parameters.
     
@@ -252,7 +252,7 @@ def extract_region_from_image_region_domain_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageRegionDomainImageParameters` object.
+    `ExtractRegionFromImageRegionDomainImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -266,7 +266,7 @@ def extract_region_from_image_region_domain_image_validate(
 
 
 def extract_region_from_image_region_domain_image_cargs(
-    params: ExtractRegionFromImageRegionDomainImageParameters,
+    params: ExtractRegionFromImageRegionDomainImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -283,10 +283,10 @@ def extract_region_from_image_region_domain_image_cargs(
     return cargs
 
 
-def extract_region_from_image_region_label_with_image_params(
+def extract_region_from_image_region_label_with_image(
     label: str,
     label_image: InputPathType,
-) -> ExtractRegionFromImageRegionLabelWithImageParametersTagged:
+) -> ExtractRegionFromImageRegionLabelWithImageParamsDictTagged:
     """
     Build parameters.
     
@@ -309,7 +309,7 @@ def extract_region_from_image_region_label_with_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageRegionLabelWithImageParameters` object.
+    `ExtractRegionFromImageRegionLabelWithImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -327,7 +327,7 @@ def extract_region_from_image_region_label_with_image_validate(
 
 
 def extract_region_from_image_region_label_with_image_cargs(
-    params: ExtractRegionFromImageRegionLabelWithImageParameters,
+    params: ExtractRegionFromImageRegionLabelWithImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -348,7 +348,7 @@ def extract_region_from_image_region_label_with_image_cargs(
 
 class ExtractRegionFromImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExtractRegionFromImageParameters(...)`.
+    Output object returned when calling `ExtractRegionFromImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -360,8 +360,8 @@ def extract_region_from_image_params(
     image_dimension: int,
     input_image: InputPathType,
     output_image: str,
-    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
-) -> ExtractRegionFromImageParametersTagged:
+    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged, ExtractRegionFromImageRegionLabelParamsDictTagged, ExtractRegionFromImageRegionDomainImageParamsDictTagged, ExtractRegionFromImageRegionLabelWithImageParamsDictTagged],
+) -> ExtractRegionFromImageParamsDictTagged:
     """
     Build parameters.
     
@@ -391,7 +391,7 @@ def extract_region_from_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageParameters` object.
+    `ExtractRegionFromImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -416,11 +416,13 @@ def extract_region_from_image_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["region_specification"])}\'')
     if "@type" not in params["region_specification"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["region_specification"]["@type"] not in ["region_min_max_index", "region_label", "region_domain_image", "region_label_with_image"]:
+        raise StyxValidationError("Parameter `region_specification`s `@type` must be one of [\"region_min_max_index\", \"region_label\", \"region_domain_image\", \"region_label_with_image\"]")
     extract_region_from_image_region_specification_validate_dyn_fn(params["region_specification"]["@type"])(params["region_specification"])
 
 
 def extract_region_from_image_cargs(
-    params: ExtractRegionFromImageParameters,
+    params: ExtractRegionFromImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -442,7 +444,7 @@ def extract_region_from_image_cargs(
 
 
 def extract_region_from_image_outputs(
-    params: ExtractRegionFromImageParameters,
+    params: ExtractRegionFromImageParamsDict,
     execution: Execution,
 ) -> ExtractRegionFromImageOutputs:
     """
@@ -462,7 +464,7 @@ def extract_region_from_image_outputs(
 
 
 def extract_region_from_image_execute(
-    params: ExtractRegionFromImageParameters,
+    params: ExtractRegionFromImageParamsDict,
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageOutputs:
     """
@@ -496,7 +498,7 @@ def extract_region_from_image(
     image_dimension: int,
     input_image: InputPathType,
     output_image: str,
-    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
+    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged, ExtractRegionFromImageRegionLabelParamsDictTagged, ExtractRegionFromImageRegionDomainImageParamsDictTagged, ExtractRegionFromImageRegionLabelWithImageParamsDictTagged],
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageOutputs:
     """
@@ -534,11 +536,21 @@ def extract_region_from_image(
 __all__ = [
     "EXTRACT_REGION_FROM_IMAGE_METADATA",
     "ExtractRegionFromImageOutputs",
+    "ExtractRegionFromImageParamsDict",
+    "ExtractRegionFromImageParamsDictTagged",
+    "ExtractRegionFromImageRegionDomainImageParamsDict",
+    "ExtractRegionFromImageRegionDomainImageParamsDictTagged",
+    "ExtractRegionFromImageRegionLabelParamsDict",
+    "ExtractRegionFromImageRegionLabelParamsDictTagged",
+    "ExtractRegionFromImageRegionLabelWithImageParamsDict",
+    "ExtractRegionFromImageRegionLabelWithImageParamsDictTagged",
+    "ExtractRegionFromImageRegionMinMaxIndexParamsDict",
+    "ExtractRegionFromImageRegionMinMaxIndexParamsDictTagged",
     "extract_region_from_image",
     "extract_region_from_image_execute",
     "extract_region_from_image_params",
-    "extract_region_from_image_region_domain_image_params",
-    "extract_region_from_image_region_label_params",
-    "extract_region_from_image_region_label_with_image_params",
-    "extract_region_from_image_region_min_max_index_params",
+    "extract_region_from_image_region_domain_image",
+    "extract_region_from_image_region_label",
+    "extract_region_from_image_region_label_with_image",
+    "extract_region_from_image_region_min_max_index",
 ]

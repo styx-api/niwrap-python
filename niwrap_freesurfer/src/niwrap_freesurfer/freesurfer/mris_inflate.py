@@ -13,7 +13,7 @@ MRIS_INFLATE_METADATA = Metadata(
 )
 
 
-MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
+MrisInflateParamsDict = typing.TypedDict('MrisInflateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_inflate"]],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -25,7 +25,7 @@ MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
     "mm_flag": bool,
     "scale_flag": typing.NotRequired[float | None],
 })
-MrisInflateParametersTagged = typing.TypedDict('MrisInflateParametersTagged', {
+MrisInflateParamsDictTagged = typing.TypedDict('MrisInflateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_inflate"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -41,7 +41,7 @@ MrisInflateParametersTagged = typing.TypedDict('MrisInflateParametersTagged', {
 
 class MrisInflateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisInflateParameters(...)`.
+    Output object returned when calling `MrisInflateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mris_inflate_params(
     sulcname: str | None = None,
     mm_flag: bool = False,
     scale_flag: float | None = None,
-) -> MrisInflateParametersTagged:
+) -> MrisInflateParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def mris_inflate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisInflateParameters` object.
+    `MrisInflateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def mris_inflate_validate(
 
 
 def mris_inflate_cargs(
-    params: MrisInflateParameters,
+    params: MrisInflateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def mris_inflate_cargs(
 
 
 def mris_inflate_outputs(
-    params: MrisInflateParameters,
+    params: MrisInflateParamsDict,
     execution: Execution,
 ) -> MrisInflateOutputs:
     """
@@ -214,7 +214,7 @@ def mris_inflate_outputs(
 
 
 def mris_inflate_execute(
-    params: MrisInflateParameters,
+    params: MrisInflateParamsDict,
     runner: Runner | None = None,
 ) -> MrisInflateOutputs:
     """
@@ -297,6 +297,8 @@ def mris_inflate(
 __all__ = [
     "MRIS_INFLATE_METADATA",
     "MrisInflateOutputs",
+    "MrisInflateParamsDict",
+    "MrisInflateParamsDictTagged",
     "mris_inflate",
     "mris_inflate_execute",
     "mris_inflate_params",

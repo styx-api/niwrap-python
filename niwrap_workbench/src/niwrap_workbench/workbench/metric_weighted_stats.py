@@ -12,24 +12,24 @@ METRIC_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-MetricWeightedStatsRoiParameters = typing.TypedDict('MetricWeightedStatsRoiParameters', {
+MetricWeightedStatsRoiParamsDict = typing.TypedDict('MetricWeightedStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
-MetricWeightedStatsRoiParametersTagged = typing.TypedDict('MetricWeightedStatsRoiParametersTagged', {
+MetricWeightedStatsRoiParamsDictTagged = typing.TypedDict('MetricWeightedStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-metric": InputPathType,
     "match-maps": bool,
 })
 
 
-MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters', {
+MetricWeightedStatsParamsDict = typing.TypedDict('MetricWeightedStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-weighted-stats"]],
     "area-surface": typing.NotRequired[InputPathType | None],
     "weight-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[MetricWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[MetricWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -37,12 +37,12 @@ MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters'
     "show-map-name": bool,
     "metric-in": InputPathType,
 })
-MetricWeightedStatsParametersTagged = typing.TypedDict('MetricWeightedStatsParametersTagged', {
+MetricWeightedStatsParamsDictTagged = typing.TypedDict('MetricWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-weighted-stats"],
     "area-surface": typing.NotRequired[InputPathType | None],
     "weight-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[MetricWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[MetricWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -52,10 +52,10 @@ MetricWeightedStatsParametersTagged = typing.TypedDict('MetricWeightedStatsParam
 })
 
 
-def metric_weighted_stats_roi_params(
+def metric_weighted_stats_roi(
     roi_metric: InputPathType,
     match_maps: bool = False,
-) -> MetricWeightedStatsRoiParametersTagged:
+) -> MetricWeightedStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def metric_weighted_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricWeightedStatsRoiParameters` object.
+    `MetricWeightedStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def metric_weighted_stats_roi_validate(
 
 
 def metric_weighted_stats_roi_cargs(
-    params: MetricWeightedStatsRoiParameters,
+    params: MetricWeightedStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def metric_weighted_stats_roi_cargs(
 
 class MetricWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricWeightedStatsParameters(...)`.
+    Output object returned when calling `MetricWeightedStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,12 +133,12 @@ def metric_weighted_stats_params(
     column: str | None,
     percent: float | None,
     metric_in: InputPathType,
-    roi: MetricWeightedStatsRoiParameters | None = None,
+    roi: MetricWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
     show_map_name: bool = False,
-) -> MetricWeightedStatsParametersTagged:
+) -> MetricWeightedStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def metric_weighted_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricWeightedStatsParameters` object.
+    `MetricWeightedStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def metric_weighted_stats_validate(
 
 
 def metric_weighted_stats_cargs(
-    params: MetricWeightedStatsParameters,
+    params: MetricWeightedStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def metric_weighted_stats_cargs(
 
 
 def metric_weighted_stats_outputs(
-    params: MetricWeightedStatsParameters,
+    params: MetricWeightedStatsParamsDict,
     execution: Execution,
 ) -> MetricWeightedStatsOutputs:
     """
@@ -292,7 +292,7 @@ def metric_weighted_stats_outputs(
 
 
 def metric_weighted_stats_execute(
-    params: MetricWeightedStatsParameters,
+    params: MetricWeightedStatsParamsDict,
     runner: Runner | None = None,
 ) -> MetricWeightedStatsOutputs:
     """
@@ -334,7 +334,7 @@ def metric_weighted_stats(
     column: str | None,
     percent: float | None,
     metric_in: InputPathType,
-    roi: MetricWeightedStatsRoiParameters | None = None,
+    roi: MetricWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
@@ -401,8 +401,12 @@ def metric_weighted_stats(
 __all__ = [
     "METRIC_WEIGHTED_STATS_METADATA",
     "MetricWeightedStatsOutputs",
+    "MetricWeightedStatsParamsDict",
+    "MetricWeightedStatsParamsDictTagged",
+    "MetricWeightedStatsRoiParamsDict",
+    "MetricWeightedStatsRoiParamsDictTagged",
     "metric_weighted_stats",
     "metric_weighted_stats_execute",
     "metric_weighted_stats_params",
-    "metric_weighted_stats_roi_params",
+    "metric_weighted_stats_roi",
 ]

@@ -13,7 +13,7 @@ V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
 )
 
 
-VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothingWithRepParameters', {
+VDjunctModalSmoothingWithRepParamsDict = typing.TypedDict('VDjunctModalSmoothingWithRepParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_modal_smoothing_with_rep"]],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -24,7 +24,7 @@ VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothing
     "overwrite": bool,
     "no_clean": bool,
 })
-VDjunctModalSmoothingWithRepParametersTagged = typing.TypedDict('VDjunctModalSmoothingWithRepParametersTagged', {
+VDjunctModalSmoothingWithRepParamsDictTagged = typing.TypedDict('VDjunctModalSmoothingWithRepParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_modal_smoothing_with_rep"],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -39,7 +39,7 @@ VDjunctModalSmoothingWithRepParametersTagged = typing.TypedDict('VDjunctModalSmo
 
 class VDjunctModalSmoothingWithRepOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctModalSmoothingWithRepParameters(...)`.
+    Output object returned when calling `VDjunctModalSmoothingWithRepParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v__djunct_modal_smoothing_with_rep_params(
     version: bool = False,
     overwrite: bool = False,
     no_clean: bool = False,
-) -> VDjunctModalSmoothingWithRepParametersTagged:
+) -> VDjunctModalSmoothingWithRepParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def v__djunct_modal_smoothing_with_rep_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctModalSmoothingWithRepParameters` object.
+    `VDjunctModalSmoothingWithRepParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def v__djunct_modal_smoothing_with_rep_validate(
 
 
 def v__djunct_modal_smoothing_with_rep_cargs(
-    params: VDjunctModalSmoothingWithRepParameters,
+    params: VDjunctModalSmoothingWithRepParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def v__djunct_modal_smoothing_with_rep_cargs(
 
 
 def v__djunct_modal_smoothing_with_rep_outputs(
-    params: VDjunctModalSmoothingWithRepParameters,
+    params: VDjunctModalSmoothingWithRepParamsDict,
     execution: Execution,
 ) -> VDjunctModalSmoothingWithRepOutputs:
     """
@@ -191,7 +191,7 @@ def v__djunct_modal_smoothing_with_rep_outputs(
 
 
 def v__djunct_modal_smoothing_with_rep_execute(
-    params: VDjunctModalSmoothingWithRepParameters,
+    params: VDjunctModalSmoothingWithRepParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctModalSmoothingWithRepOutputs:
     """
@@ -271,6 +271,8 @@ def v__djunct_modal_smoothing_with_rep(
 
 __all__ = [
     "VDjunctModalSmoothingWithRepOutputs",
+    "VDjunctModalSmoothingWithRepParamsDict",
+    "VDjunctModalSmoothingWithRepParamsDictTagged",
     "V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA",
     "v__djunct_modal_smoothing_with_rep",
     "v__djunct_modal_smoothing_with_rep_execute",

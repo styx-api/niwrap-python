@@ -13,7 +13,7 @@ MRI_3D_PHOTO_RECON_METADATA = Metadata(
 )
 
 
-Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
+Mri3dPhotoReconParamsDict = typing.TypedDict('Mri3dPhotoReconParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_3d_photo_recon"]],
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
@@ -30,7 +30,7 @@ Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
     "rigid_only_for_photos": bool,
     "gpu_index": typing.NotRequired[float | None],
 })
-Mri3dPhotoReconParametersTagged = typing.TypedDict('Mri3dPhotoReconParametersTagged', {
+Mri3dPhotoReconParamsDictTagged = typing.TypedDict('Mri3dPhotoReconParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_3d_photo_recon"],
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
@@ -51,7 +51,7 @@ Mri3dPhotoReconParametersTagged = typing.TypedDict('Mri3dPhotoReconParametersTag
 
 class Mri3dPhotoReconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Mri3dPhotoReconParameters(...)`.
+    Output object returned when calling `Mri3dPhotoReconParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def mri_3d_photo_recon_params(
     allow_z_stretch: bool = False,
     rigid_only_for_photos: bool = False,
     gpu_index: float | None = None,
-) -> Mri3dPhotoReconParametersTagged:
+) -> Mri3dPhotoReconParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def mri_3d_photo_recon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mri3dPhotoReconParameters` object.
+    `Mri3dPhotoReconParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def mri_3d_photo_recon_validate(
 
 
 def mri_3d_photo_recon_cargs(
-    params: Mri3dPhotoReconParameters,
+    params: Mri3dPhotoReconParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -275,7 +275,7 @@ def mri_3d_photo_recon_cargs(
 
 
 def mri_3d_photo_recon_outputs(
-    params: Mri3dPhotoReconParameters,
+    params: Mri3dPhotoReconParamsDict,
     execution: Execution,
 ) -> Mri3dPhotoReconOutputs:
     """
@@ -296,7 +296,7 @@ def mri_3d_photo_recon_outputs(
 
 
 def mri_3d_photo_recon_execute(
-    params: Mri3dPhotoReconParameters,
+    params: Mri3dPhotoReconParamsDict,
     runner: Runner | None = None,
 ) -> Mri3dPhotoReconOutputs:
     """
@@ -400,6 +400,8 @@ def mri_3d_photo_recon(
 __all__ = [
     "MRI_3D_PHOTO_RECON_METADATA",
     "Mri3dPhotoReconOutputs",
+    "Mri3dPhotoReconParamsDict",
+    "Mri3dPhotoReconParamsDictTagged",
     "mri_3d_photo_recon",
     "mri_3d_photo_recon_execute",
     "mri_3d_photo_recon_params",

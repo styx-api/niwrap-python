@@ -13,12 +13,12 @@ MRI_CORRECT_SEGMENTATIONS_METADATA = Metadata(
 )
 
 
-MriCorrectSegmentationsParameters = typing.TypedDict('MriCorrectSegmentationsParameters', {
+MriCorrectSegmentationsParamsDict = typing.TypedDict('MriCorrectSegmentationsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_correct_segmentations"]],
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })
-MriCorrectSegmentationsParametersTagged = typing.TypedDict('MriCorrectSegmentationsParametersTagged', {
+MriCorrectSegmentationsParamsDictTagged = typing.TypedDict('MriCorrectSegmentationsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_correct_segmentations"],
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
@@ -27,7 +27,7 @@ MriCorrectSegmentationsParametersTagged = typing.TypedDict('MriCorrectSegmentati
 
 class MriCorrectSegmentationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCorrectSegmentationsParameters(...)`.
+    Output object returned when calling `MriCorrectSegmentationsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriCorrectSegmentationsOutputs(typing.NamedTuple):
 def mri_correct_segmentations_params(
     input_file_1: InputPathType,
     input_file_2: InputPathType,
-) -> MriCorrectSegmentationsParametersTagged:
+) -> MriCorrectSegmentationsParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mri_correct_segmentations_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCorrectSegmentationsParameters` object.
+    `MriCorrectSegmentationsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mri_correct_segmentations_validate(
 
 
 def mri_correct_segmentations_cargs(
-    params: MriCorrectSegmentationsParameters,
+    params: MriCorrectSegmentationsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def mri_correct_segmentations_cargs(
 
 
 def mri_correct_segmentations_outputs(
-    params: MriCorrectSegmentationsParameters,
+    params: MriCorrectSegmentationsParamsDict,
     execution: Execution,
 ) -> MriCorrectSegmentationsOutputs:
     """
@@ -116,7 +116,7 @@ def mri_correct_segmentations_outputs(
 
 
 def mri_correct_segmentations_execute(
-    params: MriCorrectSegmentationsParameters,
+    params: MriCorrectSegmentationsParamsDict,
     runner: Runner | None = None,
 ) -> MriCorrectSegmentationsOutputs:
     """
@@ -175,6 +175,8 @@ def mri_correct_segmentations(
 __all__ = [
     "MRI_CORRECT_SEGMENTATIONS_METADATA",
     "MriCorrectSegmentationsOutputs",
+    "MriCorrectSegmentationsParamsDict",
+    "MriCorrectSegmentationsParamsDictTagged",
     "mri_correct_segmentations",
     "mri_correct_segmentations_execute",
     "mri_correct_segmentations_params",

@@ -13,7 +13,7 @@ VOL2SYMSURF_METADATA = Metadata(
 )
 
 
-Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
+Vol2symsurfParamsDict = typing.TypedDict('Vol2symsurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vol2symsurf"]],
     "registration_file": InputPathType,
     "input_volume": InputPathType,
@@ -24,7 +24,7 @@ Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
     "no_diff": bool,
     "laterality_index": bool,
 })
-Vol2symsurfParametersTagged = typing.TypedDict('Vol2symsurfParametersTagged', {
+Vol2symsurfParamsDictTagged = typing.TypedDict('Vol2symsurfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vol2symsurf"],
     "registration_file": InputPathType,
     "input_volume": InputPathType,
@@ -39,7 +39,7 @@ Vol2symsurfParametersTagged = typing.TypedDict('Vol2symsurfParametersTagged', {
 
 class Vol2symsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Vol2symsurfParameters(...)`.
+    Output object returned when calling `Vol2symsurfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def vol2symsurf_params(
     projection_fraction: float | None = None,
     no_diff: bool = False,
     laterality_index: bool = False,
-) -> Vol2symsurfParametersTagged:
+) -> Vol2symsurfParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def vol2symsurf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Vol2symsurfParameters` object.
+    `Vol2symsurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def vol2symsurf_validate(
 
 
 def vol2symsurf_cargs(
-    params: Vol2symsurfParameters,
+    params: Vol2symsurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def vol2symsurf_cargs(
 
 
 def vol2symsurf_outputs(
-    params: Vol2symsurfParameters,
+    params: Vol2symsurfParamsDict,
     execution: Execution,
 ) -> Vol2symsurfOutputs:
     """
@@ -211,7 +211,7 @@ def vol2symsurf_outputs(
 
 
 def vol2symsurf_execute(
-    params: Vol2symsurfParameters,
+    params: Vol2symsurfParamsDict,
     runner: Runner | None = None,
 ) -> Vol2symsurfOutputs:
     """
@@ -290,6 +290,8 @@ def vol2symsurf(
 __all__ = [
     "VOL2SYMSURF_METADATA",
     "Vol2symsurfOutputs",
+    "Vol2symsurfParamsDict",
+    "Vol2symsurfParamsDictTagged",
     "vol2symsurf",
     "vol2symsurf_execute",
     "vol2symsurf_params",

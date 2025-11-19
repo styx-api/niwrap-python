@@ -13,13 +13,13 @@ MRI_SURFACEMASK_METADATA = Metadata(
 )
 
 
-MriSurfacemaskParameters = typing.TypedDict('MriSurfacemaskParameters', {
+MriSurfacemaskParamsDict = typing.TypedDict('MriSurfacemaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surfacemask"]],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_volume": str,
 })
-MriSurfacemaskParametersTagged = typing.TypedDict('MriSurfacemaskParametersTagged', {
+MriSurfacemaskParamsDictTagged = typing.TypedDict('MriSurfacemaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_surfacemask"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
@@ -29,7 +29,7 @@ MriSurfacemaskParametersTagged = typing.TypedDict('MriSurfacemaskParametersTagge
 
 class MriSurfacemaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSurfacemaskParameters(...)`.
+    Output object returned when calling `MriSurfacemaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_surfacemask_params(
     input_volume: InputPathType,
     input_surface: InputPathType,
     output_volume: str,
-) -> MriSurfacemaskParametersTagged:
+) -> MriSurfacemaskParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mri_surfacemask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSurfacemaskParameters` object.
+    `MriSurfacemaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mri_surfacemask_validate(
 
 
 def mri_surfacemask_cargs(
-    params: MriSurfacemaskParameters,
+    params: MriSurfacemaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mri_surfacemask_cargs(
 
 
 def mri_surfacemask_outputs(
-    params: MriSurfacemaskParameters,
+    params: MriSurfacemaskParamsDict,
     execution: Execution,
 ) -> MriSurfacemaskOutputs:
     """
@@ -130,7 +130,7 @@ def mri_surfacemask_outputs(
 
 
 def mri_surfacemask_execute(
-    params: MriSurfacemaskParameters,
+    params: MriSurfacemaskParamsDict,
     runner: Runner | None = None,
 ) -> MriSurfacemaskOutputs:
     """
@@ -195,6 +195,8 @@ def mri_surfacemask(
 __all__ = [
     "MRI_SURFACEMASK_METADATA",
     "MriSurfacemaskOutputs",
+    "MriSurfacemaskParamsDict",
+    "MriSurfacemaskParamsDictTagged",
     "mri_surfacemask",
     "mri_surfacemask_execute",
     "mri_surfacemask_params",

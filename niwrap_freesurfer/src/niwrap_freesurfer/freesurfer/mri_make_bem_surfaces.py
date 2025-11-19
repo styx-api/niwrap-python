@@ -13,12 +13,12 @@ MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
 )
 
 
-MriMakeBemSurfacesParameters = typing.TypedDict('MriMakeBemSurfacesParameters', {
+MriMakeBemSurfacesParamsDict = typing.TypedDict('MriMakeBemSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_bem_surfaces"]],
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })
-MriMakeBemSurfacesParametersTagged = typing.TypedDict('MriMakeBemSurfacesParametersTagged', {
+MriMakeBemSurfacesParamsDictTagged = typing.TypedDict('MriMakeBemSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_make_bem_surfaces"],
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ MriMakeBemSurfacesParametersTagged = typing.TypedDict('MriMakeBemSurfacesParamet
 
 class MriMakeBemSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMakeBemSurfacesParameters(...)`.
+    Output object returned when calling `MriMakeBemSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class MriMakeBemSurfacesOutputs(typing.NamedTuple):
 def mri_make_bem_surfaces_params(
     name: str,
     mfile: InputPathType | None = None,
-) -> MriMakeBemSurfacesParametersTagged:
+) -> MriMakeBemSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mri_make_bem_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMakeBemSurfacesParameters` object.
+    `MriMakeBemSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def mri_make_bem_surfaces_validate(
 
 
 def mri_make_bem_surfaces_cargs(
-    params: MriMakeBemSurfacesParameters,
+    params: MriMakeBemSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def mri_make_bem_surfaces_cargs(
 
 
 def mri_make_bem_surfaces_outputs(
-    params: MriMakeBemSurfacesParameters,
+    params: MriMakeBemSurfacesParamsDict,
     execution: Execution,
 ) -> MriMakeBemSurfacesOutputs:
     """
@@ -123,7 +123,7 @@ def mri_make_bem_surfaces_outputs(
 
 
 def mri_make_bem_surfaces_execute(
-    params: MriMakeBemSurfacesParameters,
+    params: MriMakeBemSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MriMakeBemSurfacesOutputs:
     """
@@ -182,6 +182,8 @@ def mri_make_bem_surfaces(
 __all__ = [
     "MRI_MAKE_BEM_SURFACES_METADATA",
     "MriMakeBemSurfacesOutputs",
+    "MriMakeBemSurfacesParamsDict",
+    "MriMakeBemSurfacesParamsDictTagged",
     "mri_make_bem_surfaces",
     "mri_make_bem_surfaces_execute",
     "mri_make_bem_surfaces_params",

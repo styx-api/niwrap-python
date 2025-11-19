@@ -13,7 +13,7 @@ MRIS_PMAKE_METADATA = Metadata(
 )
 
 
-MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
+MrisPmakeParamsDict = typing.TypedDict('MrisPmakeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_pmake"]],
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
     "mpm_prog": typing.NotRequired[str | None],
     "mpm_args": typing.NotRequired[str | None],
 })
-MrisPmakeParametersTagged = typing.TypedDict('MrisPmakeParametersTagged', {
+MrisPmakeParamsDictTagged = typing.TypedDict('MrisPmakeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_pmake"],
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ MrisPmakeParametersTagged = typing.TypedDict('MrisPmakeParametersTagged', {
 
 class MrisPmakeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisPmakeParameters(...)`.
+    Output object returned when calling `MrisPmakeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def mris_pmake_params(
     use_abs_curvs: bool = False,
     mpm_prog: str | None = None,
     mpm_args: str | None = None,
-) -> MrisPmakeParametersTagged:
+) -> MrisPmakeParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def mris_pmake_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisPmakeParameters` object.
+    `MrisPmakeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def mris_pmake_validate(
 
 
 def mris_pmake_cargs(
-    params: MrisPmakeParameters,
+    params: MrisPmakeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -253,7 +253,7 @@ def mris_pmake_cargs(
 
 
 def mris_pmake_outputs(
-    params: MrisPmakeParameters,
+    params: MrisPmakeParamsDict,
     execution: Execution,
 ) -> MrisPmakeOutputs:
     """
@@ -272,7 +272,7 @@ def mris_pmake_outputs(
 
 
 def mris_pmake_execute(
-    params: MrisPmakeParameters,
+    params: MrisPmakeParamsDict,
     runner: Runner | None = None,
 ) -> MrisPmakeOutputs:
     """
@@ -368,6 +368,8 @@ def mris_pmake(
 __all__ = [
     "MRIS_PMAKE_METADATA",
     "MrisPmakeOutputs",
+    "MrisPmakeParamsDict",
+    "MrisPmakeParamsDictTagged",
     "mris_pmake",
     "mris_pmake_execute",
     "mris_pmake_params",

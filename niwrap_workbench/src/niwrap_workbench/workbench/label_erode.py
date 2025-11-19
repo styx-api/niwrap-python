@@ -12,7 +12,7 @@ LABEL_ERODE_METADATA = Metadata(
 )
 
 
-LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
+LabelErodeParamsDict = typing.TypedDict('LabelErodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-erode"]],
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
     "surface": InputPathType,
     "erode-dist": float,
 })
-LabelErodeParametersTagged = typing.TypedDict('LabelErodeParametersTagged', {
+LabelErodeParamsDictTagged = typing.TypedDict('LabelErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/label-erode"],
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ LabelErodeParametersTagged = typing.TypedDict('LabelErodeParametersTagged', {
 
 class LabelErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelErodeParameters(...)`.
+    Output object returned when calling `LabelErodeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def label_erode_params(
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
-) -> LabelErodeParametersTagged:
+) -> LabelErodeParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def label_erode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelErodeParameters` object.
+    `LabelErodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def label_erode_validate(
 
 
 def label_erode_cargs(
-    params: LabelErodeParameters,
+    params: LabelErodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def label_erode_cargs(
 
 
 def label_erode_outputs(
-    params: LabelErodeParameters,
+    params: LabelErodeParamsDict,
     execution: Execution,
 ) -> LabelErodeOutputs:
     """
@@ -182,7 +182,7 @@ def label_erode_outputs(
 
 
 def label_erode_execute(
-    params: LabelErodeParameters,
+    params: LabelErodeParamsDict,
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
@@ -265,6 +265,8 @@ def label_erode(
 __all__ = [
     "LABEL_ERODE_METADATA",
     "LabelErodeOutputs",
+    "LabelErodeParamsDict",
+    "LabelErodeParamsDictTagged",
     "label_erode",
     "label_erode_execute",
     "label_erode_params",

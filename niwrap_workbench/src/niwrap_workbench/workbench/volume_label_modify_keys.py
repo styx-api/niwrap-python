@@ -12,14 +12,14 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParameters', {
+VolumeLabelModifyKeysParamsDict = typing.TypedDict('VolumeLabelModifyKeysParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-modify-keys"]],
     "volume-out": str,
     "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
     "remap-file": str,
 })
-VolumeLabelModifyKeysParametersTagged = typing.TypedDict('VolumeLabelModifyKeysParametersTagged', {
+VolumeLabelModifyKeysParamsDictTagged = typing.TypedDict('VolumeLabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-modify-keys"],
     "volume-out": str,
     "subvolume": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ VolumeLabelModifyKeysParametersTagged = typing.TypedDict('VolumeLabelModifyKeysP
 
 class VolumeLabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelModifyKeysParameters(...)`.
+    Output object returned when calling `VolumeLabelModifyKeysParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def volume_label_modify_keys_params(
     subvolume: str | None,
     volume_in: InputPathType,
     remap_file: str,
-) -> VolumeLabelModifyKeysParametersTagged:
+) -> VolumeLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def volume_label_modify_keys_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelModifyKeysParameters` object.
+    `VolumeLabelModifyKeysParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def volume_label_modify_keys_validate(
 
 
 def volume_label_modify_keys_cargs(
-    params: VolumeLabelModifyKeysParameters,
+    params: VolumeLabelModifyKeysParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def volume_label_modify_keys_cargs(
 
 
 def volume_label_modify_keys_outputs(
-    params: VolumeLabelModifyKeysParameters,
+    params: VolumeLabelModifyKeysParamsDict,
     execution: Execution,
 ) -> VolumeLabelModifyKeysOutputs:
     """
@@ -145,7 +145,7 @@ def volume_label_modify_keys_outputs(
 
 
 def volume_label_modify_keys_execute(
-    params: VolumeLabelModifyKeysParameters,
+    params: VolumeLabelModifyKeysParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
@@ -228,6 +228,8 @@ def volume_label_modify_keys(
 __all__ = [
     "VOLUME_LABEL_MODIFY_KEYS_METADATA",
     "VolumeLabelModifyKeysOutputs",
+    "VolumeLabelModifyKeysParamsDict",
+    "VolumeLabelModifyKeysParamsDictTagged",
     "volume_label_modify_keys",
     "volume_label_modify_keys_execute",
     "volume_label_modify_keys_params",

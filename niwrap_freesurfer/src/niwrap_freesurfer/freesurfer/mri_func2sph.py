@@ -13,7 +13,7 @@ MRI_FUNC2SPH_METADATA = Metadata(
 )
 
 
-MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
+MriFunc2sphParamsDict = typing.TypedDict('MriFunc2sphParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri-func2sph"]],
     "instem": str,
     "outstem": str,
@@ -24,7 +24,7 @@ MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
     "input_type": typing.NotRequired[str | None],
     "umask": typing.NotRequired[str | None],
 })
-MriFunc2sphParametersTagged = typing.TypedDict('MriFunc2sphParametersTagged', {
+MriFunc2sphParamsDictTagged = typing.TypedDict('MriFunc2sphParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri-func2sph"],
     "instem": str,
     "outstem": str,
@@ -39,7 +39,7 @@ MriFunc2sphParametersTagged = typing.TypedDict('MriFunc2sphParametersTagged', {
 
 class MriFunc2sphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFunc2sphParameters(...)`.
+    Output object returned when calling `MriFunc2sphParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def mri_func2sph_params(
     icosahedron_size: float | None = None,
     input_type: str | None = None,
     umask: str | None = None,
-) -> MriFunc2sphParametersTagged:
+) -> MriFunc2sphParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def mri_func2sph_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFunc2sphParameters` object.
+    `MriFunc2sphParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def mri_func2sph_validate(
 
 
 def mri_func2sph_cargs(
-    params: MriFunc2sphParameters,
+    params: MriFunc2sphParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def mri_func2sph_cargs(
 
 
 def mri_func2sph_outputs(
-    params: MriFunc2sphParameters,
+    params: MriFunc2sphParamsDict,
     execution: Execution,
 ) -> MriFunc2sphOutputs:
     """
@@ -206,7 +206,7 @@ def mri_func2sph_outputs(
 
 
 def mri_func2sph_execute(
-    params: MriFunc2sphParameters,
+    params: MriFunc2sphParamsDict,
     runner: Runner | None = None,
 ) -> MriFunc2sphOutputs:
     """
@@ -283,6 +283,8 @@ def mri_func2sph(
 __all__ = [
     "MRI_FUNC2SPH_METADATA",
     "MriFunc2sphOutputs",
+    "MriFunc2sphParamsDict",
+    "MriFunc2sphParamsDictTagged",
     "mri_func2sph",
     "mri_func2sph_execute",
     "mri_func2sph_params",

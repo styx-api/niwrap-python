@@ -13,7 +13,7 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 )
 
 
-V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
+V1dgenArma11ParamsDict = typing.TypedDict('V1dgenArma11ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dgenARMA11"]],
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
@@ -28,7 +28,7 @@ V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
     "arma31": typing.NotRequired[str | None],
     "arma51": typing.NotRequired[str | None],
 })
-V1dgenArma11ParametersTagged = typing.TypedDict('V1dgenArma11ParametersTagged', {
+V1dgenArma11ParamsDictTagged = typing.TypedDict('V1dgenArma11ParamsDictTagged', {
     "@type": typing.Literal["afni/1dgenARMA11"],
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ V1dgenArma11ParametersTagged = typing.TypedDict('V1dgenArma11ParametersTagged', 
 
 class V1dgenArma11Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dgenArma11Parameters(...)`.
+    Output object returned when calling `V1dgenArma11ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def v_1dgen_arma11_params(
     corcut: float | None = None,
     arma31: str | None = None,
     arma51: str | None = None,
-) -> V1dgenArma11ParametersTagged:
+) -> V1dgenArma11ParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def v_1dgen_arma11_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dgenArma11Parameters` object.
+    `V1dgenArma11ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def v_1dgen_arma11_validate(
 
 
 def v_1dgen_arma11_cargs(
-    params: V1dgenArma11Parameters,
+    params: V1dgenArma11ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -250,7 +250,7 @@ def v_1dgen_arma11_cargs(
 
 
 def v_1dgen_arma11_outputs(
-    params: V1dgenArma11Parameters,
+    params: V1dgenArma11ParamsDict,
     execution: Execution,
 ) -> V1dgenArma11Outputs:
     """
@@ -270,7 +270,7 @@ def v_1dgen_arma11_outputs(
 
 
 def v_1dgen_arma11_execute(
-    params: V1dgenArma11Parameters,
+    params: V1dgenArma11ParamsDict,
     runner: Runner | None = None,
 ) -> V1dgenArma11Outputs:
     """
@@ -366,6 +366,8 @@ def v_1dgen_arma11(
 
 __all__ = [
     "V1dgenArma11Outputs",
+    "V1dgenArma11ParamsDict",
+    "V1dgenArma11ParamsDictTagged",
     "V_1DGEN_ARMA11_METADATA",
     "v_1dgen_arma11",
     "v_1dgen_arma11_execute",

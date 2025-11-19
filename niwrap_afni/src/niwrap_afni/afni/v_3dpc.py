@@ -13,7 +13,7 @@ V_3DPC_METADATA = Metadata(
 )
 
 
-V3dpcParameters = typing.TypedDict('V3dpcParameters', {
+V3dpcParamsDict = typing.TypedDict('V3dpcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dpc"]],
     "datasets": list[InputPathType],
     "dmean": bool,
@@ -31,7 +31,7 @@ V3dpcParameters = typing.TypedDict('V3dpcParameters', {
     "float": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
-V3dpcParametersTagged = typing.TypedDict('V3dpcParametersTagged', {
+V3dpcParamsDictTagged = typing.TypedDict('V3dpcParamsDictTagged', {
     "@type": typing.Literal["afni/3dpc"],
     "datasets": list[InputPathType],
     "dmean": bool,
@@ -53,7 +53,7 @@ V3dpcParametersTagged = typing.TypedDict('V3dpcParametersTagged', {
 
 class V3dpcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dpcParameters(...)`.
+    Output object returned when calling `V3dpcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def v_3dpc_params(
     eigonly: bool = False,
     float_: bool = False,
     mask: InputPathType | None = None,
-) -> V3dpcParametersTagged:
+) -> V3dpcParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def v_3dpc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dpcParameters` object.
+    `V3dpcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def v_3dpc_validate(
 
 
 def v_3dpc_cargs(
-    params: V3dpcParameters,
+    params: V3dpcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def v_3dpc_cargs(
 
 
 def v_3dpc_outputs(
-    params: V3dpcParameters,
+    params: V3dpcParamsDict,
     execution: Execution,
 ) -> V3dpcOutputs:
     """
@@ -301,7 +301,7 @@ def v_3dpc_outputs(
 
 
 def v_3dpc_execute(
-    params: V3dpcParameters,
+    params: V3dpcParamsDict,
     runner: Runner | None = None,
 ) -> V3dpcOutputs:
     """
@@ -401,6 +401,8 @@ def v_3dpc(
 
 __all__ = [
     "V3dpcOutputs",
+    "V3dpcParamsDict",
+    "V3dpcParamsDictTagged",
     "V_3DPC_METADATA",
     "v_3dpc",
     "v_3dpc_execute",

@@ -13,7 +13,7 @@ MRI_PATH2LABEL_METADATA = Metadata(
 )
 
 
-MriPath2labelParameters = typing.TypedDict('MriPath2labelParameters', {
+MriPath2labelParamsDict = typing.TypedDict('MriPath2labelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_path2label"]],
     "input_file": str,
     "output_file": str,
@@ -27,7 +27,7 @@ MriPath2labelParameters = typing.TypedDict('MriPath2labelParameters', {
     "source_file": typing.NotRequired[str | None],
     "dest_file": typing.NotRequired[str | None],
 })
-MriPath2labelParametersTagged = typing.TypedDict('MriPath2labelParametersTagged', {
+MriPath2labelParamsDictTagged = typing.TypedDict('MriPath2labelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_path2label"],
     "input_file": str,
     "output_file": str,
@@ -45,7 +45,7 @@ MriPath2labelParametersTagged = typing.TypedDict('MriPath2labelParametersTagged'
 
 class MriPath2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriPath2labelParameters(...)`.
+    Output object returned when calling `MriPath2labelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def mri_path2label_params(
     confill: list[str] | None = None,
     source_file: str | None = None,
     dest_file: str | None = None,
-) -> MriPath2labelParametersTagged:
+) -> MriPath2labelParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def mri_path2label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriPath2labelParameters` object.
+    `MriPath2labelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def mri_path2label_validate(
 
 
 def mri_path2label_cargs(
-    params: MriPath2labelParameters,
+    params: MriPath2labelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def mri_path2label_cargs(
 
 
 def mri_path2label_outputs(
-    params: MriPath2labelParameters,
+    params: MriPath2labelParamsDict,
     execution: Execution,
 ) -> MriPath2labelOutputs:
     """
@@ -249,7 +249,7 @@ def mri_path2label_outputs(
 
 
 def mri_path2label_execute(
-    params: MriPath2labelParameters,
+    params: MriPath2labelParamsDict,
     runner: Runner | None = None,
 ) -> MriPath2labelOutputs:
     """
@@ -339,6 +339,8 @@ def mri_path2label(
 __all__ = [
     "MRI_PATH2LABEL_METADATA",
     "MriPath2labelOutputs",
+    "MriPath2labelParamsDict",
+    "MriPath2labelParamsDictTagged",
     "mri_path2label",
     "mri_path2label_execute",
     "mri_path2label_params",

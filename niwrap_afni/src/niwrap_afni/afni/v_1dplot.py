@@ -13,50 +13,50 @@ V_1DPLOT_METADATA = Metadata(
 )
 
 
-V1dplotNolineParameters = typing.TypedDict('V1dplotNolineParameters', {
+V1dplotNolineParamsDict = typing.TypedDict('V1dplotNolineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noline"]],
     "noline": bool,
     "NOLINE": bool,
 })
-V1dplotNolineParametersTagged = typing.TypedDict('V1dplotNolineParametersTagged', {
+V1dplotNolineParamsDictTagged = typing.TypedDict('V1dplotNolineParamsDictTagged', {
     "@type": typing.Literal["noline"],
     "noline": bool,
     "NOLINE": bool,
 })
 
 
-V1dplotThickParameters = typing.TypedDict('V1dplotThickParameters', {
+V1dplotThickParamsDict = typing.TypedDict('V1dplotThickParamsDict', {
     "@type": typing.NotRequired[typing.Literal["thick"]],
     "thick": bool,
     "THICK": bool,
 })
-V1dplotThickParametersTagged = typing.TypedDict('V1dplotThickParametersTagged', {
+V1dplotThickParamsDictTagged = typing.TypedDict('V1dplotThickParamsDictTagged', {
     "@type": typing.Literal["thick"],
     "thick": bool,
     "THICK": bool,
 })
 
 
-V1dplotRboxParameters = typing.TypedDict('V1dplotRboxParameters', {
+V1dplotRboxParamsDict = typing.TypedDict('V1dplotRboxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rbox"]],
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
-V1dplotRboxParametersTagged = typing.TypedDict('V1dplotRboxParametersTagged', {
+V1dplotRboxParamsDictTagged = typing.TypedDict('V1dplotRboxParamsDictTagged', {
     "@type": typing.Literal["rbox"],
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
 
 
-V1dplotParameters = typing.TypedDict('V1dplotParameters', {
+V1dplotParamsDict = typing.TypedDict('V1dplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dplot"]],
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,
     "one": bool,
     "sepscl": bool,
-    "noline": typing.NotRequired[V1dplotNolineParameters | None],
+    "noline": typing.NotRequired[V1dplotNolineParamsDict | None],
     "box": bool,
     "hist": bool,
     "norm2": bool,
@@ -93,24 +93,24 @@ V1dplotParameters = typing.TypedDict('V1dplotParameters', {
     "yaxis": typing.NotRequired[str | None],
     "ynames": typing.NotRequired[list[str] | None],
     "volreg": bool,
-    "thick": typing.NotRequired[V1dplotThickParameters | None],
+    "thick": typing.NotRequired[V1dplotThickParamsDict | None],
     "dashed": typing.NotRequired[str | None],
     "setenv": typing.NotRequired[str | None],
     "censor_RGB": typing.NotRequired[str | None],
     "censor": typing.NotRequired[InputPathType | None],
     "CENSORTR": typing.NotRequired[list[str] | None],
     "concat": typing.NotRequired[InputPathType | None],
-    "rbox": typing.NotRequired[V1dplotRboxParameters | None],
+    "rbox": typing.NotRequired[V1dplotRboxParamsDict | None],
     "line": typing.NotRequired[str | None],
 })
-V1dplotParametersTagged = typing.TypedDict('V1dplotParametersTagged', {
+V1dplotParamsDictTagged = typing.TypedDict('V1dplotParamsDictTagged', {
     "@type": typing.Literal["afni/1dplot"],
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,
     "one": bool,
     "sepscl": bool,
-    "noline": typing.NotRequired[V1dplotNolineParameters | None],
+    "noline": typing.NotRequired[V1dplotNolineParamsDict | None],
     "box": bool,
     "hist": bool,
     "norm2": bool,
@@ -147,22 +147,22 @@ V1dplotParametersTagged = typing.TypedDict('V1dplotParametersTagged', {
     "yaxis": typing.NotRequired[str | None],
     "ynames": typing.NotRequired[list[str] | None],
     "volreg": bool,
-    "thick": typing.NotRequired[V1dplotThickParameters | None],
+    "thick": typing.NotRequired[V1dplotThickParamsDict | None],
     "dashed": typing.NotRequired[str | None],
     "setenv": typing.NotRequired[str | None],
     "censor_RGB": typing.NotRequired[str | None],
     "censor": typing.NotRequired[InputPathType | None],
     "CENSORTR": typing.NotRequired[list[str] | None],
     "concat": typing.NotRequired[InputPathType | None],
-    "rbox": typing.NotRequired[V1dplotRboxParameters | None],
+    "rbox": typing.NotRequired[V1dplotRboxParamsDict | None],
     "line": typing.NotRequired[str | None],
 })
 
 
-def v_1dplot_noline_params(
+def v_1dplot_noline(
     noline: bool = False,
     noline_: bool = False,
-) -> V1dplotNolineParametersTagged:
+) -> V1dplotNolineParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def v_1dplot_noline_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dplotNolineParameters` object.
+    `V1dplotNolineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def v_1dplot_noline_validate(
 
 
 def v_1dplot_noline_cargs(
-    params: V1dplotNolineParameters,
+    params: V1dplotNolineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -224,10 +224,10 @@ def v_1dplot_noline_cargs(
     return cargs
 
 
-def v_1dplot_thick_params(
+def v_1dplot_thick(
     thick: bool = False,
     thick_: bool = False,
-) -> V1dplotThickParametersTagged:
+) -> V1dplotThickParamsDictTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def v_1dplot_thick_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dplotThickParameters` object.
+    `V1dplotThickParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -268,7 +268,7 @@ def v_1dplot_thick_validate(
 
 
 def v_1dplot_thick_cargs(
-    params: V1dplotThickParameters,
+    params: V1dplotThickParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,10 +288,10 @@ def v_1dplot_thick_cargs(
     return cargs
 
 
-def v_1dplot_rbox_params(
+def v_1dplot_rbox(
     rbox: str | None = None,
     rbox_: str | None = None,
-) -> V1dplotRboxParametersTagged:
+) -> V1dplotRboxParamsDictTagged:
     """
     Build parameters.
     
@@ -316,7 +316,7 @@ def v_1dplot_rbox_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dplotRboxParameters` object.
+    `V1dplotRboxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -332,7 +332,7 @@ def v_1dplot_rbox_validate(
 
 
 def v_1dplot_rbox_cargs(
-    params: V1dplotRboxParameters,
+    params: V1dplotRboxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -360,7 +360,7 @@ def v_1dplot_rbox_cargs(
 
 class V1dplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dplotParameters(...)`.
+    Output object returned when calling `V1dplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -372,7 +372,7 @@ def v_1dplot_params(
     sep: bool = False,
     one: bool = False,
     sepscl: bool = False,
-    noline: V1dplotNolineParameters | None = None,
+    noline: V1dplotNolineParamsDict | None = None,
     box: bool = False,
     hist: bool = False,
     norm2: bool = False,
@@ -409,16 +409,16 @@ def v_1dplot_params(
     yaxis: str | None = None,
     ynames: list[str] | None = None,
     volreg: bool = False,
-    thick: V1dplotThickParameters | None = None,
+    thick: V1dplotThickParamsDict | None = None,
     dashed: str | None = None,
     setenv: str | None = None,
     censor_rgb: str | None = None,
     censor: InputPathType | None = None,
     censortr: list[str] | None = None,
     concat: InputPathType | None = None,
-    rbox: V1dplotRboxParameters | None = None,
+    rbox: V1dplotRboxParamsDict | None = None,
     line: str | None = None,
-) -> V1dplotParametersTagged:
+) -> V1dplotParamsDictTagged:
     """
     Build parameters.
     
@@ -594,7 +594,7 @@ def v_1dplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dplotParameters` object.
+    `V1dplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -779,7 +779,7 @@ def v_1dplot_validate(
 
 
 def v_1dplot_cargs(
-    params: V1dplotParameters,
+    params: V1dplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -994,7 +994,7 @@ def v_1dplot_cargs(
 
 
 def v_1dplot_outputs(
-    params: V1dplotParameters,
+    params: V1dplotParamsDict,
     execution: Execution,
 ) -> V1dplotOutputs:
     """
@@ -1013,7 +1013,7 @@ def v_1dplot_outputs(
 
 
 def v_1dplot_execute(
-    params: V1dplotParameters,
+    params: V1dplotParamsDict,
     runner: Runner | None = None,
 ) -> V1dplotOutputs:
     """
@@ -1048,7 +1048,7 @@ def v_1dplot(
     sep: bool = False,
     one: bool = False,
     sepscl: bool = False,
-    noline: V1dplotNolineParameters | None = None,
+    noline: V1dplotNolineParamsDict | None = None,
     box: bool = False,
     hist: bool = False,
     norm2: bool = False,
@@ -1085,14 +1085,14 @@ def v_1dplot(
     yaxis: str | None = None,
     ynames: list[str] | None = None,
     volreg: bool = False,
-    thick: V1dplotThickParameters | None = None,
+    thick: V1dplotThickParamsDict | None = None,
     dashed: str | None = None,
     setenv: str | None = None,
     censor_rgb: str | None = None,
     censor: InputPathType | None = None,
     censortr: list[str] | None = None,
     concat: InputPathType | None = None,
-    rbox: V1dplotRboxParameters | None = None,
+    rbox: V1dplotRboxParamsDict | None = None,
     line: str | None = None,
     runner: Runner | None = None,
 ) -> V1dplotOutputs:
@@ -1239,12 +1239,20 @@ def v_1dplot(
 
 
 __all__ = [
+    "V1dplotNolineParamsDict",
+    "V1dplotNolineParamsDictTagged",
     "V1dplotOutputs",
+    "V1dplotParamsDict",
+    "V1dplotParamsDictTagged",
+    "V1dplotRboxParamsDict",
+    "V1dplotRboxParamsDictTagged",
+    "V1dplotThickParamsDict",
+    "V1dplotThickParamsDictTagged",
     "V_1DPLOT_METADATA",
     "v_1dplot",
     "v_1dplot_execute",
-    "v_1dplot_noline_params",
+    "v_1dplot_noline",
     "v_1dplot_params",
-    "v_1dplot_rbox_params",
-    "v_1dplot_thick_params",
+    "v_1dplot_rbox",
+    "v_1dplot_thick",
 ]

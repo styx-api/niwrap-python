@@ -13,11 +13,11 @@ FS_INSTALL_MCR_METADATA = Metadata(
 )
 
 
-FsInstallMcrParameters = typing.TypedDict('FsInstallMcrParameters', {
+FsInstallMcrParamsDict = typing.TypedDict('FsInstallMcrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_install_mcr"]],
     "mcr_version": str,
 })
-FsInstallMcrParametersTagged = typing.TypedDict('FsInstallMcrParametersTagged', {
+FsInstallMcrParamsDictTagged = typing.TypedDict('FsInstallMcrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_install_mcr"],
     "mcr_version": str,
 })
@@ -25,7 +25,7 @@ FsInstallMcrParametersTagged = typing.TypedDict('FsInstallMcrParametersTagged', 
 
 class FsInstallMcrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsInstallMcrParameters(...)`.
+    Output object returned when calling `FsInstallMcrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FsInstallMcrOutputs(typing.NamedTuple):
 
 def fs_install_mcr_params(
     mcr_version: str,
-) -> FsInstallMcrParametersTagged:
+) -> FsInstallMcrParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def fs_install_mcr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsInstallMcrParameters` object.
+    `FsInstallMcrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def fs_install_mcr_validate(
 
 
 def fs_install_mcr_cargs(
-    params: FsInstallMcrParameters,
+    params: FsInstallMcrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def fs_install_mcr_cargs(
 
 
 def fs_install_mcr_outputs(
-    params: FsInstallMcrParameters,
+    params: FsInstallMcrParamsDict,
     execution: Execution,
 ) -> FsInstallMcrOutputs:
     """
@@ -107,7 +107,7 @@ def fs_install_mcr_outputs(
 
 
 def fs_install_mcr_execute(
-    params: FsInstallMcrParameters,
+    params: FsInstallMcrParamsDict,
     runner: Runner | None = None,
 ) -> FsInstallMcrOutputs:
     """
@@ -164,6 +164,8 @@ def fs_install_mcr(
 __all__ = [
     "FS_INSTALL_MCR_METADATA",
     "FsInstallMcrOutputs",
+    "FsInstallMcrParamsDict",
+    "FsInstallMcrParamsDictTagged",
     "fs_install_mcr",
     "fs_install_mcr_execute",
     "fs_install_mcr_params",

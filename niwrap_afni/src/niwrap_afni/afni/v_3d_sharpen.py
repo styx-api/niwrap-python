@@ -13,13 +13,13 @@ V_3D_SHARPEN_METADATA = Metadata(
 )
 
 
-V3dSharpenParameters = typing.TypedDict('V3dSharpenParameters', {
+V3dSharpenParamsDict = typing.TypedDict('V3dSharpenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSharpen"]],
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
     "output_prefix": str,
 })
-V3dSharpenParametersTagged = typing.TypedDict('V3dSharpenParametersTagged', {
+V3dSharpenParamsDictTagged = typing.TypedDict('V3dSharpenParamsDictTagged', {
     "@type": typing.Literal["afni/3dSharpen"],
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
@@ -29,7 +29,7 @@ V3dSharpenParametersTagged = typing.TypedDict('V3dSharpenParametersTagged', {
 
 class V3dSharpenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSharpenParameters(...)`.
+    Output object returned when calling `V3dSharpenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3d_sharpen_params(
     input_dataset: InputPathType,
     output_prefix: str,
     sharpening_factor: float | None = None,
-) -> V3dSharpenParametersTagged:
+) -> V3dSharpenParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def v_3d_sharpen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSharpenParameters` object.
+    `V3dSharpenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def v_3d_sharpen_validate(
 
 
 def v_3d_sharpen_cargs(
-    params: V3dSharpenParameters,
+    params: V3dSharpenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def v_3d_sharpen_cargs(
 
 
 def v_3d_sharpen_outputs(
-    params: V3dSharpenParameters,
+    params: V3dSharpenParamsDict,
     execution: Execution,
 ) -> V3dSharpenOutputs:
     """
@@ -140,7 +140,7 @@ def v_3d_sharpen_outputs(
 
 
 def v_3d_sharpen_execute(
-    params: V3dSharpenParameters,
+    params: V3dSharpenParamsDict,
     runner: Runner | None = None,
 ) -> V3dSharpenOutputs:
     """
@@ -205,6 +205,8 @@ def v_3d_sharpen(
 
 __all__ = [
     "V3dSharpenOutputs",
+    "V3dSharpenParamsDict",
+    "V3dSharpenParamsDictTagged",
     "V_3D_SHARPEN_METADATA",
     "v_3d_sharpen",
     "v_3d_sharpen_execute",

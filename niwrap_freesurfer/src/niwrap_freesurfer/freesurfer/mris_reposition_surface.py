@@ -13,7 +13,7 @@ MRIS_REPOSITION_SURFACE_METADATA = Metadata(
 )
 
 
-MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParameters', {
+MrisRepositionSurfaceParamsDict = typing.TypedDict('MrisRepositionSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_reposition_surface"]],
     "surf": InputPathType,
     "volume": InputPathType,
@@ -23,7 +23,7 @@ MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParamet
     "sigma": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],
 })
-MrisRepositionSurfaceParametersTagged = typing.TypedDict('MrisRepositionSurfaceParametersTagged', {
+MrisRepositionSurfaceParamsDictTagged = typing.TypedDict('MrisRepositionSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_reposition_surface"],
     "surf": InputPathType,
     "volume": InputPathType,
@@ -37,7 +37,7 @@ MrisRepositionSurfaceParametersTagged = typing.TypedDict('MrisRepositionSurfaceP
 
 class MrisRepositionSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRepositionSurfaceParameters(...)`.
+    Output object returned when calling `MrisRepositionSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_reposition_surface_params(
     size: float | None = None,
     sigma: float | None = None,
     iterations: float | None = None,
-) -> MrisRepositionSurfaceParametersTagged:
+) -> MrisRepositionSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mris_reposition_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRepositionSurfaceParameters` object.
+    `MrisRepositionSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def mris_reposition_surface_validate(
 
 
 def mris_reposition_surface_cargs(
-    params: MrisRepositionSurfaceParameters,
+    params: MrisRepositionSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def mris_reposition_surface_cargs(
 
 
 def mris_reposition_surface_outputs(
-    params: MrisRepositionSurfaceParameters,
+    params: MrisRepositionSurfaceParamsDict,
     execution: Execution,
 ) -> MrisRepositionSurfaceOutputs:
     """
@@ -193,7 +193,7 @@ def mris_reposition_surface_outputs(
 
 
 def mris_reposition_surface_execute(
-    params: MrisRepositionSurfaceParameters,
+    params: MrisRepositionSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> MrisRepositionSurfaceOutputs:
     """
@@ -267,6 +267,8 @@ def mris_reposition_surface(
 __all__ = [
     "MRIS_REPOSITION_SURFACE_METADATA",
     "MrisRepositionSurfaceOutputs",
+    "MrisRepositionSurfaceParamsDict",
+    "MrisRepositionSurfaceParamsDictTagged",
     "mris_reposition_surface",
     "mris_reposition_surface_execute",
     "mris_reposition_surface_params",

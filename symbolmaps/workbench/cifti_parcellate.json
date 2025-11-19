@@ -6,7 +6,7 @@
     },
     "spatial-weights": {
       "var_param": "spatial_weights",
-      "fn_struct_make_params": "cifti_parcellate_spatial_weights_params",
+      "fn_struct_make_params": "cifti_parcellate_spatial_weights",
       "properties": {
         "left-surf": {
           "var_param": "left_surf"
@@ -36,7 +36,7 @@
     },
     "exclude-outliers": {
       "var_param": "exclude_outliers",
-      "fn_struct_make_params": "cifti_parcellate_exclude_outliers_params",
+      "fn_struct_make_params": "cifti_parcellate_exclude_outliers",
       "properties": {
         "sigma-below": {
           "var_param": "sigma_below"

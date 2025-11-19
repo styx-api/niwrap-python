@@ -12,7 +12,7 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
+VolumeLabelImportParamsDict = typing.TypedDict('VolumeLabelImportParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-import"]],
     "output": str,
     "discard-others": bool,
@@ -23,7 +23,7 @@ VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
     "input": InputPathType,
     "label-list-file": str,
 })
-VolumeLabelImportParametersTagged = typing.TypedDict('VolumeLabelImportParametersTagged', {
+VolumeLabelImportParamsDictTagged = typing.TypedDict('VolumeLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-import"],
     "output": str,
     "discard-others": bool,
@@ -38,7 +38,7 @@ VolumeLabelImportParametersTagged = typing.TypedDict('VolumeLabelImportParameter
 
 class VolumeLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelImportParameters(...)`.
+    Output object returned when calling `VolumeLabelImportParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def volume_label_import_params(
     label_list_file: str,
     discard_others: bool = False,
     drop_unused_labels: bool = False,
-) -> VolumeLabelImportParametersTagged:
+) -> VolumeLabelImportParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def volume_label_import_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelImportParameters` object.
+    `VolumeLabelImportParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def volume_label_import_validate(
 
 
 def volume_label_import_cargs(
-    params: VolumeLabelImportParameters,
+    params: VolumeLabelImportParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def volume_label_import_cargs(
 
 
 def volume_label_import_outputs(
-    params: VolumeLabelImportParameters,
+    params: VolumeLabelImportParamsDict,
     execution: Execution,
 ) -> VolumeLabelImportOutputs:
     """
@@ -192,7 +192,7 @@ def volume_label_import_outputs(
 
 
 def volume_label_import_execute(
-    params: VolumeLabelImportParameters,
+    params: VolumeLabelImportParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
@@ -316,6 +316,8 @@ def volume_label_import(
 __all__ = [
     "VOLUME_LABEL_IMPORT_METADATA",
     "VolumeLabelImportOutputs",
+    "VolumeLabelImportParamsDict",
+    "VolumeLabelImportParamsDictTagged",
     "volume_label_import",
     "volume_label_import_execute",
     "volume_label_import_params",

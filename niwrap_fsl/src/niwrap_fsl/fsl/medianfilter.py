@@ -13,12 +13,12 @@ MEDIANFILTER_METADATA = Metadata(
 )
 
 
-MedianfilterParameters = typing.TypedDict('MedianfilterParameters', {
+MedianfilterParamsDict = typing.TypedDict('MedianfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/medianfilter"]],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
-MedianfilterParametersTagged = typing.TypedDict('MedianfilterParametersTagged', {
+MedianfilterParamsDictTagged = typing.TypedDict('MedianfilterParamsDictTagged', {
     "@type": typing.Literal["fsl/medianfilter"],
     "infile": InputPathType,
     "outfile": InputPathType,
@@ -27,7 +27,7 @@ MedianfilterParametersTagged = typing.TypedDict('MedianfilterParametersTagged', 
 
 class MedianfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MedianfilterParameters(...)`.
+    Output object returned when calling `MedianfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MedianfilterOutputs(typing.NamedTuple):
 def medianfilter_params(
     infile: InputPathType,
     outfile: InputPathType,
-) -> MedianfilterParametersTagged:
+) -> MedianfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def medianfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MedianfilterParameters` object.
+    `MedianfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def medianfilter_validate(
 
 
 def medianfilter_cargs(
-    params: MedianfilterParameters,
+    params: MedianfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def medianfilter_cargs(
 
 
 def medianfilter_outputs(
-    params: MedianfilterParameters,
+    params: MedianfilterParamsDict,
     execution: Execution,
 ) -> MedianfilterOutputs:
     """
@@ -120,7 +120,7 @@ def medianfilter_outputs(
 
 
 def medianfilter_execute(
-    params: MedianfilterParameters,
+    params: MedianfilterParamsDict,
     runner: Runner | None = None,
 ) -> MedianfilterOutputs:
     """
@@ -180,6 +180,8 @@ def medianfilter(
 __all__ = [
     "MEDIANFILTER_METADATA",
     "MedianfilterOutputs",
+    "MedianfilterParamsDict",
+    "MedianfilterParamsDictTagged",
     "medianfilter",
     "medianfilter_execute",
     "medianfilter_params",

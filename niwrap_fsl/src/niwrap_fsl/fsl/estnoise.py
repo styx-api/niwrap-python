@@ -13,14 +13,14 @@ ESTNOISE_METADATA = Metadata(
 )
 
 
-EstnoiseParameters = typing.TypedDict('EstnoiseParameters', {
+EstnoiseParamsDict = typing.TypedDict('EstnoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/estnoise"]],
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
     "temp_hp_sigma": typing.NotRequired[float | None],
     "temp_lp_sigma": typing.NotRequired[float | None],
 })
-EstnoiseParametersTagged = typing.TypedDict('EstnoiseParametersTagged', {
+EstnoiseParamsDictTagged = typing.TypedDict('EstnoiseParamsDictTagged', {
     "@type": typing.Literal["fsl/estnoise"],
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
@@ -31,7 +31,7 @@ EstnoiseParametersTagged = typing.TypedDict('EstnoiseParametersTagged', {
 
 class EstnoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EstnoiseParameters(...)`.
+    Output object returned when calling `EstnoiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def estnoise_params(
     spatial_sigma: float | None = None,
     temp_hp_sigma: float | None = None,
     temp_lp_sigma: float | None = None,
-) -> EstnoiseParametersTagged:
+) -> EstnoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def estnoise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EstnoiseParameters` object.
+    `EstnoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def estnoise_validate(
 
 
 def estnoise_cargs(
-    params: EstnoiseParameters,
+    params: EstnoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def estnoise_cargs(
 
 
 def estnoise_outputs(
-    params: EstnoiseParameters,
+    params: EstnoiseParamsDict,
     execution: Execution,
 ) -> EstnoiseOutputs:
     """
@@ -142,7 +142,7 @@ def estnoise_outputs(
 
 
 def estnoise_execute(
-    params: EstnoiseParameters,
+    params: EstnoiseParamsDict,
     runner: Runner | None = None,
 ) -> EstnoiseOutputs:
     """
@@ -207,6 +207,8 @@ def estnoise(
 __all__ = [
     "ESTNOISE_METADATA",
     "EstnoiseOutputs",
+    "EstnoiseParamsDict",
+    "EstnoiseParamsDictTagged",
     "estnoise",
     "estnoise_execute",
     "estnoise_params",

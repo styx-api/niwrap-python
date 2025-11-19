@@ -13,14 +13,14 @@ MAKE_CORTEX_LABEL_METADATA = Metadata(
 )
 
 
-MakeCortexLabelParameters = typing.TypedDict('MakeCortexLabelParameters', {
+MakeCortexLabelParamsDict = typing.TypedDict('MakeCortexLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_cortex_label"]],
     "subject": str,
     "hemi": typing.NotRequired[str | None],
     "use_a2009s": bool,
     "output_name": typing.NotRequired[str | None],
 })
-MakeCortexLabelParametersTagged = typing.TypedDict('MakeCortexLabelParametersTagged', {
+MakeCortexLabelParamsDictTagged = typing.TypedDict('MakeCortexLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_cortex_label"],
     "subject": str,
     "hemi": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ MakeCortexLabelParametersTagged = typing.TypedDict('MakeCortexLabelParametersTag
 
 class MakeCortexLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeCortexLabelParameters(...)`.
+    Output object returned when calling `MakeCortexLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def make_cortex_label_params(
     hemi: str | None = None,
     use_a2009s: bool = False,
     output_name: str | None = None,
-) -> MakeCortexLabelParametersTagged:
+) -> MakeCortexLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def make_cortex_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeCortexLabelParameters` object.
+    `MakeCortexLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def make_cortex_label_validate(
 
 
 def make_cortex_label_cargs(
-    params: MakeCortexLabelParameters,
+    params: MakeCortexLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def make_cortex_label_cargs(
 
 
 def make_cortex_label_outputs(
-    params: MakeCortexLabelParameters,
+    params: MakeCortexLabelParamsDict,
     execution: Execution,
 ) -> MakeCortexLabelOutputs:
     """
@@ -156,7 +156,7 @@ def make_cortex_label_outputs(
 
 
 def make_cortex_label_execute(
-    params: MakeCortexLabelParameters,
+    params: MakeCortexLabelParamsDict,
     runner: Runner | None = None,
 ) -> MakeCortexLabelOutputs:
     """
@@ -223,6 +223,8 @@ def make_cortex_label(
 __all__ = [
     "MAKE_CORTEX_LABEL_METADATA",
     "MakeCortexLabelOutputs",
+    "MakeCortexLabelParamsDict",
+    "MakeCortexLabelParamsDictTagged",
     "make_cortex_label",
     "make_cortex_label_execute",
     "make_cortex_label_params",

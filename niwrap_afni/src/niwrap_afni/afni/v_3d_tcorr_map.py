@@ -13,7 +13,7 @@ V_3D_TCORR_MAP_METADATA = Metadata(
 )
 
 
-V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
+V3dTcorrMapParamsDict = typing.TypedDict('V3dTcorrMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTcorrMap"]],
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
     "sexpr": typing.NotRequired[str | None],
     "hist": typing.NotRequired[str | None],
 })
-V3dTcorrMapParametersTagged = typing.TypedDict('V3dTcorrMapParametersTagged', {
+V3dTcorrMapParamsDictTagged = typing.TypedDict('V3dTcorrMapParamsDictTagged', {
     "@type": typing.Literal["afni/3dTcorrMap"],
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ V3dTcorrMapParametersTagged = typing.TypedDict('V3dTcorrMapParametersTagged', {
 
 class V3dTcorrMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTcorrMapParameters(...)`.
+    Output object returned when calling `V3dTcorrMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def v_3d_tcorr_map_params(
     cexpr: str | None = None,
     sexpr: str | None = None,
     hist: str | None = None,
-) -> V3dTcorrMapParametersTagged:
+) -> V3dTcorrMapParamsDictTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def v_3d_tcorr_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTcorrMapParameters` object.
+    `V3dTcorrMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def v_3d_tcorr_map_validate(
 
 
 def v_3d_tcorr_map_cargs(
-    params: V3dTcorrMapParameters,
+    params: V3dTcorrMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -317,7 +317,7 @@ def v_3d_tcorr_map_cargs(
 
 
 def v_3d_tcorr_map_outputs(
-    params: V3dTcorrMapParameters,
+    params: V3dTcorrMapParamsDict,
     execution: Execution,
 ) -> V3dTcorrMapOutputs:
     """
@@ -336,7 +336,7 @@ def v_3d_tcorr_map_outputs(
 
 
 def v_3d_tcorr_map_execute(
-    params: V3dTcorrMapParameters,
+    params: V3dTcorrMapParamsDict,
     runner: Runner | None = None,
 ) -> V3dTcorrMapOutputs:
     """
@@ -451,6 +451,8 @@ def v_3d_tcorr_map(
 
 __all__ = [
     "V3dTcorrMapOutputs",
+    "V3dTcorrMapParamsDict",
+    "V3dTcorrMapParamsDictTagged",
     "V_3D_TCORR_MAP_METADATA",
     "v_3d_tcorr_map",
     "v_3d_tcorr_map_execute",

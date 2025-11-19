@@ -13,7 +13,7 @@ SWAP_VOXELWISE_METADATA = Metadata(
 )
 
 
-SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
+SwapVoxelwiseParamsDict = typing.TypedDict('SwapVoxelwiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/swap_voxelwise"]],
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
     "crossing_thresh": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
-SwapVoxelwiseParametersTagged = typing.TypedDict('SwapVoxelwiseParametersTagged', {
+SwapVoxelwiseParamsDictTagged = typing.TypedDict('SwapVoxelwiseParamsDictTagged', {
     "@type": typing.Literal["fsl/swap_voxelwise"],
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ SwapVoxelwiseParametersTagged = typing.TypedDict('SwapVoxelwiseParametersTagged'
 
 class SwapVoxelwiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SwapVoxelwiseParameters(...)`.
+    Output object returned when calling `SwapVoxelwiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def swap_voxelwise_params(
     init_mask: InputPathType | None = None,
     crossing_thresh: float | None = None,
     verbose_flag: bool = False,
-) -> SwapVoxelwiseParametersTagged:
+) -> SwapVoxelwiseParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def swap_voxelwise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SwapVoxelwiseParameters` object.
+    `SwapVoxelwiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def swap_voxelwise_validate(
 
 
 def swap_voxelwise_cargs(
-    params: SwapVoxelwiseParameters,
+    params: SwapVoxelwiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def swap_voxelwise_cargs(
 
 
 def swap_voxelwise_outputs(
-    params: SwapVoxelwiseParameters,
+    params: SwapVoxelwiseParamsDict,
     execution: Execution,
 ) -> SwapVoxelwiseOutputs:
     """
@@ -208,7 +208,7 @@ def swap_voxelwise_outputs(
 
 
 def swap_voxelwise_execute(
-    params: SwapVoxelwiseParameters,
+    params: SwapVoxelwiseParamsDict,
     runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:
     """
@@ -287,6 +287,8 @@ def swap_voxelwise(
 __all__ = [
     "SWAP_VOXELWISE_METADATA",
     "SwapVoxelwiseOutputs",
+    "SwapVoxelwiseParamsDict",
+    "SwapVoxelwiseParamsDictTagged",
     "swap_voxelwise",
     "swap_voxelwise_execute",
     "swap_voxelwise_params",

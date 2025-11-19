@@ -13,14 +13,14 @@ MRI_STRIP_NONWHITE_METADATA = Metadata(
 )
 
 
-MriStripNonwhiteParameters = typing.TypedDict('MriStripNonwhiteParameters', {
+MriStripNonwhiteParamsDict = typing.TypedDict('MriStripNonwhiteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_nonwhite"]],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "template_volume": InputPathType,
     "output_volume": str,
 })
-MriStripNonwhiteParametersTagged = typing.TypedDict('MriStripNonwhiteParametersTagged', {
+MriStripNonwhiteParamsDictTagged = typing.TypedDict('MriStripNonwhiteParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_strip_nonwhite"],
     "input_volume": InputPathType,
     "transform": InputPathType,
@@ -31,7 +31,7 @@ MriStripNonwhiteParametersTagged = typing.TypedDict('MriStripNonwhiteParametersT
 
 class MriStripNonwhiteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriStripNonwhiteParameters(...)`.
+    Output object returned when calling `MriStripNonwhiteParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_strip_nonwhite_params(
     transform: InputPathType,
     template_volume: InputPathType,
     output_volume: str,
-) -> MriStripNonwhiteParametersTagged:
+) -> MriStripNonwhiteParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mri_strip_nonwhite_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriStripNonwhiteParameters` object.
+    `MriStripNonwhiteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mri_strip_nonwhite_validate(
 
 
 def mri_strip_nonwhite_cargs(
-    params: MriStripNonwhiteParameters,
+    params: MriStripNonwhiteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mri_strip_nonwhite_cargs(
 
 
 def mri_strip_nonwhite_outputs(
-    params: MriStripNonwhiteParameters,
+    params: MriStripNonwhiteParamsDict,
     execution: Execution,
 ) -> MriStripNonwhiteOutputs:
     """
@@ -140,7 +140,7 @@ def mri_strip_nonwhite_outputs(
 
 
 def mri_strip_nonwhite_execute(
-    params: MriStripNonwhiteParameters,
+    params: MriStripNonwhiteParamsDict,
     runner: Runner | None = None,
 ) -> MriStripNonwhiteOutputs:
     """
@@ -208,6 +208,8 @@ def mri_strip_nonwhite(
 __all__ = [
     "MRI_STRIP_NONWHITE_METADATA",
     "MriStripNonwhiteOutputs",
+    "MriStripNonwhiteParamsDict",
+    "MriStripNonwhiteParamsDictTagged",
     "mri_strip_nonwhite",
     "mri_strip_nonwhite_execute",
     "mri_strip_nonwhite_params",

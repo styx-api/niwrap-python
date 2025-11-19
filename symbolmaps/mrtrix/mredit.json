@@ -3,7 +3,7 @@
   "properties": {
     "plane": {
       "var_param": "plane",
-      "fn_struct_make_params": "mredit_plane_params",
+      "fn_struct_make_params": "mredit_plane",
       "properties": {
         "axis": {
           "var_param": "axis"
@@ -18,7 +18,7 @@
     },
     "sphere": {
       "var_param": "sphere",
-      "fn_struct_make_params": "mredit_sphere_params",
+      "fn_struct_make_params": "mredit_sphere",
       "properties": {
         "position": {
           "var_param": "position"
@@ -33,7 +33,7 @@
     },
     "voxel": {
       "var_param": "voxel",
-      "fn_struct_make_params": "mredit_voxel_params",
+      "fn_struct_make_params": "mredit_voxel",
       "properties": {
         "position": {
           "var_param": "position"
@@ -63,7 +63,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mredit_config_params",
+      "fn_struct_make_params": "mredit_config",
       "properties": {
         "key": {
           "var_param": "key"

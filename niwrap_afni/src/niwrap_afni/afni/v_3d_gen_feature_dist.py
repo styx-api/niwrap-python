@@ -13,7 +13,7 @@ V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
 )
 
 
-V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
+V3dGenFeatureDistParamsDict = typing.TypedDict('V3dGenFeatureDistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dGenFeatureDist"]],
     "features_string": str,
     "class_string": str,
@@ -28,7 +28,7 @@ V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
     "labeltable": typing.NotRequired[InputPathType | None],
     "show_histograms": typing.NotRequired[str | None],
 })
-V3dGenFeatureDistParametersTagged = typing.TypedDict('V3dGenFeatureDistParametersTagged', {
+V3dGenFeatureDistParamsDictTagged = typing.TypedDict('V3dGenFeatureDistParamsDictTagged', {
     "@type": typing.Literal["afni/3dGenFeatureDist"],
     "features_string": str,
     "class_string": str,
@@ -47,7 +47,7 @@ V3dGenFeatureDistParametersTagged = typing.TypedDict('V3dGenFeatureDistParameter
 
 class V3dGenFeatureDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dGenFeatureDistParameters(...)`.
+    Output object returned when calling `V3dGenFeatureDistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def v_3d_gen_feature_dist_params(
     hspec: list[str] | None = None,
     labeltable: InputPathType | None = None,
     show_histograms: str | None = None,
-) -> V3dGenFeatureDistParametersTagged:
+) -> V3dGenFeatureDistParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def v_3d_gen_feature_dist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dGenFeatureDistParameters` object.
+    `V3dGenFeatureDistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def v_3d_gen_feature_dist_validate(
 
 
 def v_3d_gen_feature_dist_cargs(
-    params: V3dGenFeatureDistParameters,
+    params: V3dGenFeatureDistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def v_3d_gen_feature_dist_cargs(
 
 
 def v_3d_gen_feature_dist_outputs(
-    params: V3dGenFeatureDistParameters,
+    params: V3dGenFeatureDistParamsDict,
     execution: Execution,
 ) -> V3dGenFeatureDistOutputs:
     """
@@ -268,7 +268,7 @@ def v_3d_gen_feature_dist_outputs(
 
 
 def v_3d_gen_feature_dist_execute(
-    params: V3dGenFeatureDistParameters,
+    params: V3dGenFeatureDistParamsDict,
     runner: Runner | None = None,
 ) -> V3dGenFeatureDistOutputs:
     """
@@ -359,6 +359,8 @@ def v_3d_gen_feature_dist(
 
 __all__ = [
     "V3dGenFeatureDistOutputs",
+    "V3dGenFeatureDistParamsDict",
+    "V3dGenFeatureDistParamsDictTagged",
     "V_3D_GEN_FEATURE_DIST_METADATA",
     "v_3d_gen_feature_dist",
     "v_3d_gen_feature_dist_execute",

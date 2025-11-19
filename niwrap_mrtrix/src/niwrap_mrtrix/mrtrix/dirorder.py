@@ -13,19 +13,19 @@ DIRORDER_METADATA = Metadata(
 )
 
 
-DirorderConfigParameters = typing.TypedDict('DirorderConfigParameters', {
+DirorderConfigParamsDict = typing.TypedDict('DirorderConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirorderConfigParametersTagged = typing.TypedDict('DirorderConfigParametersTagged', {
+DirorderConfigParamsDictTagged = typing.TypedDict('DirorderConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirorderParameters = typing.TypedDict('DirorderParameters', {
+DirorderParamsDict = typing.TypedDict('DirorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirorder"]],
     "cartesian": bool,
     "info": bool,
@@ -33,13 +33,13 @@ DirorderParameters = typing.TypedDict('DirorderParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirorderConfigParameters] | None],
+    "config": typing.NotRequired[list[DirorderConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-DirorderParametersTagged = typing.TypedDict('DirorderParametersTagged', {
+DirorderParamsDictTagged = typing.TypedDict('DirorderParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirorder"],
     "cartesian": bool,
     "info": bool,
@@ -47,7 +47,7 @@ DirorderParametersTagged = typing.TypedDict('DirorderParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirorderConfigParameters] | None],
+    "config": typing.NotRequired[list[DirorderConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -55,10 +55,10 @@ DirorderParametersTagged = typing.TypedDict('DirorderParametersTagged', {
 })
 
 
-def dirorder_config_params(
+def dirorder_config(
     key: str,
     value: str,
-) -> DirorderConfigParametersTagged:
+) -> DirorderConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def dirorder_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirorderConfigParameters` object.
+    `DirorderConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def dirorder_config_validate(
 
 
 def dirorder_config_cargs(
-    params: DirorderConfigParameters,
+    params: DirorderConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def dirorder_config_cargs(
 
 class DirorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirorderParameters(...)`.
+    Output object returned when calling `DirorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def dirorder_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirorderConfigParameters] | None = None,
+    config: list[DirorderConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirorderParametersTagged:
+) -> DirorderParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def dirorder_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirorderParameters` object.
+    `DirorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def dirorder_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirorderConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirorderConfigParamsDict] | None`')
         for e in params["config"]:
             dirorder_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def dirorder_validate(
 
 
 def dirorder_cargs(
-    params: DirorderParameters,
+    params: DirorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -283,7 +283,7 @@ def dirorder_cargs(
 
 
 def dirorder_outputs(
-    params: DirorderParameters,
+    params: DirorderParamsDict,
     execution: Execution,
 ) -> DirorderOutputs:
     """
@@ -303,7 +303,7 @@ def dirorder_outputs(
 
 
 def dirorder_execute(
-    params: DirorderParameters,
+    params: DirorderParamsDict,
     runner: Runner | None = None,
 ) -> DirorderOutputs:
     """
@@ -348,7 +348,7 @@ def dirorder(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirorderConfigParameters] | None = None,
+    config: list[DirorderConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -409,9 +409,13 @@ def dirorder(
 
 __all__ = [
     "DIRORDER_METADATA",
+    "DirorderConfigParamsDict",
+    "DirorderConfigParamsDictTagged",
     "DirorderOutputs",
+    "DirorderParamsDict",
+    "DirorderParamsDictTagged",
     "dirorder",
-    "dirorder_config_params",
+    "dirorder_config",
     "dirorder_execute",
     "dirorder_params",
 ]

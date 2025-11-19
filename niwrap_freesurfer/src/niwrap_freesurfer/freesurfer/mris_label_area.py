@@ -13,7 +13,7 @@ MRIS_LABEL_AREA_METADATA = Metadata(
 )
 
 
-MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
+MrisLabelAreaParamsDict = typing.TypedDict('MrisLabelAreaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_area"]],
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
     "annot_name": str,
     "labels": list[str],
 })
-MrisLabelAreaParametersTagged = typing.TypedDict('MrisLabelAreaParametersTagged', {
+MrisLabelAreaParamsDictTagged = typing.TypedDict('MrisLabelAreaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_label_area"],
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ MrisLabelAreaParametersTagged = typing.TypedDict('MrisLabelAreaParametersTagged'
 
 class MrisLabelAreaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisLabelAreaParameters(...)`.
+    Output object returned when calling `MrisLabelAreaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def mris_label_area_params(
     pct_flag: bool = False,
     log_file: str | None = None,
     brain_vol: str | None = None,
-) -> MrisLabelAreaParametersTagged:
+) -> MrisLabelAreaParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def mris_label_area_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisLabelAreaParameters` object.
+    `MrisLabelAreaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def mris_label_area_validate(
 
 
 def mris_label_area_cargs(
-    params: MrisLabelAreaParameters,
+    params: MrisLabelAreaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def mris_label_area_cargs(
 
 
 def mris_label_area_outputs(
-    params: MrisLabelAreaParameters,
+    params: MrisLabelAreaParamsDict,
     execution: Execution,
 ) -> MrisLabelAreaOutputs:
     """
@@ -188,7 +188,7 @@ def mris_label_area_outputs(
 
 
 def mris_label_area_execute(
-    params: MrisLabelAreaParameters,
+    params: MrisLabelAreaParamsDict,
     runner: Runner | None = None,
 ) -> MrisLabelAreaOutputs:
     """
@@ -267,6 +267,8 @@ def mris_label_area(
 __all__ = [
     "MRIS_LABEL_AREA_METADATA",
     "MrisLabelAreaOutputs",
+    "MrisLabelAreaParamsDict",
+    "MrisLabelAreaParamsDictTagged",
     "mris_label_area",
     "mris_label_area_execute",
     "mris_label_area_params",

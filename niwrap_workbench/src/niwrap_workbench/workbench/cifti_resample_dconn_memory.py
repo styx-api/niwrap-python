@@ -12,244 +12,244 @@ CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
 )
 
 
-CiftiResampleDconnMemoryWeightedParameters = typing.TypedDict('CiftiResampleDconnMemoryWeightedParameters', {
+CiftiResampleDconnMemoryWeightedParamsDict = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["weighted"]],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
-CiftiResampleDconnMemoryWeightedParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryWeightedParametersTagged', {
+CiftiResampleDconnMemoryWeightedParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDictTagged', {
     "@type": typing.Literal["weighted"],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
 
 
-CiftiResampleDconnMemoryVolumePredilateParameters = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParameters', {
+CiftiResampleDconnMemoryVolumePredilateParamsDict = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-predilate"]],
     "dilate-mm": float,
     "nearest": bool,
-    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters | None],
+    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
 })
-CiftiResampleDconnMemoryVolumePredilateParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParametersTagged', {
+CiftiResampleDconnMemoryVolumePredilateParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParamsDictTagged', {
     "@type": typing.Literal["volume-predilate"],
     "dilate-mm": float,
     "nearest": bool,
-    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters | None],
+    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
 })
 
 
-CiftiResampleDconnMemoryWeightedParameters_ = typing.TypedDict('CiftiResampleDconnMemoryWeightedParameters_', {
+CiftiResampleDconnMemoryWeightedParamsDict_ = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDict_', {
     "@type": typing.NotRequired[typing.Literal["weighted"]],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
-CiftiResampleDconnMemoryWeightedParametersTagged_ = typing.TypedDict('CiftiResampleDconnMemoryWeightedParametersTagged_', {
+CiftiResampleDconnMemoryWeightedParamsDictTagged_ = typing.TypedDict('CiftiResampleDconnMemoryWeightedParamsDictTagged_', {
     "@type": typing.Literal["weighted"],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
 
 
-CiftiResampleDconnMemorySurfacePostdilateParameters = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParameters', {
+CiftiResampleDconnMemorySurfacePostdilateParamsDict = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface-postdilate"]],
     "dilate-mm": float,
     "nearest": bool,
     "linear": bool,
-    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters_ | None],
+    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict_ | None],
 })
-CiftiResampleDconnMemorySurfacePostdilateParametersTagged = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParametersTagged', {
+CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged', {
     "@type": typing.Literal["surface-postdilate"],
     "dilate-mm": float,
     "nearest": bool,
     "linear": bool,
-    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters_ | None],
+    "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict_ | None],
 })
 
 
-CiftiResampleDconnMemoryFlirtParameters = typing.TypedDict('CiftiResampleDconnMemoryFlirtParameters', {
+CiftiResampleDconnMemoryFlirtParamsDict = typing.TypedDict('CiftiResampleDconnMemoryFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
     "source-volume": str,
     "target-volume": str,
 })
-CiftiResampleDconnMemoryFlirtParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryFlirtParametersTagged', {
+CiftiResampleDconnMemoryFlirtParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryFlirtParamsDictTagged', {
     "@type": typing.Literal["flirt"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-CiftiResampleDconnMemoryAffineParameters = typing.TypedDict('CiftiResampleDconnMemoryAffineParameters', {
+CiftiResampleDconnMemoryAffineParamsDict = typing.TypedDict('CiftiResampleDconnMemoryAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["affine"]],
     "affine-file": str,
-    "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParameters | None],
+    "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParamsDict | None],
 })
-CiftiResampleDconnMemoryAffineParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryAffineParametersTagged', {
+CiftiResampleDconnMemoryAffineParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryAffineParamsDictTagged', {
     "@type": typing.Literal["affine"],
     "affine-file": str,
-    "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParameters | None],
+    "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParamsDict | None],
 })
 
 
-CiftiResampleDconnMemoryWarpfieldParameters = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParameters', {
+CiftiResampleDconnMemoryWarpfieldParamsDict = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warpfield"]],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
-CiftiResampleDconnMemoryWarpfieldParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParametersTagged', {
+CiftiResampleDconnMemoryWarpfieldParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParamsDictTagged', {
     "@type": typing.Literal["warpfield"],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
 
 
-CiftiResampleDconnMemoryLeftAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParameters', {
+CiftiResampleDconnMemoryLeftAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryLeftAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParametersTagged', {
+CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["left-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryLeftAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParameters', {
+CiftiResampleDconnMemoryLeftAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryLeftAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParametersTagged', {
+CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["left-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryLeftSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParameters', {
+CiftiResampleDconnMemoryLeftSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParameters | None],
-    "left-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaMetricsParameters | None],
+    "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParamsDict | None],
+    "left-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaMetricsParamsDict | None],
 })
-CiftiResampleDconnMemoryLeftSpheresParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParametersTagged', {
+CiftiResampleDconnMemoryLeftSpheresParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParamsDictTagged', {
     "@type": typing.Literal["left-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParameters | None],
-    "left-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaMetricsParameters | None],
+    "left-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParamsDict | None],
+    "left-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleDconnMemoryRightAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParameters', {
+CiftiResampleDconnMemoryRightAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryRightAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParametersTagged', {
+CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["right-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryRightAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParameters', {
+CiftiResampleDconnMemoryRightAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryRightAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParametersTagged', {
+CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["right-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryRightSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParameters', {
+CiftiResampleDconnMemoryRightSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParameters | None],
-    "right-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryRightAreaMetricsParameters | None],
+    "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParamsDict | None],
+    "right-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryRightAreaMetricsParamsDict | None],
 })
-CiftiResampleDconnMemoryRightSpheresParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParametersTagged', {
+CiftiResampleDconnMemoryRightSpheresParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParamsDictTagged', {
     "@type": typing.Literal["right-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParameters | None],
-    "right-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryRightAreaMetricsParameters | None],
+    "right-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParamsDict | None],
+    "right-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryRightAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleDconnMemoryCerebellumAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParameters', {
+CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryCerebellumAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParametersTagged', {
+CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["cerebellum-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryCerebellumAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParameters', {
+CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleDconnMemoryCerebellumAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParametersTagged', {
+CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["cerebellum-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleDconnMemoryCerebellumSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParameters', {
+CiftiResampleDconnMemoryCerebellumSpheresParamsDict = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParameters | None],
-    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaMetricsParameters | None],
+    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict | None],
+    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict | None],
 })
-CiftiResampleDconnMemoryCerebellumSpheresParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParametersTagged', {
+CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged', {
     "@type": typing.Literal["cerebellum-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParameters | None],
-    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaMetricsParameters | None],
+    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict | None],
+    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleDconnMemoryParameters = typing.TypedDict('CiftiResampleDconnMemoryParameters', {
+CiftiResampleDconnMemoryParamsDict = typing.TypedDict('CiftiResampleDconnMemoryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-resample-dconn-memory"]],
     "cifti-out": str,
     "surface-largest": bool,
-    "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParameters | None],
-    "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParameters | None],
-    "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParameters | None],
-    "warpfield": typing.NotRequired[CiftiResampleDconnMemoryWarpfieldParameters | None],
-    "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParameters | None],
-    "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParameters | None],
-    "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParameters | None],
+    "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParamsDict | None],
+    "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParamsDict | None],
+    "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParamsDict | None],
+    "warpfield": typing.NotRequired[CiftiResampleDconnMemoryWarpfieldParamsDict | None],
+    "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParamsDict | None],
+    "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParamsDict | None],
+    "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None],
     "cifti-in": InputPathType,
     "cifti-template": InputPathType,
     "template-direction": str,
     "surface-method": str,
     "volume-method": str,
 })
-CiftiResampleDconnMemoryParametersTagged = typing.TypedDict('CiftiResampleDconnMemoryParametersTagged', {
+CiftiResampleDconnMemoryParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-resample-dconn-memory"],
     "cifti-out": str,
     "surface-largest": bool,
-    "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParameters | None],
-    "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParameters | None],
-    "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParameters | None],
-    "warpfield": typing.NotRequired[CiftiResampleDconnMemoryWarpfieldParameters | None],
-    "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParameters | None],
-    "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParameters | None],
-    "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParameters | None],
+    "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParamsDict | None],
+    "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParamsDict | None],
+    "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParamsDict | None],
+    "warpfield": typing.NotRequired[CiftiResampleDconnMemoryWarpfieldParamsDict | None],
+    "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParamsDict | None],
+    "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParamsDict | None],
+    "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None],
     "cifti-in": InputPathType,
     "cifti-template": InputPathType,
     "template-direction": str,
@@ -258,10 +258,10 @@ CiftiResampleDconnMemoryParametersTagged = typing.TypedDict('CiftiResampleDconnM
 })
 
 
-def cifti_resample_dconn_memory_weighted_params(
+def cifti_resample_dconn_memory_weighted(
     exponent: float | None,
     legacy_cutoff: bool = False,
-) -> CiftiResampleDconnMemoryWeightedParametersTagged:
+) -> CiftiResampleDconnMemoryWeightedParamsDictTagged:
     """
     Build parameters.
     
@@ -288,7 +288,7 @@ def cifti_resample_dconn_memory_weighted_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryWeightedParameters` object.
+    `CiftiResampleDconnMemoryWeightedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -305,7 +305,7 @@ def cifti_resample_dconn_memory_weighted_validate(
 
 
 def cifti_resample_dconn_memory_weighted_cargs(
-    params: CiftiResampleDconnMemoryWeightedParameters,
+    params: CiftiResampleDconnMemoryWeightedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,11 +328,11 @@ def cifti_resample_dconn_memory_weighted_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_volume_predilate_params(
+def cifti_resample_dconn_memory_volume_predilate(
     dilate_mm: float,
     nearest: bool = False,
-    weighted: CiftiResampleDconnMemoryWeightedParameters | None = None,
-) -> CiftiResampleDconnMemoryVolumePredilateParametersTagged:
+    weighted: CiftiResampleDconnMemoryWeightedParamsDict | None = None,
+) -> CiftiResampleDconnMemoryVolumePredilateParamsDictTagged:
     """
     Build parameters.
     
@@ -358,7 +358,7 @@ def cifti_resample_dconn_memory_volume_predilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryVolumePredilateParameters` object.
+    `CiftiResampleDconnMemoryVolumePredilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -378,7 +378,7 @@ def cifti_resample_dconn_memory_volume_predilate_validate(
 
 
 def cifti_resample_dconn_memory_volume_predilate_cargs(
-    params: CiftiResampleDconnMemoryVolumePredilateParameters,
+    params: CiftiResampleDconnMemoryVolumePredilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -401,10 +401,10 @@ def cifti_resample_dconn_memory_volume_predilate_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_weighted_params_(
+def cifti_resample_dconn_memory_weighted_(
     exponent: float | None,
     legacy_cutoff: bool = False,
-) -> CiftiResampleDconnMemoryWeightedParametersTagged_:
+) -> CiftiResampleDconnMemoryWeightedParamsDictTagged_:
     """
     Build parameters.
     
@@ -431,7 +431,7 @@ def cifti_resample_dconn_memory_weighted_validate_(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryWeightedParameters_` object.
+    `CiftiResampleDconnMemoryWeightedParamsDict_` object.
     
     Args:
         params: The parameters object to validate.
@@ -448,7 +448,7 @@ def cifti_resample_dconn_memory_weighted_validate_(
 
 
 def cifti_resample_dconn_memory_weighted_cargs_(
-    params: CiftiResampleDconnMemoryWeightedParameters_,
+    params: CiftiResampleDconnMemoryWeightedParamsDict_,
     execution: Execution,
 ) -> list[str]:
     """
@@ -471,12 +471,12 @@ def cifti_resample_dconn_memory_weighted_cargs_(
     return cargs
 
 
-def cifti_resample_dconn_memory_surface_postdilate_params(
+def cifti_resample_dconn_memory_surface_postdilate(
     dilate_mm: float,
     nearest: bool = False,
     linear: bool = False,
-    weighted: CiftiResampleDconnMemoryWeightedParameters_ | None = None,
-) -> CiftiResampleDconnMemorySurfacePostdilateParametersTagged:
+    weighted: CiftiResampleDconnMemoryWeightedParamsDict_ | None = None,
+) -> CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged:
     """
     Build parameters.
     
@@ -504,7 +504,7 @@ def cifti_resample_dconn_memory_surface_postdilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemorySurfacePostdilateParameters` object.
+    `CiftiResampleDconnMemorySurfacePostdilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -528,7 +528,7 @@ def cifti_resample_dconn_memory_surface_postdilate_validate(
 
 
 def cifti_resample_dconn_memory_surface_postdilate_cargs(
-    params: CiftiResampleDconnMemorySurfacePostdilateParameters,
+    params: CiftiResampleDconnMemorySurfacePostdilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -552,10 +552,10 @@ def cifti_resample_dconn_memory_surface_postdilate_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_flirt_params(
+def cifti_resample_dconn_memory_flirt(
     source_volume: str,
     target_volume: str,
-) -> CiftiResampleDconnMemoryFlirtParametersTagged:
+) -> CiftiResampleDconnMemoryFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -578,7 +578,7 @@ def cifti_resample_dconn_memory_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryFlirtParameters` object.
+    `CiftiResampleDconnMemoryFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -596,7 +596,7 @@ def cifti_resample_dconn_memory_flirt_validate(
 
 
 def cifti_resample_dconn_memory_flirt_cargs(
-    params: CiftiResampleDconnMemoryFlirtParameters,
+    params: CiftiResampleDconnMemoryFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -617,10 +617,10 @@ def cifti_resample_dconn_memory_flirt_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_affine_params(
+def cifti_resample_dconn_memory_affine(
     affine_file: str,
-    flirt: CiftiResampleDconnMemoryFlirtParameters | None = None,
-) -> CiftiResampleDconnMemoryAffineParametersTagged:
+    flirt: CiftiResampleDconnMemoryFlirtParamsDict | None = None,
+) -> CiftiResampleDconnMemoryAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -644,7 +644,7 @@ def cifti_resample_dconn_memory_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryAffineParameters` object.
+    `CiftiResampleDconnMemoryAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -660,7 +660,7 @@ def cifti_resample_dconn_memory_affine_validate(
 
 
 def cifti_resample_dconn_memory_affine_cargs(
-    params: CiftiResampleDconnMemoryAffineParameters,
+    params: CiftiResampleDconnMemoryAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -682,10 +682,10 @@ def cifti_resample_dconn_memory_affine_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_warpfield_params(
+def cifti_resample_dconn_memory_warpfield(
     warpfield: str,
     source_volume: str | None,
-) -> CiftiResampleDconnMemoryWarpfieldParametersTagged:
+) -> CiftiResampleDconnMemoryWarpfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -711,7 +711,7 @@ def cifti_resample_dconn_memory_warpfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryWarpfieldParameters` object.
+    `CiftiResampleDconnMemoryWarpfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -728,7 +728,7 @@ def cifti_resample_dconn_memory_warpfield_validate(
 
 
 def cifti_resample_dconn_memory_warpfield_cargs(
-    params: CiftiResampleDconnMemoryWarpfieldParameters,
+    params: CiftiResampleDconnMemoryWarpfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -751,10 +751,10 @@ def cifti_resample_dconn_memory_warpfield_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_left_area_surfs_params(
+def cifti_resample_dconn_memory_left_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryLeftAreaSurfsParametersTagged:
+) -> CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -777,7 +777,7 @@ def cifti_resample_dconn_memory_left_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryLeftAreaSurfsParameters` object.
+    `CiftiResampleDconnMemoryLeftAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -795,7 +795,7 @@ def cifti_resample_dconn_memory_left_area_surfs_validate(
 
 
 def cifti_resample_dconn_memory_left_area_surfs_cargs(
-    params: CiftiResampleDconnMemoryLeftAreaSurfsParameters,
+    params: CiftiResampleDconnMemoryLeftAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -816,10 +816,10 @@ def cifti_resample_dconn_memory_left_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_left_area_metrics_params(
+def cifti_resample_dconn_memory_left_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryLeftAreaMetricsParametersTagged:
+) -> CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -842,7 +842,7 @@ def cifti_resample_dconn_memory_left_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryLeftAreaMetricsParameters` object.
+    `CiftiResampleDconnMemoryLeftAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -860,7 +860,7 @@ def cifti_resample_dconn_memory_left_area_metrics_validate(
 
 
 def cifti_resample_dconn_memory_left_area_metrics_cargs(
-    params: CiftiResampleDconnMemoryLeftAreaMetricsParameters,
+    params: CiftiResampleDconnMemoryLeftAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -881,12 +881,12 @@ def cifti_resample_dconn_memory_left_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_left_spheres_params(
+def cifti_resample_dconn_memory_left_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    left_area_surfs: CiftiResampleDconnMemoryLeftAreaSurfsParameters | None = None,
-    left_area_metrics: CiftiResampleDconnMemoryLeftAreaMetricsParameters | None = None,
-) -> CiftiResampleDconnMemoryLeftSpheresParametersTagged:
+    left_area_surfs: CiftiResampleDconnMemoryLeftAreaSurfsParamsDict | None = None,
+    left_area_metrics: CiftiResampleDconnMemoryLeftAreaMetricsParamsDict | None = None,
+) -> CiftiResampleDconnMemoryLeftSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -918,7 +918,7 @@ def cifti_resample_dconn_memory_left_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryLeftSpheresParameters` object.
+    `CiftiResampleDconnMemoryLeftSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -940,7 +940,7 @@ def cifti_resample_dconn_memory_left_spheres_validate(
 
 
 def cifti_resample_dconn_memory_left_spheres_cargs(
-    params: CiftiResampleDconnMemoryLeftSpheresParameters,
+    params: CiftiResampleDconnMemoryLeftSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -964,10 +964,10 @@ def cifti_resample_dconn_memory_left_spheres_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_right_area_surfs_params(
+def cifti_resample_dconn_memory_right_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryRightAreaSurfsParametersTagged:
+) -> CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -990,7 +990,7 @@ def cifti_resample_dconn_memory_right_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryRightAreaSurfsParameters` object.
+    `CiftiResampleDconnMemoryRightAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1008,7 +1008,7 @@ def cifti_resample_dconn_memory_right_area_surfs_validate(
 
 
 def cifti_resample_dconn_memory_right_area_surfs_cargs(
-    params: CiftiResampleDconnMemoryRightAreaSurfsParameters,
+    params: CiftiResampleDconnMemoryRightAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1029,10 +1029,10 @@ def cifti_resample_dconn_memory_right_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_right_area_metrics_params(
+def cifti_resample_dconn_memory_right_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryRightAreaMetricsParametersTagged:
+) -> CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -1055,7 +1055,7 @@ def cifti_resample_dconn_memory_right_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryRightAreaMetricsParameters` object.
+    `CiftiResampleDconnMemoryRightAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1073,7 +1073,7 @@ def cifti_resample_dconn_memory_right_area_metrics_validate(
 
 
 def cifti_resample_dconn_memory_right_area_metrics_cargs(
-    params: CiftiResampleDconnMemoryRightAreaMetricsParameters,
+    params: CiftiResampleDconnMemoryRightAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1094,12 +1094,12 @@ def cifti_resample_dconn_memory_right_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_right_spheres_params(
+def cifti_resample_dconn_memory_right_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    right_area_surfs: CiftiResampleDconnMemoryRightAreaSurfsParameters | None = None,
-    right_area_metrics: CiftiResampleDconnMemoryRightAreaMetricsParameters | None = None,
-) -> CiftiResampleDconnMemoryRightSpheresParametersTagged:
+    right_area_surfs: CiftiResampleDconnMemoryRightAreaSurfsParamsDict | None = None,
+    right_area_metrics: CiftiResampleDconnMemoryRightAreaMetricsParamsDict | None = None,
+) -> CiftiResampleDconnMemoryRightSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -1132,7 +1132,7 @@ def cifti_resample_dconn_memory_right_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryRightSpheresParameters` object.
+    `CiftiResampleDconnMemoryRightSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1154,7 +1154,7 @@ def cifti_resample_dconn_memory_right_spheres_validate(
 
 
 def cifti_resample_dconn_memory_right_spheres_cargs(
-    params: CiftiResampleDconnMemoryRightSpheresParameters,
+    params: CiftiResampleDconnMemoryRightSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1178,10 +1178,10 @@ def cifti_resample_dconn_memory_right_spheres_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_cerebellum_area_surfs_params(
+def cifti_resample_dconn_memory_cerebellum_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryCerebellumAreaSurfsParametersTagged:
+) -> CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -1205,7 +1205,7 @@ def cifti_resample_dconn_memory_cerebellum_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryCerebellumAreaSurfsParameters` object.
+    `CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1223,7 +1223,7 @@ def cifti_resample_dconn_memory_cerebellum_area_surfs_validate(
 
 
 def cifti_resample_dconn_memory_cerebellum_area_surfs_cargs(
-    params: CiftiResampleDconnMemoryCerebellumAreaSurfsParameters,
+    params: CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1244,10 +1244,10 @@ def cifti_resample_dconn_memory_cerebellum_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_cerebellum_area_metrics_params(
+def cifti_resample_dconn_memory_cerebellum_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleDconnMemoryCerebellumAreaMetricsParametersTagged:
+) -> CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -1270,7 +1270,7 @@ def cifti_resample_dconn_memory_cerebellum_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryCerebellumAreaMetricsParameters` object.
+    `CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1288,7 +1288,7 @@ def cifti_resample_dconn_memory_cerebellum_area_metrics_validate(
 
 
 def cifti_resample_dconn_memory_cerebellum_area_metrics_cargs(
-    params: CiftiResampleDconnMemoryCerebellumAreaMetricsParameters,
+    params: CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1309,12 +1309,12 @@ def cifti_resample_dconn_memory_cerebellum_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_dconn_memory_cerebellum_spheres_params(
+def cifti_resample_dconn_memory_cerebellum_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    cerebellum_area_surfs: CiftiResampleDconnMemoryCerebellumAreaSurfsParameters | None = None,
-    cerebellum_area_metrics: CiftiResampleDconnMemoryCerebellumAreaMetricsParameters | None = None,
-) -> CiftiResampleDconnMemoryCerebellumSpheresParametersTagged:
+    cerebellum_area_surfs: CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict | None = None,
+    cerebellum_area_metrics: CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict | None = None,
+) -> CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -1347,7 +1347,7 @@ def cifti_resample_dconn_memory_cerebellum_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryCerebellumSpheresParameters` object.
+    `CiftiResampleDconnMemoryCerebellumSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1369,7 +1369,7 @@ def cifti_resample_dconn_memory_cerebellum_spheres_validate(
 
 
 def cifti_resample_dconn_memory_cerebellum_spheres_cargs(
-    params: CiftiResampleDconnMemoryCerebellumSpheresParameters,
+    params: CiftiResampleDconnMemoryCerebellumSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1395,7 +1395,7 @@ def cifti_resample_dconn_memory_cerebellum_spheres_cargs(
 
 class CiftiResampleDconnMemoryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiResampleDconnMemoryParameters(...)`.
+    Output object returned when calling `CiftiResampleDconnMemoryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1411,14 +1411,14 @@ def cifti_resample_dconn_memory_params(
     surface_method: str,
     volume_method: str,
     surface_largest: bool = False,
-    volume_predilate: CiftiResampleDconnMemoryVolumePredilateParameters | None = None,
-    surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParameters | None = None,
-    affine: CiftiResampleDconnMemoryAffineParameters | None = None,
-    warpfield: CiftiResampleDconnMemoryWarpfieldParameters | None = None,
-    left_spheres: CiftiResampleDconnMemoryLeftSpheresParameters | None = None,
-    right_spheres: CiftiResampleDconnMemoryRightSpheresParameters | None = None,
-    cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParameters | None = None,
-) -> CiftiResampleDconnMemoryParametersTagged:
+    volume_predilate: CiftiResampleDconnMemoryVolumePredilateParamsDict | None = None,
+    surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParamsDict | None = None,
+    affine: CiftiResampleDconnMemoryAffineParamsDict | None = None,
+    warpfield: CiftiResampleDconnMemoryWarpfieldParamsDict | None = None,
+    left_spheres: CiftiResampleDconnMemoryLeftSpheresParamsDict | None = None,
+    right_spheres: CiftiResampleDconnMemoryRightSpheresParamsDict | None = None,
+    cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None = None,
+) -> CiftiResampleDconnMemoryParamsDictTagged:
     """
     Build parameters.
     
@@ -1474,7 +1474,7 @@ def cifti_resample_dconn_memory_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleDconnMemoryParameters` object.
+    `CiftiResampleDconnMemoryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1526,7 +1526,7 @@ def cifti_resample_dconn_memory_validate(
 
 
 def cifti_resample_dconn_memory_cargs(
-    params: CiftiResampleDconnMemoryParameters,
+    params: CiftiResampleDconnMemoryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1562,7 +1562,7 @@ def cifti_resample_dconn_memory_cargs(
 
 
 def cifti_resample_dconn_memory_outputs(
-    params: CiftiResampleDconnMemoryParameters,
+    params: CiftiResampleDconnMemoryParamsDict,
     execution: Execution,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
@@ -1582,7 +1582,7 @@ def cifti_resample_dconn_memory_outputs(
 
 
 def cifti_resample_dconn_memory_execute(
-    params: CiftiResampleDconnMemoryParameters,
+    params: CiftiResampleDconnMemoryParamsDict,
     runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
@@ -1641,13 +1641,13 @@ def cifti_resample_dconn_memory(
     surface_method: str,
     volume_method: str,
     surface_largest: bool = False,
-    volume_predilate: CiftiResampleDconnMemoryVolumePredilateParameters | None = None,
-    surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParameters | None = None,
-    affine: CiftiResampleDconnMemoryAffineParameters | None = None,
-    warpfield: CiftiResampleDconnMemoryWarpfieldParameters | None = None,
-    left_spheres: CiftiResampleDconnMemoryLeftSpheresParameters | None = None,
-    right_spheres: CiftiResampleDconnMemoryRightSpheresParameters | None = None,
-    cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParameters | None = None,
+    volume_predilate: CiftiResampleDconnMemoryVolumePredilateParamsDict | None = None,
+    surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParamsDict | None = None,
+    affine: CiftiResampleDconnMemoryAffineParamsDict | None = None,
+    warpfield: CiftiResampleDconnMemoryWarpfieldParamsDict | None = None,
+    left_spheres: CiftiResampleDconnMemoryLeftSpheresParamsDict | None = None,
+    right_spheres: CiftiResampleDconnMemoryRightSpheresParamsDict | None = None,
+    cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
@@ -1724,24 +1724,58 @@ def cifti_resample_dconn_memory(
 
 __all__ = [
     "CIFTI_RESAMPLE_DCONN_MEMORY_METADATA",
+    "CiftiResampleDconnMemoryAffineParamsDict",
+    "CiftiResampleDconnMemoryAffineParamsDictTagged",
+    "CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDict",
+    "CiftiResampleDconnMemoryCerebellumAreaMetricsParamsDictTagged",
+    "CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDict",
+    "CiftiResampleDconnMemoryCerebellumAreaSurfsParamsDictTagged",
+    "CiftiResampleDconnMemoryCerebellumSpheresParamsDict",
+    "CiftiResampleDconnMemoryCerebellumSpheresParamsDictTagged",
+    "CiftiResampleDconnMemoryFlirtParamsDict",
+    "CiftiResampleDconnMemoryFlirtParamsDictTagged",
+    "CiftiResampleDconnMemoryLeftAreaMetricsParamsDict",
+    "CiftiResampleDconnMemoryLeftAreaMetricsParamsDictTagged",
+    "CiftiResampleDconnMemoryLeftAreaSurfsParamsDict",
+    "CiftiResampleDconnMemoryLeftAreaSurfsParamsDictTagged",
+    "CiftiResampleDconnMemoryLeftSpheresParamsDict",
+    "CiftiResampleDconnMemoryLeftSpheresParamsDictTagged",
     "CiftiResampleDconnMemoryOutputs",
+    "CiftiResampleDconnMemoryParamsDict",
+    "CiftiResampleDconnMemoryParamsDictTagged",
+    "CiftiResampleDconnMemoryRightAreaMetricsParamsDict",
+    "CiftiResampleDconnMemoryRightAreaMetricsParamsDictTagged",
+    "CiftiResampleDconnMemoryRightAreaSurfsParamsDict",
+    "CiftiResampleDconnMemoryRightAreaSurfsParamsDictTagged",
+    "CiftiResampleDconnMemoryRightSpheresParamsDict",
+    "CiftiResampleDconnMemoryRightSpheresParamsDictTagged",
+    "CiftiResampleDconnMemorySurfacePostdilateParamsDict",
+    "CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged",
+    "CiftiResampleDconnMemoryVolumePredilateParamsDict",
+    "CiftiResampleDconnMemoryVolumePredilateParamsDictTagged",
+    "CiftiResampleDconnMemoryWarpfieldParamsDict",
+    "CiftiResampleDconnMemoryWarpfieldParamsDictTagged",
+    "CiftiResampleDconnMemoryWeightedParamsDict",
+    "CiftiResampleDconnMemoryWeightedParamsDictTagged",
+    "CiftiResampleDconnMemoryWeightedParamsDictTagged_",
+    "CiftiResampleDconnMemoryWeightedParamsDict_",
     "cifti_resample_dconn_memory",
-    "cifti_resample_dconn_memory_affine_params",
-    "cifti_resample_dconn_memory_cerebellum_area_metrics_params",
-    "cifti_resample_dconn_memory_cerebellum_area_surfs_params",
-    "cifti_resample_dconn_memory_cerebellum_spheres_params",
+    "cifti_resample_dconn_memory_affine",
+    "cifti_resample_dconn_memory_cerebellum_area_metrics",
+    "cifti_resample_dconn_memory_cerebellum_area_surfs",
+    "cifti_resample_dconn_memory_cerebellum_spheres",
     "cifti_resample_dconn_memory_execute",
-    "cifti_resample_dconn_memory_flirt_params",
-    "cifti_resample_dconn_memory_left_area_metrics_params",
-    "cifti_resample_dconn_memory_left_area_surfs_params",
-    "cifti_resample_dconn_memory_left_spheres_params",
+    "cifti_resample_dconn_memory_flirt",
+    "cifti_resample_dconn_memory_left_area_metrics",
+    "cifti_resample_dconn_memory_left_area_surfs",
+    "cifti_resample_dconn_memory_left_spheres",
     "cifti_resample_dconn_memory_params",
-    "cifti_resample_dconn_memory_right_area_metrics_params",
-    "cifti_resample_dconn_memory_right_area_surfs_params",
-    "cifti_resample_dconn_memory_right_spheres_params",
-    "cifti_resample_dconn_memory_surface_postdilate_params",
-    "cifti_resample_dconn_memory_volume_predilate_params",
-    "cifti_resample_dconn_memory_warpfield_params",
-    "cifti_resample_dconn_memory_weighted_params",
-    "cifti_resample_dconn_memory_weighted_params_",
+    "cifti_resample_dconn_memory_right_area_metrics",
+    "cifti_resample_dconn_memory_right_area_surfs",
+    "cifti_resample_dconn_memory_right_spheres",
+    "cifti_resample_dconn_memory_surface_postdilate",
+    "cifti_resample_dconn_memory_volume_predilate",
+    "cifti_resample_dconn_memory_warpfield",
+    "cifti_resample_dconn_memory_weighted",
+    "cifti_resample_dconn_memory_weighted_",
 ]

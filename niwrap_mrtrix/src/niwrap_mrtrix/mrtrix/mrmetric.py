@@ -13,19 +13,19 @@ MRMETRIC_METADATA = Metadata(
 )
 
 
-MrmetricConfigParameters = typing.TypedDict('MrmetricConfigParameters', {
+MrmetricConfigParamsDict = typing.TypedDict('MrmetricConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrmetricConfigParametersTagged = typing.TypedDict('MrmetricConfigParametersTagged', {
+MrmetricConfigParamsDictTagged = typing.TypedDict('MrmetricConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrmetricParameters = typing.TypedDict('MrmetricParameters', {
+MrmetricParamsDict = typing.TypedDict('MrmetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrmetric"]],
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
@@ -39,13 +39,13 @@ MrmetricParameters = typing.TypedDict('MrmetricParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrmetricConfigParameters] | None],
+    "config": typing.NotRequired[list[MrmetricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1": InputPathType,
     "image2": InputPathType,
 })
-MrmetricParametersTagged = typing.TypedDict('MrmetricParametersTagged', {
+MrmetricParamsDictTagged = typing.TypedDict('MrmetricParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrmetric"],
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ MrmetricParametersTagged = typing.TypedDict('MrmetricParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrmetricConfigParameters] | None],
+    "config": typing.NotRequired[list[MrmetricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1": InputPathType,
@@ -67,10 +67,10 @@ MrmetricParametersTagged = typing.TypedDict('MrmetricParametersTagged', {
 })
 
 
-def mrmetric_config_params(
+def mrmetric_config(
     key: str,
     value: str,
-) -> MrmetricConfigParametersTagged:
+) -> MrmetricConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def mrmetric_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrmetricConfigParameters` object.
+    `MrmetricConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def mrmetric_config_validate(
 
 
 def mrmetric_config_cargs(
-    params: MrmetricConfigParameters,
+    params: MrmetricConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def mrmetric_config_cargs(
 
 class MrmetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrmetricParameters(...)`.
+    Output object returned when calling `MrmetricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,10 +153,10 @@ def mrmetric_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrmetricConfigParameters] | None = None,
+    config: list[MrmetricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrmetricParametersTagged:
+) -> MrmetricParamsDictTagged:
     """
     Build parameters.
     
@@ -227,7 +227,7 @@ def mrmetric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrmetricParameters` object.
+    `MrmetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -278,7 +278,7 @@ def mrmetric_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrmetricConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrmetricConfigParamsDict] | None`')
         for e in params["config"]:
             mrmetric_config_validate(e)
     if params.get("help", False) is None:
@@ -300,7 +300,7 @@ def mrmetric_validate(
 
 
 def mrmetric_cargs(
-    params: MrmetricParameters,
+    params: MrmetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -368,7 +368,7 @@ def mrmetric_cargs(
 
 
 def mrmetric_outputs(
-    params: MrmetricParameters,
+    params: MrmetricParamsDict,
     execution: Execution,
 ) -> MrmetricOutputs:
     """
@@ -387,7 +387,7 @@ def mrmetric_outputs(
 
 
 def mrmetric_execute(
-    params: MrmetricParameters,
+    params: MrmetricParamsDict,
     runner: Runner | None = None,
 ) -> MrmetricOutputs:
     """
@@ -436,7 +436,7 @@ def mrmetric(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrmetricConfigParameters] | None = None,
+    config: list[MrmetricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -513,9 +513,13 @@ def mrmetric(
 
 __all__ = [
     "MRMETRIC_METADATA",
+    "MrmetricConfigParamsDict",
+    "MrmetricConfigParamsDictTagged",
     "MrmetricOutputs",
+    "MrmetricParamsDict",
+    "MrmetricParamsDictTagged",
     "mrmetric",
-    "mrmetric_config_params",
+    "mrmetric_config",
     "mrmetric_execute",
     "mrmetric_params",
 ]

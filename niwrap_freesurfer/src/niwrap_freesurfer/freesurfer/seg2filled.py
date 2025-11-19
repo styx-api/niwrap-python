@@ -13,7 +13,7 @@ SEG2FILLED_METADATA = Metadata(
 )
 
 
-Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
+Seg2filledParamsDict = typing.TypedDict('Seg2filledParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/seg2filled"]],
     "seg_file": InputPathType,
     "norm_file": InputPathType,
@@ -23,7 +23,7 @@ Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
     "surf_name": typing.NotRequired[str | None],
     "surf_dir": typing.NotRequired[str | None],
 })
-Seg2filledParametersTagged = typing.TypedDict('Seg2filledParametersTagged', {
+Seg2filledParamsDictTagged = typing.TypedDict('Seg2filledParamsDictTagged', {
     "@type": typing.Literal["freesurfer/seg2filled"],
     "seg_file": InputPathType,
     "norm_file": InputPathType,
@@ -37,7 +37,7 @@ Seg2filledParametersTagged = typing.TypedDict('Seg2filledParametersTagged', {
 
 class Seg2filledOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Seg2filledParameters(...)`.
+    Output object returned when calling `Seg2filledParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def seg2filled_params(
     cavity_flag: bool = False,
     surf_name: str | None = None,
     surf_dir: str | None = None,
-) -> Seg2filledParametersTagged:
+) -> Seg2filledParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def seg2filled_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Seg2filledParameters` object.
+    `Seg2filledParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def seg2filled_validate(
 
 
 def seg2filled_cargs(
-    params: Seg2filledParameters,
+    params: Seg2filledParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -171,7 +171,7 @@ def seg2filled_cargs(
 
 
 def seg2filled_outputs(
-    params: Seg2filledParameters,
+    params: Seg2filledParamsDict,
     execution: Execution,
 ) -> Seg2filledOutputs:
     """
@@ -191,7 +191,7 @@ def seg2filled_outputs(
 
 
 def seg2filled_execute(
-    params: Seg2filledParameters,
+    params: Seg2filledParamsDict,
     runner: Runner | None = None,
 ) -> Seg2filledOutputs:
     """
@@ -267,6 +267,8 @@ def seg2filled(
 __all__ = [
     "SEG2FILLED_METADATA",
     "Seg2filledOutputs",
+    "Seg2filledParamsDict",
+    "Seg2filledParamsDictTagged",
     "seg2filled",
     "seg2filled_execute",
     "seg2filled_params",

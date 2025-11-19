@@ -13,7 +13,7 @@ MIDEFACE_METADATA = Metadata(
 )
 
 
-MidefaceParameters = typing.TypedDict('MidefaceParameters', {
+MidefaceParamsDict = typing.TypedDict('MidefaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mideface"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -46,7 +46,7 @@ MidefaceParameters = typing.TypedDict('MidefaceParameters', {
     "check_volume": typing.NotRequired[InputPathType | None],
     "check_output_file": typing.NotRequired[InputPathType | None],
 })
-MidefaceParametersTagged = typing.TypedDict('MidefaceParametersTagged', {
+MidefaceParamsDictTagged = typing.TypedDict('MidefaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mideface"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -83,7 +83,7 @@ MidefaceParametersTagged = typing.TypedDict('MidefaceParametersTagged', {
 
 class MidefaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MidefaceParameters(...)`.
+    Output object returned when calling `MidefaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,7 +124,7 @@ def mideface_params(
     apply_volume: str | None = None,
     check_volume: InputPathType | None = None,
     check_output_file: InputPathType | None = None,
-) -> MidefaceParametersTagged:
+) -> MidefaceParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def mideface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MidefaceParameters` object.
+    `MidefaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -338,7 +338,7 @@ def mideface_validate(
 
 
 def mideface_cargs(
-    params: MidefaceParameters,
+    params: MidefaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -477,7 +477,7 @@ def mideface_cargs(
 
 
 def mideface_outputs(
-    params: MidefaceParameters,
+    params: MidefaceParamsDict,
     execution: Execution,
 ) -> MidefaceOutputs:
     """
@@ -498,7 +498,7 @@ def mideface_outputs(
 
 
 def mideface_execute(
-    params: MidefaceParameters,
+    params: MidefaceParamsDict,
     runner: Runner | None = None,
 ) -> MidefaceOutputs:
     """
@@ -641,6 +641,8 @@ def mideface(
 __all__ = [
     "MIDEFACE_METADATA",
     "MidefaceOutputs",
+    "MidefaceParamsDict",
+    "MidefaceParamsDictTagged",
     "mideface",
     "mideface_execute",
     "mideface_params",

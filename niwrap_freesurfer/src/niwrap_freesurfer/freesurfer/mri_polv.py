@@ -13,13 +13,13 @@ MRI_POLV_METADATA = Metadata(
 )
 
 
-MriPolvParameters = typing.TypedDict('MriPolvParameters', {
+MriPolvParamsDict = typing.TypedDict('MriPolvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_polv"]],
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
     "output_image": InputPathType,
 })
-MriPolvParametersTagged = typing.TypedDict('MriPolvParametersTagged', {
+MriPolvParamsDictTagged = typing.TypedDict('MriPolvParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_polv"],
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
@@ -29,7 +29,7 @@ MriPolvParametersTagged = typing.TypedDict('MriPolvParametersTagged', {
 
 class MriPolvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriPolvParameters(...)`.
+    Output object returned when calling `MriPolvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mri_polv_params(
     input_image: InputPathType,
     output_image: InputPathType,
     window_size: float | None = None,
-) -> MriPolvParametersTagged:
+) -> MriPolvParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mri_polv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriPolvParameters` object.
+    `MriPolvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_polv_validate(
 
 
 def mri_polv_cargs(
-    params: MriPolvParameters,
+    params: MriPolvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def mri_polv_cargs(
 
 
 def mri_polv_outputs(
-    params: MriPolvParameters,
+    params: MriPolvParamsDict,
     execution: Execution,
 ) -> MriPolvOutputs:
     """
@@ -132,7 +132,7 @@ def mri_polv_outputs(
 
 
 def mri_polv_execute(
-    params: MriPolvParameters,
+    params: MriPolvParamsDict,
     runner: Runner | None = None,
 ) -> MriPolvOutputs:
     """
@@ -198,6 +198,8 @@ def mri_polv(
 __all__ = [
     "MRI_POLV_METADATA",
     "MriPolvOutputs",
+    "MriPolvParamsDict",
+    "MriPolvParamsDictTagged",
     "mri_polv",
     "mri_polv_execute",
     "mri_polv_params",

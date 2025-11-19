@@ -13,7 +13,7 @@ V_3D_TOUTCOUNT_METADATA = Metadata(
 )
 
 
-V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
+V3dToutcountParamsDict = typing.TypedDict('V3dToutcountParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dToutcount"]],
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
     "polort_order": typing.NotRequired[float | None],
     "legendre": bool,
 })
-V3dToutcountParametersTagged = typing.TypedDict('V3dToutcountParametersTagged', {
+V3dToutcountParamsDictTagged = typing.TypedDict('V3dToutcountParamsDictTagged', {
     "@type": typing.Literal["afni/3dToutcount"],
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ V3dToutcountParametersTagged = typing.TypedDict('V3dToutcountParametersTagged', 
 
 class V3dToutcountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dToutcountParameters(...)`.
+    Output object returned when calling `V3dToutcountParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def v_3d_toutcount_params(
     range_: bool = False,
     polort_order: float | None = None,
     legendre: bool = False,
-) -> V3dToutcountParametersTagged:
+) -> V3dToutcountParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def v_3d_toutcount_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dToutcountParameters` object.
+    `V3dToutcountParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def v_3d_toutcount_validate(
 
 
 def v_3d_toutcount_cargs(
-    params: V3dToutcountParameters,
+    params: V3dToutcountParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def v_3d_toutcount_cargs(
 
 
 def v_3d_toutcount_outputs(
-    params: V3dToutcountParameters,
+    params: V3dToutcountParamsDict,
     execution: Execution,
 ) -> V3dToutcountOutputs:
     """
@@ -228,7 +228,7 @@ def v_3d_toutcount_outputs(
 
 
 def v_3d_toutcount_execute(
-    params: V3dToutcountParameters,
+    params: V3dToutcountParamsDict,
     runner: Runner | None = None,
 ) -> V3dToutcountOutputs:
     """
@@ -316,6 +316,8 @@ def v_3d_toutcount(
 
 __all__ = [
     "V3dToutcountOutputs",
+    "V3dToutcountParamsDict",
+    "V3dToutcountParamsDictTagged",
     "V_3D_TOUTCOUNT_METADATA",
     "v_3d_toutcount",
     "v_3d_toutcount_execute",

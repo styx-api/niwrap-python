@@ -13,7 +13,7 @@ BBLABEL_METADATA = Metadata(
 )
 
 
-BblabelParameters = typing.TypedDict('BblabelParameters', {
+BblabelParamsDict = typing.TypedDict('BblabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bblabel"]],
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
@@ -26,7 +26,7 @@ BblabelParameters = typing.TypedDict('BblabelParameters', {
     "debug": bool,
     "umask": typing.NotRequired[str | None],
 })
-BblabelParametersTagged = typing.TypedDict('BblabelParametersTagged', {
+BblabelParamsDictTagged = typing.TypedDict('BblabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bblabel"],
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
@@ -43,7 +43,7 @@ BblabelParametersTagged = typing.TypedDict('BblabelParametersTagged', {
 
 class BblabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BblabelParameters(...)`.
+    Output object returned when calling `BblabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def bblabel_params(
     zmax: float | None = None,
     debug: bool = False,
     umask: str | None = None,
-) -> BblabelParametersTagged:
+) -> BblabelParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def bblabel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BblabelParameters` object.
+    `BblabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def bblabel_validate(
 
 
 def bblabel_cargs(
-    params: BblabelParameters,
+    params: BblabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def bblabel_cargs(
 
 
 def bblabel_outputs(
-    params: BblabelParameters,
+    params: BblabelParamsDict,
     execution: Execution,
 ) -> BblabelOutputs:
     """
@@ -234,7 +234,7 @@ def bblabel_outputs(
 
 
 def bblabel_execute(
-    params: BblabelParameters,
+    params: BblabelParamsDict,
     runner: Runner | None = None,
 ) -> BblabelOutputs:
     """
@@ -319,6 +319,8 @@ def bblabel(
 __all__ = [
     "BBLABEL_METADATA",
     "BblabelOutputs",
+    "BblabelParamsDict",
+    "BblabelParamsDictTagged",
     "bblabel",
     "bblabel_execute",
     "bblabel_params",

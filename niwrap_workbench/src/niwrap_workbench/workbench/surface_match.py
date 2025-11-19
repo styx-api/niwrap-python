@@ -12,13 +12,13 @@ SURFACE_MATCH_METADATA = Metadata(
 )
 
 
-SurfaceMatchParameters = typing.TypedDict('SurfaceMatchParameters', {
+SurfaceMatchParamsDict = typing.TypedDict('SurfaceMatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-match"]],
     "Match Surface File": InputPathType,
     "Input Surface File": InputPathType,
     "Output Surface Name": str,
 })
-SurfaceMatchParametersTagged = typing.TypedDict('SurfaceMatchParametersTagged', {
+SurfaceMatchParamsDictTagged = typing.TypedDict('SurfaceMatchParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-match"],
     "Match Surface File": InputPathType,
     "Input Surface File": InputPathType,
@@ -28,7 +28,7 @@ SurfaceMatchParametersTagged = typing.TypedDict('SurfaceMatchParametersTagged', 
 
 class SurfaceMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceMatchParameters(...)`.
+    Output object returned when calling `SurfaceMatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def surface_match_params(
     match_surface_file: InputPathType,
     input_surface_file: InputPathType,
     output_surface_name: str,
-) -> SurfaceMatchParametersTagged:
+) -> SurfaceMatchParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def surface_match_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceMatchParameters` object.
+    `SurfaceMatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def surface_match_validate(
 
 
 def surface_match_cargs(
-    params: SurfaceMatchParameters,
+    params: SurfaceMatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def surface_match_cargs(
 
 
 def surface_match_outputs(
-    params: SurfaceMatchParameters,
+    params: SurfaceMatchParamsDict,
     execution: Execution,
 ) -> SurfaceMatchOutputs:
     """
@@ -128,7 +128,7 @@ def surface_match_outputs(
 
 
 def surface_match_execute(
-    params: SurfaceMatchParameters,
+    params: SurfaceMatchParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceMatchOutputs:
     """
@@ -184,6 +184,8 @@ def surface_match(
 __all__ = [
     "SURFACE_MATCH_METADATA",
     "SurfaceMatchOutputs",
+    "SurfaceMatchParamsDict",
+    "SurfaceMatchParamsDictTagged",
     "surface_match",
     "surface_match_execute",
     "surface_match_params",

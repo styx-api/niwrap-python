@@ -13,13 +13,13 @@ RCA_BASE_INIT_METADATA = Metadata(
 )
 
 
-RcaBaseInitParameters = typing.TypedDict('RcaBaseInitParameters', {
+RcaBaseInitParamsDict = typing.TypedDict('RcaBaseInitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rca-base-init"]],
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],
 })
-RcaBaseInitParametersTagged = typing.TypedDict('RcaBaseInitParametersTagged', {
+RcaBaseInitParamsDictTagged = typing.TypedDict('RcaBaseInitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-base-init"],
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ RcaBaseInitParametersTagged = typing.TypedDict('RcaBaseInitParametersTagged', {
 
 class RcaBaseInitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcaBaseInitParameters(...)`.
+    Output object returned when calling `RcaBaseInitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def rca_base_init_params(
     log_file: str | None = None,
     status_file: str | None = None,
     cmd_file: str | None = None,
-) -> RcaBaseInitParametersTagged:
+) -> RcaBaseInitParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def rca_base_init_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcaBaseInitParameters` object.
+    `RcaBaseInitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def rca_base_init_validate(
 
 
 def rca_base_init_cargs(
-    params: RcaBaseInitParameters,
+    params: RcaBaseInitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def rca_base_init_cargs(
 
 
 def rca_base_init_outputs(
-    params: RcaBaseInitParameters,
+    params: RcaBaseInitParamsDict,
     execution: Execution,
 ) -> RcaBaseInitOutputs:
     """
@@ -132,7 +132,7 @@ def rca_base_init_outputs(
 
 
 def rca_base_init_execute(
-    params: RcaBaseInitParameters,
+    params: RcaBaseInitParamsDict,
     runner: Runner | None = None,
 ) -> RcaBaseInitOutputs:
     """
@@ -194,6 +194,8 @@ def rca_base_init(
 __all__ = [
     "RCA_BASE_INIT_METADATA",
     "RcaBaseInitOutputs",
+    "RcaBaseInitParamsDict",
+    "RcaBaseInitParamsDictTagged",
     "rca_base_init",
     "rca_base_init_execute",
     "rca_base_init_params",

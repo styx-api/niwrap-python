@@ -13,7 +13,7 @@ V__RETINO_PROC_METADATA = Metadata(
 )
 
 
-VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
+VRetinoProcParamsDict = typing.TypedDict('VRetinoProcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@RetinoProc"]],
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
@@ -56,7 +56,7 @@ VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
     "a2e_opts": typing.NotRequired[str | None],
     "aea_opts": typing.NotRequired[str | None],
 })
-VRetinoProcParametersTagged = typing.TypedDict('VRetinoProcParametersTagged', {
+VRetinoProcParamsDictTagged = typing.TypedDict('VRetinoProcParamsDictTagged', {
     "@type": typing.Literal["afni/@RetinoProc"],
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
@@ -103,7 +103,7 @@ VRetinoProcParametersTagged = typing.TypedDict('VRetinoProcParametersTagged', {
 
 class VRetinoProcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRetinoProcParameters(...)`.
+    Output object returned when calling `VRetinoProcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +150,7 @@ def v__retino_proc_params(
     echo_edu: bool = False,
     a2e_opts: str | None = None,
     aea_opts: str | None = None,
-) -> VRetinoProcParametersTagged:
+) -> VRetinoProcParamsDictTagged:
     """
     Build parameters.
     
@@ -286,7 +286,7 @@ def v__retino_proc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRetinoProcParameters` object.
+    `VRetinoProcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -448,7 +448,7 @@ def v__retino_proc_validate(
 
 
 def v__retino_proc_cargs(
-    params: VRetinoProcParameters,
+    params: VRetinoProcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -648,7 +648,7 @@ def v__retino_proc_cargs(
 
 
 def v__retino_proc_outputs(
-    params: VRetinoProcParameters,
+    params: VRetinoProcParamsDict,
     execution: Execution,
 ) -> VRetinoProcOutputs:
     """
@@ -667,7 +667,7 @@ def v__retino_proc_outputs(
 
 
 def v__retino_proc_execute(
-    params: VRetinoProcParameters,
+    params: VRetinoProcParamsDict,
     runner: Runner | None = None,
 ) -> VRetinoProcOutputs:
     """
@@ -846,6 +846,8 @@ def v__retino_proc(
 
 __all__ = [
     "VRetinoProcOutputs",
+    "VRetinoProcParamsDict",
+    "VRetinoProcParamsDictTagged",
     "V__RETINO_PROC_METADATA",
     "v__retino_proc",
     "v__retino_proc_execute",

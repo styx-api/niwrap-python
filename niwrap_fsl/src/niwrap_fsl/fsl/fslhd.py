@@ -13,12 +13,12 @@ FSLHD_METADATA = Metadata(
 )
 
 
-FslhdParameters = typing.TypedDict('FslhdParameters', {
+FslhdParamsDict = typing.TypedDict('FslhdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslhd"]],
     "xml_flag": bool,
     "input_file": InputPathType,
 })
-FslhdParametersTagged = typing.TypedDict('FslhdParametersTagged', {
+FslhdParamsDictTagged = typing.TypedDict('FslhdParamsDictTagged', {
     "@type": typing.Literal["fsl/fslhd"],
     "xml_flag": bool,
     "input_file": InputPathType,
@@ -27,7 +27,7 @@ FslhdParametersTagged = typing.TypedDict('FslhdParametersTagged', {
 
 class FslhdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslhdParameters(...)`.
+    Output object returned when calling `FslhdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FslhdOutputs(typing.NamedTuple):
 def fslhd_params(
     input_file: InputPathType,
     xml_flag: bool = False,
-) -> FslhdParametersTagged:
+) -> FslhdParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def fslhd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslhdParameters` object.
+    `FslhdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fslhd_validate(
 
 
 def fslhd_cargs(
-    params: FslhdParameters,
+    params: FslhdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def fslhd_cargs(
 
 
 def fslhd_outputs(
-    params: FslhdParameters,
+    params: FslhdParamsDict,
     execution: Execution,
 ) -> FslhdOutputs:
     """
@@ -117,7 +117,7 @@ def fslhd_outputs(
 
 
 def fslhd_execute(
-    params: FslhdParameters,
+    params: FslhdParamsDict,
     runner: Runner | None = None,
 ) -> FslhdOutputs:
     """
@@ -176,6 +176,8 @@ def fslhd(
 __all__ = [
     "FSLHD_METADATA",
     "FslhdOutputs",
+    "FslhdParamsDict",
+    "FslhdParamsDictTagged",
     "fslhd",
     "fslhd_execute",
     "fslhd_params",

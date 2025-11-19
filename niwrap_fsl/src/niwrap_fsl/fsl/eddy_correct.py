@@ -13,14 +13,14 @@ EDDY_CORRECT_METADATA = Metadata(
 )
 
 
-EddyCorrectParameters = typing.TypedDict('EddyCorrectParameters', {
+EddyCorrectParamsDict = typing.TypedDict('EddyCorrectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_correct"]],
     "4d_input": InputPathType,
     "4d_output": str,
     "reference_no": int,
     "interp_method": typing.NotRequired[typing.Literal["trilinear", "spline"] | None],
 })
-EddyCorrectParametersTagged = typing.TypedDict('EddyCorrectParametersTagged', {
+EddyCorrectParamsDictTagged = typing.TypedDict('EddyCorrectParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_correct"],
     "4d_input": InputPathType,
     "4d_output": str,
@@ -31,7 +31,7 @@ EddyCorrectParametersTagged = typing.TypedDict('EddyCorrectParametersTagged', {
 
 class EddyCorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyCorrectParameters(...)`.
+    Output object returned when calling `EddyCorrectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def eddy_correct_params(
     v_4d_output: str,
     reference_no: int,
     interp_method: typing.Literal["trilinear", "spline"] | None = None,
-) -> EddyCorrectParametersTagged:
+) -> EddyCorrectParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def eddy_correct_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyCorrectParameters` object.
+    `EddyCorrectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def eddy_correct_validate(
 
 
 def eddy_correct_cargs(
-    params: EddyCorrectParameters,
+    params: EddyCorrectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def eddy_correct_cargs(
 
 
 def eddy_correct_outputs(
-    params: EddyCorrectParameters,
+    params: EddyCorrectParamsDict,
     execution: Execution,
 ) -> EddyCorrectOutputs:
     """
@@ -141,7 +141,7 @@ def eddy_correct_outputs(
 
 
 def eddy_correct_execute(
-    params: EddyCorrectParameters,
+    params: EddyCorrectParamsDict,
     runner: Runner | None = None,
 ) -> EddyCorrectOutputs:
     """
@@ -206,6 +206,8 @@ def eddy_correct(
 __all__ = [
     "EDDY_CORRECT_METADATA",
     "EddyCorrectOutputs",
+    "EddyCorrectParamsDict",
+    "EddyCorrectParamsDictTagged",
     "eddy_correct",
     "eddy_correct_execute",
     "eddy_correct_params",

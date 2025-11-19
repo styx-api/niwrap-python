@@ -13,11 +13,11 @@ FIX_SUBJECT_METADATA = Metadata(
 )
 
 
-FixSubjectParameters = typing.TypedDict('FixSubjectParameters', {
+FixSubjectParamsDict = typing.TypedDict('FixSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject"]],
     "arguments": typing.NotRequired[str | None],
 })
-FixSubjectParametersTagged = typing.TypedDict('FixSubjectParametersTagged', {
+FixSubjectParamsDictTagged = typing.TypedDict('FixSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fix_subject"],
     "arguments": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ FixSubjectParametersTagged = typing.TypedDict('FixSubjectParametersTagged', {
 
 class FixSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixSubjectParameters(...)`.
+    Output object returned when calling `FixSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FixSubjectOutputs(typing.NamedTuple):
 
 def fix_subject_params(
     arguments: str | None = None,
-) -> FixSubjectParametersTagged:
+) -> FixSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def fix_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixSubjectParameters` object.
+    `FixSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def fix_subject_validate(
 
 
 def fix_subject_cargs(
-    params: FixSubjectParameters,
+    params: FixSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def fix_subject_cargs(
 
 
 def fix_subject_outputs(
-    params: FixSubjectParameters,
+    params: FixSubjectParamsDict,
     execution: Execution,
 ) -> FixSubjectOutputs:
     """
@@ -108,7 +108,7 @@ def fix_subject_outputs(
 
 
 def fix_subject_execute(
-    params: FixSubjectParameters,
+    params: FixSubjectParamsDict,
     runner: Runner | None = None,
 ) -> FixSubjectOutputs:
     """
@@ -167,6 +167,8 @@ def fix_subject(
 __all__ = [
     "FIX_SUBJECT_METADATA",
     "FixSubjectOutputs",
+    "FixSubjectParamsDict",
+    "FixSubjectParamsDictTagged",
     "fix_subject",
     "fix_subject_execute",
     "fix_subject_params",

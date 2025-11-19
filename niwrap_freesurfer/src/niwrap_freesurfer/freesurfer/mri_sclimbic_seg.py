@@ -13,7 +13,7 @@ MRI_SCLIMBIC_SEG_METADATA = Metadata(
 )
 
 
-MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
+MriSclimbicSegParamsDict = typing.TypedDict('MriSclimbicSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sclimbic_seg"]],
     "input_file": str,
     "output_file": str,
@@ -41,7 +41,7 @@ MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
     "no_cite": bool,
     "nchannels": typing.NotRequired[int | None],
 })
-MriSclimbicSegParametersTagged = typing.TypedDict('MriSclimbicSegParametersTagged', {
+MriSclimbicSegParamsDictTagged = typing.TypedDict('MriSclimbicSegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_sclimbic_seg"],
     "input_file": str,
     "output_file": str,
@@ -73,7 +73,7 @@ MriSclimbicSegParametersTagged = typing.TypedDict('MriSclimbicSegParametersTagge
 
 class MriSclimbicSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSclimbicSegParameters(...)`.
+    Output object returned when calling `MriSclimbicSegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def mri_sclimbic_seg_params(
     output_base: str | None = None,
     no_cite: bool = False,
     nchannels: int | None = None,
-) -> MriSclimbicSegParametersTagged:
+) -> MriSclimbicSegParamsDictTagged:
     """
     Build parameters.
     
@@ -197,7 +197,7 @@ def mri_sclimbic_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSclimbicSegParameters` object.
+    `MriSclimbicSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -301,7 +301,7 @@ def mri_sclimbic_seg_validate(
 
 
 def mri_sclimbic_seg_cargs(
-    params: MriSclimbicSegParameters,
+    params: MriSclimbicSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -409,7 +409,7 @@ def mri_sclimbic_seg_cargs(
 
 
 def mri_sclimbic_seg_outputs(
-    params: MriSclimbicSegParameters,
+    params: MriSclimbicSegParamsDict,
     execution: Execution,
 ) -> MriSclimbicSegOutputs:
     """
@@ -429,7 +429,7 @@ def mri_sclimbic_seg_outputs(
 
 
 def mri_sclimbic_seg_execute(
-    params: MriSclimbicSegParameters,
+    params: MriSclimbicSegParamsDict,
     runner: Runner | None = None,
 ) -> MriSclimbicSegOutputs:
     """
@@ -566,6 +566,8 @@ def mri_sclimbic_seg(
 __all__ = [
     "MRI_SCLIMBIC_SEG_METADATA",
     "MriSclimbicSegOutputs",
+    "MriSclimbicSegParamsDict",
+    "MriSclimbicSegParamsDictTagged",
     "mri_sclimbic_seg",
     "mri_sclimbic_seg_execute",
     "mri_sclimbic_seg_params",

@@ -13,7 +13,7 @@ MRIS_LABEL_CALC_METADATA = Metadata(
 )
 
 
-MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
+MrisLabelCalcParamsDict = typing.TypedDict('MrisLabelCalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_calc"]],
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
@@ -21,7 +21,7 @@ MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
     "output": str,
     "iterations": typing.NotRequired[int | None],
 })
-MrisLabelCalcParametersTagged = typing.TypedDict('MrisLabelCalcParametersTagged', {
+MrisLabelCalcParamsDictTagged = typing.TypedDict('MrisLabelCalcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_label_calc"],
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
@@ -33,7 +33,7 @@ MrisLabelCalcParametersTagged = typing.TypedDict('MrisLabelCalcParametersTagged'
 
 class MrisLabelCalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisLabelCalcParameters(...)`.
+    Output object returned when calling `MrisLabelCalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_label_calc_params(
     input2: InputPathType,
     output: str,
     iterations: int | None = None,
-) -> MrisLabelCalcParametersTagged:
+) -> MrisLabelCalcParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def mris_label_calc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisLabelCalcParameters` object.
+    `MrisLabelCalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def mris_label_calc_validate(
 
 
 def mris_label_calc_cargs(
-    params: MrisLabelCalcParameters,
+    params: MrisLabelCalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def mris_label_calc_cargs(
 
 
 def mris_label_calc_outputs(
-    params: MrisLabelCalcParameters,
+    params: MrisLabelCalcParamsDict,
     execution: Execution,
 ) -> MrisLabelCalcOutputs:
     """
@@ -156,7 +156,7 @@ def mris_label_calc_outputs(
 
 
 def mris_label_calc_execute(
-    params: MrisLabelCalcParameters,
+    params: MrisLabelCalcParamsDict,
     runner: Runner | None = None,
 ) -> MrisLabelCalcOutputs:
     """
@@ -225,6 +225,8 @@ def mris_label_calc(
 __all__ = [
     "MRIS_LABEL_CALC_METADATA",
     "MrisLabelCalcOutputs",
+    "MrisLabelCalcParamsDict",
+    "MrisLabelCalcParamsDictTagged",
     "mris_label_calc",
     "mris_label_calc_execute",
     "mris_label_calc_params",

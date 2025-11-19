@@ -13,195 +13,195 @@ TCKGEN_METADATA = Metadata(
 )
 
 
-TckgenSeedImageParameters = typing.TypedDict('TckgenSeedImageParameters', {
+TckgenSeedImageParamsDict = typing.TypedDict('TckgenSeedImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_image"]],
     "image": InputPathType,
 })
-TckgenSeedImageParametersTagged = typing.TypedDict('TckgenSeedImageParametersTagged', {
+TckgenSeedImageParamsDictTagged = typing.TypedDict('TckgenSeedImageParamsDictTagged', {
     "@type": typing.Literal["seed_image"],
     "image": InputPathType,
 })
 
 
-TckgenSeedSphereParameters = typing.TypedDict('TckgenSeedSphereParameters', {
+TckgenSeedSphereParamsDict = typing.TypedDict('TckgenSeedSphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_sphere"]],
     "spec": list[float],
 })
-TckgenSeedSphereParametersTagged = typing.TypedDict('TckgenSeedSphereParametersTagged', {
+TckgenSeedSphereParamsDictTagged = typing.TypedDict('TckgenSeedSphereParamsDictTagged', {
     "@type": typing.Literal["seed_sphere"],
     "spec": list[float],
 })
 
 
-TckgenSeedRandomPerVoxelParameters = typing.TypedDict('TckgenSeedRandomPerVoxelParameters', {
+TckgenSeedRandomPerVoxelParamsDict = typing.TypedDict('TckgenSeedRandomPerVoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_random_per_voxel"]],
     "image": InputPathType,
     "num_per_voxel": int,
 })
-TckgenSeedRandomPerVoxelParametersTagged = typing.TypedDict('TckgenSeedRandomPerVoxelParametersTagged', {
+TckgenSeedRandomPerVoxelParamsDictTagged = typing.TypedDict('TckgenSeedRandomPerVoxelParamsDictTagged', {
     "@type": typing.Literal["seed_random_per_voxel"],
     "image": InputPathType,
     "num_per_voxel": int,
 })
 
 
-TckgenSeedGridPerVoxelParameters = typing.TypedDict('TckgenSeedGridPerVoxelParameters', {
+TckgenSeedGridPerVoxelParamsDict = typing.TypedDict('TckgenSeedGridPerVoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_grid_per_voxel"]],
     "image": InputPathType,
     "grid_size": int,
 })
-TckgenSeedGridPerVoxelParametersTagged = typing.TypedDict('TckgenSeedGridPerVoxelParametersTagged', {
+TckgenSeedGridPerVoxelParamsDictTagged = typing.TypedDict('TckgenSeedGridPerVoxelParamsDictTagged', {
     "@type": typing.Literal["seed_grid_per_voxel"],
     "image": InputPathType,
     "grid_size": int,
 })
 
 
-TckgenSeedRejectionParameters = typing.TypedDict('TckgenSeedRejectionParameters', {
+TckgenSeedRejectionParamsDict = typing.TypedDict('TckgenSeedRejectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_rejection"]],
     "image": InputPathType,
 })
-TckgenSeedRejectionParametersTagged = typing.TypedDict('TckgenSeedRejectionParametersTagged', {
+TckgenSeedRejectionParamsDictTagged = typing.TypedDict('TckgenSeedRejectionParamsDictTagged', {
     "@type": typing.Literal["seed_rejection"],
     "image": InputPathType,
 })
 
 
-TckgenSeedGmwmiParameters = typing.TypedDict('TckgenSeedGmwmiParameters', {
+TckgenSeedGmwmiParamsDict = typing.TypedDict('TckgenSeedGmwmiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["seed_gmwmi"]],
     "image": InputPathType,
 })
-TckgenSeedGmwmiParametersTagged = typing.TypedDict('TckgenSeedGmwmiParametersTagged', {
+TckgenSeedGmwmiParamsDictTagged = typing.TypedDict('TckgenSeedGmwmiParamsDictTagged', {
     "@type": typing.Literal["seed_gmwmi"],
     "image": InputPathType,
 })
 
 
-TckgenVariousStringParameters = typing.TypedDict('TckgenVariousStringParameters', {
+TckgenVariousStringParamsDict = typing.TypedDict('TckgenVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-TckgenVariousStringParametersTagged = typing.TypedDict('TckgenVariousStringParametersTagged', {
+TckgenVariousStringParamsDictTagged = typing.TypedDict('TckgenVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-TckgenVariousFileParameters = typing.TypedDict('TckgenVariousFileParameters', {
+TckgenVariousFileParamsDict = typing.TypedDict('TckgenVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-TckgenVariousFileParametersTagged = typing.TypedDict('TckgenVariousFileParametersTagged', {
+TckgenVariousFileParamsDictTagged = typing.TypedDict('TckgenVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-TckgenIncludeParameters = typing.TypedDict('TckgenIncludeParameters', {
+TckgenIncludeParamsDict = typing.TypedDict('TckgenIncludeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["include"]],
-    "spec": typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
+    "spec": typing.Union[TckgenVariousStringParamsDictTagged, TckgenVariousFileParamsDictTagged],
 })
-TckgenIncludeParametersTagged = typing.TypedDict('TckgenIncludeParametersTagged', {
+TckgenIncludeParamsDictTagged = typing.TypedDict('TckgenIncludeParamsDictTagged', {
     "@type": typing.Literal["include"],
-    "spec": typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
+    "spec": typing.Union[TckgenVariousStringParamsDictTagged, TckgenVariousFileParamsDictTagged],
 })
 
 
-TckgenIncludeOrderedParameters = typing.TypedDict('TckgenIncludeOrderedParameters', {
+TckgenIncludeOrderedParamsDict = typing.TypedDict('TckgenIncludeOrderedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["include_ordered"]],
     "image": str,
 })
-TckgenIncludeOrderedParametersTagged = typing.TypedDict('TckgenIncludeOrderedParametersTagged', {
+TckgenIncludeOrderedParamsDictTagged = typing.TypedDict('TckgenIncludeOrderedParamsDictTagged', {
     "@type": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
-TckgenVariousString1Parameters = typing.TypedDict('TckgenVariousString1Parameters', {
+TckgenVariousString1ParamsDict = typing.TypedDict('TckgenVariousString1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
     "obj": str,
 })
-TckgenVariousString1ParametersTagged = typing.TypedDict('TckgenVariousString1ParametersTagged', {
+TckgenVariousString1ParamsDictTagged = typing.TypedDict('TckgenVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
-TckgenVariousFile1Parameters = typing.TypedDict('TckgenVariousFile1Parameters', {
+TckgenVariousFile1ParamsDict = typing.TypedDict('TckgenVariousFile1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
     "obj": InputPathType,
 })
-TckgenVariousFile1ParametersTagged = typing.TypedDict('TckgenVariousFile1ParametersTagged', {
+TckgenVariousFile1ParamsDictTagged = typing.TypedDict('TckgenVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
-TckgenExcludeParameters = typing.TypedDict('TckgenExcludeParameters', {
+TckgenExcludeParamsDict = typing.TypedDict('TckgenExcludeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude"]],
-    "spec": typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
+    "spec": typing.Union[TckgenVariousString1ParamsDictTagged, TckgenVariousFile1ParamsDictTagged],
 })
-TckgenExcludeParametersTagged = typing.TypedDict('TckgenExcludeParametersTagged', {
+TckgenExcludeParamsDictTagged = typing.TypedDict('TckgenExcludeParamsDictTagged', {
     "@type": typing.Literal["exclude"],
-    "spec": typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
+    "spec": typing.Union[TckgenVariousString1ParamsDictTagged, TckgenVariousFile1ParamsDictTagged],
 })
 
 
-TckgenVariousString2Parameters = typing.TypedDict('TckgenVariousString2Parameters', {
+TckgenVariousString2ParamsDict = typing.TypedDict('TckgenVariousString2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
     "obj": str,
 })
-TckgenVariousString2ParametersTagged = typing.TypedDict('TckgenVariousString2ParametersTagged', {
+TckgenVariousString2ParamsDictTagged = typing.TypedDict('TckgenVariousString2ParamsDictTagged', {
     "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
-TckgenVariousFile2Parameters = typing.TypedDict('TckgenVariousFile2Parameters', {
+TckgenVariousFile2ParamsDict = typing.TypedDict('TckgenVariousFile2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
     "obj": InputPathType,
 })
-TckgenVariousFile2ParametersTagged = typing.TypedDict('TckgenVariousFile2ParametersTagged', {
+TckgenVariousFile2ParamsDictTagged = typing.TypedDict('TckgenVariousFile2ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
-TckgenMaskParameters = typing.TypedDict('TckgenMaskParameters', {
+TckgenMaskParamsDict = typing.TypedDict('TckgenMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mask"]],
-    "spec": typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
+    "spec": typing.Union[TckgenVariousString2ParamsDictTagged, TckgenVariousFile2ParamsDictTagged],
 })
-TckgenMaskParametersTagged = typing.TypedDict('TckgenMaskParametersTagged', {
+TckgenMaskParamsDictTagged = typing.TypedDict('TckgenMaskParamsDictTagged', {
     "@type": typing.Literal["mask"],
-    "spec": typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
+    "spec": typing.Union[TckgenVariousString2ParamsDictTagged, TckgenVariousFile2ParamsDictTagged],
 })
 
 
-TckgenFslgradParameters = typing.TypedDict('TckgenFslgradParameters', {
+TckgenFslgradParamsDict = typing.TypedDict('TckgenFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-TckgenFslgradParametersTagged = typing.TypedDict('TckgenFslgradParametersTagged', {
+TckgenFslgradParamsDictTagged = typing.TypedDict('TckgenFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-TckgenConfigParameters = typing.TypedDict('TckgenConfigParameters', {
+TckgenConfigParamsDict = typing.TypedDict('TckgenConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckgenConfigParametersTagged = typing.TypedDict('TckgenConfigParametersTagged', {
+TckgenConfigParamsDictTagged = typing.TypedDict('TckgenConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckgenParameters = typing.TypedDict('TckgenParameters', {
+TckgenParamsDict = typing.TypedDict('TckgenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckgen"]],
     "algorithm": typing.NotRequired[str | None],
     "select": typing.NotRequired[int | None],
@@ -215,12 +215,12 @@ TckgenParameters = typing.TypedDict('TckgenParameters', {
     "rk4": bool,
     "stop": bool,
     "downsample": typing.NotRequired[int | None],
-    "seed_image": typing.NotRequired[list[TckgenSeedImageParameters] | None],
-    "seed_sphere": typing.NotRequired[list[TckgenSeedSphereParameters] | None],
-    "seed_random_per_voxel": typing.NotRequired[list[TckgenSeedRandomPerVoxelParameters] | None],
-    "seed_grid_per_voxel": typing.NotRequired[list[TckgenSeedGridPerVoxelParameters] | None],
-    "seed_rejection": typing.NotRequired[list[TckgenSeedRejectionParameters] | None],
-    "seed_gmwmi": typing.NotRequired[list[TckgenSeedGmwmiParameters] | None],
+    "seed_image": typing.NotRequired[list[TckgenSeedImageParamsDict] | None],
+    "seed_sphere": typing.NotRequired[list[TckgenSeedSphereParamsDict] | None],
+    "seed_random_per_voxel": typing.NotRequired[list[TckgenSeedRandomPerVoxelParamsDict] | None],
+    "seed_grid_per_voxel": typing.NotRequired[list[TckgenSeedGridPerVoxelParamsDict] | None],
+    "seed_rejection": typing.NotRequired[list[TckgenSeedRejectionParamsDict] | None],
+    "seed_gmwmi": typing.NotRequired[list[TckgenSeedGmwmiParamsDict] | None],
     "seed_dynamic": typing.NotRequired[InputPathType | None],
     "seeds": typing.NotRequired[int | None],
     "max_attempts_per_seed": typing.NotRequired[int | None],
@@ -228,29 +228,29 @@ TckgenParameters = typing.TypedDict('TckgenParameters', {
     "seed_unidirectional": bool,
     "seed_direction": typing.NotRequired[list[float] | None],
     "output_seeds": typing.NotRequired[str | None],
-    "include": typing.NotRequired[list[TckgenIncludeParameters] | None],
-    "include_ordered": typing.NotRequired[list[TckgenIncludeOrderedParameters] | None],
-    "exclude": typing.NotRequired[list[TckgenExcludeParameters] | None],
-    "mask": typing.NotRequired[list[TckgenMaskParameters] | None],
+    "include": typing.NotRequired[list[TckgenIncludeParamsDict] | None],
+    "include_ordered": typing.NotRequired[list[TckgenIncludeOrderedParamsDict] | None],
+    "exclude": typing.NotRequired[list[TckgenExcludeParamsDict] | None],
+    "mask": typing.NotRequired[list[TckgenMaskParamsDict] | None],
     "act": typing.NotRequired[InputPathType | None],
     "backtrack": bool,
     "crop_at_gmwmi": bool,
     "power": typing.NotRequired[float | None],
     "samples": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[TckgenFslgradParameters | None],
+    "fslgrad": typing.NotRequired[TckgenFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckgenConfigParameters] | None],
+    "config": typing.NotRequired[list[TckgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
     "tracks": str,
 })
-TckgenParametersTagged = typing.TypedDict('TckgenParametersTagged', {
+TckgenParamsDictTagged = typing.TypedDict('TckgenParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckgen"],
     "algorithm": typing.NotRequired[str | None],
     "select": typing.NotRequired[int | None],
@@ -264,12 +264,12 @@ TckgenParametersTagged = typing.TypedDict('TckgenParametersTagged', {
     "rk4": bool,
     "stop": bool,
     "downsample": typing.NotRequired[int | None],
-    "seed_image": typing.NotRequired[list[TckgenSeedImageParameters] | None],
-    "seed_sphere": typing.NotRequired[list[TckgenSeedSphereParameters] | None],
-    "seed_random_per_voxel": typing.NotRequired[list[TckgenSeedRandomPerVoxelParameters] | None],
-    "seed_grid_per_voxel": typing.NotRequired[list[TckgenSeedGridPerVoxelParameters] | None],
-    "seed_rejection": typing.NotRequired[list[TckgenSeedRejectionParameters] | None],
-    "seed_gmwmi": typing.NotRequired[list[TckgenSeedGmwmiParameters] | None],
+    "seed_image": typing.NotRequired[list[TckgenSeedImageParamsDict] | None],
+    "seed_sphere": typing.NotRequired[list[TckgenSeedSphereParamsDict] | None],
+    "seed_random_per_voxel": typing.NotRequired[list[TckgenSeedRandomPerVoxelParamsDict] | None],
+    "seed_grid_per_voxel": typing.NotRequired[list[TckgenSeedGridPerVoxelParamsDict] | None],
+    "seed_rejection": typing.NotRequired[list[TckgenSeedRejectionParamsDict] | None],
+    "seed_gmwmi": typing.NotRequired[list[TckgenSeedGmwmiParamsDict] | None],
     "seed_dynamic": typing.NotRequired[InputPathType | None],
     "seeds": typing.NotRequired[int | None],
     "max_attempts_per_seed": typing.NotRequired[int | None],
@@ -277,23 +277,23 @@ TckgenParametersTagged = typing.TypedDict('TckgenParametersTagged', {
     "seed_unidirectional": bool,
     "seed_direction": typing.NotRequired[list[float] | None],
     "output_seeds": typing.NotRequired[str | None],
-    "include": typing.NotRequired[list[TckgenIncludeParameters] | None],
-    "include_ordered": typing.NotRequired[list[TckgenIncludeOrderedParameters] | None],
-    "exclude": typing.NotRequired[list[TckgenExcludeParameters] | None],
-    "mask": typing.NotRequired[list[TckgenMaskParameters] | None],
+    "include": typing.NotRequired[list[TckgenIncludeParamsDict] | None],
+    "include_ordered": typing.NotRequired[list[TckgenIncludeOrderedParamsDict] | None],
+    "exclude": typing.NotRequired[list[TckgenExcludeParamsDict] | None],
+    "mask": typing.NotRequired[list[TckgenMaskParamsDict] | None],
     "act": typing.NotRequired[InputPathType | None],
     "backtrack": bool,
     "crop_at_gmwmi": bool,
     "power": typing.NotRequired[float | None],
     "samples": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[TckgenFslgradParameters | None],
+    "fslgrad": typing.NotRequired[TckgenFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckgenConfigParameters] | None],
+    "config": typing.NotRequired[list[TckgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
@@ -403,9 +403,9 @@ def tckgen_spec_validate_dyn_fn_2(
     }.get(t)
 
 
-def tckgen_seed_image_params(
+def tckgen_seed_image(
     image: InputPathType,
-) -> TckgenSeedImageParametersTagged:
+) -> TckgenSeedImageParamsDictTagged:
     """
     Build parameters.
     
@@ -426,7 +426,7 @@ def tckgen_seed_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedImageParameters` object.
+    `TckgenSeedImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -440,7 +440,7 @@ def tckgen_seed_image_validate(
 
 
 def tckgen_seed_image_cargs(
-    params: TckgenSeedImageParameters,
+    params: TckgenSeedImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -458,9 +458,9 @@ def tckgen_seed_image_cargs(
     return cargs
 
 
-def tckgen_seed_sphere_params(
+def tckgen_seed_sphere(
     spec: list[float],
-) -> TckgenSeedSphereParametersTagged:
+) -> TckgenSeedSphereParamsDictTagged:
     """
     Build parameters.
     
@@ -482,7 +482,7 @@ def tckgen_seed_sphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedSphereParameters` object.
+    `TckgenSeedSphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -499,7 +499,7 @@ def tckgen_seed_sphere_validate(
 
 
 def tckgen_seed_sphere_cargs(
-    params: TckgenSeedSphereParameters,
+    params: TckgenSeedSphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -517,10 +517,10 @@ def tckgen_seed_sphere_cargs(
     return cargs
 
 
-def tckgen_seed_random_per_voxel_params(
+def tckgen_seed_random_per_voxel(
     image: InputPathType,
     num_per_voxel: int,
-) -> TckgenSeedRandomPerVoxelParametersTagged:
+) -> TckgenSeedRandomPerVoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -545,7 +545,7 @@ def tckgen_seed_random_per_voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedRandomPerVoxelParameters` object.
+    `TckgenSeedRandomPerVoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -563,7 +563,7 @@ def tckgen_seed_random_per_voxel_validate(
 
 
 def tckgen_seed_random_per_voxel_cargs(
-    params: TckgenSeedRandomPerVoxelParameters,
+    params: TckgenSeedRandomPerVoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -582,10 +582,10 @@ def tckgen_seed_random_per_voxel_cargs(
     return cargs
 
 
-def tckgen_seed_grid_per_voxel_params(
+def tckgen_seed_grid_per_voxel(
     image: InputPathType,
     grid_size: int,
-) -> TckgenSeedGridPerVoxelParametersTagged:
+) -> TckgenSeedGridPerVoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -612,7 +612,7 @@ def tckgen_seed_grid_per_voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedGridPerVoxelParameters` object.
+    `TckgenSeedGridPerVoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -630,7 +630,7 @@ def tckgen_seed_grid_per_voxel_validate(
 
 
 def tckgen_seed_grid_per_voxel_cargs(
-    params: TckgenSeedGridPerVoxelParameters,
+    params: TckgenSeedGridPerVoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -649,9 +649,9 @@ def tckgen_seed_grid_per_voxel_cargs(
     return cargs
 
 
-def tckgen_seed_rejection_params(
+def tckgen_seed_rejection(
     image: InputPathType,
-) -> TckgenSeedRejectionParametersTagged:
+) -> TckgenSeedRejectionParamsDictTagged:
     """
     Build parameters.
     
@@ -673,7 +673,7 @@ def tckgen_seed_rejection_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedRejectionParameters` object.
+    `TckgenSeedRejectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -687,7 +687,7 @@ def tckgen_seed_rejection_validate(
 
 
 def tckgen_seed_rejection_cargs(
-    params: TckgenSeedRejectionParameters,
+    params: TckgenSeedRejectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -705,9 +705,9 @@ def tckgen_seed_rejection_cargs(
     return cargs
 
 
-def tckgen_seed_gmwmi_params(
+def tckgen_seed_gmwmi(
     image: InputPathType,
-) -> TckgenSeedGmwmiParametersTagged:
+) -> TckgenSeedGmwmiParamsDictTagged:
     """
     Build parameters.
     
@@ -731,7 +731,7 @@ def tckgen_seed_gmwmi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenSeedGmwmiParameters` object.
+    `TckgenSeedGmwmiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -745,7 +745,7 @@ def tckgen_seed_gmwmi_validate(
 
 
 def tckgen_seed_gmwmi_cargs(
-    params: TckgenSeedGmwmiParameters,
+    params: TckgenSeedGmwmiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -763,9 +763,9 @@ def tckgen_seed_gmwmi_cargs(
     return cargs
 
 
-def tckgen_various_string_params(
+def tckgen_various_string(
     obj: str,
-) -> TckgenVariousStringParametersTagged:
+) -> TckgenVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -786,7 +786,7 @@ def tckgen_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousStringParameters` object.
+    `TckgenVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -800,7 +800,7 @@ def tckgen_various_string_validate(
 
 
 def tckgen_various_string_cargs(
-    params: TckgenVariousStringParameters,
+    params: TckgenVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -817,9 +817,9 @@ def tckgen_various_string_cargs(
     return cargs
 
 
-def tckgen_various_file_params(
+def tckgen_various_file(
     obj: InputPathType,
-) -> TckgenVariousFileParametersTagged:
+) -> TckgenVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -840,7 +840,7 @@ def tckgen_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousFileParameters` object.
+    `TckgenVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -854,7 +854,7 @@ def tckgen_various_file_validate(
 
 
 def tckgen_various_file_cargs(
-    params: TckgenVariousFileParameters,
+    params: TckgenVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -871,9 +871,9 @@ def tckgen_various_file_cargs(
     return cargs
 
 
-def tckgen_include_params(
-    spec: typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
-) -> TckgenIncludeParametersTagged:
+def tckgen_include(
+    spec: typing.Union[TckgenVariousStringParamsDictTagged, TckgenVariousFileParamsDictTagged],
+) -> TckgenIncludeParamsDictTagged:
     """
     Build parameters.
     
@@ -896,7 +896,7 @@ def tckgen_include_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenIncludeParameters` object.
+    `TckgenIncludeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -909,11 +909,13 @@ def tckgen_include_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     tckgen_spec_validate_dyn_fn(params["spec"]["@type"])(params["spec"])
 
 
 def tckgen_include_cargs(
-    params: TckgenIncludeParameters,
+    params: TckgenIncludeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -931,9 +933,9 @@ def tckgen_include_cargs(
     return cargs
 
 
-def tckgen_include_ordered_params(
+def tckgen_include_ordered(
     image: str,
-) -> TckgenIncludeOrderedParametersTagged:
+) -> TckgenIncludeOrderedParamsDictTagged:
     """
     Build parameters.
     
@@ -957,7 +959,7 @@ def tckgen_include_ordered_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenIncludeOrderedParameters` object.
+    `TckgenIncludeOrderedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -971,7 +973,7 @@ def tckgen_include_ordered_validate(
 
 
 def tckgen_include_ordered_cargs(
-    params: TckgenIncludeOrderedParameters,
+    params: TckgenIncludeOrderedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -989,9 +991,9 @@ def tckgen_include_ordered_cargs(
     return cargs
 
 
-def tckgen_various_string_1_params(
+def tckgen_various_string_1(
     obj: str,
-) -> TckgenVariousString1ParametersTagged:
+) -> TckgenVariousString1ParamsDictTagged:
     """
     Build parameters.
     
@@ -1012,7 +1014,7 @@ def tckgen_various_string_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousString1Parameters` object.
+    `TckgenVariousString1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1026,7 +1028,7 @@ def tckgen_various_string_1_validate(
 
 
 def tckgen_various_string_1_cargs(
-    params: TckgenVariousString1Parameters,
+    params: TckgenVariousString1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1043,9 +1045,9 @@ def tckgen_various_string_1_cargs(
     return cargs
 
 
-def tckgen_various_file_1_params(
+def tckgen_various_file_1(
     obj: InputPathType,
-) -> TckgenVariousFile1ParametersTagged:
+) -> TckgenVariousFile1ParamsDictTagged:
     """
     Build parameters.
     
@@ -1066,7 +1068,7 @@ def tckgen_various_file_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousFile1Parameters` object.
+    `TckgenVariousFile1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1080,7 +1082,7 @@ def tckgen_various_file_1_validate(
 
 
 def tckgen_various_file_1_cargs(
-    params: TckgenVariousFile1Parameters,
+    params: TckgenVariousFile1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1097,9 +1099,9 @@ def tckgen_various_file_1_cargs(
     return cargs
 
 
-def tckgen_exclude_params(
-    spec: typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
-) -> TckgenExcludeParametersTagged:
+def tckgen_exclude(
+    spec: typing.Union[TckgenVariousString1ParamsDictTagged, TckgenVariousFile1ParamsDictTagged],
+) -> TckgenExcludeParamsDictTagged:
     """
     Build parameters.
     
@@ -1122,7 +1124,7 @@ def tckgen_exclude_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenExcludeParameters` object.
+    `TckgenExcludeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1135,11 +1137,13 @@ def tckgen_exclude_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString_1", "VariousFile_1"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString_1\", \"VariousFile_1\"]")
     tckgen_spec_validate_dyn_fn_(params["spec"]["@type"])(params["spec"])
 
 
 def tckgen_exclude_cargs(
-    params: TckgenExcludeParameters,
+    params: TckgenExcludeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1157,9 +1161,9 @@ def tckgen_exclude_cargs(
     return cargs
 
 
-def tckgen_various_string_2_params(
+def tckgen_various_string_2(
     obj: str,
-) -> TckgenVariousString2ParametersTagged:
+) -> TckgenVariousString2ParamsDictTagged:
     """
     Build parameters.
     
@@ -1180,7 +1184,7 @@ def tckgen_various_string_2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousString2Parameters` object.
+    `TckgenVariousString2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1194,7 +1198,7 @@ def tckgen_various_string_2_validate(
 
 
 def tckgen_various_string_2_cargs(
-    params: TckgenVariousString2Parameters,
+    params: TckgenVariousString2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1211,9 +1215,9 @@ def tckgen_various_string_2_cargs(
     return cargs
 
 
-def tckgen_various_file_2_params(
+def tckgen_various_file_2(
     obj: InputPathType,
-) -> TckgenVariousFile2ParametersTagged:
+) -> TckgenVariousFile2ParamsDictTagged:
     """
     Build parameters.
     
@@ -1234,7 +1238,7 @@ def tckgen_various_file_2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenVariousFile2Parameters` object.
+    `TckgenVariousFile2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1248,7 +1252,7 @@ def tckgen_various_file_2_validate(
 
 
 def tckgen_various_file_2_cargs(
-    params: TckgenVariousFile2Parameters,
+    params: TckgenVariousFile2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1265,9 +1269,9 @@ def tckgen_various_file_2_cargs(
     return cargs
 
 
-def tckgen_mask_params(
-    spec: typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
-) -> TckgenMaskParametersTagged:
+def tckgen_mask(
+    spec: typing.Union[TckgenVariousString2ParamsDictTagged, TckgenVariousFile2ParamsDictTagged],
+) -> TckgenMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -1290,7 +1294,7 @@ def tckgen_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenMaskParameters` object.
+    `TckgenMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1303,11 +1307,13 @@ def tckgen_mask_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString_2", "VariousFile_2"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString_2\", \"VariousFile_2\"]")
     tckgen_spec_validate_dyn_fn_2(params["spec"]["@type"])(params["spec"])
 
 
 def tckgen_mask_cargs(
-    params: TckgenMaskParameters,
+    params: TckgenMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1325,10 +1331,10 @@ def tckgen_mask_cargs(
     return cargs
 
 
-def tckgen_fslgrad_params(
+def tckgen_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> TckgenFslgradParametersTagged:
+) -> TckgenFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -1357,7 +1363,7 @@ def tckgen_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenFslgradParameters` object.
+    `TckgenFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1375,7 +1381,7 @@ def tckgen_fslgrad_validate(
 
 
 def tckgen_fslgrad_cargs(
-    params: TckgenFslgradParameters,
+    params: TckgenFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1394,10 +1400,10 @@ def tckgen_fslgrad_cargs(
     return cargs
 
 
-def tckgen_config_params(
+def tckgen_config(
     key: str,
     value: str,
-) -> TckgenConfigParametersTagged:
+) -> TckgenConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -1420,7 +1426,7 @@ def tckgen_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenConfigParameters` object.
+    `TckgenConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1438,7 +1444,7 @@ def tckgen_config_validate(
 
 
 def tckgen_config_cargs(
-    params: TckgenConfigParameters,
+    params: TckgenConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1459,7 +1465,7 @@ def tckgen_config_cargs(
 
 class TckgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckgenParameters(...)`.
+    Output object returned when calling `TckgenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1484,12 +1490,12 @@ def tckgen_params(
     rk4: bool = False,
     stop: bool = False,
     downsample: int | None = None,
-    seed_image: list[TckgenSeedImageParameters] | None = None,
-    seed_sphere: list[TckgenSeedSphereParameters] | None = None,
-    seed_random_per_voxel: list[TckgenSeedRandomPerVoxelParameters] | None = None,
-    seed_grid_per_voxel: list[TckgenSeedGridPerVoxelParameters] | None = None,
-    seed_rejection: list[TckgenSeedRejectionParameters] | None = None,
-    seed_gmwmi: list[TckgenSeedGmwmiParameters] | None = None,
+    seed_image: list[TckgenSeedImageParamsDict] | None = None,
+    seed_sphere: list[TckgenSeedSphereParamsDict] | None = None,
+    seed_random_per_voxel: list[TckgenSeedRandomPerVoxelParamsDict] | None = None,
+    seed_grid_per_voxel: list[TckgenSeedGridPerVoxelParamsDict] | None = None,
+    seed_rejection: list[TckgenSeedRejectionParamsDict] | None = None,
+    seed_gmwmi: list[TckgenSeedGmwmiParamsDict] | None = None,
     seed_dynamic: InputPathType | None = None,
     seeds: int | None = None,
     max_attempts_per_seed: int | None = None,
@@ -1497,26 +1503,26 @@ def tckgen_params(
     seed_unidirectional: bool = False,
     seed_direction: list[float] | None = None,
     output_seeds: str | None = None,
-    include: list[TckgenIncludeParameters] | None = None,
-    include_ordered: list[TckgenIncludeOrderedParameters] | None = None,
-    exclude: list[TckgenExcludeParameters] | None = None,
-    mask: list[TckgenMaskParameters] | None = None,
+    include: list[TckgenIncludeParamsDict] | None = None,
+    include_ordered: list[TckgenIncludeOrderedParamsDict] | None = None,
+    exclude: list[TckgenExcludeParamsDict] | None = None,
+    mask: list[TckgenMaskParamsDict] | None = None,
     act: InputPathType | None = None,
     backtrack: bool = False,
     crop_at_gmwmi: bool = False,
     power: float | None = None,
     samples: int | None = None,
     grad: InputPathType | None = None,
-    fslgrad: TckgenFslgradParameters | None = None,
+    fslgrad: TckgenFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckgenConfigParameters] | None = None,
+    config: list[TckgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckgenParametersTagged:
+) -> TckgenParamsDictTagged:
     """
     Build parameters.
     
@@ -1745,7 +1751,7 @@ def tckgen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckgenParameters` object.
+    `TckgenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1793,32 +1799,32 @@ def tckgen_validate(
             raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", None))}` expected `int | None`')
     if params.get("seed_image", None) is not None:
         if not isinstance(params["seed_image"], list):
-            raise StyxValidationError(f'`seed_image` has the wrong type: Received `{type(params.get("seed_image", None))}` expected `list[TckgenSeedImageParameters] | None`')
+            raise StyxValidationError(f'`seed_image` has the wrong type: Received `{type(params.get("seed_image", None))}` expected `list[TckgenSeedImageParamsDict] | None`')
         for e in params["seed_image"]:
             tckgen_seed_image_validate(e)
     if params.get("seed_sphere", None) is not None:
         if not isinstance(params["seed_sphere"], list):
-            raise StyxValidationError(f'`seed_sphere` has the wrong type: Received `{type(params.get("seed_sphere", None))}` expected `list[TckgenSeedSphereParameters] | None`')
+            raise StyxValidationError(f'`seed_sphere` has the wrong type: Received `{type(params.get("seed_sphere", None))}` expected `list[TckgenSeedSphereParamsDict] | None`')
         for e in params["seed_sphere"]:
             tckgen_seed_sphere_validate(e)
     if params.get("seed_random_per_voxel", None) is not None:
         if not isinstance(params["seed_random_per_voxel"], list):
-            raise StyxValidationError(f'`seed_random_per_voxel` has the wrong type: Received `{type(params.get("seed_random_per_voxel", None))}` expected `list[TckgenSeedRandomPerVoxelParameters] | None`')
+            raise StyxValidationError(f'`seed_random_per_voxel` has the wrong type: Received `{type(params.get("seed_random_per_voxel", None))}` expected `list[TckgenSeedRandomPerVoxelParamsDict] | None`')
         for e in params["seed_random_per_voxel"]:
             tckgen_seed_random_per_voxel_validate(e)
     if params.get("seed_grid_per_voxel", None) is not None:
         if not isinstance(params["seed_grid_per_voxel"], list):
-            raise StyxValidationError(f'`seed_grid_per_voxel` has the wrong type: Received `{type(params.get("seed_grid_per_voxel", None))}` expected `list[TckgenSeedGridPerVoxelParameters] | None`')
+            raise StyxValidationError(f'`seed_grid_per_voxel` has the wrong type: Received `{type(params.get("seed_grid_per_voxel", None))}` expected `list[TckgenSeedGridPerVoxelParamsDict] | None`')
         for e in params["seed_grid_per_voxel"]:
             tckgen_seed_grid_per_voxel_validate(e)
     if params.get("seed_rejection", None) is not None:
         if not isinstance(params["seed_rejection"], list):
-            raise StyxValidationError(f'`seed_rejection` has the wrong type: Received `{type(params.get("seed_rejection", None))}` expected `list[TckgenSeedRejectionParameters] | None`')
+            raise StyxValidationError(f'`seed_rejection` has the wrong type: Received `{type(params.get("seed_rejection", None))}` expected `list[TckgenSeedRejectionParamsDict] | None`')
         for e in params["seed_rejection"]:
             tckgen_seed_rejection_validate(e)
     if params.get("seed_gmwmi", None) is not None:
         if not isinstance(params["seed_gmwmi"], list):
-            raise StyxValidationError(f'`seed_gmwmi` has the wrong type: Received `{type(params.get("seed_gmwmi", None))}` expected `list[TckgenSeedGmwmiParameters] | None`')
+            raise StyxValidationError(f'`seed_gmwmi` has the wrong type: Received `{type(params.get("seed_gmwmi", None))}` expected `list[TckgenSeedGmwmiParamsDict] | None`')
         for e in params["seed_gmwmi"]:
             tckgen_seed_gmwmi_validate(e)
     if params.get("seed_dynamic", None) is not None:
@@ -1848,22 +1854,22 @@ def tckgen_validate(
             raise StyxValidationError(f'`output_seeds` has the wrong type: Received `{type(params.get("output_seeds", None))}` expected `str | None`')
     if params.get("include", None) is not None:
         if not isinstance(params["include"], list):
-            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckgenIncludeParameters] | None`')
+            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckgenIncludeParamsDict] | None`')
         for e in params["include"]:
             tckgen_include_validate(e)
     if params.get("include_ordered", None) is not None:
         if not isinstance(params["include_ordered"], list):
-            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckgenIncludeOrderedParameters] | None`')
+            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckgenIncludeOrderedParamsDict] | None`')
         for e in params["include_ordered"]:
             tckgen_include_ordered_validate(e)
     if params.get("exclude", None) is not None:
         if not isinstance(params["exclude"], list):
-            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckgenExcludeParameters] | None`')
+            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckgenExcludeParamsDict] | None`')
         for e in params["exclude"]:
             tckgen_exclude_validate(e)
     if params.get("mask", None) is not None:
         if not isinstance(params["mask"], list):
-            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckgenMaskParameters] | None`')
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckgenMaskParamsDict] | None`')
         for e in params["mask"]:
             tckgen_mask_validate(e)
     if params.get("act", None) is not None:
@@ -1909,7 +1915,7 @@ def tckgen_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckgenConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckgenConfigParamsDict] | None`')
         for e in params["config"]:
             tckgen_config_validate(e)
     if params.get("help", False) is None:
@@ -1931,7 +1937,7 @@ def tckgen_validate(
 
 
 def tckgen_cargs(
-    params: TckgenParameters,
+    params: TckgenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2099,7 +2105,7 @@ def tckgen_cargs(
 
 
 def tckgen_outputs(
-    params: TckgenParameters,
+    params: TckgenParamsDict,
     execution: Execution,
 ) -> TckgenOutputs:
     """
@@ -2120,7 +2126,7 @@ def tckgen_outputs(
 
 
 def tckgen_execute(
-    params: TckgenParameters,
+    params: TckgenParamsDict,
     runner: Runner | None = None,
 ) -> TckgenOutputs:
     """
@@ -2297,12 +2303,12 @@ def tckgen(
     rk4: bool = False,
     stop: bool = False,
     downsample: int | None = None,
-    seed_image: list[TckgenSeedImageParameters] | None = None,
-    seed_sphere: list[TckgenSeedSphereParameters] | None = None,
-    seed_random_per_voxel: list[TckgenSeedRandomPerVoxelParameters] | None = None,
-    seed_grid_per_voxel: list[TckgenSeedGridPerVoxelParameters] | None = None,
-    seed_rejection: list[TckgenSeedRejectionParameters] | None = None,
-    seed_gmwmi: list[TckgenSeedGmwmiParameters] | None = None,
+    seed_image: list[TckgenSeedImageParamsDict] | None = None,
+    seed_sphere: list[TckgenSeedSphereParamsDict] | None = None,
+    seed_random_per_voxel: list[TckgenSeedRandomPerVoxelParamsDict] | None = None,
+    seed_grid_per_voxel: list[TckgenSeedGridPerVoxelParamsDict] | None = None,
+    seed_rejection: list[TckgenSeedRejectionParamsDict] | None = None,
+    seed_gmwmi: list[TckgenSeedGmwmiParamsDict] | None = None,
     seed_dynamic: InputPathType | None = None,
     seeds: int | None = None,
     max_attempts_per_seed: int | None = None,
@@ -2310,23 +2316,23 @@ def tckgen(
     seed_unidirectional: bool = False,
     seed_direction: list[float] | None = None,
     output_seeds: str | None = None,
-    include: list[TckgenIncludeParameters] | None = None,
-    include_ordered: list[TckgenIncludeOrderedParameters] | None = None,
-    exclude: list[TckgenExcludeParameters] | None = None,
-    mask: list[TckgenMaskParameters] | None = None,
+    include: list[TckgenIncludeParamsDict] | None = None,
+    include_ordered: list[TckgenIncludeOrderedParamsDict] | None = None,
+    exclude: list[TckgenExcludeParamsDict] | None = None,
+    mask: list[TckgenMaskParamsDict] | None = None,
     act: InputPathType | None = None,
     backtrack: bool = False,
     crop_at_gmwmi: bool = False,
     power: float | None = None,
     samples: int | None = None,
     grad: InputPathType | None = None,
-    fslgrad: TckgenFslgradParameters | None = None,
+    fslgrad: TckgenFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckgenConfigParameters] | None = None,
+    config: list[TckgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -2664,26 +2670,64 @@ def tckgen(
 
 __all__ = [
     "TCKGEN_METADATA",
+    "TckgenConfigParamsDict",
+    "TckgenConfigParamsDictTagged",
+    "TckgenExcludeParamsDict",
+    "TckgenExcludeParamsDictTagged",
+    "TckgenFslgradParamsDict",
+    "TckgenFslgradParamsDictTagged",
+    "TckgenIncludeOrderedParamsDict",
+    "TckgenIncludeOrderedParamsDictTagged",
+    "TckgenIncludeParamsDict",
+    "TckgenIncludeParamsDictTagged",
+    "TckgenMaskParamsDict",
+    "TckgenMaskParamsDictTagged",
     "TckgenOutputs",
+    "TckgenParamsDict",
+    "TckgenParamsDictTagged",
+    "TckgenSeedGmwmiParamsDict",
+    "TckgenSeedGmwmiParamsDictTagged",
+    "TckgenSeedGridPerVoxelParamsDict",
+    "TckgenSeedGridPerVoxelParamsDictTagged",
+    "TckgenSeedImageParamsDict",
+    "TckgenSeedImageParamsDictTagged",
+    "TckgenSeedRandomPerVoxelParamsDict",
+    "TckgenSeedRandomPerVoxelParamsDictTagged",
+    "TckgenSeedRejectionParamsDict",
+    "TckgenSeedRejectionParamsDictTagged",
+    "TckgenSeedSphereParamsDict",
+    "TckgenSeedSphereParamsDictTagged",
+    "TckgenVariousFile1ParamsDict",
+    "TckgenVariousFile1ParamsDictTagged",
+    "TckgenVariousFile2ParamsDict",
+    "TckgenVariousFile2ParamsDictTagged",
+    "TckgenVariousFileParamsDict",
+    "TckgenVariousFileParamsDictTagged",
+    "TckgenVariousString1ParamsDict",
+    "TckgenVariousString1ParamsDictTagged",
+    "TckgenVariousString2ParamsDict",
+    "TckgenVariousString2ParamsDictTagged",
+    "TckgenVariousStringParamsDict",
+    "TckgenVariousStringParamsDictTagged",
     "tckgen",
-    "tckgen_config_params",
-    "tckgen_exclude_params",
+    "tckgen_config",
+    "tckgen_exclude",
     "tckgen_execute",
-    "tckgen_fslgrad_params",
-    "tckgen_include_ordered_params",
-    "tckgen_include_params",
-    "tckgen_mask_params",
+    "tckgen_fslgrad",
+    "tckgen_include",
+    "tckgen_include_ordered",
+    "tckgen_mask",
     "tckgen_params",
-    "tckgen_seed_gmwmi_params",
-    "tckgen_seed_grid_per_voxel_params",
-    "tckgen_seed_image_params",
-    "tckgen_seed_random_per_voxel_params",
-    "tckgen_seed_rejection_params",
-    "tckgen_seed_sphere_params",
-    "tckgen_various_file_1_params",
-    "tckgen_various_file_2_params",
-    "tckgen_various_file_params",
-    "tckgen_various_string_1_params",
-    "tckgen_various_string_2_params",
-    "tckgen_various_string_params",
+    "tckgen_seed_gmwmi",
+    "tckgen_seed_grid_per_voxel",
+    "tckgen_seed_image",
+    "tckgen_seed_random_per_voxel",
+    "tckgen_seed_rejection",
+    "tckgen_seed_sphere",
+    "tckgen_various_file",
+    "tckgen_various_file_1",
+    "tckgen_various_file_2",
+    "tckgen_various_string",
+    "tckgen_various_string_1",
+    "tckgen_various_string_2",
 ]

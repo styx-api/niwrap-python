@@ -13,7 +13,7 @@ V__MEASURE_IN2OUT_METADATA = Metadata(
 )
 
 
-VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
+VMeasureIn2outParamsDict = typing.TypedDict('VMeasureIn2outParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@measure_in2out"]],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -28,7 +28,7 @@ VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
     "surfsmooth_method": typing.NotRequired[str | None],
     "fs_cort_dir": typing.NotRequired[str | None],
 })
-VMeasureIn2outParametersTagged = typing.TypedDict('VMeasureIn2outParametersTagged', {
+VMeasureIn2outParamsDictTagged = typing.TypedDict('VMeasureIn2outParamsDictTagged', {
     "@type": typing.Literal["afni/@measure_in2out"],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -47,7 +47,7 @@ VMeasureIn2outParametersTagged = typing.TypedDict('VMeasureIn2outParametersTagge
 
 class VMeasureIn2outOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMeasureIn2outParameters(...)`.
+    Output object returned when calling `VMeasureIn2outParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +82,7 @@ def v__measure_in2out_params(
     keep_temp_files: bool = False,
     surfsmooth_method: str | None = None,
     fs_cort_dir: str | None = None,
-) -> VMeasureIn2outParametersTagged:
+) -> VMeasureIn2outParamsDictTagged:
     """
     Build parameters.
     
@@ -143,7 +143,7 @@ def v__measure_in2out_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMeasureIn2outParameters` object.
+    `VMeasureIn2outParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def v__measure_in2out_validate(
 
 
 def v__measure_in2out_cargs(
-    params: VMeasureIn2outParameters,
+    params: VMeasureIn2outParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -270,7 +270,7 @@ def v__measure_in2out_cargs(
 
 
 def v__measure_in2out_outputs(
-    params: VMeasureIn2outParameters,
+    params: VMeasureIn2outParamsDict,
     execution: Execution,
 ) -> VMeasureIn2outOutputs:
     """
@@ -297,7 +297,7 @@ def v__measure_in2out_outputs(
 
 
 def v__measure_in2out_execute(
-    params: VMeasureIn2outParameters,
+    params: VMeasureIn2outParamsDict,
     runner: Runner | None = None,
 ) -> VMeasureIn2outOutputs:
     """
@@ -395,6 +395,8 @@ def v__measure_in2out(
 
 __all__ = [
     "VMeasureIn2outOutputs",
+    "VMeasureIn2outParamsDict",
+    "VMeasureIn2outParamsDictTagged",
     "V__MEASURE_IN2OUT_METADATA",
     "v__measure_in2out",
     "v__measure_in2out_execute",

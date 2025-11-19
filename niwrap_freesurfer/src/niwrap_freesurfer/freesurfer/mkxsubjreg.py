@@ -13,7 +13,7 @@ MKXSUBJREG_METADATA = Metadata(
 )
 
 
-MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
+MkxsubjregParamsDict = typing.TypedDict('MkxsubjregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mkxsubjreg"]],
     "srcreg": InputPathType,
     "targreg": InputPathType,
@@ -24,7 +24,7 @@ MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
     "help": bool,
     "version": bool,
 })
-MkxsubjregParametersTagged = typing.TypedDict('MkxsubjregParametersTagged', {
+MkxsubjregParamsDictTagged = typing.TypedDict('MkxsubjregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mkxsubjreg"],
     "srcreg": InputPathType,
     "targreg": InputPathType,
@@ -39,7 +39,7 @@ MkxsubjregParametersTagged = typing.TypedDict('MkxsubjregParametersTagged', {
 
 class MkxsubjregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MkxsubjregParameters(...)`.
+    Output object returned when calling `MkxsubjregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def mkxsubjreg_params(
     fvol: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MkxsubjregParametersTagged:
+) -> MkxsubjregParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def mkxsubjreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MkxsubjregParameters` object.
+    `MkxsubjregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def mkxsubjreg_validate(
 
 
 def mkxsubjreg_cargs(
-    params: MkxsubjregParameters,
+    params: MkxsubjregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def mkxsubjreg_cargs(
 
 
 def mkxsubjreg_outputs(
-    params: MkxsubjregParameters,
+    params: MkxsubjregParamsDict,
     execution: Execution,
 ) -> MkxsubjregOutputs:
     """
@@ -200,7 +200,7 @@ def mkxsubjreg_outputs(
 
 
 def mkxsubjreg_execute(
-    params: MkxsubjregParameters,
+    params: MkxsubjregParamsDict,
     runner: Runner | None = None,
 ) -> MkxsubjregOutputs:
     """
@@ -281,6 +281,8 @@ def mkxsubjreg(
 __all__ = [
     "MKXSUBJREG_METADATA",
     "MkxsubjregOutputs",
+    "MkxsubjregParamsDict",
+    "MkxsubjregParamsDictTagged",
     "mkxsubjreg",
     "mkxsubjreg_execute",
     "mkxsubjreg_params",

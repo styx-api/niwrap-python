@@ -13,7 +13,7 @@ V__DIFF_TREE_METADATA = Metadata(
 )
 
 
-VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
+VDiffTreeParamsDict = typing.TypedDict('VDiffTreeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@diff.tree"]],
     "new_dir": str,
     "old_dir": str,
@@ -34,7 +34,7 @@ VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
     "xxdiff": bool,
     "X_option": bool,
 })
-VDiffTreeParametersTagged = typing.TypedDict('VDiffTreeParametersTagged', {
+VDiffTreeParamsDictTagged = typing.TypedDict('VDiffTreeParamsDictTagged', {
     "@type": typing.Literal["afni/@diff.tree"],
     "new_dir": str,
     "old_dir": str,
@@ -59,7 +59,7 @@ VDiffTreeParametersTagged = typing.TypedDict('VDiffTreeParametersTagged', {
 
 class VDiffTreeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDiffTreeParameters(...)`.
+    Output object returned when calling `VDiffTreeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def v__diff_tree_params(
     diff_prog: str | None = None,
     xxdiff: bool = False,
     x_option: bool = False,
-) -> VDiffTreeParametersTagged:
+) -> VDiffTreeParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def v__diff_tree_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDiffTreeParameters` object.
+    `VDiffTreeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def v__diff_tree_validate(
 
 
 def v__diff_tree_cargs(
-    params: VDiffTreeParameters,
+    params: VDiffTreeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -297,7 +297,7 @@ def v__diff_tree_cargs(
 
 
 def v__diff_tree_outputs(
-    params: VDiffTreeParameters,
+    params: VDiffTreeParamsDict,
     execution: Execution,
 ) -> VDiffTreeOutputs:
     """
@@ -316,7 +316,7 @@ def v__diff_tree_outputs(
 
 
 def v__diff_tree_execute(
-    params: VDiffTreeParameters,
+    params: VDiffTreeParamsDict,
     runner: Runner | None = None,
 ) -> VDiffTreeOutputs:
     """
@@ -425,6 +425,8 @@ def v__diff_tree(
 
 __all__ = [
     "VDiffTreeOutputs",
+    "VDiffTreeParamsDict",
+    "VDiffTreeParamsDictTagged",
     "V__DIFF_TREE_METADATA",
     "v__diff_tree",
     "v__diff_tree_execute",

@@ -13,7 +13,7 @@ ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA = Metadata(
 )
 
 
-AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmarkBasedTransformInitializerParameters', {
+AntsLandmarkBasedTransformInitializerParamsDict = typing.TypedDict('AntsLandmarkBasedTransformInitializerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsLandmarkBasedTransformInitializer"]],
     "dimension": int,
     "fixed_image": InputPathType,
@@ -26,7 +26,7 @@ AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmark
     "enforce_stationary_boundaries": typing.NotRequired[bool | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
-AntsLandmarkBasedTransformInitializerParametersTagged = typing.TypedDict('AntsLandmarkBasedTransformInitializerParametersTagged', {
+AntsLandmarkBasedTransformInitializerParamsDictTagged = typing.TypedDict('AntsLandmarkBasedTransformInitializerParamsDictTagged', {
     "@type": typing.Literal["ants/antsLandmarkBasedTransformInitializer"],
     "dimension": int,
     "fixed_image": InputPathType,
@@ -43,7 +43,7 @@ AntsLandmarkBasedTransformInitializerParametersTagged = typing.TypedDict('AntsLa
 
 class AntsLandmarkBasedTransformInitializerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsLandmarkBasedTransformInitializerParameters(...)`.
+    Output object returned when calling `AntsLandmarkBasedTransformInitializerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def ants_landmark_based_transform_initializer_params(
     order: int | None = None,
     enforce_stationary_boundaries: bool | None = None,
     landmark_weights: InputPathType | None = None,
-) -> AntsLandmarkBasedTransformInitializerParametersTagged:
+) -> AntsLandmarkBasedTransformInitializerParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def ants_landmark_based_transform_initializer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsLandmarkBasedTransformInitializerParameters` object.
+    `AntsLandmarkBasedTransformInitializerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def ants_landmark_based_transform_initializer_validate(
 
 
 def ants_landmark_based_transform_initializer_cargs(
-    params: AntsLandmarkBasedTransformInitializerParameters,
+    params: AntsLandmarkBasedTransformInitializerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def ants_landmark_based_transform_initializer_cargs(
 
 
 def ants_landmark_based_transform_initializer_outputs(
-    params: AntsLandmarkBasedTransformInitializerParameters,
+    params: AntsLandmarkBasedTransformInitializerParamsDict,
     execution: Execution,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:
     """
@@ -212,7 +212,7 @@ def ants_landmark_based_transform_initializer_outputs(
 
 
 def ants_landmark_based_transform_initializer_execute(
-    params: AntsLandmarkBasedTransformInitializerParameters,
+    params: AntsLandmarkBasedTransformInitializerParamsDict,
     runner: Runner | None = None,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:
     """
@@ -303,6 +303,8 @@ def ants_landmark_based_transform_initializer(
 __all__ = [
     "ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA",
     "AntsLandmarkBasedTransformInitializerOutputs",
+    "AntsLandmarkBasedTransformInitializerParamsDict",
+    "AntsLandmarkBasedTransformInitializerParamsDictTagged",
     "ants_landmark_based_transform_initializer",
     "ants_landmark_based_transform_initializer_execute",
     "ants_landmark_based_transform_initializer_params",

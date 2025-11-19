@@ -13,14 +13,14 @@ MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
 )
 
 
-MrisSurfaceToVolDistancesParameters = typing.TypedDict('MrisSurfaceToVolDistancesParameters', {
+MrisSurfaceToVolDistancesParamsDict = typing.TypedDict('MrisSurfaceToVolDistancesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_to_vol_distances"]],
     "average_subject": str,
     "hemisphere": str,
     "subjects": list[str],
     "output_prefix": str,
 })
-MrisSurfaceToVolDistancesParametersTagged = typing.TypedDict('MrisSurfaceToVolDistancesParametersTagged', {
+MrisSurfaceToVolDistancesParamsDictTagged = typing.TypedDict('MrisSurfaceToVolDistancesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_surface_to_vol_distances"],
     "average_subject": str,
     "hemisphere": str,
@@ -31,7 +31,7 @@ MrisSurfaceToVolDistancesParametersTagged = typing.TypedDict('MrisSurfaceToVolDi
 
 class MrisSurfaceToVolDistancesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSurfaceToVolDistancesParameters(...)`.
+    Output object returned when calling `MrisSurfaceToVolDistancesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_surface_to_vol_distances_params(
     hemisphere: str,
     subjects: list[str],
     output_prefix: str,
-) -> MrisSurfaceToVolDistancesParametersTagged:
+) -> MrisSurfaceToVolDistancesParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mris_surface_to_vol_distances_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSurfaceToVolDistancesParameters` object.
+    `MrisSurfaceToVolDistancesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def mris_surface_to_vol_distances_validate(
 
 
 def mris_surface_to_vol_distances_cargs(
-    params: MrisSurfaceToVolDistancesParameters,
+    params: MrisSurfaceToVolDistancesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def mris_surface_to_vol_distances_cargs(
 
 
 def mris_surface_to_vol_distances_outputs(
-    params: MrisSurfaceToVolDistancesParameters,
+    params: MrisSurfaceToVolDistancesParamsDict,
     execution: Execution,
 ) -> MrisSurfaceToVolDistancesOutputs:
     """
@@ -142,7 +142,7 @@ def mris_surface_to_vol_distances_outputs(
 
 
 def mris_surface_to_vol_distances_execute(
-    params: MrisSurfaceToVolDistancesParameters,
+    params: MrisSurfaceToVolDistancesParamsDict,
     runner: Runner | None = None,
 ) -> MrisSurfaceToVolDistancesOutputs:
     """
@@ -207,6 +207,8 @@ def mris_surface_to_vol_distances(
 __all__ = [
     "MRIS_SURFACE_TO_VOL_DISTANCES_METADATA",
     "MrisSurfaceToVolDistancesOutputs",
+    "MrisSurfaceToVolDistancesParamsDict",
+    "MrisSurfaceToVolDistancesParamsDictTagged",
     "mris_surface_to_vol_distances",
     "mris_surface_to_vol_distances_execute",
     "mris_surface_to_vol_distances_params",

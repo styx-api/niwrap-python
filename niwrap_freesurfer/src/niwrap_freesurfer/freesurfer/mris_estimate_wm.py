@@ -13,7 +13,7 @@ MRIS_ESTIMATE_WM_METADATA = Metadata(
 )
 
 
-MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
+MrisEstimateWmParamsDict = typing.TypedDict('MrisEstimateWmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_estimate_wm"]],
     "subjs": list[str],
     "hemi": str,
@@ -25,7 +25,7 @@ MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
     "single_iter": bool,
     "vol": typing.NotRequired[str | None],
 })
-MrisEstimateWmParametersTagged = typing.TypedDict('MrisEstimateWmParametersTagged', {
+MrisEstimateWmParamsDictTagged = typing.TypedDict('MrisEstimateWmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_estimate_wm"],
     "subjs": list[str],
     "hemi": str,
@@ -41,7 +41,7 @@ MrisEstimateWmParametersTagged = typing.TypedDict('MrisEstimateWmParametersTagge
 
 class MrisEstimateWmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisEstimateWmParameters(...)`.
+    Output object returned when calling `MrisEstimateWmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def mris_estimate_wm_params(
     rsi: bool = False,
     single_iter: bool = False,
     vol: str | None = None,
-) -> MrisEstimateWmParametersTagged:
+) -> MrisEstimateWmParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def mris_estimate_wm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisEstimateWmParameters` object.
+    `MrisEstimateWmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def mris_estimate_wm_validate(
 
 
 def mris_estimate_wm_cargs(
-    params: MrisEstimateWmParameters,
+    params: MrisEstimateWmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def mris_estimate_wm_cargs(
 
 
 def mris_estimate_wm_outputs(
-    params: MrisEstimateWmParameters,
+    params: MrisEstimateWmParamsDict,
     execution: Execution,
 ) -> MrisEstimateWmOutputs:
     """
@@ -214,7 +214,7 @@ def mris_estimate_wm_outputs(
 
 
 def mris_estimate_wm_execute(
-    params: MrisEstimateWmParameters,
+    params: MrisEstimateWmParamsDict,
     runner: Runner | None = None,
 ) -> MrisEstimateWmOutputs:
     """
@@ -294,6 +294,8 @@ def mris_estimate_wm(
 __all__ = [
     "MRIS_ESTIMATE_WM_METADATA",
     "MrisEstimateWmOutputs",
+    "MrisEstimateWmParamsDict",
+    "MrisEstimateWmParamsDictTagged",
     "mris_estimate_wm",
     "mris_estimate_wm_execute",
     "mris_estimate_wm_params",

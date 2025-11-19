@@ -13,14 +13,14 @@ MRI_HIRES_REGISTER_METADATA = Metadata(
 )
 
 
-MriHiresRegisterParameters = typing.TypedDict('MriHiresRegisterParameters', {
+MriHiresRegisterParamsDict = typing.TypedDict('MriHiresRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hires_register"]],
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
     "input_aseg": InputPathType,
     "output_xform": str,
 })
-MriHiresRegisterParametersTagged = typing.TypedDict('MriHiresRegisterParametersTagged', {
+MriHiresRegisterParamsDictTagged = typing.TypedDict('MriHiresRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_hires_register"],
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
@@ -31,7 +31,7 @@ MriHiresRegisterParametersTagged = typing.TypedDict('MriHiresRegisterParametersT
 
 class MriHiresRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriHiresRegisterParameters(...)`.
+    Output object returned when calling `MriHiresRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_hires_register_params(
     input_intensity: InputPathType,
     input_aseg: InputPathType,
     output_xform: str,
-) -> MriHiresRegisterParametersTagged:
+) -> MriHiresRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_hires_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriHiresRegisterParameters` object.
+    `MriHiresRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mri_hires_register_validate(
 
 
 def mri_hires_register_cargs(
-    params: MriHiresRegisterParameters,
+    params: MriHiresRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mri_hires_register_cargs(
 
 
 def mri_hires_register_outputs(
-    params: MriHiresRegisterParameters,
+    params: MriHiresRegisterParamsDict,
     execution: Execution,
 ) -> MriHiresRegisterOutputs:
     """
@@ -139,7 +139,7 @@ def mri_hires_register_outputs(
 
 
 def mri_hires_register_execute(
-    params: MriHiresRegisterParameters,
+    params: MriHiresRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriHiresRegisterOutputs:
     """
@@ -204,6 +204,8 @@ def mri_hires_register(
 __all__ = [
     "MRI_HIRES_REGISTER_METADATA",
     "MriHiresRegisterOutputs",
+    "MriHiresRegisterParamsDict",
+    "MriHiresRegisterParamsDictTagged",
     "mri_hires_register",
     "mri_hires_register_execute",
     "mri_hires_register_params",

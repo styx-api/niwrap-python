@@ -12,7 +12,7 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParameters', {
+MetricVectorOperationParamsDict = typing.TypedDict('MetricVectorOperationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-operation"]],
     "metric-out": str,
     "normalize-a": bool,
@@ -23,7 +23,7 @@ MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParamet
     "vectors-b": InputPathType,
     "operation": str,
 })
-MetricVectorOperationParametersTagged = typing.TypedDict('MetricVectorOperationParametersTagged', {
+MetricVectorOperationParamsDictTagged = typing.TypedDict('MetricVectorOperationParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-vector-operation"],
     "metric-out": str,
     "normalize-a": bool,
@@ -38,7 +38,7 @@ MetricVectorOperationParametersTagged = typing.TypedDict('MetricVectorOperationP
 
 class MetricVectorOperationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricVectorOperationParameters(...)`.
+    Output object returned when calling `MetricVectorOperationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def metric_vector_operation_params(
     normalize_b: bool = False,
     normalize_output: bool = False,
     magnitude: bool = False,
-) -> MetricVectorOperationParametersTagged:
+) -> MetricVectorOperationParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def metric_vector_operation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricVectorOperationParameters` object.
+    `MetricVectorOperationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def metric_vector_operation_validate(
 
 
 def metric_vector_operation_cargs(
-    params: MetricVectorOperationParameters,
+    params: MetricVectorOperationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def metric_vector_operation_cargs(
 
 
 def metric_vector_operation_outputs(
-    params: MetricVectorOperationParameters,
+    params: MetricVectorOperationParamsDict,
     execution: Execution,
 ) -> MetricVectorOperationOutputs:
     """
@@ -183,7 +183,7 @@ def metric_vector_operation_outputs(
 
 
 def metric_vector_operation_execute(
-    params: MetricVectorOperationParameters,
+    params: MetricVectorOperationParamsDict,
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
@@ -273,6 +273,8 @@ def metric_vector_operation(
 __all__ = [
     "METRIC_VECTOR_OPERATION_METADATA",
     "MetricVectorOperationOutputs",
+    "MetricVectorOperationParamsDict",
+    "MetricVectorOperationParamsDictTagged",
     "metric_vector_operation",
     "metric_vector_operation_execute",
     "metric_vector_operation_params",

@@ -13,7 +13,7 @@ LISTSUBJ_METADATA = Metadata(
 )
 
 
-ListsubjParameters = typing.TypedDict('ListsubjParameters', {
+ListsubjParamsDict = typing.TypedDict('ListsubjParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/listsubj"]],
     "subject_dir": str,
     "cross": bool,
@@ -26,7 +26,7 @@ ListsubjParameters = typing.TypedDict('ListsubjParameters', {
     "count": bool,
     "help": bool,
 })
-ListsubjParametersTagged = typing.TypedDict('ListsubjParametersTagged', {
+ListsubjParamsDictTagged = typing.TypedDict('ListsubjParamsDictTagged', {
     "@type": typing.Literal["freesurfer/listsubj"],
     "subject_dir": str,
     "cross": bool,
@@ -43,7 +43,7 @@ ListsubjParametersTagged = typing.TypedDict('ListsubjParametersTagged', {
 
 class ListsubjOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ListsubjParameters(...)`.
+    Output object returned when calling `ListsubjParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def listsubj_params(
     full_path: bool = False,
     count: bool = False,
     help_: bool = False,
-) -> ListsubjParametersTagged:
+) -> ListsubjParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def listsubj_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ListsubjParameters` object.
+    `ListsubjParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def listsubj_validate(
 
 
 def listsubj_cargs(
-    params: ListsubjParameters,
+    params: ListsubjParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,7 +186,7 @@ def listsubj_cargs(
 
 
 def listsubj_outputs(
-    params: ListsubjParameters,
+    params: ListsubjParamsDict,
     execution: Execution,
 ) -> ListsubjOutputs:
     """
@@ -205,7 +205,7 @@ def listsubj_outputs(
 
 
 def listsubj_execute(
-    params: ListsubjParameters,
+    params: ListsubjParamsDict,
     runner: Runner | None = None,
 ) -> ListsubjOutputs:
     """
@@ -288,6 +288,8 @@ def listsubj(
 __all__ = [
     "LISTSUBJ_METADATA",
     "ListsubjOutputs",
+    "ListsubjParamsDict",
+    "ListsubjParamsDictTagged",
     "listsubj",
     "listsubj_execute",
     "listsubj_params",

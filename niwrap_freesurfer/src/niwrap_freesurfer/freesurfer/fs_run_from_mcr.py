@@ -13,14 +13,14 @@ FS_RUN_FROM_MCR_METADATA = Metadata(
 )
 
 
-FsRunFromMcrParameters = typing.TypedDict('FsRunFromMcrParameters', {
+FsRunFromMcrParamsDict = typing.TypedDict('FsRunFromMcrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_run_from_mcr"]],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
     "zeroth_flag": bool,
     "empty_env_flag": bool,
 })
-FsRunFromMcrParametersTagged = typing.TypedDict('FsRunFromMcrParametersTagged', {
+FsRunFromMcrParamsDictTagged = typing.TypedDict('FsRunFromMcrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_run_from_mcr"],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ FsRunFromMcrParametersTagged = typing.TypedDict('FsRunFromMcrParametersTagged', 
 
 class FsRunFromMcrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsRunFromMcrParameters(...)`.
+    Output object returned when calling `FsRunFromMcrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def fs_run_from_mcr_params(
     command: str | None = None,
     zeroth_flag: bool = False,
     empty_env_flag: bool = False,
-) -> FsRunFromMcrParametersTagged:
+) -> FsRunFromMcrParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def fs_run_from_mcr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsRunFromMcrParameters` object.
+    `FsRunFromMcrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def fs_run_from_mcr_validate(
 
 
 def fs_run_from_mcr_cargs(
-    params: FsRunFromMcrParameters,
+    params: FsRunFromMcrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def fs_run_from_mcr_cargs(
 
 
 def fs_run_from_mcr_outputs(
-    params: FsRunFromMcrParameters,
+    params: FsRunFromMcrParamsDict,
     execution: Execution,
 ) -> FsRunFromMcrOutputs:
     """
@@ -143,7 +143,7 @@ def fs_run_from_mcr_outputs(
 
 
 def fs_run_from_mcr_execute(
-    params: FsRunFromMcrParameters,
+    params: FsRunFromMcrParamsDict,
     runner: Runner | None = None,
 ) -> FsRunFromMcrOutputs:
     """
@@ -208,6 +208,8 @@ def fs_run_from_mcr(
 __all__ = [
     "FS_RUN_FROM_MCR_METADATA",
     "FsRunFromMcrOutputs",
+    "FsRunFromMcrParamsDict",
+    "FsRunFromMcrParamsDictTagged",
     "fs_run_from_mcr",
     "fs_run_from_mcr_execute",
     "fs_run_from_mcr_params",

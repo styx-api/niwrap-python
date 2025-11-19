@@ -12,33 +12,33 @@ WBSPARSE_MERGE_DENSE_METADATA = Metadata(
 )
 
 
-WbsparseMergeDenseWbsparseParameters = typing.TypedDict('WbsparseMergeDenseWbsparseParameters', {
+WbsparseMergeDenseWbsparseParamsDict = typing.TypedDict('WbsparseMergeDenseWbsparseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["wbsparse"]],
     "wbsparse-in": str,
 })
-WbsparseMergeDenseWbsparseParametersTagged = typing.TypedDict('WbsparseMergeDenseWbsparseParametersTagged', {
+WbsparseMergeDenseWbsparseParamsDictTagged = typing.TypedDict('WbsparseMergeDenseWbsparseParamsDictTagged', {
     "@type": typing.Literal["wbsparse"],
     "wbsparse-in": str,
 })
 
 
-WbsparseMergeDenseParameters = typing.TypedDict('WbsparseMergeDenseParameters', {
+WbsparseMergeDenseParamsDict = typing.TypedDict('WbsparseMergeDenseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/wbsparse-merge-dense"]],
-    "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
+    "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParamsDict] | None],
     "direction": str,
     "wbsparse-out": str,
 })
-WbsparseMergeDenseParametersTagged = typing.TypedDict('WbsparseMergeDenseParametersTagged', {
+WbsparseMergeDenseParamsDictTagged = typing.TypedDict('WbsparseMergeDenseParamsDictTagged', {
     "@type": typing.Literal["workbench/wbsparse-merge-dense"],
-    "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
+    "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParamsDict] | None],
     "direction": str,
     "wbsparse-out": str,
 })
 
 
-def wbsparse_merge_dense_wbsparse_params(
+def wbsparse_merge_dense_wbsparse(
     wbsparse_in: str,
-) -> WbsparseMergeDenseWbsparseParametersTagged:
+) -> WbsparseMergeDenseWbsparseParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def wbsparse_merge_dense_wbsparse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WbsparseMergeDenseWbsparseParameters` object.
+    `WbsparseMergeDenseWbsparseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def wbsparse_merge_dense_wbsparse_validate(
 
 
 def wbsparse_merge_dense_wbsparse_cargs(
-    params: WbsparseMergeDenseWbsparseParameters,
+    params: WbsparseMergeDenseWbsparseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -95,7 +95,7 @@ def wbsparse_merge_dense_wbsparse_cargs(
 
 class WbsparseMergeDenseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WbsparseMergeDenseParameters(...)`.
+    Output object returned when calling `WbsparseMergeDenseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,8 +104,8 @@ class WbsparseMergeDenseOutputs(typing.NamedTuple):
 def wbsparse_merge_dense_params(
     direction: str,
     wbsparse_out: str,
-    wbsparse: list[WbsparseMergeDenseWbsparseParameters] | None = None,
-) -> WbsparseMergeDenseParametersTagged:
+    wbsparse: list[WbsparseMergeDenseWbsparseParamsDict] | None = None,
+) -> WbsparseMergeDenseParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def wbsparse_merge_dense_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WbsparseMergeDenseParameters` object.
+    `WbsparseMergeDenseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def wbsparse_merge_dense_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("wbsparse", None) is not None:
         if not isinstance(params["wbsparse"], list):
-            raise StyxValidationError(f'`wbsparse` has the wrong type: Received `{type(params.get("wbsparse", None))}` expected `list[WbsparseMergeDenseWbsparseParameters] | None`')
+            raise StyxValidationError(f'`wbsparse` has the wrong type: Received `{type(params.get("wbsparse", None))}` expected `list[WbsparseMergeDenseWbsparseParamsDict] | None`')
         for e in params["wbsparse"]:
             wbsparse_merge_dense_wbsparse_validate(e)
     if params.get("direction", None) is None:
@@ -154,7 +154,7 @@ def wbsparse_merge_dense_validate(
 
 
 def wbsparse_merge_dense_cargs(
-    params: WbsparseMergeDenseParameters,
+    params: WbsparseMergeDenseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def wbsparse_merge_dense_cargs(
 
 
 def wbsparse_merge_dense_outputs(
-    params: WbsparseMergeDenseParameters,
+    params: WbsparseMergeDenseParamsDict,
     execution: Execution,
 ) -> WbsparseMergeDenseOutputs:
     """
@@ -198,7 +198,7 @@ def wbsparse_merge_dense_outputs(
 
 
 def wbsparse_merge_dense_execute(
-    params: WbsparseMergeDenseParameters,
+    params: WbsparseMergeDenseParamsDict,
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
@@ -227,7 +227,7 @@ def wbsparse_merge_dense_execute(
 def wbsparse_merge_dense(
     direction: str,
     wbsparse_out: str,
-    wbsparse: list[WbsparseMergeDenseWbsparseParameters] | None = None,
+    wbsparse: list[WbsparseMergeDenseWbsparseParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
@@ -256,8 +256,12 @@ def wbsparse_merge_dense(
 __all__ = [
     "WBSPARSE_MERGE_DENSE_METADATA",
     "WbsparseMergeDenseOutputs",
+    "WbsparseMergeDenseParamsDict",
+    "WbsparseMergeDenseParamsDictTagged",
+    "WbsparseMergeDenseWbsparseParamsDict",
+    "WbsparseMergeDenseWbsparseParamsDictTagged",
     "wbsparse_merge_dense",
     "wbsparse_merge_dense_execute",
     "wbsparse_merge_dense_params",
-    "wbsparse_merge_dense_wbsparse_params",
+    "wbsparse_merge_dense_wbsparse",
 ]

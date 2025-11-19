@@ -6,7 +6,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "dwi2fod_fslgrad_params",
+      "fn_struct_make_params": "dwi2fod_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -56,7 +56,7 @@
       "var_param": "strides",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "dwi2fod_various_string_params",
+          "fn_struct_make_params": "dwi2fod_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -64,7 +64,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "dwi2fod_various_file_params",
+          "fn_struct_make_params": "dwi2fod_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -90,7 +90,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "dwi2fod_config_params",
+      "fn_struct_make_params": "dwi2fod_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -114,7 +114,7 @@
     },
     "response_odf": {
       "var_param": "response_odf",
-      "fn_struct_make_params": "dwi2fod_response_odf_params",
+      "fn_struct_make_params": "dwi2fod_response_odf",
       "properties": {
         "response": {
           "var_param": "response"

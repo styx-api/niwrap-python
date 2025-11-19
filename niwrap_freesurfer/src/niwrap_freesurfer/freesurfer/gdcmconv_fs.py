@@ -13,7 +13,7 @@ GDCMCONV_FS_METADATA = Metadata(
 )
 
 
-GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
+GdcmconvFsParamsDict = typing.TypedDict('GdcmconvFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gdcmconv.fs"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -56,7 +56,7 @@ GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
     "irreversible_flag": bool,
     "ignore_errors_flag": bool,
 })
-GdcmconvFsParametersTagged = typing.TypedDict('GdcmconvFsParametersTagged', {
+GdcmconvFsParamsDictTagged = typing.TypedDict('GdcmconvFsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gdcmconv.fs"],
     "input_file": InputPathType,
     "output_file": str,
@@ -103,7 +103,7 @@ GdcmconvFsParametersTagged = typing.TypedDict('GdcmconvFsParametersTagged', {
 
 class GdcmconvFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GdcmconvFsParameters(...)`.
+    Output object returned when calling `GdcmconvFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +150,7 @@ def gdcmconv_fs_params(
     number_resolution: float | None = None,
     irreversible_flag: bool = False,
     ignore_errors_flag: bool = False,
-) -> GdcmconvFsParametersTagged:
+) -> GdcmconvFsParamsDictTagged:
     """
     Build parameters.
     
@@ -264,7 +264,7 @@ def gdcmconv_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GdcmconvFsParameters` object.
+    `GdcmconvFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -433,7 +433,7 @@ def gdcmconv_fs_validate(
 
 
 def gdcmconv_fs_cargs(
-    params: GdcmconvFsParameters,
+    params: GdcmconvFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -562,7 +562,7 @@ def gdcmconv_fs_cargs(
 
 
 def gdcmconv_fs_outputs(
-    params: GdcmconvFsParameters,
+    params: GdcmconvFsParamsDict,
     execution: Execution,
 ) -> GdcmconvFsOutputs:
     """
@@ -581,7 +581,7 @@ def gdcmconv_fs_outputs(
 
 
 def gdcmconv_fs_execute(
-    params: GdcmconvFsParameters,
+    params: GdcmconvFsParamsDict,
     runner: Runner | None = None,
 ) -> GdcmconvFsOutputs:
     """
@@ -758,6 +758,8 @@ def gdcmconv_fs(
 __all__ = [
     "GDCMCONV_FS_METADATA",
     "GdcmconvFsOutputs",
+    "GdcmconvFsParamsDict",
+    "GdcmconvFsParamsDictTagged",
     "gdcmconv_fs",
     "gdcmconv_fs_execute",
     "gdcmconv_fs_params",

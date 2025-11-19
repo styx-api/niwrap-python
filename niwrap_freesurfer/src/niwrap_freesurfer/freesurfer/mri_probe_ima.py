@@ -13,7 +13,7 @@ MRI_PROBE_IMA_METADATA = Metadata(
 )
 
 
-MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
+MriProbeImaParamsDict = typing.TypedDict('MriProbeImaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probe_ima"]],
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
     "help": bool,
     "version": bool,
 })
-MriProbeImaParametersTagged = typing.TypedDict('MriProbeImaParametersTagged', {
+MriProbeImaParamsDictTagged = typing.TypedDict('MriProbeImaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_probe_ima"],
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ MriProbeImaParametersTagged = typing.TypedDict('MriProbeImaParametersTagged', {
 
 class MriProbeImaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriProbeImaParameters(...)`.
+    Output object returned when calling `MriProbeImaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def mri_probe_ima_params(
     ob_stem: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriProbeImaParametersTagged:
+) -> MriProbeImaParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def mri_probe_ima_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriProbeImaParameters` object.
+    `MriProbeImaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def mri_probe_ima_validate(
 
 
 def mri_probe_ima_cargs(
-    params: MriProbeImaParameters,
+    params: MriProbeImaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def mri_probe_ima_cargs(
 
 
 def mri_probe_ima_outputs(
-    params: MriProbeImaParameters,
+    params: MriProbeImaParamsDict,
     execution: Execution,
 ) -> MriProbeImaOutputs:
     """
@@ -210,7 +210,7 @@ def mri_probe_ima_outputs(
 
 
 def mri_probe_ima_execute(
-    params: MriProbeImaParameters,
+    params: MriProbeImaParamsDict,
     runner: Runner | None = None,
 ) -> MriProbeImaOutputs:
     """
@@ -291,6 +291,8 @@ def mri_probe_ima(
 __all__ = [
     "MRI_PROBE_IMA_METADATA",
     "MriProbeImaOutputs",
+    "MriProbeImaParamsDict",
+    "MriProbeImaParamsDictTagged",
     "mri_probe_ima",
     "mri_probe_ima_execute",
     "mri_probe_ima_params",

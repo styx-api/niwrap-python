@@ -13,7 +13,7 @@ FABBER_T1_METADATA = Metadata(
 )
 
 
-FabberT1Parameters = typing.TypedDict('FabberT1Parameters', {
+FabberT1ParamsDict = typing.TypedDict('FabberT1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_t1"]],
     "output": str,
     "method": str,
@@ -46,7 +46,7 @@ FabberT1Parameters = typing.TypedDict('FabberT1Parameters', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
-FabberT1ParametersTagged = typing.TypedDict('FabberT1ParametersTagged', {
+FabberT1ParamsDictTagged = typing.TypedDict('FabberT1ParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_t1"],
     "output": str,
     "method": str,
@@ -83,7 +83,7 @@ FabberT1ParametersTagged = typing.TypedDict('FabberT1ParametersTagged', {
 
 class FabberT1Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberT1Parameters(...)`.
+    Output object returned when calling `FabberT1ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +145,7 @@ def fabber_t1_params(
     save_free_energy: bool = False,
     optfile: InputPathType | None = None,
     debug: bool = False,
-) -> FabberT1ParametersTagged:
+) -> FabberT1ParamsDictTagged:
     """
     Build parameters.
     
@@ -245,7 +245,7 @@ def fabber_t1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberT1Parameters` object.
+    `FabberT1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -371,7 +371,7 @@ def fabber_t1_validate(
 
 
 def fabber_t1_cargs(
-    params: FabberT1Parameters,
+    params: FabberT1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -487,7 +487,7 @@ def fabber_t1_cargs(
 
 
 def fabber_t1_outputs(
-    params: FabberT1Parameters,
+    params: FabberT1ParamsDict,
     execution: Execution,
 ) -> FabberT1Outputs:
     """
@@ -518,7 +518,7 @@ def fabber_t1_outputs(
 
 
 def fabber_t1_execute(
-    params: FabberT1Parameters,
+    params: FabberT1ParamsDict,
     runner: Runner | None = None,
 ) -> FabberT1Outputs:
     """
@@ -674,6 +674,8 @@ def fabber_t1(
 __all__ = [
     "FABBER_T1_METADATA",
     "FabberT1Outputs",
+    "FabberT1ParamsDict",
+    "FabberT1ParamsDictTagged",
     "fabber_t1",
     "fabber_t1_execute",
     "fabber_t1_params",

@@ -13,7 +13,7 @@ MAKE_FOLDING_ATLAS_METADATA = Metadata(
 )
 
 
-MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
+MakeFoldingAtlasParamsDict = typing.TypedDict('MakeFoldingAtlasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_folding_atlas"]],
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
     "threads": typing.NotRequired[float | None],
     "slurm_account": typing.NotRequired[str | None],
 })
-MakeFoldingAtlasParametersTagged = typing.TypedDict('MakeFoldingAtlasParametersTagged', {
+MakeFoldingAtlasParamsDictTagged = typing.TypedDict('MakeFoldingAtlasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_folding_atlas"],
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
@@ -63,7 +63,7 @@ MakeFoldingAtlasParametersTagged = typing.TypedDict('MakeFoldingAtlasParametersT
 
 class MakeFoldingAtlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeFoldingAtlasParameters(...)`.
+    Output object returned when calling `MakeFoldingAtlasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def make_folding_atlas_params(
     no_template_only: bool = False,
     threads: float | None = None,
     slurm_account: str | None = None,
-) -> MakeFoldingAtlasParametersTagged:
+) -> MakeFoldingAtlasParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def make_folding_atlas_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeFoldingAtlasParameters` object.
+    `MakeFoldingAtlasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -247,7 +247,7 @@ def make_folding_atlas_validate(
 
 
 def make_folding_atlas_cargs(
-    params: MakeFoldingAtlasParameters,
+    params: MakeFoldingAtlasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -335,7 +335,7 @@ def make_folding_atlas_cargs(
 
 
 def make_folding_atlas_outputs(
-    params: MakeFoldingAtlasParameters,
+    params: MakeFoldingAtlasParamsDict,
     execution: Execution,
 ) -> MakeFoldingAtlasOutputs:
     """
@@ -354,7 +354,7 @@ def make_folding_atlas_outputs(
 
 
 def make_folding_atlas_execute(
-    params: MakeFoldingAtlasParameters,
+    params: MakeFoldingAtlasParamsDict,
     runner: Runner | None = None,
 ) -> MakeFoldingAtlasOutputs:
     """
@@ -472,6 +472,8 @@ def make_folding_atlas(
 __all__ = [
     "MAKE_FOLDING_ATLAS_METADATA",
     "MakeFoldingAtlasOutputs",
+    "MakeFoldingAtlasParamsDict",
+    "MakeFoldingAtlasParamsDictTagged",
     "make_folding_atlas",
     "make_folding_atlas_execute",
     "make_folding_atlas_params",

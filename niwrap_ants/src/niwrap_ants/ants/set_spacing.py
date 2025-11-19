@@ -13,14 +13,14 @@ SET_SPACING_METADATA = Metadata(
 )
 
 
-SetSpacingParameters = typing.TypedDict('SetSpacingParameters', {
+SetSpacingParamsDict = typing.TypedDict('SetSpacingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SetSpacing"]],
     "dimension": int,
     "input_file": InputPathType,
     "output_file": str,
     "spacing": list[float],
 })
-SetSpacingParametersTagged = typing.TypedDict('SetSpacingParametersTagged', {
+SetSpacingParamsDictTagged = typing.TypedDict('SetSpacingParamsDictTagged', {
     "@type": typing.Literal["ants/SetSpacing"],
     "dimension": int,
     "input_file": InputPathType,
@@ -31,7 +31,7 @@ SetSpacingParametersTagged = typing.TypedDict('SetSpacingParametersTagged', {
 
 class SetSpacingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SetSpacingParameters(...)`.
+    Output object returned when calling `SetSpacingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def set_spacing_params(
     input_file: InputPathType,
     output_file: str,
     spacing: list[float],
-) -> SetSpacingParametersTagged:
+) -> SetSpacingParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def set_spacing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SetSpacingParameters` object.
+    `SetSpacingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def set_spacing_validate(
 
 
 def set_spacing_cargs(
-    params: SetSpacingParameters,
+    params: SetSpacingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def set_spacing_cargs(
 
 
 def set_spacing_outputs(
-    params: SetSpacingParameters,
+    params: SetSpacingParamsDict,
     execution: Execution,
 ) -> SetSpacingOutputs:
     """
@@ -145,7 +145,7 @@ def set_spacing_outputs(
 
 
 def set_spacing_execute(
-    params: SetSpacingParameters,
+    params: SetSpacingParamsDict,
     runner: Runner | None = None,
 ) -> SetSpacingOutputs:
     """
@@ -211,6 +211,8 @@ def set_spacing(
 __all__ = [
     "SET_SPACING_METADATA",
     "SetSpacingOutputs",
+    "SetSpacingParamsDict",
+    "SetSpacingParamsDictTagged",
     "set_spacing",
     "set_spacing_execute",
     "set_spacing_params",

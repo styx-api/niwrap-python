@@ -13,13 +13,13 @@ WARP2METRIC_METADATA = Metadata(
 )
 
 
-Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
+Warp2metricFcParamsDict = typing.TypedDict('Warp2metricFcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fc"]],
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
     "output_fixel_data": str,
 })
-Warp2metricFcParametersTagged = typing.TypedDict('Warp2metricFcParametersTagged', {
+Warp2metricFcParamsDictTagged = typing.TypedDict('Warp2metricFcParamsDictTagged', {
     "@type": typing.Literal["fc"],
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
@@ -27,21 +27,21 @@ Warp2metricFcParametersTagged = typing.TypedDict('Warp2metricFcParametersTagged'
 })
 
 
-Warp2metricConfigParameters = typing.TypedDict('Warp2metricConfigParameters', {
+Warp2metricConfigParamsDict = typing.TypedDict('Warp2metricConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Warp2metricConfigParametersTagged = typing.TypedDict('Warp2metricConfigParametersTagged', {
+Warp2metricConfigParamsDictTagged = typing.TypedDict('Warp2metricConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
+Warp2metricParamsDict = typing.TypedDict('Warp2metricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/warp2metric"]],
-    "fc": typing.NotRequired[Warp2metricFcParameters | None],
+    "fc": typing.NotRequired[Warp2metricFcParamsDict | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],
     "info": bool,
@@ -49,14 +49,14 @@ Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Warp2metricConfigParameters] | None],
+    "config": typing.NotRequired[list[Warp2metricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
 })
-Warp2metricParametersTagged = typing.TypedDict('Warp2metricParametersTagged', {
+Warp2metricParamsDictTagged = typing.TypedDict('Warp2metricParamsDictTagged', {
     "@type": typing.Literal["mrtrix/warp2metric"],
-    "fc": typing.NotRequired[Warp2metricFcParameters | None],
+    "fc": typing.NotRequired[Warp2metricFcParamsDict | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],
     "info": bool,
@@ -64,18 +64,18 @@ Warp2metricParametersTagged = typing.TypedDict('Warp2metricParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Warp2metricConfigParameters] | None],
+    "config": typing.NotRequired[list[Warp2metricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
 })
 
 
-def warp2metric_fc_params(
+def warp2metric_fc(
     template_fixel_directory: InputPathType,
     output_fixel_directory: str,
     output_fixel_data: str,
-) -> Warp2metricFcParametersTagged:
+) -> Warp2metricFcParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def warp2metric_fc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Warp2metricFcParameters` object.
+    `Warp2metricFcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def warp2metric_fc_validate(
 
 
 def warp2metric_fc_cargs(
-    params: Warp2metricFcParameters,
+    params: Warp2metricFcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,10 +154,10 @@ def warp2metric_fc_cargs(
     return cargs
 
 
-def warp2metric_config_params(
+def warp2metric_config(
     key: str,
     value: str,
-) -> Warp2metricConfigParametersTagged:
+) -> Warp2metricConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -180,7 +180,7 @@ def warp2metric_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Warp2metricConfigParameters` object.
+    `Warp2metricConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def warp2metric_config_validate(
 
 
 def warp2metric_config_cargs(
-    params: Warp2metricConfigParameters,
+    params: Warp2metricConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,7 +219,7 @@ def warp2metric_config_cargs(
 
 class Warp2metricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Warp2metricParameters(...)`.
+    Output object returned when calling `Warp2metricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -233,7 +233,7 @@ class Warp2metricOutputs(typing.NamedTuple):
 
 def warp2metric_params(
     in_: InputPathType,
-    fc: Warp2metricFcParameters | None = None,
+    fc: Warp2metricFcParamsDict | None = None,
     jmat: str | None = None,
     jdet: str | None = None,
     info: bool = False,
@@ -241,10 +241,10 @@ def warp2metric_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Warp2metricConfigParameters] | None = None,
+    config: list[Warp2metricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Warp2metricParametersTagged:
+) -> Warp2metricParamsDictTagged:
     """
     Build parameters.
     
@@ -301,7 +301,7 @@ def warp2metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Warp2metricParameters` object.
+    `Warp2metricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -337,7 +337,7 @@ def warp2metric_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Warp2metricConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Warp2metricConfigParamsDict] | None`')
         for e in params["config"]:
             warp2metric_config_validate(e)
     if params.get("help", False) is None:
@@ -355,7 +355,7 @@ def warp2metric_validate(
 
 
 def warp2metric_cargs(
-    params: Warp2metricParameters,
+    params: Warp2metricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -405,7 +405,7 @@ def warp2metric_cargs(
 
 
 def warp2metric_outputs(
-    params: Warp2metricParameters,
+    params: Warp2metricParamsDict,
     execution: Execution,
 ) -> Warp2metricOutputs:
     """
@@ -426,7 +426,7 @@ def warp2metric_outputs(
 
 
 def warp2metric_execute(
-    params: Warp2metricParameters,
+    params: Warp2metricParamsDict,
     runner: Runner | None = None,
 ) -> Warp2metricOutputs:
     """
@@ -465,7 +465,7 @@ def warp2metric_execute(
 
 def warp2metric(
     in_: InputPathType,
-    fc: Warp2metricFcParameters | None = None,
+    fc: Warp2metricFcParamsDict | None = None,
     jmat: str | None = None,
     jdet: str | None = None,
     info: bool = False,
@@ -473,7 +473,7 @@ def warp2metric(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Warp2metricConfigParameters] | None = None,
+    config: list[Warp2metricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -541,10 +541,16 @@ def warp2metric(
 
 __all__ = [
     "WARP2METRIC_METADATA",
+    "Warp2metricConfigParamsDict",
+    "Warp2metricConfigParamsDictTagged",
+    "Warp2metricFcParamsDict",
+    "Warp2metricFcParamsDictTagged",
     "Warp2metricOutputs",
+    "Warp2metricParamsDict",
+    "Warp2metricParamsDictTagged",
     "warp2metric",
-    "warp2metric_config_params",
+    "warp2metric_config",
     "warp2metric_execute",
-    "warp2metric_fc_params",
+    "warp2metric_fc",
     "warp2metric_params",
 ]

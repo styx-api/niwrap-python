@@ -13,19 +13,19 @@ DIRSPLIT_METADATA = Metadata(
 )
 
 
-DirsplitConfigParameters = typing.TypedDict('DirsplitConfigParameters', {
+DirsplitConfigParamsDict = typing.TypedDict('DirsplitConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirsplitConfigParametersTagged = typing.TypedDict('DirsplitConfigParametersTagged', {
+DirsplitConfigParamsDictTagged = typing.TypedDict('DirsplitConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirsplitParameters = typing.TypedDict('DirsplitParameters', {
+DirsplitParamsDict = typing.TypedDict('DirsplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirsplit"]],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
@@ -34,13 +34,13 @@ DirsplitParameters = typing.TypedDict('DirsplitParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirsplitConfigParameters] | None],
+    "config": typing.NotRequired[list[DirsplitConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dirs": InputPathType,
     "out": str,
 })
-DirsplitParametersTagged = typing.TypedDict('DirsplitParametersTagged', {
+DirsplitParamsDictTagged = typing.TypedDict('DirsplitParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirsplit"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
@@ -49,7 +49,7 @@ DirsplitParametersTagged = typing.TypedDict('DirsplitParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirsplitConfigParameters] | None],
+    "config": typing.NotRequired[list[DirsplitConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dirs": InputPathType,
@@ -57,10 +57,10 @@ DirsplitParametersTagged = typing.TypedDict('DirsplitParametersTagged', {
 })
 
 
-def dirsplit_config_params(
+def dirsplit_config(
     key: str,
     value: str,
-) -> DirsplitConfigParametersTagged:
+) -> DirsplitConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def dirsplit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirsplitConfigParameters` object.
+    `DirsplitConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def dirsplit_config_validate(
 
 
 def dirsplit_config_cargs(
-    params: DirsplitConfigParameters,
+    params: DirsplitConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def dirsplit_config_cargs(
 
 class DirsplitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirsplitParameters(...)`.
+    Output object returned when calling `DirsplitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def dirsplit_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirsplitConfigParameters] | None = None,
+    config: list[DirsplitConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirsplitParametersTagged:
+) -> DirsplitParamsDictTagged:
     """
     Build parameters.
     
@@ -194,7 +194,7 @@ def dirsplit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirsplitParameters` object.
+    `DirsplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -229,7 +229,7 @@ def dirsplit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirsplitConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirsplitConfigParamsDict] | None`')
         for e in params["config"]:
             dirsplit_config_validate(e)
     if params.get("help", False) is None:
@@ -251,7 +251,7 @@ def dirsplit_validate(
 
 
 def dirsplit_cargs(
-    params: DirsplitParameters,
+    params: DirsplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -297,7 +297,7 @@ def dirsplit_cargs(
 
 
 def dirsplit_outputs(
-    params: DirsplitParameters,
+    params: DirsplitParamsDict,
     execution: Execution,
 ) -> DirsplitOutputs:
     """
@@ -317,7 +317,7 @@ def dirsplit_outputs(
 
 
 def dirsplit_execute(
-    params: DirsplitParameters,
+    params: DirsplitParamsDict,
     runner: Runner | None = None,
 ) -> DirsplitOutputs:
     """
@@ -362,7 +362,7 @@ def dirsplit(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirsplitConfigParameters] | None = None,
+    config: list[DirsplitConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -424,9 +424,13 @@ def dirsplit(
 
 __all__ = [
     "DIRSPLIT_METADATA",
+    "DirsplitConfigParamsDict",
+    "DirsplitConfigParamsDictTagged",
     "DirsplitOutputs",
+    "DirsplitParamsDict",
+    "DirsplitParamsDictTagged",
     "dirsplit",
-    "dirsplit_config_params",
+    "dirsplit_config",
     "dirsplit_execute",
     "dirsplit_params",
 ]

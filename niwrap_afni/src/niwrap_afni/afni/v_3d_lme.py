@@ -13,7 +13,7 @@ V_3D_LME_METADATA = Metadata(
 )
 
 
-V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
+V3dLmeParamsDict = typing.TypedDict('V3dLmeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLME"]],
     "PREFIX": str,
     "MODEL": str,
@@ -46,7 +46,7 @@ V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
     "SHOW_OPTIONS_FLAG": bool,
     "SS_TYPE": typing.NotRequired[float | None],
 })
-V3dLmeParametersTagged = typing.TypedDict('V3dLmeParametersTagged', {
+V3dLmeParamsDictTagged = typing.TypedDict('V3dLmeParamsDictTagged', {
     "@type": typing.Literal["afni/3dLME"],
     "PREFIX": str,
     "MODEL": str,
@@ -83,7 +83,7 @@ V3dLmeParametersTagged = typing.TypedDict('V3dLmeParametersTagged', {
 
 class V3dLmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLmeParameters(...)`.
+    Output object returned when calling `V3dLmeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +122,7 @@ def v_3d_lme_params(
     rio_flag: bool = False,
     show_options_flag: bool = False,
     ss_type: float | None = None,
-) -> V3dLmeParametersTagged:
+) -> V3dLmeParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def v_3d_lme_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLmeParameters` object.
+    `V3dLmeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -339,7 +339,7 @@ def v_3d_lme_validate(
 
 
 def v_3d_lme_cargs(
-    params: V3dLmeParameters,
+    params: V3dLmeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -477,7 +477,7 @@ def v_3d_lme_cargs(
 
 
 def v_3d_lme_outputs(
-    params: V3dLmeParameters,
+    params: V3dLmeParamsDict,
     execution: Execution,
 ) -> V3dLmeOutputs:
     """
@@ -497,7 +497,7 @@ def v_3d_lme_outputs(
 
 
 def v_3d_lme_execute(
-    params: V3dLmeParameters,
+    params: V3dLmeParamsDict,
     runner: Runner | None = None,
 ) -> V3dLmeOutputs:
     """
@@ -642,6 +642,8 @@ def v_3d_lme(
 
 __all__ = [
     "V3dLmeOutputs",
+    "V3dLmeParamsDict",
+    "V3dLmeParamsDictTagged",
     "V_3D_LME_METADATA",
     "v_3d_lme",
     "v_3d_lme_execute",

@@ -12,25 +12,25 @@ SPEC_FILE_MODIFY_METADATA = Metadata(
 )
 
 
-SpecFileModifyAddParameters = typing.TypedDict('SpecFileModifyAddParameters', {
+SpecFileModifyAddParamsDict = typing.TypedDict('SpecFileModifyAddParamsDict', {
     "@type": typing.NotRequired[typing.Literal["add"]],
     "structure": str,
     "file": str,
 })
-SpecFileModifyAddParametersTagged = typing.TypedDict('SpecFileModifyAddParametersTagged', {
+SpecFileModifyAddParamsDictTagged = typing.TypedDict('SpecFileModifyAddParamsDictTagged', {
     "@type": typing.Literal["add"],
     "structure": str,
     "file": str,
 })
 
 
-SpecFileModifyRemoveParameters = typing.TypedDict('SpecFileModifyRemoveParameters', {
+SpecFileModifyRemoveParamsDict = typing.TypedDict('SpecFileModifyRemoveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["remove"]],
     "filename": str,
     "recursive": bool,
     "suffix": bool,
 })
-SpecFileModifyRemoveParametersTagged = typing.TypedDict('SpecFileModifyRemoveParametersTagged', {
+SpecFileModifyRemoveParamsDictTagged = typing.TypedDict('SpecFileModifyRemoveParamsDictTagged', {
     "@type": typing.Literal["remove"],
     "filename": str,
     "recursive": bool,
@@ -38,24 +38,24 @@ SpecFileModifyRemoveParametersTagged = typing.TypedDict('SpecFileModifyRemovePar
 })
 
 
-SpecFileModifyParameters = typing.TypedDict('SpecFileModifyParameters', {
+SpecFileModifyParamsDict = typing.TypedDict('SpecFileModifyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/spec-file-modify"]],
-    "add": typing.NotRequired[list[SpecFileModifyAddParameters] | None],
-    "remove": typing.NotRequired[list[SpecFileModifyRemoveParameters] | None],
+    "add": typing.NotRequired[list[SpecFileModifyAddParamsDict] | None],
+    "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
     "spec-file": str,
 })
-SpecFileModifyParametersTagged = typing.TypedDict('SpecFileModifyParametersTagged', {
+SpecFileModifyParamsDictTagged = typing.TypedDict('SpecFileModifyParamsDictTagged', {
     "@type": typing.Literal["workbench/spec-file-modify"],
-    "add": typing.NotRequired[list[SpecFileModifyAddParameters] | None],
-    "remove": typing.NotRequired[list[SpecFileModifyRemoveParameters] | None],
+    "add": typing.NotRequired[list[SpecFileModifyAddParamsDict] | None],
+    "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
     "spec-file": str,
 })
 
 
-def spec_file_modify_add_params(
+def spec_file_modify_add(
     structure: str,
     file: str,
-) -> SpecFileModifyAddParametersTagged:
+) -> SpecFileModifyAddParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def spec_file_modify_add_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpecFileModifyAddParameters` object.
+    `SpecFileModifyAddParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def spec_file_modify_add_validate(
 
 
 def spec_file_modify_add_cargs(
-    params: SpecFileModifyAddParameters,
+    params: SpecFileModifyAddParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,11 +117,11 @@ def spec_file_modify_add_cargs(
     return cargs
 
 
-def spec_file_modify_remove_params(
+def spec_file_modify_remove(
     filename: str,
     recursive: bool = False,
     suffix: bool = False,
-) -> SpecFileModifyRemoveParametersTagged:
+) -> SpecFileModifyRemoveParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def spec_file_modify_remove_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpecFileModifyRemoveParameters` object.
+    `SpecFileModifyRemoveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -170,7 +170,7 @@ def spec_file_modify_remove_validate(
 
 
 def spec_file_modify_remove_cargs(
-    params: SpecFileModifyRemoveParameters,
+    params: SpecFileModifyRemoveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def spec_file_modify_remove_cargs(
 
 class SpecFileModifyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpecFileModifyParameters(...)`.
+    Output object returned when calling `SpecFileModifyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,9 +203,9 @@ class SpecFileModifyOutputs(typing.NamedTuple):
 
 def spec_file_modify_params(
     spec_file: str,
-    add: list[SpecFileModifyAddParameters] | None = None,
-    remove: list[SpecFileModifyRemoveParameters] | None = None,
-) -> SpecFileModifyParametersTagged:
+    add: list[SpecFileModifyAddParamsDict] | None = None,
+    remove: list[SpecFileModifyRemoveParamsDict] | None = None,
+) -> SpecFileModifyParamsDictTagged:
     """
     Build parameters.
     
@@ -232,7 +232,7 @@ def spec_file_modify_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpecFileModifyParameters` object.
+    `SpecFileModifyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,12 +241,12 @@ def spec_file_modify_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("add", None) is not None:
         if not isinstance(params["add"], list):
-            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[SpecFileModifyAddParameters] | None`')
+            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[SpecFileModifyAddParamsDict] | None`')
         for e in params["add"]:
             spec_file_modify_add_validate(e)
     if params.get("remove", None) is not None:
         if not isinstance(params["remove"], list):
-            raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[SpecFileModifyRemoveParameters] | None`')
+            raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[SpecFileModifyRemoveParamsDict] | None`')
         for e in params["remove"]:
             spec_file_modify_remove_validate(e)
     if params.get("spec-file", None) is None:
@@ -256,7 +256,7 @@ def spec_file_modify_validate(
 
 
 def spec_file_modify_cargs(
-    params: SpecFileModifyParameters,
+    params: SpecFileModifyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def spec_file_modify_cargs(
 
 
 def spec_file_modify_outputs(
-    params: SpecFileModifyParameters,
+    params: SpecFileModifyParamsDict,
     execution: Execution,
 ) -> SpecFileModifyOutputs:
     """
@@ -300,7 +300,7 @@ def spec_file_modify_outputs(
 
 
 def spec_file_modify_execute(
-    params: SpecFileModifyParameters,
+    params: SpecFileModifyParamsDict,
     runner: Runner | None = None,
 ) -> SpecFileModifyOutputs:
     """
@@ -368,8 +368,8 @@ def spec_file_modify_execute(
 
 def spec_file_modify(
     spec_file: str,
-    add: list[SpecFileModifyAddParameters] | None = None,
-    remove: list[SpecFileModifyRemoveParameters] | None = None,
+    add: list[SpecFileModifyAddParamsDict] | None = None,
+    remove: list[SpecFileModifyRemoveParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SpecFileModifyOutputs:
     """
@@ -437,10 +437,16 @@ def spec_file_modify(
 
 __all__ = [
     "SPEC_FILE_MODIFY_METADATA",
+    "SpecFileModifyAddParamsDict",
+    "SpecFileModifyAddParamsDictTagged",
     "SpecFileModifyOutputs",
+    "SpecFileModifyParamsDict",
+    "SpecFileModifyParamsDictTagged",
+    "SpecFileModifyRemoveParamsDict",
+    "SpecFileModifyRemoveParamsDictTagged",
     "spec_file_modify",
-    "spec_file_modify_add_params",
+    "spec_file_modify_add",
     "spec_file_modify_execute",
     "spec_file_modify_params",
-    "spec_file_modify_remove_params",
+    "spec_file_modify_remove",
 ]

@@ -13,11 +13,11 @@ ADJUNCT_SIMPLIFY_COST_PY_METADATA = Metadata(
 )
 
 
-AdjunctSimplifyCostPyParameters = typing.TypedDict('AdjunctSimplifyCostPyParameters', {
+AdjunctSimplifyCostPyParamsDict = typing.TypedDict('AdjunctSimplifyCostPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_simplify_cost.py"]],
     "cost_function": str,
 })
-AdjunctSimplifyCostPyParametersTagged = typing.TypedDict('AdjunctSimplifyCostPyParametersTagged', {
+AdjunctSimplifyCostPyParamsDictTagged = typing.TypedDict('AdjunctSimplifyCostPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_simplify_cost.py"],
     "cost_function": str,
 })
@@ -25,7 +25,7 @@ AdjunctSimplifyCostPyParametersTagged = typing.TypedDict('AdjunctSimplifyCostPyP
 
 class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctSimplifyCostPyParameters(...)`.
+    Output object returned when calling `AdjunctSimplifyCostPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):
 
 def adjunct_simplify_cost_py_params(
     cost_function: str,
-) -> AdjunctSimplifyCostPyParametersTagged:
+) -> AdjunctSimplifyCostPyParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def adjunct_simplify_cost_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctSimplifyCostPyParameters` object.
+    `AdjunctSimplifyCostPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def adjunct_simplify_cost_py_validate(
 
 
 def adjunct_simplify_cost_py_cargs(
-    params: AdjunctSimplifyCostPyParameters,
+    params: AdjunctSimplifyCostPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def adjunct_simplify_cost_py_cargs(
 
 
 def adjunct_simplify_cost_py_outputs(
-    params: AdjunctSimplifyCostPyParameters,
+    params: AdjunctSimplifyCostPyParamsDict,
     execution: Execution,
 ) -> AdjunctSimplifyCostPyOutputs:
     """
@@ -106,7 +106,7 @@ def adjunct_simplify_cost_py_outputs(
 
 
 def adjunct_simplify_cost_py_execute(
-    params: AdjunctSimplifyCostPyParameters,
+    params: AdjunctSimplifyCostPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctSimplifyCostPyOutputs:
     """
@@ -164,6 +164,8 @@ def adjunct_simplify_cost_py(
 __all__ = [
     "ADJUNCT_SIMPLIFY_COST_PY_METADATA",
     "AdjunctSimplifyCostPyOutputs",
+    "AdjunctSimplifyCostPyParamsDict",
+    "AdjunctSimplifyCostPyParamsDictTagged",
     "adjunct_simplify_cost_py",
     "adjunct_simplify_cost_py_execute",
     "adjunct_simplify_cost_py_params",

@@ -12,80 +12,80 @@ VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
 )
 
 
-VolumeToSurfaceMappingVolumeRoiParameters = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParameters', {
+VolumeToSurfaceMappingVolumeRoiParamsDict = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-roi"]],
     "roi-volume": InputPathType,
     "weighted": bool,
 })
-VolumeToSurfaceMappingVolumeRoiParametersTagged = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParametersTagged', {
+VolumeToSurfaceMappingVolumeRoiParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParamsDictTagged', {
     "@type": typing.Literal["volume-roi"],
     "roi-volume": InputPathType,
     "weighted": bool,
 })
 
 
-VolumeToSurfaceMappingDilateMissingParameters = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParameters', {
+VolumeToSurfaceMappingDilateMissingParamsDict = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dilate-missing"]],
     "dist": float,
     "nearest": bool,
 })
-VolumeToSurfaceMappingDilateMissingParametersTagged = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParametersTagged', {
+VolumeToSurfaceMappingDilateMissingParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParamsDictTagged', {
     "@type": typing.Literal["dilate-missing"],
     "dist": float,
     "nearest": bool,
 })
 
 
-VolumeToSurfaceMappingOutputWeightsParameters = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParameters', {
+VolumeToSurfaceMappingOutputWeightsParamsDict = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output-weights"]],
     "vertex": int,
     "weights-out": str,
 })
-VolumeToSurfaceMappingOutputWeightsParametersTagged = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParametersTagged', {
+VolumeToSurfaceMappingOutputWeightsParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParamsDictTagged', {
     "@type": typing.Literal["output-weights"],
     "vertex": int,
     "weights-out": str,
 })
 
 
-VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParameters', {
+VolumeToSurfaceMappingRibbonConstrainedParamsDict = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
-    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
-    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParameters | None],
+    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParamsDict | None],
+    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParamsDict | None],
     "subdiv-num": typing.NotRequired[int | None],
     "thin-columns": bool,
     "scale": typing.NotRequired[float | None],
     "method": typing.NotRequired[str | None],
     "roi-out": typing.NotRequired[str | None],
-    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
+    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParamsDict | None],
     "text-out": typing.NotRequired[str | None],
 })
-VolumeToSurfaceMappingRibbonConstrainedParametersTagged = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParametersTagged', {
+VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
-    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
-    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParameters | None],
+    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParamsDict | None],
+    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParamsDict | None],
     "subdiv-num": typing.NotRequired[int | None],
     "thin-columns": bool,
     "scale": typing.NotRequired[float | None],
     "method": typing.NotRequired[str | None],
     "roi-out": typing.NotRequired[str | None],
-    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
+    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParamsDict | None],
     "text-out": typing.NotRequired[str | None],
 })
 
 
-VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParameters', {
+VolumeToSurfaceMappingMyelinStyleParamsDict = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["myelin-style"]],
     "ribbon-roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
     "legacy-bug": bool,
 })
-VolumeToSurfaceMappingMyelinStyleParametersTagged = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParametersTagged', {
+VolumeToSurfaceMappingMyelinStyleParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParamsDictTagged', {
     "@type": typing.Literal["myelin-style"],
     "ribbon-roi": InputPathType,
     "thickness": InputPathType,
@@ -94,36 +94,36 @@ VolumeToSurfaceMappingMyelinStyleParametersTagged = typing.TypedDict('VolumeToSu
 })
 
 
-VolumeToSurfaceMappingParameters = typing.TypedDict('VolumeToSurfaceMappingParameters', {
+VolumeToSurfaceMappingParamsDict = typing.TypedDict('VolumeToSurfaceMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-to-surface-mapping"]],
     "metric-out": str,
     "trilinear": bool,
     "enclosing": bool,
     "cubic": bool,
-    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
-    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
+    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParamsDict | None],
+    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
 })
-VolumeToSurfaceMappingParametersTagged = typing.TypedDict('VolumeToSurfaceMappingParametersTagged', {
+VolumeToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-to-surface-mapping"],
     "metric-out": str,
     "trilinear": bool,
     "enclosing": bool,
     "cubic": bool,
-    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
-    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
+    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParamsDict | None],
+    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
 })
 
 
-def volume_to_surface_mapping_volume_roi_params(
+def volume_to_surface_mapping_volume_roi(
     roi_volume: InputPathType,
     weighted: bool = False,
-) -> VolumeToSurfaceMappingVolumeRoiParametersTagged:
+) -> VolumeToSurfaceMappingVolumeRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def volume_to_surface_mapping_volume_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingVolumeRoiParameters` object.
+    `VolumeToSurfaceMappingVolumeRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def volume_to_surface_mapping_volume_roi_validate(
 
 
 def volume_to_surface_mapping_volume_roi_cargs(
-    params: VolumeToSurfaceMappingVolumeRoiParameters,
+    params: VolumeToSurfaceMappingVolumeRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,10 +186,10 @@ def volume_to_surface_mapping_volume_roi_cargs(
     return cargs
 
 
-def volume_to_surface_mapping_dilate_missing_params(
+def volume_to_surface_mapping_dilate_missing(
     dist: float,
     nearest: bool = False,
-) -> VolumeToSurfaceMappingDilateMissingParametersTagged:
+) -> VolumeToSurfaceMappingDilateMissingParamsDictTagged:
     """
     Build parameters.
     
@@ -212,7 +212,7 @@ def volume_to_surface_mapping_dilate_missing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingDilateMissingParameters` object.
+    `VolumeToSurfaceMappingDilateMissingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -230,7 +230,7 @@ def volume_to_surface_mapping_dilate_missing_validate(
 
 
 def volume_to_surface_mapping_dilate_missing_cargs(
-    params: VolumeToSurfaceMappingDilateMissingParameters,
+    params: VolumeToSurfaceMappingDilateMissingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def volume_to_surface_mapping_dilate_missing_cargs(
 
 class VolumeToSurfaceMappingOutputWeightsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeToSurfaceMappingOutputWeightsParameters | None(...)`.
+    Output object returned when calling `VolumeToSurfaceMappingOutputWeightsParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -262,10 +262,10 @@ class VolumeToSurfaceMappingOutputWeightsOutputs(typing.NamedTuple):
     """volume to write the weights to"""
 
 
-def volume_to_surface_mapping_output_weights_params(
+def volume_to_surface_mapping_output_weights(
     vertex: int,
     weights_out: str,
-) -> VolumeToSurfaceMappingOutputWeightsParametersTagged:
+) -> VolumeToSurfaceMappingOutputWeightsParamsDictTagged:
     """
     Build parameters.
     
@@ -288,7 +288,7 @@ def volume_to_surface_mapping_output_weights_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingOutputWeightsParameters` object.
+    `VolumeToSurfaceMappingOutputWeightsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -306,7 +306,7 @@ def volume_to_surface_mapping_output_weights_validate(
 
 
 def volume_to_surface_mapping_output_weights_cargs(
-    params: VolumeToSurfaceMappingOutputWeightsParameters,
+    params: VolumeToSurfaceMappingOutputWeightsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def volume_to_surface_mapping_output_weights_cargs(
 
 
 def volume_to_surface_mapping_output_weights_outputs(
-    params: VolumeToSurfaceMappingOutputWeightsParameters,
+    params: VolumeToSurfaceMappingOutputWeightsParamsDict,
     execution: Execution,
 ) -> VolumeToSurfaceMappingOutputWeightsOutputs:
     """
@@ -349,7 +349,7 @@ def volume_to_surface_mapping_output_weights_outputs(
 
 class VolumeToSurfaceMappingRibbonConstrainedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeToSurfaceMappingRibbonConstrainedParameters | None(...)`.
+    Output object returned when calling `VolumeToSurfaceMappingRibbonConstrainedParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -357,7 +357,7 @@ class VolumeToSurfaceMappingRibbonConstrainedOutputs(typing.NamedTuple):
     """Outputs from `volume_to_surface_mapping_output_weights_outputs`."""
 
 
-def volume_to_surface_mapping_ribbon_constrained_params(
+def volume_to_surface_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     subdiv_num: int | None,
@@ -365,11 +365,11 @@ def volume_to_surface_mapping_ribbon_constrained_params(
     method: str | None,
     roi_out: str | None,
     text_out: str | None,
-    volume_roi: VolumeToSurfaceMappingVolumeRoiParameters | None = None,
-    dilate_missing: VolumeToSurfaceMappingDilateMissingParameters | None = None,
+    volume_roi: VolumeToSurfaceMappingVolumeRoiParamsDict | None = None,
+    dilate_missing: VolumeToSurfaceMappingDilateMissingParamsDict | None = None,
     thin_columns: bool = False,
-    output_weights: VolumeToSurfaceMappingOutputWeightsParameters | None = None,
-) -> VolumeToSurfaceMappingRibbonConstrainedParametersTagged:
+    output_weights: VolumeToSurfaceMappingOutputWeightsParamsDict | None = None,
+) -> VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
     
@@ -431,7 +431,7 @@ def volume_to_surface_mapping_ribbon_constrained_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingRibbonConstrainedParameters` object.
+    `VolumeToSurfaceMappingRibbonConstrainedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -474,7 +474,7 @@ def volume_to_surface_mapping_ribbon_constrained_validate(
 
 
 def volume_to_surface_mapping_ribbon_constrained_cargs(
-    params: VolumeToSurfaceMappingRibbonConstrainedParameters,
+    params: VolumeToSurfaceMappingRibbonConstrainedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -511,7 +511,7 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
 
 
 def volume_to_surface_mapping_ribbon_constrained_outputs(
-    params: VolumeToSurfaceMappingRibbonConstrainedParameters,
+    params: VolumeToSurfaceMappingRibbonConstrainedParamsDict,
     execution: Execution,
 ) -> VolumeToSurfaceMappingRibbonConstrainedOutputs:
     """
@@ -530,12 +530,12 @@ def volume_to_surface_mapping_ribbon_constrained_outputs(
     return ret
 
 
-def volume_to_surface_mapping_myelin_style_params(
+def volume_to_surface_mapping_myelin_style(
     ribbon_roi: InputPathType,
     thickness: InputPathType,
     sigma: float,
     legacy_bug: bool = False,
-) -> VolumeToSurfaceMappingMyelinStyleParametersTagged:
+) -> VolumeToSurfaceMappingMyelinStyleParamsDictTagged:
     """
     Build parameters.
     
@@ -563,7 +563,7 @@ def volume_to_surface_mapping_myelin_style_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingMyelinStyleParameters` object.
+    `VolumeToSurfaceMappingMyelinStyleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -589,7 +589,7 @@ def volume_to_surface_mapping_myelin_style_validate(
 
 
 def volume_to_surface_mapping_myelin_style_cargs(
-    params: VolumeToSurfaceMappingMyelinStyleParameters,
+    params: VolumeToSurfaceMappingMyelinStyleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -615,7 +615,7 @@ def volume_to_surface_mapping_myelin_style_cargs(
 
 class VolumeToSurfaceMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeToSurfaceMappingParameters(...)`.
+    Output object returned when calling `VolumeToSurfaceMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -633,9 +633,9 @@ def volume_to_surface_mapping_params(
     trilinear: bool = False,
     enclosing: bool = False,
     cubic: bool = False,
-    ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParameters | None = None,
-    myelin_style: VolumeToSurfaceMappingMyelinStyleParameters | None = None,
-) -> VolumeToSurfaceMappingParametersTagged:
+    ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
+    myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
+) -> VolumeToSurfaceMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -677,7 +677,7 @@ def volume_to_surface_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeToSurfaceMappingParameters` object.
+    `VolumeToSurfaceMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -718,7 +718,7 @@ def volume_to_surface_mapping_validate(
 
 
 def volume_to_surface_mapping_cargs(
-    params: VolumeToSurfaceMappingParameters,
+    params: VolumeToSurfaceMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -750,7 +750,7 @@ def volume_to_surface_mapping_cargs(
 
 
 def volume_to_surface_mapping_outputs(
-    params: VolumeToSurfaceMappingParameters,
+    params: VolumeToSurfaceMappingParamsDict,
     execution: Execution,
 ) -> VolumeToSurfaceMappingOutputs:
     """
@@ -771,7 +771,7 @@ def volume_to_surface_mapping_outputs(
 
 
 def volume_to_surface_mapping_execute(
-    params: VolumeToSurfaceMappingParameters,
+    params: VolumeToSurfaceMappingParamsDict,
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
@@ -839,8 +839,8 @@ def volume_to_surface_mapping(
     trilinear: bool = False,
     enclosing: bool = False,
     cubic: bool = False,
-    ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParameters | None = None,
-    myelin_style: VolumeToSurfaceMappingMyelinStyleParameters | None = None,
+    ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
+    myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
@@ -916,15 +916,27 @@ def volume_to_surface_mapping(
 
 __all__ = [
     "VOLUME_TO_SURFACE_MAPPING_METADATA",
+    "VolumeToSurfaceMappingDilateMissingParamsDict",
+    "VolumeToSurfaceMappingDilateMissingParamsDictTagged",
+    "VolumeToSurfaceMappingMyelinStyleParamsDict",
+    "VolumeToSurfaceMappingMyelinStyleParamsDictTagged",
     "VolumeToSurfaceMappingOutputWeightsOutputs",
+    "VolumeToSurfaceMappingOutputWeightsParamsDict",
+    "VolumeToSurfaceMappingOutputWeightsParamsDictTagged",
     "VolumeToSurfaceMappingOutputs",
+    "VolumeToSurfaceMappingParamsDict",
+    "VolumeToSurfaceMappingParamsDictTagged",
     "VolumeToSurfaceMappingRibbonConstrainedOutputs",
+    "VolumeToSurfaceMappingRibbonConstrainedParamsDict",
+    "VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged",
+    "VolumeToSurfaceMappingVolumeRoiParamsDict",
+    "VolumeToSurfaceMappingVolumeRoiParamsDictTagged",
     "volume_to_surface_mapping",
-    "volume_to_surface_mapping_dilate_missing_params",
+    "volume_to_surface_mapping_dilate_missing",
     "volume_to_surface_mapping_execute",
-    "volume_to_surface_mapping_myelin_style_params",
-    "volume_to_surface_mapping_output_weights_params",
+    "volume_to_surface_mapping_myelin_style",
+    "volume_to_surface_mapping_output_weights",
     "volume_to_surface_mapping_params",
-    "volume_to_surface_mapping_ribbon_constrained_params",
-    "volume_to_surface_mapping_volume_roi_params",
+    "volume_to_surface_mapping_ribbon_constrained",
+    "volume_to_surface_mapping_volume_roi",
 ]

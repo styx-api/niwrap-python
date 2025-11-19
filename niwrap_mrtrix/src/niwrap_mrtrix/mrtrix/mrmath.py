@@ -13,19 +13,19 @@ MRMATH_METADATA = Metadata(
 )
 
 
-MrmathConfigParameters = typing.TypedDict('MrmathConfigParameters', {
+MrmathConfigParamsDict = typing.TypedDict('MrmathConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrmathConfigParametersTagged = typing.TypedDict('MrmathConfigParametersTagged', {
+MrmathConfigParamsDictTagged = typing.TypedDict('MrmathConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrmathParameters = typing.TypedDict('MrmathParameters', {
+MrmathParamsDict = typing.TypedDict('MrmathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrmath"]],
     "axis": typing.NotRequired[int | None],
     "keep_unary_axes": bool,
@@ -35,14 +35,14 @@ MrmathParameters = typing.TypedDict('MrmathParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrmathConfigParameters] | None],
+    "config": typing.NotRequired[list[MrmathConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
     "operation": str,
     "output": str,
 })
-MrmathParametersTagged = typing.TypedDict('MrmathParametersTagged', {
+MrmathParamsDictTagged = typing.TypedDict('MrmathParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrmath"],
     "axis": typing.NotRequired[int | None],
     "keep_unary_axes": bool,
@@ -52,7 +52,7 @@ MrmathParametersTagged = typing.TypedDict('MrmathParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrmathConfigParameters] | None],
+    "config": typing.NotRequired[list[MrmathConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
@@ -61,10 +61,10 @@ MrmathParametersTagged = typing.TypedDict('MrmathParametersTagged', {
 })
 
 
-def mrmath_config_params(
+def mrmath_config(
     key: str,
     value: str,
-) -> MrmathConfigParametersTagged:
+) -> MrmathConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mrmath_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrmathConfigParameters` object.
+    `MrmathConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def mrmath_config_validate(
 
 
 def mrmath_config_cargs(
-    params: MrmathConfigParameters,
+    params: MrmathConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def mrmath_config_cargs(
 
 class MrmathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrmathParameters(...)`.
+    Output object returned when calling `MrmathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def mrmath_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrmathConfigParameters] | None = None,
+    config: list[MrmathConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrmathParametersTagged:
+) -> MrmathParamsDictTagged:
     """
     Build parameters.
     
@@ -211,7 +211,7 @@ def mrmath_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrmathParameters` object.
+    `MrmathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -249,7 +249,7 @@ def mrmath_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrmathConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrmathConfigParamsDict] | None`')
         for e in params["config"]:
             mrmath_config_validate(e)
     if params.get("help", False) is None:
@@ -278,7 +278,7 @@ def mrmath_validate(
 
 
 def mrmath_cargs(
-    params: MrmathParameters,
+    params: MrmathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -330,7 +330,7 @@ def mrmath_cargs(
 
 
 def mrmath_outputs(
-    params: MrmathParameters,
+    params: MrmathParamsDict,
     execution: Execution,
 ) -> MrmathOutputs:
     """
@@ -350,7 +350,7 @@ def mrmath_outputs(
 
 
 def mrmath_execute(
-    params: MrmathParameters,
+    params: MrmathParamsDict,
     runner: Runner | None = None,
 ) -> MrmathOutputs:
     """
@@ -408,7 +408,7 @@ def mrmath(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrmathConfigParameters] | None = None,
+    config: list[MrmathConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -491,9 +491,13 @@ def mrmath(
 
 __all__ = [
     "MRMATH_METADATA",
+    "MrmathConfigParamsDict",
+    "MrmathConfigParamsDictTagged",
     "MrmathOutputs",
+    "MrmathParamsDict",
+    "MrmathParamsDictTagged",
     "mrmath",
-    "mrmath_config_params",
+    "mrmath_config",
     "mrmath_execute",
     "mrmath_params",
 ]

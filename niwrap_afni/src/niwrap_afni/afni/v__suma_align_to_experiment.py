@@ -13,7 +13,7 @@ V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
 )
 
 
-VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParameters', {
+VSumaAlignToExperimentParamsDict = typing.TypedDict('VSumaAlignToExperimentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_AlignToExperiment"]],
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
@@ -36,7 +36,7 @@ VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParam
     "keep_tmp": bool,
     "overwrite_resp": typing.NotRequired[str | None],
 })
-VSumaAlignToExperimentParametersTagged = typing.TypedDict('VSumaAlignToExperimentParametersTagged', {
+VSumaAlignToExperimentParamsDictTagged = typing.TypedDict('VSumaAlignToExperimentParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_AlignToExperiment"],
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
@@ -63,7 +63,7 @@ VSumaAlignToExperimentParametersTagged = typing.TypedDict('VSumaAlignToExperimen
 
 class VSumaAlignToExperimentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaAlignToExperimentParameters(...)`.
+    Output object returned when calling `VSumaAlignToExperimentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def v__suma_align_to_experiment_params(
     echo: bool = False,
     keep_tmp: bool = False,
     overwrite_resp: str | None = None,
-) -> VSumaAlignToExperimentParametersTagged:
+) -> VSumaAlignToExperimentParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def v__suma_align_to_experiment_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaAlignToExperimentParameters` object.
+    `VSumaAlignToExperimentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -254,7 +254,7 @@ def v__suma_align_to_experiment_validate(
 
 
 def v__suma_align_to_experiment_cargs(
-    params: VSumaAlignToExperimentParameters,
+    params: VSumaAlignToExperimentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -349,7 +349,7 @@ def v__suma_align_to_experiment_cargs(
 
 
 def v__suma_align_to_experiment_outputs(
-    params: VSumaAlignToExperimentParameters,
+    params: VSumaAlignToExperimentParamsDict,
     execution: Execution,
 ) -> VSumaAlignToExperimentOutputs:
     """
@@ -370,7 +370,7 @@ def v__suma_align_to_experiment_outputs(
 
 
 def v__suma_align_to_experiment_execute(
-    params: VSumaAlignToExperimentParameters,
+    params: VSumaAlignToExperimentParamsDict,
     runner: Runner | None = None,
 ) -> VSumaAlignToExperimentOutputs:
     """
@@ -495,6 +495,8 @@ def v__suma_align_to_experiment(
 
 __all__ = [
     "VSumaAlignToExperimentOutputs",
+    "VSumaAlignToExperimentParamsDict",
+    "VSumaAlignToExperimentParamsDictTagged",
     "V__SUMA_ALIGN_TO_EXPERIMENT_METADATA",
     "v__suma_align_to_experiment",
     "v__suma_align_to_experiment_execute",

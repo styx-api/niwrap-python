@@ -13,7 +13,7 @@ FSL_PREPARE_FIELDMAP_METADATA = Metadata(
 )
 
 
-FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', {
+FslPrepareFieldmapParamsDict = typing.TypedDict('FslPrepareFieldmapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_prepare_fieldmap"]],
     "scanner": str,
     "phase_image": InputPathType,
@@ -22,7 +22,7 @@ FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', 
     "delta_te": float,
     "nocheck_flag": bool,
 })
-FslPrepareFieldmapParametersTagged = typing.TypedDict('FslPrepareFieldmapParametersTagged', {
+FslPrepareFieldmapParamsDictTagged = typing.TypedDict('FslPrepareFieldmapParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_prepare_fieldmap"],
     "scanner": str,
     "phase_image": InputPathType,
@@ -35,7 +35,7 @@ FslPrepareFieldmapParametersTagged = typing.TypedDict('FslPrepareFieldmapParamet
 
 class FslPrepareFieldmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslPrepareFieldmapParameters(...)`.
+    Output object returned when calling `FslPrepareFieldmapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def fsl_prepare_fieldmap_params(
     out_image: str,
     delta_te: float,
     nocheck_flag: bool = False,
-) -> FslPrepareFieldmapParametersTagged:
+) -> FslPrepareFieldmapParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def fsl_prepare_fieldmap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslPrepareFieldmapParameters` object.
+    `FslPrepareFieldmapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def fsl_prepare_fieldmap_validate(
 
 
 def fsl_prepare_fieldmap_cargs(
-    params: FslPrepareFieldmapParameters,
+    params: FslPrepareFieldmapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def fsl_prepare_fieldmap_cargs(
 
 
 def fsl_prepare_fieldmap_outputs(
-    params: FslPrepareFieldmapParameters,
+    params: FslPrepareFieldmapParamsDict,
     execution: Execution,
 ) -> FslPrepareFieldmapOutputs:
     """
@@ -163,7 +163,7 @@ def fsl_prepare_fieldmap_outputs(
 
 
 def fsl_prepare_fieldmap_execute(
-    params: FslPrepareFieldmapParameters,
+    params: FslPrepareFieldmapParamsDict,
     runner: Runner | None = None,
 ) -> FslPrepareFieldmapOutputs:
     """
@@ -237,6 +237,8 @@ def fsl_prepare_fieldmap(
 __all__ = [
     "FSL_PREPARE_FIELDMAP_METADATA",
     "FslPrepareFieldmapOutputs",
+    "FslPrepareFieldmapParamsDict",
+    "FslPrepareFieldmapParamsDictTagged",
     "fsl_prepare_fieldmap",
     "fsl_prepare_fieldmap_execute",
     "fsl_prepare_fieldmap_params",

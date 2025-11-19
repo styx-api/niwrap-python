@@ -13,7 +13,7 @@ BEDPOSTX_GPU_METADATA = Metadata(
 )
 
 
-BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
+BedpostxGpuParamsDict = typing.TypedDict('BedpostxGpuParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_gpu"]],
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
     "deconv_model": typing.NotRequired[float | None],
     "grad_nonlinear": bool,
 })
-BedpostxGpuParametersTagged = typing.TypedDict('BedpostxGpuParametersTagged', {
+BedpostxGpuParamsDictTagged = typing.TypedDict('BedpostxGpuParamsDictTagged', {
     "@type": typing.Literal["fsl/bedpostx_gpu"],
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ BedpostxGpuParametersTagged = typing.TypedDict('BedpostxGpuParametersTagged', {
 
 class BedpostxGpuOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BedpostxGpuParameters(...)`.
+    Output object returned when calling `BedpostxGpuParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def bedpostx_gpu_params(
     sample_every: float | None = None,
     deconv_model: float | None = None,
     grad_nonlinear: bool = False,
-) -> BedpostxGpuParametersTagged:
+) -> BedpostxGpuParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def bedpostx_gpu_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BedpostxGpuParameters` object.
+    `BedpostxGpuParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def bedpostx_gpu_validate(
 
 
 def bedpostx_gpu_cargs(
-    params: BedpostxGpuParameters,
+    params: BedpostxGpuParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def bedpostx_gpu_cargs(
 
 
 def bedpostx_gpu_outputs(
-    params: BedpostxGpuParameters,
+    params: BedpostxGpuParamsDict,
     execution: Execution,
 ) -> BedpostxGpuOutputs:
     """
@@ -234,7 +234,7 @@ def bedpostx_gpu_outputs(
 
 
 def bedpostx_gpu_execute(
-    params: BedpostxGpuParameters,
+    params: BedpostxGpuParamsDict,
     runner: Runner | None = None,
 ) -> BedpostxGpuOutputs:
     """
@@ -322,6 +322,8 @@ def bedpostx_gpu(
 __all__ = [
     "BEDPOSTX_GPU_METADATA",
     "BedpostxGpuOutputs",
+    "BedpostxGpuParamsDict",
+    "BedpostxGpuParamsDictTagged",
     "bedpostx_gpu",
     "bedpostx_gpu_execute",
     "bedpostx_gpu_params",

@@ -13,7 +13,7 @@ CJPEG_METADATA = Metadata(
 )
 
 
-CjpegParameters = typing.TypedDict('CjpegParameters', {
+CjpegParamsDict = typing.TypedDict('CjpegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/cjpeg"]],
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
@@ -23,7 +23,7 @@ CjpegParameters = typing.TypedDict('CjpegParameters', {
     "outfile": str,
     "infile": InputPathType,
 })
-CjpegParametersTagged = typing.TypedDict('CjpegParametersTagged', {
+CjpegParamsDictTagged = typing.TypedDict('CjpegParamsDictTagged', {
     "@type": typing.Literal["afni/cjpeg"],
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
@@ -37,7 +37,7 @@ CjpegParametersTagged = typing.TypedDict('CjpegParametersTagged', {
 
 class CjpegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CjpegParameters(...)`.
+    Output object returned when calling `CjpegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def cjpeg_params(
     optimize: bool = False,
     baseline: bool = False,
     progressive: bool = False,
-) -> CjpegParametersTagged:
+) -> CjpegParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def cjpeg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CjpegParameters` object.
+    `CjpegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def cjpeg_validate(
 
 
 def cjpeg_cargs(
-    params: CjpegParameters,
+    params: CjpegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def cjpeg_cargs(
 
 
 def cjpeg_outputs(
-    params: CjpegParameters,
+    params: CjpegParamsDict,
     execution: Execution,
 ) -> CjpegOutputs:
     """
@@ -179,7 +179,7 @@ def cjpeg_outputs(
 
 
 def cjpeg_execute(
-    params: CjpegParameters,
+    params: CjpegParamsDict,
     runner: Runner | None = None,
 ) -> CjpegOutputs:
     """
@@ -253,6 +253,8 @@ def cjpeg(
 __all__ = [
     "CJPEG_METADATA",
     "CjpegOutputs",
+    "CjpegParamsDict",
+    "CjpegParamsDictTagged",
     "cjpeg",
     "cjpeg_execute",
     "cjpeg_params",

@@ -13,19 +13,19 @@ FOD2FIXEL_METADATA = Metadata(
 )
 
 
-Fod2fixelConfigParameters = typing.TypedDict('Fod2fixelConfigParameters', {
+Fod2fixelConfigParamsDict = typing.TypedDict('Fod2fixelConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fod2fixelConfigParametersTagged = typing.TypedDict('Fod2fixelConfigParametersTagged', {
+Fod2fixelConfigParamsDictTagged = typing.TypedDict('Fod2fixelConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
+Fod2fixelParamsDict = typing.TypedDict('Fod2fixelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fod2fixel"]],
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
@@ -43,13 +43,13 @@ Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fod2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Fod2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fod": InputPathType,
     "fixel_directory": str,
 })
-Fod2fixelParametersTagged = typing.TypedDict('Fod2fixelParametersTagged', {
+Fod2fixelParamsDictTagged = typing.TypedDict('Fod2fixelParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fod2fixel"],
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
@@ -67,7 +67,7 @@ Fod2fixelParametersTagged = typing.TypedDict('Fod2fixelParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fod2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Fod2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fod": InputPathType,
@@ -75,10 +75,10 @@ Fod2fixelParametersTagged = typing.TypedDict('Fod2fixelParametersTagged', {
 })
 
 
-def fod2fixel_config_params(
+def fod2fixel_config(
     key: str,
     value: str,
-) -> Fod2fixelConfigParametersTagged:
+) -> Fod2fixelConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def fod2fixel_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fod2fixelConfigParameters` object.
+    `Fod2fixelConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def fod2fixel_config_validate(
 
 
 def fod2fixel_config_cargs(
-    params: Fod2fixelConfigParameters,
+    params: Fod2fixelConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def fod2fixel_config_cargs(
 
 class Fod2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fod2fixelParameters(...)`.
+    Output object returned when calling `Fod2fixelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -175,10 +175,10 @@ def fod2fixel_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fod2fixelConfigParameters] | None = None,
+    config: list[Fod2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fod2fixelParametersTagged:
+) -> Fod2fixelParamsDictTagged:
     """
     Build parameters.
     
@@ -271,7 +271,7 @@ def fod2fixel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fod2fixelParameters` object.
+    `Fod2fixelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -335,7 +335,7 @@ def fod2fixel_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fod2fixelConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fod2fixelConfigParamsDict] | None`')
         for e in params["config"]:
             fod2fixel_config_validate(e)
     if params.get("help", False) is None:
@@ -357,7 +357,7 @@ def fod2fixel_validate(
 
 
 def fod2fixel_cargs(
-    params: Fod2fixelParameters,
+    params: Fod2fixelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -442,7 +442,7 @@ def fod2fixel_cargs(
 
 
 def fod2fixel_outputs(
-    params: Fod2fixelParameters,
+    params: Fod2fixelParamsDict,
     execution: Execution,
 ) -> Fod2fixelOutputs:
     """
@@ -465,7 +465,7 @@ def fod2fixel_outputs(
 
 
 def fod2fixel_execute(
-    params: Fod2fixelParameters,
+    params: Fod2fixelParamsDict,
     runner: Runner | None = None,
 ) -> Fod2fixelOutputs:
     """
@@ -528,7 +528,7 @@ def fod2fixel(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fod2fixelConfigParameters] | None = None,
+    config: list[Fod2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -634,9 +634,13 @@ def fod2fixel(
 
 __all__ = [
     "FOD2FIXEL_METADATA",
+    "Fod2fixelConfigParamsDict",
+    "Fod2fixelConfigParamsDictTagged",
     "Fod2fixelOutputs",
+    "Fod2fixelParamsDict",
+    "Fod2fixelParamsDictTagged",
     "fod2fixel",
-    "fod2fixel_config_params",
+    "fod2fixel_config",
     "fod2fixel_execute",
     "fod2fixel_params",
 ]

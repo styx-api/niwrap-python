@@ -13,19 +13,19 @@ MRAVERAGEHEADER_METADATA = Metadata(
 )
 
 
-MraverageheaderConfigParameters = typing.TypedDict('MraverageheaderConfigParameters', {
+MraverageheaderConfigParamsDict = typing.TypedDict('MraverageheaderConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MraverageheaderConfigParametersTagged = typing.TypedDict('MraverageheaderConfigParametersTagged', {
+MraverageheaderConfigParamsDictTagged = typing.TypedDict('MraverageheaderConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
+MraverageheaderParamsDict = typing.TypedDict('MraverageheaderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mraverageheader"]],
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
@@ -36,13 +36,13 @@ MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MraverageheaderConfigParameters] | None],
+    "config": typing.NotRequired[list[MraverageheaderConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
     "output": str,
 })
-MraverageheaderParametersTagged = typing.TypedDict('MraverageheaderParametersTagged', {
+MraverageheaderParamsDictTagged = typing.TypedDict('MraverageheaderParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mraverageheader"],
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ MraverageheaderParametersTagged = typing.TypedDict('MraverageheaderParametersTag
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MraverageheaderConfigParameters] | None],
+    "config": typing.NotRequired[list[MraverageheaderConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
@@ -61,10 +61,10 @@ MraverageheaderParametersTagged = typing.TypedDict('MraverageheaderParametersTag
 })
 
 
-def mraverageheader_config_params(
+def mraverageheader_config(
     key: str,
     value: str,
-) -> MraverageheaderConfigParametersTagged:
+) -> MraverageheaderConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mraverageheader_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MraverageheaderConfigParameters` object.
+    `MraverageheaderConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def mraverageheader_config_validate(
 
 
 def mraverageheader_config_cargs(
-    params: MraverageheaderConfigParameters,
+    params: MraverageheaderConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def mraverageheader_config_cargs(
 
 class MraverageheaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MraverageheaderParameters(...)`.
+    Output object returned when calling `MraverageheaderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def mraverageheader_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MraverageheaderConfigParameters] | None = None,
+    config: list[MraverageheaderConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MraverageheaderParametersTagged:
+) -> MraverageheaderParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def mraverageheader_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MraverageheaderParameters` object.
+    `MraverageheaderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -254,7 +254,7 @@ def mraverageheader_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MraverageheaderConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MraverageheaderConfigParamsDict] | None`')
         for e in params["config"]:
             mraverageheader_config_validate(e)
     if params.get("help", False) is None:
@@ -279,7 +279,7 @@ def mraverageheader_validate(
 
 
 def mraverageheader_cargs(
-    params: MraverageheaderParameters,
+    params: MraverageheaderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -335,7 +335,7 @@ def mraverageheader_cargs(
 
 
 def mraverageheader_outputs(
-    params: MraverageheaderParameters,
+    params: MraverageheaderParamsDict,
     execution: Execution,
 ) -> MraverageheaderOutputs:
     """
@@ -355,7 +355,7 @@ def mraverageheader_outputs(
 
 
 def mraverageheader_execute(
-    params: MraverageheaderParameters,
+    params: MraverageheaderParamsDict,
     runner: Runner | None = None,
 ) -> MraverageheaderOutputs:
     """
@@ -401,7 +401,7 @@ def mraverageheader(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MraverageheaderConfigParameters] | None = None,
+    config: list[MraverageheaderConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -473,9 +473,13 @@ def mraverageheader(
 
 __all__ = [
     "MRAVERAGEHEADER_METADATA",
+    "MraverageheaderConfigParamsDict",
+    "MraverageheaderConfigParamsDictTagged",
     "MraverageheaderOutputs",
+    "MraverageheaderParamsDict",
+    "MraverageheaderParamsDictTagged",
     "mraverageheader",
-    "mraverageheader_config_params",
+    "mraverageheader_config",
     "mraverageheader_execute",
     "mraverageheader_params",
 ]

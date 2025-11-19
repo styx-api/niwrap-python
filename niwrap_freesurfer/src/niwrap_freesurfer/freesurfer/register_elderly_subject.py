@@ -13,7 +13,7 @@ REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
 )
 
 
-RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParameters', {
+RegisterElderlySubjectParamsDict = typing.TypedDict('RegisterElderlySubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/register_elderly_subject"]],
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
@@ -22,7 +22,7 @@ RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParam
     "gca_file": InputPathType,
     "transform_file": InputPathType,
 })
-RegisterElderlySubjectParametersTagged = typing.TypedDict('RegisterElderlySubjectParametersTagged', {
+RegisterElderlySubjectParamsDictTagged = typing.TypedDict('RegisterElderlySubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register_elderly_subject"],
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
@@ -35,7 +35,7 @@ RegisterElderlySubjectParametersTagged = typing.TypedDict('RegisterElderlySubjec
 
 class RegisterElderlySubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegisterElderlySubjectParameters(...)`.
+    Output object returned when calling `RegisterElderlySubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def register_elderly_subject_params(
     gca_file: InputPathType,
     transform_file: InputPathType,
     sampling_percentage: float | None = None,
-) -> RegisterElderlySubjectParametersTagged:
+) -> RegisterElderlySubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def register_elderly_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegisterElderlySubjectParameters` object.
+    `RegisterElderlySubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -120,7 +120,7 @@ def register_elderly_subject_validate(
 
 
 def register_elderly_subject_cargs(
-    params: RegisterElderlySubjectParameters,
+    params: RegisterElderlySubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def register_elderly_subject_cargs(
 
 
 def register_elderly_subject_outputs(
-    params: RegisterElderlySubjectParameters,
+    params: RegisterElderlySubjectParamsDict,
     execution: Execution,
 ) -> RegisterElderlySubjectOutputs:
     """
@@ -175,7 +175,7 @@ def register_elderly_subject_outputs(
 
 
 def register_elderly_subject_execute(
-    params: RegisterElderlySubjectParameters,
+    params: RegisterElderlySubjectParamsDict,
     runner: Runner | None = None,
 ) -> RegisterElderlySubjectOutputs:
     """
@@ -249,6 +249,8 @@ def register_elderly_subject(
 __all__ = [
     "REGISTER_ELDERLY_SUBJECT_METADATA",
     "RegisterElderlySubjectOutputs",
+    "RegisterElderlySubjectParamsDict",
+    "RegisterElderlySubjectParamsDictTagged",
     "register_elderly_subject",
     "register_elderly_subject_execute",
     "register_elderly_subject_params",

@@ -13,14 +13,14 @@ IMSTAT_METADATA = Metadata(
 )
 
 
-ImstatParameters = typing.TypedDict('ImstatParameters', {
+ImstatParamsDict = typing.TypedDict('ImstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imstat"]],
     "no_label": bool,
     "quiet": bool,
     "pixstat_prefix": typing.NotRequired[str | None],
     "image_files": list[InputPathType],
 })
-ImstatParametersTagged = typing.TypedDict('ImstatParametersTagged', {
+ImstatParamsDictTagged = typing.TypedDict('ImstatParamsDictTagged', {
     "@type": typing.Literal["afni/imstat"],
     "no_label": bool,
     "quiet": bool,
@@ -31,7 +31,7 @@ ImstatParametersTagged = typing.TypedDict('ImstatParametersTagged', {
 
 class ImstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImstatParameters(...)`.
+    Output object returned when calling `ImstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def imstat_params(
     no_label: bool = False,
     quiet: bool = False,
     pixstat_prefix: str | None = None,
-) -> ImstatParametersTagged:
+) -> ImstatParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def imstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImstatParameters` object.
+    `ImstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def imstat_validate(
 
 
 def imstat_cargs(
-    params: ImstatParameters,
+    params: ImstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def imstat_cargs(
 
 
 def imstat_outputs(
-    params: ImstatParameters,
+    params: ImstatParamsDict,
     execution: Execution,
 ) -> ImstatOutputs:
     """
@@ -155,7 +155,7 @@ def imstat_outputs(
 
 
 def imstat_execute(
-    params: ImstatParameters,
+    params: ImstatParamsDict,
     runner: Runner | None = None,
 ) -> ImstatOutputs:
     """
@@ -223,6 +223,8 @@ def imstat(
 __all__ = [
     "IMSTAT_METADATA",
     "ImstatOutputs",
+    "ImstatParamsDict",
+    "ImstatParamsDictTagged",
     "imstat",
     "imstat_execute",
     "imstat_params",

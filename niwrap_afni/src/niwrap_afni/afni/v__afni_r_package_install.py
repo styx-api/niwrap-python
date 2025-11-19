@@ -13,7 +13,7 @@ V__AFNI_R_PACKAGE_INSTALL_METADATA = Metadata(
 )
 
 
-VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameters', {
+VAfniRPackageInstallParamsDict = typing.TypedDict('VAfniRPackageInstallParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@afni_R_package_install"]],
     "afni": bool,
     "shiny": bool,
@@ -23,7 +23,7 @@ VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameter
     "mirror": typing.NotRequired[str | None],
     "help": bool,
 })
-VAfniRPackageInstallParametersTagged = typing.TypedDict('VAfniRPackageInstallParametersTagged', {
+VAfniRPackageInstallParamsDictTagged = typing.TypedDict('VAfniRPackageInstallParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_R_package_install"],
     "afni": bool,
     "shiny": bool,
@@ -37,7 +37,7 @@ VAfniRPackageInstallParametersTagged = typing.TypedDict('VAfniRPackageInstallPar
 
 class VAfniRPackageInstallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniRPackageInstallParameters(...)`.
+    Output object returned when calling `VAfniRPackageInstallParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v__afni_r_package_install_params(
     custom_packages: str | None = None,
     mirror: str | None = None,
     help_: bool = False,
-) -> VAfniRPackageInstallParametersTagged:
+) -> VAfniRPackageInstallParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def v__afni_r_package_install_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniRPackageInstallParameters` object.
+    `VAfniRPackageInstallParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def v__afni_r_package_install_validate(
 
 
 def v__afni_r_package_install_cargs(
-    params: VAfniRPackageInstallParameters,
+    params: VAfniRPackageInstallParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def v__afni_r_package_install_cargs(
 
 
 def v__afni_r_package_install_outputs(
-    params: VAfniRPackageInstallParameters,
+    params: VAfniRPackageInstallParamsDict,
     execution: Execution,
 ) -> VAfniRPackageInstallOutputs:
     """
@@ -183,7 +183,7 @@ def v__afni_r_package_install_outputs(
 
 
 def v__afni_r_package_install_execute(
-    params: VAfniRPackageInstallParameters,
+    params: VAfniRPackageInstallParamsDict,
     runner: Runner | None = None,
 ) -> VAfniRPackageInstallOutputs:
     """
@@ -257,6 +257,8 @@ def v__afni_r_package_install(
 
 __all__ = [
     "VAfniRPackageInstallOutputs",
+    "VAfniRPackageInstallParamsDict",
+    "VAfniRPackageInstallParamsDictTagged",
     "V__AFNI_R_PACKAGE_INSTALL_METADATA",
     "v__afni_r_package_install",
     "v__afni_r_package_install_execute",

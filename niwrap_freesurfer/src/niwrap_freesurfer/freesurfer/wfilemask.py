@@ -13,7 +13,7 @@ WFILEMASK_METADATA = Metadata(
 )
 
 
-WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
+WfilemaskParamsDict = typing.TypedDict('WfilemaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/wfilemask"]],
     "w_file": InputPathType,
     "label_file": InputPathType,
@@ -22,7 +22,7 @@ WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
     "help_flag": bool,
     "version_flag": bool,
 })
-WfilemaskParametersTagged = typing.TypedDict('WfilemaskParametersTagged', {
+WfilemaskParamsDictTagged = typing.TypedDict('WfilemaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/wfilemask"],
     "w_file": InputPathType,
     "label_file": InputPathType,
@@ -35,7 +35,7 @@ WfilemaskParametersTagged = typing.TypedDict('WfilemaskParametersTagged', {
 
 class WfilemaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WfilemaskParameters(...)`.
+    Output object returned when calling `WfilemaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def wfilemask_params(
     permission_mask: str | None = None,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> WfilemaskParametersTagged:
+) -> WfilemaskParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def wfilemask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WfilemaskParameters` object.
+    `WfilemaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def wfilemask_validate(
 
 
 def wfilemask_cargs(
-    params: WfilemaskParameters,
+    params: WfilemaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def wfilemask_cargs(
 
 
 def wfilemask_outputs(
-    params: WfilemaskParameters,
+    params: WfilemaskParamsDict,
     execution: Execution,
 ) -> WfilemaskOutputs:
     """
@@ -174,7 +174,7 @@ def wfilemask_outputs(
 
 
 def wfilemask_execute(
-    params: WfilemaskParameters,
+    params: WfilemaskParamsDict,
     runner: Runner | None = None,
 ) -> WfilemaskOutputs:
     """
@@ -245,6 +245,8 @@ def wfilemask(
 __all__ = [
     "WFILEMASK_METADATA",
     "WfilemaskOutputs",
+    "WfilemaskParamsDict",
+    "WfilemaskParamsDictTagged",
     "wfilemask",
     "wfilemask_execute",
     "wfilemask_params",

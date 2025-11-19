@@ -13,11 +13,11 @@ IS_SURFACE_METADATA = Metadata(
 )
 
 
-IsSurfaceParameters = typing.TypedDict('IsSurfaceParameters', {
+IsSurfaceParamsDict = typing.TypedDict('IsSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/is-surface"]],
     "infile": InputPathType,
 })
-IsSurfaceParametersTagged = typing.TypedDict('IsSurfaceParametersTagged', {
+IsSurfaceParamsDictTagged = typing.TypedDict('IsSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/is-surface"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ IsSurfaceParametersTagged = typing.TypedDict('IsSurfaceParametersTagged', {
 
 class IsSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsSurfaceParameters(...)`.
+    Output object returned when calling `IsSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class IsSurfaceOutputs(typing.NamedTuple):
 
 def is_surface_params(
     infile: InputPathType,
-) -> IsSurfaceParametersTagged:
+) -> IsSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def is_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsSurfaceParameters` object.
+    `IsSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def is_surface_validate(
 
 
 def is_surface_cargs(
-    params: IsSurfaceParameters,
+    params: IsSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def is_surface_cargs(
 
 
 def is_surface_outputs(
-    params: IsSurfaceParameters,
+    params: IsSurfaceParamsDict,
     execution: Execution,
 ) -> IsSurfaceOutputs:
     """
@@ -109,7 +109,7 @@ def is_surface_outputs(
 
 
 def is_surface_execute(
-    params: IsSurfaceParameters,
+    params: IsSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> IsSurfaceOutputs:
     """
@@ -167,6 +167,8 @@ def is_surface(
 __all__ = [
     "IS_SURFACE_METADATA",
     "IsSurfaceOutputs",
+    "IsSurfaceParamsDict",
+    "IsSurfaceParamsDictTagged",
     "is_surface",
     "is_surface_execute",
     "is_surface_params",

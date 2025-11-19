@@ -13,7 +13,7 @@ AVW2FSL_METADATA = Metadata(
 )
 
 
-Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
+Avw2fslParamsDict = typing.TypedDict('Avw2fslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/avw2fsl"]],
     "source": list[str],
     "destination": str,
@@ -52,7 +52,7 @@ Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
     "help": bool,
     "version": bool,
 })
-Avw2fslParametersTagged = typing.TypedDict('Avw2fslParametersTagged', {
+Avw2fslParamsDictTagged = typing.TypedDict('Avw2fslParamsDictTagged', {
     "@type": typing.Literal["fsl/avw2fsl"],
     "source": list[str],
     "destination": str,
@@ -95,7 +95,7 @@ Avw2fslParametersTagged = typing.TypedDict('Avw2fslParametersTagged', {
 
 class Avw2fslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Avw2fslParameters(...)`.
+    Output object returned when calling `Avw2fslParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +140,7 @@ def avw2fsl_params(
     context: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Avw2fslParametersTagged:
+) -> Avw2fslParamsDictTagged:
     """
     Build parameters.
     
@@ -248,7 +248,7 @@ def avw2fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Avw2fslParameters` object.
+    `Avw2fslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -397,7 +397,7 @@ def avw2fsl_validate(
 
 
 def avw2fsl_cargs(
-    params: Avw2fslParameters,
+    params: Avw2fslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -485,7 +485,7 @@ def avw2fsl_cargs(
 
 
 def avw2fsl_outputs(
-    params: Avw2fslParameters,
+    params: Avw2fslParamsDict,
     execution: Execution,
 ) -> Avw2fslOutputs:
     """
@@ -505,7 +505,7 @@ def avw2fsl_outputs(
 
 
 def avw2fsl_execute(
-    params: Avw2fslParameters,
+    params: Avw2fslParamsDict,
     runner: Runner | None = None,
 ) -> Avw2fslOutputs:
     """
@@ -675,6 +675,8 @@ def avw2fsl(
 __all__ = [
     "AVW2FSL_METADATA",
     "Avw2fslOutputs",
+    "Avw2fslParamsDict",
+    "Avw2fslParamsDictTagged",
     "avw2fsl",
     "avw2fsl_execute",
     "avw2fsl_params",

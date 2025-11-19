@@ -13,7 +13,7 @@ V_3D_LOCAL_BISTAT_METADATA = Metadata(
 )
 
 
-V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
+V3dLocalBistatParamsDict = typing.TypedDict('V3dLocalBistatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalBistat"]],
     "nbhd": str,
     "stats": list[str],
@@ -28,7 +28,7 @@ V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
     "dataset1": InputPathType,
     "dataset2": InputPathType,
 })
-V3dLocalBistatParametersTagged = typing.TypedDict('V3dLocalBistatParametersTagged', {
+V3dLocalBistatParamsDictTagged = typing.TypedDict('V3dLocalBistatParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalBistat"],
     "nbhd": str,
     "stats": list[str],
@@ -47,7 +47,7 @@ V3dLocalBistatParametersTagged = typing.TypedDict('V3dLocalBistatParametersTagge
 
 class V3dLocalBistatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalBistatParameters(...)`.
+    Output object returned when calling `V3dLocalBistatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ def v_3d_local_bistat_params(
     histbin: float | None = None,
     hclip1: list[str] | None = None,
     hclip2: list[str] | None = None,
-) -> V3dLocalBistatParametersTagged:
+) -> V3dLocalBistatParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def v_3d_local_bistat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalBistatParameters` object.
+    `V3dLocalBistatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def v_3d_local_bistat_validate(
 
 
 def v_3d_local_bistat_cargs(
-    params: V3dLocalBistatParameters,
+    params: V3dLocalBistatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def v_3d_local_bistat_cargs(
 
 
 def v_3d_local_bistat_outputs(
-    params: V3dLocalBistatParameters,
+    params: V3dLocalBistatParamsDict,
     execution: Execution,
 ) -> V3dLocalBistatOutputs:
     """
@@ -277,7 +277,7 @@ def v_3d_local_bistat_outputs(
 
 
 def v_3d_local_bistat_execute(
-    params: V3dLocalBistatParameters,
+    params: V3dLocalBistatParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalBistatOutputs:
     """
@@ -375,6 +375,8 @@ def v_3d_local_bistat(
 
 __all__ = [
     "V3dLocalBistatOutputs",
+    "V3dLocalBistatParamsDict",
+    "V3dLocalBistatParamsDictTagged",
     "V_3D_LOCAL_BISTAT_METADATA",
     "v_3d_local_bistat",
     "v_3d_local_bistat_execute",

@@ -13,57 +13,57 @@ MRREGISTER_METADATA = Metadata(
 )
 
 
-MrregisterTransformedParameters = typing.TypedDict('MrregisterTransformedParameters', {
+MrregisterTransformedParamsDict = typing.TypedDict('MrregisterTransformedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["transformed"]],
     "image": str,
 })
-MrregisterTransformedParametersTagged = typing.TypedDict('MrregisterTransformedParametersTagged', {
+MrregisterTransformedParamsDictTagged = typing.TypedDict('MrregisterTransformedParamsDictTagged', {
     "@type": typing.Literal["transformed"],
     "image": str,
 })
 
 
-MrregisterTransformedMidwayParameters = typing.TypedDict('MrregisterTransformedMidwayParameters', {
+MrregisterTransformedMidwayParamsDict = typing.TypedDict('MrregisterTransformedMidwayParamsDict', {
     "@type": typing.NotRequired[typing.Literal["transformed_midway"]],
     "image1_transformed": str,
     "image2_transformed": str,
 })
-MrregisterTransformedMidwayParametersTagged = typing.TypedDict('MrregisterTransformedMidwayParametersTagged', {
+MrregisterTransformedMidwayParamsDictTagged = typing.TypedDict('MrregisterTransformedMidwayParamsDictTagged', {
     "@type": typing.Literal["transformed_midway"],
     "image1_transformed": str,
     "image2_transformed": str,
 })
 
 
-MrregisterNlWarpParameters = typing.TypedDict('MrregisterNlWarpParameters', {
+MrregisterNlWarpParamsDict = typing.TypedDict('MrregisterNlWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["nl_warp"]],
     "warp1": str,
     "warp2": str,
 })
-MrregisterNlWarpParametersTagged = typing.TypedDict('MrregisterNlWarpParametersTagged', {
+MrregisterNlWarpParamsDictTagged = typing.TypedDict('MrregisterNlWarpParamsDictTagged', {
     "@type": typing.Literal["nl_warp"],
     "warp1": str,
     "warp2": str,
 })
 
 
-MrregisterConfigParameters = typing.TypedDict('MrregisterConfigParameters', {
+MrregisterConfigParamsDict = typing.TypedDict('MrregisterConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrregisterConfigParametersTagged = typing.TypedDict('MrregisterConfigParametersTagged', {
+MrregisterConfigParamsDictTagged = typing.TypedDict('MrregisterConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrregisterParameters = typing.TypedDict('MrregisterParameters', {
+MrregisterParamsDict = typing.TypedDict('MrregisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrregister"]],
     "type": typing.NotRequired[str | None],
-    "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
-    "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],
+    "transformed": typing.NotRequired[list[MrregisterTransformedParamsDict] | None],
+    "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParamsDict] | None],
     "mask1": typing.NotRequired[InputPathType | None],
     "mask2": typing.NotRequired[InputPathType | None],
     "nan": bool,
@@ -105,7 +105,7 @@ MrregisterParameters = typing.TypedDict('MrregisterParameters', {
     "linstage_optimiser_last": typing.NotRequired[str | None],
     "linstage_optimiser_default": typing.NotRequired[str | None],
     "linstage_diagnostics_prefix": typing.NotRequired[str | None],
-    "nl_warp": typing.NotRequired[MrregisterNlWarpParameters | None],
+    "nl_warp": typing.NotRequired[MrregisterNlWarpParamsDict | None],
     "nl_warp_full": typing.NotRequired[str | None],
     "nl_init": typing.NotRequired[InputPathType | None],
     "nl_scale": typing.NotRequired[list[float] | None],
@@ -124,17 +124,17 @@ MrregisterParameters = typing.TypedDict('MrregisterParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrregisterConfigParameters] | None],
+    "config": typing.NotRequired[list[MrregisterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1_image2": InputPathType,
     "contrast1_contrast2": typing.NotRequired[list[InputPathType] | None],
 })
-MrregisterParametersTagged = typing.TypedDict('MrregisterParametersTagged', {
+MrregisterParamsDictTagged = typing.TypedDict('MrregisterParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrregister"],
     "type": typing.NotRequired[str | None],
-    "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
-    "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],
+    "transformed": typing.NotRequired[list[MrregisterTransformedParamsDict] | None],
+    "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParamsDict] | None],
     "mask1": typing.NotRequired[InputPathType | None],
     "mask2": typing.NotRequired[InputPathType | None],
     "nan": bool,
@@ -176,7 +176,7 @@ MrregisterParametersTagged = typing.TypedDict('MrregisterParametersTagged', {
     "linstage_optimiser_last": typing.NotRequired[str | None],
     "linstage_optimiser_default": typing.NotRequired[str | None],
     "linstage_diagnostics_prefix": typing.NotRequired[str | None],
-    "nl_warp": typing.NotRequired[MrregisterNlWarpParameters | None],
+    "nl_warp": typing.NotRequired[MrregisterNlWarpParamsDict | None],
     "nl_warp_full": typing.NotRequired[str | None],
     "nl_init": typing.NotRequired[InputPathType | None],
     "nl_scale": typing.NotRequired[list[float] | None],
@@ -195,7 +195,7 @@ MrregisterParametersTagged = typing.TypedDict('MrregisterParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrregisterConfigParameters] | None],
+    "config": typing.NotRequired[list[MrregisterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1_image2": InputPathType,
@@ -205,7 +205,7 @@ MrregisterParametersTagged = typing.TypedDict('MrregisterParametersTagged', {
 
 class MrregisterTransformedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[MrregisterTransformedParameters] | None(...)`.
+    Output object returned when calling `list[MrregisterTransformedParamsDict] | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -215,9 +215,9 @@ class MrregisterTransformedOutputs(typing.NamedTuple):
     multi-contrast registration is used."""
 
 
-def mrregister_transformed_params(
+def mrregister_transformed(
     image: str,
-) -> MrregisterTransformedParametersTagged:
+) -> MrregisterTransformedParamsDictTagged:
     """
     Build parameters.
     
@@ -240,7 +240,7 @@ def mrregister_transformed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrregisterTransformedParameters` object.
+    `MrregisterTransformedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -254,7 +254,7 @@ def mrregister_transformed_validate(
 
 
 def mrregister_transformed_cargs(
-    params: MrregisterTransformedParameters,
+    params: MrregisterTransformedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def mrregister_transformed_cargs(
 
 
 def mrregister_transformed_outputs(
-    params: MrregisterTransformedParameters,
+    params: MrregisterTransformedParamsDict,
     execution: Execution,
 ) -> MrregisterTransformedOutputs:
     """
@@ -294,7 +294,7 @@ def mrregister_transformed_outputs(
 
 class MrregisterTransformedMidwayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[MrregisterTransformedMidwayParameters] | None(...)`.
+    Output object returned when calling `list[MrregisterTransformedMidwayParamsDict] | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -308,10 +308,10 @@ class MrregisterTransformedMidwayOutputs(typing.NamedTuple):
     contrast if multi-contrast registration is used."""
 
 
-def mrregister_transformed_midway_params(
+def mrregister_transformed_midway(
     image1_transformed: str,
     image2_transformed: str,
-) -> MrregisterTransformedMidwayParametersTagged:
+) -> MrregisterTransformedMidwayParamsDictTagged:
     """
     Build parameters.
     
@@ -340,7 +340,7 @@ def mrregister_transformed_midway_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrregisterTransformedMidwayParameters` object.
+    `MrregisterTransformedMidwayParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -358,7 +358,7 @@ def mrregister_transformed_midway_validate(
 
 
 def mrregister_transformed_midway_cargs(
-    params: MrregisterTransformedMidwayParameters,
+    params: MrregisterTransformedMidwayParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -378,7 +378,7 @@ def mrregister_transformed_midway_cargs(
 
 
 def mrregister_transformed_midway_outputs(
-    params: MrregisterTransformedMidwayParameters,
+    params: MrregisterTransformedMidwayParamsDict,
     execution: Execution,
 ) -> MrregisterTransformedMidwayOutputs:
     """
@@ -400,7 +400,7 @@ def mrregister_transformed_midway_outputs(
 
 class MrregisterNlWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrregisterNlWarpParameters | None(...)`.
+    Output object returned when calling `MrregisterNlWarpParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -416,10 +416,10 @@ class MrregisterNlWarpOutputs(typing.NamedTuple):
     transformation estimated prior to non-linear registration."""
 
 
-def mrregister_nl_warp_params(
+def mrregister_nl_warp(
     warp1: str,
     warp2: str,
-) -> MrregisterNlWarpParametersTagged:
+) -> MrregisterNlWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -448,7 +448,7 @@ def mrregister_nl_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrregisterNlWarpParameters` object.
+    `MrregisterNlWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -466,7 +466,7 @@ def mrregister_nl_warp_validate(
 
 
 def mrregister_nl_warp_cargs(
-    params: MrregisterNlWarpParameters,
+    params: MrregisterNlWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -486,7 +486,7 @@ def mrregister_nl_warp_cargs(
 
 
 def mrregister_nl_warp_outputs(
-    params: MrregisterNlWarpParameters,
+    params: MrregisterNlWarpParamsDict,
     execution: Execution,
 ) -> MrregisterNlWarpOutputs:
     """
@@ -506,10 +506,10 @@ def mrregister_nl_warp_outputs(
     return ret
 
 
-def mrregister_config_params(
+def mrregister_config(
     key: str,
     value: str,
-) -> MrregisterConfigParametersTagged:
+) -> MrregisterConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -532,7 +532,7 @@ def mrregister_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrregisterConfigParameters` object.
+    `MrregisterConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -550,7 +550,7 @@ def mrregister_config_validate(
 
 
 def mrregister_config_cargs(
-    params: MrregisterConfigParameters,
+    params: MrregisterConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -571,7 +571,7 @@ def mrregister_config_cargs(
 
 class MrregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrregisterParameters(...)`.
+    Output object returned when calling `MrregisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -622,8 +622,8 @@ class MrregisterOutputs(typing.NamedTuple):
 def mrregister_params(
     image1_image2: InputPathType,
     type_: str | None = None,
-    transformed: list[MrregisterTransformedParameters] | None = None,
-    transformed_midway: list[MrregisterTransformedMidwayParameters] | None = None,
+    transformed: list[MrregisterTransformedParamsDict] | None = None,
+    transformed_midway: list[MrregisterTransformedMidwayParamsDict] | None = None,
     mask1: InputPathType | None = None,
     mask2: InputPathType | None = None,
     nan: bool = False,
@@ -665,7 +665,7 @@ def mrregister_params(
     linstage_optimiser_last: str | None = None,
     linstage_optimiser_default: str | None = None,
     linstage_diagnostics_prefix: str | None = None,
-    nl_warp: MrregisterNlWarpParameters | None = None,
+    nl_warp: MrregisterNlWarpParamsDict | None = None,
     nl_warp_full: str | None = None,
     nl_init: InputPathType | None = None,
     nl_scale: list[float] | None = None,
@@ -684,11 +684,11 @@ def mrregister_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrregisterConfigParameters] | None = None,
+    config: list[MrregisterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     contrast1_contrast2: list[InputPathType] | None = None,
-) -> MrregisterParametersTagged:
+) -> MrregisterParamsDictTagged:
     """
     Build parameters.
     
@@ -1021,7 +1021,7 @@ def mrregister_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrregisterParameters` object.
+    `MrregisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1033,12 +1033,12 @@ def mrregister_validate(
             raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
     if params.get("transformed", None) is not None:
         if not isinstance(params["transformed"], list):
-            raise StyxValidationError(f'`transformed` has the wrong type: Received `{type(params.get("transformed", None))}` expected `list[MrregisterTransformedParameters] | None`')
+            raise StyxValidationError(f'`transformed` has the wrong type: Received `{type(params.get("transformed", None))}` expected `list[MrregisterTransformedParamsDict] | None`')
         for e in params["transformed"]:
             mrregister_transformed_validate(e)
     if params.get("transformed_midway", None) is not None:
         if not isinstance(params["transformed_midway"], list):
-            raise StyxValidationError(f'`transformed_midway` has the wrong type: Received `{type(params.get("transformed_midway", None))}` expected `list[MrregisterTransformedMidwayParameters] | None`')
+            raise StyxValidationError(f'`transformed_midway` has the wrong type: Received `{type(params.get("transformed_midway", None))}` expected `list[MrregisterTransformedMidwayParamsDict] | None`')
         for e in params["transformed_midway"]:
             mrregister_transformed_midway_validate(e)
     if params.get("mask1", None) is not None:
@@ -1269,7 +1269,7 @@ def mrregister_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrregisterConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrregisterConfigParamsDict] | None`')
         for e in params["config"]:
             mrregister_config_validate(e)
     if params.get("help", False) is None:
@@ -1293,7 +1293,7 @@ def mrregister_validate(
 
 
 def mrregister_cargs(
-    params: MrregisterParameters,
+    params: MrregisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1593,7 +1593,7 @@ def mrregister_cargs(
 
 
 def mrregister_outputs(
-    params: MrregisterParameters,
+    params: MrregisterParamsDict,
     execution: Execution,
 ) -> MrregisterOutputs:
     """
@@ -1624,7 +1624,7 @@ def mrregister_outputs(
 
 
 def mrregister_execute(
-    params: MrregisterParameters,
+    params: MrregisterParamsDict,
     runner: Runner | None = None,
 ) -> MrregisterOutputs:
     """
@@ -1690,8 +1690,8 @@ def mrregister_execute(
 def mrregister(
     image1_image2: InputPathType,
     type_: str | None = None,
-    transformed: list[MrregisterTransformedParameters] | None = None,
-    transformed_midway: list[MrregisterTransformedMidwayParameters] | None = None,
+    transformed: list[MrregisterTransformedParamsDict] | None = None,
+    transformed_midway: list[MrregisterTransformedMidwayParamsDict] | None = None,
     mask1: InputPathType | None = None,
     mask2: InputPathType | None = None,
     nan: bool = False,
@@ -1733,7 +1733,7 @@ def mrregister(
     linstage_optimiser_last: str | None = None,
     linstage_optimiser_default: str | None = None,
     linstage_diagnostics_prefix: str | None = None,
-    nl_warp: MrregisterNlWarpParameters | None = None,
+    nl_warp: MrregisterNlWarpParamsDict | None = None,
     nl_warp_full: str | None = None,
     nl_init: InputPathType | None = None,
     nl_scale: list[float] | None = None,
@@ -1752,7 +1752,7 @@ def mrregister(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrregisterConfigParameters] | None = None,
+    config: list[MrregisterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     contrast1_contrast2: list[InputPathType] | None = None,
@@ -2074,15 +2074,25 @@ def mrregister(
 
 __all__ = [
     "MRREGISTER_METADATA",
+    "MrregisterConfigParamsDict",
+    "MrregisterConfigParamsDictTagged",
     "MrregisterNlWarpOutputs",
+    "MrregisterNlWarpParamsDict",
+    "MrregisterNlWarpParamsDictTagged",
     "MrregisterOutputs",
+    "MrregisterParamsDict",
+    "MrregisterParamsDictTagged",
     "MrregisterTransformedMidwayOutputs",
+    "MrregisterTransformedMidwayParamsDict",
+    "MrregisterTransformedMidwayParamsDictTagged",
     "MrregisterTransformedOutputs",
+    "MrregisterTransformedParamsDict",
+    "MrregisterTransformedParamsDictTagged",
     "mrregister",
-    "mrregister_config_params",
+    "mrregister_config",
     "mrregister_execute",
-    "mrregister_nl_warp_params",
+    "mrregister_nl_warp",
     "mrregister_params",
-    "mrregister_transformed_midway_params",
-    "mrregister_transformed_params",
+    "mrregister_transformed",
+    "mrregister_transformed_midway",
 ]

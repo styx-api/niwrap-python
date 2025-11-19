@@ -12,40 +12,40 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
 )
 
 
-VolumeWarpfieldAffineRegressionFlirtOutParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParameters', {
+VolumeWarpfieldAffineRegressionFlirtOutParamsDict = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flirt-out"]],
     "source-volume": str,
     "target-volume": str,
 })
-VolumeWarpfieldAffineRegressionFlirtOutParametersTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParametersTagged', {
+VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged', {
     "@type": typing.Literal["flirt-out"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-VolumeWarpfieldAffineRegressionParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionParameters', {
+VolumeWarpfieldAffineRegressionParamsDict = typing.TypedDict('VolumeWarpfieldAffineRegressionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-warpfield-affine-regression"]],
     "roi-vol": typing.NotRequired[InputPathType | None],
     "source-volume": typing.NotRequired[str | None],
-    "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParameters | None],
+    "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None],
     "warpfield": str,
     "affine-out": str,
 })
-VolumeWarpfieldAffineRegressionParametersTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionParametersTagged', {
+VolumeWarpfieldAffineRegressionParamsDictTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-warpfield-affine-regression"],
     "roi-vol": typing.NotRequired[InputPathType | None],
     "source-volume": typing.NotRequired[str | None],
-    "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParameters | None],
+    "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None],
     "warpfield": str,
     "affine-out": str,
 })
 
 
-def volume_warpfield_affine_regression_flirt_out_params(
+def volume_warpfield_affine_regression_flirt_out(
     source_volume: str,
     target_volume: str,
-) -> VolumeWarpfieldAffineRegressionFlirtOutParametersTagged:
+) -> VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def volume_warpfield_affine_regression_flirt_out_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeWarpfieldAffineRegressionFlirtOutParameters` object.
+    `VolumeWarpfieldAffineRegressionFlirtOutParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def volume_warpfield_affine_regression_flirt_out_validate(
 
 
 def volume_warpfield_affine_regression_flirt_out_cargs(
-    params: VolumeWarpfieldAffineRegressionFlirtOutParameters,
+    params: VolumeWarpfieldAffineRegressionFlirtOutParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def volume_warpfield_affine_regression_flirt_out_cargs(
 
 class VolumeWarpfieldAffineRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeWarpfieldAffineRegressionParameters(...)`.
+    Output object returned when calling `VolumeWarpfieldAffineRegressionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,8 +121,8 @@ def volume_warpfield_affine_regression_params(
     source_volume: str | None,
     warpfield: str,
     affine_out: str,
-    flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParameters | None = None,
-) -> VolumeWarpfieldAffineRegressionParametersTagged:
+    flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None = None,
+) -> VolumeWarpfieldAffineRegressionParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def volume_warpfield_affine_regression_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeWarpfieldAffineRegressionParameters` object.
+    `VolumeWarpfieldAffineRegressionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def volume_warpfield_affine_regression_validate(
 
 
 def volume_warpfield_affine_regression_cargs(
-    params: VolumeWarpfieldAffineRegressionParameters,
+    params: VolumeWarpfieldAffineRegressionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def volume_warpfield_affine_regression_cargs(
 
 
 def volume_warpfield_affine_regression_outputs(
-    params: VolumeWarpfieldAffineRegressionParameters,
+    params: VolumeWarpfieldAffineRegressionParamsDict,
     execution: Execution,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
@@ -233,7 +233,7 @@ def volume_warpfield_affine_regression_outputs(
 
 
 def volume_warpfield_affine_regression_execute(
-    params: VolumeWarpfieldAffineRegressionParameters,
+    params: VolumeWarpfieldAffineRegressionParamsDict,
     runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
@@ -269,7 +269,7 @@ def volume_warpfield_affine_regression(
     source_volume: str | None,
     warpfield: str,
     affine_out: str,
-    flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParameters | None = None,
+    flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
@@ -311,9 +311,13 @@ def volume_warpfield_affine_regression(
 
 __all__ = [
     "VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA",
+    "VolumeWarpfieldAffineRegressionFlirtOutParamsDict",
+    "VolumeWarpfieldAffineRegressionFlirtOutParamsDictTagged",
     "VolumeWarpfieldAffineRegressionOutputs",
+    "VolumeWarpfieldAffineRegressionParamsDict",
+    "VolumeWarpfieldAffineRegressionParamsDictTagged",
     "volume_warpfield_affine_regression",
     "volume_warpfield_affine_regression_execute",
-    "volume_warpfield_affine_regression_flirt_out_params",
+    "volume_warpfield_affine_regression_flirt_out",
     "volume_warpfield_affine_regression_params",
 ]

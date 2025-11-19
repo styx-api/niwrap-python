@@ -13,7 +13,7 @@ GROUPSTATS_METADATA = Metadata(
 )
 
 
-GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
+GroupstatsParamsDict = typing.TypedDict('GroupstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/groupstats"]],
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
     "base": bool,
     "keep53": bool,
 })
-GroupstatsParametersTagged = typing.TypedDict('GroupstatsParametersTagged', {
+GroupstatsParamsDictTagged = typing.TypedDict('GroupstatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/groupstats"],
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ GroupstatsParametersTagged = typing.TypedDict('GroupstatsParametersTagged', {
 
 class GroupstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GroupstatsParameters(...)`.
+    Output object returned when calling `GroupstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def groupstats_params(
     new: bool = False,
     base: bool = False,
     keep53: bool = False,
-) -> GroupstatsParametersTagged:
+) -> GroupstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def groupstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GroupstatsParameters` object.
+    `GroupstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -216,7 +216,7 @@ def groupstats_validate(
 
 
 def groupstats_cargs(
-    params: GroupstatsParameters,
+    params: GroupstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def groupstats_cargs(
 
 
 def groupstats_outputs(
-    params: GroupstatsParameters,
+    params: GroupstatsParamsDict,
     execution: Execution,
 ) -> GroupstatsOutputs:
     """
@@ -307,7 +307,7 @@ def groupstats_outputs(
 
 
 def groupstats_execute(
-    params: GroupstatsParameters,
+    params: GroupstatsParamsDict,
     runner: Runner | None = None,
 ) -> GroupstatsOutputs:
     """
@@ -414,6 +414,8 @@ def groupstats(
 __all__ = [
     "GROUPSTATS_METADATA",
     "GroupstatsOutputs",
+    "GroupstatsParamsDict",
+    "GroupstatsParamsDictTagged",
     "groupstats",
     "groupstats_execute",
     "groupstats_params",

@@ -13,7 +13,7 @@ V_3D_LOCAL_SVD_METADATA = Metadata(
 )
 
 
-V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
+V3dLocalSvdParamsDict = typing.TypedDict('V3dLocalSvdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalSVD"]],
     "auto_mask": bool,
     "input_file": InputPathType,
@@ -24,7 +24,7 @@ V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
     "vnorm": bool,
     "vproj": typing.NotRequired[float | None],
 })
-V3dLocalSvdParametersTagged = typing.TypedDict('V3dLocalSvdParametersTagged', {
+V3dLocalSvdParamsDictTagged = typing.TypedDict('V3dLocalSvdParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalSVD"],
     "auto_mask": bool,
     "input_file": InputPathType,
@@ -39,7 +39,7 @@ V3dLocalSvdParametersTagged = typing.TypedDict('V3dLocalSvdParametersTagged', {
 
 class V3dLocalSvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalSvdParameters(...)`.
+    Output object returned when calling `V3dLocalSvdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def v_3d_local_svd_params(
     polort: str | None = None,
     vnorm: bool = False,
     vproj: float | None = None,
-) -> V3dLocalSvdParametersTagged:
+) -> V3dLocalSvdParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def v_3d_local_svd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalSvdParameters` object.
+    `V3dLocalSvdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def v_3d_local_svd_validate(
 
 
 def v_3d_local_svd_cargs(
-    params: V3dLocalSvdParameters,
+    params: V3dLocalSvdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -182,7 +182,7 @@ def v_3d_local_svd_cargs(
 
 
 def v_3d_local_svd_outputs(
-    params: V3dLocalSvdParameters,
+    params: V3dLocalSvdParamsDict,
     execution: Execution,
 ) -> V3dLocalSvdOutputs:
     """
@@ -201,7 +201,7 @@ def v_3d_local_svd_outputs(
 
 
 def v_3d_local_svd_execute(
-    params: V3dLocalSvdParameters,
+    params: V3dLocalSvdParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalSvdOutputs:
     """
@@ -278,6 +278,8 @@ def v_3d_local_svd(
 
 __all__ = [
     "V3dLocalSvdOutputs",
+    "V3dLocalSvdParamsDict",
+    "V3dLocalSvdParamsDictTagged",
     "V_3D_LOCAL_SVD_METADATA",
     "v_3d_local_svd",
     "v_3d_local_svd_execute",

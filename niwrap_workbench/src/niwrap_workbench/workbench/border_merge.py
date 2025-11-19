@@ -12,58 +12,58 @@ BORDER_MERGE_METADATA = Metadata(
 )
 
 
-BorderMergeUpToParameters = typing.TypedDict('BorderMergeUpToParameters', {
+BorderMergeUpToParamsDict = typing.TypedDict('BorderMergeUpToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["up-to"]],
     "last-border": str,
     "reverse": bool,
 })
-BorderMergeUpToParametersTagged = typing.TypedDict('BorderMergeUpToParametersTagged', {
+BorderMergeUpToParamsDictTagged = typing.TypedDict('BorderMergeUpToParamsDictTagged', {
     "@type": typing.Literal["up-to"],
     "last-border": str,
     "reverse": bool,
 })
 
 
-BorderMergeSelectParameters = typing.TypedDict('BorderMergeSelectParameters', {
+BorderMergeSelectParamsDict = typing.TypedDict('BorderMergeSelectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["select"]],
     "border": str,
-    "up-to": typing.NotRequired[BorderMergeUpToParameters | None],
+    "up-to": typing.NotRequired[BorderMergeUpToParamsDict | None],
 })
-BorderMergeSelectParametersTagged = typing.TypedDict('BorderMergeSelectParametersTagged', {
+BorderMergeSelectParamsDictTagged = typing.TypedDict('BorderMergeSelectParamsDictTagged', {
     "@type": typing.Literal["select"],
     "border": str,
-    "up-to": typing.NotRequired[BorderMergeUpToParameters | None],
+    "up-to": typing.NotRequired[BorderMergeUpToParamsDict | None],
 })
 
 
-BorderMergeBorderParameters = typing.TypedDict('BorderMergeBorderParameters', {
+BorderMergeBorderParamsDict = typing.TypedDict('BorderMergeBorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["border"]],
     "border-file-in": InputPathType,
-    "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
+    "select": typing.NotRequired[list[BorderMergeSelectParamsDict] | None],
 })
-BorderMergeBorderParametersTagged = typing.TypedDict('BorderMergeBorderParametersTagged', {
+BorderMergeBorderParamsDictTagged = typing.TypedDict('BorderMergeBorderParamsDictTagged', {
     "@type": typing.Literal["border"],
     "border-file-in": InputPathType,
-    "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
+    "select": typing.NotRequired[list[BorderMergeSelectParamsDict] | None],
 })
 
 
-BorderMergeParameters = typing.TypedDict('BorderMergeParameters', {
+BorderMergeParamsDict = typing.TypedDict('BorderMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-merge"]],
     "border-file-out": str,
-    "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
+    "border": typing.NotRequired[list[BorderMergeBorderParamsDict] | None],
 })
-BorderMergeParametersTagged = typing.TypedDict('BorderMergeParametersTagged', {
+BorderMergeParamsDictTagged = typing.TypedDict('BorderMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/border-merge"],
     "border-file-out": str,
-    "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
+    "border": typing.NotRequired[list[BorderMergeBorderParamsDict] | None],
 })
 
 
-def border_merge_up_to_params(
+def border_merge_up_to(
     last_border: str,
     reverse: bool = False,
-) -> BorderMergeUpToParametersTagged:
+) -> BorderMergeUpToParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def border_merge_up_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderMergeUpToParameters` object.
+    `BorderMergeUpToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def border_merge_up_to_validate(
 
 
 def border_merge_up_to_cargs(
-    params: BorderMergeUpToParameters,
+    params: BorderMergeUpToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,10 +126,10 @@ def border_merge_up_to_cargs(
     return cargs
 
 
-def border_merge_select_params(
+def border_merge_select(
     border: str,
-    up_to: BorderMergeUpToParameters | None = None,
-) -> BorderMergeSelectParametersTagged:
+    up_to: BorderMergeUpToParamsDict | None = None,
+) -> BorderMergeSelectParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def border_merge_select_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderMergeSelectParameters` object.
+    `BorderMergeSelectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def border_merge_select_validate(
 
 
 def border_merge_select_cargs(
-    params: BorderMergeSelectParameters,
+    params: BorderMergeSelectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,10 +191,10 @@ def border_merge_select_cargs(
     return cargs
 
 
-def border_merge_border_params(
+def border_merge_border(
     border_file_in: InputPathType,
-    select_: list[BorderMergeSelectParameters] | None = None,
-) -> BorderMergeBorderParametersTagged:
+    select_: list[BorderMergeSelectParamsDict] | None = None,
+) -> BorderMergeBorderParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def border_merge_border_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderMergeBorderParameters` object.
+    `BorderMergeBorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,13 +231,13 @@ def border_merge_border_validate(
         raise StyxValidationError(f'`border-file-in` has the wrong type: Received `{type(params.get("border-file-in", None))}` expected `InputPathType`')
     if params.get("select", None) is not None:
         if not isinstance(params["select"], list):
-            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[BorderMergeSelectParameters] | None`')
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[BorderMergeSelectParamsDict] | None`')
         for e in params["select"]:
             border_merge_select_validate(e)
 
 
 def border_merge_border_cargs(
-    params: BorderMergeBorderParameters,
+    params: BorderMergeBorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def border_merge_border_cargs(
 
 class BorderMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderMergeParameters(...)`.
+    Output object returned when calling `BorderMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -271,8 +271,8 @@ class BorderMergeOutputs(typing.NamedTuple):
 
 def border_merge_params(
     border_file_out: str,
-    border: list[BorderMergeBorderParameters] | None = None,
-) -> BorderMergeParametersTagged:
+    border: list[BorderMergeBorderParamsDict] | None = None,
+) -> BorderMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -296,7 +296,7 @@ def border_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderMergeParameters` object.
+    `BorderMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -309,13 +309,13 @@ def border_merge_validate(
         raise StyxValidationError(f'`border-file-out` has the wrong type: Received `{type(params.get("border-file-out", None))}` expected `str`')
     if params.get("border", None) is not None:
         if not isinstance(params["border"], list):
-            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `list[BorderMergeBorderParameters] | None`')
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `list[BorderMergeBorderParamsDict] | None`')
         for e in params["border"]:
             border_merge_border_validate(e)
 
 
 def border_merge_cargs(
-    params: BorderMergeParameters,
+    params: BorderMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def border_merge_cargs(
 
 
 def border_merge_outputs(
-    params: BorderMergeParameters,
+    params: BorderMergeParamsDict,
     execution: Execution,
 ) -> BorderMergeOutputs:
     """
@@ -359,7 +359,7 @@ def border_merge_outputs(
 
 
 def border_merge_execute(
-    params: BorderMergeParameters,
+    params: BorderMergeParamsDict,
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
@@ -392,7 +392,7 @@ def border_merge_execute(
 
 def border_merge(
     border_file_out: str,
-    border: list[BorderMergeBorderParameters] | None = None,
+    border: list[BorderMergeBorderParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
@@ -423,11 +423,19 @@ def border_merge(
 
 __all__ = [
     "BORDER_MERGE_METADATA",
+    "BorderMergeBorderParamsDict",
+    "BorderMergeBorderParamsDictTagged",
     "BorderMergeOutputs",
+    "BorderMergeParamsDict",
+    "BorderMergeParamsDictTagged",
+    "BorderMergeSelectParamsDict",
+    "BorderMergeSelectParamsDictTagged",
+    "BorderMergeUpToParamsDict",
+    "BorderMergeUpToParamsDictTagged",
     "border_merge",
-    "border_merge_border_params",
+    "border_merge_border",
     "border_merge_execute",
     "border_merge_params",
-    "border_merge_select_params",
-    "border_merge_up_to_params",
+    "border_merge_select",
+    "border_merge_up_to",
 ]

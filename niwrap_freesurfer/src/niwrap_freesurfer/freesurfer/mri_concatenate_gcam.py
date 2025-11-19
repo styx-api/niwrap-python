@@ -13,7 +13,7 @@ MRI_CONCATENATE_GCAM_METADATA = Metadata(
 )
 
 
-MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', {
+MriConcatenateGcamParamsDict = typing.TypedDict('MriConcatenateGcamParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_gcam"]],
     "inputs": list[InputPathType],
     "output": str,
@@ -23,7 +23,7 @@ MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', 
     "invert": bool,
     "downsample": bool,
 })
-MriConcatenateGcamParametersTagged = typing.TypedDict('MriConcatenateGcamParametersTagged', {
+MriConcatenateGcamParamsDictTagged = typing.TypedDict('MriConcatenateGcamParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_concatenate_gcam"],
     "inputs": list[InputPathType],
     "output": str,
@@ -37,7 +37,7 @@ MriConcatenateGcamParametersTagged = typing.TypedDict('MriConcatenateGcamParamet
 
 class MriConcatenateGcamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriConcatenateGcamParameters(...)`.
+    Output object returned when calling `MriConcatenateGcamParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_concatenate_gcam_params(
     reduce: bool = False,
     invert: bool = False,
     downsample: bool = False,
-) -> MriConcatenateGcamParametersTagged:
+) -> MriConcatenateGcamParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def mri_concatenate_gcam_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriConcatenateGcamParameters` object.
+    `MriConcatenateGcamParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def mri_concatenate_gcam_validate(
 
 
 def mri_concatenate_gcam_cargs(
-    params: MriConcatenateGcamParameters,
+    params: MriConcatenateGcamParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def mri_concatenate_gcam_cargs(
 
 
 def mri_concatenate_gcam_outputs(
-    params: MriConcatenateGcamParameters,
+    params: MriConcatenateGcamParamsDict,
     execution: Execution,
 ) -> MriConcatenateGcamOutputs:
     """
@@ -186,7 +186,7 @@ def mri_concatenate_gcam_outputs(
 
 
 def mri_concatenate_gcam_execute(
-    params: MriConcatenateGcamParameters,
+    params: MriConcatenateGcamParamsDict,
     runner: Runner | None = None,
 ) -> MriConcatenateGcamOutputs:
     """
@@ -265,6 +265,8 @@ def mri_concatenate_gcam(
 __all__ = [
     "MRI_CONCATENATE_GCAM_METADATA",
     "MriConcatenateGcamOutputs",
+    "MriConcatenateGcamParamsDict",
+    "MriConcatenateGcamParamsDictTagged",
     "mri_concatenate_gcam",
     "mri_concatenate_gcam_execute",
     "mri_concatenate_gcam_params",

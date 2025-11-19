@@ -13,7 +13,7 @@ V_3D_ROW_FILLIN_METADATA = Metadata(
 )
 
 
-V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
+V3dRowFillinParamsDict = typing.TypedDict('V3dRowFillinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRowFillin"]],
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
     "prefix": typing.NotRequired[str | None],
     "input_dataset": InputPathType,
 })
-V3dRowFillinParametersTagged = typing.TypedDict('V3dRowFillinParametersTagged', {
+V3dRowFillinParamsDictTagged = typing.TypedDict('V3dRowFillinParamsDictTagged', {
     "@type": typing.Literal["afni/3dRowFillin"],
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ V3dRowFillinParametersTagged = typing.TypedDict('V3dRowFillinParametersTagged', 
 
 class V3dRowFillinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRowFillinParameters(...)`.
+    Output object returned when calling `V3dRowFillinParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_3d_row_fillin_params(
     dir_: str | None = None,
     binary: bool = False,
     prefix: str | None = None,
-) -> V3dRowFillinParametersTagged:
+) -> V3dRowFillinParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def v_3d_row_fillin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRowFillinParameters` object.
+    `V3dRowFillinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def v_3d_row_fillin_validate(
 
 
 def v_3d_row_fillin_cargs(
-    params: V3dRowFillinParameters,
+    params: V3dRowFillinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def v_3d_row_fillin_cargs(
 
 
 def v_3d_row_fillin_outputs(
-    params: V3dRowFillinParameters,
+    params: V3dRowFillinParamsDict,
     execution: Execution,
 ) -> V3dRowFillinOutputs:
     """
@@ -167,7 +167,7 @@ def v_3d_row_fillin_outputs(
 
 
 def v_3d_row_fillin_execute(
-    params: V3dRowFillinParameters,
+    params: V3dRowFillinParamsDict,
     runner: Runner | None = None,
 ) -> V3dRowFillinOutputs:
     """
@@ -236,6 +236,8 @@ def v_3d_row_fillin(
 
 __all__ = [
     "V3dRowFillinOutputs",
+    "V3dRowFillinParamsDict",
+    "V3dRowFillinParamsDictTagged",
     "V_3D_ROW_FILLIN_METADATA",
     "v_3d_row_fillin",
     "v_3d_row_fillin_execute",

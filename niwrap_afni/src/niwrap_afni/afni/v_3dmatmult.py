@@ -13,7 +13,7 @@ V_3DMATMULT_METADATA = Metadata(
 )
 
 
-V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
+V3dmatmultParamsDict = typing.TypedDict('V3dmatmultParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmatmult"]],
     "inputA": InputPathType,
     "inputB": InputPathType,
@@ -21,7 +21,7 @@ V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
     "datum": typing.NotRequired[str | None],
     "verb": typing.NotRequired[float | None],
 })
-V3dmatmultParametersTagged = typing.TypedDict('V3dmatmultParametersTagged', {
+V3dmatmultParamsDictTagged = typing.TypedDict('V3dmatmultParamsDictTagged', {
     "@type": typing.Literal["afni/3dmatmult"],
     "inputA": InputPathType,
     "inputB": InputPathType,
@@ -33,7 +33,7 @@ V3dmatmultParametersTagged = typing.TypedDict('V3dmatmultParametersTagged', {
 
 class V3dmatmultOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmatmultParameters(...)`.
+    Output object returned when calling `V3dmatmultParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3dmatmult_params(
     prefix: str,
     datum: str | None = None,
     verb: float | None = None,
-) -> V3dmatmultParametersTagged:
+) -> V3dmatmultParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def v_3dmatmult_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmatmultParameters` object.
+    `V3dmatmultParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def v_3dmatmult_validate(
 
 
 def v_3dmatmult_cargs(
-    params: V3dmatmultParameters,
+    params: V3dmatmultParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def v_3dmatmult_cargs(
 
 
 def v_3dmatmult_outputs(
-    params: V3dmatmultParameters,
+    params: V3dmatmultParamsDict,
     execution: Execution,
 ) -> V3dmatmultOutputs:
     """
@@ -166,7 +166,7 @@ def v_3dmatmult_outputs(
 
 
 def v_3dmatmult_execute(
-    params: V3dmatmultParameters,
+    params: V3dmatmultParamsDict,
     runner: Runner | None = None,
 ) -> V3dmatmultOutputs:
     """
@@ -233,6 +233,8 @@ def v_3dmatmult(
 
 __all__ = [
     "V3dmatmultOutputs",
+    "V3dmatmultParamsDict",
+    "V3dmatmultParamsDictTagged",
     "V_3DMATMULT_METADATA",
     "v_3dmatmult",
     "v_3dmatmult_execute",

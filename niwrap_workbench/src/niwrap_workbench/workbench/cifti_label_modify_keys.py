@@ -12,14 +12,14 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameters', {
+CiftiLabelModifyKeysParamsDict = typing.TypedDict('CiftiLabelModifyKeysParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-modify-keys"]],
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
     "remap-file": str,
 })
-CiftiLabelModifyKeysParametersTagged = typing.TypedDict('CiftiLabelModifyKeysParametersTagged', {
+CiftiLabelModifyKeysParamsDictTagged = typing.TypedDict('CiftiLabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-modify-keys"],
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ CiftiLabelModifyKeysParametersTagged = typing.TypedDict('CiftiLabelModifyKeysPar
 
 class CiftiLabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelModifyKeysParameters(...)`.
+    Output object returned when calling `CiftiLabelModifyKeysParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def cifti_label_modify_keys_params(
     column: str | None,
     cifti_in: InputPathType,
     remap_file: str,
-) -> CiftiLabelModifyKeysParametersTagged:
+) -> CiftiLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def cifti_label_modify_keys_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelModifyKeysParameters` object.
+    `CiftiLabelModifyKeysParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def cifti_label_modify_keys_validate(
 
 
 def cifti_label_modify_keys_cargs(
-    params: CiftiLabelModifyKeysParameters,
+    params: CiftiLabelModifyKeysParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def cifti_label_modify_keys_cargs(
 
 
 def cifti_label_modify_keys_outputs(
-    params: CiftiLabelModifyKeysParameters,
+    params: CiftiLabelModifyKeysParamsDict,
     execution: Execution,
 ) -> CiftiLabelModifyKeysOutputs:
     """
@@ -145,7 +145,7 @@ def cifti_label_modify_keys_outputs(
 
 
 def cifti_label_modify_keys_execute(
-    params: CiftiLabelModifyKeysParameters,
+    params: CiftiLabelModifyKeysParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
@@ -228,6 +228,8 @@ def cifti_label_modify_keys(
 __all__ = [
     "CIFTI_LABEL_MODIFY_KEYS_METADATA",
     "CiftiLabelModifyKeysOutputs",
+    "CiftiLabelModifyKeysParamsDict",
+    "CiftiLabelModifyKeysParamsDictTagged",
     "cifti_label_modify_keys",
     "cifti_label_modify_keys_execute",
     "cifti_label_modify_keys_params",

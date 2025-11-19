@@ -13,11 +13,11 @@ UNPACKIMADIR2_METADATA = Metadata(
 )
 
 
-Unpackimadir2Parameters = typing.TypedDict('Unpackimadir2Parameters', {
+Unpackimadir2ParamsDict = typing.TypedDict('Unpackimadir2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpackimadir2"]],
     "directory": InputPathType,
 })
-Unpackimadir2ParametersTagged = typing.TypedDict('Unpackimadir2ParametersTagged', {
+Unpackimadir2ParamsDictTagged = typing.TypedDict('Unpackimadir2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpackimadir2"],
     "directory": InputPathType,
 })
@@ -25,7 +25,7 @@ Unpackimadir2ParametersTagged = typing.TypedDict('Unpackimadir2ParametersTagged'
 
 class Unpackimadir2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Unpackimadir2Parameters(...)`.
+    Output object returned when calling `Unpackimadir2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Unpackimadir2Outputs(typing.NamedTuple):
 
 def unpackimadir2_params(
     directory: InputPathType,
-) -> Unpackimadir2ParametersTagged:
+) -> Unpackimadir2ParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def unpackimadir2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Unpackimadir2Parameters` object.
+    `Unpackimadir2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def unpackimadir2_validate(
 
 
 def unpackimadir2_cargs(
-    params: Unpackimadir2Parameters,
+    params: Unpackimadir2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def unpackimadir2_cargs(
 
 
 def unpackimadir2_outputs(
-    params: Unpackimadir2Parameters,
+    params: Unpackimadir2ParamsDict,
     execution: Execution,
 ) -> Unpackimadir2Outputs:
     """
@@ -106,7 +106,7 @@ def unpackimadir2_outputs(
 
 
 def unpackimadir2_execute(
-    params: Unpackimadir2Parameters,
+    params: Unpackimadir2ParamsDict,
     runner: Runner | None = None,
 ) -> Unpackimadir2Outputs:
     """
@@ -162,6 +162,8 @@ def unpackimadir2(
 __all__ = [
     "UNPACKIMADIR2_METADATA",
     "Unpackimadir2Outputs",
+    "Unpackimadir2ParamsDict",
+    "Unpackimadir2ParamsDictTagged",
     "unpackimadir2",
     "unpackimadir2_execute",
     "unpackimadir2_params",

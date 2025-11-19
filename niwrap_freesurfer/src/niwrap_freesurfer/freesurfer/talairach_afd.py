@@ -13,7 +13,7 @@ TALAIRACH_AFD_METADATA = Metadata(
 )
 
 
-TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
+TalairachAfdParamsDict = typing.TypedDict('TalairachAfdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_afd"]],
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
     "afd_directory": typing.NotRequired[str | None],
     "verbose": bool,
 })
-TalairachAfdParametersTagged = typing.TypedDict('TalairachAfdParametersTagged', {
+TalairachAfdParamsDictTagged = typing.TypedDict('TalairachAfdParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talairach_afd"],
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ TalairachAfdParametersTagged = typing.TypedDict('TalairachAfdParametersTagged', 
 
 class TalairachAfdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalairachAfdParameters(...)`.
+    Output object returned when calling `TalairachAfdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def talairach_afd_params(
     p_value_threshold: float | None = None,
     afd_directory: str | None = None,
     verbose: bool = False,
-) -> TalairachAfdParametersTagged:
+) -> TalairachAfdParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def talairach_afd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalairachAfdParameters` object.
+    `TalairachAfdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def talairach_afd_validate(
 
 
 def talairach_afd_cargs(
-    params: TalairachAfdParameters,
+    params: TalairachAfdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def talairach_afd_cargs(
 
 
 def talairach_afd_outputs(
-    params: TalairachAfdParameters,
+    params: TalairachAfdParamsDict,
     execution: Execution,
 ) -> TalairachAfdOutputs:
     """
@@ -164,7 +164,7 @@ def talairach_afd_outputs(
 
 
 def talairach_afd_execute(
-    params: TalairachAfdParameters,
+    params: TalairachAfdParamsDict,
     runner: Runner | None = None,
 ) -> TalairachAfdOutputs:
     """
@@ -233,6 +233,8 @@ def talairach_afd(
 __all__ = [
     "TALAIRACH_AFD_METADATA",
     "TalairachAfdOutputs",
+    "TalairachAfdParamsDict",
+    "TalairachAfdParamsDictTagged",
     "talairach_afd",
     "talairach_afd_execute",
     "talairach_afd_params",

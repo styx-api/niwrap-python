@@ -13,7 +13,7 @@ MRI_FDR_METADATA = Metadata(
 )
 
 
-MriFdrParameters = typing.TypedDict('MriFdrParameters', {
+MriFdrParamsDict = typing.TypedDict('MriFdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fdr"]],
     "input_files": list[str],
     "fdr_value": float,
@@ -26,7 +26,7 @@ MriFdrParameters = typing.TypedDict('MriFdrParameters', {
     "debug": bool,
     "check_options": bool,
 })
-MriFdrParametersTagged = typing.TypedDict('MriFdrParametersTagged', {
+MriFdrParamsDictTagged = typing.TypedDict('MriFdrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fdr"],
     "input_files": list[str],
     "fdr_value": float,
@@ -43,7 +43,7 @@ MriFdrParametersTagged = typing.TypedDict('MriFdrParametersTagged', {
 
 class MriFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFdrParameters(...)`.
+    Output object returned when calling `MriFdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def mri_fdr_params(
     threshold_file: str | None = None,
     debug: bool = False,
     check_options: bool = False,
-) -> MriFdrParametersTagged:
+) -> MriFdrParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def mri_fdr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFdrParameters` object.
+    `MriFdrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -157,7 +157,7 @@ def mri_fdr_validate(
 
 
 def mri_fdr_cargs(
-    params: MriFdrParameters,
+    params: MriFdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def mri_fdr_cargs(
 
 
 def mri_fdr_outputs(
-    params: MriFdrParameters,
+    params: MriFdrParamsDict,
     execution: Execution,
 ) -> MriFdrOutputs:
     """
@@ -224,7 +224,7 @@ def mri_fdr_outputs(
 
 
 def mri_fdr_execute(
-    params: MriFdrParameters,
+    params: MriFdrParamsDict,
     runner: Runner | None = None,
 ) -> MriFdrOutputs:
     """
@@ -308,6 +308,8 @@ def mri_fdr(
 __all__ = [
     "MRI_FDR_METADATA",
     "MriFdrOutputs",
+    "MriFdrParamsDict",
+    "MriFdrParamsDictTagged",
     "mri_fdr",
     "mri_fdr_execute",
     "mri_fdr_params",

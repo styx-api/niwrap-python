@@ -13,7 +13,7 @@ DUAL_REGRESSION_METADATA = Metadata(
 )
 
 
-DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
+DualRegressionParamsDict = typing.TypedDict('DualRegressionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/dual_regression"]],
     "group_ic_maps": InputPathType,
     "des_norm": float,
@@ -24,7 +24,7 @@ DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
     "output_directory": str,
     "input_files": list[InputPathType],
 })
-DualRegressionParametersTagged = typing.TypedDict('DualRegressionParametersTagged', {
+DualRegressionParamsDictTagged = typing.TypedDict('DualRegressionParamsDictTagged', {
     "@type": typing.Literal["fsl/dual_regression"],
     "group_ic_maps": InputPathType,
     "des_norm": float,
@@ -39,7 +39,7 @@ DualRegressionParametersTagged = typing.TypedDict('DualRegressionParametersTagge
 
 class DualRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DualRegressionParameters(...)`.
+    Output object returned when calling `DualRegressionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def dual_regression_params(
     output_directory: str,
     input_files: list[InputPathType],
     thr_flag: bool = False,
-) -> DualRegressionParametersTagged:
+) -> DualRegressionParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def dual_regression_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DualRegressionParameters` object.
+    `DualRegressionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def dual_regression_validate(
 
 
 def dual_regression_cargs(
-    params: DualRegressionParameters,
+    params: DualRegressionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def dual_regression_cargs(
 
 
 def dual_regression_outputs(
-    params: DualRegressionParameters,
+    params: DualRegressionParamsDict,
     execution: Execution,
 ) -> DualRegressionOutputs:
     """
@@ -200,7 +200,7 @@ def dual_regression_outputs(
 
 
 def dual_regression_execute(
-    params: DualRegressionParameters,
+    params: DualRegressionParamsDict,
     runner: Runner | None = None,
 ) -> DualRegressionOutputs:
     """
@@ -285,6 +285,8 @@ def dual_regression(
 __all__ = [
     "DUAL_REGRESSION_METADATA",
     "DualRegressionOutputs",
+    "DualRegressionParamsDict",
+    "DualRegressionParamsDictTagged",
     "dual_regression",
     "dual_regression_execute",
     "dual_regression_params",

@@ -13,7 +13,7 @@ CONVERT_DSET_METADATA = Metadata(
 )
 
 
-ConvertDsetParameters = typing.TypedDict('ConvertDsetParameters', {
+ConvertDsetParamsDict = typing.TypedDict('ConvertDsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ConvertDset"]],
     "output_type": list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]],
     "input_dataset": InputPathType,
@@ -37,7 +37,7 @@ ConvertDsetParameters = typing.TypedDict('ConvertDsetParameters', {
     "split": typing.NotRequired[int | None],
     "no_history": bool,
 })
-ConvertDsetParametersTagged = typing.TypedDict('ConvertDsetParametersTagged', {
+ConvertDsetParamsDictTagged = typing.TypedDict('ConvertDsetParamsDictTagged', {
     "@type": typing.Literal["afni/ConvertDset"],
     "output_type": list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]],
     "input_dataset": InputPathType,
@@ -65,7 +65,7 @@ ConvertDsetParametersTagged = typing.TypedDict('ConvertDsetParametersTagged', {
 
 class ConvertDsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertDsetParameters(...)`.
+    Output object returned when calling `ConvertDsetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def convert_dset_params(
     multigraph: bool = False,
     split: int | None = None,
     no_history: bool = False,
-) -> ConvertDsetParametersTagged:
+) -> ConvertDsetParamsDictTagged:
     """
     Build parameters.
     
@@ -174,7 +174,7 @@ def convert_dset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertDsetParameters` object.
+    `ConvertDsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def convert_dset_validate(
 
 
 def convert_dset_cargs(
-    params: ConvertDsetParameters,
+    params: ConvertDsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -363,7 +363,7 @@ def convert_dset_cargs(
 
 
 def convert_dset_outputs(
-    params: ConvertDsetParameters,
+    params: ConvertDsetParamsDict,
     execution: Execution,
 ) -> ConvertDsetOutputs:
     """
@@ -383,7 +383,7 @@ def convert_dset_outputs(
 
 
 def convert_dset_execute(
-    params: ConvertDsetParameters,
+    params: ConvertDsetParamsDict,
     runner: Runner | None = None,
 ) -> ConvertDsetOutputs:
     """
@@ -505,6 +505,8 @@ def convert_dset(
 __all__ = [
     "CONVERT_DSET_METADATA",
     "ConvertDsetOutputs",
+    "ConvertDsetParamsDict",
+    "ConvertDsetParamsDictTagged",
     "convert_dset",
     "convert_dset_execute",
     "convert_dset_params",

@@ -13,12 +13,12 @@ TBSS_X_METADATA = Metadata(
 )
 
 
-TbssXParameters = typing.TypedDict('TbssXParameters', {
+TbssXParamsDict = typing.TypedDict('TbssXParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_x"]],
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })
-TbssXParametersTagged = typing.TypedDict('TbssXParametersTagged', {
+TbssXParamsDictTagged = typing.TypedDict('TbssXParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_x"],
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
@@ -27,7 +27,7 @@ TbssXParametersTagged = typing.TypedDict('TbssXParametersTagged', {
 
 class TbssXOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TbssXParameters(...)`.
+    Output object returned when calling `TbssXParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class TbssXOutputs(typing.NamedTuple):
 def tbss_x_params(
     scalar_dirs: list[str],
     vector_dirs: list[str],
-) -> TbssXParametersTagged:
+) -> TbssXParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def tbss_x_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TbssXParameters` object.
+    `TbssXParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def tbss_x_validate(
 
 
 def tbss_x_cargs(
-    params: TbssXParameters,
+    params: TbssXParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def tbss_x_cargs(
 
 
 def tbss_x_outputs(
-    params: TbssXParameters,
+    params: TbssXParamsDict,
     execution: Execution,
 ) -> TbssXOutputs:
     """
@@ -122,7 +122,7 @@ def tbss_x_outputs(
 
 
 def tbss_x_execute(
-    params: TbssXParameters,
+    params: TbssXParamsDict,
     runner: Runner | None = None,
 ) -> TbssXOutputs:
     """
@@ -181,6 +181,8 @@ def tbss_x(
 __all__ = [
     "TBSS_X_METADATA",
     "TbssXOutputs",
+    "TbssXParamsDict",
+    "TbssXParamsDictTagged",
     "tbss_x",
     "tbss_x_execute",
     "tbss_x_params",

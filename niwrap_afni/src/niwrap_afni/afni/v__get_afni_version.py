@@ -13,11 +13,11 @@ V__GET_AFNI_VERSION_METADATA = Metadata(
 )
 
 
-VGetAfniVersionParameters = typing.TypedDict('VGetAfniVersionParameters', {
+VGetAfniVersionParamsDict = typing.TypedDict('VGetAfniVersionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@get.afni.version"]],
     "version": str,
 })
-VGetAfniVersionParametersTagged = typing.TypedDict('VGetAfniVersionParametersTagged', {
+VGetAfniVersionParamsDictTagged = typing.TypedDict('VGetAfniVersionParamsDictTagged', {
     "@type": typing.Literal["afni/@get.afni.version"],
     "version": str,
 })
@@ -25,7 +25,7 @@ VGetAfniVersionParametersTagged = typing.TypedDict('VGetAfniVersionParametersTag
 
 class VGetAfniVersionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniVersionParameters(...)`.
+    Output object returned when calling `VGetAfniVersionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VGetAfniVersionOutputs(typing.NamedTuple):
 
 def v__get_afni_version_params(
     version: str,
-) -> VGetAfniVersionParametersTagged:
+) -> VGetAfniVersionParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__get_afni_version_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniVersionParameters` object.
+    `VGetAfniVersionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def v__get_afni_version_validate(
 
 
 def v__get_afni_version_cargs(
-    params: VGetAfniVersionParameters,
+    params: VGetAfniVersionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__get_afni_version_cargs(
 
 
 def v__get_afni_version_outputs(
-    params: VGetAfniVersionParameters,
+    params: VGetAfniVersionParamsDict,
     execution: Execution,
 ) -> VGetAfniVersionOutputs:
     """
@@ -110,7 +110,7 @@ def v__get_afni_version_outputs(
 
 
 def v__get_afni_version_execute(
-    params: VGetAfniVersionParameters,
+    params: VGetAfniVersionParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniVersionOutputs:
     """
@@ -165,6 +165,8 @@ def v__get_afni_version(
 
 __all__ = [
     "VGetAfniVersionOutputs",
+    "VGetAfniVersionParamsDict",
+    "VGetAfniVersionParamsDictTagged",
     "V__GET_AFNI_VERSION_METADATA",
     "v__get_afni_version",
     "v__get_afni_version_execute",

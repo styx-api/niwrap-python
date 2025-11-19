@@ -13,12 +13,12 @@ CONCAT_BVARS_METADATA = Metadata(
 )
 
 
-ConcatBvarsParameters = typing.TypedDict('ConcatBvarsParameters', {
+ConcatBvarsParamsDict = typing.TypedDict('ConcatBvarsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/concat_bvars"]],
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })
-ConcatBvarsParametersTagged = typing.TypedDict('ConcatBvarsParametersTagged', {
+ConcatBvarsParamsDictTagged = typing.TypedDict('ConcatBvarsParamsDictTagged', {
     "@type": typing.Literal["fsl/concat_bvars"],
     "output_bvars": str,
     "input_bvars": list[InputPathType],
@@ -27,7 +27,7 @@ ConcatBvarsParametersTagged = typing.TypedDict('ConcatBvarsParametersTagged', {
 
 class ConcatBvarsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConcatBvarsParameters(...)`.
+    Output object returned when calling `ConcatBvarsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class ConcatBvarsOutputs(typing.NamedTuple):
 def concat_bvars_params(
     output_bvars: str,
     input_bvars: list[InputPathType],
-) -> ConcatBvarsParametersTagged:
+) -> ConcatBvarsParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def concat_bvars_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConcatBvarsParameters` object.
+    `ConcatBvarsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def concat_bvars_validate(
 
 
 def concat_bvars_cargs(
-    params: ConcatBvarsParameters,
+    params: ConcatBvarsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def concat_bvars_cargs(
 
 
 def concat_bvars_outputs(
-    params: ConcatBvarsParameters,
+    params: ConcatBvarsParamsDict,
     execution: Execution,
 ) -> ConcatBvarsOutputs:
     """
@@ -122,7 +122,7 @@ def concat_bvars_outputs(
 
 
 def concat_bvars_execute(
-    params: ConcatBvarsParameters,
+    params: ConcatBvarsParamsDict,
     runner: Runner | None = None,
 ) -> ConcatBvarsOutputs:
     """
@@ -181,6 +181,8 @@ def concat_bvars(
 __all__ = [
     "CONCAT_BVARS_METADATA",
     "ConcatBvarsOutputs",
+    "ConcatBvarsParamsDict",
+    "ConcatBvarsParamsDictTagged",
     "concat_bvars",
     "concat_bvars_execute",
     "concat_bvars_params",

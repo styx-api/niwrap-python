@@ -13,7 +13,7 @@ V_4DFPTOANALYZE_METADATA = Metadata(
 )
 
 
-V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
+V4dfptoanalyzeParamsDict = typing.TypedDict('V4dfptoanalyzeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/4dfptoanalyze"]],
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
     "spm99": bool,
     "endianness": typing.NotRequired[str | None],
 })
-V4dfptoanalyzeParametersTagged = typing.TypedDict('V4dfptoanalyzeParametersTagged', {
+V4dfptoanalyzeParamsDictTagged = typing.TypedDict('V4dfptoanalyzeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/4dfptoanalyze"],
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ V4dfptoanalyzeParametersTagged = typing.TypedDict('V4dfptoanalyzeParametersTagge
 
 class V4dfptoanalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V4dfptoanalyzeParameters(...)`.
+    Output object returned when calling `V4dfptoanalyzeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_4dfptoanalyze_params(
     output_8bit: bool = False,
     spm99: bool = False,
     endianness: str | None = None,
-) -> V4dfptoanalyzeParametersTagged:
+) -> V4dfptoanalyzeParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def v_4dfptoanalyze_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V4dfptoanalyzeParameters` object.
+    `V4dfptoanalyzeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def v_4dfptoanalyze_validate(
 
 
 def v_4dfptoanalyze_cargs(
-    params: V4dfptoanalyzeParameters,
+    params: V4dfptoanalyzeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def v_4dfptoanalyze_cargs(
 
 
 def v_4dfptoanalyze_outputs(
-    params: V4dfptoanalyzeParameters,
+    params: V4dfptoanalyzeParamsDict,
     execution: Execution,
 ) -> V4dfptoanalyzeOutputs:
     """
@@ -162,7 +162,7 @@ def v_4dfptoanalyze_outputs(
 
 
 def v_4dfptoanalyze_execute(
-    params: V4dfptoanalyzeParameters,
+    params: V4dfptoanalyzeParamsDict,
     runner: Runner | None = None,
 ) -> V4dfptoanalyzeOutputs:
     """
@@ -229,6 +229,8 @@ def v_4dfptoanalyze(
 
 __all__ = [
     "V4dfptoanalyzeOutputs",
+    "V4dfptoanalyzeParamsDict",
+    "V4dfptoanalyzeParamsDictTagged",
     "V_4DFPTOANALYZE_METADATA",
     "v_4dfptoanalyze",
     "v_4dfptoanalyze_execute",

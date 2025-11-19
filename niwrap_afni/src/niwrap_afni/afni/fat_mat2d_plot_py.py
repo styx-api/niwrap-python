@@ -13,7 +13,7 @@ FAT_MAT2D_PLOT_PY_METADATA = Metadata(
 )
 
 
-FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
+FatMat2dPlotPyParamsDict = typing.TypedDict('FatMat2dPlotPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mat2d_plot.py"]],
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
@@ -41,7 +41,7 @@ FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
     "help": bool,
     "help_view": bool,
 })
-FatMat2dPlotPyParametersTagged = typing.TypedDict('FatMat2dPlotPyParametersTagged', {
+FatMat2dPlotPyParamsDictTagged = typing.TypedDict('FatMat2dPlotPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mat2d_plot.py"],
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
@@ -73,7 +73,7 @@ FatMat2dPlotPyParametersTagged = typing.TypedDict('FatMat2dPlotPyParametersTagge
 
 class FatMat2dPlotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMat2dPlotPyParameters(...)`.
+    Output object returned when calling `FatMat2dPlotPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +108,7 @@ def fat_mat2d_plot_py_params(
     date: bool = False,
     help_: bool = False,
     help_view: bool = False,
-) -> FatMat2dPlotPyParametersTagged:
+) -> FatMat2dPlotPyParamsDictTagged:
     """
     Build parameters.
     
@@ -202,7 +202,7 @@ def fat_mat2d_plot_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMat2dPlotPyParameters` object.
+    `FatMat2dPlotPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -300,7 +300,7 @@ def fat_mat2d_plot_py_validate(
 
 
 def fat_mat2d_plot_py_cargs(
-    params: FatMat2dPlotPyParameters,
+    params: FatMat2dPlotPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -367,7 +367,7 @@ def fat_mat2d_plot_py_cargs(
 
 
 def fat_mat2d_plot_py_outputs(
-    params: FatMat2dPlotPyParameters,
+    params: FatMat2dPlotPyParamsDict,
     execution: Execution,
 ) -> FatMat2dPlotPyOutputs:
     """
@@ -387,7 +387,7 @@ def fat_mat2d_plot_py_outputs(
 
 
 def fat_mat2d_plot_py_execute(
-    params: FatMat2dPlotPyParameters,
+    params: FatMat2dPlotPyParamsDict,
     runner: Runner | None = None,
 ) -> FatMat2dPlotPyOutputs:
     """
@@ -527,6 +527,8 @@ def fat_mat2d_plot_py(
 __all__ = [
     "FAT_MAT2D_PLOT_PY_METADATA",
     "FatMat2dPlotPyOutputs",
+    "FatMat2dPlotPyParamsDict",
+    "FatMat2dPlotPyParamsDictTagged",
     "fat_mat2d_plot_py",
     "fat_mat2d_plot_py_execute",
     "fat_mat2d_plot_py_params",

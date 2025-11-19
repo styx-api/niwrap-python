@@ -13,7 +13,7 @@ MAKEROT_METADATA = Metadata(
 )
 
 
-MakerotParameters = typing.TypedDict('MakerotParameters', {
+MakerotParamsDict = typing.TypedDict('MakerotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/makerot"]],
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ MakerotParameters = typing.TypedDict('MakerotParameters', {
     "help_flag": bool,
     "theta": float,
 })
-MakerotParametersTagged = typing.TypedDict('MakerotParametersTagged', {
+MakerotParamsDictTagged = typing.TypedDict('MakerotParamsDictTagged', {
     "@type": typing.Literal["fsl/makerot"],
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ MakerotParametersTagged = typing.TypedDict('MakerotParametersTagged', {
 
 class MakerotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakerotParameters(...)`.
+    Output object returned when calling `MakerotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def makerot_params(
     output_file: str | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> MakerotParametersTagged:
+) -> MakerotParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def makerot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakerotParameters` object.
+    `MakerotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def makerot_validate(
 
 
 def makerot_cargs(
-    params: MakerotParameters,
+    params: MakerotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def makerot_cargs(
 
 
 def makerot_outputs(
-    params: MakerotParameters,
+    params: MakerotParamsDict,
     execution: Execution,
 ) -> MakerotOutputs:
     """
@@ -190,7 +190,7 @@ def makerot_outputs(
 
 
 def makerot_execute(
-    params: MakerotParameters,
+    params: MakerotParamsDict,
     runner: Runner | None = None,
 ) -> MakerotOutputs:
     """
@@ -264,6 +264,8 @@ def makerot(
 __all__ = [
     "MAKEROT_METADATA",
     "MakerotOutputs",
+    "MakerotParamsDict",
+    "MakerotParamsDictTagged",
     "makerot",
     "makerot_execute",
     "makerot_params",

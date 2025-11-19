@@ -13,11 +13,11 @@ V__AFNI_REFACER_MAKE_MASTER_METADATA = Metadata(
 )
 
 
-VAfniRefacerMakeMasterParameters = typing.TypedDict('VAfniRefacerMakeMasterParameters', {
+VAfniRefacerMakeMasterParamsDict = typing.TypedDict('VAfniRefacerMakeMasterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_master"]],
     "input_datasets": list[InputPathType],
 })
-VAfniRefacerMakeMasterParametersTagged = typing.TypedDict('VAfniRefacerMakeMasterParametersTagged', {
+VAfniRefacerMakeMasterParamsDictTagged = typing.TypedDict('VAfniRefacerMakeMasterParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_refacer_make_master"],
     "input_datasets": list[InputPathType],
 })
@@ -25,7 +25,7 @@ VAfniRefacerMakeMasterParametersTagged = typing.TypedDict('VAfniRefacerMakeMaste
 
 class VAfniRefacerMakeMasterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniRefacerMakeMasterParameters(...)`.
+    Output object returned when calling `VAfniRefacerMakeMasterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VAfniRefacerMakeMasterOutputs(typing.NamedTuple):
 
 def v__afni_refacer_make_master_params(
     input_datasets: list[InputPathType],
-) -> VAfniRefacerMakeMasterParametersTagged:
+) -> VAfniRefacerMakeMasterParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__afni_refacer_make_master_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniRefacerMakeMasterParameters` object.
+    `VAfniRefacerMakeMasterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -74,7 +74,7 @@ def v__afni_refacer_make_master_validate(
 
 
 def v__afni_refacer_make_master_cargs(
-    params: VAfniRefacerMakeMasterParameters,
+    params: VAfniRefacerMakeMasterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -93,7 +93,7 @@ def v__afni_refacer_make_master_cargs(
 
 
 def v__afni_refacer_make_master_outputs(
-    params: VAfniRefacerMakeMasterParameters,
+    params: VAfniRefacerMakeMasterParamsDict,
     execution: Execution,
 ) -> VAfniRefacerMakeMasterOutputs:
     """
@@ -113,7 +113,7 @@ def v__afni_refacer_make_master_outputs(
 
 
 def v__afni_refacer_make_master_execute(
-    params: VAfniRefacerMakeMasterParameters,
+    params: VAfniRefacerMakeMasterParamsDict,
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeMasterOutputs:
     """
@@ -171,6 +171,8 @@ def v__afni_refacer_make_master(
 
 __all__ = [
     "VAfniRefacerMakeMasterOutputs",
+    "VAfniRefacerMakeMasterParamsDict",
+    "VAfniRefacerMakeMasterParamsDictTagged",
     "V__AFNI_REFACER_MAKE_MASTER_METADATA",
     "v__afni_refacer_make_master",
     "v__afni_refacer_make_master_execute",

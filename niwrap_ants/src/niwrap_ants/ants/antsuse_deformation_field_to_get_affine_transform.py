@@ -13,7 +13,7 @@ ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 )
 
 
-AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParameters', {
+AntsuseDeformationFieldToGetAffineTransformParamsDict = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ANTSUseDeformationFieldToGetAffineTransform"]],
     "deformation_field": InputPathType,
     "load_ratio": float,
@@ -21,7 +21,7 @@ AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('Antsus
     "output_affine": str,
     "mask": typing.NotRequired[InputPathType | None],
 })
-AntsuseDeformationFieldToGetAffineTransformParametersTagged = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParametersTagged', {
+AntsuseDeformationFieldToGetAffineTransformParamsDictTagged = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParamsDictTagged', {
     "@type": typing.Literal["ants/ANTSUseDeformationFieldToGetAffineTransform"],
     "deformation_field": InputPathType,
     "load_ratio": float,
@@ -33,7 +33,7 @@ AntsuseDeformationFieldToGetAffineTransformParametersTagged = typing.TypedDict('
 
 class AntsuseDeformationFieldToGetAffineTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsuseDeformationFieldToGetAffineTransformParameters(...)`.
+    Output object returned when calling `AntsuseDeformationFieldToGetAffineTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def antsuse_deformation_field_to_get_affine_transform_params(
     transform_type: typing.Literal["rigid", "affine"],
     output_affine: str,
     mask: InputPathType | None = None,
-) -> AntsuseDeformationFieldToGetAffineTransformParametersTagged:
+) -> AntsuseDeformationFieldToGetAffineTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def antsuse_deformation_field_to_get_affine_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsuseDeformationFieldToGetAffineTransformParameters` object.
+    `AntsuseDeformationFieldToGetAffineTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def antsuse_deformation_field_to_get_affine_transform_validate(
 
 
 def antsuse_deformation_field_to_get_affine_transform_cargs(
-    params: AntsuseDeformationFieldToGetAffineTransformParameters,
+    params: AntsuseDeformationFieldToGetAffineTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def antsuse_deformation_field_to_get_affine_transform_cargs(
 
 
 def antsuse_deformation_field_to_get_affine_transform_outputs(
-    params: AntsuseDeformationFieldToGetAffineTransformParameters,
+    params: AntsuseDeformationFieldToGetAffineTransformParamsDict,
     execution: Execution,
 ) -> AntsuseDeformationFieldToGetAffineTransformOutputs:
     """
@@ -157,7 +157,7 @@ def antsuse_deformation_field_to_get_affine_transform_outputs(
 
 
 def antsuse_deformation_field_to_get_affine_transform_execute(
-    params: AntsuseDeformationFieldToGetAffineTransformParameters,
+    params: AntsuseDeformationFieldToGetAffineTransformParamsDict,
     runner: Runner | None = None,
 ) -> AntsuseDeformationFieldToGetAffineTransformOutputs:
     """
@@ -234,6 +234,8 @@ def antsuse_deformation_field_to_get_affine_transform(
 __all__ = [
     "ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA",
     "AntsuseDeformationFieldToGetAffineTransformOutputs",
+    "AntsuseDeformationFieldToGetAffineTransformParamsDict",
+    "AntsuseDeformationFieldToGetAffineTransformParamsDictTagged",
     "antsuse_deformation_field_to_get_affine_transform",
     "antsuse_deformation_field_to_get_affine_transform_execute",
     "antsuse_deformation_field_to_get_affine_transform_params",

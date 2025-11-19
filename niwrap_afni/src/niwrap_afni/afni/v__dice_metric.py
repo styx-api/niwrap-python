@@ -13,7 +13,7 @@ V__DICE_METRIC_METADATA = Metadata(
 )
 
 
-VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
+VDiceMetricParamsDict = typing.TypedDict('VDiceMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@DiceMetric"]],
     "base": InputPathType,
     "dsets": list[InputPathType],
@@ -29,7 +29,7 @@ VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
     "ignore_bad": bool,
     "keep_tmp": bool,
 })
-VDiceMetricParametersTagged = typing.TypedDict('VDiceMetricParametersTagged', {
+VDiceMetricParamsDictTagged = typing.TypedDict('VDiceMetricParamsDictTagged', {
     "@type": typing.Literal["afni/@DiceMetric"],
     "base": InputPathType,
     "dsets": list[InputPathType],
@@ -49,7 +49,7 @@ VDiceMetricParametersTagged = typing.TypedDict('VDiceMetricParametersTagged', {
 
 class VDiceMetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDiceMetricParameters(...)`.
+    Output object returned when calling `VDiceMetricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def v__dice_metric_params(
     prefix: str | None = None,
     ignore_bad: bool = False,
     keep_tmp: bool = False,
-) -> VDiceMetricParametersTagged:
+) -> VDiceMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def v__dice_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDiceMetricParameters` object.
+    `VDiceMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -188,7 +188,7 @@ def v__dice_metric_validate(
 
 
 def v__dice_metric_cargs(
-    params: VDiceMetricParameters,
+    params: VDiceMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def v__dice_metric_cargs(
 
 
 def v__dice_metric_outputs(
-    params: VDiceMetricParameters,
+    params: VDiceMetricParamsDict,
     execution: Execution,
 ) -> VDiceMetricOutputs:
     """
@@ -267,7 +267,7 @@ def v__dice_metric_outputs(
 
 
 def v__dice_metric_execute(
-    params: VDiceMetricParameters,
+    params: VDiceMetricParamsDict,
     runner: Runner | None = None,
 ) -> VDiceMetricOutputs:
     """
@@ -367,6 +367,8 @@ def v__dice_metric(
 
 __all__ = [
     "VDiceMetricOutputs",
+    "VDiceMetricParamsDict",
+    "VDiceMetricParamsDictTagged",
     "V__DICE_METRIC_METADATA",
     "v__dice_metric",
     "v__dice_metric_execute",

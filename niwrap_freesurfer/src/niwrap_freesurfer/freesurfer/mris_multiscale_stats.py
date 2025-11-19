@@ -13,7 +13,7 @@ MRIS_MULTISCALE_STATS_METADATA = Metadata(
 )
 
 
-MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters', {
+MrisMultiscaleStatsParamsDict = typing.TypedDict('MrisMultiscaleStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multiscale_stats"]],
     "output_subject": str,
     "hemi": str,
@@ -22,7 +22,7 @@ MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters'
     "class1_subjects": list[str],
     "class2_subjects": list[str],
 })
-MrisMultiscaleStatsParametersTagged = typing.TypedDict('MrisMultiscaleStatsParametersTagged', {
+MrisMultiscaleStatsParamsDictTagged = typing.TypedDict('MrisMultiscaleStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_multiscale_stats"],
     "output_subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisMultiscaleStatsParametersTagged = typing.TypedDict('MrisMultiscaleStatsParam
 
 class MrisMultiscaleStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMultiscaleStatsParameters(...)`.
+    Output object returned when calling `MrisMultiscaleStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def mris_multiscale_stats_params(
     curv: InputPathType,
     class1_subjects: list[str],
     class2_subjects: list[str],
-) -> MrisMultiscaleStatsParametersTagged:
+) -> MrisMultiscaleStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def mris_multiscale_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMultiscaleStatsParameters` object.
+    `MrisMultiscaleStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def mris_multiscale_stats_validate(
 
 
 def mris_multiscale_stats_cargs(
-    params: MrisMultiscaleStatsParameters,
+    params: MrisMultiscaleStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def mris_multiscale_stats_cargs(
 
 
 def mris_multiscale_stats_outputs(
-    params: MrisMultiscaleStatsParameters,
+    params: MrisMultiscaleStatsParamsDict,
     execution: Execution,
 ) -> MrisMultiscaleStatsOutputs:
     """
@@ -165,7 +165,7 @@ def mris_multiscale_stats_outputs(
 
 
 def mris_multiscale_stats_execute(
-    params: MrisMultiscaleStatsParameters,
+    params: MrisMultiscaleStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisMultiscaleStatsOutputs:
     """
@@ -238,6 +238,8 @@ def mris_multiscale_stats(
 __all__ = [
     "MRIS_MULTISCALE_STATS_METADATA",
     "MrisMultiscaleStatsOutputs",
+    "MrisMultiscaleStatsParamsDict",
+    "MrisMultiscaleStatsParamsDictTagged",
     "mris_multiscale_stats",
     "mris_multiscale_stats_execute",
     "mris_multiscale_stats_params",

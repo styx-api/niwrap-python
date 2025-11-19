@@ -13,14 +13,14 @@ FLOAT_SCAN_METADATA = Metadata(
 )
 
 
-FloatScanParameters = typing.TypedDict('FloatScanParameters', {
+FloatScanParamsDict = typing.TypedDict('FloatScanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/float_scan"]],
     "fix_illegal_values": bool,
     "verbose_mode": bool,
     "skip_count": typing.NotRequired[int | None],
     "input_file": InputPathType,
 })
-FloatScanParametersTagged = typing.TypedDict('FloatScanParametersTagged', {
+FloatScanParamsDictTagged = typing.TypedDict('FloatScanParamsDictTagged', {
     "@type": typing.Literal["afni/float_scan"],
     "fix_illegal_values": bool,
     "verbose_mode": bool,
@@ -31,7 +31,7 @@ FloatScanParametersTagged = typing.TypedDict('FloatScanParametersTagged', {
 
 class FloatScanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FloatScanParameters(...)`.
+    Output object returned when calling `FloatScanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def float_scan_params(
     fix_illegal_values: bool = False,
     verbose_mode: bool = False,
     skip_count: int | None = None,
-) -> FloatScanParametersTagged:
+) -> FloatScanParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def float_scan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FloatScanParameters` object.
+    `FloatScanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def float_scan_validate(
 
 
 def float_scan_cargs(
-    params: FloatScanParameters,
+    params: FloatScanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def float_scan_cargs(
 
 
 def float_scan_outputs(
-    params: FloatScanParameters,
+    params: FloatScanParamsDict,
     execution: Execution,
 ) -> FloatScanOutputs:
     """
@@ -147,7 +147,7 @@ def float_scan_outputs(
 
 
 def float_scan_execute(
-    params: FloatScanParameters,
+    params: FloatScanParamsDict,
     runner: Runner | None = None,
 ) -> FloatScanOutputs:
     """
@@ -216,6 +216,8 @@ def float_scan(
 __all__ = [
     "FLOAT_SCAN_METADATA",
     "FloatScanOutputs",
+    "FloatScanParamsDict",
+    "FloatScanParamsDictTagged",
     "float_scan",
     "float_scan_execute",
     "float_scan_params",

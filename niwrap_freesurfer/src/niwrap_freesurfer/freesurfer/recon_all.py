@@ -13,7 +13,7 @@ RECON_ALL_METADATA = Metadata(
 )
 
 
-ReconAllParameters = typing.TypedDict('ReconAllParameters', {
+ReconAllParamsDict = typing.TypedDict('ReconAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all"]],
     "subjid": str,
     "all_flag": bool,
@@ -85,7 +85,7 @@ ReconAllParameters = typing.TypedDict('ReconAllParameters', {
     "version": bool,
     "help": bool,
 })
-ReconAllParametersTagged = typing.TypedDict('ReconAllParametersTagged', {
+ReconAllParamsDictTagged = typing.TypedDict('ReconAllParamsDictTagged', {
     "@type": typing.Literal["freesurfer/recon-all"],
     "subjid": str,
     "all_flag": bool,
@@ -161,7 +161,7 @@ ReconAllParametersTagged = typing.TypedDict('ReconAllParametersTagged', {
 
 class ReconAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReconAllParameters(...)`.
+    Output object returned when calling `ReconAllParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -241,7 +241,7 @@ def recon_all_params(
     dontrun: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> ReconAllParametersTagged:
+) -> ReconAllParamsDictTagged:
     """
     Build parameters.
     
@@ -436,7 +436,7 @@ def recon_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReconAllParameters` object.
+    `ReconAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -717,7 +717,7 @@ def recon_all_validate(
 
 
 def recon_all_cargs(
-    params: ReconAllParameters,
+    params: ReconAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -965,7 +965,7 @@ def recon_all_cargs(
 
 
 def recon_all_outputs(
-    params: ReconAllParameters,
+    params: ReconAllParamsDict,
     execution: Execution,
 ) -> ReconAllOutputs:
     """
@@ -986,7 +986,7 @@ def recon_all_outputs(
 
 
 def recon_all_execute(
-    params: ReconAllParameters,
+    params: ReconAllParamsDict,
     runner: Runner | None = None,
 ) -> ReconAllOutputs:
     """
@@ -1256,6 +1256,8 @@ def recon_all(
 __all__ = [
     "RECON_ALL_METADATA",
     "ReconAllOutputs",
+    "ReconAllParamsDict",
+    "ReconAllParamsDictTagged",
     "recon_all",
     "recon_all_execute",
     "recon_all_params",

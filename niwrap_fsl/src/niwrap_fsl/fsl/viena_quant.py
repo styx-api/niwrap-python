@@ -13,13 +13,13 @@ VIENA_QUANT_METADATA = Metadata(
 )
 
 
-VienaQuantParameters = typing.TypedDict('VienaQuantParameters', {
+VienaQuantParamsDict = typing.TypedDict('VienaQuantParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/viena_quant"]],
     "input1": InputPathType,
     "input2": InputPathType,
     "ventricle_mask": InputPathType,
 })
-VienaQuantParametersTagged = typing.TypedDict('VienaQuantParametersTagged', {
+VienaQuantParamsDictTagged = typing.TypedDict('VienaQuantParamsDictTagged', {
     "@type": typing.Literal["fsl/viena_quant"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -29,7 +29,7 @@ VienaQuantParametersTagged = typing.TypedDict('VienaQuantParametersTagged', {
 
 class VienaQuantOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VienaQuantParameters(...)`.
+    Output object returned when calling `VienaQuantParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def viena_quant_params(
     input1: InputPathType,
     input2: InputPathType,
     ventricle_mask: InputPathType,
-) -> VienaQuantParametersTagged:
+) -> VienaQuantParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def viena_quant_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VienaQuantParameters` object.
+    `VienaQuantParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def viena_quant_validate(
 
 
 def viena_quant_cargs(
-    params: VienaQuantParameters,
+    params: VienaQuantParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def viena_quant_cargs(
 
 
 def viena_quant_outputs(
-    params: VienaQuantParameters,
+    params: VienaQuantParamsDict,
     execution: Execution,
 ) -> VienaQuantOutputs:
     """
@@ -129,7 +129,7 @@ def viena_quant_outputs(
 
 
 def viena_quant_execute(
-    params: VienaQuantParameters,
+    params: VienaQuantParamsDict,
     runner: Runner | None = None,
 ) -> VienaQuantOutputs:
     """
@@ -191,6 +191,8 @@ def viena_quant(
 __all__ = [
     "VIENA_QUANT_METADATA",
     "VienaQuantOutputs",
+    "VienaQuantParamsDict",
+    "VienaQuantParamsDictTagged",
     "viena_quant",
     "viena_quant_execute",
     "viena_quant_params",

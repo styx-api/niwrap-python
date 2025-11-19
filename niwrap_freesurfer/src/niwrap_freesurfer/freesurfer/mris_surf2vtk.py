@@ -13,12 +13,12 @@ MRIS_SURF2VTK_METADATA = Metadata(
 )
 
 
-MrisSurf2vtkParameters = typing.TypedDict('MrisSurf2vtkParameters', {
+MrisSurf2vtkParamsDict = typing.TypedDict('MrisSurf2vtkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surf2vtk"]],
     "input_surface": InputPathType,
     "output_surface": str,
 })
-MrisSurf2vtkParametersTagged = typing.TypedDict('MrisSurf2vtkParametersTagged', {
+MrisSurf2vtkParamsDictTagged = typing.TypedDict('MrisSurf2vtkParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_surf2vtk"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisSurf2vtkParametersTagged = typing.TypedDict('MrisSurf2vtkParametersTagged', 
 
 class MrisSurf2vtkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSurf2vtkParameters(...)`.
+    Output object returned when calling `MrisSurf2vtkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisSurf2vtkOutputs(typing.NamedTuple):
 def mris_surf2vtk_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisSurf2vtkParametersTagged:
+) -> MrisSurf2vtkParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_surf2vtk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSurf2vtkParameters` object.
+    `MrisSurf2vtkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_surf2vtk_validate(
 
 
 def mris_surf2vtk_cargs(
-    params: MrisSurf2vtkParameters,
+    params: MrisSurf2vtkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -105,7 +105,7 @@ def mris_surf2vtk_cargs(
 
 
 def mris_surf2vtk_outputs(
-    params: MrisSurf2vtkParameters,
+    params: MrisSurf2vtkParamsDict,
     execution: Execution,
 ) -> MrisSurf2vtkOutputs:
     """
@@ -125,7 +125,7 @@ def mris_surf2vtk_outputs(
 
 
 def mris_surf2vtk_execute(
-    params: MrisSurf2vtkParameters,
+    params: MrisSurf2vtkParamsDict,
     runner: Runner | None = None,
 ) -> MrisSurf2vtkOutputs:
     """
@@ -184,6 +184,8 @@ def mris_surf2vtk(
 __all__ = [
     "MRIS_SURF2VTK_METADATA",
     "MrisSurf2vtkOutputs",
+    "MrisSurf2vtkParamsDict",
+    "MrisSurf2vtkParamsDictTagged",
     "mris_surf2vtk",
     "mris_surf2vtk_execute",
     "mris_surf2vtk_params",

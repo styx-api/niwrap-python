@@ -13,7 +13,7 @@ MRI_CONVERT_METADATA = Metadata(
 )
 
 
-MriConvertParameters = typing.TypedDict('MriConvertParameters', {
+MriConvertParamsDict = typing.TypedDict('MriConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_convert"]],
     "inp_volume": InputPathType,
     "out_volume": str,
@@ -35,7 +35,7 @@ MriConvertParameters = typing.TypedDict('MriConvertParameters', {
     "bfile_little_endian": bool,
     "sphinx": bool,
 })
-MriConvertParametersTagged = typing.TypedDict('MriConvertParametersTagged', {
+MriConvertParamsDictTagged = typing.TypedDict('MriConvertParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_convert"],
     "inp_volume": InputPathType,
     "out_volume": str,
@@ -61,7 +61,7 @@ MriConvertParametersTagged = typing.TypedDict('MriConvertParametersTagged', {
 
 class MriConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriConvertParameters(...)`.
+    Output object returned when calling `MriConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def mri_convert_params(
     scale_factor: float | None = None,
     bfile_little_endian: bool = False,
     sphinx: bool = False,
-) -> MriConvertParametersTagged:
+) -> MriConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -155,7 +155,7 @@ def mri_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriConvertParameters` object.
+    `MriConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def mri_convert_validate(
 
 
 def mri_convert_cargs(
-    params: MriConvertParameters,
+    params: MriConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -311,7 +311,7 @@ def mri_convert_cargs(
 
 
 def mri_convert_outputs(
-    params: MriConvertParameters,
+    params: MriConvertParamsDict,
     execution: Execution,
 ) -> MriConvertOutputs:
     """
@@ -331,7 +331,7 @@ def mri_convert_outputs(
 
 
 def mri_convert_execute(
-    params: MriConvertParameters,
+    params: MriConvertParamsDict,
     runner: Runner | None = None,
 ) -> MriConvertOutputs:
     """
@@ -444,6 +444,8 @@ def mri_convert(
 __all__ = [
     "MRI_CONVERT_METADATA",
     "MriConvertOutputs",
+    "MriConvertParamsDict",
+    "MriConvertParamsDictTagged",
     "mri_convert",
     "mri_convert_execute",
     "mri_convert_params",

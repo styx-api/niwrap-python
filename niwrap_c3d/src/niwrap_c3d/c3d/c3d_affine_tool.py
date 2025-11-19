@@ -13,7 +13,7 @@ C3D_AFFINE_TOOL_METADATA = Metadata(
 )
 
 
-C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
+C3dAffineToolParamsDict = typing.TypedDict('C3dAffineToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["c3d/c3d_affine_tool"]],
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
     "info": bool,
     "info_full": bool,
 })
-C3dAffineToolParametersTagged = typing.TypedDict('C3dAffineToolParametersTagged', {
+C3dAffineToolParamsDictTagged = typing.TypedDict('C3dAffineToolParamsDictTagged', {
     "@type": typing.Literal["c3d/c3d_affine_tool"],
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ C3dAffineToolParametersTagged = typing.TypedDict('C3dAffineToolParametersTagged'
 
 class C3dAffineToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `C3dAffineToolParameters(...)`.
+    Output object returned when calling `C3dAffineToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def c3d_affine_tool_params(
     out_matfile: str | None = None,
     info: bool = False,
     info_full: bool = False,
-) -> C3dAffineToolParametersTagged:
+) -> C3dAffineToolParamsDictTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def c3d_affine_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAffineToolParameters` object.
+    `C3dAffineToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def c3d_affine_tool_validate(
 
 
 def c3d_affine_tool_cargs(
-    params: C3dAffineToolParameters,
+    params: C3dAffineToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -296,7 +296,7 @@ def c3d_affine_tool_cargs(
 
 
 def c3d_affine_tool_outputs(
-    params: C3dAffineToolParameters,
+    params: C3dAffineToolParamsDict,
     execution: Execution,
 ) -> C3dAffineToolOutputs:
     """
@@ -318,7 +318,7 @@ def c3d_affine_tool_outputs(
 
 
 def c3d_affine_tool_execute(
-    params: C3dAffineToolParameters,
+    params: C3dAffineToolParamsDict,
     runner: Runner | None = None,
 ) -> C3dAffineToolOutputs:
     """
@@ -424,6 +424,8 @@ def c3d_affine_tool(
 __all__ = [
     "C3D_AFFINE_TOOL_METADATA",
     "C3dAffineToolOutputs",
+    "C3dAffineToolParamsDict",
+    "C3dAffineToolParamsDictTagged",
     "c3d_affine_tool",
     "c3d_affine_tool_execute",
     "c3d_affine_tool_params",

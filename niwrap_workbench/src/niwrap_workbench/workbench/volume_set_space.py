@@ -12,7 +12,7 @@ VOLUME_SET_SPACE_METADATA = Metadata(
 )
 
 
-VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters', {
+VolumeSetSpacePlumbParamsDict = typing.TypedDict('VolumeSetSpacePlumbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["plumb"]],
     "axis-order": str,
     "x-spacing": float,
@@ -22,7 +22,7 @@ VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters'
     "y-offset": float,
     "z-offset": float,
 })
-VolumeSetSpacePlumbParametersTagged = typing.TypedDict('VolumeSetSpacePlumbParametersTagged', {
+VolumeSetSpacePlumbParamsDictTagged = typing.TypedDict('VolumeSetSpacePlumbParamsDictTagged', {
     "@type": typing.Literal["plumb"],
     "axis-order": str,
     "x-spacing": float,
@@ -34,7 +34,7 @@ VolumeSetSpacePlumbParametersTagged = typing.TypedDict('VolumeSetSpacePlumbParam
 })
 
 
-VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters', {
+VolumeSetSpaceSformParamsDict = typing.TypedDict('VolumeSetSpaceSformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sform"]],
     "xi-spacing": float,
     "xj-spacing": float,
@@ -49,7 +49,7 @@ VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters'
     "zk-spacing": float,
     "z-offset": float,
 })
-VolumeSetSpaceSformParametersTagged = typing.TypedDict('VolumeSetSpaceSformParametersTagged', {
+VolumeSetSpaceSformParamsDictTagged = typing.TypedDict('VolumeSetSpaceSformParamsDictTagged', {
     "@type": typing.Literal["sform"],
     "xi-spacing": float,
     "xj-spacing": float,
@@ -66,37 +66,37 @@ VolumeSetSpaceSformParametersTagged = typing.TypedDict('VolumeSetSpaceSformParam
 })
 
 
-VolumeSetSpaceFileParameters = typing.TypedDict('VolumeSetSpaceFileParameters', {
+VolumeSetSpaceFileParamsDict = typing.TypedDict('VolumeSetSpaceFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["file"]],
     "volume-ref": str,
     "ignore-dims": bool,
 })
-VolumeSetSpaceFileParametersTagged = typing.TypedDict('VolumeSetSpaceFileParametersTagged', {
+VolumeSetSpaceFileParamsDictTagged = typing.TypedDict('VolumeSetSpaceFileParamsDictTagged', {
     "@type": typing.Literal["file"],
     "volume-ref": str,
     "ignore-dims": bool,
 })
 
 
-VolumeSetSpaceParameters = typing.TypedDict('VolumeSetSpaceParameters', {
+VolumeSetSpaceParamsDict = typing.TypedDict('VolumeSetSpaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-set-space"]],
-    "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
-    "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
-    "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
+    "plumb": typing.NotRequired[VolumeSetSpacePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeSetSpaceSformParamsDict | None],
+    "file": typing.NotRequired[VolumeSetSpaceFileParamsDict | None],
     "volume-in": InputPathType,
     "volume-out": str,
 })
-VolumeSetSpaceParametersTagged = typing.TypedDict('VolumeSetSpaceParametersTagged', {
+VolumeSetSpaceParamsDictTagged = typing.TypedDict('VolumeSetSpaceParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-set-space"],
-    "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
-    "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
-    "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
+    "plumb": typing.NotRequired[VolumeSetSpacePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeSetSpaceSformParamsDict | None],
+    "file": typing.NotRequired[VolumeSetSpaceFileParamsDict | None],
     "volume-in": InputPathType,
     "volume-out": str,
 })
 
 
-def volume_set_space_plumb_params(
+def volume_set_space_plumb(
     axis_order: str,
     x_spacing: float,
     y_spacing: float,
@@ -104,7 +104,7 @@ def volume_set_space_plumb_params(
     x_offset: float,
     y_offset: float,
     z_offset: float,
-) -> VolumeSetSpacePlumbParametersTagged:
+) -> VolumeSetSpacePlumbParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def volume_set_space_plumb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeSetSpacePlumbParameters` object.
+    `VolumeSetSpacePlumbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def volume_set_space_plumb_validate(
 
 
 def volume_set_space_plumb_cargs(
-    params: VolumeSetSpacePlumbParameters,
+    params: VolumeSetSpacePlumbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -202,7 +202,7 @@ def volume_set_space_plumb_cargs(
     return cargs
 
 
-def volume_set_space_sform_params(
+def volume_set_space_sform(
     xi_spacing: float,
     xj_spacing: float,
     xk_spacing: float,
@@ -215,7 +215,7 @@ def volume_set_space_sform_params(
     zj_spacing: float,
     zk_spacing: float,
     z_offset: float,
-) -> VolumeSetSpaceSformParametersTagged:
+) -> VolumeSetSpaceSformParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def volume_set_space_sform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeSetSpaceSformParameters` object.
+    `VolumeSetSpaceSformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -316,7 +316,7 @@ def volume_set_space_sform_validate(
 
 
 def volume_set_space_sform_cargs(
-    params: VolumeSetSpaceSformParameters,
+    params: VolumeSetSpaceSformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -347,10 +347,10 @@ def volume_set_space_sform_cargs(
     return cargs
 
 
-def volume_set_space_file_params(
+def volume_set_space_file(
     volume_ref: str,
     ignore_dims: bool = False,
-) -> VolumeSetSpaceFileParametersTagged:
+) -> VolumeSetSpaceFileParamsDictTagged:
     """
     Build parameters.
     
@@ -373,7 +373,7 @@ def volume_set_space_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeSetSpaceFileParameters` object.
+    `VolumeSetSpaceFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -391,7 +391,7 @@ def volume_set_space_file_validate(
 
 
 def volume_set_space_file_cargs(
-    params: VolumeSetSpaceFileParameters,
+    params: VolumeSetSpaceFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -415,7 +415,7 @@ def volume_set_space_file_cargs(
 
 class VolumeSetSpaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeSetSpaceParameters(...)`.
+    Output object returned when calling `VolumeSetSpaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -424,10 +424,10 @@ class VolumeSetSpaceOutputs(typing.NamedTuple):
 def volume_set_space_params(
     volume_in: InputPathType,
     volume_out: str,
-    plumb: VolumeSetSpacePlumbParameters | None = None,
-    sform: VolumeSetSpaceSformParameters | None = None,
-    file: VolumeSetSpaceFileParameters | None = None,
-) -> VolumeSetSpaceParametersTagged:
+    plumb: VolumeSetSpacePlumbParamsDict | None = None,
+    sform: VolumeSetSpaceSformParamsDict | None = None,
+    file: VolumeSetSpaceFileParamsDict | None = None,
+) -> VolumeSetSpaceParamsDictTagged:
     """
     Build parameters.
     
@@ -459,7 +459,7 @@ def volume_set_space_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeSetSpaceParameters` object.
+    `VolumeSetSpaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -483,7 +483,7 @@ def volume_set_space_validate(
 
 
 def volume_set_space_cargs(
-    params: VolumeSetSpaceParameters,
+    params: VolumeSetSpaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -510,7 +510,7 @@ def volume_set_space_cargs(
 
 
 def volume_set_space_outputs(
-    params: VolumeSetSpaceParameters,
+    params: VolumeSetSpaceParamsDict,
     execution: Execution,
 ) -> VolumeSetSpaceOutputs:
     """
@@ -529,7 +529,7 @@ def volume_set_space_outputs(
 
 
 def volume_set_space_execute(
-    params: VolumeSetSpaceParameters,
+    params: VolumeSetSpaceParamsDict,
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
@@ -559,9 +559,9 @@ def volume_set_space_execute(
 def volume_set_space(
     volume_in: InputPathType,
     volume_out: str,
-    plumb: VolumeSetSpacePlumbParameters | None = None,
-    sform: VolumeSetSpaceSformParameters | None = None,
-    file: VolumeSetSpaceFileParameters | None = None,
+    plumb: VolumeSetSpacePlumbParamsDict | None = None,
+    sform: VolumeSetSpaceSformParamsDict | None = None,
+    file: VolumeSetSpaceFileParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
@@ -594,11 +594,19 @@ def volume_set_space(
 
 __all__ = [
     "VOLUME_SET_SPACE_METADATA",
+    "VolumeSetSpaceFileParamsDict",
+    "VolumeSetSpaceFileParamsDictTagged",
     "VolumeSetSpaceOutputs",
+    "VolumeSetSpaceParamsDict",
+    "VolumeSetSpaceParamsDictTagged",
+    "VolumeSetSpacePlumbParamsDict",
+    "VolumeSetSpacePlumbParamsDictTagged",
+    "VolumeSetSpaceSformParamsDict",
+    "VolumeSetSpaceSformParamsDictTagged",
     "volume_set_space",
     "volume_set_space_execute",
-    "volume_set_space_file_params",
+    "volume_set_space_file",
     "volume_set_space_params",
-    "volume_set_space_plumb_params",
-    "volume_set_space_sform_params",
+    "volume_set_space_plumb",
+    "volume_set_space_sform",
 ]

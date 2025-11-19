@@ -13,7 +13,7 @@ V_3D_PFM_METADATA = Metadata(
 )
 
 
-V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
+V3dPfmParamsDict = typing.TypedDict('V3dPfmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dPFM"]],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
     "nSeg": typing.NotRequired[float | None],
     "verb": typing.NotRequired[float | None],
 })
-V3dPfmParametersTagged = typing.TypedDict('V3dPfmParametersTagged', {
+V3dPfmParamsDictTagged = typing.TypedDict('V3dPfmParamsDictTagged', {
     "@type": typing.Literal["afni/3dPFM"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ V3dPfmParametersTagged = typing.TypedDict('V3dPfmParametersTagged', {
 
 class V3dPfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dPfmParameters(...)`.
+    Output object returned when calling `V3dPfmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +129,7 @@ def v_3d_pfm_params(
     jobs: float | None = None,
     n_seg: float | None = None,
     verb: float | None = None,
-) -> V3dPfmParametersTagged:
+) -> V3dPfmParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def v_3d_pfm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dPfmParameters` object.
+    `V3dPfmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -254,7 +254,7 @@ def v_3d_pfm_validate(
 
 
 def v_3d_pfm_cargs(
-    params: V3dPfmParameters,
+    params: V3dPfmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -346,7 +346,7 @@ def v_3d_pfm_cargs(
 
 
 def v_3d_pfm_outputs(
-    params: V3dPfmParameters,
+    params: V3dPfmParamsDict,
     execution: Execution,
 ) -> V3dPfmOutputs:
     """
@@ -391,7 +391,7 @@ def v_3d_pfm_outputs(
 
 
 def v_3d_pfm_execute(
-    params: V3dPfmParameters,
+    params: V3dPfmParamsDict,
     runner: Runner | None = None,
 ) -> V3dPfmOutputs:
     """
@@ -493,6 +493,8 @@ def v_3d_pfm(
 
 __all__ = [
     "V3dPfmOutputs",
+    "V3dPfmParamsDict",
+    "V3dPfmParamsDictTagged",
     "V_3D_PFM_METADATA",
     "v_3d_pfm",
     "v_3d_pfm_execute",

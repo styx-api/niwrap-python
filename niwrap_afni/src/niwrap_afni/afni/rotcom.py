@@ -13,12 +13,12 @@ ROTCOM_METADATA = Metadata(
 )
 
 
-RotcomParameters = typing.TypedDict('RotcomParameters', {
+RotcomParamsDict = typing.TypedDict('RotcomParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/rotcom"]],
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })
-RotcomParametersTagged = typing.TypedDict('RotcomParametersTagged', {
+RotcomParamsDictTagged = typing.TypedDict('RotcomParamsDictTagged', {
     "@type": typing.Literal["afni/rotcom"],
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ RotcomParametersTagged = typing.TypedDict('RotcomParametersTagged', {
 
 class RotcomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RotcomParameters(...)`.
+    Output object returned when calling `RotcomParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class RotcomOutputs(typing.NamedTuple):
 def rotcom_params(
     rotate_ashift: str,
     dataset: InputPathType | None = None,
-) -> RotcomParametersTagged:
+) -> RotcomParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def rotcom_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RotcomParameters` object.
+    `RotcomParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def rotcom_validate(
 
 
 def rotcom_cargs(
-    params: RotcomParameters,
+    params: RotcomParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def rotcom_cargs(
 
 
 def rotcom_outputs(
-    params: RotcomParameters,
+    params: RotcomParamsDict,
     execution: Execution,
 ) -> RotcomOutputs:
     """
@@ -121,7 +121,7 @@ def rotcom_outputs(
 
 
 def rotcom_execute(
-    params: RotcomParameters,
+    params: RotcomParamsDict,
     runner: Runner | None = None,
 ) -> RotcomOutputs:
     """
@@ -183,6 +183,8 @@ def rotcom(
 __all__ = [
     "ROTCOM_METADATA",
     "RotcomOutputs",
+    "RotcomParamsDict",
+    "RotcomParamsDictTagged",
     "rotcom",
     "rotcom_execute",
     "rotcom_params",

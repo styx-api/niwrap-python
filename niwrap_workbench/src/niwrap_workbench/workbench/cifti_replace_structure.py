@@ -12,49 +12,49 @@ CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
 )
 
 
-CiftiReplaceStructureVolumeAllParameters = typing.TypedDict('CiftiReplaceStructureVolumeAllParameters', {
+CiftiReplaceStructureVolumeAllParamsDict = typing.TypedDict('CiftiReplaceStructureVolumeAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-all"]],
     "volume": InputPathType,
     "from-cropped": bool,
 })
-CiftiReplaceStructureVolumeAllParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeAllParametersTagged', {
+CiftiReplaceStructureVolumeAllParamsDictTagged = typing.TypedDict('CiftiReplaceStructureVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "volume": InputPathType,
     "from-cropped": bool,
 })
 
 
-CiftiReplaceStructureLabelParameters = typing.TypedDict('CiftiReplaceStructureLabelParameters', {
+CiftiReplaceStructureLabelParamsDict = typing.TypedDict('CiftiReplaceStructureLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "structure": str,
     "label": InputPathType,
 })
-CiftiReplaceStructureLabelParametersTagged = typing.TypedDict('CiftiReplaceStructureLabelParametersTagged', {
+CiftiReplaceStructureLabelParamsDictTagged = typing.TypedDict('CiftiReplaceStructureLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "structure": str,
     "label": InputPathType,
 })
 
 
-CiftiReplaceStructureMetricParameters = typing.TypedDict('CiftiReplaceStructureMetricParameters', {
+CiftiReplaceStructureMetricParamsDict = typing.TypedDict('CiftiReplaceStructureMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "structure": str,
     "metric": InputPathType,
 })
-CiftiReplaceStructureMetricParametersTagged = typing.TypedDict('CiftiReplaceStructureMetricParametersTagged', {
+CiftiReplaceStructureMetricParamsDictTagged = typing.TypedDict('CiftiReplaceStructureMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric": InputPathType,
 })
 
 
-CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureVolumeParameters', {
+CiftiReplaceStructureVolumeParamsDict = typing.TypedDict('CiftiReplaceStructureVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
     "volume": InputPathType,
     "from-cropped": bool,
 })
-CiftiReplaceStructureVolumeParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeParametersTagged', {
+CiftiReplaceStructureVolumeParamsDictTagged = typing.TypedDict('CiftiReplaceStructureVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "volume": InputPathType,
@@ -62,34 +62,34 @@ CiftiReplaceStructureVolumeParametersTagged = typing.TypedDict('CiftiReplaceStru
 })
 
 
-CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParameters', {
+CiftiReplaceStructureParamsDict = typing.TypedDict('CiftiReplaceStructureParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-replace-structure"]],
-    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
+    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
     "discard-unused-labels": bool,
     "action": typing.NotRequired[str | None],
-    "label": typing.NotRequired[list[CiftiReplaceStructureLabelParameters] | None],
-    "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParameters] | None],
-    "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParameters] | None],
+    "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
     "cifti": str,
     "direction": str,
 })
-CiftiReplaceStructureParametersTagged = typing.TypedDict('CiftiReplaceStructureParametersTagged', {
+CiftiReplaceStructureParamsDictTagged = typing.TypedDict('CiftiReplaceStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-replace-structure"],
-    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
+    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
     "discard-unused-labels": bool,
     "action": typing.NotRequired[str | None],
-    "label": typing.NotRequired[list[CiftiReplaceStructureLabelParameters] | None],
-    "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParameters] | None],
-    "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParameters] | None],
+    "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
     "cifti": str,
     "direction": str,
 })
 
 
-def cifti_replace_structure_volume_all_params(
+def cifti_replace_structure_volume_all(
     volume: InputPathType,
     from_cropped: bool = False,
-) -> CiftiReplaceStructureVolumeAllParametersTagged:
+) -> CiftiReplaceStructureVolumeAllParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def cifti_replace_structure_volume_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReplaceStructureVolumeAllParameters` object.
+    `CiftiReplaceStructureVolumeAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def cifti_replace_structure_volume_all_validate(
 
 
 def cifti_replace_structure_volume_all_cargs(
-    params: CiftiReplaceStructureVolumeAllParameters,
+    params: CiftiReplaceStructureVolumeAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,10 +152,10 @@ def cifti_replace_structure_volume_all_cargs(
     return cargs
 
 
-def cifti_replace_structure_label_params(
+def cifti_replace_structure_label(
     structure: str,
     label: InputPathType,
-) -> CiftiReplaceStructureLabelParametersTagged:
+) -> CiftiReplaceStructureLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def cifti_replace_structure_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReplaceStructureLabelParameters` object.
+    `CiftiReplaceStructureLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def cifti_replace_structure_label_validate(
 
 
 def cifti_replace_structure_label_cargs(
-    params: CiftiReplaceStructureLabelParameters,
+    params: CiftiReplaceStructureLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -217,10 +217,10 @@ def cifti_replace_structure_label_cargs(
     return cargs
 
 
-def cifti_replace_structure_metric_params(
+def cifti_replace_structure_metric(
     structure: str,
     metric: InputPathType,
-) -> CiftiReplaceStructureMetricParametersTagged:
+) -> CiftiReplaceStructureMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -243,7 +243,7 @@ def cifti_replace_structure_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReplaceStructureMetricParameters` object.
+    `CiftiReplaceStructureMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -261,7 +261,7 @@ def cifti_replace_structure_metric_validate(
 
 
 def cifti_replace_structure_metric_cargs(
-    params: CiftiReplaceStructureMetricParameters,
+    params: CiftiReplaceStructureMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,11 +282,11 @@ def cifti_replace_structure_metric_cargs(
     return cargs
 
 
-def cifti_replace_structure_volume_params(
+def cifti_replace_structure_volume(
     structure: str,
     volume: InputPathType,
     from_cropped: bool = False,
-) -> CiftiReplaceStructureVolumeParametersTagged:
+) -> CiftiReplaceStructureVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -311,7 +311,7 @@ def cifti_replace_structure_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReplaceStructureVolumeParameters` object.
+    `CiftiReplaceStructureVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -333,7 +333,7 @@ def cifti_replace_structure_volume_validate(
 
 
 def cifti_replace_structure_volume_cargs(
-    params: CiftiReplaceStructureVolumeParameters,
+    params: CiftiReplaceStructureVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -358,7 +358,7 @@ def cifti_replace_structure_volume_cargs(
 
 class CiftiReplaceStructureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiReplaceStructureParameters(...)`.
+    Output object returned when calling `CiftiReplaceStructureParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -368,12 +368,12 @@ def cifti_replace_structure_params(
     action: str | None,
     cifti: str,
     direction: str,
-    volume_all: CiftiReplaceStructureVolumeAllParameters | None = None,
+    volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
     discard_unused_labels: bool = False,
-    label: list[CiftiReplaceStructureLabelParameters] | None = None,
-    metric: list[CiftiReplaceStructureMetricParameters] | None = None,
-    volume: list[CiftiReplaceStructureVolumeParameters] | None = None,
-) -> CiftiReplaceStructureParametersTagged:
+    label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
+    metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
+    volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
+) -> CiftiReplaceStructureParamsDictTagged:
     """
     Build parameters.
     
@@ -417,7 +417,7 @@ def cifti_replace_structure_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReplaceStructureParameters` object.
+    `CiftiReplaceStructureParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -435,17 +435,17 @@ def cifti_replace_structure_validate(
             raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiReplaceStructureLabelParameters] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiReplaceStructureLabelParamsDict] | None`')
         for e in params["label"]:
             cifti_replace_structure_label_validate(e)
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiReplaceStructureMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiReplaceStructureMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_replace_structure_metric_validate(e)
     if params.get("volume", None) is not None:
         if not isinstance(params["volume"], list):
-            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiReplaceStructureVolumeParameters] | None`')
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiReplaceStructureVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_replace_structure_volume_validate(e)
     if params.get("cifti", None) is None:
@@ -459,7 +459,7 @@ def cifti_replace_structure_validate(
 
 
 def cifti_replace_structure_cargs(
-    params: CiftiReplaceStructureParameters,
+    params: CiftiReplaceStructureParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -490,7 +490,7 @@ def cifti_replace_structure_cargs(
 
 
 def cifti_replace_structure_outputs(
-    params: CiftiReplaceStructureParameters,
+    params: CiftiReplaceStructureParamsDict,
     execution: Execution,
 ) -> CiftiReplaceStructureOutputs:
     """
@@ -509,7 +509,7 @@ def cifti_replace_structure_outputs(
 
 
 def cifti_replace_structure_execute(
-    params: CiftiReplaceStructureParameters,
+    params: CiftiReplaceStructureParamsDict,
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
@@ -583,11 +583,11 @@ def cifti_replace_structure(
     action: str | None,
     cifti: str,
     direction: str,
-    volume_all: CiftiReplaceStructureVolumeAllParameters | None = None,
+    volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
     discard_unused_labels: bool = False,
-    label: list[CiftiReplaceStructureLabelParameters] | None = None,
-    metric: list[CiftiReplaceStructureMetricParameters] | None = None,
-    volume: list[CiftiReplaceStructureVolumeParameters] | None = None,
+    label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
+    metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
+    volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
@@ -673,12 +673,22 @@ def cifti_replace_structure(
 
 __all__ = [
     "CIFTI_REPLACE_STRUCTURE_METADATA",
+    "CiftiReplaceStructureLabelParamsDict",
+    "CiftiReplaceStructureLabelParamsDictTagged",
+    "CiftiReplaceStructureMetricParamsDict",
+    "CiftiReplaceStructureMetricParamsDictTagged",
     "CiftiReplaceStructureOutputs",
+    "CiftiReplaceStructureParamsDict",
+    "CiftiReplaceStructureParamsDictTagged",
+    "CiftiReplaceStructureVolumeAllParamsDict",
+    "CiftiReplaceStructureVolumeAllParamsDictTagged",
+    "CiftiReplaceStructureVolumeParamsDict",
+    "CiftiReplaceStructureVolumeParamsDictTagged",
     "cifti_replace_structure",
     "cifti_replace_structure_execute",
-    "cifti_replace_structure_label_params",
-    "cifti_replace_structure_metric_params",
+    "cifti_replace_structure_label",
+    "cifti_replace_structure_metric",
     "cifti_replace_structure_params",
-    "cifti_replace_structure_volume_all_params",
-    "cifti_replace_structure_volume_params",
+    "cifti_replace_structure_volume",
+    "cifti_replace_structure_volume_all",
 ]

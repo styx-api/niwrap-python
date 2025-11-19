@@ -12,7 +12,7 @@ SURFACE_GEODESIC_DISTANCE_SPARSE_TEXT_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceSparseTextParameters = typing.TypedDict('SurfaceGeodesicDistanceSparseTextParameters', {
+SurfaceGeodesicDistanceSparseTextParamsDict = typing.TypedDict('SurfaceGeodesicDistanceSparseTextParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-sparse-text"]],
     "area-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
@@ -20,7 +20,7 @@ SurfaceGeodesicDistanceSparseTextParameters = typing.TypedDict('SurfaceGeodesicD
     "limit": float,
     "text-out": str,
 })
-SurfaceGeodesicDistanceSparseTextParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceSparseTextParametersTagged', {
+SurfaceGeodesicDistanceSparseTextParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceSparseTextParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance-sparse-text"],
     "area-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
@@ -32,7 +32,7 @@ SurfaceGeodesicDistanceSparseTextParametersTagged = typing.TypedDict('SurfaceGeo
 
 class SurfaceGeodesicDistanceSparseTextOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceGeodesicDistanceSparseTextParameters(...)`.
+    Output object returned when calling `SurfaceGeodesicDistanceSparseTextParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def surface_geodesic_distance_sparse_text_params(
     limit: float,
     text_out: str,
     naive: bool = False,
-) -> SurfaceGeodesicDistanceSparseTextParametersTagged:
+) -> SurfaceGeodesicDistanceSparseTextParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def surface_geodesic_distance_sparse_text_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceGeodesicDistanceSparseTextParameters` object.
+    `SurfaceGeodesicDistanceSparseTextParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def surface_geodesic_distance_sparse_text_validate(
 
 
 def surface_geodesic_distance_sparse_text_cargs(
-    params: SurfaceGeodesicDistanceSparseTextParameters,
+    params: SurfaceGeodesicDistanceSparseTextParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def surface_geodesic_distance_sparse_text_cargs(
 
 
 def surface_geodesic_distance_sparse_text_outputs(
-    params: SurfaceGeodesicDistanceSparseTextParameters,
+    params: SurfaceGeodesicDistanceSparseTextParamsDict,
     execution: Execution,
 ) -> SurfaceGeodesicDistanceSparseTextOutputs:
     """
@@ -153,7 +153,7 @@ def surface_geodesic_distance_sparse_text_outputs(
 
 
 def surface_geodesic_distance_sparse_text_execute(
-    params: SurfaceGeodesicDistanceSparseTextParameters,
+    params: SurfaceGeodesicDistanceSparseTextParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceSparseTextOutputs:
     """
@@ -244,6 +244,8 @@ def surface_geodesic_distance_sparse_text(
 __all__ = [
     "SURFACE_GEODESIC_DISTANCE_SPARSE_TEXT_METADATA",
     "SurfaceGeodesicDistanceSparseTextOutputs",
+    "SurfaceGeodesicDistanceSparseTextParamsDict",
+    "SurfaceGeodesicDistanceSparseTextParamsDictTagged",
     "surface_geodesic_distance_sparse_text",
     "surface_geodesic_distance_sparse_text_execute",
     "surface_geodesic_distance_sparse_text_params",

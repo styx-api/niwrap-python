@@ -13,7 +13,7 @@ FSLCREATEHD_METADATA = Metadata(
 )
 
 
-FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
+FslcreatehdParamsDict = typing.TypedDict('FslcreatehdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslcreatehd"]],
     "xsize": float,
     "ysize": float,
@@ -30,7 +30,7 @@ FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
     "headername": str,
     "nifti_xml_file": typing.NotRequired[InputPathType | None],
 })
-FslcreatehdParametersTagged = typing.TypedDict('FslcreatehdParametersTagged', {
+FslcreatehdParamsDictTagged = typing.TypedDict('FslcreatehdParamsDictTagged', {
     "@type": typing.Literal["fsl/fslcreatehd"],
     "xsize": float,
     "ysize": float,
@@ -51,7 +51,7 @@ FslcreatehdParametersTagged = typing.TypedDict('FslcreatehdParametersTagged', {
 
 class FslcreatehdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslcreatehdParameters(...)`.
+    Output object returned when calling `FslcreatehdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def fslcreatehd_params(
     datatype: float,
     headername: str,
     nifti_xml_file: InputPathType | None = None,
-) -> FslcreatehdParametersTagged:
+) -> FslcreatehdParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def fslcreatehd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslcreatehdParameters` object.
+    `FslcreatehdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -189,7 +189,7 @@ def fslcreatehd_validate(
 
 
 def fslcreatehd_cargs(
-    params: FslcreatehdParameters,
+    params: FslcreatehdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def fslcreatehd_cargs(
 
 
 def fslcreatehd_outputs(
-    params: FslcreatehdParameters,
+    params: FslcreatehdParamsDict,
     execution: Execution,
 ) -> FslcreatehdOutputs:
     """
@@ -242,7 +242,7 @@ def fslcreatehd_outputs(
 
 
 def fslcreatehd_execute(
-    params: FslcreatehdParameters,
+    params: FslcreatehdParamsDict,
     runner: Runner | None = None,
 ) -> FslcreatehdOutputs:
     """
@@ -339,6 +339,8 @@ def fslcreatehd(
 __all__ = [
     "FSLCREATEHD_METADATA",
     "FslcreatehdOutputs",
+    "FslcreatehdParamsDict",
+    "FslcreatehdParamsDictTagged",
     "fslcreatehd",
     "fslcreatehd_execute",
     "fslcreatehd_params",

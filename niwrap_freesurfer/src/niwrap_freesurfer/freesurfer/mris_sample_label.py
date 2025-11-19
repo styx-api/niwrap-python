@@ -13,13 +13,13 @@ MRIS_SAMPLE_LABEL_METADATA = Metadata(
 )
 
 
-MrisSampleLabelParameters = typing.TypedDict('MrisSampleLabelParameters', {
+MrisSampleLabelParamsDict = typing.TypedDict('MrisSampleLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_label"]],
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_label_file": str,
 })
-MrisSampleLabelParametersTagged = typing.TypedDict('MrisSampleLabelParametersTagged', {
+MrisSampleLabelParamsDictTagged = typing.TypedDict('MrisSampleLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_sample_label"],
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
@@ -29,7 +29,7 @@ MrisSampleLabelParametersTagged = typing.TypedDict('MrisSampleLabelParametersTag
 
 class MrisSampleLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSampleLabelParameters(...)`.
+    Output object returned when calling `MrisSampleLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_sample_label_params(
     input_label_file: InputPathType,
     input_surface_file: InputPathType,
     output_label_file: str,
-) -> MrisSampleLabelParametersTagged:
+) -> MrisSampleLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mris_sample_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSampleLabelParameters` object.
+    `MrisSampleLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mris_sample_label_validate(
 
 
 def mris_sample_label_cargs(
-    params: MrisSampleLabelParameters,
+    params: MrisSampleLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mris_sample_label_cargs(
 
 
 def mris_sample_label_outputs(
-    params: MrisSampleLabelParameters,
+    params: MrisSampleLabelParamsDict,
     execution: Execution,
 ) -> MrisSampleLabelOutputs:
     """
@@ -129,7 +129,7 @@ def mris_sample_label_outputs(
 
 
 def mris_sample_label_execute(
-    params: MrisSampleLabelParameters,
+    params: MrisSampleLabelParamsDict,
     runner: Runner | None = None,
 ) -> MrisSampleLabelOutputs:
     """
@@ -191,6 +191,8 @@ def mris_sample_label(
 __all__ = [
     "MRIS_SAMPLE_LABEL_METADATA",
     "MrisSampleLabelOutputs",
+    "MrisSampleLabelParamsDict",
+    "MrisSampleLabelParamsDictTagged",
     "mris_sample_label",
     "mris_sample_label_execute",
     "mris_sample_label_params",

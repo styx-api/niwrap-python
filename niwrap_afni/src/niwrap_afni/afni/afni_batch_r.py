@@ -13,7 +13,7 @@ AFNI_BATCH_R_METADATA = Metadata(
 )
 
 
-AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
+AfniBatchRParamsDict = typing.TypedDict('AfniBatchRParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/AFNI_Batch_R"]],
     "no_restore": bool,
     "save_workspace": bool,
@@ -21,7 +21,7 @@ AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
     "vanilla_mode": bool,
     "help": bool,
 })
-AfniBatchRParametersTagged = typing.TypedDict('AfniBatchRParametersTagged', {
+AfniBatchRParamsDictTagged = typing.TypedDict('AfniBatchRParamsDictTagged', {
     "@type": typing.Literal["afni/AFNI_Batch_R"],
     "no_restore": bool,
     "save_workspace": bool,
@@ -33,7 +33,7 @@ AfniBatchRParametersTagged = typing.TypedDict('AfniBatchRParametersTagged', {
 
 class AfniBatchROutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniBatchRParameters(...)`.
+    Output object returned when calling `AfniBatchRParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def afni_batch_r_params(
     no_readline: bool = False,
     vanilla_mode: bool = False,
     help_: bool = False,
-) -> AfniBatchRParametersTagged:
+) -> AfniBatchRParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def afni_batch_r_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniBatchRParameters` object.
+    `AfniBatchRParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def afni_batch_r_validate(
 
 
 def afni_batch_r_cargs(
-    params: AfniBatchRParameters,
+    params: AfniBatchRParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def afni_batch_r_cargs(
 
 
 def afni_batch_r_outputs(
-    params: AfniBatchRParameters,
+    params: AfniBatchRParamsDict,
     execution: Execution,
 ) -> AfniBatchROutputs:
     """
@@ -155,7 +155,7 @@ def afni_batch_r_outputs(
 
 
 def afni_batch_r_execute(
-    params: AfniBatchRParameters,
+    params: AfniBatchRParamsDict,
     runner: Runner | None = None,
 ) -> AfniBatchROutputs:
     """
@@ -224,6 +224,8 @@ def afni_batch_r(
 __all__ = [
     "AFNI_BATCH_R_METADATA",
     "AfniBatchROutputs",
+    "AfniBatchRParamsDict",
+    "AfniBatchRParamsDictTagged",
     "afni_batch_r",
     "afni_batch_r_execute",
     "afni_batch_r_params",

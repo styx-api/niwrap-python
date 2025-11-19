@@ -13,7 +13,7 @@ V__MAKE_PLUG_DIFF_METADATA = Metadata(
 )
 
 
-VMakePlugDiffParameters = typing.TypedDict('VMakePlugDiffParameters', {
+VMakePlugDiffParamsDict = typing.TypedDict('VMakePlugDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@make_plug_diff"]],
     "vtk_dir": str,
     "xm_dir": str,
@@ -23,7 +23,7 @@ VMakePlugDiffParameters = typing.TypedDict('VMakePlugDiffParameters', {
     "linux": bool,
     "diff_dir": str,
 })
-VMakePlugDiffParametersTagged = typing.TypedDict('VMakePlugDiffParametersTagged', {
+VMakePlugDiffParamsDictTagged = typing.TypedDict('VMakePlugDiffParamsDictTagged', {
     "@type": typing.Literal["afni/@make_plug_diff"],
     "vtk_dir": str,
     "xm_dir": str,
@@ -37,7 +37,7 @@ VMakePlugDiffParametersTagged = typing.TypedDict('VMakePlugDiffParametersTagged'
 
 class VMakePlugDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMakePlugDiffParameters(...)`.
+    Output object returned when calling `VMakePlugDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v__make_plug_diff_params(
     diff_dir: str,
     comments: bool = False,
     linux: bool = False,
-) -> VMakePlugDiffParametersTagged:
+) -> VMakePlugDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def v__make_plug_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMakePlugDiffParameters` object.
+    `VMakePlugDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -122,7 +122,7 @@ def v__make_plug_diff_validate(
 
 
 def v__make_plug_diff_cargs(
-    params: VMakePlugDiffParameters,
+    params: VMakePlugDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def v__make_plug_diff_cargs(
 
 
 def v__make_plug_diff_outputs(
-    params: VMakePlugDiffParameters,
+    params: VMakePlugDiffParamsDict,
     execution: Execution,
 ) -> VMakePlugDiffOutputs:
     """
@@ -183,7 +183,7 @@ def v__make_plug_diff_outputs(
 
 
 def v__make_plug_diff_execute(
-    params: VMakePlugDiffParameters,
+    params: VMakePlugDiffParamsDict,
     runner: Runner | None = None,
 ) -> VMakePlugDiffOutputs:
     """
@@ -256,6 +256,8 @@ def v__make_plug_diff(
 
 __all__ = [
     "VMakePlugDiffOutputs",
+    "VMakePlugDiffParamsDict",
+    "VMakePlugDiffParamsDictTagged",
     "V__MAKE_PLUG_DIFF_METADATA",
     "v__make_plug_diff",
     "v__make_plug_diff_execute",

@@ -13,7 +13,7 @@ MRI_CA_REGISTER_METADATA = Metadata(
 )
 
 
-MriCaRegisterParameters = typing.TypedDict('MriCaRegisterParameters', {
+MriCaRegisterParamsDict = typing.TypedDict('MriCaRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_register"]],
     "input_volume": InputPathType,
     "template": InputPathType,
@@ -55,7 +55,7 @@ MriCaRegisterParameters = typing.TypedDict('MriCaRegisterParameters', {
     "second_pass_renorm": bool,
     "threads": typing.NotRequired[float | None],
 })
-MriCaRegisterParametersTagged = typing.TypedDict('MriCaRegisterParametersTagged', {
+MriCaRegisterParamsDictTagged = typing.TypedDict('MriCaRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ca_register"],
     "input_volume": InputPathType,
     "template": InputPathType,
@@ -101,7 +101,7 @@ MriCaRegisterParametersTagged = typing.TypedDict('MriCaRegisterParametersTagged'
 
 class MriCaRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCaRegisterParameters(...)`.
+    Output object returned when calling `MriCaRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,7 +149,7 @@ def mri_ca_register_params(
     uncompress: bool = False,
     second_pass_renorm: bool = False,
     threads: float | None = None,
-) -> MriCaRegisterParametersTagged:
+) -> MriCaRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -271,7 +271,7 @@ def mri_ca_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCaRegisterParameters` object.
+    `MriCaRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -413,7 +413,7 @@ def mri_ca_register_validate(
 
 
 def mri_ca_register_cargs(
-    params: MriCaRegisterParameters,
+    params: MriCaRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -578,7 +578,7 @@ def mri_ca_register_cargs(
 
 
 def mri_ca_register_outputs(
-    params: MriCaRegisterParameters,
+    params: MriCaRegisterParamsDict,
     execution: Execution,
 ) -> MriCaRegisterOutputs:
     """
@@ -598,7 +598,7 @@ def mri_ca_register_outputs(
 
 
 def mri_ca_register_execute(
-    params: MriCaRegisterParameters,
+    params: MriCaRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriCaRegisterOutputs:
     """
@@ -771,6 +771,8 @@ def mri_ca_register(
 __all__ = [
     "MRI_CA_REGISTER_METADATA",
     "MriCaRegisterOutputs",
+    "MriCaRegisterParamsDict",
+    "MriCaRegisterParamsDictTagged",
     "mri_ca_register",
     "mri_ca_register_execute",
     "mri_ca_register_params",

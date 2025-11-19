@@ -13,7 +13,7 @@ MRIS_MAKE_TEMPLATE_METADATA = Metadata(
 )
 
 
-MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
+MrisMakeTemplateParamsDict = typing.TypedDict('MrisMakeTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_template"]],
     "hemi": str,
     "surface_name": str,
@@ -31,7 +31,7 @@ MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
     "smooth_iterations": typing.NotRequired[float | None],
     "subjects_dir": typing.NotRequired[str | None],
 })
-MrisMakeTemplateParametersTagged = typing.TypedDict('MrisMakeTemplateParametersTagged', {
+MrisMakeTemplateParamsDictTagged = typing.TypedDict('MrisMakeTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_make_template"],
     "hemi": str,
     "surface_name": str,
@@ -53,7 +53,7 @@ MrisMakeTemplateParametersTagged = typing.TypedDict('MrisMakeTemplateParametersT
 
 class MrisMakeTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMakeTemplateParameters(...)`.
+    Output object returned when calling `MrisMakeTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def mris_make_template_params(
     surf_dir: str | None = None,
     smooth_iterations: float | None = None,
     subjects_dir: str | None = None,
-) -> MrisMakeTemplateParametersTagged:
+) -> MrisMakeTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def mris_make_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMakeTemplateParameters` object.
+    `MrisMakeTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -208,7 +208,7 @@ def mris_make_template_validate(
 
 
 def mris_make_template_cargs(
-    params: MrisMakeTemplateParameters,
+    params: MrisMakeTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def mris_make_template_cargs(
 
 
 def mris_make_template_outputs(
-    params: MrisMakeTemplateParameters,
+    params: MrisMakeTemplateParamsDict,
     execution: Execution,
 ) -> MrisMakeTemplateOutputs:
     """
@@ -292,7 +292,7 @@ def mris_make_template_outputs(
 
 
 def mris_make_template_execute(
-    params: MrisMakeTemplateParameters,
+    params: MrisMakeTemplateParamsDict,
     runner: Runner | None = None,
 ) -> MrisMakeTemplateOutputs:
     """
@@ -391,6 +391,8 @@ def mris_make_template(
 __all__ = [
     "MRIS_MAKE_TEMPLATE_METADATA",
     "MrisMakeTemplateOutputs",
+    "MrisMakeTemplateParamsDict",
+    "MrisMakeTemplateParamsDictTagged",
     "mris_make_template",
     "mris_make_template_execute",
     "mris_make_template_params",

@@ -12,22 +12,22 @@ CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA = Metadata(
 )
 
 
-ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters', {
+ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-seeds"]],
     "cifti-template": InputPathType,
     "direction": str,
 })
-ConvertMatrix4ToWorkbenchSparseVolumeSeedsParametersTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParametersTagged', {
+ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged', {
     "@type": typing.Literal["volume-seeds"],
     "cifti-template": InputPathType,
     "direction": str,
 })
 
 
-ConvertMatrix4ToWorkbenchSparseParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParameters', {
+ConvertMatrix4ToWorkbenchSparseParamsDict = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-workbench-sparse"]],
     "seed-roi": typing.NotRequired[InputPathType | None],
-    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters | None],
+    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
@@ -35,10 +35,10 @@ ConvertMatrix4ToWorkbenchSparseParameters = typing.TypedDict('ConvertMatrix4ToWo
     "voxel-list": str,
     "wb-sparse-out": str,
 })
-ConvertMatrix4ToWorkbenchSparseParametersTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParametersTagged', {
+ConvertMatrix4ToWorkbenchSparseParamsDictTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-workbench-sparse"],
     "seed-roi": typing.NotRequired[InputPathType | None],
-    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters | None],
+    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
@@ -48,10 +48,10 @@ ConvertMatrix4ToWorkbenchSparseParametersTagged = typing.TypedDict('ConvertMatri
 })
 
 
-def convert_matrix4_to_workbench_sparse_volume_seeds_params(
+def convert_matrix4_to_workbench_sparse_volume_seeds(
     cifti_template: InputPathType,
     direction: str,
-) -> ConvertMatrix4ToWorkbenchSparseVolumeSeedsParametersTagged:
+) -> ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def convert_matrix4_to_workbench_sparse_volume_seeds_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters` object.
+    `ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def convert_matrix4_to_workbench_sparse_volume_seeds_validate(
 
 
 def convert_matrix4_to_workbench_sparse_volume_seeds_cargs(
-    params: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters,
+    params: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def convert_matrix4_to_workbench_sparse_volume_seeds_cargs(
 
 class ConvertMatrix4ToWorkbenchSparseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertMatrix4ToWorkbenchSparseParameters(...)`.
+    Output object returned when calling `ConvertMatrix4ToWorkbenchSparseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,8 +130,8 @@ def convert_matrix4_to_workbench_sparse_params(
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
-    volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters | None = None,
-) -> ConvertMatrix4ToWorkbenchSparseParametersTagged:
+    volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
+) -> ConvertMatrix4ToWorkbenchSparseParamsDictTagged:
     """
     Build parameters.
     
@@ -172,7 +172,7 @@ def convert_matrix4_to_workbench_sparse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertMatrix4ToWorkbenchSparseParameters` object.
+    `ConvertMatrix4ToWorkbenchSparseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def convert_matrix4_to_workbench_sparse_validate(
 
 
 def convert_matrix4_to_workbench_sparse_cargs(
-    params: ConvertMatrix4ToWorkbenchSparseParameters,
+    params: ConvertMatrix4ToWorkbenchSparseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def convert_matrix4_to_workbench_sparse_cargs(
 
 
 def convert_matrix4_to_workbench_sparse_outputs(
-    params: ConvertMatrix4ToWorkbenchSparseParameters,
+    params: ConvertMatrix4ToWorkbenchSparseParamsDict,
     execution: Execution,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
@@ -261,7 +261,7 @@ def convert_matrix4_to_workbench_sparse_outputs(
 
 
 def convert_matrix4_to_workbench_sparse_execute(
-    params: ConvertMatrix4ToWorkbenchSparseParameters,
+    params: ConvertMatrix4ToWorkbenchSparseParamsDict,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
@@ -294,7 +294,7 @@ def convert_matrix4_to_workbench_sparse(
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
-    volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters | None = None,
+    volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
@@ -336,8 +336,12 @@ def convert_matrix4_to_workbench_sparse(
 __all__ = [
     "CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA",
     "ConvertMatrix4ToWorkbenchSparseOutputs",
+    "ConvertMatrix4ToWorkbenchSparseParamsDict",
+    "ConvertMatrix4ToWorkbenchSparseParamsDictTagged",
+    "ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict",
+    "ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDictTagged",
     "convert_matrix4_to_workbench_sparse",
     "convert_matrix4_to_workbench_sparse_execute",
     "convert_matrix4_to_workbench_sparse_params",
-    "convert_matrix4_to_workbench_sparse_volume_seeds_params",
+    "convert_matrix4_to_workbench_sparse_volume_seeds",
 ]

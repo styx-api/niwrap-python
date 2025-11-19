@@ -13,7 +13,7 @@ FSLVBM_3_PROC_METADATA = Metadata(
 )
 
 
-Fslvbm3ProcParameters = typing.TypedDict('Fslvbm3ProcParameters', {
+Fslvbm3ProcParamsDict = typing.TypedDict('Fslvbm3ProcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_3_proc"]],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ Fslvbm3ProcParameters = typing.TypedDict('Fslvbm3ProcParameters', {
     "version": bool,
     "config_file": typing.NotRequired[InputPathType | None],
 })
-Fslvbm3ProcParametersTagged = typing.TypedDict('Fslvbm3ProcParametersTagged', {
+Fslvbm3ProcParamsDictTagged = typing.TypedDict('Fslvbm3ProcParamsDictTagged', {
     "@type": typing.Literal["fsl/fslvbm_3_proc"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -87,7 +87,7 @@ Fslvbm3ProcParametersTagged = typing.TypedDict('Fslvbm3ProcParametersTagged', {
 
 class Fslvbm3ProcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fslvbm3ProcParameters(...)`.
+    Output object returned when calling `Fslvbm3ProcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +128,7 @@ def fslvbm_3_proc_params(
     verbose: bool = False,
     version: bool = False,
     config_file: InputPathType | None = None,
-) -> Fslvbm3ProcParametersTagged:
+) -> Fslvbm3ProcParamsDictTagged:
     """
     Build parameters.
     
@@ -235,7 +235,7 @@ def fslvbm_3_proc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fslvbm3ProcParameters` object.
+    `Fslvbm3ProcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -349,7 +349,7 @@ def fslvbm_3_proc_validate(
 
 
 def fslvbm_3_proc_cargs(
-    params: Fslvbm3ProcParameters,
+    params: Fslvbm3ProcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -503,7 +503,7 @@ def fslvbm_3_proc_cargs(
 
 
 def fslvbm_3_proc_outputs(
-    params: Fslvbm3ProcParameters,
+    params: Fslvbm3ProcParamsDict,
     execution: Execution,
 ) -> Fslvbm3ProcOutputs:
     """
@@ -523,7 +523,7 @@ def fslvbm_3_proc_outputs(
 
 
 def fslvbm_3_proc_execute(
-    params: Fslvbm3ProcParameters,
+    params: Fslvbm3ProcParamsDict,
     runner: Runner | None = None,
 ) -> Fslvbm3ProcOutputs:
     """
@@ -672,6 +672,8 @@ def fslvbm_3_proc(
 __all__ = [
     "FSLVBM_3_PROC_METADATA",
     "Fslvbm3ProcOutputs",
+    "Fslvbm3ProcParamsDict",
+    "Fslvbm3ProcParamsDictTagged",
     "fslvbm_3_proc",
     "fslvbm_3_proc_execute",
     "fslvbm_3_proc_params",

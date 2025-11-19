@@ -13,7 +13,7 @@ FSL_REG_METADATA = Metadata(
 )
 
 
-FslRegParameters = typing.TypedDict('FslRegParameters', {
+FslRegParamsDict = typing.TypedDict('FslRegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_reg"]],
     "input_file": InputPathType,
     "reference_file": InputPathType,
@@ -24,7 +24,7 @@ FslRegParameters = typing.TypedDict('FslRegParameters', {
     "flirt_options": typing.NotRequired[str | None],
     "fnirt_options": typing.NotRequired[str | None],
 })
-FslRegParametersTagged = typing.TypedDict('FslRegParametersTagged', {
+FslRegParamsDictTagged = typing.TypedDict('FslRegParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_reg"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
@@ -39,7 +39,7 @@ FslRegParametersTagged = typing.TypedDict('FslRegParametersTagged', {
 
 class FslRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslRegParameters(...)`.
+    Output object returned when calling `FslRegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def fsl_reg_params(
     fnirt_fa_config_flag: bool = False,
     flirt_options: str | None = None,
     fnirt_options: str | None = None,
-) -> FslRegParametersTagged:
+) -> FslRegParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def fsl_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslRegParameters` object.
+    `FslRegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def fsl_reg_validate(
 
 
 def fsl_reg_cargs(
-    params: FslRegParameters,
+    params: FslRegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def fsl_reg_cargs(
 
 
 def fsl_reg_outputs(
-    params: FslRegParameters,
+    params: FslRegParamsDict,
     execution: Execution,
 ) -> FslRegOutputs:
     """
@@ -190,7 +190,7 @@ def fsl_reg_outputs(
 
 
 def fsl_reg_execute(
-    params: FslRegParameters,
+    params: FslRegParamsDict,
     runner: Runner | None = None,
 ) -> FslRegOutputs:
     """
@@ -267,6 +267,8 @@ def fsl_reg(
 __all__ = [
     "FSL_REG_METADATA",
     "FslRegOutputs",
+    "FslRegParamsDict",
+    "FslRegParamsDictTagged",
     "fsl_reg",
     "fsl_reg_execute",
     "fsl_reg_params",

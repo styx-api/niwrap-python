@@ -13,7 +13,7 @@ DT_RECON_METADATA = Metadata(
 )
 
 
-DtReconParameters = typing.TypedDict('DtReconParameters', {
+DtReconParamsDict = typing.TypedDict('DtReconParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dt_recon"]],
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ DtReconParameters = typing.TypedDict('DtReconParameters', {
     "debug_flag": bool,
     "version_flag": bool,
 })
-DtReconParametersTagged = typing.TypedDict('DtReconParametersTagged', {
+DtReconParamsDictTagged = typing.TypedDict('DtReconParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dt_recon"],
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ DtReconParametersTagged = typing.TypedDict('DtReconParametersTagged', {
 
 class DtReconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DtReconParameters(...)`.
+    Output object returned when calling `DtReconParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +98,7 @@ def dt_recon_params(
     init_fsl_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> DtReconParametersTagged:
+) -> DtReconParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def dt_recon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DtReconParameters` object.
+    `DtReconParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -238,7 +238,7 @@ def dt_recon_validate(
 
 
 def dt_recon_cargs(
-    params: DtReconParameters,
+    params: DtReconParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -316,7 +316,7 @@ def dt_recon_cargs(
 
 
 def dt_recon_outputs(
-    params: DtReconParameters,
+    params: DtReconParamsDict,
     execution: Execution,
 ) -> DtReconOutputs:
     """
@@ -342,7 +342,7 @@ def dt_recon_outputs(
 
 
 def dt_recon_execute(
-    params: DtReconParameters,
+    params: DtReconParamsDict,
     runner: Runner | None = None,
 ) -> DtReconOutputs:
     """
@@ -452,6 +452,8 @@ def dt_recon(
 __all__ = [
     "DT_RECON_METADATA",
     "DtReconOutputs",
+    "DtReconParamsDict",
+    "DtReconParamsDictTagged",
     "dt_recon",
     "dt_recon_execute",
     "dt_recon_params",

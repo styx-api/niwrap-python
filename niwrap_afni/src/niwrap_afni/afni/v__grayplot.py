@@ -13,7 +13,7 @@ V__GRAYPLOT_METADATA = Metadata(
 )
 
 
-VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
+VGrayplotParamsDict = typing.TypedDict('VGrayplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@grayplot"]],
     "dirname": str,
     "pvorder": bool,
@@ -21,7 +21,7 @@ VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
     "ijkorder": bool,
     "allorder": bool,
 })
-VGrayplotParametersTagged = typing.TypedDict('VGrayplotParametersTagged', {
+VGrayplotParamsDictTagged = typing.TypedDict('VGrayplotParamsDictTagged', {
     "@type": typing.Literal["afni/@grayplot"],
     "dirname": str,
     "pvorder": bool,
@@ -33,7 +33,7 @@ VGrayplotParametersTagged = typing.TypedDict('VGrayplotParametersTagged', {
 
 class VGrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGrayplotParameters(...)`.
+    Output object returned when calling `VGrayplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v__grayplot_params(
     peelorder: bool = False,
     ijkorder: bool = False,
     allorder: bool = False,
-) -> VGrayplotParametersTagged:
+) -> VGrayplotParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def v__grayplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGrayplotParameters` object.
+    `VGrayplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def v__grayplot_validate(
 
 
 def v__grayplot_cargs(
-    params: VGrayplotParameters,
+    params: VGrayplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def v__grayplot_cargs(
 
 
 def v__grayplot_outputs(
-    params: VGrayplotParameters,
+    params: VGrayplotParamsDict,
     execution: Execution,
 ) -> VGrayplotOutputs:
     """
@@ -156,7 +156,7 @@ def v__grayplot_outputs(
 
 
 def v__grayplot_execute(
-    params: VGrayplotParameters,
+    params: VGrayplotParamsDict,
     runner: Runner | None = None,
 ) -> VGrayplotOutputs:
     """
@@ -230,6 +230,8 @@ def v__grayplot(
 
 __all__ = [
     "VGrayplotOutputs",
+    "VGrayplotParamsDict",
+    "VGrayplotParamsDictTagged",
     "V__GRAYPLOT_METADATA",
     "v__grayplot",
     "v__grayplot_execute",

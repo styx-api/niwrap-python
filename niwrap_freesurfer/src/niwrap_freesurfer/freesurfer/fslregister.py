@@ -13,7 +13,7 @@ FSLREGISTER_METADATA = Metadata(
 )
 
 
-FslregisterParameters = typing.TypedDict('FslregisterParameters', {
+FslregisterParamsDict = typing.TypedDict('FslregisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fslregister"]],
     "subjid": str,
     "mov_vol": str,
@@ -46,7 +46,7 @@ FslregisterParameters = typing.TypedDict('FslregisterParameters', {
     "help": bool,
     "lta_format": typing.NotRequired[str | None],
 })
-FslregisterParametersTagged = typing.TypedDict('FslregisterParametersTagged', {
+FslregisterParamsDictTagged = typing.TypedDict('FslregisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fslregister"],
     "subjid": str,
     "mov_vol": str,
@@ -83,7 +83,7 @@ FslregisterParametersTagged = typing.TypedDict('FslregisterParametersTagged', {
 
 class FslregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslregisterParameters(...)`.
+    Output object returned when calling `FslregisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,7 +130,7 @@ def fslregister_params(
     version: bool = False,
     help_: bool = False,
     lta_format: str | None = None,
-) -> FslregisterParametersTagged:
+) -> FslregisterParamsDictTagged:
     """
     Build parameters.
     
@@ -225,7 +225,7 @@ def fslregister_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslregisterParameters` object.
+    `FslregisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -340,7 +340,7 @@ def fslregister_validate(
 
 
 def fslregister_cargs(
-    params: FslregisterParameters,
+    params: FslregisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -469,7 +469,7 @@ def fslregister_cargs(
 
 
 def fslregister_outputs(
-    params: FslregisterParameters,
+    params: FslregisterParamsDict,
     execution: Execution,
 ) -> FslregisterOutputs:
     """
@@ -493,7 +493,7 @@ def fslregister_outputs(
 
 
 def fslregister_execute(
-    params: FslregisterParameters,
+    params: FslregisterParamsDict,
     runner: Runner | None = None,
 ) -> FslregisterOutputs:
     """
@@ -639,6 +639,8 @@ def fslregister(
 __all__ = [
     "FSLREGISTER_METADATA",
     "FslregisterOutputs",
+    "FslregisterParamsDict",
+    "FslregisterParamsDictTagged",
     "fslregister",
     "fslregister_execute",
     "fslregister_params",

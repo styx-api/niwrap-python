@@ -13,11 +13,11 @@ V__PARSE_AFNI_NAME_METADATA = Metadata(
 )
 
 
-VParseAfniNameParameters = typing.TypedDict('VParseAfniNameParameters', {
+VParseAfniNameParamsDict = typing.TypedDict('VParseAfniNameParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@parse_afni_name"]],
     "afni_name": str,
 })
-VParseAfniNameParametersTagged = typing.TypedDict('VParseAfniNameParametersTagged', {
+VParseAfniNameParamsDictTagged = typing.TypedDict('VParseAfniNameParamsDictTagged', {
     "@type": typing.Literal["afni/@parse_afni_name"],
     "afni_name": str,
 })
@@ -25,7 +25,7 @@ VParseAfniNameParametersTagged = typing.TypedDict('VParseAfniNameParametersTagge
 
 class VParseAfniNameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VParseAfniNameParameters(...)`.
+    Output object returned when calling `VParseAfniNameParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ class VParseAfniNameOutputs(typing.NamedTuple):
 
 def v__parse_afni_name_params(
     afni_name: str,
-) -> VParseAfniNameParametersTagged:
+) -> VParseAfniNameParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def v__parse_afni_name_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VParseAfniNameParameters` object.
+    `VParseAfniNameParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -76,7 +76,7 @@ def v__parse_afni_name_validate(
 
 
 def v__parse_afni_name_cargs(
-    params: VParseAfniNameParameters,
+    params: VParseAfniNameParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -95,7 +95,7 @@ def v__parse_afni_name_cargs(
 
 
 def v__parse_afni_name_outputs(
-    params: VParseAfniNameParameters,
+    params: VParseAfniNameParamsDict,
     execution: Execution,
 ) -> VParseAfniNameOutputs:
     """
@@ -118,7 +118,7 @@ def v__parse_afni_name_outputs(
 
 
 def v__parse_afni_name_execute(
-    params: VParseAfniNameParameters,
+    params: VParseAfniNameParamsDict,
     runner: Runner | None = None,
 ) -> VParseAfniNameOutputs:
     """
@@ -175,6 +175,8 @@ def v__parse_afni_name(
 
 __all__ = [
     "VParseAfniNameOutputs",
+    "VParseAfniNameParamsDict",
+    "VParseAfniNameParamsDictTagged",
     "V__PARSE_AFNI_NAME_METADATA",
     "v__parse_afni_name",
     "v__parse_afni_name_execute",

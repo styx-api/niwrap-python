@@ -13,12 +13,12 @@ V__ISO_MASKS_METADATA = Metadata(
 )
 
 
-VIsoMasksParameters = typing.TypedDict('VIsoMasksParameters', {
+VIsoMasksParamsDict = typing.TypedDict('VIsoMasksParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@IsoMasks"]],
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })
-VIsoMasksParametersTagged = typing.TypedDict('VIsoMasksParametersTagged', {
+VIsoMasksParamsDictTagged = typing.TypedDict('VIsoMasksParamsDictTagged', {
     "@type": typing.Literal["afni/@IsoMasks"],
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
@@ -27,7 +27,7 @@ VIsoMasksParametersTagged = typing.TypedDict('VIsoMasksParametersTagged', {
 
 class VIsoMasksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VIsoMasksParameters(...)`.
+    Output object returned when calling `VIsoMasksParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VIsoMasksOutputs(typing.NamedTuple):
 def v__iso_masks_params(
     input_dataset: InputPathType,
     isovals: list[float] | None = None,
-) -> VIsoMasksParametersTagged:
+) -> VIsoMasksParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__iso_masks_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VIsoMasksParameters` object.
+    `VIsoMasksParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def v__iso_masks_validate(
 
 
 def v__iso_masks_cargs(
-    params: VIsoMasksParameters,
+    params: VIsoMasksParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def v__iso_masks_cargs(
 
 
 def v__iso_masks_outputs(
-    params: VIsoMasksParameters,
+    params: VIsoMasksParamsDict,
     execution: Execution,
 ) -> VIsoMasksOutputs:
     """
@@ -123,7 +123,7 @@ def v__iso_masks_outputs(
 
 
 def v__iso_masks_execute(
-    params: VIsoMasksParameters,
+    params: VIsoMasksParamsDict,
     runner: Runner | None = None,
 ) -> VIsoMasksOutputs:
     """
@@ -181,6 +181,8 @@ def v__iso_masks(
 
 __all__ = [
     "VIsoMasksOutputs",
+    "VIsoMasksParamsDict",
+    "VIsoMasksParamsDictTagged",
     "V__ISO_MASKS_METADATA",
     "v__iso_masks",
     "v__iso_masks_execute",

@@ -12,14 +12,14 @@ BORDER_RESAMPLE_METADATA = Metadata(
 )
 
 
-BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
+BorderResampleParamsDict = typing.TypedDict('BorderResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-resample"]],
     "border-out": str,
     "border-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
 })
-BorderResampleParametersTagged = typing.TypedDict('BorderResampleParametersTagged', {
+BorderResampleParamsDictTagged = typing.TypedDict('BorderResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/border-resample"],
     "border-out": str,
     "border-in": InputPathType,
@@ -30,7 +30,7 @@ BorderResampleParametersTagged = typing.TypedDict('BorderResampleParametersTagge
 
 class BorderResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderResampleParameters(...)`.
+    Output object returned when calling `BorderResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def border_resample_params(
     border_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-) -> BorderResampleParametersTagged:
+) -> BorderResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def border_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderResampleParameters` object.
+    `BorderResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def border_resample_validate(
 
 
 def border_resample_cargs(
-    params: BorderResampleParameters,
+    params: BorderResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def border_resample_cargs(
 
 
 def border_resample_outputs(
-    params: BorderResampleParameters,
+    params: BorderResampleParamsDict,
     execution: Execution,
 ) -> BorderResampleOutputs:
     """
@@ -143,7 +143,7 @@ def border_resample_outputs(
 
 
 def border_resample_execute(
-    params: BorderResampleParameters,
+    params: BorderResampleParamsDict,
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
@@ -206,6 +206,8 @@ def border_resample(
 __all__ = [
     "BORDER_RESAMPLE_METADATA",
     "BorderResampleOutputs",
+    "BorderResampleParamsDict",
+    "BorderResampleParamsDictTagged",
     "border_resample",
     "border_resample_execute",
     "border_resample_params",

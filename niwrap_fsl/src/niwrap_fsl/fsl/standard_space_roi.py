@@ -13,7 +13,7 @@ STANDARD_SPACE_ROI_METADATA = Metadata(
 )
 
 
-StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
+StandardSpaceRoiParamsDict = typing.TypedDict('StandardSpaceRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/standard_space_roi"]],
     "infile": InputPathType,
     "outfile": str,
@@ -28,7 +28,7 @@ StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
     "debug_flag": bool,
     "bet_premask_flag": bool,
 })
-StandardSpaceRoiParametersTagged = typing.TypedDict('StandardSpaceRoiParametersTagged', {
+StandardSpaceRoiParamsDictTagged = typing.TypedDict('StandardSpaceRoiParamsDictTagged', {
     "@type": typing.Literal["fsl/standard_space_roi"],
     "infile": InputPathType,
     "outfile": str,
@@ -47,7 +47,7 @@ StandardSpaceRoiParametersTagged = typing.TypedDict('StandardSpaceRoiParametersT
 
 class StandardSpaceRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `StandardSpaceRoiParameters(...)`.
+    Output object returned when calling `StandardSpaceRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def standard_space_roi_params(
     alt_input: InputPathType | None = None,
     debug_flag: bool = False,
     bet_premask_flag: bool = False,
-) -> StandardSpaceRoiParametersTagged:
+) -> StandardSpaceRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def standard_space_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `StandardSpaceRoiParameters` object.
+    `StandardSpaceRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def standard_space_roi_validate(
 
 
 def standard_space_roi_cargs(
-    params: StandardSpaceRoiParameters,
+    params: StandardSpaceRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,7 +226,7 @@ def standard_space_roi_cargs(
 
 
 def standard_space_roi_outputs(
-    params: StandardSpaceRoiParameters,
+    params: StandardSpaceRoiParamsDict,
     execution: Execution,
 ) -> StandardSpaceRoiOutputs:
     """
@@ -246,7 +246,7 @@ def standard_space_roi_outputs(
 
 
 def standard_space_roi_execute(
-    params: StandardSpaceRoiParameters,
+    params: StandardSpaceRoiParamsDict,
     runner: Runner | None = None,
 ) -> StandardSpaceRoiOutputs:
     """
@@ -342,6 +342,8 @@ def standard_space_roi(
 __all__ = [
     "STANDARD_SPACE_ROI_METADATA",
     "StandardSpaceRoiOutputs",
+    "StandardSpaceRoiParamsDict",
+    "StandardSpaceRoiParamsDictTagged",
     "standard_space_roi",
     "standard_space_roi_execute",
     "standard_space_roi_params",

@@ -13,7 +13,7 @@ MRIS_DEFECTS_POINTSET_METADATA = Metadata(
 )
 
 
-MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters', {
+MrisDefectsPointsetParamsDict = typing.TypedDict('MrisDefectsPointsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_defects_pointset"]],
     "surface": InputPathType,
     "defects": InputPathType,
@@ -21,7 +21,7 @@ MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters'
     "label": typing.NotRequired[InputPathType | None],
     "control": bool,
 })
-MrisDefectsPointsetParametersTagged = typing.TypedDict('MrisDefectsPointsetParametersTagged', {
+MrisDefectsPointsetParamsDictTagged = typing.TypedDict('MrisDefectsPointsetParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_defects_pointset"],
     "surface": InputPathType,
     "defects": InputPathType,
@@ -33,7 +33,7 @@ MrisDefectsPointsetParametersTagged = typing.TypedDict('MrisDefectsPointsetParam
 
 class MrisDefectsPointsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDefectsPointsetParameters(...)`.
+    Output object returned when calling `MrisDefectsPointsetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_defects_pointset_params(
     out: str,
     label: InputPathType | None = None,
     control: bool = False,
-) -> MrisDefectsPointsetParametersTagged:
+) -> MrisDefectsPointsetParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def mris_defects_pointset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDefectsPointsetParameters` object.
+    `MrisDefectsPointsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mris_defects_pointset_validate(
 
 
 def mris_defects_pointset_cargs(
-    params: MrisDefectsPointsetParameters,
+    params: MrisDefectsPointsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def mris_defects_pointset_cargs(
 
 
 def mris_defects_pointset_outputs(
-    params: MrisDefectsPointsetParameters,
+    params: MrisDefectsPointsetParamsDict,
     execution: Execution,
 ) -> MrisDefectsPointsetOutputs:
     """
@@ -163,7 +163,7 @@ def mris_defects_pointset_outputs(
 
 
 def mris_defects_pointset_execute(
-    params: MrisDefectsPointsetParameters,
+    params: MrisDefectsPointsetParamsDict,
     runner: Runner | None = None,
 ) -> MrisDefectsPointsetOutputs:
     """
@@ -233,6 +233,8 @@ def mris_defects_pointset(
 __all__ = [
     "MRIS_DEFECTS_POINTSET_METADATA",
     "MrisDefectsPointsetOutputs",
+    "MrisDefectsPointsetParamsDict",
+    "MrisDefectsPointsetParamsDictTagged",
     "mris_defects_pointset",
     "mris_defects_pointset_execute",
     "mris_defects_pointset_params",

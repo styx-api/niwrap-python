@@ -18,7 +18,7 @@
     },
     "threshold": {
       "var_param": "threshold",
-      "fn_struct_make_params": "cifti_extrema_threshold_params",
+      "fn_struct_make_params": "cifti_extrema_threshold",
       "properties": {
         "low": {
           "var_param": "low"

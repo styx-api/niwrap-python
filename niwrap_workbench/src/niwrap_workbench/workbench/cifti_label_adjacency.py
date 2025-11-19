@@ -12,7 +12,7 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 )
 
 
-CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters', {
+CiftiLabelAdjacencyParamsDict = typing.TypedDict('CiftiLabelAdjacencyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-adjacency"]],
     "adjacency-out": str,
     "surface": typing.NotRequired[InputPathType | None],
@@ -20,7 +20,7 @@ CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters'
     "surface": typing.NotRequired[InputPathType | None],
     "label-in": InputPathType,
 })
-CiftiLabelAdjacencyParametersTagged = typing.TypedDict('CiftiLabelAdjacencyParametersTagged', {
+CiftiLabelAdjacencyParamsDictTagged = typing.TypedDict('CiftiLabelAdjacencyParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-adjacency"],
     "adjacency-out": str,
     "surface": typing.NotRequired[InputPathType | None],
@@ -32,7 +32,7 @@ CiftiLabelAdjacencyParametersTagged = typing.TypedDict('CiftiLabelAdjacencyParam
 
 class CiftiLabelAdjacencyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelAdjacencyParameters(...)`.
+    Output object returned when calling `CiftiLabelAdjacencyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def cifti_label_adjacency_params(
     surface_: InputPathType | None,
     surface_2: InputPathType | None,
     label_in: InputPathType,
-) -> CiftiLabelAdjacencyParametersTagged:
+) -> CiftiLabelAdjacencyParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def cifti_label_adjacency_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelAdjacencyParameters` object.
+    `CiftiLabelAdjacencyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def cifti_label_adjacency_validate(
 
 
 def cifti_label_adjacency_cargs(
-    params: CiftiLabelAdjacencyParameters,
+    params: CiftiLabelAdjacencyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def cifti_label_adjacency_cargs(
 
 
 def cifti_label_adjacency_outputs(
-    params: CiftiLabelAdjacencyParameters,
+    params: CiftiLabelAdjacencyParamsDict,
     execution: Execution,
 ) -> CiftiLabelAdjacencyOutputs:
     """
@@ -161,7 +161,7 @@ def cifti_label_adjacency_outputs(
 
 
 def cifti_label_adjacency_execute(
-    params: CiftiLabelAdjacencyParameters,
+    params: CiftiLabelAdjacencyParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
@@ -233,6 +233,8 @@ def cifti_label_adjacency(
 __all__ = [
     "CIFTI_LABEL_ADJACENCY_METADATA",
     "CiftiLabelAdjacencyOutputs",
+    "CiftiLabelAdjacencyParamsDict",
+    "CiftiLabelAdjacencyParamsDictTagged",
     "cifti_label_adjacency",
     "cifti_label_adjacency_execute",
     "cifti_label_adjacency_params",

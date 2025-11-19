@@ -13,7 +13,7 @@ MAP_TRACK_ID_METADATA = Metadata(
 )
 
 
-MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
+MapTrackIdParamsDict = typing.TypedDict('MapTrackIdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/map_TrackID"]],
     "prefix": str,
     "in_trk": InputPathType,
@@ -24,7 +24,7 @@ MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
     "line_only_num": bool,
     "already_inv": bool,
 })
-MapTrackIdParametersTagged = typing.TypedDict('MapTrackIdParametersTagged', {
+MapTrackIdParamsDictTagged = typing.TypedDict('MapTrackIdParamsDictTagged', {
     "@type": typing.Literal["afni/map_TrackID"],
     "prefix": str,
     "in_trk": InputPathType,
@@ -39,7 +39,7 @@ MapTrackIdParametersTagged = typing.TypedDict('MapTrackIdParametersTagged', {
 
 class MapTrackIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MapTrackIdParameters(...)`.
+    Output object returned when calling `MapTrackIdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def map_track_id_params(
     orig_zero: bool = False,
     line_only_num: bool = False,
     already_inv: bool = False,
-) -> MapTrackIdParametersTagged:
+) -> MapTrackIdParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def map_track_id_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MapTrackIdParameters` object.
+    `MapTrackIdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def map_track_id_validate(
 
 
 def map_track_id_cargs(
-    params: MapTrackIdParameters,
+    params: MapTrackIdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def map_track_id_cargs(
 
 
 def map_track_id_outputs(
-    params: MapTrackIdParameters,
+    params: MapTrackIdParamsDict,
     execution: Execution,
 ) -> MapTrackIdOutputs:
     """
@@ -197,7 +197,7 @@ def map_track_id_outputs(
 
 
 def map_track_id_execute(
-    params: MapTrackIdParameters,
+    params: MapTrackIdParamsDict,
     runner: Runner | None = None,
 ) -> MapTrackIdOutputs:
     """
@@ -278,6 +278,8 @@ def map_track_id(
 __all__ = [
     "MAP_TRACK_ID_METADATA",
     "MapTrackIdOutputs",
+    "MapTrackIdParamsDict",
+    "MapTrackIdParamsDictTagged",
     "map_track_id",
     "map_track_id_execute",
     "map_track_id_params",

@@ -13,12 +13,12 @@ V_3D_ENTROPY_METADATA = Metadata(
 )
 
 
-V3dEntropyParameters = typing.TypedDict('V3dEntropyParameters', {
+V3dEntropyParamsDict = typing.TypedDict('V3dEntropyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dEntropy"]],
     "zskip": bool,
     "input_dataset": InputPathType,
 })
-V3dEntropyParametersTagged = typing.TypedDict('V3dEntropyParametersTagged', {
+V3dEntropyParamsDictTagged = typing.TypedDict('V3dEntropyParamsDictTagged', {
     "@type": typing.Literal["afni/3dEntropy"],
     "zskip": bool,
     "input_dataset": InputPathType,
@@ -27,7 +27,7 @@ V3dEntropyParametersTagged = typing.TypedDict('V3dEntropyParametersTagged', {
 
 class V3dEntropyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dEntropyParameters(...)`.
+    Output object returned when calling `V3dEntropyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V3dEntropyOutputs(typing.NamedTuple):
 def v_3d_entropy_params(
     input_dataset: InputPathType,
     zskip: bool = False,
-) -> V3dEntropyParametersTagged:
+) -> V3dEntropyParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v_3d_entropy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dEntropyParameters` object.
+    `V3dEntropyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v_3d_entropy_validate(
 
 
 def v_3d_entropy_cargs(
-    params: V3dEntropyParameters,
+    params: V3dEntropyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def v_3d_entropy_cargs(
 
 
 def v_3d_entropy_outputs(
-    params: V3dEntropyParameters,
+    params: V3dEntropyParamsDict,
     execution: Execution,
 ) -> V3dEntropyOutputs:
     """
@@ -117,7 +117,7 @@ def v_3d_entropy_outputs(
 
 
 def v_3d_entropy_execute(
-    params: V3dEntropyParameters,
+    params: V3dEntropyParamsDict,
     runner: Runner | None = None,
 ) -> V3dEntropyOutputs:
     """
@@ -175,6 +175,8 @@ def v_3d_entropy(
 
 __all__ = [
     "V3dEntropyOutputs",
+    "V3dEntropyParamsDict",
+    "V3dEntropyParamsDictTagged",
     "V_3D_ENTROPY_METADATA",
     "v_3d_entropy",
     "v_3d_entropy_execute",

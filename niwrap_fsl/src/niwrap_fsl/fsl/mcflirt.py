@@ -13,7 +13,7 @@ MCFLIRT_METADATA = Metadata(
 )
 
 
-McflirtParameters = typing.TypedDict('McflirtParameters', {
+McflirtParamsDict = typing.TypedDict('McflirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mcflirt"]],
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
@@ -37,7 +37,7 @@ McflirtParameters = typing.TypedDict('McflirtParameters', {
     "use_contour": bool,
     "use_gradient": bool,
 })
-McflirtParametersTagged = typing.TypedDict('McflirtParametersTagged', {
+McflirtParamsDictTagged = typing.TypedDict('McflirtParamsDictTagged', {
     "@type": typing.Literal["fsl/mcflirt"],
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
@@ -65,7 +65,7 @@ McflirtParametersTagged = typing.TypedDict('McflirtParametersTagged', {
 
 class McflirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `McflirtParameters(...)`.
+    Output object returned when calling `McflirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +109,7 @@ def mcflirt_params(
     stats_imgs: bool = False,
     use_contour: bool = False,
     use_gradient: bool = False,
-) -> McflirtParametersTagged:
+) -> McflirtParamsDictTagged:
     """
     Build parameters.
     
@@ -184,7 +184,7 @@ def mcflirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `McflirtParameters` object.
+    `McflirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -270,7 +270,7 @@ def mcflirt_validate(
 
 
 def mcflirt_cargs(
-    params: McflirtParameters,
+    params: McflirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -365,7 +365,7 @@ def mcflirt_cargs(
 
 
 def mcflirt_outputs(
-    params: McflirtParameters,
+    params: McflirtParamsDict,
     execution: Execution,
 ) -> McflirtOutputs:
     """
@@ -391,7 +391,7 @@ def mcflirt_outputs(
 
 
 def mcflirt_execute(
-    params: McflirtParameters,
+    params: McflirtParamsDict,
     runner: Runner | None = None,
 ) -> McflirtOutputs:
     """
@@ -515,6 +515,8 @@ def mcflirt(
 __all__ = [
     "MCFLIRT_METADATA",
     "McflirtOutputs",
+    "McflirtParamsDict",
+    "McflirtParamsDictTagged",
     "mcflirt",
     "mcflirt_execute",
     "mcflirt_params",

@@ -13,11 +13,11 @@ MPR2MNI305_METADATA = Metadata(
 )
 
 
-Mpr2mni305Parameters = typing.TypedDict('Mpr2mni305Parameters', {
+Mpr2mni305ParamsDict = typing.TypedDict('Mpr2mni305ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mpr2mni305"]],
     "mpr_anat": str,
 })
-Mpr2mni305ParametersTagged = typing.TypedDict('Mpr2mni305ParametersTagged', {
+Mpr2mni305ParamsDictTagged = typing.TypedDict('Mpr2mni305ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mpr2mni305"],
     "mpr_anat": str,
 })
@@ -25,7 +25,7 @@ Mpr2mni305ParametersTagged = typing.TypedDict('Mpr2mni305ParametersTagged', {
 
 class Mpr2mni305Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Mpr2mni305Parameters(...)`.
+    Output object returned when calling `Mpr2mni305ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Mpr2mni305Outputs(typing.NamedTuple):
 
 def mpr2mni305_params(
     mpr_anat: str,
-) -> Mpr2mni305ParametersTagged:
+) -> Mpr2mni305ParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def mpr2mni305_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mpr2mni305Parameters` object.
+    `Mpr2mni305ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def mpr2mni305_validate(
 
 
 def mpr2mni305_cargs(
-    params: Mpr2mni305Parameters,
+    params: Mpr2mni305ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def mpr2mni305_cargs(
 
 
 def mpr2mni305_outputs(
-    params: Mpr2mni305Parameters,
+    params: Mpr2mni305ParamsDict,
     execution: Execution,
 ) -> Mpr2mni305Outputs:
     """
@@ -106,7 +106,7 @@ def mpr2mni305_outputs(
 
 
 def mpr2mni305_execute(
-    params: Mpr2mni305Parameters,
+    params: Mpr2mni305ParamsDict,
     runner: Runner | None = None,
 ) -> Mpr2mni305Outputs:
     """
@@ -162,6 +162,8 @@ def mpr2mni305(
 __all__ = [
     "MPR2MNI305_METADATA",
     "Mpr2mni305Outputs",
+    "Mpr2mni305ParamsDict",
+    "Mpr2mni305ParamsDictTagged",
     "mpr2mni305",
     "mpr2mni305_execute",
     "mpr2mni305_params",

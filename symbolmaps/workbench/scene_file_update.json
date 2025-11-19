@@ -15,7 +15,7 @@
     },
     "copy-map-one-palette": {
       "var_param": "copy_map_one_palette",
-      "fn_struct_make_params": "scene_file_update_copy_map_one_palette_params",
+      "fn_struct_make_params": "scene_file_update_copy_map_one_palette",
       "properties": {
         "Data File Name Suffix": {
           "var_param": "data_file_name_suffix"
@@ -24,7 +24,7 @@
     },
     "data-file-add": {
       "var_param": "data_file_add",
-      "fn_struct_make_params": "scene_file_update_data_file_add_params",
+      "fn_struct_make_params": "scene_file_update_data_file_add",
       "properties": {
         "Name of data file": {
           "var_param": "name_of_data_file"
@@ -33,7 +33,7 @@
     },
     "data-file-remove": {
       "var_param": "data_file_remove",
-      "fn_struct_make_params": "scene_file_update_data_file_remove_params",
+      "fn_struct_make_params": "scene_file_update_data_file_remove",
       "properties": {
         "Name of data file": {
           "var_param": "name_of_data_file"

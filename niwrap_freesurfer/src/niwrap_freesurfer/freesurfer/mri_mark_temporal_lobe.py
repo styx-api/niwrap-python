@@ -13,14 +13,14 @@ MRI_MARK_TEMPORAL_LOBE_METADATA = Metadata(
 )
 
 
-MriMarkTemporalLobeParameters = typing.TypedDict('MriMarkTemporalLobeParameters', {
+MriMarkTemporalLobeParamsDict = typing.TypedDict('MriMarkTemporalLobeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mark_temporal_lobe"]],
     "spacing": typing.NotRequired[str | None],
     "use_gradient": bool,
     "subjects": list[InputPathType],
     "output_file": str,
 })
-MriMarkTemporalLobeParametersTagged = typing.TypedDict('MriMarkTemporalLobeParametersTagged', {
+MriMarkTemporalLobeParamsDictTagged = typing.TypedDict('MriMarkTemporalLobeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mark_temporal_lobe"],
     "spacing": typing.NotRequired[str | None],
     "use_gradient": bool,
@@ -31,7 +31,7 @@ MriMarkTemporalLobeParametersTagged = typing.TypedDict('MriMarkTemporalLobeParam
 
 class MriMarkTemporalLobeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMarkTemporalLobeParameters(...)`.
+    Output object returned when calling `MriMarkTemporalLobeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_mark_temporal_lobe_params(
     output_file: str,
     spacing: str | None = None,
     use_gradient: bool = False,
-) -> MriMarkTemporalLobeParametersTagged:
+) -> MriMarkTemporalLobeParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mri_mark_temporal_lobe_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMarkTemporalLobeParameters` object.
+    `MriMarkTemporalLobeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def mri_mark_temporal_lobe_validate(
 
 
 def mri_mark_temporal_lobe_cargs(
-    params: MriMarkTemporalLobeParameters,
+    params: MriMarkTemporalLobeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def mri_mark_temporal_lobe_cargs(
 
 
 def mri_mark_temporal_lobe_outputs(
-    params: MriMarkTemporalLobeParameters,
+    params: MriMarkTemporalLobeParamsDict,
     execution: Execution,
 ) -> MriMarkTemporalLobeOutputs:
     """
@@ -145,7 +145,7 @@ def mri_mark_temporal_lobe_outputs(
 
 
 def mri_mark_temporal_lobe_execute(
-    params: MriMarkTemporalLobeParameters,
+    params: MriMarkTemporalLobeParamsDict,
     runner: Runner | None = None,
 ) -> MriMarkTemporalLobeOutputs:
     """
@@ -210,6 +210,8 @@ def mri_mark_temporal_lobe(
 __all__ = [
     "MRI_MARK_TEMPORAL_LOBE_METADATA",
     "MriMarkTemporalLobeOutputs",
+    "MriMarkTemporalLobeParamsDict",
+    "MriMarkTemporalLobeParamsDictTagged",
     "mri_mark_temporal_lobe",
     "mri_mark_temporal_lobe_execute",
     "mri_mark_temporal_lobe_params",

@@ -13,7 +13,7 @@ EXAMINE_XMAT_METADATA = Metadata(
 )
 
 
-ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
+ExamineXmatParamsDict = typing.TypedDict('ExamineXmatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ExamineXmat"]],
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
@@ -24,7 +24,7 @@ ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
     "msg_trace": bool,
     "verbosity": typing.NotRequired[float | None],
 })
-ExamineXmatParametersTagged = typing.TypedDict('ExamineXmatParametersTagged', {
+ExamineXmatParamsDictTagged = typing.TypedDict('ExamineXmatParamsDictTagged', {
     "@type": typing.Literal["afni/ExamineXmat"],
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
@@ -39,7 +39,7 @@ ExamineXmatParametersTagged = typing.TypedDict('ExamineXmatParametersTagged', {
 
 class ExamineXmatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExamineXmatParameters(...)`.
+    Output object returned when calling `ExamineXmatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def examine_xmat_params(
     select_: str | None = None,
     msg_trace: bool = False,
     verbosity: float | None = None,
-) -> ExamineXmatParametersTagged:
+) -> ExamineXmatParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def examine_xmat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExamineXmatParameters` object.
+    `ExamineXmatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def examine_xmat_validate(
 
 
 def examine_xmat_cargs(
-    params: ExamineXmatParameters,
+    params: ExamineXmatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,7 +197,7 @@ def examine_xmat_cargs(
 
 
 def examine_xmat_outputs(
-    params: ExamineXmatParameters,
+    params: ExamineXmatParamsDict,
     execution: Execution,
 ) -> ExamineXmatOutputs:
     """
@@ -221,7 +221,7 @@ def examine_xmat_outputs(
 
 
 def examine_xmat_execute(
-    params: ExamineXmatParameters,
+    params: ExamineXmatParamsDict,
     runner: Runner | None = None,
 ) -> ExamineXmatOutputs:
     """
@@ -300,6 +300,8 @@ def examine_xmat(
 __all__ = [
     "EXAMINE_XMAT_METADATA",
     "ExamineXmatOutputs",
+    "ExamineXmatParamsDict",
+    "ExamineXmatParamsDictTagged",
     "examine_xmat",
     "examine_xmat_execute",
     "examine_xmat_params",

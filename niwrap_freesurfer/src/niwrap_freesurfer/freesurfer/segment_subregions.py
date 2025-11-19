@@ -13,7 +13,7 @@ SEGMENT_SUBREGIONS_METADATA = Metadata(
 )
 
 
-SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
+SegmentSubregionsParamsDict = typing.TypedDict('SegmentSubregionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subregions"]],
     "structure": str,
     "cross": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
     "debug": bool,
     "threads": typing.NotRequired[float | None],
 })
-SegmentSubregionsParametersTagged = typing.TypedDict('SegmentSubregionsParametersTagged', {
+SegmentSubregionsParamsDictTagged = typing.TypedDict('SegmentSubregionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subregions"],
     "structure": str,
     "cross": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ SegmentSubregionsParametersTagged = typing.TypedDict('SegmentSubregionsParameter
 
 class SegmentSubregionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubregionsParameters(...)`.
+    Output object returned when calling `SegmentSubregionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def segment_subregions_params(
     out_dir: str | None = None,
     debug: bool = False,
     threads: float | None = None,
-) -> SegmentSubregionsParametersTagged:
+) -> SegmentSubregionsParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def segment_subregions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubregionsParameters` object.
+    `SegmentSubregionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def segment_subregions_validate(
 
 
 def segment_subregions_cargs(
-    params: SegmentSubregionsParameters,
+    params: SegmentSubregionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def segment_subregions_cargs(
 
 
 def segment_subregions_outputs(
-    params: SegmentSubregionsParameters,
+    params: SegmentSubregionsParamsDict,
     execution: Execution,
 ) -> SegmentSubregionsOutputs:
     """
@@ -220,7 +220,7 @@ def segment_subregions_outputs(
 
 
 def segment_subregions_execute(
-    params: SegmentSubregionsParameters,
+    params: SegmentSubregionsParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubregionsOutputs:
     """
@@ -307,6 +307,8 @@ def segment_subregions(
 __all__ = [
     "SEGMENT_SUBREGIONS_METADATA",
     "SegmentSubregionsOutputs",
+    "SegmentSubregionsParamsDict",
+    "SegmentSubregionsParamsDictTagged",
     "segment_subregions",
     "segment_subregions_execute",
     "segment_subregions_params",

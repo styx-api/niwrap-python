@@ -13,7 +13,7 @@ V_3D_NWARP_CAT_METADATA = Metadata(
 )
 
 
-V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
+V3dNwarpCatParamsDict = typing.TypedDict('V3dNwarpCatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNwarpCat"]],
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
@@ -25,7 +25,7 @@ V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
     "invert_final_warp": bool,
     "extra_padding": typing.NotRequired[float | None],
 })
-V3dNwarpCatParametersTagged = typing.TypedDict('V3dNwarpCatParametersTagged', {
+V3dNwarpCatParamsDictTagged = typing.TypedDict('V3dNwarpCatParamsDictTagged', {
     "@type": typing.Literal["afni/3dNwarpCat"],
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
@@ -41,7 +41,7 @@ V3dNwarpCatParametersTagged = typing.TypedDict('V3dNwarpCatParametersTagged', {
 
 class V3dNwarpCatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNwarpCatParameters(...)`.
+    Output object returned when calling `V3dNwarpCatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_nwarp_cat_params(
     additional_warps: list[InputPathType] | None = None,
     invert_final_warp: bool = False,
     extra_padding: float | None = None,
-) -> V3dNwarpCatParametersTagged:
+) -> V3dNwarpCatParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def v_3d_nwarp_cat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNwarpCatParameters` object.
+    `V3dNwarpCatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def v_3d_nwarp_cat_validate(
 
 
 def v_3d_nwarp_cat_cargs(
-    params: V3dNwarpCatParameters,
+    params: V3dNwarpCatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def v_3d_nwarp_cat_cargs(
 
 
 def v_3d_nwarp_cat_outputs(
-    params: V3dNwarpCatParameters,
+    params: V3dNwarpCatParamsDict,
     execution: Execution,
 ) -> V3dNwarpCatOutputs:
     """
@@ -222,7 +222,7 @@ def v_3d_nwarp_cat_outputs(
 
 
 def v_3d_nwarp_cat_execute(
-    params: V3dNwarpCatParameters,
+    params: V3dNwarpCatParamsDict,
     runner: Runner | None = None,
 ) -> V3dNwarpCatOutputs:
     """
@@ -304,6 +304,8 @@ def v_3d_nwarp_cat(
 
 __all__ = [
     "V3dNwarpCatOutputs",
+    "V3dNwarpCatParamsDict",
+    "V3dNwarpCatParamsDictTagged",
     "V_3D_NWARP_CAT_METADATA",
     "v_3d_nwarp_cat",
     "v_3d_nwarp_cat_execute",

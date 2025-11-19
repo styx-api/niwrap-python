@@ -13,7 +13,7 @@ MRIS_FLATTEN_METADATA = Metadata(
 )
 
 
-MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
+MrisFlattenParamsDict = typing.TypedDict('MrisFlattenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_flatten"]],
     "input_patch": InputPathType,
     "output_patch": str,
@@ -24,7 +24,7 @@ MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
     "copy_coords": typing.NotRequired[str | None],
     "norand": bool,
 })
-MrisFlattenParametersTagged = typing.TypedDict('MrisFlattenParametersTagged', {
+MrisFlattenParamsDictTagged = typing.TypedDict('MrisFlattenParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_flatten"],
     "input_patch": InputPathType,
     "output_patch": str,
@@ -39,7 +39,7 @@ MrisFlattenParametersTagged = typing.TypedDict('MrisFlattenParametersTagged', {
 
 class MrisFlattenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisFlattenParameters(...)`.
+    Output object returned when calling `MrisFlattenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def mris_flatten_params(
     random_seed: float | None = None,
     copy_coords: str | None = None,
     norand: bool = False,
-) -> MrisFlattenParametersTagged:
+) -> MrisFlattenParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def mris_flatten_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisFlattenParameters` object.
+    `MrisFlattenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def mris_flatten_validate(
 
 
 def mris_flatten_cargs(
-    params: MrisFlattenParameters,
+    params: MrisFlattenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def mris_flatten_cargs(
 
 
 def mris_flatten_outputs(
-    params: MrisFlattenParameters,
+    params: MrisFlattenParamsDict,
     execution: Execution,
 ) -> MrisFlattenOutputs:
     """
@@ -208,7 +208,7 @@ def mris_flatten_outputs(
 
 
 def mris_flatten_execute(
-    params: MrisFlattenParameters,
+    params: MrisFlattenParamsDict,
     runner: Runner | None = None,
 ) -> MrisFlattenOutputs:
     """
@@ -288,6 +288,8 @@ def mris_flatten(
 __all__ = [
     "MRIS_FLATTEN_METADATA",
     "MrisFlattenOutputs",
+    "MrisFlattenParamsDict",
+    "MrisFlattenParamsDictTagged",
     "mris_flatten",
     "mris_flatten_execute",
     "mris_flatten_params",

@@ -13,12 +13,12 @@ MRIS_EXTRACT_MAIN_COMPONENT_METADATA = Metadata(
 )
 
 
-MrisExtractMainComponentParameters = typing.TypedDict('MrisExtractMainComponentParameters', {
+MrisExtractMainComponentParamsDict = typing.TypedDict('MrisExtractMainComponentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_main_component"]],
     "input_surface": InputPathType,
     "output_surface": str,
 })
-MrisExtractMainComponentParametersTagged = typing.TypedDict('MrisExtractMainComponentParametersTagged', {
+MrisExtractMainComponentParamsDictTagged = typing.TypedDict('MrisExtractMainComponentParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_extract_main_component"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisExtractMainComponentParametersTagged = typing.TypedDict('MrisExtractMainComp
 
 class MrisExtractMainComponentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisExtractMainComponentParameters(...)`.
+    Output object returned when calling `MrisExtractMainComponentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisExtractMainComponentOutputs(typing.NamedTuple):
 def mris_extract_main_component_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisExtractMainComponentParametersTagged:
+) -> MrisExtractMainComponentParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_extract_main_component_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisExtractMainComponentParameters` object.
+    `MrisExtractMainComponentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_extract_main_component_validate(
 
 
 def mris_extract_main_component_cargs(
-    params: MrisExtractMainComponentParameters,
+    params: MrisExtractMainComponentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mris_extract_main_component_cargs(
 
 
 def mris_extract_main_component_outputs(
-    params: MrisExtractMainComponentParameters,
+    params: MrisExtractMainComponentParamsDict,
     execution: Execution,
 ) -> MrisExtractMainComponentOutputs:
     """
@@ -119,7 +119,7 @@ def mris_extract_main_component_outputs(
 
 
 def mris_extract_main_component_execute(
-    params: MrisExtractMainComponentParameters,
+    params: MrisExtractMainComponentParamsDict,
     runner: Runner | None = None,
 ) -> MrisExtractMainComponentOutputs:
     """
@@ -178,6 +178,8 @@ def mris_extract_main_component(
 __all__ = [
     "MRIS_EXTRACT_MAIN_COMPONENT_METADATA",
     "MrisExtractMainComponentOutputs",
+    "MrisExtractMainComponentParamsDict",
+    "MrisExtractMainComponentParamsDictTagged",
     "mris_extract_main_component",
     "mris_extract_main_component_execute",
     "mris_extract_main_component_params",

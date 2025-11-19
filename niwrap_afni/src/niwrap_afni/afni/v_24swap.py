@@ -13,13 +13,13 @@ V_24SWAP_METADATA = Metadata(
 )
 
 
-V24swapParameters = typing.TypedDict('V24swapParameters', {
+V24swapParamsDict = typing.TypedDict('V24swapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/24swap"]],
     "quiet": bool,
     "pattern": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
-V24swapParametersTagged = typing.TypedDict('V24swapParametersTagged', {
+V24swapParamsDictTagged = typing.TypedDict('V24swapParamsDictTagged', {
     "@type": typing.Literal["afni/24swap"],
     "quiet": bool,
     "pattern": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ V24swapParametersTagged = typing.TypedDict('V24swapParametersTagged', {
 
 class V24swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V24swapParameters(...)`.
+    Output object returned when calling `V24swapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def v_24swap_params(
     input_files: list[InputPathType],
     quiet: bool = False,
     pattern: str | None = None,
-) -> V24swapParametersTagged:
+) -> V24swapParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def v_24swap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V24swapParameters` object.
+    `V24swapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def v_24swap_validate(
 
 
 def v_24swap_cargs(
-    params: V24swapParameters,
+    params: V24swapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def v_24swap_cargs(
 
 
 def v_24swap_outputs(
-    params: V24swapParameters,
+    params: V24swapParamsDict,
     execution: Execution,
 ) -> V24swapOutputs:
     """
@@ -134,7 +134,7 @@ def v_24swap_outputs(
 
 
 def v_24swap_execute(
-    params: V24swapParameters,
+    params: V24swapParamsDict,
     runner: Runner | None = None,
 ) -> V24swapOutputs:
     """
@@ -195,6 +195,8 @@ def v_24swap(
 
 __all__ = [
     "V24swapOutputs",
+    "V24swapParamsDict",
+    "V24swapParamsDictTagged",
     "V_24SWAP_METADATA",
     "v_24swap",
     "v_24swap_execute",

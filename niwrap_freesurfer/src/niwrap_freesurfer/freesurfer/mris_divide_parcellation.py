@@ -13,7 +13,7 @@ MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
 )
 
 
-MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParameters', {
+MrisDivideParcellationParamsDict = typing.TypedDict('MrisDivideParcellationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_divide_parcellation"]],
     "subject": str,
     "hemi": str,
@@ -23,7 +23,7 @@ MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParam
     "scale": typing.NotRequired[float | None],
     "label_name": typing.NotRequired[str | None],
 })
-MrisDivideParcellationParametersTagged = typing.TypedDict('MrisDivideParcellationParametersTagged', {
+MrisDivideParcellationParamsDictTagged = typing.TypedDict('MrisDivideParcellationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_divide_parcellation"],
     "subject": str,
     "hemi": str,
@@ -37,7 +37,7 @@ MrisDivideParcellationParametersTagged = typing.TypedDict('MrisDivideParcellatio
 
 class MrisDivideParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDivideParcellationParameters(...)`.
+    Output object returned when calling `MrisDivideParcellationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_divide_parcellation_params(
     outannot: str,
     scale: float | None = None,
     label_name: str | None = None,
-) -> MrisDivideParcellationParametersTagged:
+) -> MrisDivideParcellationParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mris_divide_parcellation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDivideParcellationParameters` object.
+    `MrisDivideParcellationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mris_divide_parcellation_validate(
 
 
 def mris_divide_parcellation_cargs(
-    params: MrisDivideParcellationParameters,
+    params: MrisDivideParcellationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -158,7 +158,7 @@ def mris_divide_parcellation_cargs(
 
 
 def mris_divide_parcellation_outputs(
-    params: MrisDivideParcellationParameters,
+    params: MrisDivideParcellationParamsDict,
     execution: Execution,
 ) -> MrisDivideParcellationOutputs:
     """
@@ -178,7 +178,7 @@ def mris_divide_parcellation_outputs(
 
 
 def mris_divide_parcellation_execute(
-    params: MrisDivideParcellationParameters,
+    params: MrisDivideParcellationParamsDict,
     runner: Runner | None = None,
 ) -> MrisDivideParcellationOutputs:
     """
@@ -255,6 +255,8 @@ def mris_divide_parcellation(
 __all__ = [
     "MRIS_DIVIDE_PARCELLATION_METADATA",
     "MrisDivideParcellationOutputs",
+    "MrisDivideParcellationParamsDict",
+    "MrisDivideParcellationParamsDictTagged",
     "mris_divide_parcellation",
     "mris_divide_parcellation_execute",
     "mris_divide_parcellation_params",

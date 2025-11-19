@@ -13,7 +13,7 @@ MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
 )
 
 
-MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameters', {
+MriDistanceTransformParamsDict = typing.TypedDict('MriDistanceTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_distance_transform"]],
     "input_volume": InputPathType,
     "label": int,
@@ -21,7 +21,7 @@ MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameter
     "mode": typing.NotRequired[int | None],
     "output_volume": str,
 })
-MriDistanceTransformParametersTagged = typing.TypedDict('MriDistanceTransformParametersTagged', {
+MriDistanceTransformParamsDictTagged = typing.TypedDict('MriDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_distance_transform"],
     "input_volume": InputPathType,
     "label": int,
@@ -33,7 +33,7 @@ MriDistanceTransformParametersTagged = typing.TypedDict('MriDistanceTransformPar
 
 class MriDistanceTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDistanceTransformParameters(...)`.
+    Output object returned when calling `MriDistanceTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_distance_transform_params(
     max_distance: int,
     output_volume: str,
     mode: int | None = None,
-) -> MriDistanceTransformParametersTagged:
+) -> MriDistanceTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def mri_distance_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDistanceTransformParameters` object.
+    `MriDistanceTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mri_distance_transform_validate(
 
 
 def mri_distance_transform_cargs(
-    params: MriDistanceTransformParameters,
+    params: MriDistanceTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def mri_distance_transform_cargs(
 
 
 def mri_distance_transform_outputs(
-    params: MriDistanceTransformParameters,
+    params: MriDistanceTransformParamsDict,
     execution: Execution,
 ) -> MriDistanceTransformOutputs:
     """
@@ -151,7 +151,7 @@ def mri_distance_transform_outputs(
 
 
 def mri_distance_transform_execute(
-    params: MriDistanceTransformParameters,
+    params: MriDistanceTransformParamsDict,
     runner: Runner | None = None,
 ) -> MriDistanceTransformOutputs:
     """
@@ -220,6 +220,8 @@ def mri_distance_transform(
 __all__ = [
     "MRI_DISTANCE_TRANSFORM_METADATA",
     "MriDistanceTransformOutputs",
+    "MriDistanceTransformParamsDict",
+    "MriDistanceTransformParamsDictTagged",
     "mri_distance_transform",
     "mri_distance_transform_execute",
     "mri_distance_transform_params",

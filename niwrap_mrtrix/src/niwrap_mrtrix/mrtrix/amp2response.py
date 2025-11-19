@@ -13,19 +13,19 @@ AMP2RESPONSE_METADATA = Metadata(
 )
 
 
-Amp2responseConfigParameters = typing.TypedDict('Amp2responseConfigParameters', {
+Amp2responseConfigParamsDict = typing.TypedDict('Amp2responseConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Amp2responseConfigParametersTagged = typing.TypedDict('Amp2responseConfigParametersTagged', {
+Amp2responseConfigParamsDictTagged = typing.TypedDict('Amp2responseConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
+Amp2responseParamsDict = typing.TypedDict('Amp2responseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/amp2response"]],
     "isotropic": bool,
     "noconstraint": bool,
@@ -37,7 +37,7 @@ Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Amp2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Amp2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "amps": InputPathType,
@@ -45,7 +45,7 @@ Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
     "directions_1": InputPathType,
     "response": str,
 })
-Amp2responseParametersTagged = typing.TypedDict('Amp2responseParametersTagged', {
+Amp2responseParamsDictTagged = typing.TypedDict('Amp2responseParamsDictTagged', {
     "@type": typing.Literal["mrtrix/amp2response"],
     "isotropic": bool,
     "noconstraint": bool,
@@ -57,7 +57,7 @@ Amp2responseParametersTagged = typing.TypedDict('Amp2responseParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Amp2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Amp2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "amps": InputPathType,
@@ -67,10 +67,10 @@ Amp2responseParametersTagged = typing.TypedDict('Amp2responseParametersTagged', 
 })
 
 
-def amp2response_config_params(
+def amp2response_config(
     key: str,
     value: str,
-) -> Amp2responseConfigParametersTagged:
+) -> Amp2responseConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def amp2response_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2responseConfigParameters` object.
+    `Amp2responseConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def amp2response_config_validate(
 
 
 def amp2response_config_cargs(
-    params: Amp2responseConfigParameters,
+    params: Amp2responseConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def amp2response_config_cargs(
 
 class Amp2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Amp2responseParameters(...)`.
+    Output object returned when calling `Amp2responseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,10 +155,10 @@ def amp2response_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Amp2responseConfigParameters] | None = None,
+    config: list[Amp2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Amp2responseParametersTagged:
+) -> Amp2responseParamsDictTagged:
     """
     Build parameters.
     
@@ -233,7 +233,7 @@ def amp2response_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Amp2responseParameters` object.
+    `Amp2responseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -284,7 +284,7 @@ def amp2response_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Amp2responseConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Amp2responseConfigParamsDict] | None`')
         for e in params["config"]:
             amp2response_config_validate(e)
     if params.get("help", False) is None:
@@ -314,7 +314,7 @@ def amp2response_validate(
 
 
 def amp2response_cargs(
-    params: Amp2responseParameters,
+    params: Amp2responseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -374,7 +374,7 @@ def amp2response_cargs(
 
 
 def amp2response_outputs(
-    params: Amp2responseParameters,
+    params: Amp2responseParamsDict,
     execution: Execution,
 ) -> Amp2responseOutputs:
     """
@@ -394,7 +394,7 @@ def amp2response_outputs(
 
 
 def amp2response_execute(
-    params: Amp2responseParameters,
+    params: Amp2responseParamsDict,
     runner: Runner | None = None,
 ) -> Amp2responseOutputs:
     """
@@ -454,7 +454,7 @@ def amp2response(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Amp2responseConfigParameters] | None = None,
+    config: list[Amp2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -548,9 +548,13 @@ def amp2response(
 
 __all__ = [
     "AMP2RESPONSE_METADATA",
+    "Amp2responseConfigParamsDict",
+    "Amp2responseConfigParamsDictTagged",
     "Amp2responseOutputs",
+    "Amp2responseParamsDict",
+    "Amp2responseParamsDictTagged",
     "amp2response",
-    "amp2response_config_params",
+    "amp2response_config",
     "amp2response_execute",
     "amp2response_params",
 ]

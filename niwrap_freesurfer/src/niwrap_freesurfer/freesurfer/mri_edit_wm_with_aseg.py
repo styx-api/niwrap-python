@@ -13,7 +13,7 @@ MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
 )
 
 
-MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
+MriEditWmWithAsegParamsDict = typing.TypedDict('MriEditWmWithAsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_wm_with_aseg"]],
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
@@ -30,7 +30,7 @@ MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
     "sa_fix_ento_wm": typing.NotRequired[str | None],
     "debug_voxel": typing.NotRequired[list[float] | None],
 })
-MriEditWmWithAsegParametersTagged = typing.TypedDict('MriEditWmWithAsegParametersTagged', {
+MriEditWmWithAsegParamsDictTagged = typing.TypedDict('MriEditWmWithAsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_edit_wm_with_aseg"],
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
@@ -51,7 +51,7 @@ MriEditWmWithAsegParametersTagged = typing.TypedDict('MriEditWmWithAsegParameter
 
 class MriEditWmWithAsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEditWmWithAsegParameters(...)`.
+    Output object returned when calling `MriEditWmWithAsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def mri_edit_wm_with_aseg_params(
     fix_ento_wm: str | None = None,
     sa_fix_ento_wm: str | None = None,
     debug_voxel: list[float] | None = None,
-) -> MriEditWmWithAsegParametersTagged:
+) -> MriEditWmWithAsegParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def mri_edit_wm_with_aseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEditWmWithAsegParameters` object.
+    `MriEditWmWithAsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def mri_edit_wm_with_aseg_validate(
 
 
 def mri_edit_wm_with_aseg_cargs(
-    params: MriEditWmWithAsegParameters,
+    params: MriEditWmWithAsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def mri_edit_wm_with_aseg_cargs(
 
 
 def mri_edit_wm_with_aseg_outputs(
-    params: MriEditWmWithAsegParameters,
+    params: MriEditWmWithAsegParamsDict,
     execution: Execution,
 ) -> MriEditWmWithAsegOutputs:
     """
@@ -268,7 +268,7 @@ def mri_edit_wm_with_aseg_outputs(
 
 
 def mri_edit_wm_with_aseg_execute(
-    params: MriEditWmWithAsegParameters,
+    params: MriEditWmWithAsegParamsDict,
     runner: Runner | None = None,
 ) -> MriEditWmWithAsegOutputs:
     """
@@ -364,6 +364,8 @@ def mri_edit_wm_with_aseg(
 __all__ = [
     "MRI_EDIT_WM_WITH_ASEG_METADATA",
     "MriEditWmWithAsegOutputs",
+    "MriEditWmWithAsegParamsDict",
+    "MriEditWmWithAsegParamsDictTagged",
     "mri_edit_wm_with_aseg",
     "mri_edit_wm_with_aseg_execute",
     "mri_edit_wm_with_aseg_params",

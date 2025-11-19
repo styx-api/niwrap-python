@@ -13,7 +13,7 @@ TFIM_METADATA = Metadata(
 )
 
 
-TfimParameters = typing.TypedDict('TfimParameters', {
+TfimParamsDict = typing.TypedDict('TfimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/tfim"]],
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
@@ -23,7 +23,7 @@ TfimParameters = typing.TypedDict('TfimParameters', {
     "set2_images": list[InputPathType],
     "base1_value": typing.NotRequired[float | None],
 })
-TfimParametersTagged = typing.TypedDict('TfimParametersTagged', {
+TfimParamsDictTagged = typing.TypedDict('TfimParamsDictTagged', {
     "@type": typing.Literal["afni/tfim"],
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ TfimParametersTagged = typing.TypedDict('TfimParametersTagged', {
 
 class TfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TfimParameters(...)`.
+    Output object returned when calling `TfimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def tfim_params(
     eqcorr: float | None = None,
     paired: bool = False,
     base1_value: float | None = None,
-) -> TfimParametersTagged:
+) -> TfimParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def tfim_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `TfimParameters`
+    Validate parameters. Throws an error if `params` is not a valid `TfimParamsDict`
     object.
     
     Args:
@@ -141,7 +141,7 @@ def tfim_validate(
 
 
 def tfim_cargs(
-    params: TfimParameters,
+    params: TfimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -189,7 +189,7 @@ def tfim_cargs(
 
 
 def tfim_outputs(
-    params: TfimParameters,
+    params: TfimParamsDict,
     execution: Execution,
 ) -> TfimOutputs:
     """
@@ -211,7 +211,7 @@ def tfim_outputs(
 
 
 def tfim_execute(
-    params: TfimParameters,
+    params: TfimParamsDict,
     runner: Runner | None = None,
 ) -> TfimOutputs:
     """
@@ -290,6 +290,8 @@ def tfim(
 __all__ = [
     "TFIM_METADATA",
     "TfimOutputs",
+    "TfimParamsDict",
+    "TfimParamsDictTagged",
     "tfim",
     "tfim_execute",
     "tfim_params",

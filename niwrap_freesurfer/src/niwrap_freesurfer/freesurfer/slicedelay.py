@@ -13,14 +13,14 @@ SLICEDELAY_METADATA = Metadata(
 )
 
 
-SlicedelayParameters = typing.TypedDict('SlicedelayParameters', {
+SlicedelayParamsDict = typing.TypedDict('SlicedelayParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/slicedelay"]],
     "slicedelayfile": str,
     "nslices": float,
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],
     "ngroups": float,
 })
-SlicedelayParametersTagged = typing.TypedDict('SlicedelayParametersTagged', {
+SlicedelayParamsDictTagged = typing.TypedDict('SlicedelayParamsDictTagged', {
     "@type": typing.Literal["freesurfer/slicedelay"],
     "slicedelayfile": str,
     "nslices": float,
@@ -31,7 +31,7 @@ SlicedelayParametersTagged = typing.TypedDict('SlicedelayParametersTagged', {
 
 class SlicedelayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicedelayParameters(...)`.
+    Output object returned when calling `SlicedelayParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def slicedelay_params(
     nslices: float,
     order: typing.Literal["up", "down", "odd", "even", "siemens"],
     ngroups: float,
-) -> SlicedelayParametersTagged:
+) -> SlicedelayParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def slicedelay_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicedelayParameters` object.
+    `SlicedelayParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def slicedelay_validate(
 
 
 def slicedelay_cargs(
-    params: SlicedelayParameters,
+    params: SlicedelayParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def slicedelay_cargs(
 
 
 def slicedelay_outputs(
-    params: SlicedelayParameters,
+    params: SlicedelayParamsDict,
     execution: Execution,
 ) -> SlicedelayOutputs:
     """
@@ -153,7 +153,7 @@ def slicedelay_outputs(
 
 
 def slicedelay_execute(
-    params: SlicedelayParameters,
+    params: SlicedelayParamsDict,
     runner: Runner | None = None,
 ) -> SlicedelayOutputs:
     """
@@ -220,6 +220,8 @@ def slicedelay(
 __all__ = [
     "SLICEDELAY_METADATA",
     "SlicedelayOutputs",
+    "SlicedelayParamsDict",
+    "SlicedelayParamsDictTagged",
     "slicedelay",
     "slicedelay_execute",
     "slicedelay_params",

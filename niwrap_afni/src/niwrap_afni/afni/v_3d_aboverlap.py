@@ -13,7 +13,7 @@ V_3D_ABOVERLAP_METADATA = Metadata(
 )
 
 
-V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
+V3dAboverlapParamsDict = typing.TypedDict('V3dAboverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dABoverlap"]],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
@@ -21,7 +21,7 @@ V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
     "quiet": bool,
     "verbose": bool,
 })
-V3dAboverlapParametersTagged = typing.TypedDict('V3dAboverlapParametersTagged', {
+V3dAboverlapParamsDictTagged = typing.TypedDict('V3dAboverlapParamsDictTagged', {
     "@type": typing.Literal["afni/3dABoverlap"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
@@ -33,7 +33,7 @@ V3dAboverlapParametersTagged = typing.TypedDict('V3dAboverlapParametersTagged', 
 
 class V3dAboverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAboverlapParameters(...)`.
+    Output object returned when calling `V3dAboverlapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v_3d_aboverlap_params(
     no_automask: bool = False,
     quiet: bool = False,
     verbose: bool = False,
-) -> V3dAboverlapParametersTagged:
+) -> V3dAboverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def v_3d_aboverlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAboverlapParameters` object.
+    `V3dAboverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def v_3d_aboverlap_validate(
 
 
 def v_3d_aboverlap_cargs(
-    params: V3dAboverlapParameters,
+    params: V3dAboverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def v_3d_aboverlap_cargs(
 
 
 def v_3d_aboverlap_outputs(
-    params: V3dAboverlapParameters,
+    params: V3dAboverlapParamsDict,
     execution: Execution,
 ) -> V3dAboverlapOutputs:
     """
@@ -150,7 +150,7 @@ def v_3d_aboverlap_outputs(
 
 
 def v_3d_aboverlap_execute(
-    params: V3dAboverlapParameters,
+    params: V3dAboverlapParamsDict,
     runner: Runner | None = None,
 ) -> V3dAboverlapOutputs:
     """
@@ -220,6 +220,8 @@ def v_3d_aboverlap(
 
 __all__ = [
     "V3dAboverlapOutputs",
+    "V3dAboverlapParamsDict",
+    "V3dAboverlapParamsDictTagged",
     "V_3D_ABOVERLAP_METADATA",
     "v_3d_aboverlap",
     "v_3d_aboverlap_execute",

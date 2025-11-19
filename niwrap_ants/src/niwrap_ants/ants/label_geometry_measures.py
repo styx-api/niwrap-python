@@ -13,14 +13,14 @@ LABEL_GEOMETRY_MEASURES_METADATA = Metadata(
 )
 
 
-LabelGeometryMeasuresParameters = typing.TypedDict('LabelGeometryMeasuresParameters', {
+LabelGeometryMeasuresParamsDict = typing.TypedDict('LabelGeometryMeasuresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/LabelGeometryMeasures"]],
     "image_dimension": int,
     "label_image": InputPathType,
     "intensity_image": typing.NotRequired[str | None],
     "csv_file": typing.NotRequired[InputPathType | None],
 })
-LabelGeometryMeasuresParametersTagged = typing.TypedDict('LabelGeometryMeasuresParametersTagged', {
+LabelGeometryMeasuresParamsDictTagged = typing.TypedDict('LabelGeometryMeasuresParamsDictTagged', {
     "@type": typing.Literal["ants/LabelGeometryMeasures"],
     "image_dimension": int,
     "label_image": InputPathType,
@@ -31,7 +31,7 @@ LabelGeometryMeasuresParametersTagged = typing.TypedDict('LabelGeometryMeasuresP
 
 class LabelGeometryMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelGeometryMeasuresParameters(...)`.
+    Output object returned when calling `LabelGeometryMeasuresParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def label_geometry_measures_params(
     label_image: InputPathType,
     intensity_image: str | None = None,
     csv_file: InputPathType | None = None,
-) -> LabelGeometryMeasuresParametersTagged:
+) -> LabelGeometryMeasuresParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def label_geometry_measures_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelGeometryMeasuresParameters` object.
+    `LabelGeometryMeasuresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def label_geometry_measures_validate(
 
 
 def label_geometry_measures_cargs(
-    params: LabelGeometryMeasuresParameters,
+    params: LabelGeometryMeasuresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def label_geometry_measures_cargs(
 
 
 def label_geometry_measures_outputs(
-    params: LabelGeometryMeasuresParameters,
+    params: LabelGeometryMeasuresParamsDict,
     execution: Execution,
 ) -> LabelGeometryMeasuresOutputs:
     """
@@ -144,7 +144,7 @@ def label_geometry_measures_outputs(
 
 
 def label_geometry_measures_execute(
-    params: LabelGeometryMeasuresParameters,
+    params: LabelGeometryMeasuresParamsDict,
     runner: Runner | None = None,
 ) -> LabelGeometryMeasuresOutputs:
     """
@@ -214,6 +214,8 @@ def label_geometry_measures(
 __all__ = [
     "LABEL_GEOMETRY_MEASURES_METADATA",
     "LabelGeometryMeasuresOutputs",
+    "LabelGeometryMeasuresParamsDict",
+    "LabelGeometryMeasuresParamsDictTagged",
     "label_geometry_measures",
     "label_geometry_measures_execute",
     "label_geometry_measures_params",

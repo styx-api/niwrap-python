@@ -12,7 +12,7 @@ SURFACE_INFLATION_METADATA = Metadata(
 )
 
 
-SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
+SurfaceInflationParamsDict = typing.TypedDict('SurfaceInflationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-inflation"]],
     "surface-out": str,
     "anatomical-surface-in": InputPathType,
@@ -22,7 +22,7 @@ SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
     "smoothing-iterations": int,
     "inflation-factor": float,
 })
-SurfaceInflationParametersTagged = typing.TypedDict('SurfaceInflationParametersTagged', {
+SurfaceInflationParamsDictTagged = typing.TypedDict('SurfaceInflationParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-inflation"],
     "surface-out": str,
     "anatomical-surface-in": InputPathType,
@@ -36,7 +36,7 @@ SurfaceInflationParametersTagged = typing.TypedDict('SurfaceInflationParametersT
 
 class SurfaceInflationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceInflationParameters(...)`.
+    Output object returned when calling `SurfaceInflationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def surface_inflation_params(
     smoothing_strength: float,
     smoothing_iterations: int,
     inflation_factor: float,
-) -> SurfaceInflationParametersTagged:
+) -> SurfaceInflationParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def surface_inflation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceInflationParameters` object.
+    `SurfaceInflationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def surface_inflation_validate(
 
 
 def surface_inflation_cargs(
-    params: SurfaceInflationParameters,
+    params: SurfaceInflationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def surface_inflation_cargs(
 
 
 def surface_inflation_outputs(
-    params: SurfaceInflationParameters,
+    params: SurfaceInflationParamsDict,
     execution: Execution,
 ) -> SurfaceInflationOutputs:
     """
@@ -171,7 +171,7 @@ def surface_inflation_outputs(
 
 
 def surface_inflation_execute(
-    params: SurfaceInflationParameters,
+    params: SurfaceInflationParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
@@ -239,6 +239,8 @@ def surface_inflation(
 __all__ = [
     "SURFACE_INFLATION_METADATA",
     "SurfaceInflationOutputs",
+    "SurfaceInflationParamsDict",
+    "SurfaceInflationParamsDictTagged",
     "surface_inflation",
     "surface_inflation_execute",
     "surface_inflation_params",

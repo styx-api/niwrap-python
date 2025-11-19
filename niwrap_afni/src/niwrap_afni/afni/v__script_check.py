@@ -13,13 +13,13 @@ V__SCRIPT_CHECK_METADATA = Metadata(
 )
 
 
-VScriptCheckParameters = typing.TypedDict('VScriptCheckParameters', {
+VScriptCheckParamsDict = typing.TypedDict('VScriptCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ScriptCheck"]],
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],
 })
-VScriptCheckParametersTagged = typing.TypedDict('VScriptCheckParametersTagged', {
+VScriptCheckParamsDictTagged = typing.TypedDict('VScriptCheckParamsDictTagged', {
     "@type": typing.Literal["afni/@ScriptCheck"],
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ VScriptCheckParametersTagged = typing.TypedDict('VScriptCheckParametersTagged', 
 
 class VScriptCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VScriptCheckParameters(...)`.
+    Output object returned when calling `VScriptCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v__script_check_params(
     scripts: list[InputPathType],
     clean: bool = False,
     suffix: str | None = None,
-) -> VScriptCheckParametersTagged:
+) -> VScriptCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def v__script_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VScriptCheckParameters` object.
+    `VScriptCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def v__script_check_validate(
 
 
 def v__script_check_cargs(
-    params: VScriptCheckParameters,
+    params: VScriptCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def v__script_check_cargs(
 
 
 def v__script_check_outputs(
-    params: VScriptCheckParameters,
+    params: VScriptCheckParamsDict,
     execution: Execution,
 ) -> VScriptCheckOutputs:
     """
@@ -140,7 +140,7 @@ def v__script_check_outputs(
 
 
 def v__script_check_execute(
-    params: VScriptCheckParameters,
+    params: VScriptCheckParamsDict,
     runner: Runner | None = None,
 ) -> VScriptCheckOutputs:
     """
@@ -201,6 +201,8 @@ def v__script_check(
 
 __all__ = [
     "VScriptCheckOutputs",
+    "VScriptCheckParamsDict",
+    "VScriptCheckParamsDictTagged",
     "V__SCRIPT_CHECK_METADATA",
     "v__script_check",
     "v__script_check_execute",

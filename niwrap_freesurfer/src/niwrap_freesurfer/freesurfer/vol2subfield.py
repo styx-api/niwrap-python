@@ -13,7 +13,7 @@ VOL2SUBFIELD_METADATA = Metadata(
 )
 
 
-Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
+Vol2subfieldParamsDict = typing.TypedDict('Vol2subfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vol2subfield"]],
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
@@ -35,7 +35,7 @@ Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
     "preset_subfield_thalamus": bool,
     "preset_subfield_brainstem": bool,
 })
-Vol2subfieldParametersTagged = typing.TypedDict('Vol2subfieldParametersTagged', {
+Vol2subfieldParamsDictTagged = typing.TypedDict('Vol2subfieldParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vol2subfield"],
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
@@ -61,7 +61,7 @@ Vol2subfieldParametersTagged = typing.TypedDict('Vol2subfieldParametersTagged', 
 
 class Vol2subfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Vol2subfieldParameters(...)`.
+    Output object returned when calling `Vol2subfieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +97,7 @@ def vol2subfield_params(
     preset_subfield_rh_hbt: bool = False,
     preset_subfield_thalamus: bool = False,
     preset_subfield_brainstem: bool = False,
-) -> Vol2subfieldParametersTagged:
+) -> Vol2subfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def vol2subfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Vol2subfieldParameters` object.
+    `Vol2subfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -245,7 +245,7 @@ def vol2subfield_validate(
 
 
 def vol2subfield_cargs(
-    params: Vol2subfieldParameters,
+    params: Vol2subfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def vol2subfield_cargs(
 
 
 def vol2subfield_outputs(
-    params: Vol2subfieldParameters,
+    params: Vol2subfieldParamsDict,
     execution: Execution,
 ) -> Vol2subfieldOutputs:
     """
@@ -352,7 +352,7 @@ def vol2subfield_outputs(
 
 
 def vol2subfield_execute(
-    params: Vol2subfieldParameters,
+    params: Vol2subfieldParamsDict,
     runner: Runner | None = None,
 ) -> Vol2subfieldOutputs:
     """
@@ -469,6 +469,8 @@ def vol2subfield(
 __all__ = [
     "VOL2SUBFIELD_METADATA",
     "Vol2subfieldOutputs",
+    "Vol2subfieldParamsDict",
+    "Vol2subfieldParamsDictTagged",
     "vol2subfield",
     "vol2subfield_execute",
     "vol2subfield_params",

@@ -13,7 +13,7 @@ TO3D_METADATA = Metadata(
 )
 
 
-To3dParameters = typing.TypedDict('To3dParameters', {
+To3dParamsDict = typing.TypedDict('To3dParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/to3d"]],
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
@@ -56,7 +56,7 @@ To3dParameters = typing.TypedDict('To3dParameters', {
     "xtwarns_flag": bool,
     "quit_on_err_flag": bool,
 })
-To3dParametersTagged = typing.TypedDict('To3dParametersTagged', {
+To3dParamsDictTagged = typing.TypedDict('To3dParamsDictTagged', {
     "@type": typing.Literal["afni/to3d"],
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
@@ -103,7 +103,7 @@ To3dParametersTagged = typing.TypedDict('To3dParametersTagged', {
 
 class To3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `To3dParameters(...)`.
+    Output object returned when calling `To3dParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -156,7 +156,7 @@ def to3d_params(
     ncolors: float | None = None,
     xtwarns_flag: bool = False,
     quit_on_err_flag: bool = False,
-) -> To3dParametersTagged:
+) -> To3dParamsDictTagged:
     """
     Build parameters.
     
@@ -285,7 +285,7 @@ def to3d_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `To3dParameters`
+    Validate parameters. Throws an error if `params` is not a valid `To3dParamsDict`
     object.
     
     Args:
@@ -452,7 +452,7 @@ def to3d_validate(
 
 
 def to3d_cargs(
-    params: To3dParameters,
+    params: To3dParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -621,7 +621,7 @@ def to3d_cargs(
 
 
 def to3d_outputs(
-    params: To3dParameters,
+    params: To3dParamsDict,
     execution: Execution,
 ) -> To3dOutputs:
     """
@@ -643,7 +643,7 @@ def to3d_outputs(
 
 
 def to3d_execute(
-    params: To3dParameters,
+    params: To3dParamsDict,
     runner: Runner | None = None,
 ) -> To3dOutputs:
     """
@@ -823,6 +823,8 @@ def to3d(
 __all__ = [
     "TO3D_METADATA",
     "To3dOutputs",
+    "To3dParamsDict",
+    "To3dParamsDictTagged",
     "to3d",
     "to3d_execute",
     "to3d_params",

@@ -13,13 +13,13 @@ FSLMODHD_METADATA = Metadata(
 )
 
 
-FslmodhdParameters = typing.TypedDict('FslmodhdParameters', {
+FslmodhdParamsDict = typing.TypedDict('FslmodhdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslmodhd"]],
     "image": InputPathType,
     "keyword": str,
     "value": str,
 })
-FslmodhdParametersTagged = typing.TypedDict('FslmodhdParametersTagged', {
+FslmodhdParamsDictTagged = typing.TypedDict('FslmodhdParamsDictTagged', {
     "@type": typing.Literal["fsl/fslmodhd"],
     "image": InputPathType,
     "keyword": str,
@@ -29,7 +29,7 @@ FslmodhdParametersTagged = typing.TypedDict('FslmodhdParametersTagged', {
 
 class FslmodhdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslmodhdParameters(...)`.
+    Output object returned when calling `FslmodhdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def fslmodhd_params(
     image: InputPathType,
     keyword_: str,
     value: str,
-) -> FslmodhdParametersTagged:
+) -> FslmodhdParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def fslmodhd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmodhdParameters` object.
+    `FslmodhdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def fslmodhd_validate(
 
 
 def fslmodhd_cargs(
-    params: FslmodhdParameters,
+    params: FslmodhdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def fslmodhd_cargs(
 
 
 def fslmodhd_outputs(
-    params: FslmodhdParameters,
+    params: FslmodhdParamsDict,
     execution: Execution,
 ) -> FslmodhdOutputs:
     """
@@ -126,7 +126,7 @@ def fslmodhd_outputs(
 
 
 def fslmodhd_execute(
-    params: FslmodhdParameters,
+    params: FslmodhdParamsDict,
     runner: Runner | None = None,
 ) -> FslmodhdOutputs:
     """
@@ -188,6 +188,8 @@ def fslmodhd(
 __all__ = [
     "FSLMODHD_METADATA",
     "FslmodhdOutputs",
+    "FslmodhdParamsDict",
+    "FslmodhdParamsDictTagged",
     "fslmodhd",
     "fslmodhd_execute",
     "fslmodhd_params",

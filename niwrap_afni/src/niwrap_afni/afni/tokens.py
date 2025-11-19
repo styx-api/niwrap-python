@@ -13,12 +13,12 @@ TOKENS_METADATA = Metadata(
 )
 
 
-TokensParameters = typing.TypedDict('TokensParameters', {
+TokensParamsDict = typing.TypedDict('TokensParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/tokens"]],
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })
-TokensParametersTagged = typing.TypedDict('TokensParametersTagged', {
+TokensParamsDictTagged = typing.TypedDict('TokensParamsDictTagged', {
     "@type": typing.Literal["afni/tokens"],
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
@@ -27,7 +27,7 @@ TokensParametersTagged = typing.TypedDict('TokensParametersTagged', {
 
 class TokensOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TokensParameters(...)`.
+    Output object returned when calling `TokensParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class TokensOutputs(typing.NamedTuple):
 def tokens_params(
     infile: InputPathType | None = None,
     extra_char: list[str] | None = None,
-) -> TokensParametersTagged:
+) -> TokensParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def tokens_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TokensParameters` object.
+    `TokensParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def tokens_validate(
 
 
 def tokens_cargs(
-    params: TokensParameters,
+    params: TokensParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def tokens_cargs(
 
 
 def tokens_outputs(
-    params: TokensParameters,
+    params: TokensParamsDict,
     execution: Execution,
 ) -> TokensOutputs:
     """
@@ -128,7 +128,7 @@ def tokens_outputs(
 
 
 def tokens_execute(
-    params: TokensParameters,
+    params: TokensParamsDict,
     runner: Runner | None = None,
 ) -> TokensOutputs:
     """
@@ -188,6 +188,8 @@ def tokens(
 __all__ = [
     "TOKENS_METADATA",
     "TokensOutputs",
+    "TokensParamsDict",
+    "TokensParamsDictTagged",
     "tokens",
     "tokens_execute",
     "tokens_params",

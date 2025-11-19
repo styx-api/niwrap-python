@@ -12,13 +12,13 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-CiftiLabelProbabilityParameters = typing.TypedDict('CiftiLabelProbabilityParameters', {
+CiftiLabelProbabilityParamsDict = typing.TypedDict('CiftiLabelProbabilityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-probability"]],
     "probability-dscalar-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
-CiftiLabelProbabilityParametersTagged = typing.TypedDict('CiftiLabelProbabilityParametersTagged', {
+CiftiLabelProbabilityParamsDictTagged = typing.TypedDict('CiftiLabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-probability"],
     "probability-dscalar-out": str,
     "exclude-unlabeled": bool,
@@ -28,7 +28,7 @@ CiftiLabelProbabilityParametersTagged = typing.TypedDict('CiftiLabelProbabilityP
 
 class CiftiLabelProbabilityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelProbabilityParameters(...)`.
+    Output object returned when calling `CiftiLabelProbabilityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def cifti_label_probability_params(
     probability_dscalar_out: str,
     label_maps: InputPathType,
     exclude_unlabeled: bool = False,
-) -> CiftiLabelProbabilityParametersTagged:
+) -> CiftiLabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def cifti_label_probability_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelProbabilityParameters` object.
+    `CiftiLabelProbabilityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def cifti_label_probability_validate(
 
 
 def cifti_label_probability_cargs(
-    params: CiftiLabelProbabilityParameters,
+    params: CiftiLabelProbabilityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def cifti_label_probability_cargs(
 
 
 def cifti_label_probability_outputs(
-    params: CiftiLabelProbabilityParameters,
+    params: CiftiLabelProbabilityParamsDict,
     execution: Execution,
 ) -> CiftiLabelProbabilityOutputs:
     """
@@ -134,7 +134,7 @@ def cifti_label_probability_outputs(
 
 
 def cifti_label_probability_execute(
-    params: CiftiLabelProbabilityParameters,
+    params: CiftiLabelProbabilityParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
@@ -194,6 +194,8 @@ def cifti_label_probability(
 __all__ = [
     "CIFTI_LABEL_PROBABILITY_METADATA",
     "CiftiLabelProbabilityOutputs",
+    "CiftiLabelProbabilityParamsDict",
+    "CiftiLabelProbabilityParamsDictTagged",
     "cifti_label_probability",
     "cifti_label_probability_execute",
     "cifti_label_probability_params",

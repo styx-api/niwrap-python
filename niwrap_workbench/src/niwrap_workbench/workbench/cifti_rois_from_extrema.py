@@ -12,25 +12,25 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-CiftiRoisFromExtremaGaussianParameters = typing.TypedDict('CiftiRoisFromExtremaGaussianParameters', {
+CiftiRoisFromExtremaGaussianParamsDict = typing.TypedDict('CiftiRoisFromExtremaGaussianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["gaussian"]],
     "surf-sigma": float,
     "vol-sigma": float,
 })
-CiftiRoisFromExtremaGaussianParametersTagged = typing.TypedDict('CiftiRoisFromExtremaGaussianParametersTagged', {
+CiftiRoisFromExtremaGaussianParamsDictTagged = typing.TypedDict('CiftiRoisFromExtremaGaussianParamsDictTagged', {
     "@type": typing.Literal["gaussian"],
     "surf-sigma": float,
     "vol-sigma": float,
 })
 
 
-CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameters', {
+CiftiRoisFromExtremaParamsDict = typing.TypedDict('CiftiRoisFromExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-rois-from-extrema"]],
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
-    "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParameters | None],
+    "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParamsDict | None],
     "method": typing.NotRequired[str | None],
     "merged-volume": bool,
     "cifti": InputPathType,
@@ -38,13 +38,13 @@ CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameter
     "vol-limit": float,
     "direction": str,
 })
-CiftiRoisFromExtremaParametersTagged = typing.TypedDict('CiftiRoisFromExtremaParametersTagged', {
+CiftiRoisFromExtremaParamsDictTagged = typing.TypedDict('CiftiRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-rois-from-extrema"],
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
-    "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParameters | None],
+    "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParamsDict | None],
     "method": typing.NotRequired[str | None],
     "merged-volume": bool,
     "cifti": InputPathType,
@@ -54,10 +54,10 @@ CiftiRoisFromExtremaParametersTagged = typing.TypedDict('CiftiRoisFromExtremaPar
 })
 
 
-def cifti_rois_from_extrema_gaussian_params(
+def cifti_rois_from_extrema_gaussian(
     surf_sigma: float,
     vol_sigma: float,
-) -> CiftiRoisFromExtremaGaussianParametersTagged:
+) -> CiftiRoisFromExtremaGaussianParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def cifti_rois_from_extrema_gaussian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiRoisFromExtremaGaussianParameters` object.
+    `CiftiRoisFromExtremaGaussianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def cifti_rois_from_extrema_gaussian_validate(
 
 
 def cifti_rois_from_extrema_gaussian_cargs(
-    params: CiftiRoisFromExtremaGaussianParameters,
+    params: CiftiRoisFromExtremaGaussianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def cifti_rois_from_extrema_gaussian_cargs(
 
 class CiftiRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiRoisFromExtremaParameters(...)`.
+    Output object returned when calling `CiftiRoisFromExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -139,9 +139,9 @@ def cifti_rois_from_extrema_params(
     surf_limit: float,
     vol_limit: float,
     direction: str,
-    gaussian: CiftiRoisFromExtremaGaussianParameters | None = None,
+    gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
     merged_volume: bool = False,
-) -> CiftiRoisFromExtremaParametersTagged:
+) -> CiftiRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def cifti_rois_from_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiRoisFromExtremaParameters` object.
+    `CiftiRoisFromExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -244,7 +244,7 @@ def cifti_rois_from_extrema_validate(
 
 
 def cifti_rois_from_extrema_cargs(
-    params: CiftiRoisFromExtremaParameters,
+    params: CiftiRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def cifti_rois_from_extrema_cargs(
 
 
 def cifti_rois_from_extrema_outputs(
-    params: CiftiRoisFromExtremaParameters,
+    params: CiftiRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> CiftiRoisFromExtremaOutputs:
     """
@@ -301,7 +301,7 @@ def cifti_rois_from_extrema_outputs(
 
 
 def cifti_rois_from_extrema_execute(
-    params: CiftiRoisFromExtremaParameters,
+    params: CiftiRoisFromExtremaParamsDict,
     runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
     """
@@ -342,7 +342,7 @@ def cifti_rois_from_extrema(
     surf_limit: float,
     vol_limit: float,
     direction: str,
-    gaussian: CiftiRoisFromExtremaGaussianParameters | None = None,
+    gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
     merged_volume: bool = False,
     runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
@@ -401,9 +401,13 @@ def cifti_rois_from_extrema(
 
 __all__ = [
     "CIFTI_ROIS_FROM_EXTREMA_METADATA",
+    "CiftiRoisFromExtremaGaussianParamsDict",
+    "CiftiRoisFromExtremaGaussianParamsDictTagged",
     "CiftiRoisFromExtremaOutputs",
+    "CiftiRoisFromExtremaParamsDict",
+    "CiftiRoisFromExtremaParamsDictTagged",
     "cifti_rois_from_extrema",
     "cifti_rois_from_extrema_execute",
-    "cifti_rois_from_extrema_gaussian_params",
+    "cifti_rois_from_extrema_gaussian",
     "cifti_rois_from_extrema_params",
 ]

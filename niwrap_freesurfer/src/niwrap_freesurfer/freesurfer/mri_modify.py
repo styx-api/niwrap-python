@@ -13,7 +13,7 @@ MRI_MODIFY_METADATA = Metadata(
 )
 
 
-MriModifyParameters = typing.TypedDict('MriModifyParameters', {
+MriModifyParamsDict = typing.TypedDict('MriModifyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_modify"]],
     "x_ras": list[float],
     "y_ras": list[float],
@@ -30,7 +30,7 @@ MriModifyParameters = typing.TypedDict('MriModifyParameters', {
     "input_volume": InputPathType,
     "output_volume": str,
 })
-MriModifyParametersTagged = typing.TypedDict('MriModifyParametersTagged', {
+MriModifyParamsDictTagged = typing.TypedDict('MriModifyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_modify"],
     "x_ras": list[float],
     "y_ras": list[float],
@@ -51,7 +51,7 @@ MriModifyParametersTagged = typing.TypedDict('MriModifyParametersTagged', {
 
 class MriModifyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriModifyParameters(...)`.
+    Output object returned when calling `MriModifyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def mri_modify_params(
     xform: str,
     input_volume: InputPathType,
     output_volume: str,
-) -> MriModifyParametersTagged:
+) -> MriModifyParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def mri_modify_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriModifyParameters` object.
+    `MriModifyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def mri_modify_validate(
 
 
 def mri_modify_cargs(
-    params: MriModifyParameters,
+    params: MriModifyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -265,7 +265,7 @@ def mri_modify_cargs(
 
 
 def mri_modify_outputs(
-    params: MriModifyParameters,
+    params: MriModifyParamsDict,
     execution: Execution,
 ) -> MriModifyOutputs:
     """
@@ -284,7 +284,7 @@ def mri_modify_outputs(
 
 
 def mri_modify_execute(
-    params: MriModifyParameters,
+    params: MriModifyParamsDict,
     runner: Runner | None = None,
 ) -> MriModifyOutputs:
     """
@@ -379,6 +379,8 @@ def mri_modify(
 __all__ = [
     "MRI_MODIFY_METADATA",
     "MriModifyOutputs",
+    "MriModifyParamsDict",
+    "MriModifyParamsDictTagged",
     "mri_modify",
     "mri_modify_execute",
     "mri_modify_params",

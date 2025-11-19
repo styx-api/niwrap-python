@@ -13,7 +13,7 @@ SAMSEG2RECON_METADATA = Metadata(
 )
 
 
-Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
+Samseg2reconParamsDict = typing.TypedDict('Samseg2reconParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/samseg2recon"]],
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
     "from_recon_all": bool,
     "force_update": bool,
 })
-Samseg2reconParametersTagged = typing.TypedDict('Samseg2reconParametersTagged', {
+Samseg2reconParamsDictTagged = typing.TypedDict('Samseg2reconParamsDictTagged', {
     "@type": typing.Literal["freesurfer/samseg2recon"],
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ Samseg2reconParametersTagged = typing.TypedDict('Samseg2reconParametersTagged', 
 
 class Samseg2reconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Samseg2reconParameters(...)`.
+    Output object returned when calling `Samseg2reconParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def samseg2recon_params(
     mask_file: InputPathType | None = None,
     from_recon_all: bool = False,
     force_update: bool = False,
-) -> Samseg2reconParametersTagged:
+) -> Samseg2reconParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def samseg2recon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Samseg2reconParameters` object.
+    `Samseg2reconParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def samseg2recon_validate(
 
 
 def samseg2recon_cargs(
-    params: Samseg2reconParameters,
+    params: Samseg2reconParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,7 +229,7 @@ def samseg2recon_cargs(
 
 
 def samseg2recon_outputs(
-    params: Samseg2reconParameters,
+    params: Samseg2reconParamsDict,
     execution: Execution,
 ) -> Samseg2reconOutputs:
     """
@@ -251,7 +251,7 @@ def samseg2recon_outputs(
 
 
 def samseg2recon_execute(
-    params: Samseg2reconParameters,
+    params: Samseg2reconParamsDict,
     runner: Runner | None = None,
 ) -> Samseg2reconOutputs:
     """
@@ -344,6 +344,8 @@ def samseg2recon(
 __all__ = [
     "SAMSEG2RECON_METADATA",
     "Samseg2reconOutputs",
+    "Samseg2reconParamsDict",
+    "Samseg2reconParamsDictTagged",
     "samseg2recon",
     "samseg2recon_execute",
     "samseg2recon_params",

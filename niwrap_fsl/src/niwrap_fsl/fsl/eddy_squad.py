@@ -13,7 +13,7 @@ EDDY_SQUAD_METADATA = Metadata(
 )
 
 
-EddySquadParameters = typing.TypedDict('EddySquadParameters', {
+EddySquadParamsDict = typing.TypedDict('EddySquadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_squad"]],
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ EddySquadParameters = typing.TypedDict('EddySquadParameters', {
     "output_dir": typing.NotRequired[str | None],
     "subject_list": str,
 })
-EddySquadParametersTagged = typing.TypedDict('EddySquadParametersTagged', {
+EddySquadParamsDictTagged = typing.TypedDict('EddySquadParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_squad"],
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ EddySquadParametersTagged = typing.TypedDict('EddySquadParametersTagged', {
 
 class EddySquadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddySquadParameters(...)`.
+    Output object returned when calling `EddySquadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def eddy_squad_params(
     group_db: InputPathType | None = None,
     update_: bool = False,
     output_dir: str | None = None,
-) -> EddySquadParametersTagged:
+) -> EddySquadParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def eddy_squad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddySquadParameters` object.
+    `EddySquadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def eddy_squad_validate(
 
 
 def eddy_squad_cargs(
-    params: EddySquadParameters,
+    params: EddySquadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def eddy_squad_cargs(
 
 
 def eddy_squad_outputs(
-    params: EddySquadParameters,
+    params: EddySquadParamsDict,
     execution: Execution,
 ) -> EddySquadOutputs:
     """
@@ -162,7 +162,7 @@ def eddy_squad_outputs(
 
 
 def eddy_squad_execute(
-    params: EddySquadParameters,
+    params: EddySquadParamsDict,
     runner: Runner | None = None,
 ) -> EddySquadOutputs:
     """
@@ -230,6 +230,8 @@ def eddy_squad(
 __all__ = [
     "EDDY_SQUAD_METADATA",
     "EddySquadOutputs",
+    "EddySquadParamsDict",
+    "EddySquadParamsDictTagged",
     "eddy_squad",
     "eddy_squad_execute",
     "eddy_squad_params",

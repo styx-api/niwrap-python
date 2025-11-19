@@ -13,7 +13,7 @@ FSVGLRUN_METADATA = Metadata(
 )
 
 
-FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
+FsvglrunParamsDict = typing.TypedDict('FsvglrunParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsvglrun"]],
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
@@ -21,7 +21,7 @@ FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
     "command": str,
     "command_args": typing.NotRequired[list[str] | None],
 })
-FsvglrunParametersTagged = typing.TypedDict('FsvglrunParametersTagged', {
+FsvglrunParamsDictTagged = typing.TypedDict('FsvglrunParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsvglrun"],
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
@@ -33,7 +33,7 @@ FsvglrunParametersTagged = typing.TypedDict('FsvglrunParametersTagged', {
 
 class FsvglrunOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsvglrunParameters(...)`.
+    Output object returned when calling `FsvglrunParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def fsvglrun_params(
     empty_env: bool = False,
     dashed_arg: bool = False,
     command_args: list[str] | None = None,
-) -> FsvglrunParametersTagged:
+) -> FsvglrunParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def fsvglrun_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsvglrunParameters` object.
+    `FsvglrunParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def fsvglrun_validate(
 
 
 def fsvglrun_cargs(
-    params: FsvglrunParameters,
+    params: FsvglrunParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def fsvglrun_cargs(
 
 
 def fsvglrun_outputs(
-    params: FsvglrunParameters,
+    params: FsvglrunParamsDict,
     execution: Execution,
 ) -> FsvglrunOutputs:
     """
@@ -157,7 +157,7 @@ def fsvglrun_outputs(
 
 
 def fsvglrun_execute(
-    params: FsvglrunParameters,
+    params: FsvglrunParamsDict,
     runner: Runner | None = None,
 ) -> FsvglrunOutputs:
     """
@@ -228,6 +228,8 @@ def fsvglrun(
 __all__ = [
     "FSVGLRUN_METADATA",
     "FsvglrunOutputs",
+    "FsvglrunParamsDict",
+    "FsvglrunParamsDictTagged",
     "fsvglrun",
     "fsvglrun_execute",
     "fsvglrun_params",

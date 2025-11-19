@@ -13,11 +13,11 @@ REG2SUBJECT_METADATA = Metadata(
 )
 
 
-Reg2subjectParameters = typing.TypedDict('Reg2subjectParameters', {
+Reg2subjectParamsDict = typing.TypedDict('Reg2subjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reg2subject"]],
     "regfile": InputPathType,
 })
-Reg2subjectParametersTagged = typing.TypedDict('Reg2subjectParametersTagged', {
+Reg2subjectParamsDictTagged = typing.TypedDict('Reg2subjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reg2subject"],
     "regfile": InputPathType,
 })
@@ -25,7 +25,7 @@ Reg2subjectParametersTagged = typing.TypedDict('Reg2subjectParametersTagged', {
 
 class Reg2subjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Reg2subjectParameters(...)`.
+    Output object returned when calling `Reg2subjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Reg2subjectOutputs(typing.NamedTuple):
 
 def reg2subject_params(
     regfile: InputPathType,
-) -> Reg2subjectParametersTagged:
+) -> Reg2subjectParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def reg2subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Reg2subjectParameters` object.
+    `Reg2subjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def reg2subject_validate(
 
 
 def reg2subject_cargs(
-    params: Reg2subjectParameters,
+    params: Reg2subjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def reg2subject_cargs(
 
 
 def reg2subject_outputs(
-    params: Reg2subjectParameters,
+    params: Reg2subjectParamsDict,
     execution: Execution,
 ) -> Reg2subjectOutputs:
     """
@@ -109,7 +109,7 @@ def reg2subject_outputs(
 
 
 def reg2subject_execute(
-    params: Reg2subjectParameters,
+    params: Reg2subjectParamsDict,
     runner: Runner | None = None,
 ) -> Reg2subjectOutputs:
     """
@@ -167,6 +167,8 @@ def reg2subject(
 __all__ = [
     "REG2SUBJECT_METADATA",
     "Reg2subjectOutputs",
+    "Reg2subjectParamsDict",
+    "Reg2subjectParamsDictTagged",
     "reg2subject",
     "reg2subject_execute",
     "reg2subject_params",

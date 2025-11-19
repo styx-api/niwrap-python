@@ -13,11 +13,11 @@ XHEMI_TAL_METADATA = Metadata(
 )
 
 
-XhemiTalParameters = typing.TypedDict('XhemiTalParameters', {
+XhemiTalParamsDict = typing.TypedDict('XhemiTalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xhemi-tal"]],
     "subject": str,
 })
-XhemiTalParametersTagged = typing.TypedDict('XhemiTalParametersTagged', {
+XhemiTalParamsDictTagged = typing.TypedDict('XhemiTalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xhemi-tal"],
     "subject": str,
 })
@@ -25,7 +25,7 @@ XhemiTalParametersTagged = typing.TypedDict('XhemiTalParametersTagged', {
 
 class XhemiTalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XhemiTalParameters(...)`.
+    Output object returned when calling `XhemiTalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class XhemiTalOutputs(typing.NamedTuple):
 
 def xhemi_tal_params(
     subject: str,
-) -> XhemiTalParametersTagged:
+) -> XhemiTalParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def xhemi_tal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XhemiTalParameters` object.
+    `XhemiTalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def xhemi_tal_validate(
 
 
 def xhemi_tal_cargs(
-    params: XhemiTalParameters,
+    params: XhemiTalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def xhemi_tal_cargs(
 
 
 def xhemi_tal_outputs(
-    params: XhemiTalParameters,
+    params: XhemiTalParamsDict,
     execution: Execution,
 ) -> XhemiTalOutputs:
     """
@@ -109,7 +109,7 @@ def xhemi_tal_outputs(
 
 
 def xhemi_tal_execute(
-    params: XhemiTalParameters,
+    params: XhemiTalParamsDict,
     runner: Runner | None = None,
 ) -> XhemiTalOutputs:
     """
@@ -167,6 +167,8 @@ def xhemi_tal(
 __all__ = [
     "XHEMI_TAL_METADATA",
     "XhemiTalOutputs",
+    "XhemiTalParamsDict",
+    "XhemiTalParamsDictTagged",
     "xhemi_tal",
     "xhemi_tal_execute",
     "xhemi_tal_params",

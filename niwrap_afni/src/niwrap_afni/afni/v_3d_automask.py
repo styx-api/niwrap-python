@@ -13,7 +13,7 @@ V_3D_AUTOMASK_METADATA = Metadata(
 )
 
 
-V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
+V3dAutomaskParamsDict = typing.TypedDict('V3dAutomaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAutomask"]],
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "in_file": InputPathType,
 })
-V3dAutomaskParametersTagged = typing.TypedDict('V3dAutomaskParametersTagged', {
+V3dAutomaskParamsDictTagged = typing.TypedDict('V3dAutomaskParamsDictTagged', {
     "@type": typing.Literal["afni/3dAutomask"],
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ V3dAutomaskParametersTagged = typing.TypedDict('V3dAutomaskParametersTagged', {
 
 class V3dAutomaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAutomaskParameters(...)`.
+    Output object returned when calling `V3dAutomaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def v_3d_automask_params(
     dilate: int | None = None,
     erode: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dAutomaskParametersTagged:
+) -> V3dAutomaskParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def v_3d_automask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAutomaskParameters` object.
+    `V3dAutomaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def v_3d_automask_validate(
 
 
 def v_3d_automask_cargs(
-    params: V3dAutomaskParameters,
+    params: V3dAutomaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def v_3d_automask_cargs(
 
 
 def v_3d_automask_outputs(
-    params: V3dAutomaskParameters,
+    params: V3dAutomaskParamsDict,
     execution: Execution,
 ) -> V3dAutomaskOutputs:
     """
@@ -197,7 +197,7 @@ def v_3d_automask_outputs(
 
 
 def v_3d_automask_execute(
-    params: V3dAutomaskParameters,
+    params: V3dAutomaskParamsDict,
     runner: Runner | None = None,
 ) -> V3dAutomaskOutputs:
     """
@@ -272,6 +272,8 @@ def v_3d_automask(
 
 __all__ = [
     "V3dAutomaskOutputs",
+    "V3dAutomaskParamsDict",
+    "V3dAutomaskParamsDictTagged",
     "V_3D_AUTOMASK_METADATA",
     "v_3d_automask",
     "v_3d_automask_execute",

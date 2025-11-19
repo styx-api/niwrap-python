@@ -13,7 +13,7 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 )
 
 
-MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
+MriWarpConvertParamsDict = typing.TypedDict('MriWarpConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_warp_convert"]],
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
     "insrcgeom": typing.NotRequired[InputPathType | None],
     "downsample": bool,
 })
-MriWarpConvertParametersTagged = typing.TypedDict('MriWarpConvertParametersTagged', {
+MriWarpConvertParamsDictTagged = typing.TypedDict('MriWarpConvertParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_warp_convert"],
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ MriWarpConvertParametersTagged = typing.TypedDict('MriWarpConvertParametersTagge
 
 class MriWarpConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriWarpConvertParameters(...)`.
+    Output object returned when calling `MriWarpConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def mri_warp_convert_params(
     outvox: str | None = None,
     insrcgeom: InputPathType | None = None,
     downsample: bool = False,
-) -> MriWarpConvertParametersTagged:
+) -> MriWarpConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def mri_warp_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriWarpConvertParameters` object.
+    `MriWarpConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def mri_warp_convert_validate(
 
 
 def mri_warp_convert_cargs(
-    params: MriWarpConvertParameters,
+    params: MriWarpConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -272,7 +272,7 @@ def mri_warp_convert_cargs(
 
 
 def mri_warp_convert_outputs(
-    params: MriWarpConvertParameters,
+    params: MriWarpConvertParamsDict,
     execution: Execution,
 ) -> MriWarpConvertOutputs:
     """
@@ -292,7 +292,7 @@ def mri_warp_convert_outputs(
 
 
 def mri_warp_convert_execute(
-    params: MriWarpConvertParameters,
+    params: MriWarpConvertParamsDict,
     runner: Runner | None = None,
 ) -> MriWarpConvertOutputs:
     """
@@ -387,6 +387,8 @@ def mri_warp_convert(
 __all__ = [
     "MRI_WARP_CONVERT_METADATA",
     "MriWarpConvertOutputs",
+    "MriWarpConvertParamsDict",
+    "MriWarpConvertParamsDictTagged",
     "mri_warp_convert",
     "mri_warp_convert_execute",
     "mri_warp_convert_params",

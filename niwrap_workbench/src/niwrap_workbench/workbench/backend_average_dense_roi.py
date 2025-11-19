@@ -12,12 +12,12 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
 )
 
 
-BackendAverageDenseRoiParameters = typing.TypedDict('BackendAverageDenseRoiParameters', {
+BackendAverageDenseRoiParamsDict = typing.TypedDict('BackendAverageDenseRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/backend-average-dense-roi"]],
     "index-list": str,
     "out-file": str,
 })
-BackendAverageDenseRoiParametersTagged = typing.TypedDict('BackendAverageDenseRoiParametersTagged', {
+BackendAverageDenseRoiParamsDictTagged = typing.TypedDict('BackendAverageDenseRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/backend-average-dense-roi"],
     "index-list": str,
     "out-file": str,
@@ -26,7 +26,7 @@ BackendAverageDenseRoiParametersTagged = typing.TypedDict('BackendAverageDenseRo
 
 class BackendAverageDenseRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BackendAverageDenseRoiParameters(...)`.
+    Output object returned when calling `BackendAverageDenseRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class BackendAverageDenseRoiOutputs(typing.NamedTuple):
 def backend_average_dense_roi_params(
     index_list: str,
     out_file: str,
-) -> BackendAverageDenseRoiParametersTagged:
+) -> BackendAverageDenseRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def backend_average_dense_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BackendAverageDenseRoiParameters` object.
+    `BackendAverageDenseRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -76,7 +76,7 @@ def backend_average_dense_roi_validate(
 
 
 def backend_average_dense_roi_cargs(
-    params: BackendAverageDenseRoiParameters,
+    params: BackendAverageDenseRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def backend_average_dense_roi_cargs(
 
 
 def backend_average_dense_roi_outputs(
-    params: BackendAverageDenseRoiParameters,
+    params: BackendAverageDenseRoiParamsDict,
     execution: Execution,
 ) -> BackendAverageDenseRoiOutputs:
     """
@@ -118,7 +118,7 @@ def backend_average_dense_roi_outputs(
 
 
 def backend_average_dense_roi_execute(
-    params: BackendAverageDenseRoiParameters,
+    params: BackendAverageDenseRoiParamsDict,
     runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
@@ -175,6 +175,8 @@ def backend_average_dense_roi(
 __all__ = [
     "BACKEND_AVERAGE_DENSE_ROI_METADATA",
     "BackendAverageDenseRoiOutputs",
+    "BackendAverageDenseRoiParamsDict",
+    "BackendAverageDenseRoiParamsDictTagged",
     "backend_average_dense_roi",
     "backend_average_dense_roi_execute",
     "backend_average_dense_roi_params",

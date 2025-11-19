@@ -13,7 +13,7 @@ MRIS_WATERSHED_METADATA = Metadata(
 )
 
 
-MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
+MrisWatershedParamsDict = typing.TypedDict('MrisWatershedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_watershed"]],
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
@@ -21,7 +21,7 @@ MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
     "max_clusters": typing.NotRequired[float | None],
     "mask_label": typing.NotRequired[str | None],
 })
-MrisWatershedParametersTagged = typing.TypedDict('MrisWatershedParametersTagged', {
+MrisWatershedParamsDictTagged = typing.TypedDict('MrisWatershedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_watershed"],
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
@@ -33,7 +33,7 @@ MrisWatershedParametersTagged = typing.TypedDict('MrisWatershedParametersTagged'
 
 class MrisWatershedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisWatershedParameters(...)`.
+    Output object returned when calling `MrisWatershedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_watershed_params(
     output_annotation: str,
     max_clusters: float | None = None,
     mask_label: str | None = None,
-) -> MrisWatershedParametersTagged:
+) -> MrisWatershedParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def mris_watershed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisWatershedParameters` object.
+    `MrisWatershedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mris_watershed_validate(
 
 
 def mris_watershed_cargs(
-    params: MrisWatershedParameters,
+    params: MrisWatershedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def mris_watershed_cargs(
 
 
 def mris_watershed_outputs(
-    params: MrisWatershedParameters,
+    params: MrisWatershedParamsDict,
     execution: Execution,
 ) -> MrisWatershedOutputs:
     """
@@ -158,7 +158,7 @@ def mris_watershed_outputs(
 
 
 def mris_watershed_execute(
-    params: MrisWatershedParameters,
+    params: MrisWatershedParamsDict,
     runner: Runner | None = None,
 ) -> MrisWatershedOutputs:
     """
@@ -229,6 +229,8 @@ def mris_watershed(
 __all__ = [
     "MRIS_WATERSHED_METADATA",
     "MrisWatershedOutputs",
+    "MrisWatershedParamsDict",
+    "MrisWatershedParamsDictTagged",
     "mris_watershed",
     "mris_watershed_execute",
     "mris_watershed_params",

@@ -13,11 +13,11 @@ SEGMENT_SUBJECT_NOTAL2_METADATA = Metadata(
 )
 
 
-SegmentSubjectNotal2Parameters = typing.TypedDict('SegmentSubjectNotal2Parameters', {
+SegmentSubjectNotal2ParamsDict = typing.TypedDict('SegmentSubjectNotal2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_notal2"]],
     "license_file": InputPathType,
 })
-SegmentSubjectNotal2ParametersTagged = typing.TypedDict('SegmentSubjectNotal2ParametersTagged', {
+SegmentSubjectNotal2ParamsDictTagged = typing.TypedDict('SegmentSubjectNotal2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subject_notal2"],
     "license_file": InputPathType,
 })
@@ -25,7 +25,7 @@ SegmentSubjectNotal2ParametersTagged = typing.TypedDict('SegmentSubjectNotal2Par
 
 class SegmentSubjectNotal2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubjectNotal2Parameters(...)`.
+    Output object returned when calling `SegmentSubjectNotal2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class SegmentSubjectNotal2Outputs(typing.NamedTuple):
 
 def segment_subject_notal2_params(
     license_file: InputPathType,
-) -> SegmentSubjectNotal2ParametersTagged:
+) -> SegmentSubjectNotal2ParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def segment_subject_notal2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubjectNotal2Parameters` object.
+    `SegmentSubjectNotal2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def segment_subject_notal2_validate(
 
 
 def segment_subject_notal2_cargs(
-    params: SegmentSubjectNotal2Parameters,
+    params: SegmentSubjectNotal2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -94,7 +94,7 @@ def segment_subject_notal2_cargs(
 
 
 def segment_subject_notal2_outputs(
-    params: SegmentSubjectNotal2Parameters,
+    params: SegmentSubjectNotal2ParamsDict,
     execution: Execution,
 ) -> SegmentSubjectNotal2Outputs:
     """
@@ -114,7 +114,7 @@ def segment_subject_notal2_outputs(
 
 
 def segment_subject_notal2_execute(
-    params: SegmentSubjectNotal2Parameters,
+    params: SegmentSubjectNotal2ParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubjectNotal2Outputs:
     """
@@ -172,6 +172,8 @@ def segment_subject_notal2(
 __all__ = [
     "SEGMENT_SUBJECT_NOTAL2_METADATA",
     "SegmentSubjectNotal2Outputs",
+    "SegmentSubjectNotal2ParamsDict",
+    "SegmentSubjectNotal2ParamsDictTagged",
     "segment_subject_notal2",
     "segment_subject_notal2_execute",
     "segment_subject_notal2_params",

@@ -13,7 +13,7 @@ MRI_RF_LONG_TRAIN_METADATA = Metadata(
 )
 
 
-MriRfLongTrainParameters = typing.TypedDict('MriRfLongTrainParameters', {
+MriRfLongTrainParamsDict = typing.TypedDict('MriRfLongTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_long_train"]],
     "seg_dir": str,
     "xform": str,
@@ -25,7 +25,7 @@ MriRfLongTrainParameters = typing.TypedDict('MriRfLongTrainParameters', {
     "subjects": list[str],
     "output_rfa": str,
 })
-MriRfLongTrainParametersTagged = typing.TypedDict('MriRfLongTrainParametersTagged', {
+MriRfLongTrainParamsDictTagged = typing.TypedDict('MriRfLongTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_rf_long_train"],
     "seg_dir": str,
     "xform": str,
@@ -41,7 +41,7 @@ MriRfLongTrainParametersTagged = typing.TypedDict('MriRfLongTrainParametersTagge
 
 class MriRfLongTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRfLongTrainParameters(...)`.
+    Output object returned when calling `MriRfLongTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mri_rf_long_train_params(
     prior_spacing: float | None = None,
     input_data: list[str] | None = None,
     check: bool = False,
-) -> MriRfLongTrainParametersTagged:
+) -> MriRfLongTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def mri_rf_long_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRfLongTrainParameters` object.
+    `MriRfLongTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def mri_rf_long_train_validate(
 
 
 def mri_rf_long_train_cargs(
-    params: MriRfLongTrainParameters,
+    params: MriRfLongTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def mri_rf_long_train_cargs(
 
 
 def mri_rf_long_train_outputs(
-    params: MriRfLongTrainParameters,
+    params: MriRfLongTrainParamsDict,
     execution: Execution,
 ) -> MriRfLongTrainOutputs:
     """
@@ -220,7 +220,7 @@ def mri_rf_long_train_outputs(
 
 
 def mri_rf_long_train_execute(
-    params: MriRfLongTrainParameters,
+    params: MriRfLongTrainParamsDict,
     runner: Runner | None = None,
 ) -> MriRfLongTrainOutputs:
     """
@@ -302,6 +302,8 @@ def mri_rf_long_train(
 __all__ = [
     "MRI_RF_LONG_TRAIN_METADATA",
     "MriRfLongTrainOutputs",
+    "MriRfLongTrainParamsDict",
+    "MriRfLongTrainParamsDictTagged",
     "mri_rf_long_train",
     "mri_rf_long_train_execute",
     "mri_rf_long_train_params",

@@ -13,13 +13,13 @@ ICO_SUPERSAMPLE_METADATA = Metadata(
 )
 
 
-IcoSupersampleParameters = typing.TypedDict('IcoSupersampleParameters', {
+IcoSupersampleParamsDict = typing.TypedDict('IcoSupersampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/ico_supersample"]],
     "refine": bool,
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],
 })
-IcoSupersampleParametersTagged = typing.TypedDict('IcoSupersampleParametersTagged', {
+IcoSupersampleParamsDictTagged = typing.TypedDict('IcoSupersampleParamsDictTagged', {
     "@type": typing.Literal["freesurfer/ico_supersample"],
     "refine": bool,
     "radius": typing.NotRequired[float | None],
@@ -29,7 +29,7 @@ IcoSupersampleParametersTagged = typing.TypedDict('IcoSupersampleParametersTagge
 
 class IcoSupersampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IcoSupersampleParameters(...)`.
+    Output object returned when calling `IcoSupersampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def ico_supersample_params(
     refine: bool = False,
     radius: float | None = None,
     projection_point: list[float] | None = None,
-) -> IcoSupersampleParametersTagged:
+) -> IcoSupersampleParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def ico_supersample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IcoSupersampleParameters` object.
+    `IcoSupersampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def ico_supersample_validate(
 
 
 def ico_supersample_cargs(
-    params: IcoSupersampleParameters,
+    params: IcoSupersampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def ico_supersample_cargs(
 
 
 def ico_supersample_outputs(
-    params: IcoSupersampleParameters,
+    params: IcoSupersampleParamsDict,
     execution: Execution,
 ) -> IcoSupersampleOutputs:
     """
@@ -136,7 +136,7 @@ def ico_supersample_outputs(
 
 
 def ico_supersample_execute(
-    params: IcoSupersampleParameters,
+    params: IcoSupersampleParamsDict,
     runner: Runner | None = None,
 ) -> IcoSupersampleOutputs:
     """
@@ -199,6 +199,8 @@ def ico_supersample(
 __all__ = [
     "ICO_SUPERSAMPLE_METADATA",
     "IcoSupersampleOutputs",
+    "IcoSupersampleParamsDict",
+    "IcoSupersampleParamsDictTagged",
     "ico_supersample",
     "ico_supersample_execute",
     "ico_supersample_params",

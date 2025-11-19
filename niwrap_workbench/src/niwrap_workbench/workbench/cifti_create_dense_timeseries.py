@@ -12,61 +12,61 @@ CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseTimeseriesVolumeParameters = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParameters', {
+CiftiCreateDenseTimeseriesVolumeParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
-CiftiCreateDenseTimeseriesVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParametersTagged', {
+CiftiCreateDenseTimeseriesVolumeParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
 
 
-CiftiCreateDenseTimeseriesLeftMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParameters', {
+CiftiCreateDenseTimeseriesLeftMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseTimeseriesLeftMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParametersTagged', {
+CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged', {
     "@type": typing.Literal["left-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseTimeseriesRightMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParameters', {
+CiftiCreateDenseTimeseriesRightMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseTimeseriesRightMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParametersTagged', {
+CiftiCreateDenseTimeseriesRightMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParamsDictTagged', {
     "@type": typing.Literal["right-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseTimeseriesCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParameters', {
+CiftiCreateDenseTimeseriesCerebellumMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged', {
+CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged', {
     "@type": typing.Literal["cerebellum-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseTimeseriesMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParameters', {
+CiftiCreateDenseTimeseriesMetricParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "structure": str,
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseTimeseriesMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParametersTagged', {
+CiftiCreateDenseTimeseriesMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric": InputPathType,
@@ -74,36 +74,36 @@ CiftiCreateDenseTimeseriesMetricParametersTagged = typing.TypedDict('CiftiCreate
 })
 
 
-CiftiCreateDenseTimeseriesParameters = typing.TypedDict('CiftiCreateDenseTimeseriesParameters', {
+CiftiCreateDenseTimeseriesParamsDict = typing.TypedDict('CiftiCreateDenseTimeseriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-timeseries"]],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
-    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
-    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
-    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
+    "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParamsDict | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParamsDict | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParamsDict | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None],
     "interval": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "unit": typing.NotRequired[str | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParameters] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParamsDict] | None],
 })
-CiftiCreateDenseTimeseriesParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesParametersTagged', {
+CiftiCreateDenseTimeseriesParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-timeseries"],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
-    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
-    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
-    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
+    "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParamsDict | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParamsDict | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParamsDict | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None],
     "interval": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "unit": typing.NotRequired[str | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParameters] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParamsDict] | None],
 })
 
 
-def cifti_create_dense_timeseries_volume_params(
+def cifti_create_dense_timeseries_volume(
     volume_data: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateDenseTimeseriesVolumeParametersTagged:
+) -> CiftiCreateDenseTimeseriesVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def cifti_create_dense_timeseries_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesVolumeParameters` object.
+    `CiftiCreateDenseTimeseriesVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def cifti_create_dense_timeseries_volume_validate(
 
 
 def cifti_create_dense_timeseries_volume_cargs(
-    params: CiftiCreateDenseTimeseriesVolumeParameters,
+    params: CiftiCreateDenseTimeseriesVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,10 +167,10 @@ def cifti_create_dense_timeseries_volume_cargs(
     return cargs
 
 
-def cifti_create_dense_timeseries_left_metric_params(
+def cifti_create_dense_timeseries_left_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseTimeseriesLeftMetricParametersTagged:
+) -> CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def cifti_create_dense_timeseries_left_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesLeftMetricParameters` object.
+    `CiftiCreateDenseTimeseriesLeftMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def cifti_create_dense_timeseries_left_metric_validate(
 
 
 def cifti_create_dense_timeseries_left_metric_cargs(
-    params: CiftiCreateDenseTimeseriesLeftMetricParameters,
+    params: CiftiCreateDenseTimeseriesLeftMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -236,10 +236,10 @@ def cifti_create_dense_timeseries_left_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_timeseries_right_metric_params(
+def cifti_create_dense_timeseries_right_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseTimeseriesRightMetricParametersTagged:
+) -> CiftiCreateDenseTimeseriesRightMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -265,7 +265,7 @@ def cifti_create_dense_timeseries_right_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesRightMetricParameters` object.
+    `CiftiCreateDenseTimeseriesRightMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -282,7 +282,7 @@ def cifti_create_dense_timeseries_right_metric_validate(
 
 
 def cifti_create_dense_timeseries_right_metric_cargs(
-    params: CiftiCreateDenseTimeseriesRightMetricParameters,
+    params: CiftiCreateDenseTimeseriesRightMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -305,10 +305,10 @@ def cifti_create_dense_timeseries_right_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_timeseries_cerebellum_metric_params(
+def cifti_create_dense_timeseries_cerebellum_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged:
+) -> CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -334,7 +334,7 @@ def cifti_create_dense_timeseries_cerebellum_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesCerebellumMetricParameters` object.
+    `CiftiCreateDenseTimeseriesCerebellumMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -351,7 +351,7 @@ def cifti_create_dense_timeseries_cerebellum_metric_validate(
 
 
 def cifti_create_dense_timeseries_cerebellum_metric_cargs(
-    params: CiftiCreateDenseTimeseriesCerebellumMetricParameters,
+    params: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -374,11 +374,11 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_timeseries_metric_params(
+def cifti_create_dense_timeseries_metric(
     structure: str,
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseTimeseriesMetricParametersTagged:
+) -> CiftiCreateDenseTimeseriesMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -406,7 +406,7 @@ def cifti_create_dense_timeseries_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesMetricParameters` object.
+    `CiftiCreateDenseTimeseriesMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -427,7 +427,7 @@ def cifti_create_dense_timeseries_metric_validate(
 
 
 def cifti_create_dense_timeseries_metric_cargs(
-    params: CiftiCreateDenseTimeseriesMetricParameters,
+    params: CiftiCreateDenseTimeseriesMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -453,7 +453,7 @@ def cifti_create_dense_timeseries_metric_cargs(
 
 class CiftiCreateDenseTimeseriesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateDenseTimeseriesParameters(...)`.
+    Output object returned when calling `CiftiCreateDenseTimeseriesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -466,12 +466,12 @@ def cifti_create_dense_timeseries_params(
     interval: float | None,
     start: float | None,
     unit: str | None,
-    volume: CiftiCreateDenseTimeseriesVolumeParameters | None = None,
-    left_metric: CiftiCreateDenseTimeseriesLeftMetricParameters | None = None,
-    right_metric: CiftiCreateDenseTimeseriesRightMetricParameters | None = None,
-    cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParameters | None = None,
-    metric: list[CiftiCreateDenseTimeseriesMetricParameters] | None = None,
-) -> CiftiCreateDenseTimeseriesParametersTagged:
+    volume: CiftiCreateDenseTimeseriesVolumeParamsDict | None = None,
+    left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
+    right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
+    cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
+    metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
+) -> CiftiCreateDenseTimeseriesParamsDictTagged:
     """
     Build parameters.
     
@@ -522,7 +522,7 @@ def cifti_create_dense_timeseries_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseTimeseriesParameters` object.
+    `CiftiCreateDenseTimeseriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -552,13 +552,13 @@ def cifti_create_dense_timeseries_validate(
             raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseTimeseriesMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseTimeseriesMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_create_dense_timeseries_metric_validate(e)
 
 
 def cifti_create_dense_timeseries_cargs(
-    params: CiftiCreateDenseTimeseriesParameters,
+    params: CiftiCreateDenseTimeseriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -592,7 +592,7 @@ def cifti_create_dense_timeseries_cargs(
 
 
 def cifti_create_dense_timeseries_outputs(
-    params: CiftiCreateDenseTimeseriesParameters,
+    params: CiftiCreateDenseTimeseriesParamsDict,
     execution: Execution,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
@@ -612,7 +612,7 @@ def cifti_create_dense_timeseries_outputs(
 
 
 def cifti_create_dense_timeseries_execute(
-    params: CiftiCreateDenseTimeseriesParameters,
+    params: CiftiCreateDenseTimeseriesParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
@@ -691,11 +691,11 @@ def cifti_create_dense_timeseries(
     interval: float | None,
     start: float | None,
     unit: str | None,
-    volume: CiftiCreateDenseTimeseriesVolumeParameters | None = None,
-    left_metric: CiftiCreateDenseTimeseriesLeftMetricParameters | None = None,
-    right_metric: CiftiCreateDenseTimeseriesRightMetricParameters | None = None,
-    cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParameters | None = None,
-    metric: list[CiftiCreateDenseTimeseriesMetricParameters] | None = None,
+    volume: CiftiCreateDenseTimeseriesVolumeParamsDict | None = None,
+    left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
+    right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
+    cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
+    metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
@@ -789,13 +789,25 @@ def cifti_create_dense_timeseries(
 
 __all__ = [
     "CIFTI_CREATE_DENSE_TIMESERIES_METADATA",
+    "CiftiCreateDenseTimeseriesCerebellumMetricParamsDict",
+    "CiftiCreateDenseTimeseriesCerebellumMetricParamsDictTagged",
+    "CiftiCreateDenseTimeseriesLeftMetricParamsDict",
+    "CiftiCreateDenseTimeseriesLeftMetricParamsDictTagged",
+    "CiftiCreateDenseTimeseriesMetricParamsDict",
+    "CiftiCreateDenseTimeseriesMetricParamsDictTagged",
     "CiftiCreateDenseTimeseriesOutputs",
+    "CiftiCreateDenseTimeseriesParamsDict",
+    "CiftiCreateDenseTimeseriesParamsDictTagged",
+    "CiftiCreateDenseTimeseriesRightMetricParamsDict",
+    "CiftiCreateDenseTimeseriesRightMetricParamsDictTagged",
+    "CiftiCreateDenseTimeseriesVolumeParamsDict",
+    "CiftiCreateDenseTimeseriesVolumeParamsDictTagged",
     "cifti_create_dense_timeseries",
-    "cifti_create_dense_timeseries_cerebellum_metric_params",
+    "cifti_create_dense_timeseries_cerebellum_metric",
     "cifti_create_dense_timeseries_execute",
-    "cifti_create_dense_timeseries_left_metric_params",
-    "cifti_create_dense_timeseries_metric_params",
+    "cifti_create_dense_timeseries_left_metric",
+    "cifti_create_dense_timeseries_metric",
     "cifti_create_dense_timeseries_params",
-    "cifti_create_dense_timeseries_right_metric_params",
-    "cifti_create_dense_timeseries_volume_params",
+    "cifti_create_dense_timeseries_right_metric",
+    "cifti_create_dense_timeseries_volume",
 ]

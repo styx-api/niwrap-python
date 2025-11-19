@@ -13,13 +13,13 @@ MRI_COMPUTE_DISTANCES_METADATA = Metadata(
 )
 
 
-MriComputeDistancesParameters = typing.TypedDict('MriComputeDistancesParameters', {
+MriComputeDistancesParamsDict = typing.TypedDict('MriComputeDistancesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_distances"]],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
 })
-MriComputeDistancesParametersTagged = typing.TypedDict('MriComputeDistancesParametersTagged', {
+MriComputeDistancesParamsDictTagged = typing.TypedDict('MriComputeDistancesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_distances"],
     "source": InputPathType,
     "target": InputPathType,
@@ -29,7 +29,7 @@ MriComputeDistancesParametersTagged = typing.TypedDict('MriComputeDistancesParam
 
 class MriComputeDistancesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeDistancesParameters(...)`.
+    Output object returned when calling `MriComputeDistancesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_compute_distances_params(
     source: InputPathType,
     target: InputPathType,
     output_xform: str,
-) -> MriComputeDistancesParametersTagged:
+) -> MriComputeDistancesParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mri_compute_distances_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeDistancesParameters` object.
+    `MriComputeDistancesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mri_compute_distances_validate(
 
 
 def mri_compute_distances_cargs(
-    params: MriComputeDistancesParameters,
+    params: MriComputeDistancesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mri_compute_distances_cargs(
 
 
 def mri_compute_distances_outputs(
-    params: MriComputeDistancesParameters,
+    params: MriComputeDistancesParamsDict,
     execution: Execution,
 ) -> MriComputeDistancesOutputs:
     """
@@ -130,7 +130,7 @@ def mri_compute_distances_outputs(
 
 
 def mri_compute_distances_execute(
-    params: MriComputeDistancesParameters,
+    params: MriComputeDistancesParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeDistancesOutputs:
     """
@@ -193,6 +193,8 @@ def mri_compute_distances(
 __all__ = [
     "MRI_COMPUTE_DISTANCES_METADATA",
     "MriComputeDistancesOutputs",
+    "MriComputeDistancesParamsDict",
+    "MriComputeDistancesParamsDictTagged",
     "mri_compute_distances",
     "mri_compute_distances_execute",
     "mri_compute_distances_params",

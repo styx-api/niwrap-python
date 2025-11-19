@@ -13,7 +13,7 @@ V_3D_ANHIST_METADATA = Metadata(
 )
 
 
-V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
+V3dAnhistParamsDict = typing.TypedDict('V3dAnhistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAnhist"]],
     "dataset": InputPathType,
     "quiet": bool,
@@ -24,7 +24,7 @@ V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
     "label": typing.NotRequired[str | None],
     "filename": typing.NotRequired[str | None],
 })
-V3dAnhistParametersTagged = typing.TypedDict('V3dAnhistParametersTagged', {
+V3dAnhistParamsDictTagged = typing.TypedDict('V3dAnhistParamsDictTagged', {
     "@type": typing.Literal["afni/3dAnhist"],
     "dataset": InputPathType,
     "quiet": bool,
@@ -39,7 +39,7 @@ V3dAnhistParametersTagged = typing.TypedDict('V3dAnhistParametersTagged', {
 
 class V3dAnhistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAnhistParameters(...)`.
+    Output object returned when calling `V3dAnhistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v_3d_anhist_params(
     top_2peaks: bool = False,
     label: str | None = None,
     filename: str | None = None,
-) -> V3dAnhistParametersTagged:
+) -> V3dAnhistParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def v_3d_anhist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAnhistParameters` object.
+    `V3dAnhistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def v_3d_anhist_validate(
 
 
 def v_3d_anhist_cargs(
-    params: V3dAnhistParameters,
+    params: V3dAnhistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def v_3d_anhist_cargs(
 
 
 def v_3d_anhist_outputs(
-    params: V3dAnhistParameters,
+    params: V3dAnhistParamsDict,
     execution: Execution,
 ) -> V3dAnhistOutputs:
     """
@@ -201,7 +201,7 @@ def v_3d_anhist_outputs(
 
 
 def v_3d_anhist_execute(
-    params: V3dAnhistParameters,
+    params: V3dAnhistParamsDict,
     runner: Runner | None = None,
 ) -> V3dAnhistOutputs:
     """
@@ -282,6 +282,8 @@ def v_3d_anhist(
 
 __all__ = [
     "V3dAnhistOutputs",
+    "V3dAnhistParamsDict",
+    "V3dAnhistParamsDictTagged",
     "V_3D_ANHIST_METADATA",
     "v_3d_anhist",
     "v_3d_anhist_execute",

@@ -13,7 +13,7 @@ MRI_MAPS2CSD_METADATA = Metadata(
 )
 
 
-MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
+MriMaps2csdParamsDict = typing.TypedDict('MriMaps2csdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_maps2csd"]],
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
     "debug": bool,
     "checkopts": bool,
 })
-MriMaps2csdParametersTagged = typing.TypedDict('MriMaps2csdParametersTagged', {
+MriMaps2csdParamsDictTagged = typing.TypedDict('MriMaps2csdParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_maps2csd"],
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ MriMaps2csdParametersTagged = typing.TypedDict('MriMaps2csdParametersTagged', {
 
 class MriMaps2csdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMaps2csdParameters(...)`.
+    Output object returned when calling `MriMaps2csdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def mri_maps2csd_params(
     subjects_dir: str | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriMaps2csdParametersTagged:
+) -> MriMaps2csdParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def mri_maps2csd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMaps2csdParameters` object.
+    `MriMaps2csdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def mri_maps2csd_validate(
 
 
 def mri_maps2csd_cargs(
-    params: MriMaps2csdParameters,
+    params: MriMaps2csdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -225,7 +225,7 @@ def mri_maps2csd_cargs(
 
 
 def mri_maps2csd_outputs(
-    params: MriMaps2csdParameters,
+    params: MriMaps2csdParamsDict,
     execution: Execution,
 ) -> MriMaps2csdOutputs:
     """
@@ -244,7 +244,7 @@ def mri_maps2csd_outputs(
 
 
 def mri_maps2csd_execute(
-    params: MriMaps2csdParameters,
+    params: MriMaps2csdParamsDict,
     runner: Runner | None = None,
 ) -> MriMaps2csdOutputs:
     """
@@ -331,6 +331,8 @@ def mri_maps2csd(
 __all__ = [
     "MRI_MAPS2CSD_METADATA",
     "MriMaps2csdOutputs",
+    "MriMaps2csdParamsDict",
+    "MriMaps2csdParamsDictTagged",
     "mri_maps2csd",
     "mri_maps2csd_execute",
     "mri_maps2csd_params",

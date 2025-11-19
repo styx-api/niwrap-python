@@ -13,7 +13,7 @@ RUN_SAMSEG_METADATA = Metadata(
 )
 
 
-RunSamsegParameters = typing.TypedDict('RunSamsegParameters', {
+RunSamsegParamsDict = typing.TypedDict('RunSamsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run_samseg"]],
     "output_dir": str,
     "input_files": list[InputPathType],
@@ -48,7 +48,7 @@ RunSamsegParameters = typing.TypedDict('RunSamsegParameters', {
     "save_warp": bool,
     "movie": bool,
 })
-RunSamsegParametersTagged = typing.TypedDict('RunSamsegParametersTagged', {
+RunSamsegParamsDictTagged = typing.TypedDict('RunSamsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run_samseg"],
     "output_dir": str,
     "input_files": list[InputPathType],
@@ -87,7 +87,7 @@ RunSamsegParametersTagged = typing.TypedDict('RunSamsegParametersTagged', {
 
 class RunSamsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunSamsegParameters(...)`.
+    Output object returned when calling `RunSamsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def run_samseg_params(
     save_mesh: bool = False,
     save_warp: bool = False,
     movie: bool = False,
-) -> RunSamsegParametersTagged:
+) -> RunSamsegParamsDictTagged:
     """
     Build parameters.
     
@@ -232,7 +232,7 @@ def run_samseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunSamsegParameters` object.
+    `RunSamsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -367,7 +367,7 @@ def run_samseg_validate(
 
 
 def run_samseg_cargs(
-    params: RunSamsegParameters,
+    params: RunSamsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -513,7 +513,7 @@ def run_samseg_cargs(
 
 
 def run_samseg_outputs(
-    params: RunSamsegParameters,
+    params: RunSamsegParamsDict,
     execution: Execution,
 ) -> RunSamsegOutputs:
     """
@@ -532,7 +532,7 @@ def run_samseg_outputs(
 
 
 def run_samseg_execute(
-    params: RunSamsegParameters,
+    params: RunSamsegParamsDict,
     runner: Runner | None = None,
 ) -> RunSamsegOutputs:
     """
@@ -686,6 +686,8 @@ def run_samseg(
 __all__ = [
     "RUN_SAMSEG_METADATA",
     "RunSamsegOutputs",
+    "RunSamsegParamsDict",
+    "RunSamsegParamsDictTagged",
     "run_samseg",
     "run_samseg_execute",
     "run_samseg_params",

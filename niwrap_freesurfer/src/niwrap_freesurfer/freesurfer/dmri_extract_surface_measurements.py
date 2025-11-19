@@ -13,7 +13,7 @@ DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA = Metadata(
 )
 
 
-DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceMeasurementsParameters', {
+DmriExtractSurfaceMeasurementsParamsDict = typing.TypedDict('DmriExtractSurfaceMeasurementsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_extractSurfaceMeasurements"]],
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
@@ -29,7 +29,7 @@ DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceM
     "annotation_file": typing.NotRequired[InputPathType | None],
     "fa_options": typing.NotRequired[list[str] | None],
 })
-DmriExtractSurfaceMeasurementsParametersTagged = typing.TypedDict('DmriExtractSurfaceMeasurementsParametersTagged', {
+DmriExtractSurfaceMeasurementsParamsDictTagged = typing.TypedDict('DmriExtractSurfaceMeasurementsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_extractSurfaceMeasurements"],
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
@@ -49,7 +49,7 @@ DmriExtractSurfaceMeasurementsParametersTagged = typing.TypedDict('DmriExtractSu
 
 class DmriExtractSurfaceMeasurementsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriExtractSurfaceMeasurementsParameters(...)`.
+    Output object returned when calling `DmriExtractSurfaceMeasurementsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def dmri_extract_surface_measurements_params(
     transformation: InputPathType | None = None,
     annotation_file: InputPathType | None = None,
     fa_options: list[str] | None = None,
-) -> DmriExtractSurfaceMeasurementsParametersTagged:
+) -> DmriExtractSurfaceMeasurementsParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def dmri_extract_surface_measurements_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriExtractSurfaceMeasurementsParameters` object.
+    `DmriExtractSurfaceMeasurementsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def dmri_extract_surface_measurements_validate(
 
 
 def dmri_extract_surface_measurements_cargs(
-    params: DmriExtractSurfaceMeasurementsParameters,
+    params: DmriExtractSurfaceMeasurementsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def dmri_extract_surface_measurements_cargs(
 
 
 def dmri_extract_surface_measurements_outputs(
-    params: DmriExtractSurfaceMeasurementsParameters,
+    params: DmriExtractSurfaceMeasurementsParamsDict,
     execution: Execution,
 ) -> DmriExtractSurfaceMeasurementsOutputs:
     """
@@ -275,7 +275,7 @@ def dmri_extract_surface_measurements_outputs(
 
 
 def dmri_extract_surface_measurements_execute(
-    params: DmriExtractSurfaceMeasurementsParameters,
+    params: DmriExtractSurfaceMeasurementsParamsDict,
     runner: Runner | None = None,
 ) -> DmriExtractSurfaceMeasurementsOutputs:
     """
@@ -369,6 +369,8 @@ def dmri_extract_surface_measurements(
 __all__ = [
     "DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA",
     "DmriExtractSurfaceMeasurementsOutputs",
+    "DmriExtractSurfaceMeasurementsParamsDict",
+    "DmriExtractSurfaceMeasurementsParamsDictTagged",
     "dmri_extract_surface_measurements",
     "dmri_extract_surface_measurements_execute",
     "dmri_extract_surface_measurements_params",

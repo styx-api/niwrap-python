@@ -13,7 +13,7 @@ GEN_GROUP_COMMAND_PY_METADATA = Metadata(
 )
 
 
-GenGroupCommandPyParameters = typing.TypedDict('GenGroupCommandPyParameters', {
+GenGroupCommandPyParamsDict = typing.TypedDict('GenGroupCommandPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/gen_group_command.py"]],
     "command_name": str,
     "datasets": list[str],
@@ -28,7 +28,7 @@ GenGroupCommandPyParameters = typing.TypedDict('GenGroupCommandPyParameters', {
     "write_script": typing.NotRequired[str | None],
     "other_options": typing.NotRequired[list[str] | None],
 })
-GenGroupCommandPyParametersTagged = typing.TypedDict('GenGroupCommandPyParametersTagged', {
+GenGroupCommandPyParamsDictTagged = typing.TypedDict('GenGroupCommandPyParamsDictTagged', {
     "@type": typing.Literal["afni/gen_group_command.py"],
     "command_name": str,
     "datasets": list[str],
@@ -47,7 +47,7 @@ GenGroupCommandPyParametersTagged = typing.TypedDict('GenGroupCommandPyParameter
 
 class GenGroupCommandPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GenGroupCommandPyParameters(...)`.
+    Output object returned when calling `GenGroupCommandPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def gen_group_command_py_params(
     verb: str | None = None,
     write_script: str | None = None,
     other_options: list[str] | None = None,
-) -> GenGroupCommandPyParametersTagged:
+) -> GenGroupCommandPyParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def gen_group_command_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GenGroupCommandPyParameters` object.
+    `GenGroupCommandPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def gen_group_command_py_validate(
 
 
 def gen_group_command_py_cargs(
-    params: GenGroupCommandPyParameters,
+    params: GenGroupCommandPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def gen_group_command_py_cargs(
 
 
 def gen_group_command_py_outputs(
-    params: GenGroupCommandPyParameters,
+    params: GenGroupCommandPyParamsDict,
     execution: Execution,
 ) -> GenGroupCommandPyOutputs:
     """
@@ -281,7 +281,7 @@ def gen_group_command_py_outputs(
 
 
 def gen_group_command_py_execute(
-    params: GenGroupCommandPyParameters,
+    params: GenGroupCommandPyParamsDict,
     runner: Runner | None = None,
 ) -> GenGroupCommandPyOutputs:
     """
@@ -373,6 +373,8 @@ def gen_group_command_py(
 __all__ = [
     "GEN_GROUP_COMMAND_PY_METADATA",
     "GenGroupCommandPyOutputs",
+    "GenGroupCommandPyParamsDict",
+    "GenGroupCommandPyParamsDictTagged",
     "gen_group_command_py",
     "gen_group_command_py_execute",
     "gen_group_command_py_params",

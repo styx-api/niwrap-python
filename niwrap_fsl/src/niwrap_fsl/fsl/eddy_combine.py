@@ -13,7 +13,7 @@ EDDY_COMBINE_METADATA = Metadata(
 )
 
 
-EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
+EddyCombineParamsDict = typing.TypedDict('EddyCombineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_combine"]],
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
@@ -26,7 +26,7 @@ EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
     "output_path": str,
     "only_matched_flag": int,
 })
-EddyCombineParametersTagged = typing.TypedDict('EddyCombineParametersTagged', {
+EddyCombineParamsDictTagged = typing.TypedDict('EddyCombineParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_combine"],
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
@@ -43,7 +43,7 @@ EddyCombineParametersTagged = typing.TypedDict('EddyCombineParametersTagged', {
 
 class EddyCombineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyCombineParameters(...)`.
+    Output object returned when calling `EddyCombineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def eddy_combine_params(
     neg_series_vol: float,
     output_path: str,
     only_matched_flag: int,
-) -> EddyCombineParametersTagged:
+) -> EddyCombineParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def eddy_combine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyCombineParameters` object.
+    `EddyCombineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def eddy_combine_validate(
 
 
 def eddy_combine_cargs(
-    params: EddyCombineParameters,
+    params: EddyCombineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def eddy_combine_cargs(
 
 
 def eddy_combine_outputs(
-    params: EddyCombineParameters,
+    params: EddyCombineParamsDict,
     execution: Execution,
 ) -> EddyCombineOutputs:
     """
@@ -214,7 +214,7 @@ def eddy_combine_outputs(
 
 
 def eddy_combine_execute(
-    params: EddyCombineParameters,
+    params: EddyCombineParamsDict,
     runner: Runner | None = None,
 ) -> EddyCombineOutputs:
     """
@@ -306,6 +306,8 @@ def eddy_combine(
 __all__ = [
     "EDDY_COMBINE_METADATA",
     "EddyCombineOutputs",
+    "EddyCombineParamsDict",
+    "EddyCombineParamsDictTagged",
     "eddy_combine",
     "eddy_combine_execute",
     "eddy_combine_params",

@@ -13,7 +13,7 @@ SMOOTH_IMAGE_METADATA = Metadata(
 )
 
 
-SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
+SmoothImageParamsDict = typing.TypedDict('SmoothImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SmoothImage"]],
     "image_dimension": int,
     "image_ext": InputPathType,
@@ -22,7 +22,7 @@ SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
     "sigma_units": typing.NotRequired[bool | None],
     "median_filter": typing.NotRequired[bool | None],
 })
-SmoothImageParametersTagged = typing.TypedDict('SmoothImageParametersTagged', {
+SmoothImageParamsDictTagged = typing.TypedDict('SmoothImageParamsDictTagged', {
     "@type": typing.Literal["ants/SmoothImage"],
     "image_dimension": int,
     "image_ext": InputPathType,
@@ -35,7 +35,7 @@ SmoothImageParametersTagged = typing.TypedDict('SmoothImageParametersTagged', {
 
 class SmoothImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SmoothImageParameters(...)`.
+    Output object returned when calling `SmoothImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def smooth_image_params(
     out_image_ext: str,
     sigma_units: bool | None = None,
     median_filter: bool | None = None,
-) -> SmoothImageParametersTagged:
+) -> SmoothImageParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def smooth_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SmoothImageParameters` object.
+    `SmoothImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def smooth_image_validate(
 
 
 def smooth_image_cargs(
-    params: SmoothImageParameters,
+    params: SmoothImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def smooth_image_cargs(
 
 
 def smooth_image_outputs(
-    params: SmoothImageParameters,
+    params: SmoothImageParamsDict,
     execution: Execution,
 ) -> SmoothImageOutputs:
     """
@@ -164,7 +164,7 @@ def smooth_image_outputs(
 
 
 def smooth_image_execute(
-    params: SmoothImageParameters,
+    params: SmoothImageParamsDict,
     runner: Runner | None = None,
 ) -> SmoothImageOutputs:
     """
@@ -240,6 +240,8 @@ def smooth_image(
 __all__ = [
     "SMOOTH_IMAGE_METADATA",
     "SmoothImageOutputs",
+    "SmoothImageParamsDict",
+    "SmoothImageParamsDictTagged",
     "smooth_image",
     "smooth_image_execute",
     "smooth_image_params",

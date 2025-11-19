@@ -13,13 +13,13 @@ MRI_RIGID_REGISTER_METADATA = Metadata(
 )
 
 
-MriRigidRegisterParameters = typing.TypedDict('MriRigidRegisterParameters', {
+MriRigidRegisterParamsDict = typing.TypedDict('MriRigidRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rigid_register"]],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "transform_output": str,
 })
-MriRigidRegisterParametersTagged = typing.TypedDict('MriRigidRegisterParametersTagged', {
+MriRigidRegisterParamsDictTagged = typing.TypedDict('MriRigidRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_rigid_register"],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
@@ -29,7 +29,7 @@ MriRigidRegisterParametersTagged = typing.TypedDict('MriRigidRegisterParametersT
 
 class MriRigidRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRigidRegisterParameters(...)`.
+    Output object returned when calling `MriRigidRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_rigid_register_params(
     source_volume: InputPathType,
     target_volume: InputPathType,
     transform_output: str,
-) -> MriRigidRegisterParametersTagged:
+) -> MriRigidRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_rigid_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRigidRegisterParameters` object.
+    `MriRigidRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_rigid_register_validate(
 
 
 def mri_rigid_register_cargs(
-    params: MriRigidRegisterParameters,
+    params: MriRigidRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_rigid_register_cargs(
 
 
 def mri_rigid_register_outputs(
-    params: MriRigidRegisterParameters,
+    params: MriRigidRegisterParamsDict,
     execution: Execution,
 ) -> MriRigidRegisterOutputs:
     """
@@ -129,7 +129,7 @@ def mri_rigid_register_outputs(
 
 
 def mri_rigid_register_execute(
-    params: MriRigidRegisterParameters,
+    params: MriRigidRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriRigidRegisterOutputs:
     """
@@ -191,6 +191,8 @@ def mri_rigid_register(
 __all__ = [
     "MRI_RIGID_REGISTER_METADATA",
     "MriRigidRegisterOutputs",
+    "MriRigidRegisterParamsDict",
+    "MriRigidRegisterParamsDictTagged",
     "mri_rigid_register",
     "mri_rigid_register_execute",
     "mri_rigid_register_params",

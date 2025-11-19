@@ -13,7 +13,7 @@ EASYTHRESH_METADATA = Metadata(
 )
 
 
-EasythreshParameters = typing.TypedDict('EasythreshParameters', {
+EasythreshParamsDict = typing.TypedDict('EasythreshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/easythresh"]],
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
@@ -23,7 +23,7 @@ EasythreshParameters = typing.TypedDict('EasythreshParameters', {
     "output_root": str,
     "mm_flag": bool,
 })
-EasythreshParametersTagged = typing.TypedDict('EasythreshParametersTagged', {
+EasythreshParamsDictTagged = typing.TypedDict('EasythreshParamsDictTagged', {
     "@type": typing.Literal["fsl/easythresh"],
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
@@ -37,7 +37,7 @@ EasythreshParametersTagged = typing.TypedDict('EasythreshParametersTagged', {
 
 class EasythreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EasythreshParameters(...)`.
+    Output object returned when calling `EasythreshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def easythresh_params(
     background_image_input: InputPathType,
     output_root: str,
     mm_flag: bool = False,
-) -> EasythreshParametersTagged:
+) -> EasythreshParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def easythresh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EasythreshParameters` object.
+    `EasythreshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def easythresh_validate(
 
 
 def easythresh_cargs(
-    params: EasythreshParameters,
+    params: EasythreshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def easythresh_cargs(
 
 
 def easythresh_outputs(
-    params: EasythreshParameters,
+    params: EasythreshParamsDict,
     execution: Execution,
 ) -> EasythreshOutputs:
     """
@@ -170,7 +170,7 @@ def easythresh_outputs(
 
 
 def easythresh_execute(
-    params: EasythreshParameters,
+    params: EasythreshParamsDict,
     runner: Runner | None = None,
 ) -> EasythreshOutputs:
     """
@@ -244,6 +244,8 @@ def easythresh(
 __all__ = [
     "EASYTHRESH_METADATA",
     "EasythreshOutputs",
+    "EasythreshParamsDict",
+    "EasythreshParamsDictTagged",
     "easythresh",
     "easythresh_execute",
     "easythresh_params",

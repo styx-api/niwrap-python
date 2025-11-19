@@ -13,13 +13,13 @@ BAYES_VIEW_METADATA = Metadata(
 )
 
 
-BayesViewParameters = typing.TypedDict('BayesViewParameters', {
+BayesViewParamsDict = typing.TypedDict('BayesViewParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/bayes_view"]],
     "input_folder": str,
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],
 })
-BayesViewParametersTagged = typing.TypedDict('BayesViewParametersTagged', {
+BayesViewParamsDictTagged = typing.TypedDict('BayesViewParamsDictTagged', {
     "@type": typing.Literal["afni/bayes_view"],
     "input_folder": str,
     "help": bool,
@@ -29,7 +29,7 @@ BayesViewParametersTagged = typing.TypedDict('BayesViewParametersTagged', {
 
 class BayesViewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BayesViewParameters(...)`.
+    Output object returned when calling `BayesViewParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def bayes_view_params(
     input_folder: str,
     help_: bool = False,
     shiny_folder: str | None = None,
-) -> BayesViewParametersTagged:
+) -> BayesViewParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def bayes_view_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BayesViewParameters` object.
+    `BayesViewParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def bayes_view_validate(
 
 
 def bayes_view_cargs(
-    params: BayesViewParameters,
+    params: BayesViewParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def bayes_view_cargs(
 
 
 def bayes_view_outputs(
-    params: BayesViewParameters,
+    params: BayesViewParamsDict,
     execution: Execution,
 ) -> BayesViewOutputs:
     """
@@ -131,7 +131,7 @@ def bayes_view_outputs(
 
 
 def bayes_view_execute(
-    params: BayesViewParameters,
+    params: BayesViewParamsDict,
     runner: Runner | None = None,
 ) -> BayesViewOutputs:
     """
@@ -195,6 +195,8 @@ def bayes_view(
 __all__ = [
     "BAYES_VIEW_METADATA",
     "BayesViewOutputs",
+    "BayesViewParamsDict",
+    "BayesViewParamsDictTagged",
     "bayes_view",
     "bayes_view_execute",
     "bayes_view_params",

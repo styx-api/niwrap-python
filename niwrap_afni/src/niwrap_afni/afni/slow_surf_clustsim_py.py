@@ -13,7 +13,7 @@ SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
 )
 
 
-SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', {
+SlowSurfClustsimPyParamsDict = typing.TypedDict('SlowSurfClustsimPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/slow_surf_clustsim.py"]],
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', 
     "show_valid_opts": bool,
     "version": bool,
 })
-SlowSurfClustsimPyParametersTagged = typing.TypedDict('SlowSurfClustsimPyParametersTagged', {
+SlowSurfClustsimPyParamsDictTagged = typing.TypedDict('SlowSurfClustsimPyParamsDictTagged', {
     "@type": typing.Literal["afni/slow_surf_clustsim.py"],
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ SlowSurfClustsimPyParametersTagged = typing.TypedDict('SlowSurfClustsimPyParamet
 
 class SlowSurfClustsimPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlowSurfClustsimPyParameters(...)`.
+    Output object returned when calling `SlowSurfClustsimPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def slow_surf_clustsim_py_params(
     show_default_uvars: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> SlowSurfClustsimPyParametersTagged:
+) -> SlowSurfClustsimPyParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def slow_surf_clustsim_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlowSurfClustsimPyParameters` object.
+    `SlowSurfClustsimPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def slow_surf_clustsim_py_validate(
 
 
 def slow_surf_clustsim_py_cargs(
-    params: SlowSurfClustsimPyParameters,
+    params: SlowSurfClustsimPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def slow_surf_clustsim_py_cargs(
 
 
 def slow_surf_clustsim_py_outputs(
-    params: SlowSurfClustsimPyParameters,
+    params: SlowSurfClustsimPyParamsDict,
     execution: Execution,
 ) -> SlowSurfClustsimPyOutputs:
     """
@@ -235,7 +235,7 @@ def slow_surf_clustsim_py_outputs(
 
 
 def slow_surf_clustsim_py_execute(
-    params: SlowSurfClustsimPyParameters,
+    params: SlowSurfClustsimPyParamsDict,
     runner: Runner | None = None,
 ) -> SlowSurfClustsimPyOutputs:
     """
@@ -324,6 +324,8 @@ def slow_surf_clustsim_py(
 __all__ = [
     "SLOW_SURF_CLUSTSIM_PY_METADATA",
     "SlowSurfClustsimPyOutputs",
+    "SlowSurfClustsimPyParamsDict",
+    "SlowSurfClustsimPyParamsDictTagged",
     "slow_surf_clustsim_py",
     "slow_surf_clustsim_py_execute",
     "slow_surf_clustsim_py_params",

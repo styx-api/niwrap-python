@@ -13,19 +13,19 @@ LABELSTATS_METADATA = Metadata(
 )
 
 
-LabelstatsConfigParameters = typing.TypedDict('LabelstatsConfigParameters', {
+LabelstatsConfigParamsDict = typing.TypedDict('LabelstatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-LabelstatsConfigParametersTagged = typing.TypedDict('LabelstatsConfigParametersTagged', {
+LabelstatsConfigParamsDictTagged = typing.TypedDict('LabelstatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-LabelstatsParameters = typing.TypedDict('LabelstatsParameters', {
+LabelstatsParamsDict = typing.TypedDict('LabelstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/labelstats"]],
     "output": typing.NotRequired[str | None],
     "voxelspace": bool,
@@ -34,12 +34,12 @@ LabelstatsParameters = typing.TypedDict('LabelstatsParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[LabelstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[LabelstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
 })
-LabelstatsParametersTagged = typing.TypedDict('LabelstatsParametersTagged', {
+LabelstatsParamsDictTagged = typing.TypedDict('LabelstatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/labelstats"],
     "output": typing.NotRequired[str | None],
     "voxelspace": bool,
@@ -48,17 +48,17 @@ LabelstatsParametersTagged = typing.TypedDict('LabelstatsParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[LabelstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[LabelstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
 })
 
 
-def labelstats_config_params(
+def labelstats_config(
     key: str,
     value: str,
-) -> LabelstatsConfigParametersTagged:
+) -> LabelstatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def labelstats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelstatsConfigParameters` object.
+    `LabelstatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def labelstats_config_validate(
 
 
 def labelstats_config_cargs(
-    params: LabelstatsConfigParameters,
+    params: LabelstatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def labelstats_config_cargs(
 
 class LabelstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelstatsParameters(...)`.
+    Output object returned when calling `LabelstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,10 +135,10 @@ def labelstats_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[LabelstatsConfigParameters] | None = None,
+    config: list[LabelstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> LabelstatsParametersTagged:
+) -> LabelstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def labelstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelstatsParameters` object.
+    `LabelstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def labelstats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[LabelstatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[LabelstatsConfigParamsDict] | None`')
         for e in params["config"]:
             labelstats_config_validate(e)
     if params.get("help", False) is None:
@@ -240,7 +240,7 @@ def labelstats_validate(
 
 
 def labelstats_cargs(
-    params: LabelstatsParameters,
+    params: LabelstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def labelstats_cargs(
 
 
 def labelstats_outputs(
-    params: LabelstatsParameters,
+    params: LabelstatsParamsDict,
     execution: Execution,
 ) -> LabelstatsOutputs:
     """
@@ -304,7 +304,7 @@ def labelstats_outputs(
 
 
 def labelstats_execute(
-    params: LabelstatsParameters,
+    params: LabelstatsParamsDict,
     runner: Runner | None = None,
 ) -> LabelstatsOutputs:
     """
@@ -347,7 +347,7 @@ def labelstats(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[LabelstatsConfigParameters] | None = None,
+    config: list[LabelstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -406,9 +406,13 @@ def labelstats(
 
 __all__ = [
     "LABELSTATS_METADATA",
+    "LabelstatsConfigParamsDict",
+    "LabelstatsConfigParamsDictTagged",
     "LabelstatsOutputs",
+    "LabelstatsParamsDict",
+    "LabelstatsParamsDictTagged",
     "labelstats",
-    "labelstats_config_params",
+    "labelstats_config",
     "labelstats_execute",
     "labelstats_params",
 ]

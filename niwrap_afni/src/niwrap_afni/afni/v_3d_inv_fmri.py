@@ -13,7 +13,7 @@ V_3D_INV_FMRI_METADATA = Metadata(
 )
 
 
-V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
+V3dInvFmriParamsDict = typing.TypedDict('V3dInvFmriParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dInvFMRI"]],
     "input_file": InputPathType,
     "activation_map": InputPathType,
@@ -27,7 +27,7 @@ V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
     "smooth_fir": bool,
     "smooth_median": bool,
 })
-V3dInvFmriParametersTagged = typing.TypedDict('V3dInvFmriParametersTagged', {
+V3dInvFmriParamsDictTagged = typing.TypedDict('V3dInvFmriParamsDictTagged', {
     "@type": typing.Literal["afni/3dInvFMRI"],
     "input_file": InputPathType,
     "activation_map": InputPathType,
@@ -45,7 +45,7 @@ V3dInvFmriParametersTagged = typing.TypedDict('V3dInvFmriParametersTagged', {
 
 class V3dInvFmriOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dInvFmriParameters(...)`.
+    Output object returned when calling `V3dInvFmriParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_3d_inv_fmri_params(
     alpha: float | None = None,
     smooth_fir: bool = False,
     smooth_median: bool = False,
-) -> V3dInvFmriParametersTagged:
+) -> V3dInvFmriParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def v_3d_inv_fmri_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dInvFmriParameters` object.
+    `V3dInvFmriParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def v_3d_inv_fmri_validate(
 
 
 def v_3d_inv_fmri_cargs(
-    params: V3dInvFmriParameters,
+    params: V3dInvFmriParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -236,7 +236,7 @@ def v_3d_inv_fmri_cargs(
 
 
 def v_3d_inv_fmri_outputs(
-    params: V3dInvFmriParameters,
+    params: V3dInvFmriParamsDict,
     execution: Execution,
 ) -> V3dInvFmriOutputs:
     """
@@ -256,7 +256,7 @@ def v_3d_inv_fmri_outputs(
 
 
 def v_3d_inv_fmri_execute(
-    params: V3dInvFmriParameters,
+    params: V3dInvFmriParamsDict,
     runner: Runner | None = None,
 ) -> V3dInvFmriOutputs:
     """
@@ -351,6 +351,8 @@ def v_3d_inv_fmri(
 
 __all__ = [
     "V3dInvFmriOutputs",
+    "V3dInvFmriParamsDict",
+    "V3dInvFmriParamsDictTagged",
     "V_3D_INV_FMRI_METADATA",
     "v_3d_inv_fmri",
     "v_3d_inv_fmri_execute",

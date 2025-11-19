@@ -9,14 +9,14 @@
     },
     "affine": {
       "var_param": "affine",
-      "fn_struct_make_params": "volume_resample_affine_params",
+      "fn_struct_make_params": "volume_resample_affine",
       "properties": {
         "affine": {
           "var_param": "affine"
         },
         "flirt": {
           "var_param": "flirt",
-          "fn_struct_make_params": "volume_resample_flirt_params",
+          "fn_struct_make_params": "volume_resample_flirt",
           "properties": {
             "source-volume": {
               "var_param": "source_volume"
@@ -30,14 +30,14 @@
     },
     "affine-series": {
       "var_param": "affine_series",
-      "fn_struct_make_params": "volume_resample_affine_series_params",
+      "fn_struct_make_params": "volume_resample_affine_series",
       "properties": {
         "affine-series": {
           "var_param": "affine_series"
         },
         "flirt": {
           "var_param": "flirt",
-          "fn_struct_make_params": "volume_resample_flirt_params_",
+          "fn_struct_make_params": "volume_resample_flirt_",
           "properties": {
             "source-volume": {
               "var_param": "source_volume"
@@ -51,7 +51,7 @@
     },
     "warp": {
       "var_param": "warp",
-      "fn_struct_make_params": "volume_resample_warp_params",
+      "fn_struct_make_params": "volume_resample_warp",
       "properties": {
         "warpfield": {
           "var_param": "warpfield"

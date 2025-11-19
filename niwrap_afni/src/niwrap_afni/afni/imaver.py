@@ -13,13 +13,13 @@ IMAVER_METADATA = Metadata(
 )
 
 
-ImaverParameters = typing.TypedDict('ImaverParameters', {
+ImaverParamsDict = typing.TypedDict('ImaverParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imaver"]],
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
 })
-ImaverParametersTagged = typing.TypedDict('ImaverParametersTagged', {
+ImaverParamsDictTagged = typing.TypedDict('ImaverParamsDictTagged', {
     "@type": typing.Literal["afni/imaver"],
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ ImaverParametersTagged = typing.TypedDict('ImaverParametersTagged', {
 
 class ImaverOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImaverParameters(...)`.
+    Output object returned when calling `ImaverParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def imaver_params(
     input_images: list[InputPathType],
     out_ave: str | None = None,
     out_sig: str | None = None,
-) -> ImaverParametersTagged:
+) -> ImaverParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def imaver_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImaverParameters` object.
+    `ImaverParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def imaver_validate(
 
 
 def imaver_cargs(
-    params: ImaverParameters,
+    params: ImaverParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def imaver_cargs(
 
 
 def imaver_outputs(
-    params: ImaverParameters,
+    params: ImaverParamsDict,
     execution: Execution,
 ) -> ImaverOutputs:
     """
@@ -137,7 +137,7 @@ def imaver_outputs(
 
 
 def imaver_execute(
-    params: ImaverParameters,
+    params: ImaverParamsDict,
     runner: Runner | None = None,
 ) -> ImaverOutputs:
     """
@@ -201,6 +201,8 @@ def imaver(
 __all__ = [
     "IMAVER_METADATA",
     "ImaverOutputs",
+    "ImaverParamsDict",
+    "ImaverParamsDictTagged",
     "imaver",
     "imaver_execute",
     "imaver_params",

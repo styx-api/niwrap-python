@@ -13,7 +13,7 @@ FSLORIENT_METADATA = Metadata(
 )
 
 
-FslorientParameters = typing.TypedDict('FslorientParameters', {
+FslorientParamsDict = typing.TypedDict('FslorientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslorient"]],
     "get_orient": bool,
     "get_sform": bool,
@@ -32,7 +32,7 @@ FslorientParameters = typing.TypedDict('FslorientParameters', {
     "swap_orient": bool,
     "filename": InputPathType,
 })
-FslorientParametersTagged = typing.TypedDict('FslorientParametersTagged', {
+FslorientParamsDictTagged = typing.TypedDict('FslorientParamsDictTagged', {
     "@type": typing.Literal["fsl/fslorient"],
     "get_orient": bool,
     "get_sform": bool,
@@ -55,7 +55,7 @@ FslorientParametersTagged = typing.TypedDict('FslorientParametersTagged', {
 
 class FslorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslorientParameters(...)`.
+    Output object returned when calling `FslorientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def fslorient_params(
     force_neurological: bool = False,
     force_radiological: bool = False,
     swap_orient: bool = False,
-) -> FslorientParametersTagged:
+) -> FslorientParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def fslorient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslorientParameters` object.
+    `FslorientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def fslorient_validate(
 
 
 def fslorient_cargs(
-    params: FslorientParameters,
+    params: FslorientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -264,7 +264,7 @@ def fslorient_cargs(
 
 
 def fslorient_outputs(
-    params: FslorientParameters,
+    params: FslorientParamsDict,
     execution: Execution,
 ) -> FslorientOutputs:
     """
@@ -283,7 +283,7 @@ def fslorient_outputs(
 
 
 def fslorient_execute(
-    params: FslorientParameters,
+    params: FslorientParamsDict,
     runner: Runner | None = None,
 ) -> FslorientOutputs:
     """
@@ -386,6 +386,8 @@ def fslorient(
 __all__ = [
     "FSLORIENT_METADATA",
     "FslorientOutputs",
+    "FslorientParamsDict",
+    "FslorientParamsDictTagged",
     "fslorient",
     "fslorient_execute",
     "fslorient_params",

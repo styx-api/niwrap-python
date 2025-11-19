@@ -6,7 +6,7 @@
     },
     "map": {
       "var_param": "map_",
-      "fn_struct_make_params": "set_map_names_map_params",
+      "fn_struct_make_params": "set_map_names_map",
       "properties": {
         "index": {
           "var_param": "index"

@@ -13,7 +13,7 @@ ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
 )
 
 
-AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryParameters', {
+AntsNeuroimagingBatteryParamsDict = typing.TypedDict('AntsNeuroimagingBatteryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsNeuroimagingBattery"]],
     "input_directory": str,
     "output_directory": str,
@@ -35,7 +35,7 @@ AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryPar
     "help": bool,
     "info_only": bool,
 })
-AntsNeuroimagingBatteryParametersTagged = typing.TypedDict('AntsNeuroimagingBatteryParametersTagged', {
+AntsNeuroimagingBatteryParamsDictTagged = typing.TypedDict('AntsNeuroimagingBatteryParamsDictTagged', {
     "@type": typing.Literal["ants/antsNeuroimagingBattery"],
     "input_directory": str,
     "output_directory": str,
@@ -61,7 +61,7 @@ AntsNeuroimagingBatteryParametersTagged = typing.TypedDict('AntsNeuroimagingBatt
 
 class AntsNeuroimagingBatteryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsNeuroimagingBatteryParameters(...)`.
+    Output object returned when calling `AntsNeuroimagingBatteryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def ants_neuroimaging_battery_params(
     temp_directory: str | None = None,
     help_: bool = False,
     info_only: bool = False,
-) -> AntsNeuroimagingBatteryParametersTagged:
+) -> AntsNeuroimagingBatteryParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def ants_neuroimaging_battery_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsNeuroimagingBatteryParameters` object.
+    `AntsNeuroimagingBatteryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def ants_neuroimaging_battery_validate(
 
 
 def ants_neuroimaging_battery_cargs(
-    params: AntsNeuroimagingBatteryParameters,
+    params: AntsNeuroimagingBatteryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -338,7 +338,7 @@ def ants_neuroimaging_battery_cargs(
 
 
 def ants_neuroimaging_battery_outputs(
-    params: AntsNeuroimagingBatteryParameters,
+    params: AntsNeuroimagingBatteryParamsDict,
     execution: Execution,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
@@ -358,7 +358,7 @@ def ants_neuroimaging_battery_outputs(
 
 
 def ants_neuroimaging_battery_execute(
-    params: AntsNeuroimagingBatteryParameters,
+    params: AntsNeuroimagingBatteryParamsDict,
     runner: Runner | None = None,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
@@ -474,6 +474,8 @@ def ants_neuroimaging_battery(
 __all__ = [
     "ANTS_NEUROIMAGING_BATTERY_METADATA",
     "AntsNeuroimagingBatteryOutputs",
+    "AntsNeuroimagingBatteryParamsDict",
+    "AntsNeuroimagingBatteryParamsDictTagged",
     "ants_neuroimaging_battery",
     "ants_neuroimaging_battery_execute",
     "ants_neuroimaging_battery_params",

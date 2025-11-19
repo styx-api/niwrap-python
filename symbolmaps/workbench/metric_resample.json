@@ -6,7 +6,7 @@
     },
     "area-surfs": {
       "var_param": "area_surfs",
-      "fn_struct_make_params": "metric_resample_area_surfs_params",
+      "fn_struct_make_params": "metric_resample_area_surfs",
       "properties": {
         "current-area": {
           "var_param": "current_area"
@@ -18,7 +18,7 @@
     },
     "area-metrics": {
       "var_param": "area_metrics",
-      "fn_struct_make_params": "metric_resample_area_metrics_params",
+      "fn_struct_make_params": "metric_resample_area_metrics",
       "properties": {
         "current-area": {
           "var_param": "current_area"

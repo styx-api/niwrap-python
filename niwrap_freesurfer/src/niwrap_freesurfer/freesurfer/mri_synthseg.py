@@ -13,7 +13,7 @@ MRI_SYNTHSEG_METADATA = Metadata(
 )
 
 
-MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
+MriSynthsegParamsDict = typing.TypedDict('MriSynthsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthseg"]],
     "input_image": InputPathType,
     "output_segmentation": str,
@@ -31,7 +31,7 @@ MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
     "version_1": bool,
     "photo_synthseg": typing.NotRequired[str | None],
 })
-MriSynthsegParametersTagged = typing.TypedDict('MriSynthsegParametersTagged', {
+MriSynthsegParamsDictTagged = typing.TypedDict('MriSynthsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_synthseg"],
     "input_image": InputPathType,
     "output_segmentation": str,
@@ -53,7 +53,7 @@ MriSynthsegParametersTagged = typing.TypedDict('MriSynthsegParametersTagged', {
 
 class MriSynthsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSynthsegParameters(...)`.
+    Output object returned when calling `MriSynthsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def mri_synthseg_params(
     cpu: bool = False,
     version_1: bool = False,
     photo_synthseg: str | None = None,
-) -> MriSynthsegParametersTagged:
+) -> MriSynthsegParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def mri_synthseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSynthsegParameters` object.
+    `MriSynthsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def mri_synthseg_validate(
 
 
 def mri_synthseg_cargs(
-    params: MriSynthsegParameters,
+    params: MriSynthsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -260,7 +260,7 @@ def mri_synthseg_cargs(
 
 
 def mri_synthseg_outputs(
-    params: MriSynthsegParameters,
+    params: MriSynthsegParamsDict,
     execution: Execution,
 ) -> MriSynthsegOutputs:
     """
@@ -284,7 +284,7 @@ def mri_synthseg_outputs(
 
 
 def mri_synthseg_execute(
-    params: MriSynthsegParameters,
+    params: MriSynthsegParamsDict,
     runner: Runner | None = None,
 ) -> MriSynthsegOutputs:
     """
@@ -389,6 +389,8 @@ def mri_synthseg(
 __all__ = [
     "MRI_SYNTHSEG_METADATA",
     "MriSynthsegOutputs",
+    "MriSynthsegParamsDict",
+    "MriSynthsegParamsDictTagged",
     "mri_synthseg",
     "mri_synthseg_execute",
     "mri_synthseg_params",

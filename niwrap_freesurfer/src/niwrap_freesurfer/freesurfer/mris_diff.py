@@ -13,7 +13,7 @@ MRIS_DIFF_METADATA = Metadata(
 )
 
 
-MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
+MrisDiffParamsDict = typing.TypedDict('MrisDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_diff"]],
     "surface1": InputPathType,
     "surface2": InputPathType,
@@ -45,7 +45,7 @@ MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
     "help": bool,
     "version": bool,
 })
-MrisDiffParametersTagged = typing.TypedDict('MrisDiffParametersTagged', {
+MrisDiffParamsDictTagged = typing.TypedDict('MrisDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_diff"],
     "surface1": InputPathType,
     "surface2": InputPathType,
@@ -81,7 +81,7 @@ MrisDiffParametersTagged = typing.TypedDict('MrisDiffParametersTagged', {
 
 class MrisDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDiffParameters(...)`.
+    Output object returned when calling `MrisDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +117,7 @@ def mris_diff_params(
     check_opts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisDiffParametersTagged:
+) -> MrisDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -211,7 +211,7 @@ def mris_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDiffParameters` object.
+    `MrisDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -322,7 +322,7 @@ def mris_diff_validate(
 
 
 def mris_diff_cargs(
-    params: MrisDiffParameters,
+    params: MrisDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -447,7 +447,7 @@ def mris_diff_cargs(
 
 
 def mris_diff_outputs(
-    params: MrisDiffParameters,
+    params: MrisDiffParamsDict,
     execution: Execution,
 ) -> MrisDiffOutputs:
     """
@@ -466,7 +466,7 @@ def mris_diff_outputs(
 
 
 def mris_diff_execute(
-    params: MrisDiffParameters,
+    params: MrisDiffParamsDict,
     runner: Runner | None = None,
 ) -> MrisDiffOutputs:
     """
@@ -608,6 +608,8 @@ def mris_diff(
 __all__ = [
     "MRIS_DIFF_METADATA",
     "MrisDiffOutputs",
+    "MrisDiffParamsDict",
+    "MrisDiffParamsDictTagged",
     "mris_diff",
     "mris_diff_execute",
     "mris_diff_params",

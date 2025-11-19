@@ -13,11 +13,11 @@ GET_LABEL_THICKNESS_METADATA = Metadata(
 )
 
 
-GetLabelThicknessParameters = typing.TypedDict('GetLabelThicknessParameters', {
+GetLabelThicknessParamsDict = typing.TypedDict('GetLabelThicknessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/get_label_thickness"]],
     "infile": InputPathType,
 })
-GetLabelThicknessParametersTagged = typing.TypedDict('GetLabelThicknessParametersTagged', {
+GetLabelThicknessParamsDictTagged = typing.TypedDict('GetLabelThicknessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/get_label_thickness"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ GetLabelThicknessParametersTagged = typing.TypedDict('GetLabelThicknessParameter
 
 class GetLabelThicknessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GetLabelThicknessParameters(...)`.
+    Output object returned when calling `GetLabelThicknessParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class GetLabelThicknessOutputs(typing.NamedTuple):
 
 def get_label_thickness_params(
     infile: InputPathType,
-) -> GetLabelThicknessParametersTagged:
+) -> GetLabelThicknessParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def get_label_thickness_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GetLabelThicknessParameters` object.
+    `GetLabelThicknessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def get_label_thickness_validate(
 
 
 def get_label_thickness_cargs(
-    params: GetLabelThicknessParameters,
+    params: GetLabelThicknessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def get_label_thickness_cargs(
 
 
 def get_label_thickness_outputs(
-    params: GetLabelThicknessParameters,
+    params: GetLabelThicknessParamsDict,
     execution: Execution,
 ) -> GetLabelThicknessOutputs:
     """
@@ -106,7 +106,7 @@ def get_label_thickness_outputs(
 
 
 def get_label_thickness_execute(
-    params: GetLabelThicknessParameters,
+    params: GetLabelThicknessParamsDict,
     runner: Runner | None = None,
 ) -> GetLabelThicknessOutputs:
     """
@@ -162,6 +162,8 @@ def get_label_thickness(
 __all__ = [
     "GET_LABEL_THICKNESS_METADATA",
     "GetLabelThicknessOutputs",
+    "GetLabelThicknessParamsDict",
+    "GetLabelThicknessParamsDictTagged",
     "get_label_thickness",
     "get_label_thickness_execute",
     "get_label_thickness_params",

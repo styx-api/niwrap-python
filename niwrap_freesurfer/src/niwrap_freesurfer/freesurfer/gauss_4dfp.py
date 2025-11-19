@@ -13,7 +13,7 @@ GAUSS_4DFP_METADATA = Metadata(
 )
 
 
-Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
+Gauss4dfpParamsDict = typing.TypedDict('Gauss4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gauss_4dfp"]],
     "input_file": str,
     "f_half": float,
@@ -22,7 +22,7 @@ Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
     "wrap_flag": bool,
     "differentiate_flag": bool,
 })
-Gauss4dfpParametersTagged = typing.TypedDict('Gauss4dfpParametersTagged', {
+Gauss4dfpParamsDictTagged = typing.TypedDict('Gauss4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gauss_4dfp"],
     "input_file": str,
     "f_half": float,
@@ -35,7 +35,7 @@ Gauss4dfpParametersTagged = typing.TypedDict('Gauss4dfpParametersTagged', {
 
 class Gauss4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Gauss4dfpParameters(...)`.
+    Output object returned when calling `Gauss4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def gauss_4dfp_params(
     endian_flag: str | None = None,
     wrap_flag: bool = False,
     differentiate_flag: bool = False,
-) -> Gauss4dfpParametersTagged:
+) -> Gauss4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def gauss_4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Gauss4dfpParameters` object.
+    `Gauss4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def gauss_4dfp_validate(
 
 
 def gauss_4dfp_cargs(
-    params: Gauss4dfpParameters,
+    params: Gauss4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def gauss_4dfp_cargs(
 
 
 def gauss_4dfp_outputs(
-    params: Gauss4dfpParameters,
+    params: Gauss4dfpParamsDict,
     execution: Execution,
 ) -> Gauss4dfpOutputs:
     """
@@ -169,7 +169,7 @@ def gauss_4dfp_outputs(
 
 
 def gauss_4dfp_execute(
-    params: Gauss4dfpParameters,
+    params: Gauss4dfpParamsDict,
     runner: Runner | None = None,
 ) -> Gauss4dfpOutputs:
     """
@@ -243,6 +243,8 @@ def gauss_4dfp(
 __all__ = [
     "GAUSS_4DFP_METADATA",
     "Gauss4dfpOutputs",
+    "Gauss4dfpParamsDict",
+    "Gauss4dfpParamsDictTagged",
     "gauss_4dfp",
     "gauss_4dfp_execute",
     "gauss_4dfp_params",

@@ -9,7 +9,7 @@
     },
     "left-surface": {
       "var_param": "left_surface",
-      "fn_struct_make_params": "cifti_find_clusters_left_surface_params",
+      "fn_struct_make_params": "cifti_find_clusters_left_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -21,7 +21,7 @@
     },
     "right-surface": {
       "var_param": "right_surface",
-      "fn_struct_make_params": "cifti_find_clusters_right_surface_params",
+      "fn_struct_make_params": "cifti_find_clusters_right_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -33,7 +33,7 @@
     },
     "cerebellum-surface": {
       "var_param": "cerebellum_surface",
-      "fn_struct_make_params": "cifti_find_clusters_cerebellum_surface_params",
+      "fn_struct_make_params": "cifti_find_clusters_cerebellum_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -51,7 +51,7 @@
     },
     "size-ratio": {
       "var_param": "size_ratio",
-      "fn_struct_make_params": "cifti_find_clusters_size_ratio_params",
+      "fn_struct_make_params": "cifti_find_clusters_size_ratio",
       "properties": {
         "surface-ratio": {
           "var_param": "surface_ratio"
@@ -63,7 +63,7 @@
     },
     "distance": {
       "var_param": "distance",
-      "fn_struct_make_params": "cifti_find_clusters_distance_params",
+      "fn_struct_make_params": "cifti_find_clusters_distance",
       "properties": {
         "surface-distance": {
           "var_param": "surface_distance"

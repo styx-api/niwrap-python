@@ -13,7 +13,7 @@ MRI_MASK_METADATA = Metadata(
 )
 
 
-MriMaskParameters = typing.TypedDict('MriMaskParameters', {
+MriMaskParamsDict = typing.TypedDict('MriMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mask"]],
     "input_volume": InputPathType,
     "mask_volume": InputPathType,
@@ -37,7 +37,7 @@ MriMaskParameters = typing.TypedDict('MriMaskParameters', {
     "keep_mask_deletion_edits": bool,
     "samseg": bool,
 })
-MriMaskParametersTagged = typing.TypedDict('MriMaskParametersTagged', {
+MriMaskParamsDictTagged = typing.TypedDict('MriMaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mask"],
     "input_volume": InputPathType,
     "mask_volume": InputPathType,
@@ -65,7 +65,7 @@ MriMaskParametersTagged = typing.TypedDict('MriMaskParametersTagged', {
 
 class MriMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMaskParameters(...)`.
+    Output object returned when calling `MriMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def mri_mask_params(
     transfer_value: float | None = None,
     keep_mask_deletion_edits: bool = False,
     samseg: bool = False,
-) -> MriMaskParametersTagged:
+) -> MriMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -179,7 +179,7 @@ def mri_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMaskParameters` object.
+    `MriMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,7 +269,7 @@ def mri_mask_validate(
 
 
 def mri_mask_cargs(
-    params: MriMaskParameters,
+    params: MriMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def mri_mask_cargs(
 
 
 def mri_mask_outputs(
-    params: MriMaskParameters,
+    params: MriMaskParamsDict,
     execution: Execution,
 ) -> MriMaskOutputs:
     """
@@ -376,7 +376,7 @@ def mri_mask_outputs(
 
 
 def mri_mask_execute(
-    params: MriMaskParameters,
+    params: MriMaskParamsDict,
     runner: Runner | None = None,
 ) -> MriMaskOutputs:
     """
@@ -505,6 +505,8 @@ def mri_mask(
 __all__ = [
     "MRI_MASK_METADATA",
     "MriMaskOutputs",
+    "MriMaskParamsDict",
+    "MriMaskParamsDictTagged",
     "mri_mask",
     "mri_mask_execute",
     "mri_mask_params",

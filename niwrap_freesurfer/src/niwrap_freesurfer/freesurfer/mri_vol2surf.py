@@ -13,7 +13,7 @@ MRI_VOL2SURF_METADATA = Metadata(
 )
 
 
-MriVol2surfParameters = typing.TypedDict('MriVol2surfParameters', {
+MriVol2surfParamsDict = typing.TypedDict('MriVol2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2surf"]],
     "input_volume": InputPathType,
     "registration_file": InputPathType,
@@ -25,7 +25,7 @@ MriVol2surfParameters = typing.TypedDict('MriVol2surfParameters', {
     "hemisphere": typing.NotRequired[typing.Literal["lh", "rh"] | None],
     "surface": typing.NotRequired[str | None],
 })
-MriVol2surfParametersTagged = typing.TypedDict('MriVol2surfParametersTagged', {
+MriVol2surfParamsDictTagged = typing.TypedDict('MriVol2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_vol2surf"],
     "input_volume": InputPathType,
     "registration_file": InputPathType,
@@ -41,7 +41,7 @@ MriVol2surfParametersTagged = typing.TypedDict('MriVol2surfParametersTagged', {
 
 class MriVol2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVol2surfParameters(...)`.
+    Output object returned when calling `MriVol2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mri_vol2surf_params(
     target_subject: str | None = None,
     hemisphere: typing.Literal["lh", "rh"] | None = None,
     surface: str | None = None,
-) -> MriVol2surfParametersTagged:
+) -> MriVol2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def mri_vol2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVol2surfParameters` object.
+    `MriVol2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def mri_vol2surf_validate(
 
 
 def mri_vol2surf_cargs(
-    params: MriVol2surfParameters,
+    params: MriVol2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,7 +206,7 @@ def mri_vol2surf_cargs(
 
 
 def mri_vol2surf_outputs(
-    params: MriVol2surfParameters,
+    params: MriVol2surfParamsDict,
     execution: Execution,
 ) -> MriVol2surfOutputs:
     """
@@ -226,7 +226,7 @@ def mri_vol2surf_outputs(
 
 
 def mri_vol2surf_execute(
-    params: MriVol2surfParameters,
+    params: MriVol2surfParamsDict,
     runner: Runner | None = None,
 ) -> MriVol2surfOutputs:
     """
@@ -315,6 +315,8 @@ def mri_vol2surf(
 __all__ = [
     "MRI_VOL2SURF_METADATA",
     "MriVol2surfOutputs",
+    "MriVol2surfParamsDict",
+    "MriVol2surfParamsDictTagged",
     "mri_vol2surf",
     "mri_vol2surf_execute",
     "mri_vol2surf_params",

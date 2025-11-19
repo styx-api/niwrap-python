@@ -13,14 +13,14 @@ EXTRACTTXT_METADATA = Metadata(
 )
 
 
-ExtracttxtParameters = typing.TypedDict('ExtracttxtParameters', {
+ExtracttxtParamsDict = typing.TypedDict('ExtracttxtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/extracttxt"]],
     "search_word": str,
     "file": InputPathType,
     "num_trailing_lines": typing.NotRequired[float | None],
     "relative_start": typing.NotRequired[float | None],
 })
-ExtracttxtParametersTagged = typing.TypedDict('ExtracttxtParametersTagged', {
+ExtracttxtParamsDictTagged = typing.TypedDict('ExtracttxtParamsDictTagged', {
     "@type": typing.Literal["fsl/extracttxt"],
     "search_word": str,
     "file": InputPathType,
@@ -31,7 +31,7 @@ ExtracttxtParametersTagged = typing.TypedDict('ExtracttxtParametersTagged', {
 
 class ExtracttxtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExtracttxtParameters(...)`.
+    Output object returned when calling `ExtracttxtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def extracttxt_params(
     file: InputPathType,
     num_trailing_lines: float | None = None,
     relative_start: float | None = None,
-) -> ExtracttxtParametersTagged:
+) -> ExtracttxtParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def extracttxt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtracttxtParameters` object.
+    `ExtracttxtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def extracttxt_validate(
 
 
 def extracttxt_cargs(
-    params: ExtracttxtParameters,
+    params: ExtracttxtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def extracttxt_cargs(
 
 
 def extracttxt_outputs(
-    params: ExtracttxtParameters,
+    params: ExtracttxtParamsDict,
     execution: Execution,
 ) -> ExtracttxtOutputs:
     """
@@ -142,7 +142,7 @@ def extracttxt_outputs(
 
 
 def extracttxt_execute(
-    params: ExtracttxtParameters,
+    params: ExtracttxtParamsDict,
     runner: Runner | None = None,
 ) -> ExtracttxtOutputs:
     """
@@ -208,6 +208,8 @@ def extracttxt(
 __all__ = [
     "EXTRACTTXT_METADATA",
     "ExtracttxtOutputs",
+    "ExtracttxtParamsDict",
+    "ExtracttxtParamsDictTagged",
     "extracttxt",
     "extracttxt_execute",
     "extracttxt_params",

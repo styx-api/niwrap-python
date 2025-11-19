@@ -13,14 +13,14 @@ V_3D_EMPTY_METADATA = Metadata(
 )
 
 
-V3dEmptyParameters = typing.TypedDict('V3dEmptyParameters', {
+V3dEmptyParamsDict = typing.TypedDict('V3dEmptyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dEmpty"]],
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
     "nxyz": typing.NotRequired[list[float] | None],
     "nt": typing.NotRequired[float | None],
 })
-V3dEmptyParametersTagged = typing.TypedDict('V3dEmptyParametersTagged', {
+V3dEmptyParamsDictTagged = typing.TypedDict('V3dEmptyParamsDictTagged', {
     "@type": typing.Literal["afni/3dEmpty"],
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dEmptyParametersTagged = typing.TypedDict('V3dEmptyParametersTagged', {
 
 class V3dEmptyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dEmptyParameters(...)`.
+    Output object returned when calling `V3dEmptyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3d_empty_params(
     geometry: str | None = None,
     nxyz: list[float] | None = None,
     nt_: float | None = None,
-) -> V3dEmptyParametersTagged:
+) -> V3dEmptyParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def v_3d_empty_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dEmptyParameters` object.
+    `V3dEmptyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def v_3d_empty_validate(
 
 
 def v_3d_empty_cargs(
-    params: V3dEmptyParameters,
+    params: V3dEmptyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def v_3d_empty_cargs(
 
 
 def v_3d_empty_outputs(
-    params: V3dEmptyParameters,
+    params: V3dEmptyParamsDict,
     execution: Execution,
 ) -> V3dEmptyOutputs:
     """
@@ -162,7 +162,7 @@ def v_3d_empty_outputs(
 
 
 def v_3d_empty_execute(
-    params: V3dEmptyParameters,
+    params: V3dEmptyParamsDict,
     runner: Runner | None = None,
 ) -> V3dEmptyOutputs:
     """
@@ -228,6 +228,8 @@ def v_3d_empty(
 
 __all__ = [
     "V3dEmptyOutputs",
+    "V3dEmptyParamsDict",
+    "V3dEmptyParamsDictTagged",
     "V_3D_EMPTY_METADATA",
     "v_3d_empty",
     "v_3d_empty_execute",

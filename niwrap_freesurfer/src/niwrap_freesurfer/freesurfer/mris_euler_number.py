@@ -13,12 +13,12 @@ MRIS_EULER_NUMBER_METADATA = Metadata(
 )
 
 
-MrisEulerNumberParameters = typing.TypedDict('MrisEulerNumberParameters', {
+MrisEulerNumberParamsDict = typing.TypedDict('MrisEulerNumberParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_euler_number"]],
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })
-MrisEulerNumberParametersTagged = typing.TypedDict('MrisEulerNumberParametersTagged', {
+MrisEulerNumberParamsDictTagged = typing.TypedDict('MrisEulerNumberParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_euler_number"],
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ MrisEulerNumberParametersTagged = typing.TypedDict('MrisEulerNumberParametersTag
 
 class MrisEulerNumberOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisEulerNumberParameters(...)`.
+    Output object returned when calling `MrisEulerNumberParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisEulerNumberOutputs(typing.NamedTuple):
 def mris_euler_number_params(
     input_surface: InputPathType,
     output_file: str | None = None,
-) -> MrisEulerNumberParametersTagged:
+) -> MrisEulerNumberParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def mris_euler_number_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisEulerNumberParameters` object.
+    `MrisEulerNumberParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_euler_number_validate(
 
 
 def mris_euler_number_cargs(
-    params: MrisEulerNumberParameters,
+    params: MrisEulerNumberParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def mris_euler_number_cargs(
 
 
 def mris_euler_number_outputs(
-    params: MrisEulerNumberParameters,
+    params: MrisEulerNumberParamsDict,
     execution: Execution,
 ) -> MrisEulerNumberOutputs:
     """
@@ -123,7 +123,7 @@ def mris_euler_number_outputs(
 
 
 def mris_euler_number_execute(
-    params: MrisEulerNumberParameters,
+    params: MrisEulerNumberParamsDict,
     runner: Runner | None = None,
 ) -> MrisEulerNumberOutputs:
     """
@@ -182,6 +182,8 @@ def mris_euler_number(
 __all__ = [
     "MRIS_EULER_NUMBER_METADATA",
     "MrisEulerNumberOutputs",
+    "MrisEulerNumberParamsDict",
+    "MrisEulerNumberParamsDictTagged",
     "mris_euler_number",
     "mris_euler_number_execute",
     "mris_euler_number_params",

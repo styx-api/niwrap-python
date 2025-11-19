@@ -13,7 +13,7 @@ MRI_LABEL2LABEL_METADATA = Metadata(
 )
 
 
-MriLabel2labelParameters = typing.TypedDict('MriLabel2labelParameters', {
+MriLabel2labelParamsDict = typing.TypedDict('MriLabel2labelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label2label"]],
     "src_label": InputPathType,
     "trg_label": str,
@@ -62,7 +62,7 @@ MriLabel2labelParameters = typing.TypedDict('MriLabel2labelParameters', {
     "to_tkr": typing.NotRequired[str | None],
     "scanner": bool,
 })
-MriLabel2labelParametersTagged = typing.TypedDict('MriLabel2labelParametersTagged', {
+MriLabel2labelParamsDictTagged = typing.TypedDict('MriLabel2labelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_label2label"],
     "src_label": InputPathType,
     "trg_label": str,
@@ -115,7 +115,7 @@ MriLabel2labelParametersTagged = typing.TypedDict('MriLabel2labelParametersTagge
 
 class MriLabel2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLabel2labelParameters(...)`.
+    Output object returned when calling `MriLabel2labelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -168,7 +168,7 @@ def mri_label2label_params(
     to_scanner: str | None = None,
     to_tkr: str | None = None,
     scanner: bool = False,
-) -> MriLabel2labelParametersTagged:
+) -> MriLabel2labelParamsDictTagged:
     """
     Build parameters.
     
@@ -319,7 +319,7 @@ def mri_label2label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLabel2labelParameters` object.
+    `MriLabel2labelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -474,7 +474,7 @@ def mri_label2label_validate(
 
 
 def mri_label2label_cargs(
-    params: MriLabel2labelParameters,
+    params: MriLabel2labelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -705,7 +705,7 @@ def mri_label2label_cargs(
 
 
 def mri_label2label_outputs(
-    params: MriLabel2labelParameters,
+    params: MriLabel2labelParamsDict,
     execution: Execution,
 ) -> MriLabel2labelOutputs:
     """
@@ -724,7 +724,7 @@ def mri_label2label_outputs(
 
 
 def mri_label2label_execute(
-    params: MriLabel2labelParameters,
+    params: MriLabel2labelParamsDict,
     runner: Runner | None = None,
 ) -> MriLabel2labelOutputs:
     """
@@ -916,6 +916,8 @@ def mri_label2label(
 __all__ = [
     "MRI_LABEL2LABEL_METADATA",
     "MriLabel2labelOutputs",
+    "MriLabel2labelParamsDict",
+    "MriLabel2labelParamsDictTagged",
     "mri_label2label",
     "mri_label2label_execute",
     "mri_label2label_params",

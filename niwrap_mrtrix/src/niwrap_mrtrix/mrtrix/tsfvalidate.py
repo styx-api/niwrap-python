@@ -13,39 +13,39 @@ TSFVALIDATE_METADATA = Metadata(
 )
 
 
-TsfvalidateConfigParameters = typing.TypedDict('TsfvalidateConfigParameters', {
+TsfvalidateConfigParamsDict = typing.TypedDict('TsfvalidateConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfvalidateConfigParametersTagged = typing.TypedDict('TsfvalidateConfigParametersTagged', {
+TsfvalidateConfigParamsDictTagged = typing.TypedDict('TsfvalidateConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfvalidateParameters = typing.TypedDict('TsfvalidateParameters', {
+TsfvalidateParamsDict = typing.TypedDict('TsfvalidateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfvalidate"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfvalidateConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfvalidateConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tsf": InputPathType,
     "tracks": InputPathType,
 })
-TsfvalidateParametersTagged = typing.TypedDict('TsfvalidateParametersTagged', {
+TsfvalidateParamsDictTagged = typing.TypedDict('TsfvalidateParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfvalidate"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfvalidateConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfvalidateConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tsf": InputPathType,
@@ -53,10 +53,10 @@ TsfvalidateParametersTagged = typing.TypedDict('TsfvalidateParametersTagged', {
 })
 
 
-def tsfvalidate_config_params(
+def tsfvalidate_config(
     key: str,
     value: str,
-) -> TsfvalidateConfigParametersTagged:
+) -> TsfvalidateConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def tsfvalidate_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfvalidateConfigParameters` object.
+    `TsfvalidateConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def tsfvalidate_config_validate(
 
 
 def tsfvalidate_config_cargs(
-    params: TsfvalidateConfigParameters,
+    params: TsfvalidateConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def tsfvalidate_config_cargs(
 
 class TsfvalidateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfvalidateParameters(...)`.
+    Output object returned when calling `TsfvalidateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,10 +132,10 @@ def tsfvalidate_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfvalidateConfigParameters] | None = None,
+    config: list[TsfvalidateConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfvalidateParametersTagged:
+) -> TsfvalidateParamsDictTagged:
     """
     Build parameters.
     
@@ -180,7 +180,7 @@ def tsfvalidate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfvalidateParameters` object.
+    `TsfvalidateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -208,7 +208,7 @@ def tsfvalidate_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfvalidateConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfvalidateConfigParamsDict] | None`')
         for e in params["config"]:
             tsfvalidate_config_validate(e)
     if params.get("help", False) is None:
@@ -230,7 +230,7 @@ def tsfvalidate_validate(
 
 
 def tsfvalidate_cargs(
-    params: TsfvalidateParameters,
+    params: TsfvalidateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -269,7 +269,7 @@ def tsfvalidate_cargs(
 
 
 def tsfvalidate_outputs(
-    params: TsfvalidateParameters,
+    params: TsfvalidateParamsDict,
     execution: Execution,
 ) -> TsfvalidateOutputs:
     """
@@ -288,7 +288,7 @@ def tsfvalidate_outputs(
 
 
 def tsfvalidate_execute(
-    params: TsfvalidateParameters,
+    params: TsfvalidateParamsDict,
     runner: Runner | None = None,
 ) -> TsfvalidateOutputs:
     """
@@ -330,7 +330,7 @@ def tsfvalidate(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfvalidateConfigParameters] | None = None,
+    config: list[TsfvalidateConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -386,9 +386,13 @@ def tsfvalidate(
 
 __all__ = [
     "TSFVALIDATE_METADATA",
+    "TsfvalidateConfigParamsDict",
+    "TsfvalidateConfigParamsDictTagged",
     "TsfvalidateOutputs",
+    "TsfvalidateParamsDict",
+    "TsfvalidateParamsDictTagged",
     "tsfvalidate",
-    "tsfvalidate_config_params",
+    "tsfvalidate_config",
     "tsfvalidate_execute",
     "tsfvalidate_params",
 ]

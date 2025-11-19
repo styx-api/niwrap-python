@@ -13,7 +13,7 @@ DMRI_BSET_METADATA = Metadata(
 )
 
 
-DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
+DmriBsetParamsDict = typing.TypedDict('DmriBsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_bset"]],
     "input_dwi": InputPathType,
     "output_dwi": str,
@@ -26,7 +26,7 @@ DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
     "output_b_table": typing.NotRequired[str | None],
     "output_g_table": typing.NotRequired[str | None],
 })
-DmriBsetParametersTagged = typing.TypedDict('DmriBsetParametersTagged', {
+DmriBsetParamsDictTagged = typing.TypedDict('DmriBsetParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_bset"],
     "input_dwi": InputPathType,
     "output_dwi": str,
@@ -43,7 +43,7 @@ DmriBsetParametersTagged = typing.TypedDict('DmriBsetParametersTagged', {
 
 class DmriBsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriBsetParameters(...)`.
+    Output object returned when calling `DmriBsetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def dmri_bset_params(
     input_g_table: InputPathType | None = None,
     output_b_table: str | None = None,
     output_g_table: str | None = None,
-) -> DmriBsetParametersTagged:
+) -> DmriBsetParamsDictTagged:
     """
     Build parameters.
     
@@ -117,7 +117,7 @@ def dmri_bset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriBsetParameters` object.
+    `DmriBsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def dmri_bset_validate(
 
 
 def dmri_bset_cargs(
-    params: DmriBsetParameters,
+    params: DmriBsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -220,7 +220,7 @@ def dmri_bset_cargs(
 
 
 def dmri_bset_outputs(
-    params: DmriBsetParameters,
+    params: DmriBsetParamsDict,
     execution: Execution,
 ) -> DmriBsetOutputs:
     """
@@ -242,7 +242,7 @@ def dmri_bset_outputs(
 
 
 def dmri_bset_execute(
-    params: DmriBsetParameters,
+    params: DmriBsetParamsDict,
     runner: Runner | None = None,
 ) -> DmriBsetOutputs:
     """
@@ -332,6 +332,8 @@ def dmri_bset(
 __all__ = [
     "DMRI_BSET_METADATA",
     "DmriBsetOutputs",
+    "DmriBsetParamsDict",
+    "DmriBsetParamsDictTagged",
     "dmri_bset",
     "dmri_bset_execute",
     "dmri_bset_params",

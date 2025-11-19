@@ -13,7 +13,7 @@ V_3D_ICC_METADATA = Metadata(
 )
 
 
-V3dIccParameters = typing.TypedDict('V3dIccParameters', {
+V3dIccParamsDict = typing.TypedDict('V3dIccParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dICC"]],
     "model": str,
     "prefix": str,
@@ -30,7 +30,7 @@ V3dIccParameters = typing.TypedDict('V3dIccParameters', {
     "cio": bool,
     "rio": bool,
 })
-V3dIccParametersTagged = typing.TypedDict('V3dIccParametersTagged', {
+V3dIccParamsDictTagged = typing.TypedDict('V3dIccParamsDictTagged', {
     "@type": typing.Literal["afni/3dICC"],
     "model": str,
     "prefix": str,
@@ -51,7 +51,7 @@ V3dIccParametersTagged = typing.TypedDict('V3dIccParametersTagged', {
 
 class V3dIccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dIccParameters(...)`.
+    Output object returned when calling `V3dIccParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v_3d_icc_params(
     dbg_args: bool = False,
     cio: bool = False,
     rio: bool = False,
-) -> V3dIccParametersTagged:
+) -> V3dIccParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def v_3d_icc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dIccParameters` object.
+    `V3dIccParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def v_3d_icc_validate(
 
 
 def v_3d_icc_cargs(
-    params: V3dIccParameters,
+    params: V3dIccParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def v_3d_icc_cargs(
 
 
 def v_3d_icc_outputs(
-    params: V3dIccParameters,
+    params: V3dIccParamsDict,
     execution: Execution,
 ) -> V3dIccOutputs:
     """
@@ -302,7 +302,7 @@ def v_3d_icc_outputs(
 
 
 def v_3d_icc_execute(
-    params: V3dIccParameters,
+    params: V3dIccParamsDict,
     runner: Runner | None = None,
 ) -> V3dIccOutputs:
     """
@@ -413,6 +413,8 @@ def v_3d_icc(
 
 __all__ = [
     "V3dIccOutputs",
+    "V3dIccParamsDict",
+    "V3dIccParamsDictTagged",
     "V_3D_ICC_METADATA",
     "v_3d_icc",
     "v_3d_icc_execute",

@@ -13,7 +13,7 @@ SURF2SURF_METADATA = Metadata(
 )
 
 
-Surf2surfParameters = typing.TypedDict('Surf2surfParameters', {
+Surf2surfParamsDict = typing.TypedDict('Surf2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/surf2surf"]],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
@@ -25,7 +25,7 @@ Surf2surfParameters = typing.TypedDict('Surf2surfParameters', {
     "output_type": typing.NotRequired[str | None],
     "output_values": typing.NotRequired[str | None],
 })
-Surf2surfParametersTagged = typing.TypedDict('Surf2surfParametersTagged', {
+Surf2surfParamsDictTagged = typing.TypedDict('Surf2surfParamsDictTagged', {
     "@type": typing.Literal["fsl/surf2surf"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
@@ -41,7 +41,7 @@ Surf2surfParametersTagged = typing.TypedDict('Surf2surfParametersTagged', {
 
 class Surf2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Surf2surfParameters(...)`.
+    Output object returned when calling `Surf2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def surf2surf_params(
     transform: InputPathType | None = None,
     output_type: str | None = None,
     output_values: str | None = None,
-) -> Surf2surfParametersTagged:
+) -> Surf2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def surf2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Surf2surfParameters` object.
+    `Surf2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def surf2surf_validate(
 
 
 def surf2surf_cargs(
-    params: Surf2surfParameters,
+    params: Surf2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def surf2surf_cargs(
 
 
 def surf2surf_outputs(
-    params: Surf2surfParameters,
+    params: Surf2surfParamsDict,
     execution: Execution,
 ) -> Surf2surfOutputs:
     """
@@ -219,7 +219,7 @@ def surf2surf_outputs(
 
 
 def surf2surf_execute(
-    params: Surf2surfParameters,
+    params: Surf2surfParamsDict,
     runner: Runner | None = None,
 ) -> Surf2surfOutputs:
     """
@@ -304,6 +304,8 @@ def surf2surf(
 __all__ = [
     "SURF2SURF_METADATA",
     "Surf2surfOutputs",
+    "Surf2surfParamsDict",
+    "Surf2surfParamsDictTagged",
     "surf2surf",
     "surf2surf_execute",
     "surf2surf_params",

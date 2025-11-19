@@ -13,7 +13,7 @@ PVMFIT_METADATA = Metadata(
 )
 
 
-PvmfitParameters = typing.TypedDict('PvmfitParameters', {
+PvmfitParamsDict = typing.TypedDict('PvmfitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pvmfit"]],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -31,7 +31,7 @@ PvmfitParameters = typing.TypedDict('PvmfitParameters', {
     "verbose": bool,
     "help": bool,
 })
-PvmfitParametersTagged = typing.TypedDict('PvmfitParametersTagged', {
+PvmfitParamsDictTagged = typing.TypedDict('PvmfitParamsDictTagged', {
     "@type": typing.Literal["fsl/pvmfit"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -53,7 +53,7 @@ PvmfitParametersTagged = typing.TypedDict('PvmfitParametersTagged', {
 
 class PvmfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PvmfitParameters(...)`.
+    Output object returned when calling `PvmfitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def pvmfit_params(
     save_bic: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> PvmfitParametersTagged:
+) -> PvmfitParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def pvmfit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PvmfitParameters` object.
+    `PvmfitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def pvmfit_validate(
 
 
 def pvmfit_cargs(
-    params: PvmfitParameters,
+    params: PvmfitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -269,7 +269,7 @@ def pvmfit_cargs(
 
 
 def pvmfit_outputs(
-    params: PvmfitParameters,
+    params: PvmfitParamsDict,
     execution: Execution,
 ) -> PvmfitOutputs:
     """
@@ -290,7 +290,7 @@ def pvmfit_outputs(
 
 
 def pvmfit_execute(
-    params: PvmfitParameters,
+    params: PvmfitParamsDict,
     runner: Runner | None = None,
 ) -> PvmfitOutputs:
     """
@@ -393,6 +393,8 @@ def pvmfit(
 __all__ = [
     "PVMFIT_METADATA",
     "PvmfitOutputs",
+    "PvmfitParamsDict",
+    "PvmfitParamsDictTagged",
     "pvmfit",
     "pvmfit_execute",
     "pvmfit_params",

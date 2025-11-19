@@ -13,14 +13,14 @@ FSLADD_METADATA = Metadata(
 )
 
 
-FsladdParameters = typing.TypedDict('FsladdParameters', {
+FsladdParamsDict = typing.TypedDict('FsladdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsladd"]],
     "output_file": str,
     "mean_flag": bool,
     "scale_flag": bool,
     "volume_list": list[InputPathType],
 })
-FsladdParametersTagged = typing.TypedDict('FsladdParametersTagged', {
+FsladdParamsDictTagged = typing.TypedDict('FsladdParamsDictTagged', {
     "@type": typing.Literal["fsl/fsladd"],
     "output_file": str,
     "mean_flag": bool,
@@ -31,7 +31,7 @@ FsladdParametersTagged = typing.TypedDict('FsladdParametersTagged', {
 
 class FsladdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsladdParameters(...)`.
+    Output object returned when calling `FsladdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def fsladd_params(
     volume_list: list[InputPathType],
     mean_flag: bool = False,
     scale_flag: bool = False,
-) -> FsladdParametersTagged:
+) -> FsladdParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def fsladd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsladdParameters` object.
+    `FsladdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def fsladd_validate(
 
 
 def fsladd_cargs(
-    params: FsladdParameters,
+    params: FsladdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def fsladd_cargs(
 
 
 def fsladd_outputs(
-    params: FsladdParameters,
+    params: FsladdParamsDict,
     execution: Execution,
 ) -> FsladdOutputs:
     """
@@ -144,7 +144,7 @@ def fsladd_outputs(
 
 
 def fsladd_execute(
-    params: FsladdParameters,
+    params: FsladdParamsDict,
     runner: Runner | None = None,
 ) -> FsladdOutputs:
     """
@@ -209,6 +209,8 @@ def fsladd(
 __all__ = [
     "FSLADD_METADATA",
     "FsladdOutputs",
+    "FsladdParamsDict",
+    "FsladdParamsDictTagged",
     "fsladd",
     "fsladd_execute",
     "fsladd_params",

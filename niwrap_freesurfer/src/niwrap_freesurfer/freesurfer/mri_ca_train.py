@@ -13,7 +13,7 @@ MRI_CA_TRAIN_METADATA = Metadata(
 )
 
 
-MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
+MriCaTrainParamsDict = typing.TypedDict('MriCaTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_train"]],
     "subjects": list[str],
     "output_gca": str,
@@ -30,7 +30,7 @@ MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
     "threads": typing.NotRequired[int | None],
     "done_file": typing.NotRequired[str | None],
 })
-MriCaTrainParametersTagged = typing.TypedDict('MriCaTrainParametersTagged', {
+MriCaTrainParamsDictTagged = typing.TypedDict('MriCaTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ca_train"],
     "subjects": list[str],
     "output_gca": str,
@@ -51,7 +51,7 @@ MriCaTrainParametersTagged = typing.TypedDict('MriCaTrainParametersTagged', {
 
 class MriCaTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCaTrainParameters(...)`.
+    Output object returned when calling `MriCaTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def mri_ca_train_params(
     sanity_check: bool = False,
     threads: int | None = None,
     done_file: str | None = None,
-) -> MriCaTrainParametersTagged:
+) -> MriCaTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def mri_ca_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCaTrainParameters` object.
+    `MriCaTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def mri_ca_train_validate(
 
 
 def mri_ca_train_cargs(
-    params: MriCaTrainParameters,
+    params: MriCaTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -283,7 +283,7 @@ def mri_ca_train_cargs(
 
 
 def mri_ca_train_outputs(
-    params: MriCaTrainParameters,
+    params: MriCaTrainParamsDict,
     execution: Execution,
 ) -> MriCaTrainOutputs:
     """
@@ -302,7 +302,7 @@ def mri_ca_train_outputs(
 
 
 def mri_ca_train_execute(
-    params: MriCaTrainParameters,
+    params: MriCaTrainParamsDict,
     runner: Runner | None = None,
 ) -> MriCaTrainOutputs:
     """
@@ -406,6 +406,8 @@ def mri_ca_train(
 __all__ = [
     "MRI_CA_TRAIN_METADATA",
     "MriCaTrainOutputs",
+    "MriCaTrainParamsDict",
+    "MriCaTrainParamsDictTagged",
     "mri_ca_train",
     "mri_ca_train_execute",
     "mri_ca_train_params",

@@ -13,7 +13,7 @@ FIRST_METADATA = Metadata(
 )
 
 
-FirstParameters = typing.TypedDict('FirstParameters', {
+FirstParamsDict = typing.TypedDict('FirstParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/first"]],
     "input_file": InputPathType,
     "output_name": str,
@@ -31,7 +31,7 @@ FirstParameters = typing.TypedDict('FirstParameters', {
     "shcond": bool,
     "loadbvars": bool,
 })
-FirstParametersTagged = typing.TypedDict('FirstParametersTagged', {
+FirstParamsDictTagged = typing.TypedDict('FirstParamsDictTagged', {
     "@type": typing.Literal["fsl/first"],
     "input_file": InputPathType,
     "output_name": str,
@@ -53,7 +53,7 @@ FirstParametersTagged = typing.TypedDict('FirstParametersTagged', {
 
 class FirstOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirstParameters(...)`.
+    Output object returned when calling `FirstParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def first_params(
     bvars: InputPathType | None = None,
     shcond: bool = False,
     loadbvars: bool = False,
-) -> FirstParametersTagged:
+) -> FirstParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def first_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirstParameters` object.
+    `FirstParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -203,7 +203,7 @@ def first_validate(
 
 
 def first_cargs(
-    params: FirstParameters,
+    params: FirstParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def first_cargs(
 
 
 def first_outputs(
-    params: FirstParameters,
+    params: FirstParamsDict,
     execution: Execution,
 ) -> FirstOutputs:
     """
@@ -291,7 +291,7 @@ def first_outputs(
 
 
 def first_execute(
-    params: FirstParameters,
+    params: FirstParamsDict,
     runner: Runner | None = None,
 ) -> FirstOutputs:
     """
@@ -398,6 +398,8 @@ def first(
 __all__ = [
     "FIRST_METADATA",
     "FirstOutputs",
+    "FirstParamsDict",
+    "FirstParamsDictTagged",
     "first",
     "first_execute",
     "first_params",

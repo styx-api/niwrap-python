@@ -13,7 +13,7 @@ V__AUTO_TLRC_METADATA = Metadata(
 )
 
 
-VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
+VAutoTlrcParamsDict = typing.TypedDict('VAutoTlrcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@auto_tlrc"]],
     "base_template": InputPathType,
     "input_anat": InputPathType,
@@ -55,7 +55,7 @@ VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
     "use_gz": bool,
     "verb": bool,
 })
-VAutoTlrcParametersTagged = typing.TypedDict('VAutoTlrcParametersTagged', {
+VAutoTlrcParamsDictTagged = typing.TypedDict('VAutoTlrcParamsDictTagged', {
     "@type": typing.Literal["afni/@auto_tlrc"],
     "base_template": InputPathType,
     "input_anat": InputPathType,
@@ -101,7 +101,7 @@ VAutoTlrcParametersTagged = typing.TypedDict('VAutoTlrcParametersTagged', {
 
 class VAutoTlrcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAutoTlrcParameters(...)`.
+    Output object returned when calling `VAutoTlrcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -151,7 +151,7 @@ def v__auto_tlrc_params(
     base_list: bool = False,
     use_gz: bool = False,
     verb: bool = False,
-) -> VAutoTlrcParametersTagged:
+) -> VAutoTlrcParamsDictTagged:
     """
     Build parameters.
     
@@ -287,7 +287,7 @@ def v__auto_tlrc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAutoTlrcParameters` object.
+    `VAutoTlrcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -438,7 +438,7 @@ def v__auto_tlrc_validate(
 
 
 def v__auto_tlrc_cargs(
-    params: VAutoTlrcParameters,
+    params: VAutoTlrcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -587,7 +587,7 @@ def v__auto_tlrc_cargs(
 
 
 def v__auto_tlrc_outputs(
-    params: VAutoTlrcParameters,
+    params: VAutoTlrcParamsDict,
     execution: Execution,
 ) -> VAutoTlrcOutputs:
     """
@@ -608,7 +608,7 @@ def v__auto_tlrc_outputs(
 
 
 def v__auto_tlrc_execute(
-    params: VAutoTlrcParameters,
+    params: VAutoTlrcParamsDict,
     runner: Runner | None = None,
 ) -> VAutoTlrcOutputs:
     """
@@ -805,6 +805,8 @@ def v__auto_tlrc(
 
 __all__ = [
     "VAutoTlrcOutputs",
+    "VAutoTlrcParamsDict",
+    "VAutoTlrcParamsDictTagged",
     "V__AUTO_TLRC_METADATA",
     "v__auto_tlrc",
     "v__auto_tlrc_execute",

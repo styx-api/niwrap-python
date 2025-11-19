@@ -13,39 +13,39 @@ MASKFILTER_METADATA = Metadata(
 )
 
 
-MaskfilterVariousStringParameters = typing.TypedDict('MaskfilterVariousStringParameters', {
+MaskfilterVariousStringParamsDict = typing.TypedDict('MaskfilterVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-MaskfilterVariousStringParametersTagged = typing.TypedDict('MaskfilterVariousStringParametersTagged', {
+MaskfilterVariousStringParamsDictTagged = typing.TypedDict('MaskfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-MaskfilterVariousFileParameters = typing.TypedDict('MaskfilterVariousFileParameters', {
+MaskfilterVariousFileParamsDict = typing.TypedDict('MaskfilterVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-MaskfilterVariousFileParametersTagged = typing.TypedDict('MaskfilterVariousFileParametersTagged', {
+MaskfilterVariousFileParamsDictTagged = typing.TypedDict('MaskfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-MaskfilterConfigParameters = typing.TypedDict('MaskfilterConfigParameters', {
+MaskfilterConfigParamsDict = typing.TypedDict('MaskfilterConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MaskfilterConfigParametersTagged = typing.TypedDict('MaskfilterConfigParametersTagged', {
+MaskfilterConfigParamsDictTagged = typing.TypedDict('MaskfilterConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
+MaskfilterParamsDict = typing.TypedDict('MaskfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/maskfilter"]],
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
@@ -53,20 +53,20 @@ MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
     "connectivity": bool,
     "npass": typing.NotRequired[int | None],
     "extent": typing.NotRequired[list[int] | None],
-    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParamsDictTagged, MaskfilterVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MaskfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MaskfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "filter": str,
     "output": str,
 })
-MaskfilterParametersTagged = typing.TypedDict('MaskfilterParametersTagged', {
+MaskfilterParamsDictTagged = typing.TypedDict('MaskfilterParamsDictTagged', {
     "@type": typing.Literal["mrtrix/maskfilter"],
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
@@ -74,13 +74,13 @@ MaskfilterParametersTagged = typing.TypedDict('MaskfilterParametersTagged', {
     "connectivity": bool,
     "npass": typing.NotRequired[int | None],
     "extent": typing.NotRequired[list[int] | None],
-    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParamsDictTagged, MaskfilterVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MaskfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MaskfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -123,9 +123,9 @@ def maskfilter_strides_validate_dyn_fn(
     }.get(t)
 
 
-def maskfilter_various_string_params(
+def maskfilter_various_string(
     obj: str,
-) -> MaskfilterVariousStringParametersTagged:
+) -> MaskfilterVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def maskfilter_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskfilterVariousStringParameters` object.
+    `MaskfilterVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def maskfilter_various_string_validate(
 
 
 def maskfilter_various_string_cargs(
-    params: MaskfilterVariousStringParameters,
+    params: MaskfilterVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,9 +177,9 @@ def maskfilter_various_string_cargs(
     return cargs
 
 
-def maskfilter_various_file_params(
+def maskfilter_various_file(
     obj: InputPathType,
-) -> MaskfilterVariousFileParametersTagged:
+) -> MaskfilterVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def maskfilter_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskfilterVariousFileParameters` object.
+    `MaskfilterVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def maskfilter_various_file_validate(
 
 
 def maskfilter_various_file_cargs(
-    params: MaskfilterVariousFileParameters,
+    params: MaskfilterVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -231,10 +231,10 @@ def maskfilter_various_file_cargs(
     return cargs
 
 
-def maskfilter_config_params(
+def maskfilter_config(
     key: str,
     value: str,
-) -> MaskfilterConfigParametersTagged:
+) -> MaskfilterConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -257,7 +257,7 @@ def maskfilter_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskfilterConfigParameters` object.
+    `MaskfilterConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def maskfilter_config_validate(
 
 
 def maskfilter_config_cargs(
-    params: MaskfilterConfigParameters,
+    params: MaskfilterConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -296,7 +296,7 @@ def maskfilter_config_cargs(
 
 class MaskfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MaskfilterParameters(...)`.
+    Output object returned when calling `MaskfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -314,16 +314,16 @@ def maskfilter_params(
     connectivity: bool = False,
     npass: int | None = None,
     extent: list[int] | None = None,
-    strides: typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MaskfilterVariousStringParamsDictTagged, MaskfilterVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MaskfilterConfigParameters] | None = None,
+    config: list[MaskfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MaskfilterParametersTagged:
+) -> MaskfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -399,7 +399,7 @@ def maskfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskfilterParameters` object.
+    `MaskfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -437,6 +437,8 @@ def maskfilter_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         maskfilter_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -459,7 +461,7 @@ def maskfilter_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MaskfilterConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MaskfilterConfigParamsDict] | None`')
         for e in params["config"]:
             maskfilter_config_validate(e)
     if params.get("help", False) is None:
@@ -485,7 +487,7 @@ def maskfilter_validate(
 
 
 def maskfilter_cargs(
-    params: MaskfilterParameters,
+    params: MaskfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -554,7 +556,7 @@ def maskfilter_cargs(
 
 
 def maskfilter_outputs(
-    params: MaskfilterParameters,
+    params: MaskfilterParamsDict,
     execution: Execution,
 ) -> MaskfilterOutputs:
     """
@@ -574,7 +576,7 @@ def maskfilter_outputs(
 
 
 def maskfilter_execute(
-    params: MaskfilterParameters,
+    params: MaskfilterParamsDict,
     runner: Runner | None = None,
 ) -> MaskfilterOutputs:
     """
@@ -620,13 +622,13 @@ def maskfilter(
     connectivity: bool = False,
     npass: int | None = None,
     extent: list[int] | None = None,
-    strides: typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MaskfilterVariousStringParamsDictTagged, MaskfilterVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MaskfilterConfigParameters] | None = None,
+    config: list[MaskfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -710,11 +712,19 @@ def maskfilter(
 
 __all__ = [
     "MASKFILTER_METADATA",
+    "MaskfilterConfigParamsDict",
+    "MaskfilterConfigParamsDictTagged",
     "MaskfilterOutputs",
+    "MaskfilterParamsDict",
+    "MaskfilterParamsDictTagged",
+    "MaskfilterVariousFileParamsDict",
+    "MaskfilterVariousFileParamsDictTagged",
+    "MaskfilterVariousStringParamsDict",
+    "MaskfilterVariousStringParamsDictTagged",
     "maskfilter",
-    "maskfilter_config_params",
+    "maskfilter_config",
     "maskfilter_execute",
     "maskfilter_params",
-    "maskfilter_various_file_params",
-    "maskfilter_various_string_params",
+    "maskfilter_various_file",
+    "maskfilter_various_string",
 ]

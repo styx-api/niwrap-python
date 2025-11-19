@@ -13,7 +13,7 @@ RBOX_METADATA = Metadata(
 )
 
 
-RboxParameters = typing.TypedDict('RboxParameters', {
+RboxParamsDict = typing.TypedDict('RboxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/rbox"]],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ RboxParameters = typing.TypedDict('RboxParameters', {
     "user_seed": typing.NotRequired[float | None],
     "mesh_lattice": typing.NotRequired[list[str] | None],
 })
-RboxParametersTagged = typing.TypedDict('RboxParametersTagged', {
+RboxParamsDictTagged = typing.TypedDict('RboxParamsDictTagged', {
     "@type": typing.Literal["afni/rbox"],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ RboxParametersTagged = typing.TypedDict('RboxParametersTagged', {
 
 class RboxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RboxParameters(...)`.
+    Output object returned when calling `RboxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def rbox_params(
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
-) -> RboxParametersTagged:
+) -> RboxParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def rbox_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `RboxParameters`
+    Validate parameters. Throws an error if `params` is not a valid `RboxParamsDict`
     object.
     
     Args:
@@ -264,7 +264,7 @@ def rbox_validate(
 
 
 def rbox_cargs(
-    params: RboxParameters,
+    params: RboxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -344,7 +344,7 @@ def rbox_cargs(
 
 
 def rbox_outputs(
-    params: RboxParameters,
+    params: RboxParamsDict,
     execution: Execution,
 ) -> RboxOutputs:
     """
@@ -363,7 +363,7 @@ def rbox_outputs(
 
 
 def rbox_execute(
-    params: RboxParameters,
+    params: RboxParamsDict,
     runner: Runner | None = None,
 ) -> RboxOutputs:
     """
@@ -485,6 +485,8 @@ def rbox(
 __all__ = [
     "RBOX_METADATA",
     "RboxOutputs",
+    "RboxParamsDict",
+    "RboxParamsDictTagged",
     "rbox",
     "rbox_execute",
     "rbox_params",

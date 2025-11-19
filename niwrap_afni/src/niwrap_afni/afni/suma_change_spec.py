@@ -13,7 +13,7 @@ SUMA_CHANGE_SPEC_METADATA = Metadata(
 )
 
 
-SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
+SumaChangeSpecParamsDict = typing.TypedDict('SumaChangeSpecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/suma_change_spec"]],
     "input": InputPathType,
     "state": str,
@@ -22,7 +22,7 @@ SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
     "remove": bool,
     "anatomical": bool,
 })
-SumaChangeSpecParametersTagged = typing.TypedDict('SumaChangeSpecParametersTagged', {
+SumaChangeSpecParamsDictTagged = typing.TypedDict('SumaChangeSpecParamsDictTagged', {
     "@type": typing.Literal["afni/suma_change_spec"],
     "input": InputPathType,
     "state": str,
@@ -35,7 +35,7 @@ SumaChangeSpecParametersTagged = typing.TypedDict('SumaChangeSpecParametersTagge
 
 class SumaChangeSpecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SumaChangeSpecParameters(...)`.
+    Output object returned when calling `SumaChangeSpecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def suma_change_spec_params(
     output: str | None = None,
     remove: bool = False,
     anatomical: bool = False,
-) -> SumaChangeSpecParametersTagged:
+) -> SumaChangeSpecParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def suma_change_spec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SumaChangeSpecParameters` object.
+    `SumaChangeSpecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def suma_change_spec_validate(
 
 
 def suma_change_spec_cargs(
-    params: SumaChangeSpecParameters,
+    params: SumaChangeSpecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def suma_change_spec_cargs(
 
 
 def suma_change_spec_outputs(
-    params: SumaChangeSpecParameters,
+    params: SumaChangeSpecParamsDict,
     execution: Execution,
 ) -> SumaChangeSpecOutputs:
     """
@@ -166,7 +166,7 @@ def suma_change_spec_outputs(
 
 
 def suma_change_spec_execute(
-    params: SumaChangeSpecParameters,
+    params: SumaChangeSpecParamsDict,
     runner: Runner | None = None,
 ) -> SumaChangeSpecOutputs:
     """
@@ -237,6 +237,8 @@ def suma_change_spec(
 __all__ = [
     "SUMA_CHANGE_SPEC_METADATA",
     "SumaChangeSpecOutputs",
+    "SumaChangeSpecParamsDict",
+    "SumaChangeSpecParamsDictTagged",
     "suma_change_spec",
     "suma_change_spec_execute",
     "suma_change_spec_params",

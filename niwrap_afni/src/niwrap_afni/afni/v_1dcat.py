@@ -13,7 +13,7 @@ V_1DCAT_METADATA = Metadata(
 )
 
 
-V1dcatParameters = typing.TypedDict('V1dcatParameters', {
+V1dcatParamsDict = typing.TypedDict('V1dcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dcat"]],
     "input_files": list[InputPathType],
     "tsv_output": bool,
@@ -25,7 +25,7 @@ V1dcatParameters = typing.TypedDict('V1dcatParameters', {
     "column_row_selection": typing.NotRequired[str | None],
     "ok_empty": bool,
 })
-V1dcatParametersTagged = typing.TypedDict('V1dcatParametersTagged', {
+V1dcatParamsDictTagged = typing.TypedDict('V1dcatParamsDictTagged', {
     "@type": typing.Literal["afni/1dcat"],
     "input_files": list[InputPathType],
     "tsv_output": bool,
@@ -41,7 +41,7 @@ V1dcatParametersTagged = typing.TypedDict('V1dcatParametersTagged', {
 
 class V1dcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dcatParameters(...)`.
+    Output object returned when calling `V1dcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_1dcat_params(
     stack_output: bool = False,
     column_row_selection: str | None = None,
     ok_empty: bool = False,
-) -> V1dcatParametersTagged:
+) -> V1dcatParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_1dcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dcatParameters` object.
+    `V1dcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def v_1dcat_validate(
 
 
 def v_1dcat_cargs(
-    params: V1dcatParameters,
+    params: V1dcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def v_1dcat_cargs(
 
 
 def v_1dcat_outputs(
-    params: V1dcatParameters,
+    params: V1dcatParamsDict,
     execution: Execution,
 ) -> V1dcatOutputs:
     """
@@ -211,7 +211,7 @@ def v_1dcat_outputs(
 
 
 def v_1dcat_execute(
-    params: V1dcatParameters,
+    params: V1dcatParamsDict,
     runner: Runner | None = None,
 ) -> V1dcatOutputs:
     """
@@ -295,6 +295,8 @@ def v_1dcat(
 
 __all__ = [
     "V1dcatOutputs",
+    "V1dcatParamsDict",
+    "V1dcatParamsDictTagged",
     "V_1DCAT_METADATA",
     "v_1dcat",
     "v_1dcat_execute",

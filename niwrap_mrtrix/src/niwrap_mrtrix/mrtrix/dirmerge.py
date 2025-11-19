@@ -13,19 +13,19 @@ DIRMERGE_METADATA = Metadata(
 )
 
 
-DirmergeConfigParameters = typing.TypedDict('DirmergeConfigParameters', {
+DirmergeConfigParamsDict = typing.TypedDict('DirmergeConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirmergeConfigParametersTagged = typing.TypedDict('DirmergeConfigParametersTagged', {
+DirmergeConfigParamsDictTagged = typing.TypedDict('DirmergeConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirmergeParameters = typing.TypedDict('DirmergeParameters', {
+DirmergeParamsDict = typing.TypedDict('DirmergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirmerge"]],
     "unipolar_weight": typing.NotRequired[float | None],
     "info": bool,
@@ -33,14 +33,14 @@ DirmergeParameters = typing.TypedDict('DirmergeParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirmergeConfigParameters] | None],
+    "config": typing.NotRequired[list[DirmergeConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "subsets": int,
     "bvalue_files": list[str],
     "out": str,
 })
-DirmergeParametersTagged = typing.TypedDict('DirmergeParametersTagged', {
+DirmergeParamsDictTagged = typing.TypedDict('DirmergeParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirmerge"],
     "unipolar_weight": typing.NotRequired[float | None],
     "info": bool,
@@ -48,7 +48,7 @@ DirmergeParametersTagged = typing.TypedDict('DirmergeParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirmergeConfigParameters] | None],
+    "config": typing.NotRequired[list[DirmergeConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "subsets": int,
@@ -57,10 +57,10 @@ DirmergeParametersTagged = typing.TypedDict('DirmergeParametersTagged', {
 })
 
 
-def dirmerge_config_params(
+def dirmerge_config(
     key: str,
     value: str,
-) -> DirmergeConfigParametersTagged:
+) -> DirmergeConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def dirmerge_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirmergeConfigParameters` object.
+    `DirmergeConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def dirmerge_config_validate(
 
 
 def dirmerge_config_cargs(
-    params: DirmergeConfigParameters,
+    params: DirmergeConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def dirmerge_config_cargs(
 
 class DirmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirmergeParameters(...)`.
+    Output object returned when calling `DirmergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -142,10 +142,10 @@ def dirmerge_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirmergeConfigParameters] | None = None,
+    config: list[DirmergeConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirmergeParametersTagged:
+) -> DirmergeParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def dirmerge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirmergeParameters` object.
+    `DirmergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -230,7 +230,7 @@ def dirmerge_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirmergeConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirmergeConfigParamsDict] | None`')
         for e in params["config"]:
             dirmerge_config_validate(e)
     if params.get("help", False) is None:
@@ -259,7 +259,7 @@ def dirmerge_validate(
 
 
 def dirmerge_cargs(
-    params: DirmergeParameters,
+    params: DirmergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def dirmerge_cargs(
 
 
 def dirmerge_outputs(
-    params: DirmergeParameters,
+    params: DirmergeParamsDict,
     execution: Execution,
 ) -> DirmergeOutputs:
     """
@@ -324,7 +324,7 @@ def dirmerge_outputs(
 
 
 def dirmerge_execute(
-    params: DirmergeParameters,
+    params: DirmergeParamsDict,
     runner: Runner | None = None,
 ) -> DirmergeOutputs:
     """
@@ -369,7 +369,7 @@ def dirmerge(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirmergeConfigParameters] | None = None,
+    config: list[DirmergeConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -434,9 +434,13 @@ def dirmerge(
 
 __all__ = [
     "DIRMERGE_METADATA",
+    "DirmergeConfigParamsDict",
+    "DirmergeConfigParamsDictTagged",
     "DirmergeOutputs",
+    "DirmergeParamsDict",
+    "DirmergeParamsDictTagged",
     "dirmerge",
-    "dirmerge_config_params",
+    "dirmerge_config",
     "dirmerge_execute",
     "dirmerge_params",
 ]

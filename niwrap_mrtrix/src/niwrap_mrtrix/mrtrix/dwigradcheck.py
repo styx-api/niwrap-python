@@ -13,39 +13,39 @@ DWIGRADCHECK_METADATA = Metadata(
 )
 
 
-DwigradcheckFslgradParameters = typing.TypedDict('DwigradcheckFslgradParameters', {
+DwigradcheckFslgradParamsDict = typing.TypedDict('DwigradcheckFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-DwigradcheckFslgradParametersTagged = typing.TypedDict('DwigradcheckFslgradParametersTagged', {
+DwigradcheckFslgradParamsDictTagged = typing.TypedDict('DwigradcheckFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-DwigradcheckExportGradFslParameters = typing.TypedDict('DwigradcheckExportGradFslParameters', {
+DwigradcheckExportGradFslParamsDict = typing.TypedDict('DwigradcheckExportGradFslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
     "bvecs_path": str,
     "bvals_path": str,
 })
-DwigradcheckExportGradFslParametersTagged = typing.TypedDict('DwigradcheckExportGradFslParametersTagged', {
+DwigradcheckExportGradFslParamsDictTagged = typing.TypedDict('DwigradcheckExportGradFslParamsDictTagged', {
     "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
-DwigradcheckParameters = typing.TypedDict('DwigradcheckParameters', {
+DwigradcheckParamsDict = typing.TypedDict('DwigradcheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwigradcheck"]],
     "input_image": InputPathType,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwigradcheckFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwigradcheckFslgradParamsDict | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "number": typing.NotRequired[int | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[DwigradcheckExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[DwigradcheckExportGradFslParamsDict | None],
     "nocleanup": bool,
     "scratch_dir": typing.NotRequired[InputPathType | None],
     "continue_scratch_dir": typing.NotRequired[list[InputPathType] | None],
@@ -58,15 +58,15 @@ DwigradcheckParameters = typing.TypedDict('DwigradcheckParameters', {
     "help": bool,
     "version": bool,
 })
-DwigradcheckParametersTagged = typing.TypedDict('DwigradcheckParametersTagged', {
+DwigradcheckParamsDictTagged = typing.TypedDict('DwigradcheckParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwigradcheck"],
     "input_image": InputPathType,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwigradcheckFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwigradcheckFslgradParamsDict | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "number": typing.NotRequired[int | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[DwigradcheckExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[DwigradcheckExportGradFslParamsDict | None],
     "nocleanup": bool,
     "scratch_dir": typing.NotRequired[InputPathType | None],
     "continue_scratch_dir": typing.NotRequired[list[InputPathType] | None],
@@ -81,10 +81,10 @@ DwigradcheckParametersTagged = typing.TypedDict('DwigradcheckParametersTagged', 
 })
 
 
-def dwigradcheck_fslgrad_params(
+def dwigradcheck_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DwigradcheckFslgradParametersTagged:
+) -> DwigradcheckFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def dwigradcheck_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwigradcheckFslgradParameters` object.
+    `DwigradcheckFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def dwigradcheck_fslgrad_validate(
 
 
 def dwigradcheck_fslgrad_cargs(
-    params: DwigradcheckFslgradParameters,
+    params: DwigradcheckFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def dwigradcheck_fslgrad_cargs(
 
 class DwigradcheckExportGradFslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwigradcheckExportGradFslParameters | None(...)`.
+    Output object returned when calling `DwigradcheckExportGradFslParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,10 +164,10 @@ class DwigradcheckExportGradFslOutputs(typing.NamedTuple):
     bvals) format"""
 
 
-def dwigradcheck_export_grad_fsl_params(
+def dwigradcheck_export_grad_fsl(
     bvecs_path: str,
     bvals_path: str,
-) -> DwigradcheckExportGradFslParametersTagged:
+) -> DwigradcheckExportGradFslParamsDictTagged:
     """
     Build parameters.
     
@@ -192,7 +192,7 @@ def dwigradcheck_export_grad_fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwigradcheckExportGradFslParameters` object.
+    `DwigradcheckExportGradFslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def dwigradcheck_export_grad_fsl_validate(
 
 
 def dwigradcheck_export_grad_fsl_cargs(
-    params: DwigradcheckExportGradFslParameters,
+    params: DwigradcheckExportGradFslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def dwigradcheck_export_grad_fsl_cargs(
 
 
 def dwigradcheck_export_grad_fsl_outputs(
-    params: DwigradcheckExportGradFslParameters,
+    params: DwigradcheckExportGradFslParamsDict,
     execution: Execution,
 ) -> DwigradcheckExportGradFslOutputs:
     """
@@ -252,7 +252,7 @@ def dwigradcheck_export_grad_fsl_outputs(
 
 class DwigradcheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwigradcheckParameters(...)`.
+    Output object returned when calling `DwigradcheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -267,11 +267,11 @@ class DwigradcheckOutputs(typing.NamedTuple):
 def dwigradcheck_params(
     input_image: InputPathType,
     grad: InputPathType | None = None,
-    fslgrad: DwigradcheckFslgradParameters | None = None,
+    fslgrad: DwigradcheckFslgradParamsDict | None = None,
     mask_image: InputPathType | None = None,
     number: int | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: DwigradcheckExportGradFslParameters | None = None,
+    export_grad_fsl: DwigradcheckExportGradFslParamsDict | None = None,
     nocleanup: bool = False,
     scratch_dir: InputPathType | None = None,
     continue_scratch_dir: list[InputPathType] | None = None,
@@ -283,7 +283,7 @@ def dwigradcheck_params(
     config: list[str] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DwigradcheckParametersTagged:
+) -> DwigradcheckParamsDictTagged:
     """
     Build parameters.
     
@@ -357,7 +357,7 @@ def dwigradcheck_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwigradcheckParameters` object.
+    `DwigradcheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -435,7 +435,7 @@ def dwigradcheck_validate(
 
 
 def dwigradcheck_cargs(
-    params: DwigradcheckParameters,
+    params: DwigradcheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -512,7 +512,7 @@ def dwigradcheck_cargs(
 
 
 def dwigradcheck_outputs(
-    params: DwigradcheckParameters,
+    params: DwigradcheckParamsDict,
     execution: Execution,
 ) -> DwigradcheckOutputs:
     """
@@ -534,7 +534,7 @@ def dwigradcheck_outputs(
 
 
 def dwigradcheck_execute(
-    params: DwigradcheckParameters,
+    params: DwigradcheckParamsDict,
     runner: Runner | None = None,
 ) -> DwigradcheckOutputs:
     """
@@ -565,11 +565,11 @@ def dwigradcheck_execute(
 def dwigradcheck(
     input_image: InputPathType,
     grad: InputPathType | None = None,
-    fslgrad: DwigradcheckFslgradParameters | None = None,
+    fslgrad: DwigradcheckFslgradParamsDict | None = None,
     mask_image: InputPathType | None = None,
     number: int | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: DwigradcheckExportGradFslParameters | None = None,
+    export_grad_fsl: DwigradcheckExportGradFslParamsDict | None = None,
     nocleanup: bool = False,
     scratch_dir: InputPathType | None = None,
     continue_scratch_dir: list[InputPathType] | None = None,
@@ -650,10 +650,16 @@ def dwigradcheck(
 __all__ = [
     "DWIGRADCHECK_METADATA",
     "DwigradcheckExportGradFslOutputs",
+    "DwigradcheckExportGradFslParamsDict",
+    "DwigradcheckExportGradFslParamsDictTagged",
+    "DwigradcheckFslgradParamsDict",
+    "DwigradcheckFslgradParamsDictTagged",
     "DwigradcheckOutputs",
+    "DwigradcheckParamsDict",
+    "DwigradcheckParamsDictTagged",
     "dwigradcheck",
     "dwigradcheck_execute",
-    "dwigradcheck_export_grad_fsl_params",
-    "dwigradcheck_fslgrad_params",
+    "dwigradcheck_export_grad_fsl",
+    "dwigradcheck_fslgrad",
     "dwigradcheck_params",
 ]

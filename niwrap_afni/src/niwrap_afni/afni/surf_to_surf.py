@@ -13,7 +13,7 @@ SURF_TO_SURF_METADATA = Metadata(
 )
 
 
-SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
+SurfToSurfParamsDict = typing.TypedDict('SurfToSurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfToSurf"]],
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
@@ -29,7 +29,7 @@ SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
     "dset": typing.NotRequired[InputPathType | None],
     "mapfile": typing.NotRequired[InputPathType | None],
 })
-SurfToSurfParametersTagged = typing.TypedDict('SurfToSurfParametersTagged', {
+SurfToSurfParamsDictTagged = typing.TypedDict('SurfToSurfParamsDictTagged', {
     "@type": typing.Literal["afni/SurfToSurf"],
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
@@ -49,7 +49,7 @@ SurfToSurfParametersTagged = typing.TypedDict('SurfToSurfParametersTagged', {
 
 class SurfToSurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfToSurfParameters(...)`.
+    Output object returned when calling `SurfToSurfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def surf_to_surf_params(
     make_consistent: bool = False,
     dset: InputPathType | None = None,
     mapfile: InputPathType | None = None,
-) -> SurfToSurfParametersTagged:
+) -> SurfToSurfParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def surf_to_surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfToSurfParameters` object.
+    `SurfToSurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def surf_to_surf_validate(
 
 
 def surf_to_surf_cargs(
-    params: SurfToSurfParameters,
+    params: SurfToSurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -252,7 +252,7 @@ def surf_to_surf_cargs(
 
 
 def surf_to_surf_outputs(
-    params: SurfToSurfParameters,
+    params: SurfToSurfParamsDict,
     execution: Execution,
 ) -> SurfToSurfOutputs:
     """
@@ -272,7 +272,7 @@ def surf_to_surf_outputs(
 
 
 def surf_to_surf_execute(
-    params: SurfToSurfParameters,
+    params: SurfToSurfParamsDict,
     runner: Runner | None = None,
 ) -> SurfToSurfOutputs:
     """
@@ -366,6 +366,8 @@ def surf_to_surf(
 __all__ = [
     "SURF_TO_SURF_METADATA",
     "SurfToSurfOutputs",
+    "SurfToSurfParamsDict",
+    "SurfToSurfParamsDictTagged",
     "surf_to_surf",
     "surf_to_surf_execute",
     "surf_to_surf_params",

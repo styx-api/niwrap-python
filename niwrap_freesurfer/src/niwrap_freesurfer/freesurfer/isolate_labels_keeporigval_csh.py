@@ -13,7 +13,7 @@ ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA = Metadata(
 )
 
 
-IsolateLabelsKeeporigvalCshParameters = typing.TypedDict('IsolateLabelsKeeporigvalCshParameters', {
+IsolateLabelsKeeporigvalCshParamsDict = typing.TypedDict('IsolateLabelsKeeporigvalCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/isolate_labels_keeporigval.csh"]],
     "vol": InputPathType,
     "outprefix": str,
@@ -21,7 +21,7 @@ IsolateLabelsKeeporigvalCshParameters = typing.TypedDict('IsolateLabelsKeeporigv
     "version": bool,
     "help": bool,
 })
-IsolateLabelsKeeporigvalCshParametersTagged = typing.TypedDict('IsolateLabelsKeeporigvalCshParametersTagged', {
+IsolateLabelsKeeporigvalCshParamsDictTagged = typing.TypedDict('IsolateLabelsKeeporigvalCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isolate_labels_keeporigval.csh"],
     "vol": InputPathType,
     "outprefix": str,
@@ -33,7 +33,7 @@ IsolateLabelsKeeporigvalCshParametersTagged = typing.TypedDict('IsolateLabelsKee
 
 class IsolateLabelsKeeporigvalCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsolateLabelsKeeporigvalCshParameters(...)`.
+    Output object returned when calling `IsolateLabelsKeeporigvalCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def isolate_labels_keeporigval_csh_params(
     label: str | None = None,
     version: bool = False,
     help_: bool = False,
-) -> IsolateLabelsKeeporigvalCshParametersTagged:
+) -> IsolateLabelsKeeporigvalCshParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def isolate_labels_keeporigval_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsolateLabelsKeeporigvalCshParameters` object.
+    `IsolateLabelsKeeporigvalCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def isolate_labels_keeporigval_csh_validate(
 
 
 def isolate_labels_keeporigval_csh_cargs(
-    params: IsolateLabelsKeeporigvalCshParameters,
+    params: IsolateLabelsKeeporigvalCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def isolate_labels_keeporigval_csh_cargs(
 
 
 def isolate_labels_keeporigval_csh_outputs(
-    params: IsolateLabelsKeeporigvalCshParameters,
+    params: IsolateLabelsKeeporigvalCshParamsDict,
     execution: Execution,
 ) -> IsolateLabelsKeeporigvalCshOutputs:
     """
@@ -159,7 +159,7 @@ def isolate_labels_keeporigval_csh_outputs(
 
 
 def isolate_labels_keeporigval_csh_execute(
-    params: IsolateLabelsKeeporigvalCshParameters,
+    params: IsolateLabelsKeeporigvalCshParamsDict,
     runner: Runner | None = None,
 ) -> IsolateLabelsKeeporigvalCshOutputs:
     """
@@ -230,6 +230,8 @@ def isolate_labels_keeporigval_csh(
 __all__ = [
     "ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA",
     "IsolateLabelsKeeporigvalCshOutputs",
+    "IsolateLabelsKeeporigvalCshParamsDict",
+    "IsolateLabelsKeeporigvalCshParamsDictTagged",
     "isolate_labels_keeporigval_csh",
     "isolate_labels_keeporigval_csh_execute",
     "isolate_labels_keeporigval_csh_params",

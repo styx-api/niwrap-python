@@ -13,7 +13,7 @@ TRACTSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
+Tractstats2tableParamsDict = typing.TypedDict('Tractstats2tableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tractstats2table"]],
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
     "transpose": bool,
     "debug": bool,
 })
-Tractstats2tableParametersTagged = typing.TypedDict('Tractstats2tableParametersTagged', {
+Tractstats2tableParamsDictTagged = typing.TypedDict('Tractstats2tableParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tractstats2table"],
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ Tractstats2tableParametersTagged = typing.TypedDict('Tractstats2tableParametersT
 
 class Tractstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tractstats2tableParameters(...)`.
+    Output object returned when calling `Tractstats2tableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def tractstats2table_params(
     delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = None,
     transpose: bool = False,
     debug: bool = False,
-) -> Tractstats2tableParametersTagged:
+) -> Tractstats2tableParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def tractstats2table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tractstats2tableParameters` object.
+    `Tractstats2tableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def tractstats2table_validate(
 
 
 def tractstats2table_cargs(
-    params: Tractstats2tableParameters,
+    params: Tractstats2tableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def tractstats2table_cargs(
 
 
 def tractstats2table_outputs(
-    params: Tractstats2tableParameters,
+    params: Tractstats2tableParamsDict,
     execution: Execution,
 ) -> Tractstats2tableOutputs:
     """
@@ -223,7 +223,7 @@ def tractstats2table_outputs(
 
 
 def tractstats2table_execute(
-    params: Tractstats2tableParameters,
+    params: Tractstats2tableParamsDict,
     runner: Runner | None = None,
 ) -> Tractstats2tableOutputs:
     """
@@ -309,6 +309,8 @@ def tractstats2table(
 __all__ = [
     "TRACTSTATS2TABLE_METADATA",
     "Tractstats2tableOutputs",
+    "Tractstats2tableParamsDict",
+    "Tractstats2tableParamsDictTagged",
     "tractstats2table",
     "tractstats2table_execute",
     "tractstats2table_params",

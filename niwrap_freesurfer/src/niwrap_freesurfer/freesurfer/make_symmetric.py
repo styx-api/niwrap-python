@@ -13,14 +13,14 @@ MAKE_SYMMETRIC_METADATA = Metadata(
 )
 
 
-MakeSymmetricParameters = typing.TypedDict('MakeSymmetricParameters', {
+MakeSymmetricParamsDict = typing.TypedDict('MakeSymmetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_symmetric"]],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
     "transform_map": str,
 })
-MakeSymmetricParametersTagged = typing.TypedDict('MakeSymmetricParametersTagged', {
+MakeSymmetricParamsDictTagged = typing.TypedDict('MakeSymmetricParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_symmetric"],
     "hemi": str,
     "input_file": InputPathType,
@@ -31,7 +31,7 @@ MakeSymmetricParametersTagged = typing.TypedDict('MakeSymmetricParametersTagged'
 
 class MakeSymmetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeSymmetricParameters(...)`.
+    Output object returned when calling `MakeSymmetricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def make_symmetric_params(
     input_file: InputPathType,
     output_file: str,
     transform_map: str,
-) -> MakeSymmetricParametersTagged:
+) -> MakeSymmetricParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def make_symmetric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeSymmetricParameters` object.
+    `MakeSymmetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def make_symmetric_validate(
 
 
 def make_symmetric_cargs(
-    params: MakeSymmetricParameters,
+    params: MakeSymmetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def make_symmetric_cargs(
 
 
 def make_symmetric_outputs(
-    params: MakeSymmetricParameters,
+    params: MakeSymmetricParamsDict,
     execution: Execution,
 ) -> MakeSymmetricOutputs:
     """
@@ -145,7 +145,7 @@ def make_symmetric_outputs(
 
 
 def make_symmetric_execute(
-    params: MakeSymmetricParameters,
+    params: MakeSymmetricParamsDict,
     runner: Runner | None = None,
 ) -> MakeSymmetricOutputs:
     """
@@ -215,6 +215,8 @@ def make_symmetric(
 __all__ = [
     "MAKE_SYMMETRIC_METADATA",
     "MakeSymmetricOutputs",
+    "MakeSymmetricParamsDict",
+    "MakeSymmetricParamsDictTagged",
     "make_symmetric",
     "make_symmetric_execute",
     "make_symmetric_params",

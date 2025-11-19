@@ -13,14 +13,14 @@ MRI_APARC2WMSEG_METADATA = Metadata(
 )
 
 
-MriAparc2wmsegParameters = typing.TypedDict('MriAparc2wmsegParameters', {
+MriAparc2wmsegParamsDict = typing.TypedDict('MriAparc2wmsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2wmseg"]],
     "subject": str,
     "wmseg_file": str,
     "help": bool,
     "version": bool,
 })
-MriAparc2wmsegParametersTagged = typing.TypedDict('MriAparc2wmsegParametersTagged', {
+MriAparc2wmsegParamsDictTagged = typing.TypedDict('MriAparc2wmsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_aparc2wmseg"],
     "subject": str,
     "wmseg_file": str,
@@ -31,7 +31,7 @@ MriAparc2wmsegParametersTagged = typing.TypedDict('MriAparc2wmsegParametersTagge
 
 class MriAparc2wmsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAparc2wmsegParameters(...)`.
+    Output object returned when calling `MriAparc2wmsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mri_aparc2wmseg_params(
     wmseg_file: str,
     help_: bool = False,
     version: bool = False,
-) -> MriAparc2wmsegParametersTagged:
+) -> MriAparc2wmsegParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def mri_aparc2wmseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAparc2wmsegParameters` object.
+    `MriAparc2wmsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def mri_aparc2wmseg_validate(
 
 
 def mri_aparc2wmseg_cargs(
-    params: MriAparc2wmsegParameters,
+    params: MriAparc2wmsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def mri_aparc2wmseg_cargs(
 
 
 def mri_aparc2wmseg_outputs(
-    params: MriAparc2wmsegParameters,
+    params: MriAparc2wmsegParamsDict,
     execution: Execution,
 ) -> MriAparc2wmsegOutputs:
     """
@@ -144,7 +144,7 @@ def mri_aparc2wmseg_outputs(
 
 
 def mri_aparc2wmseg_execute(
-    params: MriAparc2wmsegParameters,
+    params: MriAparc2wmsegParamsDict,
     runner: Runner | None = None,
 ) -> MriAparc2wmsegOutputs:
     """
@@ -211,6 +211,8 @@ def mri_aparc2wmseg(
 __all__ = [
     "MRI_APARC2WMSEG_METADATA",
     "MriAparc2wmsegOutputs",
+    "MriAparc2wmsegParamsDict",
+    "MriAparc2wmsegParamsDictTagged",
     "mri_aparc2wmseg",
     "mri_aparc2wmseg_execute",
     "mri_aparc2wmseg_params",

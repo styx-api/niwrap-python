@@ -13,7 +13,7 @@ V__ANATICOR_METADATA = Metadata(
 )
 
 
-VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
+VAnaticorParamsDict = typing.TypedDict('VAnaticorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ANATICOR"]],
     "ts": InputPathType,
     "polort": str,
@@ -30,7 +30,7 @@ VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
     "dirty": bool,
     "echo": bool,
 })
-VAnaticorParametersTagged = typing.TypedDict('VAnaticorParametersTagged', {
+VAnaticorParamsDictTagged = typing.TypedDict('VAnaticorParamsDictTagged', {
     "@type": typing.Literal["afni/@ANATICOR"],
     "ts": InputPathType,
     "polort": str,
@@ -51,7 +51,7 @@ VAnaticorParametersTagged = typing.TypedDict('VAnaticorParametersTagged', {
 
 class VAnaticorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAnaticorParameters(...)`.
+    Output object returned when calling `VAnaticorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v__anaticor_params(
     verb: bool = False,
     dirty: bool = False,
     echo: bool = False,
-) -> VAnaticorParametersTagged:
+) -> VAnaticorParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def v__anaticor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAnaticorParameters` object.
+    `VAnaticorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def v__anaticor_validate(
 
 
 def v__anaticor_cargs(
-    params: VAnaticorParameters,
+    params: VAnaticorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def v__anaticor_cargs(
 
 
 def v__anaticor_outputs(
-    params: VAnaticorParameters,
+    params: VAnaticorParamsDict,
     execution: Execution,
 ) -> VAnaticorOutputs:
     """
@@ -274,7 +274,7 @@ def v__anaticor_outputs(
 
 
 def v__anaticor_execute(
-    params: VAnaticorParameters,
+    params: VAnaticorParamsDict,
     runner: Runner | None = None,
 ) -> VAnaticorOutputs:
     """
@@ -376,6 +376,8 @@ def v__anaticor(
 
 __all__ = [
     "VAnaticorOutputs",
+    "VAnaticorParamsDict",
+    "VAnaticorParamsDictTagged",
     "V__ANATICOR_METADATA",
     "v__anaticor",
     "v__anaticor_execute",

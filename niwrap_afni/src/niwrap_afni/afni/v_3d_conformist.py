@@ -13,11 +13,11 @@ V_3D_CONFORMIST_METADATA = Metadata(
 )
 
 
-V3dConformistParameters = typing.TypedDict('V3dConformistParameters', {
+V3dConformistParamsDict = typing.TypedDict('V3dConformistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dConformist"]],
     "input_files": list[InputPathType],
 })
-V3dConformistParametersTagged = typing.TypedDict('V3dConformistParametersTagged', {
+V3dConformistParamsDictTagged = typing.TypedDict('V3dConformistParamsDictTagged', {
     "@type": typing.Literal["afni/3dConformist"],
     "input_files": list[InputPathType],
 })
@@ -25,7 +25,7 @@ V3dConformistParametersTagged = typing.TypedDict('V3dConformistParametersTagged'
 
 class V3dConformistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dConformistParameters(...)`.
+    Output object returned when calling `V3dConformistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class V3dConformistOutputs(typing.NamedTuple):
 
 def v_3d_conformist_params(
     input_files: list[InputPathType],
-) -> V3dConformistParametersTagged:
+) -> V3dConformistParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v_3d_conformist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dConformistParameters` object.
+    `V3dConformistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def v_3d_conformist_validate(
 
 
 def v_3d_conformist_cargs(
-    params: V3dConformistParameters,
+    params: V3dConformistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def v_3d_conformist_cargs(
 
 
 def v_3d_conformist_outputs(
-    params: V3dConformistParameters,
+    params: V3dConformistParamsDict,
     execution: Execution,
 ) -> V3dConformistOutputs:
     """
@@ -112,7 +112,7 @@ def v_3d_conformist_outputs(
 
 
 def v_3d_conformist_execute(
-    params: V3dConformistParameters,
+    params: V3dConformistParamsDict,
     runner: Runner | None = None,
 ) -> V3dConformistOutputs:
     """
@@ -169,6 +169,8 @@ def v_3d_conformist(
 
 __all__ = [
     "V3dConformistOutputs",
+    "V3dConformistParamsDict",
+    "V3dConformistParamsDictTagged",
     "V_3D_CONFORMIST_METADATA",
     "v_3d_conformist",
     "v_3d_conformist_execute",

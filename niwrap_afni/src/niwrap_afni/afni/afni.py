@@ -13,7 +13,7 @@ AFNI_METADATA = Metadata(
 )
 
 
-AfniParameters = typing.TypedDict('AfniParameters', {
+AfniParamsDict = typing.TypedDict('AfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni"]],
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
@@ -41,7 +41,7 @@ AfniParameters = typing.TypedDict('AfniParameters', {
     "com": typing.NotRequired[str | None],
     "comsep": typing.NotRequired[str | None],
 })
-AfniParametersTagged = typing.TypedDict('AfniParametersTagged', {
+AfniParamsDictTagged = typing.TypedDict('AfniParamsDictTagged', {
     "@type": typing.Literal["afni/afni"],
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
@@ -73,7 +73,7 @@ AfniParametersTagged = typing.TypedDict('AfniParametersTagged', {
 
 class AfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniParameters(...)`.
+    Output object returned when calling `AfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def afni_params(
     npb: int | None = None,
     com: str | None = None,
     comsep: str | None = None,
-) -> AfniParametersTagged:
+) -> AfniParamsDictTagged:
     """
     Build parameters.
     
@@ -185,7 +185,7 @@ def afni_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `AfniParameters`
+    Validate parameters. Throws an error if `params` is not a valid `AfniParamsDict`
     object.
     
     Args:
@@ -290,7 +290,7 @@ def afni_validate(
 
 
 def afni_cargs(
-    params: AfniParameters,
+    params: AfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -382,7 +382,7 @@ def afni_cargs(
 
 
 def afni_outputs(
-    params: AfniParameters,
+    params: AfniParamsDict,
     execution: Execution,
 ) -> AfniOutputs:
     """
@@ -402,7 +402,7 @@ def afni_outputs(
 
 
 def afni_execute(
-    params: AfniParameters,
+    params: AfniParamsDict,
     runner: Runner | None = None,
 ) -> AfniOutputs:
     """
@@ -531,6 +531,8 @@ def afni_(
 __all__ = [
     "AFNI_METADATA",
     "AfniOutputs",
+    "AfniParamsDict",
+    "AfniParamsDictTagged",
     "afni_",
     "afni_execute",
     "afni_params",

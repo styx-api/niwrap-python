@@ -13,7 +13,7 @@ ANTS_REGISTRATION_SY_N_SH_METADATA = Metadata(
 )
 
 
-AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParameters', {
+AntsRegistrationSyNShParamsDict = typing.TypedDict('AntsRegistrationSyNShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyN.sh"]],
     "image_dimension": typing.Literal[2, 3],
     "fixed_image": InputPathType,
@@ -32,7 +32,7 @@ AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParamet
     "collapse_output_transforms": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
 })
-AntsRegistrationSyNShParametersTagged = typing.TypedDict('AntsRegistrationSyNShParametersTagged', {
+AntsRegistrationSyNShParamsDictTagged = typing.TypedDict('AntsRegistrationSyNShParamsDictTagged', {
     "@type": typing.Literal["ants/antsRegistrationSyN.sh"],
     "image_dimension": typing.Literal[2, 3],
     "fixed_image": InputPathType,
@@ -55,7 +55,7 @@ AntsRegistrationSyNShParametersTagged = typing.TypedDict('AntsRegistrationSyNShP
 
 class AntsRegistrationSyNShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsRegistrationSyNShParameters(...)`.
+    Output object returned when calling `AntsRegistrationSyNShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def ants_registration_sy_n_sh_params(
     use_repro_mode: bool | None = None,
     collapse_output_transforms: bool | None = None,
     random_seed: int | None = None,
-) -> AntsRegistrationSyNShParametersTagged:
+) -> AntsRegistrationSyNShParamsDictTagged:
     """
     Build parameters.
     
@@ -177,7 +177,7 @@ def ants_registration_sy_n_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsRegistrationSyNShParameters` object.
+    `AntsRegistrationSyNShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -248,7 +248,7 @@ def ants_registration_sy_n_sh_validate(
 
 
 def ants_registration_sy_n_sh_cargs(
-    params: AntsRegistrationSyNShParameters,
+    params: AntsRegistrationSyNShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -342,7 +342,7 @@ def ants_registration_sy_n_sh_cargs(
 
 
 def ants_registration_sy_n_sh_outputs(
-    params: AntsRegistrationSyNShParameters,
+    params: AntsRegistrationSyNShParamsDict,
     execution: Execution,
 ) -> AntsRegistrationSyNShOutputs:
     """
@@ -364,7 +364,7 @@ def ants_registration_sy_n_sh_outputs(
 
 
 def ants_registration_sy_n_sh_execute(
-    params: AntsRegistrationSyNShParameters,
+    params: AntsRegistrationSyNShParamsDict,
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNShOutputs:
     """
@@ -495,6 +495,8 @@ def ants_registration_sy_n_sh(
 __all__ = [
     "ANTS_REGISTRATION_SY_N_SH_METADATA",
     "AntsRegistrationSyNShOutputs",
+    "AntsRegistrationSyNShParamsDict",
+    "AntsRegistrationSyNShParamsDictTagged",
     "ants_registration_sy_n_sh",
     "ants_registration_sy_n_sh_execute",
     "ants_registration_sy_n_sh_params",

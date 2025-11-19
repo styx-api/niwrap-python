@@ -13,7 +13,7 @@ RCBF_PREP_METADATA = Metadata(
 )
 
 
-RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
+RcbfPrepParamsDict = typing.TypedDict('RcbfPrepParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rcbf-prep"]],
     "outdir": str,
     "rcbfvol": InputPathType,
@@ -22,7 +22,7 @@ RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
     "register": typing.NotRequired[InputPathType | None],
     "template": typing.NotRequired[InputPathType | None],
 })
-RcbfPrepParametersTagged = typing.TypedDict('RcbfPrepParametersTagged', {
+RcbfPrepParamsDictTagged = typing.TypedDict('RcbfPrepParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rcbf-prep"],
     "outdir": str,
     "rcbfvol": InputPathType,
@@ -35,7 +35,7 @@ RcbfPrepParametersTagged = typing.TypedDict('RcbfPrepParametersTagged', {
 
 class RcbfPrepOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcbfPrepParameters(...)`.
+    Output object returned when calling `RcbfPrepParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def rcbf_prep_params(
     roitab: InputPathType | None = None,
     register: InputPathType | None = None,
     template: InputPathType | None = None,
-) -> RcbfPrepParametersTagged:
+) -> RcbfPrepParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def rcbf_prep_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcbfPrepParameters` object.
+    `RcbfPrepParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def rcbf_prep_validate(
 
 
 def rcbf_prep_cargs(
-    params: RcbfPrepParameters,
+    params: RcbfPrepParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def rcbf_prep_cargs(
 
 
 def rcbf_prep_outputs(
-    params: RcbfPrepParameters,
+    params: RcbfPrepParamsDict,
     execution: Execution,
 ) -> RcbfPrepOutputs:
     """
@@ -192,7 +192,7 @@ def rcbf_prep_outputs(
 
 
 def rcbf_prep_execute(
-    params: RcbfPrepParameters,
+    params: RcbfPrepParamsDict,
     runner: Runner | None = None,
 ) -> RcbfPrepOutputs:
     """
@@ -267,6 +267,8 @@ def rcbf_prep(
 __all__ = [
     "RCBF_PREP_METADATA",
     "RcbfPrepOutputs",
+    "RcbfPrepParamsDict",
+    "RcbfPrepParamsDictTagged",
     "rcbf_prep",
     "rcbf_prep_execute",
     "rcbf_prep_params",

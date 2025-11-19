@@ -13,7 +13,7 @@ LTA_DIFF_METADATA = Metadata(
 )
 
 
-LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
+LtaDiffParamsDict = typing.TypedDict('LtaDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/lta_diff"]],
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
     "normdiv": typing.NotRequired[float | None],
     "radius": typing.NotRequired[float | None],
 })
-LtaDiffParametersTagged = typing.TypedDict('LtaDiffParametersTagged', {
+LtaDiffParamsDictTagged = typing.TypedDict('LtaDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/lta_diff"],
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ LtaDiffParametersTagged = typing.TypedDict('LtaDiffParametersTagged', {
 
 class LtaDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LtaDiffParameters(...)`.
+    Output object returned when calling `LtaDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def lta_diff_params(
     vox: bool = False,
     normdiv: float | None = None,
     radius: float | None = None,
-) -> LtaDiffParametersTagged:
+) -> LtaDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def lta_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LtaDiffParameters` object.
+    `LtaDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def lta_diff_validate(
 
 
 def lta_diff_cargs(
-    params: LtaDiffParameters,
+    params: LtaDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -178,7 +178,7 @@ def lta_diff_cargs(
 
 
 def lta_diff_outputs(
-    params: LtaDiffParameters,
+    params: LtaDiffParamsDict,
     execution: Execution,
 ) -> LtaDiffOutputs:
     """
@@ -197,7 +197,7 @@ def lta_diff_outputs(
 
 
 def lta_diff_execute(
-    params: LtaDiffParameters,
+    params: LtaDiffParamsDict,
     runner: Runner | None = None,
 ) -> LtaDiffOutputs:
     """
@@ -281,6 +281,8 @@ def lta_diff(
 __all__ = [
     "LTA_DIFF_METADATA",
     "LtaDiffOutputs",
+    "LtaDiffParamsDict",
+    "LtaDiffParamsDictTagged",
     "lta_diff",
     "lta_diff_execute",
     "lta_diff_params",

@@ -13,7 +13,7 @@ MRI_WBC_METADATA = Metadata(
 )
 
 
-MriWbcParameters = typing.TypedDict('MriWbcParameters', {
+MriWbcParamsDict = typing.TypedDict('MriWbcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_wbc"]],
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ MriWbcParameters = typing.TypedDict('MriWbcParameters', {
     "debug": bool,
     "checkopts": bool,
 })
-MriWbcParametersTagged = typing.TypedDict('MriWbcParametersTagged', {
+MriWbcParamsDictTagged = typing.TypedDict('MriWbcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_wbc"],
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ MriWbcParametersTagged = typing.TypedDict('MriWbcParametersTagged', {
 
 class MriWbcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriWbcParameters(...)`.
+    Output object returned when calling `MriWbcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def mri_wbc_params(
     threads: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriWbcParametersTagged:
+) -> MriWbcParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def mri_wbc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriWbcParameters` object.
+    `MriWbcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -212,7 +212,7 @@ def mri_wbc_validate(
 
 
 def mri_wbc_cargs(
-    params: MriWbcParameters,
+    params: MriWbcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def mri_wbc_cargs(
 
 
 def mri_wbc_outputs(
-    params: MriWbcParameters,
+    params: MriWbcParamsDict,
     execution: Execution,
 ) -> MriWbcOutputs:
     """
@@ -323,7 +323,7 @@ def mri_wbc_outputs(
 
 
 def mri_wbc_execute(
-    params: MriWbcParameters,
+    params: MriWbcParamsDict,
     runner: Runner | None = None,
 ) -> MriWbcOutputs:
     """
@@ -429,6 +429,8 @@ def mri_wbc(
 __all__ = [
     "MRI_WBC_METADATA",
     "MriWbcOutputs",
+    "MriWbcParamsDict",
+    "MriWbcParamsDictTagged",
     "mri_wbc",
     "mri_wbc_execute",
     "mri_wbc_params",

@@ -13,11 +13,11 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 )
 
 
-RenormalizeSubjectKeepEdittingParameters = typing.TypedDict('RenormalizeSubjectKeepEdittingParameters', {
+RenormalizeSubjectKeepEdittingParamsDict = typing.TypedDict('RenormalizeSubjectKeepEdittingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_subject_keep_editting"]],
     "placeholder_input": typing.NotRequired[str | None],
 })
-RenormalizeSubjectKeepEdittingParametersTagged = typing.TypedDict('RenormalizeSubjectKeepEdittingParametersTagged', {
+RenormalizeSubjectKeepEdittingParamsDictTagged = typing.TypedDict('RenormalizeSubjectKeepEdittingParamsDictTagged', {
     "@type": typing.Literal["freesurfer/renormalize_subject_keep_editting"],
     "placeholder_input": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ RenormalizeSubjectKeepEdittingParametersTagged = typing.TypedDict('RenormalizeSu
 
 class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RenormalizeSubjectKeepEdittingParameters(...)`.
+    Output object returned when calling `RenormalizeSubjectKeepEdittingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):
 
 def renormalize_subject_keep_editting_params(
     placeholder_input: str | None = None,
-) -> RenormalizeSubjectKeepEdittingParametersTagged:
+) -> RenormalizeSubjectKeepEdittingParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def renormalize_subject_keep_editting_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RenormalizeSubjectKeepEdittingParameters` object.
+    `RenormalizeSubjectKeepEdittingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def renormalize_subject_keep_editting_validate(
 
 
 def renormalize_subject_keep_editting_cargs(
-    params: RenormalizeSubjectKeepEdittingParameters,
+    params: RenormalizeSubjectKeepEdittingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def renormalize_subject_keep_editting_cargs(
 
 
 def renormalize_subject_keep_editting_outputs(
-    params: RenormalizeSubjectKeepEdittingParameters,
+    params: RenormalizeSubjectKeepEdittingParamsDict,
     execution: Execution,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
@@ -111,7 +111,7 @@ def renormalize_subject_keep_editting_outputs(
 
 
 def renormalize_subject_keep_editting_execute(
-    params: RenormalizeSubjectKeepEdittingParameters,
+    params: RenormalizeSubjectKeepEdittingParamsDict,
     runner: Runner | None = None,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
@@ -170,6 +170,8 @@ def renormalize_subject_keep_editting(
 __all__ = [
     "RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA",
     "RenormalizeSubjectKeepEdittingOutputs",
+    "RenormalizeSubjectKeepEdittingParamsDict",
+    "RenormalizeSubjectKeepEdittingParamsDictTagged",
     "renormalize_subject_keep_editting",
     "renormalize_subject_keep_editting_execute",
     "renormalize_subject_keep_editting_params",

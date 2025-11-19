@@ -13,14 +13,14 @@ MRI_MC_METADATA = Metadata(
 )
 
 
-MriMcParameters = typing.TypedDict('MriMcParameters', {
+MriMcParamsDict = typing.TypedDict('MriMcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mc"]],
     "input_volume": InputPathType,
     "label_value": float,
     "output_surface": str,
     "connectivity": typing.NotRequired[float | None],
 })
-MriMcParametersTagged = typing.TypedDict('MriMcParametersTagged', {
+MriMcParamsDictTagged = typing.TypedDict('MriMcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mc"],
     "input_volume": InputPathType,
     "label_value": float,
@@ -31,7 +31,7 @@ MriMcParametersTagged = typing.TypedDict('MriMcParametersTagged', {
 
 class MriMcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMcParameters(...)`.
+    Output object returned when calling `MriMcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_mc_params(
     label_value: float,
     output_surface: str,
     connectivity: float | None = None,
-) -> MriMcParametersTagged:
+) -> MriMcParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def mri_mc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMcParameters` object.
+    `MriMcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def mri_mc_validate(
 
 
 def mri_mc_cargs(
-    params: MriMcParameters,
+    params: MriMcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def mri_mc_cargs(
 
 
 def mri_mc_outputs(
-    params: MriMcParameters,
+    params: MriMcParamsDict,
     execution: Execution,
 ) -> MriMcOutputs:
     """
@@ -141,7 +141,7 @@ def mri_mc_outputs(
 
 
 def mri_mc_execute(
-    params: MriMcParameters,
+    params: MriMcParamsDict,
     runner: Runner | None = None,
 ) -> MriMcOutputs:
     """
@@ -208,6 +208,8 @@ def mri_mc(
 __all__ = [
     "MRI_MC_METADATA",
     "MriMcOutputs",
+    "MriMcParamsDict",
+    "MriMcParamsDictTagged",
     "mri_mc",
     "mri_mc_execute",
     "mri_mc_params",

@@ -13,7 +13,7 @@ MRI_COREG_METADATA = Metadata(
 )
 
 
-MriCoregParameters = typing.TypedDict('MriCoregParameters', {
+MriCoregParamsDict = typing.TypedDict('MriCoregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_coreg"]],
     "movvol": InputPathType,
     "refvol": InputPathType,
@@ -69,7 +69,7 @@ MriCoregParameters = typing.TypedDict('MriCoregParameters', {
     "checkopts": bool,
     "version": bool,
 })
-MriCoregParametersTagged = typing.TypedDict('MriCoregParametersTagged', {
+MriCoregParamsDictTagged = typing.TypedDict('MriCoregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_coreg"],
     "movvol": InputPathType,
     "refvol": InputPathType,
@@ -129,7 +129,7 @@ MriCoregParametersTagged = typing.TypedDict('MriCoregParametersTagged', {
 
 class MriCoregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCoregParameters(...)`.
+    Output object returned when calling `MriCoregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ def mri_coreg_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriCoregParametersTagged:
+) -> MriCoregParamsDictTagged:
     """
     Build parameters.
     
@@ -366,7 +366,7 @@ def mri_coreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCoregParameters` object.
+    `MriCoregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -590,7 +590,7 @@ def mri_coreg_validate(
 
 
 def mri_coreg_cargs(
-    params: MriCoregParameters,
+    params: MriCoregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -819,7 +819,7 @@ def mri_coreg_cargs(
 
 
 def mri_coreg_outputs(
-    params: MriCoregParameters,
+    params: MriCoregParamsDict,
     execution: Execution,
 ) -> MriCoregOutputs:
     """
@@ -845,7 +845,7 @@ def mri_coreg_outputs(
 
 
 def mri_coreg_execute(
-    params: MriCoregParameters,
+    params: MriCoregParamsDict,
     runner: Runner | None = None,
 ) -> MriCoregOutputs:
     """
@@ -1064,6 +1064,8 @@ def mri_coreg(
 __all__ = [
     "MRI_COREG_METADATA",
     "MriCoregOutputs",
+    "MriCoregParamsDict",
+    "MriCoregParamsDictTagged",
     "mri_coreg",
     "mri_coreg_execute",
     "mri_coreg_params",

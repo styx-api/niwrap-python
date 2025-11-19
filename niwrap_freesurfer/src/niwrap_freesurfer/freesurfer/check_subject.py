@@ -13,11 +13,11 @@ CHECK_SUBJECT_METADATA = Metadata(
 )
 
 
-CheckSubjectParameters = typing.TypedDict('CheckSubjectParameters', {
+CheckSubjectParamsDict = typing.TypedDict('CheckSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/check_subject"]],
     "subject_dir": str,
 })
-CheckSubjectParametersTagged = typing.TypedDict('CheckSubjectParametersTagged', {
+CheckSubjectParamsDictTagged = typing.TypedDict('CheckSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/check_subject"],
     "subject_dir": str,
 })
@@ -25,7 +25,7 @@ CheckSubjectParametersTagged = typing.TypedDict('CheckSubjectParametersTagged', 
 
 class CheckSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CheckSubjectParameters(...)`.
+    Output object returned when calling `CheckSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class CheckSubjectOutputs(typing.NamedTuple):
 
 def check_subject_params(
     subject_dir: str,
-) -> CheckSubjectParametersTagged:
+) -> CheckSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def check_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CheckSubjectParameters` object.
+    `CheckSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def check_subject_validate(
 
 
 def check_subject_cargs(
-    params: CheckSubjectParameters,
+    params: CheckSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def check_subject_cargs(
 
 
 def check_subject_outputs(
-    params: CheckSubjectParameters,
+    params: CheckSubjectParamsDict,
     execution: Execution,
 ) -> CheckSubjectOutputs:
     """
@@ -106,7 +106,7 @@ def check_subject_outputs(
 
 
 def check_subject_execute(
-    params: CheckSubjectParameters,
+    params: CheckSubjectParamsDict,
     runner: Runner | None = None,
 ) -> CheckSubjectOutputs:
     """
@@ -162,6 +162,8 @@ def check_subject(
 __all__ = [
     "CHECK_SUBJECT_METADATA",
     "CheckSubjectOutputs",
+    "CheckSubjectParamsDict",
+    "CheckSubjectParamsDictTagged",
     "check_subject",
     "check_subject_execute",
     "check_subject_params",

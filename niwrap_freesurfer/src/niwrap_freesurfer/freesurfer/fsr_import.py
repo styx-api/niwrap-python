@@ -13,7 +13,7 @@ FSR_IMPORT_METADATA = Metadata(
 )
 
 
-FsrImportParameters = typing.TypedDict('FsrImportParameters', {
+FsrImportParamsDict = typing.TypedDict('FsrImportParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-import"]],
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
@@ -24,7 +24,7 @@ FsrImportParameters = typing.TypedDict('FsrImportParameters', {
     "no_conform": bool,
     "hires": bool,
 })
-FsrImportParametersTagged = typing.TypedDict('FsrImportParametersTagged', {
+FsrImportParamsDictTagged = typing.TypedDict('FsrImportParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsr-import"],
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
@@ -39,7 +39,7 @@ FsrImportParametersTagged = typing.TypedDict('FsrImportParametersTagged', {
 
 class FsrImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsrImportParameters(...)`.
+    Output object returned when calling `FsrImportParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def fsr_import_params(
     force_update: bool = False,
     no_conform: bool = False,
     hires: bool = False,
-) -> FsrImportParametersTagged:
+) -> FsrImportParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def fsr_import_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsrImportParameters` object.
+    `FsrImportParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def fsr_import_validate(
 
 
 def fsr_import_cargs(
-    params: FsrImportParameters,
+    params: FsrImportParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def fsr_import_cargs(
 
 
 def fsr_import_outputs(
-    params: FsrImportParameters,
+    params: FsrImportParamsDict,
     execution: Execution,
 ) -> FsrImportOutputs:
     """
@@ -220,7 +220,7 @@ def fsr_import_outputs(
 
 
 def fsr_import_execute(
-    params: FsrImportParameters,
+    params: FsrImportParamsDict,
     runner: Runner | None = None,
 ) -> FsrImportOutputs:
     """
@@ -298,6 +298,8 @@ def fsr_import(
 __all__ = [
     "FSR_IMPORT_METADATA",
     "FsrImportOutputs",
+    "FsrImportParamsDict",
+    "FsrImportParamsDictTagged",
     "fsr_import",
     "fsr_import_execute",
     "fsr_import_params",

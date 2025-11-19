@@ -13,7 +13,7 @@ V_3D_LRFLIP_METADATA = Metadata(
 )
 
 
-V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
+V3dLrflipParamsDict = typing.TypedDict('V3dLrflipParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLRflip"]],
     "flip_lr": bool,
     "flip_ap": bool,
@@ -24,7 +24,7 @@ V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
     "output_prefix": typing.NotRequired[str | None],
     "datasets": list[InputPathType],
 })
-V3dLrflipParametersTagged = typing.TypedDict('V3dLrflipParametersTagged', {
+V3dLrflipParamsDictTagged = typing.TypedDict('V3dLrflipParamsDictTagged', {
     "@type": typing.Literal["afni/3dLRflip"],
     "flip_lr": bool,
     "flip_ap": bool,
@@ -39,7 +39,7 @@ V3dLrflipParametersTagged = typing.TypedDict('V3dLrflipParametersTagged', {
 
 class V3dLrflipOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLrflipParameters(...)`.
+    Output object returned when calling `V3dLrflipParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def v_3d_lrflip_params(
     flip_y: bool = False,
     flip_z: bool = False,
     output_prefix: str | None = None,
-) -> V3dLrflipParametersTagged:
+) -> V3dLrflipParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def v_3d_lrflip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLrflipParameters` object.
+    `V3dLrflipParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def v_3d_lrflip_validate(
 
 
 def v_3d_lrflip_cargs(
-    params: V3dLrflipParameters,
+    params: V3dLrflipParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -171,7 +171,7 @@ def v_3d_lrflip_cargs(
 
 
 def v_3d_lrflip_outputs(
-    params: V3dLrflipParameters,
+    params: V3dLrflipParamsDict,
     execution: Execution,
 ) -> V3dLrflipOutputs:
     """
@@ -190,7 +190,7 @@ def v_3d_lrflip_outputs(
 
 
 def v_3d_lrflip_execute(
-    params: V3dLrflipParameters,
+    params: V3dLrflipParamsDict,
     runner: Runner | None = None,
 ) -> V3dLrflipOutputs:
     """
@@ -269,6 +269,8 @@ def v_3d_lrflip(
 
 __all__ = [
     "V3dLrflipOutputs",
+    "V3dLrflipParamsDict",
+    "V3dLrflipParamsDictTagged",
     "V_3D_LRFLIP_METADATA",
     "v_3d_lrflip",
     "v_3d_lrflip_execute",

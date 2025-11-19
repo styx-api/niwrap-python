@@ -13,7 +13,7 @@ V_1DSVD_METADATA = Metadata(
 )
 
 
-V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
+V1dsvdParamsDict = typing.TypedDict('V1dsvdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dsvd"]],
     "one": bool,
     "vmean": bool,
@@ -27,7 +27,7 @@ V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
     "num_eigenvectors": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
-V1dsvdParametersTagged = typing.TypedDict('V1dsvdParametersTagged', {
+V1dsvdParamsDictTagged = typing.TypedDict('V1dsvdParamsDictTagged', {
     "@type": typing.Literal["afni/1dsvd"],
     "one": bool,
     "vmean": bool,
@@ -45,7 +45,7 @@ V1dsvdParametersTagged = typing.TypedDict('V1dsvdParametersTagged', {
 
 class V1dsvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dsvdParameters(...)`.
+    Output object returned when calling `V1dsvdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_1dsvd_params(
     asort: bool = False,
     left_eigenvectors: bool = False,
     num_eigenvectors: str | None = None,
-) -> V1dsvdParametersTagged:
+) -> V1dsvdParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def v_1dsvd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dsvdParameters` object.
+    `V1dsvdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def v_1dsvd_validate(
 
 
 def v_1dsvd_cargs(
-    params: V1dsvdParameters,
+    params: V1dsvdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def v_1dsvd_cargs(
 
 
 def v_1dsvd_outputs(
-    params: V1dsvdParameters,
+    params: V1dsvdParamsDict,
     execution: Execution,
 ) -> V1dsvdOutputs:
     """
@@ -225,7 +225,7 @@ def v_1dsvd_outputs(
 
 
 def v_1dsvd_execute(
-    params: V1dsvdParameters,
+    params: V1dsvdParamsDict,
     runner: Runner | None = None,
 ) -> V1dsvdOutputs:
     """
@@ -312,6 +312,8 @@ def v_1dsvd(
 
 __all__ = [
     "V1dsvdOutputs",
+    "V1dsvdParamsDict",
+    "V1dsvdParamsDictTagged",
     "V_1DSVD_METADATA",
     "v_1dsvd",
     "v_1dsvd_execute",

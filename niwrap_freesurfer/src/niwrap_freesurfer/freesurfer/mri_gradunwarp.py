@@ -13,7 +13,7 @@ MRI_GRADUNWARP_METADATA = Metadata(
 )
 
 
-MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
+MriGradunwarpParamsDict = typing.TypedDict('MriGradunwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradunwarp"]],
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
     "version": bool,
     "help": bool,
 })
-MriGradunwarpParametersTagged = typing.TypedDict('MriGradunwarpParametersTagged', {
+MriGradunwarpParamsDictTagged = typing.TypedDict('MriGradunwarpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gradunwarp"],
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ MriGradunwarpParametersTagged = typing.TypedDict('MriGradunwarpParametersTagged'
 
 class MriGradunwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGradunwarpParameters(...)`.
+    Output object returned when calling `MriGradunwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def mri_gradunwarp_params(
     checkopts: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MriGradunwarpParametersTagged:
+) -> MriGradunwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def mri_gradunwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGradunwarpParameters` object.
+    `MriGradunwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def mri_gradunwarp_validate(
 
 
 def mri_gradunwarp_cargs(
-    params: MriGradunwarpParameters,
+    params: MriGradunwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,7 +226,7 @@ def mri_gradunwarp_cargs(
 
 
 def mri_gradunwarp_outputs(
-    params: MriGradunwarpParameters,
+    params: MriGradunwarpParamsDict,
     execution: Execution,
 ) -> MriGradunwarpOutputs:
     """
@@ -247,7 +247,7 @@ def mri_gradunwarp_outputs(
 
 
 def mri_gradunwarp_execute(
-    params: MriGradunwarpParameters,
+    params: MriGradunwarpParamsDict,
     runner: Runner | None = None,
 ) -> MriGradunwarpOutputs:
     """
@@ -337,6 +337,8 @@ def mri_gradunwarp(
 __all__ = [
     "MRI_GRADUNWARP_METADATA",
     "MriGradunwarpOutputs",
+    "MriGradunwarpParamsDict",
+    "MriGradunwarpParamsDictTagged",
     "mri_gradunwarp",
     "mri_gradunwarp_execute",
     "mri_gradunwarp_params",

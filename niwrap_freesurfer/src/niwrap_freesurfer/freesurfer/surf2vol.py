@@ -13,7 +13,7 @@ SURF2VOL_METADATA = Metadata(
 )
 
 
-Surf2volParameters = typing.TypedDict('Surf2volParameters', {
+Surf2volParamsDict = typing.TypedDict('Surf2volParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/surf2vol"]],
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
@@ -33,7 +33,7 @@ Surf2volParameters = typing.TypedDict('Surf2volParameters', {
     "debug_output": bool,
     "cache_transform": typing.NotRequired[str | None],
 })
-Surf2volParametersTagged = typing.TypedDict('Surf2volParametersTagged', {
+Surf2volParamsDictTagged = typing.TypedDict('Surf2volParamsDictTagged', {
     "@type": typing.Literal["freesurfer/surf2vol"],
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
@@ -57,7 +57,7 @@ Surf2volParametersTagged = typing.TypedDict('Surf2volParametersTagged', {
 
 class Surf2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Surf2volParameters(...)`.
+    Output object returned when calling `Surf2volParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def surf2vol_params(
     dirty_factor: float | None = None,
     debug_output: bool = False,
     cache_transform: str | None = None,
-) -> Surf2volParametersTagged:
+) -> Surf2volParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def surf2vol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Surf2volParameters` object.
+    `Surf2volParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def surf2vol_validate(
 
 
 def surf2vol_cargs(
-    params: Surf2volParameters,
+    params: Surf2volParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -320,7 +320,7 @@ def surf2vol_cargs(
 
 
 def surf2vol_outputs(
-    params: Surf2volParameters,
+    params: Surf2volParamsDict,
     execution: Execution,
 ) -> Surf2volOutputs:
     """
@@ -341,7 +341,7 @@ def surf2vol_outputs(
 
 
 def surf2vol_execute(
-    params: Surf2volParameters,
+    params: Surf2volParamsDict,
     runner: Runner | None = None,
 ) -> Surf2volOutputs:
     """
@@ -449,6 +449,8 @@ def surf2vol(
 __all__ = [
     "SURF2VOL_METADATA",
     "Surf2volOutputs",
+    "Surf2volParamsDict",
+    "Surf2volParamsDictTagged",
     "surf2vol",
     "surf2vol_execute",
     "surf2vol_params",

@@ -13,11 +13,11 @@ V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
 )
 
 
-VAfniOrient2RaimapParameters = typing.TypedDict('VAfniOrient2RaimapParameters', {
+VAfniOrient2RaimapParamsDict = typing.TypedDict('VAfniOrient2RaimapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@AfniOrient2RAImap"]],
     "orientation_code": str,
 })
-VAfniOrient2RaimapParametersTagged = typing.TypedDict('VAfniOrient2RaimapParametersTagged', {
+VAfniOrient2RaimapParamsDictTagged = typing.TypedDict('VAfniOrient2RaimapParamsDictTagged', {
     "@type": typing.Literal["afni/@AfniOrient2RAImap"],
     "orientation_code": str,
 })
@@ -25,7 +25,7 @@ VAfniOrient2RaimapParametersTagged = typing.TypedDict('VAfniOrient2RaimapParamet
 
 class VAfniOrient2RaimapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniOrient2RaimapParameters(...)`.
+    Output object returned when calling `VAfniOrient2RaimapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class VAfniOrient2RaimapOutputs(typing.NamedTuple):
 
 def v__afni_orient2_raimap_params(
     orientation_code: str,
-) -> VAfniOrient2RaimapParametersTagged:
+) -> VAfniOrient2RaimapParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def v__afni_orient2_raimap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniOrient2RaimapParameters` object.
+    `VAfniOrient2RaimapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def v__afni_orient2_raimap_validate(
 
 
 def v__afni_orient2_raimap_cargs(
-    params: VAfniOrient2RaimapParameters,
+    params: VAfniOrient2RaimapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def v__afni_orient2_raimap_cargs(
 
 
 def v__afni_orient2_raimap_outputs(
-    params: VAfniOrient2RaimapParameters,
+    params: VAfniOrient2RaimapParamsDict,
     execution: Execution,
 ) -> VAfniOrient2RaimapOutputs:
     """
@@ -106,7 +106,7 @@ def v__afni_orient2_raimap_outputs(
 
 
 def v__afni_orient2_raimap_execute(
-    params: VAfniOrient2RaimapParameters,
+    params: VAfniOrient2RaimapParamsDict,
     runner: Runner | None = None,
 ) -> VAfniOrient2RaimapOutputs:
     """
@@ -161,6 +161,8 @@ def v__afni_orient2_raimap(
 
 __all__ = [
     "VAfniOrient2RaimapOutputs",
+    "VAfniOrient2RaimapParamsDict",
+    "VAfniOrient2RaimapParamsDictTagged",
     "V__AFNI_ORIENT2_RAIMAP_METADATA",
     "v__afni_orient2_raimap",
     "v__afni_orient2_raimap_execute",

@@ -13,19 +13,19 @@ AFDCONNECTIVITY_METADATA = Metadata(
 )
 
 
-AfdconnectivityConfigParameters = typing.TypedDict('AfdconnectivityConfigParameters', {
+AfdconnectivityConfigParamsDict = typing.TypedDict('AfdconnectivityConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-AfdconnectivityConfigParametersTagged = typing.TypedDict('AfdconnectivityConfigParametersTagged', {
+AfdconnectivityConfigParamsDictTagged = typing.TypedDict('AfdconnectivityConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
+AfdconnectivityParamsDict = typing.TypedDict('AfdconnectivityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/afdconnectivity"]],
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
@@ -35,13 +35,13 @@ AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[AfdconnectivityConfigParameters] | None],
+    "config": typing.NotRequired[list[AfdconnectivityConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
     "tracks": InputPathType,
 })
-AfdconnectivityParametersTagged = typing.TypedDict('AfdconnectivityParametersTagged', {
+AfdconnectivityParamsDictTagged = typing.TypedDict('AfdconnectivityParamsDictTagged', {
     "@type": typing.Literal["mrtrix/afdconnectivity"],
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ AfdconnectivityParametersTagged = typing.TypedDict('AfdconnectivityParametersTag
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[AfdconnectivityConfigParameters] | None],
+    "config": typing.NotRequired[list[AfdconnectivityConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
@@ -59,10 +59,10 @@ AfdconnectivityParametersTagged = typing.TypedDict('AfdconnectivityParametersTag
 })
 
 
-def afdconnectivity_config_params(
+def afdconnectivity_config(
     key: str,
     value: str,
-) -> AfdconnectivityConfigParametersTagged:
+) -> AfdconnectivityConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def afdconnectivity_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfdconnectivityConfigParameters` object.
+    `AfdconnectivityConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def afdconnectivity_config_validate(
 
 
 def afdconnectivity_config_cargs(
-    params: AfdconnectivityConfigParameters,
+    params: AfdconnectivityConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def afdconnectivity_config_cargs(
 
 class AfdconnectivityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfdconnectivityParameters(...)`.
+    Output object returned when calling `AfdconnectivityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,10 +143,10 @@ def afdconnectivity_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[AfdconnectivityConfigParameters] | None = None,
+    config: list[AfdconnectivityConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> AfdconnectivityParametersTagged:
+) -> AfdconnectivityParamsDictTagged:
     """
     Build parameters.
     
@@ -207,7 +207,7 @@ def afdconnectivity_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfdconnectivityParameters` object.
+    `AfdconnectivityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -245,7 +245,7 @@ def afdconnectivity_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[AfdconnectivityConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[AfdconnectivityConfigParamsDict] | None`')
         for e in params["config"]:
             afdconnectivity_config_validate(e)
     if params.get("help", False) is None:
@@ -267,7 +267,7 @@ def afdconnectivity_validate(
 
 
 def afdconnectivity_cargs(
-    params: AfdconnectivityParameters,
+    params: AfdconnectivityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -318,7 +318,7 @@ def afdconnectivity_cargs(
 
 
 def afdconnectivity_outputs(
-    params: AfdconnectivityParameters,
+    params: AfdconnectivityParamsDict,
     execution: Execution,
 ) -> AfdconnectivityOutputs:
     """
@@ -338,7 +338,7 @@ def afdconnectivity_outputs(
 
 
 def afdconnectivity_execute(
-    params: AfdconnectivityParameters,
+    params: AfdconnectivityParamsDict,
     runner: Runner | None = None,
 ) -> AfdconnectivityOutputs:
     """
@@ -414,7 +414,7 @@ def afdconnectivity(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[AfdconnectivityConfigParameters] | None = None,
+    config: list[AfdconnectivityConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -515,9 +515,13 @@ def afdconnectivity(
 
 __all__ = [
     "AFDCONNECTIVITY_METADATA",
+    "AfdconnectivityConfigParamsDict",
+    "AfdconnectivityConfigParamsDictTagged",
     "AfdconnectivityOutputs",
+    "AfdconnectivityParamsDict",
+    "AfdconnectivityParamsDictTagged",
     "afdconnectivity",
-    "afdconnectivity_config_params",
+    "afdconnectivity_config",
     "afdconnectivity_execute",
     "afdconnectivity_params",
 ]

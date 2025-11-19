@@ -3,21 +3,21 @@
   "properties": {
     "scene-file": {
       "var_param": "scene_file",
-      "fn_struct_make_params": "scene_file_merge_scene_file_params",
+      "fn_struct_make_params": "scene_file_merge_scene_file",
       "properties": {
         "scene-file": {
           "var_param": "scene_file"
         },
         "scene": {
           "var_param": "scene",
-          "fn_struct_make_params": "scene_file_merge_scene_params",
+          "fn_struct_make_params": "scene_file_merge_scene",
           "properties": {
             "scene": {
               "var_param": "scene"
             },
             "up-to": {
               "var_param": "up_to",
-              "fn_struct_make_params": "scene_file_merge_up_to_params",
+              "fn_struct_make_params": "scene_file_merge_up_to",
               "properties": {
                 "last-column": {
                   "var_param": "last_column"

@@ -13,12 +13,12 @@ V__VOL_CENTER_METADATA = Metadata(
 )
 
 
-VVolCenterParameters = typing.TypedDict('VVolCenterParameters', {
+VVolCenterParamsDict = typing.TypedDict('VVolCenterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@VolCenter"]],
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })
-VVolCenterParametersTagged = typing.TypedDict('VVolCenterParametersTagged', {
+VVolCenterParamsDictTagged = typing.TypedDict('VVolCenterParamsDictTagged', {
     "@type": typing.Literal["afni/@VolCenter"],
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ VVolCenterParametersTagged = typing.TypedDict('VVolCenterParametersTagged', {
 
 class VVolCenterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VVolCenterParameters(...)`.
+    Output object returned when calling `VVolCenterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VVolCenterOutputs(typing.NamedTuple):
 def v__vol_center_params(
     dset: InputPathType,
     orient: str | None = None,
-) -> VVolCenterParametersTagged:
+) -> VVolCenterParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__vol_center_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VVolCenterParameters` object.
+    `VVolCenterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v__vol_center_validate(
 
 
 def v__vol_center_cargs(
-    params: VVolCenterParameters,
+    params: VVolCenterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def v__vol_center_cargs(
 
 
 def v__vol_center_outputs(
-    params: VVolCenterParameters,
+    params: VVolCenterParamsDict,
     execution: Execution,
 ) -> VVolCenterOutputs:
     """
@@ -123,7 +123,7 @@ def v__vol_center_outputs(
 
 
 def v__vol_center_execute(
-    params: VVolCenterParameters,
+    params: VVolCenterParamsDict,
     runner: Runner | None = None,
 ) -> VVolCenterOutputs:
     """
@@ -181,6 +181,8 @@ def v__vol_center(
 
 __all__ = [
     "VVolCenterOutputs",
+    "VVolCenterParamsDict",
+    "VVolCenterParamsDictTagged",
     "V__VOL_CENTER_METADATA",
     "v__vol_center",
     "v__vol_center_execute",

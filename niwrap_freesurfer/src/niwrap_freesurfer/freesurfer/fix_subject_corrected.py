@@ -13,12 +13,12 @@ FIX_SUBJECT_CORRECTED_METADATA = Metadata(
 )
 
 
-FixSubjectCorrectedParameters = typing.TypedDict('FixSubjectCorrectedParameters', {
+FixSubjectCorrectedParamsDict = typing.TypedDict('FixSubjectCorrectedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected"]],
     "subject_directory": str,
     "output_directory": str,
 })
-FixSubjectCorrectedParametersTagged = typing.TypedDict('FixSubjectCorrectedParametersTagged', {
+FixSubjectCorrectedParamsDictTagged = typing.TypedDict('FixSubjectCorrectedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fix_subject_corrected"],
     "subject_directory": str,
     "output_directory": str,
@@ -27,7 +27,7 @@ FixSubjectCorrectedParametersTagged = typing.TypedDict('FixSubjectCorrectedParam
 
 class FixSubjectCorrectedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixSubjectCorrectedParameters(...)`.
+    Output object returned when calling `FixSubjectCorrectedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FixSubjectCorrectedOutputs(typing.NamedTuple):
 def fix_subject_corrected_params(
     subject_directory: str,
     output_directory: str,
-) -> FixSubjectCorrectedParametersTagged:
+) -> FixSubjectCorrectedParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def fix_subject_corrected_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixSubjectCorrectedParameters` object.
+    `FixSubjectCorrectedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fix_subject_corrected_validate(
 
 
 def fix_subject_corrected_cargs(
-    params: FixSubjectCorrectedParameters,
+    params: FixSubjectCorrectedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def fix_subject_corrected_cargs(
 
 
 def fix_subject_corrected_outputs(
-    params: FixSubjectCorrectedParameters,
+    params: FixSubjectCorrectedParamsDict,
     execution: Execution,
 ) -> FixSubjectCorrectedOutputs:
     """
@@ -116,7 +116,7 @@ def fix_subject_corrected_outputs(
 
 
 def fix_subject_corrected_execute(
-    params: FixSubjectCorrectedParameters,
+    params: FixSubjectCorrectedParamsDict,
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedOutputs:
     """
@@ -175,6 +175,8 @@ def fix_subject_corrected(
 __all__ = [
     "FIX_SUBJECT_CORRECTED_METADATA",
     "FixSubjectCorrectedOutputs",
+    "FixSubjectCorrectedParamsDict",
+    "FixSubjectCorrectedParamsDictTagged",
     "fix_subject_corrected",
     "fix_subject_corrected_execute",
     "fix_subject_corrected_params",

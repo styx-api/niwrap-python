@@ -13,7 +13,7 @@ PREDICT_V1_SH_METADATA = Metadata(
 )
 
 
-PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
+PredictV1ShParamsDict = typing.TypedDict('PredictV1ShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/predict_v1.sh"]],
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
@@ -22,7 +22,7 @@ PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
     "subjects": list[str],
     "usage_flag": bool,
 })
-PredictV1ShParametersTagged = typing.TypedDict('PredictV1ShParametersTagged', {
+PredictV1ShParamsDictTagged = typing.TypedDict('PredictV1ShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/predict_v1.sh"],
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
@@ -35,7 +35,7 @@ PredictV1ShParametersTagged = typing.TypedDict('PredictV1ShParametersTagged', {
 
 class PredictV1ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PredictV1ShParameters(...)`.
+    Output object returned when calling `PredictV1ShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def predict_v1_sh_params(
     hemisphere: str | None = None,
     print_mode_flag: bool = False,
     usage_flag: bool = False,
-) -> PredictV1ShParametersTagged:
+) -> PredictV1ShParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def predict_v1_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PredictV1ShParameters` object.
+    `PredictV1ShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def predict_v1_sh_validate(
 
 
 def predict_v1_sh_cargs(
-    params: PredictV1ShParameters,
+    params: PredictV1ShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def predict_v1_sh_cargs(
 
 
 def predict_v1_sh_outputs(
-    params: PredictV1ShParameters,
+    params: PredictV1ShParamsDict,
     execution: Execution,
 ) -> PredictV1ShOutputs:
     """
@@ -171,7 +171,7 @@ def predict_v1_sh_outputs(
 
 
 def predict_v1_sh_execute(
-    params: PredictV1ShParameters,
+    params: PredictV1ShParamsDict,
     runner: Runner | None = None,
 ) -> PredictV1ShOutputs:
     """
@@ -243,6 +243,8 @@ def predict_v1_sh(
 __all__ = [
     "PREDICT_V1_SH_METADATA",
     "PredictV1ShOutputs",
+    "PredictV1ShParamsDict",
+    "PredictV1ShParamsDictTagged",
     "predict_v1_sh",
     "predict_v1_sh_execute",
     "predict_v1_sh_params",

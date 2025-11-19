@@ -13,7 +13,7 @@ MRI_CVS_DATA_COPY_METADATA = Metadata(
 )
 
 
-MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
+MriCvsDataCopyParamsDict = typing.TypedDict('MriCvsDataCopyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_data_copy"]],
     "subjid": str,
     "olddir": str,
@@ -21,7 +21,7 @@ MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
     "version": bool,
     "help": bool,
 })
-MriCvsDataCopyParametersTagged = typing.TypedDict('MriCvsDataCopyParametersTagged', {
+MriCvsDataCopyParamsDictTagged = typing.TypedDict('MriCvsDataCopyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cvs_data_copy"],
     "subjid": str,
     "olddir": str,
@@ -33,7 +33,7 @@ MriCvsDataCopyParametersTagged = typing.TypedDict('MriCvsDataCopyParametersTagge
 
 class MriCvsDataCopyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCvsDataCopyParameters(...)`.
+    Output object returned when calling `MriCvsDataCopyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mri_cvs_data_copy_params(
     newdir: str,
     version: bool = False,
     help_: bool = False,
-) -> MriCvsDataCopyParametersTagged:
+) -> MriCvsDataCopyParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_cvs_data_copy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCvsDataCopyParameters` object.
+    `MriCvsDataCopyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_cvs_data_copy_validate(
 
 
 def mri_cvs_data_copy_cargs(
-    params: MriCvsDataCopyParameters,
+    params: MriCvsDataCopyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def mri_cvs_data_copy_cargs(
 
 
 def mri_cvs_data_copy_outputs(
-    params: MriCvsDataCopyParameters,
+    params: MriCvsDataCopyParamsDict,
     execution: Execution,
 ) -> MriCvsDataCopyOutputs:
     """
@@ -159,7 +159,7 @@ def mri_cvs_data_copy_outputs(
 
 
 def mri_cvs_data_copy_execute(
-    params: MriCvsDataCopyParameters,
+    params: MriCvsDataCopyParamsDict,
     runner: Runner | None = None,
 ) -> MriCvsDataCopyOutputs:
     """
@@ -229,6 +229,8 @@ def mri_cvs_data_copy(
 __all__ = [
     "MRI_CVS_DATA_COPY_METADATA",
     "MriCvsDataCopyOutputs",
+    "MriCvsDataCopyParamsDict",
+    "MriCvsDataCopyParamsDictTagged",
     "mri_cvs_data_copy",
     "mri_cvs_data_copy_execute",
     "mri_cvs_data_copy_params",

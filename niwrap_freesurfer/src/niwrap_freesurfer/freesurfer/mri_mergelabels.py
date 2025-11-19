@@ -13,13 +13,13 @@ MRI_MERGELABELS_METADATA = Metadata(
 )
 
 
-MriMergelabelsParameters = typing.TypedDict('MriMergelabelsParameters', {
+MriMergelabelsParamsDict = typing.TypedDict('MriMergelabelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mergelabels"]],
     "input_labels": list[InputPathType],
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],
 })
-MriMergelabelsParametersTagged = typing.TypedDict('MriMergelabelsParametersTagged', {
+MriMergelabelsParamsDictTagged = typing.TypedDict('MriMergelabelsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mergelabels"],
     "input_labels": list[InputPathType],
     "output_label": str,
@@ -29,7 +29,7 @@ MriMergelabelsParametersTagged = typing.TypedDict('MriMergelabelsParametersTagge
 
 class MriMergelabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMergelabelsParameters(...)`.
+    Output object returned when calling `MriMergelabelsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_mergelabels_params(
     input_labels: list[InputPathType],
     output_label: str,
     input_directory: str | None = None,
-) -> MriMergelabelsParametersTagged:
+) -> MriMergelabelsParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mri_mergelabels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMergelabelsParameters` object.
+    `MriMergelabelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def mri_mergelabels_validate(
 
 
 def mri_mergelabels_cargs(
-    params: MriMergelabelsParameters,
+    params: MriMergelabelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def mri_mergelabels_cargs(
 
 
 def mri_mergelabels_outputs(
-    params: MriMergelabelsParameters,
+    params: MriMergelabelsParamsDict,
     execution: Execution,
 ) -> MriMergelabelsOutputs:
     """
@@ -142,7 +142,7 @@ def mri_mergelabels_outputs(
 
 
 def mri_mergelabels_execute(
-    params: MriMergelabelsParameters,
+    params: MriMergelabelsParamsDict,
     runner: Runner | None = None,
 ) -> MriMergelabelsOutputs:
     """
@@ -204,6 +204,8 @@ def mri_mergelabels(
 __all__ = [
     "MRI_MERGELABELS_METADATA",
     "MriMergelabelsOutputs",
+    "MriMergelabelsParamsDict",
+    "MriMergelabelsParamsDictTagged",
     "mri_mergelabels",
     "mri_mergelabels_execute",
     "mri_mergelabels_params",

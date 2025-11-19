@@ -12,7 +12,7 @@
     },
     "remove": {
       "var_param": "remove",
-      "fn_struct_make_params": "metric_regression_remove_params",
+      "fn_struct_make_params": "metric_regression_remove",
       "properties": {
         "metric": {
           "var_param": "metric"
@@ -24,7 +24,7 @@
     },
     "keep": {
       "var_param": "keep",
-      "fn_struct_make_params": "metric_regression_keep_params",
+      "fn_struct_make_params": "metric_regression_keep",
       "properties": {
         "metric": {
           "var_param": "metric"

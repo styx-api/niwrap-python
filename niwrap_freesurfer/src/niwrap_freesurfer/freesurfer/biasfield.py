@@ -13,7 +13,7 @@ BIASFIELD_METADATA = Metadata(
 )
 
 
-BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
+BiasfieldParamsDict = typing.TypedDict('BiasfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/biasfield"]],
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
     "debug": bool,
     "version": bool,
 })
-BiasfieldParametersTagged = typing.TypedDict('BiasfieldParametersTagged', {
+BiasfieldParamsDictTagged = typing.TypedDict('BiasfieldParamsDictTagged', {
     "@type": typing.Literal["freesurfer/biasfield"],
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ BiasfieldParametersTagged = typing.TypedDict('BiasfieldParametersTagged', {
 
 class BiasfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BiasfieldParameters(...)`.
+    Output object returned when calling `BiasfieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def biasfield_params(
     help_: bool = False,
     debug: bool = False,
     version: bool = False,
-) -> BiasfieldParametersTagged:
+) -> BiasfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def biasfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BiasfieldParameters` object.
+    `BiasfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def biasfield_validate(
 
 
 def biasfield_cargs(
-    params: BiasfieldParameters,
+    params: BiasfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def biasfield_cargs(
 
 
 def biasfield_outputs(
-    params: BiasfieldParameters,
+    params: BiasfieldParamsDict,
     execution: Execution,
 ) -> BiasfieldOutputs:
     """
@@ -173,7 +173,7 @@ def biasfield_outputs(
 
 
 def biasfield_execute(
-    params: BiasfieldParameters,
+    params: BiasfieldParamsDict,
     runner: Runner | None = None,
 ) -> BiasfieldOutputs:
     """
@@ -246,6 +246,8 @@ def biasfield(
 __all__ = [
     "BIASFIELD_METADATA",
     "BiasfieldOutputs",
+    "BiasfieldParamsDict",
+    "BiasfieldParamsDictTagged",
     "biasfield",
     "biasfield_execute",
     "biasfield_params",

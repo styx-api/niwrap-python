@@ -13,7 +13,7 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 )
 
 
-MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
+MergeStatsTablesParamsDict = typing.TypedDict('MergeStatsTablesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/merge_stats_tables"]],
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
     "skip": bool,
     "debug": bool,
 })
-MergeStatsTablesParametersTagged = typing.TypedDict('MergeStatsTablesParametersTagged', {
+MergeStatsTablesParamsDictTagged = typing.TypedDict('MergeStatsTablesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/merge_stats_tables"],
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ MergeStatsTablesParametersTagged = typing.TypedDict('MergeStatsTablesParametersT
 
 class MergeStatsTablesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MergeStatsTablesParameters(...)`.
+    Output object returned when calling `MergeStatsTablesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def merge_stats_tables_params(
     transpose: bool = False,
     skip: bool = False,
     debug: bool = False,
-) -> MergeStatsTablesParametersTagged:
+) -> MergeStatsTablesParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def merge_stats_tables_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MergeStatsTablesParameters` object.
+    `MergeStatsTablesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -208,7 +208,7 @@ def merge_stats_tables_validate(
 
 
 def merge_stats_tables_cargs(
-    params: MergeStatsTablesParameters,
+    params: MergeStatsTablesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def merge_stats_tables_cargs(
 
 
 def merge_stats_tables_outputs(
-    params: MergeStatsTablesParameters,
+    params: MergeStatsTablesParamsDict,
     execution: Execution,
 ) -> MergeStatsTablesOutputs:
     """
@@ -304,7 +304,7 @@ def merge_stats_tables_outputs(
 
 
 def merge_stats_tables_execute(
-    params: MergeStatsTablesParameters,
+    params: MergeStatsTablesParamsDict,
     runner: Runner | None = None,
 ) -> MergeStatsTablesOutputs:
     """
@@ -410,6 +410,8 @@ def merge_stats_tables(
 __all__ = [
     "MERGE_STATS_TABLES_METADATA",
     "MergeStatsTablesOutputs",
+    "MergeStatsTablesParamsDict",
+    "MergeStatsTablesParamsDictTagged",
     "merge_stats_tables",
     "merge_stats_tables_execute",
     "merge_stats_tables_params",

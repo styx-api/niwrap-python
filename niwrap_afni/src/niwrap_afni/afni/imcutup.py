@@ -13,7 +13,7 @@ IMCUTUP_METADATA = Metadata(
 )
 
 
-ImcutupParameters = typing.TypedDict('ImcutupParameters', {
+ImcutupParamsDict = typing.TypedDict('ImcutupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imcutup"]],
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
@@ -24,7 +24,7 @@ ImcutupParameters = typing.TypedDict('ImcutupParameters', {
     "ny": int,
     "input_file": InputPathType,
 })
-ImcutupParametersTagged = typing.TypedDict('ImcutupParametersTagged', {
+ImcutupParamsDictTagged = typing.TypedDict('ImcutupParamsDictTagged', {
     "@type": typing.Literal["afni/imcutup"],
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
@@ -39,7 +39,7 @@ ImcutupParametersTagged = typing.TypedDict('ImcutupParametersTagged', {
 
 class ImcutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImcutupParameters(...)`.
+    Output object returned when calling `ImcutupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def imcutup_params(
     yxnum: bool = False,
     xynum_format: bool = False,
     yxnum_format: bool = False,
-) -> ImcutupParametersTagged:
+) -> ImcutupParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def imcutup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImcutupParameters` object.
+    `ImcutupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def imcutup_validate(
 
 
 def imcutup_cargs(
-    params: ImcutupParameters,
+    params: ImcutupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,7 +165,7 @@ def imcutup_cargs(
 
 
 def imcutup_outputs(
-    params: ImcutupParameters,
+    params: ImcutupParamsDict,
     execution: Execution,
 ) -> ImcutupOutputs:
     """
@@ -184,7 +184,7 @@ def imcutup_outputs(
 
 
 def imcutup_execute(
-    params: ImcutupParameters,
+    params: ImcutupParamsDict,
     runner: Runner | None = None,
 ) -> ImcutupOutputs:
     """
@@ -261,6 +261,8 @@ def imcutup(
 __all__ = [
     "IMCUTUP_METADATA",
     "ImcutupOutputs",
+    "ImcutupParamsDict",
+    "ImcutupParamsDictTagged",
     "imcutup",
     "imcutup_execute",
     "imcutup_params",

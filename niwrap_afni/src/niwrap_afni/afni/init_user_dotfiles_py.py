@@ -13,7 +13,7 @@ INIT_USER_DOTFILES_PY_METADATA = Metadata(
 )
 
 
-InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', {
+InitUserDotfilesPyParamsDict = typing.TypedDict('InitUserDotfilesPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/init_user_dotfiles.py"]],
     "help": bool,
     "help_dotfiles_all": bool,
@@ -33,7 +33,7 @@ InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', 
     "test": bool,
     "verbosity_level": typing.NotRequired[int | None],
 })
-InitUserDotfilesPyParametersTagged = typing.TypedDict('InitUserDotfilesPyParametersTagged', {
+InitUserDotfilesPyParamsDictTagged = typing.TypedDict('InitUserDotfilesPyParamsDictTagged', {
     "@type": typing.Literal["afni/init_user_dotfiles.py"],
     "help": bool,
     "help_dotfiles_all": bool,
@@ -57,7 +57,7 @@ InitUserDotfilesPyParametersTagged = typing.TypedDict('InitUserDotfilesPyParamet
 
 class InitUserDotfilesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InitUserDotfilesPyParameters(...)`.
+    Output object returned when calling `InitUserDotfilesPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def init_user_dotfiles_py_params(
     shell_list: list[str] | None = None,
     test: bool = False,
     verbosity_level: int | None = None,
-) -> InitUserDotfilesPyParametersTagged:
+) -> InitUserDotfilesPyParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def init_user_dotfiles_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InitUserDotfilesPyParameters` object.
+    `InitUserDotfilesPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def init_user_dotfiles_py_validate(
 
 
 def init_user_dotfiles_py_cargs(
-    params: InitUserDotfilesPyParameters,
+    params: InitUserDotfilesPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -297,7 +297,7 @@ def init_user_dotfiles_py_cargs(
 
 
 def init_user_dotfiles_py_outputs(
-    params: InitUserDotfilesPyParameters,
+    params: InitUserDotfilesPyParamsDict,
     execution: Execution,
 ) -> InitUserDotfilesPyOutputs:
     """
@@ -316,7 +316,7 @@ def init_user_dotfiles_py_outputs(
 
 
 def init_user_dotfiles_py_execute(
-    params: InitUserDotfilesPyParameters,
+    params: InitUserDotfilesPyParamsDict,
     runner: Runner | None = None,
 ) -> InitUserDotfilesPyOutputs:
     """
@@ -425,6 +425,8 @@ def init_user_dotfiles_py(
 __all__ = [
     "INIT_USER_DOTFILES_PY_METADATA",
     "InitUserDotfilesPyOutputs",
+    "InitUserDotfilesPyParamsDict",
+    "InitUserDotfilesPyParamsDictTagged",
     "init_user_dotfiles_py",
     "init_user_dotfiles_py_execute",
     "init_user_dotfiles_py_params",

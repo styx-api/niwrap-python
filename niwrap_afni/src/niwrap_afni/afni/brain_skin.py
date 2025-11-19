@@ -13,7 +13,7 @@ BRAIN_SKIN_METADATA = Metadata(
 )
 
 
-BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
+BrainSkinParamsDict = typing.TypedDict('BrainSkinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/BrainSkin"]],
     "surface": str,
     "skingrid_volume": InputPathType,
@@ -29,7 +29,7 @@ BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
     "no_zero_attraction": bool,
     "node_dbg": typing.NotRequired[float | None],
 })
-BrainSkinParametersTagged = typing.TypedDict('BrainSkinParametersTagged', {
+BrainSkinParamsDictTagged = typing.TypedDict('BrainSkinParamsDictTagged', {
     "@type": typing.Literal["afni/BrainSkin"],
     "surface": str,
     "skingrid_volume": InputPathType,
@@ -49,7 +49,7 @@ BrainSkinParametersTagged = typing.TypedDict('BrainSkinParametersTagged', {
 
 class BrainSkinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BrainSkinParameters(...)`.
+    Output object returned when calling `BrainSkinParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def brain_skin_params(
     vol_hull: InputPathType | None = None,
     no_zero_attraction: bool = False,
     node_dbg: float | None = None,
-) -> BrainSkinParametersTagged:
+) -> BrainSkinParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def brain_skin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BrainSkinParameters` object.
+    `BrainSkinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def brain_skin_validate(
 
 
 def brain_skin_cargs(
-    params: BrainSkinParameters,
+    params: BrainSkinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def brain_skin_cargs(
 
 
 def brain_skin_outputs(
-    params: BrainSkinParameters,
+    params: BrainSkinParamsDict,
     execution: Execution,
 ) -> BrainSkinOutputs:
     """
@@ -311,7 +311,7 @@ def brain_skin_outputs(
 
 
 def brain_skin_execute(
-    params: BrainSkinParameters,
+    params: BrainSkinParamsDict,
     runner: Runner | None = None,
 ) -> BrainSkinOutputs:
     """
@@ -413,6 +413,8 @@ def brain_skin(
 __all__ = [
     "BRAIN_SKIN_METADATA",
     "BrainSkinOutputs",
+    "BrainSkinParamsDict",
+    "BrainSkinParamsDictTagged",
     "brain_skin",
     "brain_skin_execute",
     "brain_skin_params",

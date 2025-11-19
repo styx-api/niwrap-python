@@ -13,13 +13,13 @@ V__THICKNESS_MASTER_METADATA = Metadata(
 )
 
 
-VThicknessMasterParameters = typing.TypedDict('VThicknessMasterParameters', {
+VThicknessMasterParamsDict = typing.TypedDict('VThicknessMasterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@thickness_master"]],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
 })
-VThicknessMasterParametersTagged = typing.TypedDict('VThicknessMasterParametersTagged', {
+VThicknessMasterParamsDictTagged = typing.TypedDict('VThicknessMasterParamsDictTagged', {
     "@type": typing.Literal["afni/@thickness_master"],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -29,7 +29,7 @@ VThicknessMasterParametersTagged = typing.TypedDict('VThicknessMasterParametersT
 
 class VThicknessMasterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VThicknessMasterParameters(...)`.
+    Output object returned when calling `VThicknessMasterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v__thickness_master_params(
     maskset: InputPathType,
     surfset: InputPathType,
     outdir: str | None = None,
-) -> VThicknessMasterParametersTagged:
+) -> VThicknessMasterParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def v__thickness_master_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VThicknessMasterParameters` object.
+    `VThicknessMasterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -94,7 +94,7 @@ def v__thickness_master_validate(
 
 
 def v__thickness_master_cargs(
-    params: VThicknessMasterParameters,
+    params: VThicknessMasterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def v__thickness_master_cargs(
 
 
 def v__thickness_master_outputs(
-    params: VThicknessMasterParameters,
+    params: VThicknessMasterParamsDict,
     execution: Execution,
 ) -> VThicknessMasterOutputs:
     """
@@ -147,7 +147,7 @@ def v__thickness_master_outputs(
 
 
 def v__thickness_master_execute(
-    params: VThicknessMasterParameters,
+    params: VThicknessMasterParamsDict,
     runner: Runner | None = None,
 ) -> VThicknessMasterOutputs:
     """
@@ -210,6 +210,8 @@ def v__thickness_master(
 
 __all__ = [
     "VThicknessMasterOutputs",
+    "VThicknessMasterParamsDict",
+    "VThicknessMasterParamsDictTagged",
     "V__THICKNESS_MASTER_METADATA",
     "v__thickness_master",
     "v__thickness_master_execute",

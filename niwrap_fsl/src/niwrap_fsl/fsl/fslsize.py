@@ -13,12 +13,12 @@ FSLSIZE_METADATA = Metadata(
 )
 
 
-FslsizeParameters = typing.TypedDict('FslsizeParameters', {
+FslsizeParamsDict = typing.TypedDict('FslsizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslsize"]],
     "input_file": InputPathType,
     "short_format_flag": bool,
 })
-FslsizeParametersTagged = typing.TypedDict('FslsizeParametersTagged', {
+FslsizeParamsDictTagged = typing.TypedDict('FslsizeParamsDictTagged', {
     "@type": typing.Literal["fsl/fslsize"],
     "input_file": InputPathType,
     "short_format_flag": bool,
@@ -27,7 +27,7 @@ FslsizeParametersTagged = typing.TypedDict('FslsizeParametersTagged', {
 
 class FslsizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslsizeParameters(...)`.
+    Output object returned when calling `FslsizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FslsizeOutputs(typing.NamedTuple):
 def fslsize_params(
     input_file: InputPathType,
     short_format_flag: bool = False,
-) -> FslsizeParametersTagged:
+) -> FslsizeParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def fslsize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslsizeParameters` object.
+    `FslsizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fslsize_validate(
 
 
 def fslsize_cargs(
-    params: FslsizeParameters,
+    params: FslsizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def fslsize_cargs(
 
 
 def fslsize_outputs(
-    params: FslsizeParameters,
+    params: FslsizeParamsDict,
     execution: Execution,
 ) -> FslsizeOutputs:
     """
@@ -117,7 +117,7 @@ def fslsize_outputs(
 
 
 def fslsize_execute(
-    params: FslsizeParameters,
+    params: FslsizeParamsDict,
     runner: Runner | None = None,
 ) -> FslsizeOutputs:
     """
@@ -176,6 +176,8 @@ def fslsize(
 __all__ = [
     "FSLSIZE_METADATA",
     "FslsizeOutputs",
+    "FslsizeParamsDict",
+    "FslsizeParamsDictTagged",
     "fslsize",
     "fslsize_execute",
     "fslsize_params",

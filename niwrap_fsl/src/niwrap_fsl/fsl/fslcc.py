@@ -13,7 +13,7 @@ FSLCC_METADATA = Metadata(
 )
 
 
-FslccParameters = typing.TypedDict('FslccParameters', {
+FslccParamsDict = typing.TypedDict('FslccParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslcc"]],
     "first_input": InputPathType,
     "second_input": InputPathType,
@@ -23,7 +23,7 @@ FslccParameters = typing.TypedDict('FslccParameters', {
     "threshold": typing.NotRequired[float | None],
     "decimal_places": typing.NotRequired[float | None],
 })
-FslccParametersTagged = typing.TypedDict('FslccParametersTagged', {
+FslccParamsDictTagged = typing.TypedDict('FslccParamsDictTagged', {
     "@type": typing.Literal["fsl/fslcc"],
     "first_input": InputPathType,
     "second_input": InputPathType,
@@ -37,7 +37,7 @@ FslccParametersTagged = typing.TypedDict('FslccParametersTagged', {
 
 class FslccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslccParameters(...)`.
+    Output object returned when calling `FslccParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def fslcc_params(
     nodemean_flag: bool = False,
     threshold: float | None = None,
     decimal_places: float | None = None,
-) -> FslccParametersTagged:
+) -> FslccParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def fslcc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslccParameters` object.
+    `FslccParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def fslcc_validate(
 
 
 def fslcc_cargs(
-    params: FslccParameters,
+    params: FslccParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def fslcc_cargs(
 
 
 def fslcc_outputs(
-    params: FslccParameters,
+    params: FslccParamsDict,
     execution: Execution,
 ) -> FslccOutputs:
     """
@@ -181,7 +181,7 @@ def fslcc_outputs(
 
 
 def fslcc_execute(
-    params: FslccParameters,
+    params: FslccParamsDict,
     runner: Runner | None = None,
 ) -> FslccOutputs:
     """
@@ -256,6 +256,8 @@ def fslcc(
 __all__ = [
     "FSLCC_METADATA",
     "FslccOutputs",
+    "FslccParamsDict",
+    "FslccParamsDictTagged",
     "fslcc",
     "fslcc_execute",
     "fslcc_params",

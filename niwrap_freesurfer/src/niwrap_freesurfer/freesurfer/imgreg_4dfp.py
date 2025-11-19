@@ -13,7 +13,7 @@ IMGREG_4DFP_METADATA = Metadata(
 )
 
 
-Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
+Imgreg4dfpParamsDict = typing.TypedDict('Imgreg4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/imgreg_4dfp"]],
     "target_image": InputPathType,
     "target_mask": str,
@@ -22,7 +22,7 @@ Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
     "t4file": str,
     "mode": str,
 })
-Imgreg4dfpParametersTagged = typing.TypedDict('Imgreg4dfpParametersTagged', {
+Imgreg4dfpParamsDictTagged = typing.TypedDict('Imgreg4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/imgreg_4dfp"],
     "target_image": InputPathType,
     "target_mask": str,
@@ -35,7 +35,7 @@ Imgreg4dfpParametersTagged = typing.TypedDict('Imgreg4dfpParametersTagged', {
 
 class Imgreg4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Imgreg4dfpParameters(...)`.
+    Output object returned when calling `Imgreg4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def imgreg_4dfp_params(
     mode: str,
     target_mask: str = "none",
     source_mask: str = "none",
-) -> Imgreg4dfpParametersTagged:
+) -> Imgreg4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def imgreg_4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Imgreg4dfpParameters` object.
+    `Imgreg4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def imgreg_4dfp_validate(
 
 
 def imgreg_4dfp_cargs(
-    params: Imgreg4dfpParameters,
+    params: Imgreg4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def imgreg_4dfp_cargs(
 
 
 def imgreg_4dfp_outputs(
-    params: Imgreg4dfpParameters,
+    params: Imgreg4dfpParamsDict,
     execution: Execution,
 ) -> Imgreg4dfpOutputs:
     """
@@ -156,7 +156,7 @@ def imgreg_4dfp_outputs(
 
 
 def imgreg_4dfp_execute(
-    params: Imgreg4dfpParameters,
+    params: Imgreg4dfpParamsDict,
     runner: Runner | None = None,
 ) -> Imgreg4dfpOutputs:
     """
@@ -227,6 +227,8 @@ def imgreg_4dfp(
 __all__ = [
     "IMGREG_4DFP_METADATA",
     "Imgreg4dfpOutputs",
+    "Imgreg4dfpParamsDict",
+    "Imgreg4dfpParamsDictTagged",
     "imgreg_4dfp",
     "imgreg_4dfp_execute",
     "imgreg_4dfp_params",

@@ -13,7 +13,7 @@ V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
 )
 
 
-VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParameters', {
+VDjunctEdgyAlignCheckParamsDict = typing.TypedDict('VDjunctEdgyAlignCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_edgy_align_check"]],
     "ULAY": str,
     "OLAY": str,
@@ -42,7 +42,7 @@ VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParamet
     "ulay_range_nz": typing.NotRequired[list[float] | None],
     "ulay_range_am": typing.NotRequired[list[float] | None],
 })
-VDjunctEdgyAlignCheckParametersTagged = typing.TypedDict('VDjunctEdgyAlignCheckParametersTagged', {
+VDjunctEdgyAlignCheckParamsDictTagged = typing.TypedDict('VDjunctEdgyAlignCheckParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_edgy_align_check"],
     "ULAY": str,
     "OLAY": str,
@@ -75,7 +75,7 @@ VDjunctEdgyAlignCheckParametersTagged = typing.TypedDict('VDjunctEdgyAlignCheckP
 
 class VDjunctEdgyAlignCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctEdgyAlignCheckParameters(...)`.
+    Output object returned when calling `VDjunctEdgyAlignCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +108,7 @@ def v__djunct_edgy_align_check_params(
     ulay_range: list[float] | None = None,
     ulay_range_nz: list[float] | None = None,
     ulay_range_am: list[float] | None = None,
-) -> VDjunctEdgyAlignCheckParametersTagged:
+) -> VDjunctEdgyAlignCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def v__djunct_edgy_align_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctEdgyAlignCheckParameters` object.
+    `VDjunctEdgyAlignCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -313,7 +313,7 @@ def v__djunct_edgy_align_check_validate(
 
 
 def v__djunct_edgy_align_check_cargs(
-    params: VDjunctEdgyAlignCheckParameters,
+    params: VDjunctEdgyAlignCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -380,7 +380,7 @@ def v__djunct_edgy_align_check_cargs(
 
 
 def v__djunct_edgy_align_check_outputs(
-    params: VDjunctEdgyAlignCheckParameters,
+    params: VDjunctEdgyAlignCheckParamsDict,
     execution: Execution,
 ) -> VDjunctEdgyAlignCheckOutputs:
     """
@@ -399,7 +399,7 @@ def v__djunct_edgy_align_check_outputs(
 
 
 def v__djunct_edgy_align_check_execute(
-    params: VDjunctEdgyAlignCheckParameters,
+    params: VDjunctEdgyAlignCheckParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctEdgyAlignCheckOutputs:
     """
@@ -531,6 +531,8 @@ def v__djunct_edgy_align_check(
 
 __all__ = [
     "VDjunctEdgyAlignCheckOutputs",
+    "VDjunctEdgyAlignCheckParamsDict",
+    "VDjunctEdgyAlignCheckParamsDictTagged",
     "V__DJUNCT_EDGY_ALIGN_CHECK_METADATA",
     "v__djunct_edgy_align_check",
     "v__djunct_edgy_align_check_execute",

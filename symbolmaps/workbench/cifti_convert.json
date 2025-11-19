@@ -3,7 +3,7 @@
   "properties": {
     "to-gifti-ext": {
       "var_param": "to_gifti_ext",
-      "fn_struct_make_params": "cifti_convert_to_gifti_ext_params",
+      "fn_struct_make_params": "cifti_convert_to_gifti_ext",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"
@@ -15,7 +15,7 @@
     },
     "from-gifti-ext": {
       "var_param": "from_gifti_ext",
-      "fn_struct_make_params": "cifti_convert_from_gifti_ext_params",
+      "fn_struct_make_params": "cifti_convert_from_gifti_ext",
       "properties": {
         "gifti-in": {
           "var_param": "gifti_in"
@@ -25,7 +25,7 @@
         },
         "reset-timepoints": {
           "var_param": "reset_timepoints",
-          "fn_struct_make_params": "cifti_convert_reset_timepoints_params",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints",
           "properties": {
             "timestep": {
               "var_param": "timestep"
@@ -46,7 +46,7 @@
         },
         "replace-binary": {
           "var_param": "replace_binary",
-          "fn_struct_make_params": "cifti_convert_replace_binary_params",
+          "fn_struct_make_params": "cifti_convert_replace_binary",
           "properties": {
             "binary-in": {
               "var_param": "binary_in"
@@ -63,7 +63,7 @@
     },
     "to-nifti": {
       "var_param": "to_nifti",
-      "fn_struct_make_params": "cifti_convert_to_nifti_params",
+      "fn_struct_make_params": "cifti_convert_to_nifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"
@@ -81,7 +81,7 @@
     },
     "from-nifti": {
       "var_param": "from_nifti",
-      "fn_struct_make_params": "cifti_convert_from_nifti_params",
+      "fn_struct_make_params": "cifti_convert_from_nifti",
       "properties": {
         "nifti-in": {
           "var_param": "nifti_in"
@@ -94,7 +94,7 @@
         },
         "reset-timepoints": {
           "var_param": "reset_timepoints",
-          "fn_struct_make_params": "cifti_convert_reset_timepoints_params_",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_",
           "properties": {
             "timestep": {
               "var_param": "timestep"
@@ -114,7 +114,7 @@
     },
     "to-text": {
       "var_param": "to_text",
-      "fn_struct_make_params": "cifti_convert_to_text_params",
+      "fn_struct_make_params": "cifti_convert_to_text",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"
@@ -129,7 +129,7 @@
     },
     "from-text": {
       "var_param": "from_text",
-      "fn_struct_make_params": "cifti_convert_from_text_params",
+      "fn_struct_make_params": "cifti_convert_from_text",
       "properties": {
         "text-in": {
           "var_param": "text_in"
@@ -145,7 +145,7 @@
         },
         "reset-timepoints": {
           "var_param": "reset_timepoints",
-          "fn_struct_make_params": "cifti_convert_reset_timepoints_params_2",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_2",
           "properties": {
             "timestep": {
               "var_param": "timestep"

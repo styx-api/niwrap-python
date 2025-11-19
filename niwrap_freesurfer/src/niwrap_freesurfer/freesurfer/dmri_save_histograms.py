@@ -13,7 +13,7 @@ DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
 )
 
 
-DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', {
+DmriSaveHistogramsParamsDict = typing.TypedDict('DmriSaveHistogramsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_saveHistograms"]],
     "parcellation": InputPathType,
     "number_of_bundles": float,
@@ -21,7 +21,7 @@ DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', 
     "output_csv": str,
     "brain_bundle_flag": bool,
 })
-DmriSaveHistogramsParametersTagged = typing.TypedDict('DmriSaveHistogramsParametersTagged', {
+DmriSaveHistogramsParamsDictTagged = typing.TypedDict('DmriSaveHistogramsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_saveHistograms"],
     "parcellation": InputPathType,
     "number_of_bundles": float,
@@ -33,7 +33,7 @@ DmriSaveHistogramsParametersTagged = typing.TypedDict('DmriSaveHistogramsParamet
 
 class DmriSaveHistogramsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriSaveHistogramsParameters(...)`.
+    Output object returned when calling `DmriSaveHistogramsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def dmri_save_histograms_params(
     vtk_bundle_list: list[InputPathType],
     output_csv: str,
     brain_bundle_flag: bool = False,
-) -> DmriSaveHistogramsParametersTagged:
+) -> DmriSaveHistogramsParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def dmri_save_histograms_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriSaveHistogramsParameters` object.
+    `DmriSaveHistogramsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def dmri_save_histograms_validate(
 
 
 def dmri_save_histograms_cargs(
-    params: DmriSaveHistogramsParameters,
+    params: DmriSaveHistogramsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def dmri_save_histograms_cargs(
 
 
 def dmri_save_histograms_outputs(
-    params: DmriSaveHistogramsParameters,
+    params: DmriSaveHistogramsParamsDict,
     execution: Execution,
 ) -> DmriSaveHistogramsOutputs:
     """
@@ -162,7 +162,7 @@ def dmri_save_histograms_outputs(
 
 
 def dmri_save_histograms_execute(
-    params: DmriSaveHistogramsParameters,
+    params: DmriSaveHistogramsParamsDict,
     runner: Runner | None = None,
 ) -> DmriSaveHistogramsOutputs:
     """
@@ -230,6 +230,8 @@ def dmri_save_histograms(
 __all__ = [
     "DMRI_SAVE_HISTOGRAMS_METADATA",
     "DmriSaveHistogramsOutputs",
+    "DmriSaveHistogramsParamsDict",
+    "DmriSaveHistogramsParamsDictTagged",
     "dmri_save_histograms",
     "dmri_save_histograms_execute",
     "dmri_save_histograms_params",

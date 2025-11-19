@@ -13,12 +13,12 @@ FSLPSPEC_METADATA = Metadata(
 )
 
 
-FslpspecParameters = typing.TypedDict('FslpspecParameters', {
+FslpspecParamsDict = typing.TypedDict('FslpspecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslpspec"]],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
-FslpspecParametersTagged = typing.TypedDict('FslpspecParametersTagged', {
+FslpspecParamsDictTagged = typing.TypedDict('FslpspecParamsDictTagged', {
     "@type": typing.Literal["fsl/fslpspec"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ FslpspecParametersTagged = typing.TypedDict('FslpspecParametersTagged', {
 
 class FslpspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslpspecParameters(...)`.
+    Output object returned when calling `FslpspecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FslpspecOutputs(typing.NamedTuple):
 def fslpspec_params(
     infile: InputPathType,
     outfile: str | None = None,
-) -> FslpspecParametersTagged:
+) -> FslpspecParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def fslpspec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslpspecParameters` object.
+    `FslpspecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fslpspec_validate(
 
 
 def fslpspec_cargs(
-    params: FslpspecParameters,
+    params: FslpspecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def fslpspec_cargs(
 
 
 def fslpspec_outputs(
-    params: FslpspecParameters,
+    params: FslpspecParamsDict,
     execution: Execution,
 ) -> FslpspecOutputs:
     """
@@ -120,7 +120,7 @@ def fslpspec_outputs(
 
 
 def fslpspec_execute(
-    params: FslpspecParameters,
+    params: FslpspecParamsDict,
     runner: Runner | None = None,
 ) -> FslpspecOutputs:
     """
@@ -179,6 +179,8 @@ def fslpspec(
 __all__ = [
     "FSLPSPEC_METADATA",
     "FslpspecOutputs",
+    "FslpspecParamsDict",
+    "FslpspecParamsDictTagged",
     "fslpspec",
     "fslpspec_execute",
     "fslpspec_params",

@@ -13,7 +13,7 @@ MRI_EM_REGISTER_METADATA = Metadata(
 )
 
 
-MriEmRegisterParameters = typing.TypedDict('MriEmRegisterParameters', {
+MriEmRegisterParamsDict = typing.TypedDict('MriEmRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_em_register"]],
     "input_volume": InputPathType,
     "template_gca": InputPathType,
@@ -72,7 +72,7 @@ MriEmRegisterParameters = typing.TypedDict('MriEmRegisterParameters', {
     "momentum": typing.NotRequired[float | None],
     "threads": typing.NotRequired[float | None],
 })
-MriEmRegisterParametersTagged = typing.TypedDict('MriEmRegisterParametersTagged', {
+MriEmRegisterParamsDictTagged = typing.TypedDict('MriEmRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_em_register"],
     "input_volume": InputPathType,
     "template_gca": InputPathType,
@@ -135,7 +135,7 @@ MriEmRegisterParametersTagged = typing.TypedDict('MriEmRegisterParametersTagged'
 
 class MriEmRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEmRegisterParameters(...)`.
+    Output object returned when calling `MriEmRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -200,7 +200,7 @@ def mri_em_register_params(
     ctl_point_pct: float | None = None,
     momentum: float | None = None,
     threads: float | None = None,
-) -> MriEmRegisterParametersTagged:
+) -> MriEmRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -377,7 +377,7 @@ def mri_em_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEmRegisterParameters` object.
+    `MriEmRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -588,7 +588,7 @@ def mri_em_register_validate(
 
 
 def mri_em_register_cargs(
-    params: MriEmRegisterParameters,
+    params: MriEmRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -844,7 +844,7 @@ def mri_em_register_cargs(
 
 
 def mri_em_register_outputs(
-    params: MriEmRegisterParameters,
+    params: MriEmRegisterParamsDict,
     execution: Execution,
 ) -> MriEmRegisterOutputs:
     """
@@ -864,7 +864,7 @@ def mri_em_register_outputs(
 
 
 def mri_em_register_execute(
-    params: MriEmRegisterParameters,
+    params: MriEmRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriEmRegisterOutputs:
     """
@@ -1088,6 +1088,8 @@ def mri_em_register(
 __all__ = [
     "MRI_EM_REGISTER_METADATA",
     "MriEmRegisterOutputs",
+    "MriEmRegisterParamsDict",
+    "MriEmRegisterParamsDictTagged",
     "mri_em_register",
     "mri_em_register_execute",
     "mri_em_register_params",

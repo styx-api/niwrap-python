@@ -13,7 +13,7 @@ MRIS_INTENSITY_PROFILE_METADATA = Metadata(
 )
 
 
-MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameters', {
+MrisIntensityProfileParamsDict = typing.TypedDict('MrisIntensityProfileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_intensity_profile"]],
     "subject_name": str,
     "hemi": str,
@@ -30,7 +30,7 @@ MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameter
     "dst": typing.NotRequired[InputPathType | None],
     "invert_flag": bool,
 })
-MrisIntensityProfileParametersTagged = typing.TypedDict('MrisIntensityProfileParametersTagged', {
+MrisIntensityProfileParamsDictTagged = typing.TypedDict('MrisIntensityProfileParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_intensity_profile"],
     "subject_name": str,
     "hemi": str,
@@ -51,7 +51,7 @@ MrisIntensityProfileParametersTagged = typing.TypedDict('MrisIntensityProfilePar
 
 class MrisIntensityProfileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisIntensityProfileParameters(...)`.
+    Output object returned when calling `MrisIntensityProfileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def mris_intensity_profile_params(
     src: InputPathType | None = None,
     dst: InputPathType | None = None,
     invert_flag: bool = False,
-) -> MrisIntensityProfileParametersTagged:
+) -> MrisIntensityProfileParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def mris_intensity_profile_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisIntensityProfileParameters` object.
+    `MrisIntensityProfileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def mris_intensity_profile_validate(
 
 
 def mris_intensity_profile_cargs(
-    params: MrisIntensityProfileParameters,
+    params: MrisIntensityProfileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def mris_intensity_profile_cargs(
 
 
 def mris_intensity_profile_outputs(
-    params: MrisIntensityProfileParameters,
+    params: MrisIntensityProfileParamsDict,
     execution: Execution,
 ) -> MrisIntensityProfileOutputs:
     """
@@ -279,7 +279,7 @@ def mris_intensity_profile_outputs(
 
 
 def mris_intensity_profile_execute(
-    params: MrisIntensityProfileParameters,
+    params: MrisIntensityProfileParamsDict,
     runner: Runner | None = None,
 ) -> MrisIntensityProfileOutputs:
     """
@@ -379,6 +379,8 @@ def mris_intensity_profile(
 __all__ = [
     "MRIS_INTENSITY_PROFILE_METADATA",
     "MrisIntensityProfileOutputs",
+    "MrisIntensityProfileParamsDict",
+    "MrisIntensityProfileParamsDictTagged",
     "mris_intensity_profile",
     "mris_intensity_profile_execute",
     "mris_intensity_profile_params",

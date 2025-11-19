@@ -13,7 +13,7 @@ V_1D_RPLOT_METADATA = Metadata(
 )
 
 
-V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
+V1dRplotParamsDict = typing.TypedDict('V1dRplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dRplot"]],
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
     "save_plot": bool,
     "column_name_show": bool,
 })
-V1dRplotParametersTagged = typing.TypedDict('V1dRplotParametersTagged', {
+V1dRplotParamsDictTagged = typing.TypedDict('V1dRplotParamsDictTagged', {
     "@type": typing.Literal["afni/1dRplot"],
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -61,7 +61,7 @@ V1dRplotParametersTagged = typing.TypedDict('V1dRplotParametersTagged', {
 
 class V1dRplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dRplotParameters(...)`.
+    Output object returned when calling `V1dRplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def v_1d_rplot_params(
     legend_position: typing.Literal["bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"] | None = None,
     save_plot: bool = False,
     column_name_show: bool = False,
-) -> V1dRplotParametersTagged:
+) -> V1dRplotParamsDictTagged:
     """
     Build parameters.
     
@@ -165,7 +165,7 @@ def v_1d_rplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dRplotParameters` object.
+    `V1dRplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -257,7 +257,7 @@ def v_1d_rplot_validate(
 
 
 def v_1d_rplot_cargs(
-    params: V1dRplotParameters,
+    params: V1dRplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -360,7 +360,7 @@ def v_1d_rplot_cargs(
 
 
 def v_1d_rplot_outputs(
-    params: V1dRplotParameters,
+    params: V1dRplotParamsDict,
     execution: Execution,
 ) -> V1dRplotOutputs:
     """
@@ -380,7 +380,7 @@ def v_1d_rplot_outputs(
 
 
 def v_1d_rplot_execute(
-    params: V1dRplotParameters,
+    params: V1dRplotParamsDict,
     runner: Runner | None = None,
 ) -> V1dRplotOutputs:
     """
@@ -493,6 +493,8 @@ def v_1d_rplot(
 
 __all__ = [
     "V1dRplotOutputs",
+    "V1dRplotParamsDict",
+    "V1dRplotParamsDictTagged",
     "V_1D_RPLOT_METADATA",
     "v_1d_rplot",
     "v_1d_rplot_execute",

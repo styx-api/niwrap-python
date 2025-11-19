@@ -13,7 +13,7 @@ MRI_EXTRACT_LABEL_METADATA = Metadata(
 )
 
 
-MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
+MriExtractLabelParamsDict = typing.TypedDict('MriExtractLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_label"]],
     "input_volume": InputPathType,
     "labels": list[str],
@@ -24,7 +24,7 @@ MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
     "dilate": typing.NotRequired[float | None],
     "erode": typing.NotRequired[float | None],
 })
-MriExtractLabelParametersTagged = typing.TypedDict('MriExtractLabelParametersTagged', {
+MriExtractLabelParamsDictTagged = typing.TypedDict('MriExtractLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_extract_label"],
     "input_volume": InputPathType,
     "labels": list[str],
@@ -39,7 +39,7 @@ MriExtractLabelParametersTagged = typing.TypedDict('MriExtractLabelParametersTag
 
 class MriExtractLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExtractLabelParameters(...)`.
+    Output object returned when calling `MriExtractLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def mri_extract_label_params(
     exit_none_found: bool = False,
     dilate: float | None = None,
     erode: float | None = None,
-) -> MriExtractLabelParametersTagged:
+) -> MriExtractLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def mri_extract_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExtractLabelParameters` object.
+    `MriExtractLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def mri_extract_label_validate(
 
 
 def mri_extract_label_cargs(
-    params: MriExtractLabelParameters,
+    params: MriExtractLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def mri_extract_label_cargs(
 
 
 def mri_extract_label_outputs(
-    params: MriExtractLabelParameters,
+    params: MriExtractLabelParamsDict,
     execution: Execution,
 ) -> MriExtractLabelOutputs:
     """
@@ -201,7 +201,7 @@ def mri_extract_label_outputs(
 
 
 def mri_extract_label_execute(
-    params: MriExtractLabelParameters,
+    params: MriExtractLabelParamsDict,
     runner: Runner | None = None,
 ) -> MriExtractLabelOutputs:
     """
@@ -280,6 +280,8 @@ def mri_extract_label(
 __all__ = [
     "MRI_EXTRACT_LABEL_METADATA",
     "MriExtractLabelOutputs",
+    "MriExtractLabelParamsDict",
+    "MriExtractLabelParamsDictTagged",
     "mri_extract_label",
     "mri_extract_label_execute",
     "mri_extract_label_params",

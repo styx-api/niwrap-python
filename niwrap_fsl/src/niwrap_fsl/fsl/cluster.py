@@ -13,7 +13,7 @@ CLUSTER_METADATA = Metadata(
 )
 
 
-ClusterParameters = typing.TypedDict('ClusterParameters', {
+ClusterParamsDict = typing.TypedDict('ClusterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/cluster"]],
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
@@ -50,7 +50,7 @@ ClusterParameters = typing.TypedDict('ClusterParameters', {
     "warpfield_file": typing.NotRequired[InputPathType | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
 })
-ClusterParametersTagged = typing.TypedDict('ClusterParametersTagged', {
+ClusterParamsDictTagged = typing.TypedDict('ClusterParamsDictTagged', {
     "@type": typing.Literal["fsl/cluster"],
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
@@ -91,7 +91,7 @@ ClusterParametersTagged = typing.TypedDict('ClusterParametersTagged', {
 
 class ClusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ClusterParameters(...)`.
+    Output object returned when calling `ClusterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -148,7 +148,7 @@ def cluster_params(
     volume: int | None = None,
     warpfield_file: InputPathType | None = None,
     xfm_file: InputPathType | None = None,
-) -> ClusterParametersTagged:
+) -> ClusterParamsDictTagged:
     """
     Build parameters.
     
@@ -263,7 +263,7 @@ def cluster_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ClusterParameters` object.
+    `ClusterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -392,7 +392,7 @@ def cluster_validate(
 
 
 def cluster_cargs(
-    params: ClusterParameters,
+    params: ClusterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -468,7 +468,7 @@ def cluster_cargs(
 
 
 def cluster_outputs(
-    params: ClusterParameters,
+    params: ClusterParamsDict,
     execution: Execution,
 ) -> ClusterOutputs:
     """
@@ -495,7 +495,7 @@ def cluster_outputs(
 
 
 def cluster_execute(
-    params: ClusterParameters,
+    params: ClusterParamsDict,
     runner: Runner | None = None,
 ) -> ClusterOutputs:
     """
@@ -659,6 +659,8 @@ def cluster(
 __all__ = [
     "CLUSTER_METADATA",
     "ClusterOutputs",
+    "ClusterParamsDict",
+    "ClusterParamsDictTagged",
     "cluster",
     "cluster_execute",
     "cluster_params",

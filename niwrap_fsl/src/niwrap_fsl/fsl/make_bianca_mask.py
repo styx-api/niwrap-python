@@ -13,7 +13,7 @@ MAKE_BIANCA_MASK_METADATA = Metadata(
 )
 
 
-MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
+MakeBiancaMaskParamsDict = typing.TypedDict('MakeBiancaMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/make_bianca_mask"]],
     "input_image": InputPathType,
     "output_image": str,
@@ -37,7 +37,7 @@ MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
     "verbose_flag": bool,
     "debug_flag": bool,
 })
-MakeBiancaMaskParametersTagged = typing.TypedDict('MakeBiancaMaskParametersTagged', {
+MakeBiancaMaskParamsDictTagged = typing.TypedDict('MakeBiancaMaskParamsDictTagged', {
     "@type": typing.Literal["fsl/make_bianca_mask"],
     "input_image": InputPathType,
     "output_image": str,
@@ -65,7 +65,7 @@ MakeBiancaMaskParametersTagged = typing.TypedDict('MakeBiancaMaskParametersTagge
 
 class MakeBiancaMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeBiancaMaskParameters(...)`.
+    Output object returned when calling `MakeBiancaMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def make_bianca_mask_params(
     additional_surfaces_t2: InputPathType | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,
-) -> MakeBiancaMaskParametersTagged:
+) -> MakeBiancaMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -173,7 +173,7 @@ def make_bianca_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeBiancaMaskParameters` object.
+    `MakeBiancaMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -266,7 +266,7 @@ def make_bianca_mask_validate(
 
 
 def make_bianca_mask_cargs(
-    params: MakeBiancaMaskParameters,
+    params: MakeBiancaMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def make_bianca_mask_cargs(
 
 
 def make_bianca_mask_outputs(
-    params: MakeBiancaMaskParameters,
+    params: MakeBiancaMaskParamsDict,
     execution: Execution,
 ) -> MakeBiancaMaskOutputs:
     """
@@ -359,7 +359,7 @@ def make_bianca_mask_outputs(
 
 
 def make_bianca_mask_execute(
-    params: MakeBiancaMaskParameters,
+    params: MakeBiancaMaskParamsDict,
     runner: Runner | None = None,
 ) -> MakeBiancaMaskOutputs:
     """
@@ -487,6 +487,8 @@ def make_bianca_mask(
 __all__ = [
     "MAKE_BIANCA_MASK_METADATA",
     "MakeBiancaMaskOutputs",
+    "MakeBiancaMaskParamsDict",
+    "MakeBiancaMaskParamsDictTagged",
     "make_bianca_mask",
     "make_bianca_mask_execute",
     "make_bianca_mask_params",

@@ -13,7 +13,7 @@ MRIS_CONGEAL_METADATA = Metadata(
 )
 
 
-MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
+MrisCongealParamsDict = typing.TypedDict('MrisCongealParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_congeal"]],
     "input_surface_name": str,
     "hemi": str,
@@ -31,7 +31,7 @@ MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
     "overlay_dir": typing.NotRequired[str | None],
     "target_subject": bool,
 })
-MrisCongealParametersTagged = typing.TypedDict('MrisCongealParametersTagged', {
+MrisCongealParamsDictTagged = typing.TypedDict('MrisCongealParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_congeal"],
     "input_surface_name": str,
     "hemi": str,
@@ -53,7 +53,7 @@ MrisCongealParametersTagged = typing.TypedDict('MrisCongealParametersTagged', {
 
 class MrisCongealOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCongealParameters(...)`.
+    Output object returned when calling `MrisCongealParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def mris_congeal_params(
     overlay: list[str] | None = None,
     overlay_dir: str | None = None,
     target_subject: bool = False,
-) -> MrisCongealParametersTagged:
+) -> MrisCongealParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def mris_congeal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCongealParameters` object.
+    `MrisCongealParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def mris_congeal_validate(
 
 
 def mris_congeal_cargs(
-    params: MrisCongealParameters,
+    params: MrisCongealParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def mris_congeal_cargs(
 
 
 def mris_congeal_outputs(
-    params: MrisCongealParameters,
+    params: MrisCongealParamsDict,
     execution: Execution,
 ) -> MrisCongealOutputs:
     """
@@ -300,7 +300,7 @@ def mris_congeal_outputs(
 
 
 def mris_congeal_execute(
-    params: MrisCongealParameters,
+    params: MrisCongealParamsDict,
     runner: Runner | None = None,
 ) -> MrisCongealOutputs:
     """
@@ -401,6 +401,8 @@ def mris_congeal(
 __all__ = [
     "MRIS_CONGEAL_METADATA",
     "MrisCongealOutputs",
+    "MrisCongealParamsDict",
+    "MrisCongealParamsDictTagged",
     "mris_congeal",
     "mris_congeal_execute",
     "mris_congeal_params",

@@ -13,13 +13,13 @@ IMGLOB_METADATA = Metadata(
 )
 
 
-ImglobParameters = typing.TypedDict('ImglobParameters', {
+ImglobParamsDict = typing.TypedDict('ImglobParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/imglob"]],
     "multiple_extensions": bool,
     "input_list": list[str],
     "single_extension": bool,
 })
-ImglobParametersTagged = typing.TypedDict('ImglobParametersTagged', {
+ImglobParamsDictTagged = typing.TypedDict('ImglobParamsDictTagged', {
     "@type": typing.Literal["fsl/imglob"],
     "multiple_extensions": bool,
     "input_list": list[str],
@@ -29,7 +29,7 @@ ImglobParametersTagged = typing.TypedDict('ImglobParametersTagged', {
 
 class ImglobOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImglobParameters(...)`.
+    Output object returned when calling `ImglobParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def imglob_params(
     input_list: list[str],
     multiple_extensions: bool = False,
     single_extension: bool = False,
-) -> ImglobParametersTagged:
+) -> ImglobParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def imglob_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImglobParameters` object.
+    `ImglobParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def imglob_validate(
 
 
 def imglob_cargs(
-    params: ImglobParameters,
+    params: ImglobParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def imglob_cargs(
 
 
 def imglob_outputs(
-    params: ImglobParameters,
+    params: ImglobParamsDict,
     execution: Execution,
 ) -> ImglobOutputs:
     """
@@ -131,7 +131,7 @@ def imglob_outputs(
 
 
 def imglob_execute(
-    params: ImglobParameters,
+    params: ImglobParamsDict,
     runner: Runner | None = None,
 ) -> ImglobOutputs:
     """
@@ -193,6 +193,8 @@ def imglob(
 __all__ = [
     "IMGLOB_METADATA",
     "ImglobOutputs",
+    "ImglobParamsDict",
+    "ImglobParamsDictTagged",
     "imglob",
     "imglob_execute",
     "imglob_params",

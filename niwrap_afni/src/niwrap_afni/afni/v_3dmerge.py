@@ -13,7 +13,7 @@ V_3DMERGE_METADATA = Metadata(
 )
 
 
-V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
+V3dmergeParamsDict = typing.TypedDict('V3dmergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmerge"]],
     "input_files": list[InputPathType],
     "output_file": str,
@@ -28,7 +28,7 @@ V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
     "gmax": bool,
     "quiet": bool,
 })
-V3dmergeParametersTagged = typing.TypedDict('V3dmergeParametersTagged', {
+V3dmergeParamsDictTagged = typing.TypedDict('V3dmergeParamsDictTagged', {
     "@type": typing.Literal["afni/3dmerge"],
     "input_files": list[InputPathType],
     "output_file": str,
@@ -47,7 +47,7 @@ V3dmergeParametersTagged = typing.TypedDict('V3dmergeParametersTagged', {
 
 class V3dmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmergeParameters(...)`.
+    Output object returned when calling `V3dmergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def v_3dmerge_params(
     gmean: bool = False,
     gmax: bool = False,
     quiet: bool = False,
-) -> V3dmergeParametersTagged:
+) -> V3dmergeParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def v_3dmerge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmergeParameters` object.
+    `V3dmergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def v_3dmerge_validate(
 
 
 def v_3dmerge_cargs(
-    params: V3dmergeParameters,
+    params: V3dmergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,7 +238,7 @@ def v_3dmerge_cargs(
 
 
 def v_3dmerge_outputs(
-    params: V3dmergeParameters,
+    params: V3dmergeParamsDict,
     execution: Execution,
 ) -> V3dmergeOutputs:
     """
@@ -258,7 +258,7 @@ def v_3dmerge_outputs(
 
 
 def v_3dmerge_execute(
-    params: V3dmergeParameters,
+    params: V3dmergeParamsDict,
     runner: Runner | None = None,
 ) -> V3dmergeOutputs:
     """
@@ -351,6 +351,8 @@ def v_3dmerge(
 
 __all__ = [
     "V3dmergeOutputs",
+    "V3dmergeParamsDict",
+    "V3dmergeParamsDictTagged",
     "V_3DMERGE_METADATA",
     "v_3dmerge",
     "v_3dmerge_execute",

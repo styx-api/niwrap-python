@@ -13,19 +13,19 @@ SH2RESPONSE_METADATA = Metadata(
 )
 
 
-Sh2responseConfigParameters = typing.TypedDict('Sh2responseConfigParameters', {
+Sh2responseConfigParamsDict = typing.TypedDict('Sh2responseConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Sh2responseConfigParametersTagged = typing.TypedDict('Sh2responseConfigParametersTagged', {
+Sh2responseConfigParamsDictTagged = typing.TypedDict('Sh2responseConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
+Sh2responseParamsDict = typing.TypedDict('Sh2responseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/sh2response"]],
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
@@ -42,7 +42,7 @@ Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
     "directions": InputPathType,
     "response": str,
 })
-Sh2responseParametersTagged = typing.TypedDict('Sh2responseParametersTagged', {
+Sh2responseParamsDictTagged = typing.TypedDict('Sh2responseParamsDictTagged', {
     "@type": typing.Literal["mrtrix/sh2response"],
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ Sh2responseParametersTagged = typing.TypedDict('Sh2responseParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
@@ -61,10 +61,10 @@ Sh2responseParametersTagged = typing.TypedDict('Sh2responseParametersTagged', {
 })
 
 
-def sh2response_config_params(
+def sh2response_config(
     key: str,
     value: str,
-) -> Sh2responseConfigParametersTagged:
+) -> Sh2responseConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def sh2response_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2responseConfigParameters` object.
+    `Sh2responseConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def sh2response_config_validate(
 
 
 def sh2response_config_cargs(
-    params: Sh2responseConfigParameters,
+    params: Sh2responseConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def sh2response_config_cargs(
 
 class Sh2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Sh2responseParameters(...)`.
+    Output object returned when calling `Sh2responseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def sh2response_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2responseConfigParameters] | None = None,
+    config: list[Sh2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2responseParametersTagged:
+) -> Sh2responseParamsDictTagged:
     """
     Build parameters.
     
@@ -212,7 +212,7 @@ def sh2response_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2responseParameters` object.
+    `Sh2responseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -246,7 +246,7 @@ def sh2response_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2responseConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2responseConfigParamsDict] | None`')
         for e in params["config"]:
             sh2response_config_validate(e)
     if params.get("help", False) is None:
@@ -276,7 +276,7 @@ def sh2response_validate(
 
 
 def sh2response_cargs(
-    params: Sh2responseParameters,
+    params: Sh2responseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -327,7 +327,7 @@ def sh2response_cargs(
 
 
 def sh2response_outputs(
-    params: Sh2responseParameters,
+    params: Sh2responseParamsDict,
     execution: Execution,
 ) -> Sh2responseOutputs:
     """
@@ -348,7 +348,7 @@ def sh2response_outputs(
 
 
 def sh2response_execute(
-    params: Sh2responseParameters,
+    params: Sh2responseParamsDict,
     runner: Runner | None = None,
 ) -> Sh2responseOutputs:
     """
@@ -397,7 +397,7 @@ def sh2response(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2responseConfigParameters] | None = None,
+    config: list[Sh2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -469,9 +469,13 @@ def sh2response(
 
 __all__ = [
     "SH2RESPONSE_METADATA",
+    "Sh2responseConfigParamsDict",
+    "Sh2responseConfigParamsDictTagged",
     "Sh2responseOutputs",
+    "Sh2responseParamsDict",
+    "Sh2responseParamsDictTagged",
     "sh2response",
-    "sh2response_config_params",
+    "sh2response_config",
     "sh2response_execute",
     "sh2response_params",
 ]

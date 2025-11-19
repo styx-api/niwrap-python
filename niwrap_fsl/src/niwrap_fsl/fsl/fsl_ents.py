@@ -13,7 +13,7 @@ FSL_ENTS_METADATA = Metadata(
 )
 
 
-FslEntsParameters = typing.TypedDict('FslEntsParameters', {
+FslEntsParamsDict = typing.TypedDict('FslEntsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_ents"]],
     "icadir": str,
     "components": list[str],
@@ -21,7 +21,7 @@ FslEntsParameters = typing.TypedDict('FslEntsParameters', {
     "overwrite": bool,
     "conffile": typing.NotRequired[list[InputPathType] | None],
 })
-FslEntsParametersTagged = typing.TypedDict('FslEntsParametersTagged', {
+FslEntsParamsDictTagged = typing.TypedDict('FslEntsParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_ents"],
     "icadir": str,
     "components": list[str],
@@ -33,7 +33,7 @@ FslEntsParametersTagged = typing.TypedDict('FslEntsParametersTagged', {
 
 class FslEntsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslEntsParameters(...)`.
+    Output object returned when calling `FslEntsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def fsl_ents_params(
     outfile: InputPathType | None = None,
     overwrite: bool = False,
     conffile: list[InputPathType] | None = None,
-) -> FslEntsParametersTagged:
+) -> FslEntsParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def fsl_ents_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslEntsParameters` object.
+    `FslEntsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def fsl_ents_validate(
 
 
 def fsl_ents_cargs(
-    params: FslEntsParameters,
+    params: FslEntsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def fsl_ents_cargs(
 
 
 def fsl_ents_outputs(
-    params: FslEntsParameters,
+    params: FslEntsParamsDict,
     execution: Execution,
 ) -> FslEntsOutputs:
     """
@@ -165,7 +165,7 @@ def fsl_ents_outputs(
 
 
 def fsl_ents_execute(
-    params: FslEntsParameters,
+    params: FslEntsParamsDict,
     runner: Runner | None = None,
 ) -> FslEntsOutputs:
     """
@@ -234,6 +234,8 @@ def fsl_ents(
 __all__ = [
     "FSL_ENTS_METADATA",
     "FslEntsOutputs",
+    "FslEntsParamsDict",
+    "FslEntsParamsDictTagged",
     "fsl_ents",
     "fsl_ents_execute",
     "fsl_ents_params",

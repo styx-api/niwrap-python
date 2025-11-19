@@ -13,7 +13,7 @@ MRIS_NUDGE_METADATA = Metadata(
 )
 
 
-MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
+MrisNudgeParamsDict = typing.TypedDict('MrisNudgeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_nudge"]],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
@@ -21,7 +21,7 @@ MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
     "target_val": float,
     "nbhd": int,
 })
-MrisNudgeParametersTagged = typing.TypedDict('MrisNudgeParametersTagged', {
+MrisNudgeParamsDictTagged = typing.TypedDict('MrisNudgeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_nudge"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
@@ -33,7 +33,7 @@ MrisNudgeParametersTagged = typing.TypedDict('MrisNudgeParametersTagged', {
 
 class MrisNudgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisNudgeParameters(...)`.
+    Output object returned when calling `MrisNudgeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_nudge_params(
     vertex: int,
     target_val: float,
     nbhd: int,
-) -> MrisNudgeParametersTagged:
+) -> MrisNudgeParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mris_nudge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisNudgeParameters` object.
+    `MrisNudgeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mris_nudge_validate(
 
 
 def mris_nudge_cargs(
-    params: MrisNudgeParameters,
+    params: MrisNudgeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def mris_nudge_cargs(
 
 
 def mris_nudge_outputs(
-    params: MrisNudgeParameters,
+    params: MrisNudgeParamsDict,
     execution: Execution,
 ) -> MrisNudgeOutputs:
     """
@@ -149,7 +149,7 @@ def mris_nudge_outputs(
 
 
 def mris_nudge_execute(
-    params: MrisNudgeParameters,
+    params: MrisNudgeParamsDict,
     runner: Runner | None = None,
 ) -> MrisNudgeOutputs:
     """
@@ -217,6 +217,8 @@ def mris_nudge(
 __all__ = [
     "MRIS_NUDGE_METADATA",
     "MrisNudgeOutputs",
+    "MrisNudgeParamsDict",
+    "MrisNudgeParamsDictTagged",
     "mris_nudge",
     "mris_nudge_execute",
     "mris_nudge_params",

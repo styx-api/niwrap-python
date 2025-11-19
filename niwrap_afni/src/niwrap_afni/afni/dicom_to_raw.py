@@ -13,11 +13,11 @@ DICOM_TO_RAW_METADATA = Metadata(
 )
 
 
-DicomToRawParameters = typing.TypedDict('DicomToRawParameters', {
+DicomToRawParamsDict = typing.TypedDict('DicomToRawParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/dicom_to_raw"]],
     "input_dicom": InputPathType,
 })
-DicomToRawParametersTagged = typing.TypedDict('DicomToRawParametersTagged', {
+DicomToRawParamsDictTagged = typing.TypedDict('DicomToRawParamsDictTagged', {
     "@type": typing.Literal["afni/dicom_to_raw"],
     "input_dicom": InputPathType,
 })
@@ -25,7 +25,7 @@ DicomToRawParametersTagged = typing.TypedDict('DicomToRawParametersTagged', {
 
 class DicomToRawOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DicomToRawParameters(...)`.
+    Output object returned when calling `DicomToRawParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class DicomToRawOutputs(typing.NamedTuple):
 
 def dicom_to_raw_params(
     input_dicom: InputPathType,
-) -> DicomToRawParametersTagged:
+) -> DicomToRawParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def dicom_to_raw_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DicomToRawParameters` object.
+    `DicomToRawParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def dicom_to_raw_validate(
 
 
 def dicom_to_raw_cargs(
-    params: DicomToRawParameters,
+    params: DicomToRawParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def dicom_to_raw_cargs(
 
 
 def dicom_to_raw_outputs(
-    params: DicomToRawParameters,
+    params: DicomToRawParamsDict,
     execution: Execution,
 ) -> DicomToRawOutputs:
     """
@@ -109,7 +109,7 @@ def dicom_to_raw_outputs(
 
 
 def dicom_to_raw_execute(
-    params: DicomToRawParameters,
+    params: DicomToRawParamsDict,
     runner: Runner | None = None,
 ) -> DicomToRawOutputs:
     """
@@ -165,6 +165,8 @@ def dicom_to_raw(
 __all__ = [
     "DICOM_TO_RAW_METADATA",
     "DicomToRawOutputs",
+    "DicomToRawParamsDict",
+    "DicomToRawParamsDictTagged",
     "dicom_to_raw",
     "dicom_to_raw_execute",
     "dicom_to_raw_params",

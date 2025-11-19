@@ -13,7 +13,7 @@ MRIS_PREPROC_METADATA = Metadata(
 )
 
 
-MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
+MrisPreprocParamsDict = typing.TypedDict('MrisPreprocParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_preproc"]],
     "outfile": str,
     "target_subject": str,
@@ -65,7 +65,7 @@ MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
     "nolog_flag": bool,
     "debug_flag": bool,
 })
-MrisPreprocParametersTagged = typing.TypedDict('MrisPreprocParametersTagged', {
+MrisPreprocParamsDictTagged = typing.TypedDict('MrisPreprocParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_preproc"],
     "outfile": str,
     "target_subject": str,
@@ -121,7 +121,7 @@ MrisPreprocParametersTagged = typing.TypedDict('MrisPreprocParametersTagged', {
 
 class MrisPreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisPreprocParameters(...)`.
+    Output object returned when calling `MrisPreprocParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -177,7 +177,7 @@ def mris_preproc_params(
     log: str | None = None,
     nolog_flag: bool = False,
     debug_flag: bool = False,
-) -> MrisPreprocParametersTagged:
+) -> MrisPreprocParamsDictTagged:
     """
     Build parameters.
     
@@ -334,7 +334,7 @@ def mris_preproc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisPreprocParameters` object.
+    `MrisPreprocParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -530,7 +530,7 @@ def mris_preproc_validate(
 
 
 def mris_preproc_cargs(
-    params: MrisPreprocParameters,
+    params: MrisPreprocParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -739,7 +739,7 @@ def mris_preproc_cargs(
 
 
 def mris_preproc_outputs(
-    params: MrisPreprocParameters,
+    params: MrisPreprocParamsDict,
     execution: Execution,
 ) -> MrisPreprocOutputs:
     """
@@ -758,7 +758,7 @@ def mris_preproc_outputs(
 
 
 def mris_preproc_execute(
-    params: MrisPreprocParameters,
+    params: MrisPreprocParamsDict,
     runner: Runner | None = None,
 ) -> MrisPreprocOutputs:
     """
@@ -973,6 +973,8 @@ def mris_preproc(
 __all__ = [
     "MRIS_PREPROC_METADATA",
     "MrisPreprocOutputs",
+    "MrisPreprocParamsDict",
+    "MrisPreprocParamsDictTagged",
     "mris_preproc",
     "mris_preproc_execute",
     "mris_preproc_params",

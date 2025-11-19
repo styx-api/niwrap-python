@@ -13,29 +13,29 @@ SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-SimulateDisplacementFieldBsplineOptionsParameters = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParameters', {
+SimulateDisplacementFieldBsplineOptionsParamsDict = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["bspline_options"]],
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
-SimulateDisplacementFieldBsplineOptionsParametersTagged = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParametersTagged', {
+SimulateDisplacementFieldBsplineOptionsParamsDictTagged = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParamsDictTagged', {
     "@type": typing.Literal["bspline_options"],
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
 
 
-SimulateDisplacementFieldExponentialOptionsParameters = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParameters', {
+SimulateDisplacementFieldExponentialOptionsParamsDict = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exponential_options"]],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
-SimulateDisplacementFieldExponentialOptionsParametersTagged = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParametersTagged', {
+SimulateDisplacementFieldExponentialOptionsParamsDictTagged = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParamsDictTagged', {
     "@type": typing.Literal["exponential_options"],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
 
 
-SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFieldParameters', {
+SimulateDisplacementFieldParamsDict = typing.TypedDict('SimulateDisplacementFieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SimulateDisplacementField"]],
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
@@ -44,9 +44,9 @@ SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFiel
     "number_of_random_points": typing.NotRequired[int | None],
     "standard_deviation_displacement_field": typing.NotRequired[float | None],
     "enforce_stationary_boundary": typing.NotRequired[int | None],
-    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None],
+    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParamsDictTagged, SimulateDisplacementFieldExponentialOptionsParamsDictTagged] | None],
 })
-SimulateDisplacementFieldParametersTagged = typing.TypedDict('SimulateDisplacementFieldParametersTagged', {
+SimulateDisplacementFieldParamsDictTagged = typing.TypedDict('SimulateDisplacementFieldParamsDictTagged', {
     "@type": typing.Literal["ants/SimulateDisplacementField"],
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
@@ -55,7 +55,7 @@ SimulateDisplacementFieldParametersTagged = typing.TypedDict('SimulateDisplaceme
     "number_of_random_points": typing.NotRequired[int | None],
     "standard_deviation_displacement_field": typing.NotRequired[float | None],
     "enforce_stationary_boundary": typing.NotRequired[int | None],
-    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None],
+    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParamsDictTagged, SimulateDisplacementFieldExponentialOptionsParamsDictTagged] | None],
 })
 
 
@@ -93,10 +93,10 @@ def simulate_displacement_field_displacement_specific_options_validate_dyn_fn(
     }.get(t)
 
 
-def simulate_displacement_field_bspline_options_params(
+def simulate_displacement_field_bspline_options(
     number_of_fitting_levels: int | None = None,
     number_of_control_points: int | None = None,
-) -> SimulateDisplacementFieldBsplineOptionsParametersTagged:
+) -> SimulateDisplacementFieldBsplineOptionsParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def simulate_displacement_field_bspline_options_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SimulateDisplacementFieldBsplineOptionsParameters` object.
+    `SimulateDisplacementFieldBsplineOptionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def simulate_displacement_field_bspline_options_validate(
 
 
 def simulate_displacement_field_bspline_options_cargs(
-    params: SimulateDisplacementFieldBsplineOptionsParameters,
+    params: SimulateDisplacementFieldBsplineOptionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,9 +157,9 @@ def simulate_displacement_field_bspline_options_cargs(
     return cargs
 
 
-def simulate_displacement_field_exponential_options_params(
+def simulate_displacement_field_exponential_options(
     smoothing_standard_deviation: float | None = None,
-) -> SimulateDisplacementFieldExponentialOptionsParametersTagged:
+) -> SimulateDisplacementFieldExponentialOptionsParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def simulate_displacement_field_exponential_options_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SimulateDisplacementFieldExponentialOptionsParameters` object.
+    `SimulateDisplacementFieldExponentialOptionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def simulate_displacement_field_exponential_options_validate(
 
 
 def simulate_displacement_field_exponential_options_cargs(
-    params: SimulateDisplacementFieldExponentialOptionsParameters,
+    params: SimulateDisplacementFieldExponentialOptionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def simulate_displacement_field_exponential_options_cargs(
 
 class SimulateDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SimulateDisplacementFieldParameters(...)`.
+    Output object returned when calling `SimulateDisplacementFieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -231,8 +231,8 @@ def simulate_displacement_field_params(
     number_of_random_points: int | None = None,
     standard_deviation_displacement_field: float | None = None,
     enforce_stationary_boundary: int | None = None,
-    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None = None,
-) -> SimulateDisplacementFieldParametersTagged:
+    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParamsDictTagged, SimulateDisplacementFieldExponentialOptionsParamsDictTagged] | None = None,
+) -> SimulateDisplacementFieldParamsDictTagged:
     """
     Build parameters.
     
@@ -275,7 +275,7 @@ def simulate_displacement_field_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SimulateDisplacementFieldParameters` object.
+    `SimulateDisplacementFieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -314,11 +314,13 @@ def simulate_displacement_field_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["displacement_specific_options"])}\'')
         if "@type" not in params["displacement_specific_options"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["displacement_specific_options"]["@type"] not in ["bspline_options", "exponential_options"]:
+            raise StyxValidationError("Parameter `displacement_specific_options`s `@type` must be one of [\"bspline_options\", \"exponential_options\"]")
         simulate_displacement_field_displacement_specific_options_validate_dyn_fn(params["displacement_specific_options"]["@type"])(params["displacement_specific_options"])
 
 
 def simulate_displacement_field_cargs(
-    params: SimulateDisplacementFieldParameters,
+    params: SimulateDisplacementFieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -348,7 +350,7 @@ def simulate_displacement_field_cargs(
 
 
 def simulate_displacement_field_outputs(
-    params: SimulateDisplacementFieldParameters,
+    params: SimulateDisplacementFieldParamsDict,
     execution: Execution,
 ) -> SimulateDisplacementFieldOutputs:
     """
@@ -368,7 +370,7 @@ def simulate_displacement_field_outputs(
 
 
 def simulate_displacement_field_execute(
-    params: SimulateDisplacementFieldParameters,
+    params: SimulateDisplacementFieldParamsDict,
     runner: Runner | None = None,
 ) -> SimulateDisplacementFieldOutputs:
     """
@@ -405,7 +407,7 @@ def simulate_displacement_field(
     number_of_random_points: int | None = None,
     standard_deviation_displacement_field: float | None = None,
     enforce_stationary_boundary: int | None = None,
-    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None = None,
+    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParamsDictTagged, SimulateDisplacementFieldExponentialOptionsParamsDictTagged] | None = None,
     runner: Runner | None = None,
 ) -> SimulateDisplacementFieldOutputs:
     """
@@ -450,10 +452,16 @@ def simulate_displacement_field(
 
 __all__ = [
     "SIMULATE_DISPLACEMENT_FIELD_METADATA",
+    "SimulateDisplacementFieldBsplineOptionsParamsDict",
+    "SimulateDisplacementFieldBsplineOptionsParamsDictTagged",
+    "SimulateDisplacementFieldExponentialOptionsParamsDict",
+    "SimulateDisplacementFieldExponentialOptionsParamsDictTagged",
     "SimulateDisplacementFieldOutputs",
+    "SimulateDisplacementFieldParamsDict",
+    "SimulateDisplacementFieldParamsDictTagged",
     "simulate_displacement_field",
-    "simulate_displacement_field_bspline_options_params",
+    "simulate_displacement_field_bspline_options",
     "simulate_displacement_field_execute",
-    "simulate_displacement_field_exponential_options_params",
+    "simulate_displacement_field_exponential_options",
     "simulate_displacement_field_params",
 ]

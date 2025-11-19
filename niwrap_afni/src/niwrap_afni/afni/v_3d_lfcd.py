@@ -13,7 +13,7 @@ V_3D_LFCD_METADATA = Metadata(
 )
 
 
-V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
+V3dLfcdParamsDict = typing.TypedDict('V3dLfcdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLFCD"]],
     "in_file": InputPathType,
     "autoclip": bool,
@@ -25,7 +25,7 @@ V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
     "polort": typing.NotRequired[int | None],
     "thresh": typing.NotRequired[float | None],
 })
-V3dLfcdParametersTagged = typing.TypedDict('V3dLfcdParametersTagged', {
+V3dLfcdParamsDictTagged = typing.TypedDict('V3dLfcdParamsDictTagged', {
     "@type": typing.Literal["afni/3dLFCD"],
     "in_file": InputPathType,
     "autoclip": bool,
@@ -41,7 +41,7 @@ V3dLfcdParametersTagged = typing.TypedDict('V3dLfcdParametersTagged', {
 
 class V3dLfcdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLfcdParameters(...)`.
+    Output object returned when calling `V3dLfcdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_lfcd_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     polort: int | None = None,
     thresh: float | None = None,
-) -> V3dLfcdParametersTagged:
+) -> V3dLfcdParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def v_3d_lfcd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLfcdParameters` object.
+    `V3dLfcdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def v_3d_lfcd_validate(
 
 
 def v_3d_lfcd_cargs(
-    params: V3dLfcdParameters,
+    params: V3dLfcdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def v_3d_lfcd_cargs(
 
 
 def v_3d_lfcd_outputs(
-    params: V3dLfcdParameters,
+    params: V3dLfcdParamsDict,
     execution: Execution,
 ) -> V3dLfcdOutputs:
     """
@@ -211,7 +211,7 @@ def v_3d_lfcd_outputs(
 
 
 def v_3d_lfcd_execute(
-    params: V3dLfcdParameters,
+    params: V3dLfcdParamsDict,
     runner: Runner | None = None,
 ) -> V3dLfcdOutputs:
     """
@@ -292,6 +292,8 @@ def v_3d_lfcd(
 
 __all__ = [
     "V3dLfcdOutputs",
+    "V3dLfcdParamsDict",
+    "V3dLfcdParamsDictTagged",
     "V_3D_LFCD_METADATA",
     "v_3d_lfcd",
     "v_3d_lfcd_execute",

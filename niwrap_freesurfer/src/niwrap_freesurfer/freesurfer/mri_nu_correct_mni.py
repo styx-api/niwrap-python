@@ -13,7 +13,7 @@ MRI_NU_CORRECT_MNI_METADATA = Metadata(
 )
 
 
-MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
+MriNuCorrectMniParamsDict = typing.TypedDict('MriNuCorrectMniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nu_correct.mni"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -29,7 +29,7 @@ MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
     "cm_flag": bool,
     "debug_flag": bool,
 })
-MriNuCorrectMniParametersTagged = typing.TypedDict('MriNuCorrectMniParametersTagged', {
+MriNuCorrectMniParamsDictTagged = typing.TypedDict('MriNuCorrectMniParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_nu_correct.mni"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -49,7 +49,7 @@ MriNuCorrectMniParametersTagged = typing.TypedDict('MriNuCorrectMniParametersTag
 
 class MriNuCorrectMniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNuCorrectMniParameters(...)`.
+    Output object returned when calling `MriNuCorrectMniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def mri_nu_correct_mni_params(
     ants_n4_replace_zeros: bool = False,
     cm_flag: bool = False,
     debug_flag: bool = False,
-) -> MriNuCorrectMniParametersTagged:
+) -> MriNuCorrectMniParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def mri_nu_correct_mni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNuCorrectMniParameters` object.
+    `MriNuCorrectMniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -183,7 +183,7 @@ def mri_nu_correct_mni_validate(
 
 
 def mri_nu_correct_mni_cargs(
-    params: MriNuCorrectMniParameters,
+    params: MriNuCorrectMniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -245,7 +245,7 @@ def mri_nu_correct_mni_cargs(
 
 
 def mri_nu_correct_mni_outputs(
-    params: MriNuCorrectMniParameters,
+    params: MriNuCorrectMniParamsDict,
     execution: Execution,
 ) -> MriNuCorrectMniOutputs:
     """
@@ -265,7 +265,7 @@ def mri_nu_correct_mni_outputs(
 
 
 def mri_nu_correct_mni_execute(
-    params: MriNuCorrectMniParameters,
+    params: MriNuCorrectMniParamsDict,
     runner: Runner | None = None,
 ) -> MriNuCorrectMniOutputs:
     """
@@ -364,6 +364,8 @@ def mri_nu_correct_mni(
 __all__ = [
     "MRI_NU_CORRECT_MNI_METADATA",
     "MriNuCorrectMniOutputs",
+    "MriNuCorrectMniParamsDict",
+    "MriNuCorrectMniParamsDictTagged",
     "mri_nu_correct_mni",
     "mri_nu_correct_mni_execute",
     "mri_nu_correct_mni_params",

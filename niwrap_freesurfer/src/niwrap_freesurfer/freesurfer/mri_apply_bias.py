@@ -13,13 +13,13 @@ MRI_APPLY_BIAS_METADATA = Metadata(
 )
 
 
-MriApplyBiasParameters = typing.TypedDict('MriApplyBiasParameters', {
+MriApplyBiasParamsDict = typing.TypedDict('MriApplyBiasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_apply_bias"]],
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
     "output_volume": str,
 })
-MriApplyBiasParametersTagged = typing.TypedDict('MriApplyBiasParametersTagged', {
+MriApplyBiasParamsDictTagged = typing.TypedDict('MriApplyBiasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_apply_bias"],
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
@@ -29,7 +29,7 @@ MriApplyBiasParametersTagged = typing.TypedDict('MriApplyBiasParametersTagged', 
 
 class MriApplyBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriApplyBiasParameters(...)`.
+    Output object returned when calling `MriApplyBiasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_apply_bias_params(
     input_volume: InputPathType,
     bias_volume: InputPathType,
     output_volume: str,
-) -> MriApplyBiasParametersTagged:
+) -> MriApplyBiasParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_apply_bias_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriApplyBiasParameters` object.
+    `MriApplyBiasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_apply_bias_validate(
 
 
 def mri_apply_bias_cargs(
-    params: MriApplyBiasParameters,
+    params: MriApplyBiasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_apply_bias_cargs(
 
 
 def mri_apply_bias_outputs(
-    params: MriApplyBiasParameters,
+    params: MriApplyBiasParamsDict,
     execution: Execution,
 ) -> MriApplyBiasOutputs:
     """
@@ -129,7 +129,7 @@ def mri_apply_bias_outputs(
 
 
 def mri_apply_bias_execute(
-    params: MriApplyBiasParameters,
+    params: MriApplyBiasParamsDict,
     runner: Runner | None = None,
 ) -> MriApplyBiasOutputs:
     """
@@ -193,6 +193,8 @@ def mri_apply_bias(
 __all__ = [
     "MRI_APPLY_BIAS_METADATA",
     "MriApplyBiasOutputs",
+    "MriApplyBiasParamsDict",
+    "MriApplyBiasParamsDictTagged",
     "mri_apply_bias",
     "mri_apply_bias_execute",
     "mri_apply_bias_params",

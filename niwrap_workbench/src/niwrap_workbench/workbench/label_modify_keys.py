@@ -12,14 +12,14 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 )
 
 
-LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
+LabelModifyKeysParamsDict = typing.TypedDict('LabelModifyKeysParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-modify-keys"]],
     "label-out": str,
     "column": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "remap-file": str,
 })
-LabelModifyKeysParametersTagged = typing.TypedDict('LabelModifyKeysParametersTagged', {
+LabelModifyKeysParamsDictTagged = typing.TypedDict('LabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/label-modify-keys"],
     "label-out": str,
     "column": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ LabelModifyKeysParametersTagged = typing.TypedDict('LabelModifyKeysParametersTag
 
 class LabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelModifyKeysParameters(...)`.
+    Output object returned when calling `LabelModifyKeysParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def label_modify_keys_params(
     column: str | None,
     label_in: InputPathType,
     remap_file: str,
-) -> LabelModifyKeysParametersTagged:
+) -> LabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def label_modify_keys_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelModifyKeysParameters` object.
+    `LabelModifyKeysParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def label_modify_keys_validate(
 
 
 def label_modify_keys_cargs(
-    params: LabelModifyKeysParameters,
+    params: LabelModifyKeysParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def label_modify_keys_cargs(
 
 
 def label_modify_keys_outputs(
-    params: LabelModifyKeysParameters,
+    params: LabelModifyKeysParamsDict,
     execution: Execution,
 ) -> LabelModifyKeysOutputs:
     """
@@ -145,7 +145,7 @@ def label_modify_keys_outputs(
 
 
 def label_modify_keys_execute(
-    params: LabelModifyKeysParameters,
+    params: LabelModifyKeysParamsDict,
     runner: Runner | None = None,
 ) -> LabelModifyKeysOutputs:
     """
@@ -228,6 +228,8 @@ def label_modify_keys(
 __all__ = [
     "LABEL_MODIFY_KEYS_METADATA",
     "LabelModifyKeysOutputs",
+    "LabelModifyKeysParamsDict",
+    "LabelModifyKeysParamsDictTagged",
     "label_modify_keys",
     "label_modify_keys_execute",
     "label_modify_keys_params",

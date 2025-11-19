@@ -13,7 +13,7 @@ MAKE_DYADIC_VECTORS_METADATA = Metadata(
 )
 
 
-MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
+MakeDyadicVectorsParamsDict = typing.TypedDict('MakeDyadicVectorsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/make_dyadic_vectors"]],
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
@@ -21,7 +21,7 @@ MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
     "output": str,
     "perc": typing.NotRequired[float | None],
 })
-MakeDyadicVectorsParametersTagged = typing.TypedDict('MakeDyadicVectorsParametersTagged', {
+MakeDyadicVectorsParamsDictTagged = typing.TypedDict('MakeDyadicVectorsParamsDictTagged', {
     "@type": typing.Literal["fsl/make_dyadic_vectors"],
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
@@ -33,7 +33,7 @@ MakeDyadicVectorsParametersTagged = typing.TypedDict('MakeDyadicVectorsParameter
 
 class MakeDyadicVectorsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeDyadicVectorsParameters(...)`.
+    Output object returned when calling `MakeDyadicVectorsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def make_dyadic_vectors_params(
     output: str,
     mask: InputPathType | None = None,
     perc: float | None = None,
-) -> MakeDyadicVectorsParametersTagged:
+) -> MakeDyadicVectorsParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def make_dyadic_vectors_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeDyadicVectorsParameters` object.
+    `MakeDyadicVectorsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def make_dyadic_vectors_validate(
 
 
 def make_dyadic_vectors_cargs(
-    params: MakeDyadicVectorsParameters,
+    params: MakeDyadicVectorsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def make_dyadic_vectors_cargs(
 
 
 def make_dyadic_vectors_outputs(
-    params: MakeDyadicVectorsParameters,
+    params: MakeDyadicVectorsParamsDict,
     execution: Execution,
 ) -> MakeDyadicVectorsOutputs:
     """
@@ -152,7 +152,7 @@ def make_dyadic_vectors_outputs(
 
 
 def make_dyadic_vectors_execute(
-    params: MakeDyadicVectorsParameters,
+    params: MakeDyadicVectorsParamsDict,
     runner: Runner | None = None,
 ) -> MakeDyadicVectorsOutputs:
     """
@@ -221,6 +221,8 @@ def make_dyadic_vectors(
 __all__ = [
     "MAKE_DYADIC_VECTORS_METADATA",
     "MakeDyadicVectorsOutputs",
+    "MakeDyadicVectorsParamsDict",
+    "MakeDyadicVectorsParamsDictTagged",
     "make_dyadic_vectors",
     "make_dyadic_vectors_execute",
     "make_dyadic_vectors_params",

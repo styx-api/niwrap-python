@@ -13,29 +13,29 @@ DENOISE_IMAGE_METADATA = Metadata(
 )
 
 
-DenoiseImageCorrectedOutputParameters = typing.TypedDict('DenoiseImageCorrectedOutputParameters', {
+DenoiseImageCorrectedOutputParamsDict = typing.TypedDict('DenoiseImageCorrectedOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["correctedOutput"]],
     "correctedOutputFileName": str,
 })
-DenoiseImageCorrectedOutputParametersTagged = typing.TypedDict('DenoiseImageCorrectedOutputParametersTagged', {
+DenoiseImageCorrectedOutputParamsDictTagged = typing.TypedDict('DenoiseImageCorrectedOutputParamsDictTagged', {
     "@type": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
-DenoiseImageCorrectedOutputNoiseParameters = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParameters', {
+DenoiseImageCorrectedOutputNoiseParamsDict = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["correctedOutputNoise"]],
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
-DenoiseImageCorrectedOutputNoiseParametersTagged = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParametersTagged', {
+DenoiseImageCorrectedOutputNoiseParamsDictTagged = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParamsDictTagged', {
     "@type": typing.Literal["correctedOutputNoise"],
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
 
 
-DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
+DenoiseImageParamsDict = typing.TypedDict('DenoiseImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/DenoiseImage"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
@@ -45,9 +45,9 @@ DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
     "search_radius": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
-    "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
+    "output": typing.Union[DenoiseImageCorrectedOutputParamsDictTagged, DenoiseImageCorrectedOutputNoiseParamsDictTagged],
 })
-DenoiseImageParametersTagged = typing.TypedDict('DenoiseImageParametersTagged', {
+DenoiseImageParamsDictTagged = typing.TypedDict('DenoiseImageParamsDictTagged', {
     "@type": typing.Literal["ants/DenoiseImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
@@ -57,7 +57,7 @@ DenoiseImageParametersTagged = typing.TypedDict('DenoiseImageParametersTagged', 
     "search_radius": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
-    "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
+    "output": typing.Union[DenoiseImageCorrectedOutputParamsDictTagged, DenoiseImageCorrectedOutputNoiseParamsDictTagged],
 })
 
 
@@ -97,7 +97,7 @@ def denoise_image_output_validate_dyn_fn(
 
 class DenoiseImageCorrectedOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DenoiseImageCorrectedOutputParameters(...)`.
+    Output object returned when calling `DenoiseImageCorrectedOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,9 +105,9 @@ class DenoiseImageCorrectedOutputOutputs(typing.NamedTuple):
     """Denoised image."""
 
 
-def denoise_image_corrected_output_params(
+def denoise_image_corrected_output(
     corrected_output_file_name: str,
-) -> DenoiseImageCorrectedOutputParametersTagged:
+) -> DenoiseImageCorrectedOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def denoise_image_corrected_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DenoiseImageCorrectedOutputParameters` object.
+    `DenoiseImageCorrectedOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def denoise_image_corrected_output_validate(
 
 
 def denoise_image_corrected_output_cargs(
-    params: DenoiseImageCorrectedOutputParameters,
+    params: DenoiseImageCorrectedOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,7 +160,7 @@ def denoise_image_corrected_output_cargs(
 
 
 def denoise_image_corrected_output_outputs(
-    params: DenoiseImageCorrectedOutputParameters,
+    params: DenoiseImageCorrectedOutputParamsDict,
     execution: Execution,
 ) -> DenoiseImageCorrectedOutputOutputs:
     """
@@ -181,7 +181,7 @@ def denoise_image_corrected_output_outputs(
 
 class DenoiseImageCorrectedOutputNoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DenoiseImageCorrectedOutputNoiseParameters(...)`.
+    Output object returned when calling `DenoiseImageCorrectedOutputNoiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -191,10 +191,10 @@ class DenoiseImageCorrectedOutputNoiseOutputs(typing.NamedTuple):
     """Noise map image."""
 
 
-def denoise_image_corrected_output_noise_params(
+def denoise_image_corrected_output_noise(
     corrected_output_file_name: str,
     noise_file: str | None = None,
-) -> DenoiseImageCorrectedOutputNoiseParametersTagged:
+) -> DenoiseImageCorrectedOutputNoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def denoise_image_corrected_output_noise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DenoiseImageCorrectedOutputNoiseParameters` object.
+    `DenoiseImageCorrectedOutputNoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -235,7 +235,7 @@ def denoise_image_corrected_output_noise_validate(
 
 
 def denoise_image_corrected_output_noise_cargs(
-    params: DenoiseImageCorrectedOutputNoiseParameters,
+    params: DenoiseImageCorrectedOutputNoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def denoise_image_corrected_output_noise_cargs(
 
 
 def denoise_image_corrected_output_noise_outputs(
-    params: DenoiseImageCorrectedOutputNoiseParameters,
+    params: DenoiseImageCorrectedOutputNoiseParamsDict,
     execution: Execution,
 ) -> DenoiseImageCorrectedOutputNoiseOutputs:
     """
@@ -276,18 +276,18 @@ def denoise_image_corrected_output_noise_outputs(
 
 class DenoiseImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DenoiseImageParameters(...)`.
+    Output object returned when calling `DenoiseImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     output: typing.Union[DenoiseImageCorrectedOutputOutputs, DenoiseImageCorrectedOutputNoiseOutputs]
-    """Outputs from `DenoiseImageCorrectedOutputParameters` or
-    `DenoiseImageCorrectedOutputNoiseParameters`."""
+    """Outputs from `DenoiseImageCorrectedOutputParamsDict` or
+    `DenoiseImageCorrectedOutputNoiseParamsDict`."""
 
 
 def denoise_image_params(
     input_image: InputPathType,
-    output: typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
+    output: typing.Union[DenoiseImageCorrectedOutputParamsDictTagged, DenoiseImageCorrectedOutputNoiseParamsDictTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -295,7 +295,7 @@ def denoise_image_params(
     patch_radius: str | None = None,
     search_radius: str | None = None,
     verbose: bool | None = None,
-) -> DenoiseImageParametersTagged:
+) -> DenoiseImageParamsDictTagged:
     """
     Build parameters.
     
@@ -350,7 +350,7 @@ def denoise_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DenoiseImageParameters` object.
+    `DenoiseImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -392,11 +392,13 @@ def denoise_image_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
     if "@type" not in params["output"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["output"]["@type"] not in ["correctedOutput", "correctedOutputNoise"]:
+        raise StyxValidationError("Parameter `output`s `@type` must be one of [\"correctedOutput\", \"correctedOutputNoise\"]")
     denoise_image_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
 
 
 def denoise_image_cargs(
-    params: DenoiseImageParameters,
+    params: DenoiseImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +459,7 @@ def denoise_image_cargs(
 
 
 def denoise_image_outputs(
-    params: DenoiseImageParameters,
+    params: DenoiseImageParamsDict,
     execution: Execution,
 ) -> DenoiseImageOutputs:
     """
@@ -477,7 +479,7 @@ def denoise_image_outputs(
 
 
 def denoise_image_execute(
-    params: DenoiseImageParameters,
+    params: DenoiseImageParamsDict,
     runner: Runner | None = None,
 ) -> DenoiseImageOutputs:
     """
@@ -510,7 +512,7 @@ def denoise_image_execute(
 
 def denoise_image(
     input_image: InputPathType,
-    output: typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
+    output: typing.Union[DenoiseImageCorrectedOutputParamsDictTagged, DenoiseImageCorrectedOutputNoiseParamsDictTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -574,11 +576,17 @@ def denoise_image(
 __all__ = [
     "DENOISE_IMAGE_METADATA",
     "DenoiseImageCorrectedOutputNoiseOutputs",
+    "DenoiseImageCorrectedOutputNoiseParamsDict",
+    "DenoiseImageCorrectedOutputNoiseParamsDictTagged",
     "DenoiseImageCorrectedOutputOutputs",
+    "DenoiseImageCorrectedOutputParamsDict",
+    "DenoiseImageCorrectedOutputParamsDictTagged",
     "DenoiseImageOutputs",
+    "DenoiseImageParamsDict",
+    "DenoiseImageParamsDictTagged",
     "denoise_image",
-    "denoise_image_corrected_output_noise_params",
-    "denoise_image_corrected_output_params",
+    "denoise_image_corrected_output",
+    "denoise_image_corrected_output_noise",
     "denoise_image_execute",
     "denoise_image_params",
 ]

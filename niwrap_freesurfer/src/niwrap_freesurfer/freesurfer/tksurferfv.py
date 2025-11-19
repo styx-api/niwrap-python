@@ -13,7 +13,7 @@ TKSURFERFV_METADATA = Metadata(
 )
 
 
-TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
+TksurferfvParamsDict = typing.TypedDict('TksurferfvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tksurferfv"]],
     "subject": str,
     "hemi": str,
@@ -27,7 +27,7 @@ TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
     "rotate_around_cursor": bool,
     "heat_scale": typing.NotRequired[str | None],
 })
-TksurferfvParametersTagged = typing.TypedDict('TksurferfvParametersTagged', {
+TksurferfvParamsDictTagged = typing.TypedDict('TksurferfvParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tksurferfv"],
     "subject": str,
     "hemi": str,
@@ -45,7 +45,7 @@ TksurferfvParametersTagged = typing.TypedDict('TksurferfvParametersTagged', {
 
 class TksurferfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TksurferfvParameters(...)`.
+    Output object returned when calling `TksurferfvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def tksurferfv_params(
     neuro_orientation: bool = False,
     rotate_around_cursor: bool = False,
     heat_scale: str | None = None,
-) -> TksurferfvParametersTagged:
+) -> TksurferfvParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def tksurferfv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TksurferfvParameters` object.
+    `TksurferfvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def tksurferfv_validate(
 
 
 def tksurferfv_cargs(
-    params: TksurferfvParameters,
+    params: TksurferfvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,7 +197,7 @@ def tksurferfv_cargs(
 
 
 def tksurferfv_outputs(
-    params: TksurferfvParameters,
+    params: TksurferfvParamsDict,
     execution: Execution,
 ) -> TksurferfvOutputs:
     """
@@ -216,7 +216,7 @@ def tksurferfv_outputs(
 
 
 def tksurferfv_execute(
-    params: TksurferfvParameters,
+    params: TksurferfvParamsDict,
     runner: Runner | None = None,
 ) -> TksurferfvOutputs:
     """
@@ -304,6 +304,8 @@ def tksurferfv(
 __all__ = [
     "TKSURFERFV_METADATA",
     "TksurferfvOutputs",
+    "TksurferfvParamsDict",
+    "TksurferfvParamsDictTagged",
     "tksurferfv",
     "tksurferfv_execute",
     "tksurferfv_params",

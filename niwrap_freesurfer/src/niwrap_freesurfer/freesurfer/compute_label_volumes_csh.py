@@ -13,40 +13,40 @@ COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
 )
 
 
-ComputeLabelVolumesCshLabelLParameters = typing.TypedDict('ComputeLabelVolumesCshLabelLParameters', {
+ComputeLabelVolumesCshLabelLParamsDict = typing.TypedDict('ComputeLabelVolumesCshLabelLParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label_L"]],
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
-ComputeLabelVolumesCshLabelLParametersTagged = typing.TypedDict('ComputeLabelVolumesCshLabelLParametersTagged', {
+ComputeLabelVolumesCshLabelLParamsDictTagged = typing.TypedDict('ComputeLabelVolumesCshLabelLParamsDictTagged', {
     "@type": typing.Literal["label_L"],
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
 
 
-ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParameters', {
+ComputeLabelVolumesCshParamsDict = typing.TypedDict('ComputeLabelVolumesCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/compute_label_volumes.csh"]],
     "label_vol": InputPathType,
     "output_file": str,
-    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
+    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParamsDict | None],
     "version": bool,
     "help": bool,
 })
-ComputeLabelVolumesCshParametersTagged = typing.TypedDict('ComputeLabelVolumesCshParametersTagged', {
+ComputeLabelVolumesCshParamsDictTagged = typing.TypedDict('ComputeLabelVolumesCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/compute_label_volumes.csh"],
     "label_vol": InputPathType,
     "output_file": str,
-    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
+    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParamsDict | None],
     "version": bool,
     "help": bool,
 })
 
 
-def compute_label_volumes_csh_label_l_params(
+def compute_label_volumes_csh_label_l(
     upper_l: str | None = None,
     lower_l: str | None = None,
-) -> ComputeLabelVolumesCshLabelLParametersTagged:
+) -> ComputeLabelVolumesCshLabelLParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def compute_label_volumes_csh_label_l_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ComputeLabelVolumesCshLabelLParameters` object.
+    `ComputeLabelVolumesCshLabelLParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def compute_label_volumes_csh_label_l_validate(
 
 
 def compute_label_volumes_csh_label_l_cargs(
-    params: ComputeLabelVolumesCshLabelLParameters,
+    params: ComputeLabelVolumesCshLabelLParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def compute_label_volumes_csh_label_l_cargs(
 
 class ComputeLabelVolumesCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ComputeLabelVolumesCshParameters(...)`.
+    Output object returned when calling `ComputeLabelVolumesCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,10 +126,10 @@ class ComputeLabelVolumesCshOutputs(typing.NamedTuple):
 def compute_label_volumes_csh_params(
     label_vol: InputPathType,
     output_file: str,
-    label_l: ComputeLabelVolumesCshLabelLParameters | None = None,
+    label_l: ComputeLabelVolumesCshLabelLParamsDict | None = None,
     version: bool = False,
     help_: bool = False,
-) -> ComputeLabelVolumesCshParametersTagged:
+) -> ComputeLabelVolumesCshParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def compute_label_volumes_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ComputeLabelVolumesCshParameters` object.
+    `ComputeLabelVolumesCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def compute_label_volumes_csh_validate(
 
 
 def compute_label_volumes_csh_cargs(
-    params: ComputeLabelVolumesCshParameters,
+    params: ComputeLabelVolumesCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,7 +219,7 @@ def compute_label_volumes_csh_cargs(
 
 
 def compute_label_volumes_csh_outputs(
-    params: ComputeLabelVolumesCshParameters,
+    params: ComputeLabelVolumesCshParamsDict,
     execution: Execution,
 ) -> ComputeLabelVolumesCshOutputs:
     """
@@ -239,7 +239,7 @@ def compute_label_volumes_csh_outputs(
 
 
 def compute_label_volumes_csh_execute(
-    params: ComputeLabelVolumesCshParameters,
+    params: ComputeLabelVolumesCshParamsDict,
     runner: Runner | None = None,
 ) -> ComputeLabelVolumesCshOutputs:
     """
@@ -271,7 +271,7 @@ def compute_label_volumes_csh_execute(
 def compute_label_volumes_csh(
     label_vol: InputPathType,
     output_file: str,
-    label_l: ComputeLabelVolumesCshLabelLParameters | None = None,
+    label_l: ComputeLabelVolumesCshLabelLParamsDict | None = None,
     version: bool = False,
     help_: bool = False,
     runner: Runner | None = None,
@@ -308,9 +308,13 @@ def compute_label_volumes_csh(
 
 __all__ = [
     "COMPUTE_LABEL_VOLUMES_CSH_METADATA",
+    "ComputeLabelVolumesCshLabelLParamsDict",
+    "ComputeLabelVolumesCshLabelLParamsDictTagged",
     "ComputeLabelVolumesCshOutputs",
+    "ComputeLabelVolumesCshParamsDict",
+    "ComputeLabelVolumesCshParamsDictTagged",
     "compute_label_volumes_csh",
     "compute_label_volumes_csh_execute",
-    "compute_label_volumes_csh_label_l_params",
+    "compute_label_volumes_csh_label_l",
     "compute_label_volumes_csh_params",
 ]

@@ -13,7 +13,7 @@ ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
 )
 
 
-AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrectionFsParameters', {
+AntsN4BiasFieldCorrectionFsParamsDict = typing.TypedDict('AntsN4BiasFieldCorrectionFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/AntsN4BiasFieldCorrectionFs"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -23,7 +23,7 @@ AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrect
     "output_dtype": typing.NotRequired[str | None],
     "replace_zeros": typing.NotRequired[str | None],
 })
-AntsN4BiasFieldCorrectionFsParametersTagged = typing.TypedDict('AntsN4BiasFieldCorrectionFsParametersTagged', {
+AntsN4BiasFieldCorrectionFsParamsDictTagged = typing.TypedDict('AntsN4BiasFieldCorrectionFsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/AntsN4BiasFieldCorrectionFs"],
     "input_file": InputPathType,
     "output_file": str,
@@ -37,7 +37,7 @@ AntsN4BiasFieldCorrectionFsParametersTagged = typing.TypedDict('AntsN4BiasFieldC
 
 class AntsN4BiasFieldCorrectionFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsN4BiasFieldCorrectionFsParameters(...)`.
+    Output object returned when calling `AntsN4BiasFieldCorrectionFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def ants_n4_bias_field_correction_fs_params(
     iterations: list[float] | None = None,
     output_dtype: str | None = None,
     replace_zeros: str | None = None,
-) -> AntsN4BiasFieldCorrectionFsParametersTagged:
+) -> AntsN4BiasFieldCorrectionFsParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def ants_n4_bias_field_correction_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsN4BiasFieldCorrectionFsParameters` object.
+    `AntsN4BiasFieldCorrectionFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def ants_n4_bias_field_correction_fs_validate(
 
 
 def ants_n4_bias_field_correction_fs_cargs(
-    params: AntsN4BiasFieldCorrectionFsParameters,
+    params: AntsN4BiasFieldCorrectionFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def ants_n4_bias_field_correction_fs_cargs(
 
 
 def ants_n4_bias_field_correction_fs_outputs(
-    params: AntsN4BiasFieldCorrectionFsParameters,
+    params: AntsN4BiasFieldCorrectionFsParamsDict,
     execution: Execution,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:
     """
@@ -203,7 +203,7 @@ def ants_n4_bias_field_correction_fs_outputs(
 
 
 def ants_n4_bias_field_correction_fs_execute(
-    params: AntsN4BiasFieldCorrectionFsParameters,
+    params: AntsN4BiasFieldCorrectionFsParamsDict,
     runner: Runner | None = None,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:
     """
@@ -286,6 +286,8 @@ def ants_n4_bias_field_correction_fs(
 __all__ = [
     "ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA",
     "AntsN4BiasFieldCorrectionFsOutputs",
+    "AntsN4BiasFieldCorrectionFsParamsDict",
+    "AntsN4BiasFieldCorrectionFsParamsDictTagged",
     "ants_n4_bias_field_correction_fs",
     "ants_n4_bias_field_correction_fs_execute",
     "ants_n4_bias_field_correction_fs_params",

@@ -13,19 +13,19 @@ V_5TTEDIT_METADATA = Metadata(
 )
 
 
-V5tteditConfigParameters = typing.TypedDict('V5tteditConfigParameters', {
+V5tteditConfigParamsDict = typing.TypedDict('V5tteditConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-V5tteditConfigParametersTagged = typing.TypedDict('V5tteditConfigParametersTagged', {
+V5tteditConfigParamsDictTagged = typing.TypedDict('V5tteditConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-V5tteditParameters = typing.TypedDict('V5tteditParameters', {
+V5tteditParamsDict = typing.TypedDict('V5tteditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/5ttedit"]],
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
@@ -38,13 +38,13 @@ V5tteditParameters = typing.TypedDict('V5tteditParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tteditConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tteditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-V5tteditParametersTagged = typing.TypedDict('V5tteditParametersTagged', {
+V5tteditParamsDictTagged = typing.TypedDict('V5tteditParamsDictTagged', {
     "@type": typing.Literal["mrtrix/5ttedit"],
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ V5tteditParametersTagged = typing.TypedDict('V5tteditParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tteditConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tteditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -65,10 +65,10 @@ V5tteditParametersTagged = typing.TypedDict('V5tteditParametersTagged', {
 })
 
 
-def v_5ttedit_config_params(
+def v_5ttedit_config(
     key: str,
     value: str,
-) -> V5tteditConfigParametersTagged:
+) -> V5tteditConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def v_5ttedit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tteditConfigParameters` object.
+    `V5tteditConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def v_5ttedit_config_validate(
 
 
 def v_5ttedit_config_cargs(
-    params: V5tteditConfigParameters,
+    params: V5tteditConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def v_5ttedit_config_cargs(
 
 class V5tteditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5tteditParameters(...)`.
+    Output object returned when calling `V5tteditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -152,10 +152,10 @@ def v_5ttedit_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tteditConfigParameters] | None = None,
+    config: list[V5tteditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5tteditParametersTagged:
+) -> V5tteditParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def v_5ttedit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tteditParameters` object.
+    `V5tteditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -268,7 +268,7 @@ def v_5ttedit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tteditConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tteditConfigParamsDict] | None`')
         for e in params["config"]:
             v_5ttedit_config_validate(e)
     if params.get("help", False) is None:
@@ -290,7 +290,7 @@ def v_5ttedit_validate(
 
 
 def v_5ttedit_cargs(
-    params: V5tteditParameters,
+    params: V5tteditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -359,7 +359,7 @@ def v_5ttedit_cargs(
 
 
 def v_5ttedit_outputs(
-    params: V5tteditParameters,
+    params: V5tteditParamsDict,
     execution: Execution,
 ) -> V5tteditOutputs:
     """
@@ -379,7 +379,7 @@ def v_5ttedit_outputs(
 
 
 def v_5ttedit_execute(
-    params: V5tteditParameters,
+    params: V5tteditParamsDict,
     runner: Runner | None = None,
 ) -> V5tteditOutputs:
     """
@@ -428,7 +428,7 @@ def v_5ttedit(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tteditConfigParameters] | None = None,
+    config: list[V5tteditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -500,10 +500,14 @@ def v_5ttedit(
 
 
 __all__ = [
+    "V5tteditConfigParamsDict",
+    "V5tteditConfigParamsDictTagged",
     "V5tteditOutputs",
+    "V5tteditParamsDict",
+    "V5tteditParamsDictTagged",
     "V_5TTEDIT_METADATA",
     "v_5ttedit",
-    "v_5ttedit_config_params",
+    "v_5ttedit_config",
     "v_5ttedit_execute",
     "v_5ttedit_params",
 ]

@@ -13,7 +13,7 @@ FABBER_ASL_METADATA = Metadata(
 )
 
 
-FabberAslParameters = typing.TypedDict('FabberAslParameters', {
+FabberAslParamsDict = typing.TypedDict('FabberAslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_asl"]],
     "listmethods": bool,
     "listmodels": bool,
@@ -48,7 +48,7 @@ FabberAslParameters = typing.TypedDict('FabberAslParameters', {
     "optfile": typing.NotRequired[str | None],
     "debug": bool,
 })
-FabberAslParametersTagged = typing.TypedDict('FabberAslParametersTagged', {
+FabberAslParamsDictTagged = typing.TypedDict('FabberAslParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_asl"],
     "listmethods": bool,
     "listmodels": bool,
@@ -87,7 +87,7 @@ FabberAslParametersTagged = typing.TypedDict('FabberAslParametersTagged', {
 
 class FabberAslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberAslParameters(...)`.
+    Output object returned when calling `FabberAslParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +150,7 @@ def fabber_asl_params(
     save_free_energy: bool = False,
     optfile: str | None = None,
     debug: bool = False,
-) -> FabberAslParametersTagged:
+) -> FabberAslParamsDictTagged:
     """
     Build parameters.
     
@@ -257,7 +257,7 @@ def fabber_asl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberAslParameters` object.
+    `FabberAslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -388,7 +388,7 @@ def fabber_asl_validate(
 
 
 def fabber_asl_cargs(
-    params: FabberAslParameters,
+    params: FabberAslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -466,7 +466,7 @@ def fabber_asl_cargs(
 
 
 def fabber_asl_outputs(
-    params: FabberAslParameters,
+    params: FabberAslParamsDict,
     execution: Execution,
 ) -> FabberAslOutputs:
     """
@@ -497,7 +497,7 @@ def fabber_asl_outputs(
 
 
 def fabber_asl_execute(
-    params: FabberAslParameters,
+    params: FabberAslParamsDict,
     runner: Runner | None = None,
 ) -> FabberAslOutputs:
     """
@@ -663,6 +663,8 @@ def fabber_asl(
 __all__ = [
     "FABBER_ASL_METADATA",
     "FabberAslOutputs",
+    "FabberAslParamsDict",
+    "FabberAslParamsDictTagged",
     "fabber_asl",
     "fabber_asl_execute",
     "fabber_asl_params",

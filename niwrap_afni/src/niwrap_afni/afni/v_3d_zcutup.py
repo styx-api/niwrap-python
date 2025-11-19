@@ -13,13 +13,13 @@ V_3D_ZCUTUP_METADATA = Metadata(
 )
 
 
-V3dZcutupParameters = typing.TypedDict('V3dZcutupParameters', {
+V3dZcutupParamsDict = typing.TypedDict('V3dZcutupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dZcutup"]],
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,
 })
-V3dZcutupParametersTagged = typing.TypedDict('V3dZcutupParametersTagged', {
+V3dZcutupParamsDictTagged = typing.TypedDict('V3dZcutupParamsDictTagged', {
     "@type": typing.Literal["afni/3dZcutup"],
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ V3dZcutupParametersTagged = typing.TypedDict('V3dZcutupParametersTagged', {
 
 class V3dZcutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dZcutupParameters(...)`.
+    Output object returned when calling `V3dZcutupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v_3d_zcutup_params(
     keep_slices: str,
     dataset: InputPathType,
     prefix: str | None = None,
-) -> V3dZcutupParametersTagged:
+) -> V3dZcutupParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_zcutup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dZcutupParameters` object.
+    `V3dZcutupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def v_3d_zcutup_validate(
 
 
 def v_3d_zcutup_cargs(
-    params: V3dZcutupParameters,
+    params: V3dZcutupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def v_3d_zcutup_cargs(
 
 
 def v_3d_zcutup_outputs(
-    params: V3dZcutupParameters,
+    params: V3dZcutupParamsDict,
     execution: Execution,
 ) -> V3dZcutupOutputs:
     """
@@ -142,7 +142,7 @@ def v_3d_zcutup_outputs(
 
 
 def v_3d_zcutup_execute(
-    params: V3dZcutupParameters,
+    params: V3dZcutupParamsDict,
     runner: Runner | None = None,
 ) -> V3dZcutupOutputs:
     """
@@ -206,6 +206,8 @@ def v_3d_zcutup(
 
 __all__ = [
     "V3dZcutupOutputs",
+    "V3dZcutupParamsDict",
+    "V3dZcutupParamsDictTagged",
     "V_3D_ZCUTUP_METADATA",
     "v_3d_zcutup",
     "v_3d_zcutup_execute",

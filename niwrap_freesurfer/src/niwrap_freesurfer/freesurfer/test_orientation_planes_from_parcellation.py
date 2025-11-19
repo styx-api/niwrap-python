@@ -13,13 +13,13 @@ TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
 )
 
 
-TestOrientationPlanesFromParcellationParameters = typing.TypedDict('TestOrientationPlanesFromParcellationParameters', {
+TestOrientationPlanesFromParcellationParamsDict = typing.TypedDict('TestOrientationPlanesFromParcellationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/testOrientationPlanesFromParcellation"]],
     "input_file": InputPathType,
     "output_file": str,
     "bb_flag": bool,
 })
-TestOrientationPlanesFromParcellationParametersTagged = typing.TypedDict('TestOrientationPlanesFromParcellationParametersTagged', {
+TestOrientationPlanesFromParcellationParamsDictTagged = typing.TypedDict('TestOrientationPlanesFromParcellationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/testOrientationPlanesFromParcellation"],
     "input_file": InputPathType,
     "output_file": str,
@@ -29,7 +29,7 @@ TestOrientationPlanesFromParcellationParametersTagged = typing.TypedDict('TestOr
 
 class TestOrientationPlanesFromParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TestOrientationPlanesFromParcellationParameters(...)`.
+    Output object returned when calling `TestOrientationPlanesFromParcellationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def test_orientation_planes_from_parcellation_params(
     input_file: InputPathType,
     output_file: str,
     bb_flag: bool = False,
-) -> TestOrientationPlanesFromParcellationParametersTagged:
+) -> TestOrientationPlanesFromParcellationParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def test_orientation_planes_from_parcellation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TestOrientationPlanesFromParcellationParameters` object.
+    `TestOrientationPlanesFromParcellationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def test_orientation_planes_from_parcellation_validate(
 
 
 def test_orientation_planes_from_parcellation_cargs(
-    params: TestOrientationPlanesFromParcellationParameters,
+    params: TestOrientationPlanesFromParcellationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def test_orientation_planes_from_parcellation_cargs(
 
 
 def test_orientation_planes_from_parcellation_outputs(
-    params: TestOrientationPlanesFromParcellationParameters,
+    params: TestOrientationPlanesFromParcellationParamsDict,
     execution: Execution,
 ) -> TestOrientationPlanesFromParcellationOutputs:
     """
@@ -133,7 +133,7 @@ def test_orientation_planes_from_parcellation_outputs(
 
 
 def test_orientation_planes_from_parcellation_execute(
-    params: TestOrientationPlanesFromParcellationParameters,
+    params: TestOrientationPlanesFromParcellationParamsDict,
     runner: Runner | None = None,
 ) -> TestOrientationPlanesFromParcellationOutputs:
     """
@@ -195,6 +195,8 @@ def test_orientation_planes_from_parcellation(
 __all__ = [
     "TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA",
     "TestOrientationPlanesFromParcellationOutputs",
+    "TestOrientationPlanesFromParcellationParamsDict",
+    "TestOrientationPlanesFromParcellationParamsDictTagged",
     "test_orientation_planes_from_parcellation",
     "test_orientation_planes_from_parcellation_execute",
     "test_orientation_planes_from_parcellation_params",

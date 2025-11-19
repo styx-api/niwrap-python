@@ -12,13 +12,13 @@ CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseFromTemplateSeriesParameters = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParameters', {
+CiftiCreateDenseFromTemplateSeriesParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["series"]],
     "step": float,
     "start": float,
     "unit": typing.NotRequired[str | None],
 })
-CiftiCreateDenseFromTemplateSeriesParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParametersTagged', {
+CiftiCreateDenseFromTemplateSeriesParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParamsDictTagged', {
     "@type": typing.Literal["series"],
     "step": float,
     "start": float,
@@ -26,59 +26,59 @@ CiftiCreateDenseFromTemplateSeriesParametersTagged = typing.TypedDict('CiftiCrea
 })
 
 
-CiftiCreateDenseFromTemplateVolumeAllParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParameters', {
+CiftiCreateDenseFromTemplateVolumeAllParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-all"]],
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
-CiftiCreateDenseFromTemplateVolumeAllParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParametersTagged', {
+CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
 
 
-CiftiCreateDenseFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParameters', {
+CiftiCreateDenseFromTemplateCiftiParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiCreateDenseFromTemplateCiftiParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParametersTagged', {
+CiftiCreateDenseFromTemplateCiftiParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiCreateDenseFromTemplateMetricParameters = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParameters', {
+CiftiCreateDenseFromTemplateMetricParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "structure": str,
     "metric-in": InputPathType,
 })
-CiftiCreateDenseFromTemplateMetricParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParametersTagged', {
+CiftiCreateDenseFromTemplateMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric-in": InputPathType,
 })
 
 
-CiftiCreateDenseFromTemplateLabelParameters = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParameters', {
+CiftiCreateDenseFromTemplateLabelParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "structure": str,
     "label-in": InputPathType,
 })
-CiftiCreateDenseFromTemplateLabelParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParametersTagged', {
+CiftiCreateDenseFromTemplateLabelParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "structure": str,
     "label-in": InputPathType,
 })
 
 
-CiftiCreateDenseFromTemplateVolumeParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParameters', {
+CiftiCreateDenseFromTemplateVolumeParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
     "volume-in": InputPathType,
     "from-cropped": bool,
 })
-CiftiCreateDenseFromTemplateVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParametersTagged', {
+CiftiCreateDenseFromTemplateVolumeParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "volume-in": InputPathType,
@@ -86,37 +86,37 @@ CiftiCreateDenseFromTemplateVolumeParametersTagged = typing.TypedDict('CiftiCrea
 })
 
 
-CiftiCreateDenseFromTemplateParameters = typing.TypedDict('CiftiCreateDenseFromTemplateParameters', {
+CiftiCreateDenseFromTemplateParamsDict = typing.TypedDict('CiftiCreateDenseFromTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-from-template"]],
     "cifti-out": str,
-    "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParameters | None],
-    "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParameters | None],
+    "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParamsDict | None],
+    "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParamsDict | None],
     "action": typing.NotRequired[str | None],
-    "cifti": typing.NotRequired[list[CiftiCreateDenseFromTemplateCiftiParameters] | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseFromTemplateMetricParameters] | None],
-    "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParameters] | None],
-    "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseFromTemplateMetricParamsDict] | None],
+    "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None],
     "template-cifti": InputPathType,
 })
-CiftiCreateDenseFromTemplateParametersTagged = typing.TypedDict('CiftiCreateDenseFromTemplateParametersTagged', {
+CiftiCreateDenseFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-from-template"],
     "cifti-out": str,
-    "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParameters | None],
-    "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParameters | None],
+    "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParamsDict | None],
+    "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParamsDict | None],
     "action": typing.NotRequired[str | None],
-    "cifti": typing.NotRequired[list[CiftiCreateDenseFromTemplateCiftiParameters] | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseFromTemplateMetricParameters] | None],
-    "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParameters] | None],
-    "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseFromTemplateMetricParamsDict] | None],
+    "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None],
     "template-cifti": InputPathType,
 })
 
 
-def cifti_create_dense_from_template_series_params(
+def cifti_create_dense_from_template_series(
     step: float,
     start: float,
     unit: str | None,
-) -> CiftiCreateDenseFromTemplateSeriesParametersTagged:
+) -> CiftiCreateDenseFromTemplateSeriesParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def cifti_create_dense_from_template_series_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateSeriesParameters` object.
+    `CiftiCreateDenseFromTemplateSeriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def cifti_create_dense_from_template_series_validate(
 
 
 def cifti_create_dense_from_template_series_cargs(
-    params: CiftiCreateDenseFromTemplateSeriesParameters,
+    params: CiftiCreateDenseFromTemplateSeriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -189,10 +189,10 @@ def cifti_create_dense_from_template_series_cargs(
     return cargs
 
 
-def cifti_create_dense_from_template_volume_all_params(
+def cifti_create_dense_from_template_volume_all(
     volume_in: InputPathType,
     from_cropped: bool = False,
-) -> CiftiCreateDenseFromTemplateVolumeAllParametersTagged:
+) -> CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged:
     """
     Build parameters.
     
@@ -216,7 +216,7 @@ def cifti_create_dense_from_template_volume_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateVolumeAllParameters` object.
+    `CiftiCreateDenseFromTemplateVolumeAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -234,7 +234,7 @@ def cifti_create_dense_from_template_volume_all_validate(
 
 
 def cifti_create_dense_from_template_volume_all_cargs(
-    params: CiftiCreateDenseFromTemplateVolumeAllParameters,
+    params: CiftiCreateDenseFromTemplateVolumeAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,9 +256,9 @@ def cifti_create_dense_from_template_volume_all_cargs(
     return cargs
 
 
-def cifti_create_dense_from_template_cifti_params(
+def cifti_create_dense_from_template_cifti(
     cifti_in: InputPathType,
-) -> CiftiCreateDenseFromTemplateCiftiParametersTagged:
+) -> CiftiCreateDenseFromTemplateCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -279,7 +279,7 @@ def cifti_create_dense_from_template_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateCiftiParameters` object.
+    `CiftiCreateDenseFromTemplateCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -293,7 +293,7 @@ def cifti_create_dense_from_template_cifti_validate(
 
 
 def cifti_create_dense_from_template_cifti_cargs(
-    params: CiftiCreateDenseFromTemplateCiftiParameters,
+    params: CiftiCreateDenseFromTemplateCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -313,10 +313,10 @@ def cifti_create_dense_from_template_cifti_cargs(
     return cargs
 
 
-def cifti_create_dense_from_template_metric_params(
+def cifti_create_dense_from_template_metric(
     structure: str,
     metric_in: InputPathType,
-) -> CiftiCreateDenseFromTemplateMetricParametersTagged:
+) -> CiftiCreateDenseFromTemplateMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -339,7 +339,7 @@ def cifti_create_dense_from_template_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateMetricParameters` object.
+    `CiftiCreateDenseFromTemplateMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -357,7 +357,7 @@ def cifti_create_dense_from_template_metric_validate(
 
 
 def cifti_create_dense_from_template_metric_cargs(
-    params: CiftiCreateDenseFromTemplateMetricParameters,
+    params: CiftiCreateDenseFromTemplateMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -378,10 +378,10 @@ def cifti_create_dense_from_template_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_from_template_label_params(
+def cifti_create_dense_from_template_label(
     structure: str,
     label_in: InputPathType,
-) -> CiftiCreateDenseFromTemplateLabelParametersTagged:
+) -> CiftiCreateDenseFromTemplateLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -404,7 +404,7 @@ def cifti_create_dense_from_template_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateLabelParameters` object.
+    `CiftiCreateDenseFromTemplateLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -422,7 +422,7 @@ def cifti_create_dense_from_template_label_validate(
 
 
 def cifti_create_dense_from_template_label_cargs(
-    params: CiftiCreateDenseFromTemplateLabelParameters,
+    params: CiftiCreateDenseFromTemplateLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -443,11 +443,11 @@ def cifti_create_dense_from_template_label_cargs(
     return cargs
 
 
-def cifti_create_dense_from_template_volume_params(
+def cifti_create_dense_from_template_volume(
     structure: str,
     volume_in: InputPathType,
     from_cropped: bool = False,
-) -> CiftiCreateDenseFromTemplateVolumeParametersTagged:
+) -> CiftiCreateDenseFromTemplateVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -472,7 +472,7 @@ def cifti_create_dense_from_template_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateVolumeParameters` object.
+    `CiftiCreateDenseFromTemplateVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -494,7 +494,7 @@ def cifti_create_dense_from_template_volume_validate(
 
 
 def cifti_create_dense_from_template_volume_cargs(
-    params: CiftiCreateDenseFromTemplateVolumeParameters,
+    params: CiftiCreateDenseFromTemplateVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -519,7 +519,7 @@ def cifti_create_dense_from_template_volume_cargs(
 
 class CiftiCreateDenseFromTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateDenseFromTemplateParameters(...)`.
+    Output object returned when calling `CiftiCreateDenseFromTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -531,13 +531,13 @@ def cifti_create_dense_from_template_params(
     cifti_out: str,
     action: str | None,
     template_cifti: InputPathType,
-    series: CiftiCreateDenseFromTemplateSeriesParameters | None = None,
-    volume_all: CiftiCreateDenseFromTemplateVolumeAllParameters | None = None,
-    cifti: list[CiftiCreateDenseFromTemplateCiftiParameters] | None = None,
-    metric: list[CiftiCreateDenseFromTemplateMetricParameters] | None = None,
-    label: list[CiftiCreateDenseFromTemplateLabelParameters] | None = None,
-    volume: list[CiftiCreateDenseFromTemplateVolumeParameters] | None = None,
-) -> CiftiCreateDenseFromTemplateParametersTagged:
+    series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
+    volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
+    cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
+    metric: list[CiftiCreateDenseFromTemplateMetricParamsDict] | None = None,
+    label: list[CiftiCreateDenseFromTemplateLabelParamsDict] | None = None,
+    volume: list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None = None,
+) -> CiftiCreateDenseFromTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -584,7 +584,7 @@ def cifti_create_dense_from_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseFromTemplateParameters` object.
+    `CiftiCreateDenseFromTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -604,22 +604,22 @@ def cifti_create_dense_from_template_validate(
             raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateDenseFromTemplateCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_create_dense_from_template_cifti_validate(e)
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseFromTemplateMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseFromTemplateMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_create_dense_from_template_metric_validate(e)
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateDenseFromTemplateLabelParameters] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateDenseFromTemplateLabelParamsDict] | None`')
         for e in params["label"]:
             cifti_create_dense_from_template_label_validate(e)
     if params.get("volume", None) is not None:
         if not isinstance(params["volume"], list):
-            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiCreateDenseFromTemplateVolumeParameters] | None`')
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_create_dense_from_template_volume_validate(e)
     if params.get("template-cifti", None) is None:
@@ -629,7 +629,7 @@ def cifti_create_dense_from_template_validate(
 
 
 def cifti_create_dense_from_template_cargs(
-    params: CiftiCreateDenseFromTemplateParameters,
+    params: CiftiCreateDenseFromTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -661,7 +661,7 @@ def cifti_create_dense_from_template_cargs(
 
 
 def cifti_create_dense_from_template_outputs(
-    params: CiftiCreateDenseFromTemplateParameters,
+    params: CiftiCreateDenseFromTemplateParamsDict,
     execution: Execution,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
@@ -681,7 +681,7 @@ def cifti_create_dense_from_template_outputs(
 
 
 def cifti_create_dense_from_template_execute(
-    params: CiftiCreateDenseFromTemplateParameters,
+    params: CiftiCreateDenseFromTemplateParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
@@ -766,12 +766,12 @@ def cifti_create_dense_from_template(
     cifti_out: str,
     action: str | None,
     template_cifti: InputPathType,
-    series: CiftiCreateDenseFromTemplateSeriesParameters | None = None,
-    volume_all: CiftiCreateDenseFromTemplateVolumeAllParameters | None = None,
-    cifti: list[CiftiCreateDenseFromTemplateCiftiParameters] | None = None,
-    metric: list[CiftiCreateDenseFromTemplateMetricParameters] | None = None,
-    label: list[CiftiCreateDenseFromTemplateLabelParameters] | None = None,
-    volume: list[CiftiCreateDenseFromTemplateVolumeParameters] | None = None,
+    series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
+    volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
+    cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
+    metric: list[CiftiCreateDenseFromTemplateMetricParamsDict] | None = None,
+    label: list[CiftiCreateDenseFromTemplateLabelParamsDict] | None = None,
+    volume: list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
@@ -869,14 +869,28 @@ def cifti_create_dense_from_template(
 
 __all__ = [
     "CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA",
+    "CiftiCreateDenseFromTemplateCiftiParamsDict",
+    "CiftiCreateDenseFromTemplateCiftiParamsDictTagged",
+    "CiftiCreateDenseFromTemplateLabelParamsDict",
+    "CiftiCreateDenseFromTemplateLabelParamsDictTagged",
+    "CiftiCreateDenseFromTemplateMetricParamsDict",
+    "CiftiCreateDenseFromTemplateMetricParamsDictTagged",
     "CiftiCreateDenseFromTemplateOutputs",
+    "CiftiCreateDenseFromTemplateParamsDict",
+    "CiftiCreateDenseFromTemplateParamsDictTagged",
+    "CiftiCreateDenseFromTemplateSeriesParamsDict",
+    "CiftiCreateDenseFromTemplateSeriesParamsDictTagged",
+    "CiftiCreateDenseFromTemplateVolumeAllParamsDict",
+    "CiftiCreateDenseFromTemplateVolumeAllParamsDictTagged",
+    "CiftiCreateDenseFromTemplateVolumeParamsDict",
+    "CiftiCreateDenseFromTemplateVolumeParamsDictTagged",
     "cifti_create_dense_from_template",
-    "cifti_create_dense_from_template_cifti_params",
+    "cifti_create_dense_from_template_cifti",
     "cifti_create_dense_from_template_execute",
-    "cifti_create_dense_from_template_label_params",
-    "cifti_create_dense_from_template_metric_params",
+    "cifti_create_dense_from_template_label",
+    "cifti_create_dense_from_template_metric",
     "cifti_create_dense_from_template_params",
-    "cifti_create_dense_from_template_series_params",
-    "cifti_create_dense_from_template_volume_all_params",
-    "cifti_create_dense_from_template_volume_params",
+    "cifti_create_dense_from_template_series",
+    "cifti_create_dense_from_template_volume",
+    "cifti_create_dense_from_template_volume_all",
 ]

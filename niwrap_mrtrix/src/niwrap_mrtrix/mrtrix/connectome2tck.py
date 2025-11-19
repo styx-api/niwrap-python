@@ -13,19 +13,19 @@ CONNECTOME2TCK_METADATA = Metadata(
 )
 
 
-Connectome2tckConfigParameters = typing.TypedDict('Connectome2tckConfigParameters', {
+Connectome2tckConfigParamsDict = typing.TypedDict('Connectome2tckConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Connectome2tckConfigParametersTagged = typing.TypedDict('Connectome2tckConfigParametersTagged', {
+Connectome2tckConfigParamsDictTagged = typing.TypedDict('Connectome2tckConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
+Connectome2tckParamsDict = typing.TypedDict('Connectome2tckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/connectome2tck"]],
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
@@ -40,14 +40,14 @@ Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Connectome2tckConfigParameters] | None],
+    "config": typing.NotRequired[list[Connectome2tckConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": InputPathType,
     "assignments_in": InputPathType,
     "prefix_out": str,
 })
-Connectome2tckParametersTagged = typing.TypedDict('Connectome2tckParametersTagged', {
+Connectome2tckParamsDictTagged = typing.TypedDict('Connectome2tckParamsDictTagged', {
     "@type": typing.Literal["mrtrix/connectome2tck"],
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
@@ -62,7 +62,7 @@ Connectome2tckParametersTagged = typing.TypedDict('Connectome2tckParametersTagge
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Connectome2tckConfigParameters] | None],
+    "config": typing.NotRequired[list[Connectome2tckConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": InputPathType,
@@ -71,10 +71,10 @@ Connectome2tckParametersTagged = typing.TypedDict('Connectome2tckParametersTagge
 })
 
 
-def connectome2tck_config_params(
+def connectome2tck_config(
     key: str,
     value: str,
-) -> Connectome2tckConfigParametersTagged:
+) -> Connectome2tckConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def connectome2tck_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Connectome2tckConfigParameters` object.
+    `Connectome2tckConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def connectome2tck_config_validate(
 
 
 def connectome2tck_config_cargs(
-    params: Connectome2tckConfigParameters,
+    params: Connectome2tckConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def connectome2tck_config_cargs(
 
 class Connectome2tckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Connectome2tckParameters(...)`.
+    Output object returned when calling `Connectome2tckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -159,10 +159,10 @@ def connectome2tck_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Connectome2tckConfigParameters] | None = None,
+    config: list[Connectome2tckConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Connectome2tckParametersTagged:
+) -> Connectome2tckParamsDictTagged:
     """
     Build parameters.
     
@@ -244,7 +244,7 @@ def connectome2tck_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Connectome2tckParameters` object.
+    `Connectome2tckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -302,7 +302,7 @@ def connectome2tck_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Connectome2tckConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Connectome2tckConfigParamsDict] | None`')
         for e in params["config"]:
             connectome2tck_config_validate(e)
     if params.get("help", False) is None:
@@ -328,7 +328,7 @@ def connectome2tck_validate(
 
 
 def connectome2tck_cargs(
-    params: Connectome2tckParameters,
+    params: Connectome2tckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -399,7 +399,7 @@ def connectome2tck_cargs(
 
 
 def connectome2tck_outputs(
-    params: Connectome2tckParameters,
+    params: Connectome2tckParamsDict,
     execution: Execution,
 ) -> Connectome2tckOutputs:
     """
@@ -418,7 +418,7 @@ def connectome2tck_outputs(
 
 
 def connectome2tck_execute(
-    params: Connectome2tckParameters,
+    params: Connectome2tckParamsDict,
     runner: Runner | None = None,
 ) -> Connectome2tckOutputs:
     """
@@ -476,7 +476,7 @@ def connectome2tck(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Connectome2tckConfigParameters] | None = None,
+    config: list[Connectome2tckConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -571,9 +571,13 @@ def connectome2tck(
 
 __all__ = [
     "CONNECTOME2TCK_METADATA",
+    "Connectome2tckConfigParamsDict",
+    "Connectome2tckConfigParamsDictTagged",
     "Connectome2tckOutputs",
+    "Connectome2tckParamsDict",
+    "Connectome2tckParamsDictTagged",
     "connectome2tck",
-    "connectome2tck_config_params",
+    "connectome2tck_config",
     "connectome2tck_execute",
     "connectome2tck_params",
 ]

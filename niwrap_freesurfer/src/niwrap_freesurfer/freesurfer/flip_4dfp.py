@@ -13,7 +13,7 @@ FLIP_4DFP_METADATA = Metadata(
 )
 
 
-Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
+Flip4dfpParamsDict = typing.TypedDict('Flip4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/flip_4dfp"]],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
     "flip_z": bool,
     "endianness": typing.NotRequired[typing.Literal["b", "l"] | None],
 })
-Flip4dfpParametersTagged = typing.TypedDict('Flip4dfpParametersTagged', {
+Flip4dfpParamsDictTagged = typing.TypedDict('Flip4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/flip_4dfp"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ Flip4dfpParametersTagged = typing.TypedDict('Flip4dfpParametersTagged', {
 
 class Flip4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Flip4dfpParameters(...)`.
+    Output object returned when calling `Flip4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def flip_4dfp_params(
     flip_y: bool = False,
     flip_z: bool = False,
     endianness: typing.Literal["b", "l"] | None = None,
-) -> Flip4dfpParametersTagged:
+) -> Flip4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def flip_4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Flip4dfpParameters` object.
+    `Flip4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def flip_4dfp_validate(
 
 
 def flip_4dfp_cargs(
-    params: Flip4dfpParameters,
+    params: Flip4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def flip_4dfp_cargs(
 
 
 def flip_4dfp_outputs(
-    params: Flip4dfpParameters,
+    params: Flip4dfpParamsDict,
     execution: Execution,
 ) -> Flip4dfpOutputs:
     """
@@ -171,7 +171,7 @@ def flip_4dfp_outputs(
 
 
 def flip_4dfp_execute(
-    params: Flip4dfpParameters,
+    params: Flip4dfpParamsDict,
     runner: Runner | None = None,
 ) -> Flip4dfpOutputs:
     """
@@ -244,6 +244,8 @@ def flip_4dfp(
 __all__ = [
     "FLIP_4DFP_METADATA",
     "Flip4dfpOutputs",
+    "Flip4dfpParamsDict",
+    "Flip4dfpParamsDictTagged",
     "flip_4dfp",
     "flip_4dfp_execute",
     "flip_4dfp_params",

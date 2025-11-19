@@ -13,7 +13,7 @@ SURF_RETINO_MAP_METADATA = Metadata(
 )
 
 
-SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
+SurfRetinoMapParamsDict = typing.TypedDict('SurfRetinoMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfRetinoMap"]],
     "surface": str,
     "polar": str,
@@ -21,7 +21,7 @@ SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
     "prefix": typing.NotRequired[str | None],
     "node_debug": typing.NotRequired[float | None],
 })
-SurfRetinoMapParametersTagged = typing.TypedDict('SurfRetinoMapParametersTagged', {
+SurfRetinoMapParamsDictTagged = typing.TypedDict('SurfRetinoMapParamsDictTagged', {
     "@type": typing.Literal["afni/SurfRetinoMap"],
     "surface": str,
     "polar": str,
@@ -33,7 +33,7 @@ SurfRetinoMapParametersTagged = typing.TypedDict('SurfRetinoMapParametersTagged'
 
 class SurfRetinoMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfRetinoMapParameters(...)`.
+    Output object returned when calling `SurfRetinoMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def surf_retino_map_params(
     eccentricity: str,
     prefix: str | None = None,
     node_debug: float | None = None,
-) -> SurfRetinoMapParametersTagged:
+) -> SurfRetinoMapParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def surf_retino_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfRetinoMapParameters` object.
+    `SurfRetinoMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def surf_retino_map_validate(
 
 
 def surf_retino_map_cargs(
-    params: SurfRetinoMapParameters,
+    params: SurfRetinoMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def surf_retino_map_cargs(
 
 
 def surf_retino_map_outputs(
-    params: SurfRetinoMapParameters,
+    params: SurfRetinoMapParamsDict,
     execution: Execution,
 ) -> SurfRetinoMapOutputs:
     """
@@ -162,7 +162,7 @@ def surf_retino_map_outputs(
 
 
 def surf_retino_map_execute(
-    params: SurfRetinoMapParameters,
+    params: SurfRetinoMapParamsDict,
     runner: Runner | None = None,
 ) -> SurfRetinoMapOutputs:
     """
@@ -232,6 +232,8 @@ def surf_retino_map(
 __all__ = [
     "SURF_RETINO_MAP_METADATA",
     "SurfRetinoMapOutputs",
+    "SurfRetinoMapParamsDict",
+    "SurfRetinoMapParamsDictTagged",
     "surf_retino_map",
     "surf_retino_map_execute",
     "surf_retino_map_params",

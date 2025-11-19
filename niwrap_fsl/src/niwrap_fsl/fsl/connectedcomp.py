@@ -13,13 +13,13 @@ CONNECTEDCOMP_METADATA = Metadata(
 )
 
 
-ConnectedcompParameters = typing.TypedDict('ConnectedcompParameters', {
+ConnectedcompParamsDict = typing.TypedDict('ConnectedcompParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/connectedcomp"]],
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],
 })
-ConnectedcompParametersTagged = typing.TypedDict('ConnectedcompParametersTagged', {
+ConnectedcompParamsDictTagged = typing.TypedDict('ConnectedcompParamsDictTagged', {
     "@type": typing.Literal["fsl/connectedcomp"],
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ ConnectedcompParametersTagged = typing.TypedDict('ConnectedcompParametersTagged'
 
 class ConnectedcompOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConnectedcompParameters(...)`.
+    Output object returned when calling `ConnectedcompParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def connectedcomp_params(
     in_volume: InputPathType,
     output_volume: str | None = None,
     num_connect: int | None = None,
-) -> ConnectedcompParametersTagged:
+) -> ConnectedcompParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def connectedcomp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectedcompParameters` object.
+    `ConnectedcompParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def connectedcomp_validate(
 
 
 def connectedcomp_cargs(
-    params: ConnectedcompParameters,
+    params: ConnectedcompParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def connectedcomp_cargs(
 
 
 def connectedcomp_outputs(
-    params: ConnectedcompParameters,
+    params: ConnectedcompParamsDict,
     execution: Execution,
 ) -> ConnectedcompOutputs:
     """
@@ -131,7 +131,7 @@ def connectedcomp_outputs(
 
 
 def connectedcomp_execute(
-    params: ConnectedcompParameters,
+    params: ConnectedcompParamsDict,
     runner: Runner | None = None,
 ) -> ConnectedcompOutputs:
     """
@@ -193,6 +193,8 @@ def connectedcomp(
 __all__ = [
     "CONNECTEDCOMP_METADATA",
     "ConnectedcompOutputs",
+    "ConnectedcompParamsDict",
+    "ConnectedcompParamsDictTagged",
     "connectedcomp",
     "connectedcomp_execute",
     "connectedcomp_params",

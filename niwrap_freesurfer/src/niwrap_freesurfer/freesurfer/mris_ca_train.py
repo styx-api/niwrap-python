@@ -13,7 +13,7 @@ MRIS_CA_TRAIN_METADATA = Metadata(
 )
 
 
-MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
+MrisCaTrainParamsDict = typing.TypedDict('MrisCaTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_train"]],
     "hemi": str,
     "canonsurf": InputPathType,
@@ -42,7 +42,7 @@ MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
     "help": bool,
     "version": bool,
 })
-MrisCaTrainParametersTagged = typing.TypedDict('MrisCaTrainParametersTagged', {
+MrisCaTrainParamsDictTagged = typing.TypedDict('MrisCaTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_ca_train"],
     "hemi": str,
     "canonsurf": InputPathType,
@@ -75,7 +75,7 @@ MrisCaTrainParametersTagged = typing.TypedDict('MrisCaTrainParametersTagged', {
 
 class MrisCaTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCaTrainParameters(...)`.
+    Output object returned when calling `MrisCaTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +110,7 @@ def mris_ca_train_params(
     no_fill: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisCaTrainParametersTagged:
+) -> MrisCaTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def mris_ca_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCaTrainParameters` object.
+    `MrisCaTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -299,7 +299,7 @@ def mris_ca_train_validate(
 
 
 def mris_ca_train_cargs(
-    params: MrisCaTrainParameters,
+    params: MrisCaTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -403,7 +403,7 @@ def mris_ca_train_cargs(
 
 
 def mris_ca_train_outputs(
-    params: MrisCaTrainParameters,
+    params: MrisCaTrainParamsDict,
     execution: Execution,
 ) -> MrisCaTrainOutputs:
     """
@@ -423,7 +423,7 @@ def mris_ca_train_outputs(
 
 
 def mris_ca_train_execute(
-    params: MrisCaTrainParameters,
+    params: MrisCaTrainParamsDict,
     runner: Runner | None = None,
 ) -> MrisCaTrainOutputs:
     """
@@ -557,6 +557,8 @@ def mris_ca_train(
 __all__ = [
     "MRIS_CA_TRAIN_METADATA",
     "MrisCaTrainOutputs",
+    "MrisCaTrainParamsDict",
+    "MrisCaTrainParamsDictTagged",
     "mris_ca_train",
     "mris_ca_train_execute",
     "mris_ca_train_params",

@@ -13,7 +13,7 @@ FSREAD_ANNOT_METADATA = Metadata(
 )
 
 
-FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
+FsreadAnnotParamsDict = typing.TypedDict('FsreadAnnotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/FSread_annot"]],
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
     "dset": typing.NotRequired[str | None],
     "help": bool,
 })
-FsreadAnnotParametersTagged = typing.TypedDict('FsreadAnnotParametersTagged', {
+FsreadAnnotParamsDictTagged = typing.TypedDict('FsreadAnnotParamsDictTagged', {
     "@type": typing.Literal["afni/FSread_annot"],
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ FsreadAnnotParametersTagged = typing.TypedDict('FsreadAnnotParametersTagged', {
 
 class FsreadAnnotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsreadAnnotParameters(...)`.
+    Output object returned when calling `FsreadAnnotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def fsread_annot_params(
     show_fscmap: bool = False,
     dset: str | None = None,
     help_: bool = False,
-) -> FsreadAnnotParametersTagged:
+) -> FsreadAnnotParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def fsread_annot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsreadAnnotParameters` object.
+    `FsreadAnnotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def fsread_annot_validate(
 
 
 def fsread_annot_cargs(
-    params: FsreadAnnotParameters,
+    params: FsreadAnnotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def fsread_annot_cargs(
 
 
 def fsread_annot_outputs(
-    params: FsreadAnnotParameters,
+    params: FsreadAnnotParamsDict,
     execution: Execution,
 ) -> FsreadAnnotOutputs:
     """
@@ -265,7 +265,7 @@ def fsread_annot_outputs(
 
 
 def fsread_annot_execute(
-    params: FsreadAnnotParameters,
+    params: FsreadAnnotParamsDict,
     runner: Runner | None = None,
 ) -> FsreadAnnotOutputs:
     """
@@ -358,6 +358,8 @@ def fsread_annot(
 __all__ = [
     "FSREAD_ANNOT_METADATA",
     "FsreadAnnotOutputs",
+    "FsreadAnnotParamsDict",
+    "FsreadAnnotParamsDictTagged",
     "fsread_annot",
     "fsread_annot_execute",
     "fsread_annot_params",

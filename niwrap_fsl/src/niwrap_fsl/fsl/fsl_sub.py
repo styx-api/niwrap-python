@@ -13,7 +13,7 @@ FSL_SUB_METADATA = Metadata(
 )
 
 
-FslSubParameters = typing.TypedDict('FslSubParameters', {
+FslSubParamsDict = typing.TypedDict('FslSubParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_sub"]],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ FslSubParameters = typing.TypedDict('FslSubParameters', {
     "version": bool,
     "fileisimage": typing.NotRequired[InputPathType | None],
 })
-FslSubParametersTagged = typing.TypedDict('FslSubParametersTagged', {
+FslSubParamsDictTagged = typing.TypedDict('FslSubParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_sub"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -91,7 +91,7 @@ FslSubParametersTagged = typing.TypedDict('FslSubParametersTagged', {
 
 class FslSubOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslSubParameters(...)`.
+    Output object returned when calling `FslSubParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +132,7 @@ def fsl_sub_params(
     verbose: bool = False,
     version: bool = False,
     fileisimage: InputPathType | None = None,
-) -> FslSubParametersTagged:
+) -> FslSubParamsDictTagged:
     """
     Build parameters.
     
@@ -256,7 +256,7 @@ def fsl_sub_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslSubParameters` object.
+    `FslSubParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -378,7 +378,7 @@ def fsl_sub_validate(
 
 
 def fsl_sub_cargs(
-    params: FslSubParameters,
+    params: FslSubParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -536,7 +536,7 @@ def fsl_sub_cargs(
 
 
 def fsl_sub_outputs(
-    params: FslSubParameters,
+    params: FslSubParamsDict,
     execution: Execution,
 ) -> FslSubOutputs:
     """
@@ -555,7 +555,7 @@ def fsl_sub_outputs(
 
 
 def fsl_sub_execute(
-    params: FslSubParameters,
+    params: FslSubParamsDict,
     runner: Runner | None = None,
 ) -> FslSubOutputs:
     """
@@ -723,6 +723,8 @@ def fsl_sub(
 __all__ = [
     "FSL_SUB_METADATA",
     "FslSubOutputs",
+    "FslSubParamsDict",
+    "FslSubParamsDictTagged",
     "fsl_sub",
     "fsl_sub_execute",
     "fsl_sub_params",

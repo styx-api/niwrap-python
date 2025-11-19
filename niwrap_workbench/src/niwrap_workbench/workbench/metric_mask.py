@@ -12,14 +12,14 @@ METRIC_MASK_METADATA = Metadata(
 )
 
 
-MetricMaskParameters = typing.TypedDict('MetricMaskParameters', {
+MetricMaskParamsDict = typing.TypedDict('MetricMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-mask"]],
     "metric-out": str,
     "column": typing.NotRequired[str | None],
     "metric": InputPathType,
     "mask": InputPathType,
 })
-MetricMaskParametersTagged = typing.TypedDict('MetricMaskParametersTagged', {
+MetricMaskParamsDictTagged = typing.TypedDict('MetricMaskParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-mask"],
     "metric-out": str,
     "column": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ MetricMaskParametersTagged = typing.TypedDict('MetricMaskParametersTagged', {
 
 class MetricMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricMaskParameters(...)`.
+    Output object returned when calling `MetricMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def metric_mask_params(
     column: str | None,
     metric: InputPathType,
     mask: InputPathType,
-) -> MetricMaskParametersTagged:
+) -> MetricMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def metric_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMaskParameters` object.
+    `MetricMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def metric_mask_validate(
 
 
 def metric_mask_cargs(
-    params: MetricMaskParameters,
+    params: MetricMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def metric_mask_cargs(
 
 
 def metric_mask_outputs(
-    params: MetricMaskParameters,
+    params: MetricMaskParamsDict,
     execution: Execution,
 ) -> MetricMaskOutputs:
     """
@@ -145,7 +145,7 @@ def metric_mask_outputs(
 
 
 def metric_mask_execute(
-    params: MetricMaskParameters,
+    params: MetricMaskParamsDict,
     runner: Runner | None = None,
 ) -> MetricMaskOutputs:
     """
@@ -210,6 +210,8 @@ def metric_mask(
 __all__ = [
     "METRIC_MASK_METADATA",
     "MetricMaskOutputs",
+    "MetricMaskParamsDict",
+    "MetricMaskParamsDictTagged",
     "metric_mask",
     "metric_mask_execute",
     "metric_mask_params",

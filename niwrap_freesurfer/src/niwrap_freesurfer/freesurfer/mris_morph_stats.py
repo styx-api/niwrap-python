@@ -13,14 +13,14 @@ MRIS_MORPH_STATS_METADATA = Metadata(
 )
 
 
-MrisMorphStatsParameters = typing.TypedDict('MrisMorphStatsParameters', {
+MrisMorphStatsParamsDict = typing.TypedDict('MrisMorphStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_morph_stats"]],
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
     "morphed_surface": InputPathType,
     "output_name": str,
 })
-MrisMorphStatsParametersTagged = typing.TypedDict('MrisMorphStatsParametersTagged', {
+MrisMorphStatsParamsDictTagged = typing.TypedDict('MrisMorphStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_morph_stats"],
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
@@ -31,7 +31,7 @@ MrisMorphStatsParametersTagged = typing.TypedDict('MrisMorphStatsParametersTagge
 
 class MrisMorphStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMorphStatsParameters(...)`.
+    Output object returned when calling `MrisMorphStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_morph_stats_params(
     hemisphere: typing.Literal["lh", "rh"],
     morphed_surface: InputPathType,
     output_name: str,
-) -> MrisMorphStatsParametersTagged:
+) -> MrisMorphStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mris_morph_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMorphStatsParameters` object.
+    `MrisMorphStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def mris_morph_stats_validate(
 
 
 def mris_morph_stats_cargs(
-    params: MrisMorphStatsParameters,
+    params: MrisMorphStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def mris_morph_stats_cargs(
 
 
 def mris_morph_stats_outputs(
-    params: MrisMorphStatsParameters,
+    params: MrisMorphStatsParamsDict,
     execution: Execution,
 ) -> MrisMorphStatsOutputs:
     """
@@ -142,7 +142,7 @@ def mris_morph_stats_outputs(
 
 
 def mris_morph_stats_execute(
-    params: MrisMorphStatsParameters,
+    params: MrisMorphStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisMorphStatsOutputs:
     """
@@ -210,6 +210,8 @@ def mris_morph_stats(
 __all__ = [
     "MRIS_MORPH_STATS_METADATA",
     "MrisMorphStatsOutputs",
+    "MrisMorphStatsParamsDict",
+    "MrisMorphStatsParamsDictTagged",
     "mris_morph_stats",
     "mris_morph_stats_execute",
     "mris_morph_stats_params",

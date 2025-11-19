@@ -13,7 +13,7 @@ FS_TEMP_FILE_METADATA = Metadata(
 )
 
 
-FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
+FsTempFileParamsDict = typing.TypedDict('FsTempFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_temp_file"]],
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
     "help": bool,
     "help_alt": bool,
 })
-FsTempFileParametersTagged = typing.TypedDict('FsTempFileParametersTagged', {
+FsTempFileParamsDictTagged = typing.TypedDict('FsTempFileParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_temp_file"],
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ FsTempFileParametersTagged = typing.TypedDict('FsTempFileParametersTagged', {
 
 class FsTempFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsTempFileParameters(...)`.
+    Output object returned when calling `FsTempFileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def fs_temp_file_params(
     scratch: bool = False,
     help_: bool = False,
     help_alt: bool = False,
-) -> FsTempFileParametersTagged:
+) -> FsTempFileParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def fs_temp_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsTempFileParameters` object.
+    `FsTempFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def fs_temp_file_validate(
 
 
 def fs_temp_file_cargs(
-    params: FsTempFileParameters,
+    params: FsTempFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,7 +167,7 @@ def fs_temp_file_cargs(
 
 
 def fs_temp_file_outputs(
-    params: FsTempFileParameters,
+    params: FsTempFileParamsDict,
     execution: Execution,
 ) -> FsTempFileOutputs:
     """
@@ -186,7 +186,7 @@ def fs_temp_file_outputs(
 
 
 def fs_temp_file_execute(
-    params: FsTempFileParameters,
+    params: FsTempFileParamsDict,
     runner: Runner | None = None,
 ) -> FsTempFileOutputs:
     """
@@ -263,6 +263,8 @@ def fs_temp_file(
 __all__ = [
     "FS_TEMP_FILE_METADATA",
     "FsTempFileOutputs",
+    "FsTempFileParamsDict",
+    "FsTempFileParamsDictTagged",
     "fs_temp_file",
     "fs_temp_file_execute",
     "fs_temp_file_params",

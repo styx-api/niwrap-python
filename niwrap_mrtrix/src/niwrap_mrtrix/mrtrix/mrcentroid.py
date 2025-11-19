@@ -13,19 +13,19 @@ MRCENTROID_METADATA = Metadata(
 )
 
 
-MrcentroidConfigParameters = typing.TypedDict('MrcentroidConfigParameters', {
+MrcentroidConfigParamsDict = typing.TypedDict('MrcentroidConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrcentroidConfigParametersTagged = typing.TypedDict('MrcentroidConfigParametersTagged', {
+MrcentroidConfigParamsDictTagged = typing.TypedDict('MrcentroidConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrcentroidParameters = typing.TypedDict('MrcentroidParameters', {
+MrcentroidParamsDict = typing.TypedDict('MrcentroidParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrcentroid"]],
     "mask": typing.NotRequired[InputPathType | None],
     "voxelspace": bool,
@@ -34,12 +34,12 @@ MrcentroidParameters = typing.TypedDict('MrcentroidParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcentroidConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcentroidConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
 })
-MrcentroidParametersTagged = typing.TypedDict('MrcentroidParametersTagged', {
+MrcentroidParamsDictTagged = typing.TypedDict('MrcentroidParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrcentroid"],
     "mask": typing.NotRequired[InputPathType | None],
     "voxelspace": bool,
@@ -48,17 +48,17 @@ MrcentroidParametersTagged = typing.TypedDict('MrcentroidParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcentroidConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcentroidConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
 })
 
 
-def mrcentroid_config_params(
+def mrcentroid_config(
     key: str,
     value: str,
-) -> MrcentroidConfigParametersTagged:
+) -> MrcentroidConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mrcentroid_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcentroidConfigParameters` object.
+    `MrcentroidConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def mrcentroid_config_validate(
 
 
 def mrcentroid_config_cargs(
-    params: MrcentroidConfigParameters,
+    params: MrcentroidConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mrcentroid_config_cargs(
 
 class MrcentroidOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrcentroidParameters(...)`.
+    Output object returned when calling `MrcentroidParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,10 +135,10 @@ def mrcentroid_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcentroidConfigParameters] | None = None,
+    config: list[MrcentroidConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcentroidParametersTagged:
+) -> MrcentroidParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def mrcentroid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcentroidParameters` object.
+    `MrcentroidParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def mrcentroid_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcentroidConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcentroidConfigParamsDict] | None`')
         for e in params["config"]:
             mrcentroid_config_validate(e)
     if params.get("help", False) is None:
@@ -240,7 +240,7 @@ def mrcentroid_validate(
 
 
 def mrcentroid_cargs(
-    params: MrcentroidParameters,
+    params: MrcentroidParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def mrcentroid_cargs(
 
 
 def mrcentroid_outputs(
-    params: MrcentroidParameters,
+    params: MrcentroidParamsDict,
     execution: Execution,
 ) -> MrcentroidOutputs:
     """
@@ -304,7 +304,7 @@ def mrcentroid_outputs(
 
 
 def mrcentroid_execute(
-    params: MrcentroidParameters,
+    params: MrcentroidParamsDict,
     runner: Runner | None = None,
 ) -> MrcentroidOutputs:
     """
@@ -347,7 +347,7 @@ def mrcentroid(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcentroidConfigParameters] | None = None,
+    config: list[MrcentroidConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -406,9 +406,13 @@ def mrcentroid(
 
 __all__ = [
     "MRCENTROID_METADATA",
+    "MrcentroidConfigParamsDict",
+    "MrcentroidConfigParamsDictTagged",
     "MrcentroidOutputs",
+    "MrcentroidParamsDict",
+    "MrcentroidParamsDictTagged",
     "mrcentroid",
-    "mrcentroid_config_params",
+    "mrcentroid_config",
     "mrcentroid_execute",
     "mrcentroid_params",
 ]

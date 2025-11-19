@@ -13,7 +13,7 @@ V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
 )
 
 
-VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
+VMoveToSeriesDirsParamsDict = typing.TypedDict('VMoveToSeriesDirsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@move.to.series.dirs"]],
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
     "ver": bool,
     "dicom_files": list[InputPathType],
 })
-VMoveToSeriesDirsParametersTagged = typing.TypedDict('VMoveToSeriesDirsParametersTagged', {
+VMoveToSeriesDirsParamsDictTagged = typing.TypedDict('VMoveToSeriesDirsParamsDictTagged', {
     "@type": typing.Literal["afni/@move.to.series.dirs"],
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ VMoveToSeriesDirsParametersTagged = typing.TypedDict('VMoveToSeriesDirsParameter
 
 class VMoveToSeriesDirsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMoveToSeriesDirsParameters(...)`.
+    Output object returned when calling `VMoveToSeriesDirsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def v__move_to_series_dirs_params(
     help_: bool = False,
     hist: bool = False,
     ver: bool = False,
-) -> VMoveToSeriesDirsParametersTagged:
+) -> VMoveToSeriesDirsParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def v__move_to_series_dirs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMoveToSeriesDirsParameters` object.
+    `VMoveToSeriesDirsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def v__move_to_series_dirs_validate(
 
 
 def v__move_to_series_dirs_cargs(
-    params: VMoveToSeriesDirsParameters,
+    params: VMoveToSeriesDirsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def v__move_to_series_dirs_cargs(
 
 
 def v__move_to_series_dirs_outputs(
-    params: VMoveToSeriesDirsParameters,
+    params: VMoveToSeriesDirsParamsDict,
     execution: Execution,
 ) -> VMoveToSeriesDirsOutputs:
     """
@@ -200,7 +200,7 @@ def v__move_to_series_dirs_outputs(
 
 
 def v__move_to_series_dirs_execute(
-    params: VMoveToSeriesDirsParameters,
+    params: VMoveToSeriesDirsParamsDict,
     runner: Runner | None = None,
 ) -> VMoveToSeriesDirsOutputs:
     """
@@ -281,6 +281,8 @@ def v__move_to_series_dirs(
 
 __all__ = [
     "VMoveToSeriesDirsOutputs",
+    "VMoveToSeriesDirsParamsDict",
+    "VMoveToSeriesDirsParamsDictTagged",
     "V__MOVE_TO_SERIES_DIRS_METADATA",
     "v__move_to_series_dirs",
     "v__move_to_series_dirs_execute",

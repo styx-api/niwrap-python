@@ -13,7 +13,7 @@ APARCSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
+Aparcstats2tableParamsDict = typing.TypedDict('Aparcstats2tableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstats2table"]],
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
     "etiv": bool,
     "scale": typing.NotRequired[float | None],
 })
-Aparcstats2tableParametersTagged = typing.TypedDict('Aparcstats2tableParametersTagged', {
+Aparcstats2tableParamsDictTagged = typing.TypedDict('Aparcstats2tableParamsDictTagged', {
     "@type": typing.Literal["freesurfer/aparcstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ Aparcstats2tableParametersTagged = typing.TypedDict('Aparcstats2tableParametersT
 
 class Aparcstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Aparcstats2tableParameters(...)`.
+    Output object returned when calling `Aparcstats2tableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def aparcstats2table_params(
     debug: bool = False,
     etiv: bool = False,
     scale: float | None = None,
-) -> Aparcstats2tableParametersTagged:
+) -> Aparcstats2tableParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def aparcstats2table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Aparcstats2tableParameters` object.
+    `Aparcstats2tableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def aparcstats2table_validate(
 
 
 def aparcstats2table_cargs(
-    params: Aparcstats2tableParameters,
+    params: Aparcstats2tableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -311,7 +311,7 @@ def aparcstats2table_cargs(
 
 
 def aparcstats2table_outputs(
-    params: Aparcstats2tableParameters,
+    params: Aparcstats2tableParamsDict,
     execution: Execution,
 ) -> Aparcstats2tableOutputs:
     """
@@ -331,7 +331,7 @@ def aparcstats2table_outputs(
 
 
 def aparcstats2table_execute(
-    params: Aparcstats2tableParameters,
+    params: Aparcstats2tableParamsDict,
     runner: Runner | None = None,
 ) -> Aparcstats2tableOutputs:
     """
@@ -440,6 +440,8 @@ def aparcstats2table(
 __all__ = [
     "APARCSTATS2TABLE_METADATA",
     "Aparcstats2tableOutputs",
+    "Aparcstats2tableParamsDict",
+    "Aparcstats2tableParamsDictTagged",
     "aparcstats2table",
     "aparcstats2table_execute",
     "aparcstats2table_params",

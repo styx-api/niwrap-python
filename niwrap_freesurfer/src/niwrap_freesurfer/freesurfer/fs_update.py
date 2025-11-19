@@ -13,14 +13,14 @@ FS_UPDATE_METADATA = Metadata(
 )
 
 
-FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
+FsUpdateParamsDict = typing.TypedDict('FsUpdateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_update"]],
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
     "help_medium": bool,
     "help_long": bool,
 })
-FsUpdateParametersTagged = typing.TypedDict('FsUpdateParametersTagged', {
+FsUpdateParamsDictTagged = typing.TypedDict('FsUpdateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_update"],
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
@@ -31,7 +31,7 @@ FsUpdateParametersTagged = typing.TypedDict('FsUpdateParametersTagged', {
 
 class FsUpdateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsUpdateParameters(...)`.
+    Output object returned when calling `FsUpdateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def fs_update_params(
     help_short: bool = False,
     help_medium: bool = False,
     help_long: bool = False,
-) -> FsUpdateParametersTagged:
+) -> FsUpdateParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def fs_update_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsUpdateParameters` object.
+    `FsUpdateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def fs_update_validate(
 
 
 def fs_update_cargs(
-    params: FsUpdateParameters,
+    params: FsUpdateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def fs_update_cargs(
 
 
 def fs_update_outputs(
-    params: FsUpdateParameters,
+    params: FsUpdateParamsDict,
     execution: Execution,
 ) -> FsUpdateOutputs:
     """
@@ -141,7 +141,7 @@ def fs_update_outputs(
 
 
 def fs_update_execute(
-    params: FsUpdateParameters,
+    params: FsUpdateParamsDict,
     runner: Runner | None = None,
 ) -> FsUpdateOutputs:
     """
@@ -207,6 +207,8 @@ def fs_update(
 __all__ = [
     "FS_UPDATE_METADATA",
     "FsUpdateOutputs",
+    "FsUpdateParamsDict",
+    "FsUpdateParamsDictTagged",
     "fs_update",
     "fs_update_execute",
     "fs_update_params",

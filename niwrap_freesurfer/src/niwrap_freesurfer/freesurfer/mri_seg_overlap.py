@@ -13,7 +13,7 @@ MRI_SEG_OVERLAP_METADATA = Metadata(
 )
 
 
-MriSegOverlapParameters = typing.TypedDict('MriSegOverlapParameters', {
+MriSegOverlapParamsDict = typing.TypedDict('MriSegOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_overlap"]],
     "vol1": InputPathType,
     "vol2": InputPathType,
@@ -26,7 +26,7 @@ MriSegOverlapParameters = typing.TypedDict('MriSegOverlapParameters', {
     "seg_flag": bool,
     "quiet_flag": bool,
 })
-MriSegOverlapParametersTagged = typing.TypedDict('MriSegOverlapParametersTagged', {
+MriSegOverlapParamsDictTagged = typing.TypedDict('MriSegOverlapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_seg_overlap"],
     "vol1": InputPathType,
     "vol2": InputPathType,
@@ -43,7 +43,7 @@ MriSegOverlapParametersTagged = typing.TypedDict('MriSegOverlapParametersTagged'
 
 class MriSegOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegOverlapParameters(...)`.
+    Output object returned when calling `MriSegOverlapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def mri_seg_overlap_params(
     no_names_flag: bool = False,
     seg_flag: bool = False,
     quiet_flag: bool = False,
-) -> MriSegOverlapParametersTagged:
+) -> MriSegOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def mri_seg_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegOverlapParameters` object.
+    `MriSegOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def mri_seg_overlap_validate(
 
 
 def mri_seg_overlap_cargs(
-    params: MriSegOverlapParameters,
+    params: MriSegOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def mri_seg_overlap_cargs(
 
 
 def mri_seg_overlap_outputs(
-    params: MriSegOverlapParameters,
+    params: MriSegOverlapParamsDict,
     execution: Execution,
 ) -> MriSegOverlapOutputs:
     """
@@ -234,7 +234,7 @@ def mri_seg_overlap_outputs(
 
 
 def mri_seg_overlap_execute(
-    params: MriSegOverlapParameters,
+    params: MriSegOverlapParamsDict,
     runner: Runner | None = None,
 ) -> MriSegOverlapOutputs:
     """
@@ -320,6 +320,8 @@ def mri_seg_overlap(
 __all__ = [
     "MRI_SEG_OVERLAP_METADATA",
     "MriSegOverlapOutputs",
+    "MriSegOverlapParamsDict",
+    "MriSegOverlapParamsDictTagged",
     "mri_seg_overlap",
     "mri_seg_overlap_execute",
     "mri_seg_overlap_params",

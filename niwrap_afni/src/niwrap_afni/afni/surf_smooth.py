@@ -13,7 +13,7 @@ SURF_SMOOTH_METADATA = Metadata(
 )
 
 
-SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
+SurfSmoothParamsDict = typing.TypedDict('SurfSmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfSmooth"]],
     "surface": str,
     "method": str,
@@ -32,7 +32,7 @@ SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
     "talk_suma": bool,
     "refresh_rate": typing.NotRequired[float | None],
 })
-SurfSmoothParametersTagged = typing.TypedDict('SurfSmoothParametersTagged', {
+SurfSmoothParamsDictTagged = typing.TypedDict('SurfSmoothParamsDictTagged', {
     "@type": typing.Literal["afni/SurfSmooth"],
     "surface": str,
     "method": str,
@@ -55,7 +55,7 @@ SurfSmoothParametersTagged = typing.TypedDict('SurfSmoothParametersTagged', {
 
 class SurfSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfSmoothParameters(...)`.
+    Output object returned when calling `SurfSmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def surf_smooth_params(
     use_neighbors_outside_mask: bool = False,
     talk_suma: bool = False,
     refresh_rate: float | None = None,
-) -> SurfSmoothParametersTagged:
+) -> SurfSmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -155,7 +155,7 @@ def surf_smooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfSmoothParameters` object.
+    `SurfSmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -217,7 +217,7 @@ def surf_smooth_validate(
 
 
 def surf_smooth_cargs(
-    params: SurfSmoothParameters,
+    params: SurfSmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def surf_smooth_cargs(
 
 
 def surf_smooth_outputs(
-    params: SurfSmoothParameters,
+    params: SurfSmoothParamsDict,
     execution: Execution,
 ) -> SurfSmoothOutputs:
     """
@@ -327,7 +327,7 @@ def surf_smooth_outputs(
 
 
 def surf_smooth_execute(
-    params: SurfSmoothParameters,
+    params: SurfSmoothParamsDict,
     runner: Runner | None = None,
 ) -> SurfSmoothOutputs:
     """
@@ -440,6 +440,8 @@ def surf_smooth(
 __all__ = [
     "SURF_SMOOTH_METADATA",
     "SurfSmoothOutputs",
+    "SurfSmoothParamsDict",
+    "SurfSmoothParamsDictTagged",
     "surf_smooth",
     "surf_smooth_execute",
     "surf_smooth_params",

@@ -12,67 +12,67 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
 )
 
 
-SceneFileUpdateCopyMapOnePaletteParameters = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParameters', {
+SceneFileUpdateCopyMapOnePaletteParamsDict = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["copy-map-one-palette"]],
     "Data File Name Suffix": str,
 })
-SceneFileUpdateCopyMapOnePaletteParametersTagged = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParametersTagged', {
+SceneFileUpdateCopyMapOnePaletteParamsDictTagged = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParamsDictTagged', {
     "@type": typing.Literal["copy-map-one-palette"],
     "Data File Name Suffix": str,
 })
 
 
-SceneFileUpdateDataFileAddParameters = typing.TypedDict('SceneFileUpdateDataFileAddParameters', {
+SceneFileUpdateDataFileAddParamsDict = typing.TypedDict('SceneFileUpdateDataFileAddParamsDict', {
     "@type": typing.NotRequired[typing.Literal["data-file-add"]],
     "Name of data file": str,
 })
-SceneFileUpdateDataFileAddParametersTagged = typing.TypedDict('SceneFileUpdateDataFileAddParametersTagged', {
+SceneFileUpdateDataFileAddParamsDictTagged = typing.TypedDict('SceneFileUpdateDataFileAddParamsDictTagged', {
     "@type": typing.Literal["data-file-add"],
     "Name of data file": str,
 })
 
 
-SceneFileUpdateDataFileRemoveParameters = typing.TypedDict('SceneFileUpdateDataFileRemoveParameters', {
+SceneFileUpdateDataFileRemoveParamsDict = typing.TypedDict('SceneFileUpdateDataFileRemoveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["data-file-remove"]],
     "Name of data file": str,
 })
-SceneFileUpdateDataFileRemoveParametersTagged = typing.TypedDict('SceneFileUpdateDataFileRemoveParametersTagged', {
+SceneFileUpdateDataFileRemoveParamsDictTagged = typing.TypedDict('SceneFileUpdateDataFileRemoveParamsDictTagged', {
     "@type": typing.Literal["data-file-remove"],
     "Name of data file": str,
 })
 
 
-SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
+SceneFileUpdateParamsDict = typing.TypedDict('SceneFileUpdateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-update"]],
     "fix-map-palette-settings": bool,
     "remove-missing-files": bool,
     "error": bool,
     "verbose": bool,
-    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
-    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
-    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None],
+    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParamsDict] | None],
+    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParamsDict] | None],
     "input-scene-file": str,
     "output-scene-file": str,
     "scene-name-or-number": str,
 })
-SceneFileUpdateParametersTagged = typing.TypedDict('SceneFileUpdateParametersTagged', {
+SceneFileUpdateParamsDictTagged = typing.TypedDict('SceneFileUpdateParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-file-update"],
     "fix-map-palette-settings": bool,
     "remove-missing-files": bool,
     "error": bool,
     "verbose": bool,
-    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
-    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
-    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None],
+    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParamsDict] | None],
+    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParamsDict] | None],
     "input-scene-file": str,
     "output-scene-file": str,
     "scene-name-or-number": str,
 })
 
 
-def scene_file_update_copy_map_one_palette_params(
+def scene_file_update_copy_map_one_palette(
     data_file_name_suffix: str,
-) -> SceneFileUpdateCopyMapOnePaletteParametersTagged:
+) -> SceneFileUpdateCopyMapOnePaletteParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def scene_file_update_copy_map_one_palette_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileUpdateCopyMapOnePaletteParameters` object.
+    `SceneFileUpdateCopyMapOnePaletteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def scene_file_update_copy_map_one_palette_validate(
 
 
 def scene_file_update_copy_map_one_palette_cargs(
-    params: SceneFileUpdateCopyMapOnePaletteParameters,
+    params: SceneFileUpdateCopyMapOnePaletteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,9 +128,9 @@ def scene_file_update_copy_map_one_palette_cargs(
     return cargs
 
 
-def scene_file_update_data_file_add_params(
+def scene_file_update_data_file_add(
     name_of_data_file: str,
-) -> SceneFileUpdateDataFileAddParametersTagged:
+) -> SceneFileUpdateDataFileAddParamsDictTagged:
     """
     Build parameters.
     
@@ -158,7 +158,7 @@ def scene_file_update_data_file_add_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileUpdateDataFileAddParameters` object.
+    `SceneFileUpdateDataFileAddParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -172,7 +172,7 @@ def scene_file_update_data_file_add_validate(
 
 
 def scene_file_update_data_file_add_cargs(
-    params: SceneFileUpdateDataFileAddParameters,
+    params: SceneFileUpdateDataFileAddParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,9 +192,9 @@ def scene_file_update_data_file_add_cargs(
     return cargs
 
 
-def scene_file_update_data_file_remove_params(
+def scene_file_update_data_file_remove(
     name_of_data_file: str,
-) -> SceneFileUpdateDataFileRemoveParametersTagged:
+) -> SceneFileUpdateDataFileRemoveParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def scene_file_update_data_file_remove_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileUpdateDataFileRemoveParameters` object.
+    `SceneFileUpdateDataFileRemoveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def scene_file_update_data_file_remove_validate(
 
 
 def scene_file_update_data_file_remove_cargs(
-    params: SceneFileUpdateDataFileRemoveParameters,
+    params: SceneFileUpdateDataFileRemoveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def scene_file_update_data_file_remove_cargs(
 
 class SceneFileUpdateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SceneFileUpdateParameters(...)`.
+    Output object returned when calling `SceneFileUpdateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -272,10 +272,10 @@ def scene_file_update_params(
     remove_missing_files: bool = False,
     error: bool = False,
     verbose: bool = False,
-    copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParameters] | None = None,
-    data_file_add: list[SceneFileUpdateDataFileAddParameters] | None = None,
-    data_file_remove: list[SceneFileUpdateDataFileRemoveParameters] | None = None,
-) -> SceneFileUpdateParametersTagged:
+    copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None = None,
+    data_file_add: list[SceneFileUpdateDataFileAddParamsDict] | None = None,
+    data_file_remove: list[SceneFileUpdateDataFileRemoveParamsDict] | None = None,
+) -> SceneFileUpdateParamsDictTagged:
     """
     Build parameters.
     
@@ -321,7 +321,7 @@ def scene_file_update_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileUpdateParameters` object.
+    `SceneFileUpdateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -346,17 +346,17 @@ def scene_file_update_validate(
         raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
     if params.get("copy-map-one-palette", None) is not None:
         if not isinstance(params["copy-map-one-palette"], list):
-            raise StyxValidationError(f'`copy-map-one-palette` has the wrong type: Received `{type(params.get("copy-map-one-palette", None))}` expected `list[SceneFileUpdateCopyMapOnePaletteParameters] | None`')
+            raise StyxValidationError(f'`copy-map-one-palette` has the wrong type: Received `{type(params.get("copy-map-one-palette", None))}` expected `list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None`')
         for e in params["copy-map-one-palette"]:
             scene_file_update_copy_map_one_palette_validate(e)
     if params.get("data-file-add", None) is not None:
         if not isinstance(params["data-file-add"], list):
-            raise StyxValidationError(f'`data-file-add` has the wrong type: Received `{type(params.get("data-file-add", None))}` expected `list[SceneFileUpdateDataFileAddParameters] | None`')
+            raise StyxValidationError(f'`data-file-add` has the wrong type: Received `{type(params.get("data-file-add", None))}` expected `list[SceneFileUpdateDataFileAddParamsDict] | None`')
         for e in params["data-file-add"]:
             scene_file_update_data_file_add_validate(e)
     if params.get("data-file-remove", None) is not None:
         if not isinstance(params["data-file-remove"], list):
-            raise StyxValidationError(f'`data-file-remove` has the wrong type: Received `{type(params.get("data-file-remove", None))}` expected `list[SceneFileUpdateDataFileRemoveParameters] | None`')
+            raise StyxValidationError(f'`data-file-remove` has the wrong type: Received `{type(params.get("data-file-remove", None))}` expected `list[SceneFileUpdateDataFileRemoveParamsDict] | None`')
         for e in params["data-file-remove"]:
             scene_file_update_data_file_remove_validate(e)
     if params.get("input-scene-file", None) is None:
@@ -374,7 +374,7 @@ def scene_file_update_validate(
 
 
 def scene_file_update_cargs(
-    params: SceneFileUpdateParameters,
+    params: SceneFileUpdateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -406,7 +406,7 @@ def scene_file_update_cargs(
 
 
 def scene_file_update_outputs(
-    params: SceneFileUpdateParameters,
+    params: SceneFileUpdateParamsDict,
     execution: Execution,
 ) -> SceneFileUpdateOutputs:
     """
@@ -425,7 +425,7 @@ def scene_file_update_outputs(
 
 
 def scene_file_update_execute(
-    params: SceneFileUpdateParameters,
+    params: SceneFileUpdateParamsDict,
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
@@ -483,9 +483,9 @@ def scene_file_update(
     remove_missing_files: bool = False,
     error: bool = False,
     verbose: bool = False,
-    copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParameters] | None = None,
-    data_file_add: list[SceneFileUpdateDataFileAddParameters] | None = None,
-    data_file_remove: list[SceneFileUpdateDataFileRemoveParameters] | None = None,
+    copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None = None,
+    data_file_add: list[SceneFileUpdateDataFileAddParamsDict] | None = None,
+    data_file_remove: list[SceneFileUpdateDataFileRemoveParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
@@ -555,11 +555,19 @@ def scene_file_update(
 
 __all__ = [
     "SCENE_FILE_UPDATE_METADATA",
+    "SceneFileUpdateCopyMapOnePaletteParamsDict",
+    "SceneFileUpdateCopyMapOnePaletteParamsDictTagged",
+    "SceneFileUpdateDataFileAddParamsDict",
+    "SceneFileUpdateDataFileAddParamsDictTagged",
+    "SceneFileUpdateDataFileRemoveParamsDict",
+    "SceneFileUpdateDataFileRemoveParamsDictTagged",
     "SceneFileUpdateOutputs",
+    "SceneFileUpdateParamsDict",
+    "SceneFileUpdateParamsDictTagged",
     "scene_file_update",
-    "scene_file_update_copy_map_one_palette_params",
-    "scene_file_update_data_file_add_params",
-    "scene_file_update_data_file_remove_params",
+    "scene_file_update_copy_map_one_palette",
+    "scene_file_update_data_file_add",
+    "scene_file_update_data_file_remove",
     "scene_file_update_execute",
     "scene_file_update_params",
 ]

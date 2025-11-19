@@ -6,7 +6,7 @@
     },
     "left-surfaces": {
       "var_param": "left_surfaces",
-      "fn_struct_make_params": "foci_resample_left_surfaces_params",
+      "fn_struct_make_params": "foci_resample_left_surfaces",
       "properties": {
         "current-surf": {
           "var_param": "current_surf"
@@ -18,7 +18,7 @@
     },
     "right-surfaces": {
       "var_param": "right_surfaces",
-      "fn_struct_make_params": "foci_resample_right_surfaces_params",
+      "fn_struct_make_params": "foci_resample_right_surfaces",
       "properties": {
         "current-surf": {
           "var_param": "current_surf"
@@ -30,7 +30,7 @@
     },
     "cerebellum-surfaces": {
       "var_param": "cerebellum_surfaces",
-      "fn_struct_make_params": "foci_resample_cerebellum_surfaces_params",
+      "fn_struct_make_params": "foci_resample_cerebellum_surfaces",
       "properties": {
         "current-surf": {
           "var_param": "current_surf"

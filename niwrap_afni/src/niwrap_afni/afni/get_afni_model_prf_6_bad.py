@@ -13,7 +13,7 @@ GET_AFNI_MODEL_PRF_6_BAD_METADATA = Metadata(
 )
 
 
-GetAfniModelPrf6BadParameters = typing.TypedDict('GetAfniModelPrf6BadParameters', {
+GetAfniModelPrf6BadParamsDict = typing.TypedDict('GetAfniModelPrf6BadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF_6_BAD"]],
     "amplitude": float,
     "x_coord": float,
@@ -22,7 +22,7 @@ GetAfniModelPrf6BadParameters = typing.TypedDict('GetAfniModelPrf6BadParameters'
     "sigrat": float,
     "theta": float,
 })
-GetAfniModelPrf6BadParametersTagged = typing.TypedDict('GetAfniModelPrf6BadParametersTagged', {
+GetAfniModelPrf6BadParamsDictTagged = typing.TypedDict('GetAfniModelPrf6BadParamsDictTagged', {
     "@type": typing.Literal["afni/get_afni_model_PRF_6_BAD"],
     "amplitude": float,
     "x_coord": float,
@@ -35,7 +35,7 @@ GetAfniModelPrf6BadParametersTagged = typing.TypedDict('GetAfniModelPrf6BadParam
 
 class GetAfniModelPrf6BadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GetAfniModelPrf6BadParameters(...)`.
+    Output object returned when calling `GetAfniModelPrf6BadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def get_afni_model_prf_6_bad_params(
     sigma: float,
     sigrat: float,
     theta: float,
-) -> GetAfniModelPrf6BadParametersTagged:
+) -> GetAfniModelPrf6BadParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def get_afni_model_prf_6_bad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GetAfniModelPrf6BadParameters` object.
+    `GetAfniModelPrf6BadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def get_afni_model_prf_6_bad_validate(
 
 
 def get_afni_model_prf_6_bad_cargs(
-    params: GetAfniModelPrf6BadParameters,
+    params: GetAfniModelPrf6BadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def get_afni_model_prf_6_bad_cargs(
 
 
 def get_afni_model_prf_6_bad_outputs(
-    params: GetAfniModelPrf6BadParameters,
+    params: GetAfniModelPrf6BadParamsDict,
     execution: Execution,
 ) -> GetAfniModelPrf6BadOutputs:
     """
@@ -156,7 +156,7 @@ def get_afni_model_prf_6_bad_outputs(
 
 
 def get_afni_model_prf_6_bad_execute(
-    params: GetAfniModelPrf6BadParameters,
+    params: GetAfniModelPrf6BadParamsDict,
     runner: Runner | None = None,
 ) -> GetAfniModelPrf6BadOutputs:
     """
@@ -227,6 +227,8 @@ def get_afni_model_prf_6_bad(
 __all__ = [
     "GET_AFNI_MODEL_PRF_6_BAD_METADATA",
     "GetAfniModelPrf6BadOutputs",
+    "GetAfniModelPrf6BadParamsDict",
+    "GetAfniModelPrf6BadParamsDictTagged",
     "get_afni_model_prf_6_bad",
     "get_afni_model_prf_6_bad_execute",
     "get_afni_model_prf_6_bad_params",

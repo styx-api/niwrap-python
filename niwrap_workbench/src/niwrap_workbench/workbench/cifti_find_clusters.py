@@ -12,77 +12,77 @@ CIFTI_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-CiftiFindClustersLeftSurfaceParameters = typing.TypedDict('CiftiFindClustersLeftSurfaceParameters', {
+CiftiFindClustersLeftSurfaceParamsDict = typing.TypedDict('CiftiFindClustersLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiFindClustersLeftSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersLeftSurfaceParametersTagged', {
+CiftiFindClustersLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiFindClustersLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiFindClustersRightSurfaceParameters = typing.TypedDict('CiftiFindClustersRightSurfaceParameters', {
+CiftiFindClustersRightSurfaceParamsDict = typing.TypedDict('CiftiFindClustersRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiFindClustersRightSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersRightSurfaceParametersTagged', {
+CiftiFindClustersRightSurfaceParamsDictTagged = typing.TypedDict('CiftiFindClustersRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiFindClustersCerebellumSurfaceParameters = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParameters', {
+CiftiFindClustersCerebellumSurfaceParamsDict = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiFindClustersCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParametersTagged', {
+CiftiFindClustersCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiFindClustersSizeRatioParameters = typing.TypedDict('CiftiFindClustersSizeRatioParameters', {
+CiftiFindClustersSizeRatioParamsDict = typing.TypedDict('CiftiFindClustersSizeRatioParamsDict', {
     "@type": typing.NotRequired[typing.Literal["size-ratio"]],
     "surface-ratio": float,
     "volume-ratio": float,
 })
-CiftiFindClustersSizeRatioParametersTagged = typing.TypedDict('CiftiFindClustersSizeRatioParametersTagged', {
+CiftiFindClustersSizeRatioParamsDictTagged = typing.TypedDict('CiftiFindClustersSizeRatioParamsDictTagged', {
     "@type": typing.Literal["size-ratio"],
     "surface-ratio": float,
     "volume-ratio": float,
 })
 
 
-CiftiFindClustersDistanceParameters = typing.TypedDict('CiftiFindClustersDistanceParameters', {
+CiftiFindClustersDistanceParamsDict = typing.TypedDict('CiftiFindClustersDistanceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["distance"]],
     "surface-distance": float,
     "volume-distance": float,
 })
-CiftiFindClustersDistanceParametersTagged = typing.TypedDict('CiftiFindClustersDistanceParametersTagged', {
+CiftiFindClustersDistanceParamsDictTagged = typing.TypedDict('CiftiFindClustersDistanceParamsDictTagged', {
     "@type": typing.Literal["distance"],
     "surface-distance": float,
     "volume-distance": float,
 })
 
 
-CiftiFindClustersParameters = typing.TypedDict('CiftiFindClustersParameters', {
+CiftiFindClustersParamsDict = typing.TypedDict('CiftiFindClustersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-find-clusters"]],
     "cifti-out": str,
     "less-than": bool,
-    "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFindClustersCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFindClustersCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
-    "size-ratio": typing.NotRequired[CiftiFindClustersSizeRatioParameters | None],
-    "distance": typing.NotRequired[CiftiFindClustersDistanceParameters | None],
+    "size-ratio": typing.NotRequired[CiftiFindClustersSizeRatioParamsDict | None],
+    "distance": typing.NotRequired[CiftiFindClustersDistanceParamsDict | None],
     "startval": typing.NotRequired[int | None],
     "cifti": InputPathType,
     "surface-value-threshold": float,
@@ -91,17 +91,17 @@ CiftiFindClustersParameters = typing.TypedDict('CiftiFindClustersParameters', {
     "volume-minimum-size": float,
     "direction": str,
 })
-CiftiFindClustersParametersTagged = typing.TypedDict('CiftiFindClustersParametersTagged', {
+CiftiFindClustersParamsDictTagged = typing.TypedDict('CiftiFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-find-clusters"],
     "cifti-out": str,
     "less-than": bool,
-    "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFindClustersCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFindClustersCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
-    "size-ratio": typing.NotRequired[CiftiFindClustersSizeRatioParameters | None],
-    "distance": typing.NotRequired[CiftiFindClustersDistanceParameters | None],
+    "size-ratio": typing.NotRequired[CiftiFindClustersSizeRatioParamsDict | None],
+    "distance": typing.NotRequired[CiftiFindClustersDistanceParamsDict | None],
     "startval": typing.NotRequired[int | None],
     "cifti": InputPathType,
     "surface-value-threshold": float,
@@ -112,10 +112,10 @@ CiftiFindClustersParametersTagged = typing.TypedDict('CiftiFindClustersParameter
 })
 
 
-def cifti_find_clusters_left_surface_params(
+def cifti_find_clusters_left_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiFindClustersLeftSurfaceParametersTagged:
+) -> CiftiFindClustersLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def cifti_find_clusters_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersLeftSurfaceParameters` object.
+    `CiftiFindClustersLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def cifti_find_clusters_left_surface_validate(
 
 
 def cifti_find_clusters_left_surface_cargs(
-    params: CiftiFindClustersLeftSurfaceParameters,
+    params: CiftiFindClustersLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -182,10 +182,10 @@ def cifti_find_clusters_left_surface_cargs(
     return cargs
 
 
-def cifti_find_clusters_right_surface_params(
+def cifti_find_clusters_right_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiFindClustersRightSurfaceParametersTagged:
+) -> CiftiFindClustersRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -212,7 +212,7 @@ def cifti_find_clusters_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersRightSurfaceParameters` object.
+    `CiftiFindClustersRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -229,7 +229,7 @@ def cifti_find_clusters_right_surface_validate(
 
 
 def cifti_find_clusters_right_surface_cargs(
-    params: CiftiFindClustersRightSurfaceParameters,
+    params: CiftiFindClustersRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -252,10 +252,10 @@ def cifti_find_clusters_right_surface_cargs(
     return cargs
 
 
-def cifti_find_clusters_cerebellum_surface_params(
+def cifti_find_clusters_cerebellum_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiFindClustersCerebellumSurfaceParametersTagged:
+) -> CiftiFindClustersCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -282,7 +282,7 @@ def cifti_find_clusters_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersCerebellumSurfaceParameters` object.
+    `CiftiFindClustersCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -299,7 +299,7 @@ def cifti_find_clusters_cerebellum_surface_validate(
 
 
 def cifti_find_clusters_cerebellum_surface_cargs(
-    params: CiftiFindClustersCerebellumSurfaceParameters,
+    params: CiftiFindClustersCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -322,10 +322,10 @@ def cifti_find_clusters_cerebellum_surface_cargs(
     return cargs
 
 
-def cifti_find_clusters_size_ratio_params(
+def cifti_find_clusters_size_ratio(
     surface_ratio: float,
     volume_ratio: float,
-) -> CiftiFindClustersSizeRatioParametersTagged:
+) -> CiftiFindClustersSizeRatioParamsDictTagged:
     """
     Build parameters.
     
@@ -348,7 +348,7 @@ def cifti_find_clusters_size_ratio_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersSizeRatioParameters` object.
+    `CiftiFindClustersSizeRatioParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -366,7 +366,7 @@ def cifti_find_clusters_size_ratio_validate(
 
 
 def cifti_find_clusters_size_ratio_cargs(
-    params: CiftiFindClustersSizeRatioParameters,
+    params: CiftiFindClustersSizeRatioParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -387,10 +387,10 @@ def cifti_find_clusters_size_ratio_cargs(
     return cargs
 
 
-def cifti_find_clusters_distance_params(
+def cifti_find_clusters_distance(
     surface_distance: float,
     volume_distance: float,
-) -> CiftiFindClustersDistanceParametersTagged:
+) -> CiftiFindClustersDistanceParamsDictTagged:
     """
     Build parameters.
     
@@ -415,7 +415,7 @@ def cifti_find_clusters_distance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersDistanceParameters` object.
+    `CiftiFindClustersDistanceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -433,7 +433,7 @@ def cifti_find_clusters_distance_validate(
 
 
 def cifti_find_clusters_distance_cargs(
-    params: CiftiFindClustersDistanceParameters,
+    params: CiftiFindClustersDistanceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,7 +456,7 @@ def cifti_find_clusters_distance_cargs(
 
 class CiftiFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiFindClustersParameters(...)`.
+    Output object returned when calling `CiftiFindClustersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -475,13 +475,13 @@ def cifti_find_clusters_params(
     volume_minimum_size: float,
     direction: str,
     less_than: bool = False,
-    left_surface: CiftiFindClustersLeftSurfaceParameters | None = None,
-    right_surface: CiftiFindClustersRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiFindClustersCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
     merged_volume: bool = False,
-    size_ratio: CiftiFindClustersSizeRatioParameters | None = None,
-    distance: CiftiFindClustersDistanceParameters | None = None,
-) -> CiftiFindClustersParametersTagged:
+    size_ratio: CiftiFindClustersSizeRatioParamsDict | None = None,
+    distance: CiftiFindClustersDistanceParamsDict | None = None,
+) -> CiftiFindClustersParamsDictTagged:
     """
     Build parameters.
     
@@ -547,7 +547,7 @@ def cifti_find_clusters_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFindClustersParameters` object.
+    `CiftiFindClustersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -609,7 +609,7 @@ def cifti_find_clusters_validate(
 
 
 def cifti_find_clusters_cargs(
-    params: CiftiFindClustersParameters,
+    params: CiftiFindClustersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -649,7 +649,7 @@ def cifti_find_clusters_cargs(
 
 
 def cifti_find_clusters_outputs(
-    params: CiftiFindClustersParameters,
+    params: CiftiFindClustersParamsDict,
     execution: Execution,
 ) -> CiftiFindClustersOutputs:
     """
@@ -669,7 +669,7 @@ def cifti_find_clusters_outputs(
 
 
 def cifti_find_clusters_execute(
-    params: CiftiFindClustersParameters,
+    params: CiftiFindClustersParamsDict,
     runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
@@ -712,12 +712,12 @@ def cifti_find_clusters(
     volume_minimum_size: float,
     direction: str,
     less_than: bool = False,
-    left_surface: CiftiFindClustersLeftSurfaceParameters | None = None,
-    right_surface: CiftiFindClustersRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiFindClustersCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
     merged_volume: bool = False,
-    size_ratio: CiftiFindClustersSizeRatioParameters | None = None,
-    distance: CiftiFindClustersDistanceParameters | None = None,
+    size_ratio: CiftiFindClustersSizeRatioParamsDict | None = None,
+    distance: CiftiFindClustersDistanceParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
@@ -785,13 +785,25 @@ def cifti_find_clusters(
 
 __all__ = [
     "CIFTI_FIND_CLUSTERS_METADATA",
+    "CiftiFindClustersCerebellumSurfaceParamsDict",
+    "CiftiFindClustersCerebellumSurfaceParamsDictTagged",
+    "CiftiFindClustersDistanceParamsDict",
+    "CiftiFindClustersDistanceParamsDictTagged",
+    "CiftiFindClustersLeftSurfaceParamsDict",
+    "CiftiFindClustersLeftSurfaceParamsDictTagged",
     "CiftiFindClustersOutputs",
+    "CiftiFindClustersParamsDict",
+    "CiftiFindClustersParamsDictTagged",
+    "CiftiFindClustersRightSurfaceParamsDict",
+    "CiftiFindClustersRightSurfaceParamsDictTagged",
+    "CiftiFindClustersSizeRatioParamsDict",
+    "CiftiFindClustersSizeRatioParamsDictTagged",
     "cifti_find_clusters",
-    "cifti_find_clusters_cerebellum_surface_params",
-    "cifti_find_clusters_distance_params",
+    "cifti_find_clusters_cerebellum_surface",
+    "cifti_find_clusters_distance",
     "cifti_find_clusters_execute",
-    "cifti_find_clusters_left_surface_params",
+    "cifti_find_clusters_left_surface",
     "cifti_find_clusters_params",
-    "cifti_find_clusters_right_surface_params",
-    "cifti_find_clusters_size_ratio_params",
+    "cifti_find_clusters_right_surface",
+    "cifti_find_clusters_size_ratio",
 ]

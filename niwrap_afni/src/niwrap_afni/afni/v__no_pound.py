@@ -13,11 +13,11 @@ V__NO_POUND_METADATA = Metadata(
 )
 
 
-VNoPoundParameters = typing.TypedDict('VNoPoundParameters', {
+VNoPoundParamsDict = typing.TypedDict('VNoPoundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@NoPound"]],
     "afni_files": list[str],
 })
-VNoPoundParametersTagged = typing.TypedDict('VNoPoundParametersTagged', {
+VNoPoundParamsDictTagged = typing.TypedDict('VNoPoundParamsDictTagged', {
     "@type": typing.Literal["afni/@NoPound"],
     "afni_files": list[str],
 })
@@ -25,7 +25,7 @@ VNoPoundParametersTagged = typing.TypedDict('VNoPoundParametersTagged', {
 
 class VNoPoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VNoPoundParameters(...)`.
+    Output object returned when calling `VNoPoundParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class VNoPoundOutputs(typing.NamedTuple):
 
 def v__no_pound_params(
     afni_files: list[str],
-) -> VNoPoundParametersTagged:
+) -> VNoPoundParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def v__no_pound_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VNoPoundParameters` object.
+    `VNoPoundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def v__no_pound_validate(
 
 
 def v__no_pound_cargs(
-    params: VNoPoundParameters,
+    params: VNoPoundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def v__no_pound_cargs(
 
 
 def v__no_pound_outputs(
-    params: VNoPoundParameters,
+    params: VNoPoundParamsDict,
     execution: Execution,
 ) -> VNoPoundOutputs:
     """
@@ -110,7 +110,7 @@ def v__no_pound_outputs(
 
 
 def v__no_pound_execute(
-    params: VNoPoundParameters,
+    params: VNoPoundParamsDict,
     runner: Runner | None = None,
 ) -> VNoPoundOutputs:
     """
@@ -166,6 +166,8 @@ def v__no_pound(
 
 __all__ = [
     "VNoPoundOutputs",
+    "VNoPoundParamsDict",
+    "VNoPoundParamsDictTagged",
     "V__NO_POUND_METADATA",
     "v__no_pound",
     "v__no_pound_execute",

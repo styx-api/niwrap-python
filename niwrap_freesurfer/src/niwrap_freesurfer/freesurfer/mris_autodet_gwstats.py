@@ -13,7 +13,7 @@ MRIS_AUTODET_GWSTATS_METADATA = Metadata(
 )
 
 
-MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', {
+MrisAutodetGwstatsParamsDict = typing.TypedDict('MrisAutodetGwstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_autodet_gwstats"]],
     "output_file": str,
     "t1w_volume": InputPathType,
@@ -31,7 +31,7 @@ MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', 
     "min_gray_at_csf_border": typing.NotRequired[float | None],
     "max_csf": typing.NotRequired[float | None],
 })
-MrisAutodetGwstatsParametersTagged = typing.TypedDict('MrisAutodetGwstatsParametersTagged', {
+MrisAutodetGwstatsParamsDictTagged = typing.TypedDict('MrisAutodetGwstatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_autodet_gwstats"],
     "output_file": str,
     "t1w_volume": InputPathType,
@@ -53,7 +53,7 @@ MrisAutodetGwstatsParametersTagged = typing.TypedDict('MrisAutodetGwstatsParamet
 
 class MrisAutodetGwstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAutodetGwstatsParameters(...)`.
+    Output object returned when calling `MrisAutodetGwstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def mris_autodet_gwstats_params(
     max_gray_at_csf_border: float | None = None,
     min_gray_at_csf_border: float | None = None,
     max_csf: float | None = None,
-) -> MrisAutodetGwstatsParametersTagged:
+) -> MrisAutodetGwstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def mris_autodet_gwstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAutodetGwstatsParameters` object.
+    `MrisAutodetGwstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def mris_autodet_gwstats_validate(
 
 
 def mris_autodet_gwstats_cargs(
-    params: MrisAutodetGwstatsParameters,
+    params: MrisAutodetGwstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def mris_autodet_gwstats_cargs(
 
 
 def mris_autodet_gwstats_outputs(
-    params: MrisAutodetGwstatsParameters,
+    params: MrisAutodetGwstatsParamsDict,
     execution: Execution,
 ) -> MrisAutodetGwstatsOutputs:
     """
@@ -304,7 +304,7 @@ def mris_autodet_gwstats_outputs(
 
 
 def mris_autodet_gwstats_execute(
-    params: MrisAutodetGwstatsParameters,
+    params: MrisAutodetGwstatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisAutodetGwstatsOutputs:
     """
@@ -405,6 +405,8 @@ def mris_autodet_gwstats(
 __all__ = [
     "MRIS_AUTODET_GWSTATS_METADATA",
     "MrisAutodetGwstatsOutputs",
+    "MrisAutodetGwstatsParamsDict",
+    "MrisAutodetGwstatsParamsDictTagged",
     "mris_autodet_gwstats",
     "mris_autodet_gwstats_execute",
     "mris_autodet_gwstats_params",

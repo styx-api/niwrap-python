@@ -13,7 +13,7 @@ MRI_CVS_REGISTER_METADATA = Metadata(
 )
 
 
-MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
+MriCvsRegisterParamsDict = typing.TypedDict('MriCvsRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_register"]],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
     "version_flag": bool,
     "help_flag": bool,
 })
-MriCvsRegisterParametersTagged = typing.TypedDict('MriCvsRegisterParametersTagged', {
+MriCvsRegisterParamsDictTagged = typing.TypedDict('MriCvsRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cvs_register"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
@@ -77,7 +77,7 @@ MriCvsRegisterParametersTagged = typing.TypedDict('MriCvsRegisterParametersTagge
 
 class MriCvsRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCvsRegisterParameters(...)`.
+    Output object returned when calling `MriCvsRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def mri_cvs_register_params(
     nolog_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriCvsRegisterParametersTagged:
+) -> MriCvsRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def mri_cvs_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCvsRegisterParameters` object.
+    `MriCvsRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -330,7 +330,7 @@ def mri_cvs_register_validate(
 
 
 def mri_cvs_register_cargs(
-    params: MriCvsRegisterParameters,
+    params: MriCvsRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -422,7 +422,7 @@ def mri_cvs_register_cargs(
 
 
 def mri_cvs_register_outputs(
-    params: MriCvsRegisterParameters,
+    params: MriCvsRegisterParamsDict,
     execution: Execution,
 ) -> MriCvsRegisterOutputs:
     """
@@ -446,7 +446,7 @@ def mri_cvs_register_outputs(
 
 
 def mri_cvs_register_execute(
-    params: MriCvsRegisterParameters,
+    params: MriCvsRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriCvsRegisterOutputs:
     """
@@ -593,6 +593,8 @@ def mri_cvs_register(
 __all__ = [
     "MRI_CVS_REGISTER_METADATA",
     "MriCvsRegisterOutputs",
+    "MriCvsRegisterParamsDict",
+    "MriCvsRegisterParamsDictTagged",
     "mri_cvs_register",
     "mri_cvs_register_execute",
     "mri_cvs_register_params",

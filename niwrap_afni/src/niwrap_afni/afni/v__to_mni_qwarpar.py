@@ -13,12 +13,12 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 )
 
 
-VToMniQwarparParameters = typing.TypedDict('VToMniQwarparParameters', {
+VToMniQwarparParamsDict = typing.TypedDict('VToMniQwarparParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Qwarpar"]],
     "numcpu": float,
     "numjob": float,
 })
-VToMniQwarparParametersTagged = typing.TypedDict('VToMniQwarparParametersTagged', {
+VToMniQwarparParamsDictTagged = typing.TypedDict('VToMniQwarparParamsDictTagged', {
     "@type": typing.Literal["afni/@toMNI_Qwarpar"],
     "numcpu": float,
     "numjob": float,
@@ -27,7 +27,7 @@ VToMniQwarparParametersTagged = typing.TypedDict('VToMniQwarparParametersTagged'
 
 class VToMniQwarparOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VToMniQwarparParameters(...)`.
+    Output object returned when calling `VToMniQwarparParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class VToMniQwarparOutputs(typing.NamedTuple):
 def v__to_mni_qwarpar_params(
     numcpu: float,
     numjob: float,
-) -> VToMniQwarparParametersTagged:
+) -> VToMniQwarparParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def v__to_mni_qwarpar_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VToMniQwarparParameters` object.
+    `VToMniQwarparParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def v__to_mni_qwarpar_validate(
 
 
 def v__to_mni_qwarpar_cargs(
-    params: VToMniQwarparParameters,
+    params: VToMniQwarparParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v__to_mni_qwarpar_cargs(
 
 
 def v__to_mni_qwarpar_outputs(
-    params: VToMniQwarparParameters,
+    params: VToMniQwarparParamsDict,
     execution: Execution,
 ) -> VToMniQwarparOutputs:
     """
@@ -121,7 +121,7 @@ def v__to_mni_qwarpar_outputs(
 
 
 def v__to_mni_qwarpar_execute(
-    params: VToMniQwarparParameters,
+    params: VToMniQwarparParamsDict,
     runner: Runner | None = None,
 ) -> VToMniQwarparOutputs:
     """
@@ -183,6 +183,8 @@ def v__to_mni_qwarpar(
 
 __all__ = [
     "VToMniQwarparOutputs",
+    "VToMniQwarparParamsDict",
+    "VToMniQwarparParamsDictTagged",
     "V__TO_MNI_QWARPAR_METADATA",
     "v__to_mni_qwarpar",
     "v__to_mni_qwarpar_execute",

@@ -13,7 +13,7 @@ V_3D_LOCAL_HISTOG_METADATA = Metadata(
 )
 
 
-V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
+V3dLocalHistogParamsDict = typing.TypedDict('V3dLocalHistogParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalHistog"]],
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
@@ -26,7 +26,7 @@ V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
     "quiet": bool,
     "input_datasets": list[InputPathType],
 })
-V3dLocalHistogParametersTagged = typing.TypedDict('V3dLocalHistogParametersTagged', {
+V3dLocalHistogParamsDictTagged = typing.TypedDict('V3dLocalHistogParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalHistog"],
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
@@ -43,7 +43,7 @@ V3dLocalHistogParametersTagged = typing.TypedDict('V3dLocalHistogParametersTagge
 
 class V3dLocalHistogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalHistogParameters(...)`.
+    Output object returned when calling `V3dLocalHistogParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def v_3d_local_histog_params(
     mincount: float | None = None,
     probability: bool = False,
     quiet: bool = False,
-) -> V3dLocalHistogParametersTagged:
+) -> V3dLocalHistogParamsDictTagged:
     """
     Build parameters.
     
@@ -117,7 +117,7 @@ def v_3d_local_histog_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalHistogParameters` object.
+    `V3dLocalHistogParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def v_3d_local_histog_validate(
 
 
 def v_3d_local_histog_cargs(
-    params: V3dLocalHistogParameters,
+    params: V3dLocalHistogParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def v_3d_local_histog_cargs(
 
 
 def v_3d_local_histog_outputs(
-    params: V3dLocalHistogParameters,
+    params: V3dLocalHistogParamsDict,
     execution: Execution,
 ) -> V3dLocalHistogOutputs:
     """
@@ -244,7 +244,7 @@ def v_3d_local_histog_outputs(
 
 
 def v_3d_local_histog_execute(
-    params: V3dLocalHistogParameters,
+    params: V3dLocalHistogParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalHistogOutputs:
     """
@@ -333,6 +333,8 @@ def v_3d_local_histog(
 
 __all__ = [
     "V3dLocalHistogOutputs",
+    "V3dLocalHistogParamsDict",
+    "V3dLocalHistogParamsDictTagged",
     "V_3D_LOCAL_HISTOG_METADATA",
     "v_3d_local_histog",
     "v_3d_local_histog_execute",

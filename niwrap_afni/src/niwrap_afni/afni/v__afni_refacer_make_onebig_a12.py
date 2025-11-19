@@ -13,11 +13,11 @@ V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
 )
 
 
-VAfniRefacerMakeOnebigA12Parameters = typing.TypedDict('VAfniRefacerMakeOnebigA12Parameters', {
+VAfniRefacerMakeOnebigA12ParamsDict = typing.TypedDict('VAfniRefacerMakeOnebigA12ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_onebigA12"]],
     "t1w_dataset": InputPathType,
 })
-VAfniRefacerMakeOnebigA12ParametersTagged = typing.TypedDict('VAfniRefacerMakeOnebigA12ParametersTagged', {
+VAfniRefacerMakeOnebigA12ParamsDictTagged = typing.TypedDict('VAfniRefacerMakeOnebigA12ParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_refacer_make_onebigA12"],
     "t1w_dataset": InputPathType,
 })
@@ -25,7 +25,7 @@ VAfniRefacerMakeOnebigA12ParametersTagged = typing.TypedDict('VAfniRefacerMakeOn
 
 class VAfniRefacerMakeOnebigA12Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniRefacerMakeOnebigA12Parameters(...)`.
+    Output object returned when calling `VAfniRefacerMakeOnebigA12ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VAfniRefacerMakeOnebigA12Outputs(typing.NamedTuple):
 
 def v__afni_refacer_make_onebig_a12_params(
     t1w_dataset: InputPathType,
-) -> VAfniRefacerMakeOnebigA12ParametersTagged:
+) -> VAfniRefacerMakeOnebigA12ParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__afni_refacer_make_onebig_a12_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniRefacerMakeOnebigA12Parameters` object.
+    `VAfniRefacerMakeOnebigA12ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__afni_refacer_make_onebig_a12_validate(
 
 
 def v__afni_refacer_make_onebig_a12_cargs(
-    params: VAfniRefacerMakeOnebigA12Parameters,
+    params: VAfniRefacerMakeOnebigA12ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__afni_refacer_make_onebig_a12_cargs(
 
 
 def v__afni_refacer_make_onebig_a12_outputs(
-    params: VAfniRefacerMakeOnebigA12Parameters,
+    params: VAfniRefacerMakeOnebigA12ParamsDict,
     execution: Execution,
 ) -> VAfniRefacerMakeOnebigA12Outputs:
     """
@@ -109,7 +109,7 @@ def v__afni_refacer_make_onebig_a12_outputs(
 
 
 def v__afni_refacer_make_onebig_a12_execute(
-    params: VAfniRefacerMakeOnebigA12Parameters,
+    params: VAfniRefacerMakeOnebigA12ParamsDict,
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeOnebigA12Outputs:
     """
@@ -166,6 +166,8 @@ def v__afni_refacer_make_onebig_a12(
 
 __all__ = [
     "VAfniRefacerMakeOnebigA12Outputs",
+    "VAfniRefacerMakeOnebigA12ParamsDict",
+    "VAfniRefacerMakeOnebigA12ParamsDictTagged",
     "V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA",
     "v__afni_refacer_make_onebig_a12",
     "v__afni_refacer_make_onebig_a12_execute",

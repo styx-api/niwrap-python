@@ -13,7 +13,7 @@ V_3D_BLUR_TO_FWHM_METADATA = Metadata(
 )
 
 
-V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
+V3dBlurToFwhmParamsDict = typing.TypedDict('V3dBlurToFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBlurToFWHM"]],
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "prefix": typing.NotRequired[str | None],
 })
-V3dBlurToFwhmParametersTagged = typing.TypedDict('V3dBlurToFwhmParametersTagged', {
+V3dBlurToFwhmParamsDictTagged = typing.TypedDict('V3dBlurToFwhmParamsDictTagged', {
     "@type": typing.Literal["afni/3dBlurToFWHM"],
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ V3dBlurToFwhmParametersTagged = typing.TypedDict('V3dBlurToFwhmParametersTagged'
 
 class V3dBlurToFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBlurToFwhmParameters(...)`.
+    Output object returned when calling `V3dBlurToFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_blur_to_fwhm_params(
     mask: InputPathType | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     prefix: str | None = None,
-) -> V3dBlurToFwhmParametersTagged:
+) -> V3dBlurToFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def v_3d_blur_to_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBlurToFwhmParameters` object.
+    `V3dBlurToFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def v_3d_blur_to_fwhm_validate(
 
 
 def v_3d_blur_to_fwhm_cargs(
-    params: V3dBlurToFwhmParameters,
+    params: V3dBlurToFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def v_3d_blur_to_fwhm_cargs(
 
 
 def v_3d_blur_to_fwhm_outputs(
-    params: V3dBlurToFwhmParameters,
+    params: V3dBlurToFwhmParamsDict,
     execution: Execution,
 ) -> V3dBlurToFwhmOutputs:
     """
@@ -207,7 +207,7 @@ def v_3d_blur_to_fwhm_outputs(
 
 
 def v_3d_blur_to_fwhm_execute(
-    params: V3dBlurToFwhmParameters,
+    params: V3dBlurToFwhmParamsDict,
     runner: Runner | None = None,
 ) -> V3dBlurToFwhmOutputs:
     """
@@ -286,6 +286,8 @@ def v_3d_blur_to_fwhm(
 
 __all__ = [
     "V3dBlurToFwhmOutputs",
+    "V3dBlurToFwhmParamsDict",
+    "V3dBlurToFwhmParamsDictTagged",
     "V_3D_BLUR_TO_FWHM_METADATA",
     "v_3d_blur_to_fwhm",
     "v_3d_blur_to_fwhm_execute",

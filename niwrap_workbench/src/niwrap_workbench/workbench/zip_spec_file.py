@@ -12,7 +12,7 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 )
 
 
-ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
+ZipSpecFileParamsDict = typing.TypedDict('ZipSpecFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/zip-spec-file"]],
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
@@ -20,7 +20,7 @@ ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
     "extract-folder": str,
     "zip-file": str,
 })
-ZipSpecFileParametersTagged = typing.TypedDict('ZipSpecFileParametersTagged', {
+ZipSpecFileParamsDictTagged = typing.TypedDict('ZipSpecFileParamsDictTagged', {
     "@type": typing.Literal["workbench/zip-spec-file"],
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
@@ -32,7 +32,7 @@ ZipSpecFileParametersTagged = typing.TypedDict('ZipSpecFileParametersTagged', {
 
 class ZipSpecFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ZipSpecFileParameters(...)`.
+    Output object returned when calling `ZipSpecFileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def zip_spec_file_params(
     extract_folder: str,
     zip_file: str,
     skip_missing: bool = False,
-) -> ZipSpecFileParametersTagged:
+) -> ZipSpecFileParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def zip_spec_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ZipSpecFileParameters` object.
+    `ZipSpecFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def zip_spec_file_validate(
 
 
 def zip_spec_file_cargs(
-    params: ZipSpecFileParameters,
+    params: ZipSpecFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def zip_spec_file_cargs(
 
 
 def zip_spec_file_outputs(
-    params: ZipSpecFileParameters,
+    params: ZipSpecFileParamsDict,
     execution: Execution,
 ) -> ZipSpecFileOutputs:
     """
@@ -155,7 +155,7 @@ def zip_spec_file_outputs(
 
 
 def zip_spec_file_execute(
-    params: ZipSpecFileParameters,
+    params: ZipSpecFileParamsDict,
     runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
@@ -230,6 +230,8 @@ def zip_spec_file(
 __all__ = [
     "ZIP_SPEC_FILE_METADATA",
     "ZipSpecFileOutputs",
+    "ZipSpecFileParamsDict",
+    "ZipSpecFileParamsDictTagged",
     "zip_spec_file",
     "zip_spec_file_execute",
     "zip_spec_file_params",

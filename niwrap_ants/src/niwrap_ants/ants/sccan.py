@@ -13,7 +13,7 @@ SCCAN_METADATA = Metadata(
 )
 
 
-SccanParameters = typing.TypedDict('SccanParameters', {
+SccanParamsDict = typing.TypedDict('SccanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/sccan"]],
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
@@ -43,7 +43,7 @@ SccanParameters = typing.TypedDict('SccanParameters', {
     "scca": typing.NotRequired[str | None],
     "svd": typing.NotRequired[str | None],
 })
-SccanParametersTagged = typing.TypedDict('SccanParametersTagged', {
+SccanParamsDictTagged = typing.TypedDict('SccanParamsDictTagged', {
     "@type": typing.Literal["ants/sccan"],
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
@@ -77,7 +77,7 @@ SccanParametersTagged = typing.TypedDict('SccanParametersTagged', {
 
 class SccanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SccanParameters(...)`.
+    Output object returned when calling `SccanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +111,7 @@ def sccan_params(
     imageset_to_projections: str | None = None,
     scca: str | None = None,
     svd: str | None = None,
-) -> SccanParametersTagged:
+) -> SccanParamsDictTagged:
     """
     Build parameters.
     
@@ -221,7 +221,7 @@ def sccan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SccanParameters` object.
+    `SccanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -314,7 +314,7 @@ def sccan_validate(
 
 
 def sccan_cargs(
-    params: SccanParameters,
+    params: SccanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -467,7 +467,7 @@ def sccan_cargs(
 
 
 def sccan_outputs(
-    params: SccanParameters,
+    params: SccanParamsDict,
     execution: Execution,
 ) -> SccanOutputs:
     """
@@ -486,7 +486,7 @@ def sccan_outputs(
 
 
 def sccan_execute(
-    params: SccanParameters,
+    params: SccanParamsDict,
     runner: Runner | None = None,
 ) -> SccanOutputs:
     """
@@ -634,6 +634,8 @@ def sccan(
 __all__ = [
     "SCCAN_METADATA",
     "SccanOutputs",
+    "SccanParamsDict",
+    "SccanParamsDictTagged",
     "sccan",
     "sccan_execute",
     "sccan_params",

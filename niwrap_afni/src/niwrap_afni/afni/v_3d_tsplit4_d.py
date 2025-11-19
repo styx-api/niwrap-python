@@ -13,14 +13,14 @@ V_3D_TSPLIT4_D_METADATA = Metadata(
 )
 
 
-V3dTsplit4DParameters = typing.TypedDict('V3dTsplit4DParameters', {
+V3dTsplit4DParamsDict = typing.TypedDict('V3dTsplit4DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTsplit4D"]],
     "prefix": str,
     "infile": InputPathType,
     "keep_datum": bool,
     "digits": typing.NotRequired[float | None],
 })
-V3dTsplit4DParametersTagged = typing.TypedDict('V3dTsplit4DParametersTagged', {
+V3dTsplit4DParamsDictTagged = typing.TypedDict('V3dTsplit4DParamsDictTagged', {
     "@type": typing.Literal["afni/3dTsplit4D"],
     "prefix": str,
     "infile": InputPathType,
@@ -31,7 +31,7 @@ V3dTsplit4DParametersTagged = typing.TypedDict('V3dTsplit4DParametersTagged', {
 
 class V3dTsplit4DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTsplit4DParameters(...)`.
+    Output object returned when calling `V3dTsplit4DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v_3d_tsplit4_d_params(
     infile: InputPathType,
     keep_datum: bool = False,
     digits: float | None = None,
-) -> V3dTsplit4DParametersTagged:
+) -> V3dTsplit4DParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def v_3d_tsplit4_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTsplit4DParameters` object.
+    `V3dTsplit4DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def v_3d_tsplit4_d_validate(
 
 
 def v_3d_tsplit4_d_cargs(
-    params: V3dTsplit4DParameters,
+    params: V3dTsplit4DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def v_3d_tsplit4_d_cargs(
 
 
 def v_3d_tsplit4_d_outputs(
-    params: V3dTsplit4DParameters,
+    params: V3dTsplit4DParamsDict,
     execution: Execution,
 ) -> V3dTsplit4DOutputs:
     """
@@ -144,7 +144,7 @@ def v_3d_tsplit4_d_outputs(
 
 
 def v_3d_tsplit4_d_execute(
-    params: V3dTsplit4DParameters,
+    params: V3dTsplit4DParamsDict,
     runner: Runner | None = None,
 ) -> V3dTsplit4DOutputs:
     """
@@ -208,6 +208,8 @@ def v_3d_tsplit4_d(
 
 __all__ = [
     "V3dTsplit4DOutputs",
+    "V3dTsplit4DParamsDict",
+    "V3dTsplit4DParamsDictTagged",
     "V_3D_TSPLIT4_D_METADATA",
     "v_3d_tsplit4_d",
     "v_3d_tsplit4_d_execute",

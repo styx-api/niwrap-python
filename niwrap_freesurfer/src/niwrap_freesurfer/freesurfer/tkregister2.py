@@ -13,7 +13,7 @@ TKREGISTER2_METADATA = Metadata(
 )
 
 
-Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
+Tkregister2ParamsDict = typing.TypedDict('Tkregister2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2"]],
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
@@ -24,7 +24,7 @@ Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
     "reg_only": bool,
     "help": bool,
 })
-Tkregister2ParametersTagged = typing.TypedDict('Tkregister2ParametersTagged', {
+Tkregister2ParamsDictTagged = typing.TypedDict('Tkregister2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tkregister2"],
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
@@ -39,7 +39,7 @@ Tkregister2ParametersTagged = typing.TypedDict('Tkregister2ParametersTagged', {
 
 class Tkregister2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tkregister2Parameters(...)`.
+    Output object returned when calling `Tkregister2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def tkregister2_params(
     surf_reg: bool = False,
     reg_only: bool = False,
     help_: bool = False,
-) -> Tkregister2ParametersTagged:
+) -> Tkregister2ParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def tkregister2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tkregister2Parameters` object.
+    `Tkregister2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def tkregister2_validate(
 
 
 def tkregister2_cargs(
-    params: Tkregister2Parameters,
+    params: Tkregister2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def tkregister2_cargs(
 
 
 def tkregister2_outputs(
-    params: Tkregister2Parameters,
+    params: Tkregister2ParamsDict,
     execution: Execution,
 ) -> Tkregister2Outputs:
     """
@@ -184,7 +184,7 @@ def tkregister2_outputs(
 
 
 def tkregister2_execute(
-    params: Tkregister2Parameters,
+    params: Tkregister2ParamsDict,
     runner: Runner | None = None,
 ) -> Tkregister2Outputs:
     """
@@ -261,6 +261,8 @@ def tkregister2(
 __all__ = [
     "TKREGISTER2_METADATA",
     "Tkregister2Outputs",
+    "Tkregister2ParamsDict",
+    "Tkregister2ParamsDictTagged",
     "tkregister2",
     "tkregister2_execute",
     "tkregister2_params",

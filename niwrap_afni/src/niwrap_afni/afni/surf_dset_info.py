@@ -13,7 +13,7 @@ SURF_DSET_INFO_METADATA = Metadata(
 )
 
 
-SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
+SurfDsetInfoParamsDict = typing.TypedDict('SurfDsetInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfDsetInfo"]],
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
     "help_aspx": bool,
     "all_opts": bool,
 })
-SurfDsetInfoParametersTagged = typing.TypedDict('SurfDsetInfoParametersTagged', {
+SurfDsetInfoParamsDictTagged = typing.TypedDict('SurfDsetInfoParamsDictTagged', {
     "@type": typing.Literal["afni/SurfDsetInfo"],
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
@@ -61,7 +61,7 @@ SurfDsetInfoParametersTagged = typing.TypedDict('SurfDsetInfoParametersTagged', 
 
 class SurfDsetInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfDsetInfoParameters(...)`.
+    Output object returned when calling `SurfDsetInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def surf_dset_info_params(
     help_spx: bool = False,
     help_aspx: bool = False,
     all_opts: bool = False,
-) -> SurfDsetInfoParametersTagged:
+) -> SurfDsetInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def surf_dset_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfDsetInfoParameters` object.
+    `SurfDsetInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -238,7 +238,7 @@ def surf_dset_info_validate(
 
 
 def surf_dset_info_cargs(
-    params: SurfDsetInfoParameters,
+    params: SurfDsetInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -305,7 +305,7 @@ def surf_dset_info_cargs(
 
 
 def surf_dset_info_outputs(
-    params: SurfDsetInfoParameters,
+    params: SurfDsetInfoParamsDict,
     execution: Execution,
 ) -> SurfDsetInfoOutputs:
     """
@@ -324,7 +324,7 @@ def surf_dset_info_outputs(
 
 
 def surf_dset_info_execute(
-    params: SurfDsetInfoParameters,
+    params: SurfDsetInfoParamsDict,
     runner: Runner | None = None,
 ) -> SurfDsetInfoOutputs:
     """
@@ -437,6 +437,8 @@ def surf_dset_info(
 __all__ = [
     "SURF_DSET_INFO_METADATA",
     "SurfDsetInfoOutputs",
+    "SurfDsetInfoParamsDict",
+    "SurfDsetInfoParamsDictTagged",
     "surf_dset_info",
     "surf_dset_info_execute",
     "surf_dset_info_params",

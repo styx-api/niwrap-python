@@ -13,7 +13,7 @@ V_3D_DECONVOLVE_METADATA = Metadata(
 )
 
 
-V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
+V3dDeconvolveParamsDict = typing.TypedDict('V3dDeconvolveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDeconvolve"]],
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
     "x1D": typing.NotRequired[str | None],
     "jobs": typing.NotRequired[int | None],
 })
-V3dDeconvolveParametersTagged = typing.TypedDict('V3dDeconvolveParametersTagged', {
+V3dDeconvolveParamsDictTagged = typing.TypedDict('V3dDeconvolveParamsDictTagged', {
     "@type": typing.Literal["afni/3dDeconvolve"],
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ V3dDeconvolveParametersTagged = typing.TypedDict('V3dDeconvolveParametersTagged'
 
 class V3dDeconvolveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDeconvolveParameters(...)`.
+    Output object returned when calling `V3dDeconvolveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def v_3d_deconvolve_params(
     cbucket: str | None = None,
     x1_d: str | None = None,
     jobs: int | None = None,
-) -> V3dDeconvolveParametersTagged:
+) -> V3dDeconvolveParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def v_3d_deconvolve_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDeconvolveParameters` object.
+    `V3dDeconvolveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -208,7 +208,7 @@ def v_3d_deconvolve_validate(
 
 
 def v_3d_deconvolve_cargs(
-    params: V3dDeconvolveParameters,
+    params: V3dDeconvolveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -291,7 +291,7 @@ def v_3d_deconvolve_cargs(
 
 
 def v_3d_deconvolve_outputs(
-    params: V3dDeconvolveParameters,
+    params: V3dDeconvolveParamsDict,
     execution: Execution,
 ) -> V3dDeconvolveOutputs:
     """
@@ -315,7 +315,7 @@ def v_3d_deconvolve_outputs(
 
 
 def v_3d_deconvolve_execute(
-    params: V3dDeconvolveParameters,
+    params: V3dDeconvolveParamsDict,
     runner: Runner | None = None,
 ) -> V3dDeconvolveOutputs:
     """
@@ -418,6 +418,8 @@ def v_3d_deconvolve(
 
 __all__ = [
     "V3dDeconvolveOutputs",
+    "V3dDeconvolveParamsDict",
+    "V3dDeconvolveParamsDictTagged",
     "V_3D_DECONVOLVE_METADATA",
     "v_3d_deconvolve",
     "v_3d_deconvolve_execute",

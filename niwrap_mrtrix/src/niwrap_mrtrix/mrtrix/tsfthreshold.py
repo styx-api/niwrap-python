@@ -13,19 +13,19 @@ TSFTHRESHOLD_METADATA = Metadata(
 )
 
 
-TsfthresholdConfigParameters = typing.TypedDict('TsfthresholdConfigParameters', {
+TsfthresholdConfigParamsDict = typing.TypedDict('TsfthresholdConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfthresholdConfigParametersTagged = typing.TypedDict('TsfthresholdConfigParametersTagged', {
+TsfthresholdConfigParamsDictTagged = typing.TypedDict('TsfthresholdConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
+TsfthresholdParamsDict = typing.TypedDict('TsfthresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfthreshold"]],
     "invert": bool,
     "info": bool,
@@ -33,14 +33,14 @@ TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfthresholdConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfthresholdConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "T": float,
     "output": str,
 })
-TsfthresholdParametersTagged = typing.TypedDict('TsfthresholdParametersTagged', {
+TsfthresholdParamsDictTagged = typing.TypedDict('TsfthresholdParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfthreshold"],
     "invert": bool,
     "info": bool,
@@ -48,7 +48,7 @@ TsfthresholdParametersTagged = typing.TypedDict('TsfthresholdParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfthresholdConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfthresholdConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -57,10 +57,10 @@ TsfthresholdParametersTagged = typing.TypedDict('TsfthresholdParametersTagged', 
 })
 
 
-def tsfthreshold_config_params(
+def tsfthreshold_config(
     key: str,
     value: str,
-) -> TsfthresholdConfigParametersTagged:
+) -> TsfthresholdConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def tsfthreshold_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfthresholdConfigParameters` object.
+    `TsfthresholdConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def tsfthreshold_config_validate(
 
 
 def tsfthreshold_config_cargs(
-    params: TsfthresholdConfigParameters,
+    params: TsfthresholdConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def tsfthreshold_config_cargs(
 
 class TsfthresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfthresholdParameters(...)`.
+    Output object returned when calling `TsfthresholdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def tsfthreshold_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfthresholdConfigParameters] | None = None,
+    config: list[TsfthresholdConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfthresholdParametersTagged:
+) -> TsfthresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -192,7 +192,7 @@ def tsfthreshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfthresholdParameters` object.
+    `TsfthresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def tsfthreshold_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfthresholdConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfthresholdConfigParamsDict] | None`')
         for e in params["config"]:
             tsfthreshold_config_validate(e)
     if params.get("help", False) is None:
@@ -250,7 +250,7 @@ def tsfthreshold_validate(
 
 
 def tsfthreshold_cargs(
-    params: TsfthresholdParameters,
+    params: TsfthresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -292,7 +292,7 @@ def tsfthreshold_cargs(
 
 
 def tsfthreshold_outputs(
-    params: TsfthresholdParameters,
+    params: TsfthresholdParamsDict,
     execution: Execution,
 ) -> TsfthresholdOutputs:
     """
@@ -312,7 +312,7 @@ def tsfthreshold_outputs(
 
 
 def tsfthreshold_execute(
-    params: TsfthresholdParameters,
+    params: TsfthresholdParamsDict,
     runner: Runner | None = None,
 ) -> TsfthresholdOutputs:
     """
@@ -356,7 +356,7 @@ def tsfthreshold(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfthresholdConfigParameters] | None = None,
+    config: list[TsfthresholdConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -416,9 +416,13 @@ def tsfthreshold(
 
 __all__ = [
     "TSFTHRESHOLD_METADATA",
+    "TsfthresholdConfigParamsDict",
+    "TsfthresholdConfigParamsDictTagged",
     "TsfthresholdOutputs",
+    "TsfthresholdParamsDict",
+    "TsfthresholdParamsDictTagged",
     "tsfthreshold",
-    "tsfthreshold_config_params",
+    "tsfthreshold_config",
     "tsfthreshold_execute",
     "tsfthreshold_params",
 ]

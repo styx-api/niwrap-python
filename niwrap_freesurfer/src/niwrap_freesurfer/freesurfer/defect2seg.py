@@ -13,7 +13,7 @@ DEFECT2SEG_METADATA = Metadata(
 )
 
 
-Defect2segParameters = typing.TypedDict('Defect2segParameters', {
+Defect2segParamsDict = typing.TypedDict('Defect2segParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/defect2seg"]],
     "output_seg": str,
     "template": InputPathType,
@@ -25,7 +25,7 @@ Defect2segParameters = typing.TypedDict('Defect2segParameters', {
     "cortex": bool,
     "no_cortex": bool,
 })
-Defect2segParametersTagged = typing.TypedDict('Defect2segParametersTagged', {
+Defect2segParamsDictTagged = typing.TypedDict('Defect2segParamsDictTagged', {
     "@type": typing.Literal["freesurfer/defect2seg"],
     "output_seg": str,
     "template": InputPathType,
@@ -41,7 +41,7 @@ Defect2segParametersTagged = typing.TypedDict('Defect2segParametersTagged', {
 
 class Defect2segOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Defect2segParameters(...)`.
+    Output object returned when calling `Defect2segParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def defect2seg_params(
     rh_only: bool = False,
     cortex: bool = False,
     no_cortex: bool = False,
-) -> Defect2segParametersTagged:
+) -> Defect2segParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def defect2seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Defect2segParameters` object.
+    `Defect2segParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def defect2seg_validate(
 
 
 def defect2seg_cargs(
-    params: Defect2segParameters,
+    params: Defect2segParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def defect2seg_cargs(
 
 
 def defect2seg_outputs(
-    params: Defect2segParameters,
+    params: Defect2segParamsDict,
     execution: Execution,
 ) -> Defect2segOutputs:
     """
@@ -223,7 +223,7 @@ def defect2seg_outputs(
 
 
 def defect2seg_execute(
-    params: Defect2segParameters,
+    params: Defect2segParamsDict,
     runner: Runner | None = None,
 ) -> Defect2segOutputs:
     """
@@ -305,6 +305,8 @@ def defect2seg(
 __all__ = [
     "DEFECT2SEG_METADATA",
     "Defect2segOutputs",
+    "Defect2segParamsDict",
+    "Defect2segParamsDictTagged",
     "defect2seg",
     "defect2seg_execute",
     "defect2seg_params",

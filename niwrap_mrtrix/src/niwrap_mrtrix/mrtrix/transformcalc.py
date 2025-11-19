@@ -13,40 +13,40 @@ TRANSFORMCALC_METADATA = Metadata(
 )
 
 
-TransformcalcConfigParameters = typing.TypedDict('TransformcalcConfigParameters', {
+TransformcalcConfigParamsDict = typing.TypedDict('TransformcalcConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TransformcalcConfigParametersTagged = typing.TypedDict('TransformcalcConfigParametersTagged', {
+TransformcalcConfigParamsDictTagged = typing.TypedDict('TransformcalcConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TransformcalcParameters = typing.TypedDict('TransformcalcParameters', {
+TransformcalcParamsDict = typing.TypedDict('TransformcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/transformcalc"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformcalcConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformcalcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "inputs": list[str],
     "operation": str,
     "output": str,
 })
-TransformcalcParametersTagged = typing.TypedDict('TransformcalcParametersTagged', {
+TransformcalcParamsDictTagged = typing.TypedDict('TransformcalcParamsDictTagged', {
     "@type": typing.Literal["mrtrix/transformcalc"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformcalcConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformcalcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "inputs": list[str],
@@ -55,10 +55,10 @@ TransformcalcParametersTagged = typing.TypedDict('TransformcalcParametersTagged'
 })
 
 
-def transformcalc_config_params(
+def transformcalc_config(
     key: str,
     value: str,
-) -> TransformcalcConfigParametersTagged:
+) -> TransformcalcConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def transformcalc_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcalcConfigParameters` object.
+    `TransformcalcConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def transformcalc_config_validate(
 
 
 def transformcalc_config_cargs(
-    params: TransformcalcConfigParameters,
+    params: TransformcalcConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def transformcalc_config_cargs(
 
 class TransformcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TransformcalcParameters(...)`.
+    Output object returned when calling `TransformcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def transformcalc_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformcalcConfigParameters] | None = None,
+    config: list[TransformcalcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TransformcalcParametersTagged:
+) -> TransformcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def transformcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcalcParameters` object.
+    `TransformcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -217,7 +217,7 @@ def transformcalc_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformcalcConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformcalcConfigParamsDict] | None`')
         for e in params["config"]:
             transformcalc_config_validate(e)
     if params.get("help", False) is None:
@@ -246,7 +246,7 @@ def transformcalc_validate(
 
 
 def transformcalc_cargs(
-    params: TransformcalcParameters,
+    params: TransformcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def transformcalc_cargs(
 
 
 def transformcalc_outputs(
-    params: TransformcalcParameters,
+    params: TransformcalcParamsDict,
     execution: Execution,
 ) -> TransformcalcOutputs:
     """
@@ -306,7 +306,7 @@ def transformcalc_outputs(
 
 
 def transformcalc_execute(
-    params: TransformcalcParameters,
+    params: TransformcalcParamsDict,
     runner: Runner | None = None,
 ) -> TransformcalcOutputs:
     """
@@ -349,7 +349,7 @@ def transformcalc(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformcalcConfigParameters] | None = None,
+    config: list[TransformcalcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -409,9 +409,13 @@ def transformcalc(
 
 __all__ = [
     "TRANSFORMCALC_METADATA",
+    "TransformcalcConfigParamsDict",
+    "TransformcalcConfigParamsDictTagged",
     "TransformcalcOutputs",
+    "TransformcalcParamsDict",
+    "TransformcalcParamsDictTagged",
     "transformcalc",
-    "transformcalc_config_params",
+    "transformcalc_config",
     "transformcalc_execute",
     "transformcalc_params",
 ]

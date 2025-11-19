@@ -24,7 +24,7 @@
     },
     "segmentation_priors": {
       "var_param": "segmentation_priors",
-      "fn_struct_make_params": "ants_atropos_n4_sh_segmentation_priors_params",
+      "fn_struct_make_params": "ants_atropos_n4_sh_segmentation_priors",
       "properties": {
         "segmentation_priors_pattern": {
           "var_param": "segmentation_priors_pattern"

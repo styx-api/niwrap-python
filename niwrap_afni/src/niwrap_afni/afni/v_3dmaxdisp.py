@@ -13,13 +13,13 @@ V_3DMAXDISP_METADATA = Metadata(
 )
 
 
-V3dmaxdispParameters = typing.TypedDict('V3dmaxdispParameters', {
+V3dmaxdispParamsDict = typing.TypedDict('V3dmaxdispParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmaxdisp"]],
     "inset": InputPathType,
     "matrix": InputPathType,
     "verbose": bool,
 })
-V3dmaxdispParametersTagged = typing.TypedDict('V3dmaxdispParametersTagged', {
+V3dmaxdispParamsDictTagged = typing.TypedDict('V3dmaxdispParamsDictTagged', {
     "@type": typing.Literal["afni/3dmaxdisp"],
     "inset": InputPathType,
     "matrix": InputPathType,
@@ -29,7 +29,7 @@ V3dmaxdispParametersTagged = typing.TypedDict('V3dmaxdispParametersTagged', {
 
 class V3dmaxdispOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaxdispParameters(...)`.
+    Output object returned when calling `V3dmaxdispParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3dmaxdisp_params(
     inset: InputPathType,
     matrix: InputPathType,
     verbose: bool = False,
-) -> V3dmaxdispParametersTagged:
+) -> V3dmaxdispParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def v_3dmaxdisp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaxdispParameters` object.
+    `V3dmaxdispParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def v_3dmaxdisp_validate(
 
 
 def v_3dmaxdisp_cargs(
-    params: V3dmaxdispParameters,
+    params: V3dmaxdispParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def v_3dmaxdisp_cargs(
 
 
 def v_3dmaxdisp_outputs(
-    params: V3dmaxdispParameters,
+    params: V3dmaxdispParamsDict,
     execution: Execution,
 ) -> V3dmaxdispOutputs:
     """
@@ -138,7 +138,7 @@ def v_3dmaxdisp_outputs(
 
 
 def v_3dmaxdisp_execute(
-    params: V3dmaxdispParameters,
+    params: V3dmaxdispParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaxdispOutputs:
     """
@@ -205,6 +205,8 @@ def v_3dmaxdisp(
 
 __all__ = [
     "V3dmaxdispOutputs",
+    "V3dmaxdispParamsDict",
+    "V3dmaxdispParamsDictTagged",
     "V_3DMAXDISP_METADATA",
     "v_3dmaxdisp",
     "v_3dmaxdisp_execute",

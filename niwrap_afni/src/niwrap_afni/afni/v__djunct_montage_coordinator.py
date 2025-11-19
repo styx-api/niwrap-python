@@ -13,7 +13,7 @@ V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
 )
 
 
-VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinatorParameters', {
+VDjunctMontageCoordinatorParamsDict = typing.TypedDict('VDjunctMontageCoordinatorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_montage_coordinator"]],
     "input_file": InputPathType,
     "montx": float,
@@ -23,7 +23,7 @@ VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinato
     "help": bool,
     "version": bool,
 })
-VDjunctMontageCoordinatorParametersTagged = typing.TypedDict('VDjunctMontageCoordinatorParametersTagged', {
+VDjunctMontageCoordinatorParamsDictTagged = typing.TypedDict('VDjunctMontageCoordinatorParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_montage_coordinator"],
     "input_file": InputPathType,
     "montx": float,
@@ -37,7 +37,7 @@ VDjunctMontageCoordinatorParametersTagged = typing.TypedDict('VDjunctMontageCoor
 
 class VDjunctMontageCoordinatorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctMontageCoordinatorParameters(...)`.
+    Output object returned when calling `VDjunctMontageCoordinatorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v__djunct_montage_coordinator_params(
     out_xyz: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> VDjunctMontageCoordinatorParametersTagged:
+) -> VDjunctMontageCoordinatorParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v__djunct_montage_coordinator_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctMontageCoordinatorParameters` object.
+    `VDjunctMontageCoordinatorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def v__djunct_montage_coordinator_validate(
 
 
 def v__djunct_montage_coordinator_cargs(
-    params: VDjunctMontageCoordinatorParameters,
+    params: VDjunctMontageCoordinatorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def v__djunct_montage_coordinator_cargs(
 
 
 def v__djunct_montage_coordinator_outputs(
-    params: VDjunctMontageCoordinatorParameters,
+    params: VDjunctMontageCoordinatorParamsDict,
     execution: Execution,
 ) -> VDjunctMontageCoordinatorOutputs:
     """
@@ -184,7 +184,7 @@ def v__djunct_montage_coordinator_outputs(
 
 
 def v__djunct_montage_coordinator_execute(
-    params: VDjunctMontageCoordinatorParameters,
+    params: VDjunctMontageCoordinatorParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctMontageCoordinatorOutputs:
     """
@@ -261,6 +261,8 @@ def v__djunct_montage_coordinator(
 
 __all__ = [
     "VDjunctMontageCoordinatorOutputs",
+    "VDjunctMontageCoordinatorParamsDict",
+    "VDjunctMontageCoordinatorParamsDictTagged",
     "V__DJUNCT_MONTAGE_COORDINATOR_METADATA",
     "v__djunct_montage_coordinator",
     "v__djunct_montage_coordinator_execute",

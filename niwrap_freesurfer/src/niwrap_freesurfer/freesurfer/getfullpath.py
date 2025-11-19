@@ -13,11 +13,11 @@ GETFULLPATH_METADATA = Metadata(
 )
 
 
-GetfullpathParameters = typing.TypedDict('GetfullpathParameters', {
+GetfullpathParamsDict = typing.TypedDict('GetfullpathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/getfullpath"]],
     "filename": str,
 })
-GetfullpathParametersTagged = typing.TypedDict('GetfullpathParametersTagged', {
+GetfullpathParamsDictTagged = typing.TypedDict('GetfullpathParamsDictTagged', {
     "@type": typing.Literal["freesurfer/getfullpath"],
     "filename": str,
 })
@@ -25,7 +25,7 @@ GetfullpathParametersTagged = typing.TypedDict('GetfullpathParametersTagged', {
 
 class GetfullpathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GetfullpathParameters(...)`.
+    Output object returned when calling `GetfullpathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class GetfullpathOutputs(typing.NamedTuple):
 
 def getfullpath_params(
     filename: str,
-) -> GetfullpathParametersTagged:
+) -> GetfullpathParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def getfullpath_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GetfullpathParameters` object.
+    `GetfullpathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def getfullpath_validate(
 
 
 def getfullpath_cargs(
-    params: GetfullpathParameters,
+    params: GetfullpathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def getfullpath_cargs(
 
 
 def getfullpath_outputs(
-    params: GetfullpathParameters,
+    params: GetfullpathParamsDict,
     execution: Execution,
 ) -> GetfullpathOutputs:
     """
@@ -106,7 +106,7 @@ def getfullpath_outputs(
 
 
 def getfullpath_execute(
-    params: GetfullpathParameters,
+    params: GetfullpathParamsDict,
     runner: Runner | None = None,
 ) -> GetfullpathOutputs:
     """
@@ -162,6 +162,8 @@ def getfullpath(
 __all__ = [
     "GETFULLPATH_METADATA",
     "GetfullpathOutputs",
+    "GetfullpathParamsDict",
+    "GetfullpathParamsDictTagged",
     "getfullpath",
     "getfullpath_execute",
     "getfullpath_params",

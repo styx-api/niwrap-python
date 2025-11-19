@@ -13,12 +13,12 @@ MRI_HISTO_EQ_METADATA = Metadata(
 )
 
 
-MriHistoEqParameters = typing.TypedDict('MriHistoEqParameters', {
+MriHistoEqParamsDict = typing.TypedDict('MriHistoEqParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_histo_eq"]],
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })
-MriHistoEqParametersTagged = typing.TypedDict('MriHistoEqParametersTagged', {
+MriHistoEqParamsDictTagged = typing.TypedDict('MriHistoEqParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_histo_eq"],
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
@@ -27,7 +27,7 @@ MriHistoEqParametersTagged = typing.TypedDict('MriHistoEqParametersTagged', {
 
 class MriHistoEqOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriHistoEqParameters(...)`.
+    Output object returned when calling `MriHistoEqParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriHistoEqOutputs(typing.NamedTuple):
 def mri_histo_eq_params(
     input_volume_1: InputPathType,
     input_volume_2: InputPathType,
-) -> MriHistoEqParametersTagged:
+) -> MriHistoEqParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mri_histo_eq_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriHistoEqParameters` object.
+    `MriHistoEqParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mri_histo_eq_validate(
 
 
 def mri_histo_eq_cargs(
-    params: MriHistoEqParameters,
+    params: MriHistoEqParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def mri_histo_eq_cargs(
 
 
 def mri_histo_eq_outputs(
-    params: MriHistoEqParameters,
+    params: MriHistoEqParamsDict,
     execution: Execution,
 ) -> MriHistoEqOutputs:
     """
@@ -116,7 +116,7 @@ def mri_histo_eq_outputs(
 
 
 def mri_histo_eq_execute(
-    params: MriHistoEqParameters,
+    params: MriHistoEqParamsDict,
     runner: Runner | None = None,
 ) -> MriHistoEqOutputs:
     """
@@ -175,6 +175,8 @@ def mri_histo_eq(
 __all__ = [
     "MRI_HISTO_EQ_METADATA",
     "MriHistoEqOutputs",
+    "MriHistoEqParamsDict",
+    "MriHistoEqParamsDictTagged",
     "mri_histo_eq",
     "mri_histo_eq_execute",
     "mri_histo_eq_params",

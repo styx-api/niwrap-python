@@ -13,11 +13,11 @@ FEAT_METADATA = Metadata(
 )
 
 
-FeatParameters = typing.TypedDict('FeatParameters', {
+FeatParamsDict = typing.TypedDict('FeatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/feat"]],
     "design_file": InputPathType,
 })
-FeatParametersTagged = typing.TypedDict('FeatParametersTagged', {
+FeatParamsDictTagged = typing.TypedDict('FeatParamsDictTagged', {
     "@type": typing.Literal["fsl/feat"],
     "design_file": InputPathType,
 })
@@ -25,7 +25,7 @@ FeatParametersTagged = typing.TypedDict('FeatParametersTagged', {
 
 class FeatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FeatParameters(...)`.
+    Output object returned when calling `FeatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class FeatOutputs(typing.NamedTuple):
 
 def feat_params(
     design_file: InputPathType,
-) -> FeatParametersTagged:
+) -> FeatParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def feat_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `FeatParameters`
+    Validate parameters. Throws an error if `params` is not a valid `FeatParamsDict`
     object.
     
     Args:
@@ -70,7 +70,7 @@ def feat_validate(
 
 
 def feat_cargs(
-    params: FeatParameters,
+    params: FeatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def feat_cargs(
 
 
 def feat_outputs(
-    params: FeatParameters,
+    params: FeatParamsDict,
     execution: Execution,
 ) -> FeatOutputs:
     """
@@ -109,7 +109,7 @@ def feat_outputs(
 
 
 def feat_execute(
-    params: FeatParameters,
+    params: FeatParamsDict,
     runner: Runner | None = None,
 ) -> FeatOutputs:
     """
@@ -165,6 +165,8 @@ def feat(
 __all__ = [
     "FEAT_METADATA",
     "FeatOutputs",
+    "FeatParamsDict",
+    "FeatParamsDictTagged",
     "feat",
     "feat_execute",
     "feat_params",

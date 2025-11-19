@@ -13,14 +13,14 @@ RMSDIFF_METADATA = Metadata(
 )
 
 
-RmsdiffParameters = typing.TypedDict('RmsdiffParameters', {
+RmsdiffParamsDict = typing.TypedDict('RmsdiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/rmsdiff"]],
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
     "refvol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
 })
-RmsdiffParametersTagged = typing.TypedDict('RmsdiffParametersTagged', {
+RmsdiffParamsDictTagged = typing.TypedDict('RmsdiffParamsDictTagged', {
     "@type": typing.Literal["fsl/rmsdiff"],
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
@@ -31,7 +31,7 @@ RmsdiffParametersTagged = typing.TypedDict('RmsdiffParametersTagged', {
 
 class RmsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RmsdiffParameters(...)`.
+    Output object returned when calling `RmsdiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def rmsdiff_params(
     matrixfile2: InputPathType,
     refvol: InputPathType,
     mask: InputPathType | None = None,
-) -> RmsdiffParametersTagged:
+) -> RmsdiffParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def rmsdiff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RmsdiffParameters` object.
+    `RmsdiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def rmsdiff_validate(
 
 
 def rmsdiff_cargs(
-    params: RmsdiffParameters,
+    params: RmsdiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def rmsdiff_cargs(
 
 
 def rmsdiff_outputs(
-    params: RmsdiffParameters,
+    params: RmsdiffParamsDict,
     execution: Execution,
 ) -> RmsdiffOutputs:
     """
@@ -137,7 +137,7 @@ def rmsdiff_outputs(
 
 
 def rmsdiff_execute(
-    params: RmsdiffParameters,
+    params: RmsdiffParamsDict,
     runner: Runner | None = None,
 ) -> RmsdiffOutputs:
     """
@@ -202,6 +202,8 @@ def rmsdiff(
 __all__ = [
     "RMSDIFF_METADATA",
     "RmsdiffOutputs",
+    "RmsdiffParamsDict",
+    "RmsdiffParamsDictTagged",
     "rmsdiff",
     "rmsdiff_execute",
     "rmsdiff_params",

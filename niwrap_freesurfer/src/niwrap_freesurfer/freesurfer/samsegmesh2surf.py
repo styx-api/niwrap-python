@@ -13,7 +13,7 @@ SAMSEGMESH2SURF_METADATA = Metadata(
 )
 
 
-Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
+Samsegmesh2surfParamsDict = typing.TypedDict('Samsegmesh2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/samsegmesh2surf"]],
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
     "output_priors": typing.NotRequired[str | None],
     "invert_flag": bool,
 })
-Samsegmesh2surfParametersTagged = typing.TypedDict('Samsegmesh2surfParametersTagged', {
+Samsegmesh2surfParamsDictTagged = typing.TypedDict('Samsegmesh2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/samsegmesh2surf"],
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ Samsegmesh2surfParametersTagged = typing.TypedDict('Samsegmesh2surfParametersTag
 
 class Samsegmesh2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Samsegmesh2surfParameters(...)`.
+    Output object returned when calling `Samsegmesh2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def samsegmesh2surf_params(
     output_surface: str | None = None,
     output_priors: str | None = None,
     invert_flag: bool = False,
-) -> Samsegmesh2surfParametersTagged:
+) -> Samsegmesh2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def samsegmesh2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Samsegmesh2surfParameters` object.
+    `Samsegmesh2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def samsegmesh2surf_validate(
 
 
 def samsegmesh2surf_cargs(
-    params: Samsegmesh2surfParameters,
+    params: Samsegmesh2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def samsegmesh2surf_cargs(
 
 
 def samsegmesh2surf_outputs(
-    params: Samsegmesh2surfParameters,
+    params: Samsegmesh2surfParamsDict,
     execution: Execution,
 ) -> Samsegmesh2surfOutputs:
     """
@@ -182,7 +182,7 @@ def samsegmesh2surf_outputs(
 
 
 def samsegmesh2surf_execute(
-    params: Samsegmesh2surfParameters,
+    params: Samsegmesh2surfParamsDict,
     runner: Runner | None = None,
 ) -> Samsegmesh2surfOutputs:
     """
@@ -255,6 +255,8 @@ def samsegmesh2surf(
 __all__ = [
     "SAMSEGMESH2SURF_METADATA",
     "Samsegmesh2surfOutputs",
+    "Samsegmesh2surfParamsDict",
+    "Samsegmesh2surfParamsDictTagged",
     "samsegmesh2surf",
     "samsegmesh2surf_execute",
     "samsegmesh2surf_params",

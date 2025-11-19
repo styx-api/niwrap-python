@@ -13,13 +13,13 @@ MAKE_UPRIGHT_METADATA = Metadata(
 )
 
 
-MakeUprightParameters = typing.TypedDict('MakeUprightParameters', {
+MakeUprightParamsDict = typing.TypedDict('MakeUprightParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_upright"]],
     "input_image": InputPathType,
     "output_image": str,
     "transformation_map": InputPathType,
 })
-MakeUprightParametersTagged = typing.TypedDict('MakeUprightParametersTagged', {
+MakeUprightParamsDictTagged = typing.TypedDict('MakeUprightParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_upright"],
     "input_image": InputPathType,
     "output_image": str,
@@ -29,7 +29,7 @@ MakeUprightParametersTagged = typing.TypedDict('MakeUprightParametersTagged', {
 
 class MakeUprightOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeUprightParameters(...)`.
+    Output object returned when calling `MakeUprightParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def make_upright_params(
     input_image: InputPathType,
     output_image: str,
     transformation_map: InputPathType,
-) -> MakeUprightParametersTagged:
+) -> MakeUprightParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def make_upright_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeUprightParameters` object.
+    `MakeUprightParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def make_upright_validate(
 
 
 def make_upright_cargs(
-    params: MakeUprightParameters,
+    params: MakeUprightParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def make_upright_cargs(
 
 
 def make_upright_outputs(
-    params: MakeUprightParameters,
+    params: MakeUprightParamsDict,
     execution: Execution,
 ) -> MakeUprightOutputs:
     """
@@ -129,7 +129,7 @@ def make_upright_outputs(
 
 
 def make_upright_execute(
-    params: MakeUprightParameters,
+    params: MakeUprightParamsDict,
     runner: Runner | None = None,
 ) -> MakeUprightOutputs:
     """
@@ -195,6 +195,8 @@ def make_upright(
 __all__ = [
     "MAKE_UPRIGHT_METADATA",
     "MakeUprightOutputs",
+    "MakeUprightParamsDict",
+    "MakeUprightParamsDictTagged",
     "make_upright",
     "make_upright_execute",
     "make_upright_params",

@@ -36,7 +36,7 @@
     },
     "property": {
       "var_param": "property_",
-      "fn_struct_make_params": "mrinfo_property_params",
+      "fn_struct_make_params": "mrinfo_property",
       "properties": {
         "key": {
           "var_param": "key"
@@ -54,7 +54,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "mrinfo_fslgrad_params",
+      "fn_struct_make_params": "mrinfo_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -72,7 +72,7 @@
     },
     "export_grad_fsl": {
       "var_param": "export_grad_fsl",
-      "fn_struct_make_params": "mrinfo_export_grad_fsl_params",
+      "fn_struct_make_params": "mrinfo_export_grad_fsl",
       "properties": {
         "bvecs_path": {
           "var_param": "bvecs_path"
@@ -99,7 +99,7 @@
     },
     "export_pe_eddy": {
       "var_param": "export_pe_eddy",
-      "fn_struct_make_params": "mrinfo_export_pe_eddy_params",
+      "fn_struct_make_params": "mrinfo_export_pe_eddy",
       "properties": {
         "config": {
           "var_param": "config"
@@ -132,7 +132,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrinfo_config_params",
+      "fn_struct_make_params": "mrinfo_config",
       "properties": {
         "key": {
           "var_param": "key"

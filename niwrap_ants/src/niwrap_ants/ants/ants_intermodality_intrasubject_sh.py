@@ -13,7 +13,7 @@ ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
 )
 
 
-AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityIntrasubjectShParameters', {
+AntsIntermodalityIntrasubjectShParamsDict = typing.TypedDict('AntsIntermodalityIntrasubjectShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsIntermodalityIntrasubject.sh"]],
     "dimension": int,
     "anatomical_t1_image": InputPathType,
@@ -28,7 +28,7 @@ AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityI
     "auxiliary_scalar_images": typing.NotRequired[InputPathType | None],
     "auxiliary_dt_image": typing.NotRequired[InputPathType | None],
 })
-AntsIntermodalityIntrasubjectShParametersTagged = typing.TypedDict('AntsIntermodalityIntrasubjectShParametersTagged', {
+AntsIntermodalityIntrasubjectShParamsDictTagged = typing.TypedDict('AntsIntermodalityIntrasubjectShParamsDictTagged', {
     "@type": typing.Literal["ants/antsIntermodalityIntrasubject.sh"],
     "dimension": int,
     "anatomical_t1_image": InputPathType,
@@ -47,7 +47,7 @@ AntsIntermodalityIntrasubjectShParametersTagged = typing.TypedDict('AntsIntermod
 
 class AntsIntermodalityIntrasubjectShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsIntermodalityIntrasubjectShParameters(...)`.
+    Output object returned when calling `AntsIntermodalityIntrasubjectShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def ants_intermodality_intrasubject_sh_params(
     labels_in_template_space: InputPathType | None = None,
     auxiliary_scalar_images: InputPathType | None = None,
     auxiliary_dt_image: InputPathType | None = None,
-) -> AntsIntermodalityIntrasubjectShParametersTagged:
+) -> AntsIntermodalityIntrasubjectShParamsDictTagged:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def ants_intermodality_intrasubject_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsIntermodalityIntrasubjectShParameters` object.
+    `AntsIntermodalityIntrasubjectShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def ants_intermodality_intrasubject_sh_validate(
 
 
 def ants_intermodality_intrasubject_sh_cargs(
-    params: AntsIntermodalityIntrasubjectShParameters,
+    params: AntsIntermodalityIntrasubjectShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -252,7 +252,7 @@ def ants_intermodality_intrasubject_sh_cargs(
 
 
 def ants_intermodality_intrasubject_sh_outputs(
-    params: AntsIntermodalityIntrasubjectShParameters,
+    params: AntsIntermodalityIntrasubjectShParamsDict,
     execution: Execution,
 ) -> AntsIntermodalityIntrasubjectShOutputs:
     """
@@ -274,7 +274,7 @@ def ants_intermodality_intrasubject_sh_outputs(
 
 
 def ants_intermodality_intrasubject_sh_execute(
-    params: AntsIntermodalityIntrasubjectShParameters,
+    params: AntsIntermodalityIntrasubjectShParamsDict,
     runner: Runner | None = None,
 ) -> AntsIntermodalityIntrasubjectShOutputs:
     """
@@ -369,6 +369,8 @@ def ants_intermodality_intrasubject_sh(
 __all__ = [
     "ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA",
     "AntsIntermodalityIntrasubjectShOutputs",
+    "AntsIntermodalityIntrasubjectShParamsDict",
+    "AntsIntermodalityIntrasubjectShParamsDictTagged",
     "ants_intermodality_intrasubject_sh",
     "ants_intermodality_intrasubject_sh_execute",
     "ants_intermodality_intrasubject_sh_params",

@@ -13,7 +13,7 @@ MRI_EASYREG_METADATA = Metadata(
 )
 
 
-MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
+MriEasyregParamsDict = typing.TypedDict('MriEasyregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easyreg"]],
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
     "affine_only": bool,
     "threads": typing.NotRequired[float | None],
 })
-MriEasyregParametersTagged = typing.TypedDict('MriEasyregParametersTagged', {
+MriEasyregParamsDictTagged = typing.TypedDict('MriEasyregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_easyreg"],
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ MriEasyregParametersTagged = typing.TypedDict('MriEasyregParametersTagged', {
 
 class MriEasyregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEasyregParameters(...)`.
+    Output object returned when calling `MriEasyregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def mri_easyreg_params(
     inverse_field: InputPathType | None = None,
     affine_only: bool = False,
     threads: float | None = None,
-) -> MriEasyregParametersTagged:
+) -> MriEasyregParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def mri_easyreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEasyregParameters` object.
+    `MriEasyregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def mri_easyreg_validate(
 
 
 def mri_easyreg_cargs(
-    params: MriEasyregParameters,
+    params: MriEasyregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -224,7 +224,7 @@ def mri_easyreg_cargs(
 
 
 def mri_easyreg_outputs(
-    params: MriEasyregParameters,
+    params: MriEasyregParamsDict,
     execution: Execution,
 ) -> MriEasyregOutputs:
     """
@@ -247,7 +247,7 @@ def mri_easyreg_outputs(
 
 
 def mri_easyreg_execute(
-    params: MriEasyregParameters,
+    params: MriEasyregParamsDict,
     runner: Runner | None = None,
 ) -> MriEasyregOutputs:
     """
@@ -334,6 +334,8 @@ def mri_easyreg(
 __all__ = [
     "MRI_EASYREG_METADATA",
     "MriEasyregOutputs",
+    "MriEasyregParamsDict",
+    "MriEasyregParamsDictTagged",
     "mri_easyreg",
     "mri_easyreg_execute",
     "mri_easyreg_params",

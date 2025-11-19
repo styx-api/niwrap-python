@@ -13,7 +13,7 @@ V_3D_RSFC_METADATA = Metadata(
 )
 
 
-V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
+V3dRsfcParamsDict = typing.TypedDict('V3dRsfcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRSFC"]],
     "fbot": float,
     "ftop": float,
@@ -40,7 +40,7 @@ V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
     "notrans": bool,
     "nosat": bool,
 })
-V3dRsfcParametersTagged = typing.TypedDict('V3dRsfcParametersTagged', {
+V3dRsfcParamsDictTagged = typing.TypedDict('V3dRsfcParamsDictTagged', {
     "@type": typing.Literal["afni/3dRSFC"],
     "fbot": float,
     "ftop": float,
@@ -71,7 +71,7 @@ V3dRsfcParametersTagged = typing.TypedDict('V3dRsfcParametersTagged', {
 
 class V3dRsfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRsfcParameters(...)`.
+    Output object returned when calling `V3dRsfcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +106,7 @@ def v_3d_rsfc_params(
     bp_at_end: bool = False,
     notrans: bool = False,
     nosat: bool = False,
-) -> V3dRsfcParametersTagged:
+) -> V3dRsfcParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def v_3d_rsfc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRsfcParameters` object.
+    `V3dRsfcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -287,7 +287,7 @@ def v_3d_rsfc_validate(
 
 
 def v_3d_rsfc_cargs(
-    params: V3dRsfcParameters,
+    params: V3dRsfcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -380,7 +380,7 @@ def v_3d_rsfc_cargs(
 
 
 def v_3d_rsfc_outputs(
-    params: V3dRsfcParameters,
+    params: V3dRsfcParamsDict,
     execution: Execution,
 ) -> V3dRsfcOutputs:
     """
@@ -401,7 +401,7 @@ def v_3d_rsfc_outputs(
 
 
 def v_3d_rsfc_execute(
-    params: V3dRsfcParameters,
+    params: V3dRsfcParamsDict,
     runner: Runner | None = None,
 ) -> V3dRsfcOutputs:
     """
@@ -530,6 +530,8 @@ def v_3d_rsfc(
 
 __all__ = [
     "V3dRsfcOutputs",
+    "V3dRsfcParamsDict",
+    "V3dRsfcParamsDictTagged",
     "V_3D_RSFC_METADATA",
     "v_3d_rsfc",
     "v_3d_rsfc_execute",

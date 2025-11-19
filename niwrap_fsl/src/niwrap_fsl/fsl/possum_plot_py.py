@@ -13,12 +13,12 @@ POSSUM_PLOT_PY_METADATA = Metadata(
 )
 
 
-PossumPlotPyParameters = typing.TypedDict('PossumPlotPyParameters', {
+PossumPlotPyParamsDict = typing.TypedDict('PossumPlotPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/possum_plot.py"]],
     "input_file": InputPathType,
     "output_basename": str,
 })
-PossumPlotPyParametersTagged = typing.TypedDict('PossumPlotPyParametersTagged', {
+PossumPlotPyParamsDictTagged = typing.TypedDict('PossumPlotPyParamsDictTagged', {
     "@type": typing.Literal["fsl/possum_plot.py"],
     "input_file": InputPathType,
     "output_basename": str,
@@ -27,7 +27,7 @@ PossumPlotPyParametersTagged = typing.TypedDict('PossumPlotPyParametersTagged', 
 
 class PossumPlotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PossumPlotPyParameters(...)`.
+    Output object returned when calling `PossumPlotPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class PossumPlotPyOutputs(typing.NamedTuple):
 def possum_plot_py_params(
     input_file: InputPathType,
     output_basename: str,
-) -> PossumPlotPyParametersTagged:
+) -> PossumPlotPyParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def possum_plot_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PossumPlotPyParameters` object.
+    `PossumPlotPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def possum_plot_py_validate(
 
 
 def possum_plot_py_cargs(
-    params: PossumPlotPyParameters,
+    params: PossumPlotPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def possum_plot_py_cargs(
 
 
 def possum_plot_py_outputs(
-    params: PossumPlotPyParameters,
+    params: PossumPlotPyParamsDict,
     execution: Execution,
 ) -> PossumPlotPyOutputs:
     """
@@ -117,7 +117,7 @@ def possum_plot_py_outputs(
 
 
 def possum_plot_py_execute(
-    params: PossumPlotPyParameters,
+    params: PossumPlotPyParamsDict,
     runner: Runner | None = None,
 ) -> PossumPlotPyOutputs:
     """
@@ -177,6 +177,8 @@ def possum_plot_py(
 __all__ = [
     "POSSUM_PLOT_PY_METADATA",
     "PossumPlotPyOutputs",
+    "PossumPlotPyParamsDict",
+    "PossumPlotPyParamsDictTagged",
     "possum_plot_py",
     "possum_plot_py_execute",
     "possum_plot_py_params",

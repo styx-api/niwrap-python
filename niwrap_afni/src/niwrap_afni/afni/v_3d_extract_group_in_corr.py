@@ -13,12 +13,12 @@ V_3D_EXTRACT_GROUP_IN_CORR_METADATA = Metadata(
 )
 
 
-V3dExtractGroupInCorrParameters = typing.TypedDict('V3dExtractGroupInCorrParameters', {
+V3dExtractGroupInCorrParamsDict = typing.TypedDict('V3dExtractGroupInCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dExtractGroupInCorr"]],
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })
-V3dExtractGroupInCorrParametersTagged = typing.TypedDict('V3dExtractGroupInCorrParametersTagged', {
+V3dExtractGroupInCorrParamsDictTagged = typing.TypedDict('V3dExtractGroupInCorrParamsDictTagged', {
     "@type": typing.Literal["afni/3dExtractGroupInCorr"],
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ V3dExtractGroupInCorrParametersTagged = typing.TypedDict('V3dExtractGroupInCorrP
 
 class V3dExtractGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dExtractGroupInCorrParameters(...)`.
+    Output object returned when calling `V3dExtractGroupInCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class V3dExtractGroupInCorrOutputs(typing.NamedTuple):
 def v_3d_extract_group_in_corr_params(
     group_in_corr_file: InputPathType,
     prefix: str | None = None,
-) -> V3dExtractGroupInCorrParametersTagged:
+) -> V3dExtractGroupInCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def v_3d_extract_group_in_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dExtractGroupInCorrParameters` object.
+    `V3dExtractGroupInCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def v_3d_extract_group_in_corr_validate(
 
 
 def v_3d_extract_group_in_corr_cargs(
-    params: V3dExtractGroupInCorrParameters,
+    params: V3dExtractGroupInCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -105,7 +105,7 @@ def v_3d_extract_group_in_corr_cargs(
 
 
 def v_3d_extract_group_in_corr_outputs(
-    params: V3dExtractGroupInCorrParameters,
+    params: V3dExtractGroupInCorrParamsDict,
     execution: Execution,
 ) -> V3dExtractGroupInCorrOutputs:
     """
@@ -125,7 +125,7 @@ def v_3d_extract_group_in_corr_outputs(
 
 
 def v_3d_extract_group_in_corr_execute(
-    params: V3dExtractGroupInCorrParameters,
+    params: V3dExtractGroupInCorrParamsDict,
     runner: Runner | None = None,
 ) -> V3dExtractGroupInCorrOutputs:
     """
@@ -187,6 +187,8 @@ def v_3d_extract_group_in_corr(
 
 __all__ = [
     "V3dExtractGroupInCorrOutputs",
+    "V3dExtractGroupInCorrParamsDict",
+    "V3dExtractGroupInCorrParamsDictTagged",
     "V_3D_EXTRACT_GROUP_IN_CORR_METADATA",
     "v_3d_extract_group_in_corr",
     "v_3d_extract_group_in_corr_execute",

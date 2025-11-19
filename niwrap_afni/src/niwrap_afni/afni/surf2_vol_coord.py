@@ -13,7 +13,7 @@ SURF2_VOL_COORD_METADATA = Metadata(
 )
 
 
-Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
+Surf2VolCoordParamsDict = typing.TypedDict('Surf2VolCoordParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/Surf2VolCoord"]],
     "surface": str,
     "grid_vol": InputPathType,
@@ -27,7 +27,7 @@ Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
     "verb_level": typing.NotRequired[float | None],
     "prefix": str,
 })
-Surf2VolCoordParametersTagged = typing.TypedDict('Surf2VolCoordParametersTagged', {
+Surf2VolCoordParamsDictTagged = typing.TypedDict('Surf2VolCoordParamsDictTagged', {
     "@type": typing.Literal["afni/Surf2VolCoord"],
     "surface": str,
     "grid_vol": InputPathType,
@@ -45,7 +45,7 @@ Surf2VolCoordParametersTagged = typing.TypedDict('Surf2VolCoordParametersTagged'
 
 class Surf2VolCoordOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Surf2VolCoordParameters(...)`.
+    Output object returned when calling `Surf2VolCoordParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def surf2_vol_coord_params(
     lpi: bool = False,
     rai: bool = False,
     verb_level: float | None = None,
-) -> Surf2VolCoordParametersTagged:
+) -> Surf2VolCoordParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def surf2_vol_coord_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Surf2VolCoordParameters` object.
+    `Surf2VolCoordParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def surf2_vol_coord_validate(
 
 
 def surf2_vol_coord_cargs(
-    params: Surf2VolCoordParameters,
+    params: Surf2VolCoordParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -227,7 +227,7 @@ def surf2_vol_coord_cargs(
 
 
 def surf2_vol_coord_outputs(
-    params: Surf2VolCoordParameters,
+    params: Surf2VolCoordParamsDict,
     execution: Execution,
 ) -> Surf2VolCoordOutputs:
     """
@@ -247,7 +247,7 @@ def surf2_vol_coord_outputs(
 
 
 def surf2_vol_coord_execute(
-    params: Surf2VolCoordParameters,
+    params: Surf2VolCoordParamsDict,
     runner: Runner | None = None,
 ) -> Surf2VolCoordOutputs:
     """
@@ -339,6 +339,8 @@ def surf2_vol_coord(
 __all__ = [
     "SURF2_VOL_COORD_METADATA",
     "Surf2VolCoordOutputs",
+    "Surf2VolCoordParamsDict",
+    "Surf2VolCoordParamsDictTagged",
     "surf2_vol_coord",
     "surf2_vol_coord_execute",
     "surf2_vol_coord_params",

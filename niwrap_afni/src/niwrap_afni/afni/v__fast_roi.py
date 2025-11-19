@@ -13,7 +13,7 @@ V__FAST_ROI_METADATA = Metadata(
 )
 
 
-VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
+VFastRoiParamsDict = typing.TypedDict('VFastRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@fast_roi"]],
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
     "twopass": bool,
     "help": bool,
 })
-VFastRoiParametersTagged = typing.TypedDict('VFastRoiParametersTagged', {
+VFastRoiParamsDictTagged = typing.TypedDict('VFastRoiParamsDictTagged', {
     "@type": typing.Literal["afni/@fast_roi"],
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ VFastRoiParametersTagged = typing.TypedDict('VFastRoiParametersTagged', {
 
 class VFastRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFastRoiParameters(...)`.
+    Output object returned when calling `VFastRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v__fast_roi_params(
     time_: bool = False,
     twopass: bool = False,
     help_: bool = False,
-) -> VFastRoiParametersTagged:
+) -> VFastRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v__fast_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFastRoiParameters` object.
+    `VFastRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def v__fast_roi_validate(
 
 
 def v__fast_roi_cargs(
-    params: VFastRoiParameters,
+    params: VFastRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def v__fast_roi_cargs(
 
 
 def v__fast_roi_outputs(
-    params: VFastRoiParameters,
+    params: VFastRoiParamsDict,
     execution: Execution,
 ) -> VFastRoiOutputs:
     """
@@ -234,7 +234,7 @@ def v__fast_roi_outputs(
 
 
 def v__fast_roi_execute(
-    params: VFastRoiParameters,
+    params: VFastRoiParamsDict,
     runner: Runner | None = None,
 ) -> VFastRoiOutputs:
     """
@@ -324,6 +324,8 @@ def v__fast_roi(
 
 __all__ = [
     "VFastRoiOutputs",
+    "VFastRoiParamsDict",
+    "VFastRoiParamsDictTagged",
     "V__FAST_ROI_METADATA",
     "v__fast_roi",
     "v__fast_roi_execute",

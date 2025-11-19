@@ -13,7 +13,7 @@ ISOLATE_LABELS_CSH_METADATA = Metadata(
 )
 
 
-IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
+IsolateLabelsCshParamsDict = typing.TypedDict('IsolateLabelsCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/isolate_labels.csh"]],
     "label_volume": InputPathType,
     "output_prefix": str,
@@ -23,7 +23,7 @@ IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
     "keepval": bool,
     "help": bool,
 })
-IsolateLabelsCshParametersTagged = typing.TypedDict('IsolateLabelsCshParametersTagged', {
+IsolateLabelsCshParamsDictTagged = typing.TypedDict('IsolateLabelsCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isolate_labels.csh"],
     "label_volume": InputPathType,
     "output_prefix": str,
@@ -37,7 +37,7 @@ IsolateLabelsCshParametersTagged = typing.TypedDict('IsolateLabelsCshParametersT
 
 class IsolateLabelsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsolateLabelsCshParameters(...)`.
+    Output object returned when calling `IsolateLabelsCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def isolate_labels_csh_params(
     version: bool = False,
     keepval: bool = False,
     help_: bool = False,
-) -> IsolateLabelsCshParametersTagged:
+) -> IsolateLabelsCshParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def isolate_labels_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsolateLabelsCshParameters` object.
+    `IsolateLabelsCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def isolate_labels_csh_validate(
 
 
 def isolate_labels_csh_cargs(
-    params: IsolateLabelsCshParameters,
+    params: IsolateLabelsCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def isolate_labels_csh_cargs(
 
 
 def isolate_labels_csh_outputs(
-    params: IsolateLabelsCshParameters,
+    params: IsolateLabelsCshParamsDict,
     execution: Execution,
 ) -> IsolateLabelsCshOutputs:
     """
@@ -185,7 +185,7 @@ def isolate_labels_csh_outputs(
 
 
 def isolate_labels_csh_execute(
-    params: IsolateLabelsCshParameters,
+    params: IsolateLabelsCshParamsDict,
     runner: Runner | None = None,
 ) -> IsolateLabelsCshOutputs:
     """
@@ -263,6 +263,8 @@ def isolate_labels_csh(
 __all__ = [
     "ISOLATE_LABELS_CSH_METADATA",
     "IsolateLabelsCshOutputs",
+    "IsolateLabelsCshParamsDict",
+    "IsolateLabelsCshParamsDictTagged",
     "isolate_labels_csh",
     "isolate_labels_csh_execute",
     "isolate_labels_csh_params",

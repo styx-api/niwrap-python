@@ -13,7 +13,7 @@ V_3DMASK_TOOL_METADATA = Metadata(
 )
 
 
-V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
+V3dmaskToolParamsDict = typing.TypedDict('V3dmaskToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmask_tool"]],
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -29,7 +29,7 @@ V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
     "union": bool,
     "verbose": typing.NotRequired[int | None],
 })
-V3dmaskToolParametersTagged = typing.TypedDict('V3dmaskToolParametersTagged', {
+V3dmaskToolParamsDictTagged = typing.TypedDict('V3dmaskToolParamsDictTagged', {
     "@type": typing.Literal["afni/3dmask_tool"],
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -49,7 +49,7 @@ V3dmaskToolParametersTagged = typing.TypedDict('V3dmaskToolParametersTagged', {
 
 class V3dmaskToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaskToolParameters(...)`.
+    Output object returned when calling `V3dmaskToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def v_3dmask_tool_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     union: bool = False,
     verbose: int | None = None,
-) -> V3dmaskToolParametersTagged:
+) -> V3dmaskToolParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def v_3dmask_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaskToolParameters` object.
+    `V3dmaskToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -193,7 +193,7 @@ def v_3dmask_tool_validate(
 
 
 def v_3dmask_tool_cargs(
-    params: V3dmaskToolParameters,
+    params: V3dmaskToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -257,7 +257,7 @@ def v_3dmask_tool_cargs(
 
 
 def v_3dmask_tool_outputs(
-    params: V3dmaskToolParameters,
+    params: V3dmaskToolParamsDict,
     execution: Execution,
 ) -> V3dmaskToolOutputs:
     """
@@ -278,7 +278,7 @@ def v_3dmask_tool_outputs(
 
 
 def v_3dmask_tool_execute(
-    params: V3dmaskToolParameters,
+    params: V3dmaskToolParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaskToolOutputs:
     """
@@ -378,6 +378,8 @@ def v_3dmask_tool(
 
 __all__ = [
     "V3dmaskToolOutputs",
+    "V3dmaskToolParamsDict",
+    "V3dmaskToolParamsDictTagged",
     "V_3DMASK_TOOL_METADATA",
     "v_3dmask_tool",
     "v_3dmask_tool_execute",

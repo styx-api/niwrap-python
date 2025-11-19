@@ -13,59 +13,59 @@ FIXELFILTER_METADATA = Metadata(
 )
 
 
-FixelfilterConfigParameters = typing.TypedDict('FixelfilterConfigParameters', {
+FixelfilterConfigParamsDict = typing.TypedDict('FixelfilterConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelfilterConfigParametersTagged = typing.TypedDict('FixelfilterConfigParametersTagged', {
+FixelfilterConfigParamsDictTagged = typing.TypedDict('FixelfilterConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelfilterVariousStringParameters = typing.TypedDict('FixelfilterVariousStringParameters', {
+FixelfilterVariousStringParamsDict = typing.TypedDict('FixelfilterVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-FixelfilterVariousStringParametersTagged = typing.TypedDict('FixelfilterVariousStringParametersTagged', {
+FixelfilterVariousStringParamsDictTagged = typing.TypedDict('FixelfilterVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-FixelfilterVariousFileParameters = typing.TypedDict('FixelfilterVariousFileParameters', {
+FixelfilterVariousFileParamsDict = typing.TypedDict('FixelfilterVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-FixelfilterVariousFileParametersTagged = typing.TypedDict('FixelfilterVariousFileParametersTagged', {
+FixelfilterVariousFileParamsDictTagged = typing.TypedDict('FixelfilterVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-FixelfilterVariousString1Parameters = typing.TypedDict('FixelfilterVariousString1Parameters', {
+FixelfilterVariousString1ParamsDict = typing.TypedDict('FixelfilterVariousString1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
     "obj": str,
 })
-FixelfilterVariousString1ParametersTagged = typing.TypedDict('FixelfilterVariousString1ParametersTagged', {
+FixelfilterVariousString1ParamsDictTagged = typing.TypedDict('FixelfilterVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
-FixelfilterVariousFile1Parameters = typing.TypedDict('FixelfilterVariousFile1Parameters', {
+FixelfilterVariousFile1ParamsDict = typing.TypedDict('FixelfilterVariousFile1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
     "obj": InputPathType,
 })
-FixelfilterVariousFile1ParametersTagged = typing.TypedDict('FixelfilterVariousFile1ParametersTagged', {
+FixelfilterVariousFile1ParamsDictTagged = typing.TypedDict('FixelfilterVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
-FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
+FixelfilterParamsDict = typing.TypedDict('FixelfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelfilter"]],
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
@@ -78,14 +78,14 @@ FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
+    "input": typing.Union[FixelfilterVariousStringParamsDictTagged, FixelfilterVariousFileParamsDictTagged],
     "filter": str,
-    "output": typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
+    "output": typing.Union[FixelfilterVariousString1ParamsDictTagged, FixelfilterVariousFile1ParamsDictTagged],
 })
-FixelfilterParametersTagged = typing.TypedDict('FixelfilterParametersTagged', {
+FixelfilterParamsDictTagged = typing.TypedDict('FixelfilterParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelfilter"],
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
@@ -98,12 +98,12 @@ FixelfilterParametersTagged = typing.TypedDict('FixelfilterParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
+    "input": typing.Union[FixelfilterVariousStringParamsDictTagged, FixelfilterVariousFileParamsDictTagged],
     "filter": str,
-    "output": typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
+    "output": typing.Union[FixelfilterVariousString1ParamsDictTagged, FixelfilterVariousFile1ParamsDictTagged],
 })
 
 
@@ -175,10 +175,10 @@ def fixelfilter_output_validate_dyn_fn(
     }.get(t)
 
 
-def fixelfilter_config_params(
+def fixelfilter_config(
     key: str,
     value: str,
-) -> FixelfilterConfigParametersTagged:
+) -> FixelfilterConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -201,7 +201,7 @@ def fixelfilter_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterConfigParameters` object.
+    `FixelfilterConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -219,7 +219,7 @@ def fixelfilter_config_validate(
 
 
 def fixelfilter_config_cargs(
-    params: FixelfilterConfigParameters,
+    params: FixelfilterConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,9 +238,9 @@ def fixelfilter_config_cargs(
     return cargs
 
 
-def fixelfilter_various_string_params(
+def fixelfilter_various_string(
     obj: str,
-) -> FixelfilterVariousStringParametersTagged:
+) -> FixelfilterVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -261,7 +261,7 @@ def fixelfilter_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterVariousStringParameters` object.
+    `FixelfilterVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def fixelfilter_various_string_validate(
 
 
 def fixelfilter_various_string_cargs(
-    params: FixelfilterVariousStringParameters,
+    params: FixelfilterVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -292,9 +292,9 @@ def fixelfilter_various_string_cargs(
     return cargs
 
 
-def fixelfilter_various_file_params(
+def fixelfilter_various_file(
     obj: InputPathType,
-) -> FixelfilterVariousFileParametersTagged:
+) -> FixelfilterVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -315,7 +315,7 @@ def fixelfilter_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterVariousFileParameters` object.
+    `FixelfilterVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -329,7 +329,7 @@ def fixelfilter_various_file_validate(
 
 
 def fixelfilter_various_file_cargs(
-    params: FixelfilterVariousFileParameters,
+    params: FixelfilterVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -346,9 +346,9 @@ def fixelfilter_various_file_cargs(
     return cargs
 
 
-def fixelfilter_various_string_1_params(
+def fixelfilter_various_string_1(
     obj: str,
-) -> FixelfilterVariousString1ParametersTagged:
+) -> FixelfilterVariousString1ParamsDictTagged:
     """
     Build parameters.
     
@@ -369,7 +369,7 @@ def fixelfilter_various_string_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterVariousString1Parameters` object.
+    `FixelfilterVariousString1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -383,7 +383,7 @@ def fixelfilter_various_string_1_validate(
 
 
 def fixelfilter_various_string_1_cargs(
-    params: FixelfilterVariousString1Parameters,
+    params: FixelfilterVariousString1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -400,9 +400,9 @@ def fixelfilter_various_string_1_cargs(
     return cargs
 
 
-def fixelfilter_various_file_1_params(
+def fixelfilter_various_file_1(
     obj: InputPathType,
-) -> FixelfilterVariousFile1ParametersTagged:
+) -> FixelfilterVariousFile1ParamsDictTagged:
     """
     Build parameters.
     
@@ -423,7 +423,7 @@ def fixelfilter_various_file_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterVariousFile1Parameters` object.
+    `FixelfilterVariousFile1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -437,7 +437,7 @@ def fixelfilter_various_file_1_validate(
 
 
 def fixelfilter_various_file_1_cargs(
-    params: FixelfilterVariousFile1Parameters,
+    params: FixelfilterVariousFile1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,7 +456,7 @@ def fixelfilter_various_file_1_cargs(
 
 class FixelfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelfilterParameters(...)`.
+    Output object returned when calling `FixelfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -464,9 +464,9 @@ class FixelfilterOutputs(typing.NamedTuple):
 
 def fixelfilter_params(
     matrix: InputPathType,
-    input_: typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
+    input_: typing.Union[FixelfilterVariousStringParamsDictTagged, FixelfilterVariousFileParamsDictTagged],
     filter_: str,
-    output: typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
+    output: typing.Union[FixelfilterVariousString1ParamsDictTagged, FixelfilterVariousFile1ParamsDictTagged],
     threshold_value: float | None = None,
     threshold_connectivity: float | None = None,
     fwhm: float | None = None,
@@ -477,10 +477,10 @@ def fixelfilter_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelfilterConfigParameters] | None = None,
+    config: list[FixelfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelfilterParametersTagged:
+) -> FixelfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -552,7 +552,7 @@ def fixelfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelfilterParameters` object.
+    `FixelfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -599,7 +599,7 @@ def fixelfilter_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelfilterConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelfilterConfigParamsDict] | None`')
         for e in params["config"]:
             fixelfilter_config_validate(e)
     if params.get("help", False) is None:
@@ -616,6 +616,8 @@ def fixelfilter_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["input"])}\'')
     if "@type" not in params["input"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["input"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `input`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     fixelfilter_input_validate_dyn_fn(params["input"]["@type"])(params["input"])
     if params.get("filter", None) is None:
         raise StyxValidationError("`filter` must not be None")
@@ -627,11 +629,13 @@ def fixelfilter_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
     if "@type" not in params["output"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["output"]["@type"] not in ["VariousString_1", "VariousFile_1"]:
+        raise StyxValidationError("Parameter `output`s `@type` must be one of [\"VariousString_1\", \"VariousFile_1\"]")
     fixelfilter_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
 
 
 def fixelfilter_cargs(
-    params: FixelfilterParameters,
+    params: FixelfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -700,7 +704,7 @@ def fixelfilter_cargs(
 
 
 def fixelfilter_outputs(
-    params: FixelfilterParameters,
+    params: FixelfilterParamsDict,
     execution: Execution,
 ) -> FixelfilterOutputs:
     """
@@ -719,7 +723,7 @@ def fixelfilter_outputs(
 
 
 def fixelfilter_execute(
-    params: FixelfilterParameters,
+    params: FixelfilterParamsDict,
     runner: Runner | None = None,
 ) -> FixelfilterOutputs:
     """
@@ -759,9 +763,9 @@ def fixelfilter_execute(
 
 def fixelfilter(
     matrix: InputPathType,
-    input_: typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
+    input_: typing.Union[FixelfilterVariousStringParamsDictTagged, FixelfilterVariousFileParamsDictTagged],
     filter_: str,
-    output: typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
+    output: typing.Union[FixelfilterVariousString1ParamsDictTagged, FixelfilterVariousFile1ParamsDictTagged],
     threshold_value: float | None = None,
     threshold_connectivity: float | None = None,
     fwhm: float | None = None,
@@ -772,7 +776,7 @@ def fixelfilter(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelfilterConfigParameters] | None = None,
+    config: list[FixelfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -854,13 +858,25 @@ def fixelfilter(
 
 __all__ = [
     "FIXELFILTER_METADATA",
+    "FixelfilterConfigParamsDict",
+    "FixelfilterConfigParamsDictTagged",
     "FixelfilterOutputs",
+    "FixelfilterParamsDict",
+    "FixelfilterParamsDictTagged",
+    "FixelfilterVariousFile1ParamsDict",
+    "FixelfilterVariousFile1ParamsDictTagged",
+    "FixelfilterVariousFileParamsDict",
+    "FixelfilterVariousFileParamsDictTagged",
+    "FixelfilterVariousString1ParamsDict",
+    "FixelfilterVariousString1ParamsDictTagged",
+    "FixelfilterVariousStringParamsDict",
+    "FixelfilterVariousStringParamsDictTagged",
     "fixelfilter",
-    "fixelfilter_config_params",
+    "fixelfilter_config",
     "fixelfilter_execute",
     "fixelfilter_params",
-    "fixelfilter_various_file_1_params",
-    "fixelfilter_various_file_params",
-    "fixelfilter_various_string_1_params",
-    "fixelfilter_various_string_params",
+    "fixelfilter_various_file",
+    "fixelfilter_various_file_1",
+    "fixelfilter_various_string",
+    "fixelfilter_various_string_1",
 ]

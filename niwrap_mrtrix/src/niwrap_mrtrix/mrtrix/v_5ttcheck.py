@@ -13,19 +13,19 @@ V_5TTCHECK_METADATA = Metadata(
 )
 
 
-V5ttcheckConfigParameters = typing.TypedDict('V5ttcheckConfigParameters', {
+V5ttcheckConfigParamsDict = typing.TypedDict('V5ttcheckConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-V5ttcheckConfigParametersTagged = typing.TypedDict('V5ttcheckConfigParametersTagged', {
+V5ttcheckConfigParamsDictTagged = typing.TypedDict('V5ttcheckConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-V5ttcheckParameters = typing.TypedDict('V5ttcheckParameters', {
+V5ttcheckParamsDict = typing.TypedDict('V5ttcheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/5ttcheck"]],
     "voxels": typing.NotRequired[str | None],
     "info": bool,
@@ -33,12 +33,12 @@ V5ttcheckParameters = typing.TypedDict('V5ttcheckParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5ttcheckConfigParameters] | None],
+    "config": typing.NotRequired[list[V5ttcheckConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
 })
-V5ttcheckParametersTagged = typing.TypedDict('V5ttcheckParametersTagged', {
+V5ttcheckParamsDictTagged = typing.TypedDict('V5ttcheckParamsDictTagged', {
     "@type": typing.Literal["mrtrix/5ttcheck"],
     "voxels": typing.NotRequired[str | None],
     "info": bool,
@@ -46,17 +46,17 @@ V5ttcheckParametersTagged = typing.TypedDict('V5ttcheckParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5ttcheckConfigParameters] | None],
+    "config": typing.NotRequired[list[V5ttcheckConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
 })
 
 
-def v_5ttcheck_config_params(
+def v_5ttcheck_config(
     key: str,
     value: str,
-) -> V5ttcheckConfigParametersTagged:
+) -> V5ttcheckConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def v_5ttcheck_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttcheckConfigParameters` object.
+    `V5ttcheckConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def v_5ttcheck_config_validate(
 
 
 def v_5ttcheck_config_cargs(
-    params: V5ttcheckConfigParameters,
+    params: V5ttcheckConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def v_5ttcheck_config_cargs(
 
 class V5ttcheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5ttcheckParameters(...)`.
+    Output object returned when calling `V5ttcheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,10 +132,10 @@ def v_5ttcheck_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5ttcheckConfigParameters] | None = None,
+    config: list[V5ttcheckConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5ttcheckParametersTagged:
+) -> V5ttcheckParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def v_5ttcheck_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5ttcheckParameters` object.
+    `V5ttcheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def v_5ttcheck_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5ttcheckConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5ttcheckConfigParamsDict] | None`')
         for e in params["config"]:
             v_5ttcheck_config_validate(e)
     if params.get("help", False) is None:
@@ -234,7 +234,7 @@ def v_5ttcheck_validate(
 
 
 def v_5ttcheck_cargs(
-    params: V5ttcheckParameters,
+    params: V5ttcheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def v_5ttcheck_cargs(
 
 
 def v_5ttcheck_outputs(
-    params: V5ttcheckParameters,
+    params: V5ttcheckParamsDict,
     execution: Execution,
 ) -> V5ttcheckOutputs:
     """
@@ -296,7 +296,7 @@ def v_5ttcheck_outputs(
 
 
 def v_5ttcheck_execute(
-    params: V5ttcheckParameters,
+    params: V5ttcheckParamsDict,
     runner: Runner | None = None,
 ) -> V5ttcheckOutputs:
     """
@@ -339,7 +339,7 @@ def v_5ttcheck(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5ttcheckConfigParameters] | None = None,
+    config: list[V5ttcheckConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -396,10 +396,14 @@ def v_5ttcheck(
 
 
 __all__ = [
+    "V5ttcheckConfigParamsDict",
+    "V5ttcheckConfigParamsDictTagged",
     "V5ttcheckOutputs",
+    "V5ttcheckParamsDict",
+    "V5ttcheckParamsDictTagged",
     "V_5TTCHECK_METADATA",
     "v_5ttcheck",
-    "v_5ttcheck_config_params",
+    "v_5ttcheck_config",
     "v_5ttcheck_execute",
     "v_5ttcheck_params",
 ]

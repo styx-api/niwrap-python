@@ -13,14 +13,14 @@ V_3DMATCALC_METADATA = Metadata(
 )
 
 
-V3dmatcalcParameters = typing.TypedDict('V3dmatcalcParameters', {
+V3dmatcalcParamsDict = typing.TypedDict('V3dmatcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmatcalc"]],
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
     "output_dataset": str,
     "mask": typing.NotRequired[InputPathType | None],
 })
-V3dmatcalcParametersTagged = typing.TypedDict('V3dmatcalcParametersTagged', {
+V3dmatcalcParamsDictTagged = typing.TypedDict('V3dmatcalcParamsDictTagged', {
     "@type": typing.Literal["afni/3dmatcalc"],
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
@@ -31,7 +31,7 @@ V3dmatcalcParametersTagged = typing.TypedDict('V3dmatcalcParametersTagged', {
 
 class V3dmatcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmatcalcParameters(...)`.
+    Output object returned when calling `V3dmatcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def v_3dmatcalc_params(
     input_matrix: InputPathType,
     output_dataset: str,
     mask: InputPathType | None = None,
-) -> V3dmatcalcParametersTagged:
+) -> V3dmatcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def v_3dmatcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmatcalcParameters` object.
+    `V3dmatcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def v_3dmatcalc_validate(
 
 
 def v_3dmatcalc_cargs(
-    params: V3dmatcalcParameters,
+    params: V3dmatcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def v_3dmatcalc_cargs(
 
 
 def v_3dmatcalc_outputs(
-    params: V3dmatcalcParameters,
+    params: V3dmatcalcParamsDict,
     execution: Execution,
 ) -> V3dmatcalcOutputs:
     """
@@ -157,7 +157,7 @@ def v_3dmatcalc_outputs(
 
 
 def v_3dmatcalc_execute(
-    params: V3dmatcalcParameters,
+    params: V3dmatcalcParamsDict,
     runner: Runner | None = None,
 ) -> V3dmatcalcOutputs:
     """
@@ -223,6 +223,8 @@ def v_3dmatcalc(
 
 __all__ = [
     "V3dmatcalcOutputs",
+    "V3dmatcalcParamsDict",
+    "V3dmatcalcParamsDictTagged",
     "V_3DMATCALC_METADATA",
     "v_3dmatcalc",
     "v_3dmatcalc_execute",

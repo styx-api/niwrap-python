@@ -13,7 +13,7 @@ FSLSELECTVOLS_METADATA = Metadata(
 )
 
 
-FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
+FslselectvolsParamsDict = typing.TypedDict('FslselectvolsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslselectvols"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -22,7 +22,7 @@ FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
     "output_variance_flag": bool,
     "help_flag": bool,
 })
-FslselectvolsParametersTagged = typing.TypedDict('FslselectvolsParametersTagged', {
+FslselectvolsParamsDictTagged = typing.TypedDict('FslselectvolsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslselectvols"],
     "input_file": InputPathType,
     "output_file": str,
@@ -35,7 +35,7 @@ FslselectvolsParametersTagged = typing.TypedDict('FslselectvolsParametersTagged'
 
 class FslselectvolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslselectvolsParameters(...)`.
+    Output object returned when calling `FslselectvolsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def fslselectvols_params(
     output_mean_flag: bool = False,
     output_variance_flag: bool = False,
     help_flag: bool = False,
-) -> FslselectvolsParametersTagged:
+) -> FslselectvolsParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def fslselectvols_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslselectvolsParameters` object.
+    `FslselectvolsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def fslselectvols_validate(
 
 
 def fslselectvols_cargs(
-    params: FslselectvolsParameters,
+    params: FslselectvolsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def fslselectvols_cargs(
 
 
 def fslselectvols_outputs(
-    params: FslselectvolsParameters,
+    params: FslselectvolsParamsDict,
     execution: Execution,
 ) -> FslselectvolsOutputs:
     """
@@ -172,7 +172,7 @@ def fslselectvols_outputs(
 
 
 def fslselectvols_execute(
-    params: FslselectvolsParameters,
+    params: FslselectvolsParamsDict,
     runner: Runner | None = None,
 ) -> FslselectvolsOutputs:
     """
@@ -244,6 +244,8 @@ def fslselectvols(
 __all__ = [
     "FSLSELECTVOLS_METADATA",
     "FslselectvolsOutputs",
+    "FslselectvolsParamsDict",
+    "FslselectvolsParamsDictTagged",
     "fslselectvols",
     "fslselectvols_execute",
     "fslselectvols_params",

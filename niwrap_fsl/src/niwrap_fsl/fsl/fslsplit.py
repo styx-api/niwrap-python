@@ -13,7 +13,7 @@ FSLSPLIT_METADATA = Metadata(
 )
 
 
-FslsplitParameters = typing.TypedDict('FslsplitParameters', {
+FslsplitParamsDict = typing.TypedDict('FslsplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslsplit"]],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ FslsplitParameters = typing.TypedDict('FslsplitParameters', {
     "separation_z": bool,
     "separation_time": bool,
 })
-FslsplitParametersTagged = typing.TypedDict('FslsplitParametersTagged', {
+FslsplitParamsDictTagged = typing.TypedDict('FslsplitParamsDictTagged', {
     "@type": typing.Literal["fsl/fslsplit"],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ FslsplitParametersTagged = typing.TypedDict('FslsplitParametersTagged', {
 
 class FslsplitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslsplitParameters(...)`.
+    Output object returned when calling `FslsplitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def fslsplit_params(
     separation_y: bool = False,
     separation_z: bool = False,
     separation_time: bool = False,
-) -> FslsplitParametersTagged:
+) -> FslsplitParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def fslsplit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslsplitParameters` object.
+    `FslsplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def fslsplit_validate(
 
 
 def fslsplit_cargs(
-    params: FslsplitParameters,
+    params: FslsplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def fslsplit_cargs(
 
 
 def fslsplit_outputs(
-    params: FslsplitParameters,
+    params: FslsplitParamsDict,
     execution: Execution,
 ) -> FslsplitOutputs:
     """
@@ -164,7 +164,7 @@ def fslsplit_outputs(
 
 
 def fslsplit_execute(
-    params: FslsplitParameters,
+    params: FslsplitParamsDict,
     runner: Runner | None = None,
 ) -> FslsplitOutputs:
     """
@@ -235,6 +235,8 @@ def fslsplit(
 __all__ = [
     "FSLSPLIT_METADATA",
     "FslsplitOutputs",
+    "FslsplitParamsDict",
+    "FslsplitParamsDictTagged",
     "fslsplit",
     "fslsplit_execute",
     "fslsplit_params",

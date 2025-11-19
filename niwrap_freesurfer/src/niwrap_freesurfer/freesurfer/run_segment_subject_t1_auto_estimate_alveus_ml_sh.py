@@ -13,12 +13,12 @@ RUN_SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubjectT1AutoEstimateAlveusMlShParameters = typing.TypedDict('RunSegmentSubjectT1AutoEstimateAlveusMlShParameters', {
+RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict = typing.TypedDict('RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run_segmentSubjectT1_autoEstimateAlveusML.sh"]],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
-RunSegmentSubjectT1AutoEstimateAlveusMlShParametersTagged = typing.TypedDict('RunSegmentSubjectT1AutoEstimateAlveusMlShParametersTagged', {
+RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDictTagged = typing.TypedDict('RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run_segmentSubjectT1_autoEstimateAlveusML.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ RunSegmentSubjectT1AutoEstimateAlveusMlShParametersTagged = typing.TypedDict('Ru
 
 class RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunSegmentSubjectT1AutoEstimateAlveusMlShParameters(...)`.
+    Output object returned when calling `RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs(typing.NamedTuple):
 def run_segment_subject_t1_auto_estimate_alveus_ml_sh_params(
     deployed_mcr_root: str,
     additional_args: str | None = None,
-) -> RunSegmentSubjectT1AutoEstimateAlveusMlShParametersTagged:
+) -> RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunSegmentSubjectT1AutoEstimateAlveusMlShParameters` object.
+    `RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_validate(
 
 
 def run_segment_subject_t1_auto_estimate_alveus_ml_sh_cargs(
-    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParameters,
+    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_cargs(
 
 
 def run_segment_subject_t1_auto_estimate_alveus_ml_sh_outputs(
-    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParameters,
+    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict,
     execution: Execution,
 ) -> RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs:
     """
@@ -117,7 +117,7 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_outputs(
 
 
 def run_segment_subject_t1_auto_estimate_alveus_ml_sh_execute(
-    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParameters,
+    params: RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict,
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs:
     """
@@ -178,6 +178,8 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh(
 __all__ = [
     "RUN_SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA",
     "RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs",
+    "RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDict",
+    "RunSegmentSubjectT1AutoEstimateAlveusMlShParamsDictTagged",
     "run_segment_subject_t1_auto_estimate_alveus_ml_sh",
     "run_segment_subject_t1_auto_estimate_alveus_ml_sh_execute",
     "run_segment_subject_t1_auto_estimate_alveus_ml_sh_params",

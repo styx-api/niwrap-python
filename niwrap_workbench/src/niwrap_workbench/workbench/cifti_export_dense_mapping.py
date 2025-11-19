@@ -12,13 +12,13 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
 )
 
 
-CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseMappingVolumeAllParameters', {
+CiftiExportDenseMappingVolumeAllParamsDict = typing.TypedDict('CiftiExportDenseMappingVolumeAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-all"]],
     "text-out": str,
     "no-cifti-index": bool,
     "structure": bool,
 })
-CiftiExportDenseMappingVolumeAllParametersTagged = typing.TypedDict('CiftiExportDenseMappingVolumeAllParametersTagged', {
+CiftiExportDenseMappingVolumeAllParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "text-out": str,
     "no-cifti-index": bool,
@@ -26,13 +26,13 @@ CiftiExportDenseMappingVolumeAllParametersTagged = typing.TypedDict('CiftiExport
 })
 
 
-CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMappingSurfaceParameters', {
+CiftiExportDenseMappingSurfaceParamsDict = typing.TypedDict('CiftiExportDenseMappingSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
     "structure": str,
     "text-out": str,
     "no-cifti-index": bool,
 })
-CiftiExportDenseMappingSurfaceParametersTagged = typing.TypedDict('CiftiExportDenseMappingSurfaceParametersTagged', {
+CiftiExportDenseMappingSurfaceParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingSurfaceParamsDictTagged', {
     "@type": typing.Literal["surface"],
     "structure": str,
     "text-out": str,
@@ -40,13 +40,13 @@ CiftiExportDenseMappingSurfaceParametersTagged = typing.TypedDict('CiftiExportDe
 })
 
 
-CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMappingVolumeParameters', {
+CiftiExportDenseMappingVolumeParamsDict = typing.TypedDict('CiftiExportDenseMappingVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
     "text-out": str,
     "no-cifti-index": bool,
 })
-CiftiExportDenseMappingVolumeParametersTagged = typing.TypedDict('CiftiExportDenseMappingVolumeParametersTagged', {
+CiftiExportDenseMappingVolumeParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "text-out": str,
@@ -54,29 +54,29 @@ CiftiExportDenseMappingVolumeParametersTagged = typing.TypedDict('CiftiExportDen
 })
 
 
-CiftiExportDenseMappingParameters = typing.TypedDict('CiftiExportDenseMappingParameters', {
+CiftiExportDenseMappingParamsDict = typing.TypedDict('CiftiExportDenseMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-export-dense-mapping"]],
-    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
-    "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParameters] | None],
-    "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParameters] | None],
+    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParamsDict | None],
+    "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParamsDict] | None],
     "cifti": InputPathType,
     "direction": str,
 })
-CiftiExportDenseMappingParametersTagged = typing.TypedDict('CiftiExportDenseMappingParametersTagged', {
+CiftiExportDenseMappingParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-export-dense-mapping"],
-    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
-    "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParameters] | None],
-    "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParameters] | None],
+    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParamsDict | None],
+    "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParamsDict] | None],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
-def cifti_export_dense_mapping_volume_all_params(
+def cifti_export_dense_mapping_volume_all(
     text_out: str,
     no_cifti_index: bool = False,
     structure: bool = False,
-) -> CiftiExportDenseMappingVolumeAllParametersTagged:
+) -> CiftiExportDenseMappingVolumeAllParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def cifti_export_dense_mapping_volume_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExportDenseMappingVolumeAllParameters` object.
+    `CiftiExportDenseMappingVolumeAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def cifti_export_dense_mapping_volume_all_validate(
 
 
 def cifti_export_dense_mapping_volume_all_cargs(
-    params: CiftiExportDenseMappingVolumeAllParameters,
+    params: CiftiExportDenseMappingVolumeAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,11 +146,11 @@ def cifti_export_dense_mapping_volume_all_cargs(
     return cargs
 
 
-def cifti_export_dense_mapping_surface_params(
+def cifti_export_dense_mapping_surface(
     structure: str,
     text_out: str,
     no_cifti_index: bool = False,
-) -> CiftiExportDenseMappingSurfaceParametersTagged:
+) -> CiftiExportDenseMappingSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def cifti_export_dense_mapping_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExportDenseMappingSurfaceParameters` object.
+    `CiftiExportDenseMappingSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def cifti_export_dense_mapping_surface_validate(
 
 
 def cifti_export_dense_mapping_surface_cargs(
-    params: CiftiExportDenseMappingSurfaceParameters,
+    params: CiftiExportDenseMappingSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -220,11 +220,11 @@ def cifti_export_dense_mapping_surface_cargs(
     return cargs
 
 
-def cifti_export_dense_mapping_volume_params(
+def cifti_export_dense_mapping_volume(
     structure: str,
     text_out: str,
     no_cifti_index: bool = False,
-) -> CiftiExportDenseMappingVolumeParametersTagged:
+) -> CiftiExportDenseMappingVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -249,7 +249,7 @@ def cifti_export_dense_mapping_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExportDenseMappingVolumeParameters` object.
+    `CiftiExportDenseMappingVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -271,7 +271,7 @@ def cifti_export_dense_mapping_volume_validate(
 
 
 def cifti_export_dense_mapping_volume_cargs(
-    params: CiftiExportDenseMappingVolumeParameters,
+    params: CiftiExportDenseMappingVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -296,7 +296,7 @@ def cifti_export_dense_mapping_volume_cargs(
 
 class CiftiExportDenseMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiExportDenseMappingParameters(...)`.
+    Output object returned when calling `CiftiExportDenseMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -305,10 +305,10 @@ class CiftiExportDenseMappingOutputs(typing.NamedTuple):
 def cifti_export_dense_mapping_params(
     cifti: InputPathType,
     direction: str,
-    volume_all: CiftiExportDenseMappingVolumeAllParameters | None = None,
-    surface: list[CiftiExportDenseMappingSurfaceParameters] | None = None,
-    volume: list[CiftiExportDenseMappingVolumeParameters] | None = None,
-) -> CiftiExportDenseMappingParametersTagged:
+    volume_all: CiftiExportDenseMappingVolumeAllParamsDict | None = None,
+    surface: list[CiftiExportDenseMappingSurfaceParamsDict] | None = None,
+    volume: list[CiftiExportDenseMappingVolumeParamsDict] | None = None,
+) -> CiftiExportDenseMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -340,7 +340,7 @@ def cifti_export_dense_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExportDenseMappingParameters` object.
+    `CiftiExportDenseMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -351,12 +351,12 @@ def cifti_export_dense_mapping_validate(
         cifti_export_dense_mapping_volume_all_validate(params["volume-all"])
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiExportDenseMappingSurfaceParameters] | None`')
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiExportDenseMappingSurfaceParamsDict] | None`')
         for e in params["surface"]:
             cifti_export_dense_mapping_surface_validate(e)
     if params.get("volume", None) is not None:
         if not isinstance(params["volume"], list):
-            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiExportDenseMappingVolumeParameters] | None`')
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiExportDenseMappingVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_export_dense_mapping_volume_validate(e)
     if params.get("cifti", None) is None:
@@ -370,7 +370,7 @@ def cifti_export_dense_mapping_validate(
 
 
 def cifti_export_dense_mapping_cargs(
-    params: CiftiExportDenseMappingParameters,
+    params: CiftiExportDenseMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -397,7 +397,7 @@ def cifti_export_dense_mapping_cargs(
 
 
 def cifti_export_dense_mapping_outputs(
-    params: CiftiExportDenseMappingParameters,
+    params: CiftiExportDenseMappingParamsDict,
     execution: Execution,
 ) -> CiftiExportDenseMappingOutputs:
     """
@@ -416,7 +416,7 @@ def cifti_export_dense_mapping_outputs(
 
 
 def cifti_export_dense_mapping_execute(
-    params: CiftiExportDenseMappingParameters,
+    params: CiftiExportDenseMappingParamsDict,
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
@@ -489,9 +489,9 @@ def cifti_export_dense_mapping_execute(
 def cifti_export_dense_mapping(
     cifti: InputPathType,
     direction: str,
-    volume_all: CiftiExportDenseMappingVolumeAllParameters | None = None,
-    surface: list[CiftiExportDenseMappingSurfaceParameters] | None = None,
-    volume: list[CiftiExportDenseMappingVolumeParameters] | None = None,
+    volume_all: CiftiExportDenseMappingVolumeAllParamsDict | None = None,
+    surface: list[CiftiExportDenseMappingSurfaceParamsDict] | None = None,
+    volume: list[CiftiExportDenseMappingVolumeParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
@@ -568,10 +568,18 @@ def cifti_export_dense_mapping(
 __all__ = [
     "CIFTI_EXPORT_DENSE_MAPPING_METADATA",
     "CiftiExportDenseMappingOutputs",
+    "CiftiExportDenseMappingParamsDict",
+    "CiftiExportDenseMappingParamsDictTagged",
+    "CiftiExportDenseMappingSurfaceParamsDict",
+    "CiftiExportDenseMappingSurfaceParamsDictTagged",
+    "CiftiExportDenseMappingVolumeAllParamsDict",
+    "CiftiExportDenseMappingVolumeAllParamsDictTagged",
+    "CiftiExportDenseMappingVolumeParamsDict",
+    "CiftiExportDenseMappingVolumeParamsDictTagged",
     "cifti_export_dense_mapping",
     "cifti_export_dense_mapping_execute",
     "cifti_export_dense_mapping_params",
-    "cifti_export_dense_mapping_surface_params",
-    "cifti_export_dense_mapping_volume_all_params",
-    "cifti_export_dense_mapping_volume_params",
+    "cifti_export_dense_mapping_surface",
+    "cifti_export_dense_mapping_volume",
+    "cifti_export_dense_mapping_volume_all",
 ]

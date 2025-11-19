@@ -13,7 +13,7 @@ IMAGE_MATH_METADATA = Metadata(
 )
 
 
-ImageMathParameters = typing.TypedDict('ImageMathParameters', {
+ImageMathParamsDict = typing.TypedDict('ImageMathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ImageMath"]],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
@@ -21,7 +21,7 @@ ImageMathParameters = typing.TypedDict('ImageMathParameters', {
     "image1": InputPathType,
     "image2": typing.NotRequired[InputPathType | None],
 })
-ImageMathParametersTagged = typing.TypedDict('ImageMathParametersTagged', {
+ImageMathParamsDictTagged = typing.TypedDict('ImageMathParamsDictTagged', {
     "@type": typing.Literal["ants/ImageMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
@@ -33,7 +33,7 @@ ImageMathParametersTagged = typing.TypedDict('ImageMathParametersTagged', {
 
 class ImageMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImageMathParameters(...)`.
+    Output object returned when calling `ImageMathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def image_math_params(
     operations_and_inputs: str,
     image1: InputPathType,
     image2: InputPathType | None = None,
-) -> ImageMathParametersTagged:
+) -> ImageMathParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def image_math_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImageMathParameters` object.
+    `ImageMathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def image_math_validate(
 
 
 def image_math_cargs(
-    params: ImageMathParameters,
+    params: ImageMathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def image_math_cargs(
 
 
 def image_math_outputs(
-    params: ImageMathParameters,
+    params: ImageMathParamsDict,
     execution: Execution,
 ) -> ImageMathOutputs:
     """
@@ -154,7 +154,7 @@ def image_math_outputs(
 
 
 def image_math_execute(
-    params: ImageMathParameters,
+    params: ImageMathParamsDict,
     runner: Runner | None = None,
 ) -> ImageMathOutputs:
     """
@@ -226,6 +226,8 @@ def image_math(
 __all__ = [
     "IMAGE_MATH_METADATA",
     "ImageMathOutputs",
+    "ImageMathParamsDict",
+    "ImageMathParamsDictTagged",
     "image_math",
     "image_math_execute",
     "image_math_params",

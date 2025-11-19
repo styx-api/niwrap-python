@@ -13,7 +13,7 @@ FSLCOMPLEX_METADATA = Metadata(
 )
 
 
-FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
+FslcomplexParamsDict = typing.TypedDict('FslcomplexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslcomplex"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -21,7 +21,7 @@ FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
     "start_vol": typing.NotRequired[int | None],
     "end_vol": typing.NotRequired[int | None],
 })
-FslcomplexParametersTagged = typing.TypedDict('FslcomplexParametersTagged', {
+FslcomplexParamsDictTagged = typing.TypedDict('FslcomplexParamsDictTagged', {
     "@type": typing.Literal["fsl/fslcomplex"],
     "input_file": InputPathType,
     "output_file": str,
@@ -33,7 +33,7 @@ FslcomplexParametersTagged = typing.TypedDict('FslcomplexParametersTagged', {
 
 class FslcomplexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslcomplexParameters(...)`.
+    Output object returned when calling `FslcomplexParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def fslcomplex_params(
     output_type: typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
     start_vol: int | None = None,
     end_vol: int | None = None,
-) -> FslcomplexParametersTagged:
+) -> FslcomplexParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def fslcomplex_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslcomplexParameters` object.
+    `FslcomplexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def fslcomplex_validate(
 
 
 def fslcomplex_cargs(
-    params: FslcomplexParameters,
+    params: FslcomplexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def fslcomplex_cargs(
 
 
 def fslcomplex_outputs(
-    params: FslcomplexParameters,
+    params: FslcomplexParamsDict,
     execution: Execution,
 ) -> FslcomplexOutputs:
     """
@@ -153,7 +153,7 @@ def fslcomplex_outputs(
 
 
 def fslcomplex_execute(
-    params: FslcomplexParameters,
+    params: FslcomplexParamsDict,
     runner: Runner | None = None,
 ) -> FslcomplexOutputs:
     """
@@ -221,6 +221,8 @@ def fslcomplex(
 __all__ = [
     "FSLCOMPLEX_METADATA",
     "FslcomplexOutputs",
+    "FslcomplexParamsDict",
+    "FslcomplexParamsDictTagged",
     "fslcomplex",
     "fslcomplex_execute",
     "fslcomplex_params",

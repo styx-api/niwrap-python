@@ -13,7 +13,7 @@ MRIS_SKELETONIZE_METADATA = Metadata(
 )
 
 
-MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
+MrisSkeletonizeParamsDict = typing.TypedDict('MrisSkeletonizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_skeletonize"]],
     "surface": str,
     "surfvals": str,
@@ -31,7 +31,7 @@ MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
     "cluster": typing.NotRequired[float | None],
     "fwhm": typing.NotRequired[float | None],
 })
-MrisSkeletonizeParametersTagged = typing.TypedDict('MrisSkeletonizeParametersTagged', {
+MrisSkeletonizeParamsDictTagged = typing.TypedDict('MrisSkeletonizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_skeletonize"],
     "surface": str,
     "surfvals": str,
@@ -53,7 +53,7 @@ MrisSkeletonizeParametersTagged = typing.TypedDict('MrisSkeletonizeParametersTag
 
 class MrisSkeletonizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSkeletonizeParameters(...)`.
+    Output object returned when calling `MrisSkeletonizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def mris_skeletonize_params(
     threshold: float | None = None,
     cluster: float | None = None,
     fwhm: float | None = None,
-) -> MrisSkeletonizeParametersTagged:
+) -> MrisSkeletonizeParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def mris_skeletonize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSkeletonizeParameters` object.
+    `MrisSkeletonizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -203,7 +203,7 @@ def mris_skeletonize_validate(
 
 
 def mris_skeletonize_cargs(
-    params: MrisSkeletonizeParameters,
+    params: MrisSkeletonizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def mris_skeletonize_cargs(
 
 
 def mris_skeletonize_outputs(
-    params: MrisSkeletonizeParameters,
+    params: MrisSkeletonizeParamsDict,
     execution: Execution,
 ) -> MrisSkeletonizeOutputs:
     """
@@ -303,7 +303,7 @@ def mris_skeletonize_outputs(
 
 
 def mris_skeletonize_execute(
-    params: MrisSkeletonizeParameters,
+    params: MrisSkeletonizeParamsDict,
     runner: Runner | None = None,
 ) -> MrisSkeletonizeOutputs:
     """
@@ -404,6 +404,8 @@ def mris_skeletonize(
 __all__ = [
     "MRIS_SKELETONIZE_METADATA",
     "MrisSkeletonizeOutputs",
+    "MrisSkeletonizeParamsDict",
+    "MrisSkeletonizeParamsDictTagged",
     "mris_skeletonize",
     "mris_skeletonize_execute",
     "mris_skeletonize_params",

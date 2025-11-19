@@ -13,7 +13,7 @@ BEDPOSTX_METADATA = Metadata(
 )
 
 
-BedpostxParameters = typing.TypedDict('BedpostxParameters', {
+BedpostxParamsDict = typing.TypedDict('BedpostxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bedpostx"]],
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
@@ -24,7 +24,7 @@ BedpostxParameters = typing.TypedDict('BedpostxParameters', {
     "model_type": typing.NotRequired[float | None],
     "grad_nonlinear": bool,
 })
-BedpostxParametersTagged = typing.TypedDict('BedpostxParametersTagged', {
+BedpostxParamsDictTagged = typing.TypedDict('BedpostxParamsDictTagged', {
     "@type": typing.Literal["fsl/bedpostx"],
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ BedpostxParametersTagged = typing.TypedDict('BedpostxParametersTagged', {
 
 class BedpostxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BedpostxParameters(...)`.
+    Output object returned when calling `BedpostxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def bedpostx_params(
     sample_every: float | None = None,
     model_type: float | None = None,
     grad_nonlinear: bool = False,
-) -> BedpostxParametersTagged:
+) -> BedpostxParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def bedpostx_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BedpostxParameters` object.
+    `BedpostxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def bedpostx_validate(
 
 
 def bedpostx_cargs(
-    params: BedpostxParameters,
+    params: BedpostxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def bedpostx_cargs(
 
 
 def bedpostx_outputs(
-    params: BedpostxParameters,
+    params: BedpostxParamsDict,
     execution: Execution,
 ) -> BedpostxOutputs:
     """
@@ -211,7 +211,7 @@ def bedpostx_outputs(
 
 
 def bedpostx_execute(
-    params: BedpostxParameters,
+    params: BedpostxParamsDict,
     runner: Runner | None = None,
 ) -> BedpostxOutputs:
     """
@@ -294,6 +294,8 @@ def bedpostx(
 __all__ = [
     "BEDPOSTX_METADATA",
     "BedpostxOutputs",
+    "BedpostxParamsDict",
+    "BedpostxParamsDictTagged",
     "bedpostx",
     "bedpostx_execute",
     "bedpostx_params",

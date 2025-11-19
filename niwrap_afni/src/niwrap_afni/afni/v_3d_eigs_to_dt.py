@@ -13,7 +13,7 @@ V_3D_EIGS_TO_DT_METADATA = Metadata(
 )
 
 
-V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
+V3dEigsToDtParamsDict = typing.TypedDict('V3dEigsToDtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dEigsToDT"]],
     "eig_vals": str,
     "eig_vecs": str,
@@ -24,7 +24,7 @@ V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
     "flip_z": bool,
     "scale_eigs": typing.NotRequired[float | None],
 })
-V3dEigsToDtParametersTagged = typing.TypedDict('V3dEigsToDtParametersTagged', {
+V3dEigsToDtParamsDictTagged = typing.TypedDict('V3dEigsToDtParamsDictTagged', {
     "@type": typing.Literal["afni/3dEigsToDT"],
     "eig_vals": str,
     "eig_vecs": str,
@@ -39,7 +39,7 @@ V3dEigsToDtParametersTagged = typing.TypedDict('V3dEigsToDtParametersTagged', {
 
 class V3dEigsToDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dEigsToDtParameters(...)`.
+    Output object returned when calling `V3dEigsToDtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v_3d_eigs_to_dt_params(
     flip_y: bool = False,
     flip_z: bool = False,
     scale_eigs: float | None = None,
-) -> V3dEigsToDtParametersTagged:
+) -> V3dEigsToDtParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def v_3d_eigs_to_dt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dEigsToDtParameters` object.
+    `V3dEigsToDtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def v_3d_eigs_to_dt_validate(
 
 
 def v_3d_eigs_to_dt_cargs(
-    params: V3dEigsToDtParameters,
+    params: V3dEigsToDtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def v_3d_eigs_to_dt_cargs(
 
 
 def v_3d_eigs_to_dt_outputs(
-    params: V3dEigsToDtParameters,
+    params: V3dEigsToDtParamsDict,
     execution: Execution,
 ) -> V3dEigsToDtOutputs:
     """
@@ -208,7 +208,7 @@ def v_3d_eigs_to_dt_outputs(
 
 
 def v_3d_eigs_to_dt_execute(
-    params: V3dEigsToDtParameters,
+    params: V3dEigsToDtParamsDict,
     runner: Runner | None = None,
 ) -> V3dEigsToDtOutputs:
     """
@@ -292,6 +292,8 @@ def v_3d_eigs_to_dt(
 
 __all__ = [
     "V3dEigsToDtOutputs",
+    "V3dEigsToDtParamsDict",
+    "V3dEigsToDtParamsDictTagged",
     "V_3D_EIGS_TO_DT_METADATA",
     "v_3d_eigs_to_dt",
     "v_3d_eigs_to_dt_execute",

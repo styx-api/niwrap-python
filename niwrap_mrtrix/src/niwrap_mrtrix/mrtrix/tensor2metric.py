@@ -13,19 +13,19 @@ TENSOR2METRIC_METADATA = Metadata(
 )
 
 
-Tensor2metricConfigParameters = typing.TypedDict('Tensor2metricConfigParameters', {
+Tensor2metricConfigParamsDict = typing.TypedDict('Tensor2metricConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Tensor2metricConfigParametersTagged = typing.TypedDict('Tensor2metricConfigParametersTagged', {
+Tensor2metricConfigParamsDictTagged = typing.TypedDict('Tensor2metricConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
+Tensor2metricParamsDict = typing.TypedDict('Tensor2metricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tensor2metric"]],
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
@@ -44,12 +44,12 @@ Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tensor2metricConfigParameters] | None],
+    "config": typing.NotRequired[list[Tensor2metricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tensor": InputPathType,
 })
-Tensor2metricParametersTagged = typing.TypedDict('Tensor2metricParametersTagged', {
+Tensor2metricParamsDictTagged = typing.TypedDict('Tensor2metricParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tensor2metric"],
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
@@ -68,17 +68,17 @@ Tensor2metricParametersTagged = typing.TypedDict('Tensor2metricParametersTagged'
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tensor2metricConfigParameters] | None],
+    "config": typing.NotRequired[list[Tensor2metricConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tensor": InputPathType,
 })
 
 
-def tensor2metric_config_params(
+def tensor2metric_config(
     key: str,
     value: str,
-) -> Tensor2metricConfigParametersTagged:
+) -> Tensor2metricConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def tensor2metric_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tensor2metricConfigParameters` object.
+    `Tensor2metricConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def tensor2metric_config_validate(
 
 
 def tensor2metric_config_cargs(
-    params: Tensor2metricConfigParameters,
+    params: Tensor2metricConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def tensor2metric_config_cargs(
 
 class Tensor2metricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tensor2metricParameters(...)`.
+    Output object returned when calling `Tensor2metricParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -189,10 +189,10 @@ def tensor2metric_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tensor2metricConfigParameters] | None = None,
+    config: list[Tensor2metricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Tensor2metricParametersTagged:
+) -> Tensor2metricParamsDictTagged:
     """
     Build parameters.
     
@@ -283,7 +283,7 @@ def tensor2metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tensor2metricParameters` object.
+    `Tensor2metricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -350,7 +350,7 @@ def tensor2metric_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tensor2metricConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tensor2metricConfigParamsDict] | None`')
         for e in params["config"]:
             tensor2metric_config_validate(e)
     if params.get("help", False) is None:
@@ -368,7 +368,7 @@ def tensor2metric_validate(
 
 
 def tensor2metric_cargs(
-    params: Tensor2metricParameters,
+    params: Tensor2metricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -466,7 +466,7 @@ def tensor2metric_cargs(
 
 
 def tensor2metric_outputs(
-    params: Tensor2metricParameters,
+    params: Tensor2metricParamsDict,
     execution: Execution,
 ) -> Tensor2metricOutputs:
     """
@@ -494,7 +494,7 @@ def tensor2metric_outputs(
 
 
 def tensor2metric_execute(
-    params: Tensor2metricParameters,
+    params: Tensor2metricParamsDict,
     runner: Runner | None = None,
 ) -> Tensor2metricOutputs:
     """
@@ -552,7 +552,7 @@ def tensor2metric(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tensor2metricConfigParameters] | None = None,
+    config: list[Tensor2metricConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -647,9 +647,13 @@ def tensor2metric(
 
 __all__ = [
     "TENSOR2METRIC_METADATA",
+    "Tensor2metricConfigParamsDict",
+    "Tensor2metricConfigParamsDictTagged",
     "Tensor2metricOutputs",
+    "Tensor2metricParamsDict",
+    "Tensor2metricParamsDictTagged",
     "tensor2metric",
-    "tensor2metric_config_params",
+    "tensor2metric_config",
     "tensor2metric_execute",
     "tensor2metric_params",
 ]

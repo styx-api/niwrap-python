@@ -13,7 +13,7 @@ MRI_SEGCENTROIDS_METADATA = Metadata(
 )
 
 
-MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
+MriSegcentroidsParamsDict = typing.TypedDict('MriSegcentroidsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segcentroids"]],
     "input_segmentation": InputPathType,
     "output_file": str,
@@ -23,7 +23,7 @@ MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
     "lut_file": typing.NotRequired[InputPathType | None],
     "default_lut_flag": bool,
 })
-MriSegcentroidsParametersTagged = typing.TypedDict('MriSegcentroidsParametersTagged', {
+MriSegcentroidsParamsDictTagged = typing.TypedDict('MriSegcentroidsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segcentroids"],
     "input_segmentation": InputPathType,
     "output_file": str,
@@ -37,7 +37,7 @@ MriSegcentroidsParametersTagged = typing.TypedDict('MriSegcentroidsParametersTag
 
 class MriSegcentroidsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegcentroidsParameters(...)`.
+    Output object returned when calling `MriSegcentroidsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_segcentroids_params(
     weights_file: InputPathType | None = None,
     lut_file: InputPathType | None = None,
     default_lut_flag: bool = False,
-) -> MriSegcentroidsParametersTagged:
+) -> MriSegcentroidsParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mri_segcentroids_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegcentroidsParameters` object.
+    `MriSegcentroidsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def mri_segcentroids_validate(
 
 
 def mri_segcentroids_cargs(
-    params: MriSegcentroidsParameters,
+    params: MriSegcentroidsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def mri_segcentroids_cargs(
 
 
 def mri_segcentroids_outputs(
-    params: MriSegcentroidsParameters,
+    params: MriSegcentroidsParamsDict,
     execution: Execution,
 ) -> MriSegcentroidsOutputs:
     """
@@ -189,7 +189,7 @@ def mri_segcentroids_outputs(
 
 
 def mri_segcentroids_execute(
-    params: MriSegcentroidsParameters,
+    params: MriSegcentroidsParamsDict,
     runner: Runner | None = None,
 ) -> MriSegcentroidsOutputs:
     """
@@ -263,6 +263,8 @@ def mri_segcentroids(
 __all__ = [
     "MRI_SEGCENTROIDS_METADATA",
     "MriSegcentroidsOutputs",
+    "MriSegcentroidsParamsDict",
+    "MriSegcentroidsParamsDictTagged",
     "mri_segcentroids",
     "mri_segcentroids_execute",
     "mri_segcentroids_params",

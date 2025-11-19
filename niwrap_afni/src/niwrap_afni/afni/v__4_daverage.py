@@ -13,12 +13,12 @@ V__4_DAVERAGE_METADATA = Metadata(
 )
 
 
-V4DaverageParameters = typing.TypedDict('V4DaverageParameters', {
+V4DaverageParamsDict = typing.TypedDict('V4DaverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@4Daverage"]],
     "output_prefix": str,
     "input_files": list[InputPathType],
 })
-V4DaverageParametersTagged = typing.TypedDict('V4DaverageParametersTagged', {
+V4DaverageParamsDictTagged = typing.TypedDict('V4DaverageParamsDictTagged', {
     "@type": typing.Literal["afni/@4Daverage"],
     "output_prefix": str,
     "input_files": list[InputPathType],
@@ -27,7 +27,7 @@ V4DaverageParametersTagged = typing.TypedDict('V4DaverageParametersTagged', {
 
 class V4DaverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V4DaverageParameters(...)`.
+    Output object returned when calling `V4DaverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V4DaverageOutputs(typing.NamedTuple):
 def v__4_daverage_params(
     output_prefix: str,
     input_files: list[InputPathType],
-) -> V4DaverageParametersTagged:
+) -> V4DaverageParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__4_daverage_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V4DaverageParameters` object.
+    `V4DaverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def v__4_daverage_validate(
 
 
 def v__4_daverage_cargs(
-    params: V4DaverageParameters,
+    params: V4DaverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v__4_daverage_cargs(
 
 
 def v__4_daverage_outputs(
-    params: V4DaverageParameters,
+    params: V4DaverageParamsDict,
     execution: Execution,
 ) -> V4DaverageOutputs:
     """
@@ -120,7 +120,7 @@ def v__4_daverage_outputs(
 
 
 def v__4_daverage_execute(
-    params: V4DaverageParameters,
+    params: V4DaverageParamsDict,
     runner: Runner | None = None,
 ) -> V4DaverageOutputs:
     """
@@ -179,6 +179,8 @@ def v__4_daverage(
 
 __all__ = [
     "V4DaverageOutputs",
+    "V4DaverageParamsDict",
+    "V4DaverageParamsDictTagged",
     "V__4_DAVERAGE_METADATA",
     "v__4_daverage",
     "v__4_daverage_execute",

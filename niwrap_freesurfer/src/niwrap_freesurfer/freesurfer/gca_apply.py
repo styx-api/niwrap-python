@@ -13,7 +13,7 @@ GCA_APPLY_METADATA = Metadata(
 )
 
 
-GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
+GcaApplyParamsDict = typing.TypedDict('GcaApplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gca-apply"]],
     "gcafile": InputPathType,
     "subject": str,
@@ -34,7 +34,7 @@ GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
     "force_update": bool,
     "gcareg_iters": typing.NotRequired[float | None],
 })
-GcaApplyParametersTagged = typing.TypedDict('GcaApplyParametersTagged', {
+GcaApplyParamsDictTagged = typing.TypedDict('GcaApplyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gca-apply"],
     "gcafile": InputPathType,
     "subject": str,
@@ -59,7 +59,7 @@ GcaApplyParametersTagged = typing.TypedDict('GcaApplyParametersTagged', {
 
 class GcaApplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GcaApplyParameters(...)`.
+    Output object returned when calling `GcaApplyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def gca_apply_params(
     gca_rb_2016: bool = False,
     force_update: bool = False,
     gcareg_iters: float | None = None,
-) -> GcaApplyParametersTagged:
+) -> GcaApplyParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def gca_apply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GcaApplyParameters` object.
+    `GcaApplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -232,7 +232,7 @@ def gca_apply_validate(
 
 
 def gca_apply_cargs(
-    params: GcaApplyParameters,
+    params: GcaApplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -320,7 +320,7 @@ def gca_apply_cargs(
 
 
 def gca_apply_outputs(
-    params: GcaApplyParameters,
+    params: GcaApplyParamsDict,
     execution: Execution,
 ) -> GcaApplyOutputs:
     """
@@ -344,7 +344,7 @@ def gca_apply_outputs(
 
 
 def gca_apply_execute(
-    params: GcaApplyParameters,
+    params: GcaApplyParamsDict,
     runner: Runner | None = None,
 ) -> GcaApplyOutputs:
     """
@@ -456,6 +456,8 @@ def gca_apply(
 __all__ = [
     "GCA_APPLY_METADATA",
     "GcaApplyOutputs",
+    "GcaApplyParamsDict",
+    "GcaApplyParamsDictTagged",
     "gca_apply",
     "gca_apply_execute",
     "gca_apply_params",

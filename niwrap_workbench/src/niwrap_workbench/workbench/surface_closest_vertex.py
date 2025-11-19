@@ -12,13 +12,13 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
 )
 
 
-SurfaceClosestVertexParameters = typing.TypedDict('SurfaceClosestVertexParameters', {
+SurfaceClosestVertexParamsDict = typing.TypedDict('SurfaceClosestVertexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-closest-vertex"]],
     "surface": InputPathType,
     "coord-list-file": str,
     "vertex-list-out": str,
 })
-SurfaceClosestVertexParametersTagged = typing.TypedDict('SurfaceClosestVertexParametersTagged', {
+SurfaceClosestVertexParamsDictTagged = typing.TypedDict('SurfaceClosestVertexParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-closest-vertex"],
     "surface": InputPathType,
     "coord-list-file": str,
@@ -28,7 +28,7 @@ SurfaceClosestVertexParametersTagged = typing.TypedDict('SurfaceClosestVertexPar
 
 class SurfaceClosestVertexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceClosestVertexParameters(...)`.
+    Output object returned when calling `SurfaceClosestVertexParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def surface_closest_vertex_params(
     surface: InputPathType,
     coord_list_file: str,
     vertex_list_out: str,
-) -> SurfaceClosestVertexParametersTagged:
+) -> SurfaceClosestVertexParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def surface_closest_vertex_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceClosestVertexParameters` object.
+    `SurfaceClosestVertexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def surface_closest_vertex_validate(
 
 
 def surface_closest_vertex_cargs(
-    params: SurfaceClosestVertexParameters,
+    params: SurfaceClosestVertexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def surface_closest_vertex_cargs(
 
 
 def surface_closest_vertex_outputs(
-    params: SurfaceClosestVertexParameters,
+    params: SurfaceClosestVertexParamsDict,
     execution: Execution,
 ) -> SurfaceClosestVertexOutputs:
     """
@@ -128,7 +128,7 @@ def surface_closest_vertex_outputs(
 
 
 def surface_closest_vertex_execute(
-    params: SurfaceClosestVertexParameters,
+    params: SurfaceClosestVertexParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
@@ -192,6 +192,8 @@ def surface_closest_vertex(
 __all__ = [
     "SURFACE_CLOSEST_VERTEX_METADATA",
     "SurfaceClosestVertexOutputs",
+    "SurfaceClosestVertexParamsDict",
+    "SurfaceClosestVertexParamsDictTagged",
     "surface_closest_vertex",
     "surface_closest_vertex_execute",
     "surface_closest_vertex_params",

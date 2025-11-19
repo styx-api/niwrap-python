@@ -13,12 +13,12 @@ MRIS_MAP_CUTS_METADATA = Metadata(
 )
 
 
-MrisMapCutsParameters = typing.TypedDict('MrisMapCutsParameters', {
+MrisMapCutsParamsDict = typing.TypedDict('MrisMapCutsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_map_cuts"]],
     "input_patch": InputPathType,
     "output_patch": str,
 })
-MrisMapCutsParametersTagged = typing.TypedDict('MrisMapCutsParametersTagged', {
+MrisMapCutsParamsDictTagged = typing.TypedDict('MrisMapCutsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_map_cuts"],
     "input_patch": InputPathType,
     "output_patch": str,
@@ -27,7 +27,7 @@ MrisMapCutsParametersTagged = typing.TypedDict('MrisMapCutsParametersTagged', {
 
 class MrisMapCutsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMapCutsParameters(...)`.
+    Output object returned when calling `MrisMapCutsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MrisMapCutsOutputs(typing.NamedTuple):
 def mris_map_cuts_params(
     input_patch: InputPathType,
     output_patch: str,
-) -> MrisMapCutsParametersTagged:
+) -> MrisMapCutsParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mris_map_cuts_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMapCutsParameters` object.
+    `MrisMapCutsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mris_map_cuts_validate(
 
 
 def mris_map_cuts_cargs(
-    params: MrisMapCutsParameters,
+    params: MrisMapCutsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def mris_map_cuts_cargs(
 
 
 def mris_map_cuts_outputs(
-    params: MrisMapCutsParameters,
+    params: MrisMapCutsParamsDict,
     execution: Execution,
 ) -> MrisMapCutsOutputs:
     """
@@ -116,7 +116,7 @@ def mris_map_cuts_outputs(
 
 
 def mris_map_cuts_execute(
-    params: MrisMapCutsParameters,
+    params: MrisMapCutsParamsDict,
     runner: Runner | None = None,
 ) -> MrisMapCutsOutputs:
     """
@@ -175,6 +175,8 @@ def mris_map_cuts(
 __all__ = [
     "MRIS_MAP_CUTS_METADATA",
     "MrisMapCutsOutputs",
+    "MrisMapCutsParamsDict",
+    "MrisMapCutsParamsDictTagged",
     "mris_map_cuts",
     "mris_map_cuts_execute",
     "mris_map_cuts_params",

@@ -13,12 +13,12 @@ IFH2HDR_METADATA = Metadata(
 )
 
 
-Ifh2hdrParameters = typing.TypedDict('Ifh2hdrParameters', {
+Ifh2hdrParamsDict = typing.TypedDict('Ifh2hdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/ifh2hdr"]],
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })
-Ifh2hdrParametersTagged = typing.TypedDict('Ifh2hdrParametersTagged', {
+Ifh2hdrParamsDictTagged = typing.TypedDict('Ifh2hdrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/ifh2hdr"],
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ Ifh2hdrParametersTagged = typing.TypedDict('Ifh2hdrParametersTagged', {
 
 class Ifh2hdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Ifh2hdrParameters(...)`.
+    Output object returned when calling `Ifh2hdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class Ifh2hdrOutputs(typing.NamedTuple):
 def ifh2hdr_params(
     input_file: InputPathType,
     range_: str | None = None,
-) -> Ifh2hdrParametersTagged:
+) -> Ifh2hdrParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def ifh2hdr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Ifh2hdrParameters` object.
+    `Ifh2hdrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def ifh2hdr_validate(
 
 
 def ifh2hdr_cargs(
-    params: Ifh2hdrParameters,
+    params: Ifh2hdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def ifh2hdr_cargs(
 
 
 def ifh2hdr_outputs(
-    params: Ifh2hdrParameters,
+    params: Ifh2hdrParamsDict,
     execution: Execution,
 ) -> Ifh2hdrOutputs:
     """
@@ -120,7 +120,7 @@ def ifh2hdr_outputs(
 
 
 def ifh2hdr_execute(
-    params: Ifh2hdrParameters,
+    params: Ifh2hdrParamsDict,
     runner: Runner | None = None,
 ) -> Ifh2hdrOutputs:
     """
@@ -181,6 +181,8 @@ def ifh2hdr(
 __all__ = [
     "IFH2HDR_METADATA",
     "Ifh2hdrOutputs",
+    "Ifh2hdrParamsDict",
+    "Ifh2hdrParamsDictTagged",
     "ifh2hdr",
     "ifh2hdr_execute",
     "ifh2hdr_params",

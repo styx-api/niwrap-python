@@ -12,7 +12,7 @@ METRIC_ERODE_METADATA = Metadata(
 )
 
 
-MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
+MetricErodeParamsDict = typing.TypedDict('MetricErodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-erode"]],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
     "surface": InputPathType,
     "distance": float,
 })
-MetricErodeParametersTagged = typing.TypedDict('MetricErodeParametersTagged', {
+MetricErodeParamsDictTagged = typing.TypedDict('MetricErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-erode"],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ MetricErodeParametersTagged = typing.TypedDict('MetricErodeParametersTagged', {
 
 class MetricErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricErodeParameters(...)`.
+    Output object returned when calling `MetricErodeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def metric_erode_params(
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-) -> MetricErodeParametersTagged:
+) -> MetricErodeParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def metric_erode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricErodeParameters` object.
+    `MetricErodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def metric_erode_validate(
 
 
 def metric_erode_cargs(
-    params: MetricErodeParameters,
+    params: MetricErodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def metric_erode_cargs(
 
 
 def metric_erode_outputs(
-    params: MetricErodeParameters,
+    params: MetricErodeParamsDict,
     execution: Execution,
 ) -> MetricErodeOutputs:
     """
@@ -182,7 +182,7 @@ def metric_erode_outputs(
 
 
 def metric_erode_execute(
-    params: MetricErodeParameters,
+    params: MetricErodeParamsDict,
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
@@ -265,6 +265,8 @@ def metric_erode(
 __all__ = [
     "METRIC_ERODE_METADATA",
     "MetricErodeOutputs",
+    "MetricErodeParamsDict",
+    "MetricErodeParamsDictTagged",
     "metric_erode",
     "metric_erode_execute",
     "metric_erode_params",

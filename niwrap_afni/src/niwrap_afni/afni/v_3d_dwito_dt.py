@@ -13,7 +13,7 @@ V_3D_DWITO_DT_METADATA = Metadata(
 )
 
 
-V3dDwitoDtParameters = typing.TypedDict('V3dDwitoDtParameters', {
+V3dDwitoDtParamsDict = typing.TypedDict('V3dDwitoDtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDWItoDT"]],
     "gradient_file": InputPathType,
     "dataset": InputPathType,
@@ -42,7 +42,7 @@ V3dDwitoDtParameters = typing.TypedDict('V3dDwitoDtParameters', {
     "opt": typing.NotRequired[str | None],
     "mean_b0": bool,
 })
-V3dDwitoDtParametersTagged = typing.TypedDict('V3dDwitoDtParametersTagged', {
+V3dDwitoDtParamsDictTagged = typing.TypedDict('V3dDwitoDtParamsDictTagged', {
     "@type": typing.Literal["afni/3dDWItoDT"],
     "gradient_file": InputPathType,
     "dataset": InputPathType,
@@ -75,7 +75,7 @@ V3dDwitoDtParametersTagged = typing.TypedDict('V3dDwitoDtParametersTagged', {
 
 class V3dDwitoDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDwitoDtParameters(...)`.
+    Output object returned when calling `V3dDwitoDtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +108,7 @@ def v_3d_dwito_dt_params(
     csf_fa: float | None = None,
     opt: str | None = None,
     mean_b0: bool = False,
-) -> V3dDwitoDtParametersTagged:
+) -> V3dDwitoDtParamsDictTagged:
     """
     Build parameters.
     
@@ -208,7 +208,7 @@ def v_3d_dwito_dt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDwitoDtParameters` object.
+    `V3dDwitoDtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -308,7 +308,7 @@ def v_3d_dwito_dt_validate(
 
 
 def v_3d_dwito_dt_cargs(
-    params: V3dDwitoDtParameters,
+    params: V3dDwitoDtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -418,7 +418,7 @@ def v_3d_dwito_dt_cargs(
 
 
 def v_3d_dwito_dt_outputs(
-    params: V3dDwitoDtParameters,
+    params: V3dDwitoDtParamsDict,
     execution: Execution,
 ) -> V3dDwitoDtOutputs:
     """
@@ -437,7 +437,7 @@ def v_3d_dwito_dt_outputs(
 
 
 def v_3d_dwito_dt_execute(
-    params: V3dDwitoDtParameters,
+    params: V3dDwitoDtParamsDict,
     runner: Runner | None = None,
 ) -> V3dDwitoDtOutputs:
     """
@@ -584,6 +584,8 @@ def v_3d_dwito_dt(
 
 __all__ = [
     "V3dDwitoDtOutputs",
+    "V3dDwitoDtParamsDict",
+    "V3dDwitoDtParamsDictTagged",
     "V_3D_DWITO_DT_METADATA",
     "v_3d_dwito_dt",
     "v_3d_dwito_dt_execute",

@@ -13,7 +13,7 @@ MRI_EASYWARP_METADATA = Metadata(
 )
 
 
-MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
+MriEasywarpParamsDict = typing.TypedDict('MriEasywarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easywarp"]],
     "input_image": InputPathType,
     "output_image": str,
@@ -21,7 +21,7 @@ MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
     "nearest_neighbor": bool,
     "num_threads": typing.NotRequired[float | None],
 })
-MriEasywarpParametersTagged = typing.TypedDict('MriEasywarpParametersTagged', {
+MriEasywarpParamsDictTagged = typing.TypedDict('MriEasywarpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_easywarp"],
     "input_image": InputPathType,
     "output_image": str,
@@ -33,7 +33,7 @@ MriEasywarpParametersTagged = typing.TypedDict('MriEasywarpParametersTagged', {
 
 class MriEasywarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEasywarpParameters(...)`.
+    Output object returned when calling `MriEasywarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_easywarp_params(
     deformation_field: InputPathType | None = None,
     nearest_neighbor: bool = False,
     num_threads: float | None = None,
-) -> MriEasywarpParametersTagged:
+) -> MriEasywarpParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def mri_easywarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEasywarpParameters` object.
+    `MriEasywarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def mri_easywarp_validate(
 
 
 def mri_easywarp_cargs(
-    params: MriEasywarpParameters,
+    params: MriEasywarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def mri_easywarp_cargs(
 
 
 def mri_easywarp_outputs(
-    params: MriEasywarpParameters,
+    params: MriEasywarpParamsDict,
     execution: Execution,
 ) -> MriEasywarpOutputs:
     """
@@ -166,7 +166,7 @@ def mri_easywarp_outputs(
 
 
 def mri_easywarp_execute(
-    params: MriEasywarpParameters,
+    params: MriEasywarpParamsDict,
     runner: Runner | None = None,
 ) -> MriEasywarpOutputs:
     """
@@ -236,6 +236,8 @@ def mri_easywarp(
 __all__ = [
     "MRI_EASYWARP_METADATA",
     "MriEasywarpOutputs",
+    "MriEasywarpParamsDict",
+    "MriEasywarpParamsDictTagged",
     "mri_easywarp",
     "mri_easywarp_execute",
     "mri_easywarp_params",

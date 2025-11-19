@@ -13,13 +13,13 @@ ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
 )
 
 
-AntsDenoiseImageFsParameters = typing.TypedDict('AntsDenoiseImageFsParameters', {
+AntsDenoiseImageFsParamsDict = typing.TypedDict('AntsDenoiseImageFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/AntsDenoiseImageFs"]],
     "input_image": InputPathType,
     "output_image": str,
     "rician_flag": bool,
 })
-AntsDenoiseImageFsParametersTagged = typing.TypedDict('AntsDenoiseImageFsParametersTagged', {
+AntsDenoiseImageFsParamsDictTagged = typing.TypedDict('AntsDenoiseImageFsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/AntsDenoiseImageFs"],
     "input_image": InputPathType,
     "output_image": str,
@@ -29,7 +29,7 @@ AntsDenoiseImageFsParametersTagged = typing.TypedDict('AntsDenoiseImageFsParamet
 
 class AntsDenoiseImageFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsDenoiseImageFsParameters(...)`.
+    Output object returned when calling `AntsDenoiseImageFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def ants_denoise_image_fs_params(
     input_image: InputPathType,
     output_image: str = "output.nii",
     rician_flag: bool = False,
-) -> AntsDenoiseImageFsParametersTagged:
+) -> AntsDenoiseImageFsParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def ants_denoise_image_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsDenoiseImageFsParameters` object.
+    `AntsDenoiseImageFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def ants_denoise_image_fs_validate(
 
 
 def ants_denoise_image_fs_cargs(
-    params: AntsDenoiseImageFsParameters,
+    params: AntsDenoiseImageFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def ants_denoise_image_fs_cargs(
 
 
 def ants_denoise_image_fs_outputs(
-    params: AntsDenoiseImageFsParameters,
+    params: AntsDenoiseImageFsParamsDict,
     execution: Execution,
 ) -> AntsDenoiseImageFsOutputs:
     """
@@ -136,7 +136,7 @@ def ants_denoise_image_fs_outputs(
 
 
 def ants_denoise_image_fs_execute(
-    params: AntsDenoiseImageFsParameters,
+    params: AntsDenoiseImageFsParamsDict,
     runner: Runner | None = None,
 ) -> AntsDenoiseImageFsOutputs:
     """
@@ -200,6 +200,8 @@ def ants_denoise_image_fs(
 __all__ = [
     "ANTS_DENOISE_IMAGE_FS_METADATA",
     "AntsDenoiseImageFsOutputs",
+    "AntsDenoiseImageFsParamsDict",
+    "AntsDenoiseImageFsParamsDictTagged",
     "ants_denoise_image_fs",
     "ants_denoise_image_fs_execute",
     "ants_denoise_image_fs_params",

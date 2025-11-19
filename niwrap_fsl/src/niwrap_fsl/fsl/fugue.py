@@ -13,7 +13,7 @@ FUGUE_METADATA = Metadata(
 )
 
 
-FugueParameters = typing.TypedDict('FugueParameters', {
+FugueParamsDict = typing.TypedDict('FugueParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fugue"]],
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
@@ -49,7 +49,7 @@ FugueParameters = typing.TypedDict('FugueParameters', {
     "unwarped_file": typing.NotRequired[str | None],
     "warped_file": typing.NotRequired[str | None],
 })
-FugueParametersTagged = typing.TypedDict('FugueParametersTagged', {
+FugueParamsDictTagged = typing.TypedDict('FugueParamsDictTagged', {
     "@type": typing.Literal["fsl/fugue"],
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
@@ -89,7 +89,7 @@ FugueParametersTagged = typing.TypedDict('FugueParametersTagged', {
 
 class FugueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FugueParameters(...)`.
+    Output object returned when calling `FugueParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +137,7 @@ def fugue_params(
     unwarp_direction: typing.Literal["x", "y", "z", "x-", "y-", "z-"] | None = None,
     unwarped_file: str | None = None,
     warped_file: str | None = None,
-) -> FugueParametersTagged:
+) -> FugueParamsDictTagged:
     """
     Build parameters.
     
@@ -246,7 +246,7 @@ def fugue_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FugueParameters` object.
+    `FugueParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -373,7 +373,7 @@ def fugue_validate(
 
 
 def fugue_cargs(
-    params: FugueParameters,
+    params: FugueParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +457,7 @@ def fugue_cargs(
 
 
 def fugue_outputs(
-    params: FugueParameters,
+    params: FugueParamsDict,
     execution: Execution,
 ) -> FugueOutputs:
     """
@@ -480,7 +480,7 @@ def fugue_outputs(
 
 
 def fugue_execute(
-    params: FugueParameters,
+    params: FugueParamsDict,
     runner: Runner | None = None,
 ) -> FugueOutputs:
     """
@@ -637,6 +637,8 @@ def fugue(
 __all__ = [
     "FUGUE_METADATA",
     "FugueOutputs",
+    "FugueParamsDict",
+    "FugueParamsDictTagged",
     "fugue",
     "fugue_execute",
     "fugue_params",

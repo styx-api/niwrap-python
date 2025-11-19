@@ -13,11 +13,11 @@ MRI_GRADIENT_INFO_METADATA = Metadata(
 )
 
 
-MriGradientInfoParameters = typing.TypedDict('MriGradientInfoParameters', {
+MriGradientInfoParamsDict = typing.TypedDict('MriGradientInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradient_info"]],
     "input_image": InputPathType,
 })
-MriGradientInfoParametersTagged = typing.TypedDict('MriGradientInfoParametersTagged', {
+MriGradientInfoParamsDictTagged = typing.TypedDict('MriGradientInfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gradient_info"],
     "input_image": InputPathType,
 })
@@ -25,7 +25,7 @@ MriGradientInfoParametersTagged = typing.TypedDict('MriGradientInfoParametersTag
 
 class MriGradientInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGradientInfoParameters(...)`.
+    Output object returned when calling `MriGradientInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class MriGradientInfoOutputs(typing.NamedTuple):
 
 def mri_gradient_info_params(
     input_image: InputPathType,
-) -> MriGradientInfoParametersTagged:
+) -> MriGradientInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def mri_gradient_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGradientInfoParameters` object.
+    `MriGradientInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def mri_gradient_info_validate(
 
 
 def mri_gradient_info_cargs(
-    params: MriGradientInfoParameters,
+    params: MriGradientInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def mri_gradient_info_cargs(
 
 
 def mri_gradient_info_outputs(
-    params: MriGradientInfoParameters,
+    params: MriGradientInfoParamsDict,
     execution: Execution,
 ) -> MriGradientInfoOutputs:
     """
@@ -109,7 +109,7 @@ def mri_gradient_info_outputs(
 
 
 def mri_gradient_info_execute(
-    params: MriGradientInfoParameters,
+    params: MriGradientInfoParamsDict,
     runner: Runner | None = None,
 ) -> MriGradientInfoOutputs:
     """
@@ -165,6 +165,8 @@ def mri_gradient_info(
 __all__ = [
     "MRI_GRADIENT_INFO_METADATA",
     "MriGradientInfoOutputs",
+    "MriGradientInfoParamsDict",
+    "MriGradientInfoParamsDictTagged",
     "mri_gradient_info",
     "mri_gradient_info_execute",
     "mri_gradient_info_params",

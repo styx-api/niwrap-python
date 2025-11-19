@@ -12,58 +12,58 @@ METRIC_MERGE_METADATA = Metadata(
 )
 
 
-MetricMergeUpToParameters = typing.TypedDict('MetricMergeUpToParameters', {
+MetricMergeUpToParamsDict = typing.TypedDict('MetricMergeUpToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["up-to"]],
     "last-column": str,
     "reverse": bool,
 })
-MetricMergeUpToParametersTagged = typing.TypedDict('MetricMergeUpToParametersTagged', {
+MetricMergeUpToParamsDictTagged = typing.TypedDict('MetricMergeUpToParamsDictTagged', {
     "@type": typing.Literal["up-to"],
     "last-column": str,
     "reverse": bool,
 })
 
 
-MetricMergeColumnParameters = typing.TypedDict('MetricMergeColumnParameters', {
+MetricMergeColumnParamsDict = typing.TypedDict('MetricMergeColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "column": str,
-    "up-to": typing.NotRequired[MetricMergeUpToParameters | None],
+    "up-to": typing.NotRequired[MetricMergeUpToParamsDict | None],
 })
-MetricMergeColumnParametersTagged = typing.TypedDict('MetricMergeColumnParametersTagged', {
+MetricMergeColumnParamsDictTagged = typing.TypedDict('MetricMergeColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "column": str,
-    "up-to": typing.NotRequired[MetricMergeUpToParameters | None],
+    "up-to": typing.NotRequired[MetricMergeUpToParamsDict | None],
 })
 
 
-MetricMergeMetricParameters = typing.TypedDict('MetricMergeMetricParameters', {
+MetricMergeMetricParamsDict = typing.TypedDict('MetricMergeMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "metric-in": InputPathType,
-    "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
+    "column": typing.NotRequired[list[MetricMergeColumnParamsDict] | None],
 })
-MetricMergeMetricParametersTagged = typing.TypedDict('MetricMergeMetricParametersTagged', {
+MetricMergeMetricParamsDictTagged = typing.TypedDict('MetricMergeMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "metric-in": InputPathType,
-    "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
+    "column": typing.NotRequired[list[MetricMergeColumnParamsDict] | None],
 })
 
 
-MetricMergeParameters = typing.TypedDict('MetricMergeParameters', {
+MetricMergeParamsDict = typing.TypedDict('MetricMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-merge"]],
     "metric-out": str,
-    "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
+    "metric": typing.NotRequired[list[MetricMergeMetricParamsDict] | None],
 })
-MetricMergeParametersTagged = typing.TypedDict('MetricMergeParametersTagged', {
+MetricMergeParamsDictTagged = typing.TypedDict('MetricMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-merge"],
     "metric-out": str,
-    "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
+    "metric": typing.NotRequired[list[MetricMergeMetricParamsDict] | None],
 })
 
 
-def metric_merge_up_to_params(
+def metric_merge_up_to(
     last_column: str,
     reverse: bool = False,
-) -> MetricMergeUpToParametersTagged:
+) -> MetricMergeUpToParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def metric_merge_up_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMergeUpToParameters` object.
+    `MetricMergeUpToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def metric_merge_up_to_validate(
 
 
 def metric_merge_up_to_cargs(
-    params: MetricMergeUpToParameters,
+    params: MetricMergeUpToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,10 +126,10 @@ def metric_merge_up_to_cargs(
     return cargs
 
 
-def metric_merge_column_params(
+def metric_merge_column(
     column: str,
-    up_to: MetricMergeUpToParameters | None = None,
-) -> MetricMergeColumnParametersTagged:
+    up_to: MetricMergeUpToParamsDict | None = None,
+) -> MetricMergeColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def metric_merge_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMergeColumnParameters` object.
+    `MetricMergeColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def metric_merge_column_validate(
 
 
 def metric_merge_column_cargs(
-    params: MetricMergeColumnParameters,
+    params: MetricMergeColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,10 +191,10 @@ def metric_merge_column_cargs(
     return cargs
 
 
-def metric_merge_metric_params(
+def metric_merge_metric(
     metric_in: InputPathType,
-    column: list[MetricMergeColumnParameters] | None = None,
-) -> MetricMergeMetricParametersTagged:
+    column: list[MetricMergeColumnParamsDict] | None = None,
+) -> MetricMergeMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def metric_merge_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMergeMetricParameters` object.
+    `MetricMergeMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,13 +231,13 @@ def metric_merge_metric_validate(
         raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[MetricMergeColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[MetricMergeColumnParamsDict] | None`')
         for e in params["column"]:
             metric_merge_column_validate(e)
 
 
 def metric_merge_metric_cargs(
-    params: MetricMergeMetricParameters,
+    params: MetricMergeMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def metric_merge_metric_cargs(
 
 class MetricMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricMergeParameters(...)`.
+    Output object returned when calling `MetricMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -271,8 +271,8 @@ class MetricMergeOutputs(typing.NamedTuple):
 
 def metric_merge_params(
     metric_out: str,
-    metric: list[MetricMergeMetricParameters] | None = None,
-) -> MetricMergeParametersTagged:
+    metric: list[MetricMergeMetricParamsDict] | None = None,
+) -> MetricMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -296,7 +296,7 @@ def metric_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMergeParameters` object.
+    `MetricMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -309,13 +309,13 @@ def metric_merge_validate(
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[MetricMergeMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[MetricMergeMetricParamsDict] | None`')
         for e in params["metric"]:
             metric_merge_metric_validate(e)
 
 
 def metric_merge_cargs(
-    params: MetricMergeParameters,
+    params: MetricMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def metric_merge_cargs(
 
 
 def metric_merge_outputs(
-    params: MetricMergeParameters,
+    params: MetricMergeParamsDict,
     execution: Execution,
 ) -> MetricMergeOutputs:
     """
@@ -359,7 +359,7 @@ def metric_merge_outputs(
 
 
 def metric_merge_execute(
-    params: MetricMergeParameters,
+    params: MetricMergeParamsDict,
     runner: Runner | None = None,
 ) -> MetricMergeOutputs:
     """
@@ -393,7 +393,7 @@ def metric_merge_execute(
 
 def metric_merge(
     metric_out: str,
-    metric: list[MetricMergeMetricParameters] | None = None,
+    metric: list[MetricMergeMetricParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> MetricMergeOutputs:
     """
@@ -425,11 +425,19 @@ def metric_merge(
 
 __all__ = [
     "METRIC_MERGE_METADATA",
+    "MetricMergeColumnParamsDict",
+    "MetricMergeColumnParamsDictTagged",
+    "MetricMergeMetricParamsDict",
+    "MetricMergeMetricParamsDictTagged",
     "MetricMergeOutputs",
+    "MetricMergeParamsDict",
+    "MetricMergeParamsDictTagged",
+    "MetricMergeUpToParamsDict",
+    "MetricMergeUpToParamsDictTagged",
     "metric_merge",
-    "metric_merge_column_params",
+    "metric_merge_column",
     "metric_merge_execute",
-    "metric_merge_metric_params",
+    "metric_merge_metric",
     "metric_merge_params",
-    "metric_merge_up_to_params",
+    "metric_merge_up_to",
 ]

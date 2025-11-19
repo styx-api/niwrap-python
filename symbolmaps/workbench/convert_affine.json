@@ -3,7 +3,7 @@
   "properties": {
     "from-world": {
       "var_param": "from_world",
-      "fn_struct_make_params": "convert_affine_from_world_params",
+      "fn_struct_make_params": "convert_affine_from_world",
       "properties": {
         "input": {
           "var_param": "input_"
@@ -18,7 +18,7 @@
     },
     "from-flirt": {
       "var_param": "from_flirt",
-      "fn_struct_make_params": "convert_affine_from_flirt_params",
+      "fn_struct_make_params": "convert_affine_from_flirt",
       "properties": {
         "input": {
           "var_param": "input_"
@@ -33,7 +33,7 @@
     },
     "to-world": {
       "var_param": "to_world",
-      "fn_struct_make_params": "convert_affine_to_world_params",
+      "fn_struct_make_params": "convert_affine_to_world",
       "properties": {
         "output": {
           "var_param": "output"
@@ -48,7 +48,7 @@
     },
     "to-flirt": {
       "var_param": "to_flirt",
-      "fn_struct_make_params": "convert_affine_to_flirt_params",
+      "fn_struct_make_params": "convert_affine_to_flirt",
       "properties": {
         "output": {
           "var_param": "output"

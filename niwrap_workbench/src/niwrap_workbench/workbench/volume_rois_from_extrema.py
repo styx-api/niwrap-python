@@ -12,7 +12,7 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParameters', {
+VolumeRoisFromExtremaParamsDict = typing.TypedDict('VolumeRoisFromExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-rois-from-extrema"]],
     "volume-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParamet
     "volume-in": InputPathType,
     "limit": float,
 })
-VolumeRoisFromExtremaParametersTagged = typing.TypedDict('VolumeRoisFromExtremaParametersTagged', {
+VolumeRoisFromExtremaParamsDictTagged = typing.TypedDict('VolumeRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-rois-from-extrema"],
     "volume-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ VolumeRoisFromExtremaParametersTagged = typing.TypedDict('VolumeRoisFromExtremaP
 
 class VolumeRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeRoisFromExtremaParameters(...)`.
+    Output object returned when calling `VolumeRoisFromExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def volume_rois_from_extrema_params(
     subvol: str | None,
     volume_in: InputPathType,
     limit: float,
-) -> VolumeRoisFromExtremaParametersTagged:
+) -> VolumeRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def volume_rois_from_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeRoisFromExtremaParameters` object.
+    `VolumeRoisFromExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def volume_rois_from_extrema_validate(
 
 
 def volume_rois_from_extrema_cargs(
-    params: VolumeRoisFromExtremaParameters,
+    params: VolumeRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def volume_rois_from_extrema_cargs(
 
 
 def volume_rois_from_extrema_outputs(
-    params: VolumeRoisFromExtremaParameters,
+    params: VolumeRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> VolumeRoisFromExtremaOutputs:
     """
@@ -184,7 +184,7 @@ def volume_rois_from_extrema_outputs(
 
 
 def volume_rois_from_extrema_execute(
-    params: VolumeRoisFromExtremaParameters,
+    params: VolumeRoisFromExtremaParamsDict,
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
@@ -272,6 +272,8 @@ def volume_rois_from_extrema(
 __all__ = [
     "VOLUME_ROIS_FROM_EXTREMA_METADATA",
     "VolumeRoisFromExtremaOutputs",
+    "VolumeRoisFromExtremaParamsDict",
+    "VolumeRoisFromExtremaParamsDictTagged",
     "volume_rois_from_extrema",
     "volume_rois_from_extrema_execute",
     "volume_rois_from_extrema_params",

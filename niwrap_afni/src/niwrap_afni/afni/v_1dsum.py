@@ -13,7 +13,7 @@ V_1DSUM_METADATA = Metadata(
 )
 
 
-V1dsumParameters = typing.TypedDict('V1dsumParameters', {
+V1dsumParamsDict = typing.TypedDict('V1dsumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dsum"]],
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ V1dsumParameters = typing.TypedDict('V1dsumParameters', {
     "nocomment_flag": bool,
     "okempty_flag": bool,
 })
-V1dsumParametersTagged = typing.TypedDict('V1dsumParametersTagged', {
+V1dsumParamsDictTagged = typing.TypedDict('V1dsumParamsDictTagged', {
     "@type": typing.Literal["afni/1dsum"],
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ V1dsumParametersTagged = typing.TypedDict('V1dsumParametersTagged', {
 
 class V1dsumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dsumParameters(...)`.
+    Output object returned when calling `V1dsumParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_1dsum_params(
     mean_flag: bool = False,
     nocomment_flag: bool = False,
     okempty_flag: bool = False,
-) -> V1dsumParametersTagged:
+) -> V1dsumParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v_1dsum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dsumParameters` object.
+    `V1dsumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def v_1dsum_validate(
 
 
 def v_1dsum_cargs(
-    params: V1dsumParameters,
+    params: V1dsumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v_1dsum_cargs(
 
 
 def v_1dsum_outputs(
-    params: V1dsumParameters,
+    params: V1dsumParamsDict,
     execution: Execution,
 ) -> V1dsumOutputs:
     """
@@ -176,7 +176,7 @@ def v_1dsum_outputs(
 
 
 def v_1dsum_execute(
-    params: V1dsumParameters,
+    params: V1dsumParamsDict,
     runner: Runner | None = None,
 ) -> V1dsumOutputs:
     """
@@ -251,6 +251,8 @@ def v_1dsum(
 
 __all__ = [
     "V1dsumOutputs",
+    "V1dsumParamsDict",
+    "V1dsumParamsDictTagged",
     "V_1DSUM_METADATA",
     "v_1dsum",
     "v_1dsum_execute",

@@ -13,11 +13,11 @@ V_1D_ASTRIP_METADATA = Metadata(
 )
 
 
-V1dAstripParameters = typing.TypedDict('V1dAstripParameters', {
+V1dAstripParamsDict = typing.TypedDict('V1dAstripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dAstrip"]],
     "infile": InputPathType,
 })
-V1dAstripParametersTagged = typing.TypedDict('V1dAstripParametersTagged', {
+V1dAstripParamsDictTagged = typing.TypedDict('V1dAstripParamsDictTagged', {
     "@type": typing.Literal["afni/1dAstrip"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ V1dAstripParametersTagged = typing.TypedDict('V1dAstripParametersTagged', {
 
 class V1dAstripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dAstripParameters(...)`.
+    Output object returned when calling `V1dAstripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class V1dAstripOutputs(typing.NamedTuple):
 
 def v_1d_astrip_params(
     infile: InputPathType,
-) -> V1dAstripParametersTagged:
+) -> V1dAstripParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v_1d_astrip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dAstripParameters` object.
+    `V1dAstripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v_1d_astrip_validate(
 
 
 def v_1d_astrip_cargs(
-    params: V1dAstripParameters,
+    params: V1dAstripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v_1d_astrip_cargs(
 
 
 def v_1d_astrip_outputs(
-    params: V1dAstripParameters,
+    params: V1dAstripParamsDict,
     execution: Execution,
 ) -> V1dAstripOutputs:
     """
@@ -109,7 +109,7 @@ def v_1d_astrip_outputs(
 
 
 def v_1d_astrip_execute(
-    params: V1dAstripParameters,
+    params: V1dAstripParamsDict,
     runner: Runner | None = None,
 ) -> V1dAstripOutputs:
     """
@@ -164,6 +164,8 @@ def v_1d_astrip(
 
 __all__ = [
     "V1dAstripOutputs",
+    "V1dAstripParamsDict",
+    "V1dAstripParamsDictTagged",
     "V_1D_ASTRIP_METADATA",
     "v_1d_astrip",
     "v_1d_astrip_execute",

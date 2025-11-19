@@ -12,13 +12,13 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 )
 
 
-CiftiTransposeParameters = typing.TypedDict('CiftiTransposeParameters', {
+CiftiTransposeParamsDict = typing.TypedDict('CiftiTransposeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-transpose"]],
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
     "cifti-in": InputPathType,
 })
-CiftiTransposeParametersTagged = typing.TypedDict('CiftiTransposeParametersTagged', {
+CiftiTransposeParamsDictTagged = typing.TypedDict('CiftiTransposeParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-transpose"],
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
@@ -28,7 +28,7 @@ CiftiTransposeParametersTagged = typing.TypedDict('CiftiTransposeParametersTagge
 
 class CiftiTransposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiTransposeParameters(...)`.
+    Output object returned when calling `CiftiTransposeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def cifti_transpose_params(
     cifti_out: str,
     limit_gb: float | None,
     cifti_in: InputPathType,
-) -> CiftiTransposeParametersTagged:
+) -> CiftiTransposeParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def cifti_transpose_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiTransposeParameters` object.
+    `CiftiTransposeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def cifti_transpose_validate(
 
 
 def cifti_transpose_cargs(
-    params: CiftiTransposeParameters,
+    params: CiftiTransposeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def cifti_transpose_cargs(
 
 
 def cifti_transpose_outputs(
-    params: CiftiTransposeParameters,
+    params: CiftiTransposeParamsDict,
     execution: Execution,
 ) -> CiftiTransposeOutputs:
     """
@@ -135,7 +135,7 @@ def cifti_transpose_outputs(
 
 
 def cifti_transpose_execute(
-    params: CiftiTransposeParameters,
+    params: CiftiTransposeParamsDict,
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
@@ -193,6 +193,8 @@ def cifti_transpose(
 __all__ = [
     "CIFTI_TRANSPOSE_METADATA",
     "CiftiTransposeOutputs",
+    "CiftiTransposeParamsDict",
+    "CiftiTransposeParamsDictTagged",
     "cifti_transpose",
     "cifti_transpose_execute",
     "cifti_transpose_params",

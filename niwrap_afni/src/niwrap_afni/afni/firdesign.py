@@ -13,7 +13,7 @@ FIRDESIGN_METADATA = Metadata(
 )
 
 
-FirdesignParameters = typing.TypedDict('FirdesignParameters', {
+FirdesignParamsDict = typing.TypedDict('FirdesignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/FIRdesign"]],
     "fbot": float,
     "ftop": float,
@@ -22,7 +22,7 @@ FirdesignParameters = typing.TypedDict('FirdesignParameters', {
     "alternative_band": typing.NotRequired[list[float] | None],
     "alternative_ntap": typing.NotRequired[float | None],
 })
-FirdesignParametersTagged = typing.TypedDict('FirdesignParametersTagged', {
+FirdesignParamsDictTagged = typing.TypedDict('FirdesignParamsDictTagged', {
     "@type": typing.Literal["afni/FIRdesign"],
     "fbot": float,
     "ftop": float,
@@ -35,7 +35,7 @@ FirdesignParametersTagged = typing.TypedDict('FirdesignParametersTagged', {
 
 class FirdesignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirdesignParameters(...)`.
+    Output object returned when calling `FirdesignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def firdesign_params(
     tr: float | None = None,
     alternative_band: list[float] | None = None,
     alternative_ntap: float | None = None,
-) -> FirdesignParametersTagged:
+) -> FirdesignParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def firdesign_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirdesignParameters` object.
+    `FirdesignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def firdesign_validate(
 
 
 def firdesign_cargs(
-    params: FirdesignParameters,
+    params: FirdesignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def firdesign_cargs(
 
 
 def firdesign_outputs(
-    params: FirdesignParameters,
+    params: FirdesignParamsDict,
     execution: Execution,
 ) -> FirdesignOutputs:
     """
@@ -183,7 +183,7 @@ def firdesign_outputs(
 
 
 def firdesign_execute(
-    params: FirdesignParameters,
+    params: FirdesignParamsDict,
     runner: Runner | None = None,
 ) -> FirdesignOutputs:
     """
@@ -260,6 +260,8 @@ def firdesign(
 __all__ = [
     "FIRDESIGN_METADATA",
     "FirdesignOutputs",
+    "FirdesignParamsDict",
+    "FirdesignParamsDictTagged",
     "firdesign",
     "firdesign_execute",
     "firdesign_params",

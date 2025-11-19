@@ -13,7 +13,7 @@ INSPEC_METADATA = Metadata(
 )
 
 
-InspecParameters = typing.TypedDict('InspecParameters', {
+InspecParamsDict = typing.TypedDict('InspecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/inspec"]],
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ InspecParameters = typing.TypedDict('InspecParameters', {
     "state_rm": typing.NotRequired[str | None],
     "help": bool,
 })
-InspecParametersTagged = typing.TypedDict('InspecParametersTagged', {
+InspecParamsDictTagged = typing.TypedDict('InspecParamsDictTagged', {
     "@type": typing.Literal["afni/inspec"],
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ InspecParametersTagged = typing.TypedDict('InspecParametersTagged', {
 
 class InspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InspecParameters(...)`.
+    Output object returned when calling `InspecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def inspec_params(
     rightspec: InputPathType | None = None,
     state_rm: str | None = None,
     help_: bool = False,
-) -> InspecParametersTagged:
+) -> InspecParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def inspec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InspecParameters` object.
+    `InspecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def inspec_validate(
 
 
 def inspec_cargs(
-    params: InspecParameters,
+    params: InspecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def inspec_cargs(
 
 
 def inspec_outputs(
-    params: InspecParameters,
+    params: InspecParamsDict,
     execution: Execution,
 ) -> InspecOutputs:
     """
@@ -195,7 +195,7 @@ def inspec_outputs(
 
 
 def inspec_execute(
-    params: InspecParameters,
+    params: InspecParamsDict,
     runner: Runner | None = None,
 ) -> InspecOutputs:
     """
@@ -272,6 +272,8 @@ def inspec(
 __all__ = [
     "INSPEC_METADATA",
     "InspecOutputs",
+    "InspecParamsDict",
+    "InspecParamsDictTagged",
     "inspec",
     "inspec_execute",
     "inspec_params",

@@ -13,7 +13,7 @@ TRR_METADATA = Metadata(
 )
 
 
-TrrParameters = typing.TypedDict('TrrParameters', {
+TrrParamsDict = typing.TypedDict('TrrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/TRR"]],
     "prefix": str,
     "chains": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ TrrParameters = typing.TypedDict('TrrParameters', {
     "debug": bool,
     "verbose": typing.NotRequired[float | None],
 })
-TrrParametersTagged = typing.TypedDict('TrrParametersTagged', {
+TrrParamsDictTagged = typing.TypedDict('TrrParamsDictTagged', {
     "@type": typing.Literal["afni/TRR"],
     "prefix": str,
     "chains": typing.NotRequired[float | None],
@@ -59,7 +59,7 @@ TrrParametersTagged = typing.TypedDict('TrrParametersTagged', {
 
 class TrrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TrrParameters(...)`.
+    Output object returned when calling `TrrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +91,7 @@ def trr_params(
     within_chain_parallelization: float | None = None,
     debug: bool = False,
     verbose: float | None = None,
-) -> TrrParametersTagged:
+) -> TrrParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def trr_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `TrrParameters`
+    Validate parameters. Throws an error if `params` is not a valid `TrrParamsDict`
     object.
     
     Args:
@@ -237,7 +237,7 @@ def trr_validate(
 
 
 def trr_cargs(
-    params: TrrParameters,
+    params: TrrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -338,7 +338,7 @@ def trr_cargs(
 
 
 def trr_outputs(
-    params: TrrParameters,
+    params: TrrParamsDict,
     execution: Execution,
 ) -> TrrOutputs:
     """
@@ -360,7 +360,7 @@ def trr_outputs(
 
 
 def trr_execute(
-    params: TrrParameters,
+    params: TrrParamsDict,
     runner: Runner | None = None,
 ) -> TrrOutputs:
     """
@@ -471,6 +471,8 @@ def trr(
 __all__ = [
     "TRR_METADATA",
     "TrrOutputs",
+    "TrrParamsDict",
+    "TrrParamsDictTagged",
     "trr",
     "trr_execute",
     "trr_params",

@@ -13,13 +13,13 @@ V_3DNVALS_METADATA = Metadata(
 )
 
 
-V3dnvalsParameters = typing.TypedDict('V3dnvalsParameters', {
+V3dnvalsParamsDict = typing.TypedDict('V3dnvalsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dnvals"]],
     "datasets": list[InputPathType],
     "all_flag": bool,
     "verbose_flag": bool,
 })
-V3dnvalsParametersTagged = typing.TypedDict('V3dnvalsParametersTagged', {
+V3dnvalsParamsDictTagged = typing.TypedDict('V3dnvalsParamsDictTagged', {
     "@type": typing.Literal["afni/3dnvals"],
     "datasets": list[InputPathType],
     "all_flag": bool,
@@ -29,7 +29,7 @@ V3dnvalsParametersTagged = typing.TypedDict('V3dnvalsParametersTagged', {
 
 class V3dnvalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dnvalsParameters(...)`.
+    Output object returned when calling `V3dnvalsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def v_3dnvals_params(
     datasets: list[InputPathType],
     all_flag: bool = False,
     verbose_flag: bool = False,
-) -> V3dnvalsParametersTagged:
+) -> V3dnvalsParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def v_3dnvals_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dnvalsParameters` object.
+    `V3dnvalsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def v_3dnvals_validate(
 
 
 def v_3dnvals_cargs(
-    params: V3dnvalsParameters,
+    params: V3dnvalsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def v_3dnvals_cargs(
 
 
 def v_3dnvals_outputs(
-    params: V3dnvalsParameters,
+    params: V3dnvalsParamsDict,
     execution: Execution,
 ) -> V3dnvalsOutputs:
     """
@@ -131,7 +131,7 @@ def v_3dnvals_outputs(
 
 
 def v_3dnvals_execute(
-    params: V3dnvalsParameters,
+    params: V3dnvalsParamsDict,
     runner: Runner | None = None,
 ) -> V3dnvalsOutputs:
     """
@@ -192,6 +192,8 @@ def v_3dnvals(
 
 __all__ = [
     "V3dnvalsOutputs",
+    "V3dnvalsParamsDict",
+    "V3dnvalsParamsDictTagged",
     "V_3DNVALS_METADATA",
     "v_3dnvals",
     "v_3dnvals_execute",

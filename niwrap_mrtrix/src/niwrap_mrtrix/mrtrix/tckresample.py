@@ -13,13 +13,13 @@ TCKRESAMPLE_METADATA = Metadata(
 )
 
 
-TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
+TckresampleLineParamsDict = typing.TypedDict('TckresampleLineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["line"]],
     "num": int,
     "start": list[float],
     "end": list[float],
 })
-TckresampleLineParametersTagged = typing.TypedDict('TckresampleLineParametersTagged', {
+TckresampleLineParamsDictTagged = typing.TypedDict('TckresampleLineParamsDictTagged', {
     "@type": typing.Literal["line"],
     "num": int,
     "start": list[float],
@@ -27,14 +27,14 @@ TckresampleLineParametersTagged = typing.TypedDict('TckresampleLineParametersTag
 })
 
 
-TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
+TckresampleArcParamsDict = typing.TypedDict('TckresampleArcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["arc"]],
     "num": int,
     "start": list[float],
     "mid": list[float],
     "end": list[float],
 })
-TckresampleArcParametersTagged = typing.TypedDict('TckresampleArcParametersTagged', {
+TckresampleArcParamsDictTagged = typing.TypedDict('TckresampleArcParamsDictTagged', {
     "@type": typing.Literal["arc"],
     "num": int,
     "start": list[float],
@@ -43,53 +43,53 @@ TckresampleArcParametersTagged = typing.TypedDict('TckresampleArcParametersTagge
 })
 
 
-TckresampleConfigParameters = typing.TypedDict('TckresampleConfigParameters', {
+TckresampleConfigParamsDict = typing.TypedDict('TckresampleConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckresampleConfigParametersTagged = typing.TypedDict('TckresampleConfigParametersTagged', {
+TckresampleConfigParamsDictTagged = typing.TypedDict('TckresampleConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckresampleParameters = typing.TypedDict('TckresampleParameters', {
+TckresampleParamsDict = typing.TypedDict('TckresampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckresample"]],
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],
     "num_points": typing.NotRequired[int | None],
     "endpoints": bool,
-    "line": typing.NotRequired[TckresampleLineParameters | None],
-    "arc": typing.NotRequired[TckresampleArcParameters | None],
+    "line": typing.NotRequired[TckresampleLineParamsDict | None],
+    "arc": typing.NotRequired[TckresampleArcParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckresampleConfigParameters] | None],
+    "config": typing.NotRequired[list[TckresampleConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_tracks": InputPathType,
     "out_tracks": str,
 })
-TckresampleParametersTagged = typing.TypedDict('TckresampleParametersTagged', {
+TckresampleParamsDictTagged = typing.TypedDict('TckresampleParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckresample"],
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],
     "num_points": typing.NotRequired[int | None],
     "endpoints": bool,
-    "line": typing.NotRequired[TckresampleLineParameters | None],
-    "arc": typing.NotRequired[TckresampleArcParameters | None],
+    "line": typing.NotRequired[TckresampleLineParamsDict | None],
+    "arc": typing.NotRequired[TckresampleArcParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckresampleConfigParameters] | None],
+    "config": typing.NotRequired[list[TckresampleConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_tracks": InputPathType,
@@ -97,11 +97,11 @@ TckresampleParametersTagged = typing.TypedDict('TckresampleParametersTagged', {
 })
 
 
-def tckresample_line_params(
+def tckresample_line(
     num: int,
     start: list[float],
     end: list[float],
-) -> TckresampleLineParametersTagged:
+) -> TckresampleLineParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def tckresample_line_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckresampleLineParameters` object.
+    `TckresampleLineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def tckresample_line_validate(
 
 
 def tckresample_line_cargs(
-    params: TckresampleLineParameters,
+    params: TckresampleLineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,12 +180,12 @@ def tckresample_line_cargs(
     return cargs
 
 
-def tckresample_arc_params(
+def tckresample_arc(
     num: int,
     start: list[float],
     mid: list[float],
     end: list[float],
-) -> TckresampleArcParametersTagged:
+) -> TckresampleArcParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def tckresample_arc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckresampleArcParameters` object.
+    `TckresampleArcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -255,7 +255,7 @@ def tckresample_arc_validate(
 
 
 def tckresample_arc_cargs(
-    params: TckresampleArcParameters,
+    params: TckresampleArcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -276,10 +276,10 @@ def tckresample_arc_cargs(
     return cargs
 
 
-def tckresample_config_params(
+def tckresample_config(
     key: str,
     value: str,
-) -> TckresampleConfigParametersTagged:
+) -> TckresampleConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -302,7 +302,7 @@ def tckresample_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckresampleConfigParameters` object.
+    `TckresampleConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -320,7 +320,7 @@ def tckresample_config_validate(
 
 
 def tckresample_config_cargs(
-    params: TckresampleConfigParameters,
+    params: TckresampleConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -341,7 +341,7 @@ def tckresample_config_cargs(
 
 class TckresampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckresampleParameters(...)`.
+    Output object returned when calling `TckresampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -357,17 +357,17 @@ def tckresample_params(
     step_size: float | None = None,
     num_points: int | None = None,
     endpoints: bool = False,
-    line: TckresampleLineParameters | None = None,
-    arc: TckresampleArcParameters | None = None,
+    line: TckresampleLineParamsDict | None = None,
+    arc: TckresampleArcParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckresampleConfigParameters] | None = None,
+    config: list[TckresampleConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckresampleParametersTagged:
+) -> TckresampleParamsDictTagged:
     """
     Build parameters.
     
@@ -439,7 +439,7 @@ def tckresample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckresampleParameters` object.
+    `TckresampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -487,7 +487,7 @@ def tckresample_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckresampleConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckresampleConfigParamsDict] | None`')
         for e in params["config"]:
             tckresample_config_validate(e)
     if params.get("help", False) is None:
@@ -509,7 +509,7 @@ def tckresample_validate(
 
 
 def tckresample_cargs(
-    params: TckresampleParameters,
+    params: TckresampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -574,7 +574,7 @@ def tckresample_cargs(
 
 
 def tckresample_outputs(
-    params: TckresampleParameters,
+    params: TckresampleParamsDict,
     execution: Execution,
 ) -> TckresampleOutputs:
     """
@@ -594,7 +594,7 @@ def tckresample_outputs(
 
 
 def tckresample_execute(
-    params: TckresampleParameters,
+    params: TckresampleParamsDict,
     runner: Runner | None = None,
 ) -> TckresampleOutputs:
     """
@@ -647,14 +647,14 @@ def tckresample(
     step_size: float | None = None,
     num_points: int | None = None,
     endpoints: bool = False,
-    line: TckresampleLineParameters | None = None,
-    arc: TckresampleArcParameters | None = None,
+    line: TckresampleLineParamsDict | None = None,
+    arc: TckresampleArcParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckresampleConfigParameters] | None = None,
+    config: list[TckresampleConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -742,11 +742,19 @@ def tckresample(
 
 __all__ = [
     "TCKRESAMPLE_METADATA",
+    "TckresampleArcParamsDict",
+    "TckresampleArcParamsDictTagged",
+    "TckresampleConfigParamsDict",
+    "TckresampleConfigParamsDictTagged",
+    "TckresampleLineParamsDict",
+    "TckresampleLineParamsDictTagged",
     "TckresampleOutputs",
+    "TckresampleParamsDict",
+    "TckresampleParamsDictTagged",
     "tckresample",
-    "tckresample_arc_params",
-    "tckresample_config_params",
+    "tckresample_arc",
+    "tckresample_config",
     "tckresample_execute",
-    "tckresample_line_params",
+    "tckresample_line",
     "tckresample_params",
 ]

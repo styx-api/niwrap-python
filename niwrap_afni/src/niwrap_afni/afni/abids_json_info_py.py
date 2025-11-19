@@ -13,7 +13,7 @@ ABIDS_JSON_INFO_PY_METADATA = Metadata(
 )
 
 
-AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
+AbidsJsonInfoPyParamsDict = typing.TypedDict('AbidsJsonInfoPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/abids_json_info.py"]],
     "json_files": list[InputPathType],
     "tr_flag": bool,
@@ -24,7 +24,7 @@ AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
     "list_fields_flag": bool,
     "help_flag": bool,
 })
-AbidsJsonInfoPyParametersTagged = typing.TypedDict('AbidsJsonInfoPyParametersTagged', {
+AbidsJsonInfoPyParamsDictTagged = typing.TypedDict('AbidsJsonInfoPyParamsDictTagged', {
     "@type": typing.Literal["afni/abids_json_info.py"],
     "json_files": list[InputPathType],
     "tr_flag": bool,
@@ -39,7 +39,7 @@ AbidsJsonInfoPyParametersTagged = typing.TypedDict('AbidsJsonInfoPyParametersTag
 
 class AbidsJsonInfoPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AbidsJsonInfoPyParameters(...)`.
+    Output object returned when calling `AbidsJsonInfoPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def abids_json_info_py_params(
     field_list: list[str] | None = None,
     list_fields_flag: bool = False,
     help_flag: bool = False,
-) -> AbidsJsonInfoPyParametersTagged:
+) -> AbidsJsonInfoPyParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def abids_json_info_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AbidsJsonInfoPyParameters` object.
+    `AbidsJsonInfoPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def abids_json_info_py_validate(
 
 
 def abids_json_info_py_cargs(
-    params: AbidsJsonInfoPyParameters,
+    params: AbidsJsonInfoPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def abids_json_info_py_cargs(
 
 
 def abids_json_info_py_outputs(
-    params: AbidsJsonInfoPyParameters,
+    params: AbidsJsonInfoPyParamsDict,
     execution: Execution,
 ) -> AbidsJsonInfoPyOutputs:
     """
@@ -196,7 +196,7 @@ def abids_json_info_py_outputs(
 
 
 def abids_json_info_py_execute(
-    params: AbidsJsonInfoPyParameters,
+    params: AbidsJsonInfoPyParamsDict,
     runner: Runner | None = None,
 ) -> AbidsJsonInfoPyOutputs:
     """
@@ -277,6 +277,8 @@ def abids_json_info_py(
 __all__ = [
     "ABIDS_JSON_INFO_PY_METADATA",
     "AbidsJsonInfoPyOutputs",
+    "AbidsJsonInfoPyParamsDict",
+    "AbidsJsonInfoPyParamsDictTagged",
     "abids_json_info_py",
     "abids_json_info_py_execute",
     "abids_json_info_py_params",

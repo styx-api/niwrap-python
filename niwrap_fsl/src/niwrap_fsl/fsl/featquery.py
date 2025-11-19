@@ -13,7 +13,7 @@ FEATQUERY_METADATA = Metadata(
 )
 
 
-FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
+FeatqueryParamsDict = typing.TypedDict('FeatqueryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/featquery"]],
     "n_featdirs": float,
     "featdirs": list[str],
@@ -30,7 +30,7 @@ FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
     "mask_file": InputPathType,
     "coords": typing.NotRequired[list[float] | None],
 })
-FeatqueryParametersTagged = typing.TypedDict('FeatqueryParametersTagged', {
+FeatqueryParamsDictTagged = typing.TypedDict('FeatqueryParamsDictTagged', {
     "@type": typing.Literal["fsl/featquery"],
     "n_featdirs": float,
     "featdirs": list[str],
@@ -51,7 +51,7 @@ FeatqueryParametersTagged = typing.TypedDict('FeatqueryParametersTagged', {
 
 class FeatqueryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FeatqueryParameters(...)`.
+    Output object returned when calling `FeatqueryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def featquery_params(
     weight_flag: bool = False,
     browser_flag: bool = False,
     coords: list[float] | None = None,
-) -> FeatqueryParametersTagged:
+) -> FeatqueryParamsDictTagged:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def featquery_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FeatqueryParameters` object.
+    `FeatqueryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def featquery_validate(
 
 
 def featquery_cargs(
-    params: FeatqueryParameters,
+    params: FeatqueryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -247,7 +247,7 @@ def featquery_cargs(
 
 
 def featquery_outputs(
-    params: FeatqueryParameters,
+    params: FeatqueryParamsDict,
     execution: Execution,
 ) -> FeatqueryOutputs:
     """
@@ -267,7 +267,7 @@ def featquery_outputs(
 
 
 def featquery_execute(
-    params: FeatqueryParameters,
+    params: FeatqueryParamsDict,
     runner: Runner | None = None,
 ) -> FeatqueryOutputs:
     """
@@ -364,6 +364,8 @@ def featquery(
 __all__ = [
     "FEATQUERY_METADATA",
     "FeatqueryOutputs",
+    "FeatqueryParamsDict",
+    "FeatqueryParamsDictTagged",
     "featquery",
     "featquery_execute",
     "featquery_params",

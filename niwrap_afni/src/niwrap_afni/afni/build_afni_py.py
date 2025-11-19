@@ -13,7 +13,7 @@ BUILD_AFNI_PY_METADATA = Metadata(
 )
 
 
-BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
+BuildAfniPyParamsDict = typing.TypedDict('BuildAfniPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/build_afni.py"]],
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
     "show_valid_opts": bool,
     "version": bool,
 })
-BuildAfniPyParametersTagged = typing.TypedDict('BuildAfniPyParametersTagged', {
+BuildAfniPyParamsDictTagged = typing.TypedDict('BuildAfniPyParamsDictTagged', {
     "@type": typing.Literal["afni/build_afni.py"],
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ BuildAfniPyParametersTagged = typing.TypedDict('BuildAfniPyParametersTagged', {
 
 class BuildAfniPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BuildAfniPyParameters(...)`.
+    Output object returned when calling `BuildAfniPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +82,7 @@ def build_afni_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> BuildAfniPyParametersTagged:
+) -> BuildAfniPyParamsDictTagged:
     """
     Build parameters.
     
@@ -143,7 +143,7 @@ def build_afni_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BuildAfniPyParameters` object.
+    `BuildAfniPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def build_afni_py_validate(
 
 
 def build_afni_py_cargs(
-    params: BuildAfniPyParameters,
+    params: BuildAfniPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -289,7 +289,7 @@ def build_afni_py_cargs(
 
 
 def build_afni_py_outputs(
-    params: BuildAfniPyParameters,
+    params: BuildAfniPyParamsDict,
     execution: Execution,
 ) -> BuildAfniPyOutputs:
     """
@@ -310,7 +310,7 @@ def build_afni_py_outputs(
 
 
 def build_afni_py_execute(
-    params: BuildAfniPyParameters,
+    params: BuildAfniPyParamsDict,
     runner: Runner | None = None,
 ) -> BuildAfniPyOutputs:
     """
@@ -411,6 +411,8 @@ def build_afni_py(
 __all__ = [
     "BUILD_AFNI_PY_METADATA",
     "BuildAfniPyOutputs",
+    "BuildAfniPyParamsDict",
+    "BuildAfniPyParamsDictTagged",
     "build_afni_py",
     "build_afni_py_execute",
     "build_afni_py_params",

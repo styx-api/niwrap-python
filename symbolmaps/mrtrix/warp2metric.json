@@ -3,7 +3,7 @@
   "properties": {
     "fc": {
       "var_param": "fc",
-      "fn_struct_make_params": "warp2metric_fc_params",
+      "fn_struct_make_params": "warp2metric_fc",
       "properties": {
         "template_fixel_directory": {
           "var_param": "template_fixel_directory"
@@ -39,7 +39,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "warp2metric_config_params",
+      "fn_struct_make_params": "warp2metric_config",
       "properties": {
         "key": {
           "var_param": "key"

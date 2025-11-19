@@ -13,34 +13,34 @@ TCKDFC_METADATA = Metadata(
 )
 
 
-TckdfcDynamicParameters = typing.TypedDict('TckdfcDynamicParameters', {
+TckdfcDynamicParamsDict = typing.TypedDict('TckdfcDynamicParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dynamic"]],
     "shape": str,
     "width": int,
 })
-TckdfcDynamicParametersTagged = typing.TypedDict('TckdfcDynamicParametersTagged', {
+TckdfcDynamicParamsDictTagged = typing.TypedDict('TckdfcDynamicParamsDictTagged', {
     "@type": typing.Literal["dynamic"],
     "shape": str,
     "width": int,
 })
 
 
-TckdfcConfigParameters = typing.TypedDict('TckdfcConfigParameters', {
+TckdfcConfigParamsDict = typing.TypedDict('TckdfcConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckdfcConfigParametersTagged = typing.TypedDict('TckdfcConfigParametersTagged', {
+TckdfcConfigParamsDictTagged = typing.TypedDict('TckdfcConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckdfcParameters = typing.TypedDict('TckdfcParameters', {
+TckdfcParamsDict = typing.TypedDict('TckdfcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckdfc"]],
     "static": bool,
-    "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
+    "dynamic": typing.NotRequired[TckdfcDynamicParamsDict | None],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "stat_vox": typing.NotRequired[str | None],
@@ -51,17 +51,17 @@ TckdfcParameters = typing.TypedDict('TckdfcParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckdfcConfigParameters] | None],
+    "config": typing.NotRequired[list[TckdfcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
     "fmri": InputPathType,
     "output": str,
 })
-TckdfcParametersTagged = typing.TypedDict('TckdfcParametersTagged', {
+TckdfcParamsDictTagged = typing.TypedDict('TckdfcParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckdfc"],
     "static": bool,
-    "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
+    "dynamic": typing.NotRequired[TckdfcDynamicParamsDict | None],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "stat_vox": typing.NotRequired[str | None],
@@ -72,7 +72,7 @@ TckdfcParametersTagged = typing.TypedDict('TckdfcParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckdfcConfigParameters] | None],
+    "config": typing.NotRequired[list[TckdfcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -81,10 +81,10 @@ TckdfcParametersTagged = typing.TypedDict('TckdfcParametersTagged', {
 })
 
 
-def tckdfc_dynamic_params(
+def tckdfc_dynamic(
     shape: str,
     width: int,
-) -> TckdfcDynamicParametersTagged:
+) -> TckdfcDynamicParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def tckdfc_dynamic_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckdfcDynamicParameters` object.
+    `TckdfcDynamicParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def tckdfc_dynamic_validate(
 
 
 def tckdfc_dynamic_cargs(
-    params: TckdfcDynamicParameters,
+    params: TckdfcDynamicParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,10 +146,10 @@ def tckdfc_dynamic_cargs(
     return cargs
 
 
-def tckdfc_config_params(
+def tckdfc_config(
     key: str,
     value: str,
-) -> TckdfcConfigParametersTagged:
+) -> TckdfcConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -172,7 +172,7 @@ def tckdfc_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckdfcConfigParameters` object.
+    `TckdfcConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -190,7 +190,7 @@ def tckdfc_config_validate(
 
 
 def tckdfc_config_cargs(
-    params: TckdfcConfigParameters,
+    params: TckdfcConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -211,7 +211,7 @@ def tckdfc_config_cargs(
 
 class TckdfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckdfcParameters(...)`.
+    Output object returned when calling `TckdfcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -224,7 +224,7 @@ def tckdfc_params(
     fmri: InputPathType,
     output: str,
     static: bool = False,
-    dynamic: TckdfcDynamicParameters | None = None,
+    dynamic: TckdfcDynamicParamsDict | None = None,
     template: InputPathType | None = None,
     vox: list[float] | None = None,
     stat_vox: str | None = None,
@@ -235,10 +235,10 @@ def tckdfc_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckdfcConfigParameters] | None = None,
+    config: list[TckdfcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckdfcParametersTagged:
+) -> TckdfcParamsDictTagged:
     """
     Build parameters.
     
@@ -314,7 +314,7 @@ def tckdfc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckdfcParameters` object.
+    `TckdfcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -367,7 +367,7 @@ def tckdfc_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckdfcConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckdfcConfigParamsDict] | None`')
         for e in params["config"]:
             tckdfc_config_validate(e)
     if params.get("help", False) is None:
@@ -393,7 +393,7 @@ def tckdfc_validate(
 
 
 def tckdfc_cargs(
-    params: TckdfcParameters,
+    params: TckdfcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -459,7 +459,7 @@ def tckdfc_cargs(
 
 
 def tckdfc_outputs(
-    params: TckdfcParameters,
+    params: TckdfcParamsDict,
     execution: Execution,
 ) -> TckdfcOutputs:
     """
@@ -479,7 +479,7 @@ def tckdfc_outputs(
 
 
 def tckdfc_execute(
-    params: TckdfcParameters,
+    params: TckdfcParamsDict,
     runner: Runner | None = None,
 ) -> TckdfcOutputs:
     """
@@ -547,7 +547,7 @@ def tckdfc(
     fmri: InputPathType,
     output: str,
     static: bool = False,
-    dynamic: TckdfcDynamicParameters | None = None,
+    dynamic: TckdfcDynamicParamsDict | None = None,
     template: InputPathType | None = None,
     vox: list[float] | None = None,
     stat_vox: str | None = None,
@@ -558,7 +558,7 @@ def tckdfc(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckdfcConfigParameters] | None = None,
+    config: list[TckdfcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -669,10 +669,16 @@ def tckdfc(
 
 __all__ = [
     "TCKDFC_METADATA",
+    "TckdfcConfigParamsDict",
+    "TckdfcConfigParamsDictTagged",
+    "TckdfcDynamicParamsDict",
+    "TckdfcDynamicParamsDictTagged",
     "TckdfcOutputs",
+    "TckdfcParamsDict",
+    "TckdfcParamsDictTagged",
     "tckdfc",
-    "tckdfc_config_params",
-    "tckdfc_dynamic_params",
+    "tckdfc_config",
+    "tckdfc_dynamic",
     "tckdfc_execute",
     "tckdfc_params",
 ]

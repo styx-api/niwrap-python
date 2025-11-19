@@ -8,7 +8,7 @@
       "var_param": "operations",
       "variants": {
         "accum": {
-          "fn_struct_make_params": "c2d_accum_params",
+          "fn_struct_make_params": "c2d_accum",
           "properties": {
             "accum": {
               "var_param": "accum"
@@ -16,7 +16,7 @@
           }
         },
         "acos": {
-          "fn_struct_make_params": "c2d_acos_params",
+          "fn_struct_make_params": "c2d_acos",
           "properties": {
             "acos": {
               "var_param": "acos"
@@ -24,7 +24,7 @@
           }
         },
         "add": {
-          "fn_struct_make_params": "c2d_add_params",
+          "fn_struct_make_params": "c2d_add",
           "properties": {
             "add": {
               "var_param": "add"
@@ -32,7 +32,7 @@
           }
         },
         "align_landmarks": {
-          "fn_struct_make_params": "c2d_align_landmarks_params",
+          "fn_struct_make_params": "c2d_align_landmarks",
           "properties": {
             "align_landmarks": {
               "var_param": "align_landmarks"
@@ -40,7 +40,7 @@
           }
         },
         "anisotropic_diffusion": {
-          "fn_struct_make_params": "c2d_anisotropic_diffusion_params",
+          "fn_struct_make_params": "c2d_anisotropic_diffusion",
           "properties": {
             "anisotropic_diffusion": {
               "var_param": "anisotropic_diffusion"
@@ -48,7 +48,7 @@
           }
         },
         "antialias": {
-          "fn_struct_make_params": "c2d_antialias_params",
+          "fn_struct_make_params": "c2d_antialias",
           "properties": {
             "antialias": {
               "var_param": "antialias"
@@ -56,7 +56,7 @@
           }
         },
         "set": {
-          "fn_struct_make_params": "c2d_set_params",
+          "fn_struct_make_params": "c2d_set",
           "properties": {
             "set": {
               "var_param": "set_"
@@ -64,7 +64,7 @@
           }
         },
         "asin": {
-          "fn_struct_make_params": "c2d_asin_params",
+          "fn_struct_make_params": "c2d_asin",
           "properties": {
             "asin": {
               "var_param": "asin"
@@ -72,7 +72,7 @@
           }
         },
         "atan2": {
-          "fn_struct_make_params": "c2d_atan2_params",
+          "fn_struct_make_params": "c2d_atan2",
           "properties": {
             "atan2": {
               "var_param": "atan2"
@@ -80,7 +80,7 @@
           }
         },
         "background": {
-          "fn_struct_make_params": "c2d_background_params",
+          "fn_struct_make_params": "c2d_background",
           "properties": {
             "background": {
               "var_param": "background"
@@ -88,7 +88,7 @@
           }
         },
         "n4_bias_correction": {
-          "fn_struct_make_params": "c2d_n4_bias_correction_params",
+          "fn_struct_make_params": "c2d_n4_bias_correction",
           "properties": {
             "n4_bias_correction": {
               "var_param": "n4_bias_correction"
@@ -96,7 +96,7 @@
           }
         },
         "binarize": {
-          "fn_struct_make_params": "c2d_binarize_params",
+          "fn_struct_make_params": "c2d_binarize",
           "properties": {
             "binarize": {
               "var_param": "binarize"
@@ -104,7 +104,7 @@
           }
         },
         "canny": {
-          "fn_struct_make_params": "c2d_canny_params",
+          "fn_struct_make_params": "c2d_canny",
           "properties": {
             "canny": {
               "var_param": "canny"
@@ -112,7 +112,7 @@
           }
         },
         "ceil": {
-          "fn_struct_make_params": "c2d_ceil_params",
+          "fn_struct_make_params": "c2d_ceil",
           "properties": {
             "ceil": {
               "var_param": "ceil"
@@ -120,7 +120,7 @@
           }
         },
         "centroid": {
-          "fn_struct_make_params": "c2d_centroid_params",
+          "fn_struct_make_params": "c2d_centroid",
           "properties": {
             "centroid": {
               "var_param": "centroid"
@@ -128,7 +128,7 @@
           }
         },
         "centroid_mark": {
-          "fn_struct_make_params": "c2d_centroid_mark_params",
+          "fn_struct_make_params": "c2d_centroid_mark",
           "properties": {
             "centroid_mark": {
               "var_param": "centroid_mark"
@@ -136,7 +136,7 @@
           }
         },
         "connected_components": {
-          "fn_struct_make_params": "c2d_connected_components_params",
+          "fn_struct_make_params": "c2d_connected_components",
           "properties": {
             "connected_components": {
               "var_param": "connected_components"
@@ -144,7 +144,7 @@
           }
         },
         "clear": {
-          "fn_struct_make_params": "c2d_clear_params",
+          "fn_struct_make_params": "c2d_clear",
           "properties": {
             "clear": {
               "var_param": "clear_"
@@ -152,7 +152,7 @@
           }
         },
         "clip": {
-          "fn_struct_make_params": "c2d_clip_params",
+          "fn_struct_make_params": "c2d_clip",
           "properties": {
             "clip": {
               "var_param": "clip"
@@ -160,7 +160,7 @@
           }
         },
         "color_map": {
-          "fn_struct_make_params": "c2d_color_map_params",
+          "fn_struct_make_params": "c2d_color_map",
           "properties": {
             "color_map": {
               "var_param": "color_map"
@@ -168,7 +168,7 @@
           }
         },
         "compress": {
-          "fn_struct_make_params": "c2d_compress_params",
+          "fn_struct_make_params": "c2d_compress",
           "properties": {
             "compress": {
               "var_param": "compress"
@@ -176,7 +176,7 @@
           }
         },
         "no_compress": {
-          "fn_struct_make_params": "c2d_no_compress_params",
+          "fn_struct_make_params": "c2d_no_compress",
           "properties": {
             "no_compress": {
               "var_param": "no_compress"
@@ -184,7 +184,7 @@
           }
         },
         "conv": {
-          "fn_struct_make_params": "c2d_conv_params",
+          "fn_struct_make_params": "c2d_conv",
           "properties": {
             "conv": {
               "var_param": "conv"
@@ -192,7 +192,7 @@
           }
         },
         "coordinate_map_voxel": {
-          "fn_struct_make_params": "c2d_coordinate_map_voxel_params",
+          "fn_struct_make_params": "c2d_coordinate_map_voxel",
           "properties": {
             "coordinate_map_voxel": {
               "var_param": "coordinate_map_voxel"
@@ -200,7 +200,7 @@
           }
         },
         "coordinate_map_physical": {
-          "fn_struct_make_params": "c2d_coordinate_map_physical_params",
+          "fn_struct_make_params": "c2d_coordinate_map_physical",
           "properties": {
             "coordinate_map_physical": {
               "var_param": "coordinate_map_physical"
@@ -208,7 +208,7 @@
           }
         },
         "copy_transform": {
-          "fn_struct_make_params": "c2d_copy_transform_params",
+          "fn_struct_make_params": "c2d_copy_transform",
           "properties": {
             "copy_transform": {
               "var_param": "copy_transform"
@@ -216,7 +216,7 @@
           }
         },
         "cos": {
-          "fn_struct_make_params": "c2d_cos_params",
+          "fn_struct_make_params": "c2d_cos",
           "properties": {
             "cos": {
               "var_param": "cos"
@@ -224,7 +224,7 @@
           }
         },
         "create": {
-          "fn_struct_make_params": "c2d_create_params",
+          "fn_struct_make_params": "c2d_create",
           "properties": {
             "create": {
               "var_param": "create"
@@ -232,7 +232,7 @@
           }
         },
         "dicom_series_list": {
-          "fn_struct_make_params": "c2d_dicom_series_list_params",
+          "fn_struct_make_params": "c2d_dicom_series_list",
           "properties": {
             "dicom_series_list": {
               "var_param": "dicom_series_list"
@@ -240,7 +240,7 @@
           }
         },
         "dicom_series_read": {
-          "fn_struct_make_params": "c2d_dicom_series_read_params",
+          "fn_struct_make_params": "c2d_dicom_series_read",
           "properties": {
             "dicom_series_read": {
               "var_param": "dicom_series_read"
@@ -248,7 +248,7 @@
           }
         },
         "dilate": {
-          "fn_struct_make_params": "c2d_dilate_params",
+          "fn_struct_make_params": "c2d_dilate",
           "properties": {
             "dilate": {
               "var_param": "dilate"
@@ -256,7 +256,7 @@
           }
         },
         "divide": {
-          "fn_struct_make_params": "c2d_divide_params",
+          "fn_struct_make_params": "c2d_divide",
           "properties": {
             "divide": {
               "var_param": "divide"
@@ -264,7 +264,7 @@
           }
         },
         "duplicate": {
-          "fn_struct_make_params": "c2d_duplicate_params",
+          "fn_struct_make_params": "c2d_duplicate",
           "properties": {
             "duplicate": {
               "var_param": "duplicate"
@@ -272,7 +272,7 @@
           }
         },
         "endaccum": {
-          "fn_struct_make_params": "c2d_endaccum_params",
+          "fn_struct_make_params": "c2d_endaccum",
           "properties": {
             "endaccum": {
               "var_param": "endaccum"
@@ -280,7 +280,7 @@
           }
         },
         "endfor": {
-          "fn_struct_make_params": "c2d_endfor_params",
+          "fn_struct_make_params": "c2d_endfor",
           "properties": {
             "endfor": {
               "var_param": "endfor"
@@ -288,7 +288,7 @@
           }
         },
         "erode": {
-          "fn_struct_make_params": "c2d_erode_params",
+          "fn_struct_make_params": "c2d_erode",
           "properties": {
             "erode": {
               "var_param": "erode"
@@ -296,7 +296,7 @@
           }
         },
         "erf": {
-          "fn_struct_make_params": "c2d_erf_params",
+          "fn_struct_make_params": "c2d_erf",
           "properties": {
             "erf": {
               "var_param": "erf"
@@ -304,7 +304,7 @@
           }
         },
         "exp": {
-          "fn_struct_make_params": "c2d_exp_params",
+          "fn_struct_make_params": "c2d_exp",
           "properties": {
             "exp": {
               "var_param": "exp"
@@ -312,7 +312,7 @@
           }
         },
         "export_patches": {
-          "fn_struct_make_params": "c2d_export_patches_params",
+          "fn_struct_make_params": "c2d_export_patches",
           "properties": {
             "export_patches": {
               "var_param": "export_patches"
@@ -320,7 +320,7 @@
           }
         },
         "export_patches_aug": {
-          "fn_struct_make_params": "c2d_export_patches_aug_params",
+          "fn_struct_make_params": "c2d_export_patches_aug",
           "properties": {
             "export_patches_aug": {
               "var_param": "export_patches_aug"
@@ -328,7 +328,7 @@
           }
         },
         "extrude_seg": {
-          "fn_struct_make_params": "c2d_extrude_seg_params",
+          "fn_struct_make_params": "c2d_extrude_seg",
           "properties": {
             "extrude_seg": {
               "var_param": "extrude_seg"
@@ -336,7 +336,7 @@
           }
         },
         "fill_background_with_noise": {
-          "fn_struct_make_params": "c2d_fill_background_with_noise_params",
+          "fn_struct_make_params": "c2d_fill_background_with_noise",
           "properties": {
             "fill_background_with_noise": {
               "var_param": "fill_background_with_noise"
@@ -344,7 +344,7 @@
           }
         },
         "fft": {
-          "fn_struct_make_params": "c2d_fft_params",
+          "fn_struct_make_params": "c2d_fft",
           "properties": {
             "fft": {
               "var_param": "fft"
@@ -352,7 +352,7 @@
           }
         },
         "flip": {
-          "fn_struct_make_params": "c2d_flip_params",
+          "fn_struct_make_params": "c2d_flip",
           "properties": {
             "flip": {
               "var_param": "flip"
@@ -360,7 +360,7 @@
           }
         },
         "floor": {
-          "fn_struct_make_params": "c2d_floor_params",
+          "fn_struct_make_params": "c2d_floor",
           "properties": {
             "floor": {
               "var_param": "floor"
@@ -368,7 +368,7 @@
           }
         },
         "foreach": {
-          "fn_struct_make_params": "c2d_foreach_params",
+          "fn_struct_make_params": "c2d_foreach",
           "properties": {
             "foreach": {
               "var_param": "foreach"
@@ -376,7 +376,7 @@
           }
         },
         "foreach_comp": {
-          "fn_struct_make_params": "c2d_foreach_comp_params",
+          "fn_struct_make_params": "c2d_foreach_comp",
           "properties": {
             "foreach_comp": {
               "var_param": "foreach_comp"
@@ -384,7 +384,7 @@
           }
         },
         "glm": {
-          "fn_struct_make_params": "c2d_glm_params",
+          "fn_struct_make_params": "c2d_glm",
           "properties": {
             "glm": {
               "var_param": "glm"
@@ -392,7 +392,7 @@
           }
         },
         "gradient": {
-          "fn_struct_make_params": "c2d_gradient_params",
+          "fn_struct_make_params": "c2d_gradient",
           "properties": {
             "gradient": {
               "var_param": "gradient"
@@ -400,7 +400,7 @@
           }
         },
         "_help": {
-          "fn_struct_make_params": "c2d__help_params",
+          "fn_struct_make_params": "c2d__help",
           "properties": {
             "_help": {
               "var_param": "v__help"
@@ -408,7 +408,7 @@
           }
         },
         "holefill": {
-          "fn_struct_make_params": "c2d_holefill_params",
+          "fn_struct_make_params": "c2d_holefill",
           "properties": {
             "holefill": {
               "var_param": "holefill"
@@ -416,7 +416,7 @@
           }
         },
         "hessian_eigenvalues": {
-          "fn_struct_make_params": "c2d_hessian_eigenvalues_params",
+          "fn_struct_make_params": "c2d_hessian_eigenvalues",
           "properties": {
             "hessian_eigenvalues": {
               "var_param": "hessian_eigenvalues"
@@ -424,7 +424,7 @@
           }
         },
         "hessian_objectness": {
-          "fn_struct_make_params": "c2d_hessian_objectness_params",
+          "fn_struct_make_params": "c2d_hessian_objectness",
           "properties": {
             "hessian_objectness": {
               "var_param": "hessian_objectness"
@@ -432,7 +432,7 @@
           }
         },
         "histogram_match": {
-          "fn_struct_make_params": "c2d_histogram_match_params",
+          "fn_struct_make_params": "c2d_histogram_match",
           "properties": {
             "histogram_match": {
               "var_param": "histogram_match"
@@ -440,7 +440,7 @@
           }
         },
         "info": {
-          "fn_struct_make_params": "c2d_info_params",
+          "fn_struct_make_params": "c2d_info",
           "properties": {
             "info": {
               "var_param": "info"
@@ -448,7 +448,7 @@
           }
         },
         "info_full": {
-          "fn_struct_make_params": "c2d_info_full_params",
+          "fn_struct_make_params": "c2d_info_full",
           "properties": {
             "info_full": {
               "var_param": "info_full"
@@ -456,7 +456,7 @@
           }
         },
         "insert": {
-          "fn_struct_make_params": "c2d_insert_params",
+          "fn_struct_make_params": "c2d_insert",
           "properties": {
             "insert": {
               "var_param": "insert"
@@ -464,7 +464,7 @@
           }
         },
         "interpolation": {
-          "fn_struct_make_params": "c2d_interpolation_params",
+          "fn_struct_make_params": "c2d_interpolation",
           "properties": {
             "interpolation": {
               "var_param": "interpolation"
@@ -472,7 +472,7 @@
           }
         },
         "iterations": {
-          "fn_struct_make_params": "c2d_iterations_params",
+          "fn_struct_make_params": "c2d_iterations",
           "properties": {
             "iterations": {
               "var_param": "iterations"
@@ -480,7 +480,7 @@
           }
         },
         "label_overlap": {
-          "fn_struct_make_params": "c2d_label_overlap_params",
+          "fn_struct_make_params": "c2d_label_overlap",
           "properties": {
             "label_overlap": {
               "var_param": "label_overlap"
@@ -488,7 +488,7 @@
           }
         },
         "label_statistics": {
-          "fn_struct_make_params": "c2d_label_statistics_params",
+          "fn_struct_make_params": "c2d_label_statistics",
           "properties": {
             "label_statistics": {
               "var_param": "label_statistics"
@@ -496,7 +496,7 @@
           }
         },
         "landmarks_to_spheres": {
-          "fn_struct_make_params": "c2d_landmarks_to_spheres_params",
+          "fn_struct_make_params": "c2d_landmarks_to_spheres",
           "properties": {
             "landmarks_to_spheres": {
               "var_param": "landmarks_to_spheres"
@@ -504,7 +504,7 @@
           }
         },
         "laplacian": {
-          "fn_struct_make_params": "c2d_laplacian_params",
+          "fn_struct_make_params": "c2d_laplacian",
           "properties": {
             "laplacian": {
               "var_param": "laplacian"
@@ -512,7 +512,7 @@
           }
         },
         "levelset": {
-          "fn_struct_make_params": "c2d_levelset_params",
+          "fn_struct_make_params": "c2d_levelset",
           "properties": {
             "levelset": {
               "var_param": "levelset"
@@ -520,7 +520,7 @@
           }
         },
         "levelset_curvature": {
-          "fn_struct_make_params": "c2d_levelset_curvature_params",
+          "fn_struct_make_params": "c2d_levelset_curvature",
           "properties": {
             "levelset_curvature": {
               "var_param": "levelset_curvature"
@@ -528,7 +528,7 @@
           }
         },
         "levelset_advection": {
-          "fn_struct_make_params": "c2d_levelset_advection_params",
+          "fn_struct_make_params": "c2d_levelset_advection",
           "properties": {
             "levelset_advection": {
               "var_param": "levelset_advection"
@@ -536,7 +536,7 @@
           }
         },
         "log": {
-          "fn_struct_make_params": "c2d_log_params",
+          "fn_struct_make_params": "c2d_log",
           "properties": {
             "log": {
               "var_param": "log"
@@ -544,7 +544,7 @@
           }
         },
         "log10": {
-          "fn_struct_make_params": "c2d_log10_params",
+          "fn_struct_make_params": "c2d_log10",
           "properties": {
             "log10": {
               "var_param": "log10"
@@ -552,7 +552,7 @@
           }
         },
         "manual": {
-          "fn_struct_make_params": "c2d_manual_params",
+          "fn_struct_make_params": "c2d_manual",
           "properties": {
             "manual": {
               "var_param": "manual"
@@ -560,7 +560,7 @@
           }
         },
         "match_bounding_box": {
-          "fn_struct_make_params": "c2d_match_bounding_box_params",
+          "fn_struct_make_params": "c2d_match_bounding_box",
           "properties": {
             "match_bounding_box": {
               "var_param": "match_bounding_box"
@@ -568,7 +568,7 @@
           }
         },
         "maximum": {
-          "fn_struct_make_params": "c2d_maximum_params",
+          "fn_struct_make_params": "c2d_maximum",
           "properties": {
             "maximum": {
               "var_param": "maximum"
@@ -576,7 +576,7 @@
           }
         },
         "multicomponent_split": {
-          "fn_struct_make_params": "c2d_multicomponent_split_params",
+          "fn_struct_make_params": "c2d_multicomponent_split",
           "properties": {
             "multicomponent_split": {
               "var_param": "multicomponent_split"
@@ -584,7 +584,7 @@
           }
         },
         "mean": {
-          "fn_struct_make_params": "c2d_mean_params",
+          "fn_struct_make_params": "c2d_mean",
           "properties": {
             "mean": {
               "var_param": "mean"
@@ -592,7 +592,7 @@
           }
         },
         "median_filter": {
-          "fn_struct_make_params": "c2d_median_filter_params",
+          "fn_struct_make_params": "c2d_median_filter",
           "properties": {
             "median_filter": {
               "var_param": "median_filter"
@@ -600,7 +600,7 @@
           }
         },
         "merge": {
-          "fn_struct_make_params": "c2d_merge_params",
+          "fn_struct_make_params": "c2d_merge",
           "properties": {
             "merge": {
               "var_param": "merge"
@@ -608,7 +608,7 @@
           }
         },
         "mean_filter": {
-          "fn_struct_make_params": "c2d_mean_filter_params",
+          "fn_struct_make_params": "c2d_mean_filter",
           "properties": {
             "mean_filter": {
               "var_param": "mean_filter"
@@ -616,7 +616,7 @@
           }
         },
         "mutual_info": {
-          "fn_struct_make_params": "c2d_mutual_info_params",
+          "fn_struct_make_params": "c2d_mutual_info",
           "properties": {
             "mutual_info": {
               "var_param": "mutual_info"
@@ -624,7 +624,7 @@
           }
         },
         "minimum": {
-          "fn_struct_make_params": "c2d_minimum_params",
+          "fn_struct_make_params": "c2d_minimum",
           "properties": {
             "minimum": {
               "var_param": "minimum"
@@ -632,7 +632,7 @@
           }
         },
         "mixture_model": {
-          "fn_struct_make_params": "c2d_mixture_model_params",
+          "fn_struct_make_params": "c2d_mixture_model",
           "properties": {
             "mixture_model": {
               "var_param": "mixture_model"
@@ -640,7 +640,7 @@
           }
         },
         "moments": {
-          "fn_struct_make_params": "c2d_moments_params",
+          "fn_struct_make_params": "c2d_moments",
           "properties": {
             "moments": {
               "var_param": "moments"
@@ -648,7 +648,7 @@
           }
         },
         "mattes_mutual_info": {
-          "fn_struct_make_params": "c2d_mattes_mutual_info_params",
+          "fn_struct_make_params": "c2d_mattes_mutual_info",
           "properties": {
             "mattes_mutual_info": {
               "var_param": "mattes_mutual_info"
@@ -656,7 +656,7 @@
           }
         },
         "mean_square": {
-          "fn_struct_make_params": "c2d_mean_square_params",
+          "fn_struct_make_params": "c2d_mean_square",
           "properties": {
             "mean_square": {
               "var_param": "mean_square"
@@ -664,7 +664,7 @@
           }
         },
         "multiply": {
-          "fn_struct_make_params": "c2d_multiply_params",
+          "fn_struct_make_params": "c2d_multiply",
           "properties": {
             "multiply": {
               "var_param": "multiply"
@@ -672,7 +672,7 @@
           }
         },
         "normalized_cross_correlation": {
-          "fn_struct_make_params": "c2d_normalized_cross_correlation_params",
+          "fn_struct_make_params": "c2d_normalized_cross_correlation",
           "properties": {
             "normalized_cross_correlation": {
               "var_param": "normalized_cross_correlation"
@@ -680,7 +680,7 @@
           }
         },
         "normalized_correlation": {
-          "fn_struct_make_params": "c2d_normalized_correlation_params",
+          "fn_struct_make_params": "c2d_normalized_correlation",
           "properties": {
             "normalized_correlation": {
               "var_param": "normalized_correlation"
@@ -688,7 +688,7 @@
           }
         },
         "normalized_mutual_info": {
-          "fn_struct_make_params": "c2d_normalized_mutual_info_params",
+          "fn_struct_make_params": "c2d_normalized_mutual_info",
           "properties": {
             "normalized_mutual_info": {
               "var_param": "normalized_mutual_info"
@@ -696,7 +696,7 @@
           }
         },
         "noise_gaussian": {
-          "fn_struct_make_params": "c2d_noise_gaussian_params",
+          "fn_struct_make_params": "c2d_noise_gaussian",
           "properties": {
             "noise_gaussian": {
               "var_param": "noise_gaussian"
@@ -704,7 +704,7 @@
           }
         },
         "noise_poisson": {
-          "fn_struct_make_params": "c2d_noise_poisson_params",
+          "fn_struct_make_params": "c2d_noise_poisson",
           "properties": {
             "noise_poisson": {
               "var_param": "noise_poisson"
@@ -712,7 +712,7 @@
           }
         },
         "noise_speckle": {
-          "fn_struct_make_params": "c2d_noise_speckle_params",
+          "fn_struct_make_params": "c2d_noise_speckle",
           "properties": {
             "noise_speckle": {
               "var_param": "noise_speckle"
@@ -720,7 +720,7 @@
           }
         },
         "noise_salt_pepper": {
-          "fn_struct_make_params": "c2d_noise_salt_pepper_params",
+          "fn_struct_make_params": "c2d_noise_salt_pepper",
           "properties": {
             "noise_salt_pepper": {
               "var_param": "noise_salt_pepper"
@@ -728,7 +728,7 @@
           }
         },
         "no_multicomponent_split": {
-          "fn_struct_make_params": "c2d_no_multicomponent_split_params",
+          "fn_struct_make_params": "c2d_no_multicomponent_split",
           "properties": {
             "no_multicomponent_split": {
               "var_param": "no_multicomponent_split"
@@ -736,7 +736,7 @@
           }
         },
         "normalize_local_window": {
-          "fn_struct_make_params": "c2d_normalize_local_window_params",
+          "fn_struct_make_params": "c2d_normalize_local_window",
           "properties": {
             "normalize_local_window": {
               "var_param": "normalize_local_window"
@@ -744,7 +744,7 @@
           }
         },
         "normpdf": {
-          "fn_struct_make_params": "c2d_normpdf_params",
+          "fn_struct_make_params": "c2d_normpdf",
           "properties": {
             "normpdf": {
               "var_param": "normpdf"
@@ -752,7 +752,7 @@
           }
         },
         "noround": {
-          "fn_struct_make_params": "c2d_noround_params",
+          "fn_struct_make_params": "c2d_noround",
           "properties": {
             "noround": {
               "var_param": "noround"
@@ -760,7 +760,7 @@
           }
         },
         "nospm": {
-          "fn_struct_make_params": "c2d_nospm_params",
+          "fn_struct_make_params": "c2d_nospm",
           "properties": {
             "nospm": {
               "var_param": "nospm"
@@ -768,7 +768,7 @@
           }
         },
         "output": {
-          "fn_struct_make_params": "c2d_output_params",
+          "fn_struct_make_params": "c2d_output",
           "properties": {
             "output": {
               "var_param": "output"
@@ -776,7 +776,7 @@
           }
         },
         "output_multicomponent": {
-          "fn_struct_make_params": "c2d_output_multicomponent_params",
+          "fn_struct_make_params": "c2d_output_multicomponent",
           "properties": {
             "output_multicomponent": {
               "var_param": "output_multicomponent"
@@ -784,7 +784,7 @@
           }
         },
         "output_multiple_multicomponent": {
-          "fn_struct_make_params": "c2d_output_multiple_multicomponent_params",
+          "fn_struct_make_params": "c2d_output_multiple_multicomponent",
           "properties": {
             "output_multiple_multicomponent": {
               "var_param": "output_multiple_multicomponent"
@@ -792,7 +792,7 @@
           }
         },
         "orient": {
-          "fn_struct_make_params": "c2d_orient_params",
+          "fn_struct_make_params": "c2d_orient",
           "properties": {
             "orient": {
               "var_param": "orient"
@@ -800,7 +800,7 @@
           }
         },
         "output_multiple": {
-          "fn_struct_make_params": "c2d_output_multiple_params",
+          "fn_struct_make_params": "c2d_output_multiple",
           "properties": {
             "output_multiple": {
               "var_param": "output_multiple"
@@ -808,7 +808,7 @@
           }
         },
         "orient_1": {
-          "fn_struct_make_params": "c2d_orient_1_params",
+          "fn_struct_make_params": "c2d_orient_1",
           "properties": {
             "orient": {
               "var_param": "orient"
@@ -816,7 +816,7 @@
           }
         },
         "origin": {
-          "fn_struct_make_params": "c2d_origin_params",
+          "fn_struct_make_params": "c2d_origin",
           "properties": {
             "origin": {
               "var_param": "origin"
@@ -824,7 +824,7 @@
           }
         },
         "origin_voxel": {
-          "fn_struct_make_params": "c2d_origin_voxel_params",
+          "fn_struct_make_params": "c2d_origin_voxel",
           "properties": {
             "origin_voxel": {
               "var_param": "origin_voxel"
@@ -832,7 +832,7 @@
           }
         },
         "origin_voxel_coord": {
-          "fn_struct_make_params": "c2d_origin_voxel_coord_params",
+          "fn_struct_make_params": "c2d_origin_voxel_coord",
           "properties": {
             "origin_voxel_coord": {
               "var_param": "origin_voxel_coord"
@@ -840,7 +840,7 @@
           }
         },
         "overlap": {
-          "fn_struct_make_params": "c2d_overlap_params",
+          "fn_struct_make_params": "c2d_overlap",
           "properties": {
             "overlap": {
               "var_param": "overlap"
@@ -848,7 +848,7 @@
           }
         },
         "overlay_label_image": {
-          "fn_struct_make_params": "c2d_overlay_label_image_params",
+          "fn_struct_make_params": "c2d_overlay_label_image",
           "properties": {
             "overlay_label_image": {
               "var_param": "overlay_label_image"
@@ -856,7 +856,7 @@
           }
         },
         "pad": {
-          "fn_struct_make_params": "c2d_pad_params",
+          "fn_struct_make_params": "c2d_pad",
           "properties": {
             "pad": {
               "var_param": "pad"
@@ -864,7 +864,7 @@
           }
         },
         "pad_to": {
-          "fn_struct_make_params": "c2d_pad_to_params",
+          "fn_struct_make_params": "c2d_pad_to",
           "properties": {
             "pad_to": {
               "var_param": "pad_to"
@@ -872,7 +872,7 @@
           }
         },
         "pca": {
-          "fn_struct_make_params": "c2d_pca_params",
+          "fn_struct_make_params": "c2d_pca",
           "properties": {
             "pca": {
               "var_param": "pca"
@@ -880,7 +880,7 @@
           }
         },
         "percent_intensity_mode": {
-          "fn_struct_make_params": "c2d_percent_intensity_mode_params",
+          "fn_struct_make_params": "c2d_percent_intensity_mode",
           "properties": {
             "percent_intensity_mode": {
               "var_param": "percent_intensity_mode"
@@ -888,7 +888,7 @@
           }
         },
         "pixel": {
-          "fn_struct_make_params": "c2d_pixel_params",
+          "fn_struct_make_params": "c2d_pixel",
           "properties": {
             "pixel": {
               "var_param": "pixel"
@@ -896,7 +896,7 @@
           }
         },
         "pop": {
-          "fn_struct_make_params": "c2d_pop_params",
+          "fn_struct_make_params": "c2d_pop",
           "properties": {
             "pop": {
               "var_param": "pop_"
@@ -904,7 +904,7 @@
           }
         },
         "popas": {
-          "fn_struct_make_params": "c2d_popas_params",
+          "fn_struct_make_params": "c2d_popas",
           "properties": {
             "popas": {
               "var_param": "popas"
@@ -912,7 +912,7 @@
           }
         },
         "probe": {
-          "fn_struct_make_params": "c2d_probe_params",
+          "fn_struct_make_params": "c2d_probe",
           "properties": {
             "probe": {
               "var_param": "probe"
@@ -920,7 +920,7 @@
           }
         },
         "push": {
-          "fn_struct_make_params": "c2d_push_params",
+          "fn_struct_make_params": "c2d_push",
           "properties": {
             "push": {
               "var_param": "push"
@@ -928,7 +928,7 @@
           }
         },
         "rank": {
-          "fn_struct_make_params": "c2d_rank_params",
+          "fn_struct_make_params": "c2d_rank",
           "properties": {
             "rank": {
               "var_param": "rank"
@@ -936,7 +936,7 @@
           }
         },
         "reciprocal": {
-          "fn_struct_make_params": "c2d_reciprocal_params",
+          "fn_struct_make_params": "c2d_reciprocal",
           "properties": {
             "reciprocal": {
               "var_param": "reciprocal"
@@ -944,7 +944,7 @@
           }
         },
         "region": {
-          "fn_struct_make_params": "c2d_region_params",
+          "fn_struct_make_params": "c2d_region",
           "properties": {
             "region": {
               "var_param": "region"
@@ -952,7 +952,7 @@
           }
         },
         "reorder": {
-          "fn_struct_make_params": "c2d_reorder_params",
+          "fn_struct_make_params": "c2d_reorder",
           "properties": {
             "reorder": {
               "var_param": "reorder"
@@ -960,7 +960,7 @@
           }
         },
         "retain_labels": {
-          "fn_struct_make_params": "c2d_retain_labels_params",
+          "fn_struct_make_params": "c2d_retain_labels",
           "properties": {
             "retain_labels": {
               "var_param": "retain_labels"
@@ -968,7 +968,7 @@
           }
         },
         "rf_apply": {
-          "fn_struct_make_params": "c2d_rf_apply_params",
+          "fn_struct_make_params": "c2d_rf_apply",
           "properties": {
             "rf_apply": {
               "var_param": "rf_apply"
@@ -976,7 +976,7 @@
           }
         },
         "rf_train": {
-          "fn_struct_make_params": "c2d_rf_train_params",
+          "fn_struct_make_params": "c2d_rf_train",
           "properties": {
             "rf_train": {
               "var_param": "rf_train"
@@ -984,7 +984,7 @@
           }
         },
         "rf_param_patch": {
-          "fn_struct_make_params": "c2d_rf_param_patch_params",
+          "fn_struct_make_params": "c2d_rf_param_patch",
           "properties": {
             "rf_param_patch": {
               "var_param": "rf_param_patch"
@@ -992,7 +992,7 @@
           }
         },
         "rf_param_usexyz": {
-          "fn_struct_make_params": "c2d_rf_param_usexyz_params",
+          "fn_struct_make_params": "c2d_rf_param_usexyz",
           "properties": {
             "rf_param_usexyz": {
               "var_param": "rf_param_usexyz"
@@ -1000,7 +1000,7 @@
           }
         },
         "rf_param_nousexyz": {
-          "fn_struct_make_params": "c2d_rf_param_nousexyz_params",
+          "fn_struct_make_params": "c2d_rf_param_nousexyz",
           "properties": {
             "rf_param_nousexyz": {
               "var_param": "rf_param_nousexyz"
@@ -1008,7 +1008,7 @@
           }
         },
         "rf_param_ntrees": {
-          "fn_struct_make_params": "c2d_rf_param_ntrees_params",
+          "fn_struct_make_params": "c2d_rf_param_ntrees",
           "properties": {
             "rf_param_ntrees": {
               "var_param": "rf_param_ntrees"
@@ -1016,7 +1016,7 @@
           }
         },
         "rf_param_treedepth": {
-          "fn_struct_make_params": "c2d_rf_param_treedepth_params",
+          "fn_struct_make_params": "c2d_rf_param_treedepth",
           "properties": {
             "rf_param_treedepth": {
               "var_param": "rf_param_treedepth"
@@ -1024,7 +1024,7 @@
           }
         },
         "set_sform": {
-          "fn_struct_make_params": "c2d_set_sform_params",
+          "fn_struct_make_params": "c2d_set_sform",
           "properties": {
             "set_sform": {
               "var_param": "set_sform"
@@ -1032,7 +1032,7 @@
           }
         },
         "replace": {
-          "fn_struct_make_params": "c2d_replace_params",
+          "fn_struct_make_params": "c2d_replace",
           "properties": {
             "replace": {
               "var_param": "replace"
@@ -1040,7 +1040,7 @@
           }
         },
         "resample": {
-          "fn_struct_make_params": "c2d_resample_params",
+          "fn_struct_make_params": "c2d_resample",
           "properties": {
             "resample": {
               "var_param": "resample"
@@ -1048,7 +1048,7 @@
           }
         },
         "resample_iso": {
-          "fn_struct_make_params": "c2d_resample_iso_params",
+          "fn_struct_make_params": "c2d_resample_iso",
           "properties": {
             "resample_iso": {
               "var_param": "resample_iso"
@@ -1056,7 +1056,7 @@
           }
         },
         "resample_mm": {
-          "fn_struct_make_params": "c2d_resample_mm_params",
+          "fn_struct_make_params": "c2d_resample_mm",
           "properties": {
             "resample_mm": {
               "var_param": "resample_mm"
@@ -1064,7 +1064,7 @@
           }
         },
         "reslice_itk": {
-          "fn_struct_make_params": "c2d_reslice_itk_params",
+          "fn_struct_make_params": "c2d_reslice_itk",
           "properties": {
             "reslice_itk": {
               "var_param": "reslice_itk"
@@ -1072,7 +1072,7 @@
           }
         },
         "reslice_matrix": {
-          "fn_struct_make_params": "c2d_reslice_matrix_params",
+          "fn_struct_make_params": "c2d_reslice_matrix",
           "properties": {
             "reslice_matrix": {
               "var_param": "reslice_matrix"
@@ -1080,7 +1080,7 @@
           }
         },
         "reslice_identity": {
-          "fn_struct_make_params": "c2d_reslice_identity_params",
+          "fn_struct_make_params": "c2d_reslice_identity",
           "properties": {
             "reslice_identity": {
               "var_param": "reslice_identity"
@@ -1088,7 +1088,7 @@
           }
         },
         "rgb2hsv": {
-          "fn_struct_make_params": "c2d_rgb2hsv_params",
+          "fn_struct_make_params": "c2d_rgb2hsv",
           "properties": {
             "rgb2hsv": {
               "var_param": "rgb2hsv"
@@ -1096,7 +1096,7 @@
           }
         },
         "rms": {
-          "fn_struct_make_params": "c2d_rms_params",
+          "fn_struct_make_params": "c2d_rms",
           "properties": {
             "rms": {
               "var_param": "rms"
@@ -1104,7 +1104,7 @@
           }
         },
         "round": {
-          "fn_struct_make_params": "c2d_round_params",
+          "fn_struct_make_params": "c2d_round",
           "properties": {
             "round": {
               "var_param": "round_"
@@ -1112,7 +1112,7 @@
           }
         },
         "scale": {
-          "fn_struct_make_params": "c2d_scale_params",
+          "fn_struct_make_params": "c2d_scale",
           "properties": {
             "scale": {
               "var_param": "scale"
@@ -1120,7 +1120,7 @@
           }
         },
         "set_sform_1": {
-          "fn_struct_make_params": "c2d_set_sform_1_params",
+          "fn_struct_make_params": "c2d_set_sform_1",
           "properties": {
             "set_sform": {
               "var_param": "set_sform"
@@ -1128,7 +1128,7 @@
           }
         },
         "sin": {
-          "fn_struct_make_params": "c2d_sin_params",
+          "fn_struct_make_params": "c2d_sin",
           "properties": {
             "sin": {
               "var_param": "sin"
@@ -1136,7 +1136,7 @@
           }
         },
         "slice": {
-          "fn_struct_make_params": "c2d_slice_params",
+          "fn_struct_make_params": "c2d_slice",
           "properties": {
             "slice": {
               "var_param": "slice_"
@@ -1144,7 +1144,7 @@
           }
         },
         "slice_all": {
-          "fn_struct_make_params": "c2d_slice_all_params",
+          "fn_struct_make_params": "c2d_slice_all",
           "properties": {
             "slice_all": {
               "var_param": "slice_all"
@@ -1152,7 +1152,7 @@
           }
         },
         "sharpen": {
-          "fn_struct_make_params": "c2d_sharpen_params",
+          "fn_struct_make_params": "c2d_sharpen",
           "properties": {
             "sharpen": {
               "var_param": "sharpen"
@@ -1160,7 +1160,7 @@
           }
         },
         "shift": {
-          "fn_struct_make_params": "c2d_shift_params",
+          "fn_struct_make_params": "c2d_shift",
           "properties": {
             "shift": {
               "var_param": "shift"
@@ -1168,7 +1168,7 @@
           }
         },
         "signed_distance_transform": {
-          "fn_struct_make_params": "c2d_signed_distance_transform_params",
+          "fn_struct_make_params": "c2d_signed_distance_transform",
           "properties": {
             "signed_distance_transform": {
               "var_param": "signed_distance_transform"
@@ -1176,7 +1176,7 @@
           }
         },
         "smooth": {
-          "fn_struct_make_params": "c2d_smooth_params",
+          "fn_struct_make_params": "c2d_smooth",
           "properties": {
             "smooth": {
               "var_param": "smooth"
@@ -1184,7 +1184,7 @@
           }
         },
         "smooth_fast": {
-          "fn_struct_make_params": "c2d_smooth_fast_params",
+          "fn_struct_make_params": "c2d_smooth_fast",
           "properties": {
             "smooth_fast": {
               "var_param": "smooth_fast"
@@ -1192,7 +1192,7 @@
           }
         },
         "spacing": {
-          "fn_struct_make_params": "c2d_spacing_params",
+          "fn_struct_make_params": "c2d_spacing",
           "properties": {
             "spacing": {
               "var_param": "spacing"
@@ -1200,7 +1200,7 @@
           }
         },
         "split": {
-          "fn_struct_make_params": "c2d_split_params",
+          "fn_struct_make_params": "c2d_split",
           "properties": {
             "split": {
               "var_param": "split"
@@ -1208,7 +1208,7 @@
           }
         },
         "sqrt": {
-          "fn_struct_make_params": "c2d_sqrt_params",
+          "fn_struct_make_params": "c2d_sqrt",
           "properties": {
             "sqrt": {
               "var_param": "sqrt"
@@ -1216,7 +1216,7 @@
           }
         },
         "staple": {
-          "fn_struct_make_params": "c2d_staple_params",
+          "fn_struct_make_params": "c2d_staple",
           "properties": {
             "staple": {
               "var_param": "staple"
@@ -1224,7 +1224,7 @@
           }
         },
         "structure_tensor_eigenvalues": {
-          "fn_struct_make_params": "c2d_structure_tensor_eigenvalues_params",
+          "fn_struct_make_params": "c2d_structure_tensor_eigenvalues",
           "properties": {
             "structure_tensor_eigenvalues": {
               "var_param": "structure_tensor_eigenvalues"
@@ -1232,7 +1232,7 @@
           }
         },
         "spm": {
-          "fn_struct_make_params": "c2d_spm_params",
+          "fn_struct_make_params": "c2d_spm",
           "properties": {
             "spm": {
               "var_param": "spm"
@@ -1240,7 +1240,7 @@
           }
         },
         "subtract": {
-          "fn_struct_make_params": "c2d_subtract_params",
+          "fn_struct_make_params": "c2d_subtract",
           "properties": {
             "subtract": {
               "var_param": "subtract"
@@ -1248,7 +1248,7 @@
           }
         },
         "supervoxel": {
-          "fn_struct_make_params": "c2d_supervoxel_params",
+          "fn_struct_make_params": "c2d_supervoxel",
           "properties": {
             "supervoxel": {
               "var_param": "supervoxel"
@@ -1256,7 +1256,7 @@
           }
         },
         "stretch": {
-          "fn_struct_make_params": "c2d_stretch_params",
+          "fn_struct_make_params": "c2d_stretch",
           "properties": {
             "stretch": {
               "var_param": "stretch"
@@ -1264,7 +1264,7 @@
           }
         },
         "swapdim": {
-          "fn_struct_make_params": "c2d_swapdim_params",
+          "fn_struct_make_params": "c2d_swapdim",
           "properties": {
             "swapdim": {
               "var_param": "swapdim"
@@ -1272,7 +1272,7 @@
           }
         },
         "test_image": {
-          "fn_struct_make_params": "c2d_test_image_params",
+          "fn_struct_make_params": "c2d_test_image",
           "properties": {
             "test_image": {
               "var_param": "test_image"
@@ -1280,7 +1280,7 @@
           }
         },
         "test_probe": {
-          "fn_struct_make_params": "c2d_test_probe_params",
+          "fn_struct_make_params": "c2d_test_probe",
           "properties": {
             "test_probe": {
               "var_param": "test_probe"
@@ -1288,7 +1288,7 @@
           }
         },
         "threshold": {
-          "fn_struct_make_params": "c2d_threshold_params",
+          "fn_struct_make_params": "c2d_threshold",
           "properties": {
             "threshold": {
               "var_param": "threshold"
@@ -1296,7 +1296,7 @@
           }
         },
         "tile": {
-          "fn_struct_make_params": "c2d_tile_params",
+          "fn_struct_make_params": "c2d_tile",
           "properties": {
             "tile": {
               "var_param": "tile"
@@ -1304,7 +1304,7 @@
           }
         },
         "trim": {
-          "fn_struct_make_params": "c2d_trim_params",
+          "fn_struct_make_params": "c2d_trim",
           "properties": {
             "trim": {
               "var_param": "trim"
@@ -1312,7 +1312,7 @@
           }
         },
         "trim_to_size": {
-          "fn_struct_make_params": "c2d_trim_to_size_params",
+          "fn_struct_make_params": "c2d_trim_to_size",
           "properties": {
             "trim_to_size": {
               "var_param": "trim_to_size"
@@ -1320,7 +1320,7 @@
           }
         },
         "type": {
-          "fn_struct_make_params": "c2d_type_params",
+          "fn_struct_make_params": "c2d_type",
           "properties": {
             "type": {
               "var_param": "type_"
@@ -1328,7 +1328,7 @@
           }
         },
         "verbose": {
-          "fn_struct_make_params": "c2d_verbose_params",
+          "fn_struct_make_params": "c2d_verbose",
           "properties": {
             "verbose": {
               "var_param": "verbose"
@@ -1336,7 +1336,7 @@
           }
         },
         "noverbose": {
-          "fn_struct_make_params": "c2d_noverbose_params",
+          "fn_struct_make_params": "c2d_noverbose",
           "properties": {
             "noverbose": {
               "var_param": "noverbose"
@@ -1344,7 +1344,7 @@
           }
         },
         "version": {
-          "fn_struct_make_params": "c2d_version_params",
+          "fn_struct_make_params": "c2d_version",
           "properties": {
             "version": {
               "var_param": "version"
@@ -1352,7 +1352,7 @@
           }
         },
         "vote": {
-          "fn_struct_make_params": "c2d_vote_params",
+          "fn_struct_make_params": "c2d_vote",
           "properties": {
             "vote": {
               "var_param": "vote"
@@ -1360,7 +1360,7 @@
           }
         },
         "vote_mrf": {
-          "fn_struct_make_params": "c2d_vote_mrf_params",
+          "fn_struct_make_params": "c2d_vote_mrf",
           "properties": {
             "vote_mrf": {
               "var_param": "vote_mrf"
@@ -1368,7 +1368,7 @@
           }
         },
         "vote_label": {
-          "fn_struct_make_params": "c2d_vote_label_params",
+          "fn_struct_make_params": "c2d_vote_label",
           "properties": {
             "vote_label": {
               "var_param": "vote_label"
@@ -1376,7 +1376,7 @@
           }
         },
         "voxel_sum": {
-          "fn_struct_make_params": "c2d_voxel_sum_params",
+          "fn_struct_make_params": "c2d_voxel_sum",
           "properties": {
             "voxel_sum": {
               "var_param": "voxel_sum"
@@ -1384,7 +1384,7 @@
           }
         },
         "voxel_integral": {
-          "fn_struct_make_params": "c2d_voxel_integral_params",
+          "fn_struct_make_params": "c2d_voxel_integral",
           "properties": {
             "voxel_integral": {
               "var_param": "voxel_integral"
@@ -1392,7 +1392,7 @@
           }
         },
         "voxelwise_regression": {
-          "fn_struct_make_params": "c2d_voxelwise_regression_params",
+          "fn_struct_make_params": "c2d_voxelwise_regression",
           "properties": {
             "voxelwise_regression": {
               "var_param": "voxelwise_regression"
@@ -1400,7 +1400,7 @@
           }
         },
         "warp": {
-          "fn_struct_make_params": "c2d_warp_params",
+          "fn_struct_make_params": "c2d_warp",
           "properties": {
             "warp": {
               "var_param": "warp"
@@ -1408,7 +1408,7 @@
           }
         },
         "warp_label": {
-          "fn_struct_make_params": "c2d_warp_label_params",
+          "fn_struct_make_params": "c2d_warp_label",
           "properties": {
             "warp_label": {
               "var_param": "warp_label"
@@ -1416,7 +1416,7 @@
           }
         },
         "wrap": {
-          "fn_struct_make_params": "c2d_wrap_params",
+          "fn_struct_make_params": "c2d_wrap",
           "properties": {
             "wrap": {
               "var_param": "wrap"
@@ -1424,7 +1424,7 @@
           }
         },
         "weighted_sum": {
-          "fn_struct_make_params": "c2d_weighted_sum_params",
+          "fn_struct_make_params": "c2d_weighted_sum",
           "properties": {
             "weighted_sum": {
               "var_param": "weighted_sum"
@@ -1432,7 +1432,7 @@
           }
         },
         "weighted_sum_voxelwise": {
-          "fn_struct_make_params": "c2d_weighted_sum_voxelwise_params",
+          "fn_struct_make_params": "c2d_weighted_sum_voxelwise",
           "properties": {
             "weighted_sum_voxelwise": {
               "var_param": "weighted_sum_voxelwise"

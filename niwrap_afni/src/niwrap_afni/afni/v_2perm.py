@@ -13,7 +13,7 @@ V_2PERM_METADATA = Metadata(
 )
 
 
-V2permParameters = typing.TypedDict('V2permParameters', {
+V2permParamsDict = typing.TypedDict('V2permParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/2perm"]],
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
@@ -22,7 +22,7 @@ V2permParameters = typing.TypedDict('V2permParameters', {
     "subset1_size": typing.NotRequired[float | None],
     "subset2_size": typing.NotRequired[float | None],
 })
-V2permParametersTagged = typing.TypedDict('V2permParametersTagged', {
+V2permParamsDictTagged = typing.TypedDict('V2permParamsDictTagged', {
     "@type": typing.Literal["afni/2perm"],
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
@@ -35,7 +35,7 @@ V2permParametersTagged = typing.TypedDict('V2permParametersTagged', {
 
 class V2permOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2permParameters(...)`.
+    Output object returned when calling `V2permParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v_2perm_params(
     comma: bool = False,
     subset1_size: float | None = None,
     subset2_size: float | None = None,
-) -> V2permParametersTagged:
+) -> V2permParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v_2perm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2permParameters` object.
+    `V2permParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def v_2perm_validate(
 
 
 def v_2perm_cargs(
-    params: V2permParameters,
+    params: V2permParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def v_2perm_cargs(
 
 
 def v_2perm_outputs(
-    params: V2permParameters,
+    params: V2permParamsDict,
     execution: Execution,
 ) -> V2permOutputs:
     """
@@ -171,7 +171,7 @@ def v_2perm_outputs(
 
 
 def v_2perm_execute(
-    params: V2permParameters,
+    params: V2permParamsDict,
     runner: Runner | None = None,
 ) -> V2permOutputs:
     """
@@ -243,6 +243,8 @@ def v_2perm(
 
 __all__ = [
     "V2permOutputs",
+    "V2permParamsDict",
+    "V2permParamsDictTagged",
     "V_2PERM_METADATA",
     "v_2perm",
     "v_2perm_execute",

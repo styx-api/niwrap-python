@@ -13,12 +13,12 @@ V__GET_AFNI_ORIENT_METADATA = Metadata(
 )
 
 
-VGetAfniOrientParameters = typing.TypedDict('VGetAfniOrientParameters', {
+VGetAfniOrientParamsDict = typing.TypedDict('VGetAfniOrientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniOrient"]],
     "exploratory": bool,
     "infile": InputPathType,
 })
-VGetAfniOrientParametersTagged = typing.TypedDict('VGetAfniOrientParametersTagged', {
+VGetAfniOrientParamsDictTagged = typing.TypedDict('VGetAfniOrientParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniOrient"],
     "exploratory": bool,
     "infile": InputPathType,
@@ -27,7 +27,7 @@ VGetAfniOrientParametersTagged = typing.TypedDict('VGetAfniOrientParametersTagge
 
 class VGetAfniOrientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniOrientParameters(...)`.
+    Output object returned when calling `VGetAfniOrientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class VGetAfniOrientOutputs(typing.NamedTuple):
 def v__get_afni_orient_params(
     infile: InputPathType,
     exploratory: bool = False,
-) -> VGetAfniOrientParametersTagged:
+) -> VGetAfniOrientParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def v__get_afni_orient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniOrientParameters` object.
+    `VGetAfniOrientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def v__get_afni_orient_validate(
 
 
 def v__get_afni_orient_cargs(
-    params: VGetAfniOrientParameters,
+    params: VGetAfniOrientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def v__get_afni_orient_cargs(
 
 
 def v__get_afni_orient_outputs(
-    params: VGetAfniOrientParameters,
+    params: VGetAfniOrientParamsDict,
     execution: Execution,
 ) -> VGetAfniOrientOutputs:
     """
@@ -120,7 +120,7 @@ def v__get_afni_orient_outputs(
 
 
 def v__get_afni_orient_execute(
-    params: VGetAfniOrientParameters,
+    params: VGetAfniOrientParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniOrientOutputs:
     """
@@ -178,6 +178,8 @@ def v__get_afni_orient(
 
 __all__ = [
     "VGetAfniOrientOutputs",
+    "VGetAfniOrientParamsDict",
+    "VGetAfniOrientParamsDictTagged",
     "V__GET_AFNI_ORIENT_METADATA",
     "v__get_afni_orient",
     "v__get_afni_orient_execute",

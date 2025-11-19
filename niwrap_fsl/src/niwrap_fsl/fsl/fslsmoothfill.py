@@ -13,7 +13,7 @@ FSLSMOOTHFILL_METADATA = Metadata(
 )
 
 
-FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
+FslsmoothfillParamsDict = typing.TypedDict('FslsmoothfillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslsmoothfill"]],
     "input_image": InputPathType,
     "mask_image": InputPathType,
@@ -22,7 +22,7 @@ FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
-FslsmoothfillParametersTagged = typing.TypedDict('FslsmoothfillParametersTagged', {
+FslsmoothfillParamsDictTagged = typing.TypedDict('FslsmoothfillParamsDictTagged', {
     "@type": typing.Literal["fsl/fslsmoothfill"],
     "input_image": InputPathType,
     "mask_image": InputPathType,
@@ -35,7 +35,7 @@ FslsmoothfillParametersTagged = typing.TypedDict('FslsmoothfillParametersTagged'
 
 class FslsmoothfillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslsmoothfillParameters(...)`.
+    Output object returned when calling `FslsmoothfillParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def fslsmoothfill_params(
     number_of_iterations: int | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> FslsmoothfillParametersTagged:
+) -> FslsmoothfillParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def fslsmoothfill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslsmoothfillParameters` object.
+    `FslsmoothfillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def fslsmoothfill_validate(
 
 
 def fslsmoothfill_cargs(
-    params: FslsmoothfillParameters,
+    params: FslsmoothfillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def fslsmoothfill_cargs(
 
 
 def fslsmoothfill_outputs(
-    params: FslsmoothfillParameters,
+    params: FslsmoothfillParamsDict,
     execution: Execution,
 ) -> FslsmoothfillOutputs:
     """
@@ -162,7 +162,7 @@ def fslsmoothfill_outputs(
 
 
 def fslsmoothfill_execute(
-    params: FslsmoothfillParameters,
+    params: FslsmoothfillParamsDict,
     runner: Runner | None = None,
 ) -> FslsmoothfillOutputs:
     """
@@ -235,6 +235,8 @@ def fslsmoothfill(
 __all__ = [
     "FSLSMOOTHFILL_METADATA",
     "FslsmoothfillOutputs",
+    "FslsmoothfillParamsDict",
+    "FslsmoothfillParamsDictTagged",
     "fslsmoothfill",
     "fslsmoothfill_execute",
     "fslsmoothfill_params",

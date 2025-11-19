@@ -12,38 +12,38 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
 )
 
 
-SurfaceApplyAffineFlirtParameters = typing.TypedDict('SurfaceApplyAffineFlirtParameters', {
+SurfaceApplyAffineFlirtParamsDict = typing.TypedDict('SurfaceApplyAffineFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
     "source-volume": str,
     "target-volume": str,
 })
-SurfaceApplyAffineFlirtParametersTagged = typing.TypedDict('SurfaceApplyAffineFlirtParametersTagged', {
+SurfaceApplyAffineFlirtParamsDictTagged = typing.TypedDict('SurfaceApplyAffineFlirtParamsDictTagged', {
     "@type": typing.Literal["flirt"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', {
+SurfaceApplyAffineParamsDict = typing.TypedDict('SurfaceApplyAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-affine"]],
     "out-surf": str,
-    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParameters | None],
+    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
     "in-surf": InputPathType,
     "affine": str,
 })
-SurfaceApplyAffineParametersTagged = typing.TypedDict('SurfaceApplyAffineParametersTagged', {
+SurfaceApplyAffineParamsDictTagged = typing.TypedDict('SurfaceApplyAffineParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-apply-affine"],
     "out-surf": str,
-    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParameters | None],
+    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
     "in-surf": InputPathType,
     "affine": str,
 })
 
 
-def surface_apply_affine_flirt_params(
+def surface_apply_affine_flirt(
     source_volume: str,
     target_volume: str,
-) -> SurfaceApplyAffineFlirtParametersTagged:
+) -> SurfaceApplyAffineFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def surface_apply_affine_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceApplyAffineFlirtParameters` object.
+    `SurfaceApplyAffineFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -84,7 +84,7 @@ def surface_apply_affine_flirt_validate(
 
 
 def surface_apply_affine_flirt_cargs(
-    params: SurfaceApplyAffineFlirtParameters,
+    params: SurfaceApplyAffineFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def surface_apply_affine_flirt_cargs(
 
 class SurfaceApplyAffineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceApplyAffineParameters(...)`.
+    Output object returned when calling `SurfaceApplyAffineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,8 +119,8 @@ def surface_apply_affine_params(
     out_surf: str,
     in_surf: InputPathType,
     affine: str,
-    flirt: SurfaceApplyAffineFlirtParameters | None = None,
-) -> SurfaceApplyAffineParametersTagged:
+    flirt: SurfaceApplyAffineFlirtParamsDict | None = None,
+) -> SurfaceApplyAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def surface_apply_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceApplyAffineParameters` object.
+    `SurfaceApplyAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -172,7 +172,7 @@ def surface_apply_affine_validate(
 
 
 def surface_apply_affine_cargs(
-    params: SurfaceApplyAffineParameters,
+    params: SurfaceApplyAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def surface_apply_affine_cargs(
 
 
 def surface_apply_affine_outputs(
-    params: SurfaceApplyAffineParameters,
+    params: SurfaceApplyAffineParamsDict,
     execution: Execution,
 ) -> SurfaceApplyAffineOutputs:
     """
@@ -218,7 +218,7 @@ def surface_apply_affine_outputs(
 
 
 def surface_apply_affine_execute(
-    params: SurfaceApplyAffineParameters,
+    params: SurfaceApplyAffineParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
@@ -250,7 +250,7 @@ def surface_apply_affine(
     out_surf: str,
     in_surf: InputPathType,
     affine: str,
-    flirt: SurfaceApplyAffineFlirtParameters | None = None,
+    flirt: SurfaceApplyAffineFlirtParamsDict | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
@@ -282,9 +282,13 @@ def surface_apply_affine(
 
 __all__ = [
     "SURFACE_APPLY_AFFINE_METADATA",
+    "SurfaceApplyAffineFlirtParamsDict",
+    "SurfaceApplyAffineFlirtParamsDictTagged",
     "SurfaceApplyAffineOutputs",
+    "SurfaceApplyAffineParamsDict",
+    "SurfaceApplyAffineParamsDictTagged",
     "surface_apply_affine",
     "surface_apply_affine_execute",
-    "surface_apply_affine_flirt_params",
+    "surface_apply_affine_flirt",
     "surface_apply_affine_params",
 ]

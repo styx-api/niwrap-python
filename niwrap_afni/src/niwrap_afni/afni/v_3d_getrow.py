@@ -13,7 +13,7 @@ V_3D_GETROW_METADATA = Metadata(
 )
 
 
-V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
+V3dGetrowParamsDict = typing.TypedDict('V3dGetrowParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dGetrow"]],
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
@@ -21,7 +21,7 @@ V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
     "input_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
 })
-V3dGetrowParametersTagged = typing.TypedDict('V3dGetrowParametersTagged', {
+V3dGetrowParamsDictTagged = typing.TypedDict('V3dGetrowParamsDictTagged', {
     "@type": typing.Literal["afni/3dGetrow"],
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
@@ -33,7 +33,7 @@ V3dGetrowParametersTagged = typing.TypedDict('V3dGetrowParametersTagged', {
 
 class V3dGetrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dGetrowParameters(...)`.
+    Output object returned when calling `V3dGetrowParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3d_getrow_params(
     zrow: list[int] | None = None,
     input_file: InputPathType | None = None,
     output_file: str | None = None,
-) -> V3dGetrowParametersTagged:
+) -> V3dGetrowParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v_3d_getrow_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dGetrowParameters` object.
+    `V3dGetrowParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def v_3d_getrow_validate(
 
 
 def v_3d_getrow_cargs(
-    params: V3dGetrowParameters,
+    params: V3dGetrowParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def v_3d_getrow_cargs(
 
 
 def v_3d_getrow_outputs(
-    params: V3dGetrowParameters,
+    params: V3dGetrowParamsDict,
     execution: Execution,
 ) -> V3dGetrowOutputs:
     """
@@ -189,7 +189,7 @@ def v_3d_getrow_outputs(
 
 
 def v_3d_getrow_execute(
-    params: V3dGetrowParameters,
+    params: V3dGetrowParamsDict,
     runner: Runner | None = None,
 ) -> V3dGetrowOutputs:
     """
@@ -261,6 +261,8 @@ def v_3d_getrow(
 
 __all__ = [
     "V3dGetrowOutputs",
+    "V3dGetrowParamsDict",
+    "V3dGetrowParamsDictTagged",
     "V_3D_GETROW_METADATA",
     "v_3d_getrow",
     "v_3d_getrow_execute",

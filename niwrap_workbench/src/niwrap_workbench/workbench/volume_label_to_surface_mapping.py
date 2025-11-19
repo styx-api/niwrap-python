@@ -12,7 +12,7 @@ VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA = Metadata(
 )
 
 
-VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParameters', {
+VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -21,7 +21,7 @@ VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('Volum
     "subdiv-num": typing.NotRequired[int | None],
     "thin-columns": bool,
 })
-VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged', {
+VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -32,32 +32,32 @@ VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged = typing.TypedDict(
 })
 
 
-VolumeLabelToSurfaceMappingParameters = typing.TypedDict('VolumeLabelToSurfaceMappingParameters', {
+VolumeLabelToSurfaceMappingParamsDict = typing.TypedDict('VolumeLabelToSurfaceMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-to-surface-mapping"]],
     "label-out": str,
-    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
 })
-VolumeLabelToSurfaceMappingParametersTagged = typing.TypedDict('VolumeLabelToSurfaceMappingParametersTagged', {
+VolumeLabelToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeLabelToSurfaceMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-to-surface-mapping"],
     "label-out": str,
-    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
 })
 
 
-def volume_label_to_surface_mapping_ribbon_constrained_params(
+def volume_label_to_surface_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     roi_volume: InputPathType | None,
     dist: float | None,
     subdiv_num: int | None,
     thin_columns: bool = False,
-) -> VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged:
+) -> VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def volume_label_to_surface_mapping_ribbon_constrained_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelToSurfaceMappingRibbonConstrainedParameters` object.
+    `VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def volume_label_to_surface_mapping_ribbon_constrained_validate(
 
 
 def volume_label_to_surface_mapping_ribbon_constrained_cargs(
-    params: VolumeLabelToSurfaceMappingRibbonConstrainedParameters,
+    params: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def volume_label_to_surface_mapping_ribbon_constrained_cargs(
 
 class VolumeLabelToSurfaceMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelToSurfaceMappingParameters(...)`.
+    Output object returned when calling `VolumeLabelToSurfaceMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -172,8 +172,8 @@ def volume_label_to_surface_mapping_params(
     subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None = None,
-) -> VolumeLabelToSurfaceMappingParametersTagged:
+    ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
+) -> VolumeLabelToSurfaceMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -206,7 +206,7 @@ def volume_label_to_surface_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelToSurfaceMappingParameters` object.
+    `VolumeLabelToSurfaceMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def volume_label_to_surface_mapping_validate(
 
 
 def volume_label_to_surface_mapping_cargs(
-    params: VolumeLabelToSurfaceMappingParameters,
+    params: VolumeLabelToSurfaceMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def volume_label_to_surface_mapping_cargs(
 
 
 def volume_label_to_surface_mapping_outputs(
-    params: VolumeLabelToSurfaceMappingParameters,
+    params: VolumeLabelToSurfaceMappingParamsDict,
     execution: Execution,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
@@ -281,7 +281,7 @@ def volume_label_to_surface_mapping_outputs(
 
 
 def volume_label_to_surface_mapping_execute(
-    params: VolumeLabelToSurfaceMappingParameters,
+    params: VolumeLabelToSurfaceMappingParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
@@ -325,7 +325,7 @@ def volume_label_to_surface_mapping(
     subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None = None,
+    ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
@@ -373,8 +373,12 @@ def volume_label_to_surface_mapping(
 __all__ = [
     "VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA",
     "VolumeLabelToSurfaceMappingOutputs",
+    "VolumeLabelToSurfaceMappingParamsDict",
+    "VolumeLabelToSurfaceMappingParamsDictTagged",
+    "VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict",
+    "VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged",
     "volume_label_to_surface_mapping",
     "volume_label_to_surface_mapping_execute",
     "volume_label_to_surface_mapping_params",
-    "volume_label_to_surface_mapping_ribbon_constrained_params",
+    "volume_label_to_surface_mapping_ribbon_constrained",
 ]

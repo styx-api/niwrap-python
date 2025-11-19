@@ -13,7 +13,7 @@ V__CHAUFFEUR_AFNI_METADATA = Metadata(
 )
 
 
-VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
+VChauffeurAfniParamsDict = typing.TypedDict('VChauffeurAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@chauffeur_afni"]],
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
     "help": bool,
     "version": bool,
 })
-VChauffeurAfniParametersTagged = typing.TypedDict('VChauffeurAfniParametersTagged', {
+VChauffeurAfniParamsDictTagged = typing.TypedDict('VChauffeurAfniParamsDictTagged', {
     "@type": typing.Literal["afni/@chauffeur_afni"],
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ VChauffeurAfniParametersTagged = typing.TypedDict('VChauffeurAfniParametersTagge
 
 class VChauffeurAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VChauffeurAfniParameters(...)`.
+    Output object returned when calling `VChauffeurAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def v__chauffeur_afni_params(
     do_clean: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> VChauffeurAfniParametersTagged:
+) -> VChauffeurAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def v__chauffeur_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VChauffeurAfniParameters` object.
+    `VChauffeurAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,7 +231,7 @@ def v__chauffeur_afni_validate(
 
 
 def v__chauffeur_afni_cargs(
-    params: VChauffeurAfniParameters,
+    params: VChauffeurAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -316,7 +316,7 @@ def v__chauffeur_afni_cargs(
 
 
 def v__chauffeur_afni_outputs(
-    params: VChauffeurAfniParameters,
+    params: VChauffeurAfniParamsDict,
     execution: Execution,
 ) -> VChauffeurAfniOutputs:
     """
@@ -338,7 +338,7 @@ def v__chauffeur_afni_outputs(
 
 
 def v__chauffeur_afni_execute(
-    params: VChauffeurAfniParameters,
+    params: VChauffeurAfniParamsDict,
     runner: Runner | None = None,
 ) -> VChauffeurAfniOutputs:
     """
@@ -448,6 +448,8 @@ def v__chauffeur_afni(
 
 __all__ = [
     "VChauffeurAfniOutputs",
+    "VChauffeurAfniParamsDict",
+    "VChauffeurAfniParamsDictTagged",
     "V__CHAUFFEUR_AFNI_METADATA",
     "v__chauffeur_afni",
     "v__chauffeur_afni_execute",

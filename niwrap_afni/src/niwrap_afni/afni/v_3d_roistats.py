@@ -13,7 +13,7 @@ V_3D_ROISTATS_METADATA = Metadata(
 )
 
 
-V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
+V3dRoistatsParamsDict = typing.TypedDict('V3dRoistatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dROIstats"]],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
     "stat": typing.NotRequired[list[InputPathType] | None],
     "zerofill": typing.NotRequired[str | None],
 })
-V3dRoistatsParametersTagged = typing.TypedDict('V3dRoistatsParametersTagged', {
+V3dRoistatsParamsDictTagged = typing.TypedDict('V3dRoistatsParamsDictTagged', {
     "@type": typing.Literal["afni/3dROIstats"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ V3dRoistatsParametersTagged = typing.TypedDict('V3dRoistatsParametersTagged', {
 
 class V3dRoistatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRoistatsParameters(...)`.
+    Output object returned when calling `V3dRoistatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def v_3d_roistats_params(
     roisel: InputPathType | None = None,
     stat_: list[InputPathType] | None = None,
     zerofill: str | None = None,
-) -> V3dRoistatsParametersTagged:
+) -> V3dRoistatsParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def v_3d_roistats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRoistatsParameters` object.
+    `V3dRoistatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def v_3d_roistats_validate(
 
 
 def v_3d_roistats_cargs(
-    params: V3dRoistatsParameters,
+    params: V3dRoistatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def v_3d_roistats_cargs(
 
 
 def v_3d_roistats_outputs(
-    params: V3dRoistatsParameters,
+    params: V3dRoistatsParamsDict,
     execution: Execution,
 ) -> V3dRoistatsOutputs:
     """
@@ -305,7 +305,7 @@ def v_3d_roistats_outputs(
 
 
 def v_3d_roistats_execute(
-    params: V3dRoistatsParameters,
+    params: V3dRoistatsParamsDict,
     runner: Runner | None = None,
 ) -> V3dRoistatsOutputs:
     """
@@ -429,6 +429,8 @@ def v_3d_roistats(
 
 __all__ = [
     "V3dRoistatsOutputs",
+    "V3dRoistatsParamsDict",
+    "V3dRoistatsParamsDictTagged",
     "V_3D_ROISTATS_METADATA",
     "v_3d_roistats",
     "v_3d_roistats_execute",

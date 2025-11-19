@@ -13,7 +13,7 @@ UBER_SKEL_PY_METADATA = Metadata(
 )
 
 
-UberSkelPyParameters = typing.TypedDict('UberSkelPyParameters', {
+UberSkelPyParamsDict = typing.TypedDict('UberSkelPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/uber_skel.py"]],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
@@ -27,7 +27,7 @@ UberSkelPyParameters = typing.TypedDict('UberSkelPyParameters', {
     "show_valid_opts": bool,
     "version": bool,
 })
-UberSkelPyParametersTagged = typing.TypedDict('UberSkelPyParametersTagged', {
+UberSkelPyParamsDictTagged = typing.TypedDict('UberSkelPyParamsDictTagged', {
     "@type": typing.Literal["afni/uber_skel.py"],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
@@ -45,7 +45,7 @@ UberSkelPyParametersTagged = typing.TypedDict('UberSkelPyParametersTagged', {
 
 class UberSkelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UberSkelPyParameters(...)`.
+    Output object returned when calling `UberSkelPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def uber_skel_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> UberSkelPyParametersTagged:
+) -> UberSkelPyParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def uber_skel_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UberSkelPyParameters` object.
+    `UberSkelPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def uber_skel_py_validate(
 
 
 def uber_skel_py_cargs(
-    params: UberSkelPyParameters,
+    params: UberSkelPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def uber_skel_py_cargs(
 
 
 def uber_skel_py_outputs(
-    params: UberSkelPyParameters,
+    params: UberSkelPyParamsDict,
     execution: Execution,
 ) -> UberSkelPyOutputs:
     """
@@ -229,7 +229,7 @@ def uber_skel_py_outputs(
 
 
 def uber_skel_py_execute(
-    params: UberSkelPyParameters,
+    params: UberSkelPyParamsDict,
     runner: Runner | None = None,
 ) -> UberSkelPyOutputs:
     """
@@ -317,6 +317,8 @@ def uber_skel_py(
 __all__ = [
     "UBER_SKEL_PY_METADATA",
     "UberSkelPyOutputs",
+    "UberSkelPyParamsDict",
+    "UberSkelPyParamsDictTagged",
     "uber_skel_py",
     "uber_skel_py_execute",
     "uber_skel_py_params",

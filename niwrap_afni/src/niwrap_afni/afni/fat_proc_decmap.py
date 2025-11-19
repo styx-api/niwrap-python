@@ -13,7 +13,7 @@ FAT_PROC_DECMAP_METADATA = Metadata(
 )
 
 
-FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
+FatProcDecmapParamsDict = typing.TypedDict('FatProcDecmapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_decmap"]],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
@@ -27,7 +27,7 @@ FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
     "no_cmd_out": bool,
     "no_qc_view": bool,
 })
-FatProcDecmapParametersTagged = typing.TypedDict('FatProcDecmapParametersTagged', {
+FatProcDecmapParamsDictTagged = typing.TypedDict('FatProcDecmapParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_decmap"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
@@ -45,7 +45,7 @@ FatProcDecmapParametersTagged = typing.TypedDict('FatProcDecmapParametersTagged'
 
 class FatProcDecmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcDecmapParameters(...)`.
+    Output object returned when calling `FatProcDecmapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def fat_proc_decmap_params(
     qc_prefix: str | None = None,
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
-) -> FatProcDecmapParametersTagged:
+) -> FatProcDecmapParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def fat_proc_decmap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcDecmapParameters` object.
+    `FatProcDecmapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def fat_proc_decmap_validate(
 
 
 def fat_proc_decmap_cargs(
-    params: FatProcDecmapParameters,
+    params: FatProcDecmapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -239,7 +239,7 @@ def fat_proc_decmap_cargs(
 
 
 def fat_proc_decmap_outputs(
-    params: FatProcDecmapParameters,
+    params: FatProcDecmapParamsDict,
     execution: Execution,
 ) -> FatProcDecmapOutputs:
     """
@@ -264,7 +264,7 @@ def fat_proc_decmap_outputs(
 
 
 def fat_proc_decmap_execute(
-    params: FatProcDecmapParameters,
+    params: FatProcDecmapParamsDict,
     runner: Runner | None = None,
 ) -> FatProcDecmapOutputs:
     """
@@ -355,6 +355,8 @@ def fat_proc_decmap(
 __all__ = [
     "FAT_PROC_DECMAP_METADATA",
     "FatProcDecmapOutputs",
+    "FatProcDecmapParamsDict",
+    "FatProcDecmapParamsDictTagged",
     "fat_proc_decmap",
     "fat_proc_decmap_execute",
     "fat_proc_decmap_params",

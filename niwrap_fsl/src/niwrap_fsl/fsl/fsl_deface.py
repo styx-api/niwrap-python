@@ -13,7 +13,7 @@ FSL_DEFACE_METADATA = Metadata(
 )
 
 
-FslDefaceParameters = typing.TypedDict('FslDefaceParameters', {
+FslDefaceParamsDict = typing.TypedDict('FslDefaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_deface"]],
     "infile": InputPathType,
     "outfile": str,
@@ -29,7 +29,7 @@ FslDefaceParameters = typing.TypedDict('FslDefaceParameters', {
     "center_of_gravity": typing.NotRequired[list[float] | None],
     "qc_images": typing.NotRequired[str | None],
 })
-FslDefaceParametersTagged = typing.TypedDict('FslDefaceParametersTagged', {
+FslDefaceParamsDictTagged = typing.TypedDict('FslDefaceParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_deface"],
     "infile": InputPathType,
     "outfile": str,
@@ -49,7 +49,7 @@ FslDefaceParametersTagged = typing.TypedDict('FslDefaceParametersTagged', {
 
 class FslDefaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslDefaceParameters(...)`.
+    Output object returned when calling `FslDefaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def fsl_deface_params(
     bias_correct_flag: bool = False,
     center_of_gravity: list[float] | None = None,
     qc_images: str | None = None,
-) -> FslDefaceParametersTagged:
+) -> FslDefaceParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def fsl_deface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslDefaceParameters` object.
+    `FslDefaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def fsl_deface_validate(
 
 
 def fsl_deface_cargs(
-    params: FslDefaceParameters,
+    params: FslDefaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def fsl_deface_cargs(
 
 
 def fsl_deface_outputs(
-    params: FslDefaceParameters,
+    params: FslDefaceParamsDict,
     execution: Execution,
 ) -> FslDefaceOutputs:
     """
@@ -307,7 +307,7 @@ def fsl_deface_outputs(
 
 
 def fsl_deface_execute(
-    params: FslDefaceParameters,
+    params: FslDefaceParamsDict,
     runner: Runner | None = None,
 ) -> FslDefaceOutputs:
     """
@@ -406,6 +406,8 @@ def fsl_deface(
 __all__ = [
     "FSL_DEFACE_METADATA",
     "FslDefaceOutputs",
+    "FslDefaceParamsDict",
+    "FslDefaceParamsDictTagged",
     "fsl_deface",
     "fsl_deface_execute",
     "fsl_deface_params",

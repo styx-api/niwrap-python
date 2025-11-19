@@ -13,7 +13,7 @@ FSL_BOXPLOT_METADATA = Metadata(
 )
 
 
-FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
+FslBoxplotParamsDict = typing.TypedDict('FslBoxplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_boxplot"]],
     "input_files": list[InputPathType],
     "output_image": str,
@@ -25,7 +25,7 @@ FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
     "plot_height": typing.NotRequired[float | None],
     "plot_width": typing.NotRequired[float | None],
 })
-FslBoxplotParametersTagged = typing.TypedDict('FslBoxplotParametersTagged', {
+FslBoxplotParamsDictTagged = typing.TypedDict('FslBoxplotParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_boxplot"],
     "input_files": list[InputPathType],
     "output_image": str,
@@ -41,7 +41,7 @@ FslBoxplotParametersTagged = typing.TypedDict('FslBoxplotParametersTagged', {
 
 class FslBoxplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslBoxplotParameters(...)`.
+    Output object returned when calling `FslBoxplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def fsl_boxplot_params(
     y_label: str | None = None,
     plot_height: float | None = None,
     plot_width: float | None = None,
-) -> FslBoxplotParametersTagged:
+) -> FslBoxplotParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def fsl_boxplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslBoxplotParameters` object.
+    `FslBoxplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def fsl_boxplot_validate(
 
 
 def fsl_boxplot_cargs(
-    params: FslBoxplotParameters,
+    params: FslBoxplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def fsl_boxplot_cargs(
 
 
 def fsl_boxplot_outputs(
-    params: FslBoxplotParameters,
+    params: FslBoxplotParamsDict,
     execution: Execution,
 ) -> FslBoxplotOutputs:
     """
@@ -224,7 +224,7 @@ def fsl_boxplot_outputs(
 
 
 def fsl_boxplot_execute(
-    params: FslBoxplotParameters,
+    params: FslBoxplotParamsDict,
     runner: Runner | None = None,
 ) -> FslBoxplotOutputs:
     """
@@ -305,6 +305,8 @@ def fsl_boxplot(
 __all__ = [
     "FSL_BOXPLOT_METADATA",
     "FslBoxplotOutputs",
+    "FslBoxplotParamsDict",
+    "FslBoxplotParamsDictTagged",
     "fsl_boxplot",
     "fsl_boxplot_execute",
     "fsl_boxplot_params",

@@ -13,7 +13,7 @@ REG_TRANSFORM_METADATA = Metadata(
 )
 
 
-RegTransformParameters = typing.TypedDict('RegTransformParameters', {
+RegTransformParamsDict = typing.TypedDict('RegTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_transform"]],
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ RegTransformParameters = typing.TypedDict('RegTransformParameters', {
     "comp_aff_2nd": typing.NotRequired[InputPathType | None],
     "comp_aff_output": typing.NotRequired[str | None],
 })
-RegTransformParametersTagged = typing.TypedDict('RegTransformParametersTagged', {
+RegTransformParamsDictTagged = typing.TypedDict('RegTransformParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_transform"],
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
@@ -79,7 +79,7 @@ RegTransformParametersTagged = typing.TypedDict('RegTransformParametersTagged', 
 
 class RegTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegTransformParameters(...)`.
+    Output object returned when calling `RegTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +140,7 @@ def reg_transform_params(
     comp_aff_1st: InputPathType | None = None,
     comp_aff_2nd: InputPathType | None = None,
     comp_aff_output: str | None = None,
-) -> RegTransformParametersTagged:
+) -> RegTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def reg_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegTransformParameters` object.
+    `RegTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -353,7 +353,7 @@ def reg_transform_validate(
 
 
 def reg_transform_cargs(
-    params: RegTransformParameters,
+    params: RegTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -459,7 +459,7 @@ def reg_transform_cargs(
 
 
 def reg_transform_outputs(
-    params: RegTransformParameters,
+    params: RegTransformParamsDict,
     execution: Execution,
 ) -> RegTransformOutputs:
     """
@@ -488,7 +488,7 @@ def reg_transform_outputs(
 
 
 def reg_transform_execute(
-    params: RegTransformParameters,
+    params: RegTransformParamsDict,
     runner: Runner | None = None,
 ) -> RegTransformOutputs:
     """
@@ -645,6 +645,8 @@ def reg_transform(
 __all__ = [
     "REG_TRANSFORM_METADATA",
     "RegTransformOutputs",
+    "RegTransformParamsDict",
+    "RegTransformParamsDictTagged",
     "reg_transform",
     "reg_transform_execute",
     "reg_transform_params",

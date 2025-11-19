@@ -13,7 +13,7 @@ V_3D_MSE_METADATA = Metadata(
 )
 
 
-V3dMseParameters = typing.TypedDict('V3dMseParameters', {
+V3dMseParamsDict = typing.TypedDict('V3dMseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMSE"]],
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
@@ -25,7 +25,7 @@ V3dMseParameters = typing.TypedDict('V3dMseParameters', {
     "rthresh": typing.NotRequired[float | None],
     "dset": InputPathType,
 })
-V3dMseParametersTagged = typing.TypedDict('V3dMseParametersTagged', {
+V3dMseParamsDictTagged = typing.TypedDict('V3dMseParamsDictTagged', {
     "@type": typing.Literal["afni/3dMSE"],
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
@@ -41,7 +41,7 @@ V3dMseParametersTagged = typing.TypedDict('V3dMseParametersTagged', {
 
 class V3dMseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMseParameters(...)`.
+    Output object returned when calling `V3dMseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_mse_params(
     scales: float | None = None,
     entwin: float | None = None,
     rthresh: float | None = None,
-) -> V3dMseParametersTagged:
+) -> V3dMseParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def v_3d_mse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMseParameters` object.
+    `V3dMseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def v_3d_mse_validate(
 
 
 def v_3d_mse_cargs(
-    params: V3dMseParameters,
+    params: V3dMseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def v_3d_mse_cargs(
 
 
 def v_3d_mse_outputs(
-    params: V3dMseParameters,
+    params: V3dMseParamsDict,
     execution: Execution,
 ) -> V3dMseOutputs:
     """
@@ -224,7 +224,7 @@ def v_3d_mse_outputs(
 
 
 def v_3d_mse_execute(
-    params: V3dMseParameters,
+    params: V3dMseParamsDict,
     runner: Runner | None = None,
 ) -> V3dMseOutputs:
     """
@@ -307,6 +307,8 @@ def v_3d_mse(
 
 __all__ = [
     "V3dMseOutputs",
+    "V3dMseParamsDict",
+    "V3dMseParamsDictTagged",
     "V_3D_MSE_METADATA",
     "v_3d_mse",
     "v_3d_mse_execute",

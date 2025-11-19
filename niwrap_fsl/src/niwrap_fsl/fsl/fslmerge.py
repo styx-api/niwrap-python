@@ -13,7 +13,7 @@ FSLMERGE_METADATA = Metadata(
 )
 
 
-FslmergeParameters = typing.TypedDict('FslmergeParameters', {
+FslmergeParamsDict = typing.TypedDict('FslmergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslmerge"]],
     "merge_time": bool,
     "merge_x": bool,
@@ -26,7 +26,7 @@ FslmergeParameters = typing.TypedDict('FslmergeParameters', {
     "volume_number": typing.NotRequired[float | None],
     "tr_value": typing.NotRequired[float | None],
 })
-FslmergeParametersTagged = typing.TypedDict('FslmergeParametersTagged', {
+FslmergeParamsDictTagged = typing.TypedDict('FslmergeParamsDictTagged', {
     "@type": typing.Literal["fsl/fslmerge"],
     "merge_time": bool,
     "merge_x": bool,
@@ -43,7 +43,7 @@ FslmergeParametersTagged = typing.TypedDict('FslmergeParametersTagged', {
 
 class FslmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslmergeParameters(...)`.
+    Output object returned when calling `FslmergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def fslmerge_params(
     merge_set_tr: bool = False,
     volume_number: float | None = None,
     tr_value: float | None = None,
-) -> FslmergeParametersTagged:
+) -> FslmergeParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def fslmerge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmergeParameters` object.
+    `FslmergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -157,7 +157,7 @@ def fslmerge_validate(
 
 
 def fslmerge_cargs(
-    params: FslmergeParameters,
+    params: FslmergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def fslmerge_cargs(
 
 
 def fslmerge_outputs(
-    params: FslmergeParameters,
+    params: FslmergeParamsDict,
     execution: Execution,
 ) -> FslmergeOutputs:
     """
@@ -216,7 +216,7 @@ def fslmerge_outputs(
 
 
 def fslmerge_execute(
-    params: FslmergeParameters,
+    params: FslmergeParamsDict,
     runner: Runner | None = None,
 ) -> FslmergeOutputs:
     """
@@ -302,6 +302,8 @@ def fslmerge(
 __all__ = [
     "FSLMERGE_METADATA",
     "FslmergeOutputs",
+    "FslmergeParamsDict",
+    "FslmergeParamsDictTagged",
     "fslmerge",
     "fslmerge_execute",
     "fslmerge_params",

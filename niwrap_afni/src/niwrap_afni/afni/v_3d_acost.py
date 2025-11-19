@@ -13,14 +13,14 @@ V_3D_ACOST_METADATA = Metadata(
 )
 
 
-V3dAcostParameters = typing.TypedDict('V3dAcostParameters', {
+V3dAcostParamsDict = typing.TypedDict('V3dAcostParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAcost"]],
     "infile": InputPathType,
     "basefile": InputPathType,
     "outfile": str,
     "all_cost": bool,
 })
-V3dAcostParametersTagged = typing.TypedDict('V3dAcostParametersTagged', {
+V3dAcostParamsDictTagged = typing.TypedDict('V3dAcostParamsDictTagged', {
     "@type": typing.Literal["afni/3dAcost"],
     "infile": InputPathType,
     "basefile": InputPathType,
@@ -31,7 +31,7 @@ V3dAcostParametersTagged = typing.TypedDict('V3dAcostParametersTagged', {
 
 class V3dAcostOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAcostParameters(...)`.
+    Output object returned when calling `V3dAcostParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def v_3d_acost_params(
     basefile: InputPathType,
     outfile: str,
     all_cost: bool = False,
-) -> V3dAcostParametersTagged:
+) -> V3dAcostParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def v_3d_acost_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAcostParameters` object.
+    `V3dAcostParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def v_3d_acost_validate(
 
 
 def v_3d_acost_cargs(
-    params: V3dAcostParameters,
+    params: V3dAcostParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def v_3d_acost_cargs(
 
 
 def v_3d_acost_outputs(
-    params: V3dAcostParameters,
+    params: V3dAcostParamsDict,
     execution: Execution,
 ) -> V3dAcostOutputs:
     """
@@ -149,7 +149,7 @@ def v_3d_acost_outputs(
 
 
 def v_3d_acost_execute(
-    params: V3dAcostParameters,
+    params: V3dAcostParamsDict,
     runner: Runner | None = None,
 ) -> V3dAcostOutputs:
     """
@@ -213,6 +213,8 @@ def v_3d_acost(
 
 __all__ = [
     "V3dAcostOutputs",
+    "V3dAcostParamsDict",
+    "V3dAcostParamsDictTagged",
     "V_3D_ACOST_METADATA",
     "v_3d_acost",
     "v_3d_acost_execute",

@@ -13,19 +13,19 @@ FIXEL2VOXEL_METADATA = Metadata(
 )
 
 
-Fixel2voxelConfigParameters = typing.TypedDict('Fixel2voxelConfigParameters', {
+Fixel2voxelConfigParamsDict = typing.TypedDict('Fixel2voxelConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fixel2voxelConfigParametersTagged = typing.TypedDict('Fixel2voxelConfigParametersTagged', {
+Fixel2voxelConfigParamsDictTagged = typing.TypedDict('Fixel2voxelConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fixel2voxelParameters = typing.TypedDict('Fixel2voxelParameters', {
+Fixel2voxelParamsDict = typing.TypedDict('Fixel2voxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2voxel"]],
     "number": typing.NotRequired[int | None],
     "fill": typing.NotRequired[float | None],
@@ -35,14 +35,14 @@ Fixel2voxelParameters = typing.TypedDict('Fixel2voxelParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2voxelConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2voxelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
     "operation": str,
     "image_out": str,
 })
-Fixel2voxelParametersTagged = typing.TypedDict('Fixel2voxelParametersTagged', {
+Fixel2voxelParamsDictTagged = typing.TypedDict('Fixel2voxelParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixel2voxel"],
     "number": typing.NotRequired[int | None],
     "fill": typing.NotRequired[float | None],
@@ -52,7 +52,7 @@ Fixel2voxelParametersTagged = typing.TypedDict('Fixel2voxelParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2voxelConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2voxelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
@@ -61,10 +61,10 @@ Fixel2voxelParametersTagged = typing.TypedDict('Fixel2voxelParametersTagged', {
 })
 
 
-def fixel2voxel_config_params(
+def fixel2voxel_config(
     key: str,
     value: str,
-) -> Fixel2voxelConfigParametersTagged:
+) -> Fixel2voxelConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def fixel2voxel_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2voxelConfigParameters` object.
+    `Fixel2voxelConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def fixel2voxel_config_validate(
 
 
 def fixel2voxel_config_cargs(
-    params: Fixel2voxelConfigParameters,
+    params: Fixel2voxelConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def fixel2voxel_config_cargs(
 
 class Fixel2voxelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fixel2voxelParameters(...)`.
+    Output object returned when calling `Fixel2voxelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def fixel2voxel_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2voxelConfigParameters] | None = None,
+    config: list[Fixel2voxelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2voxelParametersTagged:
+) -> Fixel2voxelParamsDictTagged:
     """
     Build parameters.
     
@@ -210,7 +210,7 @@ def fixel2voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2voxelParameters` object.
+    `Fixel2voxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -247,7 +247,7 @@ def fixel2voxel_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2voxelConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2voxelConfigParamsDict] | None`')
         for e in params["config"]:
             fixel2voxel_config_validate(e)
     if params.get("help", False) is None:
@@ -273,7 +273,7 @@ def fixel2voxel_validate(
 
 
 def fixel2voxel_cargs(
-    params: Fixel2voxelParameters,
+    params: Fixel2voxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def fixel2voxel_cargs(
 
 
 def fixel2voxel_outputs(
-    params: Fixel2voxelParameters,
+    params: Fixel2voxelParamsDict,
     execution: Execution,
 ) -> Fixel2voxelOutputs:
     """
@@ -348,7 +348,7 @@ def fixel2voxel_outputs(
 
 
 def fixel2voxel_execute(
-    params: Fixel2voxelParameters,
+    params: Fixel2voxelParamsDict,
     runner: Runner | None = None,
 ) -> Fixel2voxelOutputs:
     """
@@ -418,7 +418,7 @@ def fixel2voxel(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2voxelConfigParameters] | None = None,
+    config: list[Fixel2voxelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -511,9 +511,13 @@ def fixel2voxel(
 
 __all__ = [
     "FIXEL2VOXEL_METADATA",
+    "Fixel2voxelConfigParamsDict",
+    "Fixel2voxelConfigParamsDictTagged",
     "Fixel2voxelOutputs",
+    "Fixel2voxelParamsDict",
+    "Fixel2voxelParamsDictTagged",
     "fixel2voxel",
-    "fixel2voxel_config_params",
+    "fixel2voxel_config",
     "fixel2voxel_execute",
     "fixel2voxel_params",
 ]

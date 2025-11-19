@@ -13,7 +13,7 @@ V__SIMULATE_MOTION_METADATA = Metadata(
 )
 
 
-VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
+VSimulateMotionParamsDict = typing.TypedDict('VSimulateMotionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@simulate_motion"]],
     "epi": InputPathType,
     "motion_file": InputPathType,
@@ -32,7 +32,7 @@ VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
     "todo": bool,
     "ver": bool,
 })
-VSimulateMotionParametersTagged = typing.TypedDict('VSimulateMotionParametersTagged', {
+VSimulateMotionParamsDictTagged = typing.TypedDict('VSimulateMotionParamsDictTagged', {
     "@type": typing.Literal["afni/@simulate_motion"],
     "epi": InputPathType,
     "motion_file": InputPathType,
@@ -55,7 +55,7 @@ VSimulateMotionParametersTagged = typing.TypedDict('VSimulateMotionParametersTag
 
 class VSimulateMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSimulateMotionParameters(...)`.
+    Output object returned when calling `VSimulateMotionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v__simulate_motion_params(
     hist: bool = False,
     todo: bool = False,
     ver: bool = False,
-) -> VSimulateMotionParametersTagged:
+) -> VSimulateMotionParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def v__simulate_motion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSimulateMotionParameters` object.
+    `VSimulateMotionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def v__simulate_motion_validate(
 
 
 def v__simulate_motion_cargs(
-    params: VSimulateMotionParameters,
+    params: VSimulateMotionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def v__simulate_motion_cargs(
 
 
 def v__simulate_motion_outputs(
-    params: VSimulateMotionParameters,
+    params: VSimulateMotionParamsDict,
     execution: Execution,
 ) -> VSimulateMotionOutputs:
     """
@@ -302,7 +302,7 @@ def v__simulate_motion_outputs(
 
 
 def v__simulate_motion_execute(
-    params: VSimulateMotionParameters,
+    params: VSimulateMotionParamsDict,
     runner: Runner | None = None,
 ) -> VSimulateMotionOutputs:
     """
@@ -406,6 +406,8 @@ def v__simulate_motion(
 
 __all__ = [
     "VSimulateMotionOutputs",
+    "VSimulateMotionParamsDict",
+    "VSimulateMotionParamsDictTagged",
     "V__SIMULATE_MOTION_METADATA",
     "v__simulate_motion",
     "v__simulate_motion_execute",

@@ -13,12 +13,12 @@ REMOVE_TALAIRACH_METADATA = Metadata(
 )
 
 
-RemoveTalairachParameters = typing.TypedDict('RemoveTalairachParameters', {
+RemoveTalairachParamsDict = typing.TypedDict('RemoveTalairachParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/remove_talairach"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-RemoveTalairachParametersTagged = typing.TypedDict('RemoveTalairachParametersTagged', {
+RemoveTalairachParamsDictTagged = typing.TypedDict('RemoveTalairachParamsDictTagged', {
     "@type": typing.Literal["freesurfer/remove_talairach"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ RemoveTalairachParametersTagged = typing.TypedDict('RemoveTalairachParametersTag
 
 class RemoveTalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RemoveTalairachParameters(...)`.
+    Output object returned when calling `RemoveTalairachParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class RemoveTalairachOutputs(typing.NamedTuple):
 def remove_talairach_params(
     input_file: InputPathType,
     output_file: str,
-) -> RemoveTalairachParametersTagged:
+) -> RemoveTalairachParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def remove_talairach_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RemoveTalairachParameters` object.
+    `RemoveTalairachParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def remove_talairach_validate(
 
 
 def remove_talairach_cargs(
-    params: RemoveTalairachParameters,
+    params: RemoveTalairachParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def remove_talairach_cargs(
 
 
 def remove_talairach_outputs(
-    params: RemoveTalairachParameters,
+    params: RemoveTalairachParamsDict,
     execution: Execution,
 ) -> RemoveTalairachOutputs:
     """
@@ -121,7 +121,7 @@ def remove_talairach_outputs(
 
 
 def remove_talairach_execute(
-    params: RemoveTalairachParameters,
+    params: RemoveTalairachParamsDict,
     runner: Runner | None = None,
 ) -> RemoveTalairachOutputs:
     """
@@ -182,6 +182,8 @@ def remove_talairach(
 __all__ = [
     "REMOVE_TALAIRACH_METADATA",
     "RemoveTalairachOutputs",
+    "RemoveTalairachParamsDict",
+    "RemoveTalairachParamsDictTagged",
     "remove_talairach",
     "remove_talairach_execute",
     "remove_talairach_params",

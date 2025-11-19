@@ -13,7 +13,7 @@ MRI_SYNTHMORPH_METADATA = Metadata(
 )
 
 
-MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
+MriSynthmorphParamsDict = typing.TypedDict('MriSynthmorphParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthmorph"]],
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
@@ -29,7 +29,7 @@ MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
     "model_weights": typing.NotRequired[InputPathType | None],
     "inspect_directory": typing.NotRequired[str | None],
 })
-MriSynthmorphParametersTagged = typing.TypedDict('MriSynthmorphParametersTagged', {
+MriSynthmorphParamsDictTagged = typing.TypedDict('MriSynthmorphParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_synthmorph"],
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
@@ -49,7 +49,7 @@ MriSynthmorphParametersTagged = typing.TypedDict('MriSynthmorphParametersTagged'
 
 class MriSynthmorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSynthmorphParameters(...)`.
+    Output object returned when calling `MriSynthmorphParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def mri_synthmorph_params(
     extent: float | None = None,
     model_weights: InputPathType | None = None,
     inspect_directory: str | None = None,
-) -> MriSynthmorphParametersTagged:
+) -> MriSynthmorphParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def mri_synthmorph_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSynthmorphParameters` object.
+    `MriSynthmorphParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def mri_synthmorph_validate(
 
 
 def mri_synthmorph_cargs(
-    params: MriSynthmorphParameters,
+    params: MriSynthmorphParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -260,7 +260,7 @@ def mri_synthmorph_cargs(
 
 
 def mri_synthmorph_outputs(
-    params: MriSynthmorphParameters,
+    params: MriSynthmorphParamsDict,
     execution: Execution,
 ) -> MriSynthmorphOutputs:
     """
@@ -281,7 +281,7 @@ def mri_synthmorph_outputs(
 
 
 def mri_synthmorph_execute(
-    params: MriSynthmorphParameters,
+    params: MriSynthmorphParamsDict,
     runner: Runner | None = None,
 ) -> MriSynthmorphOutputs:
     """
@@ -384,6 +384,8 @@ def mri_synthmorph(
 __all__ = [
     "MRI_SYNTHMORPH_METADATA",
     "MriSynthmorphOutputs",
+    "MriSynthmorphParamsDict",
+    "MriSynthmorphParamsDictTagged",
     "mri_synthmorph",
     "mri_synthmorph_execute",
     "mri_synthmorph_params",

@@ -13,12 +13,12 @@ FS_TEMP_DIR_METADATA = Metadata(
 )
 
 
-FsTempDirParameters = typing.TypedDict('FsTempDirParameters', {
+FsTempDirParamsDict = typing.TypedDict('FsTempDirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_temp_dir"]],
     "base_directory": typing.NotRequired[str | None],
     "scratch": bool,
 })
-FsTempDirParametersTagged = typing.TypedDict('FsTempDirParametersTagged', {
+FsTempDirParamsDictTagged = typing.TypedDict('FsTempDirParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_temp_dir"],
     "base_directory": typing.NotRequired[str | None],
     "scratch": bool,
@@ -27,7 +27,7 @@ FsTempDirParametersTagged = typing.TypedDict('FsTempDirParametersTagged', {
 
 class FsTempDirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsTempDirParameters(...)`.
+    Output object returned when calling `FsTempDirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FsTempDirOutputs(typing.NamedTuple):
 def fs_temp_dir_params(
     base_directory: str | None = None,
     scratch: bool = False,
-) -> FsTempDirParametersTagged:
+) -> FsTempDirParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def fs_temp_dir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsTempDirParameters` object.
+    `FsTempDirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def fs_temp_dir_validate(
 
 
 def fs_temp_dir_cargs(
-    params: FsTempDirParameters,
+    params: FsTempDirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -105,7 +105,7 @@ def fs_temp_dir_cargs(
 
 
 def fs_temp_dir_outputs(
-    params: FsTempDirParameters,
+    params: FsTempDirParamsDict,
     execution: Execution,
 ) -> FsTempDirOutputs:
     """
@@ -125,7 +125,7 @@ def fs_temp_dir_outputs(
 
 
 def fs_temp_dir_execute(
-    params: FsTempDirParameters,
+    params: FsTempDirParamsDict,
     runner: Runner | None = None,
 ) -> FsTempDirOutputs:
     """
@@ -185,6 +185,8 @@ def fs_temp_dir(
 __all__ = [
     "FS_TEMP_DIR_METADATA",
     "FsTempDirOutputs",
+    "FsTempDirParamsDict",
+    "FsTempDirParamsDictTagged",
     "fs_temp_dir",
     "fs_temp_dir_execute",
     "fs_temp_dir_params",

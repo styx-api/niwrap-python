@@ -13,7 +13,7 @@ QDELAUNAY_METADATA = Metadata(
 )
 
 
-QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
+QdelaunayParamsDict = typing.TypedDict('QdelaunayParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/qdelaunay"]],
     "input_file": InputPathType,
     "furthest_site": bool,
@@ -49,7 +49,7 @@ QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
     "point_coordinates": bool,
     "summary": bool,
 })
-QdelaunayParametersTagged = typing.TypedDict('QdelaunayParametersTagged', {
+QdelaunayParamsDictTagged = typing.TypedDict('QdelaunayParamsDictTagged', {
     "@type": typing.Literal["afni/qdelaunay"],
     "input_file": InputPathType,
     "furthest_site": bool,
@@ -89,7 +89,7 @@ QdelaunayParametersTagged = typing.TypedDict('QdelaunayParametersTagged', {
 
 class QdelaunayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QdelaunayParameters(...)`.
+    Output object returned when calling `QdelaunayParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +129,7 @@ def qdelaunay_params(
     off_format: bool = False,
     point_coordinates: bool = False,
     summary: bool = False,
-) -> QdelaunayParametersTagged:
+) -> QdelaunayParamsDictTagged:
     """
     Build parameters.
     
@@ -235,7 +235,7 @@ def qdelaunay_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QdelaunayParameters` object.
+    `QdelaunayParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -361,7 +361,7 @@ def qdelaunay_validate(
 
 
 def qdelaunay_cargs(
-    params: QdelaunayParameters,
+    params: QdelaunayParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -492,7 +492,7 @@ def qdelaunay_cargs(
 
 
 def qdelaunay_outputs(
-    params: QdelaunayParameters,
+    params: QdelaunayParamsDict,
     execution: Execution,
 ) -> QdelaunayOutputs:
     """
@@ -511,7 +511,7 @@ def qdelaunay_outputs(
 
 
 def qdelaunay_execute(
-    params: QdelaunayParameters,
+    params: QdelaunayParamsDict,
     runner: Runner | None = None,
 ) -> QdelaunayOutputs:
     """
@@ -668,6 +668,8 @@ def qdelaunay(
 __all__ = [
     "QDELAUNAY_METADATA",
     "QdelaunayOutputs",
+    "QdelaunayParamsDict",
+    "QdelaunayParamsDictTagged",
     "qdelaunay",
     "qdelaunay_execute",
     "qdelaunay_params",

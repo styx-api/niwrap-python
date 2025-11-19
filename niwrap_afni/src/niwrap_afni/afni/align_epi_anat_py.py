@@ -13,7 +13,7 @@ ALIGN_EPI_ANAT_PY_METADATA = Metadata(
 )
 
 
-AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
+AlignEpiAnatPyParamsDict = typing.TypedDict('AlignEpiAnatPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/align_epi_anat.py"]],
     "epi": InputPathType,
     "anat": InputPathType,
@@ -33,7 +33,7 @@ AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
     "ex_mode": typing.NotRequired[typing.Literal["quiet", "echo", "dry_run", "script"] | None],
     "overwrite": bool,
 })
-AlignEpiAnatPyParametersTagged = typing.TypedDict('AlignEpiAnatPyParametersTagged', {
+AlignEpiAnatPyParamsDictTagged = typing.TypedDict('AlignEpiAnatPyParamsDictTagged', {
     "@type": typing.Literal["afni/align_epi_anat.py"],
     "epi": InputPathType,
     "anat": InputPathType,
@@ -57,7 +57,7 @@ AlignEpiAnatPyParametersTagged = typing.TypedDict('AlignEpiAnatPyParametersTagge
 
 class AlignEpiAnatPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AlignEpiAnatPyParameters(...)`.
+    Output object returned when calling `AlignEpiAnatPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def align_epi_anat_py_params(
     volreg_method: typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None = None,
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,
     overwrite: bool = False,
-) -> AlignEpiAnatPyParametersTagged:
+) -> AlignEpiAnatPyParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def align_epi_anat_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AlignEpiAnatPyParameters` object.
+    `AlignEpiAnatPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def align_epi_anat_py_validate(
 
 
 def align_epi_anat_py_cargs(
-    params: AlignEpiAnatPyParameters,
+    params: AlignEpiAnatPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -298,7 +298,7 @@ def align_epi_anat_py_cargs(
 
 
 def align_epi_anat_py_outputs(
-    params: AlignEpiAnatPyParameters,
+    params: AlignEpiAnatPyParamsDict,
     execution: Execution,
 ) -> AlignEpiAnatPyOutputs:
     """
@@ -319,7 +319,7 @@ def align_epi_anat_py_outputs(
 
 
 def align_epi_anat_py_execute(
-    params: AlignEpiAnatPyParameters,
+    params: AlignEpiAnatPyParamsDict,
     runner: Runner | None = None,
 ) -> AlignEpiAnatPyOutputs:
     """
@@ -426,6 +426,8 @@ def align_epi_anat_py(
 __all__ = [
     "ALIGN_EPI_ANAT_PY_METADATA",
     "AlignEpiAnatPyOutputs",
+    "AlignEpiAnatPyParamsDict",
+    "AlignEpiAnatPyParamsDictTagged",
     "align_epi_anat_py",
     "align_epi_anat_py_execute",
     "align_epi_anat_py_params",

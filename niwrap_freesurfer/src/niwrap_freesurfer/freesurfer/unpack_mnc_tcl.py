@@ -13,13 +13,13 @@ UNPACK_MNC_TCL_METADATA = Metadata(
 )
 
 
-UnpackMncTclParameters = typing.TypedDict('UnpackMncTclParameters', {
+UnpackMncTclParamsDict = typing.TypedDict('UnpackMncTclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_mnc.tcl"]],
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],
 })
-UnpackMncTclParametersTagged = typing.TypedDict('UnpackMncTclParametersTagged', {
+UnpackMncTclParamsDictTagged = typing.TypedDict('UnpackMncTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpack_mnc.tcl"],
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ UnpackMncTclParametersTagged = typing.TypedDict('UnpackMncTclParametersTagged', 
 
 class UnpackMncTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnpackMncTclParameters(...)`.
+    Output object returned when calling `UnpackMncTclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def unpack_mnc_tcl_params(
     verbose: bool = False,
     output_dir: str | None = None,
     input_file: InputPathType | None = None,
-) -> UnpackMncTclParametersTagged:
+) -> UnpackMncTclParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def unpack_mnc_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnpackMncTclParameters` object.
+    `UnpackMncTclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def unpack_mnc_tcl_validate(
 
 
 def unpack_mnc_tcl_cargs(
-    params: UnpackMncTclParameters,
+    params: UnpackMncTclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def unpack_mnc_tcl_cargs(
 
 
 def unpack_mnc_tcl_outputs(
-    params: UnpackMncTclParameters,
+    params: UnpackMncTclParamsDict,
     execution: Execution,
 ) -> UnpackMncTclOutputs:
     """
@@ -138,7 +138,7 @@ def unpack_mnc_tcl_outputs(
 
 
 def unpack_mnc_tcl_execute(
-    params: UnpackMncTclParameters,
+    params: UnpackMncTclParamsDict,
     runner: Runner | None = None,
 ) -> UnpackMncTclOutputs:
     """
@@ -200,6 +200,8 @@ def unpack_mnc_tcl(
 __all__ = [
     "UNPACK_MNC_TCL_METADATA",
     "UnpackMncTclOutputs",
+    "UnpackMncTclParamsDict",
+    "UnpackMncTclParamsDictTagged",
     "unpack_mnc_tcl",
     "unpack_mnc_tcl_execute",
     "unpack_mnc_tcl_params",

@@ -13,7 +13,7 @@ V_3D_MVM_METADATA = Metadata(
 )
 
 
-V3dMvmParameters = typing.TypedDict('V3dMvmParameters', {
+V3dMvmParamsDict = typing.TypedDict('V3dMvmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMVM"]],
     "dbgArgs": typing.NotRequired[str | None],
     "prefix": str,
@@ -31,7 +31,7 @@ V3dMvmParameters = typing.TypedDict('V3dMvmParameters', {
     "glfCode": typing.NotRequired[str | None],
     "dataTable": str,
 })
-V3dMvmParametersTagged = typing.TypedDict('V3dMvmParametersTagged', {
+V3dMvmParamsDictTagged = typing.TypedDict('V3dMvmParamsDictTagged', {
     "@type": typing.Literal["afni/3dMVM"],
     "dbgArgs": typing.NotRequired[str | None],
     "prefix": str,
@@ -53,7 +53,7 @@ V3dMvmParametersTagged = typing.TypedDict('V3dMvmParametersTagged', {
 
 class V3dMvmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMvmParameters(...)`.
+    Output object returned when calling `V3dMvmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def v_3d_mvm_params(
     num_glf: int | None = None,
     glf_label: str | None = None,
     glf_code: str | None = None,
-) -> V3dMvmParametersTagged:
+) -> V3dMvmParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def v_3d_mvm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMvmParameters` object.
+    `V3dMvmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -199,7 +199,7 @@ def v_3d_mvm_validate(
 
 
 def v_3d_mvm_cargs(
-    params: V3dMvmParameters,
+    params: V3dMvmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def v_3d_mvm_cargs(
 
 
 def v_3d_mvm_outputs(
-    params: V3dMvmParameters,
+    params: V3dMvmParamsDict,
     execution: Execution,
 ) -> V3dMvmOutputs:
     """
@@ -307,7 +307,7 @@ def v_3d_mvm_outputs(
 
 
 def v_3d_mvm_execute(
-    params: V3dMvmParameters,
+    params: V3dMvmParamsDict,
     runner: Runner | None = None,
 ) -> V3dMvmOutputs:
     """
@@ -405,6 +405,8 @@ def v_3d_mvm(
 
 __all__ = [
     "V3dMvmOutputs",
+    "V3dMvmParamsDict",
+    "V3dMvmParamsDictTagged",
     "V_3D_MVM_METADATA",
     "v_3d_mvm",
     "v_3d_mvm_execute",

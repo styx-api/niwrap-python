@@ -12,47 +12,47 @@ METRIC_TFCE_METADATA = Metadata(
 )
 
 
-MetricTfcePresmoothParameters = typing.TypedDict('MetricTfcePresmoothParameters', {
+MetricTfcePresmoothParamsDict = typing.TypedDict('MetricTfcePresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-MetricTfcePresmoothParametersTagged = typing.TypedDict('MetricTfcePresmoothParametersTagged', {
+MetricTfcePresmoothParamsDictTagged = typing.TypedDict('MetricTfcePresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-MetricTfceParametersParameters = typing.TypedDict('MetricTfceParametersParameters', {
+MetricTfceParametersParamsDict = typing.TypedDict('MetricTfceParametersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["parameters"]],
     "E": float,
     "H": float,
 })
-MetricTfceParametersParametersTagged = typing.TypedDict('MetricTfceParametersParametersTagged', {
+MetricTfceParametersParamsDictTagged = typing.TypedDict('MetricTfceParametersParamsDictTagged', {
     "@type": typing.Literal["parameters"],
     "E": float,
     "H": float,
 })
 
 
-MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
+MetricTfceParamsDict = typing.TypedDict('MetricTfceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-tfce"]],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricTfcePresmoothParameters | None],
+    "presmooth": typing.NotRequired[MetricTfcePresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "parameters": typing.NotRequired[MetricTfceParametersParameters | None],
+    "parameters": typing.NotRequired[MetricTfceParametersParamsDict | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
-MetricTfceParametersTagged = typing.TypedDict('MetricTfceParametersTagged', {
+MetricTfceParamsDictTagged = typing.TypedDict('MetricTfceParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-tfce"],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricTfcePresmoothParameters | None],
+    "presmooth": typing.NotRequired[MetricTfcePresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "parameters": typing.NotRequired[MetricTfceParametersParameters | None],
+    "parameters": typing.NotRequired[MetricTfceParametersParamsDict | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
@@ -60,10 +60,10 @@ MetricTfceParametersTagged = typing.TypedDict('MetricTfceParametersTagged', {
 })
 
 
-def metric_tfce_presmooth_params(
+def metric_tfce_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> MetricTfcePresmoothParametersTagged:
+) -> MetricTfcePresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def metric_tfce_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricTfcePresmoothParameters` object.
+    `MetricTfcePresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def metric_tfce_presmooth_validate(
 
 
 def metric_tfce_presmooth_cargs(
-    params: MetricTfcePresmoothParameters,
+    params: MetricTfcePresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,10 +127,10 @@ def metric_tfce_presmooth_cargs(
     return cargs
 
 
-def metric_tfce_parameters_params(
+def metric_tfce_parameters(
     e: float,
     h: float,
-) -> MetricTfceParametersParametersTagged:
+) -> MetricTfceParametersParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def metric_tfce_parameters_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricTfceParametersParameters` object.
+    `MetricTfceParametersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def metric_tfce_parameters_validate(
 
 
 def metric_tfce_parameters_cargs(
-    params: MetricTfceParametersParameters,
+    params: MetricTfceParametersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def metric_tfce_parameters_cargs(
 
 class MetricTfceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricTfceParameters(...)`.
+    Output object returned when calling `MetricTfceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -209,9 +209,9 @@ def metric_tfce_params(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    presmooth: MetricTfcePresmoothParameters | None = None,
-    parameters: MetricTfceParametersParameters | None = None,
-) -> MetricTfceParametersTagged:
+    presmooth: MetricTfcePresmoothParamsDict | None = None,
+    parameters: MetricTfceParametersParamsDict | None = None,
+) -> MetricTfceParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def metric_tfce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricTfceParameters` object.
+    `MetricTfceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -293,7 +293,7 @@ def metric_tfce_validate(
 
 
 def metric_tfce_cargs(
-    params: MetricTfceParameters,
+    params: MetricTfceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -326,7 +326,7 @@ def metric_tfce_cargs(
 
 
 def metric_tfce_outputs(
-    params: MetricTfceParameters,
+    params: MetricTfceParamsDict,
     execution: Execution,
 ) -> MetricTfceOutputs:
     """
@@ -346,7 +346,7 @@ def metric_tfce_outputs(
 
 
 def metric_tfce_execute(
-    params: MetricTfceParameters,
+    params: MetricTfceParamsDict,
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
@@ -400,8 +400,8 @@ def metric_tfce(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    presmooth: MetricTfcePresmoothParameters | None = None,
-    parameters: MetricTfceParametersParameters | None = None,
+    presmooth: MetricTfcePresmoothParamsDict | None = None,
+    parameters: MetricTfceParametersParamsDict | None = None,
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
@@ -468,9 +468,15 @@ def metric_tfce(
 __all__ = [
     "METRIC_TFCE_METADATA",
     "MetricTfceOutputs",
+    "MetricTfceParametersParamsDict",
+    "MetricTfceParametersParamsDictTagged",
+    "MetricTfceParamsDict",
+    "MetricTfceParamsDictTagged",
+    "MetricTfcePresmoothParamsDict",
+    "MetricTfcePresmoothParamsDictTagged",
     "metric_tfce",
     "metric_tfce_execute",
-    "metric_tfce_parameters_params",
+    "metric_tfce_parameters",
     "metric_tfce_params",
-    "metric_tfce_presmooth_params",
+    "metric_tfce_presmooth",
 ]

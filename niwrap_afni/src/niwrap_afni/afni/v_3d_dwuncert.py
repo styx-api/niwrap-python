@@ -13,7 +13,7 @@ V_3D_DWUNCERT_METADATA = Metadata(
 )
 
 
-V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
+V3dDwuncertParamsDict = typing.TypedDict('V3dDwuncertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDWUncert"]],
     "input_file": InputPathType,
     "input_prefix": str,
@@ -25,7 +25,7 @@ V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
     "calc_thr_fa": typing.NotRequired[float | None],
     "csf_fa": typing.NotRequired[float | None],
 })
-V3dDwuncertParametersTagged = typing.TypedDict('V3dDwuncertParametersTagged', {
+V3dDwuncertParamsDictTagged = typing.TypedDict('V3dDwuncertParamsDictTagged', {
     "@type": typing.Literal["afni/3dDWUncert"],
     "input_file": InputPathType,
     "input_prefix": str,
@@ -41,7 +41,7 @@ V3dDwuncertParametersTagged = typing.TypedDict('V3dDwuncertParametersTagged', {
 
 class V3dDwuncertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDwuncertParameters(...)`.
+    Output object returned when calling `V3dDwuncertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_dwuncert_params(
     mask_file: InputPathType | None = None,
     calc_thr_fa: float | None = None,
     csf_fa: float | None = None,
-) -> V3dDwuncertParametersTagged:
+) -> V3dDwuncertParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_3d_dwuncert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDwuncertParameters` object.
+    `V3dDwuncertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def v_3d_dwuncert_validate(
 
 
 def v_3d_dwuncert_cargs(
-    params: V3dDwuncertParameters,
+    params: V3dDwuncertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def v_3d_dwuncert_cargs(
 
 
 def v_3d_dwuncert_outputs(
-    params: V3dDwuncertParameters,
+    params: V3dDwuncertParamsDict,
     execution: Execution,
 ) -> V3dDwuncertOutputs:
     """
@@ -223,7 +223,7 @@ def v_3d_dwuncert_outputs(
 
 
 def v_3d_dwuncert_execute(
-    params: V3dDwuncertParameters,
+    params: V3dDwuncertParamsDict,
     runner: Runner | None = None,
 ) -> V3dDwuncertOutputs:
     """
@@ -305,6 +305,8 @@ def v_3d_dwuncert(
 
 __all__ = [
     "V3dDwuncertOutputs",
+    "V3dDwuncertParamsDict",
+    "V3dDwuncertParamsDictTagged",
     "V_3D_DWUNCERT_METADATA",
     "v_3d_dwuncert",
     "v_3d_dwuncert_execute",

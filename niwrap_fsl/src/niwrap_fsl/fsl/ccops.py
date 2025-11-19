@@ -13,7 +13,7 @@ CCOPS_METADATA = Metadata(
 )
 
 
-CcopsParameters = typing.TypedDict('CcopsParameters', {
+CcopsParamsDict = typing.TypedDict('CcopsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ccops"]],
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ CcopsParameters = typing.TypedDict('CcopsParameters', {
     "nclusters": typing.NotRequired[float | None],
     "help": bool,
 })
-CcopsParametersTagged = typing.TypedDict('CcopsParametersTagged', {
+CcopsParamsDictTagged = typing.TypedDict('CcopsParamsDictTagged', {
     "@type": typing.Literal["fsl/ccops"],
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ CcopsParametersTagged = typing.TypedDict('CcopsParametersTagged', {
 
 class CcopsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CcopsParameters(...)`.
+    Output object returned when calling `CcopsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def ccops_params(
     scheme: str | None = None,
     nclusters: float | None = None,
     help_: bool = False,
-) -> CcopsParametersTagged:
+) -> CcopsParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def ccops_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CcopsParameters` object.
+    `CcopsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def ccops_validate(
 
 
 def ccops_cargs(
-    params: CcopsParameters,
+    params: CcopsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,7 +267,7 @@ def ccops_cargs(
 
 
 def ccops_outputs(
-    params: CcopsParameters,
+    params: CcopsParamsDict,
     execution: Execution,
 ) -> CcopsOutputs:
     """
@@ -287,7 +287,7 @@ def ccops_outputs(
 
 
 def ccops_execute(
-    params: CcopsParameters,
+    params: CcopsParamsDict,
     runner: Runner | None = None,
 ) -> CcopsOutputs:
     """
@@ -385,6 +385,8 @@ def ccops(
 __all__ = [
     "CCOPS_METADATA",
     "CcopsOutputs",
+    "CcopsParamsDict",
+    "CcopsParamsDictTagged",
     "ccops",
     "ccops_execute",
     "ccops_params",

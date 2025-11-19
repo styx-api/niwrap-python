@@ -13,13 +13,13 @@ IMAGES_EQUAL_METADATA = Metadata(
 )
 
 
-ImagesEqualParameters = typing.TypedDict('ImagesEqualParameters', {
+ImagesEqualParamsDict = typing.TypedDict('ImagesEqualParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/images_equal"]],
     "file_a": InputPathType,
     "file_b": InputPathType,
     "all_flag": bool,
 })
-ImagesEqualParametersTagged = typing.TypedDict('ImagesEqualParametersTagged', {
+ImagesEqualParamsDictTagged = typing.TypedDict('ImagesEqualParamsDictTagged', {
     "@type": typing.Literal["afni/images_equal"],
     "file_a": InputPathType,
     "file_b": InputPathType,
@@ -29,7 +29,7 @@ ImagesEqualParametersTagged = typing.TypedDict('ImagesEqualParametersTagged', {
 
 class ImagesEqualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImagesEqualParameters(...)`.
+    Output object returned when calling `ImagesEqualParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def images_equal_params(
     file_a: InputPathType,
     file_b: InputPathType,
     all_flag: bool = False,
-) -> ImagesEqualParametersTagged:
+) -> ImagesEqualParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def images_equal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImagesEqualParameters` object.
+    `ImagesEqualParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def images_equal_validate(
 
 
 def images_equal_cargs(
-    params: ImagesEqualParameters,
+    params: ImagesEqualParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def images_equal_cargs(
 
 
 def images_equal_outputs(
-    params: ImagesEqualParameters,
+    params: ImagesEqualParamsDict,
     execution: Execution,
 ) -> ImagesEqualOutputs:
     """
@@ -131,7 +131,7 @@ def images_equal_outputs(
 
 
 def images_equal_execute(
-    params: ImagesEqualParameters,
+    params: ImagesEqualParamsDict,
     runner: Runner | None = None,
 ) -> ImagesEqualOutputs:
     """
@@ -194,6 +194,8 @@ def images_equal(
 __all__ = [
     "IMAGES_EQUAL_METADATA",
     "ImagesEqualOutputs",
+    "ImagesEqualParamsDict",
+    "ImagesEqualParamsDictTagged",
     "images_equal",
     "images_equal_execute",
     "images_equal_params",

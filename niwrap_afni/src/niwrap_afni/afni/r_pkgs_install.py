@@ -13,7 +13,7 @@ R_PKGS_INSTALL_METADATA = Metadata(
 )
 
 
-RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
+RPkgsInstallParamsDict = typing.TypedDict('RPkgsInstallParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/rPkgsInstall"]],
     "packages": str,
     "download_site": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
     "update": bool,
     "remove": bool,
 })
-RPkgsInstallParametersTagged = typing.TypedDict('RPkgsInstallParametersTagged', {
+RPkgsInstallParamsDictTagged = typing.TypedDict('RPkgsInstallParamsDictTagged', {
     "@type": typing.Literal["afni/rPkgsInstall"],
     "packages": str,
     "download_site": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ RPkgsInstallParametersTagged = typing.TypedDict('RPkgsInstallParametersTagged', 
 
 class RPkgsInstallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RPkgsInstallParameters(...)`.
+    Output object returned when calling `RPkgsInstallParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def r_pkgs_install_params(
     check: bool = False,
     update_: bool = False,
     remove: bool = False,
-) -> RPkgsInstallParametersTagged:
+) -> RPkgsInstallParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def r_pkgs_install_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RPkgsInstallParameters` object.
+    `RPkgsInstallParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def r_pkgs_install_validate(
 
 
 def r_pkgs_install_cargs(
-    params: RPkgsInstallParameters,
+    params: RPkgsInstallParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def r_pkgs_install_cargs(
 
 
 def r_pkgs_install_outputs(
-    params: RPkgsInstallParameters,
+    params: RPkgsInstallParamsDict,
     execution: Execution,
 ) -> RPkgsInstallOutputs:
     """
@@ -163,7 +163,7 @@ def r_pkgs_install_outputs(
 
 
 def r_pkgs_install_execute(
-    params: RPkgsInstallParameters,
+    params: RPkgsInstallParamsDict,
     runner: Runner | None = None,
 ) -> RPkgsInstallOutputs:
     """
@@ -234,6 +234,8 @@ def r_pkgs_install(
 
 __all__ = [
     "RPkgsInstallOutputs",
+    "RPkgsInstallParamsDict",
+    "RPkgsInstallParamsDictTagged",
     "R_PKGS_INSTALL_METADATA",
     "r_pkgs_install",
     "r_pkgs_install_execute",

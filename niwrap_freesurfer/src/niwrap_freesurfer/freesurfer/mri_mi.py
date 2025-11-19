@@ -13,14 +13,14 @@ MRI_MI_METADATA = Metadata(
 )
 
 
-MriMiParameters = typing.TypedDict('MriMiParameters', {
+MriMiParamsDict = typing.TypedDict('MriMiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mi"]],
     "input_file1": InputPathType,
     "input_file2": InputPathType,
     "bins": typing.NotRequired[str | None],
     "silent": bool,
 })
-MriMiParametersTagged = typing.TypedDict('MriMiParametersTagged', {
+MriMiParamsDictTagged = typing.TypedDict('MriMiParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mi"],
     "input_file1": InputPathType,
     "input_file2": InputPathType,
@@ -31,7 +31,7 @@ MriMiParametersTagged = typing.TypedDict('MriMiParametersTagged', {
 
 class MriMiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMiParameters(...)`.
+    Output object returned when calling `MriMiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mri_mi_params(
     input_file2: InputPathType,
     bins: str | None = None,
     silent: bool = False,
-) -> MriMiParametersTagged:
+) -> MriMiParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_mi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMiParameters` object.
+    `MriMiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def mri_mi_validate(
 
 
 def mri_mi_cargs(
-    params: MriMiParameters,
+    params: MriMiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def mri_mi_cargs(
 
 
 def mri_mi_outputs(
-    params: MriMiParameters,
+    params: MriMiParamsDict,
     execution: Execution,
 ) -> MriMiOutputs:
     """
@@ -142,7 +142,7 @@ def mri_mi_outputs(
 
 
 def mri_mi_execute(
-    params: MriMiParameters,
+    params: MriMiParamsDict,
     runner: Runner | None = None,
 ) -> MriMiOutputs:
     """
@@ -208,6 +208,8 @@ def mri_mi(
 __all__ = [
     "MRI_MI_METADATA",
     "MriMiOutputs",
+    "MriMiParamsDict",
+    "MriMiParamsDictTagged",
     "mri_mi",
     "mri_mi_execute",
     "mri_mi_params",

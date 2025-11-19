@@ -13,7 +13,7 @@ PULSE_METADATA = Metadata(
 )
 
 
-PulseParameters = typing.TypedDict('PulseParameters', {
+PulseParamsDict = typing.TypedDict('PulseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pulse"]],
     "input_file": InputPathType,
     "output_base": str,
@@ -41,7 +41,7 @@ PulseParameters = typing.TypedDict('PulseParameters', {
     "kcoord_flag": bool,
     "cover": typing.NotRequired[float | None],
 })
-PulseParametersTagged = typing.TypedDict('PulseParametersTagged', {
+PulseParamsDictTagged = typing.TypedDict('PulseParamsDictTagged', {
     "@type": typing.Literal["fsl/pulse"],
     "input_file": InputPathType,
     "output_base": str,
@@ -73,7 +73,7 @@ PulseParametersTagged = typing.TypedDict('PulseParametersTagged', {
 
 class PulseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PulseParameters(...)`.
+    Output object returned when calling `PulseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def pulse_params(
     verbose_flag: bool = False,
     kcoord_flag: bool = False,
     cover: float | None = None,
-) -> PulseParametersTagged:
+) -> PulseParamsDictTagged:
     """
     Build parameters.
     
@@ -205,7 +205,7 @@ def pulse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PulseParameters` object.
+    `PulseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -296,7 +296,7 @@ def pulse_validate(
 
 
 def pulse_cargs(
-    params: PulseParameters,
+    params: PulseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -431,7 +431,7 @@ def pulse_cargs(
 
 
 def pulse_outputs(
-    params: PulseParameters,
+    params: PulseParamsDict,
     execution: Execution,
 ) -> PulseOutputs:
     """
@@ -451,7 +451,7 @@ def pulse_outputs(
 
 
 def pulse_execute(
-    params: PulseParameters,
+    params: PulseParamsDict,
     runner: Runner | None = None,
 ) -> PulseOutputs:
     """
@@ -587,6 +587,8 @@ def pulse(
 __all__ = [
     "PULSE_METADATA",
     "PulseOutputs",
+    "PulseParamsDict",
+    "PulseParamsDictTagged",
     "pulse",
     "pulse_execute",
     "pulse_params",

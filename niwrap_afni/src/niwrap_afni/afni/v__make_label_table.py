@@ -13,7 +13,7 @@ V__MAKE_LABEL_TABLE_METADATA = Metadata(
 )
 
 
-VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
+VMakeLabelTableParamsDict = typing.TypedDict('VMakeLabelTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@MakeLabelTable"]],
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
     "all_opts": bool,
     "h_find": typing.NotRequired[str | None],
 })
-VMakeLabelTableParametersTagged = typing.TypedDict('VMakeLabelTableParametersTagged', {
+VMakeLabelTableParamsDictTagged = typing.TypedDict('VMakeLabelTableParamsDictTagged', {
     "@type": typing.Literal["afni/@MakeLabelTable"],
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
@@ -93,7 +93,7 @@ VMakeLabelTableParametersTagged = typing.TypedDict('VMakeLabelTableParametersTag
 
 class VMakeLabelTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMakeLabelTableParameters(...)`.
+    Output object returned when calling `VMakeLabelTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +143,7 @@ def v__make_label_table_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find: str | None = None,
-) -> VMakeLabelTableParametersTagged:
+) -> VMakeLabelTableParamsDictTagged:
     """
     Build parameters.
     
@@ -261,7 +261,7 @@ def v__make_label_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMakeLabelTableParameters` object.
+    `VMakeLabelTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -403,7 +403,7 @@ def v__make_label_table_validate(
 
 
 def v__make_label_table_cargs(
-    params: VMakeLabelTableParameters,
+    params: VMakeLabelTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -565,7 +565,7 @@ def v__make_label_table_cargs(
 
 
 def v__make_label_table_outputs(
-    params: VMakeLabelTableParameters,
+    params: VMakeLabelTableParamsDict,
     execution: Execution,
 ) -> VMakeLabelTableOutputs:
     """
@@ -588,7 +588,7 @@ def v__make_label_table_outputs(
 
 
 def v__make_label_table_execute(
-    params: VMakeLabelTableParameters,
+    params: VMakeLabelTableParamsDict,
     runner: Runner | None = None,
 ) -> VMakeLabelTableOutputs:
     """
@@ -750,6 +750,8 @@ def v__make_label_table(
 
 __all__ = [
     "VMakeLabelTableOutputs",
+    "VMakeLabelTableParamsDict",
+    "VMakeLabelTableParamsDictTagged",
     "V__MAKE_LABEL_TABLE_METADATA",
     "v__make_label_table",
     "v__make_label_table_execute",

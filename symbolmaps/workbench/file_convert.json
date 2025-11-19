@@ -3,7 +3,7 @@
   "properties": {
     "border-version-convert": {
       "var_param": "border_version_convert",
-      "fn_struct_make_params": "file_convert_border_version_convert_params",
+      "fn_struct_make_params": "file_convert_border_version_convert",
       "properties": {
         "border-in": {
           "var_param": "border_in"
@@ -21,7 +21,7 @@
     },
     "nifti-version-convert": {
       "var_param": "nifti_version_convert",
-      "fn_struct_make_params": "file_convert_nifti_version_convert_params",
+      "fn_struct_make_params": "file_convert_nifti_version_convert",
       "properties": {
         "input": {
           "var_param": "input_"
@@ -36,7 +36,7 @@
     },
     "cifti-version-convert": {
       "var_param": "cifti_version_convert",
-      "fn_struct_make_params": "file_convert_cifti_version_convert_params",
+      "fn_struct_make_params": "file_convert_cifti_version_convert",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"

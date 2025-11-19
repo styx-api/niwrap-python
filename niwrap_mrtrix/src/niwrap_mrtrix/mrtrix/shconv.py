@@ -13,63 +13,63 @@ SHCONV_METADATA = Metadata(
 )
 
 
-ShconvVariousStringParameters = typing.TypedDict('ShconvVariousStringParameters', {
+ShconvVariousStringParamsDict = typing.TypedDict('ShconvVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-ShconvVariousStringParametersTagged = typing.TypedDict('ShconvVariousStringParametersTagged', {
+ShconvVariousStringParamsDictTagged = typing.TypedDict('ShconvVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-ShconvVariousFileParameters = typing.TypedDict('ShconvVariousFileParameters', {
+ShconvVariousFileParamsDict = typing.TypedDict('ShconvVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-ShconvVariousFileParametersTagged = typing.TypedDict('ShconvVariousFileParametersTagged', {
+ShconvVariousFileParamsDictTagged = typing.TypedDict('ShconvVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-ShconvConfigParameters = typing.TypedDict('ShconvConfigParameters', {
+ShconvConfigParamsDict = typing.TypedDict('ShconvConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-ShconvConfigParametersTagged = typing.TypedDict('ShconvConfigParametersTagged', {
+ShconvConfigParamsDictTagged = typing.TypedDict('ShconvConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-ShconvParameters = typing.TypedDict('ShconvParameters', {
+ShconvParamsDict = typing.TypedDict('ShconvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/shconv"]],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParamsDictTagged, ShconvVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ShconvConfigParameters] | None],
+    "config": typing.NotRequired[list[ShconvConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "odf_response": list[str],
     "SH_out": str,
 })
-ShconvParametersTagged = typing.TypedDict('ShconvParametersTagged', {
+ShconvParamsDictTagged = typing.TypedDict('ShconvParamsDictTagged', {
     "@type": typing.Literal["mrtrix/shconv"],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParamsDictTagged, ShconvVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ShconvConfigParameters] | None],
+    "config": typing.NotRequired[list[ShconvConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "odf_response": list[str],
@@ -111,9 +111,9 @@ def shconv_strides_validate_dyn_fn(
     }.get(t)
 
 
-def shconv_various_string_params(
+def shconv_various_string(
     obj: str,
-) -> ShconvVariousStringParametersTagged:
+) -> ShconvVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def shconv_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShconvVariousStringParameters` object.
+    `ShconvVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -148,7 +148,7 @@ def shconv_various_string_validate(
 
 
 def shconv_various_string_cargs(
-    params: ShconvVariousStringParameters,
+    params: ShconvVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,9 +165,9 @@ def shconv_various_string_cargs(
     return cargs
 
 
-def shconv_various_file_params(
+def shconv_various_file(
     obj: InputPathType,
-) -> ShconvVariousFileParametersTagged:
+) -> ShconvVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def shconv_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShconvVariousFileParameters` object.
+    `ShconvVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -202,7 +202,7 @@ def shconv_various_file_validate(
 
 
 def shconv_various_file_cargs(
-    params: ShconvVariousFileParameters,
+    params: ShconvVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,10 +219,10 @@ def shconv_various_file_cargs(
     return cargs
 
 
-def shconv_config_params(
+def shconv_config(
     key: str,
     value: str,
-) -> ShconvConfigParametersTagged:
+) -> ShconvConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -245,7 +245,7 @@ def shconv_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShconvConfigParameters` object.
+    `ShconvConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def shconv_config_validate(
 
 
 def shconv_config_cargs(
-    params: ShconvConfigParameters,
+    params: ShconvConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def shconv_config_cargs(
 
 class ShconvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ShconvParameters(...)`.
+    Output object returned when calling `ShconvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -296,16 +296,16 @@ def shconv_params(
     odf_response: list[str],
     sh_out: str,
     datatype: str | None = None,
-    strides: typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None = None,
+    strides: typing.Union[ShconvVariousStringParamsDictTagged, ShconvVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ShconvConfigParameters] | None = None,
+    config: list[ShconvConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ShconvParametersTagged:
+) -> ShconvParamsDictTagged:
     """
     Build parameters.
     
@@ -364,7 +364,7 @@ def shconv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShconvParameters` object.
+    `ShconvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -379,6 +379,8 @@ def shconv_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         shconv_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -401,7 +403,7 @@ def shconv_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ShconvConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ShconvConfigParamsDict] | None`')
         for e in params["config"]:
             shconv_config_validate(e)
     if params.get("help", False) is None:
@@ -426,7 +428,7 @@ def shconv_validate(
 
 
 def shconv_cargs(
-    params: ShconvParameters,
+    params: ShconvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -475,7 +477,7 @@ def shconv_cargs(
 
 
 def shconv_outputs(
-    params: ShconvParameters,
+    params: ShconvParamsDict,
     execution: Execution,
 ) -> ShconvOutputs:
     """
@@ -495,7 +497,7 @@ def shconv_outputs(
 
 
 def shconv_execute(
-    params: ShconvParameters,
+    params: ShconvParamsDict,
     runner: Runner | None = None,
 ) -> ShconvOutputs:
     """
@@ -550,13 +552,13 @@ def shconv(
     odf_response: list[str],
     sh_out: str,
     datatype: str | None = None,
-    strides: typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None = None,
+    strides: typing.Union[ShconvVariousStringParamsDictTagged, ShconvVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ShconvConfigParameters] | None = None,
+    config: list[ShconvConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -641,11 +643,19 @@ def shconv(
 
 __all__ = [
     "SHCONV_METADATA",
+    "ShconvConfigParamsDict",
+    "ShconvConfigParamsDictTagged",
     "ShconvOutputs",
+    "ShconvParamsDict",
+    "ShconvParamsDictTagged",
+    "ShconvVariousFileParamsDict",
+    "ShconvVariousFileParamsDictTagged",
+    "ShconvVariousStringParamsDict",
+    "ShconvVariousStringParamsDictTagged",
     "shconv",
-    "shconv_config_params",
+    "shconv_config",
     "shconv_execute",
     "shconv_params",
-    "shconv_various_file_params",
-    "shconv_various_string_params",
+    "shconv_various_file",
+    "shconv_various_string",
 ]

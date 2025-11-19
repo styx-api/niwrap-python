@@ -13,7 +13,7 @@ BIANCA_METADATA = Metadata(
 )
 
 
-BiancaParameters = typing.TypedDict('BiancaParameters', {
+BiancaParamsDict = typing.TypedDict('BiancaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bianca"]],
     "master_file": InputPathType,
     "label_feature_num": float,
@@ -33,7 +33,7 @@ BiancaParameters = typing.TypedDict('BiancaParameters', {
     "verbose_flag": bool,
     "out_name": typing.NotRequired[str | None],
 })
-BiancaParametersTagged = typing.TypedDict('BiancaParametersTagged', {
+BiancaParamsDictTagged = typing.TypedDict('BiancaParamsDictTagged', {
     "@type": typing.Literal["fsl/bianca"],
     "master_file": InputPathType,
     "label_feature_num": float,
@@ -57,7 +57,7 @@ BiancaParametersTagged = typing.TypedDict('BiancaParametersTagged', {
 
 class BiancaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BiancaParameters(...)`.
+    Output object returned when calling `BiancaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def bianca_params(
     save_classifier_data: str | None = None,
     verbose_flag: bool = False,
     out_name: str | None = None,
-) -> BiancaParametersTagged:
+) -> BiancaParamsDictTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def bianca_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BiancaParameters` object.
+    `BiancaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def bianca_validate(
 
 
 def bianca_cargs(
-    params: BiancaParameters,
+    params: BiancaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -278,7 +278,7 @@ def bianca_cargs(
 
 
 def bianca_outputs(
-    params: BiancaParameters,
+    params: BiancaParamsDict,
     execution: Execution,
 ) -> BiancaOutputs:
     """
@@ -298,7 +298,7 @@ def bianca_outputs(
 
 
 def bianca_execute(
-    params: BiancaParameters,
+    params: BiancaParamsDict,
     runner: Runner | None = None,
 ) -> BiancaOutputs:
     """
@@ -415,6 +415,8 @@ def bianca(
 __all__ = [
     "BIANCA_METADATA",
     "BiancaOutputs",
+    "BiancaParamsDict",
+    "BiancaParamsDictTagged",
     "bianca",
     "bianca_execute",
     "bianca_params",

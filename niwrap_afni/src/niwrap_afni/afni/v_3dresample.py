@@ -13,7 +13,7 @@ V_3DRESAMPLE_METADATA = Metadata(
 )
 
 
-V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
+V3dresampleParamsDict = typing.TypedDict('V3dresampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dresample"]],
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
     "resample_mode": typing.NotRequired[typing.Literal["NN", "Li", "Cu", "Bk"] | None],
     "voxel_size": typing.NotRequired[list[float] | None],
 })
-V3dresampleParametersTagged = typing.TypedDict('V3dresampleParametersTagged', {
+V3dresampleParamsDictTagged = typing.TypedDict('V3dresampleParamsDictTagged', {
     "@type": typing.Literal["afni/3dresample"],
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ V3dresampleParametersTagged = typing.TypedDict('V3dresampleParametersTagged', {
 
 class V3dresampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dresampleParameters(...)`.
+    Output object returned when calling `V3dresampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v_3dresample_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     resample_mode: typing.Literal["NN", "Li", "Cu", "Bk"] | None = None,
     voxel_size: list[float] | None = None,
-) -> V3dresampleParametersTagged:
+) -> V3dresampleParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def v_3dresample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dresampleParameters` object.
+    `V3dresampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def v_3dresample_validate(
 
 
 def v_3dresample_cargs(
-    params: V3dresampleParameters,
+    params: V3dresampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,7 +185,7 @@ def v_3dresample_cargs(
 
 
 def v_3dresample_outputs(
-    params: V3dresampleParameters,
+    params: V3dresampleParamsDict,
     execution: Execution,
 ) -> V3dresampleOutputs:
     """
@@ -205,7 +205,7 @@ def v_3dresample_outputs(
 
 
 def v_3dresample_execute(
-    params: V3dresampleParameters,
+    params: V3dresampleParamsDict,
     runner: Runner | None = None,
 ) -> V3dresampleOutputs:
     """
@@ -280,6 +280,8 @@ def v_3dresample(
 
 __all__ = [
     "V3dresampleOutputs",
+    "V3dresampleParamsDict",
+    "V3dresampleParamsDictTagged",
     "V_3DRESAMPLE_METADATA",
     "v_3dresample",
     "v_3dresample_execute",

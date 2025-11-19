@@ -13,7 +13,7 @@ MRISP_PAINT_METADATA = Metadata(
 )
 
 
-MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
+MrispPaintParamsDict = typing.TypedDict('MrispPaintParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_paint"]],
     "template_file": InputPathType,
     "input_surface": InputPathType,
@@ -32,7 +32,7 @@ MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
     "version_flag": bool,
     "diag_write_flag": bool,
 })
-MrispPaintParametersTagged = typing.TypedDict('MrispPaintParametersTagged', {
+MrispPaintParamsDictTagged = typing.TypedDict('MrispPaintParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mrisp_paint"],
     "template_file": InputPathType,
     "input_surface": InputPathType,
@@ -55,7 +55,7 @@ MrispPaintParametersTagged = typing.TypedDict('MrispPaintParametersTagged', {
 
 class MrispPaintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrispPaintParameters(...)`.
+    Output object returned when calling `MrispPaintParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def mrisp_paint_params(
     diag_vertex: float | None = None,
     version_flag: bool = False,
     diag_write_flag: bool = False,
-) -> MrispPaintParametersTagged:
+) -> MrispPaintParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def mrisp_paint_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrispPaintParameters` object.
+    `MrispPaintParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -212,7 +212,7 @@ def mrisp_paint_validate(
 
 
 def mrisp_paint_cargs(
-    params: MrispPaintParameters,
+    params: MrispPaintParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def mrisp_paint_cargs(
 
 
 def mrisp_paint_outputs(
-    params: MrispPaintParameters,
+    params: MrispPaintParamsDict,
     execution: Execution,
 ) -> MrispPaintOutputs:
     """
@@ -297,7 +297,7 @@ def mrisp_paint_outputs(
 
 
 def mrisp_paint_execute(
-    params: MrispPaintParameters,
+    params: MrispPaintParamsDict,
     runner: Runner | None = None,
 ) -> MrispPaintOutputs:
     """
@@ -406,6 +406,8 @@ def mrisp_paint(
 __all__ = [
     "MRISP_PAINT_METADATA",
     "MrispPaintOutputs",
+    "MrispPaintParamsDict",
+    "MrispPaintParamsDictTagged",
     "mrisp_paint",
     "mrisp_paint_execute",
     "mrisp_paint_params",

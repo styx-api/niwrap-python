@@ -13,7 +13,7 @@ REG_ALADIN_METADATA = Metadata(
 )
 
 
-RegAladinParameters = typing.TypedDict('RegAladinParameters', {
+RegAladinParamsDict = typing.TypedDict('RegAladinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_aladin"]],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -29,7 +29,7 @@ RegAladinParameters = typing.TypedDict('RegAladinParameters', {
     "percent_block": typing.NotRequired[float | None],
     "percent_inlier": typing.NotRequired[float | None],
 })
-RegAladinParametersTagged = typing.TypedDict('RegAladinParametersTagged', {
+RegAladinParamsDictTagged = typing.TypedDict('RegAladinParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_aladin"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -49,7 +49,7 @@ RegAladinParametersTagged = typing.TypedDict('RegAladinParametersTagged', {
 
 class RegAladinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegAladinParameters(...)`.
+    Output object returned when calling `RegAladinParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def reg_aladin_params(
     use_nifti_origin: bool = False,
     percent_block: float | None = None,
     percent_inlier: float | None = None,
-) -> RegAladinParametersTagged:
+) -> RegAladinParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def reg_aladin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegAladinParameters` object.
+    `RegAladinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -179,7 +179,7 @@ def reg_aladin_validate(
 
 
 def reg_aladin_cargs(
-    params: RegAladinParameters,
+    params: RegAladinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def reg_aladin_cargs(
 
 
 def reg_aladin_outputs(
-    params: RegAladinParameters,
+    params: RegAladinParamsDict,
     execution: Execution,
 ) -> RegAladinOutputs:
     """
@@ -268,7 +268,7 @@ def reg_aladin_outputs(
 
 
 def reg_aladin_execute(
-    params: RegAladinParameters,
+    params: RegAladinParamsDict,
     runner: Runner | None = None,
 ) -> RegAladinOutputs:
     """
@@ -365,6 +365,8 @@ def reg_aladin(
 __all__ = [
     "REG_ALADIN_METADATA",
     "RegAladinOutputs",
+    "RegAladinParamsDict",
+    "RegAladinParamsDictTagged",
     "reg_aladin",
     "reg_aladin_execute",
     "reg_aladin_params",

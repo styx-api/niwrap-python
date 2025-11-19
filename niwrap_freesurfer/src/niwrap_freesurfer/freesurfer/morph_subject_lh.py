@@ -13,11 +13,11 @@ MORPH_SUBJECT_LH_METADATA = Metadata(
 )
 
 
-MorphSubjectLhParameters = typing.TypedDict('MorphSubjectLhParameters', {
+MorphSubjectLhParamsDict = typing.TypedDict('MorphSubjectLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/morph_subject-lh"]],
     "subject_id": str,
 })
-MorphSubjectLhParametersTagged = typing.TypedDict('MorphSubjectLhParametersTagged', {
+MorphSubjectLhParamsDictTagged = typing.TypedDict('MorphSubjectLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_subject-lh"],
     "subject_id": str,
 })
@@ -25,7 +25,7 @@ MorphSubjectLhParametersTagged = typing.TypedDict('MorphSubjectLhParametersTagge
 
 class MorphSubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphSubjectLhParameters(...)`.
+    Output object returned when calling `MorphSubjectLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MorphSubjectLhOutputs(typing.NamedTuple):
 
 def morph_subject_lh_params(
     subject_id: str,
-) -> MorphSubjectLhParametersTagged:
+) -> MorphSubjectLhParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def morph_subject_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphSubjectLhParameters` object.
+    `MorphSubjectLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def morph_subject_lh_validate(
 
 
 def morph_subject_lh_cargs(
-    params: MorphSubjectLhParameters,
+    params: MorphSubjectLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def morph_subject_lh_cargs(
 
 
 def morph_subject_lh_outputs(
-    params: MorphSubjectLhParameters,
+    params: MorphSubjectLhParamsDict,
     execution: Execution,
 ) -> MorphSubjectLhOutputs:
     """
@@ -109,7 +109,7 @@ def morph_subject_lh_outputs(
 
 
 def morph_subject_lh_execute(
-    params: MorphSubjectLhParameters,
+    params: MorphSubjectLhParamsDict,
     runner: Runner | None = None,
 ) -> MorphSubjectLhOutputs:
     """
@@ -165,6 +165,8 @@ def morph_subject_lh(
 __all__ = [
     "MORPH_SUBJECT_LH_METADATA",
     "MorphSubjectLhOutputs",
+    "MorphSubjectLhParamsDict",
+    "MorphSubjectLhParamsDictTagged",
     "morph_subject_lh",
     "morph_subject_lh_execute",
     "morph_subject_lh_params",

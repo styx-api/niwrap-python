@@ -12,12 +12,12 @@ SURFACE_FLIP_LR_METADATA = Metadata(
 )
 
 
-SurfaceFlipLrParameters = typing.TypedDict('SurfaceFlipLrParameters', {
+SurfaceFlipLrParamsDict = typing.TypedDict('SurfaceFlipLrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-lr"]],
     "surface-out": str,
     "surface": InputPathType,
 })
-SurfaceFlipLrParametersTagged = typing.TypedDict('SurfaceFlipLrParametersTagged', {
+SurfaceFlipLrParamsDictTagged = typing.TypedDict('SurfaceFlipLrParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-flip-lr"],
     "surface-out": str,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfaceFlipLrParametersTagged = typing.TypedDict('SurfaceFlipLrParametersTagged'
 
 class SurfaceFlipLrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceFlipLrParameters(...)`.
+    Output object returned when calling `SurfaceFlipLrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceFlipLrOutputs(typing.NamedTuple):
 def surface_flip_lr_params(
     surface_out: str,
     surface: InputPathType,
-) -> SurfaceFlipLrParametersTagged:
+) -> SurfaceFlipLrParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_flip_lr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceFlipLrParameters` object.
+    `SurfaceFlipLrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_flip_lr_validate(
 
 
 def surface_flip_lr_cargs(
-    params: SurfaceFlipLrParameters,
+    params: SurfaceFlipLrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_flip_lr_cargs(
 
 
 def surface_flip_lr_outputs(
-    params: SurfaceFlipLrParameters,
+    params: SurfaceFlipLrParamsDict,
     execution: Execution,
 ) -> SurfaceFlipLrOutputs:
     """
@@ -121,7 +121,7 @@ def surface_flip_lr_outputs(
 
 
 def surface_flip_lr_execute(
-    params: SurfaceFlipLrParameters,
+    params: SurfaceFlipLrParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
@@ -180,6 +180,8 @@ def surface_flip_lr(
 __all__ = [
     "SURFACE_FLIP_LR_METADATA",
     "SurfaceFlipLrOutputs",
+    "SurfaceFlipLrParamsDict",
+    "SurfaceFlipLrParamsDictTagged",
     "surface_flip_lr",
     "surface_flip_lr_execute",
     "surface_flip_lr_params",

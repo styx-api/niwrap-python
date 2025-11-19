@@ -13,14 +13,14 @@ MRIS_SEGMENTATION_STATS_METADATA = Metadata(
 )
 
 
-MrisSegmentationStatsParameters = typing.TypedDict('MrisSegmentationStatsParameters', {
+MrisSegmentationStatsParamsDict = typing.TypedDict('MrisSegmentationStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segmentation_stats"]],
     "overlay_name": str,
     "segmentation_label_name": str,
     "subjects": list[str],
     "roc_file": str,
 })
-MrisSegmentationStatsParametersTagged = typing.TypedDict('MrisSegmentationStatsParametersTagged', {
+MrisSegmentationStatsParamsDictTagged = typing.TypedDict('MrisSegmentationStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_segmentation_stats"],
     "overlay_name": str,
     "segmentation_label_name": str,
@@ -31,7 +31,7 @@ MrisSegmentationStatsParametersTagged = typing.TypedDict('MrisSegmentationStatsP
 
 class MrisSegmentationStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSegmentationStatsParameters(...)`.
+    Output object returned when calling `MrisSegmentationStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_segmentation_stats_params(
     segmentation_label_name: str,
     subjects: list[str],
     roc_file: str,
-) -> MrisSegmentationStatsParametersTagged:
+) -> MrisSegmentationStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mris_segmentation_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSegmentationStatsParameters` object.
+    `MrisSegmentationStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def mris_segmentation_stats_validate(
 
 
 def mris_segmentation_stats_cargs(
-    params: MrisSegmentationStatsParameters,
+    params: MrisSegmentationStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def mris_segmentation_stats_cargs(
 
 
 def mris_segmentation_stats_outputs(
-    params: MrisSegmentationStatsParameters,
+    params: MrisSegmentationStatsParamsDict,
     execution: Execution,
 ) -> MrisSegmentationStatsOutputs:
     """
@@ -142,7 +142,7 @@ def mris_segmentation_stats_outputs(
 
 
 def mris_segmentation_stats_execute(
-    params: MrisSegmentationStatsParameters,
+    params: MrisSegmentationStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisSegmentationStatsOutputs:
     """
@@ -207,6 +207,8 @@ def mris_segmentation_stats(
 __all__ = [
     "MRIS_SEGMENTATION_STATS_METADATA",
     "MrisSegmentationStatsOutputs",
+    "MrisSegmentationStatsParamsDict",
+    "MrisSegmentationStatsParamsDictTagged",
     "mris_segmentation_stats",
     "mris_segmentation_stats_execute",
     "mris_segmentation_stats_params",

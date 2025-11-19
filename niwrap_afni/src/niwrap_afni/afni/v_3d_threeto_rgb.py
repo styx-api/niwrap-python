@@ -13,7 +13,7 @@ V_3D_THREETO_RGB_METADATA = Metadata(
 )
 
 
-V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
+V3dThreetoRgbParamsDict = typing.TypedDict('V3dThreetoRgbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dThreetoRGB"]],
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
@@ -24,7 +24,7 @@ V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
     "input_dataset2": typing.NotRequired[InputPathType | None],
     "input_dataset3": typing.NotRequired[InputPathType | None],
 })
-V3dThreetoRgbParametersTagged = typing.TypedDict('V3dThreetoRgbParametersTagged', {
+V3dThreetoRgbParamsDictTagged = typing.TypedDict('V3dThreetoRgbParamsDictTagged', {
     "@type": typing.Literal["afni/3dThreetoRGB"],
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ V3dThreetoRgbParametersTagged = typing.TypedDict('V3dThreetoRgbParametersTagged'
 
 class V3dThreetoRgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dThreetoRgbParameters(...)`.
+    Output object returned when calling `V3dThreetoRgbParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v_3d_threeto_rgb_params(
     anat: bool = False,
     input_dataset2: InputPathType | None = None,
     input_dataset3: InputPathType | None = None,
-) -> V3dThreetoRgbParametersTagged:
+) -> V3dThreetoRgbParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def v_3d_threeto_rgb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dThreetoRgbParameters` object.
+    `V3dThreetoRgbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def v_3d_threeto_rgb_validate(
 
 
 def v_3d_threeto_rgb_cargs(
-    params: V3dThreetoRgbParameters,
+    params: V3dThreetoRgbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def v_3d_threeto_rgb_cargs(
 
 
 def v_3d_threeto_rgb_outputs(
-    params: V3dThreetoRgbParameters,
+    params: V3dThreetoRgbParamsDict,
     execution: Execution,
 ) -> V3dThreetoRgbOutputs:
     """
@@ -202,7 +202,7 @@ def v_3d_threeto_rgb_outputs(
 
 
 def v_3d_threeto_rgb_execute(
-    params: V3dThreetoRgbParameters,
+    params: V3dThreetoRgbParamsDict,
     runner: Runner | None = None,
 ) -> V3dThreetoRgbOutputs:
     """
@@ -282,6 +282,8 @@ def v_3d_threeto_rgb(
 
 __all__ = [
     "V3dThreetoRgbOutputs",
+    "V3dThreetoRgbParamsDict",
+    "V3dThreetoRgbParamsDictTagged",
     "V_3D_THREETO_RGB_METADATA",
     "v_3d_threeto_rgb",
     "v_3d_threeto_rgb_execute",

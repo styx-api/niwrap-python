@@ -13,7 +13,7 @@ MRI_FWHM_METADATA = Metadata(
 )
 
 
-MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
+MriFwhmParamsDict = typing.TypedDict('MriFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fwhm"]],
     "inputvol": InputPathType,
     "outputvol": str,
@@ -51,7 +51,7 @@ MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
     "checkopts": bool,
     "version": bool,
 })
-MriFwhmParametersTagged = typing.TypedDict('MriFwhmParametersTagged', {
+MriFwhmParamsDictTagged = typing.TypedDict('MriFwhmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fwhm"],
     "inputvol": InputPathType,
     "outputvol": str,
@@ -93,7 +93,7 @@ MriFwhmParametersTagged = typing.TypedDict('MriFwhmParametersTagged', {
 
 class MriFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFwhmParameters(...)`.
+    Output object returned when calling `MriFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,7 +149,7 @@ def mri_fwhm_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriFwhmParametersTagged:
+) -> MriFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -263,7 +263,7 @@ def mri_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFwhmParameters` object.
+    `MriFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -390,7 +390,7 @@ def mri_fwhm_validate(
 
 
 def mri_fwhm_cargs(
-    params: MriFwhmParameters,
+    params: MriFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -551,7 +551,7 @@ def mri_fwhm_cargs(
 
 
 def mri_fwhm_outputs(
-    params: MriFwhmParameters,
+    params: MriFwhmParamsDict,
     execution: Execution,
 ) -> MriFwhmOutputs:
     """
@@ -577,7 +577,7 @@ def mri_fwhm_outputs(
 
 
 def mri_fwhm_execute(
-    params: MriFwhmParameters,
+    params: MriFwhmParamsDict,
     runner: Runner | None = None,
 ) -> MriFwhmOutputs:
     """
@@ -739,6 +739,8 @@ def mri_fwhm(
 __all__ = [
     "MRI_FWHM_METADATA",
     "MriFwhmOutputs",
+    "MriFwhmParamsDict",
+    "MriFwhmParamsDictTagged",
     "mri_fwhm",
     "mri_fwhm_execute",
     "mri_fwhm_params",

@@ -13,7 +13,7 @@ V_3D_NWARP_APPLY_METADATA = Metadata(
 )
 
 
-V3dNwarpApplyParameters = typing.TypedDict('V3dNwarpApplyParameters', {
+V3dNwarpApplyParamsDict = typing.TypedDict('V3dNwarpApplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNwarpApply"]],
     "nwarp": str,
     "iwarp": bool,
@@ -30,7 +30,7 @@ V3dNwarpApplyParameters = typing.TypedDict('V3dNwarpApplyParameters', {
     "quiet": bool,
     "verb": bool,
 })
-V3dNwarpApplyParametersTagged = typing.TypedDict('V3dNwarpApplyParametersTagged', {
+V3dNwarpApplyParamsDictTagged = typing.TypedDict('V3dNwarpApplyParamsDictTagged', {
     "@type": typing.Literal["afni/3dNwarpApply"],
     "nwarp": str,
     "iwarp": bool,
@@ -51,7 +51,7 @@ V3dNwarpApplyParametersTagged = typing.TypedDict('V3dNwarpApplyParametersTagged'
 
 class V3dNwarpApplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNwarpApplyParameters(...)`.
+    Output object returned when calling `V3dNwarpApplyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v_3d_nwarp_apply_params(
     wprefix: str | None = None,
     quiet: bool = False,
     verb: bool = False,
-) -> V3dNwarpApplyParametersTagged:
+) -> V3dNwarpApplyParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def v_3d_nwarp_apply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNwarpApplyParameters` object.
+    `V3dNwarpApplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -194,7 +194,7 @@ def v_3d_nwarp_apply_validate(
 
 
 def v_3d_nwarp_apply_cargs(
-    params: V3dNwarpApplyParameters,
+    params: V3dNwarpApplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -268,7 +268,7 @@ def v_3d_nwarp_apply_cargs(
 
 
 def v_3d_nwarp_apply_outputs(
-    params: V3dNwarpApplyParameters,
+    params: V3dNwarpApplyParamsDict,
     execution: Execution,
 ) -> V3dNwarpApplyOutputs:
     """
@@ -288,7 +288,7 @@ def v_3d_nwarp_apply_outputs(
 
 
 def v_3d_nwarp_apply_execute(
-    params: V3dNwarpApplyParameters,
+    params: V3dNwarpApplyParamsDict,
     runner: Runner | None = None,
 ) -> V3dNwarpApplyOutputs:
     """
@@ -391,6 +391,8 @@ def v_3d_nwarp_apply(
 
 __all__ = [
     "V3dNwarpApplyOutputs",
+    "V3dNwarpApplyParamsDict",
+    "V3dNwarpApplyParamsDictTagged",
     "V_3D_NWARP_APPLY_METADATA",
     "v_3d_nwarp_apply",
     "v_3d_nwarp_apply_execute",

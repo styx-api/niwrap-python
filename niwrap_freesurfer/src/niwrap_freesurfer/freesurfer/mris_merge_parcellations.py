@@ -13,14 +13,14 @@ MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
 )
 
 
-MrisMergeParcellationsParameters = typing.TypedDict('MrisMergeParcellationsParameters', {
+MrisMergeParcellationsParamsDict = typing.TypedDict('MrisMergeParcellationsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_merge_parcellations"]],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
     "annot_name": typing.NotRequired[str | None],
 })
-MrisMergeParcellationsParametersTagged = typing.TypedDict('MrisMergeParcellationsParametersTagged', {
+MrisMergeParcellationsParamsDictTagged = typing.TypedDict('MrisMergeParcellationsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_merge_parcellations"],
     "surface": InputPathType,
     "label1": InputPathType,
@@ -31,7 +31,7 @@ MrisMergeParcellationsParametersTagged = typing.TypedDict('MrisMergeParcellation
 
 class MrisMergeParcellationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMergeParcellationsParameters(...)`.
+    Output object returned when calling `MrisMergeParcellationsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mris_merge_parcellations_params(
     label1: InputPathType,
     label2: InputPathType,
     annot_name: str | None = None,
-) -> MrisMergeParcellationsParametersTagged:
+) -> MrisMergeParcellationsParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def mris_merge_parcellations_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMergeParcellationsParameters` object.
+    `MrisMergeParcellationsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def mris_merge_parcellations_validate(
 
 
 def mris_merge_parcellations_cargs(
-    params: MrisMergeParcellationsParameters,
+    params: MrisMergeParcellationsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def mris_merge_parcellations_cargs(
 
 
 def mris_merge_parcellations_outputs(
-    params: MrisMergeParcellationsParameters,
+    params: MrisMergeParcellationsParamsDict,
     execution: Execution,
 ) -> MrisMergeParcellationsOutputs:
     """
@@ -140,7 +140,7 @@ def mris_merge_parcellations_outputs(
 
 
 def mris_merge_parcellations_execute(
-    params: MrisMergeParcellationsParameters,
+    params: MrisMergeParcellationsParamsDict,
     runner: Runner | None = None,
 ) -> MrisMergeParcellationsOutputs:
     """
@@ -207,6 +207,8 @@ def mris_merge_parcellations(
 __all__ = [
     "MRIS_MERGE_PARCELLATIONS_METADATA",
     "MrisMergeParcellationsOutputs",
+    "MrisMergeParcellationsParamsDict",
+    "MrisMergeParcellationsParamsDictTagged",
     "mris_merge_parcellations",
     "mris_merge_parcellations_execute",
     "mris_merge_parcellations_params",

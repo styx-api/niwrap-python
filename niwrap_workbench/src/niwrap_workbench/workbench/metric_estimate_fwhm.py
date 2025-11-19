@@ -12,7 +12,7 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', {
+MetricEstimateFwhmParamsDict = typing.TypedDict('MetricEstimateFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-estimate-fwhm"]],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', 
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
-MetricEstimateFwhmParametersTagged = typing.TypedDict('MetricEstimateFwhmParametersTagged', {
+MetricEstimateFwhmParamsDictTagged = typing.TypedDict('MetricEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-estimate-fwhm"],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ MetricEstimateFwhmParametersTagged = typing.TypedDict('MetricEstimateFwhmParamet
 
 class MetricEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricEstimateFwhmParameters(...)`.
+    Output object returned when calling `MetricEstimateFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def metric_estimate_fwhm_params(
     surface: InputPathType,
     metric_in: InputPathType,
     demean: bool | None = False,
-) -> MetricEstimateFwhmParametersTagged:
+) -> MetricEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def metric_estimate_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricEstimateFwhmParameters` object.
+    `MetricEstimateFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def metric_estimate_fwhm_validate(
 
 
 def metric_estimate_fwhm_cargs(
-    params: MetricEstimateFwhmParameters,
+    params: MetricEstimateFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def metric_estimate_fwhm_cargs(
 
 
 def metric_estimate_fwhm_outputs(
-    params: MetricEstimateFwhmParameters,
+    params: MetricEstimateFwhmParamsDict,
     execution: Execution,
 ) -> MetricEstimateFwhmOutputs:
     """
@@ -158,7 +158,7 @@ def metric_estimate_fwhm_outputs(
 
 
 def metric_estimate_fwhm_execute(
-    params: MetricEstimateFwhmParameters,
+    params: MetricEstimateFwhmParamsDict,
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
@@ -226,6 +226,8 @@ def metric_estimate_fwhm(
 __all__ = [
     "METRIC_ESTIMATE_FWHM_METADATA",
     "MetricEstimateFwhmOutputs",
+    "MetricEstimateFwhmParamsDict",
+    "MetricEstimateFwhmParamsDictTagged",
     "metric_estimate_fwhm",
     "metric_estimate_fwhm_execute",
     "metric_estimate_fwhm_params",

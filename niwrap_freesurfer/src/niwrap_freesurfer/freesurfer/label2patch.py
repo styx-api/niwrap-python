@@ -13,7 +13,7 @@ LABEL2PATCH_METADATA = Metadata(
 )
 
 
-Label2patchParameters = typing.TypedDict('Label2patchParameters', {
+Label2patchParamsDict = typing.TypedDict('Label2patchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label2patch"]],
     "subject_name": str,
     "hemisphere": str,
@@ -26,7 +26,7 @@ Label2patchParameters = typing.TypedDict('Label2patchParameters', {
     "surface_name": typing.NotRequired[str | None],
     "write_surface": bool,
 })
-Label2patchParametersTagged = typing.TypedDict('Label2patchParametersTagged', {
+Label2patchParamsDictTagged = typing.TypedDict('Label2patchParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label2patch"],
     "subject_name": str,
     "hemisphere": str,
@@ -43,7 +43,7 @@ Label2patchParametersTagged = typing.TypedDict('Label2patchParametersTagged', {
 
 class Label2patchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Label2patchParameters(...)`.
+    Output object returned when calling `Label2patchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def label2patch_params(
     subjects_dir: str | None = None,
     surface_name: str | None = None,
     write_surface: bool = False,
-) -> Label2patchParametersTagged:
+) -> Label2patchParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def label2patch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2patchParameters` object.
+    `Label2patchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def label2patch_validate(
 
 
 def label2patch_cargs(
-    params: Label2patchParameters,
+    params: Label2patchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def label2patch_cargs(
 
 
 def label2patch_outputs(
-    params: Label2patchParameters,
+    params: Label2patchParamsDict,
     execution: Execution,
 ) -> Label2patchOutputs:
     """
@@ -219,7 +219,7 @@ def label2patch_outputs(
 
 
 def label2patch_execute(
-    params: Label2patchParameters,
+    params: Label2patchParamsDict,
     runner: Runner | None = None,
 ) -> Label2patchOutputs:
     """
@@ -304,6 +304,8 @@ def label2patch(
 __all__ = [
     "LABEL2PATCH_METADATA",
     "Label2patchOutputs",
+    "Label2patchParamsDict",
+    "Label2patchParamsDictTagged",
     "label2patch",
     "label2patch_execute",
     "label2patch_params",

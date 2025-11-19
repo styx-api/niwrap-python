@@ -13,7 +13,7 @@ V_3D_NOTES_METADATA = Metadata(
 )
 
 
-V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
+V3dNotesParamsDict = typing.TypedDict('V3dNotesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNotes"]],
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
     "help": bool,
     "dataset": InputPathType,
 })
-V3dNotesParametersTagged = typing.TypedDict('V3dNotesParametersTagged', {
+V3dNotesParamsDictTagged = typing.TypedDict('V3dNotesParamsDictTagged', {
     "@type": typing.Literal["afni/3dNotes"],
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ V3dNotesParametersTagged = typing.TypedDict('V3dNotesParametersTagged', {
 
 class V3dNotesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNotesParameters(...)`.
+    Output object returned when calling `V3dNotesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v_3d_notes_params(
     delete_note: float | None = None,
     print_notes: bool = False,
     help_: bool = False,
-) -> V3dNotesParametersTagged:
+) -> V3dNotesParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def v_3d_notes_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNotesParameters` object.
+    `V3dNotesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def v_3d_notes_validate(
 
 
 def v_3d_notes_cargs(
-    params: V3dNotesParameters,
+    params: V3dNotesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,7 +167,7 @@ def v_3d_notes_cargs(
 
 
 def v_3d_notes_outputs(
-    params: V3dNotesParameters,
+    params: V3dNotesParamsDict,
     execution: Execution,
 ) -> V3dNotesOutputs:
     """
@@ -186,7 +186,7 @@ def v_3d_notes_outputs(
 
 
 def v_3d_notes_execute(
-    params: V3dNotesParameters,
+    params: V3dNotesParamsDict,
     runner: Runner | None = None,
 ) -> V3dNotesOutputs:
     """
@@ -261,6 +261,8 @@ def v_3d_notes(
 
 __all__ = [
     "V3dNotesOutputs",
+    "V3dNotesParamsDict",
+    "V3dNotesParamsDictTagged",
     "V_3D_NOTES_METADATA",
     "v_3d_notes",
     "v_3d_notes_execute",

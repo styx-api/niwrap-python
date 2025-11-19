@@ -13,7 +13,7 @@ V__CLIP_VOLUME_METADATA = Metadata(
 )
 
 
-VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
+VClipVolumeParamsDict = typing.TypedDict('VClipVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@clip_volume"]],
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
     "output_prefix": typing.NotRequired[str | None],
     "followers": typing.NotRequired[list[InputPathType] | None],
 })
-VClipVolumeParametersTagged = typing.TypedDict('VClipVolumeParametersTagged', {
+VClipVolumeParamsDictTagged = typing.TypedDict('VClipVolumeParamsDictTagged', {
     "@type": typing.Literal["afni/@clip_volume"],
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
@@ -59,7 +59,7 @@ VClipVolumeParametersTagged = typing.TypedDict('VClipVolumeParametersTagged', {
 
 class VClipVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VClipVolumeParameters(...)`.
+    Output object returned when calling `VClipVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +88,7 @@ def v__clip_volume_params(
     crop_npad: float | None = None,
     output_prefix: str | None = None,
     followers: list[InputPathType] | None = None,
-) -> VClipVolumeParametersTagged:
+) -> VClipVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def v__clip_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VClipVolumeParameters` object.
+    `VClipVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -243,7 +243,7 @@ def v__clip_volume_validate(
 
 
 def v__clip_volume_cargs(
-    params: VClipVolumeParameters,
+    params: VClipVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -329,7 +329,7 @@ def v__clip_volume_cargs(
 
 
 def v__clip_volume_outputs(
-    params: VClipVolumeParameters,
+    params: VClipVolumeParamsDict,
     execution: Execution,
 ) -> VClipVolumeOutputs:
     """
@@ -350,7 +350,7 @@ def v__clip_volume_outputs(
 
 
 def v__clip_volume_execute(
-    params: VClipVolumeParameters,
+    params: VClipVolumeParamsDict,
     runner: Runner | None = None,
 ) -> VClipVolumeOutputs:
     """
@@ -463,6 +463,8 @@ def v__clip_volume(
 
 __all__ = [
     "VClipVolumeOutputs",
+    "VClipVolumeParamsDict",
+    "VClipVolumeParamsDictTagged",
     "V__CLIP_VOLUME_METADATA",
     "v__clip_volume",
     "v__clip_volume_execute",

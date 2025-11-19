@@ -13,7 +13,7 @@ FAT_MVM_SCRIPTER_PY_METADATA = Metadata(
 )
 
 
-FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
+FatMvmScripterPyParamsDict = typing.TypedDict('FatMvmScripterPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_scripter.py"]],
     "prefix": str,
     "table": InputPathType,
@@ -29,7 +29,7 @@ FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
     "subnet_pref": typing.NotRequired[str | None],
     "cat_pair_off": bool,
 })
-FatMvmScripterPyParametersTagged = typing.TypedDict('FatMvmScripterPyParametersTagged', {
+FatMvmScripterPyParamsDictTagged = typing.TypedDict('FatMvmScripterPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mvm_scripter.py"],
     "prefix": str,
     "table": InputPathType,
@@ -49,7 +49,7 @@ FatMvmScripterPyParametersTagged = typing.TypedDict('FatMvmScripterPyParametersT
 
 class FatMvmScripterPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMvmScripterPyParameters(...)`.
+    Output object returned when calling `FatMvmScripterPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def fat_mvm_scripter_py_params(
     na_warn_off: bool = False,
     subnet_pref: str | None = None,
     cat_pair_off: bool = False,
-) -> FatMvmScripterPyParametersTagged:
+) -> FatMvmScripterPyParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def fat_mvm_scripter_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMvmScripterPyParameters` object.
+    `FatMvmScripterPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def fat_mvm_scripter_py_validate(
 
 
 def fat_mvm_scripter_py_cargs(
-    params: FatMvmScripterPyParameters,
+    params: FatMvmScripterPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,7 +267,7 @@ def fat_mvm_scripter_py_cargs(
 
 
 def fat_mvm_scripter_py_outputs(
-    params: FatMvmScripterPyParameters,
+    params: FatMvmScripterPyParamsDict,
     execution: Execution,
 ) -> FatMvmScripterPyOutputs:
     """
@@ -288,7 +288,7 @@ def fat_mvm_scripter_py_outputs(
 
 
 def fat_mvm_scripter_py_execute(
-    params: FatMvmScripterPyParameters,
+    params: FatMvmScripterPyParamsDict,
     runner: Runner | None = None,
 ) -> FatMvmScripterPyOutputs:
     """
@@ -395,6 +395,8 @@ def fat_mvm_scripter_py(
 __all__ = [
     "FAT_MVM_SCRIPTER_PY_METADATA",
     "FatMvmScripterPyOutputs",
+    "FatMvmScripterPyParamsDict",
+    "FatMvmScripterPyParamsDictTagged",
     "fat_mvm_scripter_py",
     "fat_mvm_scripter_py_execute",
     "fat_mvm_scripter_py_params",

@@ -12,7 +12,7 @@ BORDER_TO_ROIS_METADATA = Metadata(
 )
 
 
-BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
+BorderToRoisParamsDict = typing.TypedDict('BorderToRoisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-to-rois"]],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
     "surface": InputPathType,
     "border-file": InputPathType,
 })
-BorderToRoisParametersTagged = typing.TypedDict('BorderToRoisParametersTagged', {
+BorderToRoisParamsDictTagged = typing.TypedDict('BorderToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/border-to-rois"],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ BorderToRoisParametersTagged = typing.TypedDict('BorderToRoisParametersTagged', 
 
 class BorderToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderToRoisParameters(...)`.
+    Output object returned when calling `BorderToRoisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def border_to_rois_params(
     border_file: InputPathType,
     inverse: bool = False,
     include_border: bool = False,
-) -> BorderToRoisParametersTagged:
+) -> BorderToRoisParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def border_to_rois_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderToRoisParameters` object.
+    `BorderToRoisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def border_to_rois_validate(
 
 
 def border_to_rois_cargs(
-    params: BorderToRoisParameters,
+    params: BorderToRoisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def border_to_rois_cargs(
 
 
 def border_to_rois_outputs(
-    params: BorderToRoisParameters,
+    params: BorderToRoisParamsDict,
     execution: Execution,
 ) -> BorderToRoisOutputs:
     """
@@ -165,7 +165,7 @@ def border_to_rois_outputs(
 
 
 def border_to_rois_execute(
-    params: BorderToRoisParameters,
+    params: BorderToRoisParamsDict,
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
@@ -232,6 +232,8 @@ def border_to_rois(
 __all__ = [
     "BORDER_TO_ROIS_METADATA",
     "BorderToRoisOutputs",
+    "BorderToRoisParamsDict",
+    "BorderToRoisParamsDictTagged",
     "border_to_rois",
     "border_to_rois_execute",
     "border_to_rois_params",

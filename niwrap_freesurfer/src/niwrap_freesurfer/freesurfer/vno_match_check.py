@@ -13,14 +13,14 @@ VNO_MATCH_CHECK_METADATA = Metadata(
 )
 
 
-VnoMatchCheckParameters = typing.TypedDict('VnoMatchCheckParameters', {
+VnoMatchCheckParamsDict = typing.TypedDict('VnoMatchCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vno_match_check"]],
     "subjid": str,
     "debug": bool,
     "right_hemi": bool,
     "left_hemi": bool,
 })
-VnoMatchCheckParametersTagged = typing.TypedDict('VnoMatchCheckParametersTagged', {
+VnoMatchCheckParamsDictTagged = typing.TypedDict('VnoMatchCheckParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vno_match_check"],
     "subjid": str,
     "debug": bool,
@@ -31,7 +31,7 @@ VnoMatchCheckParametersTagged = typing.TypedDict('VnoMatchCheckParametersTagged'
 
 class VnoMatchCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VnoMatchCheckParameters(...)`.
+    Output object returned when calling `VnoMatchCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def vno_match_check_params(
     debug: bool = False,
     right_hemi: bool = False,
     left_hemi: bool = False,
-) -> VnoMatchCheckParametersTagged:
+) -> VnoMatchCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def vno_match_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VnoMatchCheckParameters` object.
+    `VnoMatchCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def vno_match_check_validate(
 
 
 def vno_match_check_cargs(
-    params: VnoMatchCheckParameters,
+    params: VnoMatchCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def vno_match_check_cargs(
 
 
 def vno_match_check_outputs(
-    params: VnoMatchCheckParameters,
+    params: VnoMatchCheckParamsDict,
     execution: Execution,
 ) -> VnoMatchCheckOutputs:
     """
@@ -139,7 +139,7 @@ def vno_match_check_outputs(
 
 
 def vno_match_check_execute(
-    params: VnoMatchCheckParameters,
+    params: VnoMatchCheckParamsDict,
     runner: Runner | None = None,
 ) -> VnoMatchCheckOutputs:
     """
@@ -206,6 +206,8 @@ def vno_match_check(
 __all__ = [
     "VNO_MATCH_CHECK_METADATA",
     "VnoMatchCheckOutputs",
+    "VnoMatchCheckParamsDict",
+    "VnoMatchCheckParamsDictTagged",
     "vno_match_check",
     "vno_match_check_execute",
     "vno_match_check_params",

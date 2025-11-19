@@ -13,12 +13,12 @@ IMLN_METADATA = Metadata(
 )
 
 
-ImlnParameters = typing.TypedDict('ImlnParameters', {
+ImlnParamsDict = typing.TypedDict('ImlnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/imln"]],
     "input_file": InputPathType,
     "link_name": str,
 })
-ImlnParametersTagged = typing.TypedDict('ImlnParametersTagged', {
+ImlnParamsDictTagged = typing.TypedDict('ImlnParamsDictTagged', {
     "@type": typing.Literal["fsl/imln"],
     "input_file": InputPathType,
     "link_name": str,
@@ -27,7 +27,7 @@ ImlnParametersTagged = typing.TypedDict('ImlnParametersTagged', {
 
 class ImlnOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImlnParameters(...)`.
+    Output object returned when calling `ImlnParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class ImlnOutputs(typing.NamedTuple):
 def imln_params(
     input_file: InputPathType,
     link_name: str,
-) -> ImlnParametersTagged:
+) -> ImlnParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def imln_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `ImlnParameters`
+    Validate parameters. Throws an error if `params` is not a valid `ImlnParamsDict`
     object.
     
     Args:
@@ -79,7 +79,7 @@ def imln_validate(
 
 
 def imln_cargs(
-    params: ImlnParameters,
+    params: ImlnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def imln_cargs(
 
 
 def imln_outputs(
-    params: ImlnParameters,
+    params: ImlnParamsDict,
     execution: Execution,
 ) -> ImlnOutputs:
     """
@@ -119,7 +119,7 @@ def imln_outputs(
 
 
 def imln_execute(
-    params: ImlnParameters,
+    params: ImlnParamsDict,
     runner: Runner | None = None,
 ) -> ImlnOutputs:
     """
@@ -178,6 +178,8 @@ def imln(
 __all__ = [
     "IMLN_METADATA",
     "ImlnOutputs",
+    "ImlnParamsDict",
+    "ImlnParamsDictTagged",
     "imln",
     "imln_execute",
     "imln_params",

@@ -13,7 +13,7 @@ V_3D_NLFIM_METADATA = Metadata(
 )
 
 
-V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
+V3dNlfimParamsDict = typing.TypedDict('V3dNlfimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNLfim"]],
     "input_file": InputPathType,
     "signal_model": str,
@@ -53,7 +53,7 @@ V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
     "snfit": typing.NotRequired[str | None],
     "jobs": typing.NotRequired[int | None],
 })
-V3dNlfimParametersTagged = typing.TypedDict('V3dNlfimParametersTagged', {
+V3dNlfimParamsDictTagged = typing.TypedDict('V3dNlfimParamsDictTagged', {
     "@type": typing.Literal["afni/3dNLfim"],
     "input_file": InputPathType,
     "signal_model": str,
@@ -97,7 +97,7 @@ V3dNlfimParametersTagged = typing.TypedDict('V3dNlfimParametersTagged', {
 
 class V3dNlfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNlfimParameters(...)`.
+    Output object returned when calling `V3dNlfimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -169,7 +169,7 @@ def v_3d_nlfim_params(
     sfit: str | None = None,
     snfit: str | None = None,
     jobs: int | None = None,
-) -> V3dNlfimParametersTagged:
+) -> V3dNlfimParamsDictTagged:
     """
     Build parameters.
     
@@ -310,7 +310,7 @@ def v_3d_nlfim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNlfimParameters` object.
+    `V3dNlfimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -440,7 +440,7 @@ def v_3d_nlfim_validate(
 
 
 def v_3d_nlfim_cargs(
-    params: V3dNlfimParameters,
+    params: V3dNlfimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -622,7 +622,7 @@ def v_3d_nlfim_cargs(
 
 
 def v_3d_nlfim_outputs(
-    params: V3dNlfimParameters,
+    params: V3dNlfimParamsDict,
     execution: Execution,
 ) -> V3dNlfimOutputs:
     """
@@ -655,7 +655,7 @@ def v_3d_nlfim_outputs(
 
 
 def v_3d_nlfim_execute(
-    params: V3dNlfimParameters,
+    params: V3dNlfimParamsDict,
     runner: Runner | None = None,
 ) -> V3dNlfimOutputs:
     """
@@ -838,6 +838,8 @@ def v_3d_nlfim(
 
 __all__ = [
     "V3dNlfimOutputs",
+    "V3dNlfimParamsDict",
+    "V3dNlfimParamsDictTagged",
     "V_3D_NLFIM_METADATA",
     "v_3d_nlfim",
     "v_3d_nlfim_execute",

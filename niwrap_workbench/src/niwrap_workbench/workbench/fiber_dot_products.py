@@ -12,7 +12,7 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 )
 
 
-FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
+FiberDotProductsParamsDict = typing.TypedDict('FiberDotProductsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/fiber-dot-products"]],
     "dot-metric": str,
     "f-metric": str,
@@ -21,7 +21,7 @@ FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
     "max-dist": float,
     "direction": str,
 })
-FiberDotProductsParametersTagged = typing.TypedDict('FiberDotProductsParametersTagged', {
+FiberDotProductsParamsDictTagged = typing.TypedDict('FiberDotProductsParamsDictTagged', {
     "@type": typing.Literal["workbench/fiber-dot-products"],
     "dot-metric": str,
     "f-metric": str,
@@ -34,7 +34,7 @@ FiberDotProductsParametersTagged = typing.TypedDict('FiberDotProductsParametersT
 
 class FiberDotProductsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FiberDotProductsParameters(...)`.
+    Output object returned when calling `FiberDotProductsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def fiber_dot_products_params(
     fiber_file: InputPathType,
     max_dist: float,
     direction: str,
-) -> FiberDotProductsParametersTagged:
+) -> FiberDotProductsParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def fiber_dot_products_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FiberDotProductsParameters` object.
+    `FiberDotProductsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def fiber_dot_products_validate(
 
 
 def fiber_dot_products_cargs(
-    params: FiberDotProductsParameters,
+    params: FiberDotProductsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def fiber_dot_products_cargs(
 
 
 def fiber_dot_products_outputs(
-    params: FiberDotProductsParameters,
+    params: FiberDotProductsParamsDict,
     execution: Execution,
 ) -> FiberDotProductsOutputs:
     """
@@ -166,7 +166,7 @@ def fiber_dot_products_outputs(
 
 
 def fiber_dot_products_execute(
-    params: FiberDotProductsParameters,
+    params: FiberDotProductsParamsDict,
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
@@ -243,6 +243,8 @@ def fiber_dot_products(
 __all__ = [
     "FIBER_DOT_PRODUCTS_METADATA",
     "FiberDotProductsOutputs",
+    "FiberDotProductsParamsDict",
+    "FiberDotProductsParamsDictTagged",
     "fiber_dot_products",
     "fiber_dot_products_execute",
     "fiber_dot_products_params",

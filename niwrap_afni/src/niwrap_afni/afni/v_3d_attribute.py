@@ -13,7 +13,7 @@ V_3D_ATTRIBUTE_METADATA = Metadata(
 )
 
 
-V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
+V3dAttributeParamsDict = typing.TypedDict('V3dAttributeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAttribute"]],
     "all": bool,
     "name": bool,
@@ -24,7 +24,7 @@ V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
     "aname": str,
     "dset": InputPathType,
 })
-V3dAttributeParametersTagged = typing.TypedDict('V3dAttributeParametersTagged', {
+V3dAttributeParamsDictTagged = typing.TypedDict('V3dAttributeParamsDictTagged', {
     "@type": typing.Literal["afni/3dAttribute"],
     "all": bool,
     "name": bool,
@@ -39,7 +39,7 @@ V3dAttributeParametersTagged = typing.TypedDict('V3dAttributeParametersTagged', 
 
 class V3dAttributeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAttributeParameters(...)`.
+    Output object returned when calling `V3dAttributeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_attribute_params(
     ssep: str | None = None,
     sprep: str | None = None,
     quote: bool = False,
-) -> V3dAttributeParametersTagged:
+) -> V3dAttributeParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def v_3d_attribute_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAttributeParameters` object.
+    `V3dAttributeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def v_3d_attribute_validate(
 
 
 def v_3d_attribute_cargs(
-    params: V3dAttributeParameters,
+    params: V3dAttributeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def v_3d_attribute_cargs(
 
 
 def v_3d_attribute_outputs(
-    params: V3dAttributeParameters,
+    params: V3dAttributeParamsDict,
     execution: Execution,
 ) -> V3dAttributeOutputs:
     """
@@ -192,7 +192,7 @@ def v_3d_attribute_outputs(
 
 
 def v_3d_attribute_execute(
-    params: V3dAttributeParameters,
+    params: V3dAttributeParamsDict,
     runner: Runner | None = None,
 ) -> V3dAttributeOutputs:
     """
@@ -271,6 +271,8 @@ def v_3d_attribute(
 
 __all__ = [
     "V3dAttributeOutputs",
+    "V3dAttributeParamsDict",
+    "V3dAttributeParamsDictTagged",
     "V_3D_ATTRIBUTE_METADATA",
     "v_3d_attribute",
     "v_3d_attribute_execute",

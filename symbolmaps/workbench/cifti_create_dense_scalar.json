@@ -6,7 +6,7 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "cifti_create_dense_scalar_volume_params",
+      "fn_struct_make_params": "cifti_create_dense_scalar_volume",
       "properties": {
         "volume-data": {
           "var_param": "volume_data"
@@ -18,7 +18,7 @@
     },
     "left-metric": {
       "var_param": "left_metric",
-      "fn_struct_make_params": "cifti_create_dense_scalar_left_metric_params",
+      "fn_struct_make_params": "cifti_create_dense_scalar_left_metric",
       "properties": {
         "metric": {
           "var_param": "metric"
@@ -30,7 +30,7 @@
     },
     "right-metric": {
       "var_param": "right_metric",
-      "fn_struct_make_params": "cifti_create_dense_scalar_right_metric_params",
+      "fn_struct_make_params": "cifti_create_dense_scalar_right_metric",
       "properties": {
         "metric": {
           "var_param": "metric"
@@ -42,7 +42,7 @@
     },
     "cerebellum-metric": {
       "var_param": "cerebellum_metric",
-      "fn_struct_make_params": "cifti_create_dense_scalar_cerebellum_metric_params",
+      "fn_struct_make_params": "cifti_create_dense_scalar_cerebellum_metric",
       "properties": {
         "metric": {
           "var_param": "metric"
@@ -57,7 +57,7 @@
     },
     "metric": {
       "var_param": "metric",
-      "fn_struct_make_params": "cifti_create_dense_scalar_metric_params",
+      "fn_struct_make_params": "cifti_create_dense_scalar_metric",
       "properties": {
         "structure": {
           "var_param": "structure"

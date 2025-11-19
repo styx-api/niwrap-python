@@ -13,7 +13,7 @@ SAMP_BIAS_METADATA = Metadata(
 )
 
 
-SampBiasParameters = typing.TypedDict('SampBiasParameters', {
+SampBiasParamsDict = typing.TypedDict('SampBiasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SampBias"]],
     "specfile": InputPathType,
     "surfname": str,
@@ -23,7 +23,7 @@ SampBiasParameters = typing.TypedDict('SampBiasParameters', {
     "prefix": typing.NotRequired[str | None],
     "segdo": typing.NotRequired[str | None],
 })
-SampBiasParametersTagged = typing.TypedDict('SampBiasParametersTagged', {
+SampBiasParamsDictTagged = typing.TypedDict('SampBiasParamsDictTagged', {
     "@type": typing.Literal["afni/SampBias"],
     "specfile": InputPathType,
     "surfname": str,
@@ -37,7 +37,7 @@ SampBiasParametersTagged = typing.TypedDict('SampBiasParametersTagged', {
 
 class SampBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SampBiasParameters(...)`.
+    Output object returned when calling `SampBiasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def samp_bias_params(
     dlimit: float | None = None,
     prefix: str | None = None,
     segdo: str | None = None,
-) -> SampBiasParametersTagged:
+) -> SampBiasParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def samp_bias_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SampBiasParameters` object.
+    `SampBiasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def samp_bias_validate(
 
 
 def samp_bias_cargs(
-    params: SampBiasParameters,
+    params: SampBiasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def samp_bias_cargs(
 
 
 def samp_bias_outputs(
-    params: SampBiasParameters,
+    params: SampBiasParamsDict,
     execution: Execution,
 ) -> SampBiasOutputs:
     """
@@ -198,7 +198,7 @@ def samp_bias_outputs(
 
 
 def samp_bias_execute(
-    params: SampBiasParameters,
+    params: SampBiasParamsDict,
     runner: Runner | None = None,
 ) -> SampBiasOutputs:
     """
@@ -275,6 +275,8 @@ def samp_bias(
 __all__ = [
     "SAMP_BIAS_METADATA",
     "SampBiasOutputs",
+    "SampBiasParamsDict",
+    "SampBiasParamsDictTagged",
     "samp_bias",
     "samp_bias_execute",
     "samp_bias_params",

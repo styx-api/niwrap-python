@@ -13,7 +13,7 @@ MRI_CC_METADATA = Metadata(
 )
 
 
-MriCcParameters = typing.TypedDict('MriCcParameters', {
+MriCcParamsDict = typing.TypedDict('MriCcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cc"]],
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ MriCcParameters = typing.TypedDict('MriCcParameters', {
     "skip_voxels": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
 })
-MriCcParametersTagged = typing.TypedDict('MriCcParametersTagged', {
+MriCcParamsDictTagged = typing.TypedDict('MriCcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cc"],
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ MriCcParametersTagged = typing.TypedDict('MriCcParametersTagged', {
 
 class MriCcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCcParameters(...)`.
+    Output object returned when calling `MriCcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def mri_cc_params(
     thickness: float | None = None,
     skip_voxels: float | None = None,
     max_rotation: float | None = None,
-) -> MriCcParametersTagged:
+) -> MriCcParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def mri_cc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCcParameters` object.
+    `MriCcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def mri_cc_validate(
 
 
 def mri_cc_cargs(
-    params: MriCcParameters,
+    params: MriCcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -237,7 +237,7 @@ def mri_cc_cargs(
 
 
 def mri_cc_outputs(
-    params: MriCcParameters,
+    params: MriCcParamsDict,
     execution: Execution,
 ) -> MriCcOutputs:
     """
@@ -257,7 +257,7 @@ def mri_cc_outputs(
 
 
 def mri_cc_execute(
-    params: MriCcParameters,
+    params: MriCcParamsDict,
     runner: Runner | None = None,
 ) -> MriCcOutputs:
     """
@@ -348,6 +348,8 @@ def mri_cc(
 __all__ = [
     "MRI_CC_METADATA",
     "MriCcOutputs",
+    "MriCcParamsDict",
+    "MriCcParamsDictTagged",
     "mri_cc",
     "mri_cc_execute",
     "mri_cc_params",

@@ -13,14 +13,14 @@ SETLABELSTAT_METADATA = Metadata(
 )
 
 
-SetlabelstatParameters = typing.TypedDict('SetlabelstatParameters', {
+SetlabelstatParamsDict = typing.TypedDict('SetlabelstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/setlabelstat"]],
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
     "statval": float,
     "help": bool,
 })
-SetlabelstatParametersTagged = typing.TypedDict('SetlabelstatParametersTagged', {
+SetlabelstatParamsDictTagged = typing.TypedDict('SetlabelstatParamsDictTagged', {
     "@type": typing.Literal["freesurfer/setlabelstat"],
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
@@ -31,7 +31,7 @@ SetlabelstatParametersTagged = typing.TypedDict('SetlabelstatParametersTagged', 
 
 class SetlabelstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SetlabelstatParameters(...)`.
+    Output object returned when calling `SetlabelstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def setlabelstat_params(
     outlabelfile: InputPathType,
     statval: float,
     help_: bool = False,
-) -> SetlabelstatParametersTagged:
+) -> SetlabelstatParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def setlabelstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SetlabelstatParameters` object.
+    `SetlabelstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def setlabelstat_validate(
 
 
 def setlabelstat_cargs(
-    params: SetlabelstatParameters,
+    params: SetlabelstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def setlabelstat_cargs(
 
 
 def setlabelstat_outputs(
-    params: SetlabelstatParameters,
+    params: SetlabelstatParamsDict,
     execution: Execution,
 ) -> SetlabelstatOutputs:
     """
@@ -149,7 +149,7 @@ def setlabelstat_outputs(
 
 
 def setlabelstat_execute(
-    params: SetlabelstatParameters,
+    params: SetlabelstatParamsDict,
     runner: Runner | None = None,
 ) -> SetlabelstatOutputs:
     """
@@ -216,6 +216,8 @@ def setlabelstat(
 __all__ = [
     "SETLABELSTAT_METADATA",
     "SetlabelstatOutputs",
+    "SetlabelstatParamsDict",
+    "SetlabelstatParamsDictTagged",
     "setlabelstat",
     "setlabelstat_execute",
     "setlabelstat_params",

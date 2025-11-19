@@ -13,7 +13,7 @@ MRIS_COMPUTE_ACORR_METADATA = Metadata(
 )
 
 
-MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
+MrisComputeAcorrParamsDict = typing.TypedDict('MrisComputeAcorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_acorr"]],
     "output_subject": str,
     "hemi": str,
@@ -22,7 +22,7 @@ MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
     "c1_subjects": list[str],
     "c2_subjects": list[str],
 })
-MrisComputeAcorrParametersTagged = typing.TypedDict('MrisComputeAcorrParametersTagged', {
+MrisComputeAcorrParamsDictTagged = typing.TypedDict('MrisComputeAcorrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_compute_acorr"],
     "output_subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisComputeAcorrParametersTagged = typing.TypedDict('MrisComputeAcorrParametersT
 
 class MrisComputeAcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisComputeAcorrParameters(...)`.
+    Output object returned when calling `MrisComputeAcorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def mris_compute_acorr_params(
     curv: InputPathType,
     c1_subjects: list[str],
     c2_subjects: list[str],
-) -> MrisComputeAcorrParametersTagged:
+) -> MrisComputeAcorrParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def mris_compute_acorr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisComputeAcorrParameters` object.
+    `MrisComputeAcorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -120,7 +120,7 @@ def mris_compute_acorr_validate(
 
 
 def mris_compute_acorr_cargs(
-    params: MrisComputeAcorrParameters,
+    params: MrisComputeAcorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def mris_compute_acorr_cargs(
 
 
 def mris_compute_acorr_outputs(
-    params: MrisComputeAcorrParameters,
+    params: MrisComputeAcorrParamsDict,
     execution: Execution,
 ) -> MrisComputeAcorrOutputs:
     """
@@ -166,7 +166,7 @@ def mris_compute_acorr_outputs(
 
 
 def mris_compute_acorr_execute(
-    params: MrisComputeAcorrParameters,
+    params: MrisComputeAcorrParamsDict,
     runner: Runner | None = None,
 ) -> MrisComputeAcorrOutputs:
     """
@@ -240,6 +240,8 @@ def mris_compute_acorr(
 __all__ = [
     "MRIS_COMPUTE_ACORR_METADATA",
     "MrisComputeAcorrOutputs",
+    "MrisComputeAcorrParamsDict",
+    "MrisComputeAcorrParamsDictTagged",
     "mris_compute_acorr",
     "mris_compute_acorr_execute",
     "mris_compute_acorr_params",

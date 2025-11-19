@@ -13,11 +13,11 @@ V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA = Metadata(
 )
 
 
-VSurfSmoothHeat07ExamplesParameters = typing.TypedDict('VSurfSmoothHeat07ExamplesParameters', {
+VSurfSmoothHeat07ExamplesParamsDict = typing.TypedDict('VSurfSmoothHeat07ExamplesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SurfSmooth.HEAT_07.examples"]],
     "path_to_suma_demo": str,
 })
-VSurfSmoothHeat07ExamplesParametersTagged = typing.TypedDict('VSurfSmoothHeat07ExamplesParametersTagged', {
+VSurfSmoothHeat07ExamplesParamsDictTagged = typing.TypedDict('VSurfSmoothHeat07ExamplesParamsDictTagged', {
     "@type": typing.Literal["afni/@SurfSmooth.HEAT_07.examples"],
     "path_to_suma_demo": str,
 })
@@ -25,7 +25,7 @@ VSurfSmoothHeat07ExamplesParametersTagged = typing.TypedDict('VSurfSmoothHeat07E
 
 class VSurfSmoothHeat07ExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSurfSmoothHeat07ExamplesParameters(...)`.
+    Output object returned when calling `VSurfSmoothHeat07ExamplesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class VSurfSmoothHeat07ExamplesOutputs(typing.NamedTuple):
 
 def v__surf_smooth_heat_07_examples_params(
     path_to_suma_demo: str,
-) -> VSurfSmoothHeat07ExamplesParametersTagged:
+) -> VSurfSmoothHeat07ExamplesParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def v__surf_smooth_heat_07_examples_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSurfSmoothHeat07ExamplesParameters` object.
+    `VSurfSmoothHeat07ExamplesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def v__surf_smooth_heat_07_examples_validate(
 
 
 def v__surf_smooth_heat_07_examples_cargs(
-    params: VSurfSmoothHeat07ExamplesParameters,
+    params: VSurfSmoothHeat07ExamplesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def v__surf_smooth_heat_07_examples_cargs(
 
 
 def v__surf_smooth_heat_07_examples_outputs(
-    params: VSurfSmoothHeat07ExamplesParameters,
+    params: VSurfSmoothHeat07ExamplesParamsDict,
     execution: Execution,
 ) -> VSurfSmoothHeat07ExamplesOutputs:
     """
@@ -106,7 +106,7 @@ def v__surf_smooth_heat_07_examples_outputs(
 
 
 def v__surf_smooth_heat_07_examples_execute(
-    params: VSurfSmoothHeat07ExamplesParameters,
+    params: VSurfSmoothHeat07ExamplesParamsDict,
     runner: Runner | None = None,
 ) -> VSurfSmoothHeat07ExamplesOutputs:
     """
@@ -161,6 +161,8 @@ def v__surf_smooth_heat_07_examples(
 
 __all__ = [
     "VSurfSmoothHeat07ExamplesOutputs",
+    "VSurfSmoothHeat07ExamplesParamsDict",
+    "VSurfSmoothHeat07ExamplesParamsDictTagged",
     "V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA",
     "v__surf_smooth_heat_07_examples",
     "v__surf_smooth_heat_07_examples_execute",

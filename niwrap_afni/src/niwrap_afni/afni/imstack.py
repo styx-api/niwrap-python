@@ -13,13 +13,13 @@ IMSTACK_METADATA = Metadata(
 )
 
 
-ImstackParameters = typing.TypedDict('ImstackParameters', {
+ImstackParamsDict = typing.TypedDict('ImstackParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imstack"]],
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],
 })
-ImstackParametersTagged = typing.TypedDict('ImstackParametersTagged', {
+ImstackParamsDictTagged = typing.TypedDict('ImstackParamsDictTagged', {
     "@type": typing.Literal["afni/imstack"],
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
@@ -29,7 +29,7 @@ ImstackParametersTagged = typing.TypedDict('ImstackParametersTagged', {
 
 class ImstackOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImstackParameters(...)`.
+    Output object returned when calling `ImstackParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def imstack_params(
     image_files: list[InputPathType],
     data_type: typing.Literal["short", "float"] | None = None,
     output_prefix: str | None = None,
-) -> ImstackParametersTagged:
+) -> ImstackParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def imstack_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImstackParameters` object.
+    `ImstackParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def imstack_validate(
 
 
 def imstack_cargs(
-    params: ImstackParameters,
+    params: ImstackParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def imstack_cargs(
 
 
 def imstack_outputs(
-    params: ImstackParameters,
+    params: ImstackParamsDict,
     execution: Execution,
 ) -> ImstackOutputs:
     """
@@ -147,7 +147,7 @@ def imstack_outputs(
 
 
 def imstack_execute(
-    params: ImstackParameters,
+    params: ImstackParamsDict,
     runner: Runner | None = None,
 ) -> ImstackOutputs:
     """
@@ -211,6 +211,8 @@ def imstack(
 __all__ = [
     "IMSTACK_METADATA",
     "ImstackOutputs",
+    "ImstackParamsDict",
+    "ImstackParamsDictTagged",
     "imstack",
     "imstack_execute",
     "imstack_params",

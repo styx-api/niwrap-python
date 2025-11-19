@@ -13,7 +13,7 @@ MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 )
 
 
-MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFractionsParameters', {
+MrisComputeVolumeFractionsParamsDict = typing.TypedDict('MrisComputeVolumeFractionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_volume_fractions"]],
     "volume_file": InputPathType,
     "surface_file": InputPathType,
@@ -22,7 +22,7 @@ MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFracti
     "debug": bool,
     "checkopts": bool,
 })
-MrisComputeVolumeFractionsParametersTagged = typing.TypedDict('MrisComputeVolumeFractionsParametersTagged', {
+MrisComputeVolumeFractionsParamsDictTagged = typing.TypedDict('MrisComputeVolumeFractionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_compute_volume_fractions"],
     "volume_file": InputPathType,
     "surface_file": InputPathType,
@@ -35,7 +35,7 @@ MrisComputeVolumeFractionsParametersTagged = typing.TypedDict('MrisComputeVolume
 
 class MrisComputeVolumeFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisComputeVolumeFractionsParameters(...)`.
+    Output object returned when calling `MrisComputeVolumeFractionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_compute_volume_fractions_params(
     output_file: str,
     debug: bool = False,
     checkopts: bool = False,
-) -> MrisComputeVolumeFractionsParametersTagged:
+) -> MrisComputeVolumeFractionsParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mris_compute_volume_fractions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisComputeVolumeFractionsParameters` object.
+    `MrisComputeVolumeFractionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def mris_compute_volume_fractions_validate(
 
 
 def mris_compute_volume_fractions_cargs(
-    params: MrisComputeVolumeFractionsParameters,
+    params: MrisComputeVolumeFractionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def mris_compute_volume_fractions_cargs(
 
 
 def mris_compute_volume_fractions_outputs(
-    params: MrisComputeVolumeFractionsParameters,
+    params: MrisComputeVolumeFractionsParamsDict,
     execution: Execution,
 ) -> MrisComputeVolumeFractionsOutputs:
     """
@@ -173,7 +173,7 @@ def mris_compute_volume_fractions_outputs(
 
 
 def mris_compute_volume_fractions_execute(
-    params: MrisComputeVolumeFractionsParameters,
+    params: MrisComputeVolumeFractionsParamsDict,
     runner: Runner | None = None,
 ) -> MrisComputeVolumeFractionsOutputs:
     """
@@ -244,6 +244,8 @@ def mris_compute_volume_fractions(
 __all__ = [
     "MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA",
     "MrisComputeVolumeFractionsOutputs",
+    "MrisComputeVolumeFractionsParamsDict",
+    "MrisComputeVolumeFractionsParamsDictTagged",
     "mris_compute_volume_fractions",
     "mris_compute_volume_fractions_execute",
     "mris_compute_volume_fractions_params",

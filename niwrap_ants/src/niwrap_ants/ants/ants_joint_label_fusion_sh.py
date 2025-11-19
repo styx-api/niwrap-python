@@ -13,7 +13,7 @@ ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
 )
 
 
-AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParameters', {
+AntsJointLabelFusionShParamsDict = typing.TypedDict('AntsJointLabelFusionShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsJointLabelFusion.sh"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParam
     "rigid_transform_additional_options": typing.NotRequired[str | None],
     "similarity_metric_additional_options": typing.NotRequired[str | None],
 })
-AntsJointLabelFusionShParametersTagged = typing.TypedDict('AntsJointLabelFusionShParametersTagged', {
+AntsJointLabelFusionShParamsDictTagged = typing.TypedDict('AntsJointLabelFusionShParamsDictTagged', {
     "@type": typing.Literal["ants/antsJointLabelFusion.sh"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ AntsJointLabelFusionShParametersTagged = typing.TypedDict('AntsJointLabelFusionS
 
 class AntsJointLabelFusionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsJointLabelFusionShParameters(...)`.
+    Output object returned when calling `AntsJointLabelFusionShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def ants_joint_label_fusion_sh_params(
     verbose: bool | None = None,
     rigid_transform_additional_options: str | None = None,
     similarity_metric_additional_options: str | None = None,
-) -> AntsJointLabelFusionShParametersTagged:
+) -> AntsJointLabelFusionShParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def ants_joint_label_fusion_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsJointLabelFusionShParameters` object.
+    `AntsJointLabelFusionShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def ants_joint_label_fusion_sh_validate(
 
 
 def ants_joint_label_fusion_sh_cargs(
-    params: AntsJointLabelFusionShParameters,
+    params: AntsJointLabelFusionShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -250,7 +250,7 @@ def ants_joint_label_fusion_sh_cargs(
 
 
 def ants_joint_label_fusion_sh_outputs(
-    params: AntsJointLabelFusionShParameters,
+    params: AntsJointLabelFusionShParamsDict,
     execution: Execution,
 ) -> AntsJointLabelFusionShOutputs:
     """
@@ -270,7 +270,7 @@ def ants_joint_label_fusion_sh_outputs(
 
 
 def ants_joint_label_fusion_sh_execute(
-    params: AntsJointLabelFusionShParameters,
+    params: AntsJointLabelFusionShParamsDict,
     runner: Runner | None = None,
 ) -> AntsJointLabelFusionShOutputs:
     """
@@ -364,6 +364,8 @@ def ants_joint_label_fusion_sh(
 __all__ = [
     "ANTS_JOINT_LABEL_FUSION_SH_METADATA",
     "AntsJointLabelFusionShOutputs",
+    "AntsJointLabelFusionShParamsDict",
+    "AntsJointLabelFusionShParamsDictTagged",
     "ants_joint_label_fusion_sh",
     "ants_joint_label_fusion_sh_execute",
     "ants_joint_label_fusion_sh_params",

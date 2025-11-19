@@ -13,7 +13,7 @@ DCMDRLE_FS_METADATA = Metadata(
 )
 
 
-DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
+DcmdrleFsParamsDict = typing.TypedDict('DcmdrleFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdrle.fs"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -48,7 +48,7 @@ DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
     "padding_off": bool,
     "padding_create": typing.NotRequired[str | None],
 })
-DcmdrleFsParametersTagged = typing.TypedDict('DcmdrleFsParametersTagged', {
+DcmdrleFsParamsDictTagged = typing.TypedDict('DcmdrleFsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dcmdrle.fs"],
     "input_file": InputPathType,
     "output_file": str,
@@ -87,7 +87,7 @@ DcmdrleFsParametersTagged = typing.TypedDict('DcmdrleFsParametersTagged', {
 
 class DcmdrleFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmdrleFsParameters(...)`.
+    Output object returned when calling `DcmdrleFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +128,7 @@ def dcmdrle_fs_params(
     padding_retain: bool = False,
     padding_off: bool = False,
     padding_create: str | None = None,
-) -> DcmdrleFsParametersTagged:
+) -> DcmdrleFsParamsDictTagged:
     """
     Build parameters.
     
@@ -215,7 +215,7 @@ def dcmdrle_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmdrleFsParameters` object.
+    `DcmdrleFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -350,7 +350,7 @@ def dcmdrle_fs_validate(
 
 
 def dcmdrle_fs_cargs(
-    params: DcmdrleFsParameters,
+    params: DcmdrleFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -439,7 +439,7 @@ def dcmdrle_fs_cargs(
 
 
 def dcmdrle_fs_outputs(
-    params: DcmdrleFsParameters,
+    params: DcmdrleFsParamsDict,
     execution: Execution,
 ) -> DcmdrleFsOutputs:
     """
@@ -459,7 +459,7 @@ def dcmdrle_fs_outputs(
 
 
 def dcmdrle_fs_execute(
-    params: DcmdrleFsParameters,
+    params: DcmdrleFsParamsDict,
     runner: Runner | None = None,
 ) -> DcmdrleFsOutputs:
     """
@@ -609,6 +609,8 @@ def dcmdrle_fs(
 __all__ = [
     "DCMDRLE_FS_METADATA",
     "DcmdrleFsOutputs",
+    "DcmdrleFsParamsDict",
+    "DcmdrleFsParamsDictTagged",
     "dcmdrle_fs",
     "dcmdrle_fs_execute",
     "dcmdrle_fs_params",

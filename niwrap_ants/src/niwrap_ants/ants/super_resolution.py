@@ -13,7 +13,7 @@ SUPER_RESOLUTION_METADATA = Metadata(
 )
 
 
-SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
+SuperResolutionParamsDict = typing.TypedDict('SuperResolutionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SuperResolution"]],
     "image_dimension": int,
     "output_image": str,
@@ -23,7 +23,7 @@ SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
     "number_of_levels": int,
     "input_image_files": list[InputPathType],
 })
-SuperResolutionParametersTagged = typing.TypedDict('SuperResolutionParametersTagged', {
+SuperResolutionParamsDictTagged = typing.TypedDict('SuperResolutionParamsDictTagged', {
     "@type": typing.Literal["ants/SuperResolution"],
     "image_dimension": int,
     "output_image": str,
@@ -37,7 +37,7 @@ SuperResolutionParametersTagged = typing.TypedDict('SuperResolutionParametersTag
 
 class SuperResolutionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SuperResolutionParameters(...)`.
+    Output object returned when calling `SuperResolutionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def super_resolution_params(
     mesh_size: float,
     number_of_levels: int,
     input_image_files: list[InputPathType],
-) -> SuperResolutionParametersTagged:
+) -> SuperResolutionParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def super_resolution_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SuperResolutionParameters` object.
+    `SuperResolutionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def super_resolution_validate(
 
 
 def super_resolution_cargs(
-    params: SuperResolutionParameters,
+    params: SuperResolutionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def super_resolution_cargs(
 
 
 def super_resolution_outputs(
-    params: SuperResolutionParameters,
+    params: SuperResolutionParamsDict,
     execution: Execution,
 ) -> SuperResolutionOutputs:
     """
@@ -176,7 +176,7 @@ def super_resolution_outputs(
 
 
 def super_resolution_execute(
-    params: SuperResolutionParameters,
+    params: SuperResolutionParamsDict,
     runner: Runner | None = None,
 ) -> SuperResolutionOutputs:
     """
@@ -260,6 +260,8 @@ def super_resolution(
 __all__ = [
     "SUPER_RESOLUTION_METADATA",
     "SuperResolutionOutputs",
+    "SuperResolutionParamsDict",
+    "SuperResolutionParamsDictTagged",
     "super_resolution",
     "super_resolution_execute",
     "super_resolution_params",

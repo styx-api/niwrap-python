@@ -13,7 +13,7 @@ SURFACE_METRICS_METADATA = Metadata(
 )
 
 
-SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
+SurfaceMetricsParamsDict = typing.TypedDict('SurfaceMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfaceMetrics"]],
     "volume": bool,
     "convexity": bool,
@@ -39,7 +39,7 @@ SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
     "tlrc": bool,
     "prefix": typing.NotRequired[str | None],
 })
-SurfaceMetricsParametersTagged = typing.TypedDict('SurfaceMetricsParametersTagged', {
+SurfaceMetricsParamsDictTagged = typing.TypedDict('SurfaceMetricsParamsDictTagged', {
     "@type": typing.Literal["afni/SurfaceMetrics"],
     "volume": bool,
     "convexity": bool,
@@ -69,7 +69,7 @@ SurfaceMetricsParametersTagged = typing.TypedDict('SurfaceMetricsParametersTagge
 
 class SurfaceMetricsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceMetricsParameters(...)`.
+    Output object returned when calling `SurfaceMetricsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +99,7 @@ def surface_metrics_params(
     internal_nodes: bool = False,
     tlrc: bool = False,
     prefix: str | None = None,
-) -> SurfaceMetricsParametersTagged:
+) -> SurfaceMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -170,7 +170,7 @@ def surface_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceMetricsParameters` object.
+    `SurfaceMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -273,7 +273,7 @@ def surface_metrics_validate(
 
 
 def surface_metrics_cargs(
-    params: SurfaceMetricsParameters,
+    params: SurfaceMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -351,7 +351,7 @@ def surface_metrics_cargs(
 
 
 def surface_metrics_outputs(
-    params: SurfaceMetricsParameters,
+    params: SurfaceMetricsParamsDict,
     execution: Execution,
 ) -> SurfaceMetricsOutputs:
     """
@@ -370,7 +370,7 @@ def surface_metrics_outputs(
 
 
 def surface_metrics_execute(
-    params: SurfaceMetricsParameters,
+    params: SurfaceMetricsParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceMetricsOutputs:
     """
@@ -494,6 +494,8 @@ def surface_metrics(
 __all__ = [
     "SURFACE_METRICS_METADATA",
     "SurfaceMetricsOutputs",
+    "SurfaceMetricsParamsDict",
+    "SurfaceMetricsParamsDictTagged",
     "surface_metrics",
     "surface_metrics_execute",
     "surface_metrics_params",

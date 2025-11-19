@@ -13,7 +13,7 @@ MRIS_TRANSFORM_METADATA = Metadata(
 )
 
 
-MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
+MrisTransformParamsDict = typing.TypedDict('MrisTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_transform"]],
     "input_surface": InputPathType,
     "transform": InputPathType,
@@ -22,7 +22,7 @@ MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
     "trx_dst": typing.NotRequired[InputPathType | None],
     "is_inverse": bool,
 })
-MrisTransformParametersTagged = typing.TypedDict('MrisTransformParametersTagged', {
+MrisTransformParamsDictTagged = typing.TypedDict('MrisTransformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_transform"],
     "input_surface": InputPathType,
     "transform": InputPathType,
@@ -35,7 +35,7 @@ MrisTransformParametersTagged = typing.TypedDict('MrisTransformParametersTagged'
 
 class MrisTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTransformParameters(...)`.
+    Output object returned when calling `MrisTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_transform_params(
     trx_src: InputPathType | None = None,
     trx_dst: InputPathType | None = None,
     is_inverse: bool = False,
-) -> MrisTransformParametersTagged:
+) -> MrisTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def mris_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTransformParameters` object.
+    `MrisTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def mris_transform_validate(
 
 
 def mris_transform_cargs(
-    params: MrisTransformParameters,
+    params: MrisTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def mris_transform_cargs(
 
 
 def mris_transform_outputs(
-    params: MrisTransformParameters,
+    params: MrisTransformParamsDict,
     execution: Execution,
 ) -> MrisTransformOutputs:
     """
@@ -171,7 +171,7 @@ def mris_transform_outputs(
 
 
 def mris_transform_execute(
-    params: MrisTransformParameters,
+    params: MrisTransformParamsDict,
     runner: Runner | None = None,
 ) -> MrisTransformOutputs:
     """
@@ -247,6 +247,8 @@ def mris_transform(
 __all__ = [
     "MRIS_TRANSFORM_METADATA",
     "MrisTransformOutputs",
+    "MrisTransformParamsDict",
+    "MrisTransformParamsDictTagged",
     "mris_transform",
     "mris_transform_execute",
     "mris_transform_params",

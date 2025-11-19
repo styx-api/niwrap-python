@@ -13,7 +13,7 @@ MRI_CREATE_T2COMBINED_METADATA = Metadata(
 )
 
 
-MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters', {
+MriCreateT2combinedParamsDict = typing.TypedDict('MriCreateT2combinedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_t2combined"]],
     "subjid": str,
     "t1wb": InputPathType,
@@ -23,7 +23,7 @@ MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters'
     "t2combined": str,
     "show": bool,
 })
-MriCreateT2combinedParametersTagged = typing.TypedDict('MriCreateT2combinedParametersTagged', {
+MriCreateT2combinedParamsDictTagged = typing.TypedDict('MriCreateT2combinedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_create_t2combined"],
     "subjid": str,
     "t1wb": InputPathType,
@@ -37,7 +37,7 @@ MriCreateT2combinedParametersTagged = typing.TypedDict('MriCreateT2combinedParam
 
 class MriCreateT2combinedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCreateT2combinedParameters(...)`.
+    Output object returned when calling `MriCreateT2combinedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def mri_create_t2combined_params(
     t2combined: str,
     t2middle: InputPathType | None = None,
     show: bool = False,
-) -> MriCreateT2combinedParametersTagged:
+) -> MriCreateT2combinedParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def mri_create_t2combined_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCreateT2combinedParameters` object.
+    `MriCreateT2combinedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def mri_create_t2combined_validate(
 
 
 def mri_create_t2combined_cargs(
-    params: MriCreateT2combinedParameters,
+    params: MriCreateT2combinedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def mri_create_t2combined_cargs(
 
 
 def mri_create_t2combined_outputs(
-    params: MriCreateT2combinedParameters,
+    params: MriCreateT2combinedParamsDict,
     execution: Execution,
 ) -> MriCreateT2combinedOutputs:
     """
@@ -175,7 +175,7 @@ def mri_create_t2combined_outputs(
 
 
 def mri_create_t2combined_execute(
-    params: MriCreateT2combinedParameters,
+    params: MriCreateT2combinedParamsDict,
     runner: Runner | None = None,
 ) -> MriCreateT2combinedOutputs:
     """
@@ -252,6 +252,8 @@ def mri_create_t2combined(
 __all__ = [
     "MRI_CREATE_T2COMBINED_METADATA",
     "MriCreateT2combinedOutputs",
+    "MriCreateT2combinedParamsDict",
+    "MriCreateT2combinedParamsDictTagged",
     "mri_create_t2combined",
     "mri_create_t2combined_execute",
     "mri_create_t2combined_params",

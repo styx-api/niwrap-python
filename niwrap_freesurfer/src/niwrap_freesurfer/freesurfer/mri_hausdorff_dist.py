@@ -13,7 +13,7 @@ MRI_HAUSDORFF_DIST_METADATA = Metadata(
 )
 
 
-MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
+MriHausdorffDistParamsDict = typing.TypedDict('MriHausdorffDistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hausdorff_dist"]],
     "vol1": InputPathType,
     "vol2": InputPathType,
@@ -24,7 +24,7 @@ MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
     "max_flag": bool,
     "label_index": typing.NotRequired[float | None],
 })
-MriHausdorffDistParametersTagged = typing.TypedDict('MriHausdorffDistParametersTagged', {
+MriHausdorffDistParamsDictTagged = typing.TypedDict('MriHausdorffDistParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_hausdorff_dist"],
     "vol1": InputPathType,
     "vol2": InputPathType,
@@ -39,7 +39,7 @@ MriHausdorffDistParametersTagged = typing.TypedDict('MriHausdorffDistParametersT
 
 class MriHausdorffDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriHausdorffDistParameters(...)`.
+    Output object returned when calling `MriHausdorffDistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def mri_hausdorff_dist_params(
     blur_sigma: float | None = None,
     max_flag: bool = False,
     label_index: float | None = None,
-) -> MriHausdorffDistParametersTagged:
+) -> MriHausdorffDistParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def mri_hausdorff_dist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriHausdorffDistParameters` object.
+    `MriHausdorffDistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def mri_hausdorff_dist_validate(
 
 
 def mri_hausdorff_dist_cargs(
-    params: MriHausdorffDistParameters,
+    params: MriHausdorffDistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def mri_hausdorff_dist_cargs(
 
 
 def mri_hausdorff_dist_outputs(
-    params: MriHausdorffDistParameters,
+    params: MriHausdorffDistParamsDict,
     execution: Execution,
 ) -> MriHausdorffDistOutputs:
     """
@@ -196,7 +196,7 @@ def mri_hausdorff_dist_outputs(
 
 
 def mri_hausdorff_dist_execute(
-    params: MriHausdorffDistParameters,
+    params: MriHausdorffDistParamsDict,
     runner: Runner | None = None,
 ) -> MriHausdorffDistOutputs:
     """
@@ -277,6 +277,8 @@ def mri_hausdorff_dist(
 __all__ = [
     "MRI_HAUSDORFF_DIST_METADATA",
     "MriHausdorffDistOutputs",
+    "MriHausdorffDistParamsDict",
+    "MriHausdorffDistParamsDictTagged",
     "mri_hausdorff_dist",
     "mri_hausdorff_dist_execute",
     "mri_hausdorff_dist_params",

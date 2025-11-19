@@ -13,14 +13,14 @@ MRIS_FILL_METADATA = Metadata(
 )
 
 
-MrisFillParameters = typing.TypedDict('MrisFillParameters', {
+MrisFillParamsDict = typing.TypedDict('MrisFillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fill"]],
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
     "input_surface": InputPathType,
     "output_volume": str,
 })
-MrisFillParametersTagged = typing.TypedDict('MrisFillParametersTagged', {
+MrisFillParamsDictTagged = typing.TypedDict('MrisFillParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_fill"],
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
@@ -31,7 +31,7 @@ MrisFillParametersTagged = typing.TypedDict('MrisFillParametersTagged', {
 
 class MrisFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisFillParameters(...)`.
+    Output object returned when calling `MrisFillParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_fill_params(
     output_volume: str,
     resolution: float | None = None,
     conform: bool = False,
-) -> MrisFillParametersTagged:
+) -> MrisFillParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def mris_fill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisFillParameters` object.
+    `MrisFillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mris_fill_validate(
 
 
 def mris_fill_cargs(
-    params: MrisFillParameters,
+    params: MrisFillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def mris_fill_cargs(
 
 
 def mris_fill_outputs(
-    params: MrisFillParameters,
+    params: MrisFillParamsDict,
     execution: Execution,
 ) -> MrisFillOutputs:
     """
@@ -145,7 +145,7 @@ def mris_fill_outputs(
 
 
 def mris_fill_execute(
-    params: MrisFillParameters,
+    params: MrisFillParamsDict,
     runner: Runner | None = None,
 ) -> MrisFillOutputs:
     """
@@ -213,6 +213,8 @@ def mris_fill(
 __all__ = [
     "MRIS_FILL_METADATA",
     "MrisFillOutputs",
+    "MrisFillParamsDict",
+    "MrisFillParamsDictTagged",
     "mris_fill",
     "mris_fill_execute",
     "mris_fill_params",

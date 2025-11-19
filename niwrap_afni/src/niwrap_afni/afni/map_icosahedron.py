@@ -13,7 +13,7 @@ MAP_ICOSAHEDRON_METADATA = Metadata(
 )
 
 
-MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
+MapIcosahedronParamsDict = typing.TypedDict('MapIcosahedronParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/MapIcosahedron"]],
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
@@ -27,7 +27,7 @@ MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
     "verbosity": bool,
     "help": bool,
 })
-MapIcosahedronParametersTagged = typing.TypedDict('MapIcosahedronParametersTagged', {
+MapIcosahedronParamsDictTagged = typing.TypedDict('MapIcosahedronParamsDictTagged', {
     "@type": typing.Literal["afni/MapIcosahedron"],
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ MapIcosahedronParametersTagged = typing.TypedDict('MapIcosahedronParametersTagge
 
 class MapIcosahedronOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MapIcosahedronParameters(...)`.
+    Output object returned when calling `MapIcosahedronParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def map_icosahedron_params(
     fix_cut_surfaces: bool = False,
     verbosity: bool = False,
     help_: bool = False,
-) -> MapIcosahedronParametersTagged:
+) -> MapIcosahedronParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def map_icosahedron_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MapIcosahedronParameters` object.
+    `MapIcosahedronParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def map_icosahedron_validate(
 
 
 def map_icosahedron_cargs(
-    params: MapIcosahedronParameters,
+    params: MapIcosahedronParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -221,7 +221,7 @@ def map_icosahedron_cargs(
 
 
 def map_icosahedron_outputs(
-    params: MapIcosahedronParameters,
+    params: MapIcosahedronParamsDict,
     execution: Execution,
 ) -> MapIcosahedronOutputs:
     """
@@ -240,7 +240,7 @@ def map_icosahedron_outputs(
 
 
 def map_icosahedron_execute(
-    params: MapIcosahedronParameters,
+    params: MapIcosahedronParamsDict,
     runner: Runner | None = None,
 ) -> MapIcosahedronOutputs:
     """
@@ -331,6 +331,8 @@ def map_icosahedron(
 __all__ = [
     "MAP_ICOSAHEDRON_METADATA",
     "MapIcosahedronOutputs",
+    "MapIcosahedronParamsDict",
+    "MapIcosahedronParamsDictTagged",
     "map_icosahedron",
     "map_icosahedron_execute",
     "map_icosahedron_params",

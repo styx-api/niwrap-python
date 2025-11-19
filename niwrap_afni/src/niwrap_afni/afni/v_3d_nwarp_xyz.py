@@ -13,14 +13,14 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 )
 
 
-V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
+V3dNwarpXyzParamsDict = typing.TypedDict('V3dNwarpXyzParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNwarpXYZ"]],
     "xyzfile": InputPathType,
     "warp_spec": str,
     "iwarp": bool,
     "output_file": str,
 })
-V3dNwarpXyzParametersTagged = typing.TypedDict('V3dNwarpXyzParametersTagged', {
+V3dNwarpXyzParamsDictTagged = typing.TypedDict('V3dNwarpXyzParamsDictTagged', {
     "@type": typing.Literal["afni/3dNwarpXYZ"],
     "xyzfile": InputPathType,
     "warp_spec": str,
@@ -31,7 +31,7 @@ V3dNwarpXyzParametersTagged = typing.TypedDict('V3dNwarpXyzParametersTagged', {
 
 class V3dNwarpXyzOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNwarpXyzParameters(...)`.
+    Output object returned when calling `V3dNwarpXyzParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3d_nwarp_xyz_params(
     warp_spec: str,
     output_file: str,
     iwarp: bool = False,
-) -> V3dNwarpXyzParametersTagged:
+) -> V3dNwarpXyzParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def v_3d_nwarp_xyz_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNwarpXyzParameters` object.
+    `V3dNwarpXyzParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def v_3d_nwarp_xyz_validate(
 
 
 def v_3d_nwarp_xyz_cargs(
-    params: V3dNwarpXyzParameters,
+    params: V3dNwarpXyzParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def v_3d_nwarp_xyz_cargs(
 
 
 def v_3d_nwarp_xyz_outputs(
-    params: V3dNwarpXyzParameters,
+    params: V3dNwarpXyzParamsDict,
     execution: Execution,
 ) -> V3dNwarpXyzOutputs:
     """
@@ -143,7 +143,7 @@ def v_3d_nwarp_xyz_outputs(
 
 
 def v_3d_nwarp_xyz_execute(
-    params: V3dNwarpXyzParameters,
+    params: V3dNwarpXyzParamsDict,
     runner: Runner | None = None,
 ) -> V3dNwarpXyzOutputs:
     """
@@ -209,6 +209,8 @@ def v_3d_nwarp_xyz(
 
 __all__ = [
     "V3dNwarpXyzOutputs",
+    "V3dNwarpXyzParamsDict",
+    "V3dNwarpXyzParamsDictTagged",
     "V_3D_NWARP_XYZ_METADATA",
     "v_3d_nwarp_xyz",
     "v_3d_nwarp_xyz_execute",

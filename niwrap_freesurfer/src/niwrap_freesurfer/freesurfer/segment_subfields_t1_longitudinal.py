@@ -13,13 +13,13 @@ SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA = Metadata(
 )
 
 
-SegmentSubfieldsT1LongitudinalParameters = typing.TypedDict('SegmentSubfieldsT1LongitudinalParameters', {
+SegmentSubfieldsT1LongitudinalParamsDict = typing.TypedDict('SegmentSubfieldsT1LongitudinalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/SegmentSubfieldsT1Longitudinal"]],
     "subject_id": str,
     "input_image": InputPathType,
     "output_dir": str,
 })
-SegmentSubfieldsT1LongitudinalParametersTagged = typing.TypedDict('SegmentSubfieldsT1LongitudinalParametersTagged', {
+SegmentSubfieldsT1LongitudinalParamsDictTagged = typing.TypedDict('SegmentSubfieldsT1LongitudinalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/SegmentSubfieldsT1Longitudinal"],
     "subject_id": str,
     "input_image": InputPathType,
@@ -29,7 +29,7 @@ SegmentSubfieldsT1LongitudinalParametersTagged = typing.TypedDict('SegmentSubfie
 
 class SegmentSubfieldsT1LongitudinalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubfieldsT1LongitudinalParameters(...)`.
+    Output object returned when calling `SegmentSubfieldsT1LongitudinalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def segment_subfields_t1_longitudinal_params(
     subject_id: str,
     input_image: InputPathType,
     output_dir: str,
-) -> SegmentSubfieldsT1LongitudinalParametersTagged:
+) -> SegmentSubfieldsT1LongitudinalParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def segment_subfields_t1_longitudinal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubfieldsT1LongitudinalParameters` object.
+    `SegmentSubfieldsT1LongitudinalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def segment_subfields_t1_longitudinal_validate(
 
 
 def segment_subfields_t1_longitudinal_cargs(
-    params: SegmentSubfieldsT1LongitudinalParameters,
+    params: SegmentSubfieldsT1LongitudinalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def segment_subfields_t1_longitudinal_cargs(
 
 
 def segment_subfields_t1_longitudinal_outputs(
-    params: SegmentSubfieldsT1LongitudinalParameters,
+    params: SegmentSubfieldsT1LongitudinalParamsDict,
     execution: Execution,
 ) -> SegmentSubfieldsT1LongitudinalOutputs:
     """
@@ -129,7 +129,7 @@ def segment_subfields_t1_longitudinal_outputs(
 
 
 def segment_subfields_t1_longitudinal_execute(
-    params: SegmentSubfieldsT1LongitudinalParameters,
+    params: SegmentSubfieldsT1LongitudinalParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubfieldsT1LongitudinalOutputs:
     """
@@ -191,6 +191,8 @@ def segment_subfields_t1_longitudinal(
 __all__ = [
     "SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA",
     "SegmentSubfieldsT1LongitudinalOutputs",
+    "SegmentSubfieldsT1LongitudinalParamsDict",
+    "SegmentSubfieldsT1LongitudinalParamsDictTagged",
     "segment_subfields_t1_longitudinal",
     "segment_subfields_t1_longitudinal_execute",
     "segment_subfields_t1_longitudinal_params",

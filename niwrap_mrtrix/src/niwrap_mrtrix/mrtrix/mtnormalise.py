@@ -13,31 +13,31 @@ MTNORMALISE_METADATA = Metadata(
 )
 
 
-MtnormaliseConfigParameters = typing.TypedDict('MtnormaliseConfigParameters', {
+MtnormaliseConfigParamsDict = typing.TypedDict('MtnormaliseConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MtnormaliseConfigParametersTagged = typing.TypedDict('MtnormaliseConfigParametersTagged', {
+MtnormaliseConfigParamsDictTagged = typing.TypedDict('MtnormaliseConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MtnormaliseInputOutputParameters = typing.TypedDict('MtnormaliseInputOutputParameters', {
+MtnormaliseInputOutputParamsDict = typing.TypedDict('MtnormaliseInputOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["input_output"]],
     "input": InputPathType,
     "output": str,
 })
-MtnormaliseInputOutputParametersTagged = typing.TypedDict('MtnormaliseInputOutputParametersTagged', {
+MtnormaliseInputOutputParamsDictTagged = typing.TypedDict('MtnormaliseInputOutputParamsDictTagged', {
     "@type": typing.Literal["input_output"],
     "input": InputPathType,
     "output": str,
 })
 
 
-MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
+MtnormaliseParamsDict = typing.TypedDict('MtnormaliseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mtnormalise"]],
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
@@ -52,12 +52,12 @@ MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MtnormaliseConfigParameters] | None],
+    "config": typing.NotRequired[list[MtnormaliseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input_output": list[MtnormaliseInputOutputParameters],
+    "input_output": list[MtnormaliseInputOutputParamsDict],
 })
-MtnormaliseParametersTagged = typing.TypedDict('MtnormaliseParametersTagged', {
+MtnormaliseParamsDictTagged = typing.TypedDict('MtnormaliseParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mtnormalise"],
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
@@ -72,17 +72,17 @@ MtnormaliseParametersTagged = typing.TypedDict('MtnormaliseParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MtnormaliseConfigParameters] | None],
+    "config": typing.NotRequired[list[MtnormaliseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input_output": list[MtnormaliseInputOutputParameters],
+    "input_output": list[MtnormaliseInputOutputParamsDict],
 })
 
 
-def mtnormalise_config_params(
+def mtnormalise_config(
     key: str,
     value: str,
-) -> MtnormaliseConfigParametersTagged:
+) -> MtnormaliseConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def mtnormalise_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MtnormaliseConfigParameters` object.
+    `MtnormaliseConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def mtnormalise_config_validate(
 
 
 def mtnormalise_config_cargs(
-    params: MtnormaliseConfigParameters,
+    params: MtnormaliseConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def mtnormalise_config_cargs(
 
 class MtnormaliseInputOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[MtnormaliseInputOutputParameters](...)`.
+    Output object returned when calling `list[MtnormaliseInputOutputParamsDict](...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -152,10 +152,10 @@ class MtnormaliseInputOutputOutputs(typing.NamedTuple):
     """output normalised tissue compartment image."""
 
 
-def mtnormalise_input_output_params(
+def mtnormalise_input_output(
     input_: InputPathType,
     output: str,
-) -> MtnormaliseInputOutputParametersTagged:
+) -> MtnormaliseInputOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def mtnormalise_input_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MtnormaliseInputOutputParameters` object.
+    `MtnormaliseInputOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def mtnormalise_input_output_validate(
 
 
 def mtnormalise_input_output_cargs(
-    params: MtnormaliseInputOutputParameters,
+    params: MtnormaliseInputOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def mtnormalise_input_output_cargs(
 
 
 def mtnormalise_input_output_outputs(
-    params: MtnormaliseInputOutputParameters,
+    params: MtnormaliseInputOutputParamsDict,
     execution: Execution,
 ) -> MtnormaliseInputOutputOutputs:
     """
@@ -236,7 +236,7 @@ def mtnormalise_input_output_outputs(
 
 class MtnormaliseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MtnormaliseParameters(...)`.
+    Output object returned when calling `MtnormaliseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -255,7 +255,7 @@ class MtnormaliseOutputs(typing.NamedTuple):
 
 def mtnormalise_params(
     mask: InputPathType,
-    input_output: list[MtnormaliseInputOutputParameters],
+    input_output: list[MtnormaliseInputOutputParamsDict],
     order: str | None = None,
     niter: list[int] | None = None,
     reference: float | None = None,
@@ -268,10 +268,10 @@ def mtnormalise_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MtnormaliseConfigParameters] | None = None,
+    config: list[MtnormaliseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MtnormaliseParametersTagged:
+) -> MtnormaliseParamsDictTagged:
     """
     Build parameters.
     
@@ -353,7 +353,7 @@ def mtnormalise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MtnormaliseParameters` object.
+    `MtnormaliseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -410,7 +410,7 @@ def mtnormalise_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MtnormaliseConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MtnormaliseConfigParamsDict] | None`')
         for e in params["config"]:
             mtnormalise_config_validate(e)
     if params.get("help", False) is None:
@@ -424,13 +424,13 @@ def mtnormalise_validate(
     if params.get("input_output", None) is None:
         raise StyxValidationError("`input_output` must not be None")
     if not isinstance(params["input_output"], list):
-        raise StyxValidationError(f'`input_output` has the wrong type: Received `{type(params.get("input_output", None))}` expected `list[MtnormaliseInputOutputParameters]`')
+        raise StyxValidationError(f'`input_output` has the wrong type: Received `{type(params.get("input_output", None))}` expected `list[MtnormaliseInputOutputParamsDict]`')
     for e in params["input_output"]:
         mtnormalise_input_output_validate(e)
 
 
 def mtnormalise_cargs(
-    params: MtnormaliseParameters,
+    params: MtnormaliseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -504,7 +504,7 @@ def mtnormalise_cargs(
 
 
 def mtnormalise_outputs(
-    params: MtnormaliseParameters,
+    params: MtnormaliseParamsDict,
     execution: Execution,
 ) -> MtnormaliseOutputs:
     """
@@ -527,7 +527,7 @@ def mtnormalise_outputs(
 
 
 def mtnormalise_execute(
-    params: MtnormaliseParameters,
+    params: MtnormaliseParamsDict,
     runner: Runner | None = None,
 ) -> MtnormaliseOutputs:
     """
@@ -586,7 +586,7 @@ def mtnormalise_execute(
 
 def mtnormalise(
     mask: InputPathType,
-    input_output: list[MtnormaliseInputOutputParameters],
+    input_output: list[MtnormaliseInputOutputParamsDict],
     order: str | None = None,
     niter: list[int] | None = None,
     reference: float | None = None,
@@ -599,7 +599,7 @@ def mtnormalise(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MtnormaliseConfigParameters] | None = None,
+    config: list[MtnormaliseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -709,11 +709,17 @@ def mtnormalise(
 
 __all__ = [
     "MTNORMALISE_METADATA",
+    "MtnormaliseConfigParamsDict",
+    "MtnormaliseConfigParamsDictTagged",
     "MtnormaliseInputOutputOutputs",
+    "MtnormaliseInputOutputParamsDict",
+    "MtnormaliseInputOutputParamsDictTagged",
     "MtnormaliseOutputs",
+    "MtnormaliseParamsDict",
+    "MtnormaliseParamsDictTagged",
     "mtnormalise",
-    "mtnormalise_config_params",
+    "mtnormalise_config",
     "mtnormalise_execute",
-    "mtnormalise_input_output_params",
+    "mtnormalise_input_output",
     "mtnormalise_params",
 ]

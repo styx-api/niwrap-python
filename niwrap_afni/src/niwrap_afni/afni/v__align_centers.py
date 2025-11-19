@@ -13,7 +13,7 @@ V__ALIGN_CENTERS_METADATA = Metadata(
 )
 
 
-VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
+VAlignCentersParamsDict = typing.TypedDict('VAlignCentersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Align_Centers"]],
     "base": InputPathType,
     "dset": InputPathType,
@@ -30,7 +30,7 @@ VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
     "shift_xform": typing.NotRequired[InputPathType | None],
     "shift_xform_inv": typing.NotRequired[InputPathType | None],
 })
-VAlignCentersParametersTagged = typing.TypedDict('VAlignCentersParametersTagged', {
+VAlignCentersParamsDictTagged = typing.TypedDict('VAlignCentersParamsDictTagged', {
     "@type": typing.Literal["afni/@Align_Centers"],
     "base": InputPathType,
     "dset": InputPathType,
@@ -51,7 +51,7 @@ VAlignCentersParametersTagged = typing.TypedDict('VAlignCentersParametersTagged'
 
 class VAlignCentersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAlignCentersParameters(...)`.
+    Output object returned when calling `VAlignCentersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v__align_centers_params(
     center_cm_no_amask: bool = False,
     shift_xform: InputPathType | None = None,
     shift_xform_inv: InputPathType | None = None,
-) -> VAlignCentersParametersTagged:
+) -> VAlignCentersParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def v__align_centers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAlignCentersParameters` object.
+    `VAlignCentersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def v__align_centers_validate(
 
 
 def v__align_centers_cargs(
-    params: VAlignCentersParameters,
+    params: VAlignCentersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def v__align_centers_cargs(
 
 
 def v__align_centers_outputs(
-    params: VAlignCentersParameters,
+    params: VAlignCentersParamsDict,
     execution: Execution,
 ) -> VAlignCentersOutputs:
     """
@@ -276,7 +276,7 @@ def v__align_centers_outputs(
 
 
 def v__align_centers_execute(
-    params: VAlignCentersParameters,
+    params: VAlignCentersParamsDict,
     runner: Runner | None = None,
 ) -> VAlignCentersOutputs:
     """
@@ -376,6 +376,8 @@ def v__align_centers(
 
 __all__ = [
     "VAlignCentersOutputs",
+    "VAlignCentersParamsDict",
+    "VAlignCentersParamsDictTagged",
     "V__ALIGN_CENTERS_METADATA",
     "v__align_centers",
     "v__align_centers_execute",

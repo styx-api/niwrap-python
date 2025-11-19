@@ -13,13 +13,13 @@ TBSS_2_REG_METADATA = Metadata(
 )
 
 
-Tbss2RegParameters = typing.TypedDict('Tbss2RegParameters', {
+Tbss2RegParamsDict = typing.TypedDict('Tbss2RegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_2_reg"]],
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,
 })
-Tbss2RegParametersTagged = typing.TypedDict('Tbss2RegParametersTagged', {
+Tbss2RegParamsDictTagged = typing.TypedDict('Tbss2RegParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_2_reg"],
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
@@ -29,7 +29,7 @@ Tbss2RegParametersTagged = typing.TypedDict('Tbss2RegParametersTagged', {
 
 class Tbss2RegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tbss2RegParameters(...)`.
+    Output object returned when calling `Tbss2RegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def tbss_2_reg_params(
     use_fmrib58_fa_1mm: bool = False,
     target_image: InputPathType | None = None,
     find_best_target: bool = False,
-) -> Tbss2RegParametersTagged:
+) -> Tbss2RegParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def tbss_2_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tbss2RegParameters` object.
+    `Tbss2RegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def tbss_2_reg_validate(
 
 
 def tbss_2_reg_cargs(
-    params: Tbss2RegParameters,
+    params: Tbss2RegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def tbss_2_reg_cargs(
 
 
 def tbss_2_reg_outputs(
-    params: Tbss2RegParameters,
+    params: Tbss2RegParamsDict,
     execution: Execution,
 ) -> Tbss2RegOutputs:
     """
@@ -134,7 +134,7 @@ def tbss_2_reg_outputs(
 
 
 def tbss_2_reg_execute(
-    params: Tbss2RegParameters,
+    params: Tbss2RegParamsDict,
     runner: Runner | None = None,
 ) -> Tbss2RegOutputs:
     """
@@ -200,6 +200,8 @@ def tbss_2_reg(
 __all__ = [
     "TBSS_2_REG_METADATA",
     "Tbss2RegOutputs",
+    "Tbss2RegParamsDict",
+    "Tbss2RegParamsDictTagged",
     "tbss_2_reg",
     "tbss_2_reg_execute",
     "tbss_2_reg_params",

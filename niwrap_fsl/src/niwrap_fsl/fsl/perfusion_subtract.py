@@ -13,13 +13,13 @@ PERFUSION_SUBTRACT_METADATA = Metadata(
 )
 
 
-PerfusionSubtractParameters = typing.TypedDict('PerfusionSubtractParameters', {
+PerfusionSubtractParamsDict = typing.TypedDict('PerfusionSubtractParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/perfusion_subtract"]],
     "four_d_input": InputPathType,
     "four_d_output": str,
     "control_first_flag": bool,
 })
-PerfusionSubtractParametersTagged = typing.TypedDict('PerfusionSubtractParametersTagged', {
+PerfusionSubtractParamsDictTagged = typing.TypedDict('PerfusionSubtractParamsDictTagged', {
     "@type": typing.Literal["fsl/perfusion_subtract"],
     "four_d_input": InputPathType,
     "four_d_output": str,
@@ -29,7 +29,7 @@ PerfusionSubtractParametersTagged = typing.TypedDict('PerfusionSubtractParameter
 
 class PerfusionSubtractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PerfusionSubtractParameters(...)`.
+    Output object returned when calling `PerfusionSubtractParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def perfusion_subtract_params(
     four_d_input: InputPathType,
     four_d_output: str,
     control_first_flag: bool = False,
-) -> PerfusionSubtractParametersTagged:
+) -> PerfusionSubtractParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def perfusion_subtract_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PerfusionSubtractParameters` object.
+    `PerfusionSubtractParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def perfusion_subtract_validate(
 
 
 def perfusion_subtract_cargs(
-    params: PerfusionSubtractParameters,
+    params: PerfusionSubtractParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def perfusion_subtract_cargs(
 
 
 def perfusion_subtract_outputs(
-    params: PerfusionSubtractParameters,
+    params: PerfusionSubtractParamsDict,
     execution: Execution,
 ) -> PerfusionSubtractOutputs:
     """
@@ -132,7 +132,7 @@ def perfusion_subtract_outputs(
 
 
 def perfusion_subtract_execute(
-    params: PerfusionSubtractParameters,
+    params: PerfusionSubtractParamsDict,
     runner: Runner | None = None,
 ) -> PerfusionSubtractOutputs:
     """
@@ -196,6 +196,8 @@ def perfusion_subtract(
 __all__ = [
     "PERFUSION_SUBTRACT_METADATA",
     "PerfusionSubtractOutputs",
+    "PerfusionSubtractParamsDict",
+    "PerfusionSubtractParamsDictTagged",
     "perfusion_subtract",
     "perfusion_subtract_execute",
     "perfusion_subtract_params",

@@ -12,7 +12,7 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationParameters', {
+CiftiPairwiseCorrelationParamsDict = typing.TypedDict('CiftiPairwiseCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-pairwise-correlation"]],
     "cifti-out": str,
     "fisher-z": bool,
@@ -20,7 +20,7 @@ CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationP
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
-CiftiPairwiseCorrelationParametersTagged = typing.TypedDict('CiftiPairwiseCorrelationParametersTagged', {
+CiftiPairwiseCorrelationParamsDictTagged = typing.TypedDict('CiftiPairwiseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-pairwise-correlation"],
     "cifti-out": str,
     "fisher-z": bool,
@@ -32,7 +32,7 @@ CiftiPairwiseCorrelationParametersTagged = typing.TypedDict('CiftiPairwiseCorrel
 
 class CiftiPairwiseCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiPairwiseCorrelationParameters(...)`.
+    Output object returned when calling `CiftiPairwiseCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def cifti_pairwise_correlation_params(
     cifti_b: InputPathType,
     fisher_z: bool = False,
     override_mapping_check: bool = False,
-) -> CiftiPairwiseCorrelationParametersTagged:
+) -> CiftiPairwiseCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def cifti_pairwise_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPairwiseCorrelationParameters` object.
+    `CiftiPairwiseCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def cifti_pairwise_correlation_validate(
 
 
 def cifti_pairwise_correlation_cargs(
-    params: CiftiPairwiseCorrelationParameters,
+    params: CiftiPairwiseCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def cifti_pairwise_correlation_cargs(
 
 
 def cifti_pairwise_correlation_outputs(
-    params: CiftiPairwiseCorrelationParameters,
+    params: CiftiPairwiseCorrelationParamsDict,
     execution: Execution,
 ) -> CiftiPairwiseCorrelationOutputs:
     """
@@ -153,7 +153,7 @@ def cifti_pairwise_correlation_outputs(
 
 
 def cifti_pairwise_correlation_execute(
-    params: CiftiPairwiseCorrelationParameters,
+    params: CiftiPairwiseCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiPairwiseCorrelationOutputs:
     """
@@ -216,6 +216,8 @@ def cifti_pairwise_correlation(
 __all__ = [
     "CIFTI_PAIRWISE_CORRELATION_METADATA",
     "CiftiPairwiseCorrelationOutputs",
+    "CiftiPairwiseCorrelationParamsDict",
+    "CiftiPairwiseCorrelationParamsDictTagged",
     "cifti_pairwise_correlation",
     "cifti_pairwise_correlation_execute",
     "cifti_pairwise_correlation_params",

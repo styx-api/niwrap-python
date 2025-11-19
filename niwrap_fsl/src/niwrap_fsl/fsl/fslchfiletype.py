@@ -13,13 +13,13 @@ FSLCHFILETYPE_METADATA = Metadata(
 )
 
 
-FslchfiletypeParameters = typing.TypedDict('FslchfiletypeParameters', {
+FslchfiletypeParamsDict = typing.TypedDict('FslchfiletypeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslchfiletype"]],
     "filetype": str,
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],
 })
-FslchfiletypeParametersTagged = typing.TypedDict('FslchfiletypeParametersTagged', {
+FslchfiletypeParamsDictTagged = typing.TypedDict('FslchfiletypeParamsDictTagged', {
     "@type": typing.Literal["fsl/fslchfiletype"],
     "filetype": str,
     "filename": InputPathType,
@@ -29,7 +29,7 @@ FslchfiletypeParametersTagged = typing.TypedDict('FslchfiletypeParametersTagged'
 
 class FslchfiletypeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslchfiletypeParameters(...)`.
+    Output object returned when calling `FslchfiletypeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def fslchfiletype_params(
     filetype: str,
     filename: InputPathType,
     filename2: str | None = None,
-) -> FslchfiletypeParametersTagged:
+) -> FslchfiletypeParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def fslchfiletype_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslchfiletypeParameters` object.
+    `FslchfiletypeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def fslchfiletype_validate(
 
 
 def fslchfiletype_cargs(
-    params: FslchfiletypeParameters,
+    params: FslchfiletypeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def fslchfiletype_cargs(
 
 
 def fslchfiletype_outputs(
-    params: FslchfiletypeParameters,
+    params: FslchfiletypeParamsDict,
     execution: Execution,
 ) -> FslchfiletypeOutputs:
     """
@@ -132,7 +132,7 @@ def fslchfiletype_outputs(
 
 
 def fslchfiletype_execute(
-    params: FslchfiletypeParameters,
+    params: FslchfiletypeParamsDict,
     runner: Runner | None = None,
 ) -> FslchfiletypeOutputs:
     """
@@ -196,6 +196,8 @@ def fslchfiletype(
 __all__ = [
     "FSLCHFILETYPE_METADATA",
     "FslchfiletypeOutputs",
+    "FslchfiletypeParamsDict",
+    "FslchfiletypeParamsDictTagged",
     "fslchfiletype",
     "fslchfiletype_execute",
     "fslchfiletype_params",

@@ -13,12 +13,12 @@ MRIS_DISTANCE_TO_LABEL_METADATA = Metadata(
 )
 
 
-MrisDistanceToLabelParameters = typing.TypedDict('MrisDistanceToLabelParameters', {
+MrisDistanceToLabelParamsDict = typing.TypedDict('MrisDistanceToLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_to_label"]],
     "hemisphere": str,
     "subject_1": str,
 })
-MrisDistanceToLabelParametersTagged = typing.TypedDict('MrisDistanceToLabelParametersTagged', {
+MrisDistanceToLabelParamsDictTagged = typing.TypedDict('MrisDistanceToLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_distance_to_label"],
     "hemisphere": str,
     "subject_1": str,
@@ -27,7 +27,7 @@ MrisDistanceToLabelParametersTagged = typing.TypedDict('MrisDistanceToLabelParam
 
 class MrisDistanceToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDistanceToLabelParameters(...)`.
+    Output object returned when calling `MrisDistanceToLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MrisDistanceToLabelOutputs(typing.NamedTuple):
 def mris_distance_to_label_params(
     hemisphere: str,
     subject_1: str,
-) -> MrisDistanceToLabelParametersTagged:
+) -> MrisDistanceToLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def mris_distance_to_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDistanceToLabelParameters` object.
+    `MrisDistanceToLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def mris_distance_to_label_validate(
 
 
 def mris_distance_to_label_cargs(
-    params: MrisDistanceToLabelParameters,
+    params: MrisDistanceToLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def mris_distance_to_label_cargs(
 
 
 def mris_distance_to_label_outputs(
-    params: MrisDistanceToLabelParameters,
+    params: MrisDistanceToLabelParamsDict,
     execution: Execution,
 ) -> MrisDistanceToLabelOutputs:
     """
@@ -117,7 +117,7 @@ def mris_distance_to_label_outputs(
 
 
 def mris_distance_to_label_execute(
-    params: MrisDistanceToLabelParameters,
+    params: MrisDistanceToLabelParamsDict,
     runner: Runner | None = None,
 ) -> MrisDistanceToLabelOutputs:
     """
@@ -179,6 +179,8 @@ def mris_distance_to_label(
 __all__ = [
     "MRIS_DISTANCE_TO_LABEL_METADATA",
     "MrisDistanceToLabelOutputs",
+    "MrisDistanceToLabelParamsDict",
+    "MrisDistanceToLabelParamsDictTagged",
     "mris_distance_to_label",
     "mris_distance_to_label_execute",
     "mris_distance_to_label_params",

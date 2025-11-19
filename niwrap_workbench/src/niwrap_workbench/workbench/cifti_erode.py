@@ -12,60 +12,60 @@ CIFTI_ERODE_METADATA = Metadata(
 )
 
 
-CiftiErodeLeftSurfaceParameters = typing.TypedDict('CiftiErodeLeftSurfaceParameters', {
+CiftiErodeLeftSurfaceParamsDict = typing.TypedDict('CiftiErodeLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiErodeLeftSurfaceParametersTagged = typing.TypedDict('CiftiErodeLeftSurfaceParametersTagged', {
+CiftiErodeLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiErodeRightSurfaceParameters = typing.TypedDict('CiftiErodeRightSurfaceParameters', {
+CiftiErodeRightSurfaceParamsDict = typing.TypedDict('CiftiErodeRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiErodeRightSurfaceParametersTagged = typing.TypedDict('CiftiErodeRightSurfaceParametersTagged', {
+CiftiErodeRightSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiErodeCerebellumSurfaceParameters = typing.TypedDict('CiftiErodeCerebellumSurfaceParameters', {
+CiftiErodeCerebellumSurfaceParamsDict = typing.TypedDict('CiftiErodeCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiErodeCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiErodeCerebellumSurfaceParametersTagged', {
+CiftiErodeCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiErodeCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiErodeParameters = typing.TypedDict('CiftiErodeParameters', {
+CiftiErodeParamsDict = typing.TypedDict('CiftiErodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-erode"]],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParamsDict | None],
     "merged-volume": bool,
     "cifti-in": InputPathType,
     "direction": str,
     "surface-distance": float,
     "volume-distance": float,
 })
-CiftiErodeParametersTagged = typing.TypedDict('CiftiErodeParametersTagged', {
+CiftiErodeParamsDictTagged = typing.TypedDict('CiftiErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-erode"],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParamsDict | None],
     "merged-volume": bool,
     "cifti-in": InputPathType,
     "direction": str,
@@ -74,10 +74,10 @@ CiftiErodeParametersTagged = typing.TypedDict('CiftiErodeParametersTagged', {
 })
 
 
-def cifti_erode_left_surface_params(
+def cifti_erode_left_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiErodeLeftSurfaceParametersTagged:
+) -> CiftiErodeLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def cifti_erode_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiErodeLeftSurfaceParameters` object.
+    `CiftiErodeLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def cifti_erode_left_surface_validate(
 
 
 def cifti_erode_left_surface_cargs(
-    params: CiftiErodeLeftSurfaceParameters,
+    params: CiftiErodeLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,10 +144,10 @@ def cifti_erode_left_surface_cargs(
     return cargs
 
 
-def cifti_erode_right_surface_params(
+def cifti_erode_right_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiErodeRightSurfaceParametersTagged:
+) -> CiftiErodeRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -174,7 +174,7 @@ def cifti_erode_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiErodeRightSurfaceParameters` object.
+    `CiftiErodeRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def cifti_erode_right_surface_validate(
 
 
 def cifti_erode_right_surface_cargs(
-    params: CiftiErodeRightSurfaceParameters,
+    params: CiftiErodeRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,10 +214,10 @@ def cifti_erode_right_surface_cargs(
     return cargs
 
 
-def cifti_erode_cerebellum_surface_params(
+def cifti_erode_cerebellum_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiErodeCerebellumSurfaceParametersTagged:
+) -> CiftiErodeCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -244,7 +244,7 @@ def cifti_erode_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiErodeCerebellumSurfaceParameters` object.
+    `CiftiErodeCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -261,7 +261,7 @@ def cifti_erode_cerebellum_surface_validate(
 
 
 def cifti_erode_cerebellum_surface_cargs(
-    params: CiftiErodeCerebellumSurfaceParameters,
+    params: CiftiErodeCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def cifti_erode_cerebellum_surface_cargs(
 
 class CiftiErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiErodeParameters(...)`.
+    Output object returned when calling `CiftiErodeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -300,11 +300,11 @@ def cifti_erode_params(
     direction: str,
     surface_distance: float,
     volume_distance: float,
-    left_surface: CiftiErodeLeftSurfaceParameters | None = None,
-    right_surface: CiftiErodeRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiErodeCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiErodeLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiErodeRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiErodeCerebellumSurfaceParamsDict | None = None,
     merged_volume: bool = False,
-) -> CiftiErodeParametersTagged:
+) -> CiftiErodeParamsDictTagged:
     """
     Build parameters.
     
@@ -345,7 +345,7 @@ def cifti_erode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiErodeParameters` object.
+    `CiftiErodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -385,7 +385,7 @@ def cifti_erode_validate(
 
 
 def cifti_erode_cargs(
-    params: CiftiErodeParameters,
+    params: CiftiErodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -416,7 +416,7 @@ def cifti_erode_cargs(
 
 
 def cifti_erode_outputs(
-    params: CiftiErodeParameters,
+    params: CiftiErodeParamsDict,
     execution: Execution,
 ) -> CiftiErodeOutputs:
     """
@@ -436,7 +436,7 @@ def cifti_erode_outputs(
 
 
 def cifti_erode_execute(
-    params: CiftiErodeParameters,
+    params: CiftiErodeParamsDict,
     runner: Runner | None = None,
 ) -> CiftiErodeOutputs:
     """
@@ -473,9 +473,9 @@ def cifti_erode(
     direction: str,
     surface_distance: float,
     volume_distance: float,
-    left_surface: CiftiErodeLeftSurfaceParameters | None = None,
-    right_surface: CiftiErodeRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiErodeCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiErodeLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiErodeRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiErodeCerebellumSurfaceParamsDict | None = None,
     merged_volume: bool = False,
     runner: Runner | None = None,
 ) -> CiftiErodeOutputs:
@@ -522,11 +522,19 @@ def cifti_erode(
 
 __all__ = [
     "CIFTI_ERODE_METADATA",
+    "CiftiErodeCerebellumSurfaceParamsDict",
+    "CiftiErodeCerebellumSurfaceParamsDictTagged",
+    "CiftiErodeLeftSurfaceParamsDict",
+    "CiftiErodeLeftSurfaceParamsDictTagged",
     "CiftiErodeOutputs",
+    "CiftiErodeParamsDict",
+    "CiftiErodeParamsDictTagged",
+    "CiftiErodeRightSurfaceParamsDict",
+    "CiftiErodeRightSurfaceParamsDictTagged",
     "cifti_erode",
-    "cifti_erode_cerebellum_surface_params",
+    "cifti_erode_cerebellum_surface",
     "cifti_erode_execute",
-    "cifti_erode_left_surface_params",
+    "cifti_erode_left_surface",
     "cifti_erode_params",
-    "cifti_erode_right_surface_params",
+    "cifti_erode_right_surface",
 ]

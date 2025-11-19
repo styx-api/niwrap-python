@@ -13,7 +13,7 @@ SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldParameters', {
+SmoothDisplacementFieldParamsDict = typing.TypedDict('SmoothDisplacementFieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SmoothDisplacementField"]],
     "image_dimension": int,
     "input_field": InputPathType,
@@ -24,7 +24,7 @@ SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldPar
     "estimate_inverse": typing.NotRequired[bool | None],
     "confidence_image": typing.NotRequired[InputPathType | None],
 })
-SmoothDisplacementFieldParametersTagged = typing.TypedDict('SmoothDisplacementFieldParametersTagged', {
+SmoothDisplacementFieldParamsDictTagged = typing.TypedDict('SmoothDisplacementFieldParamsDictTagged', {
     "@type": typing.Literal["ants/SmoothDisplacementField"],
     "image_dimension": int,
     "input_field": InputPathType,
@@ -39,7 +39,7 @@ SmoothDisplacementFieldParametersTagged = typing.TypedDict('SmoothDisplacementFi
 
 class SmoothDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SmoothDisplacementFieldParameters(...)`.
+    Output object returned when calling `SmoothDisplacementFieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def smooth_displacement_field_params(
     spline_order: int | None = None,
     estimate_inverse: bool | None = None,
     confidence_image: InputPathType | None = None,
-) -> SmoothDisplacementFieldParametersTagged:
+) -> SmoothDisplacementFieldParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def smooth_displacement_field_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SmoothDisplacementFieldParameters` object.
+    `SmoothDisplacementFieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def smooth_displacement_field_validate(
 
 
 def smooth_displacement_field_cargs(
-    params: SmoothDisplacementFieldParameters,
+    params: SmoothDisplacementFieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def smooth_displacement_field_cargs(
 
 
 def smooth_displacement_field_outputs(
-    params: SmoothDisplacementFieldParameters,
+    params: SmoothDisplacementFieldParamsDict,
     execution: Execution,
 ) -> SmoothDisplacementFieldOutputs:
     """
@@ -190,7 +190,7 @@ def smooth_displacement_field_outputs(
 
 
 def smooth_displacement_field_execute(
-    params: SmoothDisplacementFieldParameters,
+    params: SmoothDisplacementFieldParamsDict,
     runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:
     """
@@ -274,6 +274,8 @@ def smooth_displacement_field(
 __all__ = [
     "SMOOTH_DISPLACEMENT_FIELD_METADATA",
     "SmoothDisplacementFieldOutputs",
+    "SmoothDisplacementFieldParamsDict",
+    "SmoothDisplacementFieldParamsDictTagged",
     "smooth_displacement_field",
     "smooth_displacement_field_execute",
     "smooth_displacement_field_params",

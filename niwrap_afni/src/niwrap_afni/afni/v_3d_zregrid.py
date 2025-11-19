@@ -13,7 +13,7 @@ V_3D_ZREGRID_METADATA = Metadata(
 )
 
 
-V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
+V3dZregridParamsDict = typing.TypedDict('V3dZregridParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dZregrid"]],
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
     "infile": InputPathType,
     "verbose": bool,
 })
-V3dZregridParametersTagged = typing.TypedDict('V3dZregridParametersTagged', {
+V3dZregridParamsDictTagged = typing.TypedDict('V3dZregridParamsDictTagged', {
     "@type": typing.Literal["afni/3dZregrid"],
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ V3dZregridParametersTagged = typing.TypedDict('V3dZregridParametersTagged', {
 
 class V3dZregridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dZregridParameters(...)`.
+    Output object returned when calling `V3dZregridParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v_3d_zregrid_params(
     z_size: float | None = None,
     prefix: str | None = None,
     verbose: bool = False,
-) -> V3dZregridParametersTagged:
+) -> V3dZregridParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v_3d_zregrid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dZregridParameters` object.
+    `V3dZregridParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def v_3d_zregrid_validate(
 
 
 def v_3d_zregrid_cargs(
-    params: V3dZregridParameters,
+    params: V3dZregridParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def v_3d_zregrid_cargs(
 
 
 def v_3d_zregrid_outputs(
-    params: V3dZregridParameters,
+    params: V3dZregridParamsDict,
     execution: Execution,
 ) -> V3dZregridOutputs:
     """
@@ -180,7 +180,7 @@ def v_3d_zregrid_outputs(
 
 
 def v_3d_zregrid_execute(
-    params: V3dZregridParameters,
+    params: V3dZregridParamsDict,
     runner: Runner | None = None,
 ) -> V3dZregridOutputs:
     """
@@ -251,6 +251,8 @@ def v_3d_zregrid(
 
 __all__ = [
     "V3dZregridOutputs",
+    "V3dZregridParamsDict",
+    "V3dZregridParamsDictTagged",
     "V_3D_ZREGRID_METADATA",
     "v_3d_zregrid",
     "v_3d_zregrid_execute",

@@ -13,7 +13,7 @@ VOL2SEGAVG_METADATA = Metadata(
 )
 
 
-Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
+Vol2segavgParamsDict = typing.TypedDict('Vol2segavgParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vol2segavg"]],
     "output_file": str,
     "input_volume": InputPathType,
@@ -31,7 +31,7 @@ Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
     "xcsf_flag": bool,
     "remove_mean_flag": bool,
 })
-Vol2segavgParametersTagged = typing.TypedDict('Vol2segavgParametersTagged', {
+Vol2segavgParamsDictTagged = typing.TypedDict('Vol2segavgParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vol2segavg"],
     "output_file": str,
     "input_volume": InputPathType,
@@ -53,7 +53,7 @@ Vol2segavgParametersTagged = typing.TypedDict('Vol2segavgParametersTagged', {
 
 class Vol2segavgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Vol2segavgParameters(...)`.
+    Output object returned when calling `Vol2segavgParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def vol2segavg_params(
     vcsf_flag: bool = False,
     xcsf_flag: bool = False,
     remove_mean_flag: bool = False,
-) -> Vol2segavgParametersTagged:
+) -> Vol2segavgParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def vol2segavg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Vol2segavgParameters` object.
+    `Vol2segavgParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -200,7 +200,7 @@ def vol2segavg_validate(
 
 
 def vol2segavg_cargs(
-    params: Vol2segavgParameters,
+    params: Vol2segavgParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def vol2segavg_cargs(
 
 
 def vol2segavg_outputs(
-    params: Vol2segavgParameters,
+    params: Vol2segavgParamsDict,
     execution: Execution,
 ) -> Vol2segavgOutputs:
     """
@@ -291,7 +291,7 @@ def vol2segavg_outputs(
 
 
 def vol2segavg_execute(
-    params: Vol2segavgParameters,
+    params: Vol2segavgParamsDict,
     runner: Runner | None = None,
 ) -> Vol2segavgOutputs:
     """
@@ -392,6 +392,8 @@ def vol2segavg(
 __all__ = [
     "VOL2SEGAVG_METADATA",
     "Vol2segavgOutputs",
+    "Vol2segavgParamsDict",
+    "Vol2segavgParamsDictTagged",
     "vol2segavg",
     "vol2segavg_execute",
     "vol2segavg_params",

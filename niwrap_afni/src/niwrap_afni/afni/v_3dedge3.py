@@ -13,7 +13,7 @@ V_3DEDGE3_METADATA = Metadata(
 )
 
 
-V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
+V3dedge3ParamsDict = typing.TypedDict('V3dedge3ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dedge3"]],
     "input_file": InputPathType,
     "verbose": bool,
@@ -25,7 +25,7 @@ V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
     "scale_floats": typing.NotRequired[float | None],
     "automask": bool,
 })
-V3dedge3ParametersTagged = typing.TypedDict('V3dedge3ParametersTagged', {
+V3dedge3ParamsDictTagged = typing.TypedDict('V3dedge3ParamsDictTagged', {
     "@type": typing.Literal["afni/3dedge3"],
     "input_file": InputPathType,
     "verbose": bool,
@@ -41,7 +41,7 @@ V3dedge3ParametersTagged = typing.TypedDict('V3dedge3ParametersTagged', {
 
 class V3dedge3Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dedge3Parameters(...)`.
+    Output object returned when calling `V3dedge3ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3dedge3_params(
     nscale: bool = False,
     scale_floats: float | None = None,
     automask: bool = False,
-) -> V3dedge3ParametersTagged:
+) -> V3dedge3ParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def v_3dedge3_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dedge3Parameters` object.
+    `V3dedge3ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def v_3dedge3_validate(
 
 
 def v_3dedge3_cargs(
-    params: V3dedge3Parameters,
+    params: V3dedge3ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def v_3dedge3_cargs(
 
 
 def v_3dedge3_outputs(
-    params: V3dedge3Parameters,
+    params: V3dedge3ParamsDict,
     execution: Execution,
 ) -> V3dedge3Outputs:
     """
@@ -212,7 +212,7 @@ def v_3dedge3_outputs(
 
 
 def v_3dedge3_execute(
-    params: V3dedge3Parameters,
+    params: V3dedge3ParamsDict,
     runner: Runner | None = None,
 ) -> V3dedge3Outputs:
     """
@@ -294,6 +294,8 @@ def v_3dedge3(
 
 __all__ = [
     "V3dedge3Outputs",
+    "V3dedge3ParamsDict",
+    "V3dedge3ParamsDictTagged",
     "V_3DEDGE3_METADATA",
     "v_3dedge3",
     "v_3dedge3_execute",

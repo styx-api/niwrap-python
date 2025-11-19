@@ -13,7 +13,7 @@ PNM_EVS_METADATA = Metadata(
 )
 
 
-PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
+PnmEvsParamsDict = typing.TypedDict('PnmEvsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pnm_evs"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -36,7 +36,7 @@ PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-PnmEvsParametersTagged = typing.TypedDict('PnmEvsParametersTagged', {
+PnmEvsParamsDictTagged = typing.TypedDict('PnmEvsParamsDictTagged', {
     "@type": typing.Literal["fsl/pnm_evs"],
     "input_file": InputPathType,
     "output_file": str,
@@ -63,7 +63,7 @@ PnmEvsParametersTagged = typing.TypedDict('PnmEvsParametersTagged', {
 
 class PnmEvsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PnmEvsParameters(...)`.
+    Output object returned when calling `PnmEvsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def pnm_evs_params(
     debug_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> PnmEvsParametersTagged:
+) -> PnmEvsParamsDictTagged:
     """
     Build parameters.
     
@@ -174,7 +174,7 @@ def pnm_evs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PnmEvsParameters` object.
+    `PnmEvsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -250,7 +250,7 @@ def pnm_evs_validate(
 
 
 def pnm_evs_cargs(
-    params: PnmEvsParameters,
+    params: PnmEvsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def pnm_evs_cargs(
 
 
 def pnm_evs_outputs(
-    params: PnmEvsParameters,
+    params: PnmEvsParamsDict,
     execution: Execution,
 ) -> PnmEvsOutputs:
     """
@@ -376,7 +376,7 @@ def pnm_evs_outputs(
 
 
 def pnm_evs_execute(
-    params: PnmEvsParameters,
+    params: PnmEvsParamsDict,
     runner: Runner | None = None,
 ) -> PnmEvsOutputs:
     """
@@ -498,6 +498,8 @@ def pnm_evs(
 __all__ = [
     "PNM_EVS_METADATA",
     "PnmEvsOutputs",
+    "PnmEvsParamsDict",
+    "PnmEvsParamsDictTagged",
     "pnm_evs",
     "pnm_evs_execute",
     "pnm_evs_params",

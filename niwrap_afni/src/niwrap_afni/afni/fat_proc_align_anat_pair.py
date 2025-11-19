@@ -13,7 +13,7 @@ FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
 )
 
 
-FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameters', {
+FatProcAlignAnatPairParamsDict = typing.TypedDict('FatProcAlignAnatPairParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_align_anat_pair"]],
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
@@ -28,7 +28,7 @@ FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameter
     "no_cmd_out": bool,
     "no_clean": bool,
 })
-FatProcAlignAnatPairParametersTagged = typing.TypedDict('FatProcAlignAnatPairParametersTagged', {
+FatProcAlignAnatPairParamsDictTagged = typing.TypedDict('FatProcAlignAnatPairParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_align_anat_pair"],
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
@@ -47,7 +47,7 @@ FatProcAlignAnatPairParametersTagged = typing.TypedDict('FatProcAlignAnatPairPar
 
 class FatProcAlignAnatPairOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcAlignAnatPairParameters(...)`.
+    Output object returned when calling `FatProcAlignAnatPairParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def fat_proc_align_anat_pair_params(
     workdir: str | None = None,
     no_cmd_out: bool = False,
     no_clean: bool = False,
-) -> FatProcAlignAnatPairParametersTagged:
+) -> FatProcAlignAnatPairParamsDictTagged:
     """
     Build parameters.
     
@@ -123,7 +123,7 @@ def fat_proc_align_anat_pair_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcAlignAnatPairParameters` object.
+    `FatProcAlignAnatPairParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def fat_proc_align_anat_pair_validate(
 
 
 def fat_proc_align_anat_pair_cargs(
-    params: FatProcAlignAnatPairParameters,
+    params: FatProcAlignAnatPairParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -239,7 +239,7 @@ def fat_proc_align_anat_pair_cargs(
 
 
 def fat_proc_align_anat_pair_outputs(
-    params: FatProcAlignAnatPairParameters,
+    params: FatProcAlignAnatPairParamsDict,
     execution: Execution,
 ) -> FatProcAlignAnatPairOutputs:
     """
@@ -261,7 +261,7 @@ def fat_proc_align_anat_pair_outputs(
 
 
 def fat_proc_align_anat_pair_execute(
-    params: FatProcAlignAnatPairParameters,
+    params: FatProcAlignAnatPairParamsDict,
     runner: Runner | None = None,
 ) -> FatProcAlignAnatPairOutputs:
     """
@@ -355,6 +355,8 @@ def fat_proc_align_anat_pair(
 __all__ = [
     "FAT_PROC_ALIGN_ANAT_PAIR_METADATA",
     "FatProcAlignAnatPairOutputs",
+    "FatProcAlignAnatPairParamsDict",
+    "FatProcAlignAnatPairParamsDictTagged",
     "fat_proc_align_anat_pair",
     "fat_proc_align_anat_pair_execute",
     "fat_proc_align_anat_pair_params",

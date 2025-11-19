@@ -12,7 +12,7 @@ LABEL_DILATE_METADATA = Metadata(
 )
 
 
-LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
+LabelDilateParamsDict = typing.TypedDict('LabelDilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-dilate"]],
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
     "surface": InputPathType,
     "dilate-dist": float,
 })
-LabelDilateParametersTagged = typing.TypedDict('LabelDilateParametersTagged', {
+LabelDilateParamsDictTagged = typing.TypedDict('LabelDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/label-dilate"],
     "label-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ LabelDilateParametersTagged = typing.TypedDict('LabelDilateParametersTagged', {
 
 class LabelDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelDilateParameters(...)`.
+    Output object returned when calling `LabelDilateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def label_dilate_params(
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
-) -> LabelDilateParametersTagged:
+) -> LabelDilateParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def label_dilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelDilateParameters` object.
+    `LabelDilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def label_dilate_validate(
 
 
 def label_dilate_cargs(
-    params: LabelDilateParameters,
+    params: LabelDilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def label_dilate_cargs(
 
 
 def label_dilate_outputs(
-    params: LabelDilateParameters,
+    params: LabelDilateParamsDict,
     execution: Execution,
 ) -> LabelDilateOutputs:
     """
@@ -184,7 +184,7 @@ def label_dilate_outputs(
 
 
 def label_dilate_execute(
-    params: LabelDilateParameters,
+    params: LabelDilateParamsDict,
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
@@ -267,6 +267,8 @@ def label_dilate(
 __all__ = [
     "LABEL_DILATE_METADATA",
     "LabelDilateOutputs",
+    "LabelDilateParamsDict",
+    "LabelDilateParamsDictTagged",
     "label_dilate",
     "label_dilate_execute",
     "label_dilate_params",

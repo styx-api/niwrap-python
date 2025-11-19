@@ -13,11 +13,11 @@ ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
 )
 
 
-AdjunctCalcMontDimsPyParameters = typing.TypedDict('AdjunctCalcMontDimsPyParameters', {
+AdjunctCalcMontDimsPyParamsDict = typing.TypedDict('AdjunctCalcMontDimsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_calc_mont_dims.py"]],
     "help": bool,
 })
-AdjunctCalcMontDimsPyParametersTagged = typing.TypedDict('AdjunctCalcMontDimsPyParametersTagged', {
+AdjunctCalcMontDimsPyParamsDictTagged = typing.TypedDict('AdjunctCalcMontDimsPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_calc_mont_dims.py"],
     "help": bool,
 })
@@ -25,7 +25,7 @@ AdjunctCalcMontDimsPyParametersTagged = typing.TypedDict('AdjunctCalcMontDimsPyP
 
 class AdjunctCalcMontDimsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctCalcMontDimsPyParameters(...)`.
+    Output object returned when calling `AdjunctCalcMontDimsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class AdjunctCalcMontDimsPyOutputs(typing.NamedTuple):
 
 def adjunct_calc_mont_dims_py_params(
     help_: bool = False,
-) -> AdjunctCalcMontDimsPyParametersTagged:
+) -> AdjunctCalcMontDimsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def adjunct_calc_mont_dims_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctCalcMontDimsPyParameters` object.
+    `AdjunctCalcMontDimsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def adjunct_calc_mont_dims_py_validate(
 
 
 def adjunct_calc_mont_dims_py_cargs(
-    params: AdjunctCalcMontDimsPyParameters,
+    params: AdjunctCalcMontDimsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def adjunct_calc_mont_dims_py_cargs(
 
 
 def adjunct_calc_mont_dims_py_outputs(
-    params: AdjunctCalcMontDimsPyParameters,
+    params: AdjunctCalcMontDimsPyParamsDict,
     execution: Execution,
 ) -> AdjunctCalcMontDimsPyOutputs:
     """
@@ -107,7 +107,7 @@ def adjunct_calc_mont_dims_py_outputs(
 
 
 def adjunct_calc_mont_dims_py_execute(
-    params: AdjunctCalcMontDimsPyParameters,
+    params: AdjunctCalcMontDimsPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctCalcMontDimsPyOutputs:
     """
@@ -163,6 +163,8 @@ def adjunct_calc_mont_dims_py(
 __all__ = [
     "ADJUNCT_CALC_MONT_DIMS_PY_METADATA",
     "AdjunctCalcMontDimsPyOutputs",
+    "AdjunctCalcMontDimsPyParamsDict",
+    "AdjunctCalcMontDimsPyParamsDictTagged",
     "adjunct_calc_mont_dims_py",
     "adjunct_calc_mont_dims_py_execute",
     "adjunct_calc_mont_dims_py_params",

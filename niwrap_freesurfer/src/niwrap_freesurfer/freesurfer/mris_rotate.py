@@ -13,7 +13,7 @@ MRIS_ROTATE_METADATA = Metadata(
 )
 
 
-MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
+MrisRotateParamsDict = typing.TypedDict('MrisRotateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rotate"]],
     "input_surface": InputPathType,
     "alpha_deg": float,
@@ -23,7 +23,7 @@ MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
     "regfile": typing.NotRequired[InputPathType | None],
     "invalidate_geometry": bool,
 })
-MrisRotateParametersTagged = typing.TypedDict('MrisRotateParametersTagged', {
+MrisRotateParamsDictTagged = typing.TypedDict('MrisRotateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_rotate"],
     "input_surface": InputPathType,
     "alpha_deg": float,
@@ -37,7 +37,7 @@ MrisRotateParametersTagged = typing.TypedDict('MrisRotateParametersTagged', {
 
 class MrisRotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRotateParameters(...)`.
+    Output object returned when calling `MrisRotateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_rotate_params(
     output_surface: str,
     regfile: InputPathType | None = None,
     invalidate_geometry: bool = False,
-) -> MrisRotateParametersTagged:
+) -> MrisRotateParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def mris_rotate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRotateParameters` object.
+    `MrisRotateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mris_rotate_validate(
 
 
 def mris_rotate_cargs(
-    params: MrisRotateParameters,
+    params: MrisRotateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def mris_rotate_cargs(
 
 
 def mris_rotate_outputs(
-    params: MrisRotateParameters,
+    params: MrisRotateParamsDict,
     execution: Execution,
 ) -> MrisRotateOutputs:
     """
@@ -175,7 +175,7 @@ def mris_rotate_outputs(
 
 
 def mris_rotate_execute(
-    params: MrisRotateParameters,
+    params: MrisRotateParamsDict,
     runner: Runner | None = None,
 ) -> MrisRotateOutputs:
     """
@@ -250,6 +250,8 @@ def mris_rotate(
 __all__ = [
     "MRIS_ROTATE_METADATA",
     "MrisRotateOutputs",
+    "MrisRotateParamsDict",
+    "MrisRotateParamsDictTagged",
     "mris_rotate",
     "mris_rotate_execute",
     "mris_rotate_params",

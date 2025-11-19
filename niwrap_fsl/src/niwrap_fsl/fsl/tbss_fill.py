@@ -13,7 +13,7 @@ TBSS_FILL_METADATA = Metadata(
 )
 
 
-TbssFillParameters = typing.TypedDict('TbssFillParameters', {
+TbssFillParamsDict = typing.TypedDict('TbssFillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_fill"]],
     "stats_image": InputPathType,
     "threshold": float,
@@ -21,7 +21,7 @@ TbssFillParameters = typing.TypedDict('TbssFillParameters', {
     "output": str,
     "include_negative_flag": bool,
 })
-TbssFillParametersTagged = typing.TypedDict('TbssFillParametersTagged', {
+TbssFillParamsDictTagged = typing.TypedDict('TbssFillParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_fill"],
     "stats_image": InputPathType,
     "threshold": float,
@@ -33,7 +33,7 @@ TbssFillParametersTagged = typing.TypedDict('TbssFillParametersTagged', {
 
 class TbssFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TbssFillParameters(...)`.
+    Output object returned when calling `TbssFillParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def tbss_fill_params(
     mean_fa: InputPathType,
     output: str,
     include_negative_flag: bool = False,
-) -> TbssFillParametersTagged:
+) -> TbssFillParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def tbss_fill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TbssFillParameters` object.
+    `TbssFillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def tbss_fill_validate(
 
 
 def tbss_fill_cargs(
-    params: TbssFillParameters,
+    params: TbssFillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def tbss_fill_cargs(
 
 
 def tbss_fill_outputs(
-    params: TbssFillParameters,
+    params: TbssFillParamsDict,
     execution: Execution,
 ) -> TbssFillOutputs:
     """
@@ -150,7 +150,7 @@ def tbss_fill_outputs(
 
 
 def tbss_fill_execute(
-    params: TbssFillParameters,
+    params: TbssFillParamsDict,
     runner: Runner | None = None,
 ) -> TbssFillOutputs:
     """
@@ -218,6 +218,8 @@ def tbss_fill(
 __all__ = [
     "TBSS_FILL_METADATA",
     "TbssFillOutputs",
+    "TbssFillParamsDict",
+    "TbssFillParamsDictTagged",
     "tbss_fill",
     "tbss_fill_execute",
     "tbss_fill_params",

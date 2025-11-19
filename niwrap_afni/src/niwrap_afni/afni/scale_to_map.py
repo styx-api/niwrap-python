@@ -13,19 +13,19 @@ SCALE_TO_MAP_METADATA = Metadata(
 )
 
 
-ScaleToMapTraceParameters = typing.TypedDict('ScaleToMapTraceParameters', {
+ScaleToMapTraceParamsDict = typing.TypedDict('ScaleToMapTraceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["trace"]],
     "trace": bool,
     "TRACE": bool,
 })
-ScaleToMapTraceParametersTagged = typing.TypedDict('ScaleToMapTraceParametersTagged', {
+ScaleToMapTraceParamsDictTagged = typing.TypedDict('ScaleToMapTraceParamsDictTagged', {
     "@type": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
-ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
+ScaleToMapParamsDict = typing.TypedDict('ScaleToMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ScaleToMap"]],
     "input_file": InputPathType,
     "icol": float,
@@ -53,11 +53,11 @@ ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "trace": typing.NotRequired[ScaleToMapTraceParameters | None],
+    "trace": typing.NotRequired[ScaleToMapTraceParamsDict | None],
     "nomall": bool,
     "yesmall": bool,
 })
-ScaleToMapParametersTagged = typing.TypedDict('ScaleToMapParametersTagged', {
+ScaleToMapParamsDictTagged = typing.TypedDict('ScaleToMapParamsDictTagged', {
     "@type": typing.Literal["afni/ScaleToMap"],
     "input_file": InputPathType,
     "icol": float,
@@ -85,16 +85,16 @@ ScaleToMapParametersTagged = typing.TypedDict('ScaleToMapParametersTagged', {
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "trace": typing.NotRequired[ScaleToMapTraceParameters | None],
+    "trace": typing.NotRequired[ScaleToMapTraceParamsDict | None],
     "nomall": bool,
     "yesmall": bool,
 })
 
 
-def scale_to_map_trace_params(
+def scale_to_map_trace(
     trace_: bool = False,
     trace_2: bool = False,
-) -> ScaleToMapTraceParametersTagged:
+) -> ScaleToMapTraceParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def scale_to_map_trace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ScaleToMapTraceParameters` object.
+    `ScaleToMapTraceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def scale_to_map_trace_validate(
 
 
 def scale_to_map_trace_cargs(
-    params: ScaleToMapTraceParameters,
+    params: ScaleToMapTraceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -158,7 +158,7 @@ def scale_to_map_trace_cargs(
 
 class ScaleToMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ScaleToMapParameters(...)`.
+    Output object returned when calling `ScaleToMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -191,10 +191,10 @@ def scale_to_map_params(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: ScaleToMapTraceParameters | None = None,
+    trace_: ScaleToMapTraceParamsDict | None = None,
     nomall: bool = False,
     yesmall: bool = False,
-) -> ScaleToMapParametersTagged:
+) -> ScaleToMapParamsDictTagged:
     """
     Build parameters.
     
@@ -287,7 +287,7 @@ def scale_to_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ScaleToMapParameters` object.
+    `ScaleToMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -420,7 +420,7 @@ def scale_to_map_validate(
 
 
 def scale_to_map_cargs(
-    params: ScaleToMapParameters,
+    params: ScaleToMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -526,7 +526,7 @@ def scale_to_map_cargs(
 
 
 def scale_to_map_outputs(
-    params: ScaleToMapParameters,
+    params: ScaleToMapParamsDict,
     execution: Execution,
 ) -> ScaleToMapOutputs:
     """
@@ -545,7 +545,7 @@ def scale_to_map_outputs(
 
 
 def scale_to_map_execute(
-    params: ScaleToMapParameters,
+    params: ScaleToMapParamsDict,
     runner: Runner | None = None,
 ) -> ScaleToMapOutputs:
     """
@@ -600,7 +600,7 @@ def scale_to_map(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: ScaleToMapTraceParameters | None = None,
+    trace_: ScaleToMapTraceParamsDict | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     runner: Runner | None = None,
@@ -689,8 +689,12 @@ def scale_to_map(
 __all__ = [
     "SCALE_TO_MAP_METADATA",
     "ScaleToMapOutputs",
+    "ScaleToMapParamsDict",
+    "ScaleToMapParamsDictTagged",
+    "ScaleToMapTraceParamsDict",
+    "ScaleToMapTraceParamsDictTagged",
     "scale_to_map",
     "scale_to_map_execute",
     "scale_to_map_params",
-    "scale_to_map_trace_params",
+    "scale_to_map_trace",
 ]

@@ -13,7 +13,7 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 )
 
 
-AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParameters', {
+AntsBrainExtractionShParamsDict = typing.TypedDict('AntsBrainExtractionShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsBrainExtraction.sh"]],
     "image_dimension": int,
     "anatomical_image": InputPathType,
@@ -31,7 +31,7 @@ AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParamet
     "debug_mode": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
-AntsBrainExtractionShParametersTagged = typing.TypedDict('AntsBrainExtractionShParametersTagged', {
+AntsBrainExtractionShParamsDictTagged = typing.TypedDict('AntsBrainExtractionShParamsDictTagged', {
     "@type": typing.Literal["ants/antsBrainExtraction.sh"],
     "image_dimension": int,
     "anatomical_image": InputPathType,
@@ -53,7 +53,7 @@ AntsBrainExtractionShParametersTagged = typing.TypedDict('AntsBrainExtractionShP
 
 class AntsBrainExtractionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsBrainExtractionShParameters(...)`.
+    Output object returned when calling `AntsBrainExtractionShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def ants_brain_extraction_sh_params(
     random_seeding: bool = False,
     debug_mode: bool = False,
     output_prefix: str | None = None,
-) -> AntsBrainExtractionShParametersTagged:
+) -> AntsBrainExtractionShParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def ants_brain_extraction_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsBrainExtractionShParameters` object.
+    `AntsBrainExtractionShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -200,7 +200,7 @@ def ants_brain_extraction_sh_validate(
 
 
 def ants_brain_extraction_sh_cargs(
-    params: AntsBrainExtractionShParameters,
+    params: AntsBrainExtractionShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def ants_brain_extraction_sh_cargs(
 
 
 def ants_brain_extraction_sh_outputs(
-    params: AntsBrainExtractionShParameters,
+    params: AntsBrainExtractionShParamsDict,
     execution: Execution,
 ) -> AntsBrainExtractionShOutputs:
     """
@@ -299,7 +299,7 @@ def ants_brain_extraction_sh_outputs(
 
 
 def ants_brain_extraction_sh_execute(
-    params: AntsBrainExtractionShParameters,
+    params: AntsBrainExtractionShParamsDict,
     runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """
@@ -397,6 +397,8 @@ def ants_brain_extraction_sh(
 __all__ = [
     "ANTS_BRAIN_EXTRACTION_SH_METADATA",
     "AntsBrainExtractionShOutputs",
+    "AntsBrainExtractionShParamsDict",
+    "AntsBrainExtractionShParamsDictTagged",
     "ants_brain_extraction_sh",
     "ants_brain_extraction_sh_execute",
     "ants_brain_extraction_sh_params",

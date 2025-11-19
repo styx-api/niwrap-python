@@ -13,7 +13,7 @@ V_3D_TORTOISETO_HERE_METADATA = Metadata(
 )
 
 
-V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
+V3dTortoisetoHereParamsDict = typing.TypedDict('V3dTortoisetoHereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTORTOISEtoHere"]],
     "dt_tort": InputPathType,
     "prefix": str,
@@ -22,7 +22,7 @@ V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
     "flip_y": bool,
     "flip_z": bool,
 })
-V3dTortoisetoHereParametersTagged = typing.TypedDict('V3dTortoisetoHereParametersTagged', {
+V3dTortoisetoHereParamsDictTagged = typing.TypedDict('V3dTortoisetoHereParamsDictTagged', {
     "@type": typing.Literal["afni/3dTORTOISEtoHere"],
     "dt_tort": InputPathType,
     "prefix": str,
@@ -35,7 +35,7 @@ V3dTortoisetoHereParametersTagged = typing.TypedDict('V3dTortoisetoHereParameter
 
 class V3dTortoisetoHereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTortoisetoHereParameters(...)`.
+    Output object returned when calling `V3dTortoisetoHereParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v_3d_tortoiseto_here_params(
     flip_x: bool = False,
     flip_y: bool = False,
     flip_z: bool = False,
-) -> V3dTortoisetoHereParametersTagged:
+) -> V3dTortoisetoHereParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v_3d_tortoiseto_here_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTortoisetoHereParameters` object.
+    `V3dTortoisetoHereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def v_3d_tortoiseto_here_validate(
 
 
 def v_3d_tortoiseto_here_cargs(
-    params: V3dTortoisetoHereParameters,
+    params: V3dTortoisetoHereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v_3d_tortoiseto_here_cargs(
 
 
 def v_3d_tortoiseto_here_outputs(
-    params: V3dTortoisetoHereParameters,
+    params: V3dTortoisetoHereParamsDict,
     execution: Execution,
 ) -> V3dTortoisetoHereOutputs:
     """
@@ -176,7 +176,7 @@ def v_3d_tortoiseto_here_outputs(
 
 
 def v_3d_tortoiseto_here_execute(
-    params: V3dTortoisetoHereParameters,
+    params: V3dTortoisetoHereParamsDict,
     runner: Runner | None = None,
 ) -> V3dTortoisetoHereOutputs:
     """
@@ -251,6 +251,8 @@ def v_3d_tortoiseto_here(
 
 __all__ = [
     "V3dTortoisetoHereOutputs",
+    "V3dTortoisetoHereParamsDict",
+    "V3dTortoisetoHereParamsDictTagged",
     "V_3D_TORTOISETO_HERE_METADATA",
     "v_3d_tortoiseto_here",
     "v_3d_tortoiseto_here_execute",

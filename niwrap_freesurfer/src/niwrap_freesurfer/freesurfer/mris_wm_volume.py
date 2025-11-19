@@ -13,7 +13,7 @@ MRIS_WM_VOLUME_METADATA = Metadata(
 )
 
 
-MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
+MrisWmVolumeParamsDict = typing.TypedDict('MrisWmVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_wm_volume"]],
     "subject": str,
     "hemi": str,
@@ -22,7 +22,7 @@ MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
     "asegname": typing.NotRequired[str | None],
     "verbose": bool,
 })
-MrisWmVolumeParametersTagged = typing.TypedDict('MrisWmVolumeParametersTagged', {
+MrisWmVolumeParamsDictTagged = typing.TypedDict('MrisWmVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_wm_volume"],
     "subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisWmVolumeParametersTagged = typing.TypedDict('MrisWmVolumeParametersTagged', 
 
 class MrisWmVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisWmVolumeParameters(...)`.
+    Output object returned when calling `MrisWmVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def mris_wm_volume_params(
     whitesurfname: str | None = None,
     asegname: str | None = None,
     verbose: bool = False,
-) -> MrisWmVolumeParametersTagged:
+) -> MrisWmVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def mris_wm_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisWmVolumeParameters` object.
+    `MrisWmVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def mris_wm_volume_validate(
 
 
 def mris_wm_volume_cargs(
-    params: MrisWmVolumeParameters,
+    params: MrisWmVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def mris_wm_volume_cargs(
 
 
 def mris_wm_volume_outputs(
-    params: MrisWmVolumeParameters,
+    params: MrisWmVolumeParamsDict,
     execution: Execution,
 ) -> MrisWmVolumeOutputs:
     """
@@ -169,7 +169,7 @@ def mris_wm_volume_outputs(
 
 
 def mris_wm_volume_execute(
-    params: MrisWmVolumeParameters,
+    params: MrisWmVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MrisWmVolumeOutputs:
     """
@@ -242,6 +242,8 @@ def mris_wm_volume(
 __all__ = [
     "MRIS_WM_VOLUME_METADATA",
     "MrisWmVolumeOutputs",
+    "MrisWmVolumeParamsDict",
+    "MrisWmVolumeParamsDictTagged",
     "mris_wm_volume",
     "mris_wm_volume_execute",
     "mris_wm_volume_params",

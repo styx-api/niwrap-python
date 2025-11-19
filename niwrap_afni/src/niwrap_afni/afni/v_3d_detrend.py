@@ -13,12 +13,12 @@ V_3D_DETREND_METADATA = Metadata(
 )
 
 
-V3dDetrendParameters = typing.TypedDict('V3dDetrendParameters', {
+V3dDetrendParamsDict = typing.TypedDict('V3dDetrendParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDetrend"]],
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
-V3dDetrendParametersTagged = typing.TypedDict('V3dDetrendParametersTagged', {
+V3dDetrendParamsDictTagged = typing.TypedDict('V3dDetrendParamsDictTagged', {
     "@type": typing.Literal["afni/3dDetrend"],
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -27,7 +27,7 @@ V3dDetrendParametersTagged = typing.TypedDict('V3dDetrendParametersTagged', {
 
 class V3dDetrendOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDetrendParameters(...)`.
+    Output object returned when calling `V3dDetrendParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class V3dDetrendOutputs(typing.NamedTuple):
 def v_3d_detrend_params(
     in_file: InputPathType,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dDetrendParametersTagged:
+) -> V3dDetrendParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def v_3d_detrend_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDetrendParameters` object.
+    `V3dDetrendParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def v_3d_detrend_validate(
 
 
 def v_3d_detrend_cargs(
-    params: V3dDetrendParameters,
+    params: V3dDetrendParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def v_3d_detrend_cargs(
 
 
 def v_3d_detrend_outputs(
-    params: V3dDetrendParameters,
+    params: V3dDetrendParamsDict,
     execution: Execution,
 ) -> V3dDetrendOutputs:
     """
@@ -125,7 +125,7 @@ def v_3d_detrend_outputs(
 
 
 def v_3d_detrend_execute(
-    params: V3dDetrendParameters,
+    params: V3dDetrendParamsDict,
     runner: Runner | None = None,
 ) -> V3dDetrendOutputs:
     """
@@ -185,6 +185,8 @@ def v_3d_detrend(
 
 __all__ = [
     "V3dDetrendOutputs",
+    "V3dDetrendParamsDict",
+    "V3dDetrendParamsDictTagged",
     "V_3D_DETREND_METADATA",
     "v_3d_detrend",
     "v_3d_detrend_execute",

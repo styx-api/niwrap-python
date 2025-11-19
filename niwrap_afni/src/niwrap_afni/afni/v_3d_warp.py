@@ -13,7 +13,7 @@ V_3D_WARP_METADATA = Metadata(
 )
 
 
-V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
+V3dWarpParamsDict = typing.TypedDict('V3dWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dWarp"]],
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
     "prefix": typing.NotRequired[str | None],
     "dataset": str,
 })
-V3dWarpParametersTagged = typing.TypedDict('V3dWarpParametersTagged', {
+V3dWarpParamsDictTagged = typing.TypedDict('V3dWarpParamsDictTagged', {
     "@type": typing.Literal["afni/3dWarp"],
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
@@ -67,7 +67,7 @@ V3dWarpParametersTagged = typing.TypedDict('V3dWarpParametersTagged', {
 
 class V3dWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dWarpParameters(...)`.
+    Output object returned when calling `V3dWarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def v_3d_warp_params(
     zpad: float | None = None,
     verb: bool = False,
     prefix: str | None = None,
-) -> V3dWarpParametersTagged:
+) -> V3dWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -173,7 +173,7 @@ def v_3d_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dWarpParameters` object.
+    `V3dWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -262,7 +262,7 @@ def v_3d_warp_validate(
 
 
 def v_3d_warp_cargs(
-    params: V3dWarpParameters,
+    params: V3dWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -350,7 +350,7 @@ def v_3d_warp_cargs(
 
 
 def v_3d_warp_outputs(
-    params: V3dWarpParameters,
+    params: V3dWarpParamsDict,
     execution: Execution,
 ) -> V3dWarpOutputs:
     """
@@ -369,7 +369,7 @@ def v_3d_warp_outputs(
 
 
 def v_3d_warp_execute(
-    params: V3dWarpParameters,
+    params: V3dWarpParamsDict,
     runner: Runner | None = None,
 ) -> V3dWarpOutputs:
     """
@@ -492,6 +492,8 @@ def v_3d_warp(
 
 __all__ = [
     "V3dWarpOutputs",
+    "V3dWarpParamsDict",
+    "V3dWarpParamsDictTagged",
     "V_3D_WARP_METADATA",
     "v_3d_warp",
     "v_3d_warp_execute",

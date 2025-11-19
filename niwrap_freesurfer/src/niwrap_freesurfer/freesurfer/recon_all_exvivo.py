@@ -13,13 +13,13 @@ RECON_ALL_EXVIVO_METADATA = Metadata(
 )
 
 
-ReconAllExvivoParameters = typing.TypedDict('ReconAllExvivoParameters', {
+ReconAllExvivoParamsDict = typing.TypedDict('ReconAllExvivoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-exvivo"]],
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,
 })
-ReconAllExvivoParametersTagged = typing.TypedDict('ReconAllExvivoParametersTagged', {
+ReconAllExvivoParamsDictTagged = typing.TypedDict('ReconAllExvivoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/recon-all-exvivo"],
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ ReconAllExvivoParametersTagged = typing.TypedDict('ReconAllExvivoParametersTagge
 
 class ReconAllExvivoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReconAllExvivoParameters(...)`.
+    Output object returned when calling `ReconAllExvivoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def recon_all_exvivo_params(
     subject_id: str,
     hemisphere: str | None = None,
     nocerebellum: bool = False,
-) -> ReconAllExvivoParametersTagged:
+) -> ReconAllExvivoParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def recon_all_exvivo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReconAllExvivoParameters` object.
+    `ReconAllExvivoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def recon_all_exvivo_validate(
 
 
 def recon_all_exvivo_cargs(
-    params: ReconAllExvivoParameters,
+    params: ReconAllExvivoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def recon_all_exvivo_cargs(
 
 
 def recon_all_exvivo_outputs(
-    params: ReconAllExvivoParameters,
+    params: ReconAllExvivoParamsDict,
     execution: Execution,
 ) -> ReconAllExvivoOutputs:
     """
@@ -134,7 +134,7 @@ def recon_all_exvivo_outputs(
 
 
 def recon_all_exvivo_execute(
-    params: ReconAllExvivoParameters,
+    params: ReconAllExvivoParamsDict,
     runner: Runner | None = None,
 ) -> ReconAllExvivoOutputs:
     """
@@ -196,6 +196,8 @@ def recon_all_exvivo(
 __all__ = [
     "RECON_ALL_EXVIVO_METADATA",
     "ReconAllExvivoOutputs",
+    "ReconAllExvivoParamsDict",
+    "ReconAllExvivoParamsDictTagged",
     "recon_all_exvivo",
     "recon_all_exvivo_execute",
     "recon_all_exvivo_params",

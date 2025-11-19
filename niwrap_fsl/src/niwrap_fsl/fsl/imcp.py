@@ -13,12 +13,12 @@ IMCP_METADATA = Metadata(
 )
 
 
-ImcpParameters = typing.TypedDict('ImcpParameters', {
+ImcpParamsDict = typing.TypedDict('ImcpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/imcp"]],
     "infiles": list[InputPathType],
     "output_location": str,
 })
-ImcpParametersTagged = typing.TypedDict('ImcpParametersTagged', {
+ImcpParamsDictTagged = typing.TypedDict('ImcpParamsDictTagged', {
     "@type": typing.Literal["fsl/imcp"],
     "infiles": list[InputPathType],
     "output_location": str,
@@ -27,7 +27,7 @@ ImcpParametersTagged = typing.TypedDict('ImcpParametersTagged', {
 
 class ImcpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImcpParameters(...)`.
+    Output object returned when calling `ImcpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class ImcpOutputs(typing.NamedTuple):
 def imcp_params(
     infiles: list[InputPathType],
     output_location: str,
-) -> ImcpParametersTagged:
+) -> ImcpParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def imcp_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `ImcpParameters`
+    Validate parameters. Throws an error if `params` is not a valid `ImcpParamsDict`
     object.
     
     Args:
@@ -82,7 +82,7 @@ def imcp_validate(
 
 
 def imcp_cargs(
-    params: ImcpParameters,
+    params: ImcpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def imcp_cargs(
 
 
 def imcp_outputs(
-    params: ImcpParameters,
+    params: ImcpParamsDict,
     execution: Execution,
 ) -> ImcpOutputs:
     """
@@ -122,7 +122,7 @@ def imcp_outputs(
 
 
 def imcp_execute(
-    params: ImcpParameters,
+    params: ImcpParamsDict,
     runner: Runner | None = None,
 ) -> ImcpOutputs:
     """
@@ -181,6 +181,8 @@ def imcp(
 __all__ = [
     "IMCP_METADATA",
     "ImcpOutputs",
+    "ImcpParamsDict",
+    "ImcpParamsDictTagged",
     "imcp",
     "imcp_execute",
     "imcp_params",

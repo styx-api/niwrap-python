@@ -13,57 +13,57 @@ DWI2MASK_METADATA = Metadata(
 )
 
 
-Dwi2maskFslgradParameters = typing.TypedDict('Dwi2maskFslgradParameters', {
+Dwi2maskFslgradParamsDict = typing.TypedDict('Dwi2maskFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Dwi2maskFslgradParametersTagged = typing.TypedDict('Dwi2maskFslgradParametersTagged', {
+Dwi2maskFslgradParamsDictTagged = typing.TypedDict('Dwi2maskFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Dwi2maskConfigParameters = typing.TypedDict('Dwi2maskConfigParameters', {
+Dwi2maskConfigParamsDict = typing.TypedDict('Dwi2maskConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Dwi2maskConfigParametersTagged = typing.TypedDict('Dwi2maskConfigParametersTagged', {
+Dwi2maskConfigParamsDictTagged = typing.TypedDict('Dwi2maskConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Dwi2maskParameters = typing.TypedDict('Dwi2maskParameters', {
+Dwi2maskParamsDict = typing.TypedDict('Dwi2maskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2mask"]],
     "clean_scale": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2maskFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2maskConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2maskConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-Dwi2maskParametersTagged = typing.TypedDict('Dwi2maskParametersTagged', {
+Dwi2maskParamsDictTagged = typing.TypedDict('Dwi2maskParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwi2mask"],
     "clean_scale": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2maskFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2maskConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2maskConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -71,10 +71,10 @@ Dwi2maskParametersTagged = typing.TypedDict('Dwi2maskParametersTagged', {
 })
 
 
-def dwi2mask_fslgrad_params(
+def dwi2mask_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2maskFslgradParametersTagged:
+) -> Dwi2maskFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def dwi2mask_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2maskFslgradParameters` object.
+    `Dwi2maskFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def dwi2mask_fslgrad_validate(
 
 
 def dwi2mask_fslgrad_cargs(
-    params: Dwi2maskFslgradParameters,
+    params: Dwi2maskFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,10 +140,10 @@ def dwi2mask_fslgrad_cargs(
     return cargs
 
 
-def dwi2mask_config_params(
+def dwi2mask_config(
     key: str,
     value: str,
-) -> Dwi2maskConfigParametersTagged:
+) -> Dwi2maskConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def dwi2mask_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2maskConfigParameters` object.
+    `Dwi2maskConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def dwi2mask_config_validate(
 
 
 def dwi2mask_config_cargs(
-    params: Dwi2maskConfigParameters,
+    params: Dwi2maskConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def dwi2mask_config_cargs(
 
 class Dwi2maskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2maskParameters(...)`.
+    Output object returned when calling `Dwi2maskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -218,16 +218,16 @@ def dwi2mask_params(
     output: str,
     clean_scale: int | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2maskFslgradParameters | None = None,
+    fslgrad: Dwi2maskFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2maskConfigParameters] | None = None,
+    config: list[Dwi2maskConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2maskParametersTagged:
+) -> Dwi2maskParamsDictTagged:
     """
     Build parameters.
     
@@ -292,7 +292,7 @@ def dwi2mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2maskParameters` object.
+    `Dwi2maskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -328,7 +328,7 @@ def dwi2mask_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2maskConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2maskConfigParamsDict] | None`')
         for e in params["config"]:
             dwi2mask_config_validate(e)
     if params.get("help", False) is None:
@@ -350,7 +350,7 @@ def dwi2mask_validate(
 
 
 def dwi2mask_cargs(
-    params: Dwi2maskParameters,
+    params: Dwi2maskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -401,7 +401,7 @@ def dwi2mask_cargs(
 
 
 def dwi2mask_outputs(
-    params: Dwi2maskParameters,
+    params: Dwi2maskParamsDict,
     execution: Execution,
 ) -> Dwi2maskOutputs:
     """
@@ -421,7 +421,7 @@ def dwi2mask_outputs(
 
 
 def dwi2mask_execute(
-    params: Dwi2maskParameters,
+    params: Dwi2maskParamsDict,
     runner: Runner | None = None,
 ) -> Dwi2maskOutputs:
     """
@@ -468,13 +468,13 @@ def dwi2mask(
     output: str,
     clean_scale: int | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2maskFslgradParameters | None = None,
+    fslgrad: Dwi2maskFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2maskConfigParameters] | None = None,
+    config: list[Dwi2maskConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -555,10 +555,16 @@ def dwi2mask(
 
 __all__ = [
     "DWI2MASK_METADATA",
+    "Dwi2maskConfigParamsDict",
+    "Dwi2maskConfigParamsDictTagged",
+    "Dwi2maskFslgradParamsDict",
+    "Dwi2maskFslgradParamsDictTagged",
     "Dwi2maskOutputs",
+    "Dwi2maskParamsDict",
+    "Dwi2maskParamsDictTagged",
     "dwi2mask",
-    "dwi2mask_config_params",
+    "dwi2mask_config",
     "dwi2mask_execute",
-    "dwi2mask_fslgrad_params",
+    "dwi2mask_fslgrad",
     "dwi2mask_params",
 ]

@@ -13,14 +13,14 @@ TALAIRACH_METADATA = Metadata(
 )
 
 
-TalairachParameters = typing.TypedDict('TalairachParameters', {
+TalairachParamsDict = typing.TypedDict('TalairachParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talairach"]],
     "input_volume": InputPathType,
     "output_transform": str,
     "log_flag": bool,
     "debug_flag": bool,
 })
-TalairachParametersTagged = typing.TypedDict('TalairachParametersTagged', {
+TalairachParamsDictTagged = typing.TypedDict('TalairachParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talairach"],
     "input_volume": InputPathType,
     "output_transform": str,
@@ -31,7 +31,7 @@ TalairachParametersTagged = typing.TypedDict('TalairachParametersTagged', {
 
 class TalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalairachParameters(...)`.
+    Output object returned when calling `TalairachParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def talairach_params(
     output_transform: str,
     log_flag: bool = False,
     debug_flag: bool = False,
-) -> TalairachParametersTagged:
+) -> TalairachParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def talairach_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalairachParameters` object.
+    `TalairachParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def talairach_validate(
 
 
 def talairach_cargs(
-    params: TalairachParameters,
+    params: TalairachParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def talairach_cargs(
 
 
 def talairach_outputs(
-    params: TalairachParameters,
+    params: TalairachParamsDict,
     execution: Execution,
 ) -> TalairachOutputs:
     """
@@ -147,7 +147,7 @@ def talairach_outputs(
 
 
 def talairach_execute(
-    params: TalairachParameters,
+    params: TalairachParamsDict,
     runner: Runner | None = None,
 ) -> TalairachOutputs:
     """
@@ -214,6 +214,8 @@ def talairach(
 __all__ = [
     "TALAIRACH_METADATA",
     "TalairachOutputs",
+    "TalairachParamsDict",
+    "TalairachParamsDictTagged",
     "talairach",
     "talairach_execute",
     "talairach_params",

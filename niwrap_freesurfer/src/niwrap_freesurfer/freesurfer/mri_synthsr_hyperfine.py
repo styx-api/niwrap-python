@@ -13,7 +13,7 @@ MRI_SYNTHSR_HYPERFINE_METADATA = Metadata(
 )
 
 
-MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters', {
+MriSynthsrHyperfineParamsDict = typing.TypedDict('MriSynthsrHyperfineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthsr_hyperfine"]],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
@@ -21,7 +21,7 @@ MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters'
     "threads": typing.NotRequired[float | None],
     "cpu": bool,
 })
-MriSynthsrHyperfineParametersTagged = typing.TypedDict('MriSynthsrHyperfineParametersTagged', {
+MriSynthsrHyperfineParamsDictTagged = typing.TypedDict('MriSynthsrHyperfineParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_synthsr_hyperfine"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
@@ -33,7 +33,7 @@ MriSynthsrHyperfineParametersTagged = typing.TypedDict('MriSynthsrHyperfineParam
 
 class MriSynthsrHyperfineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSynthsrHyperfineParameters(...)`.
+    Output object returned when calling `MriSynthsrHyperfineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_synthsr_hyperfine_params(
     output: str,
     threads: float | None = None,
     cpu: bool = False,
-) -> MriSynthsrHyperfineParametersTagged:
+) -> MriSynthsrHyperfineParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def mri_synthsr_hyperfine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSynthsrHyperfineParameters` object.
+    `MriSynthsrHyperfineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def mri_synthsr_hyperfine_validate(
 
 
 def mri_synthsr_hyperfine_cargs(
-    params: MriSynthsrHyperfineParameters,
+    params: MriSynthsrHyperfineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def mri_synthsr_hyperfine_cargs(
 
 
 def mri_synthsr_hyperfine_outputs(
-    params: MriSynthsrHyperfineParameters,
+    params: MriSynthsrHyperfineParamsDict,
     execution: Execution,
 ) -> MriSynthsrHyperfineOutputs:
     """
@@ -168,7 +168,7 @@ def mri_synthsr_hyperfine_outputs(
 
 
 def mri_synthsr_hyperfine_execute(
-    params: MriSynthsrHyperfineParameters,
+    params: MriSynthsrHyperfineParamsDict,
     runner: Runner | None = None,
 ) -> MriSynthsrHyperfineOutputs:
     """
@@ -243,6 +243,8 @@ def mri_synthsr_hyperfine(
 __all__ = [
     "MRI_SYNTHSR_HYPERFINE_METADATA",
     "MriSynthsrHyperfineOutputs",
+    "MriSynthsrHyperfineParamsDict",
+    "MriSynthsrHyperfineParamsDictTagged",
     "mri_synthsr_hyperfine",
     "mri_synthsr_hyperfine_execute",
     "mri_synthsr_hyperfine_params",

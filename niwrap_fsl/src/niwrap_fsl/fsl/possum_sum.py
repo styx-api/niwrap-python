@@ -13,14 +13,14 @@ POSSUM_SUM_METADATA = Metadata(
 )
 
 
-PossumSumParameters = typing.TypedDict('PossumSumParameters', {
+PossumSumParamsDict = typing.TypedDict('PossumSumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/possum_sum"]],
     "input_signal": InputPathType,
     "output_signal": str,
     "num_processors": typing.NotRequired[int | None],
     "verbose_flag": bool,
 })
-PossumSumParametersTagged = typing.TypedDict('PossumSumParametersTagged', {
+PossumSumParamsDictTagged = typing.TypedDict('PossumSumParamsDictTagged', {
     "@type": typing.Literal["fsl/possum_sum"],
     "input_signal": InputPathType,
     "output_signal": str,
@@ -31,7 +31,7 @@ PossumSumParametersTagged = typing.TypedDict('PossumSumParametersTagged', {
 
 class PossumSumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PossumSumParameters(...)`.
+    Output object returned when calling `PossumSumParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def possum_sum_params(
     output_signal: str,
     num_processors: int | None = None,
     verbose_flag: bool = False,
-) -> PossumSumParametersTagged:
+) -> PossumSumParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def possum_sum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PossumSumParameters` object.
+    `PossumSumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def possum_sum_validate(
 
 
 def possum_sum_cargs(
-    params: PossumSumParameters,
+    params: PossumSumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def possum_sum_cargs(
 
 
 def possum_sum_outputs(
-    params: PossumSumParameters,
+    params: PossumSumParamsDict,
     execution: Execution,
 ) -> PossumSumOutputs:
     """
@@ -151,7 +151,7 @@ def possum_sum_outputs(
 
 
 def possum_sum_execute(
-    params: PossumSumParameters,
+    params: PossumSumParamsDict,
     runner: Runner | None = None,
 ) -> PossumSumOutputs:
     """
@@ -217,6 +217,8 @@ def possum_sum(
 __all__ = [
     "POSSUM_SUM_METADATA",
     "PossumSumOutputs",
+    "PossumSumParamsDict",
+    "PossumSumParamsDictTagged",
     "possum_sum",
     "possum_sum_execute",
     "possum_sum_params",

@@ -13,7 +13,7 @@ MRI_NORMALIZE_METADATA = Metadata(
 )
 
 
-MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
+MriNormalizeParamsDict = typing.TypedDict('MriNormalizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_normalize"]],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -50,7 +50,7 @@ MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
     "seed_value": typing.NotRequired[float | None],
     "print_help": bool,
 })
-MriNormalizeParametersTagged = typing.TypedDict('MriNormalizeParametersTagged', {
+MriNormalizeParamsDictTagged = typing.TypedDict('MriNormalizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_normalize"],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -91,7 +91,7 @@ MriNormalizeParametersTagged = typing.TypedDict('MriNormalizeParametersTagged', 
 
 class MriNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNormalizeParameters(...)`.
+    Output object returned when calling `MriNormalizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +136,7 @@ def mri_normalize_params(
     surface_transform: str | None = None,
     seed_value: float | None = None,
     print_help: bool = False,
-) -> MriNormalizeParametersTagged:
+) -> MriNormalizeParamsDictTagged:
     """
     Build parameters.
     
@@ -253,7 +253,7 @@ def mri_normalize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNormalizeParameters` object.
+    `MriNormalizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -377,7 +377,7 @@ def mri_normalize_validate(
 
 
 def mri_normalize_cargs(
-    params: MriNormalizeParameters,
+    params: MriNormalizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -527,7 +527,7 @@ def mri_normalize_cargs(
 
 
 def mri_normalize_outputs(
-    params: MriNormalizeParameters,
+    params: MriNormalizeParamsDict,
     execution: Execution,
 ) -> MriNormalizeOutputs:
     """
@@ -548,7 +548,7 @@ def mri_normalize_outputs(
 
 
 def mri_normalize_execute(
-    params: MriNormalizeParameters,
+    params: MriNormalizeParamsDict,
     runner: Runner | None = None,
 ) -> MriNormalizeOutputs:
     """
@@ -715,6 +715,8 @@ def mri_normalize(
 __all__ = [
     "MRI_NORMALIZE_METADATA",
     "MriNormalizeOutputs",
+    "MriNormalizeParamsDict",
+    "MriNormalizeParamsDictTagged",
     "mri_normalize",
     "mri_normalize_execute",
     "mri_normalize_params",

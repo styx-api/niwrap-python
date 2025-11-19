@@ -13,11 +13,11 @@ MRI_RF_LONG_LABEL_METADATA = Metadata(
 )
 
 
-MriRfLongLabelParameters = typing.TypedDict('MriRfLongLabelParameters', {
+MriRfLongLabelParamsDict = typing.TypedDict('MriRfLongLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_long_label"]],
     "help_flag": typing.NotRequired[str | None],
 })
-MriRfLongLabelParametersTagged = typing.TypedDict('MriRfLongLabelParametersTagged', {
+MriRfLongLabelParamsDictTagged = typing.TypedDict('MriRfLongLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_rf_long_label"],
     "help_flag": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ MriRfLongLabelParametersTagged = typing.TypedDict('MriRfLongLabelParametersTagge
 
 class MriRfLongLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRfLongLabelParameters(...)`.
+    Output object returned when calling `MriRfLongLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MriRfLongLabelOutputs(typing.NamedTuple):
 
 def mri_rf_long_label_params(
     help_flag: str | None = None,
-) -> MriRfLongLabelParametersTagged:
+) -> MriRfLongLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def mri_rf_long_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRfLongLabelParameters` object.
+    `MriRfLongLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def mri_rf_long_label_validate(
 
 
 def mri_rf_long_label_cargs(
-    params: MriRfLongLabelParameters,
+    params: MriRfLongLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def mri_rf_long_label_cargs(
 
 
 def mri_rf_long_label_outputs(
-    params: MriRfLongLabelParameters,
+    params: MriRfLongLabelParamsDict,
     execution: Execution,
 ) -> MriRfLongLabelOutputs:
     """
@@ -107,7 +107,7 @@ def mri_rf_long_label_outputs(
 
 
 def mri_rf_long_label_execute(
-    params: MriRfLongLabelParameters,
+    params: MriRfLongLabelParamsDict,
     runner: Runner | None = None,
 ) -> MriRfLongLabelOutputs:
     """
@@ -163,6 +163,8 @@ def mri_rf_long_label(
 __all__ = [
     "MRI_RF_LONG_LABEL_METADATA",
     "MriRfLongLabelOutputs",
+    "MriRfLongLabelParamsDict",
+    "MriRfLongLabelParamsDictTagged",
     "mri_rf_long_label",
     "mri_rf_long_label_execute",
     "mri_rf_long_label_params",

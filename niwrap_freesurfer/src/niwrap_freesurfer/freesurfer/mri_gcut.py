@@ -13,7 +13,7 @@ MRI_GCUT_METADATA = Metadata(
 )
 
 
-MriGcutParameters = typing.TypedDict('MriGcutParameters', {
+MriGcutParamsDict = typing.TypedDict('MriGcutParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcut"]],
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ MriGcutParameters = typing.TypedDict('MriGcutParameters', {
     "infile": InputPathType,
     "outfile": str,
 })
-MriGcutParametersTagged = typing.TypedDict('MriGcutParametersTagged', {
+MriGcutParamsDictTagged = typing.TypedDict('MriGcutParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gcut"],
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ MriGcutParametersTagged = typing.TypedDict('MriGcutParametersTagged', {
 
 class MriGcutOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGcutParameters(...)`.
+    Output object returned when calling `MriGcutParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_gcut_params(
     wmmask_110: bool = False,
     mult_file: InputPathType | None = None,
     threshold_value: float | None = None,
-) -> MriGcutParametersTagged:
+) -> MriGcutParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def mri_gcut_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGcutParameters` object.
+    `MriGcutParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def mri_gcut_validate(
 
 
 def mri_gcut_cargs(
-    params: MriGcutParameters,
+    params: MriGcutParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def mri_gcut_cargs(
 
 
 def mri_gcut_outputs(
-    params: MriGcutParameters,
+    params: MriGcutParamsDict,
     execution: Execution,
 ) -> MriGcutOutputs:
     """
@@ -164,7 +164,7 @@ def mri_gcut_outputs(
 
 
 def mri_gcut_execute(
-    params: MriGcutParameters,
+    params: MriGcutParamsDict,
     runner: Runner | None = None,
 ) -> MriGcutOutputs:
     """
@@ -236,6 +236,8 @@ def mri_gcut(
 __all__ = [
     "MRI_GCUT_METADATA",
     "MriGcutOutputs",
+    "MriGcutParamsDict",
+    "MriGcutParamsDictTagged",
     "mri_gcut",
     "mri_gcut_execute",
     "mri_gcut_params",

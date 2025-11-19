@@ -13,12 +13,12 @@ MRI_ADD_NEW_TP_METADATA = Metadata(
 )
 
 
-MriAddNewTpParameters = typing.TypedDict('MriAddNewTpParameters', {
+MriAddNewTpParamsDict = typing.TypedDict('MriAddNewTpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_new_tp"]],
     "base_id": str,
     "newtp_id": str,
 })
-MriAddNewTpParametersTagged = typing.TypedDict('MriAddNewTpParametersTagged', {
+MriAddNewTpParamsDictTagged = typing.TypedDict('MriAddNewTpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_add_new_tp"],
     "base_id": str,
     "newtp_id": str,
@@ -27,7 +27,7 @@ MriAddNewTpParametersTagged = typing.TypedDict('MriAddNewTpParametersTagged', {
 
 class MriAddNewTpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAddNewTpParameters(...)`.
+    Output object returned when calling `MriAddNewTpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriAddNewTpOutputs(typing.NamedTuple):
 def mri_add_new_tp_params(
     base_id: str,
     newtp_id: str,
-) -> MriAddNewTpParametersTagged:
+) -> MriAddNewTpParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mri_add_new_tp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAddNewTpParameters` object.
+    `MriAddNewTpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mri_add_new_tp_validate(
 
 
 def mri_add_new_tp_cargs(
-    params: MriAddNewTpParameters,
+    params: MriAddNewTpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def mri_add_new_tp_cargs(
 
 
 def mri_add_new_tp_outputs(
-    params: MriAddNewTpParameters,
+    params: MriAddNewTpParamsDict,
     execution: Execution,
 ) -> MriAddNewTpOutputs:
     """
@@ -116,7 +116,7 @@ def mri_add_new_tp_outputs(
 
 
 def mri_add_new_tp_execute(
-    params: MriAddNewTpParameters,
+    params: MriAddNewTpParamsDict,
     runner: Runner | None = None,
 ) -> MriAddNewTpOutputs:
     """
@@ -177,6 +177,8 @@ def mri_add_new_tp(
 __all__ = [
     "MRI_ADD_NEW_TP_METADATA",
     "MriAddNewTpOutputs",
+    "MriAddNewTpParamsDict",
+    "MriAddNewTpParamsDictTagged",
     "mri_add_new_tp",
     "mri_add_new_tp_execute",
     "mri_add_new_tp_params",

@@ -13,7 +13,7 @@ MM_METADATA = Metadata(
 )
 
 
-MmParameters = typing.TypedDict('MmParameters', {
+MmParamsDict = typing.TypedDict('MmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mm"]],
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
@@ -33,7 +33,7 @@ MmParameters = typing.TypedDict('MmParameters', {
     "niters": typing.NotRequired[float | None],
     "threshold": typing.NotRequired[float | None],
 })
-MmParametersTagged = typing.TypedDict('MmParametersTagged', {
+MmParamsDictTagged = typing.TypedDict('MmParamsDictTagged', {
     "@type": typing.Literal["fsl/mm"],
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
@@ -57,7 +57,7 @@ MmParametersTagged = typing.TypedDict('MmParametersTagged', {
 
 class MmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MmParameters(...)`.
+    Output object returned when calling `MmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def mm_params(
     phi: float | None = None,
     niters: float | None = None,
     threshold: float | None = None,
-) -> MmParametersTagged:
+) -> MmParamsDictTagged:
     """
     Build parameters.
     
@@ -145,7 +145,7 @@ def mm_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `MmParameters`
+    Validate parameters. Throws an error if `params` is not a valid `MmParamsDict`
     object.
     
     Args:
@@ -215,7 +215,7 @@ def mm_validate(
 
 
 def mm_cargs(
-    params: MmParameters,
+    params: MmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -298,7 +298,7 @@ def mm_cargs(
 
 
 def mm_outputs(
-    params: MmParameters,
+    params: MmParamsDict,
     execution: Execution,
 ) -> MmOutputs:
     """
@@ -317,7 +317,7 @@ def mm_outputs(
 
 
 def mm_execute(
-    params: MmParameters,
+    params: MmParamsDict,
     runner: Runner | None = None,
 ) -> MmOutputs:
     """
@@ -424,6 +424,8 @@ def mm(
 __all__ = [
     "MM_METADATA",
     "MmOutputs",
+    "MmParamsDict",
+    "MmParamsDictTagged",
     "mm",
     "mm_execute",
     "mm_params",

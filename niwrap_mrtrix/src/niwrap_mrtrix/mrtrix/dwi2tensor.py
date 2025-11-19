@@ -13,31 +13,31 @@ DWI2TENSOR_METADATA = Metadata(
 )
 
 
-Dwi2tensorFslgradParameters = typing.TypedDict('Dwi2tensorFslgradParameters', {
+Dwi2tensorFslgradParamsDict = typing.TypedDict('Dwi2tensorFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Dwi2tensorFslgradParametersTagged = typing.TypedDict('Dwi2tensorFslgradParametersTagged', {
+Dwi2tensorFslgradParamsDictTagged = typing.TypedDict('Dwi2tensorFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Dwi2tensorConfigParameters = typing.TypedDict('Dwi2tensorConfigParameters', {
+Dwi2tensorConfigParamsDict = typing.TypedDict('Dwi2tensorConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Dwi2tensorConfigParametersTagged = typing.TypedDict('Dwi2tensorConfigParametersTagged', {
+Dwi2tensorConfigParamsDictTagged = typing.TypedDict('Dwi2tensorConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
+Dwi2tensorParamsDict = typing.TypedDict('Dwi2tensorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2tensor"]],
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
@@ -46,19 +46,19 @@ Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
     "iter": typing.NotRequired[int | None],
     "predicted_signal": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2tensorFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2tensorFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2tensorConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2tensorConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
     "dt": str,
 })
-Dwi2tensorParametersTagged = typing.TypedDict('Dwi2tensorParametersTagged', {
+Dwi2tensorParamsDictTagged = typing.TypedDict('Dwi2tensorParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwi2tensor"],
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
@@ -67,13 +67,13 @@ Dwi2tensorParametersTagged = typing.TypedDict('Dwi2tensorParametersTagged', {
     "iter": typing.NotRequired[int | None],
     "predicted_signal": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2tensorFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2tensorFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2tensorConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2tensorConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
@@ -81,10 +81,10 @@ Dwi2tensorParametersTagged = typing.TypedDict('Dwi2tensorParametersTagged', {
 })
 
 
-def dwi2tensor_fslgrad_params(
+def dwi2tensor_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2tensorFslgradParametersTagged:
+) -> Dwi2tensorFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def dwi2tensor_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2tensorFslgradParameters` object.
+    `Dwi2tensorFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def dwi2tensor_fslgrad_validate(
 
 
 def dwi2tensor_fslgrad_cargs(
-    params: Dwi2tensorFslgradParameters,
+    params: Dwi2tensorFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,10 +150,10 @@ def dwi2tensor_fslgrad_cargs(
     return cargs
 
 
-def dwi2tensor_config_params(
+def dwi2tensor_config(
     key: str,
     value: str,
-) -> Dwi2tensorConfigParametersTagged:
+) -> Dwi2tensorConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -176,7 +176,7 @@ def dwi2tensor_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2tensorConfigParameters` object.
+    `Dwi2tensorConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -194,7 +194,7 @@ def dwi2tensor_config_validate(
 
 
 def dwi2tensor_config_cargs(
-    params: Dwi2tensorConfigParameters,
+    params: Dwi2tensorConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def dwi2tensor_config_cargs(
 
 class Dwi2tensorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2tensorParameters(...)`.
+    Output object returned when calling `Dwi2tensorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -239,16 +239,16 @@ def dwi2tensor_params(
     iter_: int | None = None,
     predicted_signal: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2tensorFslgradParameters | None = None,
+    fslgrad: Dwi2tensorFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2tensorConfigParameters] | None = None,
+    config: list[Dwi2tensorConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2tensorParametersTagged:
+) -> Dwi2tensorParamsDictTagged:
     """
     Build parameters.
     
@@ -327,7 +327,7 @@ def dwi2tensor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2tensorParameters` object.
+    `Dwi2tensorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -379,7 +379,7 @@ def dwi2tensor_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2tensorConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2tensorConfigParamsDict] | None`')
         for e in params["config"]:
             dwi2tensor_config_validate(e)
     if params.get("help", False) is None:
@@ -401,7 +401,7 @@ def dwi2tensor_validate(
 
 
 def dwi2tensor_cargs(
-    params: Dwi2tensorParameters,
+    params: Dwi2tensorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -474,7 +474,7 @@ def dwi2tensor_cargs(
 
 
 def dwi2tensor_outputs(
-    params: Dwi2tensorParameters,
+    params: Dwi2tensorParamsDict,
     execution: Execution,
 ) -> Dwi2tensorOutputs:
     """
@@ -497,7 +497,7 @@ def dwi2tensor_outputs(
 
 
 def dwi2tensor_execute(
-    params: Dwi2tensorParameters,
+    params: Dwi2tensorParamsDict,
     runner: Runner | None = None,
 ) -> Dwi2tensorOutputs:
     """
@@ -576,13 +576,13 @@ def dwi2tensor(
     iter_: int | None = None,
     predicted_signal: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2tensorFslgradParameters | None = None,
+    fslgrad: Dwi2tensorFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2tensorConfigParameters] | None = None,
+    config: list[Dwi2tensorConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -700,10 +700,16 @@ def dwi2tensor(
 
 __all__ = [
     "DWI2TENSOR_METADATA",
+    "Dwi2tensorConfigParamsDict",
+    "Dwi2tensorConfigParamsDictTagged",
+    "Dwi2tensorFslgradParamsDict",
+    "Dwi2tensorFslgradParamsDictTagged",
     "Dwi2tensorOutputs",
+    "Dwi2tensorParamsDict",
+    "Dwi2tensorParamsDictTagged",
     "dwi2tensor",
-    "dwi2tensor_config_params",
+    "dwi2tensor_config",
     "dwi2tensor_execute",
-    "dwi2tensor_fslgrad_params",
+    "dwi2tensor_fslgrad",
     "dwi2tensor_params",
 ]

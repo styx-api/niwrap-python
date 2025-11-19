@@ -13,12 +13,12 @@ LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
 )
 
 
-LongCreateBaseSigmaParameters = typing.TypedDict('LongCreateBaseSigmaParameters', {
+LongCreateBaseSigmaParamsDict = typing.TypedDict('LongCreateBaseSigmaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_base_sigma"]],
     "base_id": str,
     "sigma": int,
 })
-LongCreateBaseSigmaParametersTagged = typing.TypedDict('LongCreateBaseSigmaParametersTagged', {
+LongCreateBaseSigmaParamsDictTagged = typing.TypedDict('LongCreateBaseSigmaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_create_base_sigma"],
     "base_id": str,
     "sigma": int,
@@ -27,7 +27,7 @@ LongCreateBaseSigmaParametersTagged = typing.TypedDict('LongCreateBaseSigmaParam
 
 class LongCreateBaseSigmaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongCreateBaseSigmaParameters(...)`.
+    Output object returned when calling `LongCreateBaseSigmaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class LongCreateBaseSigmaOutputs(typing.NamedTuple):
 def long_create_base_sigma_params(
     base_id: str,
     sigma: int,
-) -> LongCreateBaseSigmaParametersTagged:
+) -> LongCreateBaseSigmaParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def long_create_base_sigma_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongCreateBaseSigmaParameters` object.
+    `LongCreateBaseSigmaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def long_create_base_sigma_validate(
 
 
 def long_create_base_sigma_cargs(
-    params: LongCreateBaseSigmaParameters,
+    params: LongCreateBaseSigmaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def long_create_base_sigma_cargs(
 
 
 def long_create_base_sigma_outputs(
-    params: LongCreateBaseSigmaParameters,
+    params: LongCreateBaseSigmaParamsDict,
     execution: Execution,
 ) -> LongCreateBaseSigmaOutputs:
     """
@@ -116,7 +116,7 @@ def long_create_base_sigma_outputs(
 
 
 def long_create_base_sigma_execute(
-    params: LongCreateBaseSigmaParameters,
+    params: LongCreateBaseSigmaParamsDict,
     runner: Runner | None = None,
 ) -> LongCreateBaseSigmaOutputs:
     """
@@ -179,6 +179,8 @@ def long_create_base_sigma(
 __all__ = [
     "LONG_CREATE_BASE_SIGMA_METADATA",
     "LongCreateBaseSigmaOutputs",
+    "LongCreateBaseSigmaParamsDict",
+    "LongCreateBaseSigmaParamsDictTagged",
     "long_create_base_sigma",
     "long_create_base_sigma_execute",
     "long_create_base_sigma_params",

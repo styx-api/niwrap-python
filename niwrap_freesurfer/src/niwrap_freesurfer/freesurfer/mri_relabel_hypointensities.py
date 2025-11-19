@@ -13,13 +13,13 @@ MRI_RELABEL_HYPOINTENSITIES_METADATA = Metadata(
 )
 
 
-MriRelabelHypointensitiesParameters = typing.TypedDict('MriRelabelHypointensitiesParameters', {
+MriRelabelHypointensitiesParamsDict = typing.TypedDict('MriRelabelHypointensitiesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_hypointensities"]],
     "input_aseg": InputPathType,
     "surface_directory": str,
     "output_aseg": str,
 })
-MriRelabelHypointensitiesParametersTagged = typing.TypedDict('MriRelabelHypointensitiesParametersTagged', {
+MriRelabelHypointensitiesParamsDictTagged = typing.TypedDict('MriRelabelHypointensitiesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_relabel_hypointensities"],
     "input_aseg": InputPathType,
     "surface_directory": str,
@@ -29,7 +29,7 @@ MriRelabelHypointensitiesParametersTagged = typing.TypedDict('MriRelabelHypointe
 
 class MriRelabelHypointensitiesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRelabelHypointensitiesParameters(...)`.
+    Output object returned when calling `MriRelabelHypointensitiesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_relabel_hypointensities_params(
     input_aseg: InputPathType,
     surface_directory: str,
     output_aseg: str,
-) -> MriRelabelHypointensitiesParametersTagged:
+) -> MriRelabelHypointensitiesParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_relabel_hypointensities_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRelabelHypointensitiesParameters` object.
+    `MriRelabelHypointensitiesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_relabel_hypointensities_validate(
 
 
 def mri_relabel_hypointensities_cargs(
-    params: MriRelabelHypointensitiesParameters,
+    params: MriRelabelHypointensitiesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_relabel_hypointensities_cargs(
 
 
 def mri_relabel_hypointensities_outputs(
-    params: MriRelabelHypointensitiesParameters,
+    params: MriRelabelHypointensitiesParamsDict,
     execution: Execution,
 ) -> MriRelabelHypointensitiesOutputs:
     """
@@ -129,7 +129,7 @@ def mri_relabel_hypointensities_outputs(
 
 
 def mri_relabel_hypointensities_execute(
-    params: MriRelabelHypointensitiesParameters,
+    params: MriRelabelHypointensitiesParamsDict,
     runner: Runner | None = None,
 ) -> MriRelabelHypointensitiesOutputs:
     """
@@ -191,6 +191,8 @@ def mri_relabel_hypointensities(
 __all__ = [
     "MRI_RELABEL_HYPOINTENSITIES_METADATA",
     "MriRelabelHypointensitiesOutputs",
+    "MriRelabelHypointensitiesParamsDict",
+    "MriRelabelHypointensitiesParamsDictTagged",
     "mri_relabel_hypointensities",
     "mri_relabel_hypointensities_execute",
     "mri_relabel_hypointensities_params",

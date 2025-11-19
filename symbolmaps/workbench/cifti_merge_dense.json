@@ -9,7 +9,7 @@
     },
     "cifti": {
       "var_param": "cifti",
-      "fn_struct_make_params": "cifti_merge_dense_cifti_params",
+      "fn_struct_make_params": "cifti_merge_dense_cifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"

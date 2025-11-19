@@ -13,7 +13,7 @@ RANDOMISE_METADATA = Metadata(
 )
 
 
-RandomiseParameters = typing.TypedDict('RandomiseParameters', {
+RandomiseParamsDict = typing.TypedDict('RandomiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/randomise"]],
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ RandomiseParameters = typing.TypedDict('RandomiseParameters', {
     "vox_p_values": bool,
     "x_block_labels": typing.NotRequired[InputPathType | None],
 })
-RandomiseParametersTagged = typing.TypedDict('RandomiseParametersTagged', {
+RandomiseParamsDictTagged = typing.TypedDict('RandomiseParamsDictTagged', {
     "@type": typing.Literal["fsl/randomise"],
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
@@ -79,7 +79,7 @@ RandomiseParametersTagged = typing.TypedDict('RandomiseParametersTagged', {
 
 class RandomiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RandomiseParameters(...)`.
+    Output object returned when calling `RandomiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def randomise_params(
     var_smooth: int | None = None,
     vox_p_values: bool = False,
     x_block_labels: InputPathType | None = None,
-) -> RandomiseParametersTagged:
+) -> RandomiseParamsDictTagged:
     """
     Build parameters.
     
@@ -226,7 +226,7 @@ def randomise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RandomiseParameters` object.
+    `RandomiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -333,7 +333,7 @@ def randomise_validate(
 
 
 def randomise_cargs(
-    params: RandomiseParameters,
+    params: RandomiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -445,7 +445,7 @@ def randomise_cargs(
 
 
 def randomise_outputs(
-    params: RandomiseParameters,
+    params: RandomiseParamsDict,
     execution: Execution,
 ) -> RandomiseOutputs:
     """
@@ -470,7 +470,7 @@ def randomise_outputs(
 
 
 def randomise_execute(
-    params: RandomiseParameters,
+    params: RandomiseParamsDict,
     runner: Runner | None = None,
 ) -> RandomiseOutputs:
     """
@@ -617,6 +617,8 @@ def randomise(
 __all__ = [
     "RANDOMISE_METADATA",
     "RandomiseOutputs",
+    "RandomiseParamsDict",
+    "RandomiseParamsDictTagged",
     "randomise",
     "randomise_execute",
     "randomise_params",

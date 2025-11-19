@@ -13,7 +13,7 @@ V__SHIFT_VOLUME_METADATA = Metadata(
 )
 
 
-VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
+VShiftVolumeParamsDict = typing.TypedDict('VShiftVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Shift_Volume"]],
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
@@ -22,7 +22,7 @@ VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
     "no_cp": bool,
     "prefix": str,
 })
-VShiftVolumeParametersTagged = typing.TypedDict('VShiftVolumeParametersTagged', {
+VShiftVolumeParamsDictTagged = typing.TypedDict('VShiftVolumeParamsDictTagged', {
     "@type": typing.Literal["afni/@Shift_Volume"],
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
@@ -35,7 +35,7 @@ VShiftVolumeParametersTagged = typing.TypedDict('VShiftVolumeParametersTagged', 
 
 class VShiftVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VShiftVolumeParameters(...)`.
+    Output object returned when calling `VShiftVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__shift_volume_params(
     mni_anat_to_mni: bool = False,
     mni_to_mni_anat: bool = False,
     no_cp: bool = False,
-) -> VShiftVolumeParametersTagged:
+) -> VShiftVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v__shift_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VShiftVolumeParameters` object.
+    `VShiftVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def v__shift_volume_validate(
 
 
 def v__shift_volume_cargs(
-    params: VShiftVolumeParameters,
+    params: VShiftVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def v__shift_volume_cargs(
 
 
 def v__shift_volume_outputs(
-    params: VShiftVolumeParameters,
+    params: VShiftVolumeParamsDict,
     execution: Execution,
 ) -> VShiftVolumeOutputs:
     """
@@ -181,7 +181,7 @@ def v__shift_volume_outputs(
 
 
 def v__shift_volume_execute(
-    params: VShiftVolumeParameters,
+    params: VShiftVolumeParamsDict,
     runner: Runner | None = None,
 ) -> VShiftVolumeOutputs:
     """
@@ -257,6 +257,8 @@ def v__shift_volume(
 
 __all__ = [
     "VShiftVolumeOutputs",
+    "VShiftVolumeParamsDict",
+    "VShiftVolumeParamsDictTagged",
     "V__SHIFT_VOLUME_METADATA",
     "v__shift_volume",
     "v__shift_volume_execute",

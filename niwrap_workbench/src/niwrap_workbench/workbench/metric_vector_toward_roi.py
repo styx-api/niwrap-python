@@ -12,14 +12,14 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 )
 
 
-MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParameters', {
+MetricVectorTowardRoiParamsDict = typing.TypedDict('MetricVectorTowardRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-toward-roi"]],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "target-roi": InputPathType,
 })
-MetricVectorTowardRoiParametersTagged = typing.TypedDict('MetricVectorTowardRoiParametersTagged', {
+MetricVectorTowardRoiParamsDictTagged = typing.TypedDict('MetricVectorTowardRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-vector-toward-roi"],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ MetricVectorTowardRoiParametersTagged = typing.TypedDict('MetricVectorTowardRoiP
 
 class MetricVectorTowardRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricVectorTowardRoiParameters(...)`.
+    Output object returned when calling `MetricVectorTowardRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def metric_vector_toward_roi_params(
     roi_metric: InputPathType | None,
     surface: InputPathType,
     target_roi: InputPathType,
-) -> MetricVectorTowardRoiParametersTagged:
+) -> MetricVectorTowardRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def metric_vector_toward_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricVectorTowardRoiParameters` object.
+    `MetricVectorTowardRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def metric_vector_toward_roi_validate(
 
 
 def metric_vector_toward_roi_cargs(
-    params: MetricVectorTowardRoiParameters,
+    params: MetricVectorTowardRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def metric_vector_toward_roi_cargs(
 
 
 def metric_vector_toward_roi_outputs(
-    params: MetricVectorTowardRoiParameters,
+    params: MetricVectorTowardRoiParamsDict,
     execution: Execution,
 ) -> MetricVectorTowardRoiOutputs:
     """
@@ -145,7 +145,7 @@ def metric_vector_toward_roi_outputs(
 
 
 def metric_vector_toward_roi_execute(
-    params: MetricVectorTowardRoiParameters,
+    params: MetricVectorTowardRoiParamsDict,
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
@@ -206,6 +206,8 @@ def metric_vector_toward_roi(
 __all__ = [
     "METRIC_VECTOR_TOWARD_ROI_METADATA",
     "MetricVectorTowardRoiOutputs",
+    "MetricVectorTowardRoiParamsDict",
+    "MetricVectorTowardRoiParamsDictTagged",
     "metric_vector_toward_roi",
     "metric_vector_toward_roi_execute",
     "metric_vector_toward_roi_params",

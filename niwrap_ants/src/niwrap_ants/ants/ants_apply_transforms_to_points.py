@@ -13,41 +13,41 @@ ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
 )
 
 
-AntsApplyTransformsToPointsSingleTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParameters', {
+AntsApplyTransformsToPointsSingleTransformParamsDict = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["single_transform"]],
 })
-AntsApplyTransformsToPointsSingleTransformParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParametersTagged', {
+AntsApplyTransformsToPointsSingleTransformParamsDictTagged = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParamsDictTagged', {
     "@type": typing.Literal["single_transform"],
 })
 
 
-AntsApplyTransformsToPointsInverseTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParameters', {
+AntsApplyTransformsToPointsInverseTransformParamsDict = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["inverse_transform"]],
     "transform_file": InputPathType,
 })
-AntsApplyTransformsToPointsInverseTransformParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParametersTagged', {
+AntsApplyTransformsToPointsInverseTransformParamsDictTagged = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParamsDictTagged', {
     "@type": typing.Literal["inverse_transform"],
     "transform_file": InputPathType,
 })
 
 
-AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToPointsParameters', {
+AntsApplyTransformsToPointsParamsDict = typing.TypedDict('AntsApplyTransformsToPointsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransformsToPoints"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[bool | None],
     "forantsr": typing.NotRequired[bool | None],
     "input": InputPathType,
     "output": str,
-    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
+    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParamsDictTagged, AntsApplyTransformsToPointsInverseTransformParamsDictTagged] | None],
 })
-AntsApplyTransformsToPointsParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsParametersTagged', {
+AntsApplyTransformsToPointsParamsDictTagged = typing.TypedDict('AntsApplyTransformsToPointsParamsDictTagged', {
     "@type": typing.Literal["ants/antsApplyTransformsToPoints"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[bool | None],
     "forantsr": typing.NotRequired[bool | None],
     "input": InputPathType,
     "output": str,
-    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
+    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParamsDictTagged, AntsApplyTransformsToPointsInverseTransformParamsDictTagged] | None],
 })
 
 
@@ -85,8 +85,8 @@ def ants_apply_transforms_to_points_transform_validate_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_to_points_single_transform_params(
-) -> AntsApplyTransformsToPointsSingleTransformParametersTagged:
+def ants_apply_transforms_to_points_single_transform(
+) -> AntsApplyTransformsToPointsSingleTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def ants_apply_transforms_to_points_single_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsToPointsSingleTransformParameters` object.
+    `AntsApplyTransformsToPointsSingleTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def ants_apply_transforms_to_points_single_transform_validate(
 
 
 def ants_apply_transforms_to_points_single_transform_cargs(
-    params: AntsApplyTransformsToPointsSingleTransformParameters,
+    params: AntsApplyTransformsToPointsSingleTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,9 +132,9 @@ def ants_apply_transforms_to_points_single_transform_cargs(
     return cargs
 
 
-def ants_apply_transforms_to_points_inverse_transform_params(
+def ants_apply_transforms_to_points_inverse_transform(
     transform_file: InputPathType,
-) -> AntsApplyTransformsToPointsInverseTransformParametersTagged:
+) -> AntsApplyTransformsToPointsInverseTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -155,7 +155,7 @@ def ants_apply_transforms_to_points_inverse_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsToPointsInverseTransformParameters` object.
+    `AntsApplyTransformsToPointsInverseTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def ants_apply_transforms_to_points_inverse_transform_validate(
 
 
 def ants_apply_transforms_to_points_inverse_transform_cargs(
-    params: AntsApplyTransformsToPointsInverseTransformParameters,
+    params: AntsApplyTransformsToPointsInverseTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def ants_apply_transforms_to_points_inverse_transform_cargs(
 
 class AntsApplyTransformsToPointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsApplyTransformsToPointsParameters(...)`.
+    Output object returned when calling `AntsApplyTransformsToPointsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -202,8 +202,8 @@ def ants_apply_transforms_to_points_params(
     dimensionality: typing.Literal[2, 3] | None = None,
     precision: bool | None = None,
     forantsr: bool | None = None,
-    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
-) -> AntsApplyTransformsToPointsParametersTagged:
+    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParamsDictTagged, AntsApplyTransformsToPointsInverseTransformParamsDictTagged] | None = None,
+) -> AntsApplyTransformsToPointsParamsDictTagged:
     """
     Build parameters.
     
@@ -241,7 +241,7 @@ def ants_apply_transforms_to_points_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsToPointsParameters` object.
+    `AntsApplyTransformsToPointsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -272,11 +272,13 @@ def ants_apply_transforms_to_points_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["transform"])}\'')
         if "@type" not in params["transform"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["transform"]["@type"] not in ["single_transform", "inverse_transform"]:
+            raise StyxValidationError("Parameter `transform`s `@type` must be one of [\"single_transform\", \"inverse_transform\"]")
         ants_apply_transforms_to_points_transform_validate_dyn_fn(params["transform"]["@type"])(params["transform"])
 
 
 def ants_apply_transforms_to_points_cargs(
-    params: AntsApplyTransformsToPointsParameters,
+    params: AntsApplyTransformsToPointsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -322,7 +324,7 @@ def ants_apply_transforms_to_points_cargs(
 
 
 def ants_apply_transforms_to_points_outputs(
-    params: AntsApplyTransformsToPointsParameters,
+    params: AntsApplyTransformsToPointsParamsDict,
     execution: Execution,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
@@ -342,7 +344,7 @@ def ants_apply_transforms_to_points_outputs(
 
 
 def ants_apply_transforms_to_points_execute(
-    params: AntsApplyTransformsToPointsParameters,
+    params: AntsApplyTransformsToPointsParamsDict,
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
@@ -380,7 +382,7 @@ def ants_apply_transforms_to_points(
     dimensionality: typing.Literal[2, 3] | None = None,
     precision: bool | None = None,
     forantsr: bool | None = None,
-    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
+    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParamsDictTagged, AntsApplyTransformsToPointsInverseTransformParamsDictTagged] | None = None,
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
@@ -423,10 +425,16 @@ def ants_apply_transforms_to_points(
 
 __all__ = [
     "ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA",
+    "AntsApplyTransformsToPointsInverseTransformParamsDict",
+    "AntsApplyTransformsToPointsInverseTransformParamsDictTagged",
     "AntsApplyTransformsToPointsOutputs",
+    "AntsApplyTransformsToPointsParamsDict",
+    "AntsApplyTransformsToPointsParamsDictTagged",
+    "AntsApplyTransformsToPointsSingleTransformParamsDict",
+    "AntsApplyTransformsToPointsSingleTransformParamsDictTagged",
     "ants_apply_transforms_to_points",
     "ants_apply_transforms_to_points_execute",
-    "ants_apply_transforms_to_points_inverse_transform_params",
+    "ants_apply_transforms_to_points_inverse_transform",
     "ants_apply_transforms_to_points_params",
-    "ants_apply_transforms_to_points_single_transform_params",
+    "ants_apply_transforms_to_points_single_transform",
 ]

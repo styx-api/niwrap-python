@@ -13,7 +13,7 @@ QATOOLS_PY_METADATA = Metadata(
 )
 
 
-QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
+QatoolsPyParamsDict = typing.TypedDict('QatoolsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/qatools.py"]],
     "subjects_dir": str,
     "output_dir": str,
@@ -23,7 +23,7 @@ QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
     "outlier": bool,
     "outlier_table": typing.NotRequired[InputPathType | None],
 })
-QatoolsPyParametersTagged = typing.TypedDict('QatoolsPyParametersTagged', {
+QatoolsPyParamsDictTagged = typing.TypedDict('QatoolsPyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/qatools.py"],
     "subjects_dir": str,
     "output_dir": str,
@@ -37,7 +37,7 @@ QatoolsPyParametersTagged = typing.TypedDict('QatoolsPyParametersTagged', {
 
 class QatoolsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QatoolsPyParameters(...)`.
+    Output object returned when calling `QatoolsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def qatools_py_params(
     fornix: bool = False,
     outlier: bool = False,
     outlier_table: InputPathType | None = None,
-) -> QatoolsPyParametersTagged:
+) -> QatoolsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def qatools_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QatoolsPyParameters` object.
+    `QatoolsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def qatools_py_validate(
 
 
 def qatools_py_cargs(
-    params: QatoolsPyParameters,
+    params: QatoolsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,7 +174,7 @@ def qatools_py_cargs(
 
 
 def qatools_py_outputs(
-    params: QatoolsPyParameters,
+    params: QatoolsPyParamsDict,
     execution: Execution,
 ) -> QatoolsPyOutputs:
     """
@@ -195,7 +195,7 @@ def qatools_py_outputs(
 
 
 def qatools_py_execute(
-    params: QatoolsPyParameters,
+    params: QatoolsPyParamsDict,
     runner: Runner | None = None,
 ) -> QatoolsPyOutputs:
     """
@@ -271,6 +271,8 @@ def qatools_py(
 __all__ = [
     "QATOOLS_PY_METADATA",
     "QatoolsPyOutputs",
+    "QatoolsPyParamsDict",
+    "QatoolsPyParamsDictTagged",
     "qatools_py",
     "qatools_py_execute",
     "qatools_py_params",

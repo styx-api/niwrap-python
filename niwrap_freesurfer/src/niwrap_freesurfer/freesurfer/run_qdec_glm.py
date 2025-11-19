@@ -13,11 +13,11 @@ RUN_QDEC_GLM_METADATA = Metadata(
 )
 
 
-RunQdecGlmParameters = typing.TypedDict('RunQdecGlmParameters', {
+RunQdecGlmParamsDict = typing.TypedDict('RunQdecGlmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run-qdec-glm"]],
     "qdec_directory": str,
 })
-RunQdecGlmParametersTagged = typing.TypedDict('RunQdecGlmParametersTagged', {
+RunQdecGlmParamsDictTagged = typing.TypedDict('RunQdecGlmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run-qdec-glm"],
     "qdec_directory": str,
 })
@@ -25,7 +25,7 @@ RunQdecGlmParametersTagged = typing.TypedDict('RunQdecGlmParametersTagged', {
 
 class RunQdecGlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunQdecGlmParameters(...)`.
+    Output object returned when calling `RunQdecGlmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class RunQdecGlmOutputs(typing.NamedTuple):
 
 def run_qdec_glm_params(
     qdec_directory: str,
-) -> RunQdecGlmParametersTagged:
+) -> RunQdecGlmParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def run_qdec_glm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunQdecGlmParameters` object.
+    `RunQdecGlmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def run_qdec_glm_validate(
 
 
 def run_qdec_glm_cargs(
-    params: RunQdecGlmParameters,
+    params: RunQdecGlmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def run_qdec_glm_cargs(
 
 
 def run_qdec_glm_outputs(
-    params: RunQdecGlmParameters,
+    params: RunQdecGlmParamsDict,
     execution: Execution,
 ) -> RunQdecGlmOutputs:
     """
@@ -109,7 +109,7 @@ def run_qdec_glm_outputs(
 
 
 def run_qdec_glm_execute(
-    params: RunQdecGlmParameters,
+    params: RunQdecGlmParamsDict,
     runner: Runner | None = None,
 ) -> RunQdecGlmOutputs:
     """
@@ -165,6 +165,8 @@ def run_qdec_glm(
 __all__ = [
     "RUN_QDEC_GLM_METADATA",
     "RunQdecGlmOutputs",
+    "RunQdecGlmParamsDict",
+    "RunQdecGlmParamsDictTagged",
     "run_qdec_glm",
     "run_qdec_glm_execute",
     "run_qdec_glm_params",

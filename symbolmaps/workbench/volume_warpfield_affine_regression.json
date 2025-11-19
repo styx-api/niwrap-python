@@ -9,7 +9,7 @@
     },
     "flirt-out": {
       "var_param": "flirt_out",
-      "fn_struct_make_params": "volume_warpfield_affine_regression_flirt_out_params",
+      "fn_struct_make_params": "volume_warpfield_affine_regression_flirt_out",
       "properties": {
         "source-volume": {
           "var_param": "source_volume"

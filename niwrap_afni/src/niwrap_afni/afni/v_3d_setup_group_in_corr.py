@@ -13,7 +13,7 @@ V_3D_SETUP_GROUP_IN_CORR_METADATA = Metadata(
 )
 
 
-V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters', {
+V3dSetupGroupInCorrParamsDict = typing.TypedDict('V3dSetupGroupInCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSetupGroupInCorr"]],
     "datasets": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters'
     "prep_method": typing.NotRequired[str | None],
     "lr_pairs": typing.NotRequired[list[str] | None],
 })
-V3dSetupGroupInCorrParametersTagged = typing.TypedDict('V3dSetupGroupInCorrParametersTagged', {
+V3dSetupGroupInCorrParamsDictTagged = typing.TypedDict('V3dSetupGroupInCorrParamsDictTagged', {
     "@type": typing.Literal["afni/3dSetupGroupInCorr"],
     "datasets": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ V3dSetupGroupInCorrParametersTagged = typing.TypedDict('V3dSetupGroupInCorrParam
 
 class V3dSetupGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSetupGroupInCorrParameters(...)`.
+    Output object returned when calling `V3dSetupGroupInCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_setup_group_in_corr_params(
     delete_flag: bool = False,
     prep_method: str | None = None,
     lr_pairs: list[str] | None = None,
-) -> V3dSetupGroupInCorrParametersTagged:
+) -> V3dSetupGroupInCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def v_3d_setup_group_in_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSetupGroupInCorrParameters` object.
+    `V3dSetupGroupInCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def v_3d_setup_group_in_corr_validate(
 
 
 def v_3d_setup_group_in_corr_cargs(
-    params: V3dSetupGroupInCorrParameters,
+    params: V3dSetupGroupInCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def v_3d_setup_group_in_corr_cargs(
 
 
 def v_3d_setup_group_in_corr_outputs(
-    params: V3dSetupGroupInCorrParameters,
+    params: V3dSetupGroupInCorrParamsDict,
     execution: Execution,
 ) -> V3dSetupGroupInCorrOutputs:
     """
@@ -224,7 +224,7 @@ def v_3d_setup_group_in_corr_outputs(
 
 
 def v_3d_setup_group_in_corr_execute(
-    params: V3dSetupGroupInCorrParameters,
+    params: V3dSetupGroupInCorrParamsDict,
     runner: Runner | None = None,
 ) -> V3dSetupGroupInCorrOutputs:
     """
@@ -307,6 +307,8 @@ def v_3d_setup_group_in_corr(
 
 __all__ = [
     "V3dSetupGroupInCorrOutputs",
+    "V3dSetupGroupInCorrParamsDict",
+    "V3dSetupGroupInCorrParamsDictTagged",
     "V_3D_SETUP_GROUP_IN_CORR_METADATA",
     "v_3d_setup_group_in_corr",
     "v_3d_setup_group_in_corr_execute",

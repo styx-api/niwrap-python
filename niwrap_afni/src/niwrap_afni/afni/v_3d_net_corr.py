@@ -13,7 +13,7 @@ V_3D_NET_CORR_METADATA = Metadata(
 )
 
 
-V3dNetCorrParameters = typing.TypedDict('V3dNetCorrParameters', {
+V3dNetCorrParamsDict = typing.TypedDict('V3dNetCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNetCorr"]],
     "prefix": str,
     "inset": InputPathType,
@@ -36,7 +36,7 @@ V3dNetCorrParameters = typing.TypedDict('V3dNetCorrParameters', {
     "automask_off": bool,
     "ignore_LT": bool,
 })
-V3dNetCorrParametersTagged = typing.TypedDict('V3dNetCorrParametersTagged', {
+V3dNetCorrParamsDictTagged = typing.TypedDict('V3dNetCorrParamsDictTagged', {
     "@type": typing.Literal["afni/3dNetCorr"],
     "prefix": str,
     "inset": InputPathType,
@@ -63,7 +63,7 @@ V3dNetCorrParametersTagged = typing.TypedDict('V3dNetCorrParametersTagged', {
 
 class V3dNetCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNetCorrParameters(...)`.
+    Output object returned when calling `V3dNetCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def v_3d_net_corr_params(
     allow_roi_zeros: bool = False,
     automask_off: bool = False,
     ignore_lt: bool = False,
-) -> V3dNetCorrParametersTagged:
+) -> V3dNetCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def v_3d_net_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNetCorrParameters` object.
+    `V3dNetCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -265,7 +265,7 @@ def v_3d_net_corr_validate(
 
 
 def v_3d_net_corr_cargs(
-    params: V3dNetCorrParameters,
+    params: V3dNetCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -329,7 +329,7 @@ def v_3d_net_corr_cargs(
 
 
 def v_3d_net_corr_outputs(
-    params: V3dNetCorrParameters,
+    params: V3dNetCorrParamsDict,
     execution: Execution,
 ) -> V3dNetCorrOutputs:
     """
@@ -355,7 +355,7 @@ def v_3d_net_corr_outputs(
 
 
 def v_3d_net_corr_execute(
-    params: V3dNetCorrParameters,
+    params: V3dNetCorrParamsDict,
     runner: Runner | None = None,
 ) -> V3dNetCorrOutputs:
     """
@@ -478,6 +478,8 @@ def v_3d_net_corr(
 
 __all__ = [
     "V3dNetCorrOutputs",
+    "V3dNetCorrParamsDict",
+    "V3dNetCorrParamsDictTagged",
     "V_3D_NET_CORR_METADATA",
     "v_3d_net_corr",
     "v_3d_net_corr_execute",

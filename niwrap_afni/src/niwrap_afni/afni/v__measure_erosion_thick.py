@@ -13,7 +13,7 @@ V__MEASURE_EROSION_THICK_METADATA = Metadata(
 )
 
 
-VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameters', {
+VMeasureErosionThickParamsDict = typing.TypedDict('VMeasureErosionThickParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@measure_erosion_thick"]],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -26,7 +26,7 @@ VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameter
     "keep_temp_files": bool,
     "surfsmooth_method": typing.NotRequired[str | None],
 })
-VMeasureErosionThickParametersTagged = typing.TypedDict('VMeasureErosionThickParametersTagged', {
+VMeasureErosionThickParamsDictTagged = typing.TypedDict('VMeasureErosionThickParamsDictTagged', {
     "@type": typing.Literal["afni/@measure_erosion_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -43,7 +43,7 @@ VMeasureErosionThickParametersTagged = typing.TypedDict('VMeasureErosionThickPar
 
 class VMeasureErosionThickOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMeasureErosionThickParameters(...)`.
+    Output object returned when calling `VMeasureErosionThickParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v__measure_erosion_thick_params(
     depthsearch: float | None = None,
     keep_temp_files: bool = False,
     surfsmooth_method: str | None = None,
-) -> VMeasureErosionThickParametersTagged:
+) -> VMeasureErosionThickParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def v__measure_erosion_thick_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMeasureErosionThickParameters` object.
+    `VMeasureErosionThickParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def v__measure_erosion_thick_validate(
 
 
 def v__measure_erosion_thick_cargs(
-    params: VMeasureErosionThickParameters,
+    params: VMeasureErosionThickParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -237,7 +237,7 @@ def v__measure_erosion_thick_cargs(
 
 
 def v__measure_erosion_thick_outputs(
-    params: VMeasureErosionThickParameters,
+    params: VMeasureErosionThickParamsDict,
     execution: Execution,
 ) -> VMeasureErosionThickOutputs:
     """
@@ -265,7 +265,7 @@ def v__measure_erosion_thick_outputs(
 
 
 def v__measure_erosion_thick_execute(
-    params: VMeasureErosionThickParameters,
+    params: VMeasureErosionThickParamsDict,
     runner: Runner | None = None,
 ) -> VMeasureErosionThickOutputs:
     """
@@ -354,6 +354,8 @@ def v__measure_erosion_thick(
 
 __all__ = [
     "VMeasureErosionThickOutputs",
+    "VMeasureErosionThickParamsDict",
+    "VMeasureErosionThickParamsDictTagged",
     "V__MEASURE_EROSION_THICK_METADATA",
     "v__measure_erosion_thick",
     "v__measure_erosion_thick_execute",

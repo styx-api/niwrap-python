@@ -13,7 +13,7 @@ V__SCALE_VOLUME_METADATA = Metadata(
 )
 
 
-VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
+VScaleVolumeParamsDict = typing.TypedDict('VScaleVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ScaleVolume"]],
     "input_dset": InputPathType,
     "prefix": str,
@@ -24,7 +24,7 @@ VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
     "norm": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
-VScaleVolumeParametersTagged = typing.TypedDict('VScaleVolumeParametersTagged', {
+VScaleVolumeParamsDictTagged = typing.TypedDict('VScaleVolumeParamsDictTagged', {
     "@type": typing.Literal["afni/@ScaleVolume"],
     "input_dset": InputPathType,
     "prefix": str,
@@ -39,7 +39,7 @@ VScaleVolumeParametersTagged = typing.TypedDict('VScaleVolumeParametersTagged', 
 
 class VScaleVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VScaleVolumeParameters(...)`.
+    Output object returned when calling `VScaleVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v__scale_volume_params(
     scale_by_median: bool = False,
     norm: bool = False,
     mask: InputPathType | None = None,
-) -> VScaleVolumeParametersTagged:
+) -> VScaleVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def v__scale_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VScaleVolumeParameters` object.
+    `VScaleVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def v__scale_volume_validate(
 
 
 def v__scale_volume_cargs(
-    params: VScaleVolumeParameters,
+    params: VScaleVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,7 +185,7 @@ def v__scale_volume_cargs(
 
 
 def v__scale_volume_outputs(
-    params: VScaleVolumeParameters,
+    params: VScaleVolumeParamsDict,
     execution: Execution,
 ) -> VScaleVolumeOutputs:
     """
@@ -205,7 +205,7 @@ def v__scale_volume_outputs(
 
 
 def v__scale_volume_execute(
-    params: VScaleVolumeParameters,
+    params: VScaleVolumeParamsDict,
     runner: Runner | None = None,
 ) -> VScaleVolumeOutputs:
     """
@@ -282,6 +282,8 @@ def v__scale_volume(
 
 __all__ = [
     "VScaleVolumeOutputs",
+    "VScaleVolumeParamsDict",
+    "VScaleVolumeParamsDictTagged",
     "V__SCALE_VOLUME_METADATA",
     "v__scale_volume",
     "v__scale_volume_execute",

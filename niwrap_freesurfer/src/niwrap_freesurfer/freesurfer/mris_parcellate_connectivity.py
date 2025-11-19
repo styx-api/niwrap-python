@@ -13,14 +13,14 @@ MRIS_PARCELLATE_CONNECTIVITY_METADATA = Metadata(
 )
 
 
-MrisParcellateConnectivityParameters = typing.TypedDict('MrisParcellateConnectivityParameters', {
+MrisParcellateConnectivityParamsDict = typing.TypedDict('MrisParcellateConnectivityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_parcellate_connectivity"]],
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
     "input_correlations": InputPathType,
     "output_parcellation": str,
 })
-MrisParcellateConnectivityParametersTagged = typing.TypedDict('MrisParcellateConnectivityParametersTagged', {
+MrisParcellateConnectivityParamsDictTagged = typing.TypedDict('MrisParcellateConnectivityParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_parcellate_connectivity"],
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
@@ -31,7 +31,7 @@ MrisParcellateConnectivityParametersTagged = typing.TypedDict('MrisParcellateCon
 
 class MrisParcellateConnectivityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisParcellateConnectivityParameters(...)`.
+    Output object returned when calling `MrisParcellateConnectivityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_parcellate_connectivity_params(
     input_correlations: InputPathType,
     output_parcellation: str,
     smooth_iterations: float | None = None,
-) -> MrisParcellateConnectivityParametersTagged:
+) -> MrisParcellateConnectivityParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def mris_parcellate_connectivity_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisParcellateConnectivityParameters` object.
+    `MrisParcellateConnectivityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mris_parcellate_connectivity_validate(
 
 
 def mris_parcellate_connectivity_cargs(
-    params: MrisParcellateConnectivityParameters,
+    params: MrisParcellateConnectivityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def mris_parcellate_connectivity_cargs(
 
 
 def mris_parcellate_connectivity_outputs(
-    params: MrisParcellateConnectivityParameters,
+    params: MrisParcellateConnectivityParamsDict,
     execution: Execution,
 ) -> MrisParcellateConnectivityOutputs:
     """
@@ -144,7 +144,7 @@ def mris_parcellate_connectivity_outputs(
 
 
 def mris_parcellate_connectivity_execute(
-    params: MrisParcellateConnectivityParameters,
+    params: MrisParcellateConnectivityParamsDict,
     runner: Runner | None = None,
 ) -> MrisParcellateConnectivityOutputs:
     """
@@ -210,6 +210,8 @@ def mris_parcellate_connectivity(
 __all__ = [
     "MRIS_PARCELLATE_CONNECTIVITY_METADATA",
     "MrisParcellateConnectivityOutputs",
+    "MrisParcellateConnectivityParamsDict",
+    "MrisParcellateConnectivityParamsDictTagged",
     "mris_parcellate_connectivity",
     "mris_parcellate_connectivity_execute",
     "mris_parcellate_connectivity_params",

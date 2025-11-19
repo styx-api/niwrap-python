@@ -13,7 +13,7 @@ V_3D_UPSAMPLE_METADATA = Metadata(
 )
 
 
-V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
+V3dUpsampleParamsDict = typing.TypedDict('V3dUpsampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dUpsample"]],
     "upsample_factor": int,
     "input_dataset": str,
@@ -22,7 +22,7 @@ V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
     "verbose_flag": bool,
     "datatype": typing.NotRequired[str | None],
 })
-V3dUpsampleParametersTagged = typing.TypedDict('V3dUpsampleParametersTagged', {
+V3dUpsampleParamsDictTagged = typing.TypedDict('V3dUpsampleParamsDictTagged', {
     "@type": typing.Literal["afni/3dUpsample"],
     "upsample_factor": int,
     "input_dataset": str,
@@ -35,7 +35,7 @@ V3dUpsampleParametersTagged = typing.TypedDict('V3dUpsampleParametersTagged', {
 
 class V3dUpsampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dUpsampleParameters(...)`.
+    Output object returned when calling `V3dUpsampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v_3d_upsample_params(
     output_prefix: str | None = None,
     verbose_flag: bool = False,
     datatype: str | None = None,
-) -> V3dUpsampleParametersTagged:
+) -> V3dUpsampleParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def v_3d_upsample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dUpsampleParameters` object.
+    `V3dUpsampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def v_3d_upsample_validate(
 
 
 def v_3d_upsample_cargs(
-    params: V3dUpsampleParameters,
+    params: V3dUpsampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def v_3d_upsample_cargs(
 
 
 def v_3d_upsample_outputs(
-    params: V3dUpsampleParameters,
+    params: V3dUpsampleParamsDict,
     execution: Execution,
 ) -> V3dUpsampleOutputs:
     """
@@ -184,7 +184,7 @@ def v_3d_upsample_outputs(
 
 
 def v_3d_upsample_execute(
-    params: V3dUpsampleParameters,
+    params: V3dUpsampleParamsDict,
     runner: Runner | None = None,
 ) -> V3dUpsampleOutputs:
     """
@@ -258,6 +258,8 @@ def v_3d_upsample(
 
 __all__ = [
     "V3dUpsampleOutputs",
+    "V3dUpsampleParamsDict",
+    "V3dUpsampleParamsDictTagged",
     "V_3D_UPSAMPLE_METADATA",
     "v_3d_upsample",
     "v_3d_upsample_execute",

@@ -13,13 +13,13 @@ SPLINE3_TEST_METADATA = Metadata(
 )
 
 
-Spline3TestParameters = typing.TypedDict('Spline3TestParameters', {
+Spline3TestParamsDict = typing.TypedDict('Spline3TestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/Spline3_test"]],
     "x_values": list[float],
     "y_values": list[float],
     "x_new_values": list[float],
 })
-Spline3TestParametersTagged = typing.TypedDict('Spline3TestParametersTagged', {
+Spline3TestParamsDictTagged = typing.TypedDict('Spline3TestParamsDictTagged', {
     "@type": typing.Literal["freesurfer/Spline3_test"],
     "x_values": list[float],
     "y_values": list[float],
@@ -29,7 +29,7 @@ Spline3TestParametersTagged = typing.TypedDict('Spline3TestParametersTagged', {
 
 class Spline3TestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Spline3TestParameters(...)`.
+    Output object returned when calling `Spline3TestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def spline3_test_params(
     x_values: list[float],
     y_values: list[float],
     x_new_values: list[float],
-) -> Spline3TestParametersTagged:
+) -> Spline3TestParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def spline3_test_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Spline3TestParameters` object.
+    `Spline3TestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def spline3_test_validate(
 
 
 def spline3_test_cargs(
-    params: Spline3TestParameters,
+    params: Spline3TestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def spline3_test_cargs(
 
 
 def spline3_test_outputs(
-    params: Spline3TestParameters,
+    params: Spline3TestParamsDict,
     execution: Execution,
 ) -> Spline3TestOutputs:
     """
@@ -141,7 +141,7 @@ def spline3_test_outputs(
 
 
 def spline3_test_execute(
-    params: Spline3TestParameters,
+    params: Spline3TestParamsDict,
     runner: Runner | None = None,
 ) -> Spline3TestOutputs:
     """
@@ -203,6 +203,8 @@ def spline3_test(
 __all__ = [
     "SPLINE3_TEST_METADATA",
     "Spline3TestOutputs",
+    "Spline3TestParamsDict",
+    "Spline3TestParamsDictTagged",
     "spline3_test",
     "spline3_test_execute",
     "spline3_test_params",

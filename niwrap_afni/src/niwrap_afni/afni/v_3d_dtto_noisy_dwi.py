@@ -13,7 +13,7 @@ V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
 )
 
 
-V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
+V3dDttoNoisyDwiParamsDict = typing.TypedDict('V3dDttoNoisyDwiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDTtoNoisyDWI"]],
     "dt_file": InputPathType,
     "grad_file": InputPathType,
@@ -24,7 +24,7 @@ V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
     "bval": typing.NotRequired[float | None],
     "s0": typing.NotRequired[float | None],
 })
-V3dDttoNoisyDwiParametersTagged = typing.TypedDict('V3dDttoNoisyDwiParametersTagged', {
+V3dDttoNoisyDwiParamsDictTagged = typing.TypedDict('V3dDttoNoisyDwiParamsDictTagged', {
     "@type": typing.Literal["afni/3dDTtoNoisyDWI"],
     "dt_file": InputPathType,
     "grad_file": InputPathType,
@@ -39,7 +39,7 @@ V3dDttoNoisyDwiParametersTagged = typing.TypedDict('V3dDttoNoisyDwiParametersTag
 
 class V3dDttoNoisyDwiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDttoNoisyDwiParameters(...)`.
+    Output object returned when calling `V3dDttoNoisyDwiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def v_3d_dtto_noisy_dwi_params(
     mask: InputPathType | None = None,
     bval: float | None = None,
     s0: float | None = None,
-) -> V3dDttoNoisyDwiParametersTagged:
+) -> V3dDttoNoisyDwiParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_3d_dtto_noisy_dwi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDttoNoisyDwiParameters` object.
+    `V3dDttoNoisyDwiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def v_3d_dtto_noisy_dwi_validate(
 
 
 def v_3d_dtto_noisy_dwi_cargs(
-    params: V3dDttoNoisyDwiParameters,
+    params: V3dDttoNoisyDwiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -189,7 +189,7 @@ def v_3d_dtto_noisy_dwi_cargs(
 
 
 def v_3d_dtto_noisy_dwi_outputs(
-    params: V3dDttoNoisyDwiParameters,
+    params: V3dDttoNoisyDwiParamsDict,
     execution: Execution,
 ) -> V3dDttoNoisyDwiOutputs:
     """
@@ -209,7 +209,7 @@ def v_3d_dtto_noisy_dwi_outputs(
 
 
 def v_3d_dtto_noisy_dwi_execute(
-    params: V3dDttoNoisyDwiParameters,
+    params: V3dDttoNoisyDwiParamsDict,
     runner: Runner | None = None,
 ) -> V3dDttoNoisyDwiOutputs:
     """
@@ -296,6 +296,8 @@ def v_3d_dtto_noisy_dwi(
 
 __all__ = [
     "V3dDttoNoisyDwiOutputs",
+    "V3dDttoNoisyDwiParamsDict",
+    "V3dDttoNoisyDwiParamsDictTagged",
     "V_3D_DTTO_NOISY_DWI_METADATA",
     "v_3d_dtto_noisy_dwi",
     "v_3d_dtto_noisy_dwi_execute",

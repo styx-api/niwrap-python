@@ -13,7 +13,7 @@ EDDY_OPENMP_METADATA = Metadata(
 )
 
 
-EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
+EddyOpenmpParamsDict = typing.TypedDict('EddyOpenmpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_openmp"]],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -60,7 +60,7 @@ EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
-EddyOpenmpParametersTagged = typing.TypedDict('EddyOpenmpParametersTagged', {
+EddyOpenmpParamsDictTagged = typing.TypedDict('EddyOpenmpParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_openmp"],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -111,7 +111,7 @@ EddyOpenmpParametersTagged = typing.TypedDict('EddyOpenmpParametersTagged', {
 
 class EddyOpenmpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyOpenmpParameters(...)`.
+    Output object returned when calling `EddyOpenmpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ def eddy_openmp_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyOpenmpParametersTagged:
+) -> EddyOpenmpParamsDictTagged:
     """
     Build parameters.
     
@@ -355,7 +355,7 @@ def eddy_openmp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyOpenmpParameters` object.
+    `EddyOpenmpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -527,7 +527,7 @@ def eddy_openmp_validate(
 
 
 def eddy_openmp_cargs(
-    params: EddyOpenmpParameters,
+    params: EddyOpenmpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -626,7 +626,7 @@ def eddy_openmp_cargs(
 
 
 def eddy_openmp_outputs(
-    params: EddyOpenmpParameters,
+    params: EddyOpenmpParamsDict,
     execution: Execution,
 ) -> EddyOpenmpOutputs:
     """
@@ -664,7 +664,7 @@ def eddy_openmp_outputs(
 
 
 def eddy_openmp_execute(
-    params: EddyOpenmpParameters,
+    params: EddyOpenmpParamsDict,
     runner: Runner | None = None,
 ) -> EddyOpenmpOutputs:
     """
@@ -868,6 +868,8 @@ def eddy_openmp(
 __all__ = [
     "EDDY_OPENMP_METADATA",
     "EddyOpenmpOutputs",
+    "EddyOpenmpParamsDict",
+    "EddyOpenmpParamsDictTagged",
     "eddy_openmp",
     "eddy_openmp_execute",
     "eddy_openmp_params",

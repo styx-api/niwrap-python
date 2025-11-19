@@ -13,13 +13,13 @@ COMPUTE_VOX2VOX_METADATA = Metadata(
 )
 
 
-ComputeVox2voxParameters = typing.TypedDict('ComputeVox2voxParameters', {
+ComputeVox2voxParamsDict = typing.TypedDict('ComputeVox2voxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/compute_vox2vox"]],
     "source": InputPathType,
     "t4file": InputPathType,
     "target": InputPathType,
 })
-ComputeVox2voxParametersTagged = typing.TypedDict('ComputeVox2voxParametersTagged', {
+ComputeVox2voxParamsDictTagged = typing.TypedDict('ComputeVox2voxParamsDictTagged', {
     "@type": typing.Literal["freesurfer/compute_vox2vox"],
     "source": InputPathType,
     "t4file": InputPathType,
@@ -29,7 +29,7 @@ ComputeVox2voxParametersTagged = typing.TypedDict('ComputeVox2voxParametersTagge
 
 class ComputeVox2voxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ComputeVox2voxParameters(...)`.
+    Output object returned when calling `ComputeVox2voxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def compute_vox2vox_params(
     source: InputPathType,
     t4file: InputPathType,
     target: InputPathType,
-) -> ComputeVox2voxParametersTagged:
+) -> ComputeVox2voxParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def compute_vox2vox_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ComputeVox2voxParameters` object.
+    `ComputeVox2voxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def compute_vox2vox_validate(
 
 
 def compute_vox2vox_cargs(
-    params: ComputeVox2voxParameters,
+    params: ComputeVox2voxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def compute_vox2vox_cargs(
 
 
 def compute_vox2vox_outputs(
-    params: ComputeVox2voxParameters,
+    params: ComputeVox2voxParamsDict,
     execution: Execution,
 ) -> ComputeVox2voxOutputs:
     """
@@ -126,7 +126,7 @@ def compute_vox2vox_outputs(
 
 
 def compute_vox2vox_execute(
-    params: ComputeVox2voxParameters,
+    params: ComputeVox2voxParamsDict,
     runner: Runner | None = None,
 ) -> ComputeVox2voxOutputs:
     """
@@ -188,6 +188,8 @@ def compute_vox2vox(
 __all__ = [
     "COMPUTE_VOX2VOX_METADATA",
     "ComputeVox2voxOutputs",
+    "ComputeVox2voxParamsDict",
+    "ComputeVox2voxParamsDictTagged",
     "compute_vox2vox",
     "compute_vox2vox_execute",
     "compute_vox2vox_params",

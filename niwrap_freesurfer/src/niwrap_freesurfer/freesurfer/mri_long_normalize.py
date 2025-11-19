@@ -13,7 +13,7 @@ MRI_LONG_NORMALIZE_METADATA = Metadata(
 )
 
 
-MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
+MriLongNormalizeParamsDict = typing.TypedDict('MriLongNormalizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_long_normalize"]],
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
@@ -27,7 +27,7 @@ MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
     "reading": typing.NotRequired[list[str] | None],
     "print_usage": bool,
 })
-MriLongNormalizeParametersTagged = typing.TypedDict('MriLongNormalizeParametersTagged', {
+MriLongNormalizeParamsDictTagged = typing.TypedDict('MriLongNormalizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_long_normalize"],
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
@@ -45,7 +45,7 @@ MriLongNormalizeParametersTagged = typing.TypedDict('MriLongNormalizeParametersT
 
 class MriLongNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLongNormalizeParameters(...)`.
+    Output object returned when calling `MriLongNormalizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def mri_long_normalize_params(
     debug_gx: list[float] | None = None,
     reading: list[str] | None = None,
     print_usage: bool = False,
-) -> MriLongNormalizeParametersTagged:
+) -> MriLongNormalizeParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def mri_long_normalize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLongNormalizeParameters` object.
+    `MriLongNormalizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def mri_long_normalize_validate(
 
 
 def mri_long_normalize_cargs(
-    params: MriLongNormalizeParameters,
+    params: MriLongNormalizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def mri_long_normalize_cargs(
 
 
 def mri_long_normalize_outputs(
-    params: MriLongNormalizeParameters,
+    params: MriLongNormalizeParamsDict,
     execution: Execution,
 ) -> MriLongNormalizeOutputs:
     """
@@ -250,7 +250,7 @@ def mri_long_normalize_outputs(
 
 
 def mri_long_normalize_execute(
-    params: MriLongNormalizeParameters,
+    params: MriLongNormalizeParamsDict,
     runner: Runner | None = None,
 ) -> MriLongNormalizeOutputs:
     """
@@ -338,6 +338,8 @@ def mri_long_normalize(
 __all__ = [
     "MRI_LONG_NORMALIZE_METADATA",
     "MriLongNormalizeOutputs",
+    "MriLongNormalizeParamsDict",
+    "MriLongNormalizeParamsDictTagged",
     "mri_long_normalize",
     "mri_long_normalize_execute",
     "mri_long_normalize_params",

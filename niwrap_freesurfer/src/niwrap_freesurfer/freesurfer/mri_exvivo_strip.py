@@ -13,7 +13,7 @@ MRI_EXVIVO_STRIP_METADATA = Metadata(
 )
 
 
-MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
+MriExvivoStripParamsDict = typing.TypedDict('MriExvivoStripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_strip"]],
     "invol": InputPathType,
     "outvol": str,
@@ -28,7 +28,7 @@ MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
     "wts": typing.NotRequired[InputPathType | None],
     "gpu": typing.NotRequired[float | None],
 })
-MriExvivoStripParametersTagged = typing.TypedDict('MriExvivoStripParametersTagged', {
+MriExvivoStripParamsDictTagged = typing.TypedDict('MriExvivoStripParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_exvivo_strip"],
     "invol": InputPathType,
     "outvol": str,
@@ -47,7 +47,7 @@ MriExvivoStripParametersTagged = typing.TypedDict('MriExvivoStripParametersTagge
 
 class MriExvivoStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExvivoStripParameters(...)`.
+    Output object returned when calling `MriExvivoStripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def mri_exvivo_strip_params(
     model: InputPathType | None = None,
     wts: InputPathType | None = None,
     gpu: float | None = None,
-) -> MriExvivoStripParametersTagged:
+) -> MriExvivoStripParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def mri_exvivo_strip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExvivoStripParameters` object.
+    `MriExvivoStripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -173,7 +173,7 @@ def mri_exvivo_strip_validate(
 
 
 def mri_exvivo_strip_cargs(
-    params: MriExvivoStripParameters,
+    params: MriExvivoStripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def mri_exvivo_strip_cargs(
 
 
 def mri_exvivo_strip_outputs(
-    params: MriExvivoStripParameters,
+    params: MriExvivoStripParamsDict,
     execution: Execution,
 ) -> MriExvivoStripOutputs:
     """
@@ -264,7 +264,7 @@ def mri_exvivo_strip_outputs(
 
 
 def mri_exvivo_strip_execute(
-    params: MriExvivoStripParameters,
+    params: MriExvivoStripParamsDict,
     runner: Runner | None = None,
 ) -> MriExvivoStripOutputs:
     """
@@ -353,6 +353,8 @@ def mri_exvivo_strip(
 __all__ = [
     "MRI_EXVIVO_STRIP_METADATA",
     "MriExvivoStripOutputs",
+    "MriExvivoStripParamsDict",
+    "MriExvivoStripParamsDictTagged",
     "mri_exvivo_strip",
     "mri_exvivo_strip_execute",
     "mri_exvivo_strip_params",

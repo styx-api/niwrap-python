@@ -13,12 +13,12 @@ V_2SWAP_METADATA = Metadata(
 )
 
 
-V2swapParameters = typing.TypedDict('V2swapParameters', {
+V2swapParamsDict = typing.TypedDict('V2swapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/2swap"]],
     "quiet": bool,
     "input_files": list[InputPathType],
 })
-V2swapParametersTagged = typing.TypedDict('V2swapParametersTagged', {
+V2swapParamsDictTagged = typing.TypedDict('V2swapParamsDictTagged', {
     "@type": typing.Literal["afni/2swap"],
     "quiet": bool,
     "input_files": list[InputPathType],
@@ -27,7 +27,7 @@ V2swapParametersTagged = typing.TypedDict('V2swapParametersTagged', {
 
 class V2swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2swapParameters(...)`.
+    Output object returned when calling `V2swapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V2swapOutputs(typing.NamedTuple):
 def v_2swap_params(
     input_files: list[InputPathType],
     quiet: bool = False,
-) -> V2swapParametersTagged:
+) -> V2swapParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v_2swap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2swapParameters` object.
+    `V2swapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def v_2swap_validate(
 
 
 def v_2swap_cargs(
-    params: V2swapParameters,
+    params: V2swapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v_2swap_cargs(
 
 
 def v_2swap_outputs(
-    params: V2swapParameters,
+    params: V2swapParamsDict,
     execution: Execution,
 ) -> V2swapOutputs:
     """
@@ -120,7 +120,7 @@ def v_2swap_outputs(
 
 
 def v_2swap_execute(
-    params: V2swapParameters,
+    params: V2swapParamsDict,
     runner: Runner | None = None,
 ) -> V2swapOutputs:
     """
@@ -178,6 +178,8 @@ def v_2swap(
 
 __all__ = [
     "V2swapOutputs",
+    "V2swapParamsDict",
+    "V2swapParamsDictTagged",
     "V_2SWAP_METADATA",
     "v_2swap",
     "v_2swap_execute",

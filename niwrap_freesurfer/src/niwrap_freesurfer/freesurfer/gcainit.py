@@ -13,11 +13,11 @@ GCAINIT_METADATA = Metadata(
 )
 
 
-GcainitParameters = typing.TypedDict('GcainitParameters', {
+GcainitParamsDict = typing.TypedDict('GcainitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gcainit"]],
     "gcadir": str,
 })
-GcainitParametersTagged = typing.TypedDict('GcainitParametersTagged', {
+GcainitParamsDictTagged = typing.TypedDict('GcainitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcainit"],
     "gcadir": str,
 })
@@ -25,7 +25,7 @@ GcainitParametersTagged = typing.TypedDict('GcainitParametersTagged', {
 
 class GcainitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GcainitParameters(...)`.
+    Output object returned when calling `GcainitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class GcainitOutputs(typing.NamedTuple):
 
 def gcainit_params(
     gcadir: str,
-) -> GcainitParametersTagged:
+) -> GcainitParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def gcainit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GcainitParameters` object.
+    `GcainitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def gcainit_validate(
 
 
 def gcainit_cargs(
-    params: GcainitParameters,
+    params: GcainitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def gcainit_cargs(
 
 
 def gcainit_outputs(
-    params: GcainitParameters,
+    params: GcainitParamsDict,
     execution: Execution,
 ) -> GcainitOutputs:
     """
@@ -109,7 +109,7 @@ def gcainit_outputs(
 
 
 def gcainit_execute(
-    params: GcainitParameters,
+    params: GcainitParamsDict,
     runner: Runner | None = None,
 ) -> GcainitOutputs:
     """
@@ -165,6 +165,8 @@ def gcainit(
 __all__ = [
     "GCAINIT_METADATA",
     "GcainitOutputs",
+    "GcainitParamsDict",
+    "GcainitParamsDictTagged",
     "gcainit",
     "gcainit_execute",
     "gcainit_params",

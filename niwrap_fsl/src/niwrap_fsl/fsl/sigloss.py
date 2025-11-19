@@ -13,7 +13,7 @@ SIGLOSS_METADATA = Metadata(
 )
 
 
-SiglossParameters = typing.TypedDict('SiglossParameters', {
+SiglossParamsDict = typing.TypedDict('SiglossParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/sigloss"]],
     "input_b0map": InputPathType,
     "output_sigloss": str,
@@ -23,7 +23,7 @@ SiglossParameters = typing.TypedDict('SiglossParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-SiglossParametersTagged = typing.TypedDict('SiglossParametersTagged', {
+SiglossParamsDictTagged = typing.TypedDict('SiglossParamsDictTagged', {
     "@type": typing.Literal["fsl/sigloss"],
     "input_b0map": InputPathType,
     "output_sigloss": str,
@@ -37,7 +37,7 @@ SiglossParametersTagged = typing.TypedDict('SiglossParametersTagged', {
 
 class SiglossOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SiglossParameters(...)`.
+    Output object returned when calling `SiglossParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def sigloss_params(
     slice_direction: typing.Literal["x", "y", "z"] | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> SiglossParametersTagged:
+) -> SiglossParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def sigloss_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SiglossParameters` object.
+    `SiglossParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def sigloss_validate(
 
 
 def sigloss_cargs(
-    params: SiglossParameters,
+    params: SiglossParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def sigloss_cargs(
 
 
 def sigloss_outputs(
-    params: SiglossParameters,
+    params: SiglossParamsDict,
     execution: Execution,
 ) -> SiglossOutputs:
     """
@@ -188,7 +188,7 @@ def sigloss_outputs(
 
 
 def sigloss_execute(
-    params: SiglossParameters,
+    params: SiglossParamsDict,
     runner: Runner | None = None,
 ) -> SiglossOutputs:
     """
@@ -262,6 +262,8 @@ def sigloss(
 __all__ = [
     "SIGLOSS_METADATA",
     "SiglossOutputs",
+    "SiglossParamsDict",
+    "SiglossParamsDictTagged",
     "sigloss",
     "sigloss_execute",
     "sigloss_params",

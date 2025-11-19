@@ -13,7 +13,7 @@ MRI_SEGSTATS_METADATA = Metadata(
 )
 
 
-MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
+MriSegstatsParamsDict = typing.TypedDict('MriSegstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segstats"]],
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
@@ -76,7 +76,7 @@ MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
     "subjects_dir": typing.NotRequired[str | None],
     "random_seed": typing.NotRequired[float | None],
 })
-MriSegstatsParametersTagged = typing.TypedDict('MriSegstatsParametersTagged', {
+MriSegstatsParamsDictTagged = typing.TypedDict('MriSegstatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segstats"],
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
@@ -143,7 +143,7 @@ MriSegstatsParametersTagged = typing.TypedDict('MriSegstatsParametersTagged', {
 
 class MriSegstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegstatsParameters(...)`.
+    Output object returned when calling `MriSegstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -222,7 +222,7 @@ def mri_segstats_params(
     qa_stats_file: str | None = None,
     subjects_dir: str | None = None,
     random_seed: float | None = None,
-) -> MriSegstatsParametersTagged:
+) -> MriSegstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -419,7 +419,7 @@ def mri_segstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegstatsParameters` object.
+    `MriSegstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -633,7 +633,7 @@ def mri_segstats_validate(
 
 
 def mri_segstats_cargs(
-    params: MriSegstatsParameters,
+    params: MriSegstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -871,7 +871,7 @@ def mri_segstats_cargs(
 
 
 def mri_segstats_outputs(
-    params: MriSegstatsParameters,
+    params: MriSegstatsParamsDict,
     execution: Execution,
 ) -> MriSegstatsOutputs:
     """
@@ -896,7 +896,7 @@ def mri_segstats_outputs(
 
 
 def mri_segstats_execute(
-    params: MriSegstatsParameters,
+    params: MriSegstatsParamsDict,
     runner: Runner | None = None,
 ) -> MriSegstatsOutputs:
     """
@@ -1151,6 +1151,8 @@ def mri_segstats(
 __all__ = [
     "MRI_SEGSTATS_METADATA",
     "MriSegstatsOutputs",
+    "MriSegstatsParamsDict",
+    "MriSegstatsParamsDictTagged",
     "mri_segstats",
     "mri_segstats_execute",
     "mri_segstats_params",

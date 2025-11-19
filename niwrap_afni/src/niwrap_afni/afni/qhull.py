@@ -13,7 +13,7 @@ QHULL_METADATA = Metadata(
 )
 
 
-QhullParameters = typing.TypedDict('QhullParameters', {
+QhullParamsDict = typing.TypedDict('QhullParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/qhull"]],
     "input_coords": str,
     "delaunay": bool,
@@ -37,7 +37,7 @@ QhullParameters = typing.TypedDict('QhullParameters', {
     "print_facets": typing.NotRequired[str | None],
     "output_file": typing.NotRequired[str | None],
 })
-QhullParametersTagged = typing.TypedDict('QhullParametersTagged', {
+QhullParamsDictTagged = typing.TypedDict('QhullParamsDictTagged', {
     "@type": typing.Literal["afni/qhull"],
     "input_coords": str,
     "delaunay": bool,
@@ -65,7 +65,7 @@ QhullParametersTagged = typing.TypedDict('QhullParametersTagged', {
 
 class QhullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QhullParameters(...)`.
+    Output object returned when calling `QhullParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def qhull_params(
     mathematica_output: bool = False,
     print_facets: str | None = None,
     output_file: str | None = None,
-) -> QhullParametersTagged:
+) -> QhullParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def qhull_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QhullParameters` object.
+    `QhullParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -256,7 +256,7 @@ def qhull_validate(
 
 
 def qhull_cargs(
-    params: QhullParameters,
+    params: QhullParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -321,7 +321,7 @@ def qhull_cargs(
 
 
 def qhull_outputs(
-    params: QhullParameters,
+    params: QhullParamsDict,
     execution: Execution,
 ) -> QhullOutputs:
     """
@@ -341,7 +341,7 @@ def qhull_outputs(
 
 
 def qhull_execute(
-    params: QhullParameters,
+    params: QhullParamsDict,
     runner: Runner | None = None,
 ) -> QhullOutputs:
     """
@@ -463,6 +463,8 @@ def qhull(
 __all__ = [
     "QHULL_METADATA",
     "QhullOutputs",
+    "QhullParamsDict",
+    "QhullParamsDictTagged",
     "qhull",
     "qhull_execute",
     "qhull_params",

@@ -13,7 +13,7 @@ POINTSET2LABEL_METADATA = Metadata(
 )
 
 
-Pointset2labelParameters = typing.TypedDict('Pointset2labelParameters', {
+Pointset2labelParamsDict = typing.TypedDict('Pointset2labelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/pointset2label"]],
     "waypoint_file": InputPathType,
     "input_volume": InputPathType,
@@ -21,7 +21,7 @@ Pointset2labelParameters = typing.TypedDict('Pointset2labelParameters', {
     "output_volume": str,
     "clear_option": bool,
 })
-Pointset2labelParametersTagged = typing.TypedDict('Pointset2labelParametersTagged', {
+Pointset2labelParamsDictTagged = typing.TypedDict('Pointset2labelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/pointset2label"],
     "waypoint_file": InputPathType,
     "input_volume": InputPathType,
@@ -33,7 +33,7 @@ Pointset2labelParametersTagged = typing.TypedDict('Pointset2labelParametersTagge
 
 class Pointset2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Pointset2labelParameters(...)`.
+    Output object returned when calling `Pointset2labelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def pointset2label_params(
     label_value: float,
     output_volume: str,
     clear_option: bool = False,
-) -> Pointset2labelParametersTagged:
+) -> Pointset2labelParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def pointset2label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Pointset2labelParameters` object.
+    `Pointset2labelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def pointset2label_validate(
 
 
 def pointset2label_cargs(
-    params: Pointset2labelParameters,
+    params: Pointset2labelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def pointset2label_cargs(
 
 
 def pointset2label_outputs(
-    params: Pointset2labelParameters,
+    params: Pointset2labelParamsDict,
     execution: Execution,
 ) -> Pointset2labelOutputs:
     """
@@ -150,7 +150,7 @@ def pointset2label_outputs(
 
 
 def pointset2label_execute(
-    params: Pointset2labelParameters,
+    params: Pointset2labelParamsDict,
     runner: Runner | None = None,
 ) -> Pointset2labelOutputs:
     """
@@ -218,6 +218,8 @@ def pointset2label(
 __all__ = [
     "POINTSET2LABEL_METADATA",
     "Pointset2labelOutputs",
+    "Pointset2labelParamsDict",
+    "Pointset2labelParamsDictTagged",
     "pointset2label",
     "pointset2label_execute",
     "pointset2label_params",

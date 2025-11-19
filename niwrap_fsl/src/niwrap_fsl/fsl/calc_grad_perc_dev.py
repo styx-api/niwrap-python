@@ -13,14 +13,14 @@ CALC_GRAD_PERC_DEV_METADATA = Metadata(
 )
 
 
-CalcGradPercDevParameters = typing.TypedDict('CalcGradPercDevParameters', {
+CalcGradPercDevParamsDict = typing.TypedDict('CalcGradPercDevParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/calc_grad_perc_dev"]],
     "fullwarp_image": InputPathType,
     "out_basename": str,
     "verbose_flag": bool,
     "help_flag": bool,
 })
-CalcGradPercDevParametersTagged = typing.TypedDict('CalcGradPercDevParametersTagged', {
+CalcGradPercDevParamsDictTagged = typing.TypedDict('CalcGradPercDevParamsDictTagged', {
     "@type": typing.Literal["fsl/calc_grad_perc_dev"],
     "fullwarp_image": InputPathType,
     "out_basename": str,
@@ -31,7 +31,7 @@ CalcGradPercDevParametersTagged = typing.TypedDict('CalcGradPercDevParametersTag
 
 class CalcGradPercDevOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CalcGradPercDevParameters(...)`.
+    Output object returned when calling `CalcGradPercDevParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def calc_grad_perc_dev_params(
     out_basename: str,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> CalcGradPercDevParametersTagged:
+) -> CalcGradPercDevParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def calc_grad_perc_dev_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CalcGradPercDevParameters` object.
+    `CalcGradPercDevParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def calc_grad_perc_dev_validate(
 
 
 def calc_grad_perc_dev_cargs(
-    params: CalcGradPercDevParameters,
+    params: CalcGradPercDevParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def calc_grad_perc_dev_cargs(
 
 
 def calc_grad_perc_dev_outputs(
-    params: CalcGradPercDevParameters,
+    params: CalcGradPercDevParamsDict,
     execution: Execution,
 ) -> CalcGradPercDevOutputs:
     """
@@ -144,7 +144,7 @@ def calc_grad_perc_dev_outputs(
 
 
 def calc_grad_perc_dev_execute(
-    params: CalcGradPercDevParameters,
+    params: CalcGradPercDevParamsDict,
     runner: Runner | None = None,
 ) -> CalcGradPercDevOutputs:
     """
@@ -211,6 +211,8 @@ def calc_grad_perc_dev(
 __all__ = [
     "CALC_GRAD_PERC_DEV_METADATA",
     "CalcGradPercDevOutputs",
+    "CalcGradPercDevParamsDict",
+    "CalcGradPercDevParamsDictTagged",
     "calc_grad_perc_dev",
     "calc_grad_perc_dev_execute",
     "calc_grad_perc_dev_params",

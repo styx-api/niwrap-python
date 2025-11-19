@@ -13,7 +13,7 @@ MRI_RIBBON_METADATA = Metadata(
 )
 
 
-MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
+MriRibbonParamsDict = typing.TypedDict('MriRibbonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ribbon"]],
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
@@ -21,7 +21,7 @@ MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
     "input_volume": str,
     "output_volume": str,
 })
-MriRibbonParametersTagged = typing.TypedDict('MriRibbonParametersTagged', {
+MriRibbonParamsDictTagged = typing.TypedDict('MriRibbonParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ribbon"],
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
@@ -33,7 +33,7 @@ MriRibbonParametersTagged = typing.TypedDict('MriRibbonParametersTagged', {
 
 class MriRibbonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRibbonParameters(...)`.
+    Output object returned when calling `MriRibbonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_ribbon_params(
     input_volume: str,
     output_volume: str,
     label_file: InputPathType | None = None,
-) -> MriRibbonParametersTagged:
+) -> MriRibbonParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def mri_ribbon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRibbonParameters` object.
+    `MriRibbonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_ribbon_validate(
 
 
 def mri_ribbon_cargs(
-    params: MriRibbonParameters,
+    params: MriRibbonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def mri_ribbon_cargs(
 
 
 def mri_ribbon_outputs(
-    params: MriRibbonParameters,
+    params: MriRibbonParamsDict,
     execution: Execution,
 ) -> MriRibbonOutputs:
     """
@@ -153,7 +153,7 @@ def mri_ribbon_outputs(
 
 
 def mri_ribbon_execute(
-    params: MriRibbonParameters,
+    params: MriRibbonParamsDict,
     runner: Runner | None = None,
 ) -> MriRibbonOutputs:
     """
@@ -221,6 +221,8 @@ def mri_ribbon(
 __all__ = [
     "MRI_RIBBON_METADATA",
     "MriRibbonOutputs",
+    "MriRibbonParamsDict",
+    "MriRibbonParamsDictTagged",
     "mri_ribbon",
     "mri_ribbon_execute",
     "mri_ribbon_params",

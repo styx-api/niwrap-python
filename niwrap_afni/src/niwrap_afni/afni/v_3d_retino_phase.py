@@ -13,7 +13,7 @@ V_3D_RETINO_PHASE_METADATA = Metadata(
 )
 
 
-V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
+V3dRetinoPhaseParamsDict = typing.TypedDict('V3dRetinoPhaseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRetinoPhase"]],
     "prefix": str,
     "dataset": InputPathType,
@@ -32,7 +32,7 @@ V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
     "ref_ts": typing.NotRequired[InputPathType | None],
     "multi_ref_ts": typing.NotRequired[InputPathType | None],
 })
-V3dRetinoPhaseParametersTagged = typing.TypedDict('V3dRetinoPhaseParametersTagged', {
+V3dRetinoPhaseParamsDictTagged = typing.TypedDict('V3dRetinoPhaseParamsDictTagged', {
     "@type": typing.Literal["afni/3dRetinoPhase"],
     "prefix": str,
     "dataset": InputPathType,
@@ -55,7 +55,7 @@ V3dRetinoPhaseParametersTagged = typing.TypedDict('V3dRetinoPhaseParametersTagge
 
 class V3dRetinoPhaseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRetinoPhaseParameters(...)`.
+    Output object returned when calling `V3dRetinoPhaseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def v_3d_retino_phase_params(
     phase_estimate: str | None = None,
     ref_ts: InputPathType | None = None,
     multi_ref_ts: InputPathType | None = None,
-) -> V3dRetinoPhaseParametersTagged:
+) -> V3dRetinoPhaseParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def v_3d_retino_phase_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRetinoPhaseParameters` object.
+    `V3dRetinoPhaseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def v_3d_retino_phase_validate(
 
 
 def v_3d_retino_phase_cargs(
-    params: V3dRetinoPhaseParameters,
+    params: V3dRetinoPhaseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -301,7 +301,7 @@ def v_3d_retino_phase_cargs(
 
 
 def v_3d_retino_phase_outputs(
-    params: V3dRetinoPhaseParameters,
+    params: V3dRetinoPhaseParamsDict,
     execution: Execution,
 ) -> V3dRetinoPhaseOutputs:
     """
@@ -324,7 +324,7 @@ def v_3d_retino_phase_outputs(
 
 
 def v_3d_retino_phase_execute(
-    params: V3dRetinoPhaseParameters,
+    params: V3dRetinoPhaseParamsDict,
     runner: Runner | None = None,
 ) -> V3dRetinoPhaseOutputs:
     """
@@ -429,6 +429,8 @@ def v_3d_retino_phase(
 
 __all__ = [
     "V3dRetinoPhaseOutputs",
+    "V3dRetinoPhaseParamsDict",
+    "V3dRetinoPhaseParamsDictTagged",
     "V_3D_RETINO_PHASE_METADATA",
     "v_3d_retino_phase",
     "v_3d_retino_phase_execute",

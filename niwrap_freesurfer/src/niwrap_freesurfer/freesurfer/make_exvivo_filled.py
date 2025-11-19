@@ -13,14 +13,14 @@ MAKE_EXVIVO_FILLED_METADATA = Metadata(
 )
 
 
-MakeExvivoFilledParameters = typing.TypedDict('MakeExvivoFilledParameters', {
+MakeExvivoFilledParamsDict = typing.TypedDict('MakeExvivoFilledParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_exvivo_filled"]],
     "subject_name": str,
     "input_samseg": InputPathType,
     "input_intensity_vol": InputPathType,
     "hemi_both": str,
 })
-MakeExvivoFilledParametersTagged = typing.TypedDict('MakeExvivoFilledParametersTagged', {
+MakeExvivoFilledParamsDictTagged = typing.TypedDict('MakeExvivoFilledParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_exvivo_filled"],
     "subject_name": str,
     "input_samseg": InputPathType,
@@ -31,7 +31,7 @@ MakeExvivoFilledParametersTagged = typing.TypedDict('MakeExvivoFilledParametersT
 
 class MakeExvivoFilledOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeExvivoFilledParameters(...)`.
+    Output object returned when calling `MakeExvivoFilledParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def make_exvivo_filled_params(
     input_samseg: InputPathType,
     input_intensity_vol: InputPathType,
     hemi_both: str,
-) -> MakeExvivoFilledParametersTagged:
+) -> MakeExvivoFilledParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def make_exvivo_filled_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeExvivoFilledParameters` object.
+    `MakeExvivoFilledParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def make_exvivo_filled_validate(
 
 
 def make_exvivo_filled_cargs(
-    params: MakeExvivoFilledParameters,
+    params: MakeExvivoFilledParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,7 +117,7 @@ def make_exvivo_filled_cargs(
 
 
 def make_exvivo_filled_outputs(
-    params: MakeExvivoFilledParameters,
+    params: MakeExvivoFilledParamsDict,
     execution: Execution,
 ) -> MakeExvivoFilledOutputs:
     """
@@ -136,7 +136,7 @@ def make_exvivo_filled_outputs(
 
 
 def make_exvivo_filled_execute(
-    params: MakeExvivoFilledParameters,
+    params: MakeExvivoFilledParamsDict,
     runner: Runner | None = None,
 ) -> MakeExvivoFilledOutputs:
     """
@@ -201,6 +201,8 @@ def make_exvivo_filled(
 __all__ = [
     "MAKE_EXVIVO_FILLED_METADATA",
     "MakeExvivoFilledOutputs",
+    "MakeExvivoFilledParamsDict",
+    "MakeExvivoFilledParamsDictTagged",
     "make_exvivo_filled",
     "make_exvivo_filled_execute",
     "make_exvivo_filled_params",

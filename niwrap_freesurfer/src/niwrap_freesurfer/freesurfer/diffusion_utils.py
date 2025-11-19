@@ -13,11 +13,11 @@ DIFFUSION_UTILS_METADATA = Metadata(
 )
 
 
-DiffusionUtilsParameters = typing.TypedDict('DiffusionUtilsParameters', {
+DiffusionUtilsParamsDict = typing.TypedDict('DiffusionUtilsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/diffusionUtils"]],
     "dummy_flag": bool,
 })
-DiffusionUtilsParametersTagged = typing.TypedDict('DiffusionUtilsParametersTagged', {
+DiffusionUtilsParamsDictTagged = typing.TypedDict('DiffusionUtilsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/diffusionUtils"],
     "dummy_flag": bool,
 })
@@ -25,7 +25,7 @@ DiffusionUtilsParametersTagged = typing.TypedDict('DiffusionUtilsParametersTagge
 
 class DiffusionUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DiffusionUtilsParameters(...)`.
+    Output object returned when calling `DiffusionUtilsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class DiffusionUtilsOutputs(typing.NamedTuple):
 
 def diffusion_utils_params(
     dummy_flag: bool = False,
-) -> DiffusionUtilsParametersTagged:
+) -> DiffusionUtilsParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def diffusion_utils_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DiffusionUtilsParameters` object.
+    `DiffusionUtilsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def diffusion_utils_validate(
 
 
 def diffusion_utils_cargs(
-    params: DiffusionUtilsParameters,
+    params: DiffusionUtilsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def diffusion_utils_cargs(
 
 
 def diffusion_utils_outputs(
-    params: DiffusionUtilsParameters,
+    params: DiffusionUtilsParamsDict,
     execution: Execution,
 ) -> DiffusionUtilsOutputs:
     """
@@ -108,7 +108,7 @@ def diffusion_utils_outputs(
 
 
 def diffusion_utils_execute(
-    params: DiffusionUtilsParameters,
+    params: DiffusionUtilsParamsDict,
     runner: Runner | None = None,
 ) -> DiffusionUtilsOutputs:
     """
@@ -165,6 +165,8 @@ def diffusion_utils(
 __all__ = [
     "DIFFUSION_UTILS_METADATA",
     "DiffusionUtilsOutputs",
+    "DiffusionUtilsParamsDict",
+    "DiffusionUtilsParamsDictTagged",
     "diffusion_utils",
     "diffusion_utils_execute",
     "diffusion_utils_params",

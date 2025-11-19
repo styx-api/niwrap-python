@@ -13,7 +13,7 @@ DMRI_PATHSTATS_METADATA = Metadata(
 )
 
 
-DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
+DmriPathstatsParamsDict = typing.TypedDict('DmriPathstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_pathstats"]],
     "intrk": InputPathType,
     "rois": typing.NotRequired[list[InputPathType] | None],
@@ -35,7 +35,7 @@ DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
     "help": bool,
     "version": bool,
 })
-DmriPathstatsParametersTagged = typing.TypedDict('DmriPathstatsParametersTagged', {
+DmriPathstatsParamsDictTagged = typing.TypedDict('DmriPathstatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_pathstats"],
     "intrk": InputPathType,
     "rois": typing.NotRequired[list[InputPathType] | None],
@@ -61,7 +61,7 @@ DmriPathstatsParametersTagged = typing.TypedDict('DmriPathstatsParametersTagged'
 
 class DmriPathstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriPathstatsParameters(...)`.
+    Output object returned when calling `DmriPathstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def dmri_pathstats_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriPathstatsParametersTagged:
+) -> DmriPathstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -165,7 +165,7 @@ def dmri_pathstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriPathstatsParameters` object.
+    `DmriPathstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -257,7 +257,7 @@ def dmri_pathstats_validate(
 
 
 def dmri_pathstats_cargs(
-    params: DmriPathstatsParameters,
+    params: DmriPathstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def dmri_pathstats_cargs(
 
 
 def dmri_pathstats_outputs(
-    params: DmriPathstatsParameters,
+    params: DmriPathstatsParamsDict,
     execution: Execution,
 ) -> DmriPathstatsOutputs:
     """
@@ -378,7 +378,7 @@ def dmri_pathstats_outputs(
 
 
 def dmri_pathstats_execute(
-    params: DmriPathstatsParameters,
+    params: DmriPathstatsParamsDict,
     runner: Runner | None = None,
 ) -> DmriPathstatsOutputs:
     """
@@ -492,6 +492,8 @@ def dmri_pathstats(
 __all__ = [
     "DMRI_PATHSTATS_METADATA",
     "DmriPathstatsOutputs",
+    "DmriPathstatsParamsDict",
+    "DmriPathstatsParamsDictTagged",
     "dmri_pathstats",
     "dmri_pathstats_execute",
     "dmri_pathstats_params",

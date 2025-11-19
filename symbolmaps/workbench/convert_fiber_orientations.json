@@ -6,7 +6,7 @@
     },
     "fiber": {
       "var_param": "fiber",
-      "fn_struct_make_params": "convert_fiber_orientations_fiber_params",
+      "fn_struct_make_params": "convert_fiber_orientations_fiber",
       "properties": {
         "mean-f": {
           "var_param": "mean_f"

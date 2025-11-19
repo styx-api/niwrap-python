@@ -13,13 +13,13 @@ SURFMATHS_METADATA = Metadata(
 )
 
 
-SurfmathsParameters = typing.TypedDict('SurfmathsParameters', {
+SurfmathsParamsDict = typing.TypedDict('SurfmathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/surfmaths"]],
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,
 })
-SurfmathsParametersTagged = typing.TypedDict('SurfmathsParametersTagged', {
+SurfmathsParamsDictTagged = typing.TypedDict('SurfmathsParamsDictTagged', {
     "@type": typing.Literal["fsl/surfmaths"],
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
@@ -29,7 +29,7 @@ SurfmathsParametersTagged = typing.TypedDict('SurfmathsParametersTagged', {
 
 class SurfmathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfmathsParameters(...)`.
+    Output object returned when calling `SurfmathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def surfmaths_params(
     first_input: InputPathType,
     output: str,
     operations_inputs: list[str] | None = None,
-) -> SurfmathsParametersTagged:
+) -> SurfmathsParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def surfmaths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfmathsParameters` object.
+    `SurfmathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def surfmaths_validate(
 
 
 def surfmaths_cargs(
-    params: SurfmathsParameters,
+    params: SurfmathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def surfmaths_cargs(
 
 
 def surfmaths_outputs(
-    params: SurfmathsParameters,
+    params: SurfmathsParamsDict,
     execution: Execution,
 ) -> SurfmathsOutputs:
     """
@@ -133,7 +133,7 @@ def surfmaths_outputs(
 
 
 def surfmaths_execute(
-    params: SurfmathsParameters,
+    params: SurfmathsParamsDict,
     runner: Runner | None = None,
 ) -> SurfmathsOutputs:
     """
@@ -197,6 +197,8 @@ def surfmaths(
 __all__ = [
     "SURFMATHS_METADATA",
     "SurfmathsOutputs",
+    "SurfmathsParamsDict",
+    "SurfmathsParamsDictTagged",
     "surfmaths",
     "surfmaths_execute",
     "surfmaths_params",

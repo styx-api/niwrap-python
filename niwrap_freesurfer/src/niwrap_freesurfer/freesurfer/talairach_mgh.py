@@ -13,12 +13,12 @@ TALAIRACH_MGH_METADATA = Metadata(
 )
 
 
-TalairachMghParameters = typing.TypedDict('TalairachMghParameters', {
+TalairachMghParamsDict = typing.TypedDict('TalairachMghParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_mgh"]],
     "input_volume": InputPathType,
     "output_volume": str,
 })
-TalairachMghParametersTagged = typing.TypedDict('TalairachMghParametersTagged', {
+TalairachMghParamsDictTagged = typing.TypedDict('TalairachMghParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talairach_mgh"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -27,7 +27,7 @@ TalairachMghParametersTagged = typing.TypedDict('TalairachMghParametersTagged', 
 
 class TalairachMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalairachMghParameters(...)`.
+    Output object returned when calling `TalairachMghParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class TalairachMghOutputs(typing.NamedTuple):
 def talairach_mgh_params(
     input_volume: InputPathType,
     output_volume: str,
-) -> TalairachMghParametersTagged:
+) -> TalairachMghParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def talairach_mgh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalairachMghParameters` object.
+    `TalairachMghParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def talairach_mgh_validate(
 
 
 def talairach_mgh_cargs(
-    params: TalairachMghParameters,
+    params: TalairachMghParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def talairach_mgh_cargs(
 
 
 def talairach_mgh_outputs(
-    params: TalairachMghParameters,
+    params: TalairachMghParamsDict,
     execution: Execution,
 ) -> TalairachMghOutputs:
     """
@@ -119,7 +119,7 @@ def talairach_mgh_outputs(
 
 
 def talairach_mgh_execute(
-    params: TalairachMghParameters,
+    params: TalairachMghParamsDict,
     runner: Runner | None = None,
 ) -> TalairachMghOutputs:
     """
@@ -178,6 +178,8 @@ def talairach_mgh(
 __all__ = [
     "TALAIRACH_MGH_METADATA",
     "TalairachMghOutputs",
+    "TalairachMghParamsDict",
+    "TalairachMghParamsDictTagged",
     "talairach_mgh",
     "talairach_mgh_execute",
     "talairach_mgh_params",

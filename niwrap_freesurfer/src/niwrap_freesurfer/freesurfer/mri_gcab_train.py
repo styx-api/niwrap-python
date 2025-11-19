@@ -13,11 +13,11 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 )
 
 
-MriGcabTrainParameters = typing.TypedDict('MriGcabTrainParameters', {
+MriGcabTrainParamsDict = typing.TypedDict('MriGcabTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcab_train"]],
     "removed_info": typing.NotRequired[str | None],
 })
-MriGcabTrainParametersTagged = typing.TypedDict('MriGcabTrainParametersTagged', {
+MriGcabTrainParamsDictTagged = typing.TypedDict('MriGcabTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gcab_train"],
     "removed_info": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ MriGcabTrainParametersTagged = typing.TypedDict('MriGcabTrainParametersTagged', 
 
 class MriGcabTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGcabTrainParameters(...)`.
+    Output object returned when calling `MriGcabTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MriGcabTrainOutputs(typing.NamedTuple):
 
 def mri_gcab_train_params(
     removed_info: str | None = None,
-) -> MriGcabTrainParametersTagged:
+) -> MriGcabTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def mri_gcab_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGcabTrainParameters` object.
+    `MriGcabTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def mri_gcab_train_validate(
 
 
 def mri_gcab_train_cargs(
-    params: MriGcabTrainParameters,
+    params: MriGcabTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def mri_gcab_train_cargs(
 
 
 def mri_gcab_train_outputs(
-    params: MriGcabTrainParameters,
+    params: MriGcabTrainParamsDict,
     execution: Execution,
 ) -> MriGcabTrainOutputs:
     """
@@ -109,7 +109,7 @@ def mri_gcab_train_outputs(
 
 
 def mri_gcab_train_execute(
-    params: MriGcabTrainParameters,
+    params: MriGcabTrainParamsDict,
     runner: Runner | None = None,
 ) -> MriGcabTrainOutputs:
     """
@@ -169,6 +169,8 @@ def mri_gcab_train(
 __all__ = [
     "MRI_GCAB_TRAIN_METADATA",
     "MriGcabTrainOutputs",
+    "MriGcabTrainParamsDict",
+    "MriGcabTrainParamsDictTagged",
     "mri_gcab_train",
     "mri_gcab_train_execute",
     "mri_gcab_train_params",

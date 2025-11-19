@@ -13,119 +13,119 @@ DWIEXTRACT_METADATA = Metadata(
 )
 
 
-DwiextractFslgradParameters = typing.TypedDict('DwiextractFslgradParameters', {
+DwiextractFslgradParamsDict = typing.TypedDict('DwiextractFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-DwiextractFslgradParametersTagged = typing.TypedDict('DwiextractFslgradParametersTagged', {
+DwiextractFslgradParamsDictTagged = typing.TypedDict('DwiextractFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-DwiextractExportGradFslParameters = typing.TypedDict('DwiextractExportGradFslParameters', {
+DwiextractExportGradFslParamsDict = typing.TypedDict('DwiextractExportGradFslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
     "bvecs_path": str,
     "bvals_path": str,
 })
-DwiextractExportGradFslParametersTagged = typing.TypedDict('DwiextractExportGradFslParametersTagged', {
+DwiextractExportGradFslParamsDictTagged = typing.TypedDict('DwiextractExportGradFslParamsDictTagged', {
     "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
-DwiextractImportPeEddyParameters = typing.TypedDict('DwiextractImportPeEddyParameters', {
+DwiextractImportPeEddyParamsDict = typing.TypedDict('DwiextractImportPeEddyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["import_pe_eddy"]],
     "config": InputPathType,
     "indices": InputPathType,
 })
-DwiextractImportPeEddyParametersTagged = typing.TypedDict('DwiextractImportPeEddyParametersTagged', {
+DwiextractImportPeEddyParamsDictTagged = typing.TypedDict('DwiextractImportPeEddyParamsDictTagged', {
     "@type": typing.Literal["import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
-DwiextractVariousStringParameters = typing.TypedDict('DwiextractVariousStringParameters', {
+DwiextractVariousStringParamsDict = typing.TypedDict('DwiextractVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-DwiextractVariousStringParametersTagged = typing.TypedDict('DwiextractVariousStringParametersTagged', {
+DwiextractVariousStringParamsDictTagged = typing.TypedDict('DwiextractVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-DwiextractVariousFileParameters = typing.TypedDict('DwiextractVariousFileParameters', {
+DwiextractVariousFileParamsDict = typing.TypedDict('DwiextractVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-DwiextractVariousFileParametersTagged = typing.TypedDict('DwiextractVariousFileParametersTagged', {
+DwiextractVariousFileParamsDictTagged = typing.TypedDict('DwiextractVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-DwiextractConfigParameters = typing.TypedDict('DwiextractConfigParameters', {
+DwiextractConfigParamsDict = typing.TypedDict('DwiextractConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DwiextractConfigParametersTagged = typing.TypedDict('DwiextractConfigParametersTagged', {
+DwiextractConfigParamsDictTagged = typing.TypedDict('DwiextractConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DwiextractParameters = typing.TypedDict('DwiextractParameters', {
+DwiextractParamsDict = typing.TypedDict('DwiextractParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwiextract"]],
     "bzero": bool,
     "no_bzero": bool,
     "singleshell": bool,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwiextractFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwiextractFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[DwiextractExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[DwiextractExportGradFslParamsDict | None],
     "import_pe_table": typing.NotRequired[InputPathType | None],
-    "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParameters | None],
+    "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParamsDict | None],
     "pe": typing.NotRequired[list[float] | None],
-    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParamsDictTagged, DwiextractVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DwiextractConfigParameters] | None],
+    "config": typing.NotRequired[list[DwiextractConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-DwiextractParametersTagged = typing.TypedDict('DwiextractParametersTagged', {
+DwiextractParamsDictTagged = typing.TypedDict('DwiextractParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwiextract"],
     "bzero": bool,
     "no_bzero": bool,
     "singleshell": bool,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwiextractFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwiextractFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[DwiextractExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[DwiextractExportGradFslParamsDict | None],
     "import_pe_table": typing.NotRequired[InputPathType | None],
-    "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParameters | None],
+    "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParamsDict | None],
     "pe": typing.NotRequired[list[float] | None],
-    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParamsDictTagged, DwiextractVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DwiextractConfigParameters] | None],
+    "config": typing.NotRequired[list[DwiextractConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -167,10 +167,10 @@ def dwiextract_strides_validate_dyn_fn(
     }.get(t)
 
 
-def dwiextract_fslgrad_params(
+def dwiextract_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DwiextractFslgradParametersTagged:
+) -> DwiextractFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def dwiextract_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractFslgradParameters` object.
+    `DwiextractFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -217,7 +217,7 @@ def dwiextract_fslgrad_validate(
 
 
 def dwiextract_fslgrad_cargs(
-    params: DwiextractFslgradParameters,
+    params: DwiextractFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,7 +238,7 @@ def dwiextract_fslgrad_cargs(
 
 class DwiextractExportGradFslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwiextractExportGradFslParameters | None(...)`.
+    Output object returned when calling `DwiextractExportGradFslParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -250,10 +250,10 @@ class DwiextractExportGradFslOutputs(typing.NamedTuple):
     bvals) format"""
 
 
-def dwiextract_export_grad_fsl_params(
+def dwiextract_export_grad_fsl(
     bvecs_path: str,
     bvals_path: str,
-) -> DwiextractExportGradFslParametersTagged:
+) -> DwiextractExportGradFslParamsDictTagged:
     """
     Build parameters.
     
@@ -278,7 +278,7 @@ def dwiextract_export_grad_fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractExportGradFslParameters` object.
+    `DwiextractExportGradFslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -296,7 +296,7 @@ def dwiextract_export_grad_fsl_validate(
 
 
 def dwiextract_export_grad_fsl_cargs(
-    params: DwiextractExportGradFslParameters,
+    params: DwiextractExportGradFslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -316,7 +316,7 @@ def dwiextract_export_grad_fsl_cargs(
 
 
 def dwiextract_export_grad_fsl_outputs(
-    params: DwiextractExportGradFslParameters,
+    params: DwiextractExportGradFslParamsDict,
     execution: Execution,
 ) -> DwiextractExportGradFslOutputs:
     """
@@ -336,10 +336,10 @@ def dwiextract_export_grad_fsl_outputs(
     return ret
 
 
-def dwiextract_import_pe_eddy_params(
+def dwiextract_import_pe_eddy(
     config: InputPathType,
     indices: InputPathType,
-) -> DwiextractImportPeEddyParametersTagged:
+) -> DwiextractImportPeEddyParamsDictTagged:
     """
     Build parameters.
     
@@ -364,7 +364,7 @@ def dwiextract_import_pe_eddy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractImportPeEddyParameters` object.
+    `DwiextractImportPeEddyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -382,7 +382,7 @@ def dwiextract_import_pe_eddy_validate(
 
 
 def dwiextract_import_pe_eddy_cargs(
-    params: DwiextractImportPeEddyParameters,
+    params: DwiextractImportPeEddyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -401,9 +401,9 @@ def dwiextract_import_pe_eddy_cargs(
     return cargs
 
 
-def dwiextract_various_string_params(
+def dwiextract_various_string(
     obj: str,
-) -> DwiextractVariousStringParametersTagged:
+) -> DwiextractVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -424,7 +424,7 @@ def dwiextract_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractVariousStringParameters` object.
+    `DwiextractVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -438,7 +438,7 @@ def dwiextract_various_string_validate(
 
 
 def dwiextract_various_string_cargs(
-    params: DwiextractVariousStringParameters,
+    params: DwiextractVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -455,9 +455,9 @@ def dwiextract_various_string_cargs(
     return cargs
 
 
-def dwiextract_various_file_params(
+def dwiextract_various_file(
     obj: InputPathType,
-) -> DwiextractVariousFileParametersTagged:
+) -> DwiextractVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -478,7 +478,7 @@ def dwiextract_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractVariousFileParameters` object.
+    `DwiextractVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -492,7 +492,7 @@ def dwiextract_various_file_validate(
 
 
 def dwiextract_various_file_cargs(
-    params: DwiextractVariousFileParameters,
+    params: DwiextractVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -509,10 +509,10 @@ def dwiextract_various_file_cargs(
     return cargs
 
 
-def dwiextract_config_params(
+def dwiextract_config(
     key: str,
     value: str,
-) -> DwiextractConfigParametersTagged:
+) -> DwiextractConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -535,7 +535,7 @@ def dwiextract_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractConfigParameters` object.
+    `DwiextractConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -553,7 +553,7 @@ def dwiextract_config_validate(
 
 
 def dwiextract_config_cargs(
-    params: DwiextractConfigParameters,
+    params: DwiextractConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -574,7 +574,7 @@ def dwiextract_config_cargs(
 
 class DwiextractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwiextractParameters(...)`.
+    Output object returned when calling `DwiextractParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -593,23 +593,23 @@ def dwiextract_params(
     no_bzero: bool = False,
     singleshell: bool = False,
     grad: InputPathType | None = None,
-    fslgrad: DwiextractFslgradParameters | None = None,
+    fslgrad: DwiextractFslgradParamsDict | None = None,
     shells: list[float] | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: DwiextractExportGradFslParameters | None = None,
+    export_grad_fsl: DwiextractExportGradFslParamsDict | None = None,
     import_pe_table: InputPathType | None = None,
-    import_pe_eddy: DwiextractImportPeEddyParameters | None = None,
+    import_pe_eddy: DwiextractImportPeEddyParamsDict | None = None,
     pe: list[float] | None = None,
-    strides: typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None = None,
+    strides: typing.Union[DwiextractVariousStringParamsDictTagged, DwiextractVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DwiextractConfigParameters] | None = None,
+    config: list[DwiextractConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DwiextractParametersTagged:
+) -> DwiextractParamsDictTagged:
     """
     Build parameters.
     
@@ -717,7 +717,7 @@ def dwiextract_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwiextractParameters` object.
+    `DwiextractParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -768,6 +768,8 @@ def dwiextract_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         dwiextract_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -790,7 +792,7 @@ def dwiextract_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwiextractConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwiextractConfigParamsDict] | None`')
         for e in params["config"]:
             dwiextract_config_validate(e)
     if params.get("help", False) is None:
@@ -812,7 +814,7 @@ def dwiextract_validate(
 
 
 def dwiextract_cargs(
-    params: DwiextractParameters,
+    params: DwiextractParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -893,7 +895,7 @@ def dwiextract_cargs(
 
 
 def dwiextract_outputs(
-    params: DwiextractParameters,
+    params: DwiextractParamsDict,
     execution: Execution,
 ) -> DwiextractOutputs:
     """
@@ -915,7 +917,7 @@ def dwiextract_outputs(
 
 
 def dwiextract_execute(
-    params: DwiextractParameters,
+    params: DwiextractParamsDict,
     runner: Runner | None = None,
 ) -> DwiextractOutputs:
     """
@@ -957,20 +959,20 @@ def dwiextract(
     no_bzero: bool = False,
     singleshell: bool = False,
     grad: InputPathType | None = None,
-    fslgrad: DwiextractFslgradParameters | None = None,
+    fslgrad: DwiextractFslgradParamsDict | None = None,
     shells: list[float] | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: DwiextractExportGradFslParameters | None = None,
+    export_grad_fsl: DwiextractExportGradFslParamsDict | None = None,
     import_pe_table: InputPathType | None = None,
-    import_pe_eddy: DwiextractImportPeEddyParameters | None = None,
+    import_pe_eddy: DwiextractImportPeEddyParamsDict | None = None,
     pe: list[float] | None = None,
-    strides: typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None = None,
+    strides: typing.Union[DwiextractVariousStringParamsDictTagged, DwiextractVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DwiextractConfigParameters] | None = None,
+    config: list[DwiextractConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1081,15 +1083,29 @@ def dwiextract(
 
 __all__ = [
     "DWIEXTRACT_METADATA",
+    "DwiextractConfigParamsDict",
+    "DwiextractConfigParamsDictTagged",
     "DwiextractExportGradFslOutputs",
+    "DwiextractExportGradFslParamsDict",
+    "DwiextractExportGradFslParamsDictTagged",
+    "DwiextractFslgradParamsDict",
+    "DwiextractFslgradParamsDictTagged",
+    "DwiextractImportPeEddyParamsDict",
+    "DwiextractImportPeEddyParamsDictTagged",
     "DwiextractOutputs",
+    "DwiextractParamsDict",
+    "DwiextractParamsDictTagged",
+    "DwiextractVariousFileParamsDict",
+    "DwiextractVariousFileParamsDictTagged",
+    "DwiextractVariousStringParamsDict",
+    "DwiextractVariousStringParamsDictTagged",
     "dwiextract",
-    "dwiextract_config_params",
+    "dwiextract_config",
     "dwiextract_execute",
-    "dwiextract_export_grad_fsl_params",
-    "dwiextract_fslgrad_params",
-    "dwiextract_import_pe_eddy_params",
+    "dwiextract_export_grad_fsl",
+    "dwiextract_fslgrad",
+    "dwiextract_import_pe_eddy",
     "dwiextract_params",
-    "dwiextract_various_file_params",
-    "dwiextract_various_string_params",
+    "dwiextract_various_file",
+    "dwiextract_various_string",
 ]

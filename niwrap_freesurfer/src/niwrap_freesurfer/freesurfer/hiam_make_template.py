@@ -13,14 +13,14 @@ HIAM_MAKE_TEMPLATE_METADATA = Metadata(
 )
 
 
-HiamMakeTemplateParameters = typing.TypedDict('HiamMakeTemplateParameters', {
+HiamMakeTemplateParamsDict = typing.TypedDict('HiamMakeTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_template"]],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
     "output_name": str,
 })
-HiamMakeTemplateParametersTagged = typing.TypedDict('HiamMakeTemplateParametersTagged', {
+HiamMakeTemplateParamsDictTagged = typing.TypedDict('HiamMakeTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/hiam_make_template"],
     "hemi": str,
     "surface_name": str,
@@ -31,7 +31,7 @@ HiamMakeTemplateParametersTagged = typing.TypedDict('HiamMakeTemplateParametersT
 
 class HiamMakeTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HiamMakeTemplateParameters(...)`.
+    Output object returned when calling `HiamMakeTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def hiam_make_template_params(
     surface_name: str,
     subjects: list[str],
     output_name: str,
-) -> HiamMakeTemplateParametersTagged:
+) -> HiamMakeTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def hiam_make_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HiamMakeTemplateParameters` object.
+    `HiamMakeTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def hiam_make_template_validate(
 
 
 def hiam_make_template_cargs(
-    params: HiamMakeTemplateParameters,
+    params: HiamMakeTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def hiam_make_template_cargs(
 
 
 def hiam_make_template_outputs(
-    params: HiamMakeTemplateParameters,
+    params: HiamMakeTemplateParamsDict,
     execution: Execution,
 ) -> HiamMakeTemplateOutputs:
     """
@@ -139,7 +139,7 @@ def hiam_make_template_outputs(
 
 
 def hiam_make_template_execute(
-    params: HiamMakeTemplateParameters,
+    params: HiamMakeTemplateParamsDict,
     runner: Runner | None = None,
 ) -> HiamMakeTemplateOutputs:
     """
@@ -204,6 +204,8 @@ def hiam_make_template(
 __all__ = [
     "HIAM_MAKE_TEMPLATE_METADATA",
     "HiamMakeTemplateOutputs",
+    "HiamMakeTemplateParamsDict",
+    "HiamMakeTemplateParamsDictTagged",
     "hiam_make_template",
     "hiam_make_template_execute",
     "hiam_make_template_params",

@@ -13,19 +13,19 @@ LABEL2MESH_METADATA = Metadata(
 )
 
 
-Label2meshConfigParameters = typing.TypedDict('Label2meshConfigParameters', {
+Label2meshConfigParamsDict = typing.TypedDict('Label2meshConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Label2meshConfigParametersTagged = typing.TypedDict('Label2meshConfigParametersTagged', {
+Label2meshConfigParamsDictTagged = typing.TypedDict('Label2meshConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Label2meshParameters = typing.TypedDict('Label2meshParameters', {
+Label2meshParamsDict = typing.TypedDict('Label2meshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/label2mesh"]],
     "blocky": bool,
     "info": bool,
@@ -33,13 +33,13 @@ Label2meshParameters = typing.TypedDict('Label2meshParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Label2meshConfigParameters] | None],
+    "config": typing.NotRequired[list[Label2meshConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "nodes_in": InputPathType,
     "mesh_out": str,
 })
-Label2meshParametersTagged = typing.TypedDict('Label2meshParametersTagged', {
+Label2meshParamsDictTagged = typing.TypedDict('Label2meshParamsDictTagged', {
     "@type": typing.Literal["mrtrix/label2mesh"],
     "blocky": bool,
     "info": bool,
@@ -47,7 +47,7 @@ Label2meshParametersTagged = typing.TypedDict('Label2meshParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Label2meshConfigParameters] | None],
+    "config": typing.NotRequired[list[Label2meshConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "nodes_in": InputPathType,
@@ -55,10 +55,10 @@ Label2meshParametersTagged = typing.TypedDict('Label2meshParametersTagged', {
 })
 
 
-def label2mesh_config_params(
+def label2mesh_config(
     key: str,
     value: str,
-) -> Label2meshConfigParametersTagged:
+) -> Label2meshConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def label2mesh_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2meshConfigParameters` object.
+    `Label2meshConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def label2mesh_config_validate(
 
 
 def label2mesh_config_cargs(
-    params: Label2meshConfigParameters,
+    params: Label2meshConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def label2mesh_config_cargs(
 
 class Label2meshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Label2meshParameters(...)`.
+    Output object returned when calling `Label2meshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def label2mesh_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Label2meshConfigParameters] | None = None,
+    config: list[Label2meshConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Label2meshParametersTagged:
+) -> Label2meshParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def label2mesh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2meshParameters` object.
+    `Label2meshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def label2mesh_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Label2meshConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Label2meshConfigParamsDict] | None`')
         for e in params["config"]:
             label2mesh_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def label2mesh_validate(
 
 
 def label2mesh_cargs(
-    params: Label2meshParameters,
+    params: Label2meshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -283,7 +283,7 @@ def label2mesh_cargs(
 
 
 def label2mesh_outputs(
-    params: Label2meshParameters,
+    params: Label2meshParamsDict,
     execution: Execution,
 ) -> Label2meshOutputs:
     """
@@ -303,7 +303,7 @@ def label2mesh_outputs(
 
 
 def label2mesh_execute(
-    params: Label2meshParameters,
+    params: Label2meshParamsDict,
     runner: Runner | None = None,
 ) -> Label2meshOutputs:
     """
@@ -346,7 +346,7 @@ def label2mesh(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Label2meshConfigParameters] | None = None,
+    config: list[Label2meshConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -405,9 +405,13 @@ def label2mesh(
 
 __all__ = [
     "LABEL2MESH_METADATA",
+    "Label2meshConfigParamsDict",
+    "Label2meshConfigParamsDictTagged",
     "Label2meshOutputs",
+    "Label2meshParamsDict",
+    "Label2meshParamsDictTagged",
     "label2mesh",
-    "label2mesh_config_params",
+    "label2mesh_config",
     "label2mesh_execute",
     "label2mesh_params",
 ]

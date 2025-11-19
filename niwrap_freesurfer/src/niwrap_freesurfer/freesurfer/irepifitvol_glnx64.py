@@ -13,12 +13,12 @@ IREPIFITVOL_GLNX64_METADATA = Metadata(
 )
 
 
-IrepifitvolGlnx64Parameters = typing.TypedDict('IrepifitvolGlnx64Parameters', {
+IrepifitvolGlnx64ParamsDict = typing.TypedDict('IrepifitvolGlnx64ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol.glnx64"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-IrepifitvolGlnx64ParametersTagged = typing.TypedDict('IrepifitvolGlnx64ParametersTagged', {
+IrepifitvolGlnx64ParamsDictTagged = typing.TypedDict('IrepifitvolGlnx64ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/irepifitvol.glnx64"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ IrepifitvolGlnx64ParametersTagged = typing.TypedDict('IrepifitvolGlnx64Parameter
 
 class IrepifitvolGlnx64Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `IrepifitvolGlnx64Parameters(...)`.
+    Output object returned when calling `IrepifitvolGlnx64ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class IrepifitvolGlnx64Outputs(typing.NamedTuple):
 def irepifitvol_glnx64_params(
     input_file: InputPathType,
     output_file: str,
-) -> IrepifitvolGlnx64ParametersTagged:
+) -> IrepifitvolGlnx64ParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def irepifitvol_glnx64_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IrepifitvolGlnx64Parameters` object.
+    `IrepifitvolGlnx64ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def irepifitvol_glnx64_validate(
 
 
 def irepifitvol_glnx64_cargs(
-    params: IrepifitvolGlnx64Parameters,
+    params: IrepifitvolGlnx64ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def irepifitvol_glnx64_cargs(
 
 
 def irepifitvol_glnx64_outputs(
-    params: IrepifitvolGlnx64Parameters,
+    params: IrepifitvolGlnx64ParamsDict,
     execution: Execution,
 ) -> IrepifitvolGlnx64Outputs:
     """
@@ -119,7 +119,7 @@ def irepifitvol_glnx64_outputs(
 
 
 def irepifitvol_glnx64_execute(
-    params: IrepifitvolGlnx64Parameters,
+    params: IrepifitvolGlnx64ParamsDict,
     runner: Runner | None = None,
 ) -> IrepifitvolGlnx64Outputs:
     """
@@ -180,6 +180,8 @@ def irepifitvol_glnx64(
 __all__ = [
     "IREPIFITVOL_GLNX64_METADATA",
     "IrepifitvolGlnx64Outputs",
+    "IrepifitvolGlnx64ParamsDict",
+    "IrepifitvolGlnx64ParamsDictTagged",
     "irepifitvol_glnx64",
     "irepifitvol_glnx64_execute",
     "irepifitvol_glnx64_params",

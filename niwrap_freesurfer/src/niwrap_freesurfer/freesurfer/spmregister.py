@@ -13,7 +13,7 @@ SPMREGISTER_METADATA = Metadata(
 )
 
 
-SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
+SpmregisterParamsDict = typing.TypedDict('SpmregisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/spmregister"]],
     "subjid": str,
     "mov": str,
@@ -29,7 +29,7 @@ SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
     "version": bool,
     "help": bool,
 })
-SpmregisterParametersTagged = typing.TypedDict('SpmregisterParametersTagged', {
+SpmregisterParamsDictTagged = typing.TypedDict('SpmregisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/spmregister"],
     "subjid": str,
     "mov": str,
@@ -49,7 +49,7 @@ SpmregisterParametersTagged = typing.TypedDict('SpmregisterParametersTagged', {
 
 class SpmregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpmregisterParameters(...)`.
+    Output object returned when calling `SpmregisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def spmregister_params(
     nocleanup: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> SpmregisterParametersTagged:
+) -> SpmregisterParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def spmregister_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpmregisterParameters` object.
+    `SpmregisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def spmregister_validate(
 
 
 def spmregister_cargs(
-    params: SpmregisterParameters,
+    params: SpmregisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -250,7 +250,7 @@ def spmregister_cargs(
 
 
 def spmregister_outputs(
-    params: SpmregisterParameters,
+    params: SpmregisterParamsDict,
     execution: Execution,
 ) -> SpmregisterOutputs:
     """
@@ -271,7 +271,7 @@ def spmregister_outputs(
 
 
 def spmregister_execute(
-    params: SpmregisterParameters,
+    params: SpmregisterParamsDict,
     runner: Runner | None = None,
 ) -> SpmregisterOutputs:
     """
@@ -368,6 +368,8 @@ def spmregister(
 __all__ = [
     "SPMREGISTER_METADATA",
     "SpmregisterOutputs",
+    "SpmregisterParamsDict",
+    "SpmregisterParamsDictTagged",
     "spmregister",
     "spmregister_execute",
     "spmregister_params",

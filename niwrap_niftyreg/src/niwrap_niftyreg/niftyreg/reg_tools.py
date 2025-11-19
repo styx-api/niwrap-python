@@ -13,7 +13,7 @@ REG_TOOLS_METADATA = Metadata(
 )
 
 
-RegToolsParameters = typing.TypedDict('RegToolsParameters', {
+RegToolsParamsDict = typing.TypedDict('RegToolsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_tools"]],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ RegToolsParameters = typing.TypedDict('RegToolsParameters', {
     "threshold_value": typing.NotRequired[float | None],
     "nan_mask_image": typing.NotRequired[InputPathType | None],
 })
-RegToolsParametersTagged = typing.TypedDict('RegToolsParametersTagged', {
+RegToolsParamsDictTagged = typing.TypedDict('RegToolsParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_tools"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ RegToolsParametersTagged = typing.TypedDict('RegToolsParametersTagged', {
 
 class RegToolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegToolsParameters(...)`.
+    Output object returned when calling `RegToolsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def reg_tools_params(
     binarize: bool = False,
     threshold_value: float | None = None,
     nan_mask_image: InputPathType | None = None,
-) -> RegToolsParametersTagged:
+) -> RegToolsParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def reg_tools_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegToolsParameters` object.
+    `RegToolsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def reg_tools_validate(
 
 
 def reg_tools_cargs(
-    params: RegToolsParameters,
+    params: RegToolsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def reg_tools_cargs(
 
 
 def reg_tools_outputs(
-    params: RegToolsParameters,
+    params: RegToolsParamsDict,
     execution: Execution,
 ) -> RegToolsOutputs:
     """
@@ -269,7 +269,7 @@ def reg_tools_outputs(
 
 
 def reg_tools_execute(
-    params: RegToolsParameters,
+    params: RegToolsParamsDict,
     runner: Runner | None = None,
 ) -> RegToolsOutputs:
     """
@@ -359,6 +359,8 @@ def reg_tools(
 __all__ = [
     "REG_TOOLS_METADATA",
     "RegToolsOutputs",
+    "RegToolsParamsDict",
+    "RegToolsParamsDictTagged",
     "reg_tools",
     "reg_tools_execute",
     "reg_tools_params",

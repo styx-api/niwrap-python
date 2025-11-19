@@ -13,7 +13,7 @@ V_3D_TSHIFT_METADATA = Metadata(
 )
 
 
-V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
+V3dTshiftParamsDict = typing.TypedDict('V3dTshiftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTshift"]],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
@@ -29,7 +29,7 @@ V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
     "tslice": typing.NotRequired[int | None],
     "tzero": typing.NotRequired[float | None],
 })
-V3dTshiftParametersTagged = typing.TypedDict('V3dTshiftParametersTagged', {
+V3dTshiftParamsDictTagged = typing.TypedDict('V3dTshiftParamsDictTagged', {
     "@type": typing.Literal["afni/3dTshift"],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
@@ -49,7 +49,7 @@ V3dTshiftParametersTagged = typing.TypedDict('V3dTshiftParametersTagged', {
 
 class V3dTshiftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTshiftParameters(...)`.
+    Output object returned when calling `V3dTshiftParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def v_3d_tshift_params(
     tr: float | None = None,
     tslice: int | None = None,
     tzero: float | None = None,
-) -> V3dTshiftParametersTagged:
+) -> V3dTshiftParamsDictTagged:
     """
     Build parameters.
     
@@ -139,7 +139,7 @@ def v_3d_tshift_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTshiftParameters` object.
+    `V3dTshiftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -199,7 +199,7 @@ def v_3d_tshift_validate(
 
 
 def v_3d_tshift_cargs(
-    params: V3dTshiftParameters,
+    params: V3dTshiftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -263,7 +263,7 @@ def v_3d_tshift_cargs(
 
 
 def v_3d_tshift_outputs(
-    params: V3dTshiftParameters,
+    params: V3dTshiftParamsDict,
     execution: Execution,
 ) -> V3dTshiftOutputs:
     """
@@ -284,7 +284,7 @@ def v_3d_tshift_outputs(
 
 
 def v_3d_tshift_execute(
-    params: V3dTshiftParameters,
+    params: V3dTshiftParamsDict,
     runner: Runner | None = None,
 ) -> V3dTshiftOutputs:
     """
@@ -388,6 +388,8 @@ def v_3d_tshift(
 
 __all__ = [
     "V3dTshiftOutputs",
+    "V3dTshiftParamsDict",
+    "V3dTshiftParamsDictTagged",
     "V_3D_TSHIFT_METADATA",
     "v_3d_tshift",
     "v_3d_tshift_execute",

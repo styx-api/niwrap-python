@@ -13,7 +13,7 @@ SPHARM_DECO_METADATA = Metadata(
 )
 
 
-SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
+SpharmDecoParamsDict = typing.TypedDict('SpharmDecoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SpharmDeco"]],
     "i_type_s": InputPathType,
     "unit_sph_label": str,
@@ -26,7 +26,7 @@ SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
     "debug": typing.NotRequired[float | None],
     "sigma": typing.NotRequired[float | None],
 })
-SpharmDecoParametersTagged = typing.TypedDict('SpharmDecoParametersTagged', {
+SpharmDecoParamsDictTagged = typing.TypedDict('SpharmDecoParamsDictTagged', {
     "@type": typing.Literal["afni/SpharmDeco"],
     "i_type_s": InputPathType,
     "unit_sph_label": str,
@@ -43,7 +43,7 @@ SpharmDecoParametersTagged = typing.TypedDict('SpharmDecoParametersTagged', {
 
 class SpharmDecoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpharmDecoParameters(...)`.
+    Output object returned when calling `SpharmDecoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def spharm_deco_params(
     o_type_sdr: list[InputPathType] | None = None,
     debug: float | None = None,
     sigma: float | None = None,
-) -> SpharmDecoParametersTagged:
+) -> SpharmDecoParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def spharm_deco_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpharmDecoParameters` object.
+    `SpharmDecoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def spharm_deco_validate(
 
 
 def spharm_deco_cargs(
-    params: SpharmDecoParameters,
+    params: SpharmDecoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def spharm_deco_cargs(
 
 
 def spharm_deco_outputs(
-    params: SpharmDecoParameters,
+    params: SpharmDecoParamsDict,
     execution: Execution,
 ) -> SpharmDecoOutputs:
     """
@@ -223,7 +223,7 @@ def spharm_deco_outputs(
 
 
 def spharm_deco_execute(
-    params: SpharmDecoParameters,
+    params: SpharmDecoParamsDict,
     runner: Runner | None = None,
 ) -> SpharmDecoOutputs:
     """
@@ -311,6 +311,8 @@ def spharm_deco(
 __all__ = [
     "SPHARM_DECO_METADATA",
     "SpharmDecoOutputs",
+    "SpharmDecoParamsDict",
+    "SpharmDecoParamsDictTagged",
     "spharm_deco",
     "spharm_deco_execute",
     "spharm_deco_params",

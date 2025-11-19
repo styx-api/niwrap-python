@@ -13,19 +13,19 @@ SHBASIS_METADATA = Metadata(
 )
 
 
-ShbasisConfigParameters = typing.TypedDict('ShbasisConfigParameters', {
+ShbasisConfigParamsDict = typing.TypedDict('ShbasisConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-ShbasisConfigParametersTagged = typing.TypedDict('ShbasisConfigParametersTagged', {
+ShbasisConfigParamsDictTagged = typing.TypedDict('ShbasisConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-ShbasisParameters = typing.TypedDict('ShbasisParameters', {
+ShbasisParamsDict = typing.TypedDict('ShbasisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/shbasis"]],
     "convert": typing.NotRequired[str | None],
     "info": bool,
@@ -33,12 +33,12 @@ ShbasisParameters = typing.TypedDict('ShbasisParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ShbasisConfigParameters] | None],
+    "config": typing.NotRequired[list[ShbasisConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": list[InputPathType],
 })
-ShbasisParametersTagged = typing.TypedDict('ShbasisParametersTagged', {
+ShbasisParamsDictTagged = typing.TypedDict('ShbasisParamsDictTagged', {
     "@type": typing.Literal["mrtrix/shbasis"],
     "convert": typing.NotRequired[str | None],
     "info": bool,
@@ -46,17 +46,17 @@ ShbasisParametersTagged = typing.TypedDict('ShbasisParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ShbasisConfigParameters] | None],
+    "config": typing.NotRequired[list[ShbasisConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": list[InputPathType],
 })
 
 
-def shbasis_config_params(
+def shbasis_config(
     key: str,
     value: str,
-) -> ShbasisConfigParametersTagged:
+) -> ShbasisConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def shbasis_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShbasisConfigParameters` object.
+    `ShbasisConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def shbasis_config_validate(
 
 
 def shbasis_config_cargs(
-    params: ShbasisConfigParameters,
+    params: ShbasisConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def shbasis_config_cargs(
 
 class ShbasisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ShbasisParameters(...)`.
+    Output object returned when calling `ShbasisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,10 +132,10 @@ def shbasis_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ShbasisConfigParameters] | None = None,
+    config: list[ShbasisConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ShbasisParametersTagged:
+) -> ShbasisParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def shbasis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ShbasisParameters` object.
+    `ShbasisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def shbasis_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ShbasisConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ShbasisConfigParamsDict] | None`')
         for e in params["config"]:
             shbasis_config_validate(e)
     if params.get("help", False) is None:
@@ -234,7 +234,7 @@ def shbasis_validate(
 
 
 def shbasis_cargs(
-    params: ShbasisParameters,
+    params: ShbasisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def shbasis_cargs(
 
 
 def shbasis_outputs(
-    params: ShbasisParameters,
+    params: ShbasisParamsDict,
     execution: Execution,
 ) -> ShbasisOutputs:
     """
@@ -296,7 +296,7 @@ def shbasis_outputs(
 
 
 def shbasis_execute(
-    params: ShbasisParameters,
+    params: ShbasisParamsDict,
     runner: Runner | None = None,
 ) -> ShbasisOutputs:
     """
@@ -357,7 +357,7 @@ def shbasis(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ShbasisConfigParameters] | None = None,
+    config: list[ShbasisConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -433,9 +433,13 @@ def shbasis(
 
 __all__ = [
     "SHBASIS_METADATA",
+    "ShbasisConfigParamsDict",
+    "ShbasisConfigParamsDictTagged",
     "ShbasisOutputs",
+    "ShbasisParamsDict",
+    "ShbasisParamsDictTagged",
     "shbasis",
-    "shbasis_config_params",
+    "shbasis_config",
     "shbasis_execute",
     "shbasis_params",
 ]

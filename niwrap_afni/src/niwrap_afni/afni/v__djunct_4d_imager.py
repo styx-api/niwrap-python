@@ -13,14 +13,14 @@ V__DJUNCT_4D_IMAGER_METADATA = Metadata(
 )
 
 
-VDjunct4dImagerParameters = typing.TypedDict('VDjunct4dImagerParameters', {
+VDjunct4dImagerParamsDict = typing.TypedDict('VDjunct4dImagerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_imager"]],
     "inset": InputPathType,
     "prefix": str,
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
     "no_clean": bool,
 })
-VDjunct4dImagerParametersTagged = typing.TypedDict('VDjunct4dImagerParametersTagged', {
+VDjunct4dImagerParamsDictTagged = typing.TypedDict('VDjunct4dImagerParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_4d_imager"],
     "inset": InputPathType,
     "prefix": str,
@@ -31,7 +31,7 @@ VDjunct4dImagerParametersTagged = typing.TypedDict('VDjunct4dImagerParametersTag
 
 class VDjunct4dImagerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunct4dImagerParameters(...)`.
+    Output object returned when calling `VDjunct4dImagerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v__djunct_4d_imager_params(
     prefix: str,
     do_movie: typing.Literal["MPEG", "AGIF"] | None = None,
     no_clean: bool = False,
-) -> VDjunct4dImagerParametersTagged:
+) -> VDjunct4dImagerParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def v__djunct_4d_imager_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunct4dImagerParameters` object.
+    `VDjunct4dImagerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def v__djunct_4d_imager_validate(
 
 
 def v__djunct_4d_imager_cargs(
-    params: VDjunct4dImagerParameters,
+    params: VDjunct4dImagerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def v__djunct_4d_imager_cargs(
 
 
 def v__djunct_4d_imager_outputs(
-    params: VDjunct4dImagerParameters,
+    params: VDjunct4dImagerParamsDict,
     execution: Execution,
 ) -> VDjunct4dImagerOutputs:
     """
@@ -163,7 +163,7 @@ def v__djunct_4d_imager_outputs(
 
 
 def v__djunct_4d_imager_execute(
-    params: VDjunct4dImagerParameters,
+    params: VDjunct4dImagerParamsDict,
     runner: Runner | None = None,
 ) -> VDjunct4dImagerOutputs:
     """
@@ -229,6 +229,8 @@ def v__djunct_4d_imager(
 
 __all__ = [
     "VDjunct4dImagerOutputs",
+    "VDjunct4dImagerParamsDict",
+    "VDjunct4dImagerParamsDictTagged",
     "V__DJUNCT_4D_IMAGER_METADATA",
     "v__djunct_4d_imager",
     "v__djunct_4d_imager_execute",

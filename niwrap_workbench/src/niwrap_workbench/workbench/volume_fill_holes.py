@@ -12,12 +12,12 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 )
 
 
-VolumeFillHolesParameters = typing.TypedDict('VolumeFillHolesParameters', {
+VolumeFillHolesParamsDict = typing.TypedDict('VolumeFillHolesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-fill-holes"]],
     "volume-out": str,
     "volume-in": InputPathType,
 })
-VolumeFillHolesParametersTagged = typing.TypedDict('VolumeFillHolesParametersTagged', {
+VolumeFillHolesParamsDictTagged = typing.TypedDict('VolumeFillHolesParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-fill-holes"],
     "volume-out": str,
     "volume-in": InputPathType,
@@ -26,7 +26,7 @@ VolumeFillHolesParametersTagged = typing.TypedDict('VolumeFillHolesParametersTag
 
 class VolumeFillHolesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeFillHolesParameters(...)`.
+    Output object returned when calling `VolumeFillHolesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class VolumeFillHolesOutputs(typing.NamedTuple):
 def volume_fill_holes_params(
     volume_out: str,
     volume_in: InputPathType,
-) -> VolumeFillHolesParametersTagged:
+) -> VolumeFillHolesParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def volume_fill_holes_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeFillHolesParameters` object.
+    `VolumeFillHolesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def volume_fill_holes_validate(
 
 
 def volume_fill_holes_cargs(
-    params: VolumeFillHolesParameters,
+    params: VolumeFillHolesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def volume_fill_holes_cargs(
 
 
 def volume_fill_holes_outputs(
-    params: VolumeFillHolesParameters,
+    params: VolumeFillHolesParamsDict,
     execution: Execution,
 ) -> VolumeFillHolesOutputs:
     """
@@ -121,7 +121,7 @@ def volume_fill_holes_outputs(
 
 
 def volume_fill_holes_execute(
-    params: VolumeFillHolesParameters,
+    params: VolumeFillHolesParamsDict,
     runner: Runner | None = None,
 ) -> VolumeFillHolesOutputs:
     """
@@ -174,6 +174,8 @@ def volume_fill_holes(
 __all__ = [
     "VOLUME_FILL_HOLES_METADATA",
     "VolumeFillHolesOutputs",
+    "VolumeFillHolesParamsDict",
+    "VolumeFillHolesParamsDictTagged",
     "volume_fill_holes",
     "volume_fill_holes_execute",
     "volume_fill_holes_params",

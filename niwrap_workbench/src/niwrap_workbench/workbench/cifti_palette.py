@@ -12,62 +12,62 @@ CIFTI_PALETTE_METADATA = Metadata(
 )
 
 
-CiftiPalettePosPercentParameters = typing.TypedDict('CiftiPalettePosPercentParameters', {
+CiftiPalettePosPercentParamsDict = typing.TypedDict('CiftiPalettePosPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-percent"]],
     "pos-min-%": float,
     "pos-max-%": float,
 })
-CiftiPalettePosPercentParametersTagged = typing.TypedDict('CiftiPalettePosPercentParametersTagged', {
+CiftiPalettePosPercentParamsDictTagged = typing.TypedDict('CiftiPalettePosPercentParamsDictTagged', {
     "@type": typing.Literal["pos-percent"],
     "pos-min-%": float,
     "pos-max-%": float,
 })
 
 
-CiftiPaletteNegPercentParameters = typing.TypedDict('CiftiPaletteNegPercentParameters', {
+CiftiPaletteNegPercentParamsDict = typing.TypedDict('CiftiPaletteNegPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-percent"]],
     "neg-min-%": float,
     "neg-max-%": float,
 })
-CiftiPaletteNegPercentParametersTagged = typing.TypedDict('CiftiPaletteNegPercentParametersTagged', {
+CiftiPaletteNegPercentParamsDictTagged = typing.TypedDict('CiftiPaletteNegPercentParamsDictTagged', {
     "@type": typing.Literal["neg-percent"],
     "neg-min-%": float,
     "neg-max-%": float,
 })
 
 
-CiftiPalettePosUserParameters = typing.TypedDict('CiftiPalettePosUserParameters', {
+CiftiPalettePosUserParamsDict = typing.TypedDict('CiftiPalettePosUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-user"]],
     "pos-min-user": float,
     "pos-max-user": float,
 })
-CiftiPalettePosUserParametersTagged = typing.TypedDict('CiftiPalettePosUserParametersTagged', {
+CiftiPalettePosUserParamsDictTagged = typing.TypedDict('CiftiPalettePosUserParamsDictTagged', {
     "@type": typing.Literal["pos-user"],
     "pos-min-user": float,
     "pos-max-user": float,
 })
 
 
-CiftiPaletteNegUserParameters = typing.TypedDict('CiftiPaletteNegUserParameters', {
+CiftiPaletteNegUserParamsDict = typing.TypedDict('CiftiPaletteNegUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-user"]],
     "neg-min-user": float,
     "neg-max-user": float,
 })
-CiftiPaletteNegUserParametersTagged = typing.TypedDict('CiftiPaletteNegUserParametersTagged', {
+CiftiPaletteNegUserParamsDictTagged = typing.TypedDict('CiftiPaletteNegUserParamsDictTagged', {
     "@type": typing.Literal["neg-user"],
     "neg-min-user": float,
     "neg-max-user": float,
 })
 
 
-CiftiPaletteThresholdingParameters = typing.TypedDict('CiftiPaletteThresholdingParameters', {
+CiftiPaletteThresholdingParamsDict = typing.TypedDict('CiftiPaletteThresholdingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["thresholding"]],
     "type": str,
     "test": str,
     "min": float,
     "max": float,
 })
-CiftiPaletteThresholdingParametersTagged = typing.TypedDict('CiftiPaletteThresholdingParametersTagged', {
+CiftiPaletteThresholdingParamsDictTagged = typing.TypedDict('CiftiPaletteThresholdingParamsDictTagged', {
     "@type": typing.Literal["thresholding"],
     "type": str,
     "test": str,
@@ -76,39 +76,39 @@ CiftiPaletteThresholdingParametersTagged = typing.TypedDict('CiftiPaletteThresho
 })
 
 
-CiftiPaletteParameters = typing.TypedDict('CiftiPaletteParameters', {
+CiftiPaletteParamsDict = typing.TypedDict('CiftiPaletteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-palette"]],
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[CiftiPalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[CiftiPalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[CiftiPaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[CiftiPalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[CiftiPalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[CiftiPaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[CiftiPaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[CiftiPaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
     "mode": str,
 })
-CiftiPaletteParametersTagged = typing.TypedDict('CiftiPaletteParametersTagged', {
+CiftiPaletteParamsDictTagged = typing.TypedDict('CiftiPaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-palette"],
     "cifti-out": str,
     "column": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[CiftiPalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[CiftiPalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[CiftiPaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[CiftiPalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[CiftiPalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[CiftiPaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[CiftiPaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[CiftiPaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
@@ -116,10 +116,10 @@ CiftiPaletteParametersTagged = typing.TypedDict('CiftiPaletteParametersTagged', 
 })
 
 
-def cifti_palette_pos_percent_params(
+def cifti_palette_pos_percent(
     pos_min__: float,
     pos_max__: float,
-) -> CiftiPalettePosPercentParametersTagged:
+) -> CiftiPalettePosPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def cifti_palette_pos_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPalettePosPercentParameters` object.
+    `CiftiPalettePosPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def cifti_palette_pos_percent_validate(
 
 
 def cifti_palette_pos_percent_cargs(
-    params: CiftiPalettePosPercentParameters,
+    params: CiftiPalettePosPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,10 +181,10 @@ def cifti_palette_pos_percent_cargs(
     return cargs
 
 
-def cifti_palette_neg_percent_params(
+def cifti_palette_neg_percent(
     neg_min__: float,
     neg_max__: float,
-) -> CiftiPaletteNegPercentParametersTagged:
+) -> CiftiPaletteNegPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -207,7 +207,7 @@ def cifti_palette_neg_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPaletteNegPercentParameters` object.
+    `CiftiPaletteNegPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def cifti_palette_neg_percent_validate(
 
 
 def cifti_palette_neg_percent_cargs(
-    params: CiftiPaletteNegPercentParameters,
+    params: CiftiPaletteNegPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -246,10 +246,10 @@ def cifti_palette_neg_percent_cargs(
     return cargs
 
 
-def cifti_palette_pos_user_params(
+def cifti_palette_pos_user(
     pos_min_user: float,
     pos_max_user: float,
-) -> CiftiPalettePosUserParametersTagged:
+) -> CiftiPalettePosUserParamsDictTagged:
     """
     Build parameters.
     
@@ -272,7 +272,7 @@ def cifti_palette_pos_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPalettePosUserParameters` object.
+    `CiftiPalettePosUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -290,7 +290,7 @@ def cifti_palette_pos_user_validate(
 
 
 def cifti_palette_pos_user_cargs(
-    params: CiftiPalettePosUserParameters,
+    params: CiftiPalettePosUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -311,10 +311,10 @@ def cifti_palette_pos_user_cargs(
     return cargs
 
 
-def cifti_palette_neg_user_params(
+def cifti_palette_neg_user(
     neg_min_user: float,
     neg_max_user: float,
-) -> CiftiPaletteNegUserParametersTagged:
+) -> CiftiPaletteNegUserParamsDictTagged:
     """
     Build parameters.
     
@@ -337,7 +337,7 @@ def cifti_palette_neg_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPaletteNegUserParameters` object.
+    `CiftiPaletteNegUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -355,7 +355,7 @@ def cifti_palette_neg_user_validate(
 
 
 def cifti_palette_neg_user_cargs(
-    params: CiftiPaletteNegUserParameters,
+    params: CiftiPaletteNegUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -376,12 +376,12 @@ def cifti_palette_neg_user_cargs(
     return cargs
 
 
-def cifti_palette_thresholding_params(
+def cifti_palette_thresholding(
     type_: str,
     test: str,
     min_: float,
     max_: float,
-) -> CiftiPaletteThresholdingParametersTagged:
+) -> CiftiPaletteThresholdingParamsDictTagged:
     """
     Build parameters.
     
@@ -408,7 +408,7 @@ def cifti_palette_thresholding_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPaletteThresholdingParameters` object.
+    `CiftiPaletteThresholdingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -434,7 +434,7 @@ def cifti_palette_thresholding_validate(
 
 
 def cifti_palette_thresholding_cargs(
-    params: CiftiPaletteThresholdingParameters,
+    params: CiftiPaletteThresholdingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -459,7 +459,7 @@ def cifti_palette_thresholding_cargs(
 
 class CiftiPaletteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiPaletteParameters(...)`.
+    Output object returned when calling `CiftiPaletteParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -479,12 +479,12 @@ def cifti_palette_params(
     type_2: str | None,
     cifti_in: InputPathType,
     mode: str,
-    pos_percent: CiftiPalettePosPercentParameters | None = None,
-    neg_percent: CiftiPaletteNegPercentParameters | None = None,
-    pos_user: CiftiPalettePosUserParameters | None = None,
-    neg_user: CiftiPaletteNegUserParameters | None = None,
-    thresholding: CiftiPaletteThresholdingParameters | None = None,
-) -> CiftiPaletteParametersTagged:
+    pos_percent: CiftiPalettePosPercentParamsDict | None = None,
+    neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
+    pos_user: CiftiPalettePosUserParamsDict | None = None,
+    neg_user: CiftiPaletteNegUserParamsDict | None = None,
+    thresholding: CiftiPaletteThresholdingParamsDict | None = None,
+) -> CiftiPaletteParamsDictTagged:
     """
     Build parameters.
     
@@ -565,7 +565,7 @@ def cifti_palette_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiPaletteParameters` object.
+    `CiftiPaletteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -621,7 +621,7 @@ def cifti_palette_validate(
 
 
 def cifti_palette_cargs(
-    params: CiftiPaletteParameters,
+    params: CiftiPaletteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -667,7 +667,7 @@ def cifti_palette_cargs(
 
 
 def cifti_palette_outputs(
-    params: CiftiPaletteParameters,
+    params: CiftiPaletteParamsDict,
     execution: Execution,
 ) -> CiftiPaletteOutputs:
     """
@@ -687,7 +687,7 @@ def cifti_palette_outputs(
 
 
 def cifti_palette_execute(
-    params: CiftiPaletteParameters,
+    params: CiftiPaletteParamsDict,
     runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
@@ -803,11 +803,11 @@ def cifti_palette(
     type_2: str | None,
     cifti_in: InputPathType,
     mode: str,
-    pos_percent: CiftiPalettePosPercentParameters | None = None,
-    neg_percent: CiftiPaletteNegPercentParameters | None = None,
-    pos_user: CiftiPalettePosUserParameters | None = None,
-    neg_user: CiftiPaletteNegUserParameters | None = None,
-    thresholding: CiftiPaletteThresholdingParameters | None = None,
+    pos_percent: CiftiPalettePosPercentParamsDict | None = None,
+    neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
+    pos_user: CiftiPalettePosUserParamsDict | None = None,
+    neg_user: CiftiPaletteNegUserParamsDict | None = None,
+    thresholding: CiftiPaletteThresholdingParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
@@ -956,13 +956,25 @@ def cifti_palette(
 
 __all__ = [
     "CIFTI_PALETTE_METADATA",
+    "CiftiPaletteNegPercentParamsDict",
+    "CiftiPaletteNegPercentParamsDictTagged",
+    "CiftiPaletteNegUserParamsDict",
+    "CiftiPaletteNegUserParamsDictTagged",
     "CiftiPaletteOutputs",
+    "CiftiPaletteParamsDict",
+    "CiftiPaletteParamsDictTagged",
+    "CiftiPalettePosPercentParamsDict",
+    "CiftiPalettePosPercentParamsDictTagged",
+    "CiftiPalettePosUserParamsDict",
+    "CiftiPalettePosUserParamsDictTagged",
+    "CiftiPaletteThresholdingParamsDict",
+    "CiftiPaletteThresholdingParamsDictTagged",
     "cifti_palette",
     "cifti_palette_execute",
-    "cifti_palette_neg_percent_params",
-    "cifti_palette_neg_user_params",
+    "cifti_palette_neg_percent",
+    "cifti_palette_neg_user",
     "cifti_palette_params",
-    "cifti_palette_pos_percent_params",
-    "cifti_palette_pos_user_params",
-    "cifti_palette_thresholding_params",
+    "cifti_palette_pos_percent",
+    "cifti_palette_pos_user",
+    "cifti_palette_thresholding",
 ]

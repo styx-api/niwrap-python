@@ -13,11 +13,11 @@ CHECK_MCR_SH_METADATA = Metadata(
 )
 
 
-CheckMcrShParameters = typing.TypedDict('CheckMcrShParameters', {
+CheckMcrShParamsDict = typing.TypedDict('CheckMcrShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/checkMCR.sh"]],
     "help": bool,
 })
-CheckMcrShParametersTagged = typing.TypedDict('CheckMcrShParametersTagged', {
+CheckMcrShParamsDictTagged = typing.TypedDict('CheckMcrShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/checkMCR.sh"],
     "help": bool,
 })
@@ -25,7 +25,7 @@ CheckMcrShParametersTagged = typing.TypedDict('CheckMcrShParametersTagged', {
 
 class CheckMcrShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CheckMcrShParameters(...)`.
+    Output object returned when calling `CheckMcrShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class CheckMcrShOutputs(typing.NamedTuple):
 
 def check_mcr_sh_params(
     help_: bool = False,
-) -> CheckMcrShParametersTagged:
+) -> CheckMcrShParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def check_mcr_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CheckMcrShParameters` object.
+    `CheckMcrShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def check_mcr_sh_validate(
 
 
 def check_mcr_sh_cargs(
-    params: CheckMcrShParameters,
+    params: CheckMcrShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def check_mcr_sh_cargs(
 
 
 def check_mcr_sh_outputs(
-    params: CheckMcrShParameters,
+    params: CheckMcrShParamsDict,
     execution: Execution,
 ) -> CheckMcrShOutputs:
     """
@@ -107,7 +107,7 @@ def check_mcr_sh_outputs(
 
 
 def check_mcr_sh_execute(
-    params: CheckMcrShParameters,
+    params: CheckMcrShParamsDict,
     runner: Runner | None = None,
 ) -> CheckMcrShOutputs:
     """
@@ -165,6 +165,8 @@ def check_mcr_sh(
 __all__ = [
     "CHECK_MCR_SH_METADATA",
     "CheckMcrShOutputs",
+    "CheckMcrShParamsDict",
+    "CheckMcrShParamsDictTagged",
     "check_mcr_sh",
     "check_mcr_sh_execute",
     "check_mcr_sh_params",

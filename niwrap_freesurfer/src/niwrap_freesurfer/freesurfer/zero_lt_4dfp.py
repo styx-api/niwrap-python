@@ -13,14 +13,14 @@ ZERO_LT_4DFP_METADATA = Metadata(
 )
 
 
-ZeroLt4dfpParameters = typing.TypedDict('ZeroLt4dfpParameters', {
+ZeroLt4dfpParamsDict = typing.TypedDict('ZeroLt4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/zero_lt_4dfp"]],
     "flt_value": float,
     "file_4dfp": InputPathType,
     "outroot": typing.NotRequired[str | None],
     "endianness": typing.NotRequired[str | None],
 })
-ZeroLt4dfpParametersTagged = typing.TypedDict('ZeroLt4dfpParametersTagged', {
+ZeroLt4dfpParamsDictTagged = typing.TypedDict('ZeroLt4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/zero_lt_4dfp"],
     "flt_value": float,
     "file_4dfp": InputPathType,
@@ -31,7 +31,7 @@ ZeroLt4dfpParametersTagged = typing.TypedDict('ZeroLt4dfpParametersTagged', {
 
 class ZeroLt4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ZeroLt4dfpParameters(...)`.
+    Output object returned when calling `ZeroLt4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def zero_lt_4dfp_params(
     file_4dfp: InputPathType,
     outroot: str | None = None,
     endianness: str | None = None,
-) -> ZeroLt4dfpParametersTagged:
+) -> ZeroLt4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def zero_lt_4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ZeroLt4dfpParameters` object.
+    `ZeroLt4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def zero_lt_4dfp_validate(
 
 
 def zero_lt_4dfp_cargs(
-    params: ZeroLt4dfpParameters,
+    params: ZeroLt4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def zero_lt_4dfp_cargs(
 
 
 def zero_lt_4dfp_outputs(
-    params: ZeroLt4dfpParameters,
+    params: ZeroLt4dfpParamsDict,
     execution: Execution,
 ) -> ZeroLt4dfpOutputs:
     """
@@ -147,7 +147,7 @@ def zero_lt_4dfp_outputs(
 
 
 def zero_lt_4dfp_execute(
-    params: ZeroLt4dfpParameters,
+    params: ZeroLt4dfpParamsDict,
     runner: Runner | None = None,
 ) -> ZeroLt4dfpOutputs:
     """
@@ -217,6 +217,8 @@ def zero_lt_4dfp(
 __all__ = [
     "ZERO_LT_4DFP_METADATA",
     "ZeroLt4dfpOutputs",
+    "ZeroLt4dfpParamsDict",
+    "ZeroLt4dfpParamsDictTagged",
     "zero_lt_4dfp",
     "zero_lt_4dfp_execute",
     "zero_lt_4dfp_params",

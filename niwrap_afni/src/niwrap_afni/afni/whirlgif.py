@@ -13,7 +13,7 @@ WHIRLGIF_METADATA = Metadata(
 )
 
 
-WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
+WhirlgifParamsDict = typing.TypedDict('WhirlgifParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/whirlgif"]],
     "verbose": bool,
     "loop": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
     "infile": typing.NotRequired[InputPathType | None],
     "gif_files": list[InputPathType],
 })
-WhirlgifParametersTagged = typing.TypedDict('WhirlgifParametersTagged', {
+WhirlgifParamsDictTagged = typing.TypedDict('WhirlgifParamsDictTagged', {
     "@type": typing.Literal["afni/whirlgif"],
     "verbose": bool,
     "loop": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ WhirlgifParametersTagged = typing.TypedDict('WhirlgifParametersTagged', {
 
 class WhirlgifOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WhirlgifParameters(...)`.
+    Output object returned when calling `WhirlgifParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def whirlgif_params(
     inter_frame_delay: float | None = None,
     outfile: str | None = None,
     infile: InputPathType | None = None,
-) -> WhirlgifParametersTagged:
+) -> WhirlgifParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def whirlgif_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WhirlgifParameters` object.
+    `WhirlgifParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def whirlgif_validate(
 
 
 def whirlgif_cargs(
-    params: WhirlgifParameters,
+    params: WhirlgifParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,7 +174,7 @@ def whirlgif_cargs(
 
 
 def whirlgif_outputs(
-    params: WhirlgifParameters,
+    params: WhirlgifParamsDict,
     execution: Execution,
 ) -> WhirlgifOutputs:
     """
@@ -194,7 +194,7 @@ def whirlgif_outputs(
 
 
 def whirlgif_execute(
-    params: WhirlgifParameters,
+    params: WhirlgifParamsDict,
     runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
@@ -271,6 +271,8 @@ def whirlgif(
 __all__ = [
     "WHIRLGIF_METADATA",
     "WhirlgifOutputs",
+    "WhirlgifParamsDict",
+    "WhirlgifParamsDictTagged",
     "whirlgif",
     "whirlgif_execute",
     "whirlgif_params",

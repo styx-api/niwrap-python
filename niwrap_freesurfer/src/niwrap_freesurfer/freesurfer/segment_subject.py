@@ -13,7 +13,7 @@ SEGMENT_SUBJECT_METADATA = Metadata(
 )
 
 
-SegmentSubjectParameters = typing.TypedDict('SegmentSubjectParameters', {
+SegmentSubjectParamsDict = typing.TypedDict('SegmentSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject"]],
     "input_volume": InputPathType,
     "output_xfm": str,
@@ -22,7 +22,7 @@ SegmentSubjectParameters = typing.TypedDict('SegmentSubjectParameters', {
     "debug_flag": bool,
     "version_flag": bool,
 })
-SegmentSubjectParametersTagged = typing.TypedDict('SegmentSubjectParametersTagged', {
+SegmentSubjectParamsDictTagged = typing.TypedDict('SegmentSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subject"],
     "input_volume": InputPathType,
     "output_xfm": str,
@@ -35,7 +35,7 @@ SegmentSubjectParametersTagged = typing.TypedDict('SegmentSubjectParametersTagge
 
 class SegmentSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubjectParameters(...)`.
+    Output object returned when calling `SegmentSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def segment_subject_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> SegmentSubjectParametersTagged:
+) -> SegmentSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def segment_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubjectParameters` object.
+    `SegmentSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def segment_subject_validate(
 
 
 def segment_subject_cargs(
-    params: SegmentSubjectParameters,
+    params: SegmentSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def segment_subject_cargs(
 
 
 def segment_subject_outputs(
-    params: SegmentSubjectParameters,
+    params: SegmentSubjectParamsDict,
     execution: Execution,
 ) -> SegmentSubjectOutputs:
     """
@@ -172,7 +172,7 @@ def segment_subject_outputs(
 
 
 def segment_subject_execute(
-    params: SegmentSubjectParameters,
+    params: SegmentSubjectParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubjectOutputs:
     """
@@ -245,6 +245,8 @@ def segment_subject(
 __all__ = [
     "SEGMENT_SUBJECT_METADATA",
     "SegmentSubjectOutputs",
+    "SegmentSubjectParamsDict",
+    "SegmentSubjectParamsDictTagged",
     "segment_subject",
     "segment_subject_execute",
     "segment_subject_params",

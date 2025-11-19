@@ -13,7 +13,7 @@ MRIS_CURVATURE_STATS_METADATA = Metadata(
 )
 
 
-MrisCurvatureStatsParameters = typing.TypedDict('MrisCurvatureStatsParameters', {
+MrisCurvatureStatsParamsDict = typing.TypedDict('MrisCurvatureStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature_stats"]],
     "subject_name": str,
     "hemisphere": str,
@@ -53,7 +53,7 @@ MrisCurvatureStatsParameters = typing.TypedDict('MrisCurvatureStatsParameters', 
     "set_zero_vertex": typing.NotRequired[float | None],
     "max_ulps": typing.NotRequired[float | None],
 })
-MrisCurvatureStatsParametersTagged = typing.TypedDict('MrisCurvatureStatsParametersTagged', {
+MrisCurvatureStatsParamsDictTagged = typing.TypedDict('MrisCurvatureStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_curvature_stats"],
     "subject_name": str,
     "hemisphere": str,
@@ -97,7 +97,7 @@ MrisCurvatureStatsParametersTagged = typing.TypedDict('MrisCurvatureStatsParamet
 
 class MrisCurvatureStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCurvatureStatsParameters(...)`.
+    Output object returned when calling `MrisCurvatureStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +141,7 @@ def mris_curvature_stats_params(
     version: bool = False,
     set_zero_vertex: float | None = None,
     max_ulps: float | None = None,
-) -> MrisCurvatureStatsParametersTagged:
+) -> MrisCurvatureStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -266,7 +266,7 @@ def mris_curvature_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCurvatureStatsParameters` object.
+    `MrisCurvatureStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -406,7 +406,7 @@ def mris_curvature_stats_validate(
 
 
 def mris_curvature_stats_cargs(
-    params: MrisCurvatureStatsParameters,
+    params: MrisCurvatureStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -556,7 +556,7 @@ def mris_curvature_stats_cargs(
 
 
 def mris_curvature_stats_outputs(
-    params: MrisCurvatureStatsParameters,
+    params: MrisCurvatureStatsParamsDict,
     execution: Execution,
 ) -> MrisCurvatureStatsOutputs:
     """
@@ -575,7 +575,7 @@ def mris_curvature_stats_outputs(
 
 
 def mris_curvature_stats_execute(
-    params: MrisCurvatureStatsParameters,
+    params: MrisCurvatureStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisCurvatureStatsOutputs:
     """
@@ -750,6 +750,8 @@ def mris_curvature_stats(
 __all__ = [
     "MRIS_CURVATURE_STATS_METADATA",
     "MrisCurvatureStatsOutputs",
+    "MrisCurvatureStatsParamsDict",
+    "MrisCurvatureStatsParamsDictTagged",
     "mris_curvature_stats",
     "mris_curvature_stats_execute",
     "mris_curvature_stats_params",

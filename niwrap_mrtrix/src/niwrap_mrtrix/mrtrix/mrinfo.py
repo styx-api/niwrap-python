@@ -13,65 +13,65 @@ MRINFO_METADATA = Metadata(
 )
 
 
-MrinfoPropertyParameters = typing.TypedDict('MrinfoPropertyParameters', {
+MrinfoPropertyParamsDict = typing.TypedDict('MrinfoPropertyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["property"]],
     "key": str,
 })
-MrinfoPropertyParametersTagged = typing.TypedDict('MrinfoPropertyParametersTagged', {
+MrinfoPropertyParamsDictTagged = typing.TypedDict('MrinfoPropertyParamsDictTagged', {
     "@type": typing.Literal["property"],
     "key": str,
 })
 
 
-MrinfoFslgradParameters = typing.TypedDict('MrinfoFslgradParameters', {
+MrinfoFslgradParamsDict = typing.TypedDict('MrinfoFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-MrinfoFslgradParametersTagged = typing.TypedDict('MrinfoFslgradParametersTagged', {
+MrinfoFslgradParamsDictTagged = typing.TypedDict('MrinfoFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-MrinfoExportGradFslParameters = typing.TypedDict('MrinfoExportGradFslParameters', {
+MrinfoExportGradFslParamsDict = typing.TypedDict('MrinfoExportGradFslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
     "bvecs_path": str,
     "bvals_path": str,
 })
-MrinfoExportGradFslParametersTagged = typing.TypedDict('MrinfoExportGradFslParametersTagged', {
+MrinfoExportGradFslParamsDictTagged = typing.TypedDict('MrinfoExportGradFslParamsDictTagged', {
     "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
-MrinfoExportPeEddyParameters = typing.TypedDict('MrinfoExportPeEddyParameters', {
+MrinfoExportPeEddyParamsDict = typing.TypedDict('MrinfoExportPeEddyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_pe_eddy"]],
     "config": str,
     "indices": str,
 })
-MrinfoExportPeEddyParametersTagged = typing.TypedDict('MrinfoExportPeEddyParametersTagged', {
+MrinfoExportPeEddyParamsDictTagged = typing.TypedDict('MrinfoExportPeEddyParamsDictTagged', {
     "@type": typing.Literal["export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
-MrinfoConfigParameters = typing.TypedDict('MrinfoConfigParameters', {
+MrinfoConfigParamsDict = typing.TypedDict('MrinfoConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrinfoConfigParametersTagged = typing.TypedDict('MrinfoConfigParametersTagged', {
+MrinfoConfigParamsDictTagged = typing.TypedDict('MrinfoConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrinfoParameters = typing.TypedDict('MrinfoParameters', {
+MrinfoParamsDict = typing.TypedDict('MrinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrinfo"]],
     "all": bool,
     "name": bool,
@@ -84,20 +84,20 @@ MrinfoParameters = typing.TypedDict('MrinfoParameters', {
     "offset": bool,
     "multiplier": bool,
     "transform": bool,
-    "property": typing.NotRequired[list[MrinfoPropertyParameters] | None],
+    "property": typing.NotRequired[list[MrinfoPropertyParamsDict] | None],
     "json_keyval": typing.NotRequired[str | None],
     "json_all": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[MrinfoFslgradParameters | None],
+    "fslgrad": typing.NotRequired[MrinfoFslgradParamsDict | None],
     "bvalue_scaling": typing.NotRequired[str | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[MrinfoExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[MrinfoExportGradFslParamsDict | None],
     "dwgrad": bool,
     "shell_bvalues": bool,
     "shell_sizes": bool,
     "shell_indices": bool,
     "export_pe_table": typing.NotRequired[str | None],
-    "export_pe_eddy": typing.NotRequired[MrinfoExportPeEddyParameters | None],
+    "export_pe_eddy": typing.NotRequired[MrinfoExportPeEddyParamsDict | None],
     "petable": bool,
     "nodelete": bool,
     "info": bool,
@@ -105,12 +105,12 @@ MrinfoParameters = typing.TypedDict('MrinfoParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[MrinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": list[InputPathType],
 })
-MrinfoParametersTagged = typing.TypedDict('MrinfoParametersTagged', {
+MrinfoParamsDictTagged = typing.TypedDict('MrinfoParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrinfo"],
     "all": bool,
     "name": bool,
@@ -123,20 +123,20 @@ MrinfoParametersTagged = typing.TypedDict('MrinfoParametersTagged', {
     "offset": bool,
     "multiplier": bool,
     "transform": bool,
-    "property": typing.NotRequired[list[MrinfoPropertyParameters] | None],
+    "property": typing.NotRequired[list[MrinfoPropertyParamsDict] | None],
     "json_keyval": typing.NotRequired[str | None],
     "json_all": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[MrinfoFslgradParameters | None],
+    "fslgrad": typing.NotRequired[MrinfoFslgradParamsDict | None],
     "bvalue_scaling": typing.NotRequired[str | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[MrinfoExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[MrinfoExportGradFslParamsDict | None],
     "dwgrad": bool,
     "shell_bvalues": bool,
     "shell_sizes": bool,
     "shell_indices": bool,
     "export_pe_table": typing.NotRequired[str | None],
-    "export_pe_eddy": typing.NotRequired[MrinfoExportPeEddyParameters | None],
+    "export_pe_eddy": typing.NotRequired[MrinfoExportPeEddyParamsDict | None],
     "petable": bool,
     "nodelete": bool,
     "info": bool,
@@ -144,16 +144,16 @@ MrinfoParametersTagged = typing.TypedDict('MrinfoParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[MrinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": list[InputPathType],
 })
 
 
-def mrinfo_property_params(
+def mrinfo_property(
     key: str,
-) -> MrinfoPropertyParametersTagged:
+) -> MrinfoPropertyParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def mrinfo_property_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoPropertyParameters` object.
+    `MrinfoPropertyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -189,7 +189,7 @@ def mrinfo_property_validate(
 
 
 def mrinfo_property_cargs(
-    params: MrinfoPropertyParameters,
+    params: MrinfoPropertyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,10 +207,10 @@ def mrinfo_property_cargs(
     return cargs
 
 
-def mrinfo_fslgrad_params(
+def mrinfo_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> MrinfoFslgradParametersTagged:
+) -> MrinfoFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -239,7 +239,7 @@ def mrinfo_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoFslgradParameters` object.
+    `MrinfoFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -257,7 +257,7 @@ def mrinfo_fslgrad_validate(
 
 
 def mrinfo_fslgrad_cargs(
-    params: MrinfoFslgradParameters,
+    params: MrinfoFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -278,7 +278,7 @@ def mrinfo_fslgrad_cargs(
 
 class MrinfoExportGradFslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrinfoExportGradFslParameters | None(...)`.
+    Output object returned when calling `MrinfoExportGradFslParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -290,10 +290,10 @@ class MrinfoExportGradFslOutputs(typing.NamedTuple):
     bvals) format"""
 
 
-def mrinfo_export_grad_fsl_params(
+def mrinfo_export_grad_fsl(
     bvecs_path: str,
     bvals_path: str,
-) -> MrinfoExportGradFslParametersTagged:
+) -> MrinfoExportGradFslParamsDictTagged:
     """
     Build parameters.
     
@@ -318,7 +318,7 @@ def mrinfo_export_grad_fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoExportGradFslParameters` object.
+    `MrinfoExportGradFslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -336,7 +336,7 @@ def mrinfo_export_grad_fsl_validate(
 
 
 def mrinfo_export_grad_fsl_cargs(
-    params: MrinfoExportGradFslParameters,
+    params: MrinfoExportGradFslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def mrinfo_export_grad_fsl_cargs(
 
 
 def mrinfo_export_grad_fsl_outputs(
-    params: MrinfoExportGradFslParameters,
+    params: MrinfoExportGradFslParamsDict,
     execution: Execution,
 ) -> MrinfoExportGradFslOutputs:
     """
@@ -378,7 +378,7 @@ def mrinfo_export_grad_fsl_outputs(
 
 class MrinfoExportPeEddyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrinfoExportPeEddyParameters | None(...)`.
+    Output object returned when calling `MrinfoExportPeEddyParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -390,10 +390,10 @@ class MrinfoExportPeEddyOutputs(typing.NamedTuple):
     pair"""
 
 
-def mrinfo_export_pe_eddy_params(
+def mrinfo_export_pe_eddy(
     config: str,
     indices: str,
-) -> MrinfoExportPeEddyParametersTagged:
+) -> MrinfoExportPeEddyParamsDictTagged:
     """
     Build parameters.
     
@@ -418,7 +418,7 @@ def mrinfo_export_pe_eddy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoExportPeEddyParameters` object.
+    `MrinfoExportPeEddyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -436,7 +436,7 @@ def mrinfo_export_pe_eddy_validate(
 
 
 def mrinfo_export_pe_eddy_cargs(
-    params: MrinfoExportPeEddyParameters,
+    params: MrinfoExportPeEddyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,7 +456,7 @@ def mrinfo_export_pe_eddy_cargs(
 
 
 def mrinfo_export_pe_eddy_outputs(
-    params: MrinfoExportPeEddyParameters,
+    params: MrinfoExportPeEddyParamsDict,
     execution: Execution,
 ) -> MrinfoExportPeEddyOutputs:
     """
@@ -476,10 +476,10 @@ def mrinfo_export_pe_eddy_outputs(
     return ret
 
 
-def mrinfo_config_params(
+def mrinfo_config(
     key: str,
     value: str,
-) -> MrinfoConfigParametersTagged:
+) -> MrinfoConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -502,7 +502,7 @@ def mrinfo_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoConfigParameters` object.
+    `MrinfoConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -520,7 +520,7 @@ def mrinfo_config_validate(
 
 
 def mrinfo_config_cargs(
-    params: MrinfoConfigParameters,
+    params: MrinfoConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -541,7 +541,7 @@ def mrinfo_config_cargs(
 
 class MrinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrinfoParameters(...)`.
+    Output object returned when calling `MrinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -572,20 +572,20 @@ def mrinfo_params(
     offset: bool = False,
     multiplier: bool = False,
     transform: bool = False,
-    property_: list[MrinfoPropertyParameters] | None = None,
+    property_: list[MrinfoPropertyParamsDict] | None = None,
     json_keyval: str | None = None,
     json_all: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: MrinfoFslgradParameters | None = None,
+    fslgrad: MrinfoFslgradParamsDict | None = None,
     bvalue_scaling: str | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: MrinfoExportGradFslParameters | None = None,
+    export_grad_fsl: MrinfoExportGradFslParamsDict | None = None,
     dwgrad: bool = False,
     shell_bvalues: bool = False,
     shell_sizes: bool = False,
     shell_indices: bool = False,
     export_pe_table: str | None = None,
-    export_pe_eddy: MrinfoExportPeEddyParameters | None = None,
+    export_pe_eddy: MrinfoExportPeEddyParamsDict | None = None,
     petable: bool = False,
     nodelete: bool = False,
     info: bool = False,
@@ -593,10 +593,10 @@ def mrinfo_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrinfoConfigParameters] | None = None,
+    config: list[MrinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrinfoParametersTagged:
+) -> MrinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -720,7 +720,7 @@ def mrinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrinfoParameters` object.
+    `MrinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -773,7 +773,7 @@ def mrinfo_validate(
         raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", False))}` expected `bool`')
     if params.get("property", None) is not None:
         if not isinstance(params["property"], list):
-            raise StyxValidationError(f'`property` has the wrong type: Received `{type(params.get("property", None))}` expected `list[MrinfoPropertyParameters] | None`')
+            raise StyxValidationError(f'`property` has the wrong type: Received `{type(params.get("property", None))}` expected `list[MrinfoPropertyParamsDict] | None`')
         for e in params["property"]:
             mrinfo_property_validate(e)
     if params.get("json_keyval", None) is not None:
@@ -845,7 +845,7 @@ def mrinfo_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrinfoConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrinfoConfigParamsDict] | None`')
         for e in params["config"]:
             mrinfo_config_validate(e)
     if params.get("help", False) is None:
@@ -866,7 +866,7 @@ def mrinfo_validate(
 
 
 def mrinfo_cargs(
-    params: MrinfoParameters,
+    params: MrinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -976,7 +976,7 @@ def mrinfo_cargs(
 
 
 def mrinfo_outputs(
-    params: MrinfoParameters,
+    params: MrinfoParamsDict,
     execution: Execution,
 ) -> MrinfoOutputs:
     """
@@ -1001,7 +1001,7 @@ def mrinfo_outputs(
 
 
 def mrinfo_execute(
-    params: MrinfoParameters,
+    params: MrinfoParamsDict,
     runner: Runner | None = None,
 ) -> MrinfoOutputs:
     """
@@ -1079,20 +1079,20 @@ def mrinfo(
     offset: bool = False,
     multiplier: bool = False,
     transform: bool = False,
-    property_: list[MrinfoPropertyParameters] | None = None,
+    property_: list[MrinfoPropertyParamsDict] | None = None,
     json_keyval: str | None = None,
     json_all: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: MrinfoFslgradParameters | None = None,
+    fslgrad: MrinfoFslgradParamsDict | None = None,
     bvalue_scaling: str | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: MrinfoExportGradFslParameters | None = None,
+    export_grad_fsl: MrinfoExportGradFslParamsDict | None = None,
     dwgrad: bool = False,
     shell_bvalues: bool = False,
     shell_sizes: bool = False,
     shell_indices: bool = False,
     export_pe_table: str | None = None,
-    export_pe_eddy: MrinfoExportPeEddyParameters | None = None,
+    export_pe_eddy: MrinfoExportPeEddyParamsDict | None = None,
     petable: bool = False,
     nodelete: bool = False,
     info: bool = False,
@@ -1100,7 +1100,7 @@ def mrinfo(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrinfoConfigParameters] | None = None,
+    config: list[MrinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1256,15 +1256,27 @@ def mrinfo(
 
 __all__ = [
     "MRINFO_METADATA",
+    "MrinfoConfigParamsDict",
+    "MrinfoConfigParamsDictTagged",
     "MrinfoExportGradFslOutputs",
+    "MrinfoExportGradFslParamsDict",
+    "MrinfoExportGradFslParamsDictTagged",
     "MrinfoExportPeEddyOutputs",
+    "MrinfoExportPeEddyParamsDict",
+    "MrinfoExportPeEddyParamsDictTagged",
+    "MrinfoFslgradParamsDict",
+    "MrinfoFslgradParamsDictTagged",
     "MrinfoOutputs",
+    "MrinfoParamsDict",
+    "MrinfoParamsDictTagged",
+    "MrinfoPropertyParamsDict",
+    "MrinfoPropertyParamsDictTagged",
     "mrinfo",
-    "mrinfo_config_params",
+    "mrinfo_config",
     "mrinfo_execute",
-    "mrinfo_export_grad_fsl_params",
-    "mrinfo_export_pe_eddy_params",
-    "mrinfo_fslgrad_params",
+    "mrinfo_export_grad_fsl",
+    "mrinfo_export_pe_eddy",
+    "mrinfo_fslgrad",
     "mrinfo_params",
-    "mrinfo_property_params",
+    "mrinfo_property",
 ]

@@ -12,29 +12,29 @@ VOLUME_DILATE_METADATA = Metadata(
 )
 
 
-VolumeDilatePresmoothParameters = typing.TypedDict('VolumeDilatePresmoothParameters', {
+VolumeDilatePresmoothParamsDict = typing.TypedDict('VolumeDilatePresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-VolumeDilatePresmoothParametersTagged = typing.TypedDict('VolumeDilatePresmoothParametersTagged', {
+VolumeDilatePresmoothParamsDictTagged = typing.TypedDict('VolumeDilatePresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-VolumeDilateGradExtrapolateParameters = typing.TypedDict('VolumeDilateGradExtrapolateParameters', {
+VolumeDilateGradExtrapolateParamsDict = typing.TypedDict('VolumeDilateGradExtrapolateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["grad-extrapolate"]],
-    "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeDilatePresmoothParamsDict | None],
 })
-VolumeDilateGradExtrapolateParametersTagged = typing.TypedDict('VolumeDilateGradExtrapolateParametersTagged', {
+VolumeDilateGradExtrapolateParamsDictTagged = typing.TypedDict('VolumeDilateGradExtrapolateParamsDictTagged', {
     "@type": typing.Literal["grad-extrapolate"],
-    "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeDilatePresmoothParamsDict | None],
 })
 
 
-VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
+VolumeDilateParamsDict = typing.TypedDict('VolumeDilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-dilate"]],
     "volume-out": str,
     "exponent": typing.NotRequired[float | None],
@@ -42,12 +42,12 @@ VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
     "roi-volume": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
     "legacy-cutoff": bool,
-    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
+    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParamsDict | None],
     "volume": InputPathType,
     "distance": float,
     "method": str,
 })
-VolumeDilateParametersTagged = typing.TypedDict('VolumeDilateParametersTagged', {
+VolumeDilateParamsDictTagged = typing.TypedDict('VolumeDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-dilate"],
     "volume-out": str,
     "exponent": typing.NotRequired[float | None],
@@ -55,17 +55,17 @@ VolumeDilateParametersTagged = typing.TypedDict('VolumeDilateParametersTagged', 
     "roi-volume": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
     "legacy-cutoff": bool,
-    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
+    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParamsDict | None],
     "volume": InputPathType,
     "distance": float,
     "method": str,
 })
 
 
-def volume_dilate_presmooth_params(
+def volume_dilate_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> VolumeDilatePresmoothParametersTagged:
+) -> VolumeDilatePresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def volume_dilate_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeDilatePresmoothParameters` object.
+    `VolumeDilatePresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def volume_dilate_presmooth_validate(
 
 
 def volume_dilate_presmooth_cargs(
-    params: VolumeDilatePresmoothParameters,
+    params: VolumeDilatePresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,9 +129,9 @@ def volume_dilate_presmooth_cargs(
     return cargs
 
 
-def volume_dilate_grad_extrapolate_params(
-    presmooth: VolumeDilatePresmoothParameters | None = None,
-) -> VolumeDilateGradExtrapolateParametersTagged:
+def volume_dilate_grad_extrapolate(
+    presmooth: VolumeDilatePresmoothParamsDict | None = None,
+) -> VolumeDilateGradExtrapolateParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def volume_dilate_grad_extrapolate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeDilateGradExtrapolateParameters` object.
+    `VolumeDilateGradExtrapolateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def volume_dilate_grad_extrapolate_validate(
 
 
 def volume_dilate_grad_extrapolate_cargs(
-    params: VolumeDilateGradExtrapolateParameters,
+    params: VolumeDilateGradExtrapolateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -189,7 +189,7 @@ def volume_dilate_grad_extrapolate_cargs(
 
 class VolumeDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeDilateParameters(...)`.
+    Output object returned when calling `VolumeDilateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -207,8 +207,8 @@ def volume_dilate_params(
     distance: float,
     method: str,
     legacy_cutoff: bool = False,
-    grad_extrapolate: VolumeDilateGradExtrapolateParameters | None = None,
-) -> VolumeDilateParametersTagged:
+    grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
+) -> VolumeDilateParamsDictTagged:
     """
     Build parameters.
     
@@ -265,7 +265,7 @@ def volume_dilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeDilateParameters` object.
+    `VolumeDilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -309,7 +309,7 @@ def volume_dilate_validate(
 
 
 def volume_dilate_cargs(
-    params: VolumeDilateParameters,
+    params: VolumeDilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -345,7 +345,7 @@ def volume_dilate_cargs(
 
 
 def volume_dilate_outputs(
-    params: VolumeDilateParameters,
+    params: VolumeDilateParamsDict,
     execution: Execution,
 ) -> VolumeDilateOutputs:
     """
@@ -365,7 +365,7 @@ def volume_dilate_outputs(
 
 
 def volume_dilate_execute(
-    params: VolumeDilateParameters,
+    params: VolumeDilateParamsDict,
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
@@ -415,7 +415,7 @@ def volume_dilate(
     distance: float,
     method: str,
     legacy_cutoff: bool = False,
-    grad_extrapolate: VolumeDilateGradExtrapolateParameters | None = None,
+    grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
@@ -484,10 +484,16 @@ def volume_dilate(
 
 __all__ = [
     "VOLUME_DILATE_METADATA",
+    "VolumeDilateGradExtrapolateParamsDict",
+    "VolumeDilateGradExtrapolateParamsDictTagged",
     "VolumeDilateOutputs",
+    "VolumeDilateParamsDict",
+    "VolumeDilateParamsDictTagged",
+    "VolumeDilatePresmoothParamsDict",
+    "VolumeDilatePresmoothParamsDictTagged",
     "volume_dilate",
     "volume_dilate_execute",
-    "volume_dilate_grad_extrapolate_params",
+    "volume_dilate_grad_extrapolate",
     "volume_dilate_params",
-    "volume_dilate_presmooth_params",
+    "volume_dilate_presmooth",
 ]

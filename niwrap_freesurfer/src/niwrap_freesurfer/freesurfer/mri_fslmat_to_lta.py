@@ -13,14 +13,14 @@ MRI_FSLMAT_TO_LTA_METADATA = Metadata(
 )
 
 
-MriFslmatToLtaParameters = typing.TypedDict('MriFslmatToLtaParameters', {
+MriFslmatToLtaParamsDict = typing.TypedDict('MriFslmatToLtaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fslmat_to_lta"]],
     "src_vol": InputPathType,
     "target_vol": InputPathType,
     "fslmat_file": InputPathType,
     "lta_file": str,
 })
-MriFslmatToLtaParametersTagged = typing.TypedDict('MriFslmatToLtaParametersTagged', {
+MriFslmatToLtaParamsDictTagged = typing.TypedDict('MriFslmatToLtaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fslmat_to_lta"],
     "src_vol": InputPathType,
     "target_vol": InputPathType,
@@ -31,7 +31,7 @@ MriFslmatToLtaParametersTagged = typing.TypedDict('MriFslmatToLtaParametersTagge
 
 class MriFslmatToLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFslmatToLtaParameters(...)`.
+    Output object returned when calling `MriFslmatToLtaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mri_fslmat_to_lta_params(
     target_vol: InputPathType,
     fslmat_file: InputPathType,
     lta_file: str,
-) -> MriFslmatToLtaParametersTagged:
+) -> MriFslmatToLtaParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mri_fslmat_to_lta_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFslmatToLtaParameters` object.
+    `MriFslmatToLtaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mri_fslmat_to_lta_validate(
 
 
 def mri_fslmat_to_lta_cargs(
-    params: MriFslmatToLtaParameters,
+    params: MriFslmatToLtaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mri_fslmat_to_lta_cargs(
 
 
 def mri_fslmat_to_lta_outputs(
-    params: MriFslmatToLtaParameters,
+    params: MriFslmatToLtaParamsDict,
     execution: Execution,
 ) -> MriFslmatToLtaOutputs:
     """
@@ -140,7 +140,7 @@ def mri_fslmat_to_lta_outputs(
 
 
 def mri_fslmat_to_lta_execute(
-    params: MriFslmatToLtaParameters,
+    params: MriFslmatToLtaParamsDict,
     runner: Runner | None = None,
 ) -> MriFslmatToLtaOutputs:
     """
@@ -207,6 +207,8 @@ def mri_fslmat_to_lta(
 __all__ = [
     "MRI_FSLMAT_TO_LTA_METADATA",
     "MriFslmatToLtaOutputs",
+    "MriFslmatToLtaParamsDict",
+    "MriFslmatToLtaParamsDictTagged",
     "mri_fslmat_to_lta",
     "mri_fslmat_to_lta_execute",
     "mri_fslmat_to_lta_params",

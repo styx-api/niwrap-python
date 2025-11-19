@@ -13,7 +13,7 @@ V_3DMASKAVE_METADATA = Metadata(
 )
 
 
-V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
+V3dmaskaveParamsDict = typing.TypedDict('V3dmaskaveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmaskave"]],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "quiet": bool,
 })
-V3dmaskaveParametersTagged = typing.TypedDict('V3dmaskaveParametersTagged', {
+V3dmaskaveParamsDictTagged = typing.TypedDict('V3dmaskaveParamsDictTagged', {
     "@type": typing.Literal["afni/3dmaskave"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ V3dmaskaveParametersTagged = typing.TypedDict('V3dmaskaveParametersTagged', {
 
 class V3dmaskaveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaskaveParameters(...)`.
+    Output object returned when calling `V3dmaskaveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_3dmaskave_params(
     num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     quiet: bool = False,
-) -> V3dmaskaveParametersTagged:
+) -> V3dmaskaveParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v_3dmaskave_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaskaveParameters` object.
+    `V3dmaskaveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def v_3dmaskave_validate(
 
 
 def v_3dmaskave_cargs(
-    params: V3dmaskaveParameters,
+    params: V3dmaskaveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def v_3dmaskave_cargs(
 
 
 def v_3dmaskave_outputs(
-    params: V3dmaskaveParameters,
+    params: V3dmaskaveParamsDict,
     execution: Execution,
 ) -> V3dmaskaveOutputs:
     """
@@ -161,7 +161,7 @@ def v_3dmaskave_outputs(
 
 
 def v_3dmaskave_execute(
-    params: V3dmaskaveParameters,
+    params: V3dmaskaveParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaskaveOutputs:
     """
@@ -230,6 +230,8 @@ def v_3dmaskave(
 
 __all__ = [
     "V3dmaskaveOutputs",
+    "V3dmaskaveParamsDict",
+    "V3dmaskaveParamsDictTagged",
     "V_3DMASKAVE_METADATA",
     "v_3dmaskave",
     "v_3dmaskave_execute",

@@ -13,7 +13,7 @@ MRI_VOLSYNTH_METADATA = Metadata(
 )
 
 
-MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
+MriVolsynthParamsDict = typing.TypedDict('MriVolsynthParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volsynth"]],
     "output_volid": str,
     "template": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
     "dim_surf_flag": bool,
     "ctab": typing.NotRequired[InputPathType | None],
 })
-MriVolsynthParametersTagged = typing.TypedDict('MriVolsynthParametersTagged', {
+MriVolsynthParamsDictTagged = typing.TypedDict('MriVolsynthParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_volsynth"],
     "output_volid": str,
     "template": typing.NotRequired[str | None],
@@ -109,7 +109,7 @@ MriVolsynthParametersTagged = typing.TypedDict('MriVolsynthParametersTagged', {
 
 class MriVolsynthOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVolsynthParameters(...)`.
+    Output object returned when calling `MriVolsynthParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -159,7 +159,7 @@ def mri_volsynth_params(
     sum2: InputPathType | None = None,
     dim_surf_flag: bool = False,
     ctab: InputPathType | None = None,
-) -> MriVolsynthParametersTagged:
+) -> MriVolsynthParamsDictTagged:
     """
     Build parameters.
     
@@ -302,7 +302,7 @@ def mri_volsynth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVolsynthParameters` object.
+    `MriVolsynthParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -512,7 +512,7 @@ def mri_volsynth_validate(
 
 
 def mri_volsynth_cargs(
-    params: MriVolsynthParameters,
+    params: MriVolsynthParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -729,7 +729,7 @@ def mri_volsynth_cargs(
 
 
 def mri_volsynth_outputs(
-    params: MriVolsynthParameters,
+    params: MriVolsynthParamsDict,
     execution: Execution,
 ) -> MriVolsynthOutputs:
     """
@@ -748,7 +748,7 @@ def mri_volsynth_outputs(
 
 
 def mri_volsynth_execute(
-    params: MriVolsynthParameters,
+    params: MriVolsynthParamsDict,
     runner: Runner | None = None,
 ) -> MriVolsynthOutputs:
     """
@@ -933,6 +933,8 @@ def mri_volsynth(
 __all__ = [
     "MRI_VOLSYNTH_METADATA",
     "MriVolsynthOutputs",
+    "MriVolsynthParamsDict",
+    "MriVolsynthParamsDictTagged",
     "mri_volsynth",
     "mri_volsynth_execute",
     "mri_volsynth_params",

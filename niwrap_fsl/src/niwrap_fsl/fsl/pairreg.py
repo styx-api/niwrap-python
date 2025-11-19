@@ -13,7 +13,7 @@ PAIRREG_METADATA = Metadata(
 )
 
 
-PairregParameters = typing.TypedDict('PairregParameters', {
+PairregParamsDict = typing.TypedDict('PairregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pairreg"]],
     "brain1": InputPathType,
     "brain2": InputPathType,
@@ -22,7 +22,7 @@ PairregParameters = typing.TypedDict('PairregParameters', {
     "outputmatrix": InputPathType,
     "extra_flirt_args": typing.NotRequired[str | None],
 })
-PairregParametersTagged = typing.TypedDict('PairregParametersTagged', {
+PairregParamsDictTagged = typing.TypedDict('PairregParamsDictTagged', {
     "@type": typing.Literal["fsl/pairreg"],
     "brain1": InputPathType,
     "brain2": InputPathType,
@@ -35,7 +35,7 @@ PairregParametersTagged = typing.TypedDict('PairregParametersTagged', {
 
 class PairregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PairregParameters(...)`.
+    Output object returned when calling `PairregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def pairreg_params(
     skull2: InputPathType,
     outputmatrix: InputPathType,
     extra_flirt_args: str | None = None,
-) -> PairregParametersTagged:
+) -> PairregParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def pairreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PairregParameters` object.
+    `PairregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def pairreg_validate(
 
 
 def pairreg_cargs(
-    params: PairregParameters,
+    params: PairregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def pairreg_cargs(
 
 
 def pairreg_outputs(
-    params: PairregParameters,
+    params: PairregParamsDict,
     execution: Execution,
 ) -> PairregOutputs:
     """
@@ -160,7 +160,7 @@ def pairreg_outputs(
 
 
 def pairreg_execute(
-    params: PairregParameters,
+    params: PairregParamsDict,
     runner: Runner | None = None,
 ) -> PairregOutputs:
     """
@@ -231,6 +231,8 @@ def pairreg(
 __all__ = [
     "PAIRREG_METADATA",
     "PairregOutputs",
+    "PairregParamsDict",
+    "PairregParamsDictTagged",
     "pairreg",
     "pairreg_execute",
     "pairreg_params",

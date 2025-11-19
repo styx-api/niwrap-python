@@ -13,7 +13,7 @@ MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
 )
 
 
-MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameters', {
+MriRelabelNonwmHyposParamsDict = typing.TypedDict('MriRelabelNonwmHyposParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_nonwm_hypos"]],
     "inputseg": InputPathType,
     "outputseg": str,
@@ -22,7 +22,7 @@ MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameter
     "debug": bool,
     "checkopts": bool,
 })
-MriRelabelNonwmHyposParametersTagged = typing.TypedDict('MriRelabelNonwmHyposParametersTagged', {
+MriRelabelNonwmHyposParamsDictTagged = typing.TypedDict('MriRelabelNonwmHyposParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_relabel_nonwm_hypos"],
     "inputseg": InputPathType,
     "outputseg": str,
@@ -35,7 +35,7 @@ MriRelabelNonwmHyposParametersTagged = typing.TypedDict('MriRelabelNonwmHyposPar
 
 class MriRelabelNonwmHyposOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRelabelNonwmHyposParameters(...)`.
+    Output object returned when calling `MriRelabelNonwmHyposParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_relabel_nonwm_hypos_params(
     seg_default: bool = False,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriRelabelNonwmHyposParametersTagged:
+) -> MriRelabelNonwmHyposParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def mri_relabel_nonwm_hypos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRelabelNonwmHyposParameters` object.
+    `MriRelabelNonwmHyposParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -120,7 +120,7 @@ def mri_relabel_nonwm_hypos_validate(
 
 
 def mri_relabel_nonwm_hypos_cargs(
-    params: MriRelabelNonwmHyposParameters,
+    params: MriRelabelNonwmHyposParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def mri_relabel_nonwm_hypos_cargs(
 
 
 def mri_relabel_nonwm_hypos_outputs(
-    params: MriRelabelNonwmHyposParameters,
+    params: MriRelabelNonwmHyposParamsDict,
     execution: Execution,
 ) -> MriRelabelNonwmHyposOutputs:
     """
@@ -177,7 +177,7 @@ def mri_relabel_nonwm_hypos_outputs(
 
 
 def mri_relabel_nonwm_hypos_execute(
-    params: MriRelabelNonwmHyposParameters,
+    params: MriRelabelNonwmHyposParamsDict,
     runner: Runner | None = None,
 ) -> MriRelabelNonwmHyposOutputs:
     """
@@ -250,6 +250,8 @@ def mri_relabel_nonwm_hypos(
 __all__ = [
     "MRI_RELABEL_NONWM_HYPOS_METADATA",
     "MriRelabelNonwmHyposOutputs",
+    "MriRelabelNonwmHyposParamsDict",
+    "MriRelabelNonwmHyposParamsDictTagged",
     "mri_relabel_nonwm_hypos",
     "mri_relabel_nonwm_hypos_execute",
     "mri_relabel_nonwm_hypos_params",

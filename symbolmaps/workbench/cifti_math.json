@@ -12,7 +12,7 @@
     },
     "var": {
       "var_param": "var",
-      "fn_struct_make_params": "cifti_math_var_params",
+      "fn_struct_make_params": "cifti_math_var",
       "properties": {
         "name": {
           "var_param": "name"
@@ -22,7 +22,7 @@
         },
         "select": {
           "var_param": "select_",
-          "fn_struct_make_params": "cifti_math_select_params",
+          "fn_struct_make_params": "cifti_math_select",
           "properties": {
             "dim": {
               "var_param": "dim"

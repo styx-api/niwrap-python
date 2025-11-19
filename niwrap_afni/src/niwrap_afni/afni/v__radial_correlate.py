@@ -13,7 +13,7 @@ V__RADIAL_CORRELATE_METADATA = Metadata(
 )
 
 
-VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
+VRadialCorrelateParamsDict = typing.TypedDict('VRadialCorrelateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@radial_correlate"]],
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
     "polort": typing.NotRequired[float | None],
     "merge_frad": typing.NotRequired[float | None],
 })
-VRadialCorrelateParametersTagged = typing.TypedDict('VRadialCorrelateParametersTagged', {
+VRadialCorrelateParamsDictTagged = typing.TypedDict('VRadialCorrelateParamsDictTagged', {
     "@type": typing.Literal["afni/@radial_correlate"],
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
@@ -63,7 +63,7 @@ VRadialCorrelateParametersTagged = typing.TypedDict('VRadialCorrelateParametersT
 
 class VRadialCorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRadialCorrelateParameters(...)`.
+    Output object returned when calling `VRadialCorrelateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def v__radial_correlate_params(
     do_clean: str | None = None,
     polort: float | None = None,
     merge_frad: float | None = None,
-) -> VRadialCorrelateParametersTagged:
+) -> VRadialCorrelateParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def v__radial_correlate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRadialCorrelateParameters` object.
+    `VRadialCorrelateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -244,7 +244,7 @@ def v__radial_correlate_validate(
 
 
 def v__radial_correlate_cargs(
-    params: VRadialCorrelateParameters,
+    params: VRadialCorrelateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -346,7 +346,7 @@ def v__radial_correlate_cargs(
 
 
 def v__radial_correlate_outputs(
-    params: VRadialCorrelateParameters,
+    params: VRadialCorrelateParamsDict,
     execution: Execution,
 ) -> VRadialCorrelateOutputs:
     """
@@ -366,7 +366,7 @@ def v__radial_correlate_outputs(
 
 
 def v__radial_correlate_execute(
-    params: VRadialCorrelateParameters,
+    params: VRadialCorrelateParamsDict,
     runner: Runner | None = None,
 ) -> VRadialCorrelateOutputs:
     """
@@ -478,6 +478,8 @@ def v__radial_correlate(
 
 __all__ = [
     "VRadialCorrelateOutputs",
+    "VRadialCorrelateParamsDict",
+    "VRadialCorrelateParamsDictTagged",
     "V__RADIAL_CORRELATE_METADATA",
     "v__radial_correlate",
     "v__radial_correlate_execute",

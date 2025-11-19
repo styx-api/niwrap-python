@@ -13,40 +13,40 @@ TCKTRANSFORM_METADATA = Metadata(
 )
 
 
-TcktransformConfigParameters = typing.TypedDict('TcktransformConfigParameters', {
+TcktransformConfigParamsDict = typing.TypedDict('TcktransformConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TcktransformConfigParametersTagged = typing.TypedDict('TcktransformConfigParametersTagged', {
+TcktransformConfigParamsDictTagged = typing.TypedDict('TcktransformConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TcktransformParameters = typing.TypedDict('TcktransformParameters', {
+TcktransformParamsDict = typing.TypedDict('TcktransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tcktransform"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TcktransformConfigParameters] | None],
+    "config": typing.NotRequired[list[TcktransformConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
     "transform": InputPathType,
     "output": str,
 })
-TcktransformParametersTagged = typing.TypedDict('TcktransformParametersTagged', {
+TcktransformParamsDictTagged = typing.TypedDict('TcktransformParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tcktransform"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TcktransformConfigParameters] | None],
+    "config": typing.NotRequired[list[TcktransformConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -55,10 +55,10 @@ TcktransformParametersTagged = typing.TypedDict('TcktransformParametersTagged', 
 })
 
 
-def tcktransform_config_params(
+def tcktransform_config(
     key: str,
     value: str,
-) -> TcktransformConfigParametersTagged:
+) -> TcktransformConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def tcktransform_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TcktransformConfigParameters` object.
+    `TcktransformConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def tcktransform_config_validate(
 
 
 def tcktransform_config_cargs(
-    params: TcktransformConfigParameters,
+    params: TcktransformConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def tcktransform_config_cargs(
 
 class TcktransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TcktransformParameters(...)`.
+    Output object returned when calling `TcktransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def tcktransform_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TcktransformConfigParameters] | None = None,
+    config: list[TcktransformConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TcktransformParametersTagged:
+) -> TcktransformParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def tcktransform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TcktransformParameters` object.
+    `TcktransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def tcktransform_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TcktransformConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TcktransformConfigParamsDict] | None`')
         for e in params["config"]:
             tcktransform_config_validate(e)
     if params.get("help", False) is None:
@@ -241,7 +241,7 @@ def tcktransform_validate(
 
 
 def tcktransform_cargs(
-    params: TcktransformParameters,
+    params: TcktransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def tcktransform_cargs(
 
 
 def tcktransform_outputs(
-    params: TcktransformParameters,
+    params: TcktransformParamsDict,
     execution: Execution,
 ) -> TcktransformOutputs:
     """
@@ -301,7 +301,7 @@ def tcktransform_outputs(
 
 
 def tcktransform_execute(
-    params: TcktransformParameters,
+    params: TcktransformParamsDict,
     runner: Runner | None = None,
 ) -> TcktransformOutputs:
     """
@@ -344,7 +344,7 @@ def tcktransform(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TcktransformConfigParameters] | None = None,
+    config: list[TcktransformConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -402,9 +402,13 @@ def tcktransform(
 
 __all__ = [
     "TCKTRANSFORM_METADATA",
+    "TcktransformConfigParamsDict",
+    "TcktransformConfigParamsDictTagged",
     "TcktransformOutputs",
+    "TcktransformParamsDict",
+    "TcktransformParamsDictTagged",
     "tcktransform",
-    "tcktransform_config_params",
+    "tcktransform_config",
     "tcktransform_execute",
     "tcktransform_params",
 ]

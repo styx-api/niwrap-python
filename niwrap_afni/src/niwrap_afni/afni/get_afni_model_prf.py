@@ -13,14 +13,14 @@ GET_AFNI_MODEL_PRF_METADATA = Metadata(
 )
 
 
-GetAfniModelPrfParameters = typing.TypedDict('GetAfniModelPrfParameters', {
+GetAfniModelPrfParamsDict = typing.TypedDict('GetAfniModelPrfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF"]],
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
     "sigma": float,
 })
-GetAfniModelPrfParametersTagged = typing.TypedDict('GetAfniModelPrfParametersTagged', {
+GetAfniModelPrfParamsDictTagged = typing.TypedDict('GetAfniModelPrfParamsDictTagged', {
     "@type": typing.Literal["afni/get_afni_model_PRF"],
     "amplitude": float,
     "x_coord": float,
@@ -31,7 +31,7 @@ GetAfniModelPrfParametersTagged = typing.TypedDict('GetAfniModelPrfParametersTag
 
 class GetAfniModelPrfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GetAfniModelPrfParameters(...)`.
+    Output object returned when calling `GetAfniModelPrfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def get_afni_model_prf_params(
     x_coord: float,
     y_coord: float,
     sigma: float,
-) -> GetAfniModelPrfParametersTagged:
+) -> GetAfniModelPrfParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def get_afni_model_prf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GetAfniModelPrfParameters` object.
+    `GetAfniModelPrfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def get_afni_model_prf_validate(
 
 
 def get_afni_model_prf_cargs(
-    params: GetAfniModelPrfParameters,
+    params: GetAfniModelPrfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,7 +117,7 @@ def get_afni_model_prf_cargs(
 
 
 def get_afni_model_prf_outputs(
-    params: GetAfniModelPrfParameters,
+    params: GetAfniModelPrfParamsDict,
     execution: Execution,
 ) -> GetAfniModelPrfOutputs:
     """
@@ -136,7 +136,7 @@ def get_afni_model_prf_outputs(
 
 
 def get_afni_model_prf_execute(
-    params: GetAfniModelPrfParameters,
+    params: GetAfniModelPrfParamsDict,
     runner: Runner | None = None,
 ) -> GetAfniModelPrfOutputs:
     """
@@ -201,6 +201,8 @@ def get_afni_model_prf(
 __all__ = [
     "GET_AFNI_MODEL_PRF_METADATA",
     "GetAfniModelPrfOutputs",
+    "GetAfniModelPrfParamsDict",
+    "GetAfniModelPrfParamsDictTagged",
     "get_afni_model_prf",
     "get_afni_model_prf_execute",
     "get_afni_model_prf_params",

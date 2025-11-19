@@ -12,36 +12,36 @@ FILE_INFORMATION_METADATA = Metadata(
 )
 
 
-FileInformationOnlyMetadataParameters = typing.TypedDict('FileInformationOnlyMetadataParameters', {
+FileInformationOnlyMetadataParamsDict = typing.TypedDict('FileInformationOnlyMetadataParamsDict', {
     "@type": typing.NotRequired[typing.Literal["only-metadata"]],
     "key": typing.NotRequired[str | None],
 })
-FileInformationOnlyMetadataParametersTagged = typing.TypedDict('FileInformationOnlyMetadataParametersTagged', {
+FileInformationOnlyMetadataParamsDictTagged = typing.TypedDict('FileInformationOnlyMetadataParamsDictTagged', {
     "@type": typing.Literal["only-metadata"],
     "key": typing.NotRequired[str | None],
 })
 
 
-FileInformationParameters = typing.TypedDict('FileInformationParameters', {
+FileInformationParamsDict = typing.TypedDict('FileInformationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/file-information"]],
     "no-map-info": bool,
     "only-step-interval": bool,
     "only-number-of-maps": bool,
     "only-map-names": bool,
-    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
+    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
     "only-cifti-xml": bool,
     "czi": bool,
     "czi-all-sub-blocks": bool,
     "czi-xml": bool,
     "data-file": str,
 })
-FileInformationParametersTagged = typing.TypedDict('FileInformationParametersTagged', {
+FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/file-information"],
     "no-map-info": bool,
     "only-step-interval": bool,
     "only-number-of-maps": bool,
     "only-map-names": bool,
-    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
+    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
     "only-cifti-xml": bool,
     "czi": bool,
     "czi-all-sub-blocks": bool,
@@ -50,9 +50,9 @@ FileInformationParametersTagged = typing.TypedDict('FileInformationParametersTag
 })
 
 
-def file_information_only_metadata_params(
+def file_information_only_metadata(
     key: str | None,
-) -> FileInformationOnlyMetadataParametersTagged:
+) -> FileInformationOnlyMetadataParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def file_information_only_metadata_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileInformationOnlyMetadataParameters` object.
+    `FileInformationOnlyMetadataParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def file_information_only_metadata_validate(
 
 
 def file_information_only_metadata_cargs(
-    params: FileInformationOnlyMetadataParameters,
+    params: FileInformationOnlyMetadataParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def file_information_only_metadata_cargs(
 
 class FileInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FileInformationParameters(...)`.
+    Output object returned when calling `FileInformationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -125,12 +125,12 @@ def file_information_params(
     only_step_interval: bool = False,
     only_number_of_maps: bool = False,
     only_map_names: bool = False,
-    only_metadata: FileInformationOnlyMetadataParameters | None = None,
+    only_metadata: FileInformationOnlyMetadataParamsDict | None = None,
     only_cifti_xml: bool = False,
     czi: bool = False,
     czi_all_sub_blocks: bool = False,
     czi_xml: bool = False,
-) -> FileInformationParametersTagged:
+) -> FileInformationParamsDictTagged:
     """
     Build parameters.
     
@@ -174,7 +174,7 @@ def file_information_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileInformationParameters` object.
+    `FileInformationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def file_information_validate(
 
 
 def file_information_cargs(
-    params: FileInformationParameters,
+    params: FileInformationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def file_information_cargs(
 
 
 def file_information_outputs(
-    params: FileInformationParameters,
+    params: FileInformationParamsDict,
     execution: Execution,
 ) -> FileInformationOutputs:
     """
@@ -273,7 +273,7 @@ def file_information_outputs(
 
 
 def file_information_execute(
-    params: FileInformationParameters,
+    params: FileInformationParamsDict,
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
@@ -345,7 +345,7 @@ def file_information(
     only_step_interval: bool = False,
     only_number_of_maps: bool = False,
     only_map_names: bool = False,
-    only_metadata: FileInformationOnlyMetadataParameters | None = None,
+    only_metadata: FileInformationOnlyMetadataParamsDict | None = None,
     only_cifti_xml: bool = False,
     czi: bool = False,
     czi_all_sub_blocks: bool = False,
@@ -435,9 +435,13 @@ def file_information(
 
 __all__ = [
     "FILE_INFORMATION_METADATA",
+    "FileInformationOnlyMetadataParamsDict",
+    "FileInformationOnlyMetadataParamsDictTagged",
     "FileInformationOutputs",
+    "FileInformationParamsDict",
+    "FileInformationParamsDictTagged",
     "file_information",
     "file_information_execute",
-    "file_information_only_metadata_params",
+    "file_information_only_metadata",
     "file_information_params",
 ]

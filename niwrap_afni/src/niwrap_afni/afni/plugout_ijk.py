@@ -13,7 +13,7 @@ PLUGOUT_IJK_METADATA = Metadata(
 )
 
 
-PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
+PlugoutIjkParamsDict = typing.TypedDict('PlugoutIjkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/plugout_ijk"]],
     "host": typing.NotRequired[str | None],
     "verbose": bool,
@@ -27,7 +27,7 @@ PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
     "num_assigned_ports": bool,
     "num_assigned_ports_quiet": bool,
 })
-PlugoutIjkParametersTagged = typing.TypedDict('PlugoutIjkParametersTagged', {
+PlugoutIjkParamsDictTagged = typing.TypedDict('PlugoutIjkParamsDictTagged', {
     "@type": typing.Literal["afni/plugout_ijk"],
     "host": typing.NotRequired[str | None],
     "verbose": bool,
@@ -45,7 +45,7 @@ PlugoutIjkParametersTagged = typing.TypedDict('PlugoutIjkParametersTagged', {
 
 class PlugoutIjkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PlugoutIjkParameters(...)`.
+    Output object returned when calling `PlugoutIjkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def plugout_ijk_params(
     max_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutIjkParametersTagged:
+) -> PlugoutIjkParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def plugout_ijk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PlugoutIjkParameters` object.
+    `PlugoutIjkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def plugout_ijk_validate(
 
 
 def plugout_ijk_cargs(
-    params: PlugoutIjkParameters,
+    params: PlugoutIjkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -225,7 +225,7 @@ def plugout_ijk_cargs(
 
 
 def plugout_ijk_outputs(
-    params: PlugoutIjkParameters,
+    params: PlugoutIjkParamsDict,
     execution: Execution,
 ) -> PlugoutIjkOutputs:
     """
@@ -244,7 +244,7 @@ def plugout_ijk_outputs(
 
 
 def plugout_ijk_execute(
-    params: PlugoutIjkParameters,
+    params: PlugoutIjkParamsDict,
     runner: Runner | None = None,
 ) -> PlugoutIjkOutputs:
     """
@@ -335,6 +335,8 @@ def plugout_ijk(
 __all__ = [
     "PLUGOUT_IJK_METADATA",
     "PlugoutIjkOutputs",
+    "PlugoutIjkParamsDict",
+    "PlugoutIjkParamsDictTagged",
     "plugout_ijk",
     "plugout_ijk_execute",
     "plugout_ijk_params",

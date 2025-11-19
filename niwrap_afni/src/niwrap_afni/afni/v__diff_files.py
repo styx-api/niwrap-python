@@ -13,7 +13,7 @@ V__DIFF_FILES_METADATA = Metadata(
 )
 
 
-VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
+VDiffFilesParamsDict = typing.TypedDict('VDiffFilesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@diff.files"]],
     "files": list[str],
     "old_dir": str,
@@ -27,7 +27,7 @@ VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
     "X_flag": bool,
     "verbosity": typing.NotRequired[float | None],
 })
-VDiffFilesParametersTagged = typing.TypedDict('VDiffFilesParametersTagged', {
+VDiffFilesParamsDictTagged = typing.TypedDict('VDiffFilesParamsDictTagged', {
     "@type": typing.Literal["afni/@diff.files"],
     "files": list[str],
     "old_dir": str,
@@ -45,7 +45,7 @@ VDiffFilesParametersTagged = typing.TypedDict('VDiffFilesParametersTagged', {
 
 class VDiffFilesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDiffFilesParameters(...)`.
+    Output object returned when calling `VDiffFilesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def v__diff_files_params(
     xxdiff: bool = False,
     x_flag: bool = False,
     verbosity: float | None = None,
-) -> VDiffFilesParametersTagged:
+) -> VDiffFilesParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def v__diff_files_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDiffFilesParameters` object.
+    `VDiffFilesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def v__diff_files_validate(
 
 
 def v__diff_files_cargs(
-    params: VDiffFilesParameters,
+    params: VDiffFilesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def v__diff_files_cargs(
 
 
 def v__diff_files_outputs(
-    params: VDiffFilesParameters,
+    params: VDiffFilesParamsDict,
     execution: Execution,
 ) -> VDiffFilesOutputs:
     """
@@ -229,7 +229,7 @@ def v__diff_files_outputs(
 
 
 def v__diff_files_execute(
-    params: VDiffFilesParameters,
+    params: VDiffFilesParamsDict,
     runner: Runner | None = None,
 ) -> VDiffFilesOutputs:
     """
@@ -316,6 +316,8 @@ def v__diff_files(
 
 __all__ = [
     "VDiffFilesOutputs",
+    "VDiffFilesParamsDict",
+    "VDiffFilesParamsDictTagged",
     "V__DIFF_FILES_METADATA",
     "v__diff_files",
     "v__diff_files_execute",

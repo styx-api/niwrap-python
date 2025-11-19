@@ -13,7 +13,7 @@ MRI_SEGMENT_METADATA = Metadata(
 )
 
 
-MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
+MriSegmentParamsDict = typing.TypedDict('MriSegmentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment"]],
     "in_vol": InputPathType,
     "out_vol": str,
@@ -50,7 +50,7 @@ MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
     "diag_write": bool,
     "diag_verbose": bool,
 })
-MriSegmentParametersTagged = typing.TypedDict('MriSegmentParametersTagged', {
+MriSegmentParamsDictTagged = typing.TypedDict('MriSegmentParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segment"],
     "in_vol": InputPathType,
     "out_vol": str,
@@ -91,7 +91,7 @@ MriSegmentParametersTagged = typing.TypedDict('MriSegmentParametersTagged', {
 
 class MriSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegmentParameters(...)`.
+    Output object returned when calling `MriSegmentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +136,7 @@ def mri_segment_params(
     diagno: float | None = None,
     diag_write: bool = False,
     diag_verbose: bool = False,
-) -> MriSegmentParametersTagged:
+) -> MriSegmentParamsDictTagged:
     """
     Build parameters.
     
@@ -245,7 +245,7 @@ def mri_segment_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegmentParameters` object.
+    `MriSegmentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -374,7 +374,7 @@ def mri_segment_validate(
 
 
 def mri_segment_cargs(
-    params: MriSegmentParameters,
+    params: MriSegmentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -524,7 +524,7 @@ def mri_segment_cargs(
 
 
 def mri_segment_outputs(
-    params: MriSegmentParameters,
+    params: MriSegmentParamsDict,
     execution: Execution,
 ) -> MriSegmentOutputs:
     """
@@ -545,7 +545,7 @@ def mri_segment_outputs(
 
 
 def mri_segment_execute(
-    params: MriSegmentParameters,
+    params: MriSegmentParamsDict,
     runner: Runner | None = None,
 ) -> MriSegmentOutputs:
     """
@@ -700,6 +700,8 @@ def mri_segment(
 __all__ = [
     "MRI_SEGMENT_METADATA",
     "MriSegmentOutputs",
+    "MriSegmentParamsDict",
+    "MriSegmentParamsDictTagged",
     "mri_segment",
     "mri_segment_execute",
     "mri_segment_params",

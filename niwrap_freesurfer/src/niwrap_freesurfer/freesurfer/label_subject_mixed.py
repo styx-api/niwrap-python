@@ -13,7 +13,7 @@ LABEL_SUBJECT_MIXED_METADATA = Metadata(
 )
 
 
-LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
+LabelSubjectMixedParamsDict = typing.TypedDict('LabelSubjectMixedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_mixed"]],
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
@@ -21,7 +21,7 @@ LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
     "gca_file": InputPathType,
     "aseg_output": str,
 })
-LabelSubjectMixedParametersTagged = typing.TypedDict('LabelSubjectMixedParametersTagged', {
+LabelSubjectMixedParamsDictTagged = typing.TypedDict('LabelSubjectMixedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label_subject_mixed"],
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
@@ -33,7 +33,7 @@ LabelSubjectMixedParametersTagged = typing.TypedDict('LabelSubjectMixedParameter
 
 class LabelSubjectMixedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelSubjectMixedParameters(...)`.
+    Output object returned when calling `LabelSubjectMixedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def label_subject_mixed_params(
     transform: InputPathType,
     gca_file: InputPathType,
     aseg_output: str,
-) -> LabelSubjectMixedParametersTagged:
+) -> LabelSubjectMixedParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def label_subject_mixed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelSubjectMixedParameters` object.
+    `LabelSubjectMixedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def label_subject_mixed_validate(
 
 
 def label_subject_mixed_cargs(
-    params: LabelSubjectMixedParameters,
+    params: LabelSubjectMixedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def label_subject_mixed_cargs(
 
 
 def label_subject_mixed_outputs(
-    params: LabelSubjectMixedParameters,
+    params: LabelSubjectMixedParamsDict,
     execution: Execution,
 ) -> LabelSubjectMixedOutputs:
     """
@@ -152,7 +152,7 @@ def label_subject_mixed_outputs(
 
 
 def label_subject_mixed_execute(
-    params: LabelSubjectMixedParameters,
+    params: LabelSubjectMixedParamsDict,
     runner: Runner | None = None,
 ) -> LabelSubjectMixedOutputs:
     """
@@ -220,6 +220,8 @@ def label_subject_mixed(
 __all__ = [
     "LABEL_SUBJECT_MIXED_METADATA",
     "LabelSubjectMixedOutputs",
+    "LabelSubjectMixedParamsDict",
+    "LabelSubjectMixedParamsDictTagged",
     "label_subject_mixed",
     "label_subject_mixed_execute",
     "label_subject_mixed_params",

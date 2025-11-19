@@ -13,14 +13,14 @@ HIST2PROB_METADATA = Metadata(
 )
 
 
-Hist2probParameters = typing.TypedDict('Hist2probParameters', {
+Hist2probParamsDict = typing.TypedDict('Hist2probParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/hist2prob"]],
     "image": InputPathType,
     "size": int,
     "low_threshold": float,
     "high_threshold": float,
 })
-Hist2probParametersTagged = typing.TypedDict('Hist2probParametersTagged', {
+Hist2probParamsDictTagged = typing.TypedDict('Hist2probParamsDictTagged', {
     "@type": typing.Literal["fsl/hist2prob"],
     "image": InputPathType,
     "size": int,
@@ -31,7 +31,7 @@ Hist2probParametersTagged = typing.TypedDict('Hist2probParametersTagged', {
 
 class Hist2probOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Hist2probParameters(...)`.
+    Output object returned when calling `Hist2probParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def hist2prob_params(
     size: int,
     low_threshold: float,
     high_threshold: float,
-) -> Hist2probParametersTagged:
+) -> Hist2probParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def hist2prob_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Hist2probParameters` object.
+    `Hist2probParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def hist2prob_validate(
 
 
 def hist2prob_cargs(
-    params: Hist2probParameters,
+    params: Hist2probParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def hist2prob_cargs(
 
 
 def hist2prob_outputs(
-    params: Hist2probParameters,
+    params: Hist2probParamsDict,
     execution: Execution,
 ) -> Hist2probOutputs:
     """
@@ -139,7 +139,7 @@ def hist2prob_outputs(
 
 
 def hist2prob_execute(
-    params: Hist2probParameters,
+    params: Hist2probParamsDict,
     runner: Runner | None = None,
 ) -> Hist2probOutputs:
     """
@@ -206,6 +206,8 @@ def hist2prob(
 __all__ = [
     "HIST2PROB_METADATA",
     "Hist2probOutputs",
+    "Hist2probParamsDict",
+    "Hist2probParamsDictTagged",
     "hist2prob",
     "hist2prob_execute",
     "hist2prob_params",

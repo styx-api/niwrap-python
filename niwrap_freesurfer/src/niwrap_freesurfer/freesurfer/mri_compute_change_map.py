@@ -13,7 +13,7 @@ MRI_COMPUTE_CHANGE_MAP_METADATA = Metadata(
 )
 
 
-MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters', {
+MriComputeChangeMapParamsDict = typing.TypedDict('MriComputeChangeMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_change_map"]],
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters'
     "transform": InputPathType,
     "outvolume": str,
 })
-MriComputeChangeMapParametersTagged = typing.TypedDict('MriComputeChangeMapParametersTagged', {
+MriComputeChangeMapParamsDictTagged = typing.TypedDict('MriComputeChangeMapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_change_map"],
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ MriComputeChangeMapParametersTagged = typing.TypedDict('MriComputeChangeMapParam
 
 class MriComputeChangeMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeChangeMapParameters(...)`.
+    Output object returned when calling `MriComputeChangeMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_compute_change_map_params(
     outvolume: str,
     mean_filter: bool = False,
     gaussian_sigma: float | None = None,
-) -> MriComputeChangeMapParametersTagged:
+) -> MriComputeChangeMapParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def mri_compute_change_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeChangeMapParameters` object.
+    `MriComputeChangeMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def mri_compute_change_map_validate(
 
 
 def mri_compute_change_map_cargs(
-    params: MriComputeChangeMapParameters,
+    params: MriComputeChangeMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def mri_compute_change_map_cargs(
 
 
 def mri_compute_change_map_outputs(
-    params: MriComputeChangeMapParameters,
+    params: MriComputeChangeMapParamsDict,
     execution: Execution,
 ) -> MriComputeChangeMapOutputs:
     """
@@ -167,7 +167,7 @@ def mri_compute_change_map_outputs(
 
 
 def mri_compute_change_map_execute(
-    params: MriComputeChangeMapParameters,
+    params: MriComputeChangeMapParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeChangeMapOutputs:
     """
@@ -241,6 +241,8 @@ def mri_compute_change_map(
 __all__ = [
     "MRI_COMPUTE_CHANGE_MAP_METADATA",
     "MriComputeChangeMapOutputs",
+    "MriComputeChangeMapParamsDict",
+    "MriComputeChangeMapParamsDictTagged",
     "mri_compute_change_map",
     "mri_compute_change_map_execute",
     "mri_compute_change_map_params",

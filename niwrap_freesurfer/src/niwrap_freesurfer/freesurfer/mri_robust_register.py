@@ -13,7 +13,7 @@ MRI_ROBUST_REGISTER_METADATA = Metadata(
 )
 
 
-MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
+MriRobustRegisterParamsDict = typing.TypedDict('MriRobustRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_register"]],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
@@ -65,7 +65,7 @@ MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
     "debug": bool,
     "verbose": typing.NotRequired[float | None],
 })
-MriRobustRegisterParametersTagged = typing.TypedDict('MriRobustRegisterParametersTagged', {
+MriRobustRegisterParamsDictTagged = typing.TypedDict('MriRobustRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_robust_register"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
@@ -121,7 +121,7 @@ MriRobustRegisterParametersTagged = typing.TypedDict('MriRobustRegisterParameter
 
 class MriRobustRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRobustRegisterParameters(...)`.
+    Output object returned when calling `MriRobustRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -202,7 +202,7 @@ def mri_robust_register_params(
     half_dst_lta: str | None = None,
     debug: bool = False,
     verbose: float | None = None,
-) -> MriRobustRegisterParametersTagged:
+) -> MriRobustRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -354,7 +354,7 @@ def mri_robust_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRobustRegisterParameters` object.
+    `MriRobustRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -533,7 +533,7 @@ def mri_robust_register_validate(
 
 
 def mri_robust_register_cargs(
-    params: MriRobustRegisterParameters,
+    params: MriRobustRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -736,7 +736,7 @@ def mri_robust_register_cargs(
 
 
 def mri_robust_register_outputs(
-    params: MriRobustRegisterParameters,
+    params: MriRobustRegisterParamsDict,
     execution: Execution,
 ) -> MriRobustRegisterOutputs:
     """
@@ -767,7 +767,7 @@ def mri_robust_register_outputs(
 
 
 def mri_robust_register_execute(
-    params: MriRobustRegisterParameters,
+    params: MriRobustRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriRobustRegisterOutputs:
     """
@@ -977,6 +977,8 @@ def mri_robust_register(
 __all__ = [
     "MRI_ROBUST_REGISTER_METADATA",
     "MriRobustRegisterOutputs",
+    "MriRobustRegisterParamsDict",
+    "MriRobustRegisterParamsDictTagged",
     "mri_robust_register",
     "mri_robust_register_execute",
     "mri_robust_register_params",

@@ -13,7 +13,7 @@ MRI_CVS_CHECK_METADATA = Metadata(
 )
 
 
-MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
+MriCvsCheckParamsDict = typing.TypedDict('MriCvsCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_check"]],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
     "help": bool,
     "version": bool,
 })
-MriCvsCheckParametersTagged = typing.TypedDict('MriCvsCheckParametersTagged', {
+MriCvsCheckParamsDictTagged = typing.TypedDict('MriCvsCheckParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cvs_check"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ MriCvsCheckParametersTagged = typing.TypedDict('MriCvsCheckParametersTagged', {
 
 class MriCvsCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCvsCheckParameters(...)`.
+    Output object returned when calling `MriCvsCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mri_cvs_check_params(
     hemi: typing.Literal["lh", "rh"] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriCvsCheckParametersTagged:
+) -> MriCvsCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def mri_cvs_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCvsCheckParameters` object.
+    `MriCvsCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def mri_cvs_check_validate(
 
 
 def mri_cvs_check_cargs(
-    params: MriCvsCheckParameters,
+    params: MriCvsCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def mri_cvs_check_cargs(
 
 
 def mri_cvs_check_outputs(
-    params: MriCvsCheckParameters,
+    params: MriCvsCheckParamsDict,
     execution: Execution,
 ) -> MriCvsCheckOutputs:
     """
@@ -164,7 +164,7 @@ def mri_cvs_check_outputs(
 
 
 def mri_cvs_check_execute(
-    params: MriCvsCheckParameters,
+    params: MriCvsCheckParamsDict,
     runner: Runner | None = None,
 ) -> MriCvsCheckOutputs:
     """
@@ -235,6 +235,8 @@ def mri_cvs_check(
 __all__ = [
     "MRI_CVS_CHECK_METADATA",
     "MriCvsCheckOutputs",
+    "MriCvsCheckParamsDict",
+    "MriCvsCheckParamsDictTagged",
     "mri_cvs_check",
     "mri_cvs_check_execute",
     "mri_cvs_check_params",

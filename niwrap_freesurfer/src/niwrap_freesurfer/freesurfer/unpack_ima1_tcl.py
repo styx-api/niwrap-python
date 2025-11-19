@@ -13,12 +13,12 @@ UNPACK_IMA1_TCL_METADATA = Metadata(
 )
 
 
-UnpackIma1TclParameters = typing.TypedDict('UnpackIma1TclParameters', {
+UnpackIma1TclParamsDict = typing.TypedDict('UnpackIma1TclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_ima1.tcl"]],
     "input_directory": str,
     "output_directory": str,
 })
-UnpackIma1TclParametersTagged = typing.TypedDict('UnpackIma1TclParametersTagged', {
+UnpackIma1TclParamsDictTagged = typing.TypedDict('UnpackIma1TclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpack_ima1.tcl"],
     "input_directory": str,
     "output_directory": str,
@@ -27,7 +27,7 @@ UnpackIma1TclParametersTagged = typing.TypedDict('UnpackIma1TclParametersTagged'
 
 class UnpackIma1TclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnpackIma1TclParameters(...)`.
+    Output object returned when calling `UnpackIma1TclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class UnpackIma1TclOutputs(typing.NamedTuple):
 def unpack_ima1_tcl_params(
     input_directory: str,
     output_directory: str,
-) -> UnpackIma1TclParametersTagged:
+) -> UnpackIma1TclParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def unpack_ima1_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnpackIma1TclParameters` object.
+    `UnpackIma1TclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def unpack_ima1_tcl_validate(
 
 
 def unpack_ima1_tcl_cargs(
-    params: UnpackIma1TclParameters,
+    params: UnpackIma1TclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def unpack_ima1_tcl_cargs(
 
 
 def unpack_ima1_tcl_outputs(
-    params: UnpackIma1TclParameters,
+    params: UnpackIma1TclParamsDict,
     execution: Execution,
 ) -> UnpackIma1TclOutputs:
     """
@@ -121,7 +121,7 @@ def unpack_ima1_tcl_outputs(
 
 
 def unpack_ima1_tcl_execute(
-    params: UnpackIma1TclParameters,
+    params: UnpackIma1TclParamsDict,
     runner: Runner | None = None,
 ) -> UnpackIma1TclOutputs:
     """
@@ -182,6 +182,8 @@ def unpack_ima1_tcl(
 __all__ = [
     "UNPACK_IMA1_TCL_METADATA",
     "UnpackIma1TclOutputs",
+    "UnpackIma1TclParamsDict",
+    "UnpackIma1TclParamsDictTagged",
     "unpack_ima1_tcl",
     "unpack_ima1_tcl_execute",
     "unpack_ima1_tcl_params",

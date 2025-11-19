@@ -12,25 +12,25 @@ CONVERT_WARPFIELD_METADATA = Metadata(
 )
 
 
-ConvertWarpfieldFromWorldParameters = typing.TypedDict('ConvertWarpfieldFromWorldParameters', {
+ConvertWarpfieldFromWorldParamsDict = typing.TypedDict('ConvertWarpfieldFromWorldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-world"]],
     "input": str,
     "absolute": bool,
 })
-ConvertWarpfieldFromWorldParametersTagged = typing.TypedDict('ConvertWarpfieldFromWorldParametersTagged', {
+ConvertWarpfieldFromWorldParamsDictTagged = typing.TypedDict('ConvertWarpfieldFromWorldParamsDictTagged', {
     "@type": typing.Literal["from-world"],
     "input": str,
     "absolute": bool,
 })
 
 
-ConvertWarpfieldFromFnirtParameters = typing.TypedDict('ConvertWarpfieldFromFnirtParameters', {
+ConvertWarpfieldFromFnirtParamsDict = typing.TypedDict('ConvertWarpfieldFromFnirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-fnirt"]],
     "input": str,
     "source-volume": str,
     "absolute": bool,
 })
-ConvertWarpfieldFromFnirtParametersTagged = typing.TypedDict('ConvertWarpfieldFromFnirtParametersTagged', {
+ConvertWarpfieldFromFnirtParamsDictTagged = typing.TypedDict('ConvertWarpfieldFromFnirtParamsDictTagged', {
     "@type": typing.Literal["from-fnirt"],
     "input": str,
     "source-volume": str,
@@ -38,42 +38,42 @@ ConvertWarpfieldFromFnirtParametersTagged = typing.TypedDict('ConvertWarpfieldFr
 })
 
 
-ConvertWarpfieldToFnirtParameters = typing.TypedDict('ConvertWarpfieldToFnirtParameters', {
+ConvertWarpfieldToFnirtParamsDict = typing.TypedDict('ConvertWarpfieldToFnirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["to-fnirt"]],
     "output": str,
     "source-volume": str,
 })
-ConvertWarpfieldToFnirtParametersTagged = typing.TypedDict('ConvertWarpfieldToFnirtParametersTagged', {
+ConvertWarpfieldToFnirtParamsDictTagged = typing.TypedDict('ConvertWarpfieldToFnirtParamsDictTagged', {
     "@type": typing.Literal["to-fnirt"],
     "output": str,
     "source-volume": str,
 })
 
 
-ConvertWarpfieldParameters = typing.TypedDict('ConvertWarpfieldParameters', {
+ConvertWarpfieldParamsDict = typing.TypedDict('ConvertWarpfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-warpfield"]],
-    "from-world": typing.NotRequired[ConvertWarpfieldFromWorldParameters | None],
+    "from-world": typing.NotRequired[ConvertWarpfieldFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
-    "from-fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParameters | None],
+    "from-fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParamsDict | None],
     "output": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
-    "to-fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParameters] | None],
+    "to-fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParamsDict] | None],
 })
-ConvertWarpfieldParametersTagged = typing.TypedDict('ConvertWarpfieldParametersTagged', {
+ConvertWarpfieldParamsDictTagged = typing.TypedDict('ConvertWarpfieldParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-warpfield"],
-    "from-world": typing.NotRequired[ConvertWarpfieldFromWorldParameters | None],
+    "from-world": typing.NotRequired[ConvertWarpfieldFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
-    "from-fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParameters | None],
+    "from-fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParamsDict | None],
     "output": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
-    "to-fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParameters] | None],
+    "to-fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParamsDict] | None],
 })
 
 
-def convert_warpfield_from_world_params(
+def convert_warpfield_from_world(
     input_: str,
     absolute: bool = False,
-) -> ConvertWarpfieldFromWorldParametersTagged:
+) -> ConvertWarpfieldFromWorldParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def convert_warpfield_from_world_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertWarpfieldFromWorldParameters` object.
+    `ConvertWarpfieldFromWorldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def convert_warpfield_from_world_validate(
 
 
 def convert_warpfield_from_world_cargs(
-    params: ConvertWarpfieldFromWorldParameters,
+    params: ConvertWarpfieldFromWorldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,11 +137,11 @@ def convert_warpfield_from_world_cargs(
     return cargs
 
 
-def convert_warpfield_from_fnirt_params(
+def convert_warpfield_from_fnirt(
     input_: str,
     source_volume: str,
     absolute: bool = False,
-) -> ConvertWarpfieldFromFnirtParametersTagged:
+) -> ConvertWarpfieldFromFnirtParamsDictTagged:
     """
     Build parameters.
     
@@ -168,7 +168,7 @@ def convert_warpfield_from_fnirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertWarpfieldFromFnirtParameters` object.
+    `ConvertWarpfieldFromFnirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -190,7 +190,7 @@ def convert_warpfield_from_fnirt_validate(
 
 
 def convert_warpfield_from_fnirt_cargs(
-    params: ConvertWarpfieldFromFnirtParameters,
+    params: ConvertWarpfieldFromFnirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -213,10 +213,10 @@ def convert_warpfield_from_fnirt_cargs(
     return cargs
 
 
-def convert_warpfield_to_fnirt_params(
+def convert_warpfield_to_fnirt(
     output: str,
     source_volume: str,
-) -> ConvertWarpfieldToFnirtParametersTagged:
+) -> ConvertWarpfieldToFnirtParamsDictTagged:
     """
     Build parameters.
     
@@ -239,7 +239,7 @@ def convert_warpfield_to_fnirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertWarpfieldToFnirtParameters` object.
+    `ConvertWarpfieldToFnirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -257,7 +257,7 @@ def convert_warpfield_to_fnirt_validate(
 
 
 def convert_warpfield_to_fnirt_cargs(
-    params: ConvertWarpfieldToFnirtParameters,
+    params: ConvertWarpfieldToFnirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def convert_warpfield_to_fnirt_cargs(
 
 class ConvertWarpfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertWarpfieldParameters(...)`.
+    Output object returned when calling `ConvertWarpfieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -290,10 +290,10 @@ def convert_warpfield_params(
     input_: str | None,
     output: str | None,
     output_: str | None,
-    from_world: ConvertWarpfieldFromWorldParameters | None = None,
-    from_fnirt: ConvertWarpfieldFromFnirtParameters | None = None,
-    to_fnirt: list[ConvertWarpfieldToFnirtParameters] | None = None,
-) -> ConvertWarpfieldParametersTagged:
+    from_world: ConvertWarpfieldFromWorldParamsDict | None = None,
+    from_fnirt: ConvertWarpfieldFromFnirtParamsDict | None = None,
+    to_fnirt: list[ConvertWarpfieldToFnirtParamsDict] | None = None,
+) -> ConvertWarpfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -336,7 +336,7 @@ def convert_warpfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertWarpfieldParameters` object.
+    `ConvertWarpfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -358,13 +358,13 @@ def convert_warpfield_validate(
             raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
     if params.get("to-fnirt", None) is not None:
         if not isinstance(params["to-fnirt"], list):
-            raise StyxValidationError(f'`to-fnirt` has the wrong type: Received `{type(params.get("to-fnirt", None))}` expected `list[ConvertWarpfieldToFnirtParameters] | None`')
+            raise StyxValidationError(f'`to-fnirt` has the wrong type: Received `{type(params.get("to-fnirt", None))}` expected `list[ConvertWarpfieldToFnirtParamsDict] | None`')
         for e in params["to-fnirt"]:
             convert_warpfield_to_fnirt_validate(e)
 
 
 def convert_warpfield_cargs(
-    params: ConvertWarpfieldParameters,
+    params: ConvertWarpfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -395,7 +395,7 @@ def convert_warpfield_cargs(
 
 
 def convert_warpfield_outputs(
-    params: ConvertWarpfieldParameters,
+    params: ConvertWarpfieldParamsDict,
     execution: Execution,
 ) -> ConvertWarpfieldOutputs:
     """
@@ -414,7 +414,7 @@ def convert_warpfield_outputs(
 
 
 def convert_warpfield_execute(
-    params: ConvertWarpfieldParameters,
+    params: ConvertWarpfieldParamsDict,
     runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
     """
@@ -453,9 +453,9 @@ def convert_warpfield(
     input_: str | None,
     output: str | None,
     output_: str | None,
-    from_world: ConvertWarpfieldFromWorldParameters | None = None,
-    from_fnirt: ConvertWarpfieldFromFnirtParameters | None = None,
-    to_fnirt: list[ConvertWarpfieldToFnirtParameters] | None = None,
+    from_world: ConvertWarpfieldFromWorldParamsDict | None = None,
+    from_fnirt: ConvertWarpfieldFromFnirtParamsDict | None = None,
+    to_fnirt: list[ConvertWarpfieldToFnirtParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
     """
@@ -504,11 +504,19 @@ def convert_warpfield(
 
 __all__ = [
     "CONVERT_WARPFIELD_METADATA",
+    "ConvertWarpfieldFromFnirtParamsDict",
+    "ConvertWarpfieldFromFnirtParamsDictTagged",
+    "ConvertWarpfieldFromWorldParamsDict",
+    "ConvertWarpfieldFromWorldParamsDictTagged",
     "ConvertWarpfieldOutputs",
+    "ConvertWarpfieldParamsDict",
+    "ConvertWarpfieldParamsDictTagged",
+    "ConvertWarpfieldToFnirtParamsDict",
+    "ConvertWarpfieldToFnirtParamsDictTagged",
     "convert_warpfield",
     "convert_warpfield_execute",
-    "convert_warpfield_from_fnirt_params",
-    "convert_warpfield_from_world_params",
+    "convert_warpfield_from_fnirt",
+    "convert_warpfield_from_world",
     "convert_warpfield_params",
-    "convert_warpfield_to_fnirt_params",
+    "convert_warpfield_to_fnirt",
 ]

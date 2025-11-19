@@ -12,7 +12,7 @@ CIFTI_LABEL_TO_ROI_METADATA = Metadata(
 )
 
 
-CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
+CiftiLabelToRoiParamsDict = typing.TypedDict('CiftiLabelToRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-roi"]],
     "scalar-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
     "map": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
-CiftiLabelToRoiParametersTagged = typing.TypedDict('CiftiLabelToRoiParametersTagged', {
+CiftiLabelToRoiParamsDictTagged = typing.TypedDict('CiftiLabelToRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-to-roi"],
     "scalar-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ CiftiLabelToRoiParametersTagged = typing.TypedDict('CiftiLabelToRoiParametersTag
 
 class CiftiLabelToRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelToRoiParameters(...)`.
+    Output object returned when calling `CiftiLabelToRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def cifti_label_to_roi_params(
     label_key: int | None,
     map_: str | None,
     label_in: InputPathType,
-) -> CiftiLabelToRoiParametersTagged:
+) -> CiftiLabelToRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def cifti_label_to_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelToRoiParameters` object.
+    `CiftiLabelToRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def cifti_label_to_roi_validate(
 
 
 def cifti_label_to_roi_cargs(
-    params: CiftiLabelToRoiParameters,
+    params: CiftiLabelToRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def cifti_label_to_roi_cargs(
 
 
 def cifti_label_to_roi_outputs(
-    params: CiftiLabelToRoiParameters,
+    params: CiftiLabelToRoiParamsDict,
     execution: Execution,
 ) -> CiftiLabelToRoiOutputs:
     """
@@ -161,7 +161,7 @@ def cifti_label_to_roi_outputs(
 
 
 def cifti_label_to_roi_execute(
-    params: CiftiLabelToRoiParameters,
+    params: CiftiLabelToRoiParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
@@ -233,6 +233,8 @@ def cifti_label_to_roi(
 __all__ = [
     "CIFTI_LABEL_TO_ROI_METADATA",
     "CiftiLabelToRoiOutputs",
+    "CiftiLabelToRoiParamsDict",
+    "CiftiLabelToRoiParamsDictTagged",
     "cifti_label_to_roi",
     "cifti_label_to_roi_execute",
     "cifti_label_to_roi_params",

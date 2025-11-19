@@ -12,13 +12,13 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
 )
 
 
-SurfaceSphereTriangularPatchesParameters = typing.TypedDict('SurfaceSphereTriangularPatchesParameters', {
+SurfaceSphereTriangularPatchesParamsDict = typing.TypedDict('SurfaceSphereTriangularPatchesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-triangular-patches"]],
     "sphere": InputPathType,
     "divisions": int,
     "text-out": str,
 })
-SurfaceSphereTriangularPatchesParametersTagged = typing.TypedDict('SurfaceSphereTriangularPatchesParametersTagged', {
+SurfaceSphereTriangularPatchesParamsDictTagged = typing.TypedDict('SurfaceSphereTriangularPatchesParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-sphere-triangular-patches"],
     "sphere": InputPathType,
     "divisions": int,
@@ -28,7 +28,7 @@ SurfaceSphereTriangularPatchesParametersTagged = typing.TypedDict('SurfaceSphere
 
 class SurfaceSphereTriangularPatchesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceSphereTriangularPatchesParameters(...)`.
+    Output object returned when calling `SurfaceSphereTriangularPatchesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def surface_sphere_triangular_patches_params(
     sphere: InputPathType,
     divisions: int,
     text_out: str,
-) -> SurfaceSphereTriangularPatchesParametersTagged:
+) -> SurfaceSphereTriangularPatchesParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def surface_sphere_triangular_patches_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceSphereTriangularPatchesParameters` object.
+    `SurfaceSphereTriangularPatchesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def surface_sphere_triangular_patches_validate(
 
 
 def surface_sphere_triangular_patches_cargs(
-    params: SurfaceSphereTriangularPatchesParameters,
+    params: SurfaceSphereTriangularPatchesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def surface_sphere_triangular_patches_cargs(
 
 
 def surface_sphere_triangular_patches_outputs(
-    params: SurfaceSphereTriangularPatchesParameters,
+    params: SurfaceSphereTriangularPatchesParamsDict,
     execution: Execution,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
@@ -129,7 +129,7 @@ def surface_sphere_triangular_patches_outputs(
 
 
 def surface_sphere_triangular_patches_execute(
-    params: SurfaceSphereTriangularPatchesParameters,
+    params: SurfaceSphereTriangularPatchesParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
@@ -186,6 +186,8 @@ def surface_sphere_triangular_patches(
 __all__ = [
     "SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA",
     "SurfaceSphereTriangularPatchesOutputs",
+    "SurfaceSphereTriangularPatchesParamsDict",
+    "SurfaceSphereTriangularPatchesParamsDictTagged",
     "surface_sphere_triangular_patches",
     "surface_sphere_triangular_patches_execute",
     "surface_sphere_triangular_patches_params",

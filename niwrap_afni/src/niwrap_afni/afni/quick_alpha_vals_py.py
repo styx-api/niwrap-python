@@ -13,12 +13,12 @@ QUICK_ALPHA_VALS_PY_METADATA = Metadata(
 )
 
 
-QuickAlphaValsPyParameters = typing.TypedDict('QuickAlphaValsPyParameters', {
+QuickAlphaValsPyParamsDict = typing.TypedDict('QuickAlphaValsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/quick.alpha.vals.py"]],
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })
-QuickAlphaValsPyParametersTagged = typing.TypedDict('QuickAlphaValsPyParametersTagged', {
+QuickAlphaValsPyParamsDictTagged = typing.TypedDict('QuickAlphaValsPyParamsDictTagged', {
     "@type": typing.Literal["afni/quick.alpha.vals.py"],
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
@@ -27,7 +27,7 @@ QuickAlphaValsPyParametersTagged = typing.TypedDict('QuickAlphaValsPyParametersT
 
 class QuickAlphaValsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuickAlphaValsPyParameters(...)`.
+    Output object returned when calling `QuickAlphaValsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class QuickAlphaValsPyOutputs(typing.NamedTuple):
 def quick_alpha_vals_py_params(
     max_file: InputPathType,
     niter: int | None = None,
-) -> QuickAlphaValsPyParametersTagged:
+) -> QuickAlphaValsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def quick_alpha_vals_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuickAlphaValsPyParameters` object.
+    `QuickAlphaValsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def quick_alpha_vals_py_validate(
 
 
 def quick_alpha_vals_py_cargs(
-    params: QuickAlphaValsPyParameters,
+    params: QuickAlphaValsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def quick_alpha_vals_py_cargs(
 
 
 def quick_alpha_vals_py_outputs(
-    params: QuickAlphaValsPyParameters,
+    params: QuickAlphaValsPyParamsDict,
     execution: Execution,
 ) -> QuickAlphaValsPyOutputs:
     """
@@ -123,7 +123,7 @@ def quick_alpha_vals_py_outputs(
 
 
 def quick_alpha_vals_py_execute(
-    params: QuickAlphaValsPyParameters,
+    params: QuickAlphaValsPyParamsDict,
     runner: Runner | None = None,
 ) -> QuickAlphaValsPyOutputs:
     """
@@ -182,6 +182,8 @@ def quick_alpha_vals_py(
 __all__ = [
     "QUICK_ALPHA_VALS_PY_METADATA",
     "QuickAlphaValsPyOutputs",
+    "QuickAlphaValsPyParamsDict",
+    "QuickAlphaValsPyParamsDictTagged",
     "quick_alpha_vals_py",
     "quick_alpha_vals_py_execute",
     "quick_alpha_vals_py_params",

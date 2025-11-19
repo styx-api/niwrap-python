@@ -13,11 +13,11 @@ FSLNVOLS_METADATA = Metadata(
 )
 
 
-FslnvolsParameters = typing.TypedDict('FslnvolsParameters', {
+FslnvolsParamsDict = typing.TypedDict('FslnvolsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslnvols"]],
     "infile": InputPathType,
 })
-FslnvolsParametersTagged = typing.TypedDict('FslnvolsParametersTagged', {
+FslnvolsParamsDictTagged = typing.TypedDict('FslnvolsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslnvols"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ FslnvolsParametersTagged = typing.TypedDict('FslnvolsParametersTagged', {
 
 class FslnvolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslnvolsParameters(...)`.
+    Output object returned when calling `FslnvolsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FslnvolsOutputs(typing.NamedTuple):
 
 def fslnvols_params(
     infile: InputPathType,
-) -> FslnvolsParametersTagged:
+) -> FslnvolsParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def fslnvols_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslnvolsParameters` object.
+    `FslnvolsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def fslnvols_validate(
 
 
 def fslnvols_cargs(
-    params: FslnvolsParameters,
+    params: FslnvolsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def fslnvols_cargs(
 
 
 def fslnvols_outputs(
-    params: FslnvolsParameters,
+    params: FslnvolsParamsDict,
     execution: Execution,
 ) -> FslnvolsOutputs:
     """
@@ -106,7 +106,7 @@ def fslnvols_outputs(
 
 
 def fslnvols_execute(
-    params: FslnvolsParameters,
+    params: FslnvolsParamsDict,
     runner: Runner | None = None,
 ) -> FslnvolsOutputs:
     """
@@ -162,6 +162,8 @@ def fslnvols(
 __all__ = [
     "FSLNVOLS_METADATA",
     "FslnvolsOutputs",
+    "FslnvolsParamsDict",
+    "FslnvolsParamsDictTagged",
     "fslnvols",
     "fslnvols_execute",
     "fslnvols_params",

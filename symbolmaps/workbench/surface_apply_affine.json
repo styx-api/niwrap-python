@@ -6,7 +6,7 @@
     },
     "flirt": {
       "var_param": "flirt",
-      "fn_struct_make_params": "surface_apply_affine_flirt_params",
+      "fn_struct_make_params": "surface_apply_affine_flirt",
       "properties": {
         "source-volume": {
           "var_param": "source_volume"

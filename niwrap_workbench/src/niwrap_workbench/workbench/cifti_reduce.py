@@ -12,42 +12,42 @@ CIFTI_REDUCE_METADATA = Metadata(
 )
 
 
-CiftiReduceExcludeOutliersParameters = typing.TypedDict('CiftiReduceExcludeOutliersParameters', {
+CiftiReduceExcludeOutliersParamsDict = typing.TypedDict('CiftiReduceExcludeOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
     "sigma-below": float,
     "sigma-above": float,
 })
-CiftiReduceExcludeOutliersParametersTagged = typing.TypedDict('CiftiReduceExcludeOutliersParametersTagged', {
+CiftiReduceExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiReduceExcludeOutliersParamsDictTagged', {
     "@type": typing.Literal["exclude-outliers"],
     "sigma-below": float,
     "sigma-above": float,
 })
 
 
-CiftiReduceParameters = typing.TypedDict('CiftiReduceParameters', {
+CiftiReduceParamsDict = typing.TypedDict('CiftiReduceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-reduce"]],
     "cifti-out": str,
     "direction": typing.NotRequired[str | None],
-    "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "cifti-in": InputPathType,
     "operation": str,
 })
-CiftiReduceParametersTagged = typing.TypedDict('CiftiReduceParametersTagged', {
+CiftiReduceParamsDictTagged = typing.TypedDict('CiftiReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-reduce"],
     "cifti-out": str,
     "direction": typing.NotRequired[str | None],
-    "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "cifti-in": InputPathType,
     "operation": str,
 })
 
 
-def cifti_reduce_exclude_outliers_params(
+def cifti_reduce_exclude_outliers(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiReduceExcludeOutliersParametersTagged:
+) -> CiftiReduceExcludeOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def cifti_reduce_exclude_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReduceExcludeOutliersParameters` object.
+    `CiftiReduceExcludeOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def cifti_reduce_exclude_outliers_validate(
 
 
 def cifti_reduce_exclude_outliers_cargs(
-    params: CiftiReduceExcludeOutliersParameters,
+    params: CiftiReduceExcludeOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def cifti_reduce_exclude_outliers_cargs(
 
 class CiftiReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiReduceParameters(...)`.
+    Output object returned when calling `CiftiReduceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,9 +124,9 @@ def cifti_reduce_params(
     direction: str | None,
     cifti_in: InputPathType,
     operation: str,
-    exclude_outliers: CiftiReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
-) -> CiftiReduceParametersTagged:
+) -> CiftiReduceParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def cifti_reduce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReduceParameters` object.
+    `CiftiReduceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -193,7 +193,7 @@ def cifti_reduce_validate(
 
 
 def cifti_reduce_cargs(
-    params: CiftiReduceParameters,
+    params: CiftiReduceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def cifti_reduce_cargs(
 
 
 def cifti_reduce_outputs(
-    params: CiftiReduceParameters,
+    params: CiftiReduceParamsDict,
     execution: Execution,
 ) -> CiftiReduceOutputs:
     """
@@ -242,7 +242,7 @@ def cifti_reduce_outputs(
 
 
 def cifti_reduce_execute(
-    params: CiftiReduceParameters,
+    params: CiftiReduceParamsDict,
     runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
     """
@@ -291,7 +291,7 @@ def cifti_reduce(
     direction: str | None,
     cifti_in: InputPathType,
     operation: str,
-    exclude_outliers: CiftiReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
@@ -347,9 +347,13 @@ def cifti_reduce(
 
 __all__ = [
     "CIFTI_REDUCE_METADATA",
+    "CiftiReduceExcludeOutliersParamsDict",
+    "CiftiReduceExcludeOutliersParamsDictTagged",
     "CiftiReduceOutputs",
+    "CiftiReduceParamsDict",
+    "CiftiReduceParamsDictTagged",
     "cifti_reduce",
-    "cifti_reduce_exclude_outliers_params",
+    "cifti_reduce_exclude_outliers",
     "cifti_reduce_execute",
     "cifti_reduce_params",
 ]

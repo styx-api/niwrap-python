@@ -13,12 +13,12 @@ AFNI_RUN_R_METADATA = Metadata(
 )
 
 
-AfniRunRParameters = typing.TypedDict('AfniRunRParameters', {
+AfniRunRParamsDict = typing.TypedDict('AfniRunRParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_run_R"]],
     "r_script": InputPathType,
     "r_args": list[str],
 })
-AfniRunRParametersTagged = typing.TypedDict('AfniRunRParametersTagged', {
+AfniRunRParamsDictTagged = typing.TypedDict('AfniRunRParamsDictTagged', {
     "@type": typing.Literal["afni/afni_run_R"],
     "r_script": InputPathType,
     "r_args": list[str],
@@ -27,7 +27,7 @@ AfniRunRParametersTagged = typing.TypedDict('AfniRunRParametersTagged', {
 
 class AfniRunROutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniRunRParameters(...)`.
+    Output object returned when calling `AfniRunRParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class AfniRunROutputs(typing.NamedTuple):
 def afni_run_r_params(
     r_script: InputPathType,
     r_args: list[str],
-) -> AfniRunRParametersTagged:
+) -> AfniRunRParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def afni_run_r_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniRunRParameters` object.
+    `AfniRunRParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def afni_run_r_validate(
 
 
 def afni_run_r_cargs(
-    params: AfniRunRParameters,
+    params: AfniRunRParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def afni_run_r_cargs(
 
 
 def afni_run_r_outputs(
-    params: AfniRunRParameters,
+    params: AfniRunRParamsDict,
     execution: Execution,
 ) -> AfniRunROutputs:
     """
@@ -119,7 +119,7 @@ def afni_run_r_outputs(
 
 
 def afni_run_r_execute(
-    params: AfniRunRParameters,
+    params: AfniRunRParamsDict,
     runner: Runner | None = None,
 ) -> AfniRunROutputs:
     """
@@ -178,6 +178,8 @@ def afni_run_r(
 __all__ = [
     "AFNI_RUN_R_METADATA",
     "AfniRunROutputs",
+    "AfniRunRParamsDict",
+    "AfniRunRParamsDictTagged",
     "afni_run_r",
     "afni_run_r_execute",
     "afni_run_r_params",

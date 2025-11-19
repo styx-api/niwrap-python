@@ -13,11 +13,11 @@ MRI_ALIGN_LONG_CSH_METADATA = Metadata(
 )
 
 
-MriAlignLongCshParameters = typing.TypedDict('MriAlignLongCshParameters', {
+MriAlignLongCshParamsDict = typing.TypedDict('MriAlignLongCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_align_long.csh"]],
     "base_id": str,
 })
-MriAlignLongCshParametersTagged = typing.TypedDict('MriAlignLongCshParametersTagged', {
+MriAlignLongCshParamsDictTagged = typing.TypedDict('MriAlignLongCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_align_long.csh"],
     "base_id": str,
 })
@@ -25,7 +25,7 @@ MriAlignLongCshParametersTagged = typing.TypedDict('MriAlignLongCshParametersTag
 
 class MriAlignLongCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAlignLongCshParameters(...)`.
+    Output object returned when calling `MriAlignLongCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class MriAlignLongCshOutputs(typing.NamedTuple):
 
 def mri_align_long_csh_params(
     base_id: str,
-) -> MriAlignLongCshParametersTagged:
+) -> MriAlignLongCshParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def mri_align_long_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAlignLongCshParameters` object.
+    `MriAlignLongCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def mri_align_long_csh_validate(
 
 
 def mri_align_long_csh_cargs(
-    params: MriAlignLongCshParameters,
+    params: MriAlignLongCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def mri_align_long_csh_cargs(
 
 
 def mri_align_long_csh_outputs(
-    params: MriAlignLongCshParameters,
+    params: MriAlignLongCshParamsDict,
     execution: Execution,
 ) -> MriAlignLongCshOutputs:
     """
@@ -112,7 +112,7 @@ def mri_align_long_csh_outputs(
 
 
 def mri_align_long_csh_execute(
-    params: MriAlignLongCshParameters,
+    params: MriAlignLongCshParamsDict,
     runner: Runner | None = None,
 ) -> MriAlignLongCshOutputs:
     """
@@ -170,6 +170,8 @@ def mri_align_long_csh(
 __all__ = [
     "MRI_ALIGN_LONG_CSH_METADATA",
     "MriAlignLongCshOutputs",
+    "MriAlignLongCshParamsDict",
+    "MriAlignLongCshParamsDictTagged",
     "mri_align_long_csh",
     "mri_align_long_csh_execute",
     "mri_align_long_csh_params",

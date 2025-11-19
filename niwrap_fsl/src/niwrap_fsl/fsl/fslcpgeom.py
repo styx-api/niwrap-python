@@ -13,13 +13,13 @@ FSLCPGEOM_METADATA = Metadata(
 )
 
 
-FslcpgeomParameters = typing.TypedDict('FslcpgeomParameters', {
+FslcpgeomParamsDict = typing.TypedDict('FslcpgeomParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslcpgeom"]],
     "source_file": InputPathType,
     "destination_file": InputPathType,
     "dimensions_flag": bool,
 })
-FslcpgeomParametersTagged = typing.TypedDict('FslcpgeomParametersTagged', {
+FslcpgeomParamsDictTagged = typing.TypedDict('FslcpgeomParamsDictTagged', {
     "@type": typing.Literal["fsl/fslcpgeom"],
     "source_file": InputPathType,
     "destination_file": InputPathType,
@@ -29,7 +29,7 @@ FslcpgeomParametersTagged = typing.TypedDict('FslcpgeomParametersTagged', {
 
 class FslcpgeomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslcpgeomParameters(...)`.
+    Output object returned when calling `FslcpgeomParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def fslcpgeom_params(
     source_file: InputPathType,
     destination_file: InputPathType,
     dimensions_flag: bool = False,
-) -> FslcpgeomParametersTagged:
+) -> FslcpgeomParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def fslcpgeom_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslcpgeomParameters` object.
+    `FslcpgeomParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def fslcpgeom_validate(
 
 
 def fslcpgeom_cargs(
-    params: FslcpgeomParameters,
+    params: FslcpgeomParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -108,7 +108,7 @@ def fslcpgeom_cargs(
 
 
 def fslcpgeom_outputs(
-    params: FslcpgeomParameters,
+    params: FslcpgeomParamsDict,
     execution: Execution,
 ) -> FslcpgeomOutputs:
     """
@@ -127,7 +127,7 @@ def fslcpgeom_outputs(
 
 
 def fslcpgeom_execute(
-    params: FslcpgeomParameters,
+    params: FslcpgeomParamsDict,
     runner: Runner | None = None,
 ) -> FslcpgeomOutputs:
     """
@@ -189,6 +189,8 @@ def fslcpgeom(
 __all__ = [
     "FSLCPGEOM_METADATA",
     "FslcpgeomOutputs",
+    "FslcpgeomParamsDict",
+    "FslcpgeomParamsDictTagged",
     "fslcpgeom",
     "fslcpgeom_execute",
     "fslcpgeom_params",

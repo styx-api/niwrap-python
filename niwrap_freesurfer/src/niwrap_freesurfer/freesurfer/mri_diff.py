@@ -13,7 +13,7 @@ MRI_DIFF_METADATA = Metadata(
 )
 
 
-MriDiffParameters = typing.TypedDict('MriDiffParameters', {
+MriDiffParamsDict = typing.TypedDict('MriDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_diff"]],
     "vol1file": InputPathType,
     "vol2file": InputPathType,
@@ -47,7 +47,7 @@ MriDiffParameters = typing.TypedDict('MriDiffParameters', {
     "verbose_mode": bool,
     "check_options": bool,
 })
-MriDiffParametersTagged = typing.TypedDict('MriDiffParametersTagged', {
+MriDiffParamsDictTagged = typing.TypedDict('MriDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_diff"],
     "vol1file": InputPathType,
     "vol2file": InputPathType,
@@ -85,7 +85,7 @@ MriDiffParametersTagged = typing.TypedDict('MriDiffParametersTagged', {
 
 class MriDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDiffParameters(...)`.
+    Output object returned when calling `MriDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +129,7 @@ def mri_diff_params(
     debug_mode: bool = False,
     verbose_mode: bool = False,
     check_options: bool = False,
-) -> MriDiffParametersTagged:
+) -> MriDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -225,7 +225,7 @@ def mri_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDiffParameters` object.
+    `MriDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -351,7 +351,7 @@ def mri_diff_validate(
 
 
 def mri_diff_cargs(
-    params: MriDiffParameters,
+    params: MriDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -453,7 +453,7 @@ def mri_diff_cargs(
 
 
 def mri_diff_outputs(
-    params: MriDiffParameters,
+    params: MriDiffParamsDict,
     execution: Execution,
 ) -> MriDiffOutputs:
     """
@@ -475,7 +475,7 @@ def mri_diff_outputs(
 
 
 def mri_diff_execute(
-    params: MriDiffParameters,
+    params: MriDiffParamsDict,
     runner: Runner | None = None,
 ) -> MriDiffOutputs:
     """
@@ -630,6 +630,8 @@ def mri_diff(
 __all__ = [
     "MRI_DIFF_METADATA",
     "MriDiffOutputs",
+    "MriDiffParamsDict",
+    "MriDiffParamsDictTagged",
     "mri_diff",
     "mri_diff_execute",
     "mri_diff_params",

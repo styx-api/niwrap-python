@@ -13,14 +13,14 @@ MRI_XVOLAVG_METADATA = Metadata(
 )
 
 
-MriXvolavgParameters = typing.TypedDict('MriXvolavgParameters', {
+MriXvolavgParamsDict = typing.TypedDict('MriXvolavgParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_xvolavg"]],
     "input_volumes": list[InputPathType],
     "vol_type": str,
     "output_volume": str,
     "output_type": typing.NotRequired[str | None],
 })
-MriXvolavgParametersTagged = typing.TypedDict('MriXvolavgParametersTagged', {
+MriXvolavgParamsDictTagged = typing.TypedDict('MriXvolavgParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_xvolavg"],
     "input_volumes": list[InputPathType],
     "vol_type": str,
@@ -31,7 +31,7 @@ MriXvolavgParametersTagged = typing.TypedDict('MriXvolavgParametersTagged', {
 
 class MriXvolavgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriXvolavgParameters(...)`.
+    Output object returned when calling `MriXvolavgParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_xvolavg_params(
     vol_type: str,
     output_volume: str,
     output_type: str | None = None,
-) -> MriXvolavgParametersTagged:
+) -> MriXvolavgParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def mri_xvolavg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriXvolavgParameters` object.
+    `MriXvolavgParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def mri_xvolavg_validate(
 
 
 def mri_xvolavg_cargs(
-    params: MriXvolavgParameters,
+    params: MriXvolavgParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def mri_xvolavg_cargs(
 
 
 def mri_xvolavg_outputs(
-    params: MriXvolavgParameters,
+    params: MriXvolavgParamsDict,
     execution: Execution,
 ) -> MriXvolavgOutputs:
     """
@@ -157,7 +157,7 @@ def mri_xvolavg_outputs(
 
 
 def mri_xvolavg_execute(
-    params: MriXvolavgParameters,
+    params: MriXvolavgParamsDict,
     runner: Runner | None = None,
 ) -> MriXvolavgOutputs:
     """
@@ -224,6 +224,8 @@ def mri_xvolavg(
 __all__ = [
     "MRI_XVOLAVG_METADATA",
     "MriXvolavgOutputs",
+    "MriXvolavgParamsDict",
+    "MriXvolavgParamsDictTagged",
     "mri_xvolavg",
     "mri_xvolavg_execute",
     "mri_xvolavg_params",

@@ -13,7 +13,7 @@ V_3DINFILL_METADATA = Metadata(
 )
 
 
-V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
+V3dinfillParamsDict = typing.TypedDict('V3dinfillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dinfill"]],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
     "mrange": typing.NotRequired[list[float] | None],
     "cmask": typing.NotRequired[str | None],
 })
-V3dinfillParametersTagged = typing.TypedDict('V3dinfillParametersTagged', {
+V3dinfillParamsDictTagged = typing.TypedDict('V3dinfillParamsDictTagged', {
     "@type": typing.Literal["afni/3dinfill"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ V3dinfillParametersTagged = typing.TypedDict('V3dinfillParametersTagged', {
 
 class V3dinfillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dinfillParameters(...)`.
+    Output object returned when calling `V3dinfillParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v_3dinfill_params(
     mask_range: list[float] | None = None,
     mrange: list[float] | None = None,
     cmask: str | None = None,
-) -> V3dinfillParametersTagged:
+) -> V3dinfillParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def v_3dinfill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dinfillParameters` object.
+    `V3dinfillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def v_3dinfill_validate(
 
 
 def v_3dinfill_cargs(
-    params: V3dinfillParameters,
+    params: V3dinfillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,7 +238,7 @@ def v_3dinfill_cargs(
 
 
 def v_3dinfill_outputs(
-    params: V3dinfillParameters,
+    params: V3dinfillParamsDict,
     execution: Execution,
 ) -> V3dinfillOutputs:
     """
@@ -258,7 +258,7 @@ def v_3dinfill_outputs(
 
 
 def v_3dinfill_execute(
-    params: V3dinfillParameters,
+    params: V3dinfillParamsDict,
     runner: Runner | None = None,
 ) -> V3dinfillOutputs:
     """
@@ -343,6 +343,8 @@ def v_3dinfill(
 
 __all__ = [
     "V3dinfillOutputs",
+    "V3dinfillParamsDict",
+    "V3dinfillParamsDictTagged",
     "V_3DINFILL_METADATA",
     "v_3dinfill",
     "v_3dinfill_execute",

@@ -12,25 +12,25 @@ CONVERT_AFFINE_METADATA = Metadata(
 )
 
 
-ConvertAffineFromWorldParameters = typing.TypedDict('ConvertAffineFromWorldParameters', {
+ConvertAffineFromWorldParamsDict = typing.TypedDict('ConvertAffineFromWorldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-world"]],
     "input": str,
     "inverse": bool,
 })
-ConvertAffineFromWorldParametersTagged = typing.TypedDict('ConvertAffineFromWorldParametersTagged', {
+ConvertAffineFromWorldParamsDictTagged = typing.TypedDict('ConvertAffineFromWorldParamsDictTagged', {
     "@type": typing.Literal["from-world"],
     "input": str,
     "inverse": bool,
 })
 
 
-ConvertAffineFromFlirtParameters = typing.TypedDict('ConvertAffineFromFlirtParameters', {
+ConvertAffineFromFlirtParamsDict = typing.TypedDict('ConvertAffineFromFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-flirt"]],
     "input": str,
     "source-volume": str,
     "target-volume": str,
 })
-ConvertAffineFromFlirtParametersTagged = typing.TypedDict('ConvertAffineFromFlirtParametersTagged', {
+ConvertAffineFromFlirtParamsDictTagged = typing.TypedDict('ConvertAffineFromFlirtParamsDictTagged', {
     "@type": typing.Literal["from-flirt"],
     "input": str,
     "source-volume": str,
@@ -38,25 +38,25 @@ ConvertAffineFromFlirtParametersTagged = typing.TypedDict('ConvertAffineFromFlir
 })
 
 
-ConvertAffineToWorldParameters = typing.TypedDict('ConvertAffineToWorldParameters', {
+ConvertAffineToWorldParamsDict = typing.TypedDict('ConvertAffineToWorldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["to-world"]],
     "output": str,
     "inverse": bool,
 })
-ConvertAffineToWorldParametersTagged = typing.TypedDict('ConvertAffineToWorldParametersTagged', {
+ConvertAffineToWorldParamsDictTagged = typing.TypedDict('ConvertAffineToWorldParamsDictTagged', {
     "@type": typing.Literal["to-world"],
     "output": str,
     "inverse": bool,
 })
 
 
-ConvertAffineToFlirtParameters = typing.TypedDict('ConvertAffineToFlirtParameters', {
+ConvertAffineToFlirtParamsDict = typing.TypedDict('ConvertAffineToFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["to-flirt"]],
     "output": str,
     "source-volume": str,
     "target-volume": str,
 })
-ConvertAffineToFlirtParametersTagged = typing.TypedDict('ConvertAffineToFlirtParametersTagged', {
+ConvertAffineToFlirtParamsDictTagged = typing.TypedDict('ConvertAffineToFlirtParamsDictTagged', {
     "@type": typing.Literal["to-flirt"],
     "output": str,
     "source-volume": str,
@@ -64,30 +64,30 @@ ConvertAffineToFlirtParametersTagged = typing.TypedDict('ConvertAffineToFlirtPar
 })
 
 
-ConvertAffineParameters = typing.TypedDict('ConvertAffineParameters', {
+ConvertAffineParamsDict = typing.TypedDict('ConvertAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-affine"]],
-    "from-world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
+    "from-world": typing.NotRequired[ConvertAffineFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
-    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
-    "to-world": typing.NotRequired[ConvertAffineToWorldParameters | None],
+    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParamsDict | None],
+    "to-world": typing.NotRequired[ConvertAffineToWorldParamsDict | None],
     "output": typing.NotRequired[str | None],
-    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
+    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParamsDict] | None],
 })
-ConvertAffineParametersTagged = typing.TypedDict('ConvertAffineParametersTagged', {
+ConvertAffineParamsDictTagged = typing.TypedDict('ConvertAffineParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-affine"],
-    "from-world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
+    "from-world": typing.NotRequired[ConvertAffineFromWorldParamsDict | None],
     "input": typing.NotRequired[str | None],
-    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
-    "to-world": typing.NotRequired[ConvertAffineToWorldParameters | None],
+    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParamsDict | None],
+    "to-world": typing.NotRequired[ConvertAffineToWorldParamsDict | None],
     "output": typing.NotRequired[str | None],
-    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
+    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParamsDict] | None],
 })
 
 
-def convert_affine_from_world_params(
+def convert_affine_from_world(
     input_: str,
     inverse: bool = False,
-) -> ConvertAffineFromWorldParametersTagged:
+) -> ConvertAffineFromWorldParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def convert_affine_from_world_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertAffineFromWorldParameters` object.
+    `ConvertAffineFromWorldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def convert_affine_from_world_validate(
 
 
 def convert_affine_from_world_cargs(
-    params: ConvertAffineFromWorldParameters,
+    params: ConvertAffineFromWorldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,11 +150,11 @@ def convert_affine_from_world_cargs(
     return cargs
 
 
-def convert_affine_from_flirt_params(
+def convert_affine_from_flirt(
     input_: str,
     source_volume: str,
     target_volume: str,
-) -> ConvertAffineFromFlirtParametersTagged:
+) -> ConvertAffineFromFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -179,7 +179,7 @@ def convert_affine_from_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertAffineFromFlirtParameters` object.
+    `ConvertAffineFromFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -201,7 +201,7 @@ def convert_affine_from_flirt_validate(
 
 
 def convert_affine_from_flirt_cargs(
-    params: ConvertAffineFromFlirtParameters,
+    params: ConvertAffineFromFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -223,10 +223,10 @@ def convert_affine_from_flirt_cargs(
     return cargs
 
 
-def convert_affine_to_world_params(
+def convert_affine_to_world(
     output: str,
     inverse: bool = False,
-) -> ConvertAffineToWorldParametersTagged:
+) -> ConvertAffineToWorldParamsDictTagged:
     """
     Build parameters.
     
@@ -249,7 +249,7 @@ def convert_affine_to_world_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertAffineToWorldParameters` object.
+    `ConvertAffineToWorldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -267,7 +267,7 @@ def convert_affine_to_world_validate(
 
 
 def convert_affine_to_world_cargs(
-    params: ConvertAffineToWorldParameters,
+    params: ConvertAffineToWorldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -289,11 +289,11 @@ def convert_affine_to_world_cargs(
     return cargs
 
 
-def convert_affine_to_flirt_params(
+def convert_affine_to_flirt(
     output: str,
     source_volume: str,
     target_volume: str,
-) -> ConvertAffineToFlirtParametersTagged:
+) -> ConvertAffineToFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -319,7 +319,7 @@ def convert_affine_to_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertAffineToFlirtParameters` object.
+    `ConvertAffineToFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -341,7 +341,7 @@ def convert_affine_to_flirt_validate(
 
 
 def convert_affine_to_flirt_cargs(
-    params: ConvertAffineToFlirtParameters,
+    params: ConvertAffineToFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -365,7 +365,7 @@ def convert_affine_to_flirt_cargs(
 
 class ConvertAffineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertAffineParameters(...)`.
+    Output object returned when calling `ConvertAffineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -374,11 +374,11 @@ class ConvertAffineOutputs(typing.NamedTuple):
 def convert_affine_params(
     input_: str | None,
     output: str | None,
-    from_world: ConvertAffineFromWorldParameters | None = None,
-    from_flirt: ConvertAffineFromFlirtParameters | None = None,
-    to_world: ConvertAffineToWorldParameters | None = None,
-    to_flirt: list[ConvertAffineToFlirtParameters] | None = None,
-) -> ConvertAffineParametersTagged:
+    from_world: ConvertAffineFromWorldParamsDict | None = None,
+    from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
+    to_world: ConvertAffineToWorldParamsDict | None = None,
+    to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
+) -> ConvertAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -419,7 +419,7 @@ def convert_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertAffineParameters` object.
+    `ConvertAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -440,13 +440,13 @@ def convert_affine_validate(
             raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
     if params.get("to-flirt", None) is not None:
         if not isinstance(params["to-flirt"], list):
-            raise StyxValidationError(f'`to-flirt` has the wrong type: Received `{type(params.get("to-flirt", None))}` expected `list[ConvertAffineToFlirtParameters] | None`')
+            raise StyxValidationError(f'`to-flirt` has the wrong type: Received `{type(params.get("to-flirt", None))}` expected `list[ConvertAffineToFlirtParamsDict] | None`')
         for e in params["to-flirt"]:
             convert_affine_to_flirt_validate(e)
 
 
 def convert_affine_cargs(
-    params: ConvertAffineParameters,
+    params: ConvertAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -476,7 +476,7 @@ def convert_affine_cargs(
 
 
 def convert_affine_outputs(
-    params: ConvertAffineParameters,
+    params: ConvertAffineParamsDict,
     execution: Execution,
 ) -> ConvertAffineOutputs:
     """
@@ -495,7 +495,7 @@ def convert_affine_outputs(
 
 
 def convert_affine_execute(
-    params: ConvertAffineParameters,
+    params: ConvertAffineParamsDict,
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
@@ -532,10 +532,10 @@ def convert_affine_execute(
 def convert_affine(
     input_: str | None,
     output: str | None,
-    from_world: ConvertAffineFromWorldParameters | None = None,
-    from_flirt: ConvertAffineFromFlirtParameters | None = None,
-    to_world: ConvertAffineToWorldParameters | None = None,
-    to_flirt: list[ConvertAffineToFlirtParameters] | None = None,
+    from_world: ConvertAffineFromWorldParamsDict | None = None,
+    from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
+    to_world: ConvertAffineToWorldParamsDict | None = None,
+    to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
@@ -581,12 +581,22 @@ def convert_affine(
 
 __all__ = [
     "CONVERT_AFFINE_METADATA",
+    "ConvertAffineFromFlirtParamsDict",
+    "ConvertAffineFromFlirtParamsDictTagged",
+    "ConvertAffineFromWorldParamsDict",
+    "ConvertAffineFromWorldParamsDictTagged",
     "ConvertAffineOutputs",
+    "ConvertAffineParamsDict",
+    "ConvertAffineParamsDictTagged",
+    "ConvertAffineToFlirtParamsDict",
+    "ConvertAffineToFlirtParamsDictTagged",
+    "ConvertAffineToWorldParamsDict",
+    "ConvertAffineToWorldParamsDictTagged",
     "convert_affine",
     "convert_affine_execute",
-    "convert_affine_from_flirt_params",
-    "convert_affine_from_world_params",
+    "convert_affine_from_flirt",
+    "convert_affine_from_world",
     "convert_affine_params",
-    "convert_affine_to_flirt_params",
-    "convert_affine_to_world_params",
+    "convert_affine_to_flirt",
+    "convert_affine_to_world",
 ]

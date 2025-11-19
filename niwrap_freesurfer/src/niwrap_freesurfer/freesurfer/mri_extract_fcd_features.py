@@ -13,14 +13,14 @@ MRI_EXTRACT_FCD_FEATURES_METADATA = Metadata(
 )
 
 
-MriExtractFcdFeaturesParameters = typing.TypedDict('MriExtractFcdFeaturesParameters', {
+MriExtractFcdFeaturesParamsDict = typing.TypedDict('MriExtractFcdFeaturesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_fcd_features"]],
     "subject": str,
     "hemi": str,
     "output_file": InputPathType,
     "subjects_dir": typing.NotRequired[str | None],
 })
-MriExtractFcdFeaturesParametersTagged = typing.TypedDict('MriExtractFcdFeaturesParametersTagged', {
+MriExtractFcdFeaturesParamsDictTagged = typing.TypedDict('MriExtractFcdFeaturesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_extract_fcd_features"],
     "subject": str,
     "hemi": str,
@@ -31,7 +31,7 @@ MriExtractFcdFeaturesParametersTagged = typing.TypedDict('MriExtractFcdFeaturesP
 
 class MriExtractFcdFeaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExtractFcdFeaturesParameters(...)`.
+    Output object returned when calling `MriExtractFcdFeaturesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mri_extract_fcd_features_params(
     hemi: str,
     output_file: InputPathType,
     subjects_dir: str | None = None,
-) -> MriExtractFcdFeaturesParametersTagged:
+) -> MriExtractFcdFeaturesParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_extract_fcd_features_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExtractFcdFeaturesParameters` object.
+    `MriExtractFcdFeaturesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def mri_extract_fcd_features_validate(
 
 
 def mri_extract_fcd_features_cargs(
-    params: MriExtractFcdFeaturesParameters,
+    params: MriExtractFcdFeaturesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def mri_extract_fcd_features_cargs(
 
 
 def mri_extract_fcd_features_outputs(
-    params: MriExtractFcdFeaturesParameters,
+    params: MriExtractFcdFeaturesParamsDict,
     execution: Execution,
 ) -> MriExtractFcdFeaturesOutputs:
     """
@@ -141,7 +141,7 @@ def mri_extract_fcd_features_outputs(
 
 
 def mri_extract_fcd_features_execute(
-    params: MriExtractFcdFeaturesParameters,
+    params: MriExtractFcdFeaturesParamsDict,
     runner: Runner | None = None,
 ) -> MriExtractFcdFeaturesOutputs:
     """
@@ -207,6 +207,8 @@ def mri_extract_fcd_features(
 __all__ = [
     "MRI_EXTRACT_FCD_FEATURES_METADATA",
     "MriExtractFcdFeaturesOutputs",
+    "MriExtractFcdFeaturesParamsDict",
+    "MriExtractFcdFeaturesParamsDictTagged",
     "mri_extract_fcd_features",
     "mri_extract_fcd_features_execute",
     "mri_extract_fcd_features_params",

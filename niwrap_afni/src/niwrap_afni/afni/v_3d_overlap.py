@@ -13,13 +13,13 @@ V_3D_OVERLAP_METADATA = Metadata(
 )
 
 
-V3dOverlapParameters = typing.TypedDict('V3dOverlapParameters', {
+V3dOverlapParamsDict = typing.TypedDict('V3dOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dOverlap"]],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],
 })
-V3dOverlapParametersTagged = typing.TypedDict('V3dOverlapParametersTagged', {
+V3dOverlapParamsDictTagged = typing.TypedDict('V3dOverlapParamsDictTagged', {
     "@type": typing.Literal["afni/3dOverlap"],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
@@ -29,7 +29,7 @@ V3dOverlapParametersTagged = typing.TypedDict('V3dOverlapParametersTagged', {
 
 class V3dOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dOverlapParameters(...)`.
+    Output object returned when calling `V3dOverlapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v_3d_overlap_params(
     dataset1: InputPathType,
     dataset2: list[InputPathType],
     save_prefix: str | None = None,
-) -> V3dOverlapParametersTagged:
+) -> V3dOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def v_3d_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dOverlapParameters` object.
+    `V3dOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -94,7 +94,7 @@ def v_3d_overlap_validate(
 
 
 def v_3d_overlap_cargs(
-    params: V3dOverlapParameters,
+    params: V3dOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def v_3d_overlap_cargs(
 
 
 def v_3d_overlap_outputs(
-    params: V3dOverlapParameters,
+    params: V3dOverlapParamsDict,
     execution: Execution,
 ) -> V3dOverlapOutputs:
     """
@@ -140,7 +140,7 @@ def v_3d_overlap_outputs(
 
 
 def v_3d_overlap_execute(
-    params: V3dOverlapParameters,
+    params: V3dOverlapParamsDict,
     runner: Runner | None = None,
 ) -> V3dOverlapOutputs:
     """
@@ -202,6 +202,8 @@ def v_3d_overlap(
 
 __all__ = [
     "V3dOverlapOutputs",
+    "V3dOverlapParamsDict",
+    "V3dOverlapParamsDictTagged",
     "V_3D_OVERLAP_METADATA",
     "v_3d_overlap",
     "v_3d_overlap_execute",

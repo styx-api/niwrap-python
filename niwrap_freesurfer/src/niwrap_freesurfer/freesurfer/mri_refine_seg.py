@@ -13,13 +13,13 @@ MRI_REFINE_SEG_METADATA = Metadata(
 )
 
 
-MriRefineSegParameters = typing.TypedDict('MriRefineSegParameters', {
+MriRefineSegParamsDict = typing.TypedDict('MriRefineSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_refine_seg"]],
     "input_segmentation": InputPathType,
     "output_segmentation": str,
     "debug": bool,
 })
-MriRefineSegParametersTagged = typing.TypedDict('MriRefineSegParametersTagged', {
+MriRefineSegParamsDictTagged = typing.TypedDict('MriRefineSegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_refine_seg"],
     "input_segmentation": InputPathType,
     "output_segmentation": str,
@@ -29,7 +29,7 @@ MriRefineSegParametersTagged = typing.TypedDict('MriRefineSegParametersTagged', 
 
 class MriRefineSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRefineSegParameters(...)`.
+    Output object returned when calling `MriRefineSegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_refine_seg_params(
     input_segmentation: InputPathType,
     output_segmentation: str,
     debug: bool = False,
-) -> MriRefineSegParametersTagged:
+) -> MriRefineSegParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mri_refine_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRefineSegParameters` object.
+    `MriRefineSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mri_refine_seg_validate(
 
 
 def mri_refine_seg_cargs(
-    params: MriRefineSegParameters,
+    params: MriRefineSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,7 +117,7 @@ def mri_refine_seg_cargs(
 
 
 def mri_refine_seg_outputs(
-    params: MriRefineSegParameters,
+    params: MriRefineSegParamsDict,
     execution: Execution,
 ) -> MriRefineSegOutputs:
     """
@@ -137,7 +137,7 @@ def mri_refine_seg_outputs(
 
 
 def mri_refine_seg_execute(
-    params: MriRefineSegParameters,
+    params: MriRefineSegParamsDict,
     runner: Runner | None = None,
 ) -> MriRefineSegOutputs:
     """
@@ -200,6 +200,8 @@ def mri_refine_seg(
 __all__ = [
     "MRI_REFINE_SEG_METADATA",
     "MriRefineSegOutputs",
+    "MriRefineSegParamsDict",
+    "MriRefineSegParamsDictTagged",
     "mri_refine_seg",
     "mri_refine_seg_execute",
     "mri_refine_seg_params",

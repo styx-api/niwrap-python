@@ -13,14 +13,14 @@ V_3D_AFNITO_ANALYZE_METADATA = Metadata(
 )
 
 
-V3dAfnitoAnalyzeParameters = typing.TypedDict('V3dAfnitoAnalyzeParameters', {
+V3dAfnitoAnalyzeParamsDict = typing.TypedDict('V3dAfnitoAnalyzeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoANALYZE"]],
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
     "output_name": str,
     "afni_dataset": InputPathType,
 })
-V3dAfnitoAnalyzeParametersTagged = typing.TypedDict('V3dAfnitoAnalyzeParametersTagged', {
+V3dAfnitoAnalyzeParamsDictTagged = typing.TypedDict('V3dAfnitoAnalyzeParamsDictTagged', {
     "@type": typing.Literal["afni/3dAFNItoANALYZE"],
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dAfnitoAnalyzeParametersTagged = typing.TypedDict('V3dAfnitoAnalyzeParametersT
 
 class V3dAfnitoAnalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAfnitoAnalyzeParameters(...)`.
+    Output object returned when calling `V3dAfnitoAnalyzeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_afnito_analyze_params(
     afni_dataset: InputPathType,
     v_4d_option: bool = False,
     orient_option: str | None = None,
-) -> V3dAfnitoAnalyzeParametersTagged:
+) -> V3dAfnitoAnalyzeParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def v_3d_afnito_analyze_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAfnitoAnalyzeParameters` object.
+    `V3dAfnitoAnalyzeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def v_3d_afnito_analyze_validate(
 
 
 def v_3d_afnito_analyze_cargs(
-    params: V3dAfnitoAnalyzeParameters,
+    params: V3dAfnitoAnalyzeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def v_3d_afnito_analyze_cargs(
 
 
 def v_3d_afnito_analyze_outputs(
-    params: V3dAfnitoAnalyzeParameters,
+    params: V3dAfnitoAnalyzeParamsDict,
     execution: Execution,
 ) -> V3dAfnitoAnalyzeOutputs:
     """
@@ -155,7 +155,7 @@ def v_3d_afnito_analyze_outputs(
 
 
 def v_3d_afnito_analyze_execute(
-    params: V3dAfnitoAnalyzeParameters,
+    params: V3dAfnitoAnalyzeParamsDict,
     runner: Runner | None = None,
 ) -> V3dAfnitoAnalyzeOutputs:
     """
@@ -221,6 +221,8 @@ def v_3d_afnito_analyze(
 
 __all__ = [
     "V3dAfnitoAnalyzeOutputs",
+    "V3dAfnitoAnalyzeParamsDict",
+    "V3dAfnitoAnalyzeParamsDictTagged",
     "V_3D_AFNITO_ANALYZE_METADATA",
     "v_3d_afnito_analyze",
     "v_3d_afnito_analyze_execute",

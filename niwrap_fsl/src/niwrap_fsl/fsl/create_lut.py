@@ -13,11 +13,11 @@ CREATE_LUT_METADATA = Metadata(
 )
 
 
-CreateLutParameters = typing.TypedDict('CreateLutParameters', {
+CreateLutParamsDict = typing.TypedDict('CreateLutParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/create_lut"]],
     "output_file_root": str,
 })
-CreateLutParametersTagged = typing.TypedDict('CreateLutParametersTagged', {
+CreateLutParamsDictTagged = typing.TypedDict('CreateLutParamsDictTagged', {
     "@type": typing.Literal["fsl/create_lut"],
     "output_file_root": str,
 })
@@ -25,7 +25,7 @@ CreateLutParametersTagged = typing.TypedDict('CreateLutParametersTagged', {
 
 class CreateLutOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateLutParameters(...)`.
+    Output object returned when calling `CreateLutParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class CreateLutOutputs(typing.NamedTuple):
 
 def create_lut_params(
     output_file_root: str,
-) -> CreateLutParametersTagged:
+) -> CreateLutParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def create_lut_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateLutParameters` object.
+    `CreateLutParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def create_lut_validate(
 
 
 def create_lut_cargs(
-    params: CreateLutParameters,
+    params: CreateLutParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def create_lut_cargs(
 
 
 def create_lut_outputs(
-    params: CreateLutParameters,
+    params: CreateLutParamsDict,
     execution: Execution,
 ) -> CreateLutOutputs:
     """
@@ -106,7 +106,7 @@ def create_lut_outputs(
 
 
 def create_lut_execute(
-    params: CreateLutParameters,
+    params: CreateLutParamsDict,
     runner: Runner | None = None,
 ) -> CreateLutOutputs:
     """
@@ -162,6 +162,8 @@ def create_lut(
 __all__ = [
     "CREATE_LUT_METADATA",
     "CreateLutOutputs",
+    "CreateLutParamsDict",
+    "CreateLutParamsDictTagged",
     "create_lut",
     "create_lut_execute",
     "create_lut_params",

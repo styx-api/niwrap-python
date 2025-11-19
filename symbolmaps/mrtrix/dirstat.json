@@ -12,7 +12,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "dirstat_fslgrad_params",
+      "fn_struct_make_params": "dirstat_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -39,7 +39,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "dirstat_config_params",
+      "fn_struct_make_params": "dirstat_config",
       "properties": {
         "key": {
           "var_param": "key"

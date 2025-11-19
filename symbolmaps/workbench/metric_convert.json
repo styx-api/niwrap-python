@@ -3,7 +3,7 @@
   "properties": {
     "to-nifti": {
       "var_param": "to_nifti",
-      "fn_struct_make_params": "metric_convert_to_nifti_params",
+      "fn_struct_make_params": "metric_convert_to_nifti",
       "properties": {
         "metric-in": {
           "var_param": "metric_in"
@@ -15,7 +15,7 @@
     },
     "from-nifti": {
       "var_param": "from_nifti",
-      "fn_struct_make_params": "metric_convert_from_nifti_params",
+      "fn_struct_make_params": "metric_convert_from_nifti",
       "properties": {
         "nifti-in": {
           "var_param": "nifti_in"

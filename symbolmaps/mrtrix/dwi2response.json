@@ -5,7 +5,7 @@
       "var_param": "algorithm",
       "variants": {
         "dhollander": {
-          "fn_struct_make_params": "dwi2response_dhollander_params",
+          "fn_struct_make_params": "dwi2response_dhollander",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -40,7 +40,7 @@
           }
         },
         "fa": {
-          "fn_struct_make_params": "dwi2response_fa_params",
+          "fn_struct_make_params": "dwi2response_fa",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -60,7 +60,7 @@
           }
         },
         "manual": {
-          "fn_struct_make_params": "dwi2response_manual_params",
+          "fn_struct_make_params": "dwi2response_manual",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -77,7 +77,7 @@
           }
         },
         "msmt_5tt": {
-          "fn_struct_make_params": "dwi2response_msmt_5tt_params",
+          "fn_struct_make_params": "dwi2response_msmt_5tt",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -112,7 +112,7 @@
           }
         },
         "tax": {
-          "fn_struct_make_params": "dwi2response_tax_params",
+          "fn_struct_make_params": "dwi2response_tax",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -132,7 +132,7 @@
           }
         },
         "tournier": {
-          "fn_struct_make_params": "dwi2response_tournier_params",
+          "fn_struct_make_params": "dwi2response_tournier",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -161,7 +161,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "dwi2response_fslgrad_params",
+      "fn_struct_make_params": "dwi2response_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -209,7 +209,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "dwi2response_config_params",
+      "fn_struct_make_params": "dwi2response_config",
       "properties": {
         "key": {
           "var_param": "key"

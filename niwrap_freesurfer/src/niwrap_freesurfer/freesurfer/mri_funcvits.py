@@ -13,7 +13,7 @@ MRI_FUNCVITS_METADATA = Metadata(
 )
 
 
-MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
+MriFuncvitsParamsDict = typing.TypedDict('MriFuncvitsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri-funcvits"]],
     "stem": str,
     "outdir": str,
@@ -28,7 +28,7 @@ MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
     "mail": typing.NotRequired[str | None],
     "noforce": bool,
 })
-MriFuncvitsParametersTagged = typing.TypedDict('MriFuncvitsParametersTagged', {
+MriFuncvitsParamsDictTagged = typing.TypedDict('MriFuncvitsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri-funcvits"],
     "stem": str,
     "outdir": str,
@@ -47,7 +47,7 @@ MriFuncvitsParametersTagged = typing.TypedDict('MriFuncvitsParametersTagged', {
 
 class MriFuncvitsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFuncvitsParameters(...)`.
+    Output object returned when calling `MriFuncvitsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def mri_funcvits_params(
     umask: str | None = None,
     mail: str | None = None,
     noforce: bool = False,
-) -> MriFuncvitsParametersTagged:
+) -> MriFuncvitsParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def mri_funcvits_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFuncvitsParameters` object.
+    `MriFuncvitsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -170,7 +170,7 @@ def mri_funcvits_validate(
 
 
 def mri_funcvits_cargs(
-    params: MriFuncvitsParameters,
+    params: MriFuncvitsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -243,7 +243,7 @@ def mri_funcvits_cargs(
 
 
 def mri_funcvits_outputs(
-    params: MriFuncvitsParameters,
+    params: MriFuncvitsParamsDict,
     execution: Execution,
 ) -> MriFuncvitsOutputs:
     """
@@ -262,7 +262,7 @@ def mri_funcvits_outputs(
 
 
 def mri_funcvits_execute(
-    params: MriFuncvitsParameters,
+    params: MriFuncvitsParamsDict,
     runner: Runner | None = None,
 ) -> MriFuncvitsOutputs:
     """
@@ -351,6 +351,8 @@ def mri_funcvits(
 __all__ = [
     "MRI_FUNCVITS_METADATA",
     "MriFuncvitsOutputs",
+    "MriFuncvitsParamsDict",
+    "MriFuncvitsParamsDictTagged",
     "mri_funcvits",
     "mri_funcvits_execute",
     "mri_funcvits_params",

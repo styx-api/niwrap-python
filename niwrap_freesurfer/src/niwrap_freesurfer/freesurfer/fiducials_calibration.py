@@ -13,11 +13,11 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 )
 
 
-FiducialsCalibrationParameters = typing.TypedDict('FiducialsCalibrationParameters', {
+FiducialsCalibrationParamsDict = typing.TypedDict('FiducialsCalibrationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_calibration"]],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
-FiducialsCalibrationParametersTagged = typing.TypedDict('FiducialsCalibrationParametersTagged', {
+FiducialsCalibrationParamsDictTagged = typing.TypedDict('FiducialsCalibrationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fiducials_calibration"],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ FiducialsCalibrationParametersTagged = typing.TypedDict('FiducialsCalibrationPar
 
 class FiducialsCalibrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FiducialsCalibrationParameters(...)`.
+    Output object returned when calling `FiducialsCalibrationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FiducialsCalibrationOutputs(typing.NamedTuple):
 
 def fiducials_calibration_params(
     qt_plugin_installation: str | None = None,
-) -> FiducialsCalibrationParametersTagged:
+) -> FiducialsCalibrationParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def fiducials_calibration_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FiducialsCalibrationParameters` object.
+    `FiducialsCalibrationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def fiducials_calibration_validate(
 
 
 def fiducials_calibration_cargs(
-    params: FiducialsCalibrationParameters,
+    params: FiducialsCalibrationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def fiducials_calibration_cargs(
 
 
 def fiducials_calibration_outputs(
-    params: FiducialsCalibrationParameters,
+    params: FiducialsCalibrationParamsDict,
     execution: Execution,
 ) -> FiducialsCalibrationOutputs:
     """
@@ -109,7 +109,7 @@ def fiducials_calibration_outputs(
 
 
 def fiducials_calibration_execute(
-    params: FiducialsCalibrationParameters,
+    params: FiducialsCalibrationParamsDict,
     runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """
@@ -167,6 +167,8 @@ def fiducials_calibration(
 __all__ = [
     "FIDUCIALS_CALIBRATION_METADATA",
     "FiducialsCalibrationOutputs",
+    "FiducialsCalibrationParamsDict",
+    "FiducialsCalibrationParamsDictTagged",
     "fiducials_calibration",
     "fiducials_calibration_execute",
     "fiducials_calibration_params",

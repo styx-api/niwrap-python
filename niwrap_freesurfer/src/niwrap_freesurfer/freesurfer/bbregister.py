@@ -13,7 +13,7 @@ BBREGISTER_METADATA = Metadata(
 )
 
 
-BbregisterParameters = typing.TypedDict('BbregisterParameters', {
+BbregisterParamsDict = typing.TypedDict('BbregisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bbregister"]],
     "subject": str,
     "moveable_volume": InputPathType,
@@ -32,7 +32,7 @@ BbregisterParameters = typing.TypedDict('BbregisterParameters', {
     "o_outvol": typing.NotRequired[str | None],
     "s_from_reg": bool,
 })
-BbregisterParametersTagged = typing.TypedDict('BbregisterParametersTagged', {
+BbregisterParamsDictTagged = typing.TypedDict('BbregisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bbregister"],
     "subject": str,
     "moveable_volume": InputPathType,
@@ -55,7 +55,7 @@ BbregisterParametersTagged = typing.TypedDict('BbregisterParametersTagged', {
 
 class BbregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BbregisterParameters(...)`.
+    Output object returned when calling `BbregisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +82,7 @@ def bbregister_params(
     template_out: str | None = None,
     o_outvol: str | None = None,
     s_from_reg: bool = False,
-) -> BbregisterParametersTagged:
+) -> BbregisterParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def bbregister_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BbregisterParameters` object.
+    `BbregisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def bbregister_validate(
 
 
 def bbregister_cargs(
-    params: BbregisterParameters,
+    params: BbregisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def bbregister_cargs(
 
 
 def bbregister_outputs(
-    params: BbregisterParameters,
+    params: BbregisterParamsDict,
     execution: Execution,
 ) -> BbregisterOutputs:
     """
@@ -309,7 +309,7 @@ def bbregister_outputs(
 
 
 def bbregister_execute(
-    params: BbregisterParameters,
+    params: BbregisterParamsDict,
     runner: Runner | None = None,
 ) -> BbregisterOutputs:
     """
@@ -419,6 +419,8 @@ def bbregister(
 __all__ = [
     "BBREGISTER_METADATA",
     "BbregisterOutputs",
+    "BbregisterParamsDict",
+    "BbregisterParamsDictTagged",
     "bbregister",
     "bbregister_execute",
     "bbregister_params",

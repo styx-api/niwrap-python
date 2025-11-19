@@ -13,7 +13,7 @@ MRI_WATERSHED_METADATA = Metadata(
 )
 
 
-MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
+MriWatershedParamsDict = typing.TypedDict('MriWatershedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_watershed"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -47,7 +47,7 @@ MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
     "xthresh": typing.NotRequired[float | None],
     "mask_flag": bool,
 })
-MriWatershedParametersTagged = typing.TypedDict('MriWatershedParametersTagged', {
+MriWatershedParamsDictTagged = typing.TypedDict('MriWatershedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_watershed"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -85,7 +85,7 @@ MriWatershedParametersTagged = typing.TypedDict('MriWatershedParametersTagged', 
 
 class MriWatershedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriWatershedParameters(...)`.
+    Output object returned when calling `MriWatershedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +127,7 @@ def mri_watershed_params(
     manual_params: list[float] | None = None,
     xthresh: float | None = None,
     mask_flag: bool = False,
-) -> MriWatershedParametersTagged:
+) -> MriWatershedParamsDictTagged:
     """
     Build parameters.
     
@@ -226,7 +226,7 @@ def mri_watershed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriWatershedParameters` object.
+    `MriWatershedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -360,7 +360,7 @@ def mri_watershed_validate(
 
 
 def mri_watershed_cargs(
-    params: MriWatershedParameters,
+    params: MriWatershedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -477,7 +477,7 @@ def mri_watershed_cargs(
 
 
 def mri_watershed_outputs(
-    params: MriWatershedParameters,
+    params: MriWatershedParamsDict,
     execution: Execution,
 ) -> MriWatershedOutputs:
     """
@@ -498,7 +498,7 @@ def mri_watershed_outputs(
 
 
 def mri_watershed_execute(
-    params: MriWatershedParameters,
+    params: MriWatershedParamsDict,
     runner: Runner | None = None,
 ) -> MriWatershedOutputs:
     """
@@ -651,6 +651,8 @@ def mri_watershed(
 __all__ = [
     "MRI_WATERSHED_METADATA",
     "MriWatershedOutputs",
+    "MriWatershedParamsDict",
+    "MriWatershedParamsDictTagged",
     "mri_watershed",
     "mri_watershed_execute",
     "mri_watershed_params",

@@ -13,13 +13,13 @@ REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
 )
 
 
-ReregisterSubjectMixedParameters = typing.TypedDict('ReregisterSubjectMixedParameters', {
+ReregisterSubjectMixedParamsDict = typing.TypedDict('ReregisterSubjectMixedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reregister_subject_mixed"]],
     "input_volume": InputPathType,
     "output_directory": str,
     "threads": typing.NotRequired[float | None],
 })
-ReregisterSubjectMixedParametersTagged = typing.TypedDict('ReregisterSubjectMixedParametersTagged', {
+ReregisterSubjectMixedParamsDictTagged = typing.TypedDict('ReregisterSubjectMixedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reregister_subject_mixed"],
     "input_volume": InputPathType,
     "output_directory": str,
@@ -29,7 +29,7 @@ ReregisterSubjectMixedParametersTagged = typing.TypedDict('ReregisterSubjectMixe
 
 class ReregisterSubjectMixedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReregisterSubjectMixedParameters(...)`.
+    Output object returned when calling `ReregisterSubjectMixedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def reregister_subject_mixed_params(
     input_volume: InputPathType,
     output_directory: str,
     threads: float | None = None,
-) -> ReregisterSubjectMixedParametersTagged:
+) -> ReregisterSubjectMixedParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def reregister_subject_mixed_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReregisterSubjectMixedParameters` object.
+    `ReregisterSubjectMixedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def reregister_subject_mixed_validate(
 
 
 def reregister_subject_mixed_cargs(
-    params: ReregisterSubjectMixedParameters,
+    params: ReregisterSubjectMixedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def reregister_subject_mixed_cargs(
 
 
 def reregister_subject_mixed_outputs(
-    params: ReregisterSubjectMixedParameters,
+    params: ReregisterSubjectMixedParamsDict,
     execution: Execution,
 ) -> ReregisterSubjectMixedOutputs:
     """
@@ -137,7 +137,7 @@ def reregister_subject_mixed_outputs(
 
 
 def reregister_subject_mixed_execute(
-    params: ReregisterSubjectMixedParameters,
+    params: ReregisterSubjectMixedParamsDict,
     runner: Runner | None = None,
 ) -> ReregisterSubjectMixedOutputs:
     """
@@ -200,6 +200,8 @@ def reregister_subject_mixed(
 __all__ = [
     "REREGISTER_SUBJECT_MIXED_METADATA",
     "ReregisterSubjectMixedOutputs",
+    "ReregisterSubjectMixedParamsDict",
+    "ReregisterSubjectMixedParamsDictTagged",
     "reregister_subject_mixed",
     "reregister_subject_mixed_execute",
     "reregister_subject_mixed_params",

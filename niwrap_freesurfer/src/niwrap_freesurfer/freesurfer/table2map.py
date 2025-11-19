@@ -13,7 +13,7 @@ TABLE2MAP_METADATA = Metadata(
 )
 
 
-Table2mapParameters = typing.TypedDict('Table2mapParameters', {
+Table2mapParamsDict = typing.TypedDict('Table2mapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/table2map"]],
     "input_table": InputPathType,
     "output_map": str,
@@ -22,7 +22,7 @@ Table2mapParameters = typing.TypedDict('Table2mapParameters', {
     "columns": typing.NotRequired[list[str] | None],
     "lookup_table": typing.NotRequired[InputPathType | None],
 })
-Table2mapParametersTagged = typing.TypedDict('Table2mapParametersTagged', {
+Table2mapParamsDictTagged = typing.TypedDict('Table2mapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/table2map"],
     "input_table": InputPathType,
     "output_map": str,
@@ -35,7 +35,7 @@ Table2mapParametersTagged = typing.TypedDict('Table2mapParametersTagged', {
 
 class Table2mapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Table2mapParameters(...)`.
+    Output object returned when calling `Table2mapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def table2map_params(
     parcellation: InputPathType | None = None,
     columns: list[str] | None = None,
     lookup_table: InputPathType | None = None,
-) -> Table2mapParametersTagged:
+) -> Table2mapParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def table2map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Table2mapParameters` object.
+    `Table2mapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def table2map_validate(
 
 
 def table2map_cargs(
-    params: Table2mapParameters,
+    params: Table2mapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def table2map_cargs(
 
 
 def table2map_outputs(
-    params: Table2mapParameters,
+    params: Table2mapParamsDict,
     execution: Execution,
 ) -> Table2mapOutputs:
     """
@@ -181,7 +181,7 @@ def table2map_outputs(
 
 
 def table2map_execute(
-    params: Table2mapParameters,
+    params: Table2mapParamsDict,
     runner: Runner | None = None,
 ) -> Table2mapOutputs:
     """
@@ -254,6 +254,8 @@ def table2map(
 __all__ = [
     "TABLE2MAP_METADATA",
     "Table2mapOutputs",
+    "Table2mapParamsDict",
+    "Table2mapParamsDictTagged",
     "table2map",
     "table2map_execute",
     "table2map_params",

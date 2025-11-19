@@ -13,7 +13,7 @@ V_3D_SPAT_NORM_METADATA = Metadata(
 )
 
 
-V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
+V3dSpatNormParamsDict = typing.TypedDict('V3dSpatNormParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSpatNorm"]],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
     "human": bool,
     "bottom_cuts": typing.NotRequired[str | None],
 })
-V3dSpatNormParametersTagged = typing.TypedDict('V3dSpatNormParametersTagged', {
+V3dSpatNormParamsDictTagged = typing.TypedDict('V3dSpatNormParamsDictTagged', {
     "@type": typing.Literal["afni/3dSpatNorm"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ V3dSpatNormParametersTagged = typing.TypedDict('V3dSpatNormParametersTagged', {
 
 class V3dSpatNormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSpatNormParameters(...)`.
+    Output object returned when calling `V3dSpatNormParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_spat_norm_params(
     rat: bool = False,
     human: bool = False,
     bottom_cuts: str | None = None,
-) -> V3dSpatNormParametersTagged:
+) -> V3dSpatNormParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_3d_spat_norm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSpatNormParameters` object.
+    `V3dSpatNormParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def v_3d_spat_norm_validate(
 
 
 def v_3d_spat_norm_cargs(
-    params: V3dSpatNormParameters,
+    params: V3dSpatNormParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def v_3d_spat_norm_cargs(
 
 
 def v_3d_spat_norm_outputs(
-    params: V3dSpatNormParameters,
+    params: V3dSpatNormParamsDict,
     execution: Execution,
 ) -> V3dSpatNormOutputs:
     """
@@ -209,7 +209,7 @@ def v_3d_spat_norm_outputs(
 
 
 def v_3d_spat_norm_execute(
-    params: V3dSpatNormParameters,
+    params: V3dSpatNormParamsDict,
     runner: Runner | None = None,
 ) -> V3dSpatNormOutputs:
     """
@@ -291,6 +291,8 @@ def v_3d_spat_norm(
 
 __all__ = [
     "V3dSpatNormOutputs",
+    "V3dSpatNormParamsDict",
+    "V3dSpatNormParamsDictTagged",
     "V_3D_SPAT_NORM_METADATA",
     "v_3d_spat_norm",
     "v_3d_spat_norm_execute",

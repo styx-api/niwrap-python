@@ -13,7 +13,7 @@ DISTANCEMAP_METADATA = Metadata(
 )
 
 
-DistancemapParameters = typing.TypedDict('DistancemapParameters', {
+DistancemapParamsDict = typing.TypedDict('DistancemapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/distancemap"]],
     "input_image": InputPathType,
     "output_image": str,
@@ -26,7 +26,7 @@ DistancemapParameters = typing.TypedDict('DistancemapParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-DistancemapParametersTagged = typing.TypedDict('DistancemapParametersTagged', {
+DistancemapParamsDictTagged = typing.TypedDict('DistancemapParamsDictTagged', {
     "@type": typing.Literal["fsl/distancemap"],
     "input_image": InputPathType,
     "output_image": str,
@@ -43,7 +43,7 @@ DistancemapParametersTagged = typing.TypedDict('DistancemapParametersTagged', {
 
 class DistancemapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DistancemapParameters(...)`.
+    Output object returned when calling `DistancemapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def distancemap_params(
     interpolate_values: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> DistancemapParametersTagged:
+) -> DistancemapParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def distancemap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DistancemapParameters` object.
+    `DistancemapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def distancemap_validate(
 
 
 def distancemap_cargs(
-    params: DistancemapParameters,
+    params: DistancemapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def distancemap_cargs(
 
 
 def distancemap_outputs(
-    params: DistancemapParameters,
+    params: DistancemapParamsDict,
     execution: Execution,
 ) -> DistancemapOutputs:
     """
@@ -238,7 +238,7 @@ def distancemap_outputs(
 
 
 def distancemap_execute(
-    params: DistancemapParameters,
+    params: DistancemapParamsDict,
     runner: Runner | None = None,
 ) -> DistancemapOutputs:
     """
@@ -325,6 +325,8 @@ def distancemap(
 __all__ = [
     "DISTANCEMAP_METADATA",
     "DistancemapOutputs",
+    "DistancemapParamsDict",
+    "DistancemapParamsDictTagged",
     "distancemap",
     "distancemap_execute",
     "distancemap_params",

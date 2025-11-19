@@ -13,7 +13,7 @@ GEN_SS_REVIEW_TABLE_PY_METADATA = Metadata(
 )
 
 
-GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', {
+GenSsReviewTablePyParamsDict = typing.TypedDict('GenSsReviewTablePyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_table.py"]],
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', 
     "show_missing": bool,
     "verbosity": typing.NotRequired[int | None],
 })
-GenSsReviewTablePyParametersTagged = typing.TypedDict('GenSsReviewTablePyParametersTagged', {
+GenSsReviewTablePyParamsDictTagged = typing.TypedDict('GenSsReviewTablePyParamsDictTagged', {
     "@type": typing.Literal["afni/gen_ss_review_table.py"],
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ GenSsReviewTablePyParametersTagged = typing.TypedDict('GenSsReviewTablePyParamet
 
 class GenSsReviewTablePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GenSsReviewTablePyParameters(...)`.
+    Output object returned when calling `GenSsReviewTablePyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def gen_ss_review_table_py_params(
     report_outliers_fill_style: str | None = None,
     show_missing: bool = False,
     verbosity: int | None = None,
-) -> GenSsReviewTablePyParametersTagged:
+) -> GenSsReviewTablePyParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def gen_ss_review_table_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GenSsReviewTablePyParameters` object.
+    `GenSsReviewTablePyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def gen_ss_review_table_py_validate(
 
 
 def gen_ss_review_table_py_cargs(
-    params: GenSsReviewTablePyParameters,
+    params: GenSsReviewTablePyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def gen_ss_review_table_py_cargs(
 
 
 def gen_ss_review_table_py_outputs(
-    params: GenSsReviewTablePyParameters,
+    params: GenSsReviewTablePyParamsDict,
     execution: Execution,
 ) -> GenSsReviewTablePyOutputs:
     """
@@ -282,7 +282,7 @@ def gen_ss_review_table_py_outputs(
 
 
 def gen_ss_review_table_py_execute(
-    params: GenSsReviewTablePyParameters,
+    params: GenSsReviewTablePyParamsDict,
     runner: Runner | None = None,
 ) -> GenSsReviewTablePyOutputs:
     """
@@ -377,6 +377,8 @@ def gen_ss_review_table_py(
 __all__ = [
     "GEN_SS_REVIEW_TABLE_PY_METADATA",
     "GenSsReviewTablePyOutputs",
+    "GenSsReviewTablePyParamsDict",
+    "GenSsReviewTablePyParamsDictTagged",
     "gen_ss_review_table_py",
     "gen_ss_review_table_py_execute",
     "gen_ss_review_table_py_params",

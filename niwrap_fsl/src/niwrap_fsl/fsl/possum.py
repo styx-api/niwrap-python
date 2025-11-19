@@ -13,7 +13,7 @@ POSSUM_METADATA = Metadata(
 )
 
 
-PossumParameters = typing.TypedDict('PossumParameters', {
+PossumParamsDict = typing.TypedDict('PossumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/possum"]],
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
@@ -40,7 +40,7 @@ PossumParameters = typing.TypedDict('PossumParameters', {
     "no_speedup": bool,
     "rf_average": bool,
 })
-PossumParametersTagged = typing.TypedDict('PossumParametersTagged', {
+PossumParamsDictTagged = typing.TypedDict('PossumParamsDictTagged', {
     "@type": typing.Literal["fsl/possum"],
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
@@ -71,7 +71,7 @@ PossumParametersTagged = typing.TypedDict('PossumParametersTagged', {
 
 class PossumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PossumParameters(...)`.
+    Output object returned when calling `PossumParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,7 +104,7 @@ def possum_params(
     proc_id: float | None = None,
     no_speedup: bool = False,
     rf_average: bool = False,
-) -> PossumParametersTagged:
+) -> PossumParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def possum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PossumParameters` object.
+    `PossumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def possum_validate(
 
 
 def possum_cargs(
-    params: PossumParameters,
+    params: PossumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -399,7 +399,7 @@ def possum_cargs(
 
 
 def possum_outputs(
-    params: PossumParameters,
+    params: PossumParamsDict,
     execution: Execution,
 ) -> PossumOutputs:
     """
@@ -419,7 +419,7 @@ def possum_outputs(
 
 
 def possum_execute(
-    params: PossumParameters,
+    params: PossumParamsDict,
     runner: Runner | None = None,
 ) -> PossumOutputs:
     """
@@ -550,6 +550,8 @@ def possum(
 __all__ = [
     "POSSUM_METADATA",
     "PossumOutputs",
+    "PossumParamsDict",
+    "PossumParamsDictTagged",
     "possum",
     "possum_execute",
     "possum_params",

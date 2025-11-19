@@ -13,12 +13,12 @@ FSREALPATH_METADATA = Metadata(
 )
 
 
-FsrealpathParameters = typing.TypedDict('FsrealpathParameters', {
+FsrealpathParamsDict = typing.TypedDict('FsrealpathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsrealpath"]],
     "path": str,
     "help": bool,
 })
-FsrealpathParametersTagged = typing.TypedDict('FsrealpathParametersTagged', {
+FsrealpathParamsDictTagged = typing.TypedDict('FsrealpathParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsrealpath"],
     "path": str,
     "help": bool,
@@ -27,7 +27,7 @@ FsrealpathParametersTagged = typing.TypedDict('FsrealpathParametersTagged', {
 
 class FsrealpathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsrealpathParameters(...)`.
+    Output object returned when calling `FsrealpathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FsrealpathOutputs(typing.NamedTuple):
 def fsrealpath_params(
     path: str,
     help_: bool = False,
-) -> FsrealpathParametersTagged:
+) -> FsrealpathParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def fsrealpath_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsrealpathParameters` object.
+    `FsrealpathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fsrealpath_validate(
 
 
 def fsrealpath_cargs(
-    params: FsrealpathParameters,
+    params: FsrealpathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def fsrealpath_cargs(
 
 
 def fsrealpath_outputs(
-    params: FsrealpathParameters,
+    params: FsrealpathParamsDict,
     execution: Execution,
 ) -> FsrealpathOutputs:
     """
@@ -117,7 +117,7 @@ def fsrealpath_outputs(
 
 
 def fsrealpath_execute(
-    params: FsrealpathParameters,
+    params: FsrealpathParamsDict,
     runner: Runner | None = None,
 ) -> FsrealpathOutputs:
     """
@@ -176,6 +176,8 @@ def fsrealpath(
 __all__ = [
     "FSREALPATH_METADATA",
     "FsrealpathOutputs",
+    "FsrealpathParamsDict",
+    "FsrealpathParamsDictTagged",
     "fsrealpath",
     "fsrealpath_execute",
     "fsrealpath_params",

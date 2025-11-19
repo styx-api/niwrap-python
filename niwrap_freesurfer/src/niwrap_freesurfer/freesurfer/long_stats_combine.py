@@ -13,7 +13,7 @@ LONG_STATS_COMBINE_METADATA = Metadata(
 )
 
 
-LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
+LongStatsCombineParamsDict = typing.TypedDict('LongStatsCombineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_combine"]],
     "qdec": InputPathType,
     "stats": str,
@@ -24,7 +24,7 @@ LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
     "input_stats": typing.NotRequired[InputPathType | None],
     "cross_sectional": bool,
 })
-LongStatsCombineParametersTagged = typing.TypedDict('LongStatsCombineParametersTagged', {
+LongStatsCombineParamsDictTagged = typing.TypedDict('LongStatsCombineParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_stats_combine"],
     "qdec": InputPathType,
     "stats": str,
@@ -39,7 +39,7 @@ LongStatsCombineParametersTagged = typing.TypedDict('LongStatsCombineParametersT
 
 class LongStatsCombineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongStatsCombineParameters(...)`.
+    Output object returned when calling `LongStatsCombineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def long_stats_combine_params(
     output_stats: str | None = None,
     input_stats: InputPathType | None = None,
     cross_sectional: bool = False,
-) -> LongStatsCombineParametersTagged:
+) -> LongStatsCombineParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def long_stats_combine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongStatsCombineParameters` object.
+    `LongStatsCombineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def long_stats_combine_validate(
 
 
 def long_stats_combine_cargs(
-    params: LongStatsCombineParameters,
+    params: LongStatsCombineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def long_stats_combine_cargs(
 
 
 def long_stats_combine_outputs(
-    params: LongStatsCombineParameters,
+    params: LongStatsCombineParamsDict,
     execution: Execution,
 ) -> LongStatsCombineOutputs:
     """
@@ -209,7 +209,7 @@ def long_stats_combine_outputs(
 
 
 def long_stats_combine_execute(
-    params: LongStatsCombineParameters,
+    params: LongStatsCombineParamsDict,
     runner: Runner | None = None,
 ) -> LongStatsCombineOutputs:
     """
@@ -291,6 +291,8 @@ def long_stats_combine(
 __all__ = [
     "LONG_STATS_COMBINE_METADATA",
     "LongStatsCombineOutputs",
+    "LongStatsCombineParamsDict",
+    "LongStatsCombineParamsDictTagged",
     "long_stats_combine",
     "long_stats_combine_execute",
     "long_stats_combine_params",

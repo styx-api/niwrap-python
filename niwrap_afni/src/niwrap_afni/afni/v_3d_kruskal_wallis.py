@@ -13,7 +13,7 @@ V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
 )
 
 
-V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
+V3dKruskalWallisParamsDict = typing.TypedDict('V3dKruskalWallisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dKruskalWallis"]],
     "levels": int,
     "datasets": list[str],
@@ -21,7 +21,7 @@ V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
     "voxel": typing.NotRequired[int | None],
     "output": str,
 })
-V3dKruskalWallisParametersTagged = typing.TypedDict('V3dKruskalWallisParametersTagged', {
+V3dKruskalWallisParamsDictTagged = typing.TypedDict('V3dKruskalWallisParamsDictTagged', {
     "@type": typing.Literal["afni/3dKruskalWallis"],
     "levels": int,
     "datasets": list[str],
@@ -33,7 +33,7 @@ V3dKruskalWallisParametersTagged = typing.TypedDict('V3dKruskalWallisParametersT
 
 class V3dKruskalWallisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dKruskalWallisParameters(...)`.
+    Output object returned when calling `V3dKruskalWallisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3d_kruskal_wallis_params(
     output: str,
     workmem: int | None = None,
     voxel: int | None = None,
-) -> V3dKruskalWallisParametersTagged:
+) -> V3dKruskalWallisParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def v_3d_kruskal_wallis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dKruskalWallisParameters` object.
+    `V3dKruskalWallisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def v_3d_kruskal_wallis_validate(
 
 
 def v_3d_kruskal_wallis_cargs(
-    params: V3dKruskalWallisParameters,
+    params: V3dKruskalWallisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def v_3d_kruskal_wallis_cargs(
 
 
 def v_3d_kruskal_wallis_outputs(
-    params: V3dKruskalWallisParameters,
+    params: V3dKruskalWallisParamsDict,
     execution: Execution,
 ) -> V3dKruskalWallisOutputs:
     """
@@ -172,7 +172,7 @@ def v_3d_kruskal_wallis_outputs(
 
 
 def v_3d_kruskal_wallis_execute(
-    params: V3dKruskalWallisParameters,
+    params: V3dKruskalWallisParamsDict,
     runner: Runner | None = None,
 ) -> V3dKruskalWallisOutputs:
     """
@@ -242,6 +242,8 @@ def v_3d_kruskal_wallis(
 
 __all__ = [
     "V3dKruskalWallisOutputs",
+    "V3dKruskalWallisParamsDict",
+    "V3dKruskalWallisParamsDictTagged",
     "V_3D_KRUSKAL_WALLIS_METADATA",
     "v_3d_kruskal_wallis",
     "v_3d_kruskal_wallis_execute",

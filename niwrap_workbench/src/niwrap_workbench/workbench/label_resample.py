@@ -12,35 +12,35 @@ LABEL_RESAMPLE_METADATA = Metadata(
 )
 
 
-LabelResampleAreaSurfsParameters = typing.TypedDict('LabelResampleAreaSurfsParameters', {
+LabelResampleAreaSurfsParamsDict = typing.TypedDict('LabelResampleAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-LabelResampleAreaSurfsParametersTagged = typing.TypedDict('LabelResampleAreaSurfsParametersTagged', {
+LabelResampleAreaSurfsParamsDictTagged = typing.TypedDict('LabelResampleAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-LabelResampleAreaMetricsParameters = typing.TypedDict('LabelResampleAreaMetricsParameters', {
+LabelResampleAreaMetricsParamsDict = typing.TypedDict('LabelResampleAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-LabelResampleAreaMetricsParametersTagged = typing.TypedDict('LabelResampleAreaMetricsParametersTagged', {
+LabelResampleAreaMetricsParamsDictTagged = typing.TypedDict('LabelResampleAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
+LabelResampleParamsDict = typing.TypedDict('LabelResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-resample"]],
     "label-out": str,
-    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-out": typing.NotRequired[str | None],
     "largest": bool,
@@ -50,11 +50,11 @@ LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
     "new-sphere": InputPathType,
     "method": str,
 })
-LabelResampleParametersTagged = typing.TypedDict('LabelResampleParametersTagged', {
+LabelResampleParamsDictTagged = typing.TypedDict('LabelResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/label-resample"],
     "label-out": str,
-    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-out": typing.NotRequired[str | None],
     "largest": bool,
@@ -66,10 +66,10 @@ LabelResampleParametersTagged = typing.TypedDict('LabelResampleParametersTagged'
 })
 
 
-def label_resample_area_surfs_params(
+def label_resample_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> LabelResampleAreaSurfsParametersTagged:
+) -> LabelResampleAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def label_resample_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelResampleAreaSurfsParameters` object.
+    `LabelResampleAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def label_resample_area_surfs_validate(
 
 
 def label_resample_area_surfs_cargs(
-    params: LabelResampleAreaSurfsParameters,
+    params: LabelResampleAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,10 +131,10 @@ def label_resample_area_surfs_cargs(
     return cargs
 
 
-def label_resample_area_metrics_params(
+def label_resample_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> LabelResampleAreaMetricsParametersTagged:
+) -> LabelResampleAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -157,7 +157,7 @@ def label_resample_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelResampleAreaMetricsParameters` object.
+    `LabelResampleAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def label_resample_area_metrics_validate(
 
 
 def label_resample_area_metrics_cargs(
-    params: LabelResampleAreaMetricsParameters,
+    params: LabelResampleAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def label_resample_area_metrics_cargs(
 
 class LabelResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelResampleParameters(...)`.
+    Output object returned when calling `LabelResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -214,11 +214,11 @@ def label_resample_params(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: LabelResampleAreaSurfsParameters | None = None,
-    area_metrics: LabelResampleAreaMetricsParameters | None = None,
+    area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
+    area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
-) -> LabelResampleParametersTagged:
+) -> LabelResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -273,7 +273,7 @@ def label_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelResampleParameters` object.
+    `LabelResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -321,7 +321,7 @@ def label_resample_validate(
 
 
 def label_resample_cargs(
-    params: LabelResampleParameters,
+    params: LabelResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def label_resample_cargs(
 
 
 def label_resample_outputs(
-    params: LabelResampleParameters,
+    params: LabelResampleParamsDict,
     execution: Execution,
 ) -> LabelResampleOutputs:
     """
@@ -376,7 +376,7 @@ def label_resample_outputs(
 
 
 def label_resample_execute(
-    params: LabelResampleParameters,
+    params: LabelResampleParamsDict,
     runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
@@ -428,8 +428,8 @@ def label_resample(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: LabelResampleAreaSurfsParameters | None = None,
-    area_metrics: LabelResampleAreaMetricsParameters | None = None,
+    area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
+    area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
@@ -503,10 +503,16 @@ def label_resample(
 
 __all__ = [
     "LABEL_RESAMPLE_METADATA",
+    "LabelResampleAreaMetricsParamsDict",
+    "LabelResampleAreaMetricsParamsDictTagged",
+    "LabelResampleAreaSurfsParamsDict",
+    "LabelResampleAreaSurfsParamsDictTagged",
     "LabelResampleOutputs",
+    "LabelResampleParamsDict",
+    "LabelResampleParamsDictTagged",
     "label_resample",
-    "label_resample_area_metrics_params",
-    "label_resample_area_surfs_params",
+    "label_resample_area_metrics",
+    "label_resample_area_surfs",
     "label_resample_execute",
     "label_resample_params",
 ]

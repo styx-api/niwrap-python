@@ -13,7 +13,7 @@ EDDY_METADATA = Metadata(
 )
 
 
-EddyParameters = typing.TypedDict('EddyParameters', {
+EddyParamsDict = typing.TypedDict('EddyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy"]],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -60,7 +60,7 @@ EddyParameters = typing.TypedDict('EddyParameters', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
-EddyParametersTagged = typing.TypedDict('EddyParametersTagged', {
+EddyParamsDictTagged = typing.TypedDict('EddyParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy"],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -111,7 +111,7 @@ EddyParametersTagged = typing.TypedDict('EddyParametersTagged', {
 
 class EddyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyParameters(...)`.
+    Output object returned when calling `EddyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ def eddy_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyParametersTagged:
+) -> EddyParamsDictTagged:
     """
     Build parameters.
     
@@ -354,7 +354,7 @@ def eddy_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `EddyParameters`
+    Validate parameters. Throws an error if `params` is not a valid `EddyParamsDict`
     object.
     
     Args:
@@ -527,7 +527,7 @@ def eddy_validate(
 
 
 def eddy_cargs(
-    params: EddyParameters,
+    params: EddyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -626,7 +626,7 @@ def eddy_cargs(
 
 
 def eddy_outputs(
-    params: EddyParameters,
+    params: EddyParamsDict,
     execution: Execution,
 ) -> EddyOutputs:
     """
@@ -664,7 +664,7 @@ def eddy_outputs(
 
 
 def eddy_execute(
-    params: EddyParameters,
+    params: EddyParamsDict,
     runner: Runner | None = None,
 ) -> EddyOutputs:
     """
@@ -868,6 +868,8 @@ def eddy(
 __all__ = [
     "EDDY_METADATA",
     "EddyOutputs",
+    "EddyParamsDict",
+    "EddyParamsDictTagged",
     "eddy",
     "eddy_execute",
     "eddy_params",

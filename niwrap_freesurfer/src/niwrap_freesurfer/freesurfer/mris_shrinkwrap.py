@@ -13,13 +13,13 @@ MRIS_SHRINKWRAP_METADATA = Metadata(
 )
 
 
-MrisShrinkwrapParameters = typing.TypedDict('MrisShrinkwrapParameters', {
+MrisShrinkwrapParamsDict = typing.TypedDict('MrisShrinkwrapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_shrinkwrap"]],
     "volume": InputPathType,
     "output_name": str,
     "threshold": typing.NotRequired[float | None],
 })
-MrisShrinkwrapParametersTagged = typing.TypedDict('MrisShrinkwrapParametersTagged', {
+MrisShrinkwrapParamsDictTagged = typing.TypedDict('MrisShrinkwrapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_shrinkwrap"],
     "volume": InputPathType,
     "output_name": str,
@@ -29,7 +29,7 @@ MrisShrinkwrapParametersTagged = typing.TypedDict('MrisShrinkwrapParametersTagge
 
 class MrisShrinkwrapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisShrinkwrapParameters(...)`.
+    Output object returned when calling `MrisShrinkwrapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mris_shrinkwrap_params(
     volume: InputPathType,
     output_name: str,
     threshold: float | None = None,
-) -> MrisShrinkwrapParametersTagged:
+) -> MrisShrinkwrapParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mris_shrinkwrap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisShrinkwrapParameters` object.
+    `MrisShrinkwrapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def mris_shrinkwrap_validate(
 
 
 def mris_shrinkwrap_cargs(
-    params: MrisShrinkwrapParameters,
+    params: MrisShrinkwrapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def mris_shrinkwrap_cargs(
 
 
 def mris_shrinkwrap_outputs(
-    params: MrisShrinkwrapParameters,
+    params: MrisShrinkwrapParamsDict,
     execution: Execution,
 ) -> MrisShrinkwrapOutputs:
     """
@@ -140,7 +140,7 @@ def mris_shrinkwrap_outputs(
 
 
 def mris_shrinkwrap_execute(
-    params: MrisShrinkwrapParameters,
+    params: MrisShrinkwrapParamsDict,
     runner: Runner | None = None,
 ) -> MrisShrinkwrapOutputs:
     """
@@ -203,6 +203,8 @@ def mris_shrinkwrap(
 __all__ = [
     "MRIS_SHRINKWRAP_METADATA",
     "MrisShrinkwrapOutputs",
+    "MrisShrinkwrapParamsDict",
+    "MrisShrinkwrapParamsDictTagged",
     "mris_shrinkwrap",
     "mris_shrinkwrap_execute",
     "mris_shrinkwrap_params",

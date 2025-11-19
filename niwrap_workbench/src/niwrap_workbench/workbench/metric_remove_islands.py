@@ -12,14 +12,14 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
 )
 
 
-MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters', {
+MetricRemoveIslandsParamsDict = typing.TypedDict('MetricRemoveIslandsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-remove-islands"]],
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
-MetricRemoveIslandsParametersTagged = typing.TypedDict('MetricRemoveIslandsParametersTagged', {
+MetricRemoveIslandsParamsDictTagged = typing.TypedDict('MetricRemoveIslandsParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-remove-islands"],
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ MetricRemoveIslandsParametersTagged = typing.TypedDict('MetricRemoveIslandsParam
 
 class MetricRemoveIslandsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricRemoveIslandsParameters(...)`.
+    Output object returned when calling `MetricRemoveIslandsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def metric_remove_islands_params(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-) -> MetricRemoveIslandsParametersTagged:
+) -> MetricRemoveIslandsParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def metric_remove_islands_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRemoveIslandsParameters` object.
+    `MetricRemoveIslandsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def metric_remove_islands_validate(
 
 
 def metric_remove_islands_cargs(
-    params: MetricRemoveIslandsParameters,
+    params: MetricRemoveIslandsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def metric_remove_islands_cargs(
 
 
 def metric_remove_islands_outputs(
-    params: MetricRemoveIslandsParameters,
+    params: MetricRemoveIslandsParamsDict,
     execution: Execution,
 ) -> MetricRemoveIslandsOutputs:
     """
@@ -146,7 +146,7 @@ def metric_remove_islands_outputs(
 
 
 def metric_remove_islands_execute(
-    params: MetricRemoveIslandsParameters,
+    params: MetricRemoveIslandsParamsDict,
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
@@ -208,6 +208,8 @@ def metric_remove_islands(
 __all__ = [
     "METRIC_REMOVE_ISLANDS_METADATA",
     "MetricRemoveIslandsOutputs",
+    "MetricRemoveIslandsParamsDict",
+    "MetricRemoveIslandsParamsDictTagged",
     "metric_remove_islands",
     "metric_remove_islands_execute",
     "metric_remove_islands_params",

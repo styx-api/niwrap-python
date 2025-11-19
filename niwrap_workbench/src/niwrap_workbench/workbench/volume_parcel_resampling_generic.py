@@ -12,7 +12,7 @@ VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA = Metadata(
 )
 
 
-VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResamplingGenericParameters', {
+VolumeParcelResamplingGenericParamsDict = typing.TypedDict('VolumeParcelResamplingGenericParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-resampling-generic"]],
     "volume-out": str,
     "fwhm": bool,
@@ -23,7 +23,7 @@ VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResampli
     "new-parcels": InputPathType,
     "kernel": float,
 })
-VolumeParcelResamplingGenericParametersTagged = typing.TypedDict('VolumeParcelResamplingGenericParametersTagged', {
+VolumeParcelResamplingGenericParamsDictTagged = typing.TypedDict('VolumeParcelResamplingGenericParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-parcel-resampling-generic"],
     "volume-out": str,
     "fwhm": bool,
@@ -38,7 +38,7 @@ VolumeParcelResamplingGenericParametersTagged = typing.TypedDict('VolumeParcelRe
 
 class VolumeParcelResamplingGenericOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeParcelResamplingGenericParameters(...)`.
+    Output object returned when calling `VolumeParcelResamplingGenericParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def volume_parcel_resampling_generic_params(
     kernel: float,
     fwhm: bool = False,
     fix_zeros: bool = False,
-) -> VolumeParcelResamplingGenericParametersTagged:
+) -> VolumeParcelResamplingGenericParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def volume_parcel_resampling_generic_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeParcelResamplingGenericParameters` object.
+    `VolumeParcelResamplingGenericParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def volume_parcel_resampling_generic_validate(
 
 
 def volume_parcel_resampling_generic_cargs(
-    params: VolumeParcelResamplingGenericParameters,
+    params: VolumeParcelResamplingGenericParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def volume_parcel_resampling_generic_cargs(
 
 
 def volume_parcel_resampling_generic_outputs(
-    params: VolumeParcelResamplingGenericParameters,
+    params: VolumeParcelResamplingGenericParamsDict,
     execution: Execution,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
@@ -186,7 +186,7 @@ def volume_parcel_resampling_generic_outputs(
 
 
 def volume_parcel_resampling_generic_execute(
-    params: VolumeParcelResamplingGenericParameters,
+    params: VolumeParcelResamplingGenericParamsDict,
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
@@ -274,6 +274,8 @@ def volume_parcel_resampling_generic(
 __all__ = [
     "VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA",
     "VolumeParcelResamplingGenericOutputs",
+    "VolumeParcelResamplingGenericParamsDict",
+    "VolumeParcelResamplingGenericParamsDictTagged",
     "volume_parcel_resampling_generic",
     "volume_parcel_resampling_generic_execute",
     "volume_parcel_resampling_generic_params",

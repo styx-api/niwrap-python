@@ -13,13 +13,13 @@ V_3D_TFILTER_METADATA = Metadata(
 )
 
 
-V3dTfilterParameters = typing.TypedDict('V3dTfilterParameters', {
+V3dTfilterParamsDict = typing.TypedDict('V3dTfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTfilter"]],
     "inputdataset": InputPathType,
     "outputdataset": str,
     "filters": list[str],
 })
-V3dTfilterParametersTagged = typing.TypedDict('V3dTfilterParametersTagged', {
+V3dTfilterParamsDictTagged = typing.TypedDict('V3dTfilterParamsDictTagged', {
     "@type": typing.Literal["afni/3dTfilter"],
     "inputdataset": InputPathType,
     "outputdataset": str,
@@ -29,7 +29,7 @@ V3dTfilterParametersTagged = typing.TypedDict('V3dTfilterParametersTagged', {
 
 class V3dTfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTfilterParameters(...)`.
+    Output object returned when calling `V3dTfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3d_tfilter_params(
     inputdataset: InputPathType,
     outputdataset: str,
     filters: list[str],
-) -> V3dTfilterParametersTagged:
+) -> V3dTfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def v_3d_tfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTfilterParameters` object.
+    `V3dTfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v_3d_tfilter_validate(
 
 
 def v_3d_tfilter_cargs(
-    params: V3dTfilterParameters,
+    params: V3dTfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def v_3d_tfilter_cargs(
 
 
 def v_3d_tfilter_outputs(
-    params: V3dTfilterParameters,
+    params: V3dTfilterParamsDict,
     execution: Execution,
 ) -> V3dTfilterOutputs:
     """
@@ -141,7 +141,7 @@ def v_3d_tfilter_outputs(
 
 
 def v_3d_tfilter_execute(
-    params: V3dTfilterParameters,
+    params: V3dTfilterParamsDict,
     runner: Runner | None = None,
 ) -> V3dTfilterOutputs:
     """
@@ -204,6 +204,8 @@ def v_3d_tfilter(
 
 __all__ = [
     "V3dTfilterOutputs",
+    "V3dTfilterParamsDict",
+    "V3dTfilterParamsDictTagged",
     "V_3D_TFILTER_METADATA",
     "v_3d_tfilter",
     "v_3d_tfilter_execute",

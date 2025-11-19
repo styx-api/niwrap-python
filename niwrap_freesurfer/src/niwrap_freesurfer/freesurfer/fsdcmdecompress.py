@@ -13,7 +13,7 @@ FSDCMDECOMPRESS_METADATA = Metadata(
 )
 
 
-FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
+FsdcmdecompressParamsDict = typing.TypedDict('FsdcmdecompressParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsdcmdecompress"]],
     "indcmfile": InputPathType,
     "outdcmfile": str,
@@ -22,7 +22,7 @@ FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
     "rle": bool,
     "gdcm": bool,
 })
-FsdcmdecompressParametersTagged = typing.TypedDict('FsdcmdecompressParametersTagged', {
+FsdcmdecompressParamsDictTagged = typing.TypedDict('FsdcmdecompressParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsdcmdecompress"],
     "indcmfile": InputPathType,
     "outdcmfile": str,
@@ -35,7 +35,7 @@ FsdcmdecompressParametersTagged = typing.TypedDict('FsdcmdecompressParametersTag
 
 class FsdcmdecompressOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsdcmdecompressParameters(...)`.
+    Output object returned when calling `FsdcmdecompressParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def fsdcmdecompress_params(
     jpeg: bool = False,
     rle: bool = False,
     gdcm: bool = False,
-) -> FsdcmdecompressParametersTagged:
+) -> FsdcmdecompressParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def fsdcmdecompress_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsdcmdecompressParameters` object.
+    `FsdcmdecompressParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def fsdcmdecompress_validate(
 
 
 def fsdcmdecompress_cargs(
-    params: FsdcmdecompressParameters,
+    params: FsdcmdecompressParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def fsdcmdecompress_cargs(
 
 
 def fsdcmdecompress_outputs(
-    params: FsdcmdecompressParameters,
+    params: FsdcmdecompressParamsDict,
     execution: Execution,
 ) -> FsdcmdecompressOutputs:
     """
@@ -169,7 +169,7 @@ def fsdcmdecompress_outputs(
 
 
 def fsdcmdecompress_execute(
-    params: FsdcmdecompressParameters,
+    params: FsdcmdecompressParamsDict,
     runner: Runner | None = None,
 ) -> FsdcmdecompressOutputs:
     """
@@ -240,6 +240,8 @@ def fsdcmdecompress(
 __all__ = [
     "FSDCMDECOMPRESS_METADATA",
     "FsdcmdecompressOutputs",
+    "FsdcmdecompressParamsDict",
+    "FsdcmdecompressParamsDictTagged",
     "fsdcmdecompress",
     "fsdcmdecompress_execute",
     "fsdcmdecompress_params",

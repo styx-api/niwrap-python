@@ -12,7 +12,7 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 )
 
 
-VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', {
+VolumeFindClustersParamsDict = typing.TypedDict('VolumeFindClustersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-find-clusters"]],
     "volume-out": str,
     "less-than": bool,
@@ -25,7 +25,7 @@ VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', 
     "value-threshold": float,
     "minimum-volume": float,
 })
-VolumeFindClustersParametersTagged = typing.TypedDict('VolumeFindClustersParametersTagged', {
+VolumeFindClustersParamsDictTagged = typing.TypedDict('VolumeFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-find-clusters"],
     "volume-out": str,
     "less-than": bool,
@@ -42,7 +42,7 @@ VolumeFindClustersParametersTagged = typing.TypedDict('VolumeFindClustersParamet
 
 class VolumeFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeFindClustersParameters(...)`.
+    Output object returned when calling `VolumeFindClustersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def volume_find_clusters_params(
     value_threshold: float,
     minimum_volume: float,
     less_than: bool = False,
-) -> VolumeFindClustersParametersTagged:
+) -> VolumeFindClustersParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def volume_find_clusters_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeFindClustersParameters` object.
+    `VolumeFindClustersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def volume_find_clusters_validate(
 
 
 def volume_find_clusters_cargs(
-    params: VolumeFindClustersParameters,
+    params: VolumeFindClustersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def volume_find_clusters_cargs(
 
 
 def volume_find_clusters_outputs(
-    params: VolumeFindClustersParameters,
+    params: VolumeFindClustersParamsDict,
     execution: Execution,
 ) -> VolumeFindClustersOutputs:
     """
@@ -220,7 +220,7 @@ def volume_find_clusters_outputs(
 
 
 def volume_find_clusters_execute(
-    params: VolumeFindClustersParameters,
+    params: VolumeFindClustersParamsDict,
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
@@ -322,6 +322,8 @@ def volume_find_clusters(
 __all__ = [
     "VOLUME_FIND_CLUSTERS_METADATA",
     "VolumeFindClustersOutputs",
+    "VolumeFindClustersParamsDict",
+    "VolumeFindClustersParamsDictTagged",
     "volume_find_clusters",
     "volume_find_clusters_execute",
     "volume_find_clusters_params",

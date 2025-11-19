@@ -13,7 +13,7 @@ MRIS_INFO_METADATA = Metadata(
 )
 
 
-MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
+MrisInfoParamsDict = typing.TypedDict('MrisInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_info"]],
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
     "version_flag": bool,
     "help_flag": bool,
 })
-MrisInfoParametersTagged = typing.TypedDict('MrisInfoParametersTagged', {
+MrisInfoParamsDictTagged = typing.TypedDict('MrisInfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_info"],
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
@@ -69,7 +69,7 @@ MrisInfoParametersTagged = typing.TypedDict('MrisInfoParametersTagged', {
 
 class MrisInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisInfoParameters(...)`.
+    Output object returned when calling `MrisInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +103,7 @@ def mris_info_params(
     nogifti_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MrisInfoParametersTagged:
+) -> MrisInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def mris_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisInfoParameters` object.
+    `MrisInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def mris_info_validate(
 
 
 def mris_info_cargs(
-    params: MrisInfoParameters,
+    params: MrisInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -380,7 +380,7 @@ def mris_info_cargs(
 
 
 def mris_info_outputs(
-    params: MrisInfoParameters,
+    params: MrisInfoParamsDict,
     execution: Execution,
 ) -> MrisInfoOutputs:
     """
@@ -401,7 +401,7 @@ def mris_info_outputs(
 
 
 def mris_info_execute(
-    params: MrisInfoParameters,
+    params: MrisInfoParamsDict,
     runner: Runner | None = None,
 ) -> MrisInfoOutputs:
     """
@@ -528,6 +528,8 @@ def mris_info(
 __all__ = [
     "MRIS_INFO_METADATA",
     "MrisInfoOutputs",
+    "MrisInfoParamsDict",
+    "MrisInfoParamsDictTagged",
     "mris_info",
     "mris_info_execute",
     "mris_info_params",

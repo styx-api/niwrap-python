@@ -13,11 +13,11 @@ SEGMENT_BS_SH_METADATA = Metadata(
 )
 
 
-SegmentBsShParameters = typing.TypedDict('SegmentBsShParameters', {
+SegmentBsShParamsDict = typing.TypedDict('SegmentBsShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segmentBS.sh"]],
     "matlab_runtime": typing.NotRequired[str | None],
 })
-SegmentBsShParametersTagged = typing.TypedDict('SegmentBsShParametersTagged', {
+SegmentBsShParamsDictTagged = typing.TypedDict('SegmentBsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentBS.sh"],
     "matlab_runtime": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ SegmentBsShParametersTagged = typing.TypedDict('SegmentBsShParametersTagged', {
 
 class SegmentBsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentBsShParameters(...)`.
+    Output object returned when calling `SegmentBsShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class SegmentBsShOutputs(typing.NamedTuple):
 
 def segment_bs_sh_params(
     matlab_runtime: str | None = None,
-) -> SegmentBsShParametersTagged:
+) -> SegmentBsShParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def segment_bs_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentBsShParameters` object.
+    `SegmentBsShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def segment_bs_sh_validate(
 
 
 def segment_bs_sh_cargs(
-    params: SegmentBsShParameters,
+    params: SegmentBsShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def segment_bs_sh_cargs(
 
 
 def segment_bs_sh_outputs(
-    params: SegmentBsShParameters,
+    params: SegmentBsShParamsDict,
     execution: Execution,
 ) -> SegmentBsShOutputs:
     """
@@ -108,7 +108,7 @@ def segment_bs_sh_outputs(
 
 
 def segment_bs_sh_execute(
-    params: SegmentBsShParameters,
+    params: SegmentBsShParamsDict,
     runner: Runner | None = None,
 ) -> SegmentBsShOutputs:
     """
@@ -165,6 +165,8 @@ def segment_bs_sh(
 __all__ = [
     "SEGMENT_BS_SH_METADATA",
     "SegmentBsShOutputs",
+    "SegmentBsShParamsDict",
+    "SegmentBsShParamsDictTagged",
     "segment_bs_sh",
     "segment_bs_sh_execute",
     "segment_bs_sh_params",

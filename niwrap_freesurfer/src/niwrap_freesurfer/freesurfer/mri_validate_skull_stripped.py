@@ -13,13 +13,13 @@ MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
 )
 
 
-MriValidateSkullStrippedParameters = typing.TypedDict('MriValidateSkullStrippedParameters', {
+MriValidateSkullStrippedParamsDict = typing.TypedDict('MriValidateSkullStrippedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_validate_skull_stripped"]],
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
     "weight": float,
 })
-MriValidateSkullStrippedParametersTagged = typing.TypedDict('MriValidateSkullStrippedParametersTagged', {
+MriValidateSkullStrippedParamsDictTagged = typing.TypedDict('MriValidateSkullStrippedParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_validate_skull_stripped"],
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
@@ -29,7 +29,7 @@ MriValidateSkullStrippedParametersTagged = typing.TypedDict('MriValidateSkullStr
 
 class MriValidateSkullStrippedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriValidateSkullStrippedParameters(...)`.
+    Output object returned when calling `MriValidateSkullStrippedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mri_validate_skull_stripped_params(
     mri_reference: InputPathType,
     mri_test: InputPathType,
     weight: float,
-) -> MriValidateSkullStrippedParametersTagged:
+) -> MriValidateSkullStrippedParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mri_validate_skull_stripped_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriValidateSkullStrippedParameters` object.
+    `MriValidateSkullStrippedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_validate_skull_stripped_validate(
 
 
 def mri_validate_skull_stripped_cargs(
-    params: MriValidateSkullStrippedParameters,
+    params: MriValidateSkullStrippedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_validate_skull_stripped_cargs(
 
 
 def mri_validate_skull_stripped_outputs(
-    params: MriValidateSkullStrippedParameters,
+    params: MriValidateSkullStrippedParamsDict,
     execution: Execution,
 ) -> MriValidateSkullStrippedOutputs:
     """
@@ -128,7 +128,7 @@ def mri_validate_skull_stripped_outputs(
 
 
 def mri_validate_skull_stripped_execute(
-    params: MriValidateSkullStrippedParameters,
+    params: MriValidateSkullStrippedParamsDict,
     runner: Runner | None = None,
 ) -> MriValidateSkullStrippedOutputs:
     """
@@ -190,6 +190,8 @@ def mri_validate_skull_stripped(
 __all__ = [
     "MRI_VALIDATE_SKULL_STRIPPED_METADATA",
     "MriValidateSkullStrippedOutputs",
+    "MriValidateSkullStrippedParamsDict",
+    "MriValidateSkullStrippedParamsDictTagged",
     "mri_validate_skull_stripped",
     "mri_validate_skull_stripped_execute",
     "mri_validate_skull_stripped_params",

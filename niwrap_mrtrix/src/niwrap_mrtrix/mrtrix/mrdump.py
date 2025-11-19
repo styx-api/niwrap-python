@@ -13,19 +13,19 @@ MRDUMP_METADATA = Metadata(
 )
 
 
-MrdumpConfigParameters = typing.TypedDict('MrdumpConfigParameters', {
+MrdumpConfigParamsDict = typing.TypedDict('MrdumpConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrdumpConfigParametersTagged = typing.TypedDict('MrdumpConfigParametersTagged', {
+MrdumpConfigParamsDictTagged = typing.TypedDict('MrdumpConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrdumpParameters = typing.TypedDict('MrdumpParameters', {
+MrdumpParamsDict = typing.TypedDict('MrdumpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrdump"]],
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -33,13 +33,13 @@ MrdumpParameters = typing.TypedDict('MrdumpParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrdumpConfigParameters] | None],
+    "config": typing.NotRequired[list[MrdumpConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
-MrdumpParametersTagged = typing.TypedDict('MrdumpParametersTagged', {
+MrdumpParamsDictTagged = typing.TypedDict('MrdumpParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrdump"],
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -47,7 +47,7 @@ MrdumpParametersTagged = typing.TypedDict('MrdumpParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrdumpConfigParameters] | None],
+    "config": typing.NotRequired[list[MrdumpConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -55,10 +55,10 @@ MrdumpParametersTagged = typing.TypedDict('MrdumpParametersTagged', {
 })
 
 
-def mrdump_config_params(
+def mrdump_config(
     key: str,
     value: str,
-) -> MrdumpConfigParametersTagged:
+) -> MrdumpConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mrdump_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrdumpConfigParameters` object.
+    `MrdumpConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def mrdump_config_validate(
 
 
 def mrdump_config_cargs(
-    params: MrdumpConfigParameters,
+    params: MrdumpConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mrdump_config_cargs(
 
 class MrdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrdumpParameters(...)`.
+    Output object returned when calling `MrdumpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,11 +136,11 @@ def mrdump_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrdumpConfigParameters] | None = None,
+    config: list[MrdumpConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MrdumpParametersTagged:
+) -> MrdumpParamsDictTagged:
     """
     Build parameters.
     
@@ -190,7 +190,7 @@ def mrdump_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrdumpParameters` object.
+    `MrdumpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -221,7 +221,7 @@ def mrdump_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrdumpConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrdumpConfigParamsDict] | None`')
         for e in params["config"]:
             mrdump_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def mrdump_validate(
 
 
 def mrdump_cargs(
-    params: MrdumpParameters,
+    params: MrdumpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -287,7 +287,7 @@ def mrdump_cargs(
 
 
 def mrdump_outputs(
-    params: MrdumpParameters,
+    params: MrdumpParamsDict,
     execution: Execution,
 ) -> MrdumpOutputs:
     """
@@ -307,7 +307,7 @@ def mrdump_outputs(
 
 
 def mrdump_execute(
-    params: MrdumpParameters,
+    params: MrdumpParamsDict,
     runner: Runner | None = None,
 ) -> MrdumpOutputs:
     """
@@ -350,7 +350,7 @@ def mrdump(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrdumpConfigParameters] | None = None,
+    config: list[MrdumpConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
@@ -411,9 +411,13 @@ def mrdump(
 
 __all__ = [
     "MRDUMP_METADATA",
+    "MrdumpConfigParamsDict",
+    "MrdumpConfigParamsDictTagged",
     "MrdumpOutputs",
+    "MrdumpParamsDict",
+    "MrdumpParamsDictTagged",
     "mrdump",
-    "mrdump_config_params",
+    "mrdump_config",
     "mrdump_execute",
     "mrdump_params",
 ]

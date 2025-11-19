@@ -13,14 +13,14 @@ MIST_FA_REG_METADATA = Metadata(
 )
 
 
-MistFaRegParameters = typing.TypedDict('MistFaRegParameters', {
+MistFaRegParamsDict = typing.TypedDict('MistFaRegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mist_FA_reg"]],
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
     "reference_t1_volume": InputPathType,
     "output_filename": str,
 })
-MistFaRegParametersTagged = typing.TypedDict('MistFaRegParametersTagged', {
+MistFaRegParamsDictTagged = typing.TypedDict('MistFaRegParamsDictTagged', {
     "@type": typing.Literal["fsl/mist_FA_reg"],
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
@@ -31,7 +31,7 @@ MistFaRegParametersTagged = typing.TypedDict('MistFaRegParametersTagged', {
 
 class MistFaRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MistFaRegParameters(...)`.
+    Output object returned when calling `MistFaRegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mist_fa_reg_params(
     s0_volume: InputPathType,
     reference_t1_volume: InputPathType,
     output_filename: str,
-) -> MistFaRegParametersTagged:
+) -> MistFaRegParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mist_fa_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MistFaRegParameters` object.
+    `MistFaRegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mist_fa_reg_validate(
 
 
 def mist_fa_reg_cargs(
-    params: MistFaRegParameters,
+    params: MistFaRegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mist_fa_reg_cargs(
 
 
 def mist_fa_reg_outputs(
-    params: MistFaRegParameters,
+    params: MistFaRegParamsDict,
     execution: Execution,
 ) -> MistFaRegOutputs:
     """
@@ -139,7 +139,7 @@ def mist_fa_reg_outputs(
 
 
 def mist_fa_reg_execute(
-    params: MistFaRegParameters,
+    params: MistFaRegParamsDict,
     runner: Runner | None = None,
 ) -> MistFaRegOutputs:
     """
@@ -204,6 +204,8 @@ def mist_fa_reg(
 __all__ = [
     "MIST_FA_REG_METADATA",
     "MistFaRegOutputs",
+    "MistFaRegParamsDict",
+    "MistFaRegParamsDictTagged",
     "mist_fa_reg",
     "mist_fa_reg_execute",
     "mist_fa_reg_params",

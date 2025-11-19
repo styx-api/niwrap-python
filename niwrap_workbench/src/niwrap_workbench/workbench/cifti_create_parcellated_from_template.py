@@ -12,37 +12,37 @@ CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
 )
 
 
-CiftiCreateParcellatedFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParameters', {
+CiftiCreateParcellatedFromTemplateCiftiParamsDict = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiCreateParcellatedFromTemplateCiftiParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParametersTagged', {
+CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateParameters', {
+CiftiCreateParcellatedFromTemplateParamsDict = typing.TypedDict('CiftiCreateParcellatedFromTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-parcellated-from-template"]],
     "cifti-out": str,
     "value": typing.NotRequired[float | None],
-    "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None],
     "cifti-template": InputPathType,
     "modify-direction": str,
 })
-CiftiCreateParcellatedFromTemplateParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateParametersTagged', {
+CiftiCreateParcellatedFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-parcellated-from-template"],
     "cifti-out": str,
     "value": typing.NotRequired[float | None],
-    "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None],
     "cifti-template": InputPathType,
     "modify-direction": str,
 })
 
 
-def cifti_create_parcellated_from_template_cifti_params(
+def cifti_create_parcellated_from_template_cifti(
     cifti_in: InputPathType,
-) -> CiftiCreateParcellatedFromTemplateCiftiParametersTagged:
+) -> CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def cifti_create_parcellated_from_template_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateParcellatedFromTemplateCiftiParameters` object.
+    `CiftiCreateParcellatedFromTemplateCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def cifti_create_parcellated_from_template_cifti_validate(
 
 
 def cifti_create_parcellated_from_template_cifti_cargs(
-    params: CiftiCreateParcellatedFromTemplateCiftiParameters,
+    params: CiftiCreateParcellatedFromTemplateCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def cifti_create_parcellated_from_template_cifti_cargs(
 
 class CiftiCreateParcellatedFromTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateParcellatedFromTemplateParameters(...)`.
+    Output object returned when calling `CiftiCreateParcellatedFromTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,8 +112,8 @@ def cifti_create_parcellated_from_template_params(
     value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
-    cifti: list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None = None,
-) -> CiftiCreateParcellatedFromTemplateParametersTagged:
+    cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
+) -> CiftiCreateParcellatedFromTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def cifti_create_parcellated_from_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateParcellatedFromTemplateParameters` object.
+    `CiftiCreateParcellatedFromTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def cifti_create_parcellated_from_template_validate(
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_create_parcellated_from_template_cifti_validate(e)
     if params.get("cifti-template", None) is None:
@@ -178,7 +178,7 @@ def cifti_create_parcellated_from_template_validate(
 
 
 def cifti_create_parcellated_from_template_cargs(
-    params: CiftiCreateParcellatedFromTemplateParameters,
+    params: CiftiCreateParcellatedFromTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,7 +206,7 @@ def cifti_create_parcellated_from_template_cargs(
 
 
 def cifti_create_parcellated_from_template_outputs(
-    params: CiftiCreateParcellatedFromTemplateParameters,
+    params: CiftiCreateParcellatedFromTemplateParamsDict,
     execution: Execution,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
@@ -226,7 +226,7 @@ def cifti_create_parcellated_from_template_outputs(
 
 
 def cifti_create_parcellated_from_template_execute(
-    params: CiftiCreateParcellatedFromTemplateParameters,
+    params: CiftiCreateParcellatedFromTemplateParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
@@ -259,7 +259,7 @@ def cifti_create_parcellated_from_template(
     value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
-    cifti: list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None = None,
+    cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
@@ -297,9 +297,13 @@ def cifti_create_parcellated_from_template(
 
 __all__ = [
     "CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA",
+    "CiftiCreateParcellatedFromTemplateCiftiParamsDict",
+    "CiftiCreateParcellatedFromTemplateCiftiParamsDictTagged",
     "CiftiCreateParcellatedFromTemplateOutputs",
+    "CiftiCreateParcellatedFromTemplateParamsDict",
+    "CiftiCreateParcellatedFromTemplateParamsDictTagged",
     "cifti_create_parcellated_from_template",
-    "cifti_create_parcellated_from_template_cifti_params",
+    "cifti_create_parcellated_from_template_cifti",
     "cifti_create_parcellated_from_template_execute",
     "cifti_create_parcellated_from_template_params",
 ]

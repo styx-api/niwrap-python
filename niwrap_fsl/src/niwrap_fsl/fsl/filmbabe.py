@@ -13,7 +13,7 @@ FILMBABE_METADATA = Metadata(
 )
 
 
-FilmbabeParameters = typing.TypedDict('FilmbabeParameters', {
+FilmbabeParamsDict = typing.TypedDict('FilmbabeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/filmbabe"]],
     "datafile": InputPathType,
     "datafile_alias": InputPathType,
@@ -49,7 +49,7 @@ FilmbabeParameters = typing.TypedDict('FilmbabeParameters', {
     "num_trace_samples_alias": typing.NotRequired[int | None],
     "temporal_ar_order": typing.NotRequired[int | None],
 })
-FilmbabeParametersTagged = typing.TypedDict('FilmbabeParametersTagged', {
+FilmbabeParamsDictTagged = typing.TypedDict('FilmbabeParamsDictTagged', {
     "@type": typing.Literal["fsl/filmbabe"],
     "datafile": InputPathType,
     "datafile_alias": InputPathType,
@@ -89,7 +89,7 @@ FilmbabeParametersTagged = typing.TypedDict('FilmbabeParametersTagged', {
 
 class FilmbabeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FilmbabeParameters(...)`.
+    Output object returned when calling `FilmbabeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +129,7 @@ def filmbabe_params(
     num_trace_samples: int | None = None,
     num_trace_samples_alias: int | None = None,
     temporal_ar_order: int | None = None,
-) -> FilmbabeParametersTagged:
+) -> FilmbabeParamsDictTagged:
     """
     Build parameters.
     
@@ -238,7 +238,7 @@ def filmbabe_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FilmbabeParameters` object.
+    `FilmbabeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -363,7 +363,7 @@ def filmbabe_validate(
 
 
 def filmbabe_cargs(
-    params: FilmbabeParameters,
+    params: FilmbabeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -514,7 +514,7 @@ def filmbabe_cargs(
 
 
 def filmbabe_outputs(
-    params: FilmbabeParameters,
+    params: FilmbabeParamsDict,
     execution: Execution,
 ) -> FilmbabeOutputs:
     """
@@ -533,7 +533,7 @@ def filmbabe_outputs(
 
 
 def filmbabe_execute(
-    params: FilmbabeParameters,
+    params: FilmbabeParamsDict,
     runner: Runner | None = None,
 ) -> FilmbabeOutputs:
     """
@@ -692,6 +692,8 @@ def filmbabe(
 __all__ = [
     "FILMBABE_METADATA",
     "FilmbabeOutputs",
+    "FilmbabeParamsDict",
+    "FilmbabeParamsDictTagged",
     "filmbabe",
     "filmbabe_execute",
     "filmbabe_params",

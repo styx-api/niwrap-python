@@ -13,12 +13,12 @@ MRI_GCA_AMBIGUOUS_METADATA = Metadata(
 )
 
 
-MriGcaAmbiguousParameters = typing.TypedDict('MriGcaAmbiguousParameters', {
+MriGcaAmbiguousParamsDict = typing.TypedDict('MriGcaAmbiguousParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gca_ambiguous"]],
     "gca_file": InputPathType,
     "output_volume": str,
 })
-MriGcaAmbiguousParametersTagged = typing.TypedDict('MriGcaAmbiguousParametersTagged', {
+MriGcaAmbiguousParamsDictTagged = typing.TypedDict('MriGcaAmbiguousParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gca_ambiguous"],
     "gca_file": InputPathType,
     "output_volume": str,
@@ -27,7 +27,7 @@ MriGcaAmbiguousParametersTagged = typing.TypedDict('MriGcaAmbiguousParametersTag
 
 class MriGcaAmbiguousOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGcaAmbiguousParameters(...)`.
+    Output object returned when calling `MriGcaAmbiguousParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriGcaAmbiguousOutputs(typing.NamedTuple):
 def mri_gca_ambiguous_params(
     gca_file: InputPathType,
     output_volume: str,
-) -> MriGcaAmbiguousParametersTagged:
+) -> MriGcaAmbiguousParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_gca_ambiguous_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGcaAmbiguousParameters` object.
+    `MriGcaAmbiguousParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mri_gca_ambiguous_validate(
 
 
 def mri_gca_ambiguous_cargs(
-    params: MriGcaAmbiguousParameters,
+    params: MriGcaAmbiguousParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mri_gca_ambiguous_cargs(
 
 
 def mri_gca_ambiguous_outputs(
-    params: MriGcaAmbiguousParameters,
+    params: MriGcaAmbiguousParamsDict,
     execution: Execution,
 ) -> MriGcaAmbiguousOutputs:
     """
@@ -119,7 +119,7 @@ def mri_gca_ambiguous_outputs(
 
 
 def mri_gca_ambiguous_execute(
-    params: MriGcaAmbiguousParameters,
+    params: MriGcaAmbiguousParamsDict,
     runner: Runner | None = None,
 ) -> MriGcaAmbiguousOutputs:
     """
@@ -180,6 +180,8 @@ def mri_gca_ambiguous(
 __all__ = [
     "MRI_GCA_AMBIGUOUS_METADATA",
     "MriGcaAmbiguousOutputs",
+    "MriGcaAmbiguousParamsDict",
+    "MriGcaAmbiguousParamsDictTagged",
     "mri_gca_ambiguous",
     "mri_gca_ambiguous_execute",
     "mri_gca_ambiguous_params",

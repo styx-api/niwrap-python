@@ -13,19 +13,19 @@ SH2POWER_METADATA = Metadata(
 )
 
 
-Sh2powerConfigParameters = typing.TypedDict('Sh2powerConfigParameters', {
+Sh2powerConfigParamsDict = typing.TypedDict('Sh2powerConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Sh2powerConfigParametersTagged = typing.TypedDict('Sh2powerConfigParametersTagged', {
+Sh2powerConfigParamsDictTagged = typing.TypedDict('Sh2powerConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
+Sh2powerParamsDict = typing.TypedDict('Sh2powerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/sh2power"]],
     "spectrum": bool,
     "info": bool,
@@ -33,13 +33,13 @@ Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2powerConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2powerConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
     "power": str,
 })
-Sh2powerParametersTagged = typing.TypedDict('Sh2powerParametersTagged', {
+Sh2powerParamsDictTagged = typing.TypedDict('Sh2powerParamsDictTagged', {
     "@type": typing.Literal["mrtrix/sh2power"],
     "spectrum": bool,
     "info": bool,
@@ -47,7 +47,7 @@ Sh2powerParametersTagged = typing.TypedDict('Sh2powerParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2powerConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2powerConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
@@ -55,10 +55,10 @@ Sh2powerParametersTagged = typing.TypedDict('Sh2powerParametersTagged', {
 })
 
 
-def sh2power_config_params(
+def sh2power_config(
     key: str,
     value: str,
-) -> Sh2powerConfigParametersTagged:
+) -> Sh2powerConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def sh2power_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2powerConfigParameters` object.
+    `Sh2powerConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def sh2power_config_validate(
 
 
 def sh2power_config_cargs(
-    params: Sh2powerConfigParameters,
+    params: Sh2powerConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def sh2power_config_cargs(
 
 class Sh2powerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Sh2powerParameters(...)`.
+    Output object returned when calling `Sh2powerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def sh2power_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2powerConfigParameters] | None = None,
+    config: list[Sh2powerConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2powerParametersTagged:
+) -> Sh2powerParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def sh2power_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2powerParameters` object.
+    `Sh2powerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def sh2power_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2powerConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2powerConfigParamsDict] | None`')
         for e in params["config"]:
             sh2power_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def sh2power_validate(
 
 
 def sh2power_cargs(
-    params: Sh2powerParameters,
+    params: Sh2powerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -283,7 +283,7 @@ def sh2power_cargs(
 
 
 def sh2power_outputs(
-    params: Sh2powerParameters,
+    params: Sh2powerParamsDict,
     execution: Execution,
 ) -> Sh2powerOutputs:
     """
@@ -303,7 +303,7 @@ def sh2power_outputs(
 
 
 def sh2power_execute(
-    params: Sh2powerParameters,
+    params: Sh2powerParamsDict,
     runner: Runner | None = None,
 ) -> Sh2powerOutputs:
     """
@@ -351,7 +351,7 @@ def sh2power(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2powerConfigParameters] | None = None,
+    config: list[Sh2powerConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -415,9 +415,13 @@ def sh2power(
 
 __all__ = [
     "SH2POWER_METADATA",
+    "Sh2powerConfigParamsDict",
+    "Sh2powerConfigParamsDictTagged",
     "Sh2powerOutputs",
+    "Sh2powerParamsDict",
+    "Sh2powerParamsDictTagged",
     "sh2power",
-    "sh2power_config_params",
+    "sh2power_config",
     "sh2power_execute",
     "sh2power_params",
 ]

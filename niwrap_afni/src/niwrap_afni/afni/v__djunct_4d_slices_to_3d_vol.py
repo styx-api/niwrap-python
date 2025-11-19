@@ -13,11 +13,11 @@ V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
 )
 
 
-VDjunct4dSlicesTo3dVolParameters = typing.TypedDict('VDjunct4dSlicesTo3dVolParameters', {
+VDjunct4dSlicesTo3dVolParamsDict = typing.TypedDict('VDjunct4dSlicesTo3dVolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_slices_to_3d_vol"]],
     "do_something": bool,
 })
-VDjunct4dSlicesTo3dVolParametersTagged = typing.TypedDict('VDjunct4dSlicesTo3dVolParametersTagged', {
+VDjunct4dSlicesTo3dVolParamsDictTagged = typing.TypedDict('VDjunct4dSlicesTo3dVolParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_4d_slices_to_3d_vol"],
     "do_something": bool,
 })
@@ -25,7 +25,7 @@ VDjunct4dSlicesTo3dVolParametersTagged = typing.TypedDict('VDjunct4dSlicesTo3dVo
 
 class VDjunct4dSlicesTo3dVolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunct4dSlicesTo3dVolParameters(...)`.
+    Output object returned when calling `VDjunct4dSlicesTo3dVolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VDjunct4dSlicesTo3dVolOutputs(typing.NamedTuple):
 
 def v__djunct_4d_slices_to_3d_vol_params(
     do_something: bool = False,
-) -> VDjunct4dSlicesTo3dVolParametersTagged:
+) -> VDjunct4dSlicesTo3dVolParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__djunct_4d_slices_to_3d_vol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunct4dSlicesTo3dVolParameters` object.
+    `VDjunct4dSlicesTo3dVolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__djunct_4d_slices_to_3d_vol_validate(
 
 
 def v__djunct_4d_slices_to_3d_vol_cargs(
-    params: VDjunct4dSlicesTo3dVolParameters,
+    params: VDjunct4dSlicesTo3dVolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__djunct_4d_slices_to_3d_vol_cargs(
 
 
 def v__djunct_4d_slices_to_3d_vol_outputs(
-    params: VDjunct4dSlicesTo3dVolParameters,
+    params: VDjunct4dSlicesTo3dVolParamsDict,
     execution: Execution,
 ) -> VDjunct4dSlicesTo3dVolOutputs:
     """
@@ -110,7 +110,7 @@ def v__djunct_4d_slices_to_3d_vol_outputs(
 
 
 def v__djunct_4d_slices_to_3d_vol_execute(
-    params: VDjunct4dSlicesTo3dVolParameters,
+    params: VDjunct4dSlicesTo3dVolParamsDict,
     runner: Runner | None = None,
 ) -> VDjunct4dSlicesTo3dVolOutputs:
     """
@@ -165,6 +165,8 @@ def v__djunct_4d_slices_to_3d_vol(
 
 __all__ = [
     "VDjunct4dSlicesTo3dVolOutputs",
+    "VDjunct4dSlicesTo3dVolParamsDict",
+    "VDjunct4dSlicesTo3dVolParamsDictTagged",
     "V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA",
     "v__djunct_4d_slices_to_3d_vol",
     "v__djunct_4d_slices_to_3d_vol_execute",

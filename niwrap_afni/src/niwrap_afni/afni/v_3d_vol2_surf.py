@@ -13,7 +13,7 @@ V_3D_VOL2_SURF_METADATA = Metadata(
 )
 
 
-V3dVol2SurfParameters = typing.TypedDict('V3dVol2SurfParameters', {
+V3dVol2SurfParamsDict = typing.TypedDict('V3dVol2SurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dVol2Surf"]],
     "spec_file": InputPathType,
     "sv": InputPathType,
@@ -58,7 +58,7 @@ V3dVol2SurfParameters = typing.TypedDict('V3dVol2SurfParameters', {
     "keep_norm_dir": bool,
     "reverse_norm_dir": bool,
 })
-V3dVol2SurfParametersTagged = typing.TypedDict('V3dVol2SurfParametersTagged', {
+V3dVol2SurfParamsDictTagged = typing.TypedDict('V3dVol2SurfParamsDictTagged', {
     "@type": typing.Literal["afni/3dVol2Surf"],
     "spec_file": InputPathType,
     "sv": InputPathType,
@@ -107,7 +107,7 @@ V3dVol2SurfParametersTagged = typing.TypedDict('V3dVol2SurfParametersTagged', {
 
 class V3dVol2SurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dVol2SurfParameters(...)`.
+    Output object returned when calling `V3dVol2SurfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -162,7 +162,7 @@ def v_3d_vol2_surf_params(
     version: bool = False,
     keep_norm_dir: bool = False,
     reverse_norm_dir: bool = False,
-) -> V3dVol2SurfParametersTagged:
+) -> V3dVol2SurfParamsDictTagged:
     """
     Build parameters.
     
@@ -292,7 +292,7 @@ def v_3d_vol2_surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dVol2SurfParameters` object.
+    `V3dVol2SurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -450,7 +450,7 @@ def v_3d_vol2_surf_validate(
 
 
 def v_3d_vol2_surf_cargs(
-    params: V3dVol2SurfParameters,
+    params: V3dVol2SurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -619,7 +619,7 @@ def v_3d_vol2_surf_cargs(
 
 
 def v_3d_vol2_surf_outputs(
-    params: V3dVol2SurfParameters,
+    params: V3dVol2SurfParamsDict,
     execution: Execution,
 ) -> V3dVol2SurfOutputs:
     """
@@ -641,7 +641,7 @@ def v_3d_vol2_surf_outputs(
 
 
 def v_3d_vol2_surf_execute(
-    params: V3dVol2SurfParameters,
+    params: V3dVol2SurfParamsDict,
     runner: Runner | None = None,
 ) -> V3dVol2SurfOutputs:
     """
@@ -826,6 +826,8 @@ def v_3d_vol2_surf(
 
 __all__ = [
     "V3dVol2SurfOutputs",
+    "V3dVol2SurfParamsDict",
+    "V3dVol2SurfParamsDictTagged",
     "V_3D_VOL2_SURF_METADATA",
     "v_3d_vol2_surf",
     "v_3d_vol2_surf_execute",

@@ -13,13 +13,13 @@ MRI_COPY_VALUES_METADATA = Metadata(
 )
 
 
-MriCopyValuesParameters = typing.TypedDict('MriCopyValuesParameters', {
+MriCopyValuesParamsDict = typing.TypedDict('MriCopyValuesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_copy_values"]],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "output_volume": str,
 })
-MriCopyValuesParametersTagged = typing.TypedDict('MriCopyValuesParametersTagged', {
+MriCopyValuesParamsDictTagged = typing.TypedDict('MriCopyValuesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_copy_values"],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
@@ -29,7 +29,7 @@ MriCopyValuesParametersTagged = typing.TypedDict('MriCopyValuesParametersTagged'
 
 class MriCopyValuesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCopyValuesParameters(...)`.
+    Output object returned when calling `MriCopyValuesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_copy_values_params(
     source_volume: InputPathType,
     target_volume: InputPathType,
     output_volume: str,
-) -> MriCopyValuesParametersTagged:
+) -> MriCopyValuesParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_copy_values_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCopyValuesParameters` object.
+    `MriCopyValuesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_copy_values_validate(
 
 
 def mri_copy_values_cargs(
-    params: MriCopyValuesParameters,
+    params: MriCopyValuesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_copy_values_cargs(
 
 
 def mri_copy_values_outputs(
-    params: MriCopyValuesParameters,
+    params: MriCopyValuesParamsDict,
     execution: Execution,
 ) -> MriCopyValuesOutputs:
     """
@@ -129,7 +129,7 @@ def mri_copy_values_outputs(
 
 
 def mri_copy_values_execute(
-    params: MriCopyValuesParameters,
+    params: MriCopyValuesParamsDict,
     runner: Runner | None = None,
 ) -> MriCopyValuesOutputs:
     """
@@ -191,6 +191,8 @@ def mri_copy_values(
 __all__ = [
     "MRI_COPY_VALUES_METADATA",
     "MriCopyValuesOutputs",
+    "MriCopyValuesParamsDict",
+    "MriCopyValuesParamsDictTagged",
     "mri_copy_values",
     "mri_copy_values_execute",
     "mri_copy_values_params",

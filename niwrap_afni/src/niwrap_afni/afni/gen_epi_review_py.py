@@ -13,7 +13,7 @@ GEN_EPI_REVIEW_PY_METADATA = Metadata(
 )
 
 
-GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
+GenEpiReviewPyParamsDict = typing.TypedDict('GenEpiReviewPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/gen_epi_review.py"]],
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
     "graph_xoffset": typing.NotRequired[float | None],
     "graph_yoffset": typing.NotRequired[float | None],
 })
-GenEpiReviewPyParametersTagged = typing.TypedDict('GenEpiReviewPyParametersTagged', {
+GenEpiReviewPyParamsDictTagged = typing.TypedDict('GenEpiReviewPyParamsDictTagged', {
     "@type": typing.Literal["afni/gen_epi_review.py"],
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ GenEpiReviewPyParametersTagged = typing.TypedDict('GenEpiReviewPyParametersTagge
 
 class GenEpiReviewPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GenEpiReviewPyParameters(...)`.
+    Output object returned when calling `GenEpiReviewPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def gen_epi_review_py_params(
     graph_size: list[float] | None = None,
     graph_xoffset: float | None = None,
     graph_yoffset: float | None = None,
-) -> GenEpiReviewPyParametersTagged:
+) -> GenEpiReviewPyParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def gen_epi_review_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GenEpiReviewPyParameters` object.
+    `GenEpiReviewPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def gen_epi_review_py_validate(
 
 
 def gen_epi_review_py_cargs(
-    params: GenEpiReviewPyParameters,
+    params: GenEpiReviewPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def gen_epi_review_py_cargs(
 
 
 def gen_epi_review_py_outputs(
-    params: GenEpiReviewPyParameters,
+    params: GenEpiReviewPyParamsDict,
     execution: Execution,
 ) -> GenEpiReviewPyOutputs:
     """
@@ -251,7 +251,7 @@ def gen_epi_review_py_outputs(
 
 
 def gen_epi_review_py_execute(
-    params: GenEpiReviewPyParameters,
+    params: GenEpiReviewPyParamsDict,
     runner: Runner | None = None,
 ) -> GenEpiReviewPyOutputs:
     """
@@ -334,6 +334,8 @@ def gen_epi_review_py(
 __all__ = [
     "GEN_EPI_REVIEW_PY_METADATA",
     "GenEpiReviewPyOutputs",
+    "GenEpiReviewPyParamsDict",
+    "GenEpiReviewPyParamsDictTagged",
     "gen_epi_review_py",
     "gen_epi_review_py_execute",
     "gen_epi_review_py_params",

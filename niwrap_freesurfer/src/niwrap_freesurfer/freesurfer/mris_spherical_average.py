@@ -13,7 +13,7 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 )
 
 
-MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameters', {
+MrisSphericalAverageParamsDict = typing.TypedDict('MrisSphericalAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_spherical_average"]],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
@@ -30,7 +30,7 @@ MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameter
     "average_area": bool,
     "summary_statistics": typing.NotRequired[str | None],
 })
-MrisSphericalAverageParametersTagged = typing.TypedDict('MrisSphericalAverageParametersTagged', {
+MrisSphericalAverageParamsDictTagged = typing.TypedDict('MrisSphericalAverageParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_spherical_average"],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
@@ -51,7 +51,7 @@ MrisSphericalAverageParametersTagged = typing.TypedDict('MrisSphericalAveragePar
 
 class MrisSphericalAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSphericalAverageParameters(...)`.
+    Output object returned when calling `MrisSphericalAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def mris_spherical_average_params(
     subjects_dir: str | None = None,
     average_area: bool = False,
     summary_statistics: str | None = None,
-) -> MrisSphericalAverageParametersTagged:
+) -> MrisSphericalAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def mris_spherical_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSphericalAverageParameters` object.
+    `MrisSphericalAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def mris_spherical_average_validate(
 
 
 def mris_spherical_average_cargs(
-    params: MrisSphericalAverageParameters,
+    params: MrisSphericalAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -251,7 +251,7 @@ def mris_spherical_average_cargs(
 
 
 def mris_spherical_average_outputs(
-    params: MrisSphericalAverageParameters,
+    params: MrisSphericalAverageParamsDict,
     execution: Execution,
 ) -> MrisSphericalAverageOutputs:
     """
@@ -270,7 +270,7 @@ def mris_spherical_average_outputs(
 
 
 def mris_spherical_average_execute(
-    params: MrisSphericalAverageParameters,
+    params: MrisSphericalAverageParamsDict,
     runner: Runner | None = None,
 ) -> MrisSphericalAverageOutputs:
     """
@@ -369,6 +369,8 @@ def mris_spherical_average(
 __all__ = [
     "MRIS_SPHERICAL_AVERAGE_METADATA",
     "MrisSphericalAverageOutputs",
+    "MrisSphericalAverageParamsDict",
+    "MrisSphericalAverageParamsDictTagged",
     "mris_spherical_average",
     "mris_spherical_average_execute",
     "mris_spherical_average_params",

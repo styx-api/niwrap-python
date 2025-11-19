@@ -13,12 +13,12 @@ CCALC_METADATA = Metadata(
 )
 
 
-CcalcParameters = typing.TypedDict('CcalcParameters', {
+CcalcParamsDict = typing.TypedDict('CcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ccalc"]],
     "format": typing.NotRequired[str | None],
     "expr": str,
 })
-CcalcParametersTagged = typing.TypedDict('CcalcParametersTagged', {
+CcalcParamsDictTagged = typing.TypedDict('CcalcParamsDictTagged', {
     "@type": typing.Literal["afni/ccalc"],
     "format": typing.NotRequired[str | None],
     "expr": str,
@@ -27,7 +27,7 @@ CcalcParametersTagged = typing.TypedDict('CcalcParametersTagged', {
 
 class CcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CcalcParameters(...)`.
+    Output object returned when calling `CcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class CcalcOutputs(typing.NamedTuple):
 def ccalc_params(
     expr: str,
     format_: str | None = None,
-) -> CcalcParametersTagged:
+) -> CcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def ccalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CcalcParameters` object.
+    `CcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def ccalc_validate(
 
 
 def ccalc_cargs(
-    params: CcalcParameters,
+    params: CcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -106,7 +106,7 @@ def ccalc_cargs(
 
 
 def ccalc_outputs(
-    params: CcalcParameters,
+    params: CcalcParamsDict,
     execution: Execution,
 ) -> CcalcOutputs:
     """
@@ -125,7 +125,7 @@ def ccalc_outputs(
 
 
 def ccalc_execute(
-    params: CcalcParameters,
+    params: CcalcParamsDict,
     runner: Runner | None = None,
 ) -> CcalcOutputs:
     """
@@ -186,6 +186,8 @@ def ccalc(
 __all__ = [
     "CCALC_METADATA",
     "CcalcOutputs",
+    "CcalcParamsDict",
+    "CcalcParamsDictTagged",
     "ccalc",
     "ccalc_execute",
     "ccalc_params",

@@ -13,14 +13,14 @@ BETA2SXA_METADATA = Metadata(
 )
 
 
-Beta2sxaParameters = typing.TypedDict('Beta2sxaParameters', {
+Beta2sxaParamsDict = typing.TypedDict('Beta2sxaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/beta2sxa"]],
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
     "number_of_per_subjects": float,
     "sxa_output": typing.NotRequired[str | None],
 })
-Beta2sxaParametersTagged = typing.TypedDict('Beta2sxaParametersTagged', {
+Beta2sxaParamsDictTagged = typing.TypedDict('Beta2sxaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/beta2sxa"],
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
@@ -31,7 +31,7 @@ Beta2sxaParametersTagged = typing.TypedDict('Beta2sxaParametersTagged', {
 
 class Beta2sxaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Beta2sxaParameters(...)`.
+    Output object returned when calling `Beta2sxaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def beta2sxa_params(
     number_of_conditions: float,
     number_of_per_subjects: float,
     sxa_output: str | None = None,
-) -> Beta2sxaParametersTagged:
+) -> Beta2sxaParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def beta2sxa_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Beta2sxaParameters` object.
+    `Beta2sxaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def beta2sxa_validate(
 
 
 def beta2sxa_cargs(
-    params: Beta2sxaParameters,
+    params: Beta2sxaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def beta2sxa_cargs(
 
 
 def beta2sxa_outputs(
-    params: Beta2sxaParameters,
+    params: Beta2sxaParamsDict,
     execution: Execution,
 ) -> Beta2sxaOutputs:
     """
@@ -155,7 +155,7 @@ def beta2sxa_outputs(
 
 
 def beta2sxa_execute(
-    params: Beta2sxaParameters,
+    params: Beta2sxaParamsDict,
     runner: Runner | None = None,
 ) -> Beta2sxaOutputs:
     """
@@ -222,6 +222,8 @@ def beta2sxa(
 __all__ = [
     "BETA2SXA_METADATA",
     "Beta2sxaOutputs",
+    "Beta2sxaParamsDict",
+    "Beta2sxaParamsDictTagged",
     "beta2sxa",
     "beta2sxa_execute",
     "beta2sxa_params",

@@ -13,7 +13,7 @@ V_3DFRACTIONIZE_METADATA = Metadata(
 )
 
 
-V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
+V3dfractionizeParamsDict = typing.TypedDict('V3dfractionizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dfractionize"]],
     "template": InputPathType,
     "input": InputPathType,
@@ -23,7 +23,7 @@ V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
     "preserve": bool,
     "vote": bool,
 })
-V3dfractionizeParametersTagged = typing.TypedDict('V3dfractionizeParametersTagged', {
+V3dfractionizeParamsDictTagged = typing.TypedDict('V3dfractionizeParamsDictTagged', {
     "@type": typing.Literal["afni/3dfractionize"],
     "template": InputPathType,
     "input": InputPathType,
@@ -37,7 +37,7 @@ V3dfractionizeParametersTagged = typing.TypedDict('V3dfractionizeParametersTagge
 
 class V3dfractionizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dfractionizeParameters(...)`.
+    Output object returned when calling `V3dfractionizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v_3dfractionize_params(
     warp: InputPathType | None = None,
     preserve: bool = False,
     vote: bool = False,
-) -> V3dfractionizeParametersTagged:
+) -> V3dfractionizeParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def v_3dfractionize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dfractionizeParameters` object.
+    `V3dfractionizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def v_3dfractionize_validate(
 
 
 def v_3dfractionize_cargs(
-    params: V3dfractionizeParameters,
+    params: V3dfractionizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -175,7 +175,7 @@ def v_3dfractionize_cargs(
 
 
 def v_3dfractionize_outputs(
-    params: V3dfractionizeParameters,
+    params: V3dfractionizeParamsDict,
     execution: Execution,
 ) -> V3dfractionizeOutputs:
     """
@@ -195,7 +195,7 @@ def v_3dfractionize_outputs(
 
 
 def v_3dfractionize_execute(
-    params: V3dfractionizeParameters,
+    params: V3dfractionizeParamsDict,
     runner: Runner | None = None,
 ) -> V3dfractionizeOutputs:
     """
@@ -276,6 +276,8 @@ def v_3dfractionize(
 
 __all__ = [
     "V3dfractionizeOutputs",
+    "V3dfractionizeParamsDict",
+    "V3dfractionizeParamsDictTagged",
     "V_3DFRACTIONIZE_METADATA",
     "v_3dfractionize",
     "v_3dfractionize_execute",

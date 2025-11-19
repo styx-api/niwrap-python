@@ -13,7 +13,7 @@ V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
 )
 
 
-V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParameters', {
+V3dBrainVoyagertoAfniParamsDict = typing.TypedDict('V3dBrainVoyagertoAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBRAIN_VOYAGERtoAFNI"]],
     "input_file": InputPathType,
     "force_byte_swap": bool,
@@ -30,7 +30,7 @@ V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParamet
     "turn_off_memory_tracing": bool,
     "turn_on_memory_tracing": bool,
 })
-V3dBrainVoyagertoAfniParametersTagged = typing.TypedDict('V3dBrainVoyagertoAfniParametersTagged', {
+V3dBrainVoyagertoAfniParamsDictTagged = typing.TypedDict('V3dBrainVoyagertoAfniParamsDictTagged', {
     "@type": typing.Literal["afni/3dBRAIN_VOYAGERtoAFNI"],
     "input_file": InputPathType,
     "force_byte_swap": bool,
@@ -51,7 +51,7 @@ V3dBrainVoyagertoAfniParametersTagged = typing.TypedDict('V3dBrainVoyagertoAfniP
 
 class V3dBrainVoyagertoAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBrainVoyagertoAfniParameters(...)`.
+    Output object returned when calling `V3dBrainVoyagertoAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def v_3d_brain_voyagerto_afni_params(
     trace_extreme_debugging: bool = False,
     turn_off_memory_tracing: bool = False,
     turn_on_memory_tracing: bool = False,
-) -> V3dBrainVoyagertoAfniParametersTagged:
+) -> V3dBrainVoyagertoAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def v_3d_brain_voyagerto_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBrainVoyagertoAfniParameters` object.
+    `V3dBrainVoyagertoAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def v_3d_brain_voyagerto_afni_validate(
 
 
 def v_3d_brain_voyagerto_afni_cargs(
-    params: V3dBrainVoyagertoAfniParameters,
+    params: V3dBrainVoyagertoAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -245,7 +245,7 @@ def v_3d_brain_voyagerto_afni_cargs(
 
 
 def v_3d_brain_voyagerto_afni_outputs(
-    params: V3dBrainVoyagertoAfniParameters,
+    params: V3dBrainVoyagertoAfniParamsDict,
     execution: Execution,
 ) -> V3dBrainVoyagertoAfniOutputs:
     """
@@ -266,7 +266,7 @@ def v_3d_brain_voyagerto_afni_outputs(
 
 
 def v_3d_brain_voyagerto_afni_execute(
-    params: V3dBrainVoyagertoAfniParameters,
+    params: V3dBrainVoyagertoAfniParamsDict,
     runner: Runner | None = None,
 ) -> V3dBrainVoyagertoAfniOutputs:
     """
@@ -364,6 +364,8 @@ def v_3d_brain_voyagerto_afni(
 
 __all__ = [
     "V3dBrainVoyagertoAfniOutputs",
+    "V3dBrainVoyagertoAfniParamsDict",
+    "V3dBrainVoyagertoAfniParamsDictTagged",
     "V_3D_BRAIN_VOYAGERTO_AFNI_METADATA",
     "v_3d_brain_voyagerto_afni",
     "v_3d_brain_voyagerto_afni_execute",

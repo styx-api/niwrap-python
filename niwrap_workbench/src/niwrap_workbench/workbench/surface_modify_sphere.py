@@ -12,14 +12,14 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 )
 
 
-SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters', {
+SurfaceModifySphereParamsDict = typing.TypedDict('SurfaceModifySphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-modify-sphere"]],
     "sphere-out": str,
     "recenter": bool,
     "sphere-in": InputPathType,
     "radius": float,
 })
-SurfaceModifySphereParametersTagged = typing.TypedDict('SurfaceModifySphereParametersTagged', {
+SurfaceModifySphereParamsDictTagged = typing.TypedDict('SurfaceModifySphereParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-modify-sphere"],
     "sphere-out": str,
     "recenter": bool,
@@ -30,7 +30,7 @@ SurfaceModifySphereParametersTagged = typing.TypedDict('SurfaceModifySphereParam
 
 class SurfaceModifySphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceModifySphereParameters(...)`.
+    Output object returned when calling `SurfaceModifySphereParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_modify_sphere_params(
     sphere_in: InputPathType,
     radius: float,
     recenter: bool = False,
-) -> SurfaceModifySphereParametersTagged:
+) -> SurfaceModifySphereParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def surface_modify_sphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceModifySphereParameters` object.
+    `SurfaceModifySphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def surface_modify_sphere_validate(
 
 
 def surface_modify_sphere_cargs(
-    params: SurfaceModifySphereParameters,
+    params: SurfaceModifySphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def surface_modify_sphere_cargs(
 
 
 def surface_modify_sphere_outputs(
-    params: SurfaceModifySphereParameters,
+    params: SurfaceModifySphereParamsDict,
     execution: Execution,
 ) -> SurfaceModifySphereOutputs:
     """
@@ -142,7 +142,7 @@ def surface_modify_sphere_outputs(
 
 
 def surface_modify_sphere_execute(
-    params: SurfaceModifySphereParameters,
+    params: SurfaceModifySphereParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
@@ -213,6 +213,8 @@ def surface_modify_sphere(
 __all__ = [
     "SURFACE_MODIFY_SPHERE_METADATA",
     "SurfaceModifySphereOutputs",
+    "SurfaceModifySphereParamsDict",
+    "SurfaceModifySphereParamsDictTagged",
     "surface_modify_sphere",
     "surface_modify_sphere_execute",
     "surface_modify_sphere_params",

@@ -13,7 +13,7 @@ DMRI_ANATOMI_CUTS_METADATA = Metadata(
 )
 
 
-DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
+DmriAnatomiCutsParamsDict = typing.TypedDict('DmriAnatomiCutsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_AnatomiCuts"]],
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
@@ -23,7 +23,7 @@ DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
     "output_folder": str,
     "direction_flag": typing.Literal["s", "d", "a", "o"],
 })
-DmriAnatomiCutsParametersTagged = typing.TypedDict('DmriAnatomiCutsParametersTagged', {
+DmriAnatomiCutsParamsDictTagged = typing.TypedDict('DmriAnatomiCutsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_AnatomiCuts"],
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
@@ -37,7 +37,7 @@ DmriAnatomiCutsParametersTagged = typing.TypedDict('DmriAnatomiCutsParametersTag
 
 class DmriAnatomiCutsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriAnatomiCutsParameters(...)`.
+    Output object returned when calling `DmriAnatomiCutsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def dmri_anatomi_cuts_params(
     fibers_eigen: float,
     output_folder: str,
     direction_flag: typing.Literal["s", "d", "a", "o"],
-) -> DmriAnatomiCutsParametersTagged:
+) -> DmriAnatomiCutsParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def dmri_anatomi_cuts_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriAnatomiCutsParameters` object.
+    `DmriAnatomiCutsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def dmri_anatomi_cuts_validate(
 
 
 def dmri_anatomi_cuts_cargs(
-    params: DmriAnatomiCutsParameters,
+    params: DmriAnatomiCutsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def dmri_anatomi_cuts_cargs(
 
 
 def dmri_anatomi_cuts_outputs(
-    params: DmriAnatomiCutsParameters,
+    params: DmriAnatomiCutsParamsDict,
     execution: Execution,
 ) -> DmriAnatomiCutsOutputs:
     """
@@ -193,7 +193,7 @@ def dmri_anatomi_cuts_outputs(
 
 
 def dmri_anatomi_cuts_execute(
-    params: DmriAnatomiCutsParameters,
+    params: DmriAnatomiCutsParamsDict,
     runner: Runner | None = None,
 ) -> DmriAnatomiCutsOutputs:
     """
@@ -268,6 +268,8 @@ def dmri_anatomi_cuts(
 __all__ = [
     "DMRI_ANATOMI_CUTS_METADATA",
     "DmriAnatomiCutsOutputs",
+    "DmriAnatomiCutsParamsDict",
+    "DmriAnatomiCutsParamsDictTagged",
     "dmri_anatomi_cuts",
     "dmri_anatomi_cuts_execute",
     "dmri_anatomi_cuts_params",

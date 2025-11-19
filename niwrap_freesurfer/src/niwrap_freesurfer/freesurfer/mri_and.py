@@ -13,11 +13,11 @@ MRI_AND_METADATA = Metadata(
 )
 
 
-MriAndParameters = typing.TypedDict('MriAndParameters', {
+MriAndParamsDict = typing.TypedDict('MriAndParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_and"]],
     "input_files": list[InputPathType],
 })
-MriAndParametersTagged = typing.TypedDict('MriAndParametersTagged', {
+MriAndParamsDictTagged = typing.TypedDict('MriAndParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_and"],
     "input_files": list[InputPathType],
 })
@@ -25,7 +25,7 @@ MriAndParametersTagged = typing.TypedDict('MriAndParametersTagged', {
 
 class MriAndOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAndParameters(...)`.
+    Output object returned when calling `MriAndParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MriAndOutputs(typing.NamedTuple):
 
 def mri_and_params(
     input_files: list[InputPathType],
-) -> MriAndParametersTagged:
+) -> MriAndParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def mri_and_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAndParameters` object.
+    `MriAndParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def mri_and_validate(
 
 
 def mri_and_cargs(
-    params: MriAndParameters,
+    params: MriAndParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def mri_and_cargs(
 
 
 def mri_and_outputs(
-    params: MriAndParameters,
+    params: MriAndParamsDict,
     execution: Execution,
 ) -> MriAndOutputs:
     """
@@ -109,7 +109,7 @@ def mri_and_outputs(
 
 
 def mri_and_execute(
-    params: MriAndParameters,
+    params: MriAndParamsDict,
     runner: Runner | None = None,
 ) -> MriAndOutputs:
     """
@@ -165,6 +165,8 @@ def mri_and(
 __all__ = [
     "MRI_AND_METADATA",
     "MriAndOutputs",
+    "MriAndParamsDict",
+    "MriAndParamsDictTagged",
     "mri_and",
     "mri_and_execute",
     "mri_and_params",

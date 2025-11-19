@@ -13,7 +13,7 @@ REG_RESAMPLE_METADATA = Metadata(
 )
 
 
-RegResampleParameters = typing.TypedDict('RegResampleParameters', {
+RegResampleParamsDict = typing.TypedDict('RegResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_resample"]],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -26,7 +26,7 @@ RegResampleParameters = typing.TypedDict('RegResampleParameters', {
     "nearest_neighbor": bool,
     "linear_interpolation": bool,
 })
-RegResampleParametersTagged = typing.TypedDict('RegResampleParametersTagged', {
+RegResampleParamsDictTagged = typing.TypedDict('RegResampleParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_resample"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -43,7 +43,7 @@ RegResampleParametersTagged = typing.TypedDict('RegResampleParametersTagged', {
 
 class RegResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegResampleParameters(...)`.
+    Output object returned when calling `RegResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def reg_resample_params(
     resampled_blank: str | None = None,
     nearest_neighbor: bool = False,
     linear_interpolation: bool = False,
-) -> RegResampleParametersTagged:
+) -> RegResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def reg_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegResampleParameters` object.
+    `RegResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def reg_resample_validate(
 
 
 def reg_resample_cargs(
-    params: RegResampleParameters,
+    params: RegResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,7 +219,7 @@ def reg_resample_cargs(
 
 
 def reg_resample_outputs(
-    params: RegResampleParameters,
+    params: RegResampleParamsDict,
     execution: Execution,
 ) -> RegResampleOutputs:
     """
@@ -240,7 +240,7 @@ def reg_resample_outputs(
 
 
 def reg_resample_execute(
-    params: RegResampleParameters,
+    params: RegResampleParamsDict,
     runner: Runner | None = None,
 ) -> RegResampleOutputs:
     """
@@ -331,6 +331,8 @@ def reg_resample(
 __all__ = [
     "REG_RESAMPLE_METADATA",
     "RegResampleOutputs",
+    "RegResampleParamsDict",
+    "RegResampleParamsDictTagged",
     "reg_resample",
     "reg_resample_execute",
     "reg_resample_params",

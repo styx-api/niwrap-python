@@ -13,13 +13,13 @@ SLICESMASK_METADATA = Metadata(
 )
 
 
-SlicesmaskParameters = typing.TypedDict('SlicesmaskParameters', {
+SlicesmaskParamsDict = typing.TypedDict('SlicesmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slicesmask"]],
     "image": InputPathType,
     "mask": InputPathType,
     "output": str,
 })
-SlicesmaskParametersTagged = typing.TypedDict('SlicesmaskParametersTagged', {
+SlicesmaskParamsDictTagged = typing.TypedDict('SlicesmaskParamsDictTagged', {
     "@type": typing.Literal["fsl/slicesmask"],
     "image": InputPathType,
     "mask": InputPathType,
@@ -29,7 +29,7 @@ SlicesmaskParametersTagged = typing.TypedDict('SlicesmaskParametersTagged', {
 
 class SlicesmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicesmaskParameters(...)`.
+    Output object returned when calling `SlicesmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def slicesmask_params(
     image: InputPathType,
     mask: InputPathType,
     output: str,
-) -> SlicesmaskParametersTagged:
+) -> SlicesmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def slicesmask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicesmaskParameters` object.
+    `SlicesmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def slicesmask_validate(
 
 
 def slicesmask_cargs(
-    params: SlicesmaskParameters,
+    params: SlicesmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def slicesmask_cargs(
 
 
 def slicesmask_outputs(
-    params: SlicesmaskParameters,
+    params: SlicesmaskParamsDict,
     execution: Execution,
 ) -> SlicesmaskOutputs:
     """
@@ -129,7 +129,7 @@ def slicesmask_outputs(
 
 
 def slicesmask_execute(
-    params: SlicesmaskParameters,
+    params: SlicesmaskParamsDict,
     runner: Runner | None = None,
 ) -> SlicesmaskOutputs:
     """
@@ -191,6 +191,8 @@ def slicesmask(
 __all__ = [
     "SLICESMASK_METADATA",
     "SlicesmaskOutputs",
+    "SlicesmaskParamsDict",
+    "SlicesmaskParamsDictTagged",
     "slicesmask",
     "slicesmask_execute",
     "slicesmask_params",

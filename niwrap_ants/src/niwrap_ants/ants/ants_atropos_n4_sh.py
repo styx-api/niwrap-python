@@ -13,19 +13,19 @@ ANTS_ATROPOS_N4_SH_METADATA = Metadata(
 )
 
 
-AntsAtroposN4ShSegmentationPriorsParameters = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParameters', {
+AntsAtroposN4ShSegmentationPriorsParamsDict = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["segmentation_priors"]],
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
-AntsAtroposN4ShSegmentationPriorsParametersTagged = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParametersTagged', {
+AntsAtroposN4ShSegmentationPriorsParamsDictTagged = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParamsDictTagged', {
     "@type": typing.Literal["segmentation_priors"],
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
 
 
-AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
+AntsAtroposN4ShParamsDict = typing.TypedDict('AntsAtroposN4ShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsAtroposN4.sh"]],
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
@@ -34,7 +34,7 @@ AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
     "output_prefix": str,
     "max_n4_atropos_iterations": typing.NotRequired[int | None],
     "max_atropos_iterations": typing.NotRequired[int | None],
-    "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParameters,
+    "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParamsDict,
     "mrf": typing.NotRequired[str | None],
     "denoise_anatomical_images": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None],
@@ -51,7 +51,7 @@ AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
     "atropos_segmentation_use_euclidean_distance": typing.NotRequired[bool | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
-AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTagged', {
+AntsAtroposN4ShParamsDictTagged = typing.TypedDict('AntsAtroposN4ShParamsDictTagged', {
     "@type": typing.Literal["ants/antsAtroposN4.sh"],
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
@@ -60,7 +60,7 @@ AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTag
     "output_prefix": str,
     "max_n4_atropos_iterations": typing.NotRequired[int | None],
     "max_atropos_iterations": typing.NotRequired[int | None],
-    "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParameters,
+    "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParamsDict,
     "mrf": typing.NotRequired[str | None],
     "denoise_anatomical_images": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None],
@@ -79,10 +79,10 @@ AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTag
 })
 
 
-def ants_atropos_n4_sh_segmentation_priors_params(
+def ants_atropos_n4_sh_segmentation_priors(
     segmentation_priors_pattern: str | None = None,
     segmentation_priors_folder: InputPathType | None = None,
-) -> AntsAtroposN4ShSegmentationPriorsParametersTagged:
+) -> AntsAtroposN4ShSegmentationPriorsParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def ants_atropos_n4_sh_segmentation_priors_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsAtroposN4ShSegmentationPriorsParameters` object.
+    `AntsAtroposN4ShSegmentationPriorsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def ants_atropos_n4_sh_segmentation_priors_validate(
 
 
 def ants_atropos_n4_sh_segmentation_priors_cargs(
-    params: AntsAtroposN4ShSegmentationPriorsParameters,
+    params: AntsAtroposN4ShSegmentationPriorsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def ants_atropos_n4_sh_segmentation_priors_cargs(
 
 class AntsAtroposN4ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsAtroposN4ShParameters(...)`.
+    Output object returned when calling `AntsAtroposN4ShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,7 +164,7 @@ def ants_atropos_n4_sh_params(
     mask_image: InputPathType,
     number_of_classes: int,
     output_prefix: str,
-    segmentation_priors: AntsAtroposN4ShSegmentationPriorsParameters,
+    segmentation_priors: AntsAtroposN4ShSegmentationPriorsParamsDict,
     max_n4_atropos_iterations: int | None = None,
     max_atropos_iterations: int | None = None,
     mrf: str | None = None,
@@ -182,7 +182,7 @@ def ants_atropos_n4_sh_params(
     atropos_segmentation_icm: str | None = None,
     atropos_segmentation_use_euclidean_distance: bool | None = None,
     test_debug_mode: int | None = None,
-) -> AntsAtroposN4ShParametersTagged:
+) -> AntsAtroposN4ShParamsDictTagged:
     """
     Build parameters.
     
@@ -302,7 +302,7 @@ def ants_atropos_n4_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsAtroposN4ShParameters` object.
+    `AntsAtroposN4ShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -394,7 +394,7 @@ def ants_atropos_n4_sh_validate(
 
 
 def ants_atropos_n4_sh_cargs(
-    params: AntsAtroposN4ShParameters,
+    params: AntsAtroposN4ShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -521,7 +521,7 @@ def ants_atropos_n4_sh_cargs(
 
 
 def ants_atropos_n4_sh_outputs(
-    params: AntsAtroposN4ShParameters,
+    params: AntsAtroposN4ShParamsDict,
     execution: Execution,
 ) -> AntsAtroposN4ShOutputs:
     """
@@ -543,7 +543,7 @@ def ants_atropos_n4_sh_outputs(
 
 
 def ants_atropos_n4_sh_execute(
-    params: AntsAtroposN4ShParameters,
+    params: AntsAtroposN4ShParamsDict,
     runner: Runner | None = None,
 ) -> AntsAtroposN4ShOutputs:
     """
@@ -578,7 +578,7 @@ def ants_atropos_n4_sh(
     mask_image: InputPathType,
     number_of_classes: int,
     output_prefix: str,
-    segmentation_priors: AntsAtroposN4ShSegmentationPriorsParameters,
+    segmentation_priors: AntsAtroposN4ShSegmentationPriorsParamsDict,
     max_n4_atropos_iterations: int | None = None,
     max_atropos_iterations: int | None = None,
     mrf: str | None = None,
@@ -705,8 +705,12 @@ def ants_atropos_n4_sh(
 __all__ = [
     "ANTS_ATROPOS_N4_SH_METADATA",
     "AntsAtroposN4ShOutputs",
+    "AntsAtroposN4ShParamsDict",
+    "AntsAtroposN4ShParamsDictTagged",
+    "AntsAtroposN4ShSegmentationPriorsParamsDict",
+    "AntsAtroposN4ShSegmentationPriorsParamsDictTagged",
     "ants_atropos_n4_sh",
     "ants_atropos_n4_sh_execute",
     "ants_atropos_n4_sh_params",
-    "ants_atropos_n4_sh_segmentation_priors_params",
+    "ants_atropos_n4_sh_segmentation_priors",
 ]

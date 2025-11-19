@@ -13,7 +13,7 @@ V_3D_DIFF_METADATA = Metadata(
 )
 
 
-V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
+V3dDiffParamsDict = typing.TypedDict('V3dDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDiff"]],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
@@ -24,7 +24,7 @@ V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
     "brutalist_mode": bool,
     "long_report_mode": bool,
 })
-V3dDiffParametersTagged = typing.TypedDict('V3dDiffParametersTagged', {
+V3dDiffParamsDictTagged = typing.TypedDict('V3dDiffParamsDictTagged', {
     "@type": typing.Literal["afni/3dDiff"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
@@ -39,7 +39,7 @@ V3dDiffParametersTagged = typing.TypedDict('V3dDiffParametersTagged', {
 
 class V3dDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDiffParameters(...)`.
+    Output object returned when calling `V3dDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_diff_params(
     tabular_mode: bool = False,
     brutalist_mode: bool = False,
     long_report_mode: bool = False,
-) -> V3dDiffParametersTagged:
+) -> V3dDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def v_3d_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDiffParameters` object.
+    `V3dDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def v_3d_diff_validate(
 
 
 def v_3d_diff_cargs(
-    params: V3dDiffParameters,
+    params: V3dDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -178,7 +178,7 @@ def v_3d_diff_cargs(
 
 
 def v_3d_diff_outputs(
-    params: V3dDiffParameters,
+    params: V3dDiffParamsDict,
     execution: Execution,
 ) -> V3dDiffOutputs:
     """
@@ -198,7 +198,7 @@ def v_3d_diff_outputs(
 
 
 def v_3d_diff_execute(
-    params: V3dDiffParameters,
+    params: V3dDiffParamsDict,
     runner: Runner | None = None,
 ) -> V3dDiffOutputs:
     """
@@ -275,6 +275,8 @@ def v_3d_diff(
 
 __all__ = [
     "V3dDiffOutputs",
+    "V3dDiffParamsDict",
+    "V3dDiffParamsDictTagged",
     "V_3D_DIFF_METADATA",
     "v_3d_diff",
     "v_3d_diff_execute",

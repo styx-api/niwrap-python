@@ -13,13 +13,13 @@ MRI_LOG_LIKELIHOOD_METADATA = Metadata(
 )
 
 
-MriLogLikelihoodParameters = typing.TypedDict('MriLogLikelihoodParameters', {
+MriLogLikelihoodParamsDict = typing.TypedDict('MriLogLikelihoodParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_log_likelihood"]],
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
     "transform_file": InputPathType,
 })
-MriLogLikelihoodParametersTagged = typing.TypedDict('MriLogLikelihoodParametersTagged', {
+MriLogLikelihoodParamsDictTagged = typing.TypedDict('MriLogLikelihoodParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_log_likelihood"],
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
@@ -29,7 +29,7 @@ MriLogLikelihoodParametersTagged = typing.TypedDict('MriLogLikelihoodParametersT
 
 class MriLogLikelihoodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLogLikelihoodParameters(...)`.
+    Output object returned when calling `MriLogLikelihoodParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mri_log_likelihood_params(
     input_brain_images: list[InputPathType],
     atlas_file: InputPathType,
     transform_file: InputPathType,
-) -> MriLogLikelihoodParametersTagged:
+) -> MriLogLikelihoodParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mri_log_likelihood_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLogLikelihoodParameters` object.
+    `MriLogLikelihoodParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mri_log_likelihood_validate(
 
 
 def mri_log_likelihood_cargs(
-    params: MriLogLikelihoodParameters,
+    params: MriLogLikelihoodParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mri_log_likelihood_cargs(
 
 
 def mri_log_likelihood_outputs(
-    params: MriLogLikelihoodParameters,
+    params: MriLogLikelihoodParamsDict,
     execution: Execution,
 ) -> MriLogLikelihoodOutputs:
     """
@@ -129,7 +129,7 @@ def mri_log_likelihood_outputs(
 
 
 def mri_log_likelihood_execute(
-    params: MriLogLikelihoodParameters,
+    params: MriLogLikelihoodParamsDict,
     runner: Runner | None = None,
 ) -> MriLogLikelihoodOutputs:
     """
@@ -191,6 +191,8 @@ def mri_log_likelihood(
 __all__ = [
     "MRI_LOG_LIKELIHOOD_METADATA",
     "MriLogLikelihoodOutputs",
+    "MriLogLikelihoodParamsDict",
+    "MriLogLikelihoodParamsDictTagged",
     "mri_log_likelihood",
     "mri_log_likelihood_execute",
     "mri_log_likelihood_params",

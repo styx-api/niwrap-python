@@ -13,14 +13,14 @@ ANTS_ALIGN_ORIGIN_METADATA = Metadata(
 )
 
 
-AntsAlignOriginParameters = typing.TypedDict('AntsAlignOriginParameters', {
+AntsAlignOriginParamsDict = typing.TypedDict('AntsAlignOriginParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsAlignOrigin"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
     "reference_image": InputPathType,
     "output": str,
 })
-AntsAlignOriginParametersTagged = typing.TypedDict('AntsAlignOriginParametersTagged', {
+AntsAlignOriginParamsDictTagged = typing.TypedDict('AntsAlignOriginParamsDictTagged', {
     "@type": typing.Literal["ants/antsAlignOrigin"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
@@ -31,7 +31,7 @@ AntsAlignOriginParametersTagged = typing.TypedDict('AntsAlignOriginParametersTag
 
 class AntsAlignOriginOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsAlignOriginParameters(...)`.
+    Output object returned when calling `AntsAlignOriginParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def ants_align_origin_params(
     reference_image: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-) -> AntsAlignOriginParametersTagged:
+) -> AntsAlignOriginParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def ants_align_origin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsAlignOriginParameters` object.
+    `AntsAlignOriginParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def ants_align_origin_validate(
 
 
 def ants_align_origin_cargs(
-    params: AntsAlignOriginParameters,
+    params: AntsAlignOriginParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def ants_align_origin_cargs(
 
 
 def ants_align_origin_outputs(
-    params: AntsAlignOriginParameters,
+    params: AntsAlignOriginParamsDict,
     execution: Execution,
 ) -> AntsAlignOriginOutputs:
     """
@@ -161,7 +161,7 @@ def ants_align_origin_outputs(
 
 
 def ants_align_origin_execute(
-    params: AntsAlignOriginParameters,
+    params: AntsAlignOriginParamsDict,
     runner: Runner | None = None,
 ) -> AntsAlignOriginOutputs:
     """
@@ -235,6 +235,8 @@ def ants_align_origin(
 __all__ = [
     "ANTS_ALIGN_ORIGIN_METADATA",
     "AntsAlignOriginOutputs",
+    "AntsAlignOriginParamsDict",
+    "AntsAlignOriginParamsDictTagged",
     "ants_align_origin",
     "ants_align_origin_execute",
     "ants_align_origin_params",

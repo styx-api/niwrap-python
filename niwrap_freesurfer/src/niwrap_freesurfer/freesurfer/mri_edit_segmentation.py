@@ -13,13 +13,13 @@ MRI_EDIT_SEGMENTATION_METADATA = Metadata(
 )
 
 
-MriEditSegmentationParameters = typing.TypedDict('MriEditSegmentationParameters', {
+MriEditSegmentationParamsDict = typing.TypedDict('MriEditSegmentationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_segmentation"]],
     "input_segmentation": InputPathType,
     "t1_volume": InputPathType,
     "output_segmentation": str,
 })
-MriEditSegmentationParametersTagged = typing.TypedDict('MriEditSegmentationParametersTagged', {
+MriEditSegmentationParamsDictTagged = typing.TypedDict('MriEditSegmentationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_edit_segmentation"],
     "input_segmentation": InputPathType,
     "t1_volume": InputPathType,
@@ -29,7 +29,7 @@ MriEditSegmentationParametersTagged = typing.TypedDict('MriEditSegmentationParam
 
 class MriEditSegmentationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEditSegmentationParameters(...)`.
+    Output object returned when calling `MriEditSegmentationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_edit_segmentation_params(
     input_segmentation: InputPathType,
     t1_volume: InputPathType,
     output_segmentation: str,
-) -> MriEditSegmentationParametersTagged:
+) -> MriEditSegmentationParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_edit_segmentation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEditSegmentationParameters` object.
+    `MriEditSegmentationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_edit_segmentation_validate(
 
 
 def mri_edit_segmentation_cargs(
-    params: MriEditSegmentationParameters,
+    params: MriEditSegmentationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_edit_segmentation_cargs(
 
 
 def mri_edit_segmentation_outputs(
-    params: MriEditSegmentationParameters,
+    params: MriEditSegmentationParamsDict,
     execution: Execution,
 ) -> MriEditSegmentationOutputs:
     """
@@ -129,7 +129,7 @@ def mri_edit_segmentation_outputs(
 
 
 def mri_edit_segmentation_execute(
-    params: MriEditSegmentationParameters,
+    params: MriEditSegmentationParamsDict,
     runner: Runner | None = None,
 ) -> MriEditSegmentationOutputs:
     """
@@ -191,6 +191,8 @@ def mri_edit_segmentation(
 __all__ = [
     "MRI_EDIT_SEGMENTATION_METADATA",
     "MriEditSegmentationOutputs",
+    "MriEditSegmentationParamsDict",
+    "MriEditSegmentationParamsDictTagged",
     "mri_edit_segmentation",
     "mri_edit_segmentation_execute",
     "mri_edit_segmentation_params",

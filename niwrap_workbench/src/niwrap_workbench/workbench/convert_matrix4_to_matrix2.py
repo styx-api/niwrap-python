@@ -12,13 +12,13 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
 )
 
 
-ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParameters', {
+ConvertMatrix4ToMatrix2IndividualFibersParamsDict = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["individual-fibers"]],
     "fiber-1": str,
     "fiber-2": str,
     "fiber-3": str,
 })
-ConvertMatrix4ToMatrix2IndividualFibersParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParametersTagged', {
+ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged', {
     "@type": typing.Literal["individual-fibers"],
     "fiber-1": str,
     "fiber-2": str,
@@ -26,25 +26,25 @@ ConvertMatrix4ToMatrix2IndividualFibersParametersTagged = typing.TypedDict('Conv
 })
 
 
-ConvertMatrix4ToMatrix2Parameters = typing.TypedDict('ConvertMatrix4ToMatrix2Parameters', {
+ConvertMatrix4ToMatrix2ParamsDict = typing.TypedDict('ConvertMatrix4ToMatrix2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-matrix2"]],
     "counts-out": str,
     "distance-out": typing.NotRequired[str | None],
-    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
     "matrix4-wbsparse": str,
 })
-ConvertMatrix4ToMatrix2ParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2ParametersTagged', {
+ConvertMatrix4ToMatrix2ParamsDictTagged = typing.TypedDict('ConvertMatrix4ToMatrix2ParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-matrix2"],
     "counts-out": str,
     "distance-out": typing.NotRequired[str | None],
-    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
     "matrix4-wbsparse": str,
 })
 
 
 class ConvertMatrix4ToMatrix2IndividualFibersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertMatrix4ToMatrix2IndividualFibersParameters | None(...)`.
+    Output object returned when calling `ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,11 +56,11 @@ class ConvertMatrix4ToMatrix2IndividualFibersOutputs(typing.NamedTuple):
     """output file for third fiber"""
 
 
-def convert_matrix4_to_matrix2_individual_fibers_params(
+def convert_matrix4_to_matrix2_individual_fibers(
     fiber_1: str,
     fiber_2: str,
     fiber_3: str,
-) -> ConvertMatrix4ToMatrix2IndividualFibersParametersTagged:
+) -> ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def convert_matrix4_to_matrix2_individual_fibers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertMatrix4ToMatrix2IndividualFibersParameters` object.
+    `ConvertMatrix4ToMatrix2IndividualFibersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def convert_matrix4_to_matrix2_individual_fibers_validate(
 
 
 def convert_matrix4_to_matrix2_individual_fibers_cargs(
-    params: ConvertMatrix4ToMatrix2IndividualFibersParameters,
+    params: ConvertMatrix4ToMatrix2IndividualFibersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def convert_matrix4_to_matrix2_individual_fibers_cargs(
 
 
 def convert_matrix4_to_matrix2_individual_fibers_outputs(
-    params: ConvertMatrix4ToMatrix2IndividualFibersParameters,
+    params: ConvertMatrix4ToMatrix2IndividualFibersParamsDict,
     execution: Execution,
 ) -> ConvertMatrix4ToMatrix2IndividualFibersOutputs:
     """
@@ -153,7 +153,7 @@ def convert_matrix4_to_matrix2_individual_fibers_outputs(
 
 class ConvertMatrix4ToMatrix2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertMatrix4ToMatrix2Parameters(...)`.
+    Output object returned when calling `ConvertMatrix4ToMatrix2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -167,8 +167,8 @@ def convert_matrix4_to_matrix2_params(
     counts_out: str,
     distance_out: str | None,
     matrix4_wbsparse: str,
-    individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParameters | None = None,
-) -> ConvertMatrix4ToMatrix2ParametersTagged:
+    individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
+) -> ConvertMatrix4ToMatrix2ParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def convert_matrix4_to_matrix2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertMatrix4ToMatrix2Parameters` object.
+    `ConvertMatrix4ToMatrix2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def convert_matrix4_to_matrix2_validate(
 
 
 def convert_matrix4_to_matrix2_cargs(
-    params: ConvertMatrix4ToMatrix2Parameters,
+    params: ConvertMatrix4ToMatrix2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def convert_matrix4_to_matrix2_cargs(
 
 
 def convert_matrix4_to_matrix2_outputs(
-    params: ConvertMatrix4ToMatrix2Parameters,
+    params: ConvertMatrix4ToMatrix2ParamsDict,
     execution: Execution,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
@@ -270,7 +270,7 @@ def convert_matrix4_to_matrix2_outputs(
 
 
 def convert_matrix4_to_matrix2_execute(
-    params: ConvertMatrix4ToMatrix2Parameters,
+    params: ConvertMatrix4ToMatrix2ParamsDict,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
@@ -302,7 +302,7 @@ def convert_matrix4_to_matrix2(
     counts_out: str,
     distance_out: str | None,
     matrix4_wbsparse: str,
-    individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParameters | None = None,
+    individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
@@ -337,9 +337,13 @@ def convert_matrix4_to_matrix2(
 __all__ = [
     "CONVERT_MATRIX4_TO_MATRIX2_METADATA",
     "ConvertMatrix4ToMatrix2IndividualFibersOutputs",
+    "ConvertMatrix4ToMatrix2IndividualFibersParamsDict",
+    "ConvertMatrix4ToMatrix2IndividualFibersParamsDictTagged",
     "ConvertMatrix4ToMatrix2Outputs",
+    "ConvertMatrix4ToMatrix2ParamsDict",
+    "ConvertMatrix4ToMatrix2ParamsDictTagged",
     "convert_matrix4_to_matrix2",
     "convert_matrix4_to_matrix2_execute",
-    "convert_matrix4_to_matrix2_individual_fibers_params",
+    "convert_matrix4_to_matrix2_individual_fibers",
     "convert_matrix4_to_matrix2_params",
 ]

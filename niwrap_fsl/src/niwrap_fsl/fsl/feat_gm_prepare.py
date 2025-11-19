@@ -13,12 +13,12 @@ FEAT_GM_PREPARE_METADATA = Metadata(
 )
 
 
-FeatGmPrepareParameters = typing.TypedDict('FeatGmPrepareParameters', {
+FeatGmPrepareParamsDict = typing.TypedDict('FeatGmPrepareParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/feat_gm_prepare"]],
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })
-FeatGmPrepareParametersTagged = typing.TypedDict('FeatGmPrepareParametersTagged', {
+FeatGmPrepareParamsDictTagged = typing.TypedDict('FeatGmPrepareParamsDictTagged', {
     "@type": typing.Literal["fsl/feat_gm_prepare"],
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
@@ -27,7 +27,7 @@ FeatGmPrepareParametersTagged = typing.TypedDict('FeatGmPrepareParametersTagged'
 
 class FeatGmPrepareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FeatGmPrepareParameters(...)`.
+    Output object returned when calling `FeatGmPrepareParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FeatGmPrepareOutputs(typing.NamedTuple):
 def feat_gm_prepare_params(
     gm_output: str,
     feat_dirs_list: list[InputPathType],
-) -> FeatGmPrepareParametersTagged:
+) -> FeatGmPrepareParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def feat_gm_prepare_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FeatGmPrepareParameters` object.
+    `FeatGmPrepareParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def feat_gm_prepare_validate(
 
 
 def feat_gm_prepare_cargs(
-    params: FeatGmPrepareParameters,
+    params: FeatGmPrepareParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def feat_gm_prepare_cargs(
 
 
 def feat_gm_prepare_outputs(
-    params: FeatGmPrepareParameters,
+    params: FeatGmPrepareParamsDict,
     execution: Execution,
 ) -> FeatGmPrepareOutputs:
     """
@@ -119,7 +119,7 @@ def feat_gm_prepare_outputs(
 
 
 def feat_gm_prepare_execute(
-    params: FeatGmPrepareParameters,
+    params: FeatGmPrepareParamsDict,
     runner: Runner | None = None,
 ) -> FeatGmPrepareOutputs:
     """
@@ -178,6 +178,8 @@ def feat_gm_prepare(
 __all__ = [
     "FEAT_GM_PREPARE_METADATA",
     "FeatGmPrepareOutputs",
+    "FeatGmPrepareParamsDict",
+    "FeatGmPrepareParamsDictTagged",
     "feat_gm_prepare",
     "feat_gm_prepare_execute",
     "feat_gm_prepare_params",

@@ -13,37 +13,37 @@ V_3D_CRUISETO_AFNI_METADATA = Metadata(
 )
 
 
-V3dCruisetoAfniTraceParameters = typing.TypedDict('V3dCruisetoAfniTraceParameters', {
+V3dCruisetoAfniTraceParamsDict = typing.TypedDict('V3dCruisetoAfniTraceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["trace"]],
     "trace": bool,
     "TRACE": bool,
 })
-V3dCruisetoAfniTraceParametersTagged = typing.TypedDict('V3dCruisetoAfniTraceParametersTagged', {
+V3dCruisetoAfniTraceParamsDictTagged = typing.TypedDict('V3dCruisetoAfniTraceParamsDictTagged', {
     "@type": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
-V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
+V3dCruisetoAfniParamsDict = typing.TypedDict('V3dCruisetoAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dCRUISEtoAFNI"]],
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "trace": typing.NotRequired[V3dCruisetoAfniTraceParameters | None],
+    "trace": typing.NotRequired[V3dCruisetoAfniTraceParamsDict | None],
     "nomall": bool,
     "yesmall": bool,
     "help": bool,
     "h": bool,
 })
-V3dCruisetoAfniParametersTagged = typing.TypedDict('V3dCruisetoAfniParametersTagged', {
+V3dCruisetoAfniParamsDictTagged = typing.TypedDict('V3dCruisetoAfniParamsDictTagged', {
     "@type": typing.Literal["afni/3dCRUISEtoAFNI"],
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "trace": typing.NotRequired[V3dCruisetoAfniTraceParameters | None],
+    "trace": typing.NotRequired[V3dCruisetoAfniTraceParamsDict | None],
     "nomall": bool,
     "yesmall": bool,
     "help": bool,
@@ -51,10 +51,10 @@ V3dCruisetoAfniParametersTagged = typing.TypedDict('V3dCruisetoAfniParametersTag
 })
 
 
-def v_3d_cruiseto_afni_trace_params(
+def v_3d_cruiseto_afni_trace(
     trace_: bool = False,
     trace_2: bool = False,
-) -> V3dCruisetoAfniTraceParametersTagged:
+) -> V3dCruisetoAfniTraceParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def v_3d_cruiseto_afni_trace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dCruisetoAfniTraceParameters` object.
+    `V3dCruisetoAfniTraceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def v_3d_cruiseto_afni_trace_validate(
 
 
 def v_3d_cruiseto_afni_trace_cargs(
-    params: V3dCruisetoAfniTraceParameters,
+    params: V3dCruisetoAfniTraceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def v_3d_cruiseto_afni_trace_cargs(
 
 class V3dCruisetoAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dCruisetoAfniParameters(...)`.
+    Output object returned when calling `V3dCruisetoAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,12 +129,12 @@ def v_3d_cruiseto_afni_params(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: V3dCruisetoAfniTraceParameters | None = None,
+    trace_: V3dCruisetoAfniTraceParamsDict | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     help_: bool = False,
     h: bool = False,
-) -> V3dCruisetoAfniParametersTagged:
+) -> V3dCruisetoAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -176,7 +176,7 @@ def v_3d_cruiseto_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dCruisetoAfniParameters` object.
+    `V3dCruisetoAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -219,7 +219,7 @@ def v_3d_cruiseto_afni_validate(
 
 
 def v_3d_cruiseto_afni_cargs(
-    params: V3dCruisetoAfniParameters,
+    params: V3dCruisetoAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -260,7 +260,7 @@ def v_3d_cruiseto_afni_cargs(
 
 
 def v_3d_cruiseto_afni_outputs(
-    params: V3dCruisetoAfniParameters,
+    params: V3dCruisetoAfniParamsDict,
     execution: Execution,
 ) -> V3dCruisetoAfniOutputs:
     """
@@ -279,7 +279,7 @@ def v_3d_cruiseto_afni_outputs(
 
 
 def v_3d_cruiseto_afni_execute(
-    params: V3dCruisetoAfniParameters,
+    params: V3dCruisetoAfniParamsDict,
     runner: Runner | None = None,
 ) -> V3dCruisetoAfniOutputs:
     """
@@ -312,7 +312,7 @@ def v_3d_cruiseto_afni(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: V3dCruisetoAfniTraceParameters | None = None,
+    trace_: V3dCruisetoAfniTraceParamsDict | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     help_: bool = False,
@@ -361,9 +361,13 @@ def v_3d_cruiseto_afni(
 
 __all__ = [
     "V3dCruisetoAfniOutputs",
+    "V3dCruisetoAfniParamsDict",
+    "V3dCruisetoAfniParamsDictTagged",
+    "V3dCruisetoAfniTraceParamsDict",
+    "V3dCruisetoAfniTraceParamsDictTagged",
     "V_3D_CRUISETO_AFNI_METADATA",
     "v_3d_cruiseto_afni",
     "v_3d_cruiseto_afni_execute",
     "v_3d_cruiseto_afni_params",
-    "v_3d_cruiseto_afni_trace_params",
+    "v_3d_cruiseto_afni_trace",
 ]

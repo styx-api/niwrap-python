@@ -13,11 +13,11 @@ FNAME2EXT_METADATA = Metadata(
 )
 
 
-Fname2extParameters = typing.TypedDict('Fname2extParameters', {
+Fname2extParamsDict = typing.TypedDict('Fname2extParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fname2ext"]],
     "filename": str,
 })
-Fname2extParametersTagged = typing.TypedDict('Fname2extParametersTagged', {
+Fname2extParamsDictTagged = typing.TypedDict('Fname2extParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fname2ext"],
     "filename": str,
 })
@@ -25,7 +25,7 @@ Fname2extParametersTagged = typing.TypedDict('Fname2extParametersTagged', {
 
 class Fname2extOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fname2extParameters(...)`.
+    Output object returned when calling `Fname2extParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class Fname2extOutputs(typing.NamedTuple):
 
 def fname2ext_params(
     filename: str,
-) -> Fname2extParametersTagged:
+) -> Fname2extParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def fname2ext_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fname2extParameters` object.
+    `Fname2extParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def fname2ext_validate(
 
 
 def fname2ext_cargs(
-    params: Fname2extParameters,
+    params: Fname2extParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def fname2ext_cargs(
 
 
 def fname2ext_outputs(
-    params: Fname2extParameters,
+    params: Fname2extParamsDict,
     execution: Execution,
 ) -> Fname2extOutputs:
     """
@@ -110,7 +110,7 @@ def fname2ext_outputs(
 
 
 def fname2ext_execute(
-    params: Fname2extParameters,
+    params: Fname2extParamsDict,
     runner: Runner | None = None,
 ) -> Fname2extOutputs:
     """
@@ -167,6 +167,8 @@ def fname2ext(
 __all__ = [
     "FNAME2EXT_METADATA",
     "Fname2extOutputs",
+    "Fname2extParamsDict",
+    "Fname2extParamsDictTagged",
     "fname2ext",
     "fname2ext_execute",
     "fname2ext_params",

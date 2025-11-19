@@ -13,7 +13,7 @@ MRIS_TRANSLATE_ANNOTATION_METADATA = Metadata(
 )
 
 
-MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationParameters', {
+MrisTranslateAnnotationParamsDict = typing.TypedDict('MrisTranslateAnnotationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_translate_annotation"]],
     "subject": str,
     "hemi": str,
@@ -21,7 +21,7 @@ MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationPar
     "translation_file": InputPathType,
     "out_annot": str,
 })
-MrisTranslateAnnotationParametersTagged = typing.TypedDict('MrisTranslateAnnotationParametersTagged', {
+MrisTranslateAnnotationParamsDictTagged = typing.TypedDict('MrisTranslateAnnotationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_translate_annotation"],
     "subject": str,
     "hemi": str,
@@ -33,7 +33,7 @@ MrisTranslateAnnotationParametersTagged = typing.TypedDict('MrisTranslateAnnotat
 
 class MrisTranslateAnnotationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTranslateAnnotationParameters(...)`.
+    Output object returned when calling `MrisTranslateAnnotationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_translate_annotation_params(
     in_annot: InputPathType,
     translation_file: InputPathType,
     out_annot: str,
-) -> MrisTranslateAnnotationParametersTagged:
+) -> MrisTranslateAnnotationParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mris_translate_annotation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTranslateAnnotationParameters` object.
+    `MrisTranslateAnnotationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mris_translate_annotation_validate(
 
 
 def mris_translate_annotation_cargs(
-    params: MrisTranslateAnnotationParameters,
+    params: MrisTranslateAnnotationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def mris_translate_annotation_cargs(
 
 
 def mris_translate_annotation_outputs(
-    params: MrisTranslateAnnotationParameters,
+    params: MrisTranslateAnnotationParamsDict,
     execution: Execution,
 ) -> MrisTranslateAnnotationOutputs:
     """
@@ -149,7 +149,7 @@ def mris_translate_annotation_outputs(
 
 
 def mris_translate_annotation_execute(
-    params: MrisTranslateAnnotationParameters,
+    params: MrisTranslateAnnotationParamsDict,
     runner: Runner | None = None,
 ) -> MrisTranslateAnnotationOutputs:
     """
@@ -217,6 +217,8 @@ def mris_translate_annotation(
 __all__ = [
     "MRIS_TRANSLATE_ANNOTATION_METADATA",
     "MrisTranslateAnnotationOutputs",
+    "MrisTranslateAnnotationParamsDict",
+    "MrisTranslateAnnotationParamsDictTagged",
     "mris_translate_annotation",
     "mris_translate_annotation_execute",
     "mris_translate_annotation_params",

@@ -13,7 +13,7 @@ FILM_CIFTI_METADATA = Metadata(
 )
 
 
-FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
+FilmCiftiParamsDict = typing.TypedDict('FilmCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/film_cifti"]],
     "input_filename": InputPathType,
     "basename": str,
@@ -25,7 +25,7 @@ FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
     "surface_extent": typing.NotRequired[float | None],
     "film_options": typing.NotRequired[str | None],
 })
-FilmCiftiParametersTagged = typing.TypedDict('FilmCiftiParametersTagged', {
+FilmCiftiParamsDictTagged = typing.TypedDict('FilmCiftiParamsDictTagged', {
     "@type": typing.Literal["fsl/film_cifti"],
     "input_filename": InputPathType,
     "basename": str,
@@ -41,7 +41,7 @@ FilmCiftiParametersTagged = typing.TypedDict('FilmCiftiParametersTagged', {
 
 class FilmCiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FilmCiftiParameters(...)`.
+    Output object returned when calling `FilmCiftiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def film_cifti_params(
     surface_sigma: float | None = None,
     surface_extent: float | None = None,
     film_options: str | None = None,
-) -> FilmCiftiParametersTagged:
+) -> FilmCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def film_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FilmCiftiParameters` object.
+    `FilmCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def film_cifti_validate(
 
 
 def film_cifti_cargs(
-    params: FilmCiftiParameters,
+    params: FilmCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def film_cifti_cargs(
 
 
 def film_cifti_outputs(
-    params: FilmCiftiParameters,
+    params: FilmCiftiParamsDict,
     execution: Execution,
 ) -> FilmCiftiOutputs:
     """
@@ -223,7 +223,7 @@ def film_cifti_outputs(
 
 
 def film_cifti_execute(
-    params: FilmCiftiParameters,
+    params: FilmCiftiParamsDict,
     runner: Runner | None = None,
 ) -> FilmCiftiOutputs:
     """
@@ -305,6 +305,8 @@ def film_cifti(
 __all__ = [
     "FILM_CIFTI_METADATA",
     "FilmCiftiOutputs",
+    "FilmCiftiParamsDict",
+    "FilmCiftiParamsDictTagged",
     "film_cifti",
     "film_cifti_execute",
     "film_cifti_params",

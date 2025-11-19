@@ -13,7 +13,7 @@ V_3D_PAR2_AFNI_PL_METADATA = Metadata(
 )
 
 
-V3dPar2AfniPlParameters = typing.TypedDict('V3dPar2AfniPlParameters', {
+V3dPar2AfniPlParamsDict = typing.TypedDict('V3dPar2AfniPlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dPAR2AFNI.pl"]],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
@@ -26,7 +26,7 @@ V3dPar2AfniPlParameters = typing.TypedDict('V3dPar2AfniPlParameters', {
     "byte_swap_4": bool,
     "help_flag": bool,
 })
-V3dPar2AfniPlParametersTagged = typing.TypedDict('V3dPar2AfniPlParametersTagged', {
+V3dPar2AfniPlParamsDictTagged = typing.TypedDict('V3dPar2AfniPlParamsDictTagged', {
     "@type": typing.Literal["afni/3dPAR2AFNI.pl"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
@@ -43,7 +43,7 @@ V3dPar2AfniPlParametersTagged = typing.TypedDict('V3dPar2AfniPlParametersTagged'
 
 class V3dPar2AfniPlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dPar2AfniPlParameters(...)`.
+    Output object returned when calling `V3dPar2AfniPlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v_3d_par2_afni_pl_params(
     byte_swap_2: bool = False,
     byte_swap_4: bool = False,
     help_flag: bool = False,
-) -> V3dPar2AfniPlParametersTagged:
+) -> V3dPar2AfniPlParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v_3d_par2_afni_pl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dPar2AfniPlParameters` object.
+    `V3dPar2AfniPlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def v_3d_par2_afni_pl_validate(
 
 
 def v_3d_par2_afni_pl_cargs(
-    params: V3dPar2AfniPlParameters,
+    params: V3dPar2AfniPlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def v_3d_par2_afni_pl_cargs(
 
 
 def v_3d_par2_afni_pl_outputs(
-    params: V3dPar2AfniPlParameters,
+    params: V3dPar2AfniPlParamsDict,
     execution: Execution,
 ) -> V3dPar2AfniPlOutputs:
     """
@@ -218,7 +218,7 @@ def v_3d_par2_afni_pl_outputs(
 
 
 def v_3d_par2_afni_pl_execute(
-    params: V3dPar2AfniPlParameters,
+    params: V3dPar2AfniPlParamsDict,
     runner: Runner | None = None,
 ) -> V3dPar2AfniPlOutputs:
     """
@@ -307,6 +307,8 @@ def v_3d_par2_afni_pl(
 
 __all__ = [
     "V3dPar2AfniPlOutputs",
+    "V3dPar2AfniPlParamsDict",
+    "V3dPar2AfniPlParamsDictTagged",
     "V_3D_PAR2_AFNI_PL_METADATA",
     "v_3d_par2_afni_pl",
     "v_3d_par2_afni_pl_execute",

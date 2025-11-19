@@ -13,14 +13,14 @@ RCA_CONFIG_METADATA = Metadata(
 )
 
 
-RcaConfigParameters = typing.TypedDict('RcaConfigParameters', {
+RcaConfigParamsDict = typing.TypedDict('RcaConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config"]],
     "source_config": InputPathType,
     "updated_config": InputPathType,
     "unknown_args_file": InputPathType,
     "args": typing.NotRequired[list[str] | None],
 })
-RcaConfigParametersTagged = typing.TypedDict('RcaConfigParametersTagged', {
+RcaConfigParamsDictTagged = typing.TypedDict('RcaConfigParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-config"],
     "source_config": InputPathType,
     "updated_config": InputPathType,
@@ -31,7 +31,7 @@ RcaConfigParametersTagged = typing.TypedDict('RcaConfigParametersTagged', {
 
 class RcaConfigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcaConfigParameters(...)`.
+    Output object returned when calling `RcaConfigParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def rca_config_params(
     updated_config: InputPathType,
     unknown_args_file: InputPathType,
     args: list[str] | None = None,
-) -> RcaConfigParametersTagged:
+) -> RcaConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def rca_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcaConfigParameters` object.
+    `RcaConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def rca_config_validate(
 
 
 def rca_config_cargs(
-    params: RcaConfigParameters,
+    params: RcaConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def rca_config_cargs(
 
 
 def rca_config_outputs(
-    params: RcaConfigParameters,
+    params: RcaConfigParamsDict,
     execution: Execution,
 ) -> RcaConfigOutputs:
     """
@@ -144,7 +144,7 @@ def rca_config_outputs(
 
 
 def rca_config_execute(
-    params: RcaConfigParameters,
+    params: RcaConfigParamsDict,
     runner: Runner | None = None,
 ) -> RcaConfigOutputs:
     """
@@ -210,6 +210,8 @@ def rca_config(
 __all__ = [
     "RCA_CONFIG_METADATA",
     "RcaConfigOutputs",
+    "RcaConfigParamsDict",
+    "RcaConfigParamsDictTagged",
     "rca_config",
     "rca_config_execute",
     "rca_config_params",

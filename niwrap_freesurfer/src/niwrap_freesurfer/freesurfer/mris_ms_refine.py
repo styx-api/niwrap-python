@@ -13,7 +13,7 @@ MRIS_MS_REFINE_METADATA = Metadata(
 )
 
 
-MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
+MrisMsRefineParamsDict = typing.TypedDict('MrisMsRefineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ms_refine"]],
     "subject_name": str,
     "hemisphere": str,
@@ -25,7 +25,7 @@ MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
-MrisMsRefineParametersTagged = typing.TypedDict('MrisMsRefineParametersTagged', {
+MrisMsRefineParamsDictTagged = typing.TypedDict('MrisMsRefineParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_ms_refine"],
     "subject_name": str,
     "hemisphere": str,
@@ -41,7 +41,7 @@ MrisMsRefineParametersTagged = typing.TypedDict('MrisMsRefineParametersTagged', 
 
 class MrisMsRefineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMsRefineParameters(...)`.
+    Output object returned when calling `MrisMsRefineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def mris_ms_refine_params(
     create_curvature_files: bool = False,
     average_curvature: float | None = None,
     white_only: bool = False,
-) -> MrisMsRefineParametersTagged:
+) -> MrisMsRefineParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def mris_ms_refine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMsRefineParameters` object.
+    `MrisMsRefineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def mris_ms_refine_validate(
 
 
 def mris_ms_refine_cargs(
-    params: MrisMsRefineParameters,
+    params: MrisMsRefineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def mris_ms_refine_cargs(
 
 
 def mris_ms_refine_outputs(
-    params: MrisMsRefineParameters,
+    params: MrisMsRefineParamsDict,
     execution: Execution,
 ) -> MrisMsRefineOutputs:
     """
@@ -211,7 +211,7 @@ def mris_ms_refine_outputs(
 
 
 def mris_ms_refine_execute(
-    params: MrisMsRefineParameters,
+    params: MrisMsRefineParamsDict,
     runner: Runner | None = None,
 ) -> MrisMsRefineOutputs:
     """
@@ -300,6 +300,8 @@ def mris_ms_refine(
 __all__ = [
     "MRIS_MS_REFINE_METADATA",
     "MrisMsRefineOutputs",
+    "MrisMsRefineParamsDict",
+    "MrisMsRefineParamsDictTagged",
     "mris_ms_refine",
     "mris_ms_refine_execute",
     "mris_ms_refine_params",

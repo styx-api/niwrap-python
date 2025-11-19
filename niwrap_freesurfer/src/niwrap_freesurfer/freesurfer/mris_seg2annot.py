@@ -13,7 +13,7 @@ MRIS_SEG2ANNOT_METADATA = Metadata(
 )
 
 
-MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
+MrisSeg2annotParamsDict = typing.TypedDict('MrisSeg2annotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_seg2annot"]],
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
     "checkopts": bool,
     "version": bool,
 })
-MrisSeg2annotParametersTagged = typing.TypedDict('MrisSeg2annotParametersTagged', {
+MrisSeg2annotParamsDictTagged = typing.TypedDict('MrisSeg2annotParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_seg2annot"],
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ MrisSeg2annotParametersTagged = typing.TypedDict('MrisSeg2annotParametersTagged'
 
 class MrisSeg2annotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSeg2annotParameters(...)`.
+    Output object returned when calling `MrisSeg2annotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def mris_seg2annot_params(
     debug_vertex: float | None = None,
     checkopts: bool = False,
     version: bool = False,
-) -> MrisSeg2annotParametersTagged:
+) -> MrisSeg2annotParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def mris_seg2annot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSeg2annotParameters` object.
+    `MrisSeg2annotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def mris_seg2annot_validate(
 
 
 def mris_seg2annot_cargs(
-    params: MrisSeg2annotParameters,
+    params: MrisSeg2annotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def mris_seg2annot_cargs(
 
 
 def mris_seg2annot_outputs(
-    params: MrisSeg2annotParameters,
+    params: MrisSeg2annotParamsDict,
     execution: Execution,
 ) -> MrisSeg2annotOutputs:
     """
@@ -242,7 +242,7 @@ def mris_seg2annot_outputs(
 
 
 def mris_seg2annot_execute(
-    params: MrisSeg2annotParameters,
+    params: MrisSeg2annotParamsDict,
     runner: Runner | None = None,
 ) -> MrisSeg2annotOutputs:
     """
@@ -330,6 +330,8 @@ def mris_seg2annot(
 __all__ = [
     "MRIS_SEG2ANNOT_METADATA",
     "MrisSeg2annotOutputs",
+    "MrisSeg2annotParamsDict",
+    "MrisSeg2annotParamsDictTagged",
     "mris_seg2annot",
     "mris_seg2annot_execute",
     "mris_seg2annot_params",

@@ -13,7 +13,7 @@ V__HELP_AFNI_METADATA = Metadata(
 )
 
 
-VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
+VHelpAfniParamsDict = typing.TypedDict('VHelpAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@help.AFNI"]],
     "match": typing.NotRequired[str | None],
     "lynx": bool,
@@ -22,7 +22,7 @@ VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
     "nedit": bool,
     "noview": bool,
 })
-VHelpAfniParametersTagged = typing.TypedDict('VHelpAfniParametersTagged', {
+VHelpAfniParamsDictTagged = typing.TypedDict('VHelpAfniParamsDictTagged', {
     "@type": typing.Literal["afni/@help.AFNI"],
     "match": typing.NotRequired[str | None],
     "lynx": bool,
@@ -35,7 +35,7 @@ VHelpAfniParametersTagged = typing.TypedDict('VHelpAfniParametersTagged', {
 
 class VHelpAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VHelpAfniParameters(...)`.
+    Output object returned when calling `VHelpAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v__help_afni_params(
     less: bool = False,
     nedit: bool = False,
     noview: bool = False,
-) -> VHelpAfniParametersTagged:
+) -> VHelpAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def v__help_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VHelpAfniParameters` object.
+    `VHelpAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def v__help_afni_validate(
 
 
 def v__help_afni_cargs(
-    params: VHelpAfniParameters,
+    params: VHelpAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def v__help_afni_cargs(
 
 
 def v__help_afni_outputs(
-    params: VHelpAfniParameters,
+    params: VHelpAfniParamsDict,
     execution: Execution,
 ) -> VHelpAfniOutputs:
     """
@@ -167,7 +167,7 @@ def v__help_afni_outputs(
 
 
 def v__help_afni_execute(
-    params: VHelpAfniParameters,
+    params: VHelpAfniParamsDict,
     runner: Runner | None = None,
 ) -> VHelpAfniOutputs:
     """
@@ -239,6 +239,8 @@ def v__help_afni(
 
 __all__ = [
     "VHelpAfniOutputs",
+    "VHelpAfniParamsDict",
+    "VHelpAfniParamsDictTagged",
     "V__HELP_AFNI_METADATA",
     "v__help_afni",
     "v__help_afni_execute",

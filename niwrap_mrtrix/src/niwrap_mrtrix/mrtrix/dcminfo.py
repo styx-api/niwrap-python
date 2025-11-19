@@ -13,68 +13,68 @@ DCMINFO_METADATA = Metadata(
 )
 
 
-DcminfoTagParameters = typing.TypedDict('DcminfoTagParameters', {
+DcminfoTagParamsDict = typing.TypedDict('DcminfoTagParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tag"]],
     "group": str,
     "element": str,
 })
-DcminfoTagParametersTagged = typing.TypedDict('DcminfoTagParametersTagged', {
+DcminfoTagParamsDictTagged = typing.TypedDict('DcminfoTagParamsDictTagged', {
     "@type": typing.Literal["tag"],
     "group": str,
     "element": str,
 })
 
 
-DcminfoConfigParameters = typing.TypedDict('DcminfoConfigParameters', {
+DcminfoConfigParamsDict = typing.TypedDict('DcminfoConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DcminfoConfigParametersTagged = typing.TypedDict('DcminfoConfigParametersTagged', {
+DcminfoConfigParamsDictTagged = typing.TypedDict('DcminfoConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DcminfoParameters = typing.TypedDict('DcminfoParameters', {
+DcminfoParamsDict = typing.TypedDict('DcminfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dcminfo"]],
     "all": bool,
     "csa": bool,
     "phoenix": bool,
-    "tag": typing.NotRequired[list[DcminfoTagParameters] | None],
+    "tag": typing.NotRequired[list[DcminfoTagParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DcminfoConfigParameters] | None],
+    "config": typing.NotRequired[list[DcminfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "file": InputPathType,
 })
-DcminfoParametersTagged = typing.TypedDict('DcminfoParametersTagged', {
+DcminfoParamsDictTagged = typing.TypedDict('DcminfoParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dcminfo"],
     "all": bool,
     "csa": bool,
     "phoenix": bool,
-    "tag": typing.NotRequired[list[DcminfoTagParameters] | None],
+    "tag": typing.NotRequired[list[DcminfoTagParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DcminfoConfigParameters] | None],
+    "config": typing.NotRequired[list[DcminfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "file": InputPathType,
 })
 
 
-def dcminfo_tag_params(
+def dcminfo_tag(
     group: str,
     element: str,
-) -> DcminfoTagParametersTagged:
+) -> DcminfoTagParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def dcminfo_tag_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcminfoTagParameters` object.
+    `DcminfoTagParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def dcminfo_tag_validate(
 
 
 def dcminfo_tag_cargs(
-    params: DcminfoTagParameters,
+    params: DcminfoTagParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,10 +138,10 @@ def dcminfo_tag_cargs(
     return cargs
 
 
-def dcminfo_config_params(
+def dcminfo_config(
     key: str,
     value: str,
-) -> DcminfoConfigParametersTagged:
+) -> DcminfoConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def dcminfo_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcminfoConfigParameters` object.
+    `DcminfoConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def dcminfo_config_validate(
 
 
 def dcminfo_config_cargs(
-    params: DcminfoConfigParameters,
+    params: DcminfoConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def dcminfo_config_cargs(
 
 class DcminfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcminfoParameters(...)`.
+    Output object returned when calling `DcminfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -214,16 +214,16 @@ def dcminfo_params(
     all_: bool = False,
     csa: bool = False,
     phoenix: bool = False,
-    tag: list[DcminfoTagParameters] | None = None,
+    tag: list[DcminfoTagParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DcminfoConfigParameters] | None = None,
+    config: list[DcminfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DcminfoParametersTagged:
+) -> DcminfoParamsDictTagged:
     """
     Build parameters.
     
@@ -277,7 +277,7 @@ def dcminfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcminfoParameters` object.
+    `DcminfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -298,7 +298,7 @@ def dcminfo_validate(
         raise StyxValidationError(f'`phoenix` has the wrong type: Received `{type(params.get("phoenix", False))}` expected `bool`')
     if params.get("tag", None) is not None:
         if not isinstance(params["tag"], list):
-            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[DcminfoTagParameters] | None`')
+            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[DcminfoTagParamsDict] | None`')
         for e in params["tag"]:
             dcminfo_tag_validate(e)
     if params.get("info", False) is None:
@@ -322,7 +322,7 @@ def dcminfo_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DcminfoConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DcminfoConfigParamsDict] | None`')
         for e in params["config"]:
             dcminfo_config_validate(e)
     if params.get("help", False) is None:
@@ -340,7 +340,7 @@ def dcminfo_validate(
 
 
 def dcminfo_cargs(
-    params: DcminfoParameters,
+    params: DcminfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -386,7 +386,7 @@ def dcminfo_cargs(
 
 
 def dcminfo_outputs(
-    params: DcminfoParameters,
+    params: DcminfoParamsDict,
     execution: Execution,
 ) -> DcminfoOutputs:
     """
@@ -405,7 +405,7 @@ def dcminfo_outputs(
 
 
 def dcminfo_execute(
-    params: DcminfoParameters,
+    params: DcminfoParamsDict,
     runner: Runner | None = None,
 ) -> DcminfoOutputs:
     """
@@ -444,13 +444,13 @@ def dcminfo(
     all_: bool = False,
     csa: bool = False,
     phoenix: bool = False,
-    tag: list[DcminfoTagParameters] | None = None,
+    tag: list[DcminfoTagParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DcminfoConfigParameters] | None = None,
+    config: list[DcminfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -514,10 +514,16 @@ def dcminfo(
 
 __all__ = [
     "DCMINFO_METADATA",
+    "DcminfoConfigParamsDict",
+    "DcminfoConfigParamsDictTagged",
     "DcminfoOutputs",
+    "DcminfoParamsDict",
+    "DcminfoParamsDictTagged",
+    "DcminfoTagParamsDict",
+    "DcminfoTagParamsDictTagged",
     "dcminfo",
-    "dcminfo_config_params",
+    "dcminfo_config",
     "dcminfo_execute",
     "dcminfo_params",
-    "dcminfo_tag_params",
+    "dcminfo_tag",
 ]

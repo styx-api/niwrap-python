@@ -13,7 +13,7 @@ SURF_INFO_METADATA = Metadata(
 )
 
 
-SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
+SurfInfoParamsDict = typing.TypedDict('SurfInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfInfo"]],
     "surface": InputPathType,
     "com": bool,
@@ -36,7 +36,7 @@ SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
     "nomall": bool,
     "yesmall": bool,
 })
-SurfInfoParametersTagged = typing.TypedDict('SurfInfoParametersTagged', {
+SurfInfoParamsDictTagged = typing.TypedDict('SurfInfoParamsDictTagged', {
     "@type": typing.Literal["afni/SurfInfo"],
     "surface": InputPathType,
     "com": bool,
@@ -63,7 +63,7 @@ SurfInfoParametersTagged = typing.TypedDict('SurfInfoParametersTagged', {
 
 class SurfInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfInfoParameters(...)`.
+    Output object returned when calling `SurfInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def surf_info_params(
     extreme_trace: bool = False,
     nomall: bool = False,
     yesmall: bool = False,
-) -> SurfInfoParametersTagged:
+) -> SurfInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def surf_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfInfoParameters` object.
+    `SurfInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -244,7 +244,7 @@ def surf_info_validate(
 
 
 def surf_info_cargs(
-    params: SurfInfoParameters,
+    params: SurfInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -325,7 +325,7 @@ def surf_info_cargs(
 
 
 def surf_info_outputs(
-    params: SurfInfoParameters,
+    params: SurfInfoParamsDict,
     execution: Execution,
 ) -> SurfInfoOutputs:
     """
@@ -345,7 +345,7 @@ def surf_info_outputs(
 
 
 def surf_info_execute(
-    params: SurfInfoParameters,
+    params: SurfInfoParamsDict,
     runner: Runner | None = None,
 ) -> SurfInfoOutputs:
     """
@@ -461,6 +461,8 @@ def surf_info(
 __all__ = [
     "SURF_INFO_METADATA",
     "SurfInfoOutputs",
+    "SurfInfoParamsDict",
+    "SurfInfoParamsDictTagged",
     "surf_info",
     "surf_info_execute",
     "surf_info_params",

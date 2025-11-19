@@ -13,7 +13,7 @@ AP_RUN_SIMPLE_REST_TCSH_METADATA = Metadata(
 )
 
 
-ApRunSimpleRestTcshParameters = typing.TypedDict('ApRunSimpleRestTcshParameters', {
+ApRunSimpleRestTcshParamsDict = typing.TypedDict('ApRunSimpleRestTcshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ap_run_simple_rest.tcsh"]],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
@@ -26,7 +26,7 @@ ApRunSimpleRestTcshParameters = typing.TypedDict('ApRunSimpleRestTcshParameters'
     "verb": typing.NotRequired[float | None],
     "echo": bool,
 })
-ApRunSimpleRestTcshParametersTagged = typing.TypedDict('ApRunSimpleRestTcshParametersTagged', {
+ApRunSimpleRestTcshParamsDictTagged = typing.TypedDict('ApRunSimpleRestTcshParamsDictTagged', {
     "@type": typing.Literal["afni/ap_run_simple_rest.tcsh"],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
@@ -43,7 +43,7 @@ ApRunSimpleRestTcshParametersTagged = typing.TypedDict('ApRunSimpleRestTcshParam
 
 class ApRunSimpleRestTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApRunSimpleRestTcshParameters(...)`.
+    Output object returned when calling `ApRunSimpleRestTcshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def ap_run_simple_rest_tcsh_params(
     compressor: str | None = None,
     verb: float | None = None,
     echo: bool = False,
-) -> ApRunSimpleRestTcshParametersTagged:
+) -> ApRunSimpleRestTcshParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def ap_run_simple_rest_tcsh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApRunSimpleRestTcshParameters` object.
+    `ApRunSimpleRestTcshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def ap_run_simple_rest_tcsh_validate(
 
 
 def ap_run_simple_rest_tcsh_cargs(
-    params: ApRunSimpleRestTcshParameters,
+    params: ApRunSimpleRestTcshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def ap_run_simple_rest_tcsh_cargs(
 
 
 def ap_run_simple_rest_tcsh_outputs(
-    params: ApRunSimpleRestTcshParameters,
+    params: ApRunSimpleRestTcshParamsDict,
     execution: Execution,
 ) -> ApRunSimpleRestTcshOutputs:
     """
@@ -238,7 +238,7 @@ def ap_run_simple_rest_tcsh_outputs(
 
 
 def ap_run_simple_rest_tcsh_execute(
-    params: ApRunSimpleRestTcshParameters,
+    params: ApRunSimpleRestTcshParamsDict,
     runner: Runner | None = None,
 ) -> ApRunSimpleRestTcshOutputs:
     """
@@ -321,6 +321,8 @@ def ap_run_simple_rest_tcsh(
 __all__ = [
     "AP_RUN_SIMPLE_REST_TCSH_METADATA",
     "ApRunSimpleRestTcshOutputs",
+    "ApRunSimpleRestTcshParamsDict",
+    "ApRunSimpleRestTcshParamsDictTagged",
     "ap_run_simple_rest_tcsh",
     "ap_run_simple_rest_tcsh_execute",
     "ap_run_simple_rest_tcsh_params",

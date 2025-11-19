@@ -13,7 +13,7 @@ V__REORDER_METADATA = Metadata(
 )
 
 
-VReorderParameters = typing.TypedDict('VReorderParameters', {
+VReorderParamsDict = typing.TypedDict('VReorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Reorder"]],
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
@@ -23,7 +23,7 @@ VReorderParameters = typing.TypedDict('VReorderParameters', {
     "test": bool,
     "help": bool,
 })
-VReorderParametersTagged = typing.TypedDict('VReorderParametersTagged', {
+VReorderParamsDictTagged = typing.TypedDict('VReorderParamsDictTagged', {
     "@type": typing.Literal["afni/@Reorder"],
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
@@ -37,7 +37,7 @@ VReorderParametersTagged = typing.TypedDict('VReorderParametersTagged', {
 
 class VReorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VReorderParameters(...)`.
+    Output object returned when calling `VReorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v__reorder_params(
     save_work: bool = False,
     test: bool = False,
     help_: bool = False,
-) -> VReorderParametersTagged:
+) -> VReorderParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def v__reorder_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VReorderParameters` object.
+    `VReorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def v__reorder_validate(
 
 
 def v__reorder_cargs(
-    params: VReorderParameters,
+    params: VReorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v__reorder_cargs(
 
 
 def v__reorder_outputs(
-    params: VReorderParameters,
+    params: VReorderParamsDict,
     execution: Execution,
 ) -> VReorderOutputs:
     """
@@ -176,7 +176,7 @@ def v__reorder_outputs(
 
 
 def v__reorder_execute(
-    params: VReorderParameters,
+    params: VReorderParamsDict,
     runner: Runner | None = None,
 ) -> VReorderOutputs:
     """
@@ -251,6 +251,8 @@ def v__reorder(
 
 __all__ = [
     "VReorderOutputs",
+    "VReorderParamsDict",
+    "VReorderParamsDictTagged",
     "V__REORDER_METADATA",
     "v__reorder",
     "v__reorder_execute",

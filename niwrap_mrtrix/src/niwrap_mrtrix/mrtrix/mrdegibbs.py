@@ -13,19 +13,19 @@ MRDEGIBBS_METADATA = Metadata(
 )
 
 
-MrdegibbsConfigParameters = typing.TypedDict('MrdegibbsConfigParameters', {
+MrdegibbsConfigParamsDict = typing.TypedDict('MrdegibbsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrdegibbsConfigParametersTagged = typing.TypedDict('MrdegibbsConfigParametersTagged', {
+MrdegibbsConfigParamsDictTagged = typing.TypedDict('MrdegibbsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
+MrdegibbsParamsDict = typing.TypedDict('MrdegibbsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrdegibbs"]],
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
@@ -37,13 +37,13 @@ MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrdegibbsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrdegibbsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
     "out": str,
 })
-MrdegibbsParametersTagged = typing.TypedDict('MrdegibbsParametersTagged', {
+MrdegibbsParamsDictTagged = typing.TypedDict('MrdegibbsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrdegibbs"],
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
@@ -55,7 +55,7 @@ MrdegibbsParametersTagged = typing.TypedDict('MrdegibbsParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrdegibbsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrdegibbsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
@@ -63,10 +63,10 @@ MrdegibbsParametersTagged = typing.TypedDict('MrdegibbsParametersTagged', {
 })
 
 
-def mrdegibbs_config_params(
+def mrdegibbs_config(
     key: str,
     value: str,
-) -> MrdegibbsConfigParametersTagged:
+) -> MrdegibbsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mrdegibbs_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrdegibbsConfigParameters` object.
+    `MrdegibbsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mrdegibbs_config_validate(
 
 
 def mrdegibbs_config_cargs(
-    params: MrdegibbsConfigParameters,
+    params: MrdegibbsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def mrdegibbs_config_cargs(
 
 class MrdegibbsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrdegibbsParameters(...)`.
+    Output object returned when calling `MrdegibbsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def mrdegibbs_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrdegibbsConfigParameters] | None = None,
+    config: list[MrdegibbsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrdegibbsParametersTagged:
+) -> MrdegibbsParamsDictTagged:
     """
     Build parameters.
     
@@ -217,7 +217,7 @@ def mrdegibbs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrdegibbsParameters` object.
+    `MrdegibbsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def mrdegibbs_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrdegibbsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrdegibbsConfigParamsDict] | None`')
         for e in params["config"]:
             mrdegibbs_config_validate(e)
     if params.get("help", False) is None:
@@ -285,7 +285,7 @@ def mrdegibbs_validate(
 
 
 def mrdegibbs_cargs(
-    params: MrdegibbsParameters,
+    params: MrdegibbsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -349,7 +349,7 @@ def mrdegibbs_cargs(
 
 
 def mrdegibbs_outputs(
-    params: MrdegibbsParameters,
+    params: MrdegibbsParamsDict,
     execution: Execution,
 ) -> MrdegibbsOutputs:
     """
@@ -369,7 +369,7 @@ def mrdegibbs_outputs(
 
 
 def mrdegibbs_execute(
-    params: MrdegibbsParameters,
+    params: MrdegibbsParamsDict,
     runner: Runner | None = None,
 ) -> MrdegibbsOutputs:
     """
@@ -434,7 +434,7 @@ def mrdegibbs(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrdegibbsConfigParameters] | None = None,
+    config: list[MrdegibbsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -523,9 +523,13 @@ def mrdegibbs(
 
 __all__ = [
     "MRDEGIBBS_METADATA",
+    "MrdegibbsConfigParamsDict",
+    "MrdegibbsConfigParamsDictTagged",
     "MrdegibbsOutputs",
+    "MrdegibbsParamsDict",
+    "MrdegibbsParamsDictTagged",
     "mrdegibbs",
-    "mrdegibbs_config_params",
+    "mrdegibbs_config",
     "mrdegibbs_execute",
     "mrdegibbs_params",
 ]

@@ -13,7 +13,7 @@ CREATE_TILED_MOSAIC_METADATA = Metadata(
 )
 
 
-CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
+CreateTiledMosaicParamsDict = typing.TypedDict('CreateTiledMosaicParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/CreateTiledMosaic"]],
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
     "flip_slice": typing.NotRequired[str | None],
     "permute_axes": typing.NotRequired[bool | None],
 })
-CreateTiledMosaicParametersTagged = typing.TypedDict('CreateTiledMosaicParametersTagged', {
+CreateTiledMosaicParamsDictTagged = typing.TypedDict('CreateTiledMosaicParamsDictTagged', {
     "@type": typing.Literal["ants/CreateTiledMosaic"],
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ CreateTiledMosaicParametersTagged = typing.TypedDict('CreateTiledMosaicParameter
 
 class CreateTiledMosaicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateTiledMosaicParameters(...)`.
+    Output object returned when calling `CreateTiledMosaicParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def create_tiled_mosaic_params(
     slices: str | None = None,
     flip_slice: str | None = None,
     permute_axes: bool | None = None,
-) -> CreateTiledMosaicParametersTagged:
+) -> CreateTiledMosaicParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def create_tiled_mosaic_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateTiledMosaicParameters` object.
+    `CreateTiledMosaicParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def create_tiled_mosaic_validate(
 
 
 def create_tiled_mosaic_cargs(
-    params: CreateTiledMosaicParameters,
+    params: CreateTiledMosaicParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -263,7 +263,7 @@ def create_tiled_mosaic_cargs(
 
 
 def create_tiled_mosaic_outputs(
-    params: CreateTiledMosaicParameters,
+    params: CreateTiledMosaicParamsDict,
     execution: Execution,
 ) -> CreateTiledMosaicOutputs:
     """
@@ -283,7 +283,7 @@ def create_tiled_mosaic_outputs(
 
 
 def create_tiled_mosaic_execute(
-    params: CreateTiledMosaicParameters,
+    params: CreateTiledMosaicParamsDict,
     runner: Runner | None = None,
 ) -> CreateTiledMosaicOutputs:
     """
@@ -388,6 +388,8 @@ def create_tiled_mosaic(
 __all__ = [
     "CREATE_TILED_MOSAIC_METADATA",
     "CreateTiledMosaicOutputs",
+    "CreateTiledMosaicParamsDict",
+    "CreateTiledMosaicParamsDictTagged",
     "create_tiled_mosaic",
     "create_tiled_mosaic_execute",
     "create_tiled_mosaic_params",

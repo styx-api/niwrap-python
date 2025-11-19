@@ -13,7 +13,7 @@ BEDPOSTX_MGH_METADATA = Metadata(
 )
 
 
-BedpostxMghParameters = typing.TypedDict('BedpostxMghParameters', {
+BedpostxMghParamsDict = typing.TypedDict('BedpostxMghParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bedpostx_mgh"]],
     "subject_directory": str,
     "fibres": typing.NotRequired[float | None],
@@ -24,7 +24,7 @@ BedpostxMghParameters = typing.TypedDict('BedpostxMghParameters', {
     "deconv_model": typing.NotRequired[float | None],
     "gradient_nonlin": bool,
 })
-BedpostxMghParametersTagged = typing.TypedDict('BedpostxMghParametersTagged', {
+BedpostxMghParamsDictTagged = typing.TypedDict('BedpostxMghParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bedpostx_mgh"],
     "subject_directory": str,
     "fibres": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ BedpostxMghParametersTagged = typing.TypedDict('BedpostxMghParametersTagged', {
 
 class BedpostxMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BedpostxMghParameters(...)`.
+    Output object returned when calling `BedpostxMghParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def bedpostx_mgh_params(
     sample_every: float | None = None,
     deconv_model: float | None = None,
     gradient_nonlin: bool = False,
-) -> BedpostxMghParametersTagged:
+) -> BedpostxMghParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def bedpostx_mgh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BedpostxMghParameters` object.
+    `BedpostxMghParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def bedpostx_mgh_validate(
 
 
 def bedpostx_mgh_cargs(
-    params: BedpostxMghParameters,
+    params: BedpostxMghParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,7 +185,7 @@ def bedpostx_mgh_cargs(
 
 
 def bedpostx_mgh_outputs(
-    params: BedpostxMghParameters,
+    params: BedpostxMghParamsDict,
     execution: Execution,
 ) -> BedpostxMghOutputs:
     """
@@ -204,7 +204,7 @@ def bedpostx_mgh_outputs(
 
 
 def bedpostx_mgh_execute(
-    params: BedpostxMghParameters,
+    params: BedpostxMghParamsDict,
     runner: Runner | None = None,
 ) -> BedpostxMghOutputs:
     """
@@ -286,6 +286,8 @@ def bedpostx_mgh(
 __all__ = [
     "BEDPOSTX_MGH_METADATA",
     "BedpostxMghOutputs",
+    "BedpostxMghParamsDict",
+    "BedpostxMghParamsDictTagged",
     "bedpostx_mgh",
     "bedpostx_mgh_execute",
     "bedpostx_mgh_params",

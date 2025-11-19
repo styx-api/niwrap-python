@@ -13,13 +13,13 @@ IMAGE_INTENSITY_STATISTICS_METADATA = Metadata(
 )
 
 
-ImageIntensityStatisticsParameters = typing.TypedDict('ImageIntensityStatisticsParameters', {
+ImageIntensityStatisticsParamsDict = typing.TypedDict('ImageIntensityStatisticsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ImageIntensityStatistics"]],
     "image_dimension": int,
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],
 })
-ImageIntensityStatisticsParametersTagged = typing.TypedDict('ImageIntensityStatisticsParametersTagged', {
+ImageIntensityStatisticsParamsDictTagged = typing.TypedDict('ImageIntensityStatisticsParamsDictTagged', {
     "@type": typing.Literal["ants/ImageIntensityStatistics"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -29,7 +29,7 @@ ImageIntensityStatisticsParametersTagged = typing.TypedDict('ImageIntensityStati
 
 class ImageIntensityStatisticsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImageIntensityStatisticsParameters(...)`.
+    Output object returned when calling `ImageIntensityStatisticsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def image_intensity_statistics_params(
     image_dimension: int,
     input_image: InputPathType,
     label_image: InputPathType | None = None,
-) -> ImageIntensityStatisticsParametersTagged:
+) -> ImageIntensityStatisticsParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def image_intensity_statistics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImageIntensityStatisticsParameters` object.
+    `ImageIntensityStatisticsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def image_intensity_statistics_validate(
 
 
 def image_intensity_statistics_cargs(
-    params: ImageIntensityStatisticsParameters,
+    params: ImageIntensityStatisticsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def image_intensity_statistics_cargs(
 
 
 def image_intensity_statistics_outputs(
-    params: ImageIntensityStatisticsParameters,
+    params: ImageIntensityStatisticsParamsDict,
     execution: Execution,
 ) -> ImageIntensityStatisticsOutputs:
     """
@@ -131,7 +131,7 @@ def image_intensity_statistics_outputs(
 
 
 def image_intensity_statistics_execute(
-    params: ImageIntensityStatisticsParameters,
+    params: ImageIntensityStatisticsParamsDict,
     runner: Runner | None = None,
 ) -> ImageIntensityStatisticsOutputs:
     """
@@ -196,6 +196,8 @@ def image_intensity_statistics(
 __all__ = [
     "IMAGE_INTENSITY_STATISTICS_METADATA",
     "ImageIntensityStatisticsOutputs",
+    "ImageIntensityStatisticsParamsDict",
+    "ImageIntensityStatisticsParamsDictTagged",
     "image_intensity_statistics",
     "image_intensity_statistics_execute",
     "image_intensity_statistics_params",

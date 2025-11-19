@@ -13,7 +13,7 @@ SLICES_METADATA = Metadata(
 )
 
 
-SlicesParameters = typing.TypedDict('SlicesParameters', {
+SlicesParamsDict = typing.TypedDict('SlicesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slices"]],
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ SlicesParameters = typing.TypedDict('SlicesParameters', {
     "intensity_range": typing.NotRequired[list[float] | None],
     "output_gif": typing.NotRequired[str | None],
 })
-SlicesParametersTagged = typing.TypedDict('SlicesParametersTagged', {
+SlicesParamsDictTagged = typing.TypedDict('SlicesParamsDictTagged', {
     "@type": typing.Literal["fsl/slices"],
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ SlicesParametersTagged = typing.TypedDict('SlicesParametersTagged', {
 
 class SlicesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicesParameters(...)`.
+    Output object returned when calling `SlicesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def slices_params(
     scale_factor: float | None = None,
     intensity_range: list[float] | None = None,
     output_gif: str | None = None,
-) -> SlicesParametersTagged:
+) -> SlicesParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def slices_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicesParameters` object.
+    `SlicesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def slices_validate(
 
 
 def slices_cargs(
-    params: SlicesParameters,
+    params: SlicesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def slices_cargs(
 
 
 def slices_outputs(
-    params: SlicesParameters,
+    params: SlicesParamsDict,
     execution: Execution,
 ) -> SlicesOutputs:
     """
@@ -165,7 +165,7 @@ def slices_outputs(
 
 
 def slices_execute(
-    params: SlicesParameters,
+    params: SlicesParamsDict,
     runner: Runner | None = None,
 ) -> SlicesOutputs:
     """
@@ -236,6 +236,8 @@ def slices(
 __all__ = [
     "SLICES_METADATA",
     "SlicesOutputs",
+    "SlicesParamsDict",
+    "SlicesParamsDictTagged",
     "slices",
     "slices_execute",
     "slices_params",

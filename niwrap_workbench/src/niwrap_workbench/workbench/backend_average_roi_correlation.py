@@ -12,12 +12,12 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 )
 
 
-BackendAverageRoiCorrelationParameters = typing.TypedDict('BackendAverageRoiCorrelationParameters', {
+BackendAverageRoiCorrelationParamsDict = typing.TypedDict('BackendAverageRoiCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/backend-average-roi-correlation"]],
     "index-list": str,
     "out-file": str,
 })
-BackendAverageRoiCorrelationParametersTagged = typing.TypedDict('BackendAverageRoiCorrelationParametersTagged', {
+BackendAverageRoiCorrelationParamsDictTagged = typing.TypedDict('BackendAverageRoiCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/backend-average-roi-correlation"],
     "index-list": str,
     "out-file": str,
@@ -26,7 +26,7 @@ BackendAverageRoiCorrelationParametersTagged = typing.TypedDict('BackendAverageR
 
 class BackendAverageRoiCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BackendAverageRoiCorrelationParameters(...)`.
+    Output object returned when calling `BackendAverageRoiCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class BackendAverageRoiCorrelationOutputs(typing.NamedTuple):
 def backend_average_roi_correlation_params(
     index_list: str,
     out_file: str,
-) -> BackendAverageRoiCorrelationParametersTagged:
+) -> BackendAverageRoiCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def backend_average_roi_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BackendAverageRoiCorrelationParameters` object.
+    `BackendAverageRoiCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def backend_average_roi_correlation_validate(
 
 
 def backend_average_roi_correlation_cargs(
-    params: BackendAverageRoiCorrelationParameters,
+    params: BackendAverageRoiCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def backend_average_roi_correlation_cargs(
 
 
 def backend_average_roi_correlation_outputs(
-    params: BackendAverageRoiCorrelationParameters,
+    params: BackendAverageRoiCorrelationParamsDict,
     execution: Execution,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
@@ -119,7 +119,7 @@ def backend_average_roi_correlation_outputs(
 
 
 def backend_average_roi_correlation_execute(
-    params: BackendAverageRoiCorrelationParameters,
+    params: BackendAverageRoiCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
@@ -177,6 +177,8 @@ def backend_average_roi_correlation(
 __all__ = [
     "BACKEND_AVERAGE_ROI_CORRELATION_METADATA",
     "BackendAverageRoiCorrelationOutputs",
+    "BackendAverageRoiCorrelationParamsDict",
+    "BackendAverageRoiCorrelationParamsDictTagged",
     "backend_average_roi_correlation",
     "backend_average_roi_correlation_execute",
     "backend_average_roi_correlation_params",

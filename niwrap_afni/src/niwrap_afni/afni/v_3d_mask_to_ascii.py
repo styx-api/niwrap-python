@@ -13,13 +13,13 @@ V_3D_MASK_TO_ASCII_METADATA = Metadata(
 )
 
 
-V3dMaskToAsciiParameters = typing.TypedDict('V3dMaskToAsciiParameters', {
+V3dMaskToAsciiParamsDict = typing.TypedDict('V3dMaskToAsciiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMaskToASCII"]],
     "tobin_flag": bool,
     "dataset": InputPathType,
     "outputfile": str,
 })
-V3dMaskToAsciiParametersTagged = typing.TypedDict('V3dMaskToAsciiParametersTagged', {
+V3dMaskToAsciiParamsDictTagged = typing.TypedDict('V3dMaskToAsciiParamsDictTagged', {
     "@type": typing.Literal["afni/3dMaskToASCII"],
     "tobin_flag": bool,
     "dataset": InputPathType,
@@ -29,7 +29,7 @@ V3dMaskToAsciiParametersTagged = typing.TypedDict('V3dMaskToAsciiParametersTagge
 
 class V3dMaskToAsciiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMaskToAsciiParameters(...)`.
+    Output object returned when calling `V3dMaskToAsciiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3d_mask_to_ascii_params(
     dataset: InputPathType,
     outputfile: str,
     tobin_flag: bool = False,
-) -> V3dMaskToAsciiParametersTagged:
+) -> V3dMaskToAsciiParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def v_3d_mask_to_ascii_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMaskToAsciiParameters` object.
+    `V3dMaskToAsciiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def v_3d_mask_to_ascii_validate(
 
 
 def v_3d_mask_to_ascii_cargs(
-    params: V3dMaskToAsciiParameters,
+    params: V3dMaskToAsciiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def v_3d_mask_to_ascii_cargs(
 
 
 def v_3d_mask_to_ascii_outputs(
-    params: V3dMaskToAsciiParameters,
+    params: V3dMaskToAsciiParamsDict,
     execution: Execution,
 ) -> V3dMaskToAsciiOutputs:
     """
@@ -132,7 +132,7 @@ def v_3d_mask_to_ascii_outputs(
 
 
 def v_3d_mask_to_ascii_execute(
-    params: V3dMaskToAsciiParameters,
+    params: V3dMaskToAsciiParamsDict,
     runner: Runner | None = None,
 ) -> V3dMaskToAsciiOutputs:
     """
@@ -195,6 +195,8 @@ def v_3d_mask_to_ascii(
 
 __all__ = [
     "V3dMaskToAsciiOutputs",
+    "V3dMaskToAsciiParamsDict",
+    "V3dMaskToAsciiParamsDictTagged",
     "V_3D_MASK_TO_ASCII_METADATA",
     "v_3d_mask_to_ascii",
     "v_3d_mask_to_ascii_execute",

@@ -13,7 +13,7 @@ BALLOON_METADATA = Metadata(
 )
 
 
-BalloonParameters = typing.TypedDict('BalloonParameters', {
+BalloonParamsDict = typing.TypedDict('BalloonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/balloon"]],
     "tr": float,
     "num_scans": int,
@@ -22,7 +22,7 @@ BalloonParameters = typing.TypedDict('BalloonParameters', {
     "t_fall": typing.NotRequired[list[float] | None],
     "t_sustain": typing.NotRequired[list[float] | None],
 })
-BalloonParametersTagged = typing.TypedDict('BalloonParametersTagged', {
+BalloonParamsDictTagged = typing.TypedDict('BalloonParamsDictTagged', {
     "@type": typing.Literal["afni/balloon"],
     "tr": float,
     "num_scans": int,
@@ -35,7 +35,7 @@ BalloonParametersTagged = typing.TypedDict('BalloonParametersTagged', {
 
 class BalloonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BalloonParameters(...)`.
+    Output object returned when calling `BalloonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def balloon_params(
     t_rise: list[float] | None = None,
     t_fall: list[float] | None = None,
     t_sustain: list[float] | None = None,
-) -> BalloonParametersTagged:
+) -> BalloonParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def balloon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BalloonParameters` object.
+    `BalloonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def balloon_validate(
 
 
 def balloon_cargs(
-    params: BalloonParameters,
+    params: BalloonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def balloon_cargs(
 
 
 def balloon_outputs(
-    params: BalloonParameters,
+    params: BalloonParamsDict,
     execution: Execution,
 ) -> BalloonOutputs:
     """
@@ -181,7 +181,7 @@ def balloon_outputs(
 
 
 def balloon_execute(
-    params: BalloonParameters,
+    params: BalloonParamsDict,
     runner: Runner | None = None,
 ) -> BalloonOutputs:
     """
@@ -261,6 +261,8 @@ def balloon(
 __all__ = [
     "BALLOON_METADATA",
     "BalloonOutputs",
+    "BalloonParamsDict",
+    "BalloonParamsDictTagged",
     "balloon",
     "balloon_execute",
     "balloon_params",

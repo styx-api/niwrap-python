@@ -13,7 +13,7 @@ MRI_VOL2VOL_METADATA = Metadata(
 )
 
 
-MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
+MriVol2volParamsDict = typing.TypedDict('MriVol2volParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2vol"]],
     "movvol": InputPathType,
     "targvol": InputPathType,
@@ -60,7 +60,7 @@ MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
     "debug": bool,
     "version": bool,
 })
-MriVol2volParametersTagged = typing.TypedDict('MriVol2volParametersTagged', {
+MriVol2volParamsDictTagged = typing.TypedDict('MriVol2volParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_vol2vol"],
     "movvol": InputPathType,
     "targvol": InputPathType,
@@ -111,7 +111,7 @@ MriVol2volParametersTagged = typing.TypedDict('MriVol2volParametersTagged', {
 
 class MriVol2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVol2volParameters(...)`.
+    Output object returned when calling `MriVol2volParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,7 +164,7 @@ def mri_vol2vol_params(
     save_reg: bool = False,
     debug: bool = False,
     version: bool = False,
-) -> MriVol2volParametersTagged:
+) -> MriVol2volParamsDictTagged:
     """
     Build parameters.
     
@@ -306,7 +306,7 @@ def mri_vol2vol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVol2volParameters` object.
+    `MriVol2volParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -488,7 +488,7 @@ def mri_vol2vol_validate(
 
 
 def mri_vol2vol_cargs(
-    params: MriVol2volParameters,
+    params: MriVol2volParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -672,7 +672,7 @@ def mri_vol2vol_cargs(
 
 
 def mri_vol2vol_outputs(
-    params: MriVol2volParameters,
+    params: MriVol2volParamsDict,
     execution: Execution,
 ) -> MriVol2volOutputs:
     """
@@ -692,7 +692,7 @@ def mri_vol2vol_outputs(
 
 
 def mri_vol2vol_execute(
-    params: MriVol2volParameters,
+    params: MriVol2volParamsDict,
     runner: Runner | None = None,
 ) -> MriVol2volOutputs:
     """
@@ -887,6 +887,8 @@ def mri_vol2vol(
 __all__ = [
     "MRI_VOL2VOL_METADATA",
     "MriVol2volOutputs",
+    "MriVol2volParamsDict",
+    "MriVol2volParamsDictTagged",
     "mri_vol2vol",
     "mri_vol2vol_execute",
     "mri_vol2vol_params",

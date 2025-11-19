@@ -12,14 +12,14 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', {
+VolumeEstimateFwhmParamsDict = typing.TypedDict('VolumeEstimateFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-estimate-fwhm"]],
     "roivol": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
     "demean": typing.NotRequired[bool | None],
     "volume": InputPathType,
 })
-VolumeEstimateFwhmParametersTagged = typing.TypedDict('VolumeEstimateFwhmParametersTagged', {
+VolumeEstimateFwhmParamsDictTagged = typing.TypedDict('VolumeEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-estimate-fwhm"],
     "roivol": typing.NotRequired[InputPathType | None],
     "subvol": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ VolumeEstimateFwhmParametersTagged = typing.TypedDict('VolumeEstimateFwhmParamet
 
 class VolumeEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeEstimateFwhmParameters(...)`.
+    Output object returned when calling `VolumeEstimateFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def volume_estimate_fwhm_params(
     subvol: str | None,
     volume: InputPathType,
     demean: bool | None = False,
-) -> VolumeEstimateFwhmParametersTagged:
+) -> VolumeEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def volume_estimate_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeEstimateFwhmParameters` object.
+    `VolumeEstimateFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def volume_estimate_fwhm_validate(
 
 
 def volume_estimate_fwhm_cargs(
-    params: VolumeEstimateFwhmParameters,
+    params: VolumeEstimateFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def volume_estimate_fwhm_cargs(
 
 
 def volume_estimate_fwhm_outputs(
-    params: VolumeEstimateFwhmParameters,
+    params: VolumeEstimateFwhmParamsDict,
     execution: Execution,
 ) -> VolumeEstimateFwhmOutputs:
     """
@@ -149,7 +149,7 @@ def volume_estimate_fwhm_outputs(
 
 
 def volume_estimate_fwhm_execute(
-    params: VolumeEstimateFwhmParameters,
+    params: VolumeEstimateFwhmParamsDict,
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
@@ -219,6 +219,8 @@ def volume_estimate_fwhm(
 __all__ = [
     "VOLUME_ESTIMATE_FWHM_METADATA",
     "VolumeEstimateFwhmOutputs",
+    "VolumeEstimateFwhmParamsDict",
+    "VolumeEstimateFwhmParamsDictTagged",
     "volume_estimate_fwhm",
     "volume_estimate_fwhm_execute",
     "volume_estimate_fwhm_params",

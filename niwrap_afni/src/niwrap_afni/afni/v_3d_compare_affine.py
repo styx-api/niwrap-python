@@ -13,13 +13,13 @@ V_3D_COMPARE_AFFINE_METADATA = Metadata(
 )
 
 
-V3dCompareAffineParameters = typing.TypedDict('V3dCompareAffineParameters', {
+V3dCompareAffineParamsDict = typing.TypedDict('V3dCompareAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dCompareAffine"]],
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],
 })
-V3dCompareAffineParametersTagged = typing.TypedDict('V3dCompareAffineParametersTagged', {
+V3dCompareAffineParamsDictTagged = typing.TypedDict('V3dCompareAffineParamsDictTagged', {
     "@type": typing.Literal["afni/3dCompareAffine"],
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
@@ -29,7 +29,7 @@ V3dCompareAffineParametersTagged = typing.TypedDict('V3dCompareAffineParametersT
 
 class V3dCompareAffineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dCompareAffineParameters(...)`.
+    Output object returned when calling `V3dCompareAffineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3d_compare_affine_params(
     mask: str | None = None,
     dset: InputPathType | None = None,
     affine: list[str] | None = None,
-) -> V3dCompareAffineParametersTagged:
+) -> V3dCompareAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_compare_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dCompareAffineParameters` object.
+    `V3dCompareAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -94,7 +94,7 @@ def v_3d_compare_affine_validate(
 
 
 def v_3d_compare_affine_cargs(
-    params: V3dCompareAffineParameters,
+    params: V3dCompareAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def v_3d_compare_affine_cargs(
 
 
 def v_3d_compare_affine_outputs(
-    params: V3dCompareAffineParameters,
+    params: V3dCompareAffineParamsDict,
     execution: Execution,
 ) -> V3dCompareAffineOutputs:
     """
@@ -147,7 +147,7 @@ def v_3d_compare_affine_outputs(
 
 
 def v_3d_compare_affine_execute(
-    params: V3dCompareAffineParameters,
+    params: V3dCompareAffineParamsDict,
     runner: Runner | None = None,
 ) -> V3dCompareAffineOutputs:
     """
@@ -213,6 +213,8 @@ def v_3d_compare_affine(
 
 __all__ = [
     "V3dCompareAffineOutputs",
+    "V3dCompareAffineParamsDict",
+    "V3dCompareAffineParamsDictTagged",
     "V_3D_COMPARE_AFFINE_METADATA",
     "v_3d_compare_affine",
     "v_3d_compare_affine_execute",

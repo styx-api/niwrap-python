@@ -13,7 +13,7 @@ V__QUIET_TALKERS_METADATA = Metadata(
 )
 
 
-VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
+VQuietTalkersParamsDict = typing.TypedDict('VQuietTalkersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Quiet_Talkers"]],
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
@@ -24,7 +24,7 @@ VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
     "list": bool,
     "quiet": bool,
 })
-VQuietTalkersParametersTagged = typing.TypedDict('VQuietTalkersParametersTagged', {
+VQuietTalkersParamsDictTagged = typing.TypedDict('VQuietTalkersParamsDictTagged', {
     "@type": typing.Literal["afni/@Quiet_Talkers"],
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
@@ -39,7 +39,7 @@ VQuietTalkersParametersTagged = typing.TypedDict('VQuietTalkersParametersTagged'
 
 class VQuietTalkersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VQuietTalkersParameters(...)`.
+    Output object returned when calling `VQuietTalkersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def v__quiet_talkers_params(
     no_npb: bool = False,
     list_: bool = False,
     quiet: bool = False,
-) -> VQuietTalkersParametersTagged:
+) -> VQuietTalkersParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def v__quiet_talkers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VQuietTalkersParameters` object.
+    `VQuietTalkersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def v__quiet_talkers_validate(
 
 
 def v__quiet_talkers_cargs(
-    params: VQuietTalkersParameters,
+    params: VQuietTalkersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def v__quiet_talkers_cargs(
 
 
 def v__quiet_talkers_outputs(
-    params: VQuietTalkersParameters,
+    params: VQuietTalkersParamsDict,
     execution: Execution,
 ) -> VQuietTalkersOutputs:
     """
@@ -209,7 +209,7 @@ def v__quiet_talkers_outputs(
 
 
 def v__quiet_talkers_execute(
-    params: VQuietTalkersParameters,
+    params: VQuietTalkersParamsDict,
     runner: Runner | None = None,
 ) -> VQuietTalkersOutputs:
     """
@@ -287,6 +287,8 @@ def v__quiet_talkers(
 
 __all__ = [
     "VQuietTalkersOutputs",
+    "VQuietTalkersParamsDict",
+    "VQuietTalkersParamsDictTagged",
     "V__QUIET_TALKERS_METADATA",
     "v__quiet_talkers",
     "v__quiet_talkers_execute",

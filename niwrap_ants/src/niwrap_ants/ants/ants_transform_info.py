@@ -13,11 +13,11 @@ ANTS_TRANSFORM_INFO_METADATA = Metadata(
 )
 
 
-AntsTransformInfoParameters = typing.TypedDict('AntsTransformInfoParameters', {
+AntsTransformInfoParamsDict = typing.TypedDict('AntsTransformInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsTransformInfo"]],
     "transform_file": InputPathType,
 })
-AntsTransformInfoParametersTagged = typing.TypedDict('AntsTransformInfoParametersTagged', {
+AntsTransformInfoParamsDictTagged = typing.TypedDict('AntsTransformInfoParamsDictTagged', {
     "@type": typing.Literal["ants/antsTransformInfo"],
     "transform_file": InputPathType,
 })
@@ -25,7 +25,7 @@ AntsTransformInfoParametersTagged = typing.TypedDict('AntsTransformInfoParameter
 
 class AntsTransformInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsTransformInfoParameters(...)`.
+    Output object returned when calling `AntsTransformInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class AntsTransformInfoOutputs(typing.NamedTuple):
 
 def ants_transform_info_params(
     transform_file: InputPathType,
-) -> AntsTransformInfoParametersTagged:
+) -> AntsTransformInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def ants_transform_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsTransformInfoParameters` object.
+    `AntsTransformInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def ants_transform_info_validate(
 
 
 def ants_transform_info_cargs(
-    params: AntsTransformInfoParameters,
+    params: AntsTransformInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -93,7 +93,7 @@ def ants_transform_info_cargs(
 
 
 def ants_transform_info_outputs(
-    params: AntsTransformInfoParameters,
+    params: AntsTransformInfoParamsDict,
     execution: Execution,
 ) -> AntsTransformInfoOutputs:
     """
@@ -113,7 +113,7 @@ def ants_transform_info_outputs(
 
 
 def ants_transform_info_execute(
-    params: AntsTransformInfoParameters,
+    params: AntsTransformInfoParamsDict,
     runner: Runner | None = None,
 ) -> AntsTransformInfoOutputs:
     """
@@ -170,6 +170,8 @@ def ants_transform_info(
 __all__ = [
     "ANTS_TRANSFORM_INFO_METADATA",
     "AntsTransformInfoOutputs",
+    "AntsTransformInfoParamsDict",
+    "AntsTransformInfoParamsDictTagged",
     "ants_transform_info",
     "ants_transform_info_execute",
     "ants_transform_info_params",

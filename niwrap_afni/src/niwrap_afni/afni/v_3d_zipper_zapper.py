@@ -13,7 +13,7 @@ V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
 )
 
 
-V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
+V3dZipperZapperParamsDict = typing.TypedDict('V3dZipperZapperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dZipperZapper"]],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -32,7 +32,7 @@ V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
     "min_corr_len": typing.NotRequired[float | None],
     "min_corr_corr": typing.NotRequired[float | None],
 })
-V3dZipperZapperParametersTagged = typing.TypedDict('V3dZipperZapperParametersTagged', {
+V3dZipperZapperParamsDictTagged = typing.TypedDict('V3dZipperZapperParamsDictTagged', {
     "@type": typing.Literal["afni/3dZipperZapper"],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -55,7 +55,7 @@ V3dZipperZapperParametersTagged = typing.TypedDict('V3dZipperZapperParametersTag
 
 class V3dZipperZapperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dZipperZapperParameters(...)`.
+    Output object returned when calling `V3dZipperZapperParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +88,7 @@ def v_3d_zipper_zapper_params(
     min_drop_diff: float | None = None,
     min_corr_len: float | None = None,
     min_corr_corr: float | None = None,
-) -> V3dZipperZapperParametersTagged:
+) -> V3dZipperZapperParamsDictTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def v_3d_zipper_zapper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dZipperZapperParameters` object.
+    `V3dZipperZapperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def v_3d_zipper_zapper_validate(
 
 
 def v_3d_zipper_zapper_cargs(
-    params: V3dZipperZapperParameters,
+    params: V3dZipperZapperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def v_3d_zipper_zapper_cargs(
 
 
 def v_3d_zipper_zapper_outputs(
-    params: V3dZipperZapperParameters,
+    params: V3dZipperZapperParamsDict,
     execution: Execution,
 ) -> V3dZipperZapperOutputs:
     """
@@ -328,7 +328,7 @@ def v_3d_zipper_zapper_outputs(
 
 
 def v_3d_zipper_zapper_execute(
-    params: V3dZipperZapperParameters,
+    params: V3dZipperZapperParamsDict,
     runner: Runner | None = None,
 ) -> V3dZipperZapperOutputs:
     """
@@ -443,6 +443,8 @@ def v_3d_zipper_zapper(
 
 __all__ = [
     "V3dZipperZapperOutputs",
+    "V3dZipperZapperParamsDict",
+    "V3dZipperZapperParamsDictTagged",
     "V_3D_ZIPPER_ZAPPER_METADATA",
     "v_3d_zipper_zapper",
     "v_3d_zipper_zapper_execute",

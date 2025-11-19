@@ -13,11 +13,11 @@ SPHERE_SUBJECT_LH_METADATA = Metadata(
 )
 
 
-SphereSubjectLhParameters = typing.TypedDict('SphereSubjectLhParameters', {
+SphereSubjectLhParamsDict = typing.TypedDict('SphereSubjectLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject-lh"]],
     "license_file": InputPathType,
 })
-SphereSubjectLhParametersTagged = typing.TypedDict('SphereSubjectLhParametersTagged', {
+SphereSubjectLhParamsDictTagged = typing.TypedDict('SphereSubjectLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sphere_subject-lh"],
     "license_file": InputPathType,
 })
@@ -25,7 +25,7 @@ SphereSubjectLhParametersTagged = typing.TypedDict('SphereSubjectLhParametersTag
 
 class SphereSubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SphereSubjectLhParameters(...)`.
+    Output object returned when calling `SphereSubjectLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class SphereSubjectLhOutputs(typing.NamedTuple):
 
 def sphere_subject_lh_params(
     license_file: InputPathType,
-) -> SphereSubjectLhParametersTagged:
+) -> SphereSubjectLhParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def sphere_subject_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SphereSubjectLhParameters` object.
+    `SphereSubjectLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def sphere_subject_lh_validate(
 
 
 def sphere_subject_lh_cargs(
-    params: SphereSubjectLhParameters,
+    params: SphereSubjectLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def sphere_subject_lh_cargs(
 
 
 def sphere_subject_lh_outputs(
-    params: SphereSubjectLhParameters,
+    params: SphereSubjectLhParamsDict,
     execution: Execution,
 ) -> SphereSubjectLhOutputs:
     """
@@ -109,7 +109,7 @@ def sphere_subject_lh_outputs(
 
 
 def sphere_subject_lh_execute(
-    params: SphereSubjectLhParameters,
+    params: SphereSubjectLhParamsDict,
     runner: Runner | None = None,
 ) -> SphereSubjectLhOutputs:
     """
@@ -165,6 +165,8 @@ def sphere_subject_lh(
 __all__ = [
     "SPHERE_SUBJECT_LH_METADATA",
     "SphereSubjectLhOutputs",
+    "SphereSubjectLhParamsDict",
+    "SphereSubjectLhParamsDictTagged",
     "sphere_subject_lh",
     "sphere_subject_lh_execute",
     "sphere_subject_lh_params",

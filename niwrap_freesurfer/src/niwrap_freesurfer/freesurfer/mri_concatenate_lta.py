@@ -13,7 +13,7 @@ MRI_CONCATENATE_LTA_METADATA = Metadata(
 )
 
 
-MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
+MriConcatenateLtaParamsDict = typing.TypedDict('MriConcatenateLtaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_lta"]],
     "lta_1": InputPathType,
     "lta_2": InputPathType,
@@ -28,7 +28,7 @@ MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
     "rmsdiff_radius": typing.NotRequired[float | None],
     "rmsdiff_outputfile": typing.NotRequired[str | None],
 })
-MriConcatenateLtaParametersTagged = typing.TypedDict('MriConcatenateLtaParametersTagged', {
+MriConcatenateLtaParamsDictTagged = typing.TypedDict('MriConcatenateLtaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_concatenate_lta"],
     "lta_1": InputPathType,
     "lta_2": InputPathType,
@@ -47,7 +47,7 @@ MriConcatenateLtaParametersTagged = typing.TypedDict('MriConcatenateLtaParameter
 
 class MriConcatenateLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriConcatenateLtaParameters(...)`.
+    Output object returned when calling `MriConcatenateLtaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def mri_concatenate_lta_params(
     subject: str | None = None,
     rmsdiff_radius: float | None = None,
     rmsdiff_outputfile: str | None = None,
-) -> MriConcatenateLtaParametersTagged:
+) -> MriConcatenateLtaParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def mri_concatenate_lta_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriConcatenateLtaParameters` object.
+    `MriConcatenateLtaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def mri_concatenate_lta_validate(
 
 
 def mri_concatenate_lta_cargs(
-    params: MriConcatenateLtaParameters,
+    params: MriConcatenateLtaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,7 +219,7 @@ def mri_concatenate_lta_cargs(
 
 
 def mri_concatenate_lta_outputs(
-    params: MriConcatenateLtaParameters,
+    params: MriConcatenateLtaParamsDict,
     execution: Execution,
 ) -> MriConcatenateLtaOutputs:
     """
@@ -238,7 +238,7 @@ def mri_concatenate_lta_outputs(
 
 
 def mri_concatenate_lta_execute(
-    params: MriConcatenateLtaParameters,
+    params: MriConcatenateLtaParamsDict,
     runner: Runner | None = None,
 ) -> MriConcatenateLtaOutputs:
     """
@@ -330,6 +330,8 @@ def mri_concatenate_lta(
 __all__ = [
     "MRI_CONCATENATE_LTA_METADATA",
     "MriConcatenateLtaOutputs",
+    "MriConcatenateLtaParamsDict",
+    "MriConcatenateLtaParamsDictTagged",
     "mri_concatenate_lta",
     "mri_concatenate_lta_execute",
     "mri_concatenate_lta_params",

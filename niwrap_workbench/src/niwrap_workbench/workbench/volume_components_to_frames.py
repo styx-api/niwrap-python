@@ -12,12 +12,12 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 )
 
 
-VolumeComponentsToFramesParameters = typing.TypedDict('VolumeComponentsToFramesParameters', {
+VolumeComponentsToFramesParamsDict = typing.TypedDict('VolumeComponentsToFramesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-components-to-frames"]],
     "output": str,
     "input": InputPathType,
 })
-VolumeComponentsToFramesParametersTagged = typing.TypedDict('VolumeComponentsToFramesParametersTagged', {
+VolumeComponentsToFramesParamsDictTagged = typing.TypedDict('VolumeComponentsToFramesParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-components-to-frames"],
     "output": str,
     "input": InputPathType,
@@ -26,7 +26,7 @@ VolumeComponentsToFramesParametersTagged = typing.TypedDict('VolumeComponentsToF
 
 class VolumeComponentsToFramesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeComponentsToFramesParameters(...)`.
+    Output object returned when calling `VolumeComponentsToFramesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class VolumeComponentsToFramesOutputs(typing.NamedTuple):
 def volume_components_to_frames_params(
     output: str,
     input_: InputPathType,
-) -> VolumeComponentsToFramesParametersTagged:
+) -> VolumeComponentsToFramesParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def volume_components_to_frames_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeComponentsToFramesParameters` object.
+    `VolumeComponentsToFramesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def volume_components_to_frames_validate(
 
 
 def volume_components_to_frames_cargs(
-    params: VolumeComponentsToFramesParameters,
+    params: VolumeComponentsToFramesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def volume_components_to_frames_cargs(
 
 
 def volume_components_to_frames_outputs(
-    params: VolumeComponentsToFramesParameters,
+    params: VolumeComponentsToFramesParamsDict,
     execution: Execution,
 ) -> VolumeComponentsToFramesOutputs:
     """
@@ -121,7 +121,7 @@ def volume_components_to_frames_outputs(
 
 
 def volume_components_to_frames_execute(
-    params: VolumeComponentsToFramesParameters,
+    params: VolumeComponentsToFramesParamsDict,
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
@@ -174,6 +174,8 @@ def volume_components_to_frames(
 __all__ = [
     "VOLUME_COMPONENTS_TO_FRAMES_METADATA",
     "VolumeComponentsToFramesOutputs",
+    "VolumeComponentsToFramesParamsDict",
+    "VolumeComponentsToFramesParamsDictTagged",
     "volume_components_to_frames",
     "volume_components_to_frames_execute",
     "volume_components_to_frames_params",

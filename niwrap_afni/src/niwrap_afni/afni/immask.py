@@ -13,7 +13,7 @@ IMMASK_METADATA = Metadata(
 )
 
 
-ImmaskParameters = typing.TypedDict('ImmaskParameters', {
+ImmaskParamsDict = typing.TypedDict('ImmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/immask"]],
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ ImmaskParameters = typing.TypedDict('ImmaskParameters', {
     "input_image": InputPathType,
     "output_image": str,
 })
-ImmaskParametersTagged = typing.TypedDict('ImmaskParametersTagged', {
+ImmaskParamsDictTagged = typing.TypedDict('ImmaskParamsDictTagged', {
     "@type": typing.Literal["afni/immask"],
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ ImmaskParametersTagged = typing.TypedDict('ImmaskParametersTagged', {
 
 class ImmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImmaskParameters(...)`.
+    Output object returned when calling `ImmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def immask_params(
     threshold: float | None = None,
     mask_image: InputPathType | None = None,
     positive_only: bool = False,
-) -> ImmaskParametersTagged:
+) -> ImmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def immask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImmaskParameters` object.
+    `ImmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def immask_validate(
 
 
 def immask_cargs(
-    params: ImmaskParameters,
+    params: ImmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def immask_cargs(
 
 
 def immask_outputs(
-    params: ImmaskParameters,
+    params: ImmaskParamsDict,
     execution: Execution,
 ) -> ImmaskOutputs:
     """
@@ -160,7 +160,7 @@ def immask_outputs(
 
 
 def immask_execute(
-    params: ImmaskParameters,
+    params: ImmaskParamsDict,
     runner: Runner | None = None,
 ) -> ImmaskOutputs:
     """
@@ -232,6 +232,8 @@ def immask(
 __all__ = [
     "IMMASK_METADATA",
     "ImmaskOutputs",
+    "ImmaskParamsDict",
+    "ImmaskParamsDictTagged",
     "immask",
     "immask_execute",
     "immask_params",

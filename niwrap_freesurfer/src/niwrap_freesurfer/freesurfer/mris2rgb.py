@@ -13,11 +13,11 @@ MRIS2RGB_METADATA = Metadata(
 )
 
 
-Mris2rgbParameters = typing.TypedDict('Mris2rgbParameters', {
+Mris2rgbParamsDict = typing.TypedDict('Mris2rgbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris2rgb"]],
     "library_path": str,
 })
-Mris2rgbParametersTagged = typing.TypedDict('Mris2rgbParametersTagged', {
+Mris2rgbParamsDictTagged = typing.TypedDict('Mris2rgbParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris2rgb"],
     "library_path": str,
 })
@@ -25,7 +25,7 @@ Mris2rgbParametersTagged = typing.TypedDict('Mris2rgbParametersTagged', {
 
 class Mris2rgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Mris2rgbParameters(...)`.
+    Output object returned when calling `Mris2rgbParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Mris2rgbOutputs(typing.NamedTuple):
 
 def mris2rgb_params(
     library_path: str,
-) -> Mris2rgbParametersTagged:
+) -> Mris2rgbParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def mris2rgb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mris2rgbParameters` object.
+    `Mris2rgbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def mris2rgb_validate(
 
 
 def mris2rgb_cargs(
-    params: Mris2rgbParameters,
+    params: Mris2rgbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def mris2rgb_cargs(
 
 
 def mris2rgb_outputs(
-    params: Mris2rgbParameters,
+    params: Mris2rgbParamsDict,
     execution: Execution,
 ) -> Mris2rgbOutputs:
     """
@@ -110,7 +110,7 @@ def mris2rgb_outputs(
 
 
 def mris2rgb_execute(
-    params: Mris2rgbParameters,
+    params: Mris2rgbParamsDict,
     runner: Runner | None = None,
 ) -> Mris2rgbOutputs:
     """
@@ -167,6 +167,8 @@ def mris2rgb(
 __all__ = [
     "MRIS2RGB_METADATA",
     "Mris2rgbOutputs",
+    "Mris2rgbParamsDict",
+    "Mris2rgbParamsDictTagged",
     "mris2rgb",
     "mris2rgb_execute",
     "mris2rgb_params",

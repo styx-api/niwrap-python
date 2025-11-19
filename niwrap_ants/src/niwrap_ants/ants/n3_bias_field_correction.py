@@ -13,7 +13,7 @@ N3_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 )
 
 
-N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParameters', {
+N3BiasFieldCorrectionParamsDict = typing.TypedDict('N3BiasFieldCorrectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/N3BiasFieldCorrection"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -27,7 +27,7 @@ N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParamet
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-N3BiasFieldCorrectionParametersTagged = typing.TypedDict('N3BiasFieldCorrectionParametersTagged', {
+N3BiasFieldCorrectionParamsDictTagged = typing.TypedDict('N3BiasFieldCorrectionParamsDictTagged', {
     "@type": typing.Literal["ants/N3BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -45,7 +45,7 @@ N3BiasFieldCorrectionParametersTagged = typing.TypedDict('N3BiasFieldCorrectionP
 
 class N3BiasFieldCorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `N3BiasFieldCorrectionParameters(...)`.
+    Output object returned when calling `N3BiasFieldCorrectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def n3_bias_field_correction_params(
     bspline_fitting: str | None = None,
     histogram_sharpening: str | None = None,
     verbose: bool | None = None,
-) -> N3BiasFieldCorrectionParametersTagged:
+) -> N3BiasFieldCorrectionParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def n3_bias_field_correction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `N3BiasFieldCorrectionParameters` object.
+    `N3BiasFieldCorrectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def n3_bias_field_correction_validate(
 
 
 def n3_bias_field_correction_cargs(
-    params: N3BiasFieldCorrectionParameters,
+    params: N3BiasFieldCorrectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def n3_bias_field_correction_cargs(
 
 
 def n3_bias_field_correction_outputs(
-    params: N3BiasFieldCorrectionParameters,
+    params: N3BiasFieldCorrectionParamsDict,
     execution: Execution,
 ) -> N3BiasFieldCorrectionOutputs:
     """
@@ -270,7 +270,7 @@ def n3_bias_field_correction_outputs(
 
 
 def n3_bias_field_correction_execute(
-    params: N3BiasFieldCorrectionParameters,
+    params: N3BiasFieldCorrectionParamsDict,
     runner: Runner | None = None,
 ) -> N3BiasFieldCorrectionOutputs:
     """
@@ -381,6 +381,8 @@ def n3_bias_field_correction(
 
 __all__ = [
     "N3BiasFieldCorrectionOutputs",
+    "N3BiasFieldCorrectionParamsDict",
+    "N3BiasFieldCorrectionParamsDictTagged",
     "N3_BIAS_FIELD_CORRECTION_METADATA",
     "n3_bias_field_correction",
     "n3_bias_field_correction_execute",

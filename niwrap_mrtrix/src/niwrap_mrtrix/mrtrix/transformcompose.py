@@ -13,39 +13,39 @@ TRANSFORMCOMPOSE_METADATA = Metadata(
 )
 
 
-TransformcomposeConfigParameters = typing.TypedDict('TransformcomposeConfigParameters', {
+TransformcomposeConfigParamsDict = typing.TypedDict('TransformcomposeConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TransformcomposeConfigParametersTagged = typing.TypedDict('TransformcomposeConfigParametersTagged', {
+TransformcomposeConfigParamsDictTagged = typing.TypedDict('TransformcomposeConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TransformcomposeVariousStringParameters = typing.TypedDict('TransformcomposeVariousStringParameters', {
+TransformcomposeVariousStringParamsDict = typing.TypedDict('TransformcomposeVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-TransformcomposeVariousStringParametersTagged = typing.TypedDict('TransformcomposeVariousStringParametersTagged', {
+TransformcomposeVariousStringParamsDictTagged = typing.TypedDict('TransformcomposeVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-TransformcomposeVariousFileParameters = typing.TypedDict('TransformcomposeVariousFileParameters', {
+TransformcomposeVariousFileParamsDict = typing.TypedDict('TransformcomposeVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-TransformcomposeVariousFileParametersTagged = typing.TypedDict('TransformcomposeVariousFileParametersTagged', {
+TransformcomposeVariousFileParamsDictTagged = typing.TypedDict('TransformcomposeVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
+TransformcomposeParamsDict = typing.TypedDict('TransformcomposeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/transformcompose"]],
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -53,13 +53,13 @@ TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformcomposeConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformcomposeConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
-    "output": typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
+    "output": typing.Union[TransformcomposeVariousStringParamsDictTagged, TransformcomposeVariousFileParamsDictTagged],
 })
-TransformcomposeParametersTagged = typing.TypedDict('TransformcomposeParametersTagged', {
+TransformcomposeParamsDictTagged = typing.TypedDict('TransformcomposeParamsDictTagged', {
     "@type": typing.Literal["mrtrix/transformcompose"],
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -67,11 +67,11 @@ TransformcomposeParametersTagged = typing.TypedDict('TransformcomposeParametersT
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TransformcomposeConfigParameters] | None],
+    "config": typing.NotRequired[list[TransformcomposeConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
-    "output": typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
+    "output": typing.Union[TransformcomposeVariousStringParamsDictTagged, TransformcomposeVariousFileParamsDictTagged],
 })
 
 
@@ -109,10 +109,10 @@ def transformcompose_output_validate_dyn_fn(
     }.get(t)
 
 
-def transformcompose_config_params(
+def transformcompose_config(
     key: str,
     value: str,
-) -> TransformcomposeConfigParametersTagged:
+) -> TransformcomposeConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def transformcompose_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcomposeConfigParameters` object.
+    `TransformcomposeConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def transformcompose_config_validate(
 
 
 def transformcompose_config_cargs(
-    params: TransformcomposeConfigParameters,
+    params: TransformcomposeConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,9 +172,9 @@ def transformcompose_config_cargs(
     return cargs
 
 
-def transformcompose_various_string_params(
+def transformcompose_various_string(
     obj: str,
-) -> TransformcomposeVariousStringParametersTagged:
+) -> TransformcomposeVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def transformcompose_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcomposeVariousStringParameters` object.
+    `TransformcomposeVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def transformcompose_various_string_validate(
 
 
 def transformcompose_various_string_cargs(
-    params: TransformcomposeVariousStringParameters,
+    params: TransformcomposeVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,9 +226,9 @@ def transformcompose_various_string_cargs(
     return cargs
 
 
-def transformcompose_various_file_params(
+def transformcompose_various_file(
     obj: InputPathType,
-) -> TransformcomposeVariousFileParametersTagged:
+) -> TransformcomposeVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -249,7 +249,7 @@ def transformcompose_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcomposeVariousFileParameters` object.
+    `TransformcomposeVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def transformcompose_various_file_validate(
 
 
 def transformcompose_various_file_cargs(
-    params: TransformcomposeVariousFileParameters,
+    params: TransformcomposeVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def transformcompose_various_file_cargs(
 
 class TransformcomposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TransformcomposeParameters(...)`.
+    Output object returned when calling `TransformcomposeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -290,17 +290,17 @@ class TransformcomposeOutputs(typing.NamedTuple):
 
 def transformcompose_params(
     input_: list[InputPathType],
-    output: typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
+    output: typing.Union[TransformcomposeVariousStringParamsDictTagged, TransformcomposeVariousFileParamsDictTagged],
     template: InputPathType | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformcomposeConfigParameters] | None = None,
+    config: list[TransformcomposeConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TransformcomposeParametersTagged:
+) -> TransformcomposeParamsDictTagged:
     """
     Build parameters.
     
@@ -349,7 +349,7 @@ def transformcompose_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TransformcomposeParameters` object.
+    `TransformcomposeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -380,7 +380,7 @@ def transformcompose_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformcomposeConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TransformcomposeConfigParamsDict] | None`')
         for e in params["config"]:
             transformcompose_config_validate(e)
     if params.get("help", False) is None:
@@ -404,11 +404,13 @@ def transformcompose_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
     if "@type" not in params["output"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["output"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `output`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     transformcompose_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
 
 
 def transformcompose_cargs(
-    params: TransformcomposeParameters,
+    params: TransformcomposeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -452,7 +454,7 @@ def transformcompose_cargs(
 
 
 def transformcompose_outputs(
-    params: TransformcomposeParameters,
+    params: TransformcomposeParamsDict,
     execution: Execution,
 ) -> TransformcomposeOutputs:
     """
@@ -471,7 +473,7 @@ def transformcompose_outputs(
 
 
 def transformcompose_execute(
-    params: TransformcomposeParameters,
+    params: TransformcomposeParamsDict,
     runner: Runner | None = None,
 ) -> TransformcomposeOutputs:
     """
@@ -523,14 +525,14 @@ def transformcompose_execute(
 
 def transformcompose(
     input_: list[InputPathType],
-    output: typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
+    output: typing.Union[TransformcomposeVariousStringParamsDictTagged, TransformcomposeVariousFileParamsDictTagged],
     template: InputPathType | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TransformcomposeConfigParameters] | None = None,
+    config: list[TransformcomposeConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -605,11 +607,19 @@ def transformcompose(
 
 __all__ = [
     "TRANSFORMCOMPOSE_METADATA",
+    "TransformcomposeConfigParamsDict",
+    "TransformcomposeConfigParamsDictTagged",
     "TransformcomposeOutputs",
+    "TransformcomposeParamsDict",
+    "TransformcomposeParamsDictTagged",
+    "TransformcomposeVariousFileParamsDict",
+    "TransformcomposeVariousFileParamsDictTagged",
+    "TransformcomposeVariousStringParamsDict",
+    "TransformcomposeVariousStringParamsDictTagged",
     "transformcompose",
-    "transformcompose_config_params",
+    "transformcompose_config",
     "transformcompose_execute",
     "transformcompose_params",
-    "transformcompose_various_file_params",
-    "transformcompose_various_string_params",
+    "transformcompose_various_file",
+    "transformcompose_various_string",
 ]

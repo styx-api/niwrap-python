@@ -13,7 +13,7 @@ SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkullStripParameters', {
+SegmentSubjectOldSkullStripParamsDict = typing.TypedDict('SegmentSubjectOldSkullStripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_old_skull_strip"]],
     "input_volume": InputPathType,
     "output_xfm": str,
@@ -22,7 +22,7 @@ SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkull
     "debug_flag": bool,
     "version_flag": bool,
 })
-SegmentSubjectOldSkullStripParametersTagged = typing.TypedDict('SegmentSubjectOldSkullStripParametersTagged', {
+SegmentSubjectOldSkullStripParamsDictTagged = typing.TypedDict('SegmentSubjectOldSkullStripParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subject_old_skull_strip"],
     "input_volume": InputPathType,
     "output_xfm": str,
@@ -35,7 +35,7 @@ SegmentSubjectOldSkullStripParametersTagged = typing.TypedDict('SegmentSubjectOl
 
 class SegmentSubjectOldSkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubjectOldSkullStripParameters(...)`.
+    Output object returned when calling `SegmentSubjectOldSkullStripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def segment_subject_old_skull_strip_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> SegmentSubjectOldSkullStripParametersTagged:
+) -> SegmentSubjectOldSkullStripParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def segment_subject_old_skull_strip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubjectOldSkullStripParameters` object.
+    `SegmentSubjectOldSkullStripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def segment_subject_old_skull_strip_validate(
 
 
 def segment_subject_old_skull_strip_cargs(
-    params: SegmentSubjectOldSkullStripParameters,
+    params: SegmentSubjectOldSkullStripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def segment_subject_old_skull_strip_cargs(
 
 
 def segment_subject_old_skull_strip_outputs(
-    params: SegmentSubjectOldSkullStripParameters,
+    params: SegmentSubjectOldSkullStripParamsDict,
     execution: Execution,
 ) -> SegmentSubjectOldSkullStripOutputs:
     """
@@ -175,7 +175,7 @@ def segment_subject_old_skull_strip_outputs(
 
 
 def segment_subject_old_skull_strip_execute(
-    params: SegmentSubjectOldSkullStripParameters,
+    params: SegmentSubjectOldSkullStripParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubjectOldSkullStripOutputs:
     """
@@ -248,6 +248,8 @@ def segment_subject_old_skull_strip(
 __all__ = [
     "SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA",
     "SegmentSubjectOldSkullStripOutputs",
+    "SegmentSubjectOldSkullStripParamsDict",
+    "SegmentSubjectOldSkullStripParamsDictTagged",
     "segment_subject_old_skull_strip",
     "segment_subject_old_skull_strip_execute",
     "segment_subject_old_skull_strip_params",

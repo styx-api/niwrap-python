@@ -13,7 +13,7 @@ MRI_SPH2SURF_METADATA = Metadata(
 )
 
 
-MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
+MriSph2surfParamsDict = typing.TypedDict('MriSph2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri-sph2surf"]],
     "instem": str,
     "outstem": str,
@@ -25,7 +25,7 @@ MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
     "verbose": bool,
     "version": bool,
 })
-MriSph2surfParametersTagged = typing.TypedDict('MriSph2surfParametersTagged', {
+MriSph2surfParamsDictTagged = typing.TypedDict('MriSph2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri-sph2surf"],
     "instem": str,
     "outstem": str,
@@ -41,7 +41,7 @@ MriSph2surfParametersTagged = typing.TypedDict('MriSph2surfParametersTagged', {
 
 class MriSph2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSph2surfParameters(...)`.
+    Output object returned when calling `MriSph2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mri_sph2surf_params(
     umask: str | None = None,
     verbose: bool = False,
     version: bool = False,
-) -> MriSph2surfParametersTagged:
+) -> MriSph2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def mri_sph2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSph2surfParameters` object.
+    `MriSph2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def mri_sph2surf_validate(
 
 
 def mri_sph2surf_cargs(
-    params: MriSph2surfParameters,
+    params: MriSph2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def mri_sph2surf_cargs(
 
 
 def mri_sph2surf_outputs(
-    params: MriSph2surfParameters,
+    params: MriSph2surfParamsDict,
     execution: Execution,
 ) -> MriSph2surfOutputs:
     """
@@ -220,7 +220,7 @@ def mri_sph2surf_outputs(
 
 
 def mri_sph2surf_execute(
-    params: MriSph2surfParameters,
+    params: MriSph2surfParamsDict,
     runner: Runner | None = None,
 ) -> MriSph2surfOutputs:
     """
@@ -307,6 +307,8 @@ def mri_sph2surf(
 __all__ = [
     "MRI_SPH2SURF_METADATA",
     "MriSph2surfOutputs",
+    "MriSph2surfParamsDict",
+    "MriSph2surfParamsDictTagged",
     "mri_sph2surf",
     "mri_sph2surf_execute",
     "mri_sph2surf_params",

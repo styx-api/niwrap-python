@@ -13,7 +13,7 @@ MRIS_REMESH_METADATA = Metadata(
 )
 
 
-MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
+MrisRemeshParamsDict = typing.TypedDict('MrisRemeshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remesh"]],
     "input": InputPathType,
     "output": str,
@@ -23,7 +23,7 @@ MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
     "remesh": bool,
     "iterations": typing.NotRequired[float | None],
 })
-MrisRemeshParametersTagged = typing.TypedDict('MrisRemeshParametersTagged', {
+MrisRemeshParamsDictTagged = typing.TypedDict('MrisRemeshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_remesh"],
     "input": InputPathType,
     "output": str,
@@ -37,7 +37,7 @@ MrisRemeshParametersTagged = typing.TypedDict('MrisRemeshParametersTagged', {
 
 class MrisRemeshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRemeshParameters(...)`.
+    Output object returned when calling `MrisRemeshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_remesh_params(
     face_area: float | None = None,
     remesh: bool = False,
     iterations: float | None = None,
-) -> MrisRemeshParametersTagged:
+) -> MrisRemeshParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def mris_remesh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRemeshParameters` object.
+    `MrisRemeshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mris_remesh_validate(
 
 
 def mris_remesh_cargs(
-    params: MrisRemeshParameters,
+    params: MrisRemeshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def mris_remesh_cargs(
 
 
 def mris_remesh_outputs(
-    params: MrisRemeshParameters,
+    params: MrisRemeshParamsDict,
     execution: Execution,
 ) -> MrisRemeshOutputs:
     """
@@ -193,7 +193,7 @@ def mris_remesh_outputs(
 
 
 def mris_remesh_execute(
-    params: MrisRemeshParameters,
+    params: MrisRemeshParamsDict,
     runner: Runner | None = None,
 ) -> MrisRemeshOutputs:
     """
@@ -270,6 +270,8 @@ def mris_remesh(
 __all__ = [
     "MRIS_REMESH_METADATA",
     "MrisRemeshOutputs",
+    "MrisRemeshParamsDict",
+    "MrisRemeshParamsDictTagged",
     "mris_remesh",
     "mris_remesh_execute",
     "mris_remesh_params",

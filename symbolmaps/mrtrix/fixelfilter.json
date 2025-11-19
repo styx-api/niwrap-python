@@ -36,7 +36,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "fixelfilter_config_params",
+      "fn_struct_make_params": "fixelfilter_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -56,7 +56,7 @@
       "var_param": "input_",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "fixelfilter_various_string_params",
+          "fn_struct_make_params": "fixelfilter_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -64,7 +64,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "fixelfilter_various_file_params",
+          "fn_struct_make_params": "fixelfilter_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -80,7 +80,7 @@
       "var_param": "output",
       "variants": {
         "VariousString_1": {
-          "fn_struct_make_params": "fixelfilter_various_string_1_params",
+          "fn_struct_make_params": "fixelfilter_various_string_1",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -88,7 +88,7 @@
           }
         },
         "VariousFile_1": {
-          "fn_struct_make_params": "fixelfilter_various_file_1_params",
+          "fn_struct_make_params": "fixelfilter_various_file_1",
           "properties": {
             "obj": {
               "var_param": "obj"

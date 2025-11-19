@@ -13,11 +13,11 @@ V_1DMATCALC_METADATA = Metadata(
 )
 
 
-V1dmatcalcParameters = typing.TypedDict('V1dmatcalcParameters', {
+V1dmatcalcParamsDict = typing.TypedDict('V1dmatcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dmatcalc"]],
     "expression": typing.NotRequired[str | None],
 })
-V1dmatcalcParametersTagged = typing.TypedDict('V1dmatcalcParametersTagged', {
+V1dmatcalcParamsDictTagged = typing.TypedDict('V1dmatcalcParamsDictTagged', {
     "@type": typing.Literal["afni/1dmatcalc"],
     "expression": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ V1dmatcalcParametersTagged = typing.TypedDict('V1dmatcalcParametersTagged', {
 
 class V1dmatcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dmatcalcParameters(...)`.
+    Output object returned when calling `V1dmatcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class V1dmatcalcOutputs(typing.NamedTuple):
 
 def v_1dmatcalc_params(
     expression: str | None = None,
-) -> V1dmatcalcParametersTagged:
+) -> V1dmatcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v_1dmatcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dmatcalcParameters` object.
+    `V1dmatcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v_1dmatcalc_validate(
 
 
 def v_1dmatcalc_cargs(
-    params: V1dmatcalcParameters,
+    params: V1dmatcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v_1dmatcalc_cargs(
 
 
 def v_1dmatcalc_outputs(
-    params: V1dmatcalcParameters,
+    params: V1dmatcalcParamsDict,
     execution: Execution,
 ) -> V1dmatcalcOutputs:
     """
@@ -110,7 +110,7 @@ def v_1dmatcalc_outputs(
 
 
 def v_1dmatcalc_execute(
-    params: V1dmatcalcParameters,
+    params: V1dmatcalcParamsDict,
     runner: Runner | None = None,
 ) -> V1dmatcalcOutputs:
     """
@@ -167,6 +167,8 @@ def v_1dmatcalc(
 
 __all__ = [
     "V1dmatcalcOutputs",
+    "V1dmatcalcParamsDict",
+    "V1dmatcalcParamsDictTagged",
     "V_1DMATCALC_METADATA",
     "v_1dmatcalc",
     "v_1dmatcalc_execute",

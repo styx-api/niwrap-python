@@ -12,13 +12,13 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-VolumeLabelProbabilityParameters = typing.TypedDict('VolumeLabelProbabilityParameters', {
+VolumeLabelProbabilityParamsDict = typing.TypedDict('VolumeLabelProbabilityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-probability"]],
     "probability-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
-VolumeLabelProbabilityParametersTagged = typing.TypedDict('VolumeLabelProbabilityParametersTagged', {
+VolumeLabelProbabilityParamsDictTagged = typing.TypedDict('VolumeLabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-probability"],
     "probability-out": str,
     "exclude-unlabeled": bool,
@@ -28,7 +28,7 @@ VolumeLabelProbabilityParametersTagged = typing.TypedDict('VolumeLabelProbabilit
 
 class VolumeLabelProbabilityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelProbabilityParameters(...)`.
+    Output object returned when calling `VolumeLabelProbabilityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def volume_label_probability_params(
     probability_out: str,
     label_maps: InputPathType,
     exclude_unlabeled: bool = False,
-) -> VolumeLabelProbabilityParametersTagged:
+) -> VolumeLabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def volume_label_probability_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelProbabilityParameters` object.
+    `VolumeLabelProbabilityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def volume_label_probability_validate(
 
 
 def volume_label_probability_cargs(
-    params: VolumeLabelProbabilityParameters,
+    params: VolumeLabelProbabilityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def volume_label_probability_cargs(
 
 
 def volume_label_probability_outputs(
-    params: VolumeLabelProbabilityParameters,
+    params: VolumeLabelProbabilityParamsDict,
     execution: Execution,
 ) -> VolumeLabelProbabilityOutputs:
     """
@@ -133,7 +133,7 @@ def volume_label_probability_outputs(
 
 
 def volume_label_probability_execute(
-    params: VolumeLabelProbabilityParameters,
+    params: VolumeLabelProbabilityParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
@@ -192,6 +192,8 @@ def volume_label_probability(
 __all__ = [
     "VOLUME_LABEL_PROBABILITY_METADATA",
     "VolumeLabelProbabilityOutputs",
+    "VolumeLabelProbabilityParamsDict",
+    "VolumeLabelProbabilityParamsDictTagged",
     "volume_label_probability",
     "volume_label_probability_execute",
     "volume_label_probability_params",

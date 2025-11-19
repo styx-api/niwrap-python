@@ -13,14 +13,14 @@ V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
 )
 
 
-V3dVecRgbToHslParameters = typing.TypedDict('V3dVecRgbToHslParameters', {
+V3dVecRgbToHslParamsDict = typing.TypedDict('V3dVecRgbToHslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dVecRGB_to_HSL"]],
     "prefix": str,
     "in_vec": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "in_scal": typing.NotRequired[InputPathType | None],
 })
-V3dVecRgbToHslParametersTagged = typing.TypedDict('V3dVecRgbToHslParametersTagged', {
+V3dVecRgbToHslParamsDictTagged = typing.TypedDict('V3dVecRgbToHslParamsDictTagged', {
     "@type": typing.Literal["afni/3dVecRGB_to_HSL"],
     "prefix": str,
     "in_vec": InputPathType,
@@ -31,7 +31,7 @@ V3dVecRgbToHslParametersTagged = typing.TypedDict('V3dVecRgbToHslParametersTagge
 
 class V3dVecRgbToHslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dVecRgbToHslParameters(...)`.
+    Output object returned when calling `V3dVecRgbToHslParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3d_vec_rgb_to_hsl_params(
     in_vec: InputPathType,
     mask: InputPathType | None = None,
     in_scal: InputPathType | None = None,
-) -> V3dVecRgbToHslParametersTagged:
+) -> V3dVecRgbToHslParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def v_3d_vec_rgb_to_hsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dVecRgbToHslParameters` object.
+    `V3dVecRgbToHslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def v_3d_vec_rgb_to_hsl_validate(
 
 
 def v_3d_vec_rgb_to_hsl_cargs(
-    params: V3dVecRgbToHslParameters,
+    params: V3dVecRgbToHslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def v_3d_vec_rgb_to_hsl_cargs(
 
 
 def v_3d_vec_rgb_to_hsl_outputs(
-    params: V3dVecRgbToHslParameters,
+    params: V3dVecRgbToHslParamsDict,
     execution: Execution,
 ) -> V3dVecRgbToHslOutputs:
     """
@@ -157,7 +157,7 @@ def v_3d_vec_rgb_to_hsl_outputs(
 
 
 def v_3d_vec_rgb_to_hsl_execute(
-    params: V3dVecRgbToHslParameters,
+    params: V3dVecRgbToHslParamsDict,
     runner: Runner | None = None,
 ) -> V3dVecRgbToHslOutputs:
     """
@@ -227,6 +227,8 @@ def v_3d_vec_rgb_to_hsl(
 
 __all__ = [
     "V3dVecRgbToHslOutputs",
+    "V3dVecRgbToHslParamsDict",
+    "V3dVecRgbToHslParamsDictTagged",
     "V_3D_VEC_RGB_TO_HSL_METADATA",
     "v_3d_vec_rgb_to_hsl",
     "v_3d_vec_rgb_to_hsl_execute",

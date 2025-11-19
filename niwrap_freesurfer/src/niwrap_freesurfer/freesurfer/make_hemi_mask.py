@@ -13,13 +13,13 @@ MAKE_HEMI_MASK_METADATA = Metadata(
 )
 
 
-MakeHemiMaskParameters = typing.TypedDict('MakeHemiMaskParameters', {
+MakeHemiMaskParamsDict = typing.TypedDict('MakeHemiMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_hemi_mask"]],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
 })
-MakeHemiMaskParametersTagged = typing.TypedDict('MakeHemiMaskParametersTagged', {
+MakeHemiMaskParamsDictTagged = typing.TypedDict('MakeHemiMaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_hemi_mask"],
     "hemi": str,
     "input_file": InputPathType,
@@ -29,7 +29,7 @@ MakeHemiMaskParametersTagged = typing.TypedDict('MakeHemiMaskParametersTagged', 
 
 class MakeHemiMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeHemiMaskParameters(...)`.
+    Output object returned when calling `MakeHemiMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def make_hemi_mask_params(
     hemi: str,
     input_file: InputPathType,
     output_file: str,
-) -> MakeHemiMaskParametersTagged:
+) -> MakeHemiMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def make_hemi_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeHemiMaskParameters` object.
+    `MakeHemiMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def make_hemi_mask_validate(
 
 
 def make_hemi_mask_cargs(
-    params: MakeHemiMaskParameters,
+    params: MakeHemiMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def make_hemi_mask_cargs(
 
 
 def make_hemi_mask_outputs(
-    params: MakeHemiMaskParameters,
+    params: MakeHemiMaskParamsDict,
     execution: Execution,
 ) -> MakeHemiMaskOutputs:
     """
@@ -130,7 +130,7 @@ def make_hemi_mask_outputs(
 
 
 def make_hemi_mask_execute(
-    params: MakeHemiMaskParameters,
+    params: MakeHemiMaskParamsDict,
     runner: Runner | None = None,
 ) -> MakeHemiMaskOutputs:
     """
@@ -195,6 +195,8 @@ def make_hemi_mask(
 __all__ = [
     "MAKE_HEMI_MASK_METADATA",
     "MakeHemiMaskOutputs",
+    "MakeHemiMaskParamsDict",
+    "MakeHemiMaskParamsDictTagged",
     "make_hemi_mask",
     "make_hemi_mask_execute",
     "make_hemi_mask_params",

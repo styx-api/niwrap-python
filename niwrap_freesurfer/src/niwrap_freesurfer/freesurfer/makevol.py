@@ -13,7 +13,7 @@ MAKEVOL_METADATA = Metadata(
 )
 
 
-MakevolParameters = typing.TypedDict('MakevolParameters', {
+MakevolParamsDict = typing.TypedDict('MakevolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/makevol"]],
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
@@ -24,7 +24,7 @@ MakevolParameters = typing.TypedDict('MakevolParameters', {
     "sizez": typing.NotRequired[float | None],
     "set_method": typing.NotRequired[str | None],
 })
-MakevolParametersTagged = typing.TypedDict('MakevolParametersTagged', {
+MakevolParamsDictTagged = typing.TypedDict('MakevolParamsDictTagged', {
     "@type": typing.Literal["freesurfer/makevol"],
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
@@ -39,7 +39,7 @@ MakevolParametersTagged = typing.TypedDict('MakevolParametersTagged', {
 
 class MakevolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakevolParameters(...)`.
+    Output object returned when calling `MakevolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def makevol_params(
     sizey: float | None = None,
     sizez: float | None = None,
     set_method: str | None = None,
-) -> MakevolParametersTagged:
+) -> MakevolParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def makevol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakevolParameters` object.
+    `MakevolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def makevol_validate(
 
 
 def makevol_cargs(
-    params: MakevolParameters,
+    params: MakevolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def makevol_cargs(
 
 
 def makevol_outputs(
-    params: MakevolParameters,
+    params: MakevolParamsDict,
     execution: Execution,
 ) -> MakevolOutputs:
     """
@@ -212,7 +212,7 @@ def makevol_outputs(
 
 
 def makevol_execute(
-    params: MakevolParameters,
+    params: MakevolParamsDict,
     runner: Runner | None = None,
 ) -> MakevolOutputs:
     """
@@ -290,6 +290,8 @@ def makevol(
 __all__ = [
     "MAKEVOL_METADATA",
     "MakevolOutputs",
+    "MakevolParamsDict",
+    "MakevolParamsDictTagged",
     "makevol",
     "makevol_execute",
     "makevol_params",

@@ -13,7 +13,7 @@ APPLYXFM4_D_METADATA = Metadata(
 )
 
 
-Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
+Applyxfm4DParamsDict = typing.TypedDict('Applyxfm4DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/applyxfm4D"]],
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
@@ -24,7 +24,7 @@ Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
     "four_digit_flag": bool,
     "user_prefix": typing.NotRequired[str | None],
 })
-Applyxfm4DParametersTagged = typing.TypedDict('Applyxfm4DParametersTagged', {
+Applyxfm4DParamsDictTagged = typing.TypedDict('Applyxfm4DParamsDictTagged', {
     "@type": typing.Literal["fsl/applyxfm4D"],
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
@@ -39,7 +39,7 @@ Applyxfm4DParametersTagged = typing.TypedDict('Applyxfm4DParametersTagged', {
 
 class Applyxfm4DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Applyxfm4DParameters(...)`.
+    Output object returned when calling `Applyxfm4DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def applyxfm4_d_params(
     single_matrix_flag: bool = False,
     four_digit_flag: bool = False,
     user_prefix: str | None = None,
-) -> Applyxfm4DParametersTagged:
+) -> Applyxfm4DParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def applyxfm4_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Applyxfm4DParameters` object.
+    `Applyxfm4DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def applyxfm4_d_validate(
 
 
 def applyxfm4_d_cargs(
-    params: Applyxfm4DParameters,
+    params: Applyxfm4DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -171,7 +171,7 @@ def applyxfm4_d_cargs(
 
 
 def applyxfm4_d_outputs(
-    params: Applyxfm4DParameters,
+    params: Applyxfm4DParamsDict,
     execution: Execution,
 ) -> Applyxfm4DOutputs:
     """
@@ -191,7 +191,7 @@ def applyxfm4_d_outputs(
 
 
 def applyxfm4_d_execute(
-    params: Applyxfm4DParameters,
+    params: Applyxfm4DParamsDict,
     runner: Runner | None = None,
 ) -> Applyxfm4DOutputs:
     """
@@ -270,6 +270,8 @@ def applyxfm4_d(
 __all__ = [
     "APPLYXFM4_D_METADATA",
     "Applyxfm4DOutputs",
+    "Applyxfm4DParamsDict",
+    "Applyxfm4DParamsDictTagged",
     "applyxfm4_d",
     "applyxfm4_d_execute",
     "applyxfm4_d_params",

@@ -12,62 +12,62 @@ METRIC_PALETTE_METADATA = Metadata(
 )
 
 
-MetricPalettePosPercentParameters = typing.TypedDict('MetricPalettePosPercentParameters', {
+MetricPalettePosPercentParamsDict = typing.TypedDict('MetricPalettePosPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-percent"]],
     "pos-min-%": float,
     "pos-max-%": float,
 })
-MetricPalettePosPercentParametersTagged = typing.TypedDict('MetricPalettePosPercentParametersTagged', {
+MetricPalettePosPercentParamsDictTagged = typing.TypedDict('MetricPalettePosPercentParamsDictTagged', {
     "@type": typing.Literal["pos-percent"],
     "pos-min-%": float,
     "pos-max-%": float,
 })
 
 
-MetricPaletteNegPercentParameters = typing.TypedDict('MetricPaletteNegPercentParameters', {
+MetricPaletteNegPercentParamsDict = typing.TypedDict('MetricPaletteNegPercentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-percent"]],
     "neg-min-%": float,
     "neg-max-%": float,
 })
-MetricPaletteNegPercentParametersTagged = typing.TypedDict('MetricPaletteNegPercentParametersTagged', {
+MetricPaletteNegPercentParamsDictTagged = typing.TypedDict('MetricPaletteNegPercentParamsDictTagged', {
     "@type": typing.Literal["neg-percent"],
     "neg-min-%": float,
     "neg-max-%": float,
 })
 
 
-MetricPalettePosUserParameters = typing.TypedDict('MetricPalettePosUserParameters', {
+MetricPalettePosUserParamsDict = typing.TypedDict('MetricPalettePosUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pos-user"]],
     "pos-min-user": float,
     "pos-max-user": float,
 })
-MetricPalettePosUserParametersTagged = typing.TypedDict('MetricPalettePosUserParametersTagged', {
+MetricPalettePosUserParamsDictTagged = typing.TypedDict('MetricPalettePosUserParamsDictTagged', {
     "@type": typing.Literal["pos-user"],
     "pos-min-user": float,
     "pos-max-user": float,
 })
 
 
-MetricPaletteNegUserParameters = typing.TypedDict('MetricPaletteNegUserParameters', {
+MetricPaletteNegUserParamsDict = typing.TypedDict('MetricPaletteNegUserParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg-user"]],
     "neg-min-user": float,
     "neg-max-user": float,
 })
-MetricPaletteNegUserParametersTagged = typing.TypedDict('MetricPaletteNegUserParametersTagged', {
+MetricPaletteNegUserParamsDictTagged = typing.TypedDict('MetricPaletteNegUserParamsDictTagged', {
     "@type": typing.Literal["neg-user"],
     "neg-min-user": float,
     "neg-max-user": float,
 })
 
 
-MetricPaletteThresholdingParameters = typing.TypedDict('MetricPaletteThresholdingParameters', {
+MetricPaletteThresholdingParamsDict = typing.TypedDict('MetricPaletteThresholdingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["thresholding"]],
     "type": str,
     "test": str,
     "min": float,
     "max": float,
 })
-MetricPaletteThresholdingParametersTagged = typing.TypedDict('MetricPaletteThresholdingParametersTagged', {
+MetricPaletteThresholdingParamsDictTagged = typing.TypedDict('MetricPaletteThresholdingParamsDictTagged', {
     "@type": typing.Literal["thresholding"],
     "type": str,
     "test": str,
@@ -76,37 +76,37 @@ MetricPaletteThresholdingParametersTagged = typing.TypedDict('MetricPaletteThres
 })
 
 
-MetricPaletteParameters = typing.TypedDict('MetricPaletteParameters', {
+MetricPaletteParamsDict = typing.TypedDict('MetricPaletteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-palette"]],
     "column": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[MetricPalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[MetricPaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[MetricPalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[MetricPalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[MetricPaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[MetricPaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "metric": str,
     "mode": str,
 })
-MetricPaletteParametersTagged = typing.TypedDict('MetricPaletteParametersTagged', {
+MetricPaletteParamsDictTagged = typing.TypedDict('MetricPaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-palette"],
     "column": typing.NotRequired[str | None],
-    "pos-percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
-    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
-    "pos-user": typing.NotRequired[MetricPalettePosUserParameters | None],
-    "neg-user": typing.NotRequired[MetricPaletteNegUserParameters | None],
+    "pos-percent": typing.NotRequired[MetricPalettePosPercentParamsDict | None],
+    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParamsDict | None],
+    "pos-user": typing.NotRequired[MetricPalettePosUserParamsDict | None],
+    "neg-user": typing.NotRequired[MetricPaletteNegUserParamsDict | None],
     "interpolate": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "display": typing.NotRequired[bool | None],
     "name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
+    "thresholding": typing.NotRequired[MetricPaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
     "metric": str,
@@ -114,10 +114,10 @@ MetricPaletteParametersTagged = typing.TypedDict('MetricPaletteParametersTagged'
 })
 
 
-def metric_palette_pos_percent_params(
+def metric_palette_pos_percent(
     pos_min__: float,
     pos_max__: float,
-) -> MetricPalettePosPercentParametersTagged:
+) -> MetricPalettePosPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def metric_palette_pos_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPalettePosPercentParameters` object.
+    `MetricPalettePosPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def metric_palette_pos_percent_validate(
 
 
 def metric_palette_pos_percent_cargs(
-    params: MetricPalettePosPercentParameters,
+    params: MetricPalettePosPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,10 +179,10 @@ def metric_palette_pos_percent_cargs(
     return cargs
 
 
-def metric_palette_neg_percent_params(
+def metric_palette_neg_percent(
     neg_min__: float,
     neg_max__: float,
-) -> MetricPaletteNegPercentParametersTagged:
+) -> MetricPaletteNegPercentParamsDictTagged:
     """
     Build parameters.
     
@@ -205,7 +205,7 @@ def metric_palette_neg_percent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPaletteNegPercentParameters` object.
+    `MetricPaletteNegPercentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -223,7 +223,7 @@ def metric_palette_neg_percent_validate(
 
 
 def metric_palette_neg_percent_cargs(
-    params: MetricPaletteNegPercentParameters,
+    params: MetricPaletteNegPercentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,10 +244,10 @@ def metric_palette_neg_percent_cargs(
     return cargs
 
 
-def metric_palette_pos_user_params(
+def metric_palette_pos_user(
     pos_min_user: float,
     pos_max_user: float,
-) -> MetricPalettePosUserParametersTagged:
+) -> MetricPalettePosUserParamsDictTagged:
     """
     Build parameters.
     
@@ -270,7 +270,7 @@ def metric_palette_pos_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPalettePosUserParameters` object.
+    `MetricPalettePosUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -288,7 +288,7 @@ def metric_palette_pos_user_validate(
 
 
 def metric_palette_pos_user_cargs(
-    params: MetricPalettePosUserParameters,
+    params: MetricPalettePosUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -309,10 +309,10 @@ def metric_palette_pos_user_cargs(
     return cargs
 
 
-def metric_palette_neg_user_params(
+def metric_palette_neg_user(
     neg_min_user: float,
     neg_max_user: float,
-) -> MetricPaletteNegUserParametersTagged:
+) -> MetricPaletteNegUserParamsDictTagged:
     """
     Build parameters.
     
@@ -335,7 +335,7 @@ def metric_palette_neg_user_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPaletteNegUserParameters` object.
+    `MetricPaletteNegUserParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -353,7 +353,7 @@ def metric_palette_neg_user_validate(
 
 
 def metric_palette_neg_user_cargs(
-    params: MetricPaletteNegUserParameters,
+    params: MetricPaletteNegUserParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -374,12 +374,12 @@ def metric_palette_neg_user_cargs(
     return cargs
 
 
-def metric_palette_thresholding_params(
+def metric_palette_thresholding(
     type_: str,
     test: str,
     min_: float,
     max_: float,
-) -> MetricPaletteThresholdingParametersTagged:
+) -> MetricPaletteThresholdingParamsDictTagged:
     """
     Build parameters.
     
@@ -406,7 +406,7 @@ def metric_palette_thresholding_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPaletteThresholdingParameters` object.
+    `MetricPaletteThresholdingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -432,7 +432,7 @@ def metric_palette_thresholding_validate(
 
 
 def metric_palette_thresholding_cargs(
-    params: MetricPaletteThresholdingParameters,
+    params: MetricPaletteThresholdingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +457,7 @@ def metric_palette_thresholding_cargs(
 
 class MetricPaletteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricPaletteParameters(...)`.
+    Output object returned when calling `MetricPaletteParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -474,12 +474,12 @@ def metric_palette_params(
     type_2: str | None,
     metric: str,
     mode: str,
-    pos_percent: MetricPalettePosPercentParameters | None = None,
-    neg_percent: MetricPaletteNegPercentParameters | None = None,
-    pos_user: MetricPalettePosUserParameters | None = None,
-    neg_user: MetricPaletteNegUserParameters | None = None,
-    thresholding: MetricPaletteThresholdingParameters | None = None,
-) -> MetricPaletteParametersTagged:
+    pos_percent: MetricPalettePosPercentParamsDict | None = None,
+    neg_percent: MetricPaletteNegPercentParamsDict | None = None,
+    pos_user: MetricPalettePosUserParamsDict | None = None,
+    neg_user: MetricPaletteNegUserParamsDict | None = None,
+    thresholding: MetricPaletteThresholdingParamsDict | None = None,
+) -> MetricPaletteParamsDictTagged:
     """
     Build parameters.
     
@@ -558,7 +558,7 @@ def metric_palette_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricPaletteParameters` object.
+    `MetricPaletteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -610,7 +610,7 @@ def metric_palette_validate(
 
 
 def metric_palette_cargs(
-    params: MetricPaletteParameters,
+    params: MetricPaletteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -655,7 +655,7 @@ def metric_palette_cargs(
 
 
 def metric_palette_outputs(
-    params: MetricPaletteParameters,
+    params: MetricPaletteParamsDict,
     execution: Execution,
 ) -> MetricPaletteOutputs:
     """
@@ -674,7 +674,7 @@ def metric_palette_outputs(
 
 
 def metric_palette_execute(
-    params: MetricPaletteParameters,
+    params: MetricPaletteParamsDict,
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
@@ -788,11 +788,11 @@ def metric_palette(
     type_2: str | None,
     metric: str,
     mode: str,
-    pos_percent: MetricPalettePosPercentParameters | None = None,
-    neg_percent: MetricPaletteNegPercentParameters | None = None,
-    pos_user: MetricPalettePosUserParameters | None = None,
-    neg_user: MetricPaletteNegUserParameters | None = None,
-    thresholding: MetricPaletteThresholdingParameters | None = None,
+    pos_percent: MetricPalettePosPercentParamsDict | None = None,
+    neg_percent: MetricPaletteNegPercentParamsDict | None = None,
+    pos_user: MetricPalettePosUserParamsDict | None = None,
+    neg_user: MetricPaletteNegUserParamsDict | None = None,
+    thresholding: MetricPaletteThresholdingParamsDict | None = None,
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
@@ -938,13 +938,25 @@ def metric_palette(
 
 __all__ = [
     "METRIC_PALETTE_METADATA",
+    "MetricPaletteNegPercentParamsDict",
+    "MetricPaletteNegPercentParamsDictTagged",
+    "MetricPaletteNegUserParamsDict",
+    "MetricPaletteNegUserParamsDictTagged",
     "MetricPaletteOutputs",
+    "MetricPaletteParamsDict",
+    "MetricPaletteParamsDictTagged",
+    "MetricPalettePosPercentParamsDict",
+    "MetricPalettePosPercentParamsDictTagged",
+    "MetricPalettePosUserParamsDict",
+    "MetricPalettePosUserParamsDictTagged",
+    "MetricPaletteThresholdingParamsDict",
+    "MetricPaletteThresholdingParamsDictTagged",
     "metric_palette",
     "metric_palette_execute",
-    "metric_palette_neg_percent_params",
-    "metric_palette_neg_user_params",
+    "metric_palette_neg_percent",
+    "metric_palette_neg_user",
     "metric_palette_params",
-    "metric_palette_pos_percent_params",
-    "metric_palette_pos_user_params",
-    "metric_palette_thresholding_params",
+    "metric_palette_pos_percent",
+    "metric_palette_pos_user",
+    "metric_palette_thresholding",
 ]

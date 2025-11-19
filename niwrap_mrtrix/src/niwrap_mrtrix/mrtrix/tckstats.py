@@ -13,31 +13,31 @@ TCKSTATS_METADATA = Metadata(
 )
 
 
-TckstatsOutputParameters = typing.TypedDict('TckstatsOutputParameters', {
+TckstatsOutputParamsDict = typing.TypedDict('TckstatsOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output"]],
     "field": str,
 })
-TckstatsOutputParametersTagged = typing.TypedDict('TckstatsOutputParametersTagged', {
+TckstatsOutputParamsDictTagged = typing.TypedDict('TckstatsOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "field": str,
 })
 
 
-TckstatsConfigParameters = typing.TypedDict('TckstatsConfigParameters', {
+TckstatsConfigParamsDict = typing.TypedDict('TckstatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckstatsConfigParametersTagged = typing.TypedDict('TckstatsConfigParametersTagged', {
+TckstatsConfigParamsDictTagged = typing.TypedDict('TckstatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckstatsParameters = typing.TypedDict('TckstatsParameters', {
+TckstatsParamsDict = typing.TypedDict('TckstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckstats"]],
-    "output": typing.NotRequired[list[TckstatsOutputParameters] | None],
+    "output": typing.NotRequired[list[TckstatsOutputParamsDict] | None],
     "histogram": typing.NotRequired[str | None],
     "dump": typing.NotRequired[str | None],
     "ignorezero": bool,
@@ -47,14 +47,14 @@ TckstatsParameters = typing.TypedDict('TckstatsParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[TckstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": InputPathType,
 })
-TckstatsParametersTagged = typing.TypedDict('TckstatsParametersTagged', {
+TckstatsParamsDictTagged = typing.TypedDict('TckstatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckstats"],
-    "output": typing.NotRequired[list[TckstatsOutputParameters] | None],
+    "output": typing.NotRequired[list[TckstatsOutputParamsDict] | None],
     "histogram": typing.NotRequired[str | None],
     "dump": typing.NotRequired[str | None],
     "ignorezero": bool,
@@ -64,16 +64,16 @@ TckstatsParametersTagged = typing.TypedDict('TckstatsParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[TckstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": InputPathType,
 })
 
 
-def tckstats_output_params(
+def tckstats_output(
     field: str,
-) -> TckstatsOutputParametersTagged:
+) -> TckstatsOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def tckstats_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckstatsOutputParameters` object.
+    `TckstatsOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def tckstats_output_validate(
 
 
 def tckstats_output_cargs(
-    params: TckstatsOutputParameters,
+    params: TckstatsOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,10 +128,10 @@ def tckstats_output_cargs(
     return cargs
 
 
-def tckstats_config_params(
+def tckstats_config(
     key: str,
     value: str,
-) -> TckstatsConfigParametersTagged:
+) -> TckstatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def tckstats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckstatsConfigParameters` object.
+    `TckstatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -172,7 +172,7 @@ def tckstats_config_validate(
 
 
 def tckstats_config_cargs(
-    params: TckstatsConfigParameters,
+    params: TckstatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -193,7 +193,7 @@ def tckstats_config_cargs(
 
 class TckstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckstatsParameters(...)`.
+    Output object returned when calling `TckstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -205,7 +205,7 @@ class TckstatsOutputs(typing.NamedTuple):
 
 def tckstats_params(
     tracks_in: InputPathType,
-    output: list[TckstatsOutputParameters] | None = None,
+    output: list[TckstatsOutputParamsDict] | None = None,
     histogram: str | None = None,
     dump: str | None = None,
     ignorezero: bool = False,
@@ -215,10 +215,10 @@ def tckstats_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckstatsConfigParameters] | None = None,
+    config: list[TckstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckstatsParametersTagged:
+) -> TckstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -279,7 +279,7 @@ def tckstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckstatsParameters` object.
+    `TckstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -288,7 +288,7 @@ def tckstats_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("output", None) is not None:
         if not isinstance(params["output"], list):
-            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `list[TckstatsOutputParameters] | None`')
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `list[TckstatsOutputParamsDict] | None`')
         for e in params["output"]:
             tckstats_output_validate(e)
     if params.get("histogram", None) is not None:
@@ -325,7 +325,7 @@ def tckstats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckstatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckstatsConfigParamsDict] | None`')
         for e in params["config"]:
             tckstats_config_validate(e)
     if params.get("help", False) is None:
@@ -343,7 +343,7 @@ def tckstats_validate(
 
 
 def tckstats_cargs(
-    params: TckstatsParameters,
+    params: TckstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -400,7 +400,7 @@ def tckstats_cargs(
 
 
 def tckstats_outputs(
-    params: TckstatsParameters,
+    params: TckstatsParamsDict,
     execution: Execution,
 ) -> TckstatsOutputs:
     """
@@ -421,7 +421,7 @@ def tckstats_outputs(
 
 
 def tckstats_execute(
-    params: TckstatsParameters,
+    params: TckstatsParamsDict,
     runner: Runner | None = None,
 ) -> TckstatsOutputs:
     """
@@ -457,7 +457,7 @@ def tckstats_execute(
 
 def tckstats(
     tracks_in: InputPathType,
-    output: list[TckstatsOutputParameters] | None = None,
+    output: list[TckstatsOutputParamsDict] | None = None,
     histogram: str | None = None,
     dump: str | None = None,
     ignorezero: bool = False,
@@ -467,7 +467,7 @@ def tckstats(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckstatsConfigParameters] | None = None,
+    config: list[TckstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -535,10 +535,16 @@ def tckstats(
 
 __all__ = [
     "TCKSTATS_METADATA",
+    "TckstatsConfigParamsDict",
+    "TckstatsConfigParamsDictTagged",
+    "TckstatsOutputParamsDict",
+    "TckstatsOutputParamsDictTagged",
     "TckstatsOutputs",
+    "TckstatsParamsDict",
+    "TckstatsParamsDictTagged",
     "tckstats",
-    "tckstats_config_params",
+    "tckstats_config",
     "tckstats_execute",
-    "tckstats_output_params",
+    "tckstats_output",
     "tckstats_params",
 ]

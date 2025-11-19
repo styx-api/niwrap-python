@@ -12,67 +12,67 @@ SCENE_CAPTURE_IMAGE_METADATA = Metadata(
 )
 
 
-SceneCaptureImageSizeWidthHeightParameters = typing.TypedDict('SceneCaptureImageSizeWidthHeightParameters', {
+SceneCaptureImageSizeWidthHeightParamsDict = typing.TypedDict('SceneCaptureImageSizeWidthHeightParamsDict', {
     "@type": typing.NotRequired[typing.Literal["size-width-height"]],
     "width": float,
     "height": float,
 })
-SceneCaptureImageSizeWidthHeightParametersTagged = typing.TypedDict('SceneCaptureImageSizeWidthHeightParametersTagged', {
+SceneCaptureImageSizeWidthHeightParamsDictTagged = typing.TypedDict('SceneCaptureImageSizeWidthHeightParamsDictTagged', {
     "@type": typing.Literal["size-width-height"],
     "width": float,
     "height": float,
 })
 
 
-SceneCaptureImageResolutionParameters = typing.TypedDict('SceneCaptureImageResolutionParameters', {
+SceneCaptureImageResolutionParamsDict = typing.TypedDict('SceneCaptureImageResolutionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["resolution"]],
     "Number of pixels": float,
     "Units Name": str,
 })
-SceneCaptureImageResolutionParametersTagged = typing.TypedDict('SceneCaptureImageResolutionParametersTagged', {
+SceneCaptureImageResolutionParamsDictTagged = typing.TypedDict('SceneCaptureImageResolutionParamsDictTagged', {
     "@type": typing.Literal["resolution"],
     "Number of pixels": float,
     "Units Name": str,
 })
 
 
-SceneCaptureImageSetMapYokeParameters = typing.TypedDict('SceneCaptureImageSetMapYokeParameters', {
+SceneCaptureImageSetMapYokeParamsDict = typing.TypedDict('SceneCaptureImageSetMapYokeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["set-map-yoke"]],
     "map yoking roman numeral": str,
     "map undex": int,
 })
-SceneCaptureImageSetMapYokeParametersTagged = typing.TypedDict('SceneCaptureImageSetMapYokeParametersTagged', {
+SceneCaptureImageSetMapYokeParamsDictTagged = typing.TypedDict('SceneCaptureImageSetMapYokeParamsDictTagged', {
     "@type": typing.Literal["set-map-yoke"],
     "map yoking roman numeral": str,
     "map undex": int,
 })
 
 
-SceneCaptureImageConnDbLoginParameters = typing.TypedDict('SceneCaptureImageConnDbLoginParameters', {
+SceneCaptureImageConnDbLoginParamsDict = typing.TypedDict('SceneCaptureImageConnDbLoginParamsDict', {
     "@type": typing.NotRequired[typing.Literal["conn-db-login"]],
     "username": str,
     "password": str,
 })
-SceneCaptureImageConnDbLoginParametersTagged = typing.TypedDict('SceneCaptureImageConnDbLoginParametersTagged', {
+SceneCaptureImageConnDbLoginParamsDictTagged = typing.TypedDict('SceneCaptureImageConnDbLoginParamsDictTagged', {
     "@type": typing.Literal["conn-db-login"],
     "username": str,
     "password": str,
 })
 
 
-SceneCaptureImageParameters = typing.TypedDict('SceneCaptureImageParameters', {
+SceneCaptureImageParamsDict = typing.TypedDict('SceneCaptureImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-capture-image"]],
     "size-window": bool,
     "size-capture": bool,
-    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
+    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParamsDict | None],
     "width": typing.NotRequired[float | None],
     "height": typing.NotRequired[float | None],
     "units": typing.NotRequired[str | None],
-    "resolution": typing.NotRequired[SceneCaptureImageResolutionParameters | None],
+    "resolution": typing.NotRequired[SceneCaptureImageResolutionParamsDict | None],
     "size": typing.NotRequired[int | None],
     "no-scene-colors": bool,
-    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
-    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
+    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParamsDict | None],
+    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParamsDict | None],
     "show-capture-settings": bool,
     "Renderer": typing.NotRequired[str | None],
     "print-image-info": bool,
@@ -80,19 +80,19 @@ SceneCaptureImageParameters = typing.TypedDict('SceneCaptureImageParameters', {
     "scene-name-or-number": str,
     "image-file-name": str,
 })
-SceneCaptureImageParametersTagged = typing.TypedDict('SceneCaptureImageParametersTagged', {
+SceneCaptureImageParamsDictTagged = typing.TypedDict('SceneCaptureImageParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-capture-image"],
     "size-window": bool,
     "size-capture": bool,
-    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
+    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParamsDict | None],
     "width": typing.NotRequired[float | None],
     "height": typing.NotRequired[float | None],
     "units": typing.NotRequired[str | None],
-    "resolution": typing.NotRequired[SceneCaptureImageResolutionParameters | None],
+    "resolution": typing.NotRequired[SceneCaptureImageResolutionParamsDict | None],
     "size": typing.NotRequired[int | None],
     "no-scene-colors": bool,
-    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
-    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
+    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParamsDict | None],
+    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParamsDict | None],
     "show-capture-settings": bool,
     "Renderer": typing.NotRequired[str | None],
     "print-image-info": bool,
@@ -102,10 +102,10 @@ SceneCaptureImageParametersTagged = typing.TypedDict('SceneCaptureImageParameter
 })
 
 
-def scene_capture_image_size_width_height_params(
+def scene_capture_image_size_width_height(
     width: float,
     height: float,
-) -> SceneCaptureImageSizeWidthHeightParametersTagged:
+) -> SceneCaptureImageSizeWidthHeightParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def scene_capture_image_size_width_height_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneCaptureImageSizeWidthHeightParameters` object.
+    `SceneCaptureImageSizeWidthHeightParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def scene_capture_image_size_width_height_validate(
 
 
 def scene_capture_image_size_width_height_cargs(
-    params: SceneCaptureImageSizeWidthHeightParameters,
+    params: SceneCaptureImageSizeWidthHeightParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,10 +167,10 @@ def scene_capture_image_size_width_height_cargs(
     return cargs
 
 
-def scene_capture_image_resolution_params(
+def scene_capture_image_resolution(
     number_of_pixels: float,
     units_name: str,
-) -> SceneCaptureImageResolutionParametersTagged:
+) -> SceneCaptureImageResolutionParamsDictTagged:
     """
     Build parameters.
     
@@ -197,7 +197,7 @@ def scene_capture_image_resolution_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneCaptureImageResolutionParameters` object.
+    `SceneCaptureImageResolutionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def scene_capture_image_resolution_validate(
 
 
 def scene_capture_image_resolution_cargs(
-    params: SceneCaptureImageResolutionParameters,
+    params: SceneCaptureImageResolutionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -236,10 +236,10 @@ def scene_capture_image_resolution_cargs(
     return cargs
 
 
-def scene_capture_image_set_map_yoke_params(
+def scene_capture_image_set_map_yoke(
     map_yoking_roman_numeral: str,
     map_undex: int,
-) -> SceneCaptureImageSetMapYokeParametersTagged:
+) -> SceneCaptureImageSetMapYokeParamsDictTagged:
     """
     Build parameters.
     
@@ -263,7 +263,7 @@ def scene_capture_image_set_map_yoke_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneCaptureImageSetMapYokeParameters` object.
+    `SceneCaptureImageSetMapYokeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -281,7 +281,7 @@ def scene_capture_image_set_map_yoke_validate(
 
 
 def scene_capture_image_set_map_yoke_cargs(
-    params: SceneCaptureImageSetMapYokeParameters,
+    params: SceneCaptureImageSetMapYokeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -302,10 +302,10 @@ def scene_capture_image_set_map_yoke_cargs(
     return cargs
 
 
-def scene_capture_image_conn_db_login_params(
+def scene_capture_image_conn_db_login(
     username: str,
     password: str,
-) -> SceneCaptureImageConnDbLoginParametersTagged:
+) -> SceneCaptureImageConnDbLoginParamsDictTagged:
     """
     Build parameters.
     
@@ -328,7 +328,7 @@ def scene_capture_image_conn_db_login_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneCaptureImageConnDbLoginParameters` object.
+    `SceneCaptureImageConnDbLoginParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -346,7 +346,7 @@ def scene_capture_image_conn_db_login_validate(
 
 
 def scene_capture_image_conn_db_login_cargs(
-    params: SceneCaptureImageConnDbLoginParameters,
+    params: SceneCaptureImageConnDbLoginParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -369,7 +369,7 @@ def scene_capture_image_conn_db_login_cargs(
 
 class SceneCaptureImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SceneCaptureImageParameters(...)`.
+    Output object returned when calling `SceneCaptureImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -386,14 +386,14 @@ def scene_capture_image_params(
     image_file_name: str,
     size_window: bool = False,
     size_capture: bool = False,
-    size_width_height: SceneCaptureImageSizeWidthHeightParameters | None = None,
-    resolution: SceneCaptureImageResolutionParameters | None = None,
+    size_width_height: SceneCaptureImageSizeWidthHeightParamsDict | None = None,
+    resolution: SceneCaptureImageResolutionParamsDict | None = None,
     no_scene_colors: bool = False,
-    set_map_yoke: SceneCaptureImageSetMapYokeParameters | None = None,
-    conn_db_login: SceneCaptureImageConnDbLoginParameters | None = None,
+    set_map_yoke: SceneCaptureImageSetMapYokeParamsDict | None = None,
+    conn_db_login: SceneCaptureImageConnDbLoginParamsDict | None = None,
     show_capture_settings: bool = False,
     print_image_info: bool = False,
-) -> SceneCaptureImageParametersTagged:
+) -> SceneCaptureImageParamsDictTagged:
     """
     Build parameters.
     
@@ -491,7 +491,7 @@ def scene_capture_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneCaptureImageParameters` object.
+    `SceneCaptureImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -556,7 +556,7 @@ def scene_capture_image_validate(
 
 
 def scene_capture_image_cargs(
-    params: SceneCaptureImageParameters,
+    params: SceneCaptureImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -600,7 +600,7 @@ def scene_capture_image_cargs(
 
 
 def scene_capture_image_outputs(
-    params: SceneCaptureImageParameters,
+    params: SceneCaptureImageParamsDict,
     execution: Execution,
 ) -> SceneCaptureImageOutputs:
     """
@@ -619,7 +619,7 @@ def scene_capture_image_outputs(
 
 
 def scene_capture_image_execute(
-    params: SceneCaptureImageParameters,
+    params: SceneCaptureImageParamsDict,
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
@@ -695,11 +695,11 @@ def scene_capture_image(
     image_file_name: str,
     size_window: bool = False,
     size_capture: bool = False,
-    size_width_height: SceneCaptureImageSizeWidthHeightParameters | None = None,
-    resolution: SceneCaptureImageResolutionParameters | None = None,
+    size_width_height: SceneCaptureImageSizeWidthHeightParamsDict | None = None,
+    resolution: SceneCaptureImageResolutionParamsDict | None = None,
     no_scene_colors: bool = False,
-    set_map_yoke: SceneCaptureImageSetMapYokeParameters | None = None,
-    conn_db_login: SceneCaptureImageConnDbLoginParameters | None = None,
+    set_map_yoke: SceneCaptureImageSetMapYokeParamsDict | None = None,
+    conn_db_login: SceneCaptureImageConnDbLoginParamsDict | None = None,
     show_capture_settings: bool = False,
     print_image_info: bool = False,
     runner: Runner | None = None,
@@ -832,12 +832,22 @@ def scene_capture_image(
 
 __all__ = [
     "SCENE_CAPTURE_IMAGE_METADATA",
+    "SceneCaptureImageConnDbLoginParamsDict",
+    "SceneCaptureImageConnDbLoginParamsDictTagged",
     "SceneCaptureImageOutputs",
+    "SceneCaptureImageParamsDict",
+    "SceneCaptureImageParamsDictTagged",
+    "SceneCaptureImageResolutionParamsDict",
+    "SceneCaptureImageResolutionParamsDictTagged",
+    "SceneCaptureImageSetMapYokeParamsDict",
+    "SceneCaptureImageSetMapYokeParamsDictTagged",
+    "SceneCaptureImageSizeWidthHeightParamsDict",
+    "SceneCaptureImageSizeWidthHeightParamsDictTagged",
     "scene_capture_image",
-    "scene_capture_image_conn_db_login_params",
+    "scene_capture_image_conn_db_login",
     "scene_capture_image_execute",
     "scene_capture_image_params",
-    "scene_capture_image_resolution_params",
-    "scene_capture_image_set_map_yoke_params",
-    "scene_capture_image_size_width_height_params",
+    "scene_capture_image_resolution",
+    "scene_capture_image_set_map_yoke",
+    "scene_capture_image_size_width_height",
 ]

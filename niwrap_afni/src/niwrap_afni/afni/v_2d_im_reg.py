@@ -13,7 +13,7 @@ V_2D_IM_REG_METADATA = Metadata(
 )
 
 
-V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
+V2dImRegParamsDict = typing.TypedDict('V2dImRegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/2dImReg"]],
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
     "rprefix": typing.NotRequired[str | None],
     "debug": bool,
 })
-V2dImRegParametersTagged = typing.TypedDict('V2dImRegParametersTagged', {
+V2dImRegParamsDictTagged = typing.TypedDict('V2dImRegParamsDictTagged', {
     "@type": typing.Literal["afni/2dImReg"],
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ V2dImRegParametersTagged = typing.TypedDict('V2dImRegParametersTagged', {
 
 class V2dImRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2dImRegParameters(...)`.
+    Output object returned when calling `V2dImRegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v_2d_im_reg_params(
     dmm: bool = False,
     rprefix: str | None = None,
     debug: bool = False,
-) -> V2dImRegParametersTagged:
+) -> V2dImRegParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def v_2d_im_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2dImRegParameters` object.
+    `V2dImRegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def v_2d_im_reg_validate(
 
 
 def v_2d_im_reg_cargs(
-    params: V2dImRegParameters,
+    params: V2dImRegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,7 +226,7 @@ def v_2d_im_reg_cargs(
 
 
 def v_2d_im_reg_outputs(
-    params: V2dImRegParameters,
+    params: V2dImRegParamsDict,
     execution: Execution,
 ) -> V2dImRegOutputs:
     """
@@ -251,7 +251,7 @@ def v_2d_im_reg_outputs(
 
 
 def v_2d_im_reg_execute(
-    params: V2dImRegParameters,
+    params: V2dImRegParamsDict,
     runner: Runner | None = None,
 ) -> V2dImRegOutputs:
     """
@@ -348,6 +348,8 @@ def v_2d_im_reg(
 
 __all__ = [
     "V2dImRegOutputs",
+    "V2dImRegParamsDict",
+    "V2dImRegParamsDictTagged",
     "V_2D_IM_REG_METADATA",
     "v_2d_im_reg",
     "v_2d_im_reg_execute",

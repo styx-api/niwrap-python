@@ -13,11 +13,11 @@ REINFLATE_SUBJECT_METADATA = Metadata(
 )
 
 
-ReinflateSubjectParameters = typing.TypedDict('ReinflateSubjectParameters', {
+ReinflateSubjectParamsDict = typing.TypedDict('ReinflateSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject"]],
     "args": typing.NotRequired[str | None],
 })
-ReinflateSubjectParametersTagged = typing.TypedDict('ReinflateSubjectParametersTagged', {
+ReinflateSubjectParamsDictTagged = typing.TypedDict('ReinflateSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reinflate_subject"],
     "args": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ ReinflateSubjectParametersTagged = typing.TypedDict('ReinflateSubjectParametersT
 
 class ReinflateSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReinflateSubjectParameters(...)`.
+    Output object returned when calling `ReinflateSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class ReinflateSubjectOutputs(typing.NamedTuple):
 
 def reinflate_subject_params(
     args: str | None = None,
-) -> ReinflateSubjectParametersTagged:
+) -> ReinflateSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def reinflate_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReinflateSubjectParameters` object.
+    `ReinflateSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def reinflate_subject_validate(
 
 
 def reinflate_subject_cargs(
-    params: ReinflateSubjectParameters,
+    params: ReinflateSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def reinflate_subject_cargs(
 
 
 def reinflate_subject_outputs(
-    params: ReinflateSubjectParameters,
+    params: ReinflateSubjectParamsDict,
     execution: Execution,
 ) -> ReinflateSubjectOutputs:
     """
@@ -107,7 +107,7 @@ def reinflate_subject_outputs(
 
 
 def reinflate_subject_execute(
-    params: ReinflateSubjectParameters,
+    params: ReinflateSubjectParamsDict,
     runner: Runner | None = None,
 ) -> ReinflateSubjectOutputs:
     """
@@ -163,6 +163,8 @@ def reinflate_subject(
 __all__ = [
     "REINFLATE_SUBJECT_METADATA",
     "ReinflateSubjectOutputs",
+    "ReinflateSubjectParamsDict",
+    "ReinflateSubjectParamsDictTagged",
     "reinflate_subject",
     "reinflate_subject_execute",
     "reinflate_subject_params",

@@ -13,7 +13,7 @@ REGISTER_SUBJECT_METADATA = Metadata(
 )
 
 
-RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
+RegisterSubjectParamsDict = typing.TypedDict('RegisterSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject"]],
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
     "log_file": typing.NotRequired[InputPathType | None],
     "gca_file": typing.NotRequired[InputPathType | None],
 })
-RegisterSubjectParametersTagged = typing.TypedDict('RegisterSubjectParametersTagged', {
+RegisterSubjectParamsDictTagged = typing.TypedDict('RegisterSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register_subject"],
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ RegisterSubjectParametersTagged = typing.TypedDict('RegisterSubjectParametersTag
 
 class RegisterSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegisterSubjectParameters(...)`.
+    Output object returned when calling `RegisterSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def register_subject_params(
     output_directory: str | None = None,
     log_file: InputPathType | None = None,
     gca_file: InputPathType | None = None,
-) -> RegisterSubjectParametersTagged:
+) -> RegisterSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def register_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegisterSubjectParameters` object.
+    `RegisterSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def register_subject_validate(
 
 
 def register_subject_cargs(
-    params: RegisterSubjectParameters,
+    params: RegisterSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def register_subject_cargs(
 
 
 def register_subject_outputs(
-    params: RegisterSubjectParameters,
+    params: RegisterSubjectParamsDict,
     execution: Execution,
 ) -> RegisterSubjectOutputs:
     """
@@ -169,7 +169,7 @@ def register_subject_outputs(
 
 
 def register_subject_execute(
-    params: RegisterSubjectParameters,
+    params: RegisterSubjectParamsDict,
     runner: Runner | None = None,
 ) -> RegisterSubjectOutputs:
     """
@@ -241,6 +241,8 @@ def register_subject(
 __all__ = [
     "REGISTER_SUBJECT_METADATA",
     "RegisterSubjectOutputs",
+    "RegisterSubjectParamsDict",
+    "RegisterSubjectParamsDictTagged",
     "register_subject",
     "register_subject_execute",
     "register_subject_params",

@@ -13,7 +13,7 @@ V__FS_ROI_LABEL_METADATA = Metadata(
 )
 
 
-VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
+VFsRoiLabelParamsDict = typing.TypedDict('VFsRoiLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@FS_roi_label"]],
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
@@ -25,7 +25,7 @@ VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
     "slab_int": typing.NotRequired[float | None],
     "sname_name": typing.NotRequired[str | None],
 })
-VFsRoiLabelParametersTagged = typing.TypedDict('VFsRoiLabelParametersTagged', {
+VFsRoiLabelParamsDictTagged = typing.TypedDict('VFsRoiLabelParamsDictTagged', {
     "@type": typing.Literal["afni/@FS_roi_label"],
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ VFsRoiLabelParametersTagged = typing.TypedDict('VFsRoiLabelParametersTagged', {
 
 class VFsRoiLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFsRoiLabelParameters(...)`.
+    Output object returned when calling `VFsRoiLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def v__fs_roi_label_params(
     surf_annot_cmap: InputPathType | None = None,
     slab_int: float | None = None,
     sname_name: str | None = None,
-) -> VFsRoiLabelParametersTagged:
+) -> VFsRoiLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def v__fs_roi_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFsRoiLabelParameters` object.
+    `VFsRoiLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def v__fs_roi_label_validate(
 
 
 def v__fs_roi_label_cargs(
-    params: VFsRoiLabelParameters,
+    params: VFsRoiLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def v__fs_roi_label_cargs(
 
 
 def v__fs_roi_label_outputs(
-    params: VFsRoiLabelParameters,
+    params: VFsRoiLabelParamsDict,
     execution: Execution,
 ) -> VFsRoiLabelOutputs:
     """
@@ -224,7 +224,7 @@ def v__fs_roi_label_outputs(
 
 
 def v__fs_roi_label_execute(
-    params: VFsRoiLabelParameters,
+    params: VFsRoiLabelParamsDict,
     runner: Runner | None = None,
 ) -> VFsRoiLabelOutputs:
     """
@@ -310,6 +310,8 @@ def v__fs_roi_label(
 
 __all__ = [
     "VFsRoiLabelOutputs",
+    "VFsRoiLabelParamsDict",
+    "VFsRoiLabelParamsDictTagged",
     "V__FS_ROI_LABEL_METADATA",
     "v__fs_roi_label",
     "v__fs_roi_label_execute",

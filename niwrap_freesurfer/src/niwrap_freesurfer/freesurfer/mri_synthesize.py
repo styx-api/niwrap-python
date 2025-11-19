@@ -13,7 +13,7 @@ MRI_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
+MriSynthesizeParamsDict = typing.TypedDict('MriSynthesizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthesize"]],
     "tr": float,
     "alpha": float,
@@ -23,7 +23,7 @@ MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
     "output_volume": str,
     "fixed_weight": bool,
 })
-MriSynthesizeParametersTagged = typing.TypedDict('MriSynthesizeParametersTagged', {
+MriSynthesizeParamsDictTagged = typing.TypedDict('MriSynthesizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_synthesize"],
     "tr": float,
     "alpha": float,
@@ -37,7 +37,7 @@ MriSynthesizeParametersTagged = typing.TypedDict('MriSynthesizeParametersTagged'
 
 class MriSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSynthesizeParameters(...)`.
+    Output object returned when calling `MriSynthesizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_synthesize_params(
     pd_volume: InputPathType,
     output_volume: str,
     fixed_weight: bool = False,
-) -> MriSynthesizeParametersTagged:
+) -> MriSynthesizeParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mri_synthesize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSynthesizeParameters` object.
+    `MriSynthesizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mri_synthesize_validate(
 
 
 def mri_synthesize_cargs(
-    params: MriSynthesizeParameters,
+    params: MriSynthesizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def mri_synthesize_cargs(
 
 
 def mri_synthesize_outputs(
-    params: MriSynthesizeParameters,
+    params: MriSynthesizeParamsDict,
     execution: Execution,
 ) -> MriSynthesizeOutputs:
     """
@@ -171,7 +171,7 @@ def mri_synthesize_outputs(
 
 
 def mri_synthesize_execute(
-    params: MriSynthesizeParameters,
+    params: MriSynthesizeParamsDict,
     runner: Runner | None = None,
 ) -> MriSynthesizeOutputs:
     """
@@ -248,6 +248,8 @@ def mri_synthesize(
 __all__ = [
     "MRI_SYNTHESIZE_METADATA",
     "MriSynthesizeOutputs",
+    "MriSynthesizeParamsDict",
+    "MriSynthesizeParamsDictTagged",
     "mri_synthesize",
     "mri_synthesize_execute",
     "mri_synthesize_params",

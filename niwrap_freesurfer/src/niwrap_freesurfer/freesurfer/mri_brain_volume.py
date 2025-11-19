@@ -13,14 +13,14 @@ MRI_BRAIN_VOLUME_METADATA = Metadata(
 )
 
 
-MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
+MriBrainVolumeParamsDict = typing.TypedDict('MriBrainVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brain_volume"]],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "force_param": typing.NotRequired[float | None],
     "version": bool,
 })
-MriBrainVolumeParametersTagged = typing.TypedDict('MriBrainVolumeParametersTagged', {
+MriBrainVolumeParamsDictTagged = typing.TypedDict('MriBrainVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_brain_volume"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ MriBrainVolumeParametersTagged = typing.TypedDict('MriBrainVolumeParametersTagge
 
 class MriBrainVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriBrainVolumeParameters(...)`.
+    Output object returned when calling `MriBrainVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_brain_volume_params(
     output_file: str | None = None,
     force_param: float | None = None,
     version: bool = False,
-) -> MriBrainVolumeParametersTagged:
+) -> MriBrainVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def mri_brain_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriBrainVolumeParameters` object.
+    `MriBrainVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mri_brain_volume_validate(
 
 
 def mri_brain_volume_cargs(
-    params: MriBrainVolumeParameters,
+    params: MriBrainVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def mri_brain_volume_cargs(
 
 
 def mri_brain_volume_outputs(
-    params: MriBrainVolumeParameters,
+    params: MriBrainVolumeParamsDict,
     execution: Execution,
 ) -> MriBrainVolumeOutputs:
     """
@@ -145,7 +145,7 @@ def mri_brain_volume_outputs(
 
 
 def mri_brain_volume_execute(
-    params: MriBrainVolumeParameters,
+    params: MriBrainVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MriBrainVolumeOutputs:
     """
@@ -210,6 +210,8 @@ def mri_brain_volume(
 __all__ = [
     "MRI_BRAIN_VOLUME_METADATA",
     "MriBrainVolumeOutputs",
+    "MriBrainVolumeParamsDict",
+    "MriBrainVolumeParamsDictTagged",
     "mri_brain_volume",
     "mri_brain_volume_execute",
     "mri_brain_volume_params",

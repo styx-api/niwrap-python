@@ -13,7 +13,7 @@ V__ROI_MODAL_GROW_METADATA = Metadata(
 )
 
 
-VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
+VRoiModalGrowParamsDict = typing.TypedDict('VRoiModalGrowParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ROI_modal_grow"]],
     "input_dset": InputPathType,
     "niters": float,
@@ -22,7 +22,7 @@ VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
     "prefix": typing.NotRequired[str | None],
     "neighborhood_type": typing.NotRequired[int | None],
 })
-VRoiModalGrowParametersTagged = typing.TypedDict('VRoiModalGrowParametersTagged', {
+VRoiModalGrowParamsDictTagged = typing.TypedDict('VRoiModalGrowParamsDictTagged', {
     "@type": typing.Literal["afni/@ROI_modal_grow"],
     "input_dset": InputPathType,
     "niters": float,
@@ -35,7 +35,7 @@ VRoiModalGrowParametersTagged = typing.TypedDict('VRoiModalGrowParametersTagged'
 
 class VRoiModalGrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRoiModalGrowParameters(...)`.
+    Output object returned when calling `VRoiModalGrowParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__roi_modal_grow_params(
     mask: InputPathType | None = None,
     prefix: str | None = None,
     neighborhood_type: int | None = None,
-) -> VRoiModalGrowParametersTagged:
+) -> VRoiModalGrowParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def v__roi_modal_grow_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRoiModalGrowParameters` object.
+    `VRoiModalGrowParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def v__roi_modal_grow_validate(
 
 
 def v__roi_modal_grow_cargs(
-    params: VRoiModalGrowParameters,
+    params: VRoiModalGrowParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def v__roi_modal_grow_cargs(
 
 
 def v__roi_modal_grow_outputs(
-    params: VRoiModalGrowParameters,
+    params: VRoiModalGrowParamsDict,
     execution: Execution,
 ) -> VRoiModalGrowOutputs:
     """
@@ -190,7 +190,7 @@ def v__roi_modal_grow_outputs(
 
 
 def v__roi_modal_grow_execute(
-    params: VRoiModalGrowParameters,
+    params: VRoiModalGrowParamsDict,
     runner: Runner | None = None,
 ) -> VRoiModalGrowOutputs:
     """
@@ -269,6 +269,8 @@ def v__roi_modal_grow(
 
 __all__ = [
     "VRoiModalGrowOutputs",
+    "VRoiModalGrowParamsDict",
+    "VRoiModalGrowParamsDictTagged",
     "V__ROI_MODAL_GROW_METADATA",
     "v__roi_modal_grow",
     "v__roi_modal_grow_execute",

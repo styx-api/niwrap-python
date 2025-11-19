@@ -13,7 +13,7 @@ FEAT2SEGSTATS_METADATA = Metadata(
 )
 
 
-Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
+Feat2segstatsParamsDict = typing.TypedDict('Feat2segstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/feat2segstats"]],
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
     "debug_flag": bool,
     "nolog_flag": bool,
 })
-Feat2segstatsParametersTagged = typing.TypedDict('Feat2segstatsParametersTagged', {
+Feat2segstatsParamsDictTagged = typing.TypedDict('Feat2segstatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/feat2segstats"],
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -63,7 +63,7 @@ Feat2segstatsParametersTagged = typing.TypedDict('Feat2segstatsParametersTagged'
 
 class Feat2segstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Feat2segstatsParameters(...)`.
+    Output object returned when calling `Feat2segstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def feat2segstats_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     nolog_flag: bool = False,
-) -> Feat2segstatsParametersTagged:
+) -> Feat2segstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def feat2segstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Feat2segstatsParameters` object.
+    `Feat2segstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -242,7 +242,7 @@ def feat2segstats_validate(
 
 
 def feat2segstats_cargs(
-    params: Feat2segstatsParameters,
+    params: Feat2segstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -325,7 +325,7 @@ def feat2segstats_cargs(
 
 
 def feat2segstats_outputs(
-    params: Feat2segstatsParameters,
+    params: Feat2segstatsParamsDict,
     execution: Execution,
 ) -> Feat2segstatsOutputs:
     """
@@ -345,7 +345,7 @@ def feat2segstats_outputs(
 
 
 def feat2segstats_execute(
-    params: Feat2segstatsParameters,
+    params: Feat2segstatsParamsDict,
     runner: Runner | None = None,
 ) -> Feat2segstatsOutputs:
     """
@@ -461,6 +461,8 @@ def feat2segstats(
 __all__ = [
     "FEAT2SEGSTATS_METADATA",
     "Feat2segstatsOutputs",
+    "Feat2segstatsParamsDict",
+    "Feat2segstatsParamsDictTagged",
     "feat2segstats",
     "feat2segstats_execute",
     "feat2segstats_params",

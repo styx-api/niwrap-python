@@ -13,13 +13,13 @@ V_1D_FLAG_MOTION_METADATA = Metadata(
 )
 
 
-V1dFlagMotionParameters = typing.TypedDict('V1dFlagMotionParameters', {
+V1dFlagMotionParamsDict = typing.TypedDict('V1dFlagMotionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dFlagMotion"]],
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
 })
-V1dFlagMotionParametersTagged = typing.TypedDict('V1dFlagMotionParametersTagged', {
+V1dFlagMotionParamsDictTagged = typing.TypedDict('V1dFlagMotionParamsDictTagged', {
     "@type": typing.Literal["afni/1dFlagMotion"],
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
@@ -29,7 +29,7 @@ V1dFlagMotionParametersTagged = typing.TypedDict('V1dFlagMotionParametersTagged'
 
 class V1dFlagMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dFlagMotionParameters(...)`.
+    Output object returned when calling `V1dFlagMotionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_1d_flag_motion_params(
     input_motion_file: InputPathType,
     max_translation: float | None = None,
     max_rotation: float | None = None,
-) -> V1dFlagMotionParametersTagged:
+) -> V1dFlagMotionParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_1d_flag_motion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dFlagMotionParameters` object.
+    `V1dFlagMotionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def v_1d_flag_motion_validate(
 
 
 def v_1d_flag_motion_cargs(
-    params: V1dFlagMotionParameters,
+    params: V1dFlagMotionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def v_1d_flag_motion_cargs(
 
 
 def v_1d_flag_motion_outputs(
-    params: V1dFlagMotionParameters,
+    params: V1dFlagMotionParamsDict,
     execution: Execution,
 ) -> V1dFlagMotionOutputs:
     """
@@ -141,7 +141,7 @@ def v_1d_flag_motion_outputs(
 
 
 def v_1d_flag_motion_execute(
-    params: V1dFlagMotionParameters,
+    params: V1dFlagMotionParamsDict,
     runner: Runner | None = None,
 ) -> V1dFlagMotionOutputs:
     """
@@ -208,6 +208,8 @@ def v_1d_flag_motion(
 
 __all__ = [
     "V1dFlagMotionOutputs",
+    "V1dFlagMotionParamsDict",
+    "V1dFlagMotionParamsDictTagged",
     "V_1D_FLAG_MOTION_METADATA",
     "v_1d_flag_motion",
     "v_1d_flag_motion_execute",

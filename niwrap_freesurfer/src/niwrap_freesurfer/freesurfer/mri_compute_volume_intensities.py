@@ -13,13 +13,13 @@ MRI_COMPUTE_VOLUME_INTENSITIES_METADATA = Metadata(
 )
 
 
-MriComputeVolumeIntensitiesParameters = typing.TypedDict('MriComputeVolumeIntensitiesParameters', {
+MriComputeVolumeIntensitiesParamsDict = typing.TypedDict('MriComputeVolumeIntensitiesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_volume_intensities"]],
     "input_intensity": InputPathType,
     "volume_fraction_stem": str,
     "output_volume": str,
 })
-MriComputeVolumeIntensitiesParametersTagged = typing.TypedDict('MriComputeVolumeIntensitiesParametersTagged', {
+MriComputeVolumeIntensitiesParamsDictTagged = typing.TypedDict('MriComputeVolumeIntensitiesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_volume_intensities"],
     "input_intensity": InputPathType,
     "volume_fraction_stem": str,
@@ -29,7 +29,7 @@ MriComputeVolumeIntensitiesParametersTagged = typing.TypedDict('MriComputeVolume
 
 class MriComputeVolumeIntensitiesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeVolumeIntensitiesParameters(...)`.
+    Output object returned when calling `MriComputeVolumeIntensitiesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_compute_volume_intensities_params(
     input_intensity: InputPathType,
     volume_fraction_stem: str,
     output_volume: str,
-) -> MriComputeVolumeIntensitiesParametersTagged:
+) -> MriComputeVolumeIntensitiesParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_compute_volume_intensities_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeVolumeIntensitiesParameters` object.
+    `MriComputeVolumeIntensitiesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_compute_volume_intensities_validate(
 
 
 def mri_compute_volume_intensities_cargs(
-    params: MriComputeVolumeIntensitiesParameters,
+    params: MriComputeVolumeIntensitiesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_compute_volume_intensities_cargs(
 
 
 def mri_compute_volume_intensities_outputs(
-    params: MriComputeVolumeIntensitiesParameters,
+    params: MriComputeVolumeIntensitiesParamsDict,
     execution: Execution,
 ) -> MriComputeVolumeIntensitiesOutputs:
     """
@@ -129,7 +129,7 @@ def mri_compute_volume_intensities_outputs(
 
 
 def mri_compute_volume_intensities_execute(
-    params: MriComputeVolumeIntensitiesParameters,
+    params: MriComputeVolumeIntensitiesParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeVolumeIntensitiesOutputs:
     """
@@ -193,6 +193,8 @@ def mri_compute_volume_intensities(
 __all__ = [
     "MRI_COMPUTE_VOLUME_INTENSITIES_METADATA",
     "MriComputeVolumeIntensitiesOutputs",
+    "MriComputeVolumeIntensitiesParamsDict",
+    "MriComputeVolumeIntensitiesParamsDictTagged",
     "mri_compute_volume_intensities",
     "mri_compute_volume_intensities_execute",
     "mri_compute_volume_intensities_params",

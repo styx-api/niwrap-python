@@ -13,45 +13,45 @@ TCKMAP_METADATA = Metadata(
 )
 
 
-TckmapVariousStringParameters = typing.TypedDict('TckmapVariousStringParameters', {
+TckmapVariousStringParamsDict = typing.TypedDict('TckmapVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-TckmapVariousStringParametersTagged = typing.TypedDict('TckmapVariousStringParametersTagged', {
+TckmapVariousStringParamsDictTagged = typing.TypedDict('TckmapVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-TckmapVariousFileParameters = typing.TypedDict('TckmapVariousFileParameters', {
+TckmapVariousFileParamsDict = typing.TypedDict('TckmapVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-TckmapVariousFileParametersTagged = typing.TypedDict('TckmapVariousFileParametersTagged', {
+TckmapVariousFileParamsDictTagged = typing.TypedDict('TckmapVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-TckmapConfigParameters = typing.TypedDict('TckmapConfigParameters', {
+TckmapConfigParamsDict = typing.TypedDict('TckmapConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckmapConfigParametersTagged = typing.TypedDict('TckmapConfigParametersTagged', {
+TckmapConfigParamsDictTagged = typing.TypedDict('TckmapConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckmapParameters = typing.TypedDict('TckmapParameters', {
+TckmapParamsDict = typing.TypedDict('TckmapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckmap"]],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],
     "dec": bool,
-    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None],
+    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParamsDictTagged, TckmapVariousFileParamsDictTagged] | None],
     "tod": typing.NotRequired[int | None],
     "contrast": typing.NotRequired[str | None],
     "image": typing.NotRequired[InputPathType | None],
@@ -70,19 +70,19 @@ TckmapParameters = typing.TypedDict('TckmapParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckmapConfigParameters] | None],
+    "config": typing.NotRequired[list[TckmapConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
     "output": str,
 })
-TckmapParametersTagged = typing.TypedDict('TckmapParametersTagged', {
+TckmapParamsDictTagged = typing.TypedDict('TckmapParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckmap"],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],
     "dec": bool,
-    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None],
+    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParamsDictTagged, TckmapVariousFileParamsDictTagged] | None],
     "tod": typing.NotRequired[int | None],
     "contrast": typing.NotRequired[str | None],
     "image": typing.NotRequired[InputPathType | None],
@@ -101,7 +101,7 @@ TckmapParametersTagged = typing.TypedDict('TckmapParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckmapConfigParameters] | None],
+    "config": typing.NotRequired[list[TckmapConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -143,9 +143,9 @@ def tckmap_dixel_validate_dyn_fn(
     }.get(t)
 
 
-def tckmap_various_string_params(
+def tckmap_various_string(
     obj: str,
-) -> TckmapVariousStringParametersTagged:
+) -> TckmapVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def tckmap_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckmapVariousStringParameters` object.
+    `TckmapVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def tckmap_various_string_validate(
 
 
 def tckmap_various_string_cargs(
-    params: TckmapVariousStringParameters,
+    params: TckmapVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,9 +197,9 @@ def tckmap_various_string_cargs(
     return cargs
 
 
-def tckmap_various_file_params(
+def tckmap_various_file(
     obj: InputPathType,
-) -> TckmapVariousFileParametersTagged:
+) -> TckmapVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def tckmap_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckmapVariousFileParameters` object.
+    `TckmapVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -234,7 +234,7 @@ def tckmap_various_file_validate(
 
 
 def tckmap_various_file_cargs(
-    params: TckmapVariousFileParameters,
+    params: TckmapVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -251,10 +251,10 @@ def tckmap_various_file_cargs(
     return cargs
 
 
-def tckmap_config_params(
+def tckmap_config(
     key: str,
     value: str,
-) -> TckmapConfigParametersTagged:
+) -> TckmapConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -277,7 +277,7 @@ def tckmap_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckmapConfigParameters` object.
+    `TckmapConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -295,7 +295,7 @@ def tckmap_config_validate(
 
 
 def tckmap_config_cargs(
-    params: TckmapConfigParameters,
+    params: TckmapConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -316,7 +316,7 @@ def tckmap_config_cargs(
 
 class TckmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckmapParameters(...)`.
+    Output object returned when calling `TckmapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -331,7 +331,7 @@ def tckmap_params(
     vox: list[float] | None = None,
     datatype: str | None = None,
     dec: bool = False,
-    dixel: typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None = None,
+    dixel: typing.Union[TckmapVariousStringParamsDictTagged, TckmapVariousFileParamsDictTagged] | None = None,
     tod: int | None = None,
     contrast: str | None = None,
     image: InputPathType | None = None,
@@ -350,10 +350,10 @@ def tckmap_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckmapConfigParameters] | None = None,
+    config: list[TckmapConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckmapParametersTagged:
+) -> TckmapParamsDictTagged:
     """
     Build parameters.
     
@@ -480,7 +480,7 @@ def tckmap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckmapParameters` object.
+    `TckmapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -508,6 +508,8 @@ def tckmap_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["dixel"])}\'')
         if "@type" not in params["dixel"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["dixel"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `dixel`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         tckmap_dixel_validate_dyn_fn(params["dixel"]["@type"])(params["dixel"])
     if params.get("tod", None) is not None:
         if not isinstance(params["tod"], int):
@@ -573,7 +575,7 @@ def tckmap_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckmapConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckmapConfigParamsDict] | None`')
         for e in params["config"]:
             tckmap_config_validate(e)
     if params.get("help", False) is None:
@@ -595,7 +597,7 @@ def tckmap_validate(
 
 
 def tckmap_cargs(
-    params: TckmapParameters,
+    params: TckmapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -709,7 +711,7 @@ def tckmap_cargs(
 
 
 def tckmap_outputs(
-    params: TckmapParameters,
+    params: TckmapParamsDict,
     execution: Execution,
 ) -> TckmapOutputs:
     """
@@ -729,7 +731,7 @@ def tckmap_outputs(
 
 
 def tckmap_execute(
-    params: TckmapParameters,
+    params: TckmapParamsDict,
     runner: Runner | None = None,
 ) -> TckmapOutputs:
     """
@@ -805,7 +807,7 @@ def tckmap(
     vox: list[float] | None = None,
     datatype: str | None = None,
     dec: bool = False,
-    dixel: typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None = None,
+    dixel: typing.Union[TckmapVariousStringParamsDictTagged, TckmapVariousFileParamsDictTagged] | None = None,
     tod: int | None = None,
     contrast: str | None = None,
     image: InputPathType | None = None,
@@ -824,7 +826,7 @@ def tckmap(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckmapConfigParameters] | None = None,
+    config: list[TckmapConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -984,11 +986,19 @@ def tckmap(
 
 __all__ = [
     "TCKMAP_METADATA",
+    "TckmapConfigParamsDict",
+    "TckmapConfigParamsDictTagged",
     "TckmapOutputs",
+    "TckmapParamsDict",
+    "TckmapParamsDictTagged",
+    "TckmapVariousFileParamsDict",
+    "TckmapVariousFileParamsDictTagged",
+    "TckmapVariousStringParamsDict",
+    "TckmapVariousStringParamsDictTagged",
     "tckmap",
-    "tckmap_config_params",
+    "tckmap_config",
     "tckmap_execute",
     "tckmap_params",
-    "tckmap_various_file_params",
-    "tckmap_various_string_params",
+    "tckmap_various_file",
+    "tckmap_various_string",
 ]

@@ -13,7 +13,7 @@ FSR_COREG_METADATA = Metadata(
 )
 
 
-FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
+FsrCoregParamsDict = typing.TypedDict('FsrCoregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-coreg"]],
     "import_dir": str,
     "reference_mode": str,
@@ -22,7 +22,7 @@ FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
     "output_dir": typing.NotRequired[str | None],
     "expert_options": typing.NotRequired[InputPathType | None],
 })
-FsrCoregParametersTagged = typing.TypedDict('FsrCoregParametersTagged', {
+FsrCoregParamsDictTagged = typing.TypedDict('FsrCoregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsr-coreg"],
     "import_dir": str,
     "reference_mode": str,
@@ -35,7 +35,7 @@ FsrCoregParametersTagged = typing.TypedDict('FsrCoregParametersTagged', {
 
 class FsrCoregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsrCoregParameters(...)`.
+    Output object returned when calling `FsrCoregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def fsr_coreg_params(
     force_update: bool = False,
     output_dir: str | None = None,
     expert_options: InputPathType | None = None,
-) -> FsrCoregParametersTagged:
+) -> FsrCoregParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def fsr_coreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsrCoregParameters` object.
+    `FsrCoregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def fsr_coreg_validate(
 
 
 def fsr_coreg_cargs(
-    params: FsrCoregParameters,
+    params: FsrCoregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def fsr_coreg_cargs(
 
 
 def fsr_coreg_outputs(
-    params: FsrCoregParameters,
+    params: FsrCoregParamsDict,
     execution: Execution,
 ) -> FsrCoregOutputs:
     """
@@ -182,7 +182,7 @@ def fsr_coreg_outputs(
 
 
 def fsr_coreg_execute(
-    params: FsrCoregParameters,
+    params: FsrCoregParamsDict,
     runner: Runner | None = None,
 ) -> FsrCoregOutputs:
     """
@@ -254,6 +254,8 @@ def fsr_coreg(
 __all__ = [
     "FSR_COREG_METADATA",
     "FsrCoregOutputs",
+    "FsrCoregParamsDict",
+    "FsrCoregParamsDictTagged",
     "fsr_coreg",
     "fsr_coreg_execute",
     "fsr_coreg_params",

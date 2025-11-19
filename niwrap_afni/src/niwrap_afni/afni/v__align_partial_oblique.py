@@ -13,7 +13,7 @@ V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
 )
 
 
-VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameters', {
+VAlignPartialObliqueParamsDict = typing.TypedDict('VAlignPartialObliqueParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@align_partial_oblique"]],
     "base": InputPathType,
     "input": InputPathType,
@@ -25,7 +25,7 @@ VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameter
     "dy": typing.NotRequired[float | None],
     "dz": typing.NotRequired[float | None],
 })
-VAlignPartialObliqueParametersTagged = typing.TypedDict('VAlignPartialObliqueParametersTagged', {
+VAlignPartialObliqueParamsDictTagged = typing.TypedDict('VAlignPartialObliqueParamsDictTagged', {
     "@type": typing.Literal["afni/@align_partial_oblique"],
     "base": InputPathType,
     "input": InputPathType,
@@ -41,7 +41,7 @@ VAlignPartialObliqueParametersTagged = typing.TypedDict('VAlignPartialObliquePar
 
 class VAlignPartialObliqueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAlignPartialObliqueParameters(...)`.
+    Output object returned when calling `VAlignPartialObliqueParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v__align_partial_oblique_params(
     dx: float | None = None,
     dy: float | None = None,
     dz: float | None = None,
-) -> VAlignPartialObliqueParametersTagged:
+) -> VAlignPartialObliqueParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def v__align_partial_oblique_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAlignPartialObliqueParameters` object.
+    `VAlignPartialObliqueParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def v__align_partial_oblique_validate(
 
 
 def v__align_partial_oblique_cargs(
-    params: VAlignPartialObliqueParameters,
+    params: VAlignPartialObliqueParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def v__align_partial_oblique_cargs(
 
 
 def v__align_partial_oblique_outputs(
-    params: VAlignPartialObliqueParameters,
+    params: VAlignPartialObliqueParamsDict,
     execution: Execution,
 ) -> VAlignPartialObliqueOutputs:
     """
@@ -221,7 +221,7 @@ def v__align_partial_oblique_outputs(
 
 
 def v__align_partial_oblique_execute(
-    params: VAlignPartialObliqueParameters,
+    params: VAlignPartialObliqueParamsDict,
     runner: Runner | None = None,
 ) -> VAlignPartialObliqueOutputs:
     """
@@ -308,6 +308,8 @@ def v__align_partial_oblique(
 
 __all__ = [
     "VAlignPartialObliqueOutputs",
+    "VAlignPartialObliqueParamsDict",
+    "VAlignPartialObliqueParamsDictTagged",
     "V__ALIGN_PARTIAL_OBLIQUE_METADATA",
     "v__align_partial_oblique",
     "v__align_partial_oblique_execute",

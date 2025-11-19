@@ -13,7 +13,7 @@ SURF_EXTREMA_METADATA = Metadata(
 )
 
 
-SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
+SurfExtremaParamsDict = typing.TypedDict('SurfExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfExtrema"]],
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
@@ -24,7 +24,7 @@ SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
     "prefix": str,
     "table": typing.NotRequired[str | None],
 })
-SurfExtremaParametersTagged = typing.TypedDict('SurfExtremaParametersTagged', {
+SurfExtremaParamsDictTagged = typing.TypedDict('SurfExtremaParamsDictTagged', {
     "@type": typing.Literal["afni/SurfExtrema"],
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ SurfExtremaParametersTagged = typing.TypedDict('SurfExtremaParametersTagged', {
 
 class SurfExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfExtremaParameters(...)`.
+    Output object returned when calling `SurfExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def surf_extrema_params(
     gscale: typing.Literal["NONE", "LMEAN", "GMEAN"] | None = None,
     extype: typing.Literal["MAX", "MIN", "ABS"] | None = None,
     table: str | None = None,
-) -> SurfExtremaParametersTagged:
+) -> SurfExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def surf_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfExtremaParameters` object.
+    `SurfExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def surf_extrema_validate(
 
 
 def surf_extrema_cargs(
-    params: SurfExtremaParameters,
+    params: SurfExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -199,7 +199,7 @@ def surf_extrema_cargs(
 
 
 def surf_extrema_outputs(
-    params: SurfExtremaParameters,
+    params: SurfExtremaParamsDict,
     execution: Execution,
 ) -> SurfExtremaOutputs:
     """
@@ -220,7 +220,7 @@ def surf_extrema_outputs(
 
 
 def surf_extrema_execute(
-    params: SurfExtremaParameters,
+    params: SurfExtremaParamsDict,
     runner: Runner | None = None,
 ) -> SurfExtremaOutputs:
     """
@@ -300,6 +300,8 @@ def surf_extrema(
 __all__ = [
     "SURF_EXTREMA_METADATA",
     "SurfExtremaOutputs",
+    "SurfExtremaParamsDict",
+    "SurfExtremaParamsDictTagged",
     "surf_extrema",
     "surf_extrema_execute",
     "surf_extrema_params",

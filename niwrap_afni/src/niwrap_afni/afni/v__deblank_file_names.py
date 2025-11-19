@@ -13,7 +13,7 @@ V__DEBLANK_FILE_NAMES_METADATA = Metadata(
 )
 
 
-VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
+VDeblankFileNamesParamsDict = typing.TypedDict('VDeblankFileNamesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@DeblankFileNames"]],
     "move": bool,
     "nobrac": bool,
@@ -22,7 +22,7 @@ VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
     "help": bool,
     "files": typing.NotRequired[list[InputPathType] | None],
 })
-VDeblankFileNamesParametersTagged = typing.TypedDict('VDeblankFileNamesParametersTagged', {
+VDeblankFileNamesParamsDictTagged = typing.TypedDict('VDeblankFileNamesParamsDictTagged', {
     "@type": typing.Literal["afni/@DeblankFileNames"],
     "move": bool,
     "nobrac": bool,
@@ -35,7 +35,7 @@ VDeblankFileNamesParametersTagged = typing.TypedDict('VDeblankFileNamesParameter
 
 class VDeblankFileNamesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDeblankFileNamesParameters(...)`.
+    Output object returned when calling `VDeblankFileNamesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v__deblank_file_names_params(
     echo: bool = False,
     help_: bool = False,
     files: list[InputPathType] | None = None,
-) -> VDeblankFileNamesParametersTagged:
+) -> VDeblankFileNamesParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v__deblank_file_names_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDeblankFileNamesParameters` object.
+    `VDeblankFileNamesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def v__deblank_file_names_validate(
 
 
 def v__deblank_file_names_cargs(
-    params: VDeblankFileNamesParameters,
+    params: VDeblankFileNamesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def v__deblank_file_names_cargs(
 
 
 def v__deblank_file_names_outputs(
-    params: VDeblankFileNamesParameters,
+    params: VDeblankFileNamesParamsDict,
     execution: Execution,
 ) -> VDeblankFileNamesOutputs:
     """
@@ -166,7 +166,7 @@ def v__deblank_file_names_outputs(
 
 
 def v__deblank_file_names_execute(
-    params: VDeblankFileNamesParameters,
+    params: VDeblankFileNamesParamsDict,
     runner: Runner | None = None,
 ) -> VDeblankFileNamesOutputs:
     """
@@ -239,6 +239,8 @@ def v__deblank_file_names(
 
 __all__ = [
     "VDeblankFileNamesOutputs",
+    "VDeblankFileNamesParamsDict",
+    "VDeblankFileNamesParamsDictTagged",
     "V__DEBLANK_FILE_NAMES_METADATA",
     "v__deblank_file_names",
     "v__deblank_file_names_execute",

@@ -13,7 +13,7 @@ FABBER_DWI_METADATA = Metadata(
 )
 
 
-FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
+FabberDwiParamsDict = typing.TypedDict('FabberDwiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_dwi"]],
     "output_dir": str,
     "method": str,
@@ -52,7 +52,7 @@ FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug_flag": bool,
 })
-FabberDwiParametersTagged = typing.TypedDict('FabberDwiParametersTagged', {
+FabberDwiParamsDictTagged = typing.TypedDict('FabberDwiParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_dwi"],
     "output_dir": str,
     "method": str,
@@ -95,7 +95,7 @@ FabberDwiParametersTagged = typing.TypedDict('FabberDwiParametersTagged', {
 
 class FabberDwiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberDwiParameters(...)`.
+    Output object returned when calling `FabberDwiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +140,7 @@ def fabber_dwi_params(
     save_free_energy_flag: bool = False,
     optfile: InputPathType | None = None,
     debug_flag: bool = False,
-) -> FabberDwiParametersTagged:
+) -> FabberDwiParamsDictTagged:
     """
     Build parameters.
     
@@ -264,7 +264,7 @@ def fabber_dwi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberDwiParameters` object.
+    `FabberDwiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -408,7 +408,7 @@ def fabber_dwi_validate(
 
 
 def fabber_dwi_cargs(
-    params: FabberDwiParameters,
+    params: FabberDwiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -536,7 +536,7 @@ def fabber_dwi_cargs(
 
 
 def fabber_dwi_outputs(
-    params: FabberDwiParameters,
+    params: FabberDwiParamsDict,
     execution: Execution,
 ) -> FabberDwiOutputs:
     """
@@ -556,7 +556,7 @@ def fabber_dwi_outputs(
 
 
 def fabber_dwi_execute(
-    params: FabberDwiParameters,
+    params: FabberDwiParamsDict,
     runner: Runner | None = None,
 ) -> FabberDwiOutputs:
     """
@@ -742,6 +742,8 @@ def fabber_dwi(
 __all__ = [
     "FABBER_DWI_METADATA",
     "FabberDwiOutputs",
+    "FabberDwiParamsDict",
+    "FabberDwiParamsDictTagged",
     "fabber_dwi",
     "fabber_dwi_execute",
     "fabber_dwi_params",

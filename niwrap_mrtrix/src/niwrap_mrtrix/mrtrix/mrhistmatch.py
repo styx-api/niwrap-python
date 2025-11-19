@@ -13,19 +13,19 @@ MRHISTMATCH_METADATA = Metadata(
 )
 
 
-MrhistmatchConfigParameters = typing.TypedDict('MrhistmatchConfigParameters', {
+MrhistmatchConfigParamsDict = typing.TypedDict('MrhistmatchConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrhistmatchConfigParametersTagged = typing.TypedDict('MrhistmatchConfigParametersTagged', {
+MrhistmatchConfigParamsDictTagged = typing.TypedDict('MrhistmatchConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrhistmatchParameters = typing.TypedDict('MrhistmatchParameters', {
+MrhistmatchParamsDict = typing.TypedDict('MrhistmatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrhistmatch"]],
     "mask_input": typing.NotRequired[InputPathType | None],
     "mask_target": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ MrhistmatchParameters = typing.TypedDict('MrhistmatchParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrhistmatchConfigParameters] | None],
+    "config": typing.NotRequired[list[MrhistmatchConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "type": str,
@@ -43,7 +43,7 @@ MrhistmatchParameters = typing.TypedDict('MrhistmatchParameters', {
     "target": InputPathType,
     "output": str,
 })
-MrhistmatchParametersTagged = typing.TypedDict('MrhistmatchParametersTagged', {
+MrhistmatchParamsDictTagged = typing.TypedDict('MrhistmatchParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrhistmatch"],
     "mask_input": typing.NotRequired[InputPathType | None],
     "mask_target": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ MrhistmatchParametersTagged = typing.TypedDict('MrhistmatchParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrhistmatchConfigParameters] | None],
+    "config": typing.NotRequired[list[MrhistmatchConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "type": str,
@@ -63,10 +63,10 @@ MrhistmatchParametersTagged = typing.TypedDict('MrhistmatchParametersTagged', {
 })
 
 
-def mrhistmatch_config_params(
+def mrhistmatch_config(
     key: str,
     value: str,
-) -> MrhistmatchConfigParametersTagged:
+) -> MrhistmatchConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mrhistmatch_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrhistmatchConfigParameters` object.
+    `MrhistmatchConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mrhistmatch_config_validate(
 
 
 def mrhistmatch_config_cargs(
-    params: MrhistmatchConfigParameters,
+    params: MrhistmatchConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def mrhistmatch_config_cargs(
 
 class MrhistmatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrhistmatchParameters(...)`.
+    Output object returned when calling `MrhistmatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def mrhistmatch_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrhistmatchConfigParameters] | None = None,
+    config: list[MrhistmatchConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrhistmatchParametersTagged:
+) -> MrhistmatchParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def mrhistmatch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrhistmatchParameters` object.
+    `MrhistmatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -250,7 +250,7 @@ def mrhistmatch_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrhistmatchConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrhistmatchConfigParamsDict] | None`')
         for e in params["config"]:
             mrhistmatch_config_validate(e)
     if params.get("help", False) is None:
@@ -280,7 +280,7 @@ def mrhistmatch_validate(
 
 
 def mrhistmatch_cargs(
-    params: MrhistmatchParameters,
+    params: MrhistmatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -336,7 +336,7 @@ def mrhistmatch_cargs(
 
 
 def mrhistmatch_outputs(
-    params: MrhistmatchParameters,
+    params: MrhistmatchParamsDict,
     execution: Execution,
 ) -> MrhistmatchOutputs:
     """
@@ -356,7 +356,7 @@ def mrhistmatch_outputs(
 
 
 def mrhistmatch_execute(
-    params: MrhistmatchParameters,
+    params: MrhistmatchParamsDict,
     runner: Runner | None = None,
 ) -> MrhistmatchOutputs:
     """
@@ -408,7 +408,7 @@ def mrhistmatch(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrhistmatchConfigParameters] | None = None,
+    config: list[MrhistmatchConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -482,9 +482,13 @@ def mrhistmatch(
 
 __all__ = [
     "MRHISTMATCH_METADATA",
+    "MrhistmatchConfigParamsDict",
+    "MrhistmatchConfigParamsDictTagged",
     "MrhistmatchOutputs",
+    "MrhistmatchParamsDict",
+    "MrhistmatchParamsDictTagged",
     "mrhistmatch",
-    "mrhistmatch_config_params",
+    "mrhistmatch_config",
     "mrhistmatch_execute",
     "mrhistmatch_params",
 ]

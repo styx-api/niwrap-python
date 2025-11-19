@@ -13,13 +13,13 @@ APAS2ASEG_METADATA = Metadata(
 )
 
 
-Apas2asegParameters = typing.TypedDict('Apas2asegParameters', {
+Apas2asegParamsDict = typing.TypedDict('Apas2asegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/apas2aseg"]],
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],
 })
-Apas2asegParametersTagged = typing.TypedDict('Apas2asegParametersTagged', {
+Apas2asegParamsDictTagged = typing.TypedDict('Apas2asegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/apas2aseg"],
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
@@ -29,7 +29,7 @@ Apas2asegParametersTagged = typing.TypedDict('Apas2asegParametersTagged', {
 
 class Apas2asegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Apas2asegParameters(...)`.
+    Output object returned when calling `Apas2asegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def apas2aseg_params(
     subject: str | None = None,
     input_aparc_aseg: InputPathType | None = None,
     output_seg: str | None = None,
-) -> Apas2asegParametersTagged:
+) -> Apas2asegParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def apas2aseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Apas2asegParameters` object.
+    `Apas2asegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def apas2aseg_validate(
 
 
 def apas2aseg_cargs(
-    params: Apas2asegParameters,
+    params: Apas2asegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def apas2aseg_cargs(
 
 
 def apas2aseg_outputs(
-    params: Apas2asegParameters,
+    params: Apas2asegParamsDict,
     execution: Execution,
 ) -> Apas2asegOutputs:
     """
@@ -142,7 +142,7 @@ def apas2aseg_outputs(
 
 
 def apas2aseg_execute(
-    params: Apas2asegParameters,
+    params: Apas2asegParamsDict,
     runner: Runner | None = None,
 ) -> Apas2asegOutputs:
     """
@@ -207,6 +207,8 @@ def apas2aseg(
 __all__ = [
     "APAS2ASEG_METADATA",
     "Apas2asegOutputs",
+    "Apas2asegParamsDict",
+    "Apas2asegParamsDictTagged",
     "apas2aseg",
     "apas2aseg_execute",
     "apas2aseg_params",

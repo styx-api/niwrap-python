@@ -6,7 +6,7 @@
     },
     "exclude-outliers": {
       "var_param": "exclude_outliers",
-      "fn_struct_make_params": "metric_reduce_exclude_outliers_params",
+      "fn_struct_make_params": "metric_reduce_exclude_outliers",
       "properties": {
         "sigma-below": {
           "var_param": "sigma_below"

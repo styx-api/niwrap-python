@@ -13,39 +13,39 @@ WARPINIT_METADATA = Metadata(
 )
 
 
-WarpinitConfigParameters = typing.TypedDict('WarpinitConfigParameters', {
+WarpinitConfigParamsDict = typing.TypedDict('WarpinitConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-WarpinitConfigParametersTagged = typing.TypedDict('WarpinitConfigParametersTagged', {
+WarpinitConfigParamsDictTagged = typing.TypedDict('WarpinitConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-WarpinitParameters = typing.TypedDict('WarpinitParameters', {
+WarpinitParamsDict = typing.TypedDict('WarpinitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/warpinit"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpinitConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpinitConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "template": InputPathType,
     "warp": str,
 })
-WarpinitParametersTagged = typing.TypedDict('WarpinitParametersTagged', {
+WarpinitParamsDictTagged = typing.TypedDict('WarpinitParamsDictTagged', {
     "@type": typing.Literal["mrtrix/warpinit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpinitConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpinitConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "template": InputPathType,
@@ -53,10 +53,10 @@ WarpinitParametersTagged = typing.TypedDict('WarpinitParametersTagged', {
 })
 
 
-def warpinit_config_params(
+def warpinit_config(
     key: str,
     value: str,
-) -> WarpinitConfigParametersTagged:
+) -> WarpinitConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def warpinit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpinitConfigParameters` object.
+    `WarpinitConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def warpinit_config_validate(
 
 
 def warpinit_config_cargs(
-    params: WarpinitConfigParameters,
+    params: WarpinitConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def warpinit_config_cargs(
 
 class WarpinitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WarpinitParameters(...)`.
+    Output object returned when calling `WarpinitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,10 +134,10 @@ def warpinit_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpinitConfigParameters] | None = None,
+    config: list[WarpinitConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpinitParametersTagged:
+) -> WarpinitParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def warpinit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpinitParameters` object.
+    `WarpinitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def warpinit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpinitConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpinitConfigParamsDict] | None`')
         for e in params["config"]:
             warpinit_config_validate(e)
     if params.get("help", False) is None:
@@ -232,7 +232,7 @@ def warpinit_validate(
 
 
 def warpinit_cargs(
-    params: WarpinitParameters,
+    params: WarpinitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def warpinit_cargs(
 
 
 def warpinit_outputs(
-    params: WarpinitParameters,
+    params: WarpinitParamsDict,
     execution: Execution,
 ) -> WarpinitOutputs:
     """
@@ -291,7 +291,7 @@ def warpinit_outputs(
 
 
 def warpinit_execute(
-    params: WarpinitParameters,
+    params: WarpinitParamsDict,
     runner: Runner | None = None,
 ) -> WarpinitOutputs:
     """
@@ -345,7 +345,7 @@ def warpinit(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpinitConfigParameters] | None = None,
+    config: list[WarpinitConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -413,9 +413,13 @@ def warpinit(
 
 __all__ = [
     "WARPINIT_METADATA",
+    "WarpinitConfigParamsDict",
+    "WarpinitConfigParamsDictTagged",
     "WarpinitOutputs",
+    "WarpinitParamsDict",
+    "WarpinitParamsDictTagged",
     "warpinit",
-    "warpinit_config_params",
+    "warpinit_config",
     "warpinit_execute",
     "warpinit_params",
 ]

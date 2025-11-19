@@ -13,7 +13,7 @@ RUN_MESH_UTILS_METADATA = Metadata(
 )
 
 
-RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
+RunMeshUtilsParamsDict = typing.TypedDict('RunMeshUtilsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/run_mesh_utils"]],
     "base_mesh": InputPathType,
     "output_image": str,
@@ -33,7 +33,7 @@ RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
     "verbose": bool,
     "help": bool,
 })
-RunMeshUtilsParametersTagged = typing.TypedDict('RunMeshUtilsParametersTagged', {
+RunMeshUtilsParamsDictTagged = typing.TypedDict('RunMeshUtilsParamsDictTagged', {
     "@type": typing.Literal["fsl/run_mesh_utils"],
     "base_mesh": InputPathType,
     "output_image": str,
@@ -57,7 +57,7 @@ RunMeshUtilsParametersTagged = typing.TypedDict('RunMeshUtilsParametersTagged', 
 
 class RunMeshUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunMeshUtilsParameters(...)`.
+    Output object returned when calling `RunMeshUtilsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def run_mesh_utils_params(
     inverse: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> RunMeshUtilsParametersTagged:
+) -> RunMeshUtilsParamsDictTagged:
     """
     Build parameters.
     
@@ -143,7 +143,7 @@ def run_mesh_utils_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunMeshUtilsParameters` object.
+    `RunMeshUtilsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -214,7 +214,7 @@ def run_mesh_utils_validate(
 
 
 def run_mesh_utils_cargs(
-    params: RunMeshUtilsParameters,
+    params: RunMeshUtilsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def run_mesh_utils_cargs(
 
 
 def run_mesh_utils_outputs(
-    params: RunMeshUtilsParameters,
+    params: RunMeshUtilsParamsDict,
     execution: Execution,
 ) -> RunMeshUtilsOutputs:
     """
@@ -308,7 +308,7 @@ def run_mesh_utils_outputs(
 
 
 def run_mesh_utils_execute(
-    params: RunMeshUtilsParameters,
+    params: RunMeshUtilsParamsDict,
     runner: Runner | None = None,
 ) -> RunMeshUtilsOutputs:
     """
@@ -412,6 +412,8 @@ def run_mesh_utils(
 __all__ = [
     "RUN_MESH_UTILS_METADATA",
     "RunMeshUtilsOutputs",
+    "RunMeshUtilsParamsDict",
+    "RunMeshUtilsParamsDictTagged",
     "run_mesh_utils",
     "run_mesh_utils_execute",
     "run_mesh_utils_params",

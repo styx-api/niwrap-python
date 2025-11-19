@@ -13,7 +13,7 @@ V_3D_EXCHANGE_METADATA = Metadata(
 )
 
 
-V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
+V3dExchangeParamsDict = typing.TypedDict('V3dExchangeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dExchange"]],
     "prefix": str,
     "infile": InputPathType,
@@ -21,7 +21,7 @@ V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
     "version": bool,
     "help": bool,
 })
-V3dExchangeParametersTagged = typing.TypedDict('V3dExchangeParametersTagged', {
+V3dExchangeParamsDictTagged = typing.TypedDict('V3dExchangeParamsDictTagged', {
     "@type": typing.Literal["afni/3dExchange"],
     "prefix": str,
     "infile": InputPathType,
@@ -33,7 +33,7 @@ V3dExchangeParametersTagged = typing.TypedDict('V3dExchangeParametersTagged', {
 
 class V3dExchangeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dExchangeParameters(...)`.
+    Output object returned when calling `V3dExchangeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_3d_exchange_params(
     mapfile: InputPathType,
     version: bool = False,
     help_: bool = False,
-) -> V3dExchangeParametersTagged:
+) -> V3dExchangeParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def v_3d_exchange_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dExchangeParameters` object.
+    `V3dExchangeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def v_3d_exchange_validate(
 
 
 def v_3d_exchange_cargs(
-    params: V3dExchangeParameters,
+    params: V3dExchangeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def v_3d_exchange_cargs(
 
 
 def v_3d_exchange_outputs(
-    params: V3dExchangeParameters,
+    params: V3dExchangeParamsDict,
     execution: Execution,
 ) -> V3dExchangeOutputs:
     """
@@ -165,7 +165,7 @@ def v_3d_exchange_outputs(
 
 
 def v_3d_exchange_execute(
-    params: V3dExchangeParameters,
+    params: V3dExchangeParamsDict,
     runner: Runner | None = None,
 ) -> V3dExchangeOutputs:
     """
@@ -234,6 +234,8 @@ def v_3d_exchange(
 
 __all__ = [
     "V3dExchangeOutputs",
+    "V3dExchangeParamsDict",
+    "V3dExchangeParamsDictTagged",
     "V_3D_EXCHANGE_METADATA",
     "v_3d_exchange",
     "v_3d_exchange_execute",

@@ -13,7 +13,7 @@ MRI_GTMPVC_METADATA = Metadata(
 )
 
 
-MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
+MriGtmpvcParamsDict = typing.TypedDict('MriGtmpvcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmpvc"]],
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
@@ -78,7 +78,7 @@ MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
     "help": bool,
     "version": bool,
 })
-MriGtmpvcParametersTagged = typing.TypedDict('MriGtmpvcParametersTagged', {
+MriGtmpvcParamsDictTagged = typing.TypedDict('MriGtmpvcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gtmpvc"],
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
@@ -147,7 +147,7 @@ MriGtmpvcParametersTagged = typing.TypedDict('MriGtmpvcParametersTagged', {
 
 class MriGtmpvcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGtmpvcParameters(...)`.
+    Output object returned when calling `MriGtmpvcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -240,7 +240,7 @@ def mri_gtmpvc_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MriGtmpvcParametersTagged:
+) -> MriGtmpvcParamsDictTagged:
     """
     Build parameters.
     
@@ -415,7 +415,7 @@ def mri_gtmpvc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGtmpvcParameters` object.
+    `MriGtmpvcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -650,7 +650,7 @@ def mri_gtmpvc_validate(
 
 
 def mri_gtmpvc_cargs(
-    params: MriGtmpvcParameters,
+    params: MriGtmpvcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -869,7 +869,7 @@ def mri_gtmpvc_cargs(
 
 
 def mri_gtmpvc_outputs(
-    params: MriGtmpvcParameters,
+    params: MriGtmpvcParamsDict,
     execution: Execution,
 ) -> MriGtmpvcOutputs:
     """
@@ -900,7 +900,7 @@ def mri_gtmpvc_outputs(
 
 
 def mri_gtmpvc_execute(
-    params: MriGtmpvcParameters,
+    params: MriGtmpvcParamsDict,
     runner: Runner | None = None,
 ) -> MriGtmpvcOutputs:
     """
@@ -1150,6 +1150,8 @@ def mri_gtmpvc(
 __all__ = [
     "MRI_GTMPVC_METADATA",
     "MriGtmpvcOutputs",
+    "MriGtmpvcParamsDict",
+    "MriGtmpvcParamsDictTagged",
     "mri_gtmpvc",
     "mri_gtmpvc_execute",
     "mri_gtmpvc_params",

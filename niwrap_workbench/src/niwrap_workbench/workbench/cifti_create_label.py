@@ -12,61 +12,61 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
 )
 
 
-CiftiCreateLabelVolumeParameters = typing.TypedDict('CiftiCreateLabelVolumeParameters', {
+CiftiCreateLabelVolumeParamsDict = typing.TypedDict('CiftiCreateLabelVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "label-volume": InputPathType,
     "structure-label-volume": InputPathType,
 })
-CiftiCreateLabelVolumeParametersTagged = typing.TypedDict('CiftiCreateLabelVolumeParametersTagged', {
+CiftiCreateLabelVolumeParamsDictTagged = typing.TypedDict('CiftiCreateLabelVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "label-volume": InputPathType,
     "structure-label-volume": InputPathType,
 })
 
 
-CiftiCreateLabelLeftLabelParameters = typing.TypedDict('CiftiCreateLabelLeftLabelParameters', {
+CiftiCreateLabelLeftLabelParamsDict = typing.TypedDict('CiftiCreateLabelLeftLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-label"]],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateLabelLeftLabelParametersTagged = typing.TypedDict('CiftiCreateLabelLeftLabelParametersTagged', {
+CiftiCreateLabelLeftLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelLeftLabelParamsDictTagged', {
     "@type": typing.Literal["left-label"],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateLabelRightLabelParameters = typing.TypedDict('CiftiCreateLabelRightLabelParameters', {
+CiftiCreateLabelRightLabelParamsDict = typing.TypedDict('CiftiCreateLabelRightLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-label"]],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateLabelRightLabelParametersTagged = typing.TypedDict('CiftiCreateLabelRightLabelParametersTagged', {
+CiftiCreateLabelRightLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelRightLabelParamsDictTagged', {
     "@type": typing.Literal["right-label"],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateLabelCerebellumLabelParameters = typing.TypedDict('CiftiCreateLabelCerebellumLabelParameters', {
+CiftiCreateLabelCerebellumLabelParamsDict = typing.TypedDict('CiftiCreateLabelCerebellumLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-label"]],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateLabelCerebellumLabelParametersTagged = typing.TypedDict('CiftiCreateLabelCerebellumLabelParametersTagged', {
+CiftiCreateLabelCerebellumLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelCerebellumLabelParamsDictTagged', {
     "@type": typing.Literal["cerebellum-label"],
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateLabelLabelParameters = typing.TypedDict('CiftiCreateLabelLabelParameters', {
+CiftiCreateLabelLabelParamsDict = typing.TypedDict('CiftiCreateLabelLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "structure": str,
     "label": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateLabelLabelParametersTagged = typing.TypedDict('CiftiCreateLabelLabelParametersTagged', {
+CiftiCreateLabelLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "structure": str,
     "label": InputPathType,
@@ -74,30 +74,30 @@ CiftiCreateLabelLabelParametersTagged = typing.TypedDict('CiftiCreateLabelLabelP
 })
 
 
-CiftiCreateLabelParameters = typing.TypedDict('CiftiCreateLabelParameters', {
+CiftiCreateLabelParamsDict = typing.TypedDict('CiftiCreateLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-label"]],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
-    "left-label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],
-    "right-label": typing.NotRequired[CiftiCreateLabelRightLabelParameters | None],
-    "cerebellum-label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParameters | None],
-    "label": typing.NotRequired[list[CiftiCreateLabelLabelParameters] | None],
+    "volume": typing.NotRequired[CiftiCreateLabelVolumeParamsDict | None],
+    "left-label": typing.NotRequired[CiftiCreateLabelLeftLabelParamsDict | None],
+    "right-label": typing.NotRequired[CiftiCreateLabelRightLabelParamsDict | None],
+    "cerebellum-label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParamsDict | None],
+    "label": typing.NotRequired[list[CiftiCreateLabelLabelParamsDict] | None],
 })
-CiftiCreateLabelParametersTagged = typing.TypedDict('CiftiCreateLabelParametersTagged', {
+CiftiCreateLabelParamsDictTagged = typing.TypedDict('CiftiCreateLabelParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-label"],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
-    "left-label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],
-    "right-label": typing.NotRequired[CiftiCreateLabelRightLabelParameters | None],
-    "cerebellum-label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParameters | None],
-    "label": typing.NotRequired[list[CiftiCreateLabelLabelParameters] | None],
+    "volume": typing.NotRequired[CiftiCreateLabelVolumeParamsDict | None],
+    "left-label": typing.NotRequired[CiftiCreateLabelLeftLabelParamsDict | None],
+    "right-label": typing.NotRequired[CiftiCreateLabelRightLabelParamsDict | None],
+    "cerebellum-label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParamsDict | None],
+    "label": typing.NotRequired[list[CiftiCreateLabelLabelParamsDict] | None],
 })
 
 
-def cifti_create_label_volume_params(
+def cifti_create_label_volume(
     label_volume: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateLabelVolumeParametersTagged:
+) -> CiftiCreateLabelVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def cifti_create_label_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelVolumeParameters` object.
+    `CiftiCreateLabelVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def cifti_create_label_volume_validate(
 
 
 def cifti_create_label_volume_cargs(
-    params: CiftiCreateLabelVolumeParameters,
+    params: CiftiCreateLabelVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,10 +160,10 @@ def cifti_create_label_volume_cargs(
     return cargs
 
 
-def cifti_create_label_left_label_params(
+def cifti_create_label_left_label(
     label: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateLabelLeftLabelParametersTagged:
+) -> CiftiCreateLabelLeftLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def cifti_create_label_left_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelLeftLabelParameters` object.
+    `CiftiCreateLabelLeftLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def cifti_create_label_left_label_validate(
 
 
 def cifti_create_label_left_label_cargs(
-    params: CiftiCreateLabelLeftLabelParameters,
+    params: CiftiCreateLabelLeftLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,10 +229,10 @@ def cifti_create_label_left_label_cargs(
     return cargs
 
 
-def cifti_create_label_right_label_params(
+def cifti_create_label_right_label(
     label: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateLabelRightLabelParametersTagged:
+) -> CiftiCreateLabelRightLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def cifti_create_label_right_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelRightLabelParameters` object.
+    `CiftiCreateLabelRightLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def cifti_create_label_right_label_validate(
 
 
 def cifti_create_label_right_label_cargs(
-    params: CiftiCreateLabelRightLabelParameters,
+    params: CiftiCreateLabelRightLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -298,10 +298,10 @@ def cifti_create_label_right_label_cargs(
     return cargs
 
 
-def cifti_create_label_cerebellum_label_params(
+def cifti_create_label_cerebellum_label(
     label: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateLabelCerebellumLabelParametersTagged:
+) -> CiftiCreateLabelCerebellumLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -327,7 +327,7 @@ def cifti_create_label_cerebellum_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelCerebellumLabelParameters` object.
+    `CiftiCreateLabelCerebellumLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -344,7 +344,7 @@ def cifti_create_label_cerebellum_label_validate(
 
 
 def cifti_create_label_cerebellum_label_cargs(
-    params: CiftiCreateLabelCerebellumLabelParameters,
+    params: CiftiCreateLabelCerebellumLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -367,11 +367,11 @@ def cifti_create_label_cerebellum_label_cargs(
     return cargs
 
 
-def cifti_create_label_label_params(
+def cifti_create_label_label(
     structure: str,
     label: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateLabelLabelParametersTagged:
+) -> CiftiCreateLabelLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -399,7 +399,7 @@ def cifti_create_label_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelLabelParameters` object.
+    `CiftiCreateLabelLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -420,7 +420,7 @@ def cifti_create_label_label_validate(
 
 
 def cifti_create_label_label_cargs(
-    params: CiftiCreateLabelLabelParameters,
+    params: CiftiCreateLabelLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -446,7 +446,7 @@ def cifti_create_label_label_cargs(
 
 class CiftiCreateLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateLabelParameters(...)`.
+    Output object returned when calling `CiftiCreateLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -456,12 +456,12 @@ class CiftiCreateLabelOutputs(typing.NamedTuple):
 
 def cifti_create_label_params(
     cifti_out: str,
-    volume: CiftiCreateLabelVolumeParameters | None = None,
-    left_label: CiftiCreateLabelLeftLabelParameters | None = None,
-    right_label: CiftiCreateLabelRightLabelParameters | None = None,
-    cerebellum_label: CiftiCreateLabelCerebellumLabelParameters | None = None,
-    label: list[CiftiCreateLabelLabelParameters] | None = None,
-) -> CiftiCreateLabelParametersTagged:
+    volume: CiftiCreateLabelVolumeParamsDict | None = None,
+    left_label: CiftiCreateLabelLeftLabelParamsDict | None = None,
+    right_label: CiftiCreateLabelRightLabelParamsDict | None = None,
+    cerebellum_label: CiftiCreateLabelCerebellumLabelParamsDict | None = None,
+    label: list[CiftiCreateLabelLabelParamsDict] | None = None,
+) -> CiftiCreateLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -497,7 +497,7 @@ def cifti_create_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateLabelParameters` object.
+    `CiftiCreateLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -518,13 +518,13 @@ def cifti_create_label_validate(
         cifti_create_label_cerebellum_label_validate(params["cerebellum-label"])
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateLabelLabelParameters] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateLabelLabelParamsDict] | None`')
         for e in params["label"]:
             cifti_create_label_label_validate(e)
 
 
 def cifti_create_label_cargs(
-    params: CiftiCreateLabelParameters,
+    params: CiftiCreateLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -552,7 +552,7 @@ def cifti_create_label_cargs(
 
 
 def cifti_create_label_outputs(
-    params: CiftiCreateLabelParameters,
+    params: CiftiCreateLabelParamsDict,
     execution: Execution,
 ) -> CiftiCreateLabelOutputs:
     """
@@ -572,7 +572,7 @@ def cifti_create_label_outputs(
 
 
 def cifti_create_label_execute(
-    params: CiftiCreateLabelParameters,
+    params: CiftiCreateLabelParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateLabelOutputs:
     """
@@ -646,11 +646,11 @@ def cifti_create_label_execute(
 
 def cifti_create_label(
     cifti_out: str,
-    volume: CiftiCreateLabelVolumeParameters | None = None,
-    left_label: CiftiCreateLabelLeftLabelParameters | None = None,
-    right_label: CiftiCreateLabelRightLabelParameters | None = None,
-    cerebellum_label: CiftiCreateLabelCerebellumLabelParameters | None = None,
-    label: list[CiftiCreateLabelLabelParameters] | None = None,
+    volume: CiftiCreateLabelVolumeParamsDict | None = None,
+    left_label: CiftiCreateLabelLeftLabelParamsDict | None = None,
+    right_label: CiftiCreateLabelRightLabelParamsDict | None = None,
+    cerebellum_label: CiftiCreateLabelCerebellumLabelParamsDict | None = None,
+    label: list[CiftiCreateLabelLabelParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateLabelOutputs:
     """
@@ -730,13 +730,25 @@ def cifti_create_label(
 
 __all__ = [
     "CIFTI_CREATE_LABEL_METADATA",
+    "CiftiCreateLabelCerebellumLabelParamsDict",
+    "CiftiCreateLabelCerebellumLabelParamsDictTagged",
+    "CiftiCreateLabelLabelParamsDict",
+    "CiftiCreateLabelLabelParamsDictTagged",
+    "CiftiCreateLabelLeftLabelParamsDict",
+    "CiftiCreateLabelLeftLabelParamsDictTagged",
     "CiftiCreateLabelOutputs",
+    "CiftiCreateLabelParamsDict",
+    "CiftiCreateLabelParamsDictTagged",
+    "CiftiCreateLabelRightLabelParamsDict",
+    "CiftiCreateLabelRightLabelParamsDictTagged",
+    "CiftiCreateLabelVolumeParamsDict",
+    "CiftiCreateLabelVolumeParamsDictTagged",
     "cifti_create_label",
-    "cifti_create_label_cerebellum_label_params",
+    "cifti_create_label_cerebellum_label",
     "cifti_create_label_execute",
-    "cifti_create_label_label_params",
-    "cifti_create_label_left_label_params",
+    "cifti_create_label_label",
+    "cifti_create_label_left_label",
     "cifti_create_label_params",
-    "cifti_create_label_right_label_params",
-    "cifti_create_label_volume_params",
+    "cifti_create_label_right_label",
+    "cifti_create_label_volume",
 ]

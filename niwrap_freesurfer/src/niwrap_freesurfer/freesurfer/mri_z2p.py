@@ -13,7 +13,7 @@ MRI_Z2P_METADATA = Metadata(
 )
 
 
-MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
+MriZ2pParamsDict = typing.TypedDict('MriZ2pParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_z2p"]],
     "z_volume": InputPathType,
     "p_volume": str,
@@ -32,7 +32,7 @@ MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
     "debug": bool,
     "check_opts": bool,
 })
-MriZ2pParametersTagged = typing.TypedDict('MriZ2pParametersTagged', {
+MriZ2pParamsDictTagged = typing.TypedDict('MriZ2pParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_z2p"],
     "z_volume": InputPathType,
     "p_volume": str,
@@ -55,7 +55,7 @@ MriZ2pParametersTagged = typing.TypedDict('MriZ2pParametersTagged', {
 
 class MriZ2pOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriZ2pParameters(...)`.
+    Output object returned when calling `MriZ2pParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +82,7 @@ def mri_z2p_params(
     img_format: bool = False,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriZ2pParametersTagged:
+) -> MriZ2pParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def mri_z2p_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriZ2pParameters` object.
+    `MriZ2pParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -208,7 +208,7 @@ def mri_z2p_validate(
 
 
 def mri_z2p_cargs(
-    params: MriZ2pParameters,
+    params: MriZ2pParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def mri_z2p_cargs(
 
 
 def mri_z2p_outputs(
-    params: MriZ2pParameters,
+    params: MriZ2pParamsDict,
     execution: Execution,
 ) -> MriZ2pOutputs:
     """
@@ -294,7 +294,7 @@ def mri_z2p_outputs(
 
 
 def mri_z2p_execute(
-    params: MriZ2pParameters,
+    params: MriZ2pParamsDict,
     runner: Runner | None = None,
 ) -> MriZ2pOutputs:
     """
@@ -396,6 +396,8 @@ def mri_z2p(
 __all__ = [
     "MRI_Z2P_METADATA",
     "MriZ2pOutputs",
+    "MriZ2pParamsDict",
+    "MriZ2pParamsDictTagged",
     "mri_z2p",
     "mri_z2p_execute",
     "mri_z2p_params",

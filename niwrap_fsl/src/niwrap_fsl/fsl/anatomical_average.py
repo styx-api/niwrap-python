@@ -13,7 +13,7 @@ ANATOMICAL_AVERAGE_METADATA = Metadata(
 )
 
 
-AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
+AnatomicalAverageParamsDict = typing.TypedDict('AnatomicalAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/AnatomicalAverage"]],
     "output_basename": str,
     "input_images": list[InputPathType],
@@ -25,7 +25,7 @@ AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
     "noclean_flag": bool,
     "verbose_flag": bool,
 })
-AnatomicalAverageParametersTagged = typing.TypedDict('AnatomicalAverageParametersTagged', {
+AnatomicalAverageParamsDictTagged = typing.TypedDict('AnatomicalAverageParamsDictTagged', {
     "@type": typing.Literal["fsl/AnatomicalAverage"],
     "output_basename": str,
     "input_images": list[InputPathType],
@@ -41,7 +41,7 @@ AnatomicalAverageParametersTagged = typing.TypedDict('AnatomicalAverageParameter
 
 class AnatomicalAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AnatomicalAverageParameters(...)`.
+    Output object returned when calling `AnatomicalAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def anatomical_average_params(
     brainsize: float | None = None,
     noclean_flag: bool = False,
     verbose_flag: bool = False,
-) -> AnatomicalAverageParametersTagged:
+) -> AnatomicalAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def anatomical_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AnatomicalAverageParameters` object.
+    `AnatomicalAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def anatomical_average_validate(
 
 
 def anatomical_average_cargs(
-    params: AnatomicalAverageParameters,
+    params: AnatomicalAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def anatomical_average_cargs(
 
 
 def anatomical_average_outputs(
-    params: AnatomicalAverageParameters,
+    params: AnatomicalAverageParamsDict,
     execution: Execution,
 ) -> AnatomicalAverageOutputs:
     """
@@ -216,7 +216,7 @@ def anatomical_average_outputs(
 
 
 def anatomical_average_execute(
-    params: AnatomicalAverageParameters,
+    params: AnatomicalAverageParamsDict,
     runner: Runner | None = None,
 ) -> AnatomicalAverageOutputs:
     """
@@ -298,6 +298,8 @@ def anatomical_average(
 __all__ = [
     "ANATOMICAL_AVERAGE_METADATA",
     "AnatomicalAverageOutputs",
+    "AnatomicalAverageParamsDict",
+    "AnatomicalAverageParamsDictTagged",
     "anatomical_average",
     "anatomical_average_execute",
     "anatomical_average_params",

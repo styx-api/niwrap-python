@@ -13,13 +13,13 @@ MRIS_PROFILE_CLUSTERING_METADATA = Metadata(
 )
 
 
-MrisProfileClusteringParameters = typing.TypedDict('MrisProfileClusteringParameters', {
+MrisProfileClusteringParamsDict = typing.TypedDict('MrisProfileClusteringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_profileClustering"]],
     "input_file": InputPathType,
     "output_file": str,
     "other_options": typing.NotRequired[str | None],
 })
-MrisProfileClusteringParametersTagged = typing.TypedDict('MrisProfileClusteringParametersTagged', {
+MrisProfileClusteringParamsDictTagged = typing.TypedDict('MrisProfileClusteringParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_profileClustering"],
     "input_file": InputPathType,
     "output_file": str,
@@ -29,7 +29,7 @@ MrisProfileClusteringParametersTagged = typing.TypedDict('MrisProfileClusteringP
 
 class MrisProfileClusteringOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisProfileClusteringParameters(...)`.
+    Output object returned when calling `MrisProfileClusteringParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_profile_clustering_params(
     input_file: InputPathType,
     output_file: str,
     other_options: str | None = None,
-) -> MrisProfileClusteringParametersTagged:
+) -> MrisProfileClusteringParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mris_profile_clustering_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisProfileClusteringParameters` object.
+    `MrisProfileClusteringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mris_profile_clustering_validate(
 
 
 def mris_profile_clustering_cargs(
-    params: MrisProfileClusteringParameters,
+    params: MrisProfileClusteringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mris_profile_clustering_cargs(
 
 
 def mris_profile_clustering_outputs(
-    params: MrisProfileClusteringParameters,
+    params: MrisProfileClusteringParamsDict,
     execution: Execution,
 ) -> MrisProfileClusteringOutputs:
     """
@@ -130,7 +130,7 @@ def mris_profile_clustering_outputs(
 
 
 def mris_profile_clustering_execute(
-    params: MrisProfileClusteringParameters,
+    params: MrisProfileClusteringParamsDict,
     runner: Runner | None = None,
 ) -> MrisProfileClusteringOutputs:
     """
@@ -192,6 +192,8 @@ def mris_profile_clustering(
 __all__ = [
     "MRIS_PROFILE_CLUSTERING_METADATA",
     "MrisProfileClusteringOutputs",
+    "MrisProfileClusteringParamsDict",
+    "MrisProfileClusteringParamsDictTagged",
     "mris_profile_clustering",
     "mris_profile_clustering_execute",
     "mris_profile_clustering_params",

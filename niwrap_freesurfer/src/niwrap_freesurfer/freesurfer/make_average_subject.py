@@ -13,7 +13,7 @@ MAKE_AVERAGE_SUBJECT_METADATA = Metadata(
 )
 
 
-MakeAverageSubjectParameters = typing.TypedDict('MakeAverageSubjectParameters', {
+MakeAverageSubjectParamsDict = typing.TypedDict('MakeAverageSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_subject"]],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ MakeAverageSubjectParameters = typing.TypedDict('MakeAverageSubjectParameters', 
     "echo": bool,
     "debug": bool,
 })
-MakeAverageSubjectParametersTagged = typing.TypedDict('MakeAverageSubjectParametersTagged', {
+MakeAverageSubjectParamsDictTagged = typing.TypedDict('MakeAverageSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_average_subject"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -67,7 +67,7 @@ MakeAverageSubjectParametersTagged = typing.TypedDict('MakeAverageSubjectParamet
 
 class MakeAverageSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeAverageSubjectParameters(...)`.
+    Output object returned when calling `MakeAverageSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def make_average_subject_params(
     version: bool = False,
     echo: bool = False,
     debug: bool = False,
-) -> MakeAverageSubjectParametersTagged:
+) -> MakeAverageSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -168,7 +168,7 @@ def make_average_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeAverageSubjectParameters` object.
+    `MakeAverageSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -261,7 +261,7 @@ def make_average_subject_validate(
 
 
 def make_average_subject_cargs(
-    params: MakeAverageSubjectParameters,
+    params: MakeAverageSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -351,7 +351,7 @@ def make_average_subject_cargs(
 
 
 def make_average_subject_outputs(
-    params: MakeAverageSubjectParameters,
+    params: MakeAverageSubjectParamsDict,
     execution: Execution,
 ) -> MakeAverageSubjectOutputs:
     """
@@ -370,7 +370,7 @@ def make_average_subject_outputs(
 
 
 def make_average_subject_execute(
-    params: MakeAverageSubjectParameters,
+    params: MakeAverageSubjectParamsDict,
     runner: Runner | None = None,
 ) -> MakeAverageSubjectOutputs:
     """
@@ -492,6 +492,8 @@ def make_average_subject(
 __all__ = [
     "MAKE_AVERAGE_SUBJECT_METADATA",
     "MakeAverageSubjectOutputs",
+    "MakeAverageSubjectParamsDict",
+    "MakeAverageSubjectParamsDictTagged",
     "make_average_subject",
     "make_average_subject_execute",
     "make_average_subject_params",

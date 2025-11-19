@@ -13,7 +13,7 @@ SLICES_SUMMARY_METADATA = Metadata(
 )
 
 
-SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
+SlicesSummaryParamsDict = typing.TypedDict('SlicesSummaryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slices_summary"]],
     "4d_input_file": InputPathType,
     "threshold": float,
@@ -26,7 +26,7 @@ SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
     "output_png": str,
     "timepoints": str,
 })
-SlicesSummaryParametersTagged = typing.TypedDict('SlicesSummaryParametersTagged', {
+SlicesSummaryParamsDictTagged = typing.TypedDict('SlicesSummaryParamsDictTagged', {
     "@type": typing.Literal["fsl/slices_summary"],
     "4d_input_file": InputPathType,
     "threshold": float,
@@ -43,7 +43,7 @@ SlicesSummaryParametersTagged = typing.TypedDict('SlicesSummaryParametersTagged'
 
 class SlicesSummaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicesSummaryParameters(...)`.
+    Output object returned when calling `SlicesSummaryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def slices_summary_params(
     single_slice_flag: bool = False,
     darker_background_flag: bool = False,
     dumb_rule_flag: bool = False,
-) -> SlicesSummaryParametersTagged:
+) -> SlicesSummaryParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def slices_summary_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicesSummaryParameters` object.
+    `SlicesSummaryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def slices_summary_validate(
 
 
 def slices_summary_cargs(
-    params: SlicesSummaryParameters,
+    params: SlicesSummaryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def slices_summary_cargs(
 
 
 def slices_summary_outputs(
-    params: SlicesSummaryParameters,
+    params: SlicesSummaryParamsDict,
     execution: Execution,
 ) -> SlicesSummaryOutputs:
     """
@@ -208,7 +208,7 @@ def slices_summary_outputs(
 
 
 def slices_summary_execute(
-    params: SlicesSummaryParameters,
+    params: SlicesSummaryParamsDict,
     runner: Runner | None = None,
 ) -> SlicesSummaryOutputs:
     """
@@ -294,6 +294,8 @@ def slices_summary(
 __all__ = [
     "SLICES_SUMMARY_METADATA",
     "SlicesSummaryOutputs",
+    "SlicesSummaryParamsDict",
+    "SlicesSummaryParamsDictTagged",
     "slices_summary",
     "slices_summary_execute",
     "slices_summary_params",

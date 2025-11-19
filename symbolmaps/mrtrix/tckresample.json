@@ -18,7 +18,7 @@
     },
     "line": {
       "var_param": "line",
-      "fn_struct_make_params": "tckresample_line_params",
+      "fn_struct_make_params": "tckresample_line",
       "properties": {
         "num": {
           "var_param": "num"
@@ -33,7 +33,7 @@
     },
     "arc": {
       "var_param": "arc",
-      "fn_struct_make_params": "tckresample_arc_params",
+      "fn_struct_make_params": "tckresample_arc",
       "properties": {
         "num": {
           "var_param": "num"
@@ -66,7 +66,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "tckresample_config_params",
+      "fn_struct_make_params": "tckresample_config",
       "properties": {
         "key": {
           "var_param": "key"

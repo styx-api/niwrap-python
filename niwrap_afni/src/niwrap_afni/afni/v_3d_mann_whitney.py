@@ -13,7 +13,7 @@ V_3D_MANN_WHITNEY_METADATA = Metadata(
 )
 
 
-V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
+V3dMannWhitneyParamsDict = typing.TypedDict('V3dMannWhitneyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMannWhitney"]],
     "dset1_x": list[str],
     "dset2_y": list[str],
@@ -21,7 +21,7 @@ V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
     "workmem": typing.NotRequired[int | None],
     "voxel_num": typing.NotRequired[int | None],
 })
-V3dMannWhitneyParametersTagged = typing.TypedDict('V3dMannWhitneyParametersTagged', {
+V3dMannWhitneyParamsDictTagged = typing.TypedDict('V3dMannWhitneyParamsDictTagged', {
     "@type": typing.Literal["afni/3dMannWhitney"],
     "dset1_x": list[str],
     "dset2_y": list[str],
@@ -33,7 +33,7 @@ V3dMannWhitneyParametersTagged = typing.TypedDict('V3dMannWhitneyParametersTagge
 
 class V3dMannWhitneyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMannWhitneyParameters(...)`.
+    Output object returned when calling `V3dMannWhitneyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v_3d_mann_whitney_params(
     output_prefix: str,
     workmem: int | None = None,
     voxel_num: int | None = None,
-) -> V3dMannWhitneyParametersTagged:
+) -> V3dMannWhitneyParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def v_3d_mann_whitney_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMannWhitneyParameters` object.
+    `V3dMannWhitneyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def v_3d_mann_whitney_validate(
 
 
 def v_3d_mann_whitney_cargs(
-    params: V3dMannWhitneyParameters,
+    params: V3dMannWhitneyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def v_3d_mann_whitney_cargs(
 
 
 def v_3d_mann_whitney_outputs(
-    params: V3dMannWhitneyParameters,
+    params: V3dMannWhitneyParamsDict,
     execution: Execution,
 ) -> V3dMannWhitneyOutputs:
     """
@@ -172,7 +172,7 @@ def v_3d_mann_whitney_outputs(
 
 
 def v_3d_mann_whitney_execute(
-    params: V3dMannWhitneyParameters,
+    params: V3dMannWhitneyParamsDict,
     runner: Runner | None = None,
 ) -> V3dMannWhitneyOutputs:
     """
@@ -242,6 +242,8 @@ def v_3d_mann_whitney(
 
 __all__ = [
     "V3dMannWhitneyOutputs",
+    "V3dMannWhitneyParamsDict",
+    "V3dMannWhitneyParamsDictTagged",
     "V_3D_MANN_WHITNEY_METADATA",
     "v_3d_mann_whitney",
     "v_3d_mann_whitney_execute",

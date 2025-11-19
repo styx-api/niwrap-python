@@ -13,7 +13,7 @@ ANALYZETO4DFP_METADATA = Metadata(
 )
 
 
-Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
+Analyzeto4dfpParamsDict = typing.TypedDict('Analyzeto4dfpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/analyzeto4dfp"]],
     "analyze_image": InputPathType,
     "rois_scale": bool,
@@ -23,7 +23,7 @@ Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
     "endian": typing.NotRequired[str | None],
     "orientation": typing.NotRequired[int | None],
 })
-Analyzeto4dfpParametersTagged = typing.TypedDict('Analyzeto4dfpParametersTagged', {
+Analyzeto4dfpParamsDictTagged = typing.TypedDict('Analyzeto4dfpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/analyzeto4dfp"],
     "analyze_image": InputPathType,
     "rois_scale": bool,
@@ -37,7 +37,7 @@ Analyzeto4dfpParametersTagged = typing.TypedDict('Analyzeto4dfpParametersTagged'
 
 class Analyzeto4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Analyzeto4dfpParameters(...)`.
+    Output object returned when calling `Analyzeto4dfpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def analyzeto4dfp_params(
     flip_z: bool = False,
     endian: str | None = None,
     orientation: int | None = None,
-) -> Analyzeto4dfpParametersTagged:
+) -> Analyzeto4dfpParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def analyzeto4dfp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Analyzeto4dfpParameters` object.
+    `Analyzeto4dfpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def analyzeto4dfp_validate(
 
 
 def analyzeto4dfp_cargs(
-    params: Analyzeto4dfpParameters,
+    params: Analyzeto4dfpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def analyzeto4dfp_cargs(
 
 
 def analyzeto4dfp_outputs(
-    params: Analyzeto4dfpParameters,
+    params: Analyzeto4dfpParamsDict,
     execution: Execution,
 ) -> Analyzeto4dfpOutputs:
     """
@@ -180,7 +180,7 @@ def analyzeto4dfp_outputs(
 
 
 def analyzeto4dfp_execute(
-    params: Analyzeto4dfpParameters,
+    params: Analyzeto4dfpParamsDict,
     runner: Runner | None = None,
 ) -> Analyzeto4dfpOutputs:
     """
@@ -254,6 +254,8 @@ def analyzeto4dfp(
 __all__ = [
     "ANALYZETO4DFP_METADATA",
     "Analyzeto4dfpOutputs",
+    "Analyzeto4dfpParamsDict",
+    "Analyzeto4dfpParamsDictTagged",
     "analyzeto4dfp",
     "analyzeto4dfp_execute",
     "analyzeto4dfp_params",

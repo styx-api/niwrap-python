@@ -13,12 +13,12 @@ TBSS_3_POSTREG_METADATA = Metadata(
 )
 
 
-Tbss3PostregParameters = typing.TypedDict('Tbss3PostregParameters', {
+Tbss3PostregParamsDict = typing.TypedDict('Tbss3PostregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_3_postreg"]],
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })
-Tbss3PostregParametersTagged = typing.TypedDict('Tbss3PostregParametersTagged', {
+Tbss3PostregParamsDictTagged = typing.TypedDict('Tbss3PostregParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_3_postreg"],
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
@@ -27,7 +27,7 @@ Tbss3PostregParametersTagged = typing.TypedDict('Tbss3PostregParametersTagged', 
 
 class Tbss3PostregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tbss3PostregParameters(...)`.
+    Output object returned when calling `Tbss3PostregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class Tbss3PostregOutputs(typing.NamedTuple):
 def tbss_3_postreg_params(
     derive_mean_from_study: bool = False,
     use_fmrib58: bool = False,
-) -> Tbss3PostregParametersTagged:
+) -> Tbss3PostregParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def tbss_3_postreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tbss3PostregParameters` object.
+    `Tbss3PostregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def tbss_3_postreg_validate(
 
 
 def tbss_3_postreg_cargs(
-    params: Tbss3PostregParameters,
+    params: Tbss3PostregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def tbss_3_postreg_cargs(
 
 
 def tbss_3_postreg_outputs(
-    params: Tbss3PostregParameters,
+    params: Tbss3PostregParamsDict,
     execution: Execution,
 ) -> Tbss3PostregOutputs:
     """
@@ -120,7 +120,7 @@ def tbss_3_postreg_outputs(
 
 
 def tbss_3_postreg_execute(
-    params: Tbss3PostregParameters,
+    params: Tbss3PostregParamsDict,
     runner: Runner | None = None,
 ) -> Tbss3PostregOutputs:
     """
@@ -181,6 +181,8 @@ def tbss_3_postreg(
 __all__ = [
     "TBSS_3_POSTREG_METADATA",
     "Tbss3PostregOutputs",
+    "Tbss3PostregParamsDict",
+    "Tbss3PostregParamsDictTagged",
     "tbss_3_postreg",
     "tbss_3_postreg_execute",
     "tbss_3_postreg_params",

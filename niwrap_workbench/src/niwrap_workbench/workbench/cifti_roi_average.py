@@ -12,7 +12,7 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 )
 
 
-CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
+CiftiRoiAverageParamsDict = typing.TypedDict('CiftiRoiAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-roi-average"]],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
     "cifti-in": InputPathType,
     "text-out": str,
 })
-CiftiRoiAverageParametersTagged = typing.TypedDict('CiftiRoiAverageParametersTagged', {
+CiftiRoiAverageParamsDictTagged = typing.TypedDict('CiftiRoiAverageParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-roi-average"],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ CiftiRoiAverageParametersTagged = typing.TypedDict('CiftiRoiAverageParametersTag
 
 class CiftiRoiAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiRoiAverageParameters(...)`.
+    Output object returned when calling `CiftiRoiAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def cifti_roi_average_params(
     roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     text_out: str,
-) -> CiftiRoiAverageParametersTagged:
+) -> CiftiRoiAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def cifti_roi_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiRoiAverageParameters` object.
+    `CiftiRoiAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def cifti_roi_average_validate(
 
 
 def cifti_roi_average_cargs(
-    params: CiftiRoiAverageParameters,
+    params: CiftiRoiAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,7 +165,7 @@ def cifti_roi_average_cargs(
 
 
 def cifti_roi_average_outputs(
-    params: CiftiRoiAverageParameters,
+    params: CiftiRoiAverageParamsDict,
     execution: Execution,
 ) -> CiftiRoiAverageOutputs:
     """
@@ -184,7 +184,7 @@ def cifti_roi_average_outputs(
 
 
 def cifti_roi_average_execute(
-    params: CiftiRoiAverageParameters,
+    params: CiftiRoiAverageParamsDict,
     runner: Runner | None = None,
 ) -> CiftiRoiAverageOutputs:
     """
@@ -266,6 +266,8 @@ def cifti_roi_average(
 __all__ = [
     "CIFTI_ROI_AVERAGE_METADATA",
     "CiftiRoiAverageOutputs",
+    "CiftiRoiAverageParamsDict",
+    "CiftiRoiAverageParamsDictTagged",
     "cifti_roi_average",
     "cifti_roi_average_execute",
     "cifti_roi_average_params",

@@ -13,7 +13,7 @@ FTOZ_METADATA = Metadata(
 )
 
 
-FtozParameters = typing.TypedDict('FtozParameters', {
+FtozParamsDict = typing.TypedDict('FtozParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ftoz"]],
     "input_file": InputPathType,
     "dof1": float,
@@ -21,7 +21,7 @@ FtozParameters = typing.TypedDict('FtozParameters', {
     "output_file": typing.NotRequired[str | None],
     "help_flag": bool,
 })
-FtozParametersTagged = typing.TypedDict('FtozParametersTagged', {
+FtozParamsDictTagged = typing.TypedDict('FtozParamsDictTagged', {
     "@type": typing.Literal["fsl/ftoz"],
     "input_file": InputPathType,
     "dof1": float,
@@ -33,7 +33,7 @@ FtozParametersTagged = typing.TypedDict('FtozParametersTagged', {
 
 class FtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FtozParameters(...)`.
+    Output object returned when calling `FtozParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def ftoz_params(
     dof2: float,
     output_file: str | None = None,
     help_flag: bool = False,
-) -> FtozParametersTagged:
+) -> FtozParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def ftoz_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `FtozParameters`
+    Validate parameters. Throws an error if `params` is not a valid `FtozParamsDict`
     object.
     
     Args:
@@ -106,7 +106,7 @@ def ftoz_validate(
 
 
 def ftoz_cargs(
-    params: FtozParameters,
+    params: FtozParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def ftoz_cargs(
 
 
 def ftoz_outputs(
-    params: FtozParameters,
+    params: FtozParamsDict,
     execution: Execution,
 ) -> FtozOutputs:
     """
@@ -154,7 +154,7 @@ def ftoz_outputs(
 
 
 def ftoz_execute(
-    params: FtozParameters,
+    params: FtozParamsDict,
     runner: Runner | None = None,
 ) -> FtozOutputs:
     """
@@ -222,6 +222,8 @@ def ftoz(
 __all__ = [
     "FTOZ_METADATA",
     "FtozOutputs",
+    "FtozParamsDict",
+    "FtozParamsDictTagged",
     "ftoz",
     "ftoz_execute",
     "ftoz_params",

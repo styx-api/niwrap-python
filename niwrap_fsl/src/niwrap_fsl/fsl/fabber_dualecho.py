@@ -13,7 +13,7 @@ FABBER_DUALECHO_METADATA = Metadata(
 )
 
 
-FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
+FabberDualechoParamsDict = typing.TypedDict('FabberDualechoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_dualecho"]],
     "output_directory": str,
     "method": str,
@@ -51,7 +51,7 @@ FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
     "save_free_energy_flag": bool,
     "debug_flag": bool,
 })
-FabberDualechoParametersTagged = typing.TypedDict('FabberDualechoParametersTagged', {
+FabberDualechoParamsDictTagged = typing.TypedDict('FabberDualechoParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_dualecho"],
     "output_directory": str,
     "method": str,
@@ -93,7 +93,7 @@ FabberDualechoParametersTagged = typing.TypedDict('FabberDualechoParametersTagge
 
 class FabberDualechoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberDualechoParameters(...)`.
+    Output object returned when calling `FabberDualechoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +137,7 @@ def fabber_dualecho_params(
     save_noise_std_flag: bool = False,
     save_free_energy_flag: bool = False,
     debug_flag: bool = False,
-) -> FabberDualechoParametersTagged:
+) -> FabberDualechoParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def fabber_dualecho_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberDualechoParameters` object.
+    `FabberDualechoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -399,7 +399,7 @@ def fabber_dualecho_validate(
 
 
 def fabber_dualecho_cargs(
-    params: FabberDualechoParameters,
+    params: FabberDualechoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -519,7 +519,7 @@ def fabber_dualecho_cargs(
 
 
 def fabber_dualecho_outputs(
-    params: FabberDualechoParameters,
+    params: FabberDualechoParamsDict,
     execution: Execution,
 ) -> FabberDualechoOutputs:
     """
@@ -539,7 +539,7 @@ def fabber_dualecho_outputs(
 
 
 def fabber_dualecho_execute(
-    params: FabberDualechoParameters,
+    params: FabberDualechoParamsDict,
     runner: Runner | None = None,
 ) -> FabberDualechoOutputs:
     """
@@ -720,6 +720,8 @@ def fabber_dualecho(
 __all__ = [
     "FABBER_DUALECHO_METADATA",
     "FabberDualechoOutputs",
+    "FabberDualechoParamsDict",
+    "FabberDualechoParamsDictTagged",
     "fabber_dualecho",
     "fabber_dualecho_execute",
     "fabber_dualecho_params",

@@ -13,7 +13,7 @@ V_3D_AUTOBOX_METADATA = Metadata(
 )
 
 
-V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
+V3dAutoboxParamsDict = typing.TypedDict('V3dAutoboxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAutobox"]],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
     "npad": typing.NotRequired[float | None],
     "npad_safety_on": bool,
 })
-V3dAutoboxParametersTagged = typing.TypedDict('V3dAutoboxParametersTagged', {
+V3dAutoboxParamsDictTagged = typing.TypedDict('V3dAutoboxParamsDictTagged', {
     "@type": typing.Literal["afni/3dAutobox"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ V3dAutoboxParametersTagged = typing.TypedDict('V3dAutoboxParametersTagged', {
 
 class V3dAutoboxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAutoboxParameters(...)`.
+    Output object returned when calling `V3dAutoboxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def v_3d_autobox_params(
     extent_xyz_midslice: bool = False,
     npad: float | None = None,
     npad_safety_on: bool = False,
-) -> V3dAutoboxParametersTagged:
+) -> V3dAutoboxParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def v_3d_autobox_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAutoboxParameters` object.
+    `V3dAutoboxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def v_3d_autobox_validate(
 
 
 def v_3d_autobox_cargs(
-    params: V3dAutoboxParameters,
+    params: V3dAutoboxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def v_3d_autobox_cargs(
 
 
 def v_3d_autobox_outputs(
-    params: V3dAutoboxParameters,
+    params: V3dAutoboxParamsDict,
     execution: Execution,
 ) -> V3dAutoboxOutputs:
     """
@@ -277,7 +277,7 @@ def v_3d_autobox_outputs(
 
 
 def v_3d_autobox_execute(
-    params: V3dAutoboxParameters,
+    params: V3dAutoboxParamsDict,
     runner: Runner | None = None,
 ) -> V3dAutoboxOutputs:
     """
@@ -383,6 +383,8 @@ def v_3d_autobox(
 
 __all__ = [
     "V3dAutoboxOutputs",
+    "V3dAutoboxParamsDict",
+    "V3dAutoboxParamsDictTagged",
     "V_3D_AUTOBOX_METADATA",
     "v_3d_autobox",
     "v_3d_autobox_execute",

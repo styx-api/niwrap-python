@@ -13,11 +13,11 @@ MRIS_ERRORS_METADATA = Metadata(
 )
 
 
-MrisErrorsParameters = typing.TypedDict('MrisErrorsParameters', {
+MrisErrorsParamsDict = typing.TypedDict('MrisErrorsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_errors"]],
     "input_image_file": InputPathType,
 })
-MrisErrorsParametersTagged = typing.TypedDict('MrisErrorsParametersTagged', {
+MrisErrorsParamsDictTagged = typing.TypedDict('MrisErrorsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_errors"],
     "input_image_file": InputPathType,
 })
@@ -25,7 +25,7 @@ MrisErrorsParametersTagged = typing.TypedDict('MrisErrorsParametersTagged', {
 
 class MrisErrorsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisErrorsParameters(...)`.
+    Output object returned when calling `MrisErrorsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MrisErrorsOutputs(typing.NamedTuple):
 
 def mris_errors_params(
     input_image_file: InputPathType,
-) -> MrisErrorsParametersTagged:
+) -> MrisErrorsParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def mris_errors_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisErrorsParameters` object.
+    `MrisErrorsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def mris_errors_validate(
 
 
 def mris_errors_cargs(
-    params: MrisErrorsParameters,
+    params: MrisErrorsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def mris_errors_cargs(
 
 
 def mris_errors_outputs(
-    params: MrisErrorsParameters,
+    params: MrisErrorsParamsDict,
     execution: Execution,
 ) -> MrisErrorsOutputs:
     """
@@ -106,7 +106,7 @@ def mris_errors_outputs(
 
 
 def mris_errors_execute(
-    params: MrisErrorsParameters,
+    params: MrisErrorsParamsDict,
     runner: Runner | None = None,
 ) -> MrisErrorsOutputs:
     """
@@ -162,6 +162,8 @@ def mris_errors(
 __all__ = [
     "MRIS_ERRORS_METADATA",
     "MrisErrorsOutputs",
+    "MrisErrorsParamsDict",
+    "MrisErrorsParamsDictTagged",
     "mris_errors",
     "mris_errors_execute",
     "mris_errors_params",

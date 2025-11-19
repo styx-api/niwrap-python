@@ -12,12 +12,12 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 )
 
 
-SurfaceCreateSphereParameters = typing.TypedDict('SurfaceCreateSphereParameters', {
+SurfaceCreateSphereParamsDict = typing.TypedDict('SurfaceCreateSphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-create-sphere"]],
     "sphere-out": str,
     "num-vertices": int,
 })
-SurfaceCreateSphereParametersTagged = typing.TypedDict('SurfaceCreateSphereParametersTagged', {
+SurfaceCreateSphereParamsDictTagged = typing.TypedDict('SurfaceCreateSphereParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-create-sphere"],
     "sphere-out": str,
     "num-vertices": int,
@@ -26,7 +26,7 @@ SurfaceCreateSphereParametersTagged = typing.TypedDict('SurfaceCreateSphereParam
 
 class SurfaceCreateSphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceCreateSphereParameters(...)`.
+    Output object returned when calling `SurfaceCreateSphereParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceCreateSphereOutputs(typing.NamedTuple):
 def surface_create_sphere_params(
     sphere_out: str,
     num_vertices: int,
-) -> SurfaceCreateSphereParametersTagged:
+) -> SurfaceCreateSphereParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_create_sphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceCreateSphereParameters` object.
+    `SurfaceCreateSphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_create_sphere_validate(
 
 
 def surface_create_sphere_cargs(
-    params: SurfaceCreateSphereParameters,
+    params: SurfaceCreateSphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_create_sphere_cargs(
 
 
 def surface_create_sphere_outputs(
-    params: SurfaceCreateSphereParameters,
+    params: SurfaceCreateSphereParamsDict,
     execution: Execution,
 ) -> SurfaceCreateSphereOutputs:
     """
@@ -121,7 +121,7 @@ def surface_create_sphere_outputs(
 
 
 def surface_create_sphere_execute(
-    params: SurfaceCreateSphereParameters,
+    params: SurfaceCreateSphereParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
@@ -192,6 +192,8 @@ def surface_create_sphere(
 __all__ = [
     "SURFACE_CREATE_SPHERE_METADATA",
     "SurfaceCreateSphereOutputs",
+    "SurfaceCreateSphereParamsDict",
+    "SurfaceCreateSphereParamsDictTagged",
     "surface_create_sphere",
     "surface_create_sphere_execute",
     "surface_create_sphere_params",

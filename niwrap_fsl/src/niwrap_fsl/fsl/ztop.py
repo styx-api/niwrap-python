@@ -13,14 +13,14 @@ ZTOP_METADATA = Metadata(
 )
 
 
-ZtopParameters = typing.TypedDict('ZtopParameters', {
+ZtopParamsDict = typing.TypedDict('ZtopParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ztop"]],
     "z_score": float,
     "tail_flag": bool,
     "grf_flag": bool,
     "number_of_resels": typing.NotRequired[float | None],
 })
-ZtopParametersTagged = typing.TypedDict('ZtopParametersTagged', {
+ZtopParamsDictTagged = typing.TypedDict('ZtopParamsDictTagged', {
     "@type": typing.Literal["fsl/ztop"],
     "z_score": float,
     "tail_flag": bool,
@@ -31,7 +31,7 @@ ZtopParametersTagged = typing.TypedDict('ZtopParametersTagged', {
 
 class ZtopOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ZtopParameters(...)`.
+    Output object returned when calling `ZtopParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def ztop_params(
     tail_flag: bool = False,
     grf_flag: bool = False,
     number_of_resels: float | None = None,
-) -> ZtopParametersTagged:
+) -> ZtopParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def ztop_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `ZtopParameters`
+    Validate parameters. Throws an error if `params` is not a valid `ZtopParamsDict`
     object.
     
     Args:
@@ -96,7 +96,7 @@ def ztop_validate(
 
 
 def ztop_cargs(
-    params: ZtopParameters,
+    params: ZtopParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def ztop_cargs(
 
 
 def ztop_outputs(
-    params: ZtopParameters,
+    params: ZtopParamsDict,
     execution: Execution,
 ) -> ZtopOutputs:
     """
@@ -140,7 +140,7 @@ def ztop_outputs(
 
 
 def ztop_execute(
-    params: ZtopParameters,
+    params: ZtopParamsDict,
     runner: Runner | None = None,
 ) -> ZtopOutputs:
     """
@@ -206,6 +206,8 @@ def ztop(
 __all__ = [
     "ZTOP_METADATA",
     "ZtopOutputs",
+    "ZtopParamsDict",
+    "ZtopParamsDictTagged",
     "ztop",
     "ztop_execute",
     "ztop_params",

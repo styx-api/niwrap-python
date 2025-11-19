@@ -13,7 +13,7 @@ MRI_MORPHOLOGY_METADATA = Metadata(
 )
 
 
-MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
+MriMorphologyParamsDict = typing.TypedDict('MriMorphologyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_morphology"]],
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
@@ -21,7 +21,7 @@ MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
     "output_volume": str,
     "label_option": typing.NotRequired[float | None],
 })
-MriMorphologyParametersTagged = typing.TypedDict('MriMorphologyParametersTagged', {
+MriMorphologyParamsDictTagged = typing.TypedDict('MriMorphologyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_morphology"],
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
@@ -33,7 +33,7 @@ MriMorphologyParametersTagged = typing.TypedDict('MriMorphologyParametersTagged'
 
 class MriMorphologyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMorphologyParameters(...)`.
+    Output object returned when calling `MriMorphologyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_morphology_params(
     number_iter: int,
     output_volume: str,
     label_option: float | None = None,
-) -> MriMorphologyParametersTagged:
+) -> MriMorphologyParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mri_morphology_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMorphologyParameters` object.
+    `MriMorphologyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def mri_morphology_validate(
 
 
 def mri_morphology_cargs(
-    params: MriMorphologyParameters,
+    params: MriMorphologyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def mri_morphology_cargs(
 
 
 def mri_morphology_outputs(
-    params: MriMorphologyParameters,
+    params: MriMorphologyParamsDict,
     execution: Execution,
 ) -> MriMorphologyOutputs:
     """
@@ -159,7 +159,7 @@ def mri_morphology_outputs(
 
 
 def mri_morphology_execute(
-    params: MriMorphologyParameters,
+    params: MriMorphologyParamsDict,
     runner: Runner | None = None,
 ) -> MriMorphologyOutputs:
     """
@@ -231,6 +231,8 @@ def mri_morphology(
 __all__ = [
     "MRI_MORPHOLOGY_METADATA",
     "MriMorphologyOutputs",
+    "MriMorphologyParamsDict",
+    "MriMorphologyParamsDictTagged",
     "mri_morphology",
     "mri_morphology_execute",
     "mri_morphology_params",

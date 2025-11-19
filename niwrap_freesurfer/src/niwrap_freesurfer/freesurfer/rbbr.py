@@ -13,7 +13,7 @@ RBBR_METADATA = Metadata(
 )
 
 
-RbbrParameters = typing.TypedDict('RbbrParameters', {
+RbbrParamsDict = typing.TypedDict('RbbrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rbbr"]],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
@@ -38,7 +38,7 @@ RbbrParameters = typing.TypedDict('RbbrParameters', {
     "output_template": typing.NotRequired[str | None],
     "no_merge": bool,
 })
-RbbrParametersTagged = typing.TypedDict('RbbrParametersTagged', {
+RbbrParamsDictTagged = typing.TypedDict('RbbrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rbbr"],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
@@ -67,7 +67,7 @@ RbbrParametersTagged = typing.TypedDict('RbbrParametersTagged', {
 
 class RbbrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RbbrParameters(...)`.
+    Output object returned when calling `RbbrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def rbbr_params(
     frame_no: float | None = None,
     output_template: str | None = None,
     no_merge: bool = False,
-) -> RbbrParametersTagged:
+) -> RbbrParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def rbbr_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `RbbrParameters`
+    Validate parameters. Throws an error if `params` is not a valid `RbbrParamsDict`
     object.
     
     Args:
@@ -263,7 +263,7 @@ def rbbr_validate(
 
 
 def rbbr_cargs(
-    params: RbbrParameters,
+    params: RbbrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -360,7 +360,7 @@ def rbbr_cargs(
 
 
 def rbbr_outputs(
-    params: RbbrParameters,
+    params: RbbrParamsDict,
     execution: Execution,
 ) -> RbbrOutputs:
     """
@@ -382,7 +382,7 @@ def rbbr_outputs(
 
 
 def rbbr_execute(
-    params: RbbrParameters,
+    params: RbbrParamsDict,
     runner: Runner | None = None,
 ) -> RbbrOutputs:
     """
@@ -501,6 +501,8 @@ def rbbr(
 __all__ = [
     "RBBR_METADATA",
     "RbbrOutputs",
+    "RbbrParamsDict",
+    "RbbrParamsDictTagged",
     "rbbr",
     "rbbr_execute",
     "rbbr_params",

@@ -9,7 +9,7 @@
     },
     "individual-fibers": {
       "var_param": "individual_fibers",
-      "fn_struct_make_params": "convert_matrix4_to_matrix2_individual_fibers_params",
+      "fn_struct_make_params": "convert_matrix4_to_matrix2_individual_fibers",
       "properties": {
         "fiber-1": {
           "var_param": "fiber_1"

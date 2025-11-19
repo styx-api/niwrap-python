@@ -13,7 +13,7 @@ P2DSETSTAT_METADATA = Metadata(
 )
 
 
-P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
+P2dsetstatParamsDict = typing.TypedDict('P2dsetstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/p2dsetstat"]],
     "dataset": str,
     "pvalue": float,
@@ -22,7 +22,7 @@ P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
     "onesided": bool,
     "quiet": bool,
 })
-P2dsetstatParametersTagged = typing.TypedDict('P2dsetstatParametersTagged', {
+P2dsetstatParamsDictTagged = typing.TypedDict('P2dsetstatParamsDictTagged', {
     "@type": typing.Literal["afni/p2dsetstat"],
     "dataset": str,
     "pvalue": float,
@@ -35,7 +35,7 @@ P2dsetstatParametersTagged = typing.TypedDict('P2dsetstatParametersTagged', {
 
 class P2dsetstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `P2dsetstatParameters(...)`.
+    Output object returned when calling `P2dsetstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def p2dsetstat_params(
     twosided: bool = False,
     onesided: bool = False,
     quiet: bool = False,
-) -> P2dsetstatParametersTagged:
+) -> P2dsetstatParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def p2dsetstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `P2dsetstatParameters` object.
+    `P2dsetstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def p2dsetstat_validate(
 
 
 def p2dsetstat_cargs(
-    params: P2dsetstatParameters,
+    params: P2dsetstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def p2dsetstat_cargs(
 
 
 def p2dsetstat_outputs(
-    params: P2dsetstatParameters,
+    params: P2dsetstatParamsDict,
     execution: Execution,
 ) -> P2dsetstatOutputs:
     """
@@ -175,7 +175,7 @@ def p2dsetstat_outputs(
 
 
 def p2dsetstat_execute(
-    params: P2dsetstatParameters,
+    params: P2dsetstatParamsDict,
     runner: Runner | None = None,
 ) -> P2dsetstatOutputs:
     """
@@ -252,6 +252,8 @@ def p2dsetstat(
 __all__ = [
     "P2DSETSTAT_METADATA",
     "P2dsetstatOutputs",
+    "P2dsetstatParamsDict",
+    "P2dsetstatParamsDictTagged",
     "p2dsetstat",
     "p2dsetstat_execute",
     "p2dsetstat_params",

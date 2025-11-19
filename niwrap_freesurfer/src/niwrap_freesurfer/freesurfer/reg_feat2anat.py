@@ -13,7 +13,7 @@ REG_FEAT2ANAT_METADATA = Metadata(
 )
 
 
-RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
+RegFeat2anatParamsDict = typing.TypedDict('RegFeat2anatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reg-feat2anat"]],
     "feat_dir": str,
     "subject_id": str,
@@ -32,7 +32,7 @@ RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
     "fmov": typing.NotRequired[str | None],
     "debug": bool,
 })
-RegFeat2anatParametersTagged = typing.TypedDict('RegFeat2anatParametersTagged', {
+RegFeat2anatParamsDictTagged = typing.TypedDict('RegFeat2anatParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reg-feat2anat"],
     "feat_dir": str,
     "subject_id": str,
@@ -55,7 +55,7 @@ RegFeat2anatParametersTagged = typing.TypedDict('RegFeat2anatParametersTagged', 
 
 class RegFeat2anatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegFeat2anatParameters(...)`.
+    Output object returned when calling `RegFeat2anatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def reg_feat2anat_params(
     no_inorm: bool = False,
     fmov: str | None = None,
     debug: bool = False,
-) -> RegFeat2anatParametersTagged:
+) -> RegFeat2anatParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def reg_feat2anat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegFeat2anatParameters` object.
+    `RegFeat2anatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def reg_feat2anat_validate(
 
 
 def reg_feat2anat_cargs(
-    params: RegFeat2anatParameters,
+    params: RegFeat2anatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -295,7 +295,7 @@ def reg_feat2anat_cargs(
 
 
 def reg_feat2anat_outputs(
-    params: RegFeat2anatParameters,
+    params: RegFeat2anatParamsDict,
     execution: Execution,
 ) -> RegFeat2anatOutputs:
     """
@@ -322,7 +322,7 @@ def reg_feat2anat_outputs(
 
 
 def reg_feat2anat_execute(
-    params: RegFeat2anatParameters,
+    params: RegFeat2anatParamsDict,
     runner: Runner | None = None,
 ) -> RegFeat2anatOutputs:
     """
@@ -424,6 +424,8 @@ def reg_feat2anat(
 __all__ = [
     "REG_FEAT2ANAT_METADATA",
     "RegFeat2anatOutputs",
+    "RegFeat2anatParamsDict",
+    "RegFeat2anatParamsDictTagged",
     "reg_feat2anat",
     "reg_feat2anat_execute",
     "reg_feat2anat_params",

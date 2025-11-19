@@ -12,13 +12,13 @@ GIFTI_CONVERT_METADATA = Metadata(
 )
 
 
-GiftiConvertParameters = typing.TypedDict('GiftiConvertParameters', {
+GiftiConvertParamsDict = typing.TypedDict('GiftiConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-convert"]],
     "gifti-encoding": str,
     "input-gifti-file": str,
     "output-gifti-file": str,
 })
-GiftiConvertParametersTagged = typing.TypedDict('GiftiConvertParametersTagged', {
+GiftiConvertParamsDictTagged = typing.TypedDict('GiftiConvertParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-convert"],
     "gifti-encoding": str,
     "input-gifti-file": str,
@@ -28,7 +28,7 @@ GiftiConvertParametersTagged = typing.TypedDict('GiftiConvertParametersTagged', 
 
 class GiftiConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GiftiConvertParameters(...)`.
+    Output object returned when calling `GiftiConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def gifti_convert_params(
     gifti_encoding: str,
     input_gifti_file: str,
     output_gifti_file: str,
-) -> GiftiConvertParametersTagged:
+) -> GiftiConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def gifti_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GiftiConvertParameters` object.
+    `GiftiConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def gifti_convert_validate(
 
 
 def gifti_convert_cargs(
-    params: GiftiConvertParameters,
+    params: GiftiConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def gifti_convert_cargs(
 
 
 def gifti_convert_outputs(
-    params: GiftiConvertParameters,
+    params: GiftiConvertParamsDict,
     execution: Execution,
 ) -> GiftiConvertOutputs:
     """
@@ -128,7 +128,7 @@ def gifti_convert_outputs(
 
 
 def gifti_convert_execute(
-    params: GiftiConvertParameters,
+    params: GiftiConvertParamsDict,
     runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
@@ -192,6 +192,8 @@ def gifti_convert(
 __all__ = [
     "GIFTI_CONVERT_METADATA",
     "GiftiConvertOutputs",
+    "GiftiConvertParamsDict",
+    "GiftiConvertParamsDictTagged",
     "gifti_convert",
     "gifti_convert_execute",
     "gifti_convert_params",

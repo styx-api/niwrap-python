@@ -13,7 +13,7 @@ CONF2HIRES_METADATA = Metadata(
 )
 
 
-Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
+Conf2hiresParamsDict = typing.TypedDict('Conf2hiresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/conf2hires"]],
     "subject": str,
     "t2": bool,
@@ -37,7 +37,7 @@ Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
     "expert": typing.NotRequired[str | None],
     "force_update": bool,
 })
-Conf2hiresParametersTagged = typing.TypedDict('Conf2hiresParametersTagged', {
+Conf2hiresParamsDictTagged = typing.TypedDict('Conf2hiresParamsDictTagged', {
     "@type": typing.Literal["freesurfer/conf2hires"],
     "subject": str,
     "t2": bool,
@@ -65,7 +65,7 @@ Conf2hiresParametersTagged = typing.TypedDict('Conf2hiresParametersTagged', {
 
 class Conf2hiresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Conf2hiresParameters(...)`.
+    Output object returned when calling `Conf2hiresParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def conf2hires_params(
     stopmask: str | None = None,
     expert: str | None = None,
     force_update: bool = False,
-) -> Conf2hiresParametersTagged:
+) -> Conf2hiresParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def conf2hires_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Conf2hiresParameters` object.
+    `Conf2hiresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -253,7 +253,7 @@ def conf2hires_validate(
 
 
 def conf2hires_cargs(
-    params: Conf2hiresParameters,
+    params: Conf2hiresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -330,7 +330,7 @@ def conf2hires_cargs(
 
 
 def conf2hires_outputs(
-    params: Conf2hiresParameters,
+    params: Conf2hiresParamsDict,
     execution: Execution,
 ) -> Conf2hiresOutputs:
     """
@@ -349,7 +349,7 @@ def conf2hires_outputs(
 
 
 def conf2hires_execute(
-    params: Conf2hiresParameters,
+    params: Conf2hiresParamsDict,
     runner: Runner | None = None,
 ) -> Conf2hiresOutputs:
     """
@@ -472,6 +472,8 @@ def conf2hires(
 __all__ = [
     "CONF2HIRES_METADATA",
     "Conf2hiresOutputs",
+    "Conf2hiresParamsDict",
+    "Conf2hiresParamsDictTagged",
     "conf2hires",
     "conf2hires_execute",
     "conf2hires_params",

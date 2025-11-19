@@ -13,12 +13,12 @@ UNPACKSDCMDIR_METADATA = Metadata(
 )
 
 
-UnpacksdcmdirParameters = typing.TypedDict('UnpacksdcmdirParameters', {
+UnpacksdcmdirParamsDict = typing.TypedDict('UnpacksdcmdirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpacksdcmdir"]],
     "input_directory": str,
     "output_directory": str,
 })
-UnpacksdcmdirParametersTagged = typing.TypedDict('UnpacksdcmdirParametersTagged', {
+UnpacksdcmdirParamsDictTagged = typing.TypedDict('UnpacksdcmdirParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpacksdcmdir"],
     "input_directory": str,
     "output_directory": str,
@@ -27,7 +27,7 @@ UnpacksdcmdirParametersTagged = typing.TypedDict('UnpacksdcmdirParametersTagged'
 
 class UnpacksdcmdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnpacksdcmdirParameters(...)`.
+    Output object returned when calling `UnpacksdcmdirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class UnpacksdcmdirOutputs(typing.NamedTuple):
 def unpacksdcmdir_params(
     input_directory: str,
     output_directory: str,
-) -> UnpacksdcmdirParametersTagged:
+) -> UnpacksdcmdirParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def unpacksdcmdir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnpacksdcmdirParameters` object.
+    `UnpacksdcmdirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def unpacksdcmdir_validate(
 
 
 def unpacksdcmdir_cargs(
-    params: UnpacksdcmdirParameters,
+    params: UnpacksdcmdirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def unpacksdcmdir_cargs(
 
 
 def unpacksdcmdir_outputs(
-    params: UnpacksdcmdirParameters,
+    params: UnpacksdcmdirParamsDict,
     execution: Execution,
 ) -> UnpacksdcmdirOutputs:
     """
@@ -120,7 +120,7 @@ def unpacksdcmdir_outputs(
 
 
 def unpacksdcmdir_execute(
-    params: UnpacksdcmdirParameters,
+    params: UnpacksdcmdirParamsDict,
     runner: Runner | None = None,
 ) -> UnpacksdcmdirOutputs:
     """
@@ -184,6 +184,8 @@ def unpacksdcmdir(
 __all__ = [
     "UNPACKSDCMDIR_METADATA",
     "UnpacksdcmdirOutputs",
+    "UnpacksdcmdirParamsDict",
+    "UnpacksdcmdirParamsDictTagged",
     "unpacksdcmdir",
     "unpacksdcmdir_execute",
     "unpacksdcmdir_params",

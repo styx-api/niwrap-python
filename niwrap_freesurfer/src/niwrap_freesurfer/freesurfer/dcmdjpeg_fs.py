@@ -13,7 +13,7 @@ DCMDJPEG_FS_METADATA = Metadata(
 )
 
 
-DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
+DcmdjpegFsParamsDict = typing.TypedDict('DcmdjpegFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdjpeg.fs"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -57,7 +57,7 @@ DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
     "padding_off": bool,
     "padding_create": typing.NotRequired[list[float] | None],
 })
-DcmdjpegFsParametersTagged = typing.TypedDict('DcmdjpegFsParametersTagged', {
+DcmdjpegFsParamsDictTagged = typing.TypedDict('DcmdjpegFsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dcmdjpeg.fs"],
     "input_file": InputPathType,
     "output_file": str,
@@ -105,7 +105,7 @@ DcmdjpegFsParametersTagged = typing.TypedDict('DcmdjpegFsParametersTagged', {
 
 class DcmdjpegFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmdjpegFsParameters(...)`.
+    Output object returned when calling `DcmdjpegFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,7 +155,7 @@ def dcmdjpeg_fs_params(
     padding_retain: bool = False,
     padding_off: bool = False,
     padding_create: list[float] | None = None,
-) -> DcmdjpegFsParametersTagged:
+) -> DcmdjpegFsParamsDictTagged:
     """
     Build parameters.
     
@@ -263,7 +263,7 @@ def dcmdjpeg_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmdjpegFsParameters` object.
+    `DcmdjpegFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -439,7 +439,7 @@ def dcmdjpeg_fs_validate(
 
 
 def dcmdjpeg_fs_cargs(
-    params: DcmdjpegFsParameters,
+    params: DcmdjpegFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -546,7 +546,7 @@ def dcmdjpeg_fs_cargs(
 
 
 def dcmdjpeg_fs_outputs(
-    params: DcmdjpegFsParameters,
+    params: DcmdjpegFsParamsDict,
     execution: Execution,
 ) -> DcmdjpegFsOutputs:
     """
@@ -566,7 +566,7 @@ def dcmdjpeg_fs_outputs(
 
 
 def dcmdjpeg_fs_execute(
-    params: DcmdjpegFsParameters,
+    params: DcmdjpegFsParamsDict,
     runner: Runner | None = None,
 ) -> DcmdjpegFsOutputs:
     """
@@ -746,6 +746,8 @@ def dcmdjpeg_fs(
 __all__ = [
     "DCMDJPEG_FS_METADATA",
     "DcmdjpegFsOutputs",
+    "DcmdjpegFsParamsDict",
+    "DcmdjpegFsParamsDictTagged",
     "dcmdjpeg_fs",
     "dcmdjpeg_fs_execute",
     "dcmdjpeg_fs_params",

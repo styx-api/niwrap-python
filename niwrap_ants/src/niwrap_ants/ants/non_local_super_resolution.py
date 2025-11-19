@@ -13,7 +13,7 @@ NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
 )
 
 
-NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionParameters', {
+NonLocalSuperResolutionParamsDict = typing.TypedDict('NonLocalSuperResolutionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/NonLocalSuperResolution"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -28,7 +28,7 @@ NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionPar
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-NonLocalSuperResolutionParametersTagged = typing.TypedDict('NonLocalSuperResolutionParametersTagged', {
+NonLocalSuperResolutionParamsDictTagged = typing.TypedDict('NonLocalSuperResolutionParamsDictTagged', {
     "@type": typing.Literal["ants/NonLocalSuperResolution"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
@@ -47,7 +47,7 @@ NonLocalSuperResolutionParametersTagged = typing.TypedDict('NonLocalSuperResolut
 
 class NonLocalSuperResolutionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NonLocalSuperResolutionParameters(...)`.
+    Output object returned when calling `NonLocalSuperResolutionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def non_local_super_resolution_params(
     scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: bool | None = None,
-) -> NonLocalSuperResolutionParametersTagged:
+) -> NonLocalSuperResolutionParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def non_local_super_resolution_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NonLocalSuperResolutionParameters` object.
+    `NonLocalSuperResolutionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def non_local_super_resolution_validate(
 
 
 def non_local_super_resolution_cargs(
-    params: NonLocalSuperResolutionParameters,
+    params: NonLocalSuperResolutionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -260,7 +260,7 @@ def non_local_super_resolution_cargs(
 
 
 def non_local_super_resolution_outputs(
-    params: NonLocalSuperResolutionParameters,
+    params: NonLocalSuperResolutionParamsDict,
     execution: Execution,
 ) -> NonLocalSuperResolutionOutputs:
     """
@@ -280,7 +280,7 @@ def non_local_super_resolution_outputs(
 
 
 def non_local_super_resolution_execute(
-    params: NonLocalSuperResolutionParameters,
+    params: NonLocalSuperResolutionParamsDict,
     runner: Runner | None = None,
 ) -> NonLocalSuperResolutionOutputs:
     """
@@ -378,6 +378,8 @@ def non_local_super_resolution(
 __all__ = [
     "NON_LOCAL_SUPER_RESOLUTION_METADATA",
     "NonLocalSuperResolutionOutputs",
+    "NonLocalSuperResolutionParamsDict",
+    "NonLocalSuperResolutionParamsDictTagged",
     "non_local_super_resolution",
     "non_local_super_resolution_execute",
     "non_local_super_resolution_params",

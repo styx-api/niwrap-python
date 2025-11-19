@@ -13,7 +13,7 @@ ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
 )
 
 
-AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParameters', {
+AdjunctApqcTsnrGeneralParamsDict = typing.TypedDict('AdjunctApqcTsnrGeneralParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_apqc_tsnr_general"]],
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParam
     "no_axi": bool,
     "echo": bool,
 })
-AdjunctApqcTsnrGeneralParametersTagged = typing.TypedDict('AdjunctApqcTsnrGeneralParametersTagged', {
+AdjunctApqcTsnrGeneralParamsDictTagged = typing.TypedDict('AdjunctApqcTsnrGeneralParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_apqc_tsnr_general"],
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
@@ -69,7 +69,7 @@ AdjunctApqcTsnrGeneralParametersTagged = typing.TypedDict('AdjunctApqcTsnrGenera
 
 class AdjunctApqcTsnrGeneralOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctApqcTsnrGeneralParameters(...)`.
+    Output object returned when calling `AdjunctApqcTsnrGeneralParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +99,7 @@ def adjunct_apqc_tsnr_general_params(
     no_sag: bool = False,
     no_axi: bool = False,
     echo: bool = False,
-) -> AdjunctApqcTsnrGeneralParametersTagged:
+) -> AdjunctApqcTsnrGeneralParamsDictTagged:
     """
     Build parameters.
     
@@ -183,7 +183,7 @@ def adjunct_apqc_tsnr_general_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctApqcTsnrGeneralParameters` object.
+    `AdjunctApqcTsnrGeneralParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -301,7 +301,7 @@ def adjunct_apqc_tsnr_general_validate(
 
 
 def adjunct_apqc_tsnr_general_cargs(
-    params: AdjunctApqcTsnrGeneralParameters,
+    params: AdjunctApqcTsnrGeneralParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -422,7 +422,7 @@ def adjunct_apqc_tsnr_general_cargs(
 
 
 def adjunct_apqc_tsnr_general_outputs(
-    params: AdjunctApqcTsnrGeneralParameters,
+    params: AdjunctApqcTsnrGeneralParamsDict,
     execution: Execution,
 ) -> AdjunctApqcTsnrGeneralOutputs:
     """
@@ -441,7 +441,7 @@ def adjunct_apqc_tsnr_general_outputs(
 
 
 def adjunct_apqc_tsnr_general_execute(
-    params: AdjunctApqcTsnrGeneralParameters,
+    params: AdjunctApqcTsnrGeneralParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctApqcTsnrGeneralOutputs:
     """
@@ -563,6 +563,8 @@ def adjunct_apqc_tsnr_general(
 __all__ = [
     "ADJUNCT_APQC_TSNR_GENERAL_METADATA",
     "AdjunctApqcTsnrGeneralOutputs",
+    "AdjunctApqcTsnrGeneralParamsDict",
+    "AdjunctApqcTsnrGeneralParamsDictTagged",
     "adjunct_apqc_tsnr_general",
     "adjunct_apqc_tsnr_general_execute",
     "adjunct_apqc_tsnr_general_params",

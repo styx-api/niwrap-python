@@ -13,7 +13,7 @@ V_3D_RPROG_DEMO_METADATA = Metadata(
 )
 
 
-V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
+V3dRprogDemoParamsDict = typing.TypedDict('V3dRprogDemoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRprogDemo"]],
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
     "show_allowed_options": bool,
     "verbosity_level": typing.NotRequired[float | None],
 })
-V3dRprogDemoParametersTagged = typing.TypedDict('V3dRprogDemoParametersTagged', {
+V3dRprogDemoParamsDictTagged = typing.TypedDict('V3dRprogDemoParamsDictTagged', {
     "@type": typing.Literal["afni/3dRprogDemo"],
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ V3dRprogDemoParametersTagged = typing.TypedDict('V3dRprogDemoParametersTagged', 
 
 class V3dRprogDemoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRprogDemoParameters(...)`.
+    Output object returned when calling `V3dRprogDemoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_3d_rprog_demo_params(
     help_: bool = False,
     show_allowed_options: bool = False,
     verbosity_level: float | None = None,
-) -> V3dRprogDemoParametersTagged:
+) -> V3dRprogDemoParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v_3d_rprog_demo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRprogDemoParameters` object.
+    `V3dRprogDemoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def v_3d_rprog_demo_validate(
 
 
 def v_3d_rprog_demo_cargs(
-    params: V3dRprogDemoParameters,
+    params: V3dRprogDemoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -213,7 +213,7 @@ def v_3d_rprog_demo_cargs(
 
 
 def v_3d_rprog_demo_outputs(
-    params: V3dRprogDemoParameters,
+    params: V3dRprogDemoParamsDict,
     execution: Execution,
 ) -> V3dRprogDemoOutputs:
     """
@@ -233,7 +233,7 @@ def v_3d_rprog_demo_outputs(
 
 
 def v_3d_rprog_demo_execute(
-    params: V3dRprogDemoParameters,
+    params: V3dRprogDemoParamsDict,
     runner: Runner | None = None,
 ) -> V3dRprogDemoOutputs:
     """
@@ -321,6 +321,8 @@ def v_3d_rprog_demo(
 
 __all__ = [
     "V3dRprogDemoOutputs",
+    "V3dRprogDemoParamsDict",
+    "V3dRprogDemoParamsDictTagged",
     "V_3D_RPROG_DEMO_METADATA",
     "v_3d_rprog_demo",
     "v_3d_rprog_demo_execute",

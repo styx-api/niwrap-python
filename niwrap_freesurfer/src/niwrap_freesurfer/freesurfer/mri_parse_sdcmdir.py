@@ -13,7 +13,7 @@ MRI_PARSE_SDCMDIR_METADATA = Metadata(
 )
 
 
-MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
+MriParseSdcmdirParamsDict = typing.TypedDict('MriParseSdcmdirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_parse_sdcmdir"]],
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
     "summarize": bool,
     "dwi": bool,
 })
-MriParseSdcmdirParametersTagged = typing.TypedDict('MriParseSdcmdirParametersTagged', {
+MriParseSdcmdirParamsDictTagged = typing.TypedDict('MriParseSdcmdirParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_parse_sdcmdir"],
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ MriParseSdcmdirParametersTagged = typing.TypedDict('MriParseSdcmdirParametersTag
 
 class MriParseSdcmdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriParseSdcmdirParameters(...)`.
+    Output object returned when calling `MriParseSdcmdirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mri_parse_sdcmdir_params(
     sortbyrun: bool = False,
     summarize: bool = False,
     dwi: bool = False,
-) -> MriParseSdcmdirParametersTagged:
+) -> MriParseSdcmdirParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_parse_sdcmdir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriParseSdcmdirParameters` object.
+    `MriParseSdcmdirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def mri_parse_sdcmdir_validate(
 
 
 def mri_parse_sdcmdir_cargs(
-    params: MriParseSdcmdirParameters,
+    params: MriParseSdcmdirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def mri_parse_sdcmdir_cargs(
 
 
 def mri_parse_sdcmdir_outputs(
-    params: MriParseSdcmdirParameters,
+    params: MriParseSdcmdirParamsDict,
     execution: Execution,
 ) -> MriParseSdcmdirOutputs:
     """
@@ -157,7 +157,7 @@ def mri_parse_sdcmdir_outputs(
 
 
 def mri_parse_sdcmdir_execute(
-    params: MriParseSdcmdirParameters,
+    params: MriParseSdcmdirParamsDict,
     runner: Runner | None = None,
 ) -> MriParseSdcmdirOutputs:
     """
@@ -228,6 +228,8 @@ def mri_parse_sdcmdir(
 __all__ = [
     "MRI_PARSE_SDCMDIR_METADATA",
     "MriParseSdcmdirOutputs",
+    "MriParseSdcmdirParamsDict",
+    "MriParseSdcmdirParamsDictTagged",
     "mri_parse_sdcmdir",
     "mri_parse_sdcmdir_execute",
     "mri_parse_sdcmdir_params",

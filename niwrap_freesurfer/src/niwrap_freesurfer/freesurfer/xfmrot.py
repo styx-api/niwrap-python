@@ -13,13 +13,13 @@ XFMROT_METADATA = Metadata(
 )
 
 
-XfmrotParameters = typing.TypedDict('XfmrotParameters', {
+XfmrotParamsDict = typing.TypedDict('XfmrotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xfmrot"]],
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],
 })
-XfmrotParametersTagged = typing.TypedDict('XfmrotParametersTagged', {
+XfmrotParamsDictTagged = typing.TypedDict('XfmrotParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xfmrot"],
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
@@ -29,7 +29,7 @@ XfmrotParametersTagged = typing.TypedDict('XfmrotParametersTagged', {
 
 class XfmrotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XfmrotParameters(...)`.
+    Output object returned when calling `XfmrotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def xfmrot_params(
     transform_file: InputPathType,
     input_vector_file: InputPathType,
     output_vector_file: str | None = None,
-) -> XfmrotParametersTagged:
+) -> XfmrotParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def xfmrot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XfmrotParameters` object.
+    `XfmrotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def xfmrot_validate(
 
 
 def xfmrot_cargs(
-    params: XfmrotParameters,
+    params: XfmrotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def xfmrot_cargs(
 
 
 def xfmrot_outputs(
-    params: XfmrotParameters,
+    params: XfmrotParamsDict,
     execution: Execution,
 ) -> XfmrotOutputs:
     """
@@ -133,7 +133,7 @@ def xfmrot_outputs(
 
 
 def xfmrot_execute(
-    params: XfmrotParameters,
+    params: XfmrotParamsDict,
     runner: Runner | None = None,
 ) -> XfmrotOutputs:
     """
@@ -200,6 +200,8 @@ def xfmrot(
 __all__ = [
     "XFMROT_METADATA",
     "XfmrotOutputs",
+    "XfmrotParamsDict",
+    "XfmrotParamsDictTagged",
     "xfmrot",
     "xfmrot_execute",
     "xfmrot_params",

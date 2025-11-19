@@ -13,7 +13,7 @@ LONG_QDEC_TABLE_METADATA = Metadata(
 )
 
 
-LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
+LongQdecTableParamsDict = typing.TypedDict('LongQdecTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_qdec_table"]],
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
     "sort": typing.NotRequired[str | None],
     "out": typing.NotRequired[str | None],
 })
-LongQdecTableParametersTagged = typing.TypedDict('LongQdecTableParametersTagged', {
+LongQdecTableParamsDictTagged = typing.TypedDict('LongQdecTableParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_qdec_table"],
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ LongQdecTableParametersTagged = typing.TypedDict('LongQdecTableParametersTagged'
 
 class LongQdecTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongQdecTableParameters(...)`.
+    Output object returned when calling `LongQdecTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def long_qdec_table_params(
     cross_flag: bool = False,
     sort: str | None = None,
     out: str | None = None,
-) -> LongQdecTableParametersTagged:
+) -> LongQdecTableParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def long_qdec_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongQdecTableParameters` object.
+    `LongQdecTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def long_qdec_table_validate(
 
 
 def long_qdec_table_cargs(
-    params: LongQdecTableParameters,
+    params: LongQdecTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def long_qdec_table_cargs(
 
 
 def long_qdec_table_outputs(
-    params: LongQdecTableParameters,
+    params: LongQdecTableParamsDict,
     execution: Execution,
 ) -> LongQdecTableOutputs:
     """
@@ -166,7 +166,7 @@ def long_qdec_table_outputs(
 
 
 def long_qdec_table_execute(
-    params: LongQdecTableParameters,
+    params: LongQdecTableParamsDict,
     runner: Runner | None = None,
 ) -> LongQdecTableOutputs:
     """
@@ -235,6 +235,8 @@ def long_qdec_table(
 __all__ = [
     "LONG_QDEC_TABLE_METADATA",
     "LongQdecTableOutputs",
+    "LongQdecTableParamsDict",
+    "LongQdecTableParamsDictTagged",
     "long_qdec_table",
     "long_qdec_table_execute",
     "long_qdec_table_params",

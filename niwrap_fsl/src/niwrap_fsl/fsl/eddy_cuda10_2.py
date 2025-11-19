@@ -13,7 +13,7 @@ EDDY_CUDA10_2_METADATA = Metadata(
 )
 
 
-EddyCuda102Parameters = typing.TypedDict('EddyCuda102Parameters', {
+EddyCuda102ParamsDict = typing.TypedDict('EddyCuda102ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_cuda10.2"]],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -60,7 +60,7 @@ EddyCuda102Parameters = typing.TypedDict('EddyCuda102Parameters', {
     "data_is_shelled": bool,
     "verbose": bool,
 })
-EddyCuda102ParametersTagged = typing.TypedDict('EddyCuda102ParametersTagged', {
+EddyCuda102ParamsDictTagged = typing.TypedDict('EddyCuda102ParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_cuda10.2"],
     "imain": InputPathType,
     "mask": InputPathType,
@@ -111,7 +111,7 @@ EddyCuda102ParametersTagged = typing.TypedDict('EddyCuda102ParametersTagged', {
 
 class EddyCuda102Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyCuda102Parameters(...)`.
+    Output object returned when calling `EddyCuda102ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ def eddy_cuda10_2_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyCuda102ParametersTagged:
+) -> EddyCuda102ParamsDictTagged:
     """
     Build parameters.
     
@@ -355,7 +355,7 @@ def eddy_cuda10_2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyCuda102Parameters` object.
+    `EddyCuda102ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -527,7 +527,7 @@ def eddy_cuda10_2_validate(
 
 
 def eddy_cuda10_2_cargs(
-    params: EddyCuda102Parameters,
+    params: EddyCuda102ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -626,7 +626,7 @@ def eddy_cuda10_2_cargs(
 
 
 def eddy_cuda10_2_outputs(
-    params: EddyCuda102Parameters,
+    params: EddyCuda102ParamsDict,
     execution: Execution,
 ) -> EddyCuda102Outputs:
     """
@@ -664,7 +664,7 @@ def eddy_cuda10_2_outputs(
 
 
 def eddy_cuda10_2_execute(
-    params: EddyCuda102Parameters,
+    params: EddyCuda102ParamsDict,
     runner: Runner | None = None,
 ) -> EddyCuda102Outputs:
     """
@@ -868,6 +868,8 @@ def eddy_cuda10_2(
 __all__ = [
     "EDDY_CUDA10_2_METADATA",
     "EddyCuda102Outputs",
+    "EddyCuda102ParamsDict",
+    "EddyCuda102ParamsDictTagged",
     "eddy_cuda10_2",
     "eddy_cuda10_2_execute",
     "eddy_cuda10_2_params",

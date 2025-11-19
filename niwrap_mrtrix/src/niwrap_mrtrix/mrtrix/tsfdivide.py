@@ -13,40 +13,40 @@ TSFDIVIDE_METADATA = Metadata(
 )
 
 
-TsfdivideConfigParameters = typing.TypedDict('TsfdivideConfigParameters', {
+TsfdivideConfigParamsDict = typing.TypedDict('TsfdivideConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfdivideConfigParametersTagged = typing.TypedDict('TsfdivideConfigParametersTagged', {
+TsfdivideConfigParamsDictTagged = typing.TypedDict('TsfdivideConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfdivideParameters = typing.TypedDict('TsfdivideParameters', {
+TsfdivideParamsDict = typing.TypedDict('TsfdivideParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfdivide"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfdivideConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfdivideConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,
 })
-TsfdivideParametersTagged = typing.TypedDict('TsfdivideParametersTagged', {
+TsfdivideParamsDictTagged = typing.TypedDict('TsfdivideParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfdivide"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfdivideConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfdivideConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input1": InputPathType,
@@ -55,10 +55,10 @@ TsfdivideParametersTagged = typing.TypedDict('TsfdivideParametersTagged', {
 })
 
 
-def tsfdivide_config_params(
+def tsfdivide_config(
     key: str,
     value: str,
-) -> TsfdivideConfigParametersTagged:
+) -> TsfdivideConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def tsfdivide_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfdivideConfigParameters` object.
+    `TsfdivideConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def tsfdivide_config_validate(
 
 
 def tsfdivide_config_cargs(
-    params: TsfdivideConfigParameters,
+    params: TsfdivideConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def tsfdivide_config_cargs(
 
 class TsfdivideOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfdivideParameters(...)`.
+    Output object returned when calling `TsfdivideParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def tsfdivide_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfdivideConfigParameters] | None = None,
+    config: list[TsfdivideConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfdivideParametersTagged:
+) -> TsfdivideParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def tsfdivide_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfdivideParameters` object.
+    `TsfdivideParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def tsfdivide_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfdivideConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfdivideConfigParamsDict] | None`')
         for e in params["config"]:
             tsfdivide_config_validate(e)
     if params.get("help", False) is None:
@@ -241,7 +241,7 @@ def tsfdivide_validate(
 
 
 def tsfdivide_cargs(
-    params: TsfdivideParameters,
+    params: TsfdivideParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def tsfdivide_cargs(
 
 
 def tsfdivide_outputs(
-    params: TsfdivideParameters,
+    params: TsfdivideParamsDict,
     execution: Execution,
 ) -> TsfdivideOutputs:
     """
@@ -301,7 +301,7 @@ def tsfdivide_outputs(
 
 
 def tsfdivide_execute(
-    params: TsfdivideParameters,
+    params: TsfdivideParamsDict,
     runner: Runner | None = None,
 ) -> TsfdivideOutputs:
     """
@@ -344,7 +344,7 @@ def tsfdivide(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfdivideConfigParameters] | None = None,
+    config: list[TsfdivideConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -402,9 +402,13 @@ def tsfdivide(
 
 __all__ = [
     "TSFDIVIDE_METADATA",
+    "TsfdivideConfigParamsDict",
+    "TsfdivideConfigParamsDictTagged",
     "TsfdivideOutputs",
+    "TsfdivideParamsDict",
+    "TsfdivideParamsDictTagged",
     "tsfdivide",
-    "tsfdivide_config_params",
+    "tsfdivide_config",
     "tsfdivide_execute",
     "tsfdivide_params",
 ]

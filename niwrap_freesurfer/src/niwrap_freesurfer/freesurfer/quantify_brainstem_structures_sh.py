@@ -13,12 +13,12 @@ QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
 )
 
 
-QuantifyBrainstemStructuresShParameters = typing.TypedDict('QuantifyBrainstemStructuresShParameters', {
+QuantifyBrainstemStructuresShParamsDict = typing.TypedDict('QuantifyBrainstemStructuresShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyBrainstemStructures.sh"]],
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
-QuantifyBrainstemStructuresShParametersTagged = typing.TypedDict('QuantifyBrainstemStructuresShParametersTagged', {
+QuantifyBrainstemStructuresShParamsDictTagged = typing.TypedDict('QuantifyBrainstemStructuresShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/quantifyBrainstemStructures.sh"],
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ QuantifyBrainstemStructuresShParametersTagged = typing.TypedDict('QuantifyBrains
 
 class QuantifyBrainstemStructuresShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuantifyBrainstemStructuresShParameters(...)`.
+    Output object returned when calling `QuantifyBrainstemStructuresShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class QuantifyBrainstemStructuresShOutputs(typing.NamedTuple):
 def quantify_brainstem_structures_sh_params(
     output_file: str,
     subjects_directory: str | None = None,
-) -> QuantifyBrainstemStructuresShParametersTagged:
+) -> QuantifyBrainstemStructuresShParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def quantify_brainstem_structures_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuantifyBrainstemStructuresShParameters` object.
+    `QuantifyBrainstemStructuresShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def quantify_brainstem_structures_sh_validate(
 
 
 def quantify_brainstem_structures_sh_cargs(
-    params: QuantifyBrainstemStructuresShParameters,
+    params: QuantifyBrainstemStructuresShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def quantify_brainstem_structures_sh_cargs(
 
 
 def quantify_brainstem_structures_sh_outputs(
-    params: QuantifyBrainstemStructuresShParameters,
+    params: QuantifyBrainstemStructuresShParamsDict,
     execution: Execution,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """
@@ -122,7 +122,7 @@ def quantify_brainstem_structures_sh_outputs(
 
 
 def quantify_brainstem_structures_sh_execute(
-    params: QuantifyBrainstemStructuresShParameters,
+    params: QuantifyBrainstemStructuresShParamsDict,
     runner: Runner | None = None,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """
@@ -185,6 +185,8 @@ def quantify_brainstem_structures_sh(
 __all__ = [
     "QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA",
     "QuantifyBrainstemStructuresShOutputs",
+    "QuantifyBrainstemStructuresShParamsDict",
+    "QuantifyBrainstemStructuresShParamsDictTagged",
     "quantify_brainstem_structures_sh",
     "quantify_brainstem_structures_sh_execute",
     "quantify_brainstem_structures_sh_params",

@@ -13,7 +13,7 @@ SURFREG_METADATA = Metadata(
 )
 
 
-SurfregParameters = typing.TypedDict('SurfregParameters', {
+SurfregParamsDict = typing.TypedDict('SurfregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/surfreg"]],
     "subject": str,
     "target": str,
@@ -32,7 +32,7 @@ SurfregParameters = typing.TypedDict('SurfregParameters', {
     "no_set_vol_geom": bool,
     "threads": typing.NotRequired[float | None],
 })
-SurfregParametersTagged = typing.TypedDict('SurfregParametersTagged', {
+SurfregParamsDictTagged = typing.TypedDict('SurfregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/surfreg"],
     "subject": str,
     "target": str,
@@ -55,7 +55,7 @@ SurfregParametersTagged = typing.TypedDict('SurfregParametersTagged', {
 
 class SurfregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfregParameters(...)`.
+    Output object returned when calling `SurfregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def surfreg_params(
     outsurf: str | None = None,
     no_set_vol_geom: bool = False,
     threads: float | None = None,
-) -> SurfregParametersTagged:
+) -> SurfregParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def surfreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfregParameters` object.
+    `SurfregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def surfreg_validate(
 
 
 def surfreg_cargs(
-    params: SurfregParameters,
+    params: SurfregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -274,7 +274,7 @@ def surfreg_cargs(
 
 
 def surfreg_outputs(
-    params: SurfregParameters,
+    params: SurfregParamsDict,
     execution: Execution,
 ) -> SurfregOutputs:
     """
@@ -294,7 +294,7 @@ def surfreg_outputs(
 
 
 def surfreg_execute(
-    params: SurfregParameters,
+    params: SurfregParamsDict,
     runner: Runner | None = None,
 ) -> SurfregOutputs:
     """
@@ -399,6 +399,8 @@ def surfreg(
 __all__ = [
     "SURFREG_METADATA",
     "SurfregOutputs",
+    "SurfregParamsDict",
+    "SurfregParamsDictTagged",
     "surfreg",
     "surfreg_execute",
     "surfreg_params",

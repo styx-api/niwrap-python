@@ -13,13 +13,13 @@ DEFECT_SEG_METADATA = Metadata(
 )
 
 
-DefectSegParameters = typing.TypedDict('DefectSegParameters', {
+DefectSegParamsDict = typing.TypedDict('DefectSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/defect-seg"]],
     "subject": str,
     "lh_only": bool,
     "rh_only": bool,
 })
-DefectSegParametersTagged = typing.TypedDict('DefectSegParametersTagged', {
+DefectSegParamsDictTagged = typing.TypedDict('DefectSegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/defect-seg"],
     "subject": str,
     "lh_only": bool,
@@ -29,7 +29,7 @@ DefectSegParametersTagged = typing.TypedDict('DefectSegParametersTagged', {
 
 class DefectSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DefectSegParameters(...)`.
+    Output object returned when calling `DefectSegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def defect_seg_params(
     subject: str,
     lh_only: bool = False,
     rh_only: bool = False,
-) -> DefectSegParametersTagged:
+) -> DefectSegParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def defect_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DefectSegParameters` object.
+    `DefectSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -114,7 +114,7 @@ def defect_seg_validate(
 
 
 def defect_seg_cargs(
-    params: DefectSegParameters,
+    params: DefectSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def defect_seg_cargs(
 
 
 def defect_seg_outputs(
-    params: DefectSegParameters,
+    params: DefectSegParamsDict,
     execution: Execution,
 ) -> DefectSegOutputs:
     """
@@ -172,7 +172,7 @@ def defect_seg_outputs(
 
 
 def defect_seg_execute(
-    params: DefectSegParameters,
+    params: DefectSegParamsDict,
     runner: Runner | None = None,
 ) -> DefectSegOutputs:
     """
@@ -238,6 +238,8 @@ def defect_seg(
 __all__ = [
     "DEFECT_SEG_METADATA",
     "DefectSegOutputs",
+    "DefectSegParamsDict",
+    "DefectSegParamsDictTagged",
     "defect_seg",
     "defect_seg_execute",
     "defect_seg_params",

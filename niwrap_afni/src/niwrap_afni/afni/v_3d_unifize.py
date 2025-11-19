@@ -13,7 +13,7 @@ V_3D_UNIFIZE_METADATA = Metadata(
 )
 
 
-V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
+V3dUnifizeParamsDict = typing.TypedDict('V3dUnifizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dUnifize"]],
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
@@ -30,7 +30,7 @@ V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
     "urad": typing.NotRequired[float | None],
     "in_file": InputPathType,
 })
-V3dUnifizeParametersTagged = typing.TypedDict('V3dUnifizeParametersTagged', {
+V3dUnifizeParamsDictTagged = typing.TypedDict('V3dUnifizeParamsDictTagged', {
     "@type": typing.Literal["afni/3dUnifize"],
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
@@ -51,7 +51,7 @@ V3dUnifizeParametersTagged = typing.TypedDict('V3dUnifizeParametersTagged', {
 
 class V3dUnifizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dUnifizeParameters(...)`.
+    Output object returned when calling `V3dUnifizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def v_3d_unifize_params(
     t2: bool = False,
     t2_up: float | None = None,
     urad: float | None = None,
-) -> V3dUnifizeParametersTagged:
+) -> V3dUnifizeParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def v_3d_unifize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dUnifizeParameters` object.
+    `V3dUnifizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -218,7 +218,7 @@ def v_3d_unifize_validate(
 
 
 def v_3d_unifize_cargs(
-    params: V3dUnifizeParameters,
+    params: V3dUnifizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def v_3d_unifize_cargs(
 
 
 def v_3d_unifize_outputs(
-    params: V3dUnifizeParameters,
+    params: V3dUnifizeParamsDict,
     execution: Execution,
 ) -> V3dUnifizeOutputs:
     """
@@ -305,7 +305,7 @@ def v_3d_unifize_outputs(
 
 
 def v_3d_unifize_execute(
-    params: V3dUnifizeParameters,
+    params: V3dUnifizeParamsDict,
     runner: Runner | None = None,
 ) -> V3dUnifizeOutputs:
     """
@@ -455,6 +455,8 @@ def v_3d_unifize(
 
 __all__ = [
     "V3dUnifizeOutputs",
+    "V3dUnifizeParamsDict",
+    "V3dUnifizeParamsDictTagged",
     "V_3D_UNIFIZE_METADATA",
     "v_3d_unifize",
     "v_3d_unifize_execute",

@@ -13,7 +13,7 @@ TKREGISTERFV_METADATA = Metadata(
 )
 
 
-TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
+TkregisterfvParamsDict = typing.TypedDict('TkregisterfvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tkregisterfv"]],
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
@@ -48,7 +48,7 @@ TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
     "fstal": bool,
     "aux": typing.NotRequired[InputPathType | None],
 })
-TkregisterfvParametersTagged = typing.TypedDict('TkregisterfvParametersTagged', {
+TkregisterfvParamsDictTagged = typing.TypedDict('TkregisterfvParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tkregisterfv"],
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
@@ -87,7 +87,7 @@ TkregisterfvParametersTagged = typing.TypedDict('TkregisterfvParametersTagged', 
 
 class TkregisterfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TkregisterfvParameters(...)`.
+    Output object returned when calling `TkregisterfvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def tkregisterfv_params(
     flip_z_flag: bool = False,
     fstal: bool = False,
     aux: InputPathType | None = None,
-) -> TkregisterfvParametersTagged:
+) -> TkregisterfvParamsDictTagged:
     """
     Build parameters.
     
@@ -227,7 +227,7 @@ def tkregisterfv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TkregisterfvParameters` object.
+    `TkregisterfvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -352,7 +352,7 @@ def tkregisterfv_validate(
 
 
 def tkregisterfv_cargs(
-    params: TkregisterfvParameters,
+    params: TkregisterfvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -484,7 +484,7 @@ def tkregisterfv_cargs(
 
 
 def tkregisterfv_outputs(
-    params: TkregisterfvParameters,
+    params: TkregisterfvParamsDict,
     execution: Execution,
 ) -> TkregisterfvOutputs:
     """
@@ -503,7 +503,7 @@ def tkregisterfv_outputs(
 
 
 def tkregisterfv_execute(
-    params: TkregisterfvParameters,
+    params: TkregisterfvParamsDict,
     runner: Runner | None = None,
 ) -> TkregisterfvOutputs:
     """
@@ -656,6 +656,8 @@ def tkregisterfv(
 __all__ = [
     "TKREGISTERFV_METADATA",
     "TkregisterfvOutputs",
+    "TkregisterfvParamsDict",
+    "TkregisterfvParamsDictTagged",
     "tkregisterfv",
     "tkregisterfv_execute",
     "tkregisterfv_params",

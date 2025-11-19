@@ -13,11 +13,11 @@ INFLATE_SUBJECT_NEW_LH_METADATA = Metadata(
 )
 
 
-InflateSubjectNewLhParameters = typing.TypedDict('InflateSubjectNewLhParameters', {
+InflateSubjectNewLhParamsDict = typing.TypedDict('InflateSubjectNewLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_new-lh"]],
     "subject_dir": str,
 })
-InflateSubjectNewLhParametersTagged = typing.TypedDict('InflateSubjectNewLhParametersTagged', {
+InflateSubjectNewLhParamsDictTagged = typing.TypedDict('InflateSubjectNewLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/inflate_subject_new-lh"],
     "subject_dir": str,
 })
@@ -25,7 +25,7 @@ InflateSubjectNewLhParametersTagged = typing.TypedDict('InflateSubjectNewLhParam
 
 class InflateSubjectNewLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InflateSubjectNewLhParameters(...)`.
+    Output object returned when calling `InflateSubjectNewLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class InflateSubjectNewLhOutputs(typing.NamedTuple):
 
 def inflate_subject_new_lh_params(
     subject_dir: str,
-) -> InflateSubjectNewLhParametersTagged:
+) -> InflateSubjectNewLhParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def inflate_subject_new_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InflateSubjectNewLhParameters` object.
+    `InflateSubjectNewLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def inflate_subject_new_lh_validate(
 
 
 def inflate_subject_new_lh_cargs(
-    params: InflateSubjectNewLhParameters,
+    params: InflateSubjectNewLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def inflate_subject_new_lh_cargs(
 
 
 def inflate_subject_new_lh_outputs(
-    params: InflateSubjectNewLhParameters,
+    params: InflateSubjectNewLhParamsDict,
     execution: Execution,
 ) -> InflateSubjectNewLhOutputs:
     """
@@ -112,7 +112,7 @@ def inflate_subject_new_lh_outputs(
 
 
 def inflate_subject_new_lh_execute(
-    params: InflateSubjectNewLhParameters,
+    params: InflateSubjectNewLhParamsDict,
     runner: Runner | None = None,
 ) -> InflateSubjectNewLhOutputs:
     """
@@ -168,6 +168,8 @@ def inflate_subject_new_lh(
 __all__ = [
     "INFLATE_SUBJECT_NEW_LH_METADATA",
     "InflateSubjectNewLhOutputs",
+    "InflateSubjectNewLhParamsDict",
+    "InflateSubjectNewLhParamsDictTagged",
     "inflate_subject_new_lh",
     "inflate_subject_new_lh_execute",
     "inflate_subject_new_lh_params",

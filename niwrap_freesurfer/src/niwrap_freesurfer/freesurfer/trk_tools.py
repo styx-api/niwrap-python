@@ -13,7 +13,7 @@ TRK_TOOLS_METADATA = Metadata(
 )
 
 
-TrkToolsParameters = typing.TypedDict('TrkToolsParameters', {
+TrkToolsParamsDict = typing.TypedDict('TrkToolsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/trk_tools"]],
     "reference_image": InputPathType,
     "input_trk": InputPathType,
@@ -22,7 +22,7 @@ TrkToolsParameters = typing.TypedDict('TrkToolsParameters', {
     "update_header": bool,
     "output_vtk": typing.NotRequired[str | None],
 })
-TrkToolsParametersTagged = typing.TypedDict('TrkToolsParametersTagged', {
+TrkToolsParamsDictTagged = typing.TypedDict('TrkToolsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/trk_tools"],
     "reference_image": InputPathType,
     "input_trk": InputPathType,
@@ -35,7 +35,7 @@ TrkToolsParametersTagged = typing.TypedDict('TrkToolsParametersTagged', {
 
 class TrkToolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TrkToolsParameters(...)`.
+    Output object returned when calling `TrkToolsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def trk_tools_params(
     output_image: str | None = None,
     update_header: bool = False,
     output_vtk: str | None = None,
-) -> TrkToolsParametersTagged:
+) -> TrkToolsParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def trk_tools_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TrkToolsParameters` object.
+    `TrkToolsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def trk_tools_validate(
 
 
 def trk_tools_cargs(
-    params: TrkToolsParameters,
+    params: TrkToolsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def trk_tools_cargs(
 
 
 def trk_tools_outputs(
-    params: TrkToolsParameters,
+    params: TrkToolsParamsDict,
     execution: Execution,
 ) -> TrkToolsOutputs:
     """
@@ -184,7 +184,7 @@ def trk_tools_outputs(
 
 
 def trk_tools_execute(
-    params: TrkToolsParameters,
+    params: TrkToolsParamsDict,
     runner: Runner | None = None,
 ) -> TrkToolsOutputs:
     """
@@ -255,6 +255,8 @@ def trk_tools(
 __all__ = [
     "TRK_TOOLS_METADATA",
     "TrkToolsOutputs",
+    "TrkToolsParamsDict",
+    "TrkToolsParamsDictTagged",
     "trk_tools",
     "trk_tools_execute",
     "trk_tools_params",

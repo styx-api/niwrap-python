@@ -13,7 +13,7 @@ IMREG_METADATA = Metadata(
 )
 
 
-ImregParameters = typing.TypedDict('ImregParameters', {
+ImregParamsDict = typing.TypedDict('ImregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imreg"]],
     "base_image": str,
     "image_sequence": list[InputPathType],
@@ -36,7 +36,7 @@ ImregParameters = typing.TypedDict('ImregParameters', {
     "fine": typing.NotRequired[list[float] | None],
     "nofine": bool,
 })
-ImregParametersTagged = typing.TypedDict('ImregParametersTagged', {
+ImregParamsDictTagged = typing.TypedDict('ImregParamsDictTagged', {
     "@type": typing.Literal["afni/imreg"],
     "base_image": str,
     "image_sequence": list[InputPathType],
@@ -63,7 +63,7 @@ ImregParametersTagged = typing.TypedDict('ImregParametersTagged', {
 
 class ImregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImregParameters(...)`.
+    Output object returned when calling `ImregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +98,7 @@ def imreg_params(
     cmass: bool = False,
     fine: list[float] | None = None,
     nofine: bool = False,
-) -> ImregParametersTagged:
+) -> ImregParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def imreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImregParameters` object.
+    `ImregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -256,7 +256,7 @@ def imreg_validate(
 
 
 def imreg_cargs(
-    params: ImregParameters,
+    params: ImregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -336,7 +336,7 @@ def imreg_cargs(
 
 
 def imreg_outputs(
-    params: ImregParameters,
+    params: ImregParamsDict,
     execution: Execution,
 ) -> ImregOutputs:
     """
@@ -359,7 +359,7 @@ def imreg_outputs(
 
 
 def imreg_execute(
-    params: ImregParameters,
+    params: ImregParamsDict,
     runner: Runner | None = None,
 ) -> ImregOutputs:
     """
@@ -473,6 +473,8 @@ def imreg(
 __all__ = [
     "IMREG_METADATA",
     "ImregOutputs",
+    "ImregParamsDict",
+    "ImregParamsDictTagged",
     "imreg",
     "imreg_execute",
     "imreg_params",

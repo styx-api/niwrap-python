@@ -13,11 +13,11 @@ HELP_FORMAT_METADATA = Metadata(
 )
 
 
-HelpFormatParameters = typing.TypedDict('HelpFormatParameters', {
+HelpFormatParamsDict = typing.TypedDict('HelpFormatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/help_format"]],
     "stdin": str,
 })
-HelpFormatParametersTagged = typing.TypedDict('HelpFormatParametersTagged', {
+HelpFormatParamsDictTagged = typing.TypedDict('HelpFormatParamsDictTagged', {
     "@type": typing.Literal["afni/help_format"],
     "stdin": str,
 })
@@ -25,7 +25,7 @@ HelpFormatParametersTagged = typing.TypedDict('HelpFormatParametersTagged', {
 
 class HelpFormatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HelpFormatParameters(...)`.
+    Output object returned when calling `HelpFormatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class HelpFormatOutputs(typing.NamedTuple):
 
 def help_format_params(
     stdin: str,
-) -> HelpFormatParametersTagged:
+) -> HelpFormatParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def help_format_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HelpFormatParameters` object.
+    `HelpFormatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def help_format_validate(
 
 
 def help_format_cargs(
-    params: HelpFormatParameters,
+    params: HelpFormatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def help_format_cargs(
 
 
 def help_format_outputs(
-    params: HelpFormatParameters,
+    params: HelpFormatParamsDict,
     execution: Execution,
 ) -> HelpFormatOutputs:
     """
@@ -109,7 +109,7 @@ def help_format_outputs(
 
 
 def help_format_execute(
-    params: HelpFormatParameters,
+    params: HelpFormatParamsDict,
     runner: Runner | None = None,
 ) -> HelpFormatOutputs:
     """
@@ -165,6 +165,8 @@ def help_format(
 __all__ = [
     "HELP_FORMAT_METADATA",
     "HelpFormatOutputs",
+    "HelpFormatParamsDict",
+    "HelpFormatParamsDictTagged",
     "help_format",
     "help_format_execute",
     "help_format_params",

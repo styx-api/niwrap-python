@@ -13,7 +13,7 @@ V_3D_SPACE_TIME_CORR_METADATA = Metadata(
 )
 
 
-V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
+V3dSpaceTimeCorrParamsDict = typing.TypedDict('V3dSpaceTimeCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSpaceTimeCorr"]],
     "insetA": InputPathType,
     "insetB": InputPathType,
@@ -23,7 +23,7 @@ V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
     "freeze_insetA_ijk": typing.NotRequired[list[float] | None],
     "freeze_insetA_xyz": typing.NotRequired[list[float] | None],
 })
-V3dSpaceTimeCorrParametersTagged = typing.TypedDict('V3dSpaceTimeCorrParametersTagged', {
+V3dSpaceTimeCorrParamsDictTagged = typing.TypedDict('V3dSpaceTimeCorrParamsDictTagged', {
     "@type": typing.Literal["afni/3dSpaceTimeCorr"],
     "insetA": InputPathType,
     "insetB": InputPathType,
@@ -37,7 +37,7 @@ V3dSpaceTimeCorrParametersTagged = typing.TypedDict('V3dSpaceTimeCorrParametersT
 
 class V3dSpaceTimeCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSpaceTimeCorrParameters(...)`.
+    Output object returned when calling `V3dSpaceTimeCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v_3d_space_time_corr_params(
     out_zcorr: bool = False,
     freeze_inset_a_ijk: list[float] | None = None,
     freeze_inset_a_xyz: list[float] | None = None,
-) -> V3dSpaceTimeCorrParametersTagged:
+) -> V3dSpaceTimeCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def v_3d_space_time_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSpaceTimeCorrParameters` object.
+    `V3dSpaceTimeCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def v_3d_space_time_corr_validate(
 
 
 def v_3d_space_time_corr_cargs(
-    params: V3dSpaceTimeCorrParameters,
+    params: V3dSpaceTimeCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def v_3d_space_time_corr_cargs(
 
 
 def v_3d_space_time_corr_outputs(
-    params: V3dSpaceTimeCorrParameters,
+    params: V3dSpaceTimeCorrParamsDict,
     execution: Execution,
 ) -> V3dSpaceTimeCorrOutputs:
     """
@@ -208,7 +208,7 @@ def v_3d_space_time_corr_outputs(
 
 
 def v_3d_space_time_corr_execute(
-    params: V3dSpaceTimeCorrParameters,
+    params: V3dSpaceTimeCorrParamsDict,
     runner: Runner | None = None,
 ) -> V3dSpaceTimeCorrOutputs:
     """
@@ -290,6 +290,8 @@ def v_3d_space_time_corr(
 
 __all__ = [
     "V3dSpaceTimeCorrOutputs",
+    "V3dSpaceTimeCorrParamsDict",
+    "V3dSpaceTimeCorrParamsDictTagged",
     "V_3D_SPACE_TIME_CORR_METADATA",
     "v_3d_space_time_corr",
     "v_3d_space_time_corr_execute",

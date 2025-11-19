@@ -13,7 +13,7 @@ V_2DCAT_METADATA = Metadata(
 )
 
 
-V2dcatParameters = typing.TypedDict('V2dcatParameters', {
+V2dcatParamsDict = typing.TypedDict('V2dcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/2dcat"]],
     "filenames": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ V2dcatParameters = typing.TypedDict('V2dcatParameters', {
     "gap": typing.NotRequired[float | None],
     "gap_col": typing.NotRequired[list[float] | None],
 })
-V2dcatParametersTagged = typing.TypedDict('V2dcatParametersTagged', {
+V2dcatParamsDictTagged = typing.TypedDict('V2dcatParamsDictTagged', {
     "@type": typing.Literal["afni/2dcat"],
     "filenames": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
@@ -73,7 +73,7 @@ V2dcatParametersTagged = typing.TypedDict('V2dcatParametersTagged', {
 
 class V2dcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2dcatParameters(...)`.
+    Output object returned when calling `V2dcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +110,7 @@ def v_2dcat_params(
     matrix_from_scale: bool = False,
     gap: float | None = None,
     gap_col: list[float] | None = None,
-) -> V2dcatParametersTagged:
+) -> V2dcatParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def v_2dcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2dcatParameters` object.
+    `V2dcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -339,7 +339,7 @@ def v_2dcat_validate(
 
 
 def v_2dcat_cargs(
-    params: V2dcatParameters,
+    params: V2dcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -454,7 +454,7 @@ def v_2dcat_cargs(
 
 
 def v_2dcat_outputs(
-    params: V2dcatParameters,
+    params: V2dcatParamsDict,
     execution: Execution,
 ) -> V2dcatOutputs:
     """
@@ -475,7 +475,7 @@ def v_2dcat_outputs(
 
 
 def v_2dcat_execute(
-    params: V2dcatParameters,
+    params: V2dcatParamsDict,
     runner: Runner | None = None,
 ) -> V2dcatOutputs:
     """
@@ -620,6 +620,8 @@ def v_2dcat(
 
 __all__ = [
     "V2dcatOutputs",
+    "V2dcatParamsDict",
+    "V2dcatParamsDictTagged",
     "V_2DCAT_METADATA",
     "v_2dcat",
     "v_2dcat_execute",

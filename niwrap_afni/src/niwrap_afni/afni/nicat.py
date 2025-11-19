@@ -13,14 +13,14 @@ NICAT_METADATA = Metadata(
 )
 
 
-NicatParameters = typing.TypedDict('NicatParameters', {
+NicatParamsDict = typing.TypedDict('NicatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/nicat"]],
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
     "copy_stream": bool,
     "read_only": bool,
 })
-NicatParametersTagged = typing.TypedDict('NicatParametersTagged', {
+NicatParamsDictTagged = typing.TypedDict('NicatParamsDictTagged', {
     "@type": typing.Literal["afni/nicat"],
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ NicatParametersTagged = typing.TypedDict('NicatParametersTagged', {
 
 class NicatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NicatParameters(...)`.
+    Output object returned when calling `NicatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def nicat_params(
     reopen: str | None = None,
     copy_stream: bool = False,
     read_only: bool = False,
-) -> NicatParametersTagged:
+) -> NicatParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def nicat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NicatParameters` object.
+    `NicatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def nicat_validate(
 
 
 def nicat_cargs(
-    params: NicatParameters,
+    params: NicatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def nicat_cargs(
 
 
 def nicat_outputs(
-    params: NicatParameters,
+    params: NicatParamsDict,
     execution: Execution,
 ) -> NicatOutputs:
     """
@@ -144,7 +144,7 @@ def nicat_outputs(
 
 
 def nicat_execute(
-    params: NicatParameters,
+    params: NicatParamsDict,
     runner: Runner | None = None,
 ) -> NicatOutputs:
     """
@@ -211,6 +211,8 @@ def nicat(
 __all__ = [
     "NICAT_METADATA",
     "NicatOutputs",
+    "NicatParamsDict",
+    "NicatParamsDictTagged",
     "nicat",
     "nicat_execute",
     "nicat_params",

@@ -13,13 +13,13 @@ V__2DWARPER_ALLIN_METADATA = Metadata(
 )
 
 
-V2dwarperAllinParameters = typing.TypedDict('V2dwarperAllinParameters', {
+V2dwarperAllinParamsDict = typing.TypedDict('V2dwarperAllinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@2dwarper.Allin"]],
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],
 })
-V2dwarperAllinParametersTagged = typing.TypedDict('V2dwarperAllinParametersTagged', {
+V2dwarperAllinParamsDictTagged = typing.TypedDict('V2dwarperAllinParamsDictTagged', {
     "@type": typing.Literal["afni/@2dwarper.Allin"],
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ V2dwarperAllinParametersTagged = typing.TypedDict('V2dwarperAllinParametersTagge
 
 class V2dwarperAllinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2dwarperAllinParameters(...)`.
+    Output object returned when calling `V2dwarperAllinParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v__2dwarper_allin_params(
     input_prefix: str,
     mask_prefix: str | None = None,
     output_prefix: str | None = None,
-) -> V2dwarperAllinParametersTagged:
+) -> V2dwarperAllinParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def v__2dwarper_allin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2dwarperAllinParameters` object.
+    `V2dwarperAllinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def v__2dwarper_allin_validate(
 
 
 def v__2dwarper_allin_cargs(
-    params: V2dwarperAllinParameters,
+    params: V2dwarperAllinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def v__2dwarper_allin_cargs(
 
 
 def v__2dwarper_allin_outputs(
-    params: V2dwarperAllinParameters,
+    params: V2dwarperAllinParamsDict,
     execution: Execution,
 ) -> V2dwarperAllinOutputs:
     """
@@ -140,7 +140,7 @@ def v__2dwarper_allin_outputs(
 
 
 def v__2dwarper_allin_execute(
-    params: V2dwarperAllinParameters,
+    params: V2dwarperAllinParamsDict,
     runner: Runner | None = None,
 ) -> V2dwarperAllinOutputs:
     """
@@ -203,6 +203,8 @@ def v__2dwarper_allin(
 
 __all__ = [
     "V2dwarperAllinOutputs",
+    "V2dwarperAllinParamsDict",
+    "V2dwarperAllinParamsDictTagged",
     "V__2DWARPER_ALLIN_METADATA",
     "v__2dwarper_allin",
     "v__2dwarper_allin_execute",

@@ -13,7 +13,7 @@ MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
 )
 
 
-MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameters', {
+MrisAverageCurvatureParamsDict = typing.TypedDict('MrisAverageCurvatureParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_average_curvature"]],
     "input_curvature_file": InputPathType,
     "hemi": str,
@@ -23,7 +23,7 @@ MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameter
     "summary_stats_flag": bool,
     "output_surface_flag": bool,
 })
-MrisAverageCurvatureParametersTagged = typing.TypedDict('MrisAverageCurvatureParametersTagged', {
+MrisAverageCurvatureParamsDictTagged = typing.TypedDict('MrisAverageCurvatureParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_average_curvature"],
     "input_curvature_file": InputPathType,
     "hemi": str,
@@ -37,7 +37,7 @@ MrisAverageCurvatureParametersTagged = typing.TypedDict('MrisAverageCurvaturePar
 
 class MrisAverageCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAverageCurvatureParameters(...)`.
+    Output object returned when calling `MrisAverageCurvatureParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def mris_average_curvature_params(
     output_curvature_file: str,
     summary_stats_flag: bool = False,
     output_surface_flag: bool = False,
-) -> MrisAverageCurvatureParametersTagged:
+) -> MrisAverageCurvatureParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def mris_average_curvature_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAverageCurvatureParameters` object.
+    `MrisAverageCurvatureParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def mris_average_curvature_validate(
 
 
 def mris_average_curvature_cargs(
-    params: MrisAverageCurvatureParameters,
+    params: MrisAverageCurvatureParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def mris_average_curvature_cargs(
 
 
 def mris_average_curvature_outputs(
-    params: MrisAverageCurvatureParameters,
+    params: MrisAverageCurvatureParamsDict,
     execution: Execution,
 ) -> MrisAverageCurvatureOutputs:
     """
@@ -173,7 +173,7 @@ def mris_average_curvature_outputs(
 
 
 def mris_average_curvature_execute(
-    params: MrisAverageCurvatureParameters,
+    params: MrisAverageCurvatureParamsDict,
     runner: Runner | None = None,
 ) -> MrisAverageCurvatureOutputs:
     """
@@ -253,6 +253,8 @@ def mris_average_curvature(
 __all__ = [
     "MRIS_AVERAGE_CURVATURE_METADATA",
     "MrisAverageCurvatureOutputs",
+    "MrisAverageCurvatureParamsDict",
+    "MrisAverageCurvatureParamsDictTagged",
     "mris_average_curvature",
     "mris_average_curvature_execute",
     "mris_average_curvature_params",

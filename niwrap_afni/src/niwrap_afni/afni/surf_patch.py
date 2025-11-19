@@ -13,7 +13,7 @@ SURF_PATCH_METADATA = Metadata(
 )
 
 
-SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
+SurfPatchParamsDict = typing.TypedDict('SurfPatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfPatch"]],
     "spec_file": InputPathType,
     "surf_A": InputPathType,
@@ -37,7 +37,7 @@ SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
     "flip_orientation": bool,
     "verbosity": typing.NotRequired[float | None],
 })
-SurfPatchParametersTagged = typing.TypedDict('SurfPatchParametersTagged', {
+SurfPatchParamsDictTagged = typing.TypedDict('SurfPatchParamsDictTagged', {
     "@type": typing.Literal["afni/SurfPatch"],
     "spec_file": InputPathType,
     "surf_A": InputPathType,
@@ -65,7 +65,7 @@ SurfPatchParametersTagged = typing.TypedDict('SurfPatchParametersTagged', {
 
 class SurfPatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfPatchParameters(...)`.
+    Output object returned when calling `SurfPatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +99,7 @@ def surf_patch_params(
     stitched_surface: InputPathType | None = None,
     flip_orientation: bool = False,
     verbosity: float | None = None,
-) -> SurfPatchParametersTagged:
+) -> SurfPatchParamsDictTagged:
     """
     Build parameters.
     
@@ -176,7 +176,7 @@ def surf_patch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfPatchParameters` object.
+    `SurfPatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -265,7 +265,7 @@ def surf_patch_validate(
 
 
 def surf_patch_cargs(
-    params: SurfPatchParameters,
+    params: SurfPatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -345,7 +345,7 @@ def surf_patch_cargs(
 
 
 def surf_patch_outputs(
-    params: SurfPatchParameters,
+    params: SurfPatchParamsDict,
     execution: Execution,
 ) -> SurfPatchOutputs:
     """
@@ -367,7 +367,7 @@ def surf_patch_outputs(
 
 
 def surf_patch_execute(
-    params: SurfPatchParameters,
+    params: SurfPatchParamsDict,
     runner: Runner | None = None,
 ) -> SurfPatchOutputs:
     """
@@ -496,6 +496,8 @@ def surf_patch(
 __all__ = [
     "SURF_PATCH_METADATA",
     "SurfPatchOutputs",
+    "SurfPatchParamsDict",
+    "SurfPatchParamsDictTagged",
     "surf_patch",
     "surf_patch_execute",
     "surf_patch_params",

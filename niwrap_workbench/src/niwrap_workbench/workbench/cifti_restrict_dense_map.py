@@ -12,7 +12,7 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 )
 
 
-CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParameters', {
+CiftiRestrictDenseMapParamsDict = typing.TypedDict('CiftiRestrictDenseMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-restrict-dense-map"]],
     "cifti-out": str,
     "roi-cifti": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParamet
     "cifti-in": InputPathType,
     "direction": str,
 })
-CiftiRestrictDenseMapParametersTagged = typing.TypedDict('CiftiRestrictDenseMapParametersTagged', {
+CiftiRestrictDenseMapParamsDictTagged = typing.TypedDict('CiftiRestrictDenseMapParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-restrict-dense-map"],
     "cifti-out": str,
     "roi-cifti": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ CiftiRestrictDenseMapParametersTagged = typing.TypedDict('CiftiRestrictDenseMapP
 
 class CiftiRestrictDenseMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiRestrictDenseMapParameters(...)`.
+    Output object returned when calling `CiftiRestrictDenseMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def cifti_restrict_dense_map_params(
     roi_vol: InputPathType | None,
     cifti_in: InputPathType,
     direction: str,
-) -> CiftiRestrictDenseMapParametersTagged:
+) -> CiftiRestrictDenseMapParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def cifti_restrict_dense_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiRestrictDenseMapParameters` object.
+    `CiftiRestrictDenseMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def cifti_restrict_dense_map_validate(
 
 
 def cifti_restrict_dense_map_cargs(
-    params: CiftiRestrictDenseMapParameters,
+    params: CiftiRestrictDenseMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -178,7 +178,7 @@ def cifti_restrict_dense_map_cargs(
 
 
 def cifti_restrict_dense_map_outputs(
-    params: CiftiRestrictDenseMapParameters,
+    params: CiftiRestrictDenseMapParamsDict,
     execution: Execution,
 ) -> CiftiRestrictDenseMapOutputs:
     """
@@ -198,7 +198,7 @@ def cifti_restrict_dense_map_outputs(
 
 
 def cifti_restrict_dense_map_execute(
-    params: CiftiRestrictDenseMapParameters,
+    params: CiftiRestrictDenseMapParamsDict,
     runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
@@ -288,6 +288,8 @@ def cifti_restrict_dense_map(
 __all__ = [
     "CIFTI_RESTRICT_DENSE_MAP_METADATA",
     "CiftiRestrictDenseMapOutputs",
+    "CiftiRestrictDenseMapParamsDict",
+    "CiftiRestrictDenseMapParamsDictTagged",
     "cifti_restrict_dense_map",
     "cifti_restrict_dense_map_execute",
     "cifti_restrict_dense_map_params",

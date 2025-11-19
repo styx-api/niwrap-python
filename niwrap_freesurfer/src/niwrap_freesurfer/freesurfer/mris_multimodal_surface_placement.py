@@ -13,7 +13,7 @@ MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA = Metadata(
 )
 
 
-MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfacePlacementParameters', {
+MrisMultimodalSurfacePlacementParamsDict = typing.TypedDict('MrisMultimodalSurfacePlacementParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal_surface_placement"]],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
@@ -32,7 +32,7 @@ MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfa
     "flair_image": InputPathType,
     "min_max": bool,
 })
-MrisMultimodalSurfacePlacementParametersTagged = typing.TypedDict('MrisMultimodalSurfacePlacementParametersTagged', {
+MrisMultimodalSurfacePlacementParamsDictTagged = typing.TypedDict('MrisMultimodalSurfacePlacementParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_multimodal_surface_placement"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
@@ -55,7 +55,7 @@ MrisMultimodalSurfacePlacementParametersTagged = typing.TypedDict('MrisMultimoda
 
 class MrisMultimodalSurfacePlacementOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMultimodalSurfacePlacementParameters(...)`.
+    Output object returned when calling `MrisMultimodalSurfacePlacementParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def mris_multimodal_surface_placement_params(
     flair_image: InputPathType,
     debug_vertex: float | None = None,
     min_max: bool = False,
-) -> MrisMultimodalSurfacePlacementParametersTagged:
+) -> MrisMultimodalSurfacePlacementParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def mris_multimodal_surface_placement_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMultimodalSurfacePlacementParameters` object.
+    `MrisMultimodalSurfacePlacementParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -203,7 +203,7 @@ def mris_multimodal_surface_placement_validate(
 
 
 def mris_multimodal_surface_placement_cargs(
-    params: MrisMultimodalSurfacePlacementParameters,
+    params: MrisMultimodalSurfacePlacementParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def mris_multimodal_surface_placement_cargs(
 
 
 def mris_multimodal_surface_placement_outputs(
-    params: MrisMultimodalSurfacePlacementParameters,
+    params: MrisMultimodalSurfacePlacementParamsDict,
     execution: Execution,
 ) -> MrisMultimodalSurfacePlacementOutputs:
     """
@@ -303,7 +303,7 @@ def mris_multimodal_surface_placement_outputs(
 
 
 def mris_multimodal_surface_placement_execute(
-    params: MrisMultimodalSurfacePlacementParameters,
+    params: MrisMultimodalSurfacePlacementParamsDict,
     runner: Runner | None = None,
 ) -> MrisMultimodalSurfacePlacementOutputs:
     """
@@ -404,6 +404,8 @@ def mris_multimodal_surface_placement(
 __all__ = [
     "MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA",
     "MrisMultimodalSurfacePlacementOutputs",
+    "MrisMultimodalSurfacePlacementParamsDict",
+    "MrisMultimodalSurfacePlacementParamsDictTagged",
     "mris_multimodal_surface_placement",
     "mris_multimodal_surface_placement_execute",
     "mris_multimodal_surface_placement_params",

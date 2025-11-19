@@ -13,14 +13,14 @@ CLUST_EXP_HIST_TABLE_PY_METADATA = Metadata(
 )
 
 
-ClustExpHistTablePyParameters = typing.TypedDict('ClustExpHistTablePyParameters', {
+ClustExpHistTablePyParamsDict = typing.TypedDict('ClustExpHistTablePyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ClustExp_HistTable.py"]],
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
     "overwrite": bool,
 })
-ClustExpHistTablePyParametersTagged = typing.TypedDict('ClustExpHistTablePyParametersTagged', {
+ClustExpHistTablePyParamsDictTagged = typing.TypedDict('ClustExpHistTablePyParamsDictTagged', {
     "@type": typing.Literal["afni/ClustExp_HistTable.py"],
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ ClustExpHistTablePyParametersTagged = typing.TypedDict('ClustExpHistTablePyParam
 
 class ClustExpHistTablePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ClustExpHistTablePyParameters(...)`.
+    Output object returned when calling `ClustExpHistTablePyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def clust_exp_hist_table_py_params(
     prefix: str | None = None,
     session: str | None = None,
     overwrite: bool = False,
-) -> ClustExpHistTablePyParametersTagged:
+) -> ClustExpHistTablePyParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def clust_exp_hist_table_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ClustExpHistTablePyParameters` object.
+    `ClustExpHistTablePyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def clust_exp_hist_table_py_validate(
 
 
 def clust_exp_hist_table_py_cargs(
-    params: ClustExpHistTablePyParameters,
+    params: ClustExpHistTablePyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def clust_exp_hist_table_py_cargs(
 
 
 def clust_exp_hist_table_py_outputs(
-    params: ClustExpHistTablePyParameters,
+    params: ClustExpHistTablePyParamsDict,
     execution: Execution,
 ) -> ClustExpHistTablePyOutputs:
     """
@@ -152,7 +152,7 @@ def clust_exp_hist_table_py_outputs(
 
 
 def clust_exp_hist_table_py_execute(
-    params: ClustExpHistTablePyParameters,
+    params: ClustExpHistTablePyParamsDict,
     runner: Runner | None = None,
 ) -> ClustExpHistTablePyOutputs:
     """
@@ -220,6 +220,8 @@ def clust_exp_hist_table_py(
 __all__ = [
     "CLUST_EXP_HIST_TABLE_PY_METADATA",
     "ClustExpHistTablePyOutputs",
+    "ClustExpHistTablePyParamsDict",
+    "ClustExpHistTablePyParamsDictTagged",
     "clust_exp_hist_table_py",
     "clust_exp_hist_table_py_execute",
     "clust_exp_hist_table_py_params",

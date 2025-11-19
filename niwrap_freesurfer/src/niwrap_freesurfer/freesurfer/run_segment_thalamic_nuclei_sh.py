@@ -13,12 +13,12 @@ RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 )
 
 
-RunSegmentThalamicNucleiShParameters = typing.TypedDict('RunSegmentThalamicNucleiShParameters', {
+RunSegmentThalamicNucleiShParamsDict = typing.TypedDict('RunSegmentThalamicNucleiShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentThalamicNuclei.sh"]],
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
 })
-RunSegmentThalamicNucleiShParametersTagged = typing.TypedDict('RunSegmentThalamicNucleiShParametersTagged', {
+RunSegmentThalamicNucleiShParamsDictTagged = typing.TypedDict('RunSegmentThalamicNucleiShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run_SegmentThalamicNuclei.sh"],
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
@@ -27,7 +27,7 @@ RunSegmentThalamicNucleiShParametersTagged = typing.TypedDict('RunSegmentThalami
 
 class RunSegmentThalamicNucleiShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunSegmentThalamicNucleiShParameters(...)`.
+    Output object returned when calling `RunSegmentThalamicNucleiShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class RunSegmentThalamicNucleiShOutputs(typing.NamedTuple):
 def run_segment_thalamic_nuclei_sh_params(
     mcr_root: str,
     args: list[str] | None = None,
-) -> RunSegmentThalamicNucleiShParametersTagged:
+) -> RunSegmentThalamicNucleiShParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def run_segment_thalamic_nuclei_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunSegmentThalamicNucleiShParameters` object.
+    `RunSegmentThalamicNucleiShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def run_segment_thalamic_nuclei_sh_validate(
 
 
 def run_segment_thalamic_nuclei_sh_cargs(
-    params: RunSegmentThalamicNucleiShParameters,
+    params: RunSegmentThalamicNucleiShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def run_segment_thalamic_nuclei_sh_cargs(
 
 
 def run_segment_thalamic_nuclei_sh_outputs(
-    params: RunSegmentThalamicNucleiShParameters,
+    params: RunSegmentThalamicNucleiShParamsDict,
     execution: Execution,
 ) -> RunSegmentThalamicNucleiShOutputs:
     """
@@ -121,7 +121,7 @@ def run_segment_thalamic_nuclei_sh_outputs(
 
 
 def run_segment_thalamic_nuclei_sh_execute(
-    params: RunSegmentThalamicNucleiShParameters,
+    params: RunSegmentThalamicNucleiShParamsDict,
     runner: Runner | None = None,
 ) -> RunSegmentThalamicNucleiShOutputs:
     """
@@ -181,6 +181,8 @@ def run_segment_thalamic_nuclei_sh(
 __all__ = [
     "RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA",
     "RunSegmentThalamicNucleiShOutputs",
+    "RunSegmentThalamicNucleiShParamsDict",
+    "RunSegmentThalamicNucleiShParamsDictTagged",
     "run_segment_thalamic_nuclei_sh",
     "run_segment_thalamic_nuclei_sh_execute",
     "run_segment_thalamic_nuclei_sh_params",

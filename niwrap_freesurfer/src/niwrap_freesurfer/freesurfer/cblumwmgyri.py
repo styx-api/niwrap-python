@@ -13,7 +13,7 @@ CBLUMWMGYRI_METADATA = Metadata(
 )
 
 
-CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
+CblumwmgyriParamsDict = typing.TypedDict('CblumwmgyriParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/cblumwmgyri"]],
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
     "no_segstats": bool,
     "subjects_dir": typing.NotRequired[str | None],
 })
-CblumwmgyriParametersTagged = typing.TypedDict('CblumwmgyriParametersTagged', {
+CblumwmgyriParamsDictTagged = typing.TypedDict('CblumwmgyriParamsDictTagged', {
     "@type": typing.Literal["freesurfer/cblumwmgyri"],
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ CblumwmgyriParametersTagged = typing.TypedDict('CblumwmgyriParametersTagged', {
 
 class CblumwmgyriOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CblumwmgyriParameters(...)`.
+    Output object returned when calling `CblumwmgyriParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def cblumwmgyri_params(
     out_seg: str | None = None,
     no_segstats: bool = False,
     subjects_dir: str | None = None,
-) -> CblumwmgyriParametersTagged:
+) -> CblumwmgyriParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def cblumwmgyri_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CblumwmgyriParameters` object.
+    `CblumwmgyriParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def cblumwmgyri_validate(
 
 
 def cblumwmgyri_cargs(
-    params: CblumwmgyriParameters,
+    params: CblumwmgyriParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def cblumwmgyri_cargs(
 
 
 def cblumwmgyri_outputs(
-    params: CblumwmgyriParameters,
+    params: CblumwmgyriParamsDict,
     execution: Execution,
 ) -> CblumwmgyriOutputs:
     """
@@ -179,7 +179,7 @@ def cblumwmgyri_outputs(
 
 
 def cblumwmgyri_execute(
-    params: CblumwmgyriParameters,
+    params: CblumwmgyriParamsDict,
     runner: Runner | None = None,
 ) -> CblumwmgyriOutputs:
     """
@@ -252,6 +252,8 @@ def cblumwmgyri(
 __all__ = [
     "CBLUMWMGYRI_METADATA",
     "CblumwmgyriOutputs",
+    "CblumwmgyriParamsDict",
+    "CblumwmgyriParamsDictTagged",
     "cblumwmgyri",
     "cblumwmgyri_execute",
     "cblumwmgyri_params",

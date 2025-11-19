@@ -12,12 +12,12 @@ SPEC_FILE_RELOCATE_METADATA = Metadata(
 )
 
 
-SpecFileRelocateParameters = typing.TypedDict('SpecFileRelocateParameters', {
+SpecFileRelocateParamsDict = typing.TypedDict('SpecFileRelocateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/spec-file-relocate"]],
     "input-spec": str,
     "output-spec": str,
 })
-SpecFileRelocateParametersTagged = typing.TypedDict('SpecFileRelocateParametersTagged', {
+SpecFileRelocateParamsDictTagged = typing.TypedDict('SpecFileRelocateParamsDictTagged', {
     "@type": typing.Literal["workbench/spec-file-relocate"],
     "input-spec": str,
     "output-spec": str,
@@ -26,7 +26,7 @@ SpecFileRelocateParametersTagged = typing.TypedDict('SpecFileRelocateParametersT
 
 class SpecFileRelocateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpecFileRelocateParameters(...)`.
+    Output object returned when calling `SpecFileRelocateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class SpecFileRelocateOutputs(typing.NamedTuple):
 def spec_file_relocate_params(
     input_spec: str,
     output_spec: str,
-) -> SpecFileRelocateParametersTagged:
+) -> SpecFileRelocateParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def spec_file_relocate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpecFileRelocateParameters` object.
+    `SpecFileRelocateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -76,7 +76,7 @@ def spec_file_relocate_validate(
 
 
 def spec_file_relocate_cargs(
-    params: SpecFileRelocateParameters,
+    params: SpecFileRelocateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def spec_file_relocate_cargs(
 
 
 def spec_file_relocate_outputs(
-    params: SpecFileRelocateParameters,
+    params: SpecFileRelocateParamsDict,
     execution: Execution,
 ) -> SpecFileRelocateOutputs:
     """
@@ -118,7 +118,7 @@ def spec_file_relocate_outputs(
 
 
 def spec_file_relocate_execute(
-    params: SpecFileRelocateParameters,
+    params: SpecFileRelocateParamsDict,
     runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
@@ -175,6 +175,8 @@ def spec_file_relocate(
 __all__ = [
     "SPEC_FILE_RELOCATE_METADATA",
     "SpecFileRelocateOutputs",
+    "SpecFileRelocateParamsDict",
+    "SpecFileRelocateParamsDictTagged",
     "spec_file_relocate",
     "spec_file_relocate_execute",
     "spec_file_relocate_params",

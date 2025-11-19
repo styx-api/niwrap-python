@@ -13,7 +13,7 @@ V_3D_TCORRELATE_METADATA = Metadata(
 )
 
 
-V3dTcorrelateParameters = typing.TypedDict('V3dTcorrelateParameters', {
+V3dTcorrelateParamsDict = typing.TypedDict('V3dTcorrelateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTcorrelate"]],
     "xset": InputPathType,
     "yset": InputPathType,
@@ -32,7 +32,7 @@ V3dTcorrelateParameters = typing.TypedDict('V3dTcorrelateParameters', {
     "zcensor": bool,
     "prefix": typing.NotRequired[str | None],
 })
-V3dTcorrelateParametersTagged = typing.TypedDict('V3dTcorrelateParametersTagged', {
+V3dTcorrelateParamsDictTagged = typing.TypedDict('V3dTcorrelateParamsDictTagged', {
     "@type": typing.Literal["afni/3dTcorrelate"],
     "xset": InputPathType,
     "yset": InputPathType,
@@ -55,7 +55,7 @@ V3dTcorrelateParametersTagged = typing.TypedDict('V3dTcorrelateParametersTagged'
 
 class V3dTcorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTcorrelateParameters(...)`.
+    Output object returned when calling `V3dTcorrelateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v_3d_tcorrelate_params(
     automask: bool = False,
     zcensor: bool = False,
     prefix: str | None = None,
-) -> V3dTcorrelateParametersTagged:
+) -> V3dTcorrelateParamsDictTagged:
     """
     Build parameters.
     
@@ -155,7 +155,7 @@ def v_3d_tcorrelate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTcorrelateParameters` object.
+    `V3dTcorrelateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def v_3d_tcorrelate_validate(
 
 
 def v_3d_tcorrelate_cargs(
-    params: V3dTcorrelateParameters,
+    params: V3dTcorrelateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -287,7 +287,7 @@ def v_3d_tcorrelate_cargs(
 
 
 def v_3d_tcorrelate_outputs(
-    params: V3dTcorrelateParameters,
+    params: V3dTcorrelateParamsDict,
     execution: Execution,
 ) -> V3dTcorrelateOutputs:
     """
@@ -307,7 +307,7 @@ def v_3d_tcorrelate_outputs(
 
 
 def v_3d_tcorrelate_execute(
-    params: V3dTcorrelateParameters,
+    params: V3dTcorrelateParamsDict,
     runner: Runner | None = None,
 ) -> V3dTcorrelateOutputs:
     """
@@ -429,6 +429,8 @@ def v_3d_tcorrelate(
 
 __all__ = [
     "V3dTcorrelateOutputs",
+    "V3dTcorrelateParamsDict",
+    "V3dTcorrelateParamsDictTagged",
     "V_3D_TCORRELATE_METADATA",
     "v_3d_tcorrelate",
     "v_3d_tcorrelate_execute",

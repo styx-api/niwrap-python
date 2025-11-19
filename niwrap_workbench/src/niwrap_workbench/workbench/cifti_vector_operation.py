@@ -12,7 +12,7 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-CiftiVectorOperationParameters = typing.TypedDict('CiftiVectorOperationParameters', {
+CiftiVectorOperationParamsDict = typing.TypedDict('CiftiVectorOperationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-vector-operation"]],
     "cifti-out": str,
     "normalize-a": bool,
@@ -23,7 +23,7 @@ CiftiVectorOperationParameters = typing.TypedDict('CiftiVectorOperationParameter
     "vectors-b": InputPathType,
     "operation": str,
 })
-CiftiVectorOperationParametersTagged = typing.TypedDict('CiftiVectorOperationParametersTagged', {
+CiftiVectorOperationParamsDictTagged = typing.TypedDict('CiftiVectorOperationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-vector-operation"],
     "cifti-out": str,
     "normalize-a": bool,
@@ -38,7 +38,7 @@ CiftiVectorOperationParametersTagged = typing.TypedDict('CiftiVectorOperationPar
 
 class CiftiVectorOperationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiVectorOperationParameters(...)`.
+    Output object returned when calling `CiftiVectorOperationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def cifti_vector_operation_params(
     normalize_b: bool = False,
     normalize_output: bool = False,
     magnitude: bool = False,
-) -> CiftiVectorOperationParametersTagged:
+) -> CiftiVectorOperationParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def cifti_vector_operation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiVectorOperationParameters` object.
+    `CiftiVectorOperationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def cifti_vector_operation_validate(
 
 
 def cifti_vector_operation_cargs(
-    params: CiftiVectorOperationParameters,
+    params: CiftiVectorOperationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def cifti_vector_operation_cargs(
 
 
 def cifti_vector_operation_outputs(
-    params: CiftiVectorOperationParameters,
+    params: CiftiVectorOperationParamsDict,
     execution: Execution,
 ) -> CiftiVectorOperationOutputs:
     """
@@ -183,7 +183,7 @@ def cifti_vector_operation_outputs(
 
 
 def cifti_vector_operation_execute(
-    params: CiftiVectorOperationParameters,
+    params: CiftiVectorOperationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiVectorOperationOutputs:
     """
@@ -273,6 +273,8 @@ def cifti_vector_operation(
 __all__ = [
     "CIFTI_VECTOR_OPERATION_METADATA",
     "CiftiVectorOperationOutputs",
+    "CiftiVectorOperationParamsDict",
+    "CiftiVectorOperationParamsDictTagged",
     "cifti_vector_operation",
     "cifti_vector_operation_execute",
     "cifti_vector_operation_params",

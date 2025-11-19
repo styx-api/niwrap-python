@@ -13,7 +13,7 @@ MRI_DEFACER_METADATA = Metadata(
 )
 
 
-MriDefacerParameters = typing.TypedDict('MriDefacerParameters', {
+MriDefacerParamsDict = typing.TypedDict('MriDefacerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_defacer"]],
     "input_volume": InputPathType,
     "headmask": InputPathType,
@@ -40,7 +40,7 @@ MriDefacerParameters = typing.TypedDict('MriDefacerParameters', {
     "checkopts": bool,
     "version": bool,
 })
-MriDefacerParametersTagged = typing.TypedDict('MriDefacerParametersTagged', {
+MriDefacerParamsDictTagged = typing.TypedDict('MriDefacerParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_defacer"],
     "input_volume": InputPathType,
     "headmask": InputPathType,
@@ -71,7 +71,7 @@ MriDefacerParametersTagged = typing.TypedDict('MriDefacerParametersTagged', {
 
 class MriDefacerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDefacerParameters(...)`.
+    Output object returned when calling `MriDefacerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def mri_defacer_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriDefacerParametersTagged:
+) -> MriDefacerParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def mri_defacer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDefacerParameters` object.
+    `MriDefacerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -298,7 +298,7 @@ def mri_defacer_validate(
 
 
 def mri_defacer_cargs(
-    params: MriDefacerParameters,
+    params: MriDefacerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -423,7 +423,7 @@ def mri_defacer_cargs(
 
 
 def mri_defacer_outputs(
-    params: MriDefacerParameters,
+    params: MriDefacerParamsDict,
     execution: Execution,
 ) -> MriDefacerOutputs:
     """
@@ -442,7 +442,7 @@ def mri_defacer_outputs(
 
 
 def mri_defacer_execute(
-    params: MriDefacerParameters,
+    params: MriDefacerParamsDict,
     runner: Runner | None = None,
 ) -> MriDefacerOutputs:
     """
@@ -567,6 +567,8 @@ def mri_defacer(
 __all__ = [
     "MRI_DEFACER_METADATA",
     "MriDefacerOutputs",
+    "MriDefacerParamsDict",
+    "MriDefacerParamsDictTagged",
     "mri_defacer",
     "mri_defacer_execute",
     "mri_defacer_params",

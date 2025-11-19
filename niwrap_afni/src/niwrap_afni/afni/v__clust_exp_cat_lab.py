@@ -13,13 +13,13 @@ V__CLUST_EXP_CAT_LAB_METADATA = Metadata(
 )
 
 
-VClustExpCatLabParameters = typing.TypedDict('VClustExpCatLabParameters', {
+VClustExpCatLabParamsDict = typing.TypedDict('VClustExpCatLabParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_CatLab"]],
     "prefix": str,
     "input_file": InputPathType,
     "help": bool,
 })
-VClustExpCatLabParametersTagged = typing.TypedDict('VClustExpCatLabParametersTagged', {
+VClustExpCatLabParamsDictTagged = typing.TypedDict('VClustExpCatLabParamsDictTagged', {
     "@type": typing.Literal["afni/@ClustExp_CatLab"],
     "prefix": str,
     "input_file": InputPathType,
@@ -29,7 +29,7 @@ VClustExpCatLabParametersTagged = typing.TypedDict('VClustExpCatLabParametersTag
 
 class VClustExpCatLabOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VClustExpCatLabParameters(...)`.
+    Output object returned when calling `VClustExpCatLabParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v__clust_exp_cat_lab_params(
     prefix: str,
     input_file: InputPathType,
     help_: bool = False,
-) -> VClustExpCatLabParametersTagged:
+) -> VClustExpCatLabParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def v__clust_exp_cat_lab_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VClustExpCatLabParameters` object.
+    `VClustExpCatLabParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def v__clust_exp_cat_lab_validate(
 
 
 def v__clust_exp_cat_lab_cargs(
-    params: VClustExpCatLabParameters,
+    params: VClustExpCatLabParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,7 +117,7 @@ def v__clust_exp_cat_lab_cargs(
 
 
 def v__clust_exp_cat_lab_outputs(
-    params: VClustExpCatLabParameters,
+    params: VClustExpCatLabParamsDict,
     execution: Execution,
 ) -> VClustExpCatLabOutputs:
     """
@@ -137,7 +137,7 @@ def v__clust_exp_cat_lab_outputs(
 
 
 def v__clust_exp_cat_lab_execute(
-    params: VClustExpCatLabParameters,
+    params: VClustExpCatLabParamsDict,
     runner: Runner | None = None,
 ) -> VClustExpCatLabOutputs:
     """
@@ -199,6 +199,8 @@ def v__clust_exp_cat_lab(
 
 __all__ = [
     "VClustExpCatLabOutputs",
+    "VClustExpCatLabParamsDict",
+    "VClustExpCatLabParamsDictTagged",
     "V__CLUST_EXP_CAT_LAB_METADATA",
     "v__clust_exp_cat_lab",
     "v__clust_exp_cat_lab_execute",

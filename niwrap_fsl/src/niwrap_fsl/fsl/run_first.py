@@ -13,7 +13,7 @@ RUN_FIRST_METADATA = Metadata(
 )
 
 
-RunFirstParameters = typing.TypedDict('RunFirstParameters', {
+RunFirstParamsDict = typing.TypedDict('RunFirstParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/run_first"]],
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
@@ -25,7 +25,7 @@ RunFirstParameters = typing.TypedDict('RunFirstParameters', {
     "load_bvars": typing.NotRequired[InputPathType | None],
     "multiple_images_flag": bool,
 })
-RunFirstParametersTagged = typing.TypedDict('RunFirstParametersTagged', {
+RunFirstParamsDictTagged = typing.TypedDict('RunFirstParamsDictTagged', {
     "@type": typing.Literal["fsl/run_first"],
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
@@ -41,7 +41,7 @@ RunFirstParametersTagged = typing.TypedDict('RunFirstParametersTagged', {
 
 class RunFirstOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunFirstParameters(...)`.
+    Output object returned when calling `RunFirstParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def run_first_params(
     intref_model_name: str | None = None,
     load_bvars: InputPathType | None = None,
     multiple_images_flag: bool = False,
-) -> RunFirstParametersTagged:
+) -> RunFirstParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def run_first_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunFirstParameters` object.
+    `RunFirstParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def run_first_validate(
 
 
 def run_first_cargs(
-    params: RunFirstParameters,
+    params: RunFirstParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def run_first_cargs(
 
 
 def run_first_outputs(
-    params: RunFirstParameters,
+    params: RunFirstParamsDict,
     execution: Execution,
 ) -> RunFirstOutputs:
     """
@@ -214,7 +214,7 @@ def run_first_outputs(
 
 
 def run_first_execute(
-    params: RunFirstParameters,
+    params: RunFirstParamsDict,
     runner: Runner | None = None,
 ) -> RunFirstOutputs:
     """
@@ -297,6 +297,8 @@ def run_first(
 __all__ = [
     "RUN_FIRST_METADATA",
     "RunFirstOutputs",
+    "RunFirstParamsDict",
+    "RunFirstParamsDictTagged",
     "run_first",
     "run_first_execute",
     "run_first_params",

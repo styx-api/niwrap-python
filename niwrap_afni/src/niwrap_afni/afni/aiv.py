@@ -13,7 +13,7 @@ AIV_METADATA = Metadata(
 )
 
 
-AivParameters = typing.TypedDict('AivParameters', {
+AivParamsDict = typing.TypedDict('AivParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/aiv"]],
     "verbose": bool,
     "quiet": bool,
@@ -22,7 +22,7 @@ AivParameters = typing.TypedDict('AivParameters', {
     "pad": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
 })
-AivParametersTagged = typing.TypedDict('AivParametersTagged', {
+AivParamsDictTagged = typing.TypedDict('AivParamsDictTagged', {
     "@type": typing.Literal["afni/aiv"],
     "verbose": bool,
     "quiet": bool,
@@ -35,7 +35,7 @@ AivParametersTagged = typing.TypedDict('AivParametersTagged', {
 
 class AivOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AivParameters(...)`.
+    Output object returned when calling `AivParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def aiv_params(
     title: str | None = None,
     port: float | None = None,
     pad: str | None = None,
-) -> AivParametersTagged:
+) -> AivParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def aiv_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `AivParameters`
+    Validate parameters. Throws an error if `params` is not a valid `AivParamsDict`
     object.
     
     Args:
@@ -118,7 +118,7 @@ def aiv_validate(
 
 
 def aiv_cargs(
-    params: AivParameters,
+    params: AivParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def aiv_cargs(
 
 
 def aiv_outputs(
-    params: AivParameters,
+    params: AivParamsDict,
     execution: Execution,
 ) -> AivOutputs:
     """
@@ -175,7 +175,7 @@ def aiv_outputs(
 
 
 def aiv_execute(
-    params: AivParameters,
+    params: AivParamsDict,
     runner: Runner | None = None,
 ) -> AivOutputs:
     """
@@ -248,6 +248,8 @@ def aiv(
 __all__ = [
     "AIV_METADATA",
     "AivOutputs",
+    "AivParamsDict",
+    "AivParamsDictTagged",
     "aiv",
     "aiv_execute",
     "aiv_params",

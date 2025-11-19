@@ -13,7 +13,7 @@ MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
 )
 
 
-MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameters', {
+MriFuseSegmentationsParamsDict = typing.TypedDict('MriFuseSegmentationsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_segmentations"]],
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
@@ -23,7 +23,7 @@ MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameter
     "input_file": InputPathType,
     "output_file": str,
 })
-MriFuseSegmentationsParametersTagged = typing.TypedDict('MriFuseSegmentationsParametersTagged', {
+MriFuseSegmentationsParamsDictTagged = typing.TypedDict('MriFuseSegmentationsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fuse_segmentations"],
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
@@ -37,7 +37,7 @@ MriFuseSegmentationsParametersTagged = typing.TypedDict('MriFuseSegmentationsPar
 
 class MriFuseSegmentationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFuseSegmentationsParameters(...)`.
+    Output object returned when calling `MriFuseSegmentationsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_fuse_segmentations_params(
     output_file: str,
     transforms: list[InputPathType] | None = None,
     sigma: float | None = None,
-) -> MriFuseSegmentationsParametersTagged:
+) -> MriFuseSegmentationsParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def mri_fuse_segmentations_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFuseSegmentationsParameters` object.
+    `MriFuseSegmentationsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def mri_fuse_segmentations_validate(
 
 
 def mri_fuse_segmentations_cargs(
-    params: MriFuseSegmentationsParameters,
+    params: MriFuseSegmentationsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def mri_fuse_segmentations_cargs(
 
 
 def mri_fuse_segmentations_outputs(
-    params: MriFuseSegmentationsParameters,
+    params: MriFuseSegmentationsParamsDict,
     execution: Execution,
 ) -> MriFuseSegmentationsOutputs:
     """
@@ -200,7 +200,7 @@ def mri_fuse_segmentations_outputs(
 
 
 def mri_fuse_segmentations_execute(
-    params: MriFuseSegmentationsParameters,
+    params: MriFuseSegmentationsParamsDict,
     runner: Runner | None = None,
 ) -> MriFuseSegmentationsOutputs:
     """
@@ -278,6 +278,8 @@ def mri_fuse_segmentations(
 __all__ = [
     "MRI_FUSE_SEGMENTATIONS_METADATA",
     "MriFuseSegmentationsOutputs",
+    "MriFuseSegmentationsParamsDict",
+    "MriFuseSegmentationsParamsDictTagged",
     "mri_fuse_segmentations",
     "mri_fuse_segmentations_execute",
     "mri_fuse_segmentations_params",

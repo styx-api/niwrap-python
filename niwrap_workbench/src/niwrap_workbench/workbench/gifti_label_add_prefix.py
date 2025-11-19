@@ -12,13 +12,13 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 )
 
 
-GiftiLabelAddPrefixParameters = typing.TypedDict('GiftiLabelAddPrefixParameters', {
+GiftiLabelAddPrefixParamsDict = typing.TypedDict('GiftiLabelAddPrefixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-add-prefix"]],
     "label-out": str,
     "label-in": InputPathType,
     "prefix": str,
 })
-GiftiLabelAddPrefixParametersTagged = typing.TypedDict('GiftiLabelAddPrefixParametersTagged', {
+GiftiLabelAddPrefixParamsDictTagged = typing.TypedDict('GiftiLabelAddPrefixParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-label-add-prefix"],
     "label-out": str,
     "label-in": InputPathType,
@@ -28,7 +28,7 @@ GiftiLabelAddPrefixParametersTagged = typing.TypedDict('GiftiLabelAddPrefixParam
 
 class GiftiLabelAddPrefixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GiftiLabelAddPrefixParameters(...)`.
+    Output object returned when calling `GiftiLabelAddPrefixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def gifti_label_add_prefix_params(
     label_out: str,
     label_in: InputPathType,
     prefix: str,
-) -> GiftiLabelAddPrefixParametersTagged:
+) -> GiftiLabelAddPrefixParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def gifti_label_add_prefix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GiftiLabelAddPrefixParameters` object.
+    `GiftiLabelAddPrefixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def gifti_label_add_prefix_validate(
 
 
 def gifti_label_add_prefix_cargs(
-    params: GiftiLabelAddPrefixParameters,
+    params: GiftiLabelAddPrefixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def gifti_label_add_prefix_cargs(
 
 
 def gifti_label_add_prefix_outputs(
-    params: GiftiLabelAddPrefixParameters,
+    params: GiftiLabelAddPrefixParamsDict,
     execution: Execution,
 ) -> GiftiLabelAddPrefixOutputs:
     """
@@ -131,7 +131,7 @@ def gifti_label_add_prefix_outputs(
 
 
 def gifti_label_add_prefix_execute(
-    params: GiftiLabelAddPrefixParameters,
+    params: GiftiLabelAddPrefixParamsDict,
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
@@ -185,6 +185,8 @@ def gifti_label_add_prefix(
 __all__ = [
     "GIFTI_LABEL_ADD_PREFIX_METADATA",
     "GiftiLabelAddPrefixOutputs",
+    "GiftiLabelAddPrefixParamsDict",
+    "GiftiLabelAddPrefixParamsDictTagged",
     "gifti_label_add_prefix",
     "gifti_label_add_prefix_execute",
     "gifti_label_add_prefix_params",

@@ -13,7 +13,7 @@ MRI_NLFILTER_METADATA = Metadata(
 )
 
 
-MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
+MriNlfilterParamsDict = typing.TypedDict('MriNlfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nlfilter"]],
     "input_image": InputPathType,
     "output_image": str,
@@ -28,7 +28,7 @@ MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
     "version_flag": bool,
     "help_flag": bool,
 })
-MriNlfilterParametersTagged = typing.TypedDict('MriNlfilterParametersTagged', {
+MriNlfilterParamsDictTagged = typing.TypedDict('MriNlfilterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_nlfilter"],
     "input_image": InputPathType,
     "output_image": str,
@@ -47,7 +47,7 @@ MriNlfilterParametersTagged = typing.TypedDict('MriNlfilterParametersTagged', {
 
 class MriNlfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNlfilterParameters(...)`.
+    Output object returned when calling `MriNlfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def mri_nlfilter_params(
     no_crop_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriNlfilterParametersTagged:
+) -> MriNlfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -117,7 +117,7 @@ def mri_nlfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNlfilterParameters` object.
+    `MriNlfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -172,7 +172,7 @@ def mri_nlfilter_validate(
 
 
 def mri_nlfilter_cargs(
-    params: MriNlfilterParameters,
+    params: MriNlfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -221,7 +221,7 @@ def mri_nlfilter_cargs(
 
 
 def mri_nlfilter_outputs(
-    params: MriNlfilterParameters,
+    params: MriNlfilterParamsDict,
     execution: Execution,
 ) -> MriNlfilterOutputs:
     """
@@ -241,7 +241,7 @@ def mri_nlfilter_outputs(
 
 
 def mri_nlfilter_execute(
-    params: MriNlfilterParameters,
+    params: MriNlfilterParamsDict,
     runner: Runner | None = None,
 ) -> MriNlfilterOutputs:
     """
@@ -337,6 +337,8 @@ def mri_nlfilter(
 __all__ = [
     "MRI_NLFILTER_METADATA",
     "MriNlfilterOutputs",
+    "MriNlfilterParamsDict",
+    "MriNlfilterParamsDictTagged",
     "mri_nlfilter",
     "mri_nlfilter_execute",
     "mri_nlfilter_params",

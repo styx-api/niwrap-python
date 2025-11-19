@@ -12,13 +12,13 @@ CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
 )
 
 
-CiftiCreateScalarSeriesSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesSeriesParameters', {
+CiftiCreateScalarSeriesSeriesParamsDict = typing.TypedDict('CiftiCreateScalarSeriesSeriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["series"]],
     "unit": str,
     "start": float,
     "step": float,
 })
-CiftiCreateScalarSeriesSeriesParametersTagged = typing.TypedDict('CiftiCreateScalarSeriesSeriesParametersTagged', {
+CiftiCreateScalarSeriesSeriesParamsDictTagged = typing.TypedDict('CiftiCreateScalarSeriesSeriesParamsDictTagged', {
     "@type": typing.Literal["series"],
     "unit": str,
     "start": float,
@@ -26,29 +26,29 @@ CiftiCreateScalarSeriesSeriesParametersTagged = typing.TypedDict('CiftiCreateSca
 })
 
 
-CiftiCreateScalarSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesParameters', {
+CiftiCreateScalarSeriesParamsDict = typing.TypedDict('CiftiCreateScalarSeriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-scalar-series"]],
     "cifti-out": str,
     "transpose": bool,
     "file": typing.NotRequired[str | None],
-    "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParameters | None],
+    "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParamsDict | None],
     "input": str,
 })
-CiftiCreateScalarSeriesParametersTagged = typing.TypedDict('CiftiCreateScalarSeriesParametersTagged', {
+CiftiCreateScalarSeriesParamsDictTagged = typing.TypedDict('CiftiCreateScalarSeriesParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-scalar-series"],
     "cifti-out": str,
     "transpose": bool,
     "file": typing.NotRequired[str | None],
-    "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParameters | None],
+    "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParamsDict | None],
     "input": str,
 })
 
 
-def cifti_create_scalar_series_series_params(
+def cifti_create_scalar_series_series(
     unit: str,
     start: float,
     step: float,
-) -> CiftiCreateScalarSeriesSeriesParametersTagged:
+) -> CiftiCreateScalarSeriesSeriesParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def cifti_create_scalar_series_series_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateScalarSeriesSeriesParameters` object.
+    `CiftiCreateScalarSeriesSeriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def cifti_create_scalar_series_series_validate(
 
 
 def cifti_create_scalar_series_series_cargs(
-    params: CiftiCreateScalarSeriesSeriesParameters,
+    params: CiftiCreateScalarSeriesSeriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def cifti_create_scalar_series_series_cargs(
 
 class CiftiCreateScalarSeriesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateScalarSeriesParameters(...)`.
+    Output object returned when calling `CiftiCreateScalarSeriesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,8 +132,8 @@ def cifti_create_scalar_series_params(
     file: str | None,
     input_: str,
     transpose: bool = False,
-    series: CiftiCreateScalarSeriesSeriesParameters | None = None,
-) -> CiftiCreateScalarSeriesParametersTagged:
+    series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
+) -> CiftiCreateScalarSeriesParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def cifti_create_scalar_series_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateScalarSeriesParameters` object.
+    `CiftiCreateScalarSeriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -194,7 +194,7 @@ def cifti_create_scalar_series_validate(
 
 
 def cifti_create_scalar_series_cargs(
-    params: CiftiCreateScalarSeriesParameters,
+    params: CiftiCreateScalarSeriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def cifti_create_scalar_series_cargs(
 
 
 def cifti_create_scalar_series_outputs(
-    params: CiftiCreateScalarSeriesParameters,
+    params: CiftiCreateScalarSeriesParamsDict,
     execution: Execution,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
@@ -242,7 +242,7 @@ def cifti_create_scalar_series_outputs(
 
 
 def cifti_create_scalar_series_execute(
-    params: CiftiCreateScalarSeriesParameters,
+    params: CiftiCreateScalarSeriesParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
@@ -280,7 +280,7 @@ def cifti_create_scalar_series(
     file: str | None,
     input_: str,
     transpose: bool = False,
-    series: CiftiCreateScalarSeriesSeriesParameters | None = None,
+    series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
@@ -323,8 +323,12 @@ def cifti_create_scalar_series(
 __all__ = [
     "CIFTI_CREATE_SCALAR_SERIES_METADATA",
     "CiftiCreateScalarSeriesOutputs",
+    "CiftiCreateScalarSeriesParamsDict",
+    "CiftiCreateScalarSeriesParamsDictTagged",
+    "CiftiCreateScalarSeriesSeriesParamsDict",
+    "CiftiCreateScalarSeriesSeriesParamsDictTagged",
     "cifti_create_scalar_series",
     "cifti_create_scalar_series_execute",
     "cifti_create_scalar_series_params",
-    "cifti_create_scalar_series_series_params",
+    "cifti_create_scalar_series_series",
 ]

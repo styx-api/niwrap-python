@@ -13,7 +13,7 @@ ASL_MFREE_METADATA = Metadata(
 )
 
 
-AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
+AslMfreeParamsDict = typing.TypedDict('AslMfreeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/asl_mfree"]],
     "datafile": InputPathType,
     "mask": InputPathType,
@@ -35,7 +35,7 @@ AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
     "shift_factor": typing.NotRequired[float | None],
     "verbose": bool,
 })
-AslMfreeParametersTagged = typing.TypedDict('AslMfreeParametersTagged', {
+AslMfreeParamsDictTagged = typing.TypedDict('AslMfreeParamsDictTagged', {
     "@type": typing.Literal["fsl/asl_mfree"],
     "datafile": InputPathType,
     "mask": InputPathType,
@@ -61,7 +61,7 @@ AslMfreeParametersTagged = typing.TypedDict('AslMfreeParametersTagged', {
 
 class AslMfreeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AslMfreeParameters(...)`.
+    Output object returned when calling `AslMfreeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +91,7 @@ def asl_mfree_params(
     turbo_quasar: bool = False,
     shift_factor: float | None = None,
     verbose: bool = False,
-) -> AslMfreeParametersTagged:
+) -> AslMfreeParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def asl_mfree_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AslMfreeParameters` object.
+    `AslMfreeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -239,7 +239,7 @@ def asl_mfree_validate(
 
 
 def asl_mfree_cargs(
-    params: AslMfreeParameters,
+    params: AslMfreeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -332,7 +332,7 @@ def asl_mfree_cargs(
 
 
 def asl_mfree_outputs(
-    params: AslMfreeParameters,
+    params: AslMfreeParamsDict,
     execution: Execution,
 ) -> AslMfreeOutputs:
     """
@@ -353,7 +353,7 @@ def asl_mfree_outputs(
 
 
 def asl_mfree_execute(
-    params: AslMfreeParameters,
+    params: AslMfreeParamsDict,
     runner: Runner | None = None,
 ) -> AslMfreeOutputs:
     """
@@ -468,6 +468,8 @@ def asl_mfree(
 __all__ = [
     "ASL_MFREE_METADATA",
     "AslMfreeOutputs",
+    "AslMfreeParamsDict",
+    "AslMfreeParamsDictTagged",
     "asl_mfree",
     "asl_mfree_execute",
     "asl_mfree_params",

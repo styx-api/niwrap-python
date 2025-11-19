@@ -13,7 +13,7 @@ SPHARM_RECO_METADATA = Metadata(
 )
 
 
-SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
+SpharmRecoParamsDict = typing.TypedDict('SpharmRecoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SpharmReco"]],
     "input_surface": str,
     "decomposition_order": float,
@@ -24,7 +24,7 @@ SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
     "debug": typing.NotRequired[float | None],
     "smoothing": typing.NotRequired[float | None],
 })
-SpharmRecoParametersTagged = typing.TypedDict('SpharmRecoParametersTagged', {
+SpharmRecoParamsDictTagged = typing.TypedDict('SpharmRecoParamsDictTagged', {
     "@type": typing.Literal["afni/SpharmReco"],
     "input_surface": str,
     "decomposition_order": float,
@@ -39,7 +39,7 @@ SpharmRecoParametersTagged = typing.TypedDict('SpharmRecoParametersTagged', {
 
 class SpharmRecoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpharmRecoParameters(...)`.
+    Output object returned when calling `SpharmRecoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def spharm_reco_params(
     output_surface: list[str] | None = None,
     debug: float | None = None,
     smoothing: float | None = None,
-) -> SpharmRecoParametersTagged:
+) -> SpharmRecoParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def spharm_reco_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpharmRecoParameters` object.
+    `SpharmRecoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def spharm_reco_validate(
 
 
 def spharm_reco_cargs(
-    params: SpharmRecoParameters,
+    params: SpharmRecoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def spharm_reco_cargs(
 
 
 def spharm_reco_outputs(
-    params: SpharmRecoParameters,
+    params: SpharmRecoParamsDict,
     execution: Execution,
 ) -> SpharmRecoOutputs:
     """
@@ -220,7 +220,7 @@ def spharm_reco_outputs(
 
 
 def spharm_reco_execute(
-    params: SpharmRecoParameters,
+    params: SpharmRecoParamsDict,
     runner: Runner | None = None,
 ) -> SpharmRecoOutputs:
     """
@@ -305,6 +305,8 @@ def spharm_reco(
 __all__ = [
     "SPHARM_RECO_METADATA",
     "SpharmRecoOutputs",
+    "SpharmRecoParamsDict",
+    "SpharmRecoParamsDictTagged",
     "spharm_reco",
     "spharm_reco_execute",
     "spharm_reco_params",

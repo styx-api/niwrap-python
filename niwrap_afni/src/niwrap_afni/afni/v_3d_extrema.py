@@ -13,7 +13,7 @@ V_3D_EXTREMA_METADATA = Metadata(
 )
 
 
-V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
+V3dExtremaParamsDict = typing.TypedDict('V3dExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dExtrema"]],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
     "average": bool,
     "weight": bool,
 })
-V3dExtremaParametersTagged = typing.TypedDict('V3dExtremaParametersTagged', {
+V3dExtremaParamsDictTagged = typing.TypedDict('V3dExtremaParamsDictTagged', {
     "@type": typing.Literal["afni/3dExtrema"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -63,7 +63,7 @@ V3dExtremaParametersTagged = typing.TypedDict('V3dExtremaParametersTagged', {
 
 class V3dExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dExtremaParameters(...)`.
+    Output object returned when calling `V3dExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def v_3d_extrema_params(
     remove: bool = False,
     average: bool = False,
     weight: bool = False,
-) -> V3dExtremaParametersTagged:
+) -> V3dExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -163,7 +163,7 @@ def v_3d_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dExtremaParameters` object.
+    `V3dExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -246,7 +246,7 @@ def v_3d_extrema_validate(
 
 
 def v_3d_extrema_cargs(
-    params: V3dExtremaParameters,
+    params: V3dExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -324,7 +324,7 @@ def v_3d_extrema_cargs(
 
 
 def v_3d_extrema_outputs(
-    params: V3dExtremaParameters,
+    params: V3dExtremaParamsDict,
     execution: Execution,
 ) -> V3dExtremaOutputs:
     """
@@ -345,7 +345,7 @@ def v_3d_extrema_outputs(
 
 
 def v_3d_extrema_execute(
-    params: V3dExtremaParameters,
+    params: V3dExtremaParamsDict,
     runner: Runner | None = None,
 ) -> V3dExtremaOutputs:
     """
@@ -460,6 +460,8 @@ def v_3d_extrema(
 
 __all__ = [
     "V3dExtremaOutputs",
+    "V3dExtremaParamsDict",
+    "V3dExtremaParamsDictTagged",
     "V_3D_EXTREMA_METADATA",
     "v_3d_extrema",
     "v_3d_extrema_execute",

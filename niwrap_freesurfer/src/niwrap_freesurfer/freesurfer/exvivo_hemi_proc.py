@@ -13,7 +13,7 @@ EXVIVO_HEMI_PROC_METADATA = Metadata(
 )
 
 
-ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
+ExvivoHemiProcParamsDict = typing.TypedDict('ExvivoHemiProcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/exvivo-hemi-proc"]],
     "flashdir": str,
     "outdir": str,
@@ -31,7 +31,7 @@ ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
     "stop_mmppsp_after": typing.NotRequired[str | None],
     "force": bool,
 })
-ExvivoHemiProcParametersTagged = typing.TypedDict('ExvivoHemiProcParametersTagged', {
+ExvivoHemiProcParamsDictTagged = typing.TypedDict('ExvivoHemiProcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/exvivo-hemi-proc"],
     "flashdir": str,
     "outdir": str,
@@ -53,7 +53,7 @@ ExvivoHemiProcParametersTagged = typing.TypedDict('ExvivoHemiProcParametersTagge
 
 class ExvivoHemiProcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExvivoHemiProcParameters(...)`.
+    Output object returned when calling `ExvivoHemiProcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def exvivo_hemi_proc_params(
     samseg_only: bool = False,
     stop_mmppsp_after: str | None = None,
     force: bool = False,
-) -> ExvivoHemiProcParametersTagged:
+) -> ExvivoHemiProcParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def exvivo_hemi_proc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExvivoHemiProcParameters` object.
+    `ExvivoHemiProcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def exvivo_hemi_proc_validate(
 
 
 def exvivo_hemi_proc_cargs(
-    params: ExvivoHemiProcParameters,
+    params: ExvivoHemiProcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def exvivo_hemi_proc_cargs(
 
 
 def exvivo_hemi_proc_outputs(
-    params: ExvivoHemiProcParameters,
+    params: ExvivoHemiProcParamsDict,
     execution: Execution,
 ) -> ExvivoHemiProcOutputs:
     """
@@ -277,7 +277,7 @@ def exvivo_hemi_proc_outputs(
 
 
 def exvivo_hemi_proc_execute(
-    params: ExvivoHemiProcParameters,
+    params: ExvivoHemiProcParamsDict,
     runner: Runner | None = None,
 ) -> ExvivoHemiProcOutputs:
     """
@@ -378,6 +378,8 @@ def exvivo_hemi_proc(
 __all__ = [
     "EXVIVO_HEMI_PROC_METADATA",
     "ExvivoHemiProcOutputs",
+    "ExvivoHemiProcParamsDict",
+    "ExvivoHemiProcParamsDictTagged",
     "exvivo_hemi_proc",
     "exvivo_hemi_proc_execute",
     "exvivo_hemi_proc_params",

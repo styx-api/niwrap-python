@@ -13,7 +13,7 @@ V_3D_CLUSTERIZE_METADATA = Metadata(
 )
 
 
-V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
+V3dClusterizeParamsDict = typing.TypedDict('V3dClusterizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dClusterize"]],
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
     "abs_table_data": bool,
     "binary": bool,
 })
-V3dClusterizeParametersTagged = typing.TypedDict('V3dClusterizeParametersTagged', {
+V3dClusterizeParamsDictTagged = typing.TypedDict('V3dClusterizeParamsDictTagged', {
     "@type": typing.Literal["afni/3dClusterize"],
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -71,7 +71,7 @@ V3dClusterizeParametersTagged = typing.TypedDict('V3dClusterizeParametersTagged'
 
 class V3dClusterizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dClusterizeParameters(...)`.
+    Output object returned when calling `V3dClusterizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +108,7 @@ def v_3d_clusterize_params(
     orient: str | None = None,
     abs_table_data: bool = False,
     binary: bool = False,
-) -> V3dClusterizeParametersTagged:
+) -> V3dClusterizeParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def v_3d_clusterize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dClusterizeParameters` object.
+    `V3dClusterizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def v_3d_clusterize_validate(
 
 
 def v_3d_clusterize_cargs(
-    params: V3dClusterizeParameters,
+    params: V3dClusterizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -391,7 +391,7 @@ def v_3d_clusterize_cargs(
 
 
 def v_3d_clusterize_outputs(
-    params: V3dClusterizeParameters,
+    params: V3dClusterizeParamsDict,
     execution: Execution,
 ) -> V3dClusterizeOutputs:
     """
@@ -413,7 +413,7 @@ def v_3d_clusterize_outputs(
 
 
 def v_3d_clusterize_execute(
-    params: V3dClusterizeParameters,
+    params: V3dClusterizeParamsDict,
     runner: Runner | None = None,
 ) -> V3dClusterizeOutputs:
     """
@@ -539,6 +539,8 @@ def v_3d_clusterize(
 
 __all__ = [
     "V3dClusterizeOutputs",
+    "V3dClusterizeParamsDict",
+    "V3dClusterizeParamsDictTagged",
     "V_3D_CLUSTERIZE_METADATA",
     "v_3d_clusterize",
     "v_3d_clusterize_execute",

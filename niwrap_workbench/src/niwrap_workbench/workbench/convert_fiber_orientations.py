@@ -12,7 +12,7 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
 )
 
 
-ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientationsFiberParameters', {
+ConvertFiberOrientationsFiberParamsDict = typing.TypedDict('ConvertFiberOrientationsFiberParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fiber"]],
     "mean-f": InputPathType,
     "stdev-f": InputPathType,
@@ -22,7 +22,7 @@ ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientat
     "ka": InputPathType,
     "kb": InputPathType,
 })
-ConvertFiberOrientationsFiberParametersTagged = typing.TypedDict('ConvertFiberOrientationsFiberParametersTagged', {
+ConvertFiberOrientationsFiberParamsDictTagged = typing.TypedDict('ConvertFiberOrientationsFiberParamsDictTagged', {
     "@type": typing.Literal["fiber"],
     "mean-f": InputPathType,
     "stdev-f": InputPathType,
@@ -34,21 +34,21 @@ ConvertFiberOrientationsFiberParametersTagged = typing.TypedDict('ConvertFiberOr
 })
 
 
-ConvertFiberOrientationsParameters = typing.TypedDict('ConvertFiberOrientationsParameters', {
+ConvertFiberOrientationsParamsDict = typing.TypedDict('ConvertFiberOrientationsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-fiber-orientations"]],
     "fiber-out": str,
-    "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
+    "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
     "label-volume": InputPathType,
 })
-ConvertFiberOrientationsParametersTagged = typing.TypedDict('ConvertFiberOrientationsParametersTagged', {
+ConvertFiberOrientationsParamsDictTagged = typing.TypedDict('ConvertFiberOrientationsParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-fiber-orientations"],
     "fiber-out": str,
-    "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
+    "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
     "label-volume": InputPathType,
 })
 
 
-def convert_fiber_orientations_fiber_params(
+def convert_fiber_orientations_fiber(
     mean_f: InputPathType,
     stdev_f: InputPathType,
     theta: InputPathType,
@@ -56,7 +56,7 @@ def convert_fiber_orientations_fiber_params(
     psi: InputPathType,
     ka: InputPathType,
     kb: InputPathType,
-) -> ConvertFiberOrientationsFiberParametersTagged:
+) -> ConvertFiberOrientationsFiberParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def convert_fiber_orientations_fiber_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertFiberOrientationsFiberParameters` object.
+    `ConvertFiberOrientationsFiberParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def convert_fiber_orientations_fiber_validate(
 
 
 def convert_fiber_orientations_fiber_cargs(
-    params: ConvertFiberOrientationsFiberParameters,
+    params: ConvertFiberOrientationsFiberParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def convert_fiber_orientations_fiber_cargs(
 
 class ConvertFiberOrientationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertFiberOrientationsParameters(...)`.
+    Output object returned when calling `ConvertFiberOrientationsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -166,8 +166,8 @@ class ConvertFiberOrientationsOutputs(typing.NamedTuple):
 def convert_fiber_orientations_params(
     fiber_out: str,
     label_volume: InputPathType,
-    fiber: list[ConvertFiberOrientationsFiberParameters] | None = None,
-) -> ConvertFiberOrientationsParametersTagged:
+    fiber: list[ConvertFiberOrientationsFiberParamsDict] | None = None,
+) -> ConvertFiberOrientationsParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def convert_fiber_orientations_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertFiberOrientationsParameters` object.
+    `ConvertFiberOrientationsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def convert_fiber_orientations_validate(
         raise StyxValidationError(f'`fiber-out` has the wrong type: Received `{type(params.get("fiber-out", None))}` expected `str`')
     if params.get("fiber", None) is not None:
         if not isinstance(params["fiber"], list):
-            raise StyxValidationError(f'`fiber` has the wrong type: Received `{type(params.get("fiber", None))}` expected `list[ConvertFiberOrientationsFiberParameters] | None`')
+            raise StyxValidationError(f'`fiber` has the wrong type: Received `{type(params.get("fiber", None))}` expected `list[ConvertFiberOrientationsFiberParamsDict] | None`')
         for e in params["fiber"]:
             convert_fiber_orientations_fiber_validate(e)
     if params.get("label-volume", None) is None:
@@ -216,7 +216,7 @@ def convert_fiber_orientations_validate(
 
 
 def convert_fiber_orientations_cargs(
-    params: ConvertFiberOrientationsParameters,
+    params: ConvertFiberOrientationsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -241,7 +241,7 @@ def convert_fiber_orientations_cargs(
 
 
 def convert_fiber_orientations_outputs(
-    params: ConvertFiberOrientationsParameters,
+    params: ConvertFiberOrientationsParamsDict,
     execution: Execution,
 ) -> ConvertFiberOrientationsOutputs:
     """
@@ -261,7 +261,7 @@ def convert_fiber_orientations_outputs(
 
 
 def convert_fiber_orientations_execute(
-    params: ConvertFiberOrientationsParameters,
+    params: ConvertFiberOrientationsParamsDict,
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
@@ -327,7 +327,7 @@ def convert_fiber_orientations_execute(
 def convert_fiber_orientations(
     fiber_out: str,
     label_volume: InputPathType,
-    fiber: list[ConvertFiberOrientationsFiberParameters] | None = None,
+    fiber: list[ConvertFiberOrientationsFiberParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
@@ -392,9 +392,13 @@ def convert_fiber_orientations(
 
 __all__ = [
     "CONVERT_FIBER_ORIENTATIONS_METADATA",
+    "ConvertFiberOrientationsFiberParamsDict",
+    "ConvertFiberOrientationsFiberParamsDictTagged",
     "ConvertFiberOrientationsOutputs",
+    "ConvertFiberOrientationsParamsDict",
+    "ConvertFiberOrientationsParamsDictTagged",
     "convert_fiber_orientations",
     "convert_fiber_orientations_execute",
-    "convert_fiber_orientations_fiber_params",
+    "convert_fiber_orientations_fiber",
     "convert_fiber_orientations_params",
 ]

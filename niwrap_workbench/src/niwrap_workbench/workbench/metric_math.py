@@ -12,14 +12,14 @@ METRIC_MATH_METADATA = Metadata(
 )
 
 
-MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
+MetricMathVarParamsDict = typing.TypedDict('MetricMathVarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["var"]],
     "name": str,
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
     "repeat": bool,
 })
-MetricMathVarParametersTagged = typing.TypedDict('MetricMathVarParametersTagged', {
+MetricMathVarParamsDictTagged = typing.TypedDict('MetricMathVarParamsDictTagged', {
     "@type": typing.Literal["var"],
     "name": str,
     "metric": InputPathType,
@@ -28,28 +28,28 @@ MetricMathVarParametersTagged = typing.TypedDict('MetricMathVarParametersTagged'
 })
 
 
-MetricMathParameters = typing.TypedDict('MetricMathParameters', {
+MetricMathParamsDict = typing.TypedDict('MetricMathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-math"]],
     "metric-out": str,
     "replace": typing.NotRequired[float | None],
-    "var": typing.NotRequired[list[MetricMathVarParameters] | None],
+    "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
     "expression": str,
 })
-MetricMathParametersTagged = typing.TypedDict('MetricMathParametersTagged', {
+MetricMathParamsDictTagged = typing.TypedDict('MetricMathParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-math"],
     "metric-out": str,
     "replace": typing.NotRequired[float | None],
-    "var": typing.NotRequired[list[MetricMathVarParameters] | None],
+    "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
     "expression": str,
 })
 
 
-def metric_math_var_params(
+def metric_math_var(
     name: str,
     metric: InputPathType,
     column: str | None,
     repeat: bool = False,
-) -> MetricMathVarParametersTagged:
+) -> MetricMathVarParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def metric_math_var_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMathVarParameters` object.
+    `MetricMathVarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def metric_math_var_validate(
 
 
 def metric_math_var_cargs(
-    params: MetricMathVarParameters,
+    params: MetricMathVarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def metric_math_var_cargs(
 
 class MetricMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricMathParameters(...)`.
+    Output object returned when calling `MetricMathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,8 +143,8 @@ def metric_math_params(
     metric_out: str,
     replace: float | None,
     expression: str,
-    var: list[MetricMathVarParameters] | None = None,
-) -> MetricMathParametersTagged:
+    var: list[MetricMathVarParamsDict] | None = None,
+) -> MetricMathParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def metric_math_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricMathParameters` object.
+    `MetricMathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def metric_math_validate(
             raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("var", None) is not None:
         if not isinstance(params["var"], list):
-            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[MetricMathVarParameters] | None`')
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[MetricMathVarParamsDict] | None`')
         for e in params["var"]:
             metric_math_var_validate(e)
     if params.get("expression", None) is None:
@@ -201,7 +201,7 @@ def metric_math_validate(
 
 
 def metric_math_cargs(
-    params: MetricMathParameters,
+    params: MetricMathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def metric_math_cargs(
 
 
 def metric_math_outputs(
-    params: MetricMathParameters,
+    params: MetricMathParamsDict,
     execution: Execution,
 ) -> MetricMathOutputs:
     """
@@ -248,7 +248,7 @@ def metric_math_outputs(
 
 
 def metric_math_execute(
-    params: MetricMathParameters,
+    params: MetricMathParamsDict,
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
@@ -344,7 +344,7 @@ def metric_math(
     metric_out: str,
     replace: float | None,
     expression: str,
-    var: list[MetricMathVarParameters] | None = None,
+    var: list[MetricMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
@@ -443,8 +443,12 @@ def metric_math(
 __all__ = [
     "METRIC_MATH_METADATA",
     "MetricMathOutputs",
+    "MetricMathParamsDict",
+    "MetricMathParamsDictTagged",
+    "MetricMathVarParamsDict",
+    "MetricMathVarParamsDictTagged",
     "metric_math",
     "metric_math_execute",
     "metric_math_params",
-    "metric_math_var_params",
+    "metric_math_var",
 ]

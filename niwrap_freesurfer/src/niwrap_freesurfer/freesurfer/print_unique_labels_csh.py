@@ -13,7 +13,7 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 )
 
 
-PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameters', {
+PrintUniqueLabelsCshParamsDict = typing.TypedDict('PrintUniqueLabelsCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/print_unique_labels.csh"]],
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameter
     "version": bool,
     "help": bool,
 })
-PrintUniqueLabelsCshParametersTagged = typing.TypedDict('PrintUniqueLabelsCshParametersTagged', {
+PrintUniqueLabelsCshParamsDictTagged = typing.TypedDict('PrintUniqueLabelsCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/print_unique_labels.csh"],
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ PrintUniqueLabelsCshParametersTagged = typing.TypedDict('PrintUniqueLabelsCshPar
 
 class PrintUniqueLabelsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PrintUniqueLabelsCshParameters(...)`.
+    Output object returned when calling `PrintUniqueLabelsCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def print_unique_labels_csh_params(
     list_only: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> PrintUniqueLabelsCshParametersTagged:
+) -> PrintUniqueLabelsCshParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def print_unique_labels_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PrintUniqueLabelsCshParameters` object.
+    `PrintUniqueLabelsCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def print_unique_labels_csh_validate(
 
 
 def print_unique_labels_csh_cargs(
-    params: PrintUniqueLabelsCshParameters,
+    params: PrintUniqueLabelsCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def print_unique_labels_csh_cargs(
 
 
 def print_unique_labels_csh_outputs(
-    params: PrintUniqueLabelsCshParameters,
+    params: PrintUniqueLabelsCshParamsDict,
     execution: Execution,
 ) -> PrintUniqueLabelsCshOutputs:
     """
@@ -159,7 +159,7 @@ def print_unique_labels_csh_outputs(
 
 
 def print_unique_labels_csh_execute(
-    params: PrintUniqueLabelsCshParameters,
+    params: PrintUniqueLabelsCshParamsDict,
     runner: Runner | None = None,
 ) -> PrintUniqueLabelsCshOutputs:
     """
@@ -227,6 +227,8 @@ def print_unique_labels_csh(
 __all__ = [
     "PRINT_UNIQUE_LABELS_CSH_METADATA",
     "PrintUniqueLabelsCshOutputs",
+    "PrintUniqueLabelsCshParamsDict",
+    "PrintUniqueLabelsCshParamsDictTagged",
     "print_unique_labels_csh",
     "print_unique_labels_csh_execute",
     "print_unique_labels_csh_params",

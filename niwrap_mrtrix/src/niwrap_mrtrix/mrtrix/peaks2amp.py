@@ -13,39 +13,39 @@ PEAKS2AMP_METADATA = Metadata(
 )
 
 
-Peaks2ampConfigParameters = typing.TypedDict('Peaks2ampConfigParameters', {
+Peaks2ampConfigParamsDict = typing.TypedDict('Peaks2ampConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Peaks2ampConfigParametersTagged = typing.TypedDict('Peaks2ampConfigParametersTagged', {
+Peaks2ampConfigParamsDictTagged = typing.TypedDict('Peaks2ampConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Peaks2ampParameters = typing.TypedDict('Peaks2ampParameters', {
+Peaks2ampParamsDict = typing.TypedDict('Peaks2ampParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2amp"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Peaks2ampConfigParameters] | None],
+    "config": typing.NotRequired[list[Peaks2ampConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "directions": InputPathType,
     "amplitudes": str,
 })
-Peaks2ampParametersTagged = typing.TypedDict('Peaks2ampParametersTagged', {
+Peaks2ampParamsDictTagged = typing.TypedDict('Peaks2ampParamsDictTagged', {
     "@type": typing.Literal["mrtrix/peaks2amp"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Peaks2ampConfigParameters] | None],
+    "config": typing.NotRequired[list[Peaks2ampConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "directions": InputPathType,
@@ -53,10 +53,10 @@ Peaks2ampParametersTagged = typing.TypedDict('Peaks2ampParametersTagged', {
 })
 
 
-def peaks2amp_config_params(
+def peaks2amp_config(
     key: str,
     value: str,
-) -> Peaks2ampConfigParametersTagged:
+) -> Peaks2ampConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def peaks2amp_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Peaks2ampConfigParameters` object.
+    `Peaks2ampConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def peaks2amp_config_validate(
 
 
 def peaks2amp_config_cargs(
-    params: Peaks2ampConfigParameters,
+    params: Peaks2ampConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def peaks2amp_config_cargs(
 
 class Peaks2ampOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Peaks2ampParameters(...)`.
+    Output object returned when calling `Peaks2ampParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,10 +134,10 @@ def peaks2amp_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Peaks2ampConfigParameters] | None = None,
+    config: list[Peaks2ampConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Peaks2ampParametersTagged:
+) -> Peaks2ampParamsDictTagged:
     """
     Build parameters.
     
@@ -183,7 +183,7 @@ def peaks2amp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Peaks2ampParameters` object.
+    `Peaks2ampParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def peaks2amp_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Peaks2ampConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Peaks2ampConfigParamsDict] | None`')
         for e in params["config"]:
             peaks2amp_config_validate(e)
     if params.get("help", False) is None:
@@ -233,7 +233,7 @@ def peaks2amp_validate(
 
 
 def peaks2amp_cargs(
-    params: Peaks2ampParameters,
+    params: Peaks2ampParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -272,7 +272,7 @@ def peaks2amp_cargs(
 
 
 def peaks2amp_outputs(
-    params: Peaks2ampParameters,
+    params: Peaks2ampParamsDict,
     execution: Execution,
 ) -> Peaks2ampOutputs:
     """
@@ -292,7 +292,7 @@ def peaks2amp_outputs(
 
 
 def peaks2amp_execute(
-    params: Peaks2ampParameters,
+    params: Peaks2ampParamsDict,
     runner: Runner | None = None,
 ) -> Peaks2ampOutputs:
     """
@@ -334,7 +334,7 @@ def peaks2amp(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Peaks2ampConfigParameters] | None = None,
+    config: list[Peaks2ampConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -391,9 +391,13 @@ def peaks2amp(
 
 __all__ = [
     "PEAKS2AMP_METADATA",
+    "Peaks2ampConfigParamsDict",
+    "Peaks2ampConfigParamsDictTagged",
     "Peaks2ampOutputs",
+    "Peaks2ampParamsDict",
+    "Peaks2ampParamsDictTagged",
     "peaks2amp",
-    "peaks2amp_config_params",
+    "peaks2amp_config",
     "peaks2amp_execute",
     "peaks2amp_params",
 ]

@@ -13,14 +13,14 @@ FSL_LABEL2VOXEL_METADATA = Metadata(
 )
 
 
-FslLabel2voxelParameters = typing.TypedDict('FslLabel2voxelParameters', {
+FslLabel2voxelParamsDict = typing.TypedDict('FslLabel2voxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_label2voxel"]],
     "label_value": float,
     "labeled_volume": InputPathType,
     "src_volume": InputPathType,
     "output_filename": str,
 })
-FslLabel2voxelParametersTagged = typing.TypedDict('FslLabel2voxelParametersTagged', {
+FslLabel2voxelParamsDictTagged = typing.TypedDict('FslLabel2voxelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsl_label2voxel"],
     "label_value": float,
     "labeled_volume": InputPathType,
@@ -31,7 +31,7 @@ FslLabel2voxelParametersTagged = typing.TypedDict('FslLabel2voxelParametersTagge
 
 class FslLabel2voxelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslLabel2voxelParameters(...)`.
+    Output object returned when calling `FslLabel2voxelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def fsl_label2voxel_params(
     labeled_volume: InputPathType,
     src_volume: InputPathType,
     output_filename: str,
-) -> FslLabel2voxelParametersTagged:
+) -> FslLabel2voxelParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def fsl_label2voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslLabel2voxelParameters` object.
+    `FslLabel2voxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def fsl_label2voxel_validate(
 
 
 def fsl_label2voxel_cargs(
-    params: FslLabel2voxelParameters,
+    params: FslLabel2voxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def fsl_label2voxel_cargs(
 
 
 def fsl_label2voxel_outputs(
-    params: FslLabel2voxelParameters,
+    params: FslLabel2voxelParamsDict,
     execution: Execution,
 ) -> FslLabel2voxelOutputs:
     """
@@ -139,7 +139,7 @@ def fsl_label2voxel_outputs(
 
 
 def fsl_label2voxel_execute(
-    params: FslLabel2voxelParameters,
+    params: FslLabel2voxelParamsDict,
     runner: Runner | None = None,
 ) -> FslLabel2voxelOutputs:
     """
@@ -204,6 +204,8 @@ def fsl_label2voxel(
 __all__ = [
     "FSL_LABEL2VOXEL_METADATA",
     "FslLabel2voxelOutputs",
+    "FslLabel2voxelParamsDict",
+    "FslLabel2voxelParamsDictTagged",
     "fsl_label2voxel",
     "fsl_label2voxel_execute",
     "fsl_label2voxel_params",

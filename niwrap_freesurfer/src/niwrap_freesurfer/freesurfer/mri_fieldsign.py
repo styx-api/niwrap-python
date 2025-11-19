@@ -13,7 +13,7 @@ MRI_FIELDSIGN_METADATA = Metadata(
 )
 
 
-MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
+MriFieldsignParamsDict = typing.TypedDict('MriFieldsignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fieldsign"]],
     "fieldsign_file": str,
     "eccen_values": list[float],
@@ -40,7 +40,7 @@ MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
     "help_flag": bool,
     "version_flag": bool,
 })
-MriFieldsignParametersTagged = typing.TypedDict('MriFieldsignParametersTagged', {
+MriFieldsignParamsDictTagged = typing.TypedDict('MriFieldsignParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fieldsign"],
     "fieldsign_file": str,
     "eccen_values": list[float],
@@ -71,7 +71,7 @@ MriFieldsignParametersTagged = typing.TypedDict('MriFieldsignParametersTagged', 
 
 class MriFieldsignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFieldsignParameters(...)`.
+    Output object returned when calling `MriFieldsignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def mri_fieldsign_params(
     checkopts_flag: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MriFieldsignParametersTagged:
+) -> MriFieldsignParamsDictTagged:
     """
     Build parameters.
     
@@ -179,7 +179,7 @@ def mri_fieldsign_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFieldsignParameters` object.
+    `MriFieldsignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -285,7 +285,7 @@ def mri_fieldsign_validate(
 
 
 def mri_fieldsign_cargs(
-    params: MriFieldsignParameters,
+    params: MriFieldsignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -391,7 +391,7 @@ def mri_fieldsign_cargs(
 
 
 def mri_fieldsign_outputs(
-    params: MriFieldsignParameters,
+    params: MriFieldsignParamsDict,
     execution: Execution,
 ) -> MriFieldsignOutputs:
     """
@@ -410,7 +410,7 @@ def mri_fieldsign_outputs(
 
 
 def mri_fieldsign_execute(
-    params: MriFieldsignParameters,
+    params: MriFieldsignParamsDict,
     runner: Runner | None = None,
 ) -> MriFieldsignOutputs:
     """
@@ -535,6 +535,8 @@ def mri_fieldsign(
 __all__ = [
     "MRI_FIELDSIGN_METADATA",
     "MriFieldsignOutputs",
+    "MriFieldsignParamsDict",
+    "MriFieldsignParamsDictTagged",
     "mri_fieldsign",
     "mri_fieldsign_execute",
     "mri_fieldsign_params",

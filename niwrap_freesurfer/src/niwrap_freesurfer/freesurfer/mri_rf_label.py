@@ -13,7 +13,7 @@ MRI_RF_LABEL_METADATA = Metadata(
 )
 
 
-MriRfLabelParameters = typing.TypedDict('MriRfLabelParameters', {
+MriRfLabelParamsDict = typing.TypedDict('MriRfLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_label"]],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
@@ -56,7 +56,7 @@ MriRfLabelParameters = typing.TypedDict('MriRfLabelParameters', {
     "longitudinal_lta": typing.NotRequired[InputPathType | None],
     "relabel_unlikely_flag": typing.NotRequired[list[float] | None],
 })
-MriRfLabelParametersTagged = typing.TypedDict('MriRfLabelParametersTagged', {
+MriRfLabelParamsDictTagged = typing.TypedDict('MriRfLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_rf_label"],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
@@ -103,7 +103,7 @@ MriRfLabelParametersTagged = typing.TypedDict('MriRfLabelParametersTagged', {
 
 class MriRfLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRfLabelParameters(...)`.
+    Output object returned when calling `MriRfLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -152,7 +152,7 @@ def mri_rf_label_params(
     longitudinal_vol: InputPathType | None = None,
     longitudinal_lta: InputPathType | None = None,
     relabel_unlikely_flag: list[float] | None = None,
-) -> MriRfLabelParametersTagged:
+) -> MriRfLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -283,7 +283,7 @@ def mri_rf_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRfLabelParameters` object.
+    `MriRfLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -459,7 +459,7 @@ def mri_rf_label_validate(
 
 
 def mri_rf_label_cargs(
-    params: MriRfLabelParameters,
+    params: MriRfLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -634,7 +634,7 @@ def mri_rf_label_cargs(
 
 
 def mri_rf_label_outputs(
-    params: MriRfLabelParameters,
+    params: MriRfLabelParamsDict,
     execution: Execution,
 ) -> MriRfLabelOutputs:
     """
@@ -654,7 +654,7 @@ def mri_rf_label_outputs(
 
 
 def mri_rf_label_execute(
-    params: MriRfLabelParameters,
+    params: MriRfLabelParamsDict,
     runner: Runner | None = None,
 ) -> MriRfLabelOutputs:
     """
@@ -831,6 +831,8 @@ def mri_rf_label(
 __all__ = [
     "MRI_RF_LABEL_METADATA",
     "MriRfLabelOutputs",
+    "MriRfLabelParamsDict",
+    "MriRfLabelParamsDictTagged",
     "mri_rf_label",
     "mri_rf_label_execute",
     "mri_rf_label_params",

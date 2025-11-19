@@ -12,48 +12,48 @@ CIFTI_DILATE_METADATA = Metadata(
 )
 
 
-CiftiDilateLeftSurfaceParameters = typing.TypedDict('CiftiDilateLeftSurfaceParameters', {
+CiftiDilateLeftSurfaceParamsDict = typing.TypedDict('CiftiDilateLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiDilateLeftSurfaceParametersTagged = typing.TypedDict('CiftiDilateLeftSurfaceParametersTagged', {
+CiftiDilateLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiDilateRightSurfaceParameters = typing.TypedDict('CiftiDilateRightSurfaceParameters', {
+CiftiDilateRightSurfaceParamsDict = typing.TypedDict('CiftiDilateRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiDilateRightSurfaceParametersTagged = typing.TypedDict('CiftiDilateRightSurfaceParametersTagged', {
+CiftiDilateRightSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiDilateCerebellumSurfaceParameters = typing.TypedDict('CiftiDilateCerebellumSurfaceParameters', {
+CiftiDilateCerebellumSurfaceParamsDict = typing.TypedDict('CiftiDilateCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiDilateCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiDilateCerebellumSurfaceParametersTagged', {
+CiftiDilateCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiDilateCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiDilateParameters = typing.TypedDict('CiftiDilateParameters', {
+CiftiDilateParamsDict = typing.TypedDict('CiftiDilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-dilate"]],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "nearest": bool,
     "merged-volume": bool,
@@ -63,12 +63,12 @@ CiftiDilateParameters = typing.TypedDict('CiftiDilateParameters', {
     "surface-distance": float,
     "volume-distance": float,
 })
-CiftiDilateParametersTagged = typing.TypedDict('CiftiDilateParametersTagged', {
+CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-dilate"],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "nearest": bool,
     "merged-volume": bool,
@@ -80,10 +80,10 @@ CiftiDilateParametersTagged = typing.TypedDict('CiftiDilateParametersTagged', {
 })
 
 
-def cifti_dilate_left_surface_params(
+def cifti_dilate_left_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiDilateLeftSurfaceParametersTagged:
+) -> CiftiDilateLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def cifti_dilate_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiDilateLeftSurfaceParameters` object.
+    `CiftiDilateLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def cifti_dilate_left_surface_validate(
 
 
 def cifti_dilate_left_surface_cargs(
-    params: CiftiDilateLeftSurfaceParameters,
+    params: CiftiDilateLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,10 +150,10 @@ def cifti_dilate_left_surface_cargs(
     return cargs
 
 
-def cifti_dilate_right_surface_params(
+def cifti_dilate_right_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiDilateRightSurfaceParametersTagged:
+) -> CiftiDilateRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -180,7 +180,7 @@ def cifti_dilate_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiDilateRightSurfaceParameters` object.
+    `CiftiDilateRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def cifti_dilate_right_surface_validate(
 
 
 def cifti_dilate_right_surface_cargs(
-    params: CiftiDilateRightSurfaceParameters,
+    params: CiftiDilateRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -220,10 +220,10 @@ def cifti_dilate_right_surface_cargs(
     return cargs
 
 
-def cifti_dilate_cerebellum_surface_params(
+def cifti_dilate_cerebellum_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiDilateCerebellumSurfaceParametersTagged:
+) -> CiftiDilateCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def cifti_dilate_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiDilateCerebellumSurfaceParameters` object.
+    `CiftiDilateCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -267,7 +267,7 @@ def cifti_dilate_cerebellum_surface_validate(
 
 
 def cifti_dilate_cerebellum_surface_cargs(
-    params: CiftiDilateCerebellumSurfaceParameters,
+    params: CiftiDilateCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -292,7 +292,7 @@ def cifti_dilate_cerebellum_surface_cargs(
 
 class CiftiDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiDilateParameters(...)`.
+    Output object returned when calling `CiftiDilateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -307,13 +307,13 @@ def cifti_dilate_params(
     direction: str,
     surface_distance: float,
     volume_distance: float,
-    left_surface: CiftiDilateLeftSurfaceParameters | None = None,
-    right_surface: CiftiDilateRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiDilateCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
     nearest: bool = False,
     merged_volume: bool = False,
     legacy_mode: bool = False,
-) -> CiftiDilateParametersTagged:
+) -> CiftiDilateParamsDictTagged:
     """
     Build parameters.
     
@@ -365,7 +365,7 @@ def cifti_dilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiDilateParameters` object.
+    `CiftiDilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -416,7 +416,7 @@ def cifti_dilate_validate(
 
 
 def cifti_dilate_cargs(
-    params: CiftiDilateParameters,
+    params: CiftiDilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -451,7 +451,7 @@ def cifti_dilate_cargs(
 
 
 def cifti_dilate_outputs(
-    params: CiftiDilateParameters,
+    params: CiftiDilateParamsDict,
     execution: Execution,
 ) -> CiftiDilateOutputs:
     """
@@ -471,7 +471,7 @@ def cifti_dilate_outputs(
 
 
 def cifti_dilate_execute(
-    params: CiftiDilateParameters,
+    params: CiftiDilateParamsDict,
     runner: Runner | None = None,
 ) -> CiftiDilateOutputs:
     """
@@ -516,9 +516,9 @@ def cifti_dilate(
     direction: str,
     surface_distance: float,
     volume_distance: float,
-    left_surface: CiftiDilateLeftSurfaceParameters | None = None,
-    right_surface: CiftiDilateRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiDilateCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
     nearest: bool = False,
     merged_volume: bool = False,
     legacy_mode: bool = False,
@@ -584,11 +584,19 @@ def cifti_dilate(
 
 __all__ = [
     "CIFTI_DILATE_METADATA",
+    "CiftiDilateCerebellumSurfaceParamsDict",
+    "CiftiDilateCerebellumSurfaceParamsDictTagged",
+    "CiftiDilateLeftSurfaceParamsDict",
+    "CiftiDilateLeftSurfaceParamsDictTagged",
     "CiftiDilateOutputs",
+    "CiftiDilateParamsDict",
+    "CiftiDilateParamsDictTagged",
+    "CiftiDilateRightSurfaceParamsDict",
+    "CiftiDilateRightSurfaceParamsDictTagged",
     "cifti_dilate",
-    "cifti_dilate_cerebellum_surface_params",
+    "cifti_dilate_cerebellum_surface",
     "cifti_dilate_execute",
-    "cifti_dilate_left_surface_params",
+    "cifti_dilate_left_surface",
     "cifti_dilate_params",
-    "cifti_dilate_right_surface_params",
+    "cifti_dilate_right_surface",
 ]

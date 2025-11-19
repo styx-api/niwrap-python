@@ -13,7 +13,7 @@ V_3D_REG_ANA_METADATA = Metadata(
 )
 
 
-V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
+V3dRegAnaParamsDict = typing.TypedDict('V3dRegAnaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRegAna"]],
     "rows": float,
     "cols": float,
@@ -31,7 +31,7 @@ V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
     "brick": typing.NotRequired[list[str] | None],
     "datum": typing.NotRequired[str | None],
 })
-V3dRegAnaParametersTagged = typing.TypedDict('V3dRegAnaParametersTagged', {
+V3dRegAnaParamsDictTagged = typing.TypedDict('V3dRegAnaParamsDictTagged', {
     "@type": typing.Literal["afni/3dRegAna"],
     "rows": float,
     "cols": float,
@@ -53,7 +53,7 @@ V3dRegAnaParametersTagged = typing.TypedDict('V3dRegAnaParametersTagged', {
 
 class V3dRegAnaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRegAnaParameters(...)`.
+    Output object returned when calling `V3dRegAnaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +85,7 @@ def v_3d_reg_ana_params(
     bucket: str | None = None,
     brick: list[str] | None = None,
     datum: str | None = None,
-) -> V3dRegAnaParametersTagged:
+) -> V3dRegAnaParamsDictTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def v_3d_reg_ana_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRegAnaParameters` object.
+    `V3dRegAnaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def v_3d_reg_ana_validate(
 
 
 def v_3d_reg_ana_cargs(
-    params: V3dRegAnaParameters,
+    params: V3dRegAnaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -312,7 +312,7 @@ def v_3d_reg_ana_cargs(
 
 
 def v_3d_reg_ana_outputs(
-    params: V3dRegAnaParameters,
+    params: V3dRegAnaParamsDict,
     execution: Execution,
 ) -> V3dRegAnaOutputs:
     """
@@ -336,7 +336,7 @@ def v_3d_reg_ana_outputs(
 
 
 def v_3d_reg_ana_execute(
-    params: V3dRegAnaParameters,
+    params: V3dRegAnaParamsDict,
     runner: Runner | None = None,
 ) -> V3dRegAnaOutputs:
     """
@@ -440,6 +440,8 @@ def v_3d_reg_ana(
 
 __all__ = [
     "V3dRegAnaOutputs",
+    "V3dRegAnaParamsDict",
+    "V3dRegAnaParamsDictTagged",
     "V_3D_REG_ANA_METADATA",
     "v_3d_reg_ana",
     "v_3d_reg_ana_execute",

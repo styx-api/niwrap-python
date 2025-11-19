@@ -13,7 +13,7 @@ V_3DANISOSMOOTH_METADATA = Metadata(
 )
 
 
-V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
+V3danisosmoothParamsDict = typing.TypedDict('V3danisosmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3danisosmooth"]],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
     "matchorig_flag": bool,
     "help_flag": bool,
 })
-V3danisosmoothParametersTagged = typing.TypedDict('V3danisosmoothParametersTagged', {
+V3danisosmoothParamsDictTagged = typing.TypedDict('V3danisosmoothParamsDictTagged', {
     "@type": typing.Literal["afni/3danisosmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -67,7 +67,7 @@ V3danisosmoothParametersTagged = typing.TypedDict('V3danisosmoothParametersTagge
 
 class V3danisosmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3danisosmoothParameters(...)`.
+    Output object returned when calling `V3danisosmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +115,7 @@ def v_3danisosmooth_params(
     datum_type: str | None = None,
     matchorig_flag: bool = False,
     help_flag: bool = False,
-) -> V3danisosmoothParametersTagged:
+) -> V3danisosmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -192,7 +192,7 @@ def v_3danisosmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3danisosmoothParameters` object.
+    `V3danisosmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def v_3danisosmooth_validate(
 
 
 def v_3danisosmooth_cargs(
-    params: V3danisosmoothParameters,
+    params: V3danisosmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -371,7 +371,7 @@ def v_3danisosmooth_cargs(
 
 
 def v_3danisosmooth_outputs(
-    params: V3danisosmoothParameters,
+    params: V3danisosmoothParamsDict,
     execution: Execution,
 ) -> V3danisosmoothOutputs:
     """
@@ -399,7 +399,7 @@ def v_3danisosmooth_outputs(
 
 
 def v_3danisosmooth_execute(
-    params: V3danisosmoothParameters,
+    params: V3danisosmoothParamsDict,
     runner: Runner | None = None,
 ) -> V3danisosmoothOutputs:
     """
@@ -522,6 +522,8 @@ def v_3danisosmooth(
 
 __all__ = [
     "V3danisosmoothOutputs",
+    "V3danisosmoothParamsDict",
+    "V3danisosmoothParamsDictTagged",
     "V_3DANISOSMOOTH_METADATA",
     "v_3danisosmooth",
     "v_3danisosmooth_execute",

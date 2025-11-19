@@ -13,11 +13,11 @@ V__2DWARPER_METADATA = Metadata(
 )
 
 
-V2dwarperParameters = typing.TypedDict('V2dwarperParameters', {
+V2dwarperParamsDict = typing.TypedDict('V2dwarperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@2dwarper"]],
     "input_dataset": InputPathType,
 })
-V2dwarperParametersTagged = typing.TypedDict('V2dwarperParametersTagged', {
+V2dwarperParamsDictTagged = typing.TypedDict('V2dwarperParamsDictTagged', {
     "@type": typing.Literal["afni/@2dwarper"],
     "input_dataset": InputPathType,
 })
@@ -25,7 +25,7 @@ V2dwarperParametersTagged = typing.TypedDict('V2dwarperParametersTagged', {
 
 class V2dwarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V2dwarperParameters(...)`.
+    Output object returned when calling `V2dwarperParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class V2dwarperOutputs(typing.NamedTuple):
 
 def v__2dwarper_params(
     input_dataset: InputPathType,
-) -> V2dwarperParametersTagged:
+) -> V2dwarperParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__2dwarper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V2dwarperParameters` object.
+    `V2dwarperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__2dwarper_validate(
 
 
 def v__2dwarper_cargs(
-    params: V2dwarperParameters,
+    params: V2dwarperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__2dwarper_cargs(
 
 
 def v__2dwarper_outputs(
-    params: V2dwarperParameters,
+    params: V2dwarperParamsDict,
     execution: Execution,
 ) -> V2dwarperOutputs:
     """
@@ -109,7 +109,7 @@ def v__2dwarper_outputs(
 
 
 def v__2dwarper_execute(
-    params: V2dwarperParameters,
+    params: V2dwarperParamsDict,
     runner: Runner | None = None,
 ) -> V2dwarperOutputs:
     """
@@ -164,6 +164,8 @@ def v__2dwarper(
 
 __all__ = [
     "V2dwarperOutputs",
+    "V2dwarperParamsDict",
+    "V2dwarperParamsDictTagged",
     "V__2DWARPER_METADATA",
     "v__2dwarper",
     "v__2dwarper_execute",

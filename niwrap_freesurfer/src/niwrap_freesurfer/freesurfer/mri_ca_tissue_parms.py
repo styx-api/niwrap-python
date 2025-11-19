@@ -13,14 +13,14 @@ MRI_CA_TISSUE_PARMS_METADATA = Metadata(
 )
 
 
-MriCaTissueParmsParameters = typing.TypedDict('MriCaTissueParmsParameters', {
+MriCaTissueParmsParamsDict = typing.TypedDict('MriCaTissueParmsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_tissue_parms"]],
     "subjects": list[str],
     "output_file": str,
     "spacing_flag": bool,
     "gradient_flag": bool,
 })
-MriCaTissueParmsParametersTagged = typing.TypedDict('MriCaTissueParmsParametersTagged', {
+MriCaTissueParmsParamsDictTagged = typing.TypedDict('MriCaTissueParmsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ca_tissue_parms"],
     "subjects": list[str],
     "output_file": str,
@@ -31,7 +31,7 @@ MriCaTissueParmsParametersTagged = typing.TypedDict('MriCaTissueParmsParametersT
 
 class MriCaTissueParmsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCaTissueParmsParameters(...)`.
+    Output object returned when calling `MriCaTissueParmsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_ca_tissue_parms_params(
     output_file: str,
     spacing_flag: bool = False,
     gradient_flag: bool = False,
-) -> MriCaTissueParmsParametersTagged:
+) -> MriCaTissueParmsParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_ca_tissue_parms_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCaTissueParmsParameters` object.
+    `MriCaTissueParmsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def mri_ca_tissue_parms_validate(
 
 
 def mri_ca_tissue_parms_cargs(
-    params: MriCaTissueParmsParameters,
+    params: MriCaTissueParmsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def mri_ca_tissue_parms_cargs(
 
 
 def mri_ca_tissue_parms_outputs(
-    params: MriCaTissueParmsParameters,
+    params: MriCaTissueParmsParamsDict,
     execution: Execution,
 ) -> MriCaTissueParmsOutputs:
     """
@@ -144,7 +144,7 @@ def mri_ca_tissue_parms_outputs(
 
 
 def mri_ca_tissue_parms_execute(
-    params: MriCaTissueParmsParameters,
+    params: MriCaTissueParmsParamsDict,
     runner: Runner | None = None,
 ) -> MriCaTissueParmsOutputs:
     """
@@ -209,6 +209,8 @@ def mri_ca_tissue_parms(
 __all__ = [
     "MRI_CA_TISSUE_PARMS_METADATA",
     "MriCaTissueParmsOutputs",
+    "MriCaTissueParmsParamsDict",
+    "MriCaTissueParmsParamsDictTagged",
     "mri_ca_tissue_parms",
     "mri_ca_tissue_parms_execute",
     "mri_ca_tissue_parms_params",

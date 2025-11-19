@@ -13,7 +13,7 @@ MRI_ENTOWM_SEG_METADATA = Metadata(
 )
 
 
-MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
+MriEntowmSegParamsDict = typing.TypedDict('MriEntowmSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_entowm_seg"]],
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
     "no_cite_sclimbic": bool,
     "nchannels": typing.NotRequired[float | None],
 })
-MriEntowmSegParametersTagged = typing.TypedDict('MriEntowmSegParametersTagged', {
+MriEntowmSegParamsDictTagged = typing.TypedDict('MriEntowmSegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_entowm_seg"],
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
@@ -73,7 +73,7 @@ MriEntowmSegParametersTagged = typing.TypedDict('MriEntowmSegParametersTagged', 
 
 class MriEntowmSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriEntowmSegParameters(...)`.
+    Output object returned when calling `MriEntowmSegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def mri_entowm_seg_params(
     output_base: str | None = None,
     no_cite_sclimbic: bool = False,
     nchannels: float | None = None,
-) -> MriEntowmSegParametersTagged:
+) -> MriEntowmSegParamsDictTagged:
     """
     Build parameters.
     
@@ -205,7 +205,7 @@ def mri_entowm_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriEntowmSegParameters` object.
+    `MriEntowmSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -307,7 +307,7 @@ def mri_entowm_seg_validate(
 
 
 def mri_entowm_seg_cargs(
-    params: MriEntowmSegParameters,
+    params: MriEntowmSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -417,7 +417,7 @@ def mri_entowm_seg_cargs(
 
 
 def mri_entowm_seg_outputs(
-    params: MriEntowmSegParameters,
+    params: MriEntowmSegParamsDict,
     execution: Execution,
 ) -> MriEntowmSegOutputs:
     """
@@ -440,7 +440,7 @@ def mri_entowm_seg_outputs(
 
 
 def mri_entowm_seg_execute(
-    params: MriEntowmSegParameters,
+    params: MriEntowmSegParamsDict,
     runner: Runner | None = None,
 ) -> MriEntowmSegOutputs:
     """
@@ -579,6 +579,8 @@ def mri_entowm_seg(
 __all__ = [
     "MRI_ENTOWM_SEG_METADATA",
     "MriEntowmSegOutputs",
+    "MriEntowmSegParamsDict",
+    "MriEntowmSegParamsDictTagged",
     "mri_entowm_seg",
     "mri_entowm_seg_execute",
     "mri_entowm_seg_params",

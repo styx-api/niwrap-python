@@ -24,7 +24,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "fixel2peaks_config_params",
+      "fn_struct_make_params": "fixel2peaks_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -44,7 +44,7 @@
       "var_param": "in_",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "fixel2peaks_various_string_params",
+          "fn_struct_make_params": "fixel2peaks_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -52,7 +52,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "fixel2peaks_various_file_params",
+          "fn_struct_make_params": "fixel2peaks_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"

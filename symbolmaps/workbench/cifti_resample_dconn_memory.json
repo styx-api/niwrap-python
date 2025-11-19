@@ -9,7 +9,7 @@
     },
     "volume-predilate": {
       "var_param": "volume_predilate",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_volume_predilate_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_volume_predilate",
       "properties": {
         "dilate-mm": {
           "var_param": "dilate_mm"
@@ -19,7 +19,7 @@
         },
         "weighted": {
           "var_param": "weighted",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_weighted_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_weighted",
           "properties": {
             "exponent": {
               "var_param": "exponent"
@@ -33,7 +33,7 @@
     },
     "surface-postdilate": {
       "var_param": "surface_postdilate",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_surface_postdilate_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_surface_postdilate",
       "properties": {
         "dilate-mm": {
           "var_param": "dilate_mm"
@@ -46,7 +46,7 @@
         },
         "weighted": {
           "var_param": "weighted",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_weighted_params_",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_weighted_",
           "properties": {
             "exponent": {
               "var_param": "exponent"
@@ -60,14 +60,14 @@
     },
     "affine": {
       "var_param": "affine",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_affine_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_affine",
       "properties": {
         "affine-file": {
           "var_param": "affine_file"
         },
         "flirt": {
           "var_param": "flirt",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_flirt_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_flirt",
           "properties": {
             "source-volume": {
               "var_param": "source_volume"
@@ -81,7 +81,7 @@
     },
     "warpfield": {
       "var_param": "warpfield",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_warpfield_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_warpfield",
       "properties": {
         "warpfield": {
           "var_param": "warpfield"
@@ -93,7 +93,7 @@
     },
     "left-spheres": {
       "var_param": "left_spheres",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_left_spheres_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_left_spheres",
       "properties": {
         "current-sphere": {
           "var_param": "current_sphere"
@@ -103,7 +103,7 @@
         },
         "left-area-surfs": {
           "var_param": "left_area_surfs",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_left_area_surfs_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_left_area_surfs",
           "properties": {
             "current-area": {
               "var_param": "current_area"
@@ -115,7 +115,7 @@
         },
         "left-area-metrics": {
           "var_param": "left_area_metrics",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_left_area_metrics_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_left_area_metrics",
           "properties": {
             "current-area": {
               "var_param": "current_area"
@@ -129,7 +129,7 @@
     },
     "right-spheres": {
       "var_param": "right_spheres",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_right_spheres_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_right_spheres",
       "properties": {
         "current-sphere": {
           "var_param": "current_sphere"
@@ -139,7 +139,7 @@
         },
         "right-area-surfs": {
           "var_param": "right_area_surfs",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_right_area_surfs_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_right_area_surfs",
           "properties": {
             "current-area": {
               "var_param": "current_area"
@@ -151,7 +151,7 @@
         },
         "right-area-metrics": {
           "var_param": "right_area_metrics",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_right_area_metrics_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_right_area_metrics",
           "properties": {
             "current-area": {
               "var_param": "current_area"
@@ -165,7 +165,7 @@
     },
     "cerebellum-spheres": {
       "var_param": "cerebellum_spheres",
-      "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_spheres_params",
+      "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_spheres",
       "properties": {
         "current-sphere": {
           "var_param": "current_sphere"
@@ -175,7 +175,7 @@
         },
         "cerebellum-area-surfs": {
           "var_param": "cerebellum_area_surfs",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_area_surfs_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_area_surfs",
           "properties": {
             "current-area": {
               "var_param": "current_area"
@@ -187,7 +187,7 @@
         },
         "cerebellum-area-metrics": {
           "var_param": "cerebellum_area_metrics",
-          "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_area_metrics_params",
+          "fn_struct_make_params": "cifti_resample_dconn_memory_cerebellum_area_metrics",
           "properties": {
             "current-area": {
               "var_param": "current_area"

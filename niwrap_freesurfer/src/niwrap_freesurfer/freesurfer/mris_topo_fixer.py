@@ -13,12 +13,12 @@ MRIS_TOPO_FIXER_METADATA = Metadata(
 )
 
 
-MrisTopoFixerParameters = typing.TypedDict('MrisTopoFixerParameters', {
+MrisTopoFixerParamsDict = typing.TypedDict('MrisTopoFixerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_topo_fixer"]],
     "input_surface": InputPathType,
     "output_surface": str,
 })
-MrisTopoFixerParametersTagged = typing.TypedDict('MrisTopoFixerParametersTagged', {
+MrisTopoFixerParamsDictTagged = typing.TypedDict('MrisTopoFixerParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_topo_fixer"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisTopoFixerParametersTagged = typing.TypedDict('MrisTopoFixerParametersTagged'
 
 class MrisTopoFixerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTopoFixerParameters(...)`.
+    Output object returned when calling `MrisTopoFixerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisTopoFixerOutputs(typing.NamedTuple):
 def mris_topo_fixer_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisTopoFixerParametersTagged:
+) -> MrisTopoFixerParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_topo_fixer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTopoFixerParameters` object.
+    `MrisTopoFixerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_topo_fixer_validate(
 
 
 def mris_topo_fixer_cargs(
-    params: MrisTopoFixerParameters,
+    params: MrisTopoFixerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mris_topo_fixer_cargs(
 
 
 def mris_topo_fixer_outputs(
-    params: MrisTopoFixerParameters,
+    params: MrisTopoFixerParamsDict,
     execution: Execution,
 ) -> MrisTopoFixerOutputs:
     """
@@ -119,7 +119,7 @@ def mris_topo_fixer_outputs(
 
 
 def mris_topo_fixer_execute(
-    params: MrisTopoFixerParameters,
+    params: MrisTopoFixerParamsDict,
     runner: Runner | None = None,
 ) -> MrisTopoFixerOutputs:
     """
@@ -178,6 +178,8 @@ def mris_topo_fixer(
 __all__ = [
     "MRIS_TOPO_FIXER_METADATA",
     "MrisTopoFixerOutputs",
+    "MrisTopoFixerParamsDict",
+    "MrisTopoFixerParamsDictTagged",
     "mris_topo_fixer",
     "mris_topo_fixer_execute",
     "mris_topo_fixer_params",

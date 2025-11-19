@@ -12,49 +12,49 @@ CIFTI_CORRELATION_GRADIENT_METADATA = Metadata(
 )
 
 
-CiftiCorrelationGradientLeftSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParameters', {
+CiftiCorrelationGradientLeftSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCorrelationGradientLeftSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParametersTagged', {
+CiftiCorrelationGradientLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCorrelationGradientRightSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParameters', {
+CiftiCorrelationGradientRightSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCorrelationGradientRightSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParametersTagged', {
+CiftiCorrelationGradientRightSurfaceParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCorrelationGradientCerebellumSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParameters', {
+CiftiCorrelationGradientCerebellumSurfaceParamsDict = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCorrelationGradientCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParametersTagged', {
+CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCorrelationGradientDoubleCorrelationParameters = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParameters', {
+CiftiCorrelationGradientDoubleCorrelationParamsDict = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["double-correlation"]],
     "fisher-z-first": bool,
     "no-demean-first": bool,
     "covariance-first": bool,
 })
-CiftiCorrelationGradientDoubleCorrelationParametersTagged = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParametersTagged', {
+CiftiCorrelationGradientDoubleCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParamsDictTagged', {
     "@type": typing.Literal["double-correlation"],
     "fisher-z-first": bool,
     "no-demean-first": bool,
@@ -62,12 +62,12 @@ CiftiCorrelationGradientDoubleCorrelationParametersTagged = typing.TypedDict('Ci
 })
 
 
-CiftiCorrelationGradientParameters = typing.TypedDict('CiftiCorrelationGradientParameters', {
+CiftiCorrelationGradientParamsDict = typing.TypedDict('CiftiCorrelationGradientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation-gradient"]],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParamsDict | None],
     "surface-kernel": typing.NotRequired[float | None],
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
@@ -77,15 +77,15 @@ CiftiCorrelationGradientParameters = typing.TypedDict('CiftiCorrelationGradientP
     "distance": typing.NotRequired[float | None],
     "covariance": bool,
     "limit-GB": typing.NotRequired[float | None],
-    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
+    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParamsDict | None],
     "cifti": InputPathType,
 })
-CiftiCorrelationGradientParametersTagged = typing.TypedDict('CiftiCorrelationGradientParametersTagged', {
+CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-correlation-gradient"],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParamsDict | None],
     "surface-kernel": typing.NotRequired[float | None],
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
@@ -95,15 +95,15 @@ CiftiCorrelationGradientParametersTagged = typing.TypedDict('CiftiCorrelationGra
     "distance": typing.NotRequired[float | None],
     "covariance": bool,
     "limit-GB": typing.NotRequired[float | None],
-    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
+    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParamsDict | None],
     "cifti": InputPathType,
 })
 
 
-def cifti_correlation_gradient_left_surface_params(
+def cifti_correlation_gradient_left_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiCorrelationGradientLeftSurfaceParametersTagged:
+) -> CiftiCorrelationGradientLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def cifti_correlation_gradient_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationGradientLeftSurfaceParameters` object.
+    `CiftiCorrelationGradientLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def cifti_correlation_gradient_left_surface_validate(
 
 
 def cifti_correlation_gradient_left_surface_cargs(
-    params: CiftiCorrelationGradientLeftSurfaceParameters,
+    params: CiftiCorrelationGradientLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,10 +170,10 @@ def cifti_correlation_gradient_left_surface_cargs(
     return cargs
 
 
-def cifti_correlation_gradient_right_surface_params(
+def cifti_correlation_gradient_right_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiCorrelationGradientRightSurfaceParametersTagged:
+) -> CiftiCorrelationGradientRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def cifti_correlation_gradient_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationGradientRightSurfaceParameters` object.
+    `CiftiCorrelationGradientRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -217,7 +217,7 @@ def cifti_correlation_gradient_right_surface_validate(
 
 
 def cifti_correlation_gradient_right_surface_cargs(
-    params: CiftiCorrelationGradientRightSurfaceParameters,
+    params: CiftiCorrelationGradientRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,10 +240,10 @@ def cifti_correlation_gradient_right_surface_cargs(
     return cargs
 
 
-def cifti_correlation_gradient_cerebellum_surface_params(
+def cifti_correlation_gradient_cerebellum_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiCorrelationGradientCerebellumSurfaceParametersTagged:
+) -> CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -270,7 +270,7 @@ def cifti_correlation_gradient_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationGradientCerebellumSurfaceParameters` object.
+    `CiftiCorrelationGradientCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -287,7 +287,7 @@ def cifti_correlation_gradient_cerebellum_surface_validate(
 
 
 def cifti_correlation_gradient_cerebellum_surface_cargs(
-    params: CiftiCorrelationGradientCerebellumSurfaceParameters,
+    params: CiftiCorrelationGradientCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -310,11 +310,11 @@ def cifti_correlation_gradient_cerebellum_surface_cargs(
     return cargs
 
 
-def cifti_correlation_gradient_double_correlation_params(
+def cifti_correlation_gradient_double_correlation(
     fisher_z_first: bool = False,
     no_demean_first: bool = False,
     covariance_first: bool = False,
-) -> CiftiCorrelationGradientDoubleCorrelationParametersTagged:
+) -> CiftiCorrelationGradientDoubleCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -342,7 +342,7 @@ def cifti_correlation_gradient_double_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationGradientDoubleCorrelationParameters` object.
+    `CiftiCorrelationGradientDoubleCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -364,7 +364,7 @@ def cifti_correlation_gradient_double_correlation_validate(
 
 
 def cifti_correlation_gradient_double_correlation_cargs(
-    params: CiftiCorrelationGradientDoubleCorrelationParameters,
+    params: CiftiCorrelationGradientDoubleCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -389,7 +389,7 @@ def cifti_correlation_gradient_double_correlation_cargs(
 
 class CiftiCorrelationGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCorrelationGradientParameters(...)`.
+    Output object returned when calling `CiftiCorrelationGradientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -405,15 +405,15 @@ def cifti_correlation_gradient_params(
     distance_: float | None,
     limit_gb: float | None,
     cifti: InputPathType,
-    left_surface: CiftiCorrelationGradientLeftSurfaceParameters | None = None,
-    right_surface: CiftiCorrelationGradientRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
     presmooth_fwhm: bool = False,
     undo_fisher_z: bool = False,
     fisher_z: bool = False,
     covariance: bool = False,
-    double_correlation: CiftiCorrelationGradientDoubleCorrelationParameters | None = None,
-) -> CiftiCorrelationGradientParametersTagged:
+    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
+) -> CiftiCorrelationGradientParamsDictTagged:
     """
     Build parameters.
     
@@ -484,7 +484,7 @@ def cifti_correlation_gradient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationGradientParameters` object.
+    `CiftiCorrelationGradientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -541,7 +541,7 @@ def cifti_correlation_gradient_validate(
 
 
 def cifti_correlation_gradient_cargs(
-    params: CiftiCorrelationGradientParameters,
+    params: CiftiCorrelationGradientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -583,7 +583,7 @@ def cifti_correlation_gradient_cargs(
 
 
 def cifti_correlation_gradient_outputs(
-    params: CiftiCorrelationGradientParameters,
+    params: CiftiCorrelationGradientParamsDict,
     execution: Execution,
 ) -> CiftiCorrelationGradientOutputs:
     """
@@ -603,7 +603,7 @@ def cifti_correlation_gradient_outputs(
 
 
 def cifti_correlation_gradient_execute(
-    params: CiftiCorrelationGradientParameters,
+    params: CiftiCorrelationGradientParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
@@ -638,14 +638,14 @@ def cifti_correlation_gradient(
     distance_: float | None,
     limit_gb: float | None,
     cifti: InputPathType,
-    left_surface: CiftiCorrelationGradientLeftSurfaceParameters | None = None,
-    right_surface: CiftiCorrelationGradientRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
     presmooth_fwhm: bool = False,
     undo_fisher_z: bool = False,
     fisher_z: bool = False,
     covariance: bool = False,
-    double_correlation: CiftiCorrelationGradientDoubleCorrelationParameters | None = None,
+    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
@@ -711,12 +711,22 @@ def cifti_correlation_gradient(
 
 __all__ = [
     "CIFTI_CORRELATION_GRADIENT_METADATA",
+    "CiftiCorrelationGradientCerebellumSurfaceParamsDict",
+    "CiftiCorrelationGradientCerebellumSurfaceParamsDictTagged",
+    "CiftiCorrelationGradientDoubleCorrelationParamsDict",
+    "CiftiCorrelationGradientDoubleCorrelationParamsDictTagged",
+    "CiftiCorrelationGradientLeftSurfaceParamsDict",
+    "CiftiCorrelationGradientLeftSurfaceParamsDictTagged",
     "CiftiCorrelationGradientOutputs",
+    "CiftiCorrelationGradientParamsDict",
+    "CiftiCorrelationGradientParamsDictTagged",
+    "CiftiCorrelationGradientRightSurfaceParamsDict",
+    "CiftiCorrelationGradientRightSurfaceParamsDictTagged",
     "cifti_correlation_gradient",
-    "cifti_correlation_gradient_cerebellum_surface_params",
-    "cifti_correlation_gradient_double_correlation_params",
+    "cifti_correlation_gradient_cerebellum_surface",
+    "cifti_correlation_gradient_double_correlation",
     "cifti_correlation_gradient_execute",
-    "cifti_correlation_gradient_left_surface_params",
+    "cifti_correlation_gradient_left_surface",
     "cifti_correlation_gradient_params",
-    "cifti_correlation_gradient_right_surface_params",
+    "cifti_correlation_gradient_right_surface",
 ]

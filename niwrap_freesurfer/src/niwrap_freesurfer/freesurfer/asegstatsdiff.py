@@ -13,13 +13,13 @@ ASEGSTATSDIFF_METADATA = Metadata(
 )
 
 
-AsegstatsdiffParameters = typing.TypedDict('AsegstatsdiffParameters', {
+AsegstatsdiffParamsDict = typing.TypedDict('AsegstatsdiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/asegstatsdiff"]],
     "subject1": str,
     "subject2": str,
     "outdir": typing.NotRequired[str | None],
 })
-AsegstatsdiffParametersTagged = typing.TypedDict('AsegstatsdiffParametersTagged', {
+AsegstatsdiffParamsDictTagged = typing.TypedDict('AsegstatsdiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/asegstatsdiff"],
     "subject1": str,
     "subject2": str,
@@ -29,7 +29,7 @@ AsegstatsdiffParametersTagged = typing.TypedDict('AsegstatsdiffParametersTagged'
 
 class AsegstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AsegstatsdiffParameters(...)`.
+    Output object returned when calling `AsegstatsdiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def asegstatsdiff_params(
     subject1: str,
     subject2: str,
     outdir: str | None = None,
-) -> AsegstatsdiffParametersTagged:
+) -> AsegstatsdiffParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def asegstatsdiff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AsegstatsdiffParameters` object.
+    `AsegstatsdiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def asegstatsdiff_validate(
 
 
 def asegstatsdiff_cargs(
-    params: AsegstatsdiffParameters,
+    params: AsegstatsdiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def asegstatsdiff_cargs(
 
 
 def asegstatsdiff_outputs(
-    params: AsegstatsdiffParameters,
+    params: AsegstatsdiffParamsDict,
     execution: Execution,
 ) -> AsegstatsdiffOutputs:
     """
@@ -130,7 +130,7 @@ def asegstatsdiff_outputs(
 
 
 def asegstatsdiff_execute(
-    params: AsegstatsdiffParameters,
+    params: AsegstatsdiffParamsDict,
     runner: Runner | None = None,
 ) -> AsegstatsdiffOutputs:
     """
@@ -195,6 +195,8 @@ def asegstatsdiff(
 __all__ = [
     "ASEGSTATSDIFF_METADATA",
     "AsegstatsdiffOutputs",
+    "AsegstatsdiffParamsDict",
+    "AsegstatsdiffParamsDictTagged",
     "asegstatsdiff",
     "asegstatsdiff_execute",
     "asegstatsdiff_params",

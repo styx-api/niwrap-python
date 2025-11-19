@@ -13,7 +13,7 @@ NIML_FEEDME_METADATA = Metadata(
 )
 
 
-NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
+NimlFeedmeParamsDict = typing.TypedDict('NimlFeedmeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/niml_feedme"]],
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
@@ -23,7 +23,7 @@ NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
     "drive_cmds": typing.NotRequired[list[str] | None],
     "dataset": InputPathType,
 })
-NimlFeedmeParametersTagged = typing.TypedDict('NimlFeedmeParametersTagged', {
+NimlFeedmeParamsDictTagged = typing.TypedDict('NimlFeedmeParamsDictTagged', {
     "@type": typing.Literal["afni/niml_feedme"],
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ NimlFeedmeParametersTagged = typing.TypedDict('NimlFeedmeParametersTagged', {
 
 class NimlFeedmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NimlFeedmeParameters(...)`.
+    Output object returned when calling `NimlFeedmeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def niml_feedme_params(
     accum: bool = False,
     target_dataset: str | None = None,
     drive_cmds: list[str] | None = None,
-) -> NimlFeedmeParametersTagged:
+) -> NimlFeedmeParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def niml_feedme_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NimlFeedmeParameters` object.
+    `NimlFeedmeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def niml_feedme_validate(
 
 
 def niml_feedme_cargs(
-    params: NimlFeedmeParameters,
+    params: NimlFeedmeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def niml_feedme_cargs(
 
 
 def niml_feedme_outputs(
-    params: NimlFeedmeParameters,
+    params: NimlFeedmeParamsDict,
     execution: Execution,
 ) -> NimlFeedmeOutputs:
     """
@@ -196,7 +196,7 @@ def niml_feedme_outputs(
 
 
 def niml_feedme_execute(
-    params: NimlFeedmeParameters,
+    params: NimlFeedmeParamsDict,
     runner: Runner | None = None,
 ) -> NimlFeedmeOutputs:
     """
@@ -279,6 +279,8 @@ def niml_feedme(
 __all__ = [
     "NIML_FEEDME_METADATA",
     "NimlFeedmeOutputs",
+    "NimlFeedmeParamsDict",
+    "NimlFeedmeParamsDictTagged",
     "niml_feedme",
     "niml_feedme_execute",
     "niml_feedme_params",

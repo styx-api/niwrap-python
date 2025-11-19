@@ -13,11 +13,11 @@ BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
 )
 
 
-BuildDesikanKillianyGcsCshParameters = typing.TypedDict('BuildDesikanKillianyGcsCshParameters', {
+BuildDesikanKillianyGcsCshParamsDict = typing.TypedDict('BuildDesikanKillianyGcsCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"]],
     "hemi": str,
 })
-BuildDesikanKillianyGcsCshParametersTagged = typing.TypedDict('BuildDesikanKillianyGcsCshParametersTagged', {
+BuildDesikanKillianyGcsCshParamsDictTagged = typing.TypedDict('BuildDesikanKillianyGcsCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"],
     "hemi": str,
 })
@@ -25,7 +25,7 @@ BuildDesikanKillianyGcsCshParametersTagged = typing.TypedDict('BuildDesikanKilli
 
 class BuildDesikanKillianyGcsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BuildDesikanKillianyGcsCshParameters(...)`.
+    Output object returned when calling `BuildDesikanKillianyGcsCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class BuildDesikanKillianyGcsCshOutputs(typing.NamedTuple):
 
 def build_desikan_killiany_gcs_csh_params(
     hemi: str,
-) -> BuildDesikanKillianyGcsCshParametersTagged:
+) -> BuildDesikanKillianyGcsCshParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def build_desikan_killiany_gcs_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BuildDesikanKillianyGcsCshParameters` object.
+    `BuildDesikanKillianyGcsCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def build_desikan_killiany_gcs_csh_validate(
 
 
 def build_desikan_killiany_gcs_csh_cargs(
-    params: BuildDesikanKillianyGcsCshParameters,
+    params: BuildDesikanKillianyGcsCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def build_desikan_killiany_gcs_csh_cargs(
 
 
 def build_desikan_killiany_gcs_csh_outputs(
-    params: BuildDesikanKillianyGcsCshParameters,
+    params: BuildDesikanKillianyGcsCshParamsDict,
     execution: Execution,
 ) -> BuildDesikanKillianyGcsCshOutputs:
     """
@@ -107,7 +107,7 @@ def build_desikan_killiany_gcs_csh_outputs(
 
 
 def build_desikan_killiany_gcs_csh_execute(
-    params: BuildDesikanKillianyGcsCshParameters,
+    params: BuildDesikanKillianyGcsCshParamsDict,
     runner: Runner | None = None,
 ) -> BuildDesikanKillianyGcsCshOutputs:
     """
@@ -164,6 +164,8 @@ def build_desikan_killiany_gcs_csh(
 __all__ = [
     "BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA",
     "BuildDesikanKillianyGcsCshOutputs",
+    "BuildDesikanKillianyGcsCshParamsDict",
+    "BuildDesikanKillianyGcsCshParamsDictTagged",
     "build_desikan_killiany_gcs_csh",
     "build_desikan_killiany_gcs_csh_execute",
     "build_desikan_killiany_gcs_csh_params",

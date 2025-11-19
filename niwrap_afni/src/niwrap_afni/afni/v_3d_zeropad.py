@@ -13,7 +13,7 @@ V_3D_ZEROPAD_METADATA = Metadata(
 )
 
 
-V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
+V3dZeropadParamsDict = typing.TypedDict('V3dZeropadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dZeropad"]],
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
@@ -31,7 +31,7 @@ V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
     "master_dataset": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
 })
-V3dZeropadParametersTagged = typing.TypedDict('V3dZeropadParametersTagged', {
+V3dZeropadParamsDictTagged = typing.TypedDict('V3dZeropadParamsDictTagged', {
     "@type": typing.Literal["afni/3dZeropad"],
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
@@ -53,7 +53,7 @@ V3dZeropadParametersTagged = typing.TypedDict('V3dZeropadParametersTagged', {
 
 class V3dZeropadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dZeropadParameters(...)`.
+    Output object returned when calling `V3dZeropadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def v_3d_zeropad_params(
     mm_flag: bool = False,
     master_dataset: InputPathType | None = None,
     prefix: str | None = None,
-) -> V3dZeropadParametersTagged:
+) -> V3dZeropadParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def v_3d_zeropad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dZeropadParameters` object.
+    `V3dZeropadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def v_3d_zeropad_validate(
 
 
 def v_3d_zeropad_cargs(
-    params: V3dZeropadParameters,
+    params: V3dZeropadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -289,7 +289,7 @@ def v_3d_zeropad_cargs(
 
 
 def v_3d_zeropad_outputs(
-    params: V3dZeropadParameters,
+    params: V3dZeropadParamsDict,
     execution: Execution,
 ) -> V3dZeropadOutputs:
     """
@@ -310,7 +310,7 @@ def v_3d_zeropad_outputs(
 
 
 def v_3d_zeropad_execute(
-    params: V3dZeropadParameters,
+    params: V3dZeropadParamsDict,
     runner: Runner | None = None,
 ) -> V3dZeropadOutputs:
     """
@@ -417,6 +417,8 @@ def v_3d_zeropad(
 
 __all__ = [
     "V3dZeropadOutputs",
+    "V3dZeropadParamsDict",
+    "V3dZeropadParamsDictTagged",
     "V_3D_ZEROPAD_METADATA",
     "v_3d_zeropad",
     "v_3d_zeropad_execute",

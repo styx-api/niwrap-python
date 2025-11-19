@@ -13,13 +13,13 @@ MRIS_REMOVE_NEGATIVE_VERTICES_METADATA = Metadata(
 )
 
 
-MrisRemoveNegativeVerticesParameters = typing.TypedDict('MrisRemoveNegativeVerticesParameters', {
+MrisRemoveNegativeVerticesParamsDict = typing.TypedDict('MrisRemoveNegativeVerticesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_negative_vertices"]],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
 })
-MrisRemoveNegativeVerticesParametersTagged = typing.TypedDict('MrisRemoveNegativeVerticesParametersTagged', {
+MrisRemoveNegativeVerticesParamsDictTagged = typing.TypedDict('MrisRemoveNegativeVerticesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_remove_negative_vertices"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
@@ -29,7 +29,7 @@ MrisRemoveNegativeVerticesParametersTagged = typing.TypedDict('MrisRemoveNegativ
 
 class MrisRemoveNegativeVerticesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRemoveNegativeVerticesParameters(...)`.
+    Output object returned when calling `MrisRemoveNegativeVerticesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_remove_negative_vertices_params(
     surface_file: InputPathType,
     patch_file: InputPathType,
     output_patch: str,
-) -> MrisRemoveNegativeVerticesParametersTagged:
+) -> MrisRemoveNegativeVerticesParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mris_remove_negative_vertices_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRemoveNegativeVerticesParameters` object.
+    `MrisRemoveNegativeVerticesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mris_remove_negative_vertices_validate(
 
 
 def mris_remove_negative_vertices_cargs(
-    params: MrisRemoveNegativeVerticesParameters,
+    params: MrisRemoveNegativeVerticesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mris_remove_negative_vertices_cargs(
 
 
 def mris_remove_negative_vertices_outputs(
-    params: MrisRemoveNegativeVerticesParameters,
+    params: MrisRemoveNegativeVerticesParamsDict,
     execution: Execution,
 ) -> MrisRemoveNegativeVerticesOutputs:
     """
@@ -129,7 +129,7 @@ def mris_remove_negative_vertices_outputs(
 
 
 def mris_remove_negative_vertices_execute(
-    params: MrisRemoveNegativeVerticesParameters,
+    params: MrisRemoveNegativeVerticesParamsDict,
     runner: Runner | None = None,
 ) -> MrisRemoveNegativeVerticesOutputs:
     """
@@ -191,6 +191,8 @@ def mris_remove_negative_vertices(
 __all__ = [
     "MRIS_REMOVE_NEGATIVE_VERTICES_METADATA",
     "MrisRemoveNegativeVerticesOutputs",
+    "MrisRemoveNegativeVerticesParamsDict",
+    "MrisRemoveNegativeVerticesParamsDictTagged",
     "mris_remove_negative_vertices",
     "mris_remove_negative_vertices_execute",
     "mris_remove_negative_vertices_params",

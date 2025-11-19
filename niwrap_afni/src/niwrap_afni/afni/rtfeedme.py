@@ -13,7 +13,7 @@ RTFEEDME_METADATA = Metadata(
 )
 
 
-RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
+RtfeedmeParamsDict = typing.TypedDict('RtfeedmeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/rtfeedme"]],
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
     "note": typing.NotRequired[list[str] | None],
     "yrange": typing.NotRequired[float | None],
 })
-RtfeedmeParametersTagged = typing.TypedDict('RtfeedmeParametersTagged', {
+RtfeedmeParamsDictTagged = typing.TypedDict('RtfeedmeParamsDictTagged', {
     "@type": typing.Literal["afni/rtfeedme"],
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ RtfeedmeParametersTagged = typing.TypedDict('RtfeedmeParametersTagged', {
 
 class RtfeedmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RtfeedmeParameters(...)`.
+    Output object returned when calling `RtfeedmeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def rtfeedme_params(
     drive_cmd: list[str] | None = None,
     note: list[str] | None = None,
     yrange: float | None = None,
-) -> RtfeedmeParametersTagged:
+) -> RtfeedmeParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def rtfeedme_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RtfeedmeParameters` object.
+    `RtfeedmeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def rtfeedme_validate(
 
 
 def rtfeedme_cargs(
-    params: RtfeedmeParameters,
+    params: RtfeedmeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -236,7 +236,7 @@ def rtfeedme_cargs(
 
 
 def rtfeedme_outputs(
-    params: RtfeedmeParameters,
+    params: RtfeedmeParamsDict,
     execution: Execution,
 ) -> RtfeedmeOutputs:
     """
@@ -255,7 +255,7 @@ def rtfeedme_outputs(
 
 
 def rtfeedme_execute(
-    params: RtfeedmeParameters,
+    params: RtfeedmeParamsDict,
     runner: Runner | None = None,
 ) -> RtfeedmeOutputs:
     """
@@ -350,6 +350,8 @@ def rtfeedme(
 __all__ = [
     "RTFEEDME_METADATA",
     "RtfeedmeOutputs",
+    "RtfeedmeParamsDict",
+    "RtfeedmeParamsDictTagged",
     "rtfeedme",
     "rtfeedme_execute",
     "rtfeedme_params",

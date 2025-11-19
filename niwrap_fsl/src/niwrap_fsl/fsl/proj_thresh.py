@@ -13,12 +13,12 @@ PROJ_THRESH_METADATA = Metadata(
 )
 
 
-ProjThreshParameters = typing.TypedDict('ProjThreshParameters', {
+ProjThreshParamsDict = typing.TypedDict('ProjThreshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/proj_thresh"]],
     "input_paths": list[InputPathType],
     "threshold": float,
 })
-ProjThreshParametersTagged = typing.TypedDict('ProjThreshParametersTagged', {
+ProjThreshParamsDictTagged = typing.TypedDict('ProjThreshParamsDictTagged', {
     "@type": typing.Literal["fsl/proj_thresh"],
     "input_paths": list[InputPathType],
     "threshold": float,
@@ -27,7 +27,7 @@ ProjThreshParametersTagged = typing.TypedDict('ProjThreshParametersTagged', {
 
 class ProjThreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ProjThreshParameters(...)`.
+    Output object returned when calling `ProjThreshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class ProjThreshOutputs(typing.NamedTuple):
 def proj_thresh_params(
     input_paths: list[InputPathType],
     threshold: float,
-) -> ProjThreshParametersTagged:
+) -> ProjThreshParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def proj_thresh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProjThreshParameters` object.
+    `ProjThreshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def proj_thresh_validate(
 
 
 def proj_thresh_cargs(
-    params: ProjThreshParameters,
+    params: ProjThreshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def proj_thresh_cargs(
 
 
 def proj_thresh_outputs(
-    params: ProjThreshParameters,
+    params: ProjThreshParamsDict,
     execution: Execution,
 ) -> ProjThreshOutputs:
     """
@@ -120,7 +120,7 @@ def proj_thresh_outputs(
 
 
 def proj_thresh_execute(
-    params: ProjThreshParameters,
+    params: ProjThreshParamsDict,
     runner: Runner | None = None,
 ) -> ProjThreshOutputs:
     """
@@ -180,6 +180,8 @@ def proj_thresh(
 __all__ = [
     "PROJ_THRESH_METADATA",
     "ProjThreshOutputs",
+    "ProjThreshParamsDict",
+    "ProjThreshParamsDictTagged",
     "proj_thresh",
     "proj_thresh_execute",
     "proj_thresh_params",

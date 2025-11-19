@@ -3,7 +3,7 @@
   "properties": {
     "from-world": {
       "var_param": "from_world",
-      "fn_struct_make_params": "convert_warpfield_from_world_params",
+      "fn_struct_make_params": "convert_warpfield_from_world",
       "properties": {
         "input": {
           "var_param": "input_"
@@ -18,7 +18,7 @@
     },
     "from-fnirt": {
       "var_param": "from_fnirt",
-      "fn_struct_make_params": "convert_warpfield_from_fnirt_params",
+      "fn_struct_make_params": "convert_warpfield_from_fnirt",
       "properties": {
         "input": {
           "var_param": "input_"
@@ -36,7 +36,7 @@
     },
     "to-fnirt": {
       "var_param": "to_fnirt",
-      "fn_struct_make_params": "convert_warpfield_to_fnirt_params",
+      "fn_struct_make_params": "convert_warpfield_to_fnirt",
       "properties": {
         "output": {
           "var_param": "output"

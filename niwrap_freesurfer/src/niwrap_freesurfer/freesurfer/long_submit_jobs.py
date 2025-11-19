@@ -13,7 +13,7 @@ LONG_SUBMIT_JOBS_METADATA = Metadata(
 )
 
 
-LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
+LongSubmitJobsParamsDict = typing.TypedDict('LongSubmitJobsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_jobs"]],
     "qdec": InputPathType,
     "cdir": str,
@@ -41,7 +41,7 @@ LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
     "bnodes": typing.NotRequired[float | None],
     "lnodes": typing.NotRequired[float | None],
 })
-LongSubmitJobsParametersTagged = typing.TypedDict('LongSubmitJobsParametersTagged', {
+LongSubmitJobsParamsDictTagged = typing.TypedDict('LongSubmitJobsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_submit_jobs"],
     "qdec": InputPathType,
     "cdir": str,
@@ -73,7 +73,7 @@ LongSubmitJobsParametersTagged = typing.TypedDict('LongSubmitJobsParametersTagge
 
 class LongSubmitJobsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongSubmitJobsParameters(...)`.
+    Output object returned when calling `LongSubmitJobsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def long_submit_jobs_params(
     cnodes: float | None = None,
     bnodes: float | None = None,
     lnodes: float | None = None,
-) -> LongSubmitJobsParametersTagged:
+) -> LongSubmitJobsParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def long_submit_jobs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongSubmitJobsParameters` object.
+    `LongSubmitJobsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -286,7 +286,7 @@ def long_submit_jobs_validate(
 
 
 def long_submit_jobs_cargs(
-    params: LongSubmitJobsParameters,
+    params: LongSubmitJobsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -403,7 +403,7 @@ def long_submit_jobs_cargs(
 
 
 def long_submit_jobs_outputs(
-    params: LongSubmitJobsParameters,
+    params: LongSubmitJobsParamsDict,
     execution: Execution,
 ) -> LongSubmitJobsOutputs:
     """
@@ -422,7 +422,7 @@ def long_submit_jobs_outputs(
 
 
 def long_submit_jobs_execute(
-    params: LongSubmitJobsParameters,
+    params: LongSubmitJobsParamsDict,
     runner: Runner | None = None,
 ) -> LongSubmitJobsOutputs:
     """
@@ -554,6 +554,8 @@ def long_submit_jobs(
 __all__ = [
     "LONG_SUBMIT_JOBS_METADATA",
     "LongSubmitJobsOutputs",
+    "LongSubmitJobsParamsDict",
+    "LongSubmitJobsParamsDictTagged",
     "long_submit_jobs",
     "long_submit_jobs_execute",
     "long_submit_jobs_params",

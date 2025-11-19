@@ -13,12 +13,12 @@ REGISTER_CHILD_METADATA = Metadata(
 )
 
 
-RegisterChildParameters = typing.TypedDict('RegisterChildParameters', {
+RegisterChildParamsDict = typing.TypedDict('RegisterChildParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/register_child"]],
     "input_volume": InputPathType,
     "output_directory": str,
 })
-RegisterChildParametersTagged = typing.TypedDict('RegisterChildParametersTagged', {
+RegisterChildParamsDictTagged = typing.TypedDict('RegisterChildParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register_child"],
     "input_volume": InputPathType,
     "output_directory": str,
@@ -27,7 +27,7 @@ RegisterChildParametersTagged = typing.TypedDict('RegisterChildParametersTagged'
 
 class RegisterChildOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegisterChildParameters(...)`.
+    Output object returned when calling `RegisterChildParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class RegisterChildOutputs(typing.NamedTuple):
 def register_child_params(
     input_volume: InputPathType,
     output_directory: str,
-) -> RegisterChildParametersTagged:
+) -> RegisterChildParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def register_child_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegisterChildParameters` object.
+    `RegisterChildParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def register_child_validate(
 
 
 def register_child_cargs(
-    params: RegisterChildParameters,
+    params: RegisterChildParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def register_child_cargs(
 
 
 def register_child_outputs(
-    params: RegisterChildParameters,
+    params: RegisterChildParamsDict,
     execution: Execution,
 ) -> RegisterChildOutputs:
     """
@@ -122,7 +122,7 @@ def register_child_outputs(
 
 
 def register_child_execute(
-    params: RegisterChildParameters,
+    params: RegisterChildParamsDict,
     runner: Runner | None = None,
 ) -> RegisterChildOutputs:
     """
@@ -181,6 +181,8 @@ def register_child(
 __all__ = [
     "REGISTER_CHILD_METADATA",
     "RegisterChildOutputs",
+    "RegisterChildParamsDict",
+    "RegisterChildParamsDictTagged",
     "register_child",
     "register_child_execute",
     "register_child_params",

@@ -3,7 +3,7 @@
   "properties": {
     "surface-pair": {
       "var_param": "surface_pair",
-      "fn_struct_make_params": "annotation_resample_surface_pair_params",
+      "fn_struct_make_params": "annotation_resample_surface_pair",
       "properties": {
         "source-surface": {
           "var_param": "source_surface"

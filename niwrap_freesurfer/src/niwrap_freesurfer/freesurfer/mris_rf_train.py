@@ -13,14 +13,14 @@ MRIS_RF_TRAIN_METADATA = Metadata(
 )
 
 
-MrisRfTrainParameters = typing.TypedDict('MrisRfTrainParameters', {
+MrisRfTrainParamsDict = typing.TypedDict('MrisRfTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_train"]],
     "subjects": list[str],
     "output_name": str,
     "hemi": typing.NotRequired[str | None],
     "surf": typing.NotRequired[str | None],
 })
-MrisRfTrainParametersTagged = typing.TypedDict('MrisRfTrainParametersTagged', {
+MrisRfTrainParamsDictTagged = typing.TypedDict('MrisRfTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_rf_train"],
     "subjects": list[str],
     "output_name": str,
@@ -31,7 +31,7 @@ MrisRfTrainParametersTagged = typing.TypedDict('MrisRfTrainParametersTagged', {
 
 class MrisRfTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRfTrainParameters(...)`.
+    Output object returned when calling `MrisRfTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mris_rf_train_params(
     output_name: str,
     hemi: str | None = None,
     surf: str | None = None,
-) -> MrisRfTrainParametersTagged:
+) -> MrisRfTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mris_rf_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRfTrainParameters` object.
+    `MrisRfTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def mris_rf_train_validate(
 
 
 def mris_rf_train_cargs(
-    params: MrisRfTrainParameters,
+    params: MrisRfTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def mris_rf_train_cargs(
 
 
 def mris_rf_train_outputs(
-    params: MrisRfTrainParameters,
+    params: MrisRfTrainParamsDict,
     execution: Execution,
 ) -> MrisRfTrainOutputs:
     """
@@ -148,7 +148,7 @@ def mris_rf_train_outputs(
 
 
 def mris_rf_train_execute(
-    params: MrisRfTrainParameters,
+    params: MrisRfTrainParamsDict,
     runner: Runner | None = None,
 ) -> MrisRfTrainOutputs:
     """
@@ -214,6 +214,8 @@ def mris_rf_train(
 __all__ = [
     "MRIS_RF_TRAIN_METADATA",
     "MrisRfTrainOutputs",
+    "MrisRfTrainParamsDict",
+    "MrisRfTrainParamsDictTagged",
     "mris_rf_train",
     "mris_rf_train_execute",
     "mris_rf_train_params",

@@ -13,7 +13,7 @@ MRI_BRAINVOL_STATS_METADATA = Metadata(
 )
 
 
-MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
+MriBrainvolStatsParamsDict = typing.TypedDict('MriBrainvolStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brainvol_stats"]],
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
     "include_segmentation": bool,
     "output_file": typing.NotRequired[str | None],
 })
-MriBrainvolStatsParametersTagged = typing.TypedDict('MriBrainvolStatsParametersTagged', {
+MriBrainvolStatsParamsDictTagged = typing.TypedDict('MriBrainvolStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_brainvol_stats"],
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ MriBrainvolStatsParametersTagged = typing.TypedDict('MriBrainvolStatsParametersT
 
 class MriBrainvolStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriBrainvolStatsParameters(...)`.
+    Output object returned when calling `MriBrainvolStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_brainvol_stats_params(
     no_surface: bool = False,
     include_segmentation: bool = False,
     output_file: str | None = None,
-) -> MriBrainvolStatsParametersTagged:
+) -> MriBrainvolStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def mri_brainvol_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriBrainvolStatsParameters` object.
+    `MriBrainvolStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def mri_brainvol_stats_validate(
 
 
 def mri_brainvol_stats_cargs(
-    params: MriBrainvolStatsParameters,
+    params: MriBrainvolStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def mri_brainvol_stats_cargs(
 
 
 def mri_brainvol_stats_outputs(
-    params: MriBrainvolStatsParameters,
+    params: MriBrainvolStatsParamsDict,
     execution: Execution,
 ) -> MriBrainvolStatsOutputs:
     """
@@ -166,7 +166,7 @@ def mri_brainvol_stats_outputs(
 
 
 def mri_brainvol_stats_execute(
-    params: MriBrainvolStatsParameters,
+    params: MriBrainvolStatsParamsDict,
     runner: Runner | None = None,
 ) -> MriBrainvolStatsOutputs:
     """
@@ -238,6 +238,8 @@ def mri_brainvol_stats(
 __all__ = [
     "MRI_BRAINVOL_STATS_METADATA",
     "MriBrainvolStatsOutputs",
+    "MriBrainvolStatsParamsDict",
+    "MriBrainvolStatsParamsDictTagged",
     "mri_brainvol_stats",
     "mri_brainvol_stats_execute",
     "mri_brainvol_stats_params",

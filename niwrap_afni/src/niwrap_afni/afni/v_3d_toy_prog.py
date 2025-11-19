@@ -13,7 +13,7 @@ V_3D_TOY_PROG_METADATA = Metadata(
 )
 
 
-V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
+V3dToyProgParamsDict = typing.TypedDict('V3dToyProgParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dToyProg"]],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
     "help_aspx": bool,
     "help_all_opts": bool,
 })
-V3dToyProgParametersTagged = typing.TypedDict('V3dToyProgParametersTagged', {
+V3dToyProgParamsDictTagged = typing.TypedDict('V3dToyProgParamsDictTagged', {
     "@type": typing.Literal["afni/3dToyProg"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ V3dToyProgParametersTagged = typing.TypedDict('V3dToyProgParametersTagged', {
 
 class V3dToyProgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dToyProgParameters(...)`.
+    Output object returned when calling `V3dToyProgParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def v_3d_toy_prog_params(
     help_spx: bool = False,
     help_aspx: bool = False,
     help_all_opts: bool = False,
-) -> V3dToyProgParametersTagged:
+) -> V3dToyProgParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def v_3d_toy_prog_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dToyProgParameters` object.
+    `V3dToyProgParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def v_3d_toy_prog_validate(
 
 
 def v_3d_toy_prog_cargs(
-    params: V3dToyProgParameters,
+    params: V3dToyProgParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def v_3d_toy_prog_cargs(
 
 
 def v_3d_toy_prog_outputs(
-    params: V3dToyProgParameters,
+    params: V3dToyProgParamsDict,
     execution: Execution,
 ) -> V3dToyProgOutputs:
     """
@@ -275,7 +275,7 @@ def v_3d_toy_prog_outputs(
 
 
 def v_3d_toy_prog_execute(
-    params: V3dToyProgParameters,
+    params: V3dToyProgParamsDict,
     runner: Runner | None = None,
 ) -> V3dToyProgOutputs:
     """
@@ -380,6 +380,8 @@ def v_3d_toy_prog(
 
 __all__ = [
     "V3dToyProgOutputs",
+    "V3dToyProgParamsDict",
+    "V3dToyProgParamsDictTagged",
     "V_3D_TOY_PROG_METADATA",
     "v_3d_toy_prog",
     "v_3d_toy_prog_execute",

@@ -13,7 +13,7 @@ V_3D_ZCAT_METADATA = Metadata(
 )
 
 
-V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
+V3dZcatParamsDict = typing.TypedDict('V3dZcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dZcat"]],
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -23,7 +23,7 @@ V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
     "frugal": bool,
     "input_files": list[InputPathType],
 })
-V3dZcatParametersTagged = typing.TypedDict('V3dZcatParametersTagged', {
+V3dZcatParamsDictTagged = typing.TypedDict('V3dZcatParamsDictTagged', {
     "@type": typing.Literal["afni/3dZcat"],
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -37,7 +37,7 @@ V3dZcatParametersTagged = typing.TypedDict('V3dZcatParametersTagged', {
 
 class V3dZcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dZcatParameters(...)`.
+    Output object returned when calling `V3dZcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def v_3d_zcat_params(
     nscale: bool = False,
     verb: bool = False,
     frugal: bool = False,
-) -> V3dZcatParametersTagged:
+) -> V3dZcatParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def v_3d_zcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dZcatParameters` object.
+    `V3dZcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def v_3d_zcat_validate(
 
 
 def v_3d_zcat_cargs(
-    params: V3dZcatParameters,
+    params: V3dZcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,7 +177,7 @@ def v_3d_zcat_cargs(
 
 
 def v_3d_zcat_outputs(
-    params: V3dZcatParameters,
+    params: V3dZcatParamsDict,
     execution: Execution,
 ) -> V3dZcatOutputs:
     """
@@ -198,7 +198,7 @@ def v_3d_zcat_outputs(
 
 
 def v_3d_zcat_execute(
-    params: V3dZcatParameters,
+    params: V3dZcatParamsDict,
     runner: Runner | None = None,
 ) -> V3dZcatOutputs:
     """
@@ -280,6 +280,8 @@ def v_3d_zcat(
 
 __all__ = [
     "V3dZcatOutputs",
+    "V3dZcatParamsDict",
+    "V3dZcatParamsDictTagged",
     "V_3D_ZCAT_METADATA",
     "v_3d_zcat",
     "v_3d_zcat_execute",

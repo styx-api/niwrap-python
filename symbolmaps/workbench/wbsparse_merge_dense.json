@@ -3,7 +3,7 @@
   "properties": {
     "wbsparse": {
       "var_param": "wbsparse",
-      "fn_struct_make_params": "wbsparse_merge_dense_wbsparse_params",
+      "fn_struct_make_params": "wbsparse_merge_dense_wbsparse",
       "properties": {
         "wbsparse-in": {
           "var_param": "wbsparse_in"

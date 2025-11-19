@@ -13,7 +13,7 @@ THRESHOLD_IMAGE_METADATA = Metadata(
 )
 
 
-ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
+ThresholdImageParamsDict = typing.TypedDict('ThresholdImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ThresholdImage"]],
     "image_dimension": int,
     "image_in": InputPathType,
@@ -26,7 +26,7 @@ ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
     "kmeans_number_of_thresholds": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
 })
-ThresholdImageParametersTagged = typing.TypedDict('ThresholdImageParametersTagged', {
+ThresholdImageParamsDictTagged = typing.TypedDict('ThresholdImageParamsDictTagged', {
     "@type": typing.Literal["ants/ThresholdImage"],
     "image_dimension": int,
     "image_in": InputPathType,
@@ -43,7 +43,7 @@ ThresholdImageParametersTagged = typing.TypedDict('ThresholdImageParametersTagge
 
 class ThresholdImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ThresholdImageParameters(...)`.
+    Output object returned when calling `ThresholdImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def threshold_image_params(
     otsu_number_of_thresholds: float | None = None,
     kmeans_number_of_thresholds: float | None = None,
     mask_image: InputPathType | None = None,
-) -> ThresholdImageParametersTagged:
+) -> ThresholdImageParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def threshold_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ThresholdImageParameters` object.
+    `ThresholdImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def threshold_image_validate(
 
 
 def threshold_image_cargs(
-    params: ThresholdImageParameters,
+    params: ThresholdImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def threshold_image_cargs(
 
 
 def threshold_image_outputs(
-    params: ThresholdImageParameters,
+    params: ThresholdImageParamsDict,
     execution: Execution,
 ) -> ThresholdImageOutputs:
     """
@@ -208,7 +208,7 @@ def threshold_image_outputs(
 
 
 def threshold_image_execute(
-    params: ThresholdImageParameters,
+    params: ThresholdImageParamsDict,
     runner: Runner | None = None,
 ) -> ThresholdImageOutputs:
     """
@@ -297,6 +297,8 @@ def threshold_image(
 __all__ = [
     "THRESHOLD_IMAGE_METADATA",
     "ThresholdImageOutputs",
+    "ThresholdImageParamsDict",
+    "ThresholdImageParamsDictTagged",
     "threshold_image",
     "threshold_image_execute",
     "threshold_image_params",

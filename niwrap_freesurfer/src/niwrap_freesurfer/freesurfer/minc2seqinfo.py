@@ -13,12 +13,12 @@ MINC2SEQINFO_METADATA = Metadata(
 )
 
 
-Minc2seqinfoParameters = typing.TypedDict('Minc2seqinfoParameters', {
+Minc2seqinfoParamsDict = typing.TypedDict('Minc2seqinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/minc2seqinfo"]],
     "mincfile": InputPathType,
     "seqinfofile": str,
 })
-Minc2seqinfoParametersTagged = typing.TypedDict('Minc2seqinfoParametersTagged', {
+Minc2seqinfoParamsDictTagged = typing.TypedDict('Minc2seqinfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/minc2seqinfo"],
     "mincfile": InputPathType,
     "seqinfofile": str,
@@ -27,7 +27,7 @@ Minc2seqinfoParametersTagged = typing.TypedDict('Minc2seqinfoParametersTagged', 
 
 class Minc2seqinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Minc2seqinfoParameters(...)`.
+    Output object returned when calling `Minc2seqinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class Minc2seqinfoOutputs(typing.NamedTuple):
 def minc2seqinfo_params(
     mincfile: InputPathType,
     seqinfofile: str,
-) -> Minc2seqinfoParametersTagged:
+) -> Minc2seqinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def minc2seqinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Minc2seqinfoParameters` object.
+    `Minc2seqinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def minc2seqinfo_validate(
 
 
 def minc2seqinfo_cargs(
-    params: Minc2seqinfoParameters,
+    params: Minc2seqinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def minc2seqinfo_cargs(
 
 
 def minc2seqinfo_outputs(
-    params: Minc2seqinfoParameters,
+    params: Minc2seqinfoParamsDict,
     execution: Execution,
 ) -> Minc2seqinfoOutputs:
     """
@@ -119,7 +119,7 @@ def minc2seqinfo_outputs(
 
 
 def minc2seqinfo_execute(
-    params: Minc2seqinfoParameters,
+    params: Minc2seqinfoParamsDict,
     runner: Runner | None = None,
 ) -> Minc2seqinfoOutputs:
     """
@@ -178,6 +178,8 @@ def minc2seqinfo(
 __all__ = [
     "MINC2SEQINFO_METADATA",
     "Minc2seqinfoOutputs",
+    "Minc2seqinfoParamsDict",
+    "Minc2seqinfoParamsDictTagged",
     "minc2seqinfo",
     "minc2seqinfo_execute",
     "minc2seqinfo_params",

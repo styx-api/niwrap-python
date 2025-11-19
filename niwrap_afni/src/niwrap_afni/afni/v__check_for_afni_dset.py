@@ -13,11 +13,11 @@ V__CHECK_FOR_AFNI_DSET_METADATA = Metadata(
 )
 
 
-VCheckForAfniDsetParameters = typing.TypedDict('VCheckForAfniDsetParameters', {
+VCheckForAfniDsetParamsDict = typing.TypedDict('VCheckForAfniDsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@CheckForAfniDset"]],
     "dataset_name": str,
 })
-VCheckForAfniDsetParametersTagged = typing.TypedDict('VCheckForAfniDsetParametersTagged', {
+VCheckForAfniDsetParamsDictTagged = typing.TypedDict('VCheckForAfniDsetParamsDictTagged', {
     "@type": typing.Literal["afni/@CheckForAfniDset"],
     "dataset_name": str,
 })
@@ -25,7 +25,7 @@ VCheckForAfniDsetParametersTagged = typing.TypedDict('VCheckForAfniDsetParameter
 
 class VCheckForAfniDsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VCheckForAfniDsetParameters(...)`.
+    Output object returned when calling `VCheckForAfniDsetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VCheckForAfniDsetOutputs(typing.NamedTuple):
 
 def v__check_for_afni_dset_params(
     dataset_name: str,
-) -> VCheckForAfniDsetParametersTagged:
+) -> VCheckForAfniDsetParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__check_for_afni_dset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VCheckForAfniDsetParameters` object.
+    `VCheckForAfniDsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def v__check_for_afni_dset_validate(
 
 
 def v__check_for_afni_dset_cargs(
-    params: VCheckForAfniDsetParameters,
+    params: VCheckForAfniDsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__check_for_afni_dset_cargs(
 
 
 def v__check_for_afni_dset_outputs(
-    params: VCheckForAfniDsetParameters,
+    params: VCheckForAfniDsetParamsDict,
     execution: Execution,
 ) -> VCheckForAfniDsetOutputs:
     """
@@ -110,7 +110,7 @@ def v__check_for_afni_dset_outputs(
 
 
 def v__check_for_afni_dset_execute(
-    params: VCheckForAfniDsetParameters,
+    params: VCheckForAfniDsetParamsDict,
     runner: Runner | None = None,
 ) -> VCheckForAfniDsetOutputs:
     """
@@ -166,6 +166,8 @@ def v__check_for_afni_dset(
 
 __all__ = [
     "VCheckForAfniDsetOutputs",
+    "VCheckForAfniDsetParamsDict",
+    "VCheckForAfniDsetParamsDictTagged",
     "V__CHECK_FOR_AFNI_DSET_METADATA",
     "v__check_for_afni_dset",
     "v__check_for_afni_dset_execute",

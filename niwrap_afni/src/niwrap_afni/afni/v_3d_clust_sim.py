@@ -13,7 +13,7 @@ V_3D_CLUST_SIM_METADATA = Metadata(
 )
 
 
-V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
+V3dClustSimParamsDict = typing.TypedDict('V3dClustSimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dClustSim"]],
     "nxyz": typing.NotRequired[str | None],
     "dxyz": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
     "quiet": bool,
     "ssave": typing.NotRequired[str | None],
 })
-V3dClustSimParametersTagged = typing.TypedDict('V3dClustSimParametersTagged', {
+V3dClustSimParamsDictTagged = typing.TypedDict('V3dClustSimParamsDictTagged', {
     "@type": typing.Literal["afni/3dClustSim"],
     "nxyz": typing.NotRequired[str | None],
     "dxyz": typing.NotRequired[str | None],
@@ -67,7 +67,7 @@ V3dClustSimParametersTagged = typing.TypedDict('V3dClustSimParametersTagged', {
 
 class V3dClustSimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dClustSimParameters(...)`.
+    Output object returned when calling `V3dClustSimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +116,7 @@ def v_3d_clust_sim_params(
     cmd_: str | None = None,
     quiet: bool = False,
     ssave: str | None = None,
-) -> V3dClustSimParametersTagged:
+) -> V3dClustSimParamsDictTagged:
     """
     Build parameters.
     
@@ -194,7 +194,7 @@ def v_3d_clust_sim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dClustSimParameters` object.
+    `V3dClustSimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -282,7 +282,7 @@ def v_3d_clust_sim_validate(
 
 
 def v_3d_clust_sim_cargs(
-    params: V3dClustSimParameters,
+    params: V3dClustSimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -383,7 +383,7 @@ def v_3d_clust_sim_cargs(
 
 
 def v_3d_clust_sim_outputs(
-    params: V3dClustSimParameters,
+    params: V3dClustSimParamsDict,
     execution: Execution,
 ) -> V3dClustSimOutputs:
     """
@@ -412,7 +412,7 @@ def v_3d_clust_sim_outputs(
 
 
 def v_3d_clust_sim_execute(
-    params: V3dClustSimParameters,
+    params: V3dClustSimParamsDict,
     runner: Runner | None = None,
 ) -> V3dClustSimOutputs:
     """
@@ -532,6 +532,8 @@ def v_3d_clust_sim(
 
 __all__ = [
     "V3dClustSimOutputs",
+    "V3dClustSimParamsDict",
+    "V3dClustSimParamsDictTagged",
     "V_3D_CLUST_SIM_METADATA",
     "v_3d_clust_sim",
     "v_3d_clust_sim_execute",

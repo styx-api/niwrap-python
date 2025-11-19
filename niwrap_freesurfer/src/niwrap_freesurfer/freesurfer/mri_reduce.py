@@ -13,12 +13,12 @@ MRI_REDUCE_METADATA = Metadata(
 )
 
 
-MriReduceParameters = typing.TypedDict('MriReduceParameters', {
+MriReduceParamsDict = typing.TypedDict('MriReduceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reduce"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-MriReduceParametersTagged = typing.TypedDict('MriReduceParametersTagged', {
+MriReduceParamsDictTagged = typing.TypedDict('MriReduceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_reduce"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ MriReduceParametersTagged = typing.TypedDict('MriReduceParametersTagged', {
 
 class MriReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriReduceParameters(...)`.
+    Output object returned when calling `MriReduceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriReduceOutputs(typing.NamedTuple):
 def mri_reduce_params(
     input_file: InputPathType,
     output_file: str,
-) -> MriReduceParametersTagged:
+) -> MriReduceParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_reduce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriReduceParameters` object.
+    `MriReduceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mri_reduce_validate(
 
 
 def mri_reduce_cargs(
-    params: MriReduceParameters,
+    params: MriReduceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mri_reduce_cargs(
 
 
 def mri_reduce_outputs(
-    params: MriReduceParameters,
+    params: MriReduceParamsDict,
     execution: Execution,
 ) -> MriReduceOutputs:
     """
@@ -119,7 +119,7 @@ def mri_reduce_outputs(
 
 
 def mri_reduce_execute(
-    params: MriReduceParameters,
+    params: MriReduceParamsDict,
     runner: Runner | None = None,
 ) -> MriReduceOutputs:
     """
@@ -178,6 +178,8 @@ def mri_reduce(
 __all__ = [
     "MRI_REDUCE_METADATA",
     "MriReduceOutputs",
+    "MriReduceParamsDict",
+    "MriReduceParamsDictTagged",
     "mri_reduce",
     "mri_reduce_execute",
     "mri_reduce_params",

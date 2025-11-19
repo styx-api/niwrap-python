@@ -12,32 +12,32 @@ CIFTI_AVERAGE_DENSE_ROI_METADATA = Metadata(
 )
 
 
-CiftiAverageDenseRoiCiftiRoiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParameters', {
+CiftiAverageDenseRoiCiftiRoiParamsDict = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti-roi"]],
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
-CiftiAverageDenseRoiCiftiRoiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParametersTagged', {
+CiftiAverageDenseRoiCiftiRoiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParamsDictTagged', {
     "@type": typing.Literal["cifti-roi"],
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
 
 
-CiftiAverageDenseRoiCiftiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiParameters', {
+CiftiAverageDenseRoiCiftiParamsDict = typing.TypedDict('CiftiAverageDenseRoiCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiAverageDenseRoiCiftiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiParametersTagged', {
+CiftiAverageDenseRoiCiftiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameters', {
+CiftiAverageDenseRoiParamsDict = typing.TypedDict('CiftiAverageDenseRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-average-dense-roi"]],
     "cifti-out": str,
-    "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
+    "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -45,12 +45,12 @@ CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameter
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParamsDict] | None],
 })
-CiftiAverageDenseRoiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiParametersTagged', {
+CiftiAverageDenseRoiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-average-dense-roi"],
     "cifti-out": str,
-    "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
+    "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -58,14 +58,14 @@ CiftiAverageDenseRoiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiPar
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParamsDict] | None],
 })
 
 
-def cifti_average_dense_roi_cifti_roi_params(
+def cifti_average_dense_roi_cifti_roi(
     roi_cifti: InputPathType,
     in_memory: bool = False,
-) -> CiftiAverageDenseRoiCiftiRoiParametersTagged:
+) -> CiftiAverageDenseRoiCiftiRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def cifti_average_dense_roi_cifti_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageDenseRoiCiftiRoiParameters` object.
+    `CiftiAverageDenseRoiCiftiRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def cifti_average_dense_roi_cifti_roi_validate(
 
 
 def cifti_average_dense_roi_cifti_roi_cargs(
-    params: CiftiAverageDenseRoiCiftiRoiParameters,
+    params: CiftiAverageDenseRoiCiftiRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,9 +129,9 @@ def cifti_average_dense_roi_cifti_roi_cargs(
     return cargs
 
 
-def cifti_average_dense_roi_cifti_params(
+def cifti_average_dense_roi_cifti(
     cifti_in: InputPathType,
-) -> CiftiAverageDenseRoiCiftiParametersTagged:
+) -> CiftiAverageDenseRoiCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def cifti_average_dense_roi_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageDenseRoiCiftiParameters` object.
+    `CiftiAverageDenseRoiCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def cifti_average_dense_roi_cifti_validate(
 
 
 def cifti_average_dense_roi_cifti_cargs(
-    params: CiftiAverageDenseRoiCiftiParameters,
+    params: CiftiAverageDenseRoiCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def cifti_average_dense_roi_cifti_cargs(
 
 class CiftiAverageDenseRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiAverageDenseRoiParameters(...)`.
+    Output object returned when calling `CiftiAverageDenseRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -205,9 +205,9 @@ def cifti_average_dense_roi_params(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
-    cifti_roi: CiftiAverageDenseRoiCiftiRoiParameters | None = None,
-    cifti: list[CiftiAverageDenseRoiCiftiParameters] | None = None,
-) -> CiftiAverageDenseRoiParametersTagged:
+    cifti_roi: CiftiAverageDenseRoiCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
+) -> CiftiAverageDenseRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -270,7 +270,7 @@ def cifti_average_dense_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageDenseRoiParameters` object.
+    `CiftiAverageDenseRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -306,13 +306,13 @@ def cifti_average_dense_roi_validate(
             raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageDenseRoiCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageDenseRoiCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_average_dense_roi_cifti_validate(e)
 
 
 def cifti_average_dense_roi_cargs(
-    params: CiftiAverageDenseRoiParameters,
+    params: CiftiAverageDenseRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -351,7 +351,7 @@ def cifti_average_dense_roi_cargs(
 
 
 def cifti_average_dense_roi_outputs(
-    params: CiftiAverageDenseRoiParameters,
+    params: CiftiAverageDenseRoiParamsDict,
     execution: Execution,
 ) -> CiftiAverageDenseRoiOutputs:
     """
@@ -371,7 +371,7 @@ def cifti_average_dense_roi_outputs(
 
 
 def cifti_average_dense_roi_execute(
-    params: CiftiAverageDenseRoiParameters,
+    params: CiftiAverageDenseRoiParamsDict,
     runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
@@ -409,8 +409,8 @@ def cifti_average_dense_roi(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
-    cifti_roi: CiftiAverageDenseRoiCiftiRoiParameters | None = None,
-    cifti: list[CiftiAverageDenseRoiCiftiParameters] | None = None,
+    cifti_roi: CiftiAverageDenseRoiCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
@@ -470,10 +470,16 @@ def cifti_average_dense_roi(
 
 __all__ = [
     "CIFTI_AVERAGE_DENSE_ROI_METADATA",
+    "CiftiAverageDenseRoiCiftiParamsDict",
+    "CiftiAverageDenseRoiCiftiParamsDictTagged",
+    "CiftiAverageDenseRoiCiftiRoiParamsDict",
+    "CiftiAverageDenseRoiCiftiRoiParamsDictTagged",
     "CiftiAverageDenseRoiOutputs",
+    "CiftiAverageDenseRoiParamsDict",
+    "CiftiAverageDenseRoiParamsDictTagged",
     "cifti_average_dense_roi",
-    "cifti_average_dense_roi_cifti_params",
-    "cifti_average_dense_roi_cifti_roi_params",
+    "cifti_average_dense_roi_cifti",
+    "cifti_average_dense_roi_cifti_roi",
     "cifti_average_dense_roi_execute",
     "cifti_average_dense_roi_params",
 ]

@@ -13,563 +13,563 @@ MRCALC_METADATA = Metadata(
 )
 
 
-MrcalcAbsParameters = typing.TypedDict('MrcalcAbsParameters', {
+MrcalcAbsParamsDict = typing.TypedDict('MrcalcAbsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["abs"]],
 })
-MrcalcAbsParametersTagged = typing.TypedDict('MrcalcAbsParametersTagged', {
+MrcalcAbsParamsDictTagged = typing.TypedDict('MrcalcAbsParamsDictTagged', {
     "@type": typing.Literal["abs"],
 })
 
 
-MrcalcNegParameters = typing.TypedDict('MrcalcNegParameters', {
+MrcalcNegParamsDict = typing.TypedDict('MrcalcNegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neg"]],
 })
-MrcalcNegParametersTagged = typing.TypedDict('MrcalcNegParametersTagged', {
+MrcalcNegParamsDictTagged = typing.TypedDict('MrcalcNegParamsDictTagged', {
     "@type": typing.Literal["neg"],
 })
 
 
-MrcalcAddParameters = typing.TypedDict('MrcalcAddParameters', {
+MrcalcAddParamsDict = typing.TypedDict('MrcalcAddParamsDict', {
     "@type": typing.NotRequired[typing.Literal["add"]],
 })
-MrcalcAddParametersTagged = typing.TypedDict('MrcalcAddParametersTagged', {
+MrcalcAddParamsDictTagged = typing.TypedDict('MrcalcAddParamsDictTagged', {
     "@type": typing.Literal["add"],
 })
 
 
-MrcalcSubtractParameters = typing.TypedDict('MrcalcSubtractParameters', {
+MrcalcSubtractParamsDict = typing.TypedDict('MrcalcSubtractParamsDict', {
     "@type": typing.NotRequired[typing.Literal["subtract"]],
 })
-MrcalcSubtractParametersTagged = typing.TypedDict('MrcalcSubtractParametersTagged', {
+MrcalcSubtractParamsDictTagged = typing.TypedDict('MrcalcSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
 })
 
 
-MrcalcMultiplyParameters = typing.TypedDict('MrcalcMultiplyParameters', {
+MrcalcMultiplyParamsDict = typing.TypedDict('MrcalcMultiplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["multiply"]],
 })
-MrcalcMultiplyParametersTagged = typing.TypedDict('MrcalcMultiplyParametersTagged', {
+MrcalcMultiplyParamsDictTagged = typing.TypedDict('MrcalcMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
 })
 
 
-MrcalcDivideParameters = typing.TypedDict('MrcalcDivideParameters', {
+MrcalcDivideParamsDict = typing.TypedDict('MrcalcDivideParamsDict', {
     "@type": typing.NotRequired[typing.Literal["divide"]],
 })
-MrcalcDivideParametersTagged = typing.TypedDict('MrcalcDivideParametersTagged', {
+MrcalcDivideParamsDictTagged = typing.TypedDict('MrcalcDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
 })
 
 
-MrcalcMinParameters = typing.TypedDict('MrcalcMinParameters', {
+MrcalcMinParamsDict = typing.TypedDict('MrcalcMinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["min"]],
 })
-MrcalcMinParametersTagged = typing.TypedDict('MrcalcMinParametersTagged', {
+MrcalcMinParamsDictTagged = typing.TypedDict('MrcalcMinParamsDictTagged', {
     "@type": typing.Literal["min"],
 })
 
 
-MrcalcMaxParameters = typing.TypedDict('MrcalcMaxParameters', {
+MrcalcMaxParamsDict = typing.TypedDict('MrcalcMaxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["max"]],
 })
-MrcalcMaxParametersTagged = typing.TypedDict('MrcalcMaxParametersTagged', {
+MrcalcMaxParamsDictTagged = typing.TypedDict('MrcalcMaxParamsDictTagged', {
     "@type": typing.Literal["max"],
 })
 
 
-MrcalcLtParameters = typing.TypedDict('MrcalcLtParameters', {
+MrcalcLtParamsDict = typing.TypedDict('MrcalcLtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["lt"]],
 })
-MrcalcLtParametersTagged = typing.TypedDict('MrcalcLtParametersTagged', {
+MrcalcLtParamsDictTagged = typing.TypedDict('MrcalcLtParamsDictTagged', {
     "@type": typing.Literal["lt"],
 })
 
 
-MrcalcGtParameters = typing.TypedDict('MrcalcGtParameters', {
+MrcalcGtParamsDict = typing.TypedDict('MrcalcGtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["gt"]],
 })
-MrcalcGtParametersTagged = typing.TypedDict('MrcalcGtParametersTagged', {
+MrcalcGtParamsDictTagged = typing.TypedDict('MrcalcGtParamsDictTagged', {
     "@type": typing.Literal["gt"],
 })
 
 
-MrcalcLeParameters = typing.TypedDict('MrcalcLeParameters', {
+MrcalcLeParamsDict = typing.TypedDict('MrcalcLeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["le"]],
 })
-MrcalcLeParametersTagged = typing.TypedDict('MrcalcLeParametersTagged', {
+MrcalcLeParamsDictTagged = typing.TypedDict('MrcalcLeParamsDictTagged', {
     "@type": typing.Literal["le"],
 })
 
 
-MrcalcGeParameters = typing.TypedDict('MrcalcGeParameters', {
+MrcalcGeParamsDict = typing.TypedDict('MrcalcGeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ge"]],
 })
-MrcalcGeParametersTagged = typing.TypedDict('MrcalcGeParametersTagged', {
+MrcalcGeParamsDictTagged = typing.TypedDict('MrcalcGeParamsDictTagged', {
     "@type": typing.Literal["ge"],
 })
 
 
-MrcalcEqParameters = typing.TypedDict('MrcalcEqParameters', {
+MrcalcEqParamsDict = typing.TypedDict('MrcalcEqParamsDict', {
     "@type": typing.NotRequired[typing.Literal["eq"]],
 })
-MrcalcEqParametersTagged = typing.TypedDict('MrcalcEqParametersTagged', {
+MrcalcEqParamsDictTagged = typing.TypedDict('MrcalcEqParamsDictTagged', {
     "@type": typing.Literal["eq"],
 })
 
 
-MrcalcNeqParameters = typing.TypedDict('MrcalcNeqParameters', {
+MrcalcNeqParamsDict = typing.TypedDict('MrcalcNeqParamsDict', {
     "@type": typing.NotRequired[typing.Literal["neq"]],
 })
-MrcalcNeqParametersTagged = typing.TypedDict('MrcalcNeqParametersTagged', {
+MrcalcNeqParamsDictTagged = typing.TypedDict('MrcalcNeqParamsDictTagged', {
     "@type": typing.Literal["neq"],
 })
 
 
-MrcalcIfParameters = typing.TypedDict('MrcalcIfParameters', {
+MrcalcIfParamsDict = typing.TypedDict('MrcalcIfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["if"]],
 })
-MrcalcIfParametersTagged = typing.TypedDict('MrcalcIfParametersTagged', {
+MrcalcIfParamsDictTagged = typing.TypedDict('MrcalcIfParamsDictTagged', {
     "@type": typing.Literal["if"],
 })
 
 
-MrcalcReplaceParameters = typing.TypedDict('MrcalcReplaceParameters', {
+MrcalcReplaceParamsDict = typing.TypedDict('MrcalcReplaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["replace"]],
 })
-MrcalcReplaceParametersTagged = typing.TypedDict('MrcalcReplaceParametersTagged', {
+MrcalcReplaceParamsDictTagged = typing.TypedDict('MrcalcReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
 })
 
 
-MrcalcSqrtParameters = typing.TypedDict('MrcalcSqrtParameters', {
+MrcalcSqrtParamsDict = typing.TypedDict('MrcalcSqrtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sqrt"]],
 })
-MrcalcSqrtParametersTagged = typing.TypedDict('MrcalcSqrtParametersTagged', {
+MrcalcSqrtParamsDictTagged = typing.TypedDict('MrcalcSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
 })
 
 
-MrcalcPowParameters = typing.TypedDict('MrcalcPowParameters', {
+MrcalcPowParamsDict = typing.TypedDict('MrcalcPowParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pow"]],
 })
-MrcalcPowParametersTagged = typing.TypedDict('MrcalcPowParametersTagged', {
+MrcalcPowParamsDictTagged = typing.TypedDict('MrcalcPowParamsDictTagged', {
     "@type": typing.Literal["pow"],
 })
 
 
-MrcalcRoundParameters = typing.TypedDict('MrcalcRoundParameters', {
+MrcalcRoundParamsDict = typing.TypedDict('MrcalcRoundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["round"]],
 })
-MrcalcRoundParametersTagged = typing.TypedDict('MrcalcRoundParametersTagged', {
+MrcalcRoundParamsDictTagged = typing.TypedDict('MrcalcRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
 })
 
 
-MrcalcCeilParameters = typing.TypedDict('MrcalcCeilParameters', {
+MrcalcCeilParamsDict = typing.TypedDict('MrcalcCeilParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ceil"]],
 })
-MrcalcCeilParametersTagged = typing.TypedDict('MrcalcCeilParametersTagged', {
+MrcalcCeilParamsDictTagged = typing.TypedDict('MrcalcCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
 })
 
 
-MrcalcFloorParameters = typing.TypedDict('MrcalcFloorParameters', {
+MrcalcFloorParamsDict = typing.TypedDict('MrcalcFloorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["floor"]],
 })
-MrcalcFloorParametersTagged = typing.TypedDict('MrcalcFloorParametersTagged', {
+MrcalcFloorParamsDictTagged = typing.TypedDict('MrcalcFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
 })
 
 
-MrcalcNotParameters = typing.TypedDict('MrcalcNotParameters', {
+MrcalcNotParamsDict = typing.TypedDict('MrcalcNotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["not"]],
 })
-MrcalcNotParametersTagged = typing.TypedDict('MrcalcNotParametersTagged', {
+MrcalcNotParamsDictTagged = typing.TypedDict('MrcalcNotParamsDictTagged', {
     "@type": typing.Literal["not"],
 })
 
 
-MrcalcAndParameters = typing.TypedDict('MrcalcAndParameters', {
+MrcalcAndParamsDict = typing.TypedDict('MrcalcAndParamsDict', {
     "@type": typing.NotRequired[typing.Literal["and"]],
 })
-MrcalcAndParametersTagged = typing.TypedDict('MrcalcAndParametersTagged', {
+MrcalcAndParamsDictTagged = typing.TypedDict('MrcalcAndParamsDictTagged', {
     "@type": typing.Literal["and"],
 })
 
 
-MrcalcOrParameters = typing.TypedDict('MrcalcOrParameters', {
+MrcalcOrParamsDict = typing.TypedDict('MrcalcOrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["or"]],
 })
-MrcalcOrParametersTagged = typing.TypedDict('MrcalcOrParametersTagged', {
+MrcalcOrParamsDictTagged = typing.TypedDict('MrcalcOrParamsDictTagged', {
     "@type": typing.Literal["or"],
 })
 
 
-MrcalcXorParameters = typing.TypedDict('MrcalcXorParameters', {
+MrcalcXorParamsDict = typing.TypedDict('MrcalcXorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["xor"]],
 })
-MrcalcXorParametersTagged = typing.TypedDict('MrcalcXorParametersTagged', {
+MrcalcXorParamsDictTagged = typing.TypedDict('MrcalcXorParamsDictTagged', {
     "@type": typing.Literal["xor"],
 })
 
 
-MrcalcIsnanParameters = typing.TypedDict('MrcalcIsnanParameters', {
+MrcalcIsnanParamsDict = typing.TypedDict('MrcalcIsnanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["isnan"]],
 })
-MrcalcIsnanParametersTagged = typing.TypedDict('MrcalcIsnanParametersTagged', {
+MrcalcIsnanParamsDictTagged = typing.TypedDict('MrcalcIsnanParamsDictTagged', {
     "@type": typing.Literal["isnan"],
 })
 
 
-MrcalcIsinfParameters = typing.TypedDict('MrcalcIsinfParameters', {
+MrcalcIsinfParamsDict = typing.TypedDict('MrcalcIsinfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["isinf"]],
 })
-MrcalcIsinfParametersTagged = typing.TypedDict('MrcalcIsinfParametersTagged', {
+MrcalcIsinfParamsDictTagged = typing.TypedDict('MrcalcIsinfParamsDictTagged', {
     "@type": typing.Literal["isinf"],
 })
 
 
-MrcalcFiniteParameters = typing.TypedDict('MrcalcFiniteParameters', {
+MrcalcFiniteParamsDict = typing.TypedDict('MrcalcFiniteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["finite"]],
 })
-MrcalcFiniteParametersTagged = typing.TypedDict('MrcalcFiniteParametersTagged', {
+MrcalcFiniteParamsDictTagged = typing.TypedDict('MrcalcFiniteParamsDictTagged', {
     "@type": typing.Literal["finite"],
 })
 
 
-MrcalcComplexParameters = typing.TypedDict('MrcalcComplexParameters', {
+MrcalcComplexParamsDict = typing.TypedDict('MrcalcComplexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["complex"]],
 })
-MrcalcComplexParametersTagged = typing.TypedDict('MrcalcComplexParametersTagged', {
+MrcalcComplexParamsDictTagged = typing.TypedDict('MrcalcComplexParamsDictTagged', {
     "@type": typing.Literal["complex"],
 })
 
 
-MrcalcPolarParameters = typing.TypedDict('MrcalcPolarParameters', {
+MrcalcPolarParamsDict = typing.TypedDict('MrcalcPolarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["polar"]],
 })
-MrcalcPolarParametersTagged = typing.TypedDict('MrcalcPolarParametersTagged', {
+MrcalcPolarParamsDictTagged = typing.TypedDict('MrcalcPolarParamsDictTagged', {
     "@type": typing.Literal["polar"],
 })
 
 
-MrcalcRealParameters = typing.TypedDict('MrcalcRealParameters', {
+MrcalcRealParamsDict = typing.TypedDict('MrcalcRealParamsDict', {
     "@type": typing.NotRequired[typing.Literal["real"]],
 })
-MrcalcRealParametersTagged = typing.TypedDict('MrcalcRealParametersTagged', {
+MrcalcRealParamsDictTagged = typing.TypedDict('MrcalcRealParamsDictTagged', {
     "@type": typing.Literal["real"],
 })
 
 
-MrcalcImagParameters = typing.TypedDict('MrcalcImagParameters', {
+MrcalcImagParamsDict = typing.TypedDict('MrcalcImagParamsDict', {
     "@type": typing.NotRequired[typing.Literal["imag"]],
 })
-MrcalcImagParametersTagged = typing.TypedDict('MrcalcImagParametersTagged', {
+MrcalcImagParamsDictTagged = typing.TypedDict('MrcalcImagParamsDictTagged', {
     "@type": typing.Literal["imag"],
 })
 
 
-MrcalcPhaseParameters = typing.TypedDict('MrcalcPhaseParameters', {
+MrcalcPhaseParamsDict = typing.TypedDict('MrcalcPhaseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["phase"]],
 })
-MrcalcPhaseParametersTagged = typing.TypedDict('MrcalcPhaseParametersTagged', {
+MrcalcPhaseParamsDictTagged = typing.TypedDict('MrcalcPhaseParamsDictTagged', {
     "@type": typing.Literal["phase"],
 })
 
 
-MrcalcConjParameters = typing.TypedDict('MrcalcConjParameters', {
+MrcalcConjParamsDict = typing.TypedDict('MrcalcConjParamsDict', {
     "@type": typing.NotRequired[typing.Literal["conj"]],
 })
-MrcalcConjParametersTagged = typing.TypedDict('MrcalcConjParametersTagged', {
+MrcalcConjParamsDictTagged = typing.TypedDict('MrcalcConjParamsDictTagged', {
     "@type": typing.Literal["conj"],
 })
 
 
-MrcalcProjParameters = typing.TypedDict('MrcalcProjParameters', {
+MrcalcProjParamsDict = typing.TypedDict('MrcalcProjParamsDict', {
     "@type": typing.NotRequired[typing.Literal["proj"]],
 })
-MrcalcProjParametersTagged = typing.TypedDict('MrcalcProjParametersTagged', {
+MrcalcProjParamsDictTagged = typing.TypedDict('MrcalcProjParamsDictTagged', {
     "@type": typing.Literal["proj"],
 })
 
 
-MrcalcExpParameters = typing.TypedDict('MrcalcExpParameters', {
+MrcalcExpParamsDict = typing.TypedDict('MrcalcExpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exp"]],
 })
-MrcalcExpParametersTagged = typing.TypedDict('MrcalcExpParametersTagged', {
+MrcalcExpParamsDictTagged = typing.TypedDict('MrcalcExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
 })
 
 
-MrcalcLogParameters = typing.TypedDict('MrcalcLogParameters', {
+MrcalcLogParamsDict = typing.TypedDict('MrcalcLogParamsDict', {
     "@type": typing.NotRequired[typing.Literal["log"]],
 })
-MrcalcLogParametersTagged = typing.TypedDict('MrcalcLogParametersTagged', {
+MrcalcLogParamsDictTagged = typing.TypedDict('MrcalcLogParamsDictTagged', {
     "@type": typing.Literal["log"],
 })
 
 
-MrcalcLog10Parameters = typing.TypedDict('MrcalcLog10Parameters', {
+MrcalcLog10ParamsDict = typing.TypedDict('MrcalcLog10ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["log10"]],
 })
-MrcalcLog10ParametersTagged = typing.TypedDict('MrcalcLog10ParametersTagged', {
+MrcalcLog10ParamsDictTagged = typing.TypedDict('MrcalcLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
 })
 
 
-MrcalcCosParameters = typing.TypedDict('MrcalcCosParameters', {
+MrcalcCosParamsDict = typing.TypedDict('MrcalcCosParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cos"]],
 })
-MrcalcCosParametersTagged = typing.TypedDict('MrcalcCosParametersTagged', {
+MrcalcCosParamsDictTagged = typing.TypedDict('MrcalcCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
 })
 
 
-MrcalcSinParameters = typing.TypedDict('MrcalcSinParameters', {
+MrcalcSinParamsDict = typing.TypedDict('MrcalcSinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sin"]],
 })
-MrcalcSinParametersTagged = typing.TypedDict('MrcalcSinParametersTagged', {
+MrcalcSinParamsDictTagged = typing.TypedDict('MrcalcSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
 })
 
 
-MrcalcTanParameters = typing.TypedDict('MrcalcTanParameters', {
+MrcalcTanParamsDict = typing.TypedDict('MrcalcTanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tan"]],
 })
-MrcalcTanParametersTagged = typing.TypedDict('MrcalcTanParametersTagged', {
+MrcalcTanParamsDictTagged = typing.TypedDict('MrcalcTanParamsDictTagged', {
     "@type": typing.Literal["tan"],
 })
 
 
-MrcalcAcosParameters = typing.TypedDict('MrcalcAcosParameters', {
+MrcalcAcosParamsDict = typing.TypedDict('MrcalcAcosParamsDict', {
     "@type": typing.NotRequired[typing.Literal["acos"]],
 })
-MrcalcAcosParametersTagged = typing.TypedDict('MrcalcAcosParametersTagged', {
+MrcalcAcosParamsDictTagged = typing.TypedDict('MrcalcAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
 })
 
 
-MrcalcAsinParameters = typing.TypedDict('MrcalcAsinParameters', {
+MrcalcAsinParamsDict = typing.TypedDict('MrcalcAsinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["asin"]],
 })
-MrcalcAsinParametersTagged = typing.TypedDict('MrcalcAsinParametersTagged', {
+MrcalcAsinParamsDictTagged = typing.TypedDict('MrcalcAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
 })
 
 
-MrcalcAtanParameters = typing.TypedDict('MrcalcAtanParameters', {
+MrcalcAtanParamsDict = typing.TypedDict('MrcalcAtanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["atan"]],
 })
-MrcalcAtanParametersTagged = typing.TypedDict('MrcalcAtanParametersTagged', {
+MrcalcAtanParamsDictTagged = typing.TypedDict('MrcalcAtanParamsDictTagged', {
     "@type": typing.Literal["atan"],
 })
 
 
-MrcalcCoshParameters = typing.TypedDict('MrcalcCoshParameters', {
+MrcalcCoshParamsDict = typing.TypedDict('MrcalcCoshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cosh"]],
 })
-MrcalcCoshParametersTagged = typing.TypedDict('MrcalcCoshParametersTagged', {
+MrcalcCoshParamsDictTagged = typing.TypedDict('MrcalcCoshParamsDictTagged', {
     "@type": typing.Literal["cosh"],
 })
 
 
-MrcalcSinhParameters = typing.TypedDict('MrcalcSinhParameters', {
+MrcalcSinhParamsDict = typing.TypedDict('MrcalcSinhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sinh"]],
 })
-MrcalcSinhParametersTagged = typing.TypedDict('MrcalcSinhParametersTagged', {
+MrcalcSinhParamsDictTagged = typing.TypedDict('MrcalcSinhParamsDictTagged', {
     "@type": typing.Literal["sinh"],
 })
 
 
-MrcalcTanhParameters = typing.TypedDict('MrcalcTanhParameters', {
+MrcalcTanhParamsDict = typing.TypedDict('MrcalcTanhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tanh"]],
 })
-MrcalcTanhParametersTagged = typing.TypedDict('MrcalcTanhParametersTagged', {
+MrcalcTanhParamsDictTagged = typing.TypedDict('MrcalcTanhParamsDictTagged', {
     "@type": typing.Literal["tanh"],
 })
 
 
-MrcalcAcoshParameters = typing.TypedDict('MrcalcAcoshParameters', {
+MrcalcAcoshParamsDict = typing.TypedDict('MrcalcAcoshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["acosh"]],
 })
-MrcalcAcoshParametersTagged = typing.TypedDict('MrcalcAcoshParametersTagged', {
+MrcalcAcoshParamsDictTagged = typing.TypedDict('MrcalcAcoshParamsDictTagged', {
     "@type": typing.Literal["acosh"],
 })
 
 
-MrcalcAsinhParameters = typing.TypedDict('MrcalcAsinhParameters', {
+MrcalcAsinhParamsDict = typing.TypedDict('MrcalcAsinhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["asinh"]],
 })
-MrcalcAsinhParametersTagged = typing.TypedDict('MrcalcAsinhParametersTagged', {
+MrcalcAsinhParamsDictTagged = typing.TypedDict('MrcalcAsinhParamsDictTagged', {
     "@type": typing.Literal["asinh"],
 })
 
 
-MrcalcAtanhParameters = typing.TypedDict('MrcalcAtanhParameters', {
+MrcalcAtanhParamsDict = typing.TypedDict('MrcalcAtanhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["atanh"]],
 })
-MrcalcAtanhParametersTagged = typing.TypedDict('MrcalcAtanhParametersTagged', {
+MrcalcAtanhParamsDictTagged = typing.TypedDict('MrcalcAtanhParamsDictTagged', {
     "@type": typing.Literal["atanh"],
 })
 
 
-MrcalcConfigParameters = typing.TypedDict('MrcalcConfigParameters', {
+MrcalcConfigParamsDict = typing.TypedDict('MrcalcConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrcalcConfigParametersTagged = typing.TypedDict('MrcalcConfigParametersTagged', {
+MrcalcConfigParamsDictTagged = typing.TypedDict('MrcalcConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrcalcVariousStringParameters = typing.TypedDict('MrcalcVariousStringParameters', {
+MrcalcVariousStringParamsDict = typing.TypedDict('MrcalcVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-MrcalcVariousStringParametersTagged = typing.TypedDict('MrcalcVariousStringParametersTagged', {
+MrcalcVariousStringParamsDictTagged = typing.TypedDict('MrcalcVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-MrcalcVariousFileParameters = typing.TypedDict('MrcalcVariousFileParameters', {
+MrcalcVariousFileParamsDict = typing.TypedDict('MrcalcVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-MrcalcVariousFileParametersTagged = typing.TypedDict('MrcalcVariousFileParametersTagged', {
+MrcalcVariousFileParamsDictTagged = typing.TypedDict('MrcalcVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-MrcalcParameters = typing.TypedDict('MrcalcParameters', {
+MrcalcParamsDict = typing.TypedDict('MrcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrcalc"]],
-    "abs": typing.NotRequired[list[MrcalcAbsParameters] | None],
-    "neg": typing.NotRequired[list[MrcalcNegParameters] | None],
-    "add": typing.NotRequired[list[MrcalcAddParameters] | None],
-    "subtract": typing.NotRequired[list[MrcalcSubtractParameters] | None],
-    "multiply": typing.NotRequired[list[MrcalcMultiplyParameters] | None],
-    "divide": typing.NotRequired[list[MrcalcDivideParameters] | None],
-    "min": typing.NotRequired[list[MrcalcMinParameters] | None],
-    "max": typing.NotRequired[list[MrcalcMaxParameters] | None],
-    "lt": typing.NotRequired[list[MrcalcLtParameters] | None],
-    "gt": typing.NotRequired[list[MrcalcGtParameters] | None],
-    "le": typing.NotRequired[list[MrcalcLeParameters] | None],
-    "ge": typing.NotRequired[list[MrcalcGeParameters] | None],
-    "eq": typing.NotRequired[list[MrcalcEqParameters] | None],
-    "neq": typing.NotRequired[list[MrcalcNeqParameters] | None],
-    "if": typing.NotRequired[list[MrcalcIfParameters] | None],
-    "replace": typing.NotRequired[list[MrcalcReplaceParameters] | None],
-    "sqrt": typing.NotRequired[list[MrcalcSqrtParameters] | None],
-    "pow": typing.NotRequired[list[MrcalcPowParameters] | None],
-    "round": typing.NotRequired[list[MrcalcRoundParameters] | None],
-    "ceil": typing.NotRequired[list[MrcalcCeilParameters] | None],
-    "floor": typing.NotRequired[list[MrcalcFloorParameters] | None],
-    "not": typing.NotRequired[list[MrcalcNotParameters] | None],
-    "and": typing.NotRequired[list[MrcalcAndParameters] | None],
-    "or": typing.NotRequired[list[MrcalcOrParameters] | None],
-    "xor": typing.NotRequired[list[MrcalcXorParameters] | None],
-    "isnan": typing.NotRequired[list[MrcalcIsnanParameters] | None],
-    "isinf": typing.NotRequired[list[MrcalcIsinfParameters] | None],
-    "finite": typing.NotRequired[list[MrcalcFiniteParameters] | None],
-    "complex": typing.NotRequired[list[MrcalcComplexParameters] | None],
-    "polar": typing.NotRequired[list[MrcalcPolarParameters] | None],
-    "real": typing.NotRequired[list[MrcalcRealParameters] | None],
-    "imag": typing.NotRequired[list[MrcalcImagParameters] | None],
-    "phase": typing.NotRequired[list[MrcalcPhaseParameters] | None],
-    "conj": typing.NotRequired[list[MrcalcConjParameters] | None],
-    "proj": typing.NotRequired[list[MrcalcProjParameters] | None],
-    "exp": typing.NotRequired[list[MrcalcExpParameters] | None],
-    "log": typing.NotRequired[list[MrcalcLogParameters] | None],
-    "log10": typing.NotRequired[list[MrcalcLog10Parameters] | None],
-    "cos": typing.NotRequired[list[MrcalcCosParameters] | None],
-    "sin": typing.NotRequired[list[MrcalcSinParameters] | None],
-    "tan": typing.NotRequired[list[MrcalcTanParameters] | None],
-    "acos": typing.NotRequired[list[MrcalcAcosParameters] | None],
-    "asin": typing.NotRequired[list[MrcalcAsinParameters] | None],
-    "atan": typing.NotRequired[list[MrcalcAtanParameters] | None],
-    "cosh": typing.NotRequired[list[MrcalcCoshParameters] | None],
-    "sinh": typing.NotRequired[list[MrcalcSinhParameters] | None],
-    "tanh": typing.NotRequired[list[MrcalcTanhParameters] | None],
-    "acosh": typing.NotRequired[list[MrcalcAcoshParameters] | None],
-    "asinh": typing.NotRequired[list[MrcalcAsinhParameters] | None],
-    "atanh": typing.NotRequired[list[MrcalcAtanhParameters] | None],
+    "abs": typing.NotRequired[list[MrcalcAbsParamsDict] | None],
+    "neg": typing.NotRequired[list[MrcalcNegParamsDict] | None],
+    "add": typing.NotRequired[list[MrcalcAddParamsDict] | None],
+    "subtract": typing.NotRequired[list[MrcalcSubtractParamsDict] | None],
+    "multiply": typing.NotRequired[list[MrcalcMultiplyParamsDict] | None],
+    "divide": typing.NotRequired[list[MrcalcDivideParamsDict] | None],
+    "min": typing.NotRequired[list[MrcalcMinParamsDict] | None],
+    "max": typing.NotRequired[list[MrcalcMaxParamsDict] | None],
+    "lt": typing.NotRequired[list[MrcalcLtParamsDict] | None],
+    "gt": typing.NotRequired[list[MrcalcGtParamsDict] | None],
+    "le": typing.NotRequired[list[MrcalcLeParamsDict] | None],
+    "ge": typing.NotRequired[list[MrcalcGeParamsDict] | None],
+    "eq": typing.NotRequired[list[MrcalcEqParamsDict] | None],
+    "neq": typing.NotRequired[list[MrcalcNeqParamsDict] | None],
+    "if": typing.NotRequired[list[MrcalcIfParamsDict] | None],
+    "replace": typing.NotRequired[list[MrcalcReplaceParamsDict] | None],
+    "sqrt": typing.NotRequired[list[MrcalcSqrtParamsDict] | None],
+    "pow": typing.NotRequired[list[MrcalcPowParamsDict] | None],
+    "round": typing.NotRequired[list[MrcalcRoundParamsDict] | None],
+    "ceil": typing.NotRequired[list[MrcalcCeilParamsDict] | None],
+    "floor": typing.NotRequired[list[MrcalcFloorParamsDict] | None],
+    "not": typing.NotRequired[list[MrcalcNotParamsDict] | None],
+    "and": typing.NotRequired[list[MrcalcAndParamsDict] | None],
+    "or": typing.NotRequired[list[MrcalcOrParamsDict] | None],
+    "xor": typing.NotRequired[list[MrcalcXorParamsDict] | None],
+    "isnan": typing.NotRequired[list[MrcalcIsnanParamsDict] | None],
+    "isinf": typing.NotRequired[list[MrcalcIsinfParamsDict] | None],
+    "finite": typing.NotRequired[list[MrcalcFiniteParamsDict] | None],
+    "complex": typing.NotRequired[list[MrcalcComplexParamsDict] | None],
+    "polar": typing.NotRequired[list[MrcalcPolarParamsDict] | None],
+    "real": typing.NotRequired[list[MrcalcRealParamsDict] | None],
+    "imag": typing.NotRequired[list[MrcalcImagParamsDict] | None],
+    "phase": typing.NotRequired[list[MrcalcPhaseParamsDict] | None],
+    "conj": typing.NotRequired[list[MrcalcConjParamsDict] | None],
+    "proj": typing.NotRequired[list[MrcalcProjParamsDict] | None],
+    "exp": typing.NotRequired[list[MrcalcExpParamsDict] | None],
+    "log": typing.NotRequired[list[MrcalcLogParamsDict] | None],
+    "log10": typing.NotRequired[list[MrcalcLog10ParamsDict] | None],
+    "cos": typing.NotRequired[list[MrcalcCosParamsDict] | None],
+    "sin": typing.NotRequired[list[MrcalcSinParamsDict] | None],
+    "tan": typing.NotRequired[list[MrcalcTanParamsDict] | None],
+    "acos": typing.NotRequired[list[MrcalcAcosParamsDict] | None],
+    "asin": typing.NotRequired[list[MrcalcAsinParamsDict] | None],
+    "atan": typing.NotRequired[list[MrcalcAtanParamsDict] | None],
+    "cosh": typing.NotRequired[list[MrcalcCoshParamsDict] | None],
+    "sinh": typing.NotRequired[list[MrcalcSinhParamsDict] | None],
+    "tanh": typing.NotRequired[list[MrcalcTanhParamsDict] | None],
+    "acosh": typing.NotRequired[list[MrcalcAcoshParamsDict] | None],
+    "asinh": typing.NotRequired[list[MrcalcAsinhParamsDict] | None],
+    "atanh": typing.NotRequired[list[MrcalcAtanhParamsDict] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcalcConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcalcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "operand": list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
+    "operand": list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]],
 })
-MrcalcParametersTagged = typing.TypedDict('MrcalcParametersTagged', {
+MrcalcParamsDictTagged = typing.TypedDict('MrcalcParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrcalc"],
-    "abs": typing.NotRequired[list[MrcalcAbsParameters] | None],
-    "neg": typing.NotRequired[list[MrcalcNegParameters] | None],
-    "add": typing.NotRequired[list[MrcalcAddParameters] | None],
-    "subtract": typing.NotRequired[list[MrcalcSubtractParameters] | None],
-    "multiply": typing.NotRequired[list[MrcalcMultiplyParameters] | None],
-    "divide": typing.NotRequired[list[MrcalcDivideParameters] | None],
-    "min": typing.NotRequired[list[MrcalcMinParameters] | None],
-    "max": typing.NotRequired[list[MrcalcMaxParameters] | None],
-    "lt": typing.NotRequired[list[MrcalcLtParameters] | None],
-    "gt": typing.NotRequired[list[MrcalcGtParameters] | None],
-    "le": typing.NotRequired[list[MrcalcLeParameters] | None],
-    "ge": typing.NotRequired[list[MrcalcGeParameters] | None],
-    "eq": typing.NotRequired[list[MrcalcEqParameters] | None],
-    "neq": typing.NotRequired[list[MrcalcNeqParameters] | None],
-    "if": typing.NotRequired[list[MrcalcIfParameters] | None],
-    "replace": typing.NotRequired[list[MrcalcReplaceParameters] | None],
-    "sqrt": typing.NotRequired[list[MrcalcSqrtParameters] | None],
-    "pow": typing.NotRequired[list[MrcalcPowParameters] | None],
-    "round": typing.NotRequired[list[MrcalcRoundParameters] | None],
-    "ceil": typing.NotRequired[list[MrcalcCeilParameters] | None],
-    "floor": typing.NotRequired[list[MrcalcFloorParameters] | None],
-    "not": typing.NotRequired[list[MrcalcNotParameters] | None],
-    "and": typing.NotRequired[list[MrcalcAndParameters] | None],
-    "or": typing.NotRequired[list[MrcalcOrParameters] | None],
-    "xor": typing.NotRequired[list[MrcalcXorParameters] | None],
-    "isnan": typing.NotRequired[list[MrcalcIsnanParameters] | None],
-    "isinf": typing.NotRequired[list[MrcalcIsinfParameters] | None],
-    "finite": typing.NotRequired[list[MrcalcFiniteParameters] | None],
-    "complex": typing.NotRequired[list[MrcalcComplexParameters] | None],
-    "polar": typing.NotRequired[list[MrcalcPolarParameters] | None],
-    "real": typing.NotRequired[list[MrcalcRealParameters] | None],
-    "imag": typing.NotRequired[list[MrcalcImagParameters] | None],
-    "phase": typing.NotRequired[list[MrcalcPhaseParameters] | None],
-    "conj": typing.NotRequired[list[MrcalcConjParameters] | None],
-    "proj": typing.NotRequired[list[MrcalcProjParameters] | None],
-    "exp": typing.NotRequired[list[MrcalcExpParameters] | None],
-    "log": typing.NotRequired[list[MrcalcLogParameters] | None],
-    "log10": typing.NotRequired[list[MrcalcLog10Parameters] | None],
-    "cos": typing.NotRequired[list[MrcalcCosParameters] | None],
-    "sin": typing.NotRequired[list[MrcalcSinParameters] | None],
-    "tan": typing.NotRequired[list[MrcalcTanParameters] | None],
-    "acos": typing.NotRequired[list[MrcalcAcosParameters] | None],
-    "asin": typing.NotRequired[list[MrcalcAsinParameters] | None],
-    "atan": typing.NotRequired[list[MrcalcAtanParameters] | None],
-    "cosh": typing.NotRequired[list[MrcalcCoshParameters] | None],
-    "sinh": typing.NotRequired[list[MrcalcSinhParameters] | None],
-    "tanh": typing.NotRequired[list[MrcalcTanhParameters] | None],
-    "acosh": typing.NotRequired[list[MrcalcAcoshParameters] | None],
-    "asinh": typing.NotRequired[list[MrcalcAsinhParameters] | None],
-    "atanh": typing.NotRequired[list[MrcalcAtanhParameters] | None],
+    "abs": typing.NotRequired[list[MrcalcAbsParamsDict] | None],
+    "neg": typing.NotRequired[list[MrcalcNegParamsDict] | None],
+    "add": typing.NotRequired[list[MrcalcAddParamsDict] | None],
+    "subtract": typing.NotRequired[list[MrcalcSubtractParamsDict] | None],
+    "multiply": typing.NotRequired[list[MrcalcMultiplyParamsDict] | None],
+    "divide": typing.NotRequired[list[MrcalcDivideParamsDict] | None],
+    "min": typing.NotRequired[list[MrcalcMinParamsDict] | None],
+    "max": typing.NotRequired[list[MrcalcMaxParamsDict] | None],
+    "lt": typing.NotRequired[list[MrcalcLtParamsDict] | None],
+    "gt": typing.NotRequired[list[MrcalcGtParamsDict] | None],
+    "le": typing.NotRequired[list[MrcalcLeParamsDict] | None],
+    "ge": typing.NotRequired[list[MrcalcGeParamsDict] | None],
+    "eq": typing.NotRequired[list[MrcalcEqParamsDict] | None],
+    "neq": typing.NotRequired[list[MrcalcNeqParamsDict] | None],
+    "if": typing.NotRequired[list[MrcalcIfParamsDict] | None],
+    "replace": typing.NotRequired[list[MrcalcReplaceParamsDict] | None],
+    "sqrt": typing.NotRequired[list[MrcalcSqrtParamsDict] | None],
+    "pow": typing.NotRequired[list[MrcalcPowParamsDict] | None],
+    "round": typing.NotRequired[list[MrcalcRoundParamsDict] | None],
+    "ceil": typing.NotRequired[list[MrcalcCeilParamsDict] | None],
+    "floor": typing.NotRequired[list[MrcalcFloorParamsDict] | None],
+    "not": typing.NotRequired[list[MrcalcNotParamsDict] | None],
+    "and": typing.NotRequired[list[MrcalcAndParamsDict] | None],
+    "or": typing.NotRequired[list[MrcalcOrParamsDict] | None],
+    "xor": typing.NotRequired[list[MrcalcXorParamsDict] | None],
+    "isnan": typing.NotRequired[list[MrcalcIsnanParamsDict] | None],
+    "isinf": typing.NotRequired[list[MrcalcIsinfParamsDict] | None],
+    "finite": typing.NotRequired[list[MrcalcFiniteParamsDict] | None],
+    "complex": typing.NotRequired[list[MrcalcComplexParamsDict] | None],
+    "polar": typing.NotRequired[list[MrcalcPolarParamsDict] | None],
+    "real": typing.NotRequired[list[MrcalcRealParamsDict] | None],
+    "imag": typing.NotRequired[list[MrcalcImagParamsDict] | None],
+    "phase": typing.NotRequired[list[MrcalcPhaseParamsDict] | None],
+    "conj": typing.NotRequired[list[MrcalcConjParamsDict] | None],
+    "proj": typing.NotRequired[list[MrcalcProjParamsDict] | None],
+    "exp": typing.NotRequired[list[MrcalcExpParamsDict] | None],
+    "log": typing.NotRequired[list[MrcalcLogParamsDict] | None],
+    "log10": typing.NotRequired[list[MrcalcLog10ParamsDict] | None],
+    "cos": typing.NotRequired[list[MrcalcCosParamsDict] | None],
+    "sin": typing.NotRequired[list[MrcalcSinParamsDict] | None],
+    "tan": typing.NotRequired[list[MrcalcTanParamsDict] | None],
+    "acos": typing.NotRequired[list[MrcalcAcosParamsDict] | None],
+    "asin": typing.NotRequired[list[MrcalcAsinParamsDict] | None],
+    "atan": typing.NotRequired[list[MrcalcAtanParamsDict] | None],
+    "cosh": typing.NotRequired[list[MrcalcCoshParamsDict] | None],
+    "sinh": typing.NotRequired[list[MrcalcSinhParamsDict] | None],
+    "tanh": typing.NotRequired[list[MrcalcTanhParamsDict] | None],
+    "acosh": typing.NotRequired[list[MrcalcAcoshParamsDict] | None],
+    "asinh": typing.NotRequired[list[MrcalcAsinhParamsDict] | None],
+    "atanh": typing.NotRequired[list[MrcalcAtanhParamsDict] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcalcConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcalcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "operand": list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
+    "operand": list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]],
 })
 
 
@@ -607,8 +607,8 @@ def mrcalc_operand_validate_dyn_fn(
     }.get(t)
 
 
-def mrcalc_abs_params(
-) -> MrcalcAbsParametersTagged:
+def mrcalc_abs(
+) -> MrcalcAbsParamsDictTagged:
     """
     Build parameters.
     
@@ -627,7 +627,7 @@ def mrcalc_abs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAbsParameters` object.
+    `MrcalcAbsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -637,7 +637,7 @@ def mrcalc_abs_validate(
 
 
 def mrcalc_abs_cargs(
-    params: MrcalcAbsParameters,
+    params: MrcalcAbsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -654,8 +654,8 @@ def mrcalc_abs_cargs(
     return cargs
 
 
-def mrcalc_neg_params(
-) -> MrcalcNegParametersTagged:
+def mrcalc_neg(
+) -> MrcalcNegParamsDictTagged:
     """
     Build parameters.
     
@@ -674,7 +674,7 @@ def mrcalc_neg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcNegParameters` object.
+    `MrcalcNegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -684,7 +684,7 @@ def mrcalc_neg_validate(
 
 
 def mrcalc_neg_cargs(
-    params: MrcalcNegParameters,
+    params: MrcalcNegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -701,8 +701,8 @@ def mrcalc_neg_cargs(
     return cargs
 
 
-def mrcalc_add_params(
-) -> MrcalcAddParametersTagged:
+def mrcalc_add(
+) -> MrcalcAddParamsDictTagged:
     """
     Build parameters.
     
@@ -721,7 +721,7 @@ def mrcalc_add_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAddParameters` object.
+    `MrcalcAddParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -731,7 +731,7 @@ def mrcalc_add_validate(
 
 
 def mrcalc_add_cargs(
-    params: MrcalcAddParameters,
+    params: MrcalcAddParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -748,8 +748,8 @@ def mrcalc_add_cargs(
     return cargs
 
 
-def mrcalc_subtract_params(
-) -> MrcalcSubtractParametersTagged:
+def mrcalc_subtract(
+) -> MrcalcSubtractParamsDictTagged:
     """
     Build parameters.
     
@@ -768,7 +768,7 @@ def mrcalc_subtract_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcSubtractParameters` object.
+    `MrcalcSubtractParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -778,7 +778,7 @@ def mrcalc_subtract_validate(
 
 
 def mrcalc_subtract_cargs(
-    params: MrcalcSubtractParameters,
+    params: MrcalcSubtractParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -795,8 +795,8 @@ def mrcalc_subtract_cargs(
     return cargs
 
 
-def mrcalc_multiply_params(
-) -> MrcalcMultiplyParametersTagged:
+def mrcalc_multiply(
+) -> MrcalcMultiplyParamsDictTagged:
     """
     Build parameters.
     
@@ -815,7 +815,7 @@ def mrcalc_multiply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcMultiplyParameters` object.
+    `MrcalcMultiplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -825,7 +825,7 @@ def mrcalc_multiply_validate(
 
 
 def mrcalc_multiply_cargs(
-    params: MrcalcMultiplyParameters,
+    params: MrcalcMultiplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -842,8 +842,8 @@ def mrcalc_multiply_cargs(
     return cargs
 
 
-def mrcalc_divide_params(
-) -> MrcalcDivideParametersTagged:
+def mrcalc_divide(
+) -> MrcalcDivideParamsDictTagged:
     """
     Build parameters.
     
@@ -862,7 +862,7 @@ def mrcalc_divide_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcDivideParameters` object.
+    `MrcalcDivideParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -872,7 +872,7 @@ def mrcalc_divide_validate(
 
 
 def mrcalc_divide_cargs(
-    params: MrcalcDivideParameters,
+    params: MrcalcDivideParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -889,8 +889,8 @@ def mrcalc_divide_cargs(
     return cargs
 
 
-def mrcalc_min_params(
-) -> MrcalcMinParametersTagged:
+def mrcalc_min(
+) -> MrcalcMinParamsDictTagged:
     """
     Build parameters.
     
@@ -909,7 +909,7 @@ def mrcalc_min_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcMinParameters` object.
+    `MrcalcMinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -919,7 +919,7 @@ def mrcalc_min_validate(
 
 
 def mrcalc_min_cargs(
-    params: MrcalcMinParameters,
+    params: MrcalcMinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -936,8 +936,8 @@ def mrcalc_min_cargs(
     return cargs
 
 
-def mrcalc_max_params(
-) -> MrcalcMaxParametersTagged:
+def mrcalc_max(
+) -> MrcalcMaxParamsDictTagged:
     """
     Build parameters.
     
@@ -956,7 +956,7 @@ def mrcalc_max_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcMaxParameters` object.
+    `MrcalcMaxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -966,7 +966,7 @@ def mrcalc_max_validate(
 
 
 def mrcalc_max_cargs(
-    params: MrcalcMaxParameters,
+    params: MrcalcMaxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -983,8 +983,8 @@ def mrcalc_max_cargs(
     return cargs
 
 
-def mrcalc_lt_params(
-) -> MrcalcLtParametersTagged:
+def mrcalc_lt(
+) -> MrcalcLtParamsDictTagged:
     """
     Build parameters.
     
@@ -1003,7 +1003,7 @@ def mrcalc_lt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcLtParameters` object.
+    `MrcalcLtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1013,7 +1013,7 @@ def mrcalc_lt_validate(
 
 
 def mrcalc_lt_cargs(
-    params: MrcalcLtParameters,
+    params: MrcalcLtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1030,8 +1030,8 @@ def mrcalc_lt_cargs(
     return cargs
 
 
-def mrcalc_gt_params(
-) -> MrcalcGtParametersTagged:
+def mrcalc_gt(
+) -> MrcalcGtParamsDictTagged:
     """
     Build parameters.
     
@@ -1050,7 +1050,7 @@ def mrcalc_gt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcGtParameters` object.
+    `MrcalcGtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1060,7 +1060,7 @@ def mrcalc_gt_validate(
 
 
 def mrcalc_gt_cargs(
-    params: MrcalcGtParameters,
+    params: MrcalcGtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1077,8 +1077,8 @@ def mrcalc_gt_cargs(
     return cargs
 
 
-def mrcalc_le_params(
-) -> MrcalcLeParametersTagged:
+def mrcalc_le(
+) -> MrcalcLeParamsDictTagged:
     """
     Build parameters.
     
@@ -1097,7 +1097,7 @@ def mrcalc_le_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcLeParameters` object.
+    `MrcalcLeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1107,7 +1107,7 @@ def mrcalc_le_validate(
 
 
 def mrcalc_le_cargs(
-    params: MrcalcLeParameters,
+    params: MrcalcLeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1124,8 +1124,8 @@ def mrcalc_le_cargs(
     return cargs
 
 
-def mrcalc_ge_params(
-) -> MrcalcGeParametersTagged:
+def mrcalc_ge(
+) -> MrcalcGeParamsDictTagged:
     """
     Build parameters.
     
@@ -1144,7 +1144,7 @@ def mrcalc_ge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcGeParameters` object.
+    `MrcalcGeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1154,7 +1154,7 @@ def mrcalc_ge_validate(
 
 
 def mrcalc_ge_cargs(
-    params: MrcalcGeParameters,
+    params: MrcalcGeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1171,8 +1171,8 @@ def mrcalc_ge_cargs(
     return cargs
 
 
-def mrcalc_eq_params(
-) -> MrcalcEqParametersTagged:
+def mrcalc_eq(
+) -> MrcalcEqParamsDictTagged:
     """
     Build parameters.
     
@@ -1191,7 +1191,7 @@ def mrcalc_eq_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcEqParameters` object.
+    `MrcalcEqParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1201,7 +1201,7 @@ def mrcalc_eq_validate(
 
 
 def mrcalc_eq_cargs(
-    params: MrcalcEqParameters,
+    params: MrcalcEqParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1218,8 +1218,8 @@ def mrcalc_eq_cargs(
     return cargs
 
 
-def mrcalc_neq_params(
-) -> MrcalcNeqParametersTagged:
+def mrcalc_neq(
+) -> MrcalcNeqParamsDictTagged:
     """
     Build parameters.
     
@@ -1238,7 +1238,7 @@ def mrcalc_neq_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcNeqParameters` object.
+    `MrcalcNeqParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1248,7 +1248,7 @@ def mrcalc_neq_validate(
 
 
 def mrcalc_neq_cargs(
-    params: MrcalcNeqParameters,
+    params: MrcalcNeqParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1265,8 +1265,8 @@ def mrcalc_neq_cargs(
     return cargs
 
 
-def mrcalc_if_params(
-) -> MrcalcIfParametersTagged:
+def mrcalc_if(
+) -> MrcalcIfParamsDictTagged:
     """
     Build parameters.
     
@@ -1285,7 +1285,7 @@ def mrcalc_if_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcIfParameters` object.
+    `MrcalcIfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1295,7 +1295,7 @@ def mrcalc_if_validate(
 
 
 def mrcalc_if_cargs(
-    params: MrcalcIfParameters,
+    params: MrcalcIfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1312,8 +1312,8 @@ def mrcalc_if_cargs(
     return cargs
 
 
-def mrcalc_replace_params(
-) -> MrcalcReplaceParametersTagged:
+def mrcalc_replace(
+) -> MrcalcReplaceParamsDictTagged:
     """
     Build parameters.
     
@@ -1332,7 +1332,7 @@ def mrcalc_replace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcReplaceParameters` object.
+    `MrcalcReplaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1342,7 +1342,7 @@ def mrcalc_replace_validate(
 
 
 def mrcalc_replace_cargs(
-    params: MrcalcReplaceParameters,
+    params: MrcalcReplaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1359,8 +1359,8 @@ def mrcalc_replace_cargs(
     return cargs
 
 
-def mrcalc_sqrt_params(
-) -> MrcalcSqrtParametersTagged:
+def mrcalc_sqrt(
+) -> MrcalcSqrtParamsDictTagged:
     """
     Build parameters.
     
@@ -1379,7 +1379,7 @@ def mrcalc_sqrt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcSqrtParameters` object.
+    `MrcalcSqrtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1389,7 +1389,7 @@ def mrcalc_sqrt_validate(
 
 
 def mrcalc_sqrt_cargs(
-    params: MrcalcSqrtParameters,
+    params: MrcalcSqrtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1406,8 +1406,8 @@ def mrcalc_sqrt_cargs(
     return cargs
 
 
-def mrcalc_pow_params(
-) -> MrcalcPowParametersTagged:
+def mrcalc_pow(
+) -> MrcalcPowParamsDictTagged:
     """
     Build parameters.
     
@@ -1426,7 +1426,7 @@ def mrcalc_pow_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcPowParameters` object.
+    `MrcalcPowParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1436,7 +1436,7 @@ def mrcalc_pow_validate(
 
 
 def mrcalc_pow_cargs(
-    params: MrcalcPowParameters,
+    params: MrcalcPowParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1453,8 +1453,8 @@ def mrcalc_pow_cargs(
     return cargs
 
 
-def mrcalc_round_params(
-) -> MrcalcRoundParametersTagged:
+def mrcalc_round(
+) -> MrcalcRoundParamsDictTagged:
     """
     Build parameters.
     
@@ -1473,7 +1473,7 @@ def mrcalc_round_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcRoundParameters` object.
+    `MrcalcRoundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1483,7 +1483,7 @@ def mrcalc_round_validate(
 
 
 def mrcalc_round_cargs(
-    params: MrcalcRoundParameters,
+    params: MrcalcRoundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1500,8 +1500,8 @@ def mrcalc_round_cargs(
     return cargs
 
 
-def mrcalc_ceil_params(
-) -> MrcalcCeilParametersTagged:
+def mrcalc_ceil(
+) -> MrcalcCeilParamsDictTagged:
     """
     Build parameters.
     
@@ -1520,7 +1520,7 @@ def mrcalc_ceil_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcCeilParameters` object.
+    `MrcalcCeilParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1530,7 +1530,7 @@ def mrcalc_ceil_validate(
 
 
 def mrcalc_ceil_cargs(
-    params: MrcalcCeilParameters,
+    params: MrcalcCeilParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1547,8 +1547,8 @@ def mrcalc_ceil_cargs(
     return cargs
 
 
-def mrcalc_floor_params(
-) -> MrcalcFloorParametersTagged:
+def mrcalc_floor(
+) -> MrcalcFloorParamsDictTagged:
     """
     Build parameters.
     
@@ -1567,7 +1567,7 @@ def mrcalc_floor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcFloorParameters` object.
+    `MrcalcFloorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1577,7 +1577,7 @@ def mrcalc_floor_validate(
 
 
 def mrcalc_floor_cargs(
-    params: MrcalcFloorParameters,
+    params: MrcalcFloorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1594,8 +1594,8 @@ def mrcalc_floor_cargs(
     return cargs
 
 
-def mrcalc_not_params(
-) -> MrcalcNotParametersTagged:
+def mrcalc_not(
+) -> MrcalcNotParamsDictTagged:
     """
     Build parameters.
     
@@ -1614,7 +1614,7 @@ def mrcalc_not_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcNotParameters` object.
+    `MrcalcNotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1624,7 +1624,7 @@ def mrcalc_not_validate(
 
 
 def mrcalc_not_cargs(
-    params: MrcalcNotParameters,
+    params: MrcalcNotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1641,8 +1641,8 @@ def mrcalc_not_cargs(
     return cargs
 
 
-def mrcalc_and_params(
-) -> MrcalcAndParametersTagged:
+def mrcalc_and(
+) -> MrcalcAndParamsDictTagged:
     """
     Build parameters.
     
@@ -1661,7 +1661,7 @@ def mrcalc_and_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAndParameters` object.
+    `MrcalcAndParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1671,7 +1671,7 @@ def mrcalc_and_validate(
 
 
 def mrcalc_and_cargs(
-    params: MrcalcAndParameters,
+    params: MrcalcAndParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1688,8 +1688,8 @@ def mrcalc_and_cargs(
     return cargs
 
 
-def mrcalc_or_params(
-) -> MrcalcOrParametersTagged:
+def mrcalc_or(
+) -> MrcalcOrParamsDictTagged:
     """
     Build parameters.
     
@@ -1708,7 +1708,7 @@ def mrcalc_or_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcOrParameters` object.
+    `MrcalcOrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1718,7 +1718,7 @@ def mrcalc_or_validate(
 
 
 def mrcalc_or_cargs(
-    params: MrcalcOrParameters,
+    params: MrcalcOrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1735,8 +1735,8 @@ def mrcalc_or_cargs(
     return cargs
 
 
-def mrcalc_xor_params(
-) -> MrcalcXorParametersTagged:
+def mrcalc_xor(
+) -> MrcalcXorParamsDictTagged:
     """
     Build parameters.
     
@@ -1755,7 +1755,7 @@ def mrcalc_xor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcXorParameters` object.
+    `MrcalcXorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1765,7 +1765,7 @@ def mrcalc_xor_validate(
 
 
 def mrcalc_xor_cargs(
-    params: MrcalcXorParameters,
+    params: MrcalcXorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1782,8 +1782,8 @@ def mrcalc_xor_cargs(
     return cargs
 
 
-def mrcalc_isnan_params(
-) -> MrcalcIsnanParametersTagged:
+def mrcalc_isnan(
+) -> MrcalcIsnanParamsDictTagged:
     """
     Build parameters.
     
@@ -1802,7 +1802,7 @@ def mrcalc_isnan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcIsnanParameters` object.
+    `MrcalcIsnanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1812,7 +1812,7 @@ def mrcalc_isnan_validate(
 
 
 def mrcalc_isnan_cargs(
-    params: MrcalcIsnanParameters,
+    params: MrcalcIsnanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1829,8 +1829,8 @@ def mrcalc_isnan_cargs(
     return cargs
 
 
-def mrcalc_isinf_params(
-) -> MrcalcIsinfParametersTagged:
+def mrcalc_isinf(
+) -> MrcalcIsinfParamsDictTagged:
     """
     Build parameters.
     
@@ -1849,7 +1849,7 @@ def mrcalc_isinf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcIsinfParameters` object.
+    `MrcalcIsinfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1859,7 +1859,7 @@ def mrcalc_isinf_validate(
 
 
 def mrcalc_isinf_cargs(
-    params: MrcalcIsinfParameters,
+    params: MrcalcIsinfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1876,8 +1876,8 @@ def mrcalc_isinf_cargs(
     return cargs
 
 
-def mrcalc_finite_params(
-) -> MrcalcFiniteParametersTagged:
+def mrcalc_finite(
+) -> MrcalcFiniteParamsDictTagged:
     """
     Build parameters.
     
@@ -1896,7 +1896,7 @@ def mrcalc_finite_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcFiniteParameters` object.
+    `MrcalcFiniteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1906,7 +1906,7 @@ def mrcalc_finite_validate(
 
 
 def mrcalc_finite_cargs(
-    params: MrcalcFiniteParameters,
+    params: MrcalcFiniteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1923,8 +1923,8 @@ def mrcalc_finite_cargs(
     return cargs
 
 
-def mrcalc_complex_params(
-) -> MrcalcComplexParametersTagged:
+def mrcalc_complex(
+) -> MrcalcComplexParamsDictTagged:
     """
     Build parameters.
     
@@ -1943,7 +1943,7 @@ def mrcalc_complex_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcComplexParameters` object.
+    `MrcalcComplexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1953,7 +1953,7 @@ def mrcalc_complex_validate(
 
 
 def mrcalc_complex_cargs(
-    params: MrcalcComplexParameters,
+    params: MrcalcComplexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1970,8 +1970,8 @@ def mrcalc_complex_cargs(
     return cargs
 
 
-def mrcalc_polar_params(
-) -> MrcalcPolarParametersTagged:
+def mrcalc_polar(
+) -> MrcalcPolarParamsDictTagged:
     """
     Build parameters.
     
@@ -1990,7 +1990,7 @@ def mrcalc_polar_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcPolarParameters` object.
+    `MrcalcPolarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2000,7 +2000,7 @@ def mrcalc_polar_validate(
 
 
 def mrcalc_polar_cargs(
-    params: MrcalcPolarParameters,
+    params: MrcalcPolarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2017,8 +2017,8 @@ def mrcalc_polar_cargs(
     return cargs
 
 
-def mrcalc_real_params(
-) -> MrcalcRealParametersTagged:
+def mrcalc_real(
+) -> MrcalcRealParamsDictTagged:
     """
     Build parameters.
     
@@ -2037,7 +2037,7 @@ def mrcalc_real_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcRealParameters` object.
+    `MrcalcRealParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2047,7 +2047,7 @@ def mrcalc_real_validate(
 
 
 def mrcalc_real_cargs(
-    params: MrcalcRealParameters,
+    params: MrcalcRealParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2064,8 +2064,8 @@ def mrcalc_real_cargs(
     return cargs
 
 
-def mrcalc_imag_params(
-) -> MrcalcImagParametersTagged:
+def mrcalc_imag(
+) -> MrcalcImagParamsDictTagged:
     """
     Build parameters.
     
@@ -2084,7 +2084,7 @@ def mrcalc_imag_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcImagParameters` object.
+    `MrcalcImagParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2094,7 +2094,7 @@ def mrcalc_imag_validate(
 
 
 def mrcalc_imag_cargs(
-    params: MrcalcImagParameters,
+    params: MrcalcImagParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2111,8 +2111,8 @@ def mrcalc_imag_cargs(
     return cargs
 
 
-def mrcalc_phase_params(
-) -> MrcalcPhaseParametersTagged:
+def mrcalc_phase(
+) -> MrcalcPhaseParamsDictTagged:
     """
     Build parameters.
     
@@ -2131,7 +2131,7 @@ def mrcalc_phase_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcPhaseParameters` object.
+    `MrcalcPhaseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2141,7 +2141,7 @@ def mrcalc_phase_validate(
 
 
 def mrcalc_phase_cargs(
-    params: MrcalcPhaseParameters,
+    params: MrcalcPhaseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2158,8 +2158,8 @@ def mrcalc_phase_cargs(
     return cargs
 
 
-def mrcalc_conj_params(
-) -> MrcalcConjParametersTagged:
+def mrcalc_conj(
+) -> MrcalcConjParamsDictTagged:
     """
     Build parameters.
     
@@ -2178,7 +2178,7 @@ def mrcalc_conj_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcConjParameters` object.
+    `MrcalcConjParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2188,7 +2188,7 @@ def mrcalc_conj_validate(
 
 
 def mrcalc_conj_cargs(
-    params: MrcalcConjParameters,
+    params: MrcalcConjParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2205,8 +2205,8 @@ def mrcalc_conj_cargs(
     return cargs
 
 
-def mrcalc_proj_params(
-) -> MrcalcProjParametersTagged:
+def mrcalc_proj(
+) -> MrcalcProjParamsDictTagged:
     """
     Build parameters.
     
@@ -2225,7 +2225,7 @@ def mrcalc_proj_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcProjParameters` object.
+    `MrcalcProjParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2235,7 +2235,7 @@ def mrcalc_proj_validate(
 
 
 def mrcalc_proj_cargs(
-    params: MrcalcProjParameters,
+    params: MrcalcProjParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2252,8 +2252,8 @@ def mrcalc_proj_cargs(
     return cargs
 
 
-def mrcalc_exp_params(
-) -> MrcalcExpParametersTagged:
+def mrcalc_exp(
+) -> MrcalcExpParamsDictTagged:
     """
     Build parameters.
     
@@ -2272,7 +2272,7 @@ def mrcalc_exp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcExpParameters` object.
+    `MrcalcExpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2282,7 +2282,7 @@ def mrcalc_exp_validate(
 
 
 def mrcalc_exp_cargs(
-    params: MrcalcExpParameters,
+    params: MrcalcExpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2299,8 +2299,8 @@ def mrcalc_exp_cargs(
     return cargs
 
 
-def mrcalc_log_params(
-) -> MrcalcLogParametersTagged:
+def mrcalc_log(
+) -> MrcalcLogParamsDictTagged:
     """
     Build parameters.
     
@@ -2319,7 +2319,7 @@ def mrcalc_log_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcLogParameters` object.
+    `MrcalcLogParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2329,7 +2329,7 @@ def mrcalc_log_validate(
 
 
 def mrcalc_log_cargs(
-    params: MrcalcLogParameters,
+    params: MrcalcLogParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2346,8 +2346,8 @@ def mrcalc_log_cargs(
     return cargs
 
 
-def mrcalc_log10_params(
-) -> MrcalcLog10ParametersTagged:
+def mrcalc_log10(
+) -> MrcalcLog10ParamsDictTagged:
     """
     Build parameters.
     
@@ -2366,7 +2366,7 @@ def mrcalc_log10_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcLog10Parameters` object.
+    `MrcalcLog10ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2376,7 +2376,7 @@ def mrcalc_log10_validate(
 
 
 def mrcalc_log10_cargs(
-    params: MrcalcLog10Parameters,
+    params: MrcalcLog10ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2393,8 +2393,8 @@ def mrcalc_log10_cargs(
     return cargs
 
 
-def mrcalc_cos_params(
-) -> MrcalcCosParametersTagged:
+def mrcalc_cos(
+) -> MrcalcCosParamsDictTagged:
     """
     Build parameters.
     
@@ -2413,7 +2413,7 @@ def mrcalc_cos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcCosParameters` object.
+    `MrcalcCosParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2423,7 +2423,7 @@ def mrcalc_cos_validate(
 
 
 def mrcalc_cos_cargs(
-    params: MrcalcCosParameters,
+    params: MrcalcCosParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2440,8 +2440,8 @@ def mrcalc_cos_cargs(
     return cargs
 
 
-def mrcalc_sin_params(
-) -> MrcalcSinParametersTagged:
+def mrcalc_sin(
+) -> MrcalcSinParamsDictTagged:
     """
     Build parameters.
     
@@ -2460,7 +2460,7 @@ def mrcalc_sin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcSinParameters` object.
+    `MrcalcSinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2470,7 +2470,7 @@ def mrcalc_sin_validate(
 
 
 def mrcalc_sin_cargs(
-    params: MrcalcSinParameters,
+    params: MrcalcSinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2487,8 +2487,8 @@ def mrcalc_sin_cargs(
     return cargs
 
 
-def mrcalc_tan_params(
-) -> MrcalcTanParametersTagged:
+def mrcalc_tan(
+) -> MrcalcTanParamsDictTagged:
     """
     Build parameters.
     
@@ -2507,7 +2507,7 @@ def mrcalc_tan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcTanParameters` object.
+    `MrcalcTanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2517,7 +2517,7 @@ def mrcalc_tan_validate(
 
 
 def mrcalc_tan_cargs(
-    params: MrcalcTanParameters,
+    params: MrcalcTanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2534,8 +2534,8 @@ def mrcalc_tan_cargs(
     return cargs
 
 
-def mrcalc_acos_params(
-) -> MrcalcAcosParametersTagged:
+def mrcalc_acos(
+) -> MrcalcAcosParamsDictTagged:
     """
     Build parameters.
     
@@ -2554,7 +2554,7 @@ def mrcalc_acos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAcosParameters` object.
+    `MrcalcAcosParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2564,7 +2564,7 @@ def mrcalc_acos_validate(
 
 
 def mrcalc_acos_cargs(
-    params: MrcalcAcosParameters,
+    params: MrcalcAcosParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2581,8 +2581,8 @@ def mrcalc_acos_cargs(
     return cargs
 
 
-def mrcalc_asin_params(
-) -> MrcalcAsinParametersTagged:
+def mrcalc_asin(
+) -> MrcalcAsinParamsDictTagged:
     """
     Build parameters.
     
@@ -2601,7 +2601,7 @@ def mrcalc_asin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAsinParameters` object.
+    `MrcalcAsinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2611,7 +2611,7 @@ def mrcalc_asin_validate(
 
 
 def mrcalc_asin_cargs(
-    params: MrcalcAsinParameters,
+    params: MrcalcAsinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2628,8 +2628,8 @@ def mrcalc_asin_cargs(
     return cargs
 
 
-def mrcalc_atan_params(
-) -> MrcalcAtanParametersTagged:
+def mrcalc_atan(
+) -> MrcalcAtanParamsDictTagged:
     """
     Build parameters.
     
@@ -2648,7 +2648,7 @@ def mrcalc_atan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAtanParameters` object.
+    `MrcalcAtanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2658,7 +2658,7 @@ def mrcalc_atan_validate(
 
 
 def mrcalc_atan_cargs(
-    params: MrcalcAtanParameters,
+    params: MrcalcAtanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2675,8 +2675,8 @@ def mrcalc_atan_cargs(
     return cargs
 
 
-def mrcalc_cosh_params(
-) -> MrcalcCoshParametersTagged:
+def mrcalc_cosh(
+) -> MrcalcCoshParamsDictTagged:
     """
     Build parameters.
     
@@ -2695,7 +2695,7 @@ def mrcalc_cosh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcCoshParameters` object.
+    `MrcalcCoshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2705,7 +2705,7 @@ def mrcalc_cosh_validate(
 
 
 def mrcalc_cosh_cargs(
-    params: MrcalcCoshParameters,
+    params: MrcalcCoshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2722,8 +2722,8 @@ def mrcalc_cosh_cargs(
     return cargs
 
 
-def mrcalc_sinh_params(
-) -> MrcalcSinhParametersTagged:
+def mrcalc_sinh(
+) -> MrcalcSinhParamsDictTagged:
     """
     Build parameters.
     
@@ -2742,7 +2742,7 @@ def mrcalc_sinh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcSinhParameters` object.
+    `MrcalcSinhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2752,7 +2752,7 @@ def mrcalc_sinh_validate(
 
 
 def mrcalc_sinh_cargs(
-    params: MrcalcSinhParameters,
+    params: MrcalcSinhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2769,8 +2769,8 @@ def mrcalc_sinh_cargs(
     return cargs
 
 
-def mrcalc_tanh_params(
-) -> MrcalcTanhParametersTagged:
+def mrcalc_tanh(
+) -> MrcalcTanhParamsDictTagged:
     """
     Build parameters.
     
@@ -2789,7 +2789,7 @@ def mrcalc_tanh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcTanhParameters` object.
+    `MrcalcTanhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2799,7 +2799,7 @@ def mrcalc_tanh_validate(
 
 
 def mrcalc_tanh_cargs(
-    params: MrcalcTanhParameters,
+    params: MrcalcTanhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2816,8 +2816,8 @@ def mrcalc_tanh_cargs(
     return cargs
 
 
-def mrcalc_acosh_params(
-) -> MrcalcAcoshParametersTagged:
+def mrcalc_acosh(
+) -> MrcalcAcoshParamsDictTagged:
     """
     Build parameters.
     
@@ -2836,7 +2836,7 @@ def mrcalc_acosh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAcoshParameters` object.
+    `MrcalcAcoshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2846,7 +2846,7 @@ def mrcalc_acosh_validate(
 
 
 def mrcalc_acosh_cargs(
-    params: MrcalcAcoshParameters,
+    params: MrcalcAcoshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2863,8 +2863,8 @@ def mrcalc_acosh_cargs(
     return cargs
 
 
-def mrcalc_asinh_params(
-) -> MrcalcAsinhParametersTagged:
+def mrcalc_asinh(
+) -> MrcalcAsinhParamsDictTagged:
     """
     Build parameters.
     
@@ -2883,7 +2883,7 @@ def mrcalc_asinh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAsinhParameters` object.
+    `MrcalcAsinhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2893,7 +2893,7 @@ def mrcalc_asinh_validate(
 
 
 def mrcalc_asinh_cargs(
-    params: MrcalcAsinhParameters,
+    params: MrcalcAsinhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2910,8 +2910,8 @@ def mrcalc_asinh_cargs(
     return cargs
 
 
-def mrcalc_atanh_params(
-) -> MrcalcAtanhParametersTagged:
+def mrcalc_atanh(
+) -> MrcalcAtanhParamsDictTagged:
     """
     Build parameters.
     
@@ -2930,7 +2930,7 @@ def mrcalc_atanh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcAtanhParameters` object.
+    `MrcalcAtanhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2940,7 +2940,7 @@ def mrcalc_atanh_validate(
 
 
 def mrcalc_atanh_cargs(
-    params: MrcalcAtanhParameters,
+    params: MrcalcAtanhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2957,10 +2957,10 @@ def mrcalc_atanh_cargs(
     return cargs
 
 
-def mrcalc_config_params(
+def mrcalc_config(
     key: str,
     value: str,
-) -> MrcalcConfigParametersTagged:
+) -> MrcalcConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -2983,7 +2983,7 @@ def mrcalc_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcConfigParameters` object.
+    `MrcalcConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3001,7 +3001,7 @@ def mrcalc_config_validate(
 
 
 def mrcalc_config_cargs(
-    params: MrcalcConfigParameters,
+    params: MrcalcConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3020,9 +3020,9 @@ def mrcalc_config_cargs(
     return cargs
 
 
-def mrcalc_various_string_params(
+def mrcalc_various_string(
     obj: str,
-) -> MrcalcVariousStringParametersTagged:
+) -> MrcalcVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -3043,7 +3043,7 @@ def mrcalc_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcVariousStringParameters` object.
+    `MrcalcVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3057,7 +3057,7 @@ def mrcalc_various_string_validate(
 
 
 def mrcalc_various_string_cargs(
-    params: MrcalcVariousStringParameters,
+    params: MrcalcVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3074,9 +3074,9 @@ def mrcalc_various_string_cargs(
     return cargs
 
 
-def mrcalc_various_file_params(
+def mrcalc_various_file(
     obj: InputPathType,
-) -> MrcalcVariousFileParametersTagged:
+) -> MrcalcVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -3097,7 +3097,7 @@ def mrcalc_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcVariousFileParameters` object.
+    `MrcalcVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3111,7 +3111,7 @@ def mrcalc_various_file_validate(
 
 
 def mrcalc_various_file_cargs(
-    params: MrcalcVariousFileParameters,
+    params: MrcalcVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3130,74 +3130,74 @@ def mrcalc_various_file_cargs(
 
 class MrcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrcalcParameters(...)`.
+    Output object returned when calling `MrcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
 def mrcalc_params(
-    operand: list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
-    abs_: list[MrcalcAbsParameters] | None = None,
-    neg: list[MrcalcNegParameters] | None = None,
-    add: list[MrcalcAddParameters] | None = None,
-    subtract: list[MrcalcSubtractParameters] | None = None,
-    multiply: list[MrcalcMultiplyParameters] | None = None,
-    divide: list[MrcalcDivideParameters] | None = None,
-    min_: list[MrcalcMinParameters] | None = None,
-    max_: list[MrcalcMaxParameters] | None = None,
-    lt: list[MrcalcLtParameters] | None = None,
-    gt: list[MrcalcGtParameters] | None = None,
-    le: list[MrcalcLeParameters] | None = None,
-    ge: list[MrcalcGeParameters] | None = None,
-    eq: list[MrcalcEqParameters] | None = None,
-    neq: list[MrcalcNeqParameters] | None = None,
-    if_: list[MrcalcIfParameters] | None = None,
-    replace: list[MrcalcReplaceParameters] | None = None,
-    sqrt: list[MrcalcSqrtParameters] | None = None,
-    pow_: list[MrcalcPowParameters] | None = None,
-    round_: list[MrcalcRoundParameters] | None = None,
-    ceil: list[MrcalcCeilParameters] | None = None,
-    floor: list[MrcalcFloorParameters] | None = None,
-    not_: list[MrcalcNotParameters] | None = None,
-    and_: list[MrcalcAndParameters] | None = None,
-    or_: list[MrcalcOrParameters] | None = None,
-    xor: list[MrcalcXorParameters] | None = None,
-    isnan: list[MrcalcIsnanParameters] | None = None,
-    isinf: list[MrcalcIsinfParameters] | None = None,
-    finite: list[MrcalcFiniteParameters] | None = None,
-    complex_: list[MrcalcComplexParameters] | None = None,
-    polar: list[MrcalcPolarParameters] | None = None,
-    real: list[MrcalcRealParameters] | None = None,
-    imag: list[MrcalcImagParameters] | None = None,
-    phase: list[MrcalcPhaseParameters] | None = None,
-    conj: list[MrcalcConjParameters] | None = None,
-    proj: list[MrcalcProjParameters] | None = None,
-    exp: list[MrcalcExpParameters] | None = None,
-    log: list[MrcalcLogParameters] | None = None,
-    log10: list[MrcalcLog10Parameters] | None = None,
-    cos: list[MrcalcCosParameters] | None = None,
-    sin: list[MrcalcSinParameters] | None = None,
-    tan: list[MrcalcTanParameters] | None = None,
-    acos: list[MrcalcAcosParameters] | None = None,
-    asin: list[MrcalcAsinParameters] | None = None,
-    atan: list[MrcalcAtanParameters] | None = None,
-    cosh: list[MrcalcCoshParameters] | None = None,
-    sinh: list[MrcalcSinhParameters] | None = None,
-    tanh: list[MrcalcTanhParameters] | None = None,
-    acosh: list[MrcalcAcoshParameters] | None = None,
-    asinh: list[MrcalcAsinhParameters] | None = None,
-    atanh: list[MrcalcAtanhParameters] | None = None,
+    operand: list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]],
+    abs_: list[MrcalcAbsParamsDict] | None = None,
+    neg: list[MrcalcNegParamsDict] | None = None,
+    add: list[MrcalcAddParamsDict] | None = None,
+    subtract: list[MrcalcSubtractParamsDict] | None = None,
+    multiply: list[MrcalcMultiplyParamsDict] | None = None,
+    divide: list[MrcalcDivideParamsDict] | None = None,
+    min_: list[MrcalcMinParamsDict] | None = None,
+    max_: list[MrcalcMaxParamsDict] | None = None,
+    lt: list[MrcalcLtParamsDict] | None = None,
+    gt: list[MrcalcGtParamsDict] | None = None,
+    le: list[MrcalcLeParamsDict] | None = None,
+    ge: list[MrcalcGeParamsDict] | None = None,
+    eq: list[MrcalcEqParamsDict] | None = None,
+    neq: list[MrcalcNeqParamsDict] | None = None,
+    if_: list[MrcalcIfParamsDict] | None = None,
+    replace: list[MrcalcReplaceParamsDict] | None = None,
+    sqrt: list[MrcalcSqrtParamsDict] | None = None,
+    pow_: list[MrcalcPowParamsDict] | None = None,
+    round_: list[MrcalcRoundParamsDict] | None = None,
+    ceil: list[MrcalcCeilParamsDict] | None = None,
+    floor: list[MrcalcFloorParamsDict] | None = None,
+    not_: list[MrcalcNotParamsDict] | None = None,
+    and_: list[MrcalcAndParamsDict] | None = None,
+    or_: list[MrcalcOrParamsDict] | None = None,
+    xor: list[MrcalcXorParamsDict] | None = None,
+    isnan: list[MrcalcIsnanParamsDict] | None = None,
+    isinf: list[MrcalcIsinfParamsDict] | None = None,
+    finite: list[MrcalcFiniteParamsDict] | None = None,
+    complex_: list[MrcalcComplexParamsDict] | None = None,
+    polar: list[MrcalcPolarParamsDict] | None = None,
+    real: list[MrcalcRealParamsDict] | None = None,
+    imag: list[MrcalcImagParamsDict] | None = None,
+    phase: list[MrcalcPhaseParamsDict] | None = None,
+    conj: list[MrcalcConjParamsDict] | None = None,
+    proj: list[MrcalcProjParamsDict] | None = None,
+    exp: list[MrcalcExpParamsDict] | None = None,
+    log: list[MrcalcLogParamsDict] | None = None,
+    log10: list[MrcalcLog10ParamsDict] | None = None,
+    cos: list[MrcalcCosParamsDict] | None = None,
+    sin: list[MrcalcSinParamsDict] | None = None,
+    tan: list[MrcalcTanParamsDict] | None = None,
+    acos: list[MrcalcAcosParamsDict] | None = None,
+    asin: list[MrcalcAsinParamsDict] | None = None,
+    atan: list[MrcalcAtanParamsDict] | None = None,
+    cosh: list[MrcalcCoshParamsDict] | None = None,
+    sinh: list[MrcalcSinhParamsDict] | None = None,
+    tanh: list[MrcalcTanhParamsDict] | None = None,
+    acosh: list[MrcalcAcoshParamsDict] | None = None,
+    asinh: list[MrcalcAsinhParamsDict] | None = None,
+    atanh: list[MrcalcAtanhParamsDict] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcalcConfigParameters] | None = None,
+    config: list[MrcalcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcalcParametersTagged:
+) -> MrcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -3410,7 +3410,7 @@ def mrcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcalcParameters` object.
+    `MrcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3419,252 +3419,252 @@ def mrcalc_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("abs", None) is not None:
         if not isinstance(params["abs"], list):
-            raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", None))}` expected `list[MrcalcAbsParameters] | None`')
+            raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", None))}` expected `list[MrcalcAbsParamsDict] | None`')
         for e in params["abs"]:
             mrcalc_abs_validate(e)
     if params.get("neg", None) is not None:
         if not isinstance(params["neg"], list):
-            raise StyxValidationError(f'`neg` has the wrong type: Received `{type(params.get("neg", None))}` expected `list[MrcalcNegParameters] | None`')
+            raise StyxValidationError(f'`neg` has the wrong type: Received `{type(params.get("neg", None))}` expected `list[MrcalcNegParamsDict] | None`')
         for e in params["neg"]:
             mrcalc_neg_validate(e)
     if params.get("add", None) is not None:
         if not isinstance(params["add"], list):
-            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[MrcalcAddParameters] | None`')
+            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[MrcalcAddParamsDict] | None`')
         for e in params["add"]:
             mrcalc_add_validate(e)
     if params.get("subtract", None) is not None:
         if not isinstance(params["subtract"], list):
-            raise StyxValidationError(f'`subtract` has the wrong type: Received `{type(params.get("subtract", None))}` expected `list[MrcalcSubtractParameters] | None`')
+            raise StyxValidationError(f'`subtract` has the wrong type: Received `{type(params.get("subtract", None))}` expected `list[MrcalcSubtractParamsDict] | None`')
         for e in params["subtract"]:
             mrcalc_subtract_validate(e)
     if params.get("multiply", None) is not None:
         if not isinstance(params["multiply"], list):
-            raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", None))}` expected `list[MrcalcMultiplyParameters] | None`')
+            raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", None))}` expected `list[MrcalcMultiplyParamsDict] | None`')
         for e in params["multiply"]:
             mrcalc_multiply_validate(e)
     if params.get("divide", None) is not None:
         if not isinstance(params["divide"], list):
-            raise StyxValidationError(f'`divide` has the wrong type: Received `{type(params.get("divide", None))}` expected `list[MrcalcDivideParameters] | None`')
+            raise StyxValidationError(f'`divide` has the wrong type: Received `{type(params.get("divide", None))}` expected `list[MrcalcDivideParamsDict] | None`')
         for e in params["divide"]:
             mrcalc_divide_validate(e)
     if params.get("min", None) is not None:
         if not isinstance(params["min"], list):
-            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `list[MrcalcMinParameters] | None`')
+            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `list[MrcalcMinParamsDict] | None`')
         for e in params["min"]:
             mrcalc_min_validate(e)
     if params.get("max", None) is not None:
         if not isinstance(params["max"], list):
-            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `list[MrcalcMaxParameters] | None`')
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `list[MrcalcMaxParamsDict] | None`')
         for e in params["max"]:
             mrcalc_max_validate(e)
     if params.get("lt", None) is not None:
         if not isinstance(params["lt"], list):
-            raise StyxValidationError(f'`lt` has the wrong type: Received `{type(params.get("lt", None))}` expected `list[MrcalcLtParameters] | None`')
+            raise StyxValidationError(f'`lt` has the wrong type: Received `{type(params.get("lt", None))}` expected `list[MrcalcLtParamsDict] | None`')
         for e in params["lt"]:
             mrcalc_lt_validate(e)
     if params.get("gt", None) is not None:
         if not isinstance(params["gt"], list):
-            raise StyxValidationError(f'`gt` has the wrong type: Received `{type(params.get("gt", None))}` expected `list[MrcalcGtParameters] | None`')
+            raise StyxValidationError(f'`gt` has the wrong type: Received `{type(params.get("gt", None))}` expected `list[MrcalcGtParamsDict] | None`')
         for e in params["gt"]:
             mrcalc_gt_validate(e)
     if params.get("le", None) is not None:
         if not isinstance(params["le"], list):
-            raise StyxValidationError(f'`le` has the wrong type: Received `{type(params.get("le", None))}` expected `list[MrcalcLeParameters] | None`')
+            raise StyxValidationError(f'`le` has the wrong type: Received `{type(params.get("le", None))}` expected `list[MrcalcLeParamsDict] | None`')
         for e in params["le"]:
             mrcalc_le_validate(e)
     if params.get("ge", None) is not None:
         if not isinstance(params["ge"], list):
-            raise StyxValidationError(f'`ge` has the wrong type: Received `{type(params.get("ge", None))}` expected `list[MrcalcGeParameters] | None`')
+            raise StyxValidationError(f'`ge` has the wrong type: Received `{type(params.get("ge", None))}` expected `list[MrcalcGeParamsDict] | None`')
         for e in params["ge"]:
             mrcalc_ge_validate(e)
     if params.get("eq", None) is not None:
         if not isinstance(params["eq"], list):
-            raise StyxValidationError(f'`eq` has the wrong type: Received `{type(params.get("eq", None))}` expected `list[MrcalcEqParameters] | None`')
+            raise StyxValidationError(f'`eq` has the wrong type: Received `{type(params.get("eq", None))}` expected `list[MrcalcEqParamsDict] | None`')
         for e in params["eq"]:
             mrcalc_eq_validate(e)
     if params.get("neq", None) is not None:
         if not isinstance(params["neq"], list):
-            raise StyxValidationError(f'`neq` has the wrong type: Received `{type(params.get("neq", None))}` expected `list[MrcalcNeqParameters] | None`')
+            raise StyxValidationError(f'`neq` has the wrong type: Received `{type(params.get("neq", None))}` expected `list[MrcalcNeqParamsDict] | None`')
         for e in params["neq"]:
             mrcalc_neq_validate(e)
     if params.get("if", None) is not None:
         if not isinstance(params["if"], list):
-            raise StyxValidationError(f'`if` has the wrong type: Received `{type(params.get("if", None))}` expected `list[MrcalcIfParameters] | None`')
+            raise StyxValidationError(f'`if` has the wrong type: Received `{type(params.get("if", None))}` expected `list[MrcalcIfParamsDict] | None`')
         for e in params["if"]:
             mrcalc_if_validate(e)
     if params.get("replace", None) is not None:
         if not isinstance(params["replace"], list):
-            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `list[MrcalcReplaceParameters] | None`')
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `list[MrcalcReplaceParamsDict] | None`')
         for e in params["replace"]:
             mrcalc_replace_validate(e)
     if params.get("sqrt", None) is not None:
         if not isinstance(params["sqrt"], list):
-            raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", None))}` expected `list[MrcalcSqrtParameters] | None`')
+            raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", None))}` expected `list[MrcalcSqrtParamsDict] | None`')
         for e in params["sqrt"]:
             mrcalc_sqrt_validate(e)
     if params.get("pow", None) is not None:
         if not isinstance(params["pow"], list):
-            raise StyxValidationError(f'`pow` has the wrong type: Received `{type(params.get("pow", None))}` expected `list[MrcalcPowParameters] | None`')
+            raise StyxValidationError(f'`pow` has the wrong type: Received `{type(params.get("pow", None))}` expected `list[MrcalcPowParamsDict] | None`')
         for e in params["pow"]:
             mrcalc_pow_validate(e)
     if params.get("round", None) is not None:
         if not isinstance(params["round"], list):
-            raise StyxValidationError(f'`round` has the wrong type: Received `{type(params.get("round", None))}` expected `list[MrcalcRoundParameters] | None`')
+            raise StyxValidationError(f'`round` has the wrong type: Received `{type(params.get("round", None))}` expected `list[MrcalcRoundParamsDict] | None`')
         for e in params["round"]:
             mrcalc_round_validate(e)
     if params.get("ceil", None) is not None:
         if not isinstance(params["ceil"], list):
-            raise StyxValidationError(f'`ceil` has the wrong type: Received `{type(params.get("ceil", None))}` expected `list[MrcalcCeilParameters] | None`')
+            raise StyxValidationError(f'`ceil` has the wrong type: Received `{type(params.get("ceil", None))}` expected `list[MrcalcCeilParamsDict] | None`')
         for e in params["ceil"]:
             mrcalc_ceil_validate(e)
     if params.get("floor", None) is not None:
         if not isinstance(params["floor"], list):
-            raise StyxValidationError(f'`floor` has the wrong type: Received `{type(params.get("floor", None))}` expected `list[MrcalcFloorParameters] | None`')
+            raise StyxValidationError(f'`floor` has the wrong type: Received `{type(params.get("floor", None))}` expected `list[MrcalcFloorParamsDict] | None`')
         for e in params["floor"]:
             mrcalc_floor_validate(e)
     if params.get("not", None) is not None:
         if not isinstance(params["not"], list):
-            raise StyxValidationError(f'`not` has the wrong type: Received `{type(params.get("not", None))}` expected `list[MrcalcNotParameters] | None`')
+            raise StyxValidationError(f'`not` has the wrong type: Received `{type(params.get("not", None))}` expected `list[MrcalcNotParamsDict] | None`')
         for e in params["not"]:
             mrcalc_not_validate(e)
     if params.get("and", None) is not None:
         if not isinstance(params["and"], list):
-            raise StyxValidationError(f'`and` has the wrong type: Received `{type(params.get("and", None))}` expected `list[MrcalcAndParameters] | None`')
+            raise StyxValidationError(f'`and` has the wrong type: Received `{type(params.get("and", None))}` expected `list[MrcalcAndParamsDict] | None`')
         for e in params["and"]:
             mrcalc_and_validate(e)
     if params.get("or", None) is not None:
         if not isinstance(params["or"], list):
-            raise StyxValidationError(f'`or` has the wrong type: Received `{type(params.get("or", None))}` expected `list[MrcalcOrParameters] | None`')
+            raise StyxValidationError(f'`or` has the wrong type: Received `{type(params.get("or", None))}` expected `list[MrcalcOrParamsDict] | None`')
         for e in params["or"]:
             mrcalc_or_validate(e)
     if params.get("xor", None) is not None:
         if not isinstance(params["xor"], list):
-            raise StyxValidationError(f'`xor` has the wrong type: Received `{type(params.get("xor", None))}` expected `list[MrcalcXorParameters] | None`')
+            raise StyxValidationError(f'`xor` has the wrong type: Received `{type(params.get("xor", None))}` expected `list[MrcalcXorParamsDict] | None`')
         for e in params["xor"]:
             mrcalc_xor_validate(e)
     if params.get("isnan", None) is not None:
         if not isinstance(params["isnan"], list):
-            raise StyxValidationError(f'`isnan` has the wrong type: Received `{type(params.get("isnan", None))}` expected `list[MrcalcIsnanParameters] | None`')
+            raise StyxValidationError(f'`isnan` has the wrong type: Received `{type(params.get("isnan", None))}` expected `list[MrcalcIsnanParamsDict] | None`')
         for e in params["isnan"]:
             mrcalc_isnan_validate(e)
     if params.get("isinf", None) is not None:
         if not isinstance(params["isinf"], list):
-            raise StyxValidationError(f'`isinf` has the wrong type: Received `{type(params.get("isinf", None))}` expected `list[MrcalcIsinfParameters] | None`')
+            raise StyxValidationError(f'`isinf` has the wrong type: Received `{type(params.get("isinf", None))}` expected `list[MrcalcIsinfParamsDict] | None`')
         for e in params["isinf"]:
             mrcalc_isinf_validate(e)
     if params.get("finite", None) is not None:
         if not isinstance(params["finite"], list):
-            raise StyxValidationError(f'`finite` has the wrong type: Received `{type(params.get("finite", None))}` expected `list[MrcalcFiniteParameters] | None`')
+            raise StyxValidationError(f'`finite` has the wrong type: Received `{type(params.get("finite", None))}` expected `list[MrcalcFiniteParamsDict] | None`')
         for e in params["finite"]:
             mrcalc_finite_validate(e)
     if params.get("complex", None) is not None:
         if not isinstance(params["complex"], list):
-            raise StyxValidationError(f'`complex` has the wrong type: Received `{type(params.get("complex", None))}` expected `list[MrcalcComplexParameters] | None`')
+            raise StyxValidationError(f'`complex` has the wrong type: Received `{type(params.get("complex", None))}` expected `list[MrcalcComplexParamsDict] | None`')
         for e in params["complex"]:
             mrcalc_complex_validate(e)
     if params.get("polar", None) is not None:
         if not isinstance(params["polar"], list):
-            raise StyxValidationError(f'`polar` has the wrong type: Received `{type(params.get("polar", None))}` expected `list[MrcalcPolarParameters] | None`')
+            raise StyxValidationError(f'`polar` has the wrong type: Received `{type(params.get("polar", None))}` expected `list[MrcalcPolarParamsDict] | None`')
         for e in params["polar"]:
             mrcalc_polar_validate(e)
     if params.get("real", None) is not None:
         if not isinstance(params["real"], list):
-            raise StyxValidationError(f'`real` has the wrong type: Received `{type(params.get("real", None))}` expected `list[MrcalcRealParameters] | None`')
+            raise StyxValidationError(f'`real` has the wrong type: Received `{type(params.get("real", None))}` expected `list[MrcalcRealParamsDict] | None`')
         for e in params["real"]:
             mrcalc_real_validate(e)
     if params.get("imag", None) is not None:
         if not isinstance(params["imag"], list):
-            raise StyxValidationError(f'`imag` has the wrong type: Received `{type(params.get("imag", None))}` expected `list[MrcalcImagParameters] | None`')
+            raise StyxValidationError(f'`imag` has the wrong type: Received `{type(params.get("imag", None))}` expected `list[MrcalcImagParamsDict] | None`')
         for e in params["imag"]:
             mrcalc_imag_validate(e)
     if params.get("phase", None) is not None:
         if not isinstance(params["phase"], list):
-            raise StyxValidationError(f'`phase` has the wrong type: Received `{type(params.get("phase", None))}` expected `list[MrcalcPhaseParameters] | None`')
+            raise StyxValidationError(f'`phase` has the wrong type: Received `{type(params.get("phase", None))}` expected `list[MrcalcPhaseParamsDict] | None`')
         for e in params["phase"]:
             mrcalc_phase_validate(e)
     if params.get("conj", None) is not None:
         if not isinstance(params["conj"], list):
-            raise StyxValidationError(f'`conj` has the wrong type: Received `{type(params.get("conj", None))}` expected `list[MrcalcConjParameters] | None`')
+            raise StyxValidationError(f'`conj` has the wrong type: Received `{type(params.get("conj", None))}` expected `list[MrcalcConjParamsDict] | None`')
         for e in params["conj"]:
             mrcalc_conj_validate(e)
     if params.get("proj", None) is not None:
         if not isinstance(params["proj"], list):
-            raise StyxValidationError(f'`proj` has the wrong type: Received `{type(params.get("proj", None))}` expected `list[MrcalcProjParameters] | None`')
+            raise StyxValidationError(f'`proj` has the wrong type: Received `{type(params.get("proj", None))}` expected `list[MrcalcProjParamsDict] | None`')
         for e in params["proj"]:
             mrcalc_proj_validate(e)
     if params.get("exp", None) is not None:
         if not isinstance(params["exp"], list):
-            raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `list[MrcalcExpParameters] | None`')
+            raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `list[MrcalcExpParamsDict] | None`')
         for e in params["exp"]:
             mrcalc_exp_validate(e)
     if params.get("log", None) is not None:
         if not isinstance(params["log"], list):
-            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `list[MrcalcLogParameters] | None`')
+            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `list[MrcalcLogParamsDict] | None`')
         for e in params["log"]:
             mrcalc_log_validate(e)
     if params.get("log10", None) is not None:
         if not isinstance(params["log10"], list):
-            raise StyxValidationError(f'`log10` has the wrong type: Received `{type(params.get("log10", None))}` expected `list[MrcalcLog10Parameters] | None`')
+            raise StyxValidationError(f'`log10` has the wrong type: Received `{type(params.get("log10", None))}` expected `list[MrcalcLog10ParamsDict] | None`')
         for e in params["log10"]:
             mrcalc_log10_validate(e)
     if params.get("cos", None) is not None:
         if not isinstance(params["cos"], list):
-            raise StyxValidationError(f'`cos` has the wrong type: Received `{type(params.get("cos", None))}` expected `list[MrcalcCosParameters] | None`')
+            raise StyxValidationError(f'`cos` has the wrong type: Received `{type(params.get("cos", None))}` expected `list[MrcalcCosParamsDict] | None`')
         for e in params["cos"]:
             mrcalc_cos_validate(e)
     if params.get("sin", None) is not None:
         if not isinstance(params["sin"], list):
-            raise StyxValidationError(f'`sin` has the wrong type: Received `{type(params.get("sin", None))}` expected `list[MrcalcSinParameters] | None`')
+            raise StyxValidationError(f'`sin` has the wrong type: Received `{type(params.get("sin", None))}` expected `list[MrcalcSinParamsDict] | None`')
         for e in params["sin"]:
             mrcalc_sin_validate(e)
     if params.get("tan", None) is not None:
         if not isinstance(params["tan"], list):
-            raise StyxValidationError(f'`tan` has the wrong type: Received `{type(params.get("tan", None))}` expected `list[MrcalcTanParameters] | None`')
+            raise StyxValidationError(f'`tan` has the wrong type: Received `{type(params.get("tan", None))}` expected `list[MrcalcTanParamsDict] | None`')
         for e in params["tan"]:
             mrcalc_tan_validate(e)
     if params.get("acos", None) is not None:
         if not isinstance(params["acos"], list):
-            raise StyxValidationError(f'`acos` has the wrong type: Received `{type(params.get("acos", None))}` expected `list[MrcalcAcosParameters] | None`')
+            raise StyxValidationError(f'`acos` has the wrong type: Received `{type(params.get("acos", None))}` expected `list[MrcalcAcosParamsDict] | None`')
         for e in params["acos"]:
             mrcalc_acos_validate(e)
     if params.get("asin", None) is not None:
         if not isinstance(params["asin"], list):
-            raise StyxValidationError(f'`asin` has the wrong type: Received `{type(params.get("asin", None))}` expected `list[MrcalcAsinParameters] | None`')
+            raise StyxValidationError(f'`asin` has the wrong type: Received `{type(params.get("asin", None))}` expected `list[MrcalcAsinParamsDict] | None`')
         for e in params["asin"]:
             mrcalc_asin_validate(e)
     if params.get("atan", None) is not None:
         if not isinstance(params["atan"], list):
-            raise StyxValidationError(f'`atan` has the wrong type: Received `{type(params.get("atan", None))}` expected `list[MrcalcAtanParameters] | None`')
+            raise StyxValidationError(f'`atan` has the wrong type: Received `{type(params.get("atan", None))}` expected `list[MrcalcAtanParamsDict] | None`')
         for e in params["atan"]:
             mrcalc_atan_validate(e)
     if params.get("cosh", None) is not None:
         if not isinstance(params["cosh"], list):
-            raise StyxValidationError(f'`cosh` has the wrong type: Received `{type(params.get("cosh", None))}` expected `list[MrcalcCoshParameters] | None`')
+            raise StyxValidationError(f'`cosh` has the wrong type: Received `{type(params.get("cosh", None))}` expected `list[MrcalcCoshParamsDict] | None`')
         for e in params["cosh"]:
             mrcalc_cosh_validate(e)
     if params.get("sinh", None) is not None:
         if not isinstance(params["sinh"], list):
-            raise StyxValidationError(f'`sinh` has the wrong type: Received `{type(params.get("sinh", None))}` expected `list[MrcalcSinhParameters] | None`')
+            raise StyxValidationError(f'`sinh` has the wrong type: Received `{type(params.get("sinh", None))}` expected `list[MrcalcSinhParamsDict] | None`')
         for e in params["sinh"]:
             mrcalc_sinh_validate(e)
     if params.get("tanh", None) is not None:
         if not isinstance(params["tanh"], list):
-            raise StyxValidationError(f'`tanh` has the wrong type: Received `{type(params.get("tanh", None))}` expected `list[MrcalcTanhParameters] | None`')
+            raise StyxValidationError(f'`tanh` has the wrong type: Received `{type(params.get("tanh", None))}` expected `list[MrcalcTanhParamsDict] | None`')
         for e in params["tanh"]:
             mrcalc_tanh_validate(e)
     if params.get("acosh", None) is not None:
         if not isinstance(params["acosh"], list):
-            raise StyxValidationError(f'`acosh` has the wrong type: Received `{type(params.get("acosh", None))}` expected `list[MrcalcAcoshParameters] | None`')
+            raise StyxValidationError(f'`acosh` has the wrong type: Received `{type(params.get("acosh", None))}` expected `list[MrcalcAcoshParamsDict] | None`')
         for e in params["acosh"]:
             mrcalc_acosh_validate(e)
     if params.get("asinh", None) is not None:
         if not isinstance(params["asinh"], list):
-            raise StyxValidationError(f'`asinh` has the wrong type: Received `{type(params.get("asinh", None))}` expected `list[MrcalcAsinhParameters] | None`')
+            raise StyxValidationError(f'`asinh` has the wrong type: Received `{type(params.get("asinh", None))}` expected `list[MrcalcAsinhParamsDict] | None`')
         for e in params["asinh"]:
             mrcalc_asinh_validate(e)
     if params.get("atanh", None) is not None:
         if not isinstance(params["atanh"], list):
-            raise StyxValidationError(f'`atanh` has the wrong type: Received `{type(params.get("atanh", None))}` expected `list[MrcalcAtanhParameters] | None`')
+            raise StyxValidationError(f'`atanh` has the wrong type: Received `{type(params.get("atanh", None))}` expected `list[MrcalcAtanhParamsDict] | None`')
         for e in params["atanh"]:
             mrcalc_atanh_validate(e)
     if params.get("datatype", None) is not None:
@@ -3691,7 +3691,7 @@ def mrcalc_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcalcConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcalcConfigParamsDict] | None`')
         for e in params["config"]:
             mrcalc_config_validate(e)
     if params.get("help", False) is None:
@@ -3705,17 +3705,19 @@ def mrcalc_validate(
     if params.get("operand", None) is None:
         raise StyxValidationError("`operand` must not be None")
     if not isinstance(params["operand"], list):
-        raise StyxValidationError(f'`operand` has the wrong type: Received `{type(params.get("operand", None))}` expected `list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]]`')
+        raise StyxValidationError(f'`operand` has the wrong type: Received `{type(params.get("operand", None))}` expected `list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]]`')
     for e in params["operand"]:
         if not isinstance(e, dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
         if "@type" not in e:
             raise StyxValidationError("Params object is missing `@type`")
+        if e["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `operand`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         mrcalc_operand_validate_dyn_fn(e["@type"])(e)
 
 
 def mrcalc_cargs(
-    params: MrcalcParameters,
+    params: MrcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3858,7 +3860,7 @@ def mrcalc_cargs(
 
 
 def mrcalc_outputs(
-    params: MrcalcParameters,
+    params: MrcalcParamsDict,
     execution: Execution,
 ) -> MrcalcOutputs:
     """
@@ -3877,7 +3879,7 @@ def mrcalc_outputs(
 
 
 def mrcalc_execute(
-    params: MrcalcParameters,
+    params: MrcalcParamsDict,
     runner: Runner | None = None,
 ) -> MrcalcOutputs:
     """
@@ -3932,64 +3934,64 @@ def mrcalc_execute(
 
 
 def mrcalc(
-    operand: list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
-    abs_: list[MrcalcAbsParameters] | None = None,
-    neg: list[MrcalcNegParameters] | None = None,
-    add: list[MrcalcAddParameters] | None = None,
-    subtract: list[MrcalcSubtractParameters] | None = None,
-    multiply: list[MrcalcMultiplyParameters] | None = None,
-    divide: list[MrcalcDivideParameters] | None = None,
-    min_: list[MrcalcMinParameters] | None = None,
-    max_: list[MrcalcMaxParameters] | None = None,
-    lt: list[MrcalcLtParameters] | None = None,
-    gt: list[MrcalcGtParameters] | None = None,
-    le: list[MrcalcLeParameters] | None = None,
-    ge: list[MrcalcGeParameters] | None = None,
-    eq: list[MrcalcEqParameters] | None = None,
-    neq: list[MrcalcNeqParameters] | None = None,
-    if_: list[MrcalcIfParameters] | None = None,
-    replace: list[MrcalcReplaceParameters] | None = None,
-    sqrt: list[MrcalcSqrtParameters] | None = None,
-    pow_: list[MrcalcPowParameters] | None = None,
-    round_: list[MrcalcRoundParameters] | None = None,
-    ceil: list[MrcalcCeilParameters] | None = None,
-    floor: list[MrcalcFloorParameters] | None = None,
-    not_: list[MrcalcNotParameters] | None = None,
-    and_: list[MrcalcAndParameters] | None = None,
-    or_: list[MrcalcOrParameters] | None = None,
-    xor: list[MrcalcXorParameters] | None = None,
-    isnan: list[MrcalcIsnanParameters] | None = None,
-    isinf: list[MrcalcIsinfParameters] | None = None,
-    finite: list[MrcalcFiniteParameters] | None = None,
-    complex_: list[MrcalcComplexParameters] | None = None,
-    polar: list[MrcalcPolarParameters] | None = None,
-    real: list[MrcalcRealParameters] | None = None,
-    imag: list[MrcalcImagParameters] | None = None,
-    phase: list[MrcalcPhaseParameters] | None = None,
-    conj: list[MrcalcConjParameters] | None = None,
-    proj: list[MrcalcProjParameters] | None = None,
-    exp: list[MrcalcExpParameters] | None = None,
-    log: list[MrcalcLogParameters] | None = None,
-    log10: list[MrcalcLog10Parameters] | None = None,
-    cos: list[MrcalcCosParameters] | None = None,
-    sin: list[MrcalcSinParameters] | None = None,
-    tan: list[MrcalcTanParameters] | None = None,
-    acos: list[MrcalcAcosParameters] | None = None,
-    asin: list[MrcalcAsinParameters] | None = None,
-    atan: list[MrcalcAtanParameters] | None = None,
-    cosh: list[MrcalcCoshParameters] | None = None,
-    sinh: list[MrcalcSinhParameters] | None = None,
-    tanh: list[MrcalcTanhParameters] | None = None,
-    acosh: list[MrcalcAcoshParameters] | None = None,
-    asinh: list[MrcalcAsinhParameters] | None = None,
-    atanh: list[MrcalcAtanhParameters] | None = None,
+    operand: list[typing.Union[MrcalcVariousStringParamsDictTagged, MrcalcVariousFileParamsDictTagged]],
+    abs_: list[MrcalcAbsParamsDict] | None = None,
+    neg: list[MrcalcNegParamsDict] | None = None,
+    add: list[MrcalcAddParamsDict] | None = None,
+    subtract: list[MrcalcSubtractParamsDict] | None = None,
+    multiply: list[MrcalcMultiplyParamsDict] | None = None,
+    divide: list[MrcalcDivideParamsDict] | None = None,
+    min_: list[MrcalcMinParamsDict] | None = None,
+    max_: list[MrcalcMaxParamsDict] | None = None,
+    lt: list[MrcalcLtParamsDict] | None = None,
+    gt: list[MrcalcGtParamsDict] | None = None,
+    le: list[MrcalcLeParamsDict] | None = None,
+    ge: list[MrcalcGeParamsDict] | None = None,
+    eq: list[MrcalcEqParamsDict] | None = None,
+    neq: list[MrcalcNeqParamsDict] | None = None,
+    if_: list[MrcalcIfParamsDict] | None = None,
+    replace: list[MrcalcReplaceParamsDict] | None = None,
+    sqrt: list[MrcalcSqrtParamsDict] | None = None,
+    pow_: list[MrcalcPowParamsDict] | None = None,
+    round_: list[MrcalcRoundParamsDict] | None = None,
+    ceil: list[MrcalcCeilParamsDict] | None = None,
+    floor: list[MrcalcFloorParamsDict] | None = None,
+    not_: list[MrcalcNotParamsDict] | None = None,
+    and_: list[MrcalcAndParamsDict] | None = None,
+    or_: list[MrcalcOrParamsDict] | None = None,
+    xor: list[MrcalcXorParamsDict] | None = None,
+    isnan: list[MrcalcIsnanParamsDict] | None = None,
+    isinf: list[MrcalcIsinfParamsDict] | None = None,
+    finite: list[MrcalcFiniteParamsDict] | None = None,
+    complex_: list[MrcalcComplexParamsDict] | None = None,
+    polar: list[MrcalcPolarParamsDict] | None = None,
+    real: list[MrcalcRealParamsDict] | None = None,
+    imag: list[MrcalcImagParamsDict] | None = None,
+    phase: list[MrcalcPhaseParamsDict] | None = None,
+    conj: list[MrcalcConjParamsDict] | None = None,
+    proj: list[MrcalcProjParamsDict] | None = None,
+    exp: list[MrcalcExpParamsDict] | None = None,
+    log: list[MrcalcLogParamsDict] | None = None,
+    log10: list[MrcalcLog10ParamsDict] | None = None,
+    cos: list[MrcalcCosParamsDict] | None = None,
+    sin: list[MrcalcSinParamsDict] | None = None,
+    tan: list[MrcalcTanParamsDict] | None = None,
+    acos: list[MrcalcAcosParamsDict] | None = None,
+    asin: list[MrcalcAsinParamsDict] | None = None,
+    atan: list[MrcalcAtanParamsDict] | None = None,
+    cosh: list[MrcalcCoshParamsDict] | None = None,
+    sinh: list[MrcalcSinhParamsDict] | None = None,
+    tanh: list[MrcalcTanhParamsDict] | None = None,
+    acosh: list[MrcalcAcoshParamsDict] | None = None,
+    asinh: list[MrcalcAsinhParamsDict] | None = None,
+    atanh: list[MrcalcAtanhParamsDict] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcalcConfigParameters] | None = None,
+    config: list[MrcalcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -4182,61 +4184,169 @@ def mrcalc(
 
 __all__ = [
     "MRCALC_METADATA",
+    "MrcalcAbsParamsDict",
+    "MrcalcAbsParamsDictTagged",
+    "MrcalcAcosParamsDict",
+    "MrcalcAcosParamsDictTagged",
+    "MrcalcAcoshParamsDict",
+    "MrcalcAcoshParamsDictTagged",
+    "MrcalcAddParamsDict",
+    "MrcalcAddParamsDictTagged",
+    "MrcalcAndParamsDict",
+    "MrcalcAndParamsDictTagged",
+    "MrcalcAsinParamsDict",
+    "MrcalcAsinParamsDictTagged",
+    "MrcalcAsinhParamsDict",
+    "MrcalcAsinhParamsDictTagged",
+    "MrcalcAtanParamsDict",
+    "MrcalcAtanParamsDictTagged",
+    "MrcalcAtanhParamsDict",
+    "MrcalcAtanhParamsDictTagged",
+    "MrcalcCeilParamsDict",
+    "MrcalcCeilParamsDictTagged",
+    "MrcalcComplexParamsDict",
+    "MrcalcComplexParamsDictTagged",
+    "MrcalcConfigParamsDict",
+    "MrcalcConfigParamsDictTagged",
+    "MrcalcConjParamsDict",
+    "MrcalcConjParamsDictTagged",
+    "MrcalcCosParamsDict",
+    "MrcalcCosParamsDictTagged",
+    "MrcalcCoshParamsDict",
+    "MrcalcCoshParamsDictTagged",
+    "MrcalcDivideParamsDict",
+    "MrcalcDivideParamsDictTagged",
+    "MrcalcEqParamsDict",
+    "MrcalcEqParamsDictTagged",
+    "MrcalcExpParamsDict",
+    "MrcalcExpParamsDictTagged",
+    "MrcalcFiniteParamsDict",
+    "MrcalcFiniteParamsDictTagged",
+    "MrcalcFloorParamsDict",
+    "MrcalcFloorParamsDictTagged",
+    "MrcalcGeParamsDict",
+    "MrcalcGeParamsDictTagged",
+    "MrcalcGtParamsDict",
+    "MrcalcGtParamsDictTagged",
+    "MrcalcIfParamsDict",
+    "MrcalcIfParamsDictTagged",
+    "MrcalcImagParamsDict",
+    "MrcalcImagParamsDictTagged",
+    "MrcalcIsinfParamsDict",
+    "MrcalcIsinfParamsDictTagged",
+    "MrcalcIsnanParamsDict",
+    "MrcalcIsnanParamsDictTagged",
+    "MrcalcLeParamsDict",
+    "MrcalcLeParamsDictTagged",
+    "MrcalcLog10ParamsDict",
+    "MrcalcLog10ParamsDictTagged",
+    "MrcalcLogParamsDict",
+    "MrcalcLogParamsDictTagged",
+    "MrcalcLtParamsDict",
+    "MrcalcLtParamsDictTagged",
+    "MrcalcMaxParamsDict",
+    "MrcalcMaxParamsDictTagged",
+    "MrcalcMinParamsDict",
+    "MrcalcMinParamsDictTagged",
+    "MrcalcMultiplyParamsDict",
+    "MrcalcMultiplyParamsDictTagged",
+    "MrcalcNegParamsDict",
+    "MrcalcNegParamsDictTagged",
+    "MrcalcNeqParamsDict",
+    "MrcalcNeqParamsDictTagged",
+    "MrcalcNotParamsDict",
+    "MrcalcNotParamsDictTagged",
+    "MrcalcOrParamsDict",
+    "MrcalcOrParamsDictTagged",
     "MrcalcOutputs",
+    "MrcalcParamsDict",
+    "MrcalcParamsDictTagged",
+    "MrcalcPhaseParamsDict",
+    "MrcalcPhaseParamsDictTagged",
+    "MrcalcPolarParamsDict",
+    "MrcalcPolarParamsDictTagged",
+    "MrcalcPowParamsDict",
+    "MrcalcPowParamsDictTagged",
+    "MrcalcProjParamsDict",
+    "MrcalcProjParamsDictTagged",
+    "MrcalcRealParamsDict",
+    "MrcalcRealParamsDictTagged",
+    "MrcalcReplaceParamsDict",
+    "MrcalcReplaceParamsDictTagged",
+    "MrcalcRoundParamsDict",
+    "MrcalcRoundParamsDictTagged",
+    "MrcalcSinParamsDict",
+    "MrcalcSinParamsDictTagged",
+    "MrcalcSinhParamsDict",
+    "MrcalcSinhParamsDictTagged",
+    "MrcalcSqrtParamsDict",
+    "MrcalcSqrtParamsDictTagged",
+    "MrcalcSubtractParamsDict",
+    "MrcalcSubtractParamsDictTagged",
+    "MrcalcTanParamsDict",
+    "MrcalcTanParamsDictTagged",
+    "MrcalcTanhParamsDict",
+    "MrcalcTanhParamsDictTagged",
+    "MrcalcVariousFileParamsDict",
+    "MrcalcVariousFileParamsDictTagged",
+    "MrcalcVariousStringParamsDict",
+    "MrcalcVariousStringParamsDictTagged",
+    "MrcalcXorParamsDict",
+    "MrcalcXorParamsDictTagged",
     "mrcalc",
-    "mrcalc_abs_params",
-    "mrcalc_acos_params",
-    "mrcalc_acosh_params",
-    "mrcalc_add_params",
-    "mrcalc_and_params",
-    "mrcalc_asin_params",
-    "mrcalc_asinh_params",
-    "mrcalc_atan_params",
-    "mrcalc_atanh_params",
-    "mrcalc_ceil_params",
-    "mrcalc_complex_params",
-    "mrcalc_config_params",
-    "mrcalc_conj_params",
-    "mrcalc_cos_params",
-    "mrcalc_cosh_params",
-    "mrcalc_divide_params",
-    "mrcalc_eq_params",
+    "mrcalc_abs",
+    "mrcalc_acos",
+    "mrcalc_acosh",
+    "mrcalc_add",
+    "mrcalc_and",
+    "mrcalc_asin",
+    "mrcalc_asinh",
+    "mrcalc_atan",
+    "mrcalc_atanh",
+    "mrcalc_ceil",
+    "mrcalc_complex",
+    "mrcalc_config",
+    "mrcalc_conj",
+    "mrcalc_cos",
+    "mrcalc_cosh",
+    "mrcalc_divide",
+    "mrcalc_eq",
     "mrcalc_execute",
-    "mrcalc_exp_params",
-    "mrcalc_finite_params",
-    "mrcalc_floor_params",
-    "mrcalc_ge_params",
-    "mrcalc_gt_params",
-    "mrcalc_if_params",
-    "mrcalc_imag_params",
-    "mrcalc_isinf_params",
-    "mrcalc_isnan_params",
-    "mrcalc_le_params",
-    "mrcalc_log10_params",
-    "mrcalc_log_params",
-    "mrcalc_lt_params",
-    "mrcalc_max_params",
-    "mrcalc_min_params",
-    "mrcalc_multiply_params",
-    "mrcalc_neg_params",
-    "mrcalc_neq_params",
-    "mrcalc_not_params",
-    "mrcalc_or_params",
+    "mrcalc_exp",
+    "mrcalc_finite",
+    "mrcalc_floor",
+    "mrcalc_ge",
+    "mrcalc_gt",
+    "mrcalc_if",
+    "mrcalc_imag",
+    "mrcalc_isinf",
+    "mrcalc_isnan",
+    "mrcalc_le",
+    "mrcalc_log",
+    "mrcalc_log10",
+    "mrcalc_lt",
+    "mrcalc_max",
+    "mrcalc_min",
+    "mrcalc_multiply",
+    "mrcalc_neg",
+    "mrcalc_neq",
+    "mrcalc_not",
+    "mrcalc_or",
     "mrcalc_params",
-    "mrcalc_phase_params",
-    "mrcalc_polar_params",
-    "mrcalc_pow_params",
-    "mrcalc_proj_params",
-    "mrcalc_real_params",
-    "mrcalc_replace_params",
-    "mrcalc_round_params",
-    "mrcalc_sin_params",
-    "mrcalc_sinh_params",
-    "mrcalc_sqrt_params",
-    "mrcalc_subtract_params",
-    "mrcalc_tan_params",
-    "mrcalc_tanh_params",
-    "mrcalc_various_file_params",
-    "mrcalc_various_string_params",
-    "mrcalc_xor_params",
+    "mrcalc_phase",
+    "mrcalc_polar",
+    "mrcalc_pow",
+    "mrcalc_proj",
+    "mrcalc_real",
+    "mrcalc_replace",
+    "mrcalc_round",
+    "mrcalc_sin",
+    "mrcalc_sinh",
+    "mrcalc_sqrt",
+    "mrcalc_subtract",
+    "mrcalc_tan",
+    "mrcalc_tanh",
+    "mrcalc_various_file",
+    "mrcalc_various_string",
+    "mrcalc_xor",
 ]

@@ -12,7 +12,7 @@ GIFTI_LABEL_TO_ROI_METADATA = Metadata(
 )
 
 
-GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
+GiftiLabelToRoiParamsDict = typing.TypedDict('GiftiLabelToRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-to-roi"]],
     "metric-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
     "map": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
-GiftiLabelToRoiParametersTagged = typing.TypedDict('GiftiLabelToRoiParametersTagged', {
+GiftiLabelToRoiParamsDictTagged = typing.TypedDict('GiftiLabelToRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-label-to-roi"],
     "metric-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ GiftiLabelToRoiParametersTagged = typing.TypedDict('GiftiLabelToRoiParametersTag
 
 class GiftiLabelToRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GiftiLabelToRoiParameters(...)`.
+    Output object returned when calling `GiftiLabelToRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def gifti_label_to_roi_params(
     label_key: int | None,
     map_: str | None,
     label_in: InputPathType,
-) -> GiftiLabelToRoiParametersTagged:
+) -> GiftiLabelToRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def gifti_label_to_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GiftiLabelToRoiParameters` object.
+    `GiftiLabelToRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def gifti_label_to_roi_validate(
 
 
 def gifti_label_to_roi_cargs(
-    params: GiftiLabelToRoiParameters,
+    params: GiftiLabelToRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def gifti_label_to_roi_cargs(
 
 
 def gifti_label_to_roi_outputs(
-    params: GiftiLabelToRoiParameters,
+    params: GiftiLabelToRoiParamsDict,
     execution: Execution,
 ) -> GiftiLabelToRoiOutputs:
     """
@@ -161,7 +161,7 @@ def gifti_label_to_roi_outputs(
 
 
 def gifti_label_to_roi_execute(
-    params: GiftiLabelToRoiParameters,
+    params: GiftiLabelToRoiParamsDict,
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
@@ -233,6 +233,8 @@ def gifti_label_to_roi(
 __all__ = [
     "GIFTI_LABEL_TO_ROI_METADATA",
     "GiftiLabelToRoiOutputs",
+    "GiftiLabelToRoiParamsDict",
+    "GiftiLabelToRoiParamsDictTagged",
     "gifti_label_to_roi",
     "gifti_label_to_roi_execute",
     "gifti_label_to_roi_params",

@@ -13,13 +13,13 @@ MYGET_METADATA = Metadata(
 )
 
 
-MygetParameters = typing.TypedDict('MygetParameters', {
+MygetParamsDict = typing.TypedDict('MygetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/myget"]],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
     "output_file": str,
 })
-MygetParametersTagged = typing.TypedDict('MygetParametersTagged', {
+MygetParamsDictTagged = typing.TypedDict('MygetParamsDictTagged', {
     "@type": typing.Literal["afni/myget"],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
@@ -29,7 +29,7 @@ MygetParametersTagged = typing.TypedDict('MygetParametersTagged', {
 
 class MygetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MygetParameters(...)`.
+    Output object returned when calling `MygetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def myget_params(
     url: str,
     output_file: str,
     protocol_version: typing.Literal["-1", "-1.1"] | None = None,
-) -> MygetParametersTagged:
+) -> MygetParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def myget_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MygetParameters` object.
+    `MygetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def myget_validate(
 
 
 def myget_cargs(
-    params: MygetParameters,
+    params: MygetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def myget_cargs(
 
 
 def myget_outputs(
-    params: MygetParameters,
+    params: MygetParamsDict,
     execution: Execution,
 ) -> MygetOutputs:
     """
@@ -136,7 +136,7 @@ def myget_outputs(
 
 
 def myget_execute(
-    params: MygetParameters,
+    params: MygetParamsDict,
     runner: Runner | None = None,
 ) -> MygetOutputs:
     """
@@ -199,6 +199,8 @@ def myget(
 __all__ = [
     "MYGET_METADATA",
     "MygetOutputs",
+    "MygetParamsDict",
+    "MygetParamsDictTagged",
     "myget",
     "myget_execute",
     "myget_params",

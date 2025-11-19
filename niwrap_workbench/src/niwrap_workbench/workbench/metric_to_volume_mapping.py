@@ -12,7 +12,7 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
 )
 
 
-MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParameters', {
+MetricToVolumeMappingRibbonConstrainedParamsDict = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -20,7 +20,7 @@ MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVol
     "greedy": bool,
     "thick-columns": bool,
 })
-MetricToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParametersTagged', {
+MetricToVolumeMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -30,33 +30,33 @@ MetricToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('Metri
 })
 
 
-MetricToVolumeMappingParameters = typing.TypedDict('MetricToVolumeMappingParameters', {
+MetricToVolumeMappingParamsDict = typing.TypedDict('MetricToVolumeMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-to-volume-mapping"]],
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
-    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
-MetricToVolumeMappingParametersTagged = typing.TypedDict('MetricToVolumeMappingParametersTagged', {
+MetricToVolumeMappingParamsDictTagged = typing.TypedDict('MetricToVolumeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-to-volume-mapping"],
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
-    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
 
 
-def metric_to_volume_mapping_ribbon_constrained_params(
+def metric_to_volume_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     subdiv_num: int | None,
     greedy: bool = False,
     thick_columns: bool = False,
-) -> MetricToVolumeMappingRibbonConstrainedParametersTagged:
+) -> MetricToVolumeMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def metric_to_volume_mapping_ribbon_constrained_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricToVolumeMappingRibbonConstrainedParameters` object.
+    `MetricToVolumeMappingRibbonConstrainedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def metric_to_volume_mapping_ribbon_constrained_validate(
 
 
 def metric_to_volume_mapping_ribbon_constrained_cargs(
-    params: MetricToVolumeMappingRibbonConstrainedParameters,
+    params: MetricToVolumeMappingRibbonConstrainedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def metric_to_volume_mapping_ribbon_constrained_cargs(
 
 class MetricToVolumeMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricToVolumeMappingParameters(...)`.
+    Output object returned when calling `MetricToVolumeMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -160,8 +160,8 @@ def metric_to_volume_mapping_params(
     metric: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParameters | None = None,
-) -> MetricToVolumeMappingParametersTagged:
+    ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParamsDict | None = None,
+) -> MetricToVolumeMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def metric_to_volume_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricToVolumeMappingParameters` object.
+    `MetricToVolumeMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def metric_to_volume_mapping_validate(
 
 
 def metric_to_volume_mapping_cargs(
-    params: MetricToVolumeMappingParameters,
+    params: MetricToVolumeMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def metric_to_volume_mapping_cargs(
 
 
 def metric_to_volume_mapping_outputs(
-    params: MetricToVolumeMappingParameters,
+    params: MetricToVolumeMappingParamsDict,
     execution: Execution,
 ) -> MetricToVolumeMappingOutputs:
     """
@@ -276,7 +276,7 @@ def metric_to_volume_mapping_outputs(
 
 
 def metric_to_volume_mapping_execute(
-    params: MetricToVolumeMappingParameters,
+    params: MetricToVolumeMappingParamsDict,
     runner: Runner | None = None,
 ) -> MetricToVolumeMappingOutputs:
     """
@@ -312,7 +312,7 @@ def metric_to_volume_mapping(
     metric: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParameters | None = None,
+    ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParamsDict | None = None,
     runner: Runner | None = None,
 ) -> MetricToVolumeMappingOutputs:
     """
@@ -353,8 +353,12 @@ def metric_to_volume_mapping(
 __all__ = [
     "METRIC_TO_VOLUME_MAPPING_METADATA",
     "MetricToVolumeMappingOutputs",
+    "MetricToVolumeMappingParamsDict",
+    "MetricToVolumeMappingParamsDictTagged",
+    "MetricToVolumeMappingRibbonConstrainedParamsDict",
+    "MetricToVolumeMappingRibbonConstrainedParamsDictTagged",
     "metric_to_volume_mapping",
     "metric_to_volume_mapping_execute",
     "metric_to_volume_mapping_params",
-    "metric_to_volume_mapping_ribbon_constrained_params",
+    "metric_to_volume_mapping_ribbon_constrained",
 ]

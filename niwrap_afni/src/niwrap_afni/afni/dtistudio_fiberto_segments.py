@@ -13,13 +13,13 @@ DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
 )
 
 
-DtistudioFibertoSegmentsParameters = typing.TypedDict('DtistudioFibertoSegmentsParameters', {
+DtistudioFibertoSegmentsParamsDict = typing.TypedDict('DtistudioFibertoSegmentsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/DTIStudioFibertoSegments"]],
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,
 })
-DtistudioFibertoSegmentsParametersTagged = typing.TypedDict('DtistudioFibertoSegmentsParametersTagged', {
+DtistudioFibertoSegmentsParamsDictTagged = typing.TypedDict('DtistudioFibertoSegmentsParamsDictTagged', {
     "@type": typing.Literal["afni/DTIStudioFibertoSegments"],
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ DtistudioFibertoSegmentsParametersTagged = typing.TypedDict('DtistudioFibertoSeg
 
 class DtistudioFibertoSegmentsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DtistudioFibertoSegmentsParameters(...)`.
+    Output object returned when calling `DtistudioFibertoSegmentsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def dtistudio_fiberto_segments_params(
     dataset: InputPathType,
     output_file: str | None = None,
     swap_flag: bool = False,
-) -> DtistudioFibertoSegmentsParametersTagged:
+) -> DtistudioFibertoSegmentsParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def dtistudio_fiberto_segments_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DtistudioFibertoSegmentsParameters` object.
+    `DtistudioFibertoSegmentsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def dtistudio_fiberto_segments_validate(
 
 
 def dtistudio_fiberto_segments_cargs(
-    params: DtistudioFibertoSegmentsParameters,
+    params: DtistudioFibertoSegmentsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def dtistudio_fiberto_segments_cargs(
 
 
 def dtistudio_fiberto_segments_outputs(
-    params: DtistudioFibertoSegmentsParameters,
+    params: DtistudioFibertoSegmentsParamsDict,
     execution: Execution,
 ) -> DtistudioFibertoSegmentsOutputs:
     """
@@ -134,7 +134,7 @@ def dtistudio_fiberto_segments_outputs(
 
 
 def dtistudio_fiberto_segments_execute(
-    params: DtistudioFibertoSegmentsParameters,
+    params: DtistudioFibertoSegmentsParamsDict,
     runner: Runner | None = None,
 ) -> DtistudioFibertoSegmentsOutputs:
     """
@@ -196,6 +196,8 @@ def dtistudio_fiberto_segments(
 __all__ = [
     "DTISTUDIO_FIBERTO_SEGMENTS_METADATA",
     "DtistudioFibertoSegmentsOutputs",
+    "DtistudioFibertoSegmentsParamsDict",
+    "DtistudioFibertoSegmentsParamsDictTagged",
     "dtistudio_fiberto_segments",
     "dtistudio_fiberto_segments_execute",
     "dtistudio_fiberto_segments_params",

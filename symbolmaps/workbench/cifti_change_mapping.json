@@ -6,7 +6,7 @@
     },
     "series": {
       "var_param": "series",
-      "fn_struct_make_params": "cifti_change_mapping_series_params",
+      "fn_struct_make_params": "cifti_change_mapping_series",
       "properties": {
         "step": {
           "var_param": "step"
@@ -21,7 +21,7 @@
     },
     "scalar": {
       "var_param": "scalar",
-      "fn_struct_make_params": "cifti_change_mapping_scalar_params",
+      "fn_struct_make_params": "cifti_change_mapping_scalar",
       "properties": {
         "file": {
           "var_param": "file"
@@ -30,7 +30,7 @@
     },
     "from-cifti": {
       "var_param": "from_cifti",
-      "fn_struct_make_params": "cifti_change_mapping_from_cifti_params",
+      "fn_struct_make_params": "cifti_change_mapping_from_cifti",
       "properties": {
         "template-cifti": {
           "var_param": "template_cifti"

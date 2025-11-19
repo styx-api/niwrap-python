@@ -13,7 +13,7 @@ MRIS_REMOVE_INTERSECTION_METADATA = Metadata(
 )
 
 
-MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParameters', {
+MrisRemoveIntersectionParamsDict = typing.TypedDict('MrisRemoveIntersectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_intersection"]],
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
@@ -21,7 +21,7 @@ MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParam
     "map_option": typing.NotRequired[InputPathType | None],
     "projdistmm": typing.NotRequired[float | None],
 })
-MrisRemoveIntersectionParametersTagged = typing.TypedDict('MrisRemoveIntersectionParametersTagged', {
+MrisRemoveIntersectionParamsDictTagged = typing.TypedDict('MrisRemoveIntersectionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_remove_intersection"],
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
@@ -33,7 +33,7 @@ MrisRemoveIntersectionParametersTagged = typing.TypedDict('MrisRemoveIntersectio
 
 class MrisRemoveIntersectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRemoveIntersectionParameters(...)`.
+    Output object returned when calling `MrisRemoveIntersectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def mris_remove_intersection_params(
     fill_holes: bool = False,
     map_option: InputPathType | None = None,
     projdistmm: float | None = None,
-) -> MrisRemoveIntersectionParametersTagged:
+) -> MrisRemoveIntersectionParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mris_remove_intersection_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRemoveIntersectionParameters` object.
+    `MrisRemoveIntersectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def mris_remove_intersection_validate(
 
 
 def mris_remove_intersection_cargs(
-    params: MrisRemoveIntersectionParameters,
+    params: MrisRemoveIntersectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def mris_remove_intersection_cargs(
 
 
 def mris_remove_intersection_outputs(
-    params: MrisRemoveIntersectionParameters,
+    params: MrisRemoveIntersectionParamsDict,
     execution: Execution,
 ) -> MrisRemoveIntersectionOutputs:
     """
@@ -159,7 +159,7 @@ def mris_remove_intersection_outputs(
 
 
 def mris_remove_intersection_execute(
-    params: MrisRemoveIntersectionParameters,
+    params: MrisRemoveIntersectionParamsDict,
     runner: Runner | None = None,
 ) -> MrisRemoveIntersectionOutputs:
     """
@@ -228,6 +228,8 @@ def mris_remove_intersection(
 __all__ = [
     "MRIS_REMOVE_INTERSECTION_METADATA",
     "MrisRemoveIntersectionOutputs",
+    "MrisRemoveIntersectionParamsDict",
+    "MrisRemoveIntersectionParamsDictTagged",
     "mris_remove_intersection",
     "mris_remove_intersection_execute",
     "mris_remove_intersection_params",

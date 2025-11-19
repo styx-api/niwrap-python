@@ -13,7 +13,7 @@ V_3D_SURF_MASK_METADATA = Metadata(
 )
 
 
-V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
+V3dSurfMaskParamsDict = typing.TypedDict('V3dSurfMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSurfMask"]],
     "surface_type": str,
     "surface_file": InputPathType,
@@ -25,7 +25,7 @@ V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
     "flip_orientation": bool,
     "no_distance": bool,
 })
-V3dSurfMaskParametersTagged = typing.TypedDict('V3dSurfMaskParametersTagged', {
+V3dSurfMaskParamsDictTagged = typing.TypedDict('V3dSurfMaskParamsDictTagged', {
     "@type": typing.Literal["afni/3dSurfMask"],
     "surface_type": str,
     "surface_file": InputPathType,
@@ -41,7 +41,7 @@ V3dSurfMaskParametersTagged = typing.TypedDict('V3dSurfMaskParametersTagged', {
 
 class V3dSurfMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSurfMaskParameters(...)`.
+    Output object returned when calling `V3dSurfMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_surf_mask_params(
     mask_only: bool = False,
     flip_orientation: bool = False,
     no_distance: bool = False,
-) -> V3dSurfMaskParametersTagged:
+) -> V3dSurfMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def v_3d_surf_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSurfMaskParameters` object.
+    `V3dSurfMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def v_3d_surf_mask_validate(
 
 
 def v_3d_surf_mask_cargs(
-    params: V3dSurfMaskParameters,
+    params: V3dSurfMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -184,7 +184,7 @@ def v_3d_surf_mask_cargs(
 
 
 def v_3d_surf_mask_outputs(
-    params: V3dSurfMaskParameters,
+    params: V3dSurfMaskParamsDict,
     execution: Execution,
 ) -> V3dSurfMaskOutputs:
     """
@@ -205,7 +205,7 @@ def v_3d_surf_mask_outputs(
 
 
 def v_3d_surf_mask_execute(
-    params: V3dSurfMaskParameters,
+    params: V3dSurfMaskParamsDict,
     runner: Runner | None = None,
 ) -> V3dSurfMaskOutputs:
     """
@@ -288,6 +288,8 @@ def v_3d_surf_mask(
 
 __all__ = [
     "V3dSurfMaskOutputs",
+    "V3dSurfMaskParamsDict",
+    "V3dSurfMaskParamsDictTagged",
     "V_3D_SURF_MASK_METADATA",
     "v_3d_surf_mask",
     "v_3d_surf_mask_execute",

@@ -13,7 +13,7 @@ TOPUP_METADATA = Metadata(
 )
 
 
-TopupParameters = typing.TypedDict('TopupParameters', {
+TopupParamsDict = typing.TypedDict('TopupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/topup"]],
     "imain": InputPathType,
     "datain": InputPathType,
@@ -39,7 +39,7 @@ TopupParameters = typing.TypedDict('TopupParameters', {
     "nthr": typing.NotRequired[float | None],
     "verbose": bool,
 })
-TopupParametersTagged = typing.TypedDict('TopupParametersTagged', {
+TopupParamsDictTagged = typing.TypedDict('TopupParamsDictTagged', {
     "@type": typing.Literal["fsl/topup"],
     "imain": InputPathType,
     "datain": InputPathType,
@@ -69,7 +69,7 @@ TopupParametersTagged = typing.TypedDict('TopupParametersTagged', {
 
 class TopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TopupParameters(...)`.
+    Output object returned when calling `TopupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +109,7 @@ def topup_params(
     regrid: bool = False,
     nthr: float | None = None,
     verbose: bool = False,
-) -> TopupParametersTagged:
+) -> TopupParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def topup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TopupParameters` object.
+    `TopupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -294,7 +294,7 @@ def topup_validate(
 
 
 def topup_cargs(
-    params: TopupParameters,
+    params: TopupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def topup_cargs(
 
 
 def topup_outputs(
-    params: TopupParameters,
+    params: TopupParamsDict,
     execution: Execution,
 ) -> TopupOutputs:
     """
@@ -380,7 +380,7 @@ def topup_outputs(
 
 
 def topup_execute(
-    params: TopupParameters,
+    params: TopupParamsDict,
     runner: Runner | None = None,
 ) -> TopupOutputs:
     """
@@ -514,6 +514,8 @@ def topup(
 __all__ = [
     "TOPUP_METADATA",
     "TopupOutputs",
+    "TopupParamsDict",
+    "TopupParamsDictTagged",
     "topup",
     "topup_execute",
     "topup_params",

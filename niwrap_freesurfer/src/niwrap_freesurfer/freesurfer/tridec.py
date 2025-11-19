@@ -13,14 +13,14 @@ TRIDEC_METADATA = Metadata(
 )
 
 
-TridecParameters = typing.TypedDict('TridecParameters', {
+TridecParamsDict = typing.TypedDict('TridecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tridec"]],
     "subject_name": str,
     "fine_file": InputPathType,
     "ico_file": InputPathType,
     "out_file": str,
 })
-TridecParametersTagged = typing.TypedDict('TridecParametersTagged', {
+TridecParamsDictTagged = typing.TypedDict('TridecParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tridec"],
     "subject_name": str,
     "fine_file": InputPathType,
@@ -31,7 +31,7 @@ TridecParametersTagged = typing.TypedDict('TridecParametersTagged', {
 
 class TridecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TridecParameters(...)`.
+    Output object returned when calling `TridecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def tridec_params(
     fine_file: InputPathType,
     ico_file: InputPathType,
     out_file: str,
-) -> TridecParametersTagged:
+) -> TridecParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def tridec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TridecParameters` object.
+    `TridecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def tridec_validate(
 
 
 def tridec_cargs(
-    params: TridecParameters,
+    params: TridecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def tridec_cargs(
 
 
 def tridec_outputs(
-    params: TridecParameters,
+    params: TridecParamsDict,
     execution: Execution,
 ) -> TridecOutputs:
     """
@@ -139,7 +139,7 @@ def tridec_outputs(
 
 
 def tridec_execute(
-    params: TridecParameters,
+    params: TridecParamsDict,
     runner: Runner | None = None,
 ) -> TridecOutputs:
     """
@@ -204,6 +204,8 @@ def tridec(
 __all__ = [
     "TRIDEC_METADATA",
     "TridecOutputs",
+    "TridecParamsDict",
+    "TridecParamsDictTagged",
     "tridec",
     "tridec_execute",
     "tridec_params",

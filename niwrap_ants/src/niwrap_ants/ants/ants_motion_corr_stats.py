@@ -13,7 +13,7 @@ ANTS_MOTION_CORR_STATS_METADATA = Metadata(
 )
 
 
-AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters', {
+AntsMotionCorrStatsParamsDict = typing.TypedDict('AntsMotionCorrStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrStats"]],
     "mask": InputPathType,
     "moco_params": InputPathType,
@@ -24,7 +24,7 @@ AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters'
     "timeseries_displacement": bool,
     "help": typing.NotRequired[bool | None],
 })
-AntsMotionCorrStatsParametersTagged = typing.TypedDict('AntsMotionCorrStatsParametersTagged', {
+AntsMotionCorrStatsParamsDictTagged = typing.TypedDict('AntsMotionCorrStatsParamsDictTagged', {
     "@type": typing.Literal["ants/antsMotionCorrStats"],
     "mask": InputPathType,
     "moco_params": InputPathType,
@@ -39,7 +39,7 @@ AntsMotionCorrStatsParametersTagged = typing.TypedDict('AntsMotionCorrStatsParam
 
 class AntsMotionCorrStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsMotionCorrStatsParameters(...)`.
+    Output object returned when calling `AntsMotionCorrStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def ants_motion_corr_stats_params(
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
     help_: bool | None = None,
-) -> AntsMotionCorrStatsParametersTagged:
+) -> AntsMotionCorrStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def ants_motion_corr_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsMotionCorrStatsParameters` object.
+    `AntsMotionCorrStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def ants_motion_corr_stats_validate(
 
 
 def ants_motion_corr_stats_cargs(
-    params: AntsMotionCorrStatsParameters,
+    params: AntsMotionCorrStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def ants_motion_corr_stats_cargs(
 
 
 def ants_motion_corr_stats_outputs(
-    params: AntsMotionCorrStatsParameters,
+    params: AntsMotionCorrStatsParamsDict,
     execution: Execution,
 ) -> AntsMotionCorrStatsOutputs:
     """
@@ -203,7 +203,7 @@ def ants_motion_corr_stats_outputs(
 
 
 def ants_motion_corr_stats_execute(
-    params: AntsMotionCorrStatsParameters,
+    params: AntsMotionCorrStatsParamsDict,
     runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """
@@ -291,6 +291,8 @@ def ants_motion_corr_stats(
 __all__ = [
     "ANTS_MOTION_CORR_STATS_METADATA",
     "AntsMotionCorrStatsOutputs",
+    "AntsMotionCorrStatsParamsDict",
+    "AntsMotionCorrStatsParamsDictTagged",
     "ants_motion_corr_stats",
     "ants_motion_corr_stats_execute",
     "ants_motion_corr_stats_params",

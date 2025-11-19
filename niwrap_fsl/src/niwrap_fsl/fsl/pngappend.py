@@ -13,12 +13,12 @@ PNGAPPEND_METADATA = Metadata(
 )
 
 
-PngappendParameters = typing.TypedDict('PngappendParameters', {
+PngappendParamsDict = typing.TypedDict('PngappendParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pngappend"]],
     "input_files_and_options": list[str],
     "output_file": InputPathType,
 })
-PngappendParametersTagged = typing.TypedDict('PngappendParametersTagged', {
+PngappendParamsDictTagged = typing.TypedDict('PngappendParamsDictTagged', {
     "@type": typing.Literal["fsl/pngappend"],
     "input_files_and_options": list[str],
     "output_file": InputPathType,
@@ -27,7 +27,7 @@ PngappendParametersTagged = typing.TypedDict('PngappendParametersTagged', {
 
 class PngappendOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PngappendParameters(...)`.
+    Output object returned when calling `PngappendParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class PngappendOutputs(typing.NamedTuple):
 def pngappend_params(
     input_files_and_options: list[str],
     output_file: InputPathType,
-) -> PngappendParametersTagged:
+) -> PngappendParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def pngappend_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PngappendParameters` object.
+    `PngappendParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def pngappend_validate(
 
 
 def pngappend_cargs(
-    params: PngappendParameters,
+    params: PngappendParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def pngappend_cargs(
 
 
 def pngappend_outputs(
-    params: PngappendParameters,
+    params: PngappendParamsDict,
     execution: Execution,
 ) -> PngappendOutputs:
     """
@@ -120,7 +120,7 @@ def pngappend_outputs(
 
 
 def pngappend_execute(
-    params: PngappendParameters,
+    params: PngappendParamsDict,
     runner: Runner | None = None,
 ) -> PngappendOutputs:
     """
@@ -182,6 +182,8 @@ def pngappend(
 __all__ = [
     "PNGAPPEND_METADATA",
     "PngappendOutputs",
+    "PngappendParamsDict",
+    "PngappendParamsDictTagged",
     "pngappend",
     "pngappend_execute",
     "pngappend_params",

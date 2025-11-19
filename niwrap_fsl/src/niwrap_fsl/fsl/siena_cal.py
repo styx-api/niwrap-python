@@ -13,14 +13,14 @@ SIENA_CAL_METADATA = Metadata(
 )
 
 
-SienaCalParameters = typing.TypedDict('SienaCalParameters', {
+SienaCalParamsDict = typing.TypedDict('SienaCalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/siena_cal"]],
     "input1_file": InputPathType,
     "input2_file": InputPathType,
     "scale": float,
     "siena_diff_options": typing.NotRequired[str | None],
 })
-SienaCalParametersTagged = typing.TypedDict('SienaCalParametersTagged', {
+SienaCalParamsDictTagged = typing.TypedDict('SienaCalParamsDictTagged', {
     "@type": typing.Literal["fsl/siena_cal"],
     "input1_file": InputPathType,
     "input2_file": InputPathType,
@@ -31,7 +31,7 @@ SienaCalParametersTagged = typing.TypedDict('SienaCalParametersTagged', {
 
 class SienaCalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaCalParameters(...)`.
+    Output object returned when calling `SienaCalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def siena_cal_params(
     input2_file: InputPathType,
     scale: float,
     siena_diff_options: str | None = None,
-) -> SienaCalParametersTagged:
+) -> SienaCalParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def siena_cal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaCalParameters` object.
+    `SienaCalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def siena_cal_validate(
 
 
 def siena_cal_cargs(
-    params: SienaCalParameters,
+    params: SienaCalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def siena_cal_cargs(
 
 
 def siena_cal_outputs(
-    params: SienaCalParameters,
+    params: SienaCalParamsDict,
     execution: Execution,
 ) -> SienaCalOutputs:
     """
@@ -140,7 +140,7 @@ def siena_cal_outputs(
 
 
 def siena_cal_execute(
-    params: SienaCalParameters,
+    params: SienaCalParamsDict,
     runner: Runner | None = None,
 ) -> SienaCalOutputs:
     """
@@ -207,6 +207,8 @@ def siena_cal(
 __all__ = [
     "SIENA_CAL_METADATA",
     "SienaCalOutputs",
+    "SienaCalParamsDict",
+    "SienaCalParamsDictTagged",
     "siena_cal",
     "siena_cal_execute",
     "siena_cal_params",

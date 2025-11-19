@@ -13,7 +13,7 @@ V_3D_NWARP_FUNCS_METADATA = Metadata(
 )
 
 
-V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
+V3dNwarpFuncsParamsDict = typing.TypedDict('V3dNwarpFuncsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNwarpFuncs"]],
     "input_warp": InputPathType,
     "output_prefix": str,
@@ -22,7 +22,7 @@ V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
     "vorticity_flag": bool,
     "all_flag": bool,
 })
-V3dNwarpFuncsParametersTagged = typing.TypedDict('V3dNwarpFuncsParametersTagged', {
+V3dNwarpFuncsParamsDictTagged = typing.TypedDict('V3dNwarpFuncsParamsDictTagged', {
     "@type": typing.Literal["afni/3dNwarpFuncs"],
     "input_warp": InputPathType,
     "output_prefix": str,
@@ -35,7 +35,7 @@ V3dNwarpFuncsParametersTagged = typing.TypedDict('V3dNwarpFuncsParametersTagged'
 
 class V3dNwarpFuncsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNwarpFuncsParameters(...)`.
+    Output object returned when calling `V3dNwarpFuncsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_nwarp_funcs_params(
     shear_flag: bool = False,
     vorticity_flag: bool = False,
     all_flag: bool = False,
-) -> V3dNwarpFuncsParametersTagged:
+) -> V3dNwarpFuncsParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def v_3d_nwarp_funcs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNwarpFuncsParameters` object.
+    `V3dNwarpFuncsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def v_3d_nwarp_funcs_validate(
 
 
 def v_3d_nwarp_funcs_cargs(
-    params: V3dNwarpFuncsParameters,
+    params: V3dNwarpFuncsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def v_3d_nwarp_funcs_cargs(
 
 
 def v_3d_nwarp_funcs_outputs(
-    params: V3dNwarpFuncsParameters,
+    params: V3dNwarpFuncsParamsDict,
     execution: Execution,
 ) -> V3dNwarpFuncsOutputs:
     """
@@ -171,7 +171,7 @@ def v_3d_nwarp_funcs_outputs(
 
 
 def v_3d_nwarp_funcs_execute(
-    params: V3dNwarpFuncsParameters,
+    params: V3dNwarpFuncsParamsDict,
     runner: Runner | None = None,
 ) -> V3dNwarpFuncsOutputs:
     """
@@ -245,6 +245,8 @@ def v_3d_nwarp_funcs(
 
 __all__ = [
     "V3dNwarpFuncsOutputs",
+    "V3dNwarpFuncsParamsDict",
+    "V3dNwarpFuncsParamsDictTagged",
     "V_3D_NWARP_FUNCS_METADATA",
     "v_3d_nwarp_funcs",
     "v_3d_nwarp_funcs_execute",

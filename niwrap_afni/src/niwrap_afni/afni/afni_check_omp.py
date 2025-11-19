@@ -13,11 +13,11 @@ AFNI_CHECK_OMP_METADATA = Metadata(
 )
 
 
-AfniCheckOmpParameters = typing.TypedDict('AfniCheckOmpParameters', {
+AfniCheckOmpParamsDict = typing.TypedDict('AfniCheckOmpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_check_omp"]],
     "iterations": typing.NotRequired[float | None],
 })
-AfniCheckOmpParametersTagged = typing.TypedDict('AfniCheckOmpParametersTagged', {
+AfniCheckOmpParamsDictTagged = typing.TypedDict('AfniCheckOmpParamsDictTagged', {
     "@type": typing.Literal["afni/afni_check_omp"],
     "iterations": typing.NotRequired[float | None],
 })
@@ -25,7 +25,7 @@ AfniCheckOmpParametersTagged = typing.TypedDict('AfniCheckOmpParametersTagged', 
 
 class AfniCheckOmpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniCheckOmpParameters(...)`.
+    Output object returned when calling `AfniCheckOmpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class AfniCheckOmpOutputs(typing.NamedTuple):
 
 def afni_check_omp_params(
     iterations: float | None = None,
-) -> AfniCheckOmpParametersTagged:
+) -> AfniCheckOmpParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def afni_check_omp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniCheckOmpParameters` object.
+    `AfniCheckOmpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def afni_check_omp_validate(
 
 
 def afni_check_omp_cargs(
-    params: AfniCheckOmpParameters,
+    params: AfniCheckOmpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def afni_check_omp_cargs(
 
 
 def afni_check_omp_outputs(
-    params: AfniCheckOmpParameters,
+    params: AfniCheckOmpParamsDict,
     execution: Execution,
 ) -> AfniCheckOmpOutputs:
     """
@@ -107,7 +107,7 @@ def afni_check_omp_outputs(
 
 
 def afni_check_omp_execute(
-    params: AfniCheckOmpParameters,
+    params: AfniCheckOmpParamsDict,
     runner: Runner | None = None,
 ) -> AfniCheckOmpOutputs:
     """
@@ -163,6 +163,8 @@ def afni_check_omp(
 __all__ = [
     "AFNI_CHECK_OMP_METADATA",
     "AfniCheckOmpOutputs",
+    "AfniCheckOmpParamsDict",
+    "AfniCheckOmpParamsDictTagged",
     "afni_check_omp",
     "afni_check_omp_execute",
     "afni_check_omp_params",

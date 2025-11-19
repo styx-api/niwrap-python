@@ -12,35 +12,35 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
 )
 
 
-CiftiMergeDenseCiftiParameters = typing.TypedDict('CiftiMergeDenseCiftiParameters', {
+CiftiMergeDenseCiftiParamsDict = typing.TypedDict('CiftiMergeDenseCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiMergeDenseCiftiParametersTagged = typing.TypedDict('CiftiMergeDenseCiftiParametersTagged', {
+CiftiMergeDenseCiftiParamsDictTagged = typing.TypedDict('CiftiMergeDenseCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiMergeDenseParameters = typing.TypedDict('CiftiMergeDenseParameters', {
+CiftiMergeDenseParamsDict = typing.TypedDict('CiftiMergeDenseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge-dense"]],
     "cifti-out": str,
     "action": typing.NotRequired[str | None],
-    "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
     "direction": str,
 })
-CiftiMergeDenseParametersTagged = typing.TypedDict('CiftiMergeDenseParametersTagged', {
+CiftiMergeDenseParamsDictTagged = typing.TypedDict('CiftiMergeDenseParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-merge-dense"],
     "cifti-out": str,
     "action": typing.NotRequired[str | None],
-    "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
     "direction": str,
 })
 
 
-def cifti_merge_dense_cifti_params(
+def cifti_merge_dense_cifti(
     cifti_in: InputPathType,
-) -> CiftiMergeDenseCiftiParametersTagged:
+) -> CiftiMergeDenseCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def cifti_merge_dense_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMergeDenseCiftiParameters` object.
+    `CiftiMergeDenseCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -75,7 +75,7 @@ def cifti_merge_dense_cifti_validate(
 
 
 def cifti_merge_dense_cifti_cargs(
-    params: CiftiMergeDenseCiftiParameters,
+    params: CiftiMergeDenseCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def cifti_merge_dense_cifti_cargs(
 
 class CiftiMergeDenseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiMergeDenseParameters(...)`.
+    Output object returned when calling `CiftiMergeDenseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,8 +109,8 @@ def cifti_merge_dense_params(
     cifti_out: str,
     action: str | None,
     direction: str,
-    cifti: list[CiftiMergeDenseCiftiParameters] | None = None,
-) -> CiftiMergeDenseParametersTagged:
+    cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
+) -> CiftiMergeDenseParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def cifti_merge_dense_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMergeDenseParameters` object.
+    `CiftiMergeDenseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def cifti_merge_dense_validate(
             raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeDenseCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeDenseCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_merge_dense_cifti_validate(e)
     if params.get("direction", None) is None:
@@ -168,7 +168,7 @@ def cifti_merge_dense_validate(
 
 
 def cifti_merge_dense_cargs(
-    params: CiftiMergeDenseParameters,
+    params: CiftiMergeDenseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def cifti_merge_dense_cargs(
 
 
 def cifti_merge_dense_outputs(
-    params: CiftiMergeDenseParameters,
+    params: CiftiMergeDenseParamsDict,
     execution: Execution,
 ) -> CiftiMergeDenseOutputs:
     """
@@ -215,7 +215,7 @@ def cifti_merge_dense_outputs(
 
 
 def cifti_merge_dense_execute(
-    params: CiftiMergeDenseParameters,
+    params: CiftiMergeDenseParamsDict,
     runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
     """
@@ -245,7 +245,7 @@ def cifti_merge_dense(
     cifti_out: str,
     action: str | None,
     direction: str,
-    cifti: list[CiftiMergeDenseCiftiParameters] | None = None,
+    cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
     """
@@ -278,9 +278,13 @@ def cifti_merge_dense(
 
 __all__ = [
     "CIFTI_MERGE_DENSE_METADATA",
+    "CiftiMergeDenseCiftiParamsDict",
+    "CiftiMergeDenseCiftiParamsDictTagged",
     "CiftiMergeDenseOutputs",
+    "CiftiMergeDenseParamsDict",
+    "CiftiMergeDenseParamsDictTagged",
     "cifti_merge_dense",
-    "cifti_merge_dense_cifti_params",
+    "cifti_merge_dense_cifti",
     "cifti_merge_dense_execute",
     "cifti_merge_dense_params",
 ]

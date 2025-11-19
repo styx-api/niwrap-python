@@ -13,7 +13,7 @@ MRI_COMPUTE_OVERLAP_METADATA = Metadata(
 )
 
 
-MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
+MriComputeOverlapParamsDict = typing.TypedDict('MriComputeOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_overlap"]],
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
@@ -27,7 +27,7 @@ MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
     "translate_label": typing.NotRequired[list[float] | None],
     "help": bool,
 })
-MriComputeOverlapParametersTagged = typing.TypedDict('MriComputeOverlapParametersTagged', {
+MriComputeOverlapParamsDictTagged = typing.TypedDict('MriComputeOverlapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_overlap"],
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
@@ -45,7 +45,7 @@ MriComputeOverlapParametersTagged = typing.TypedDict('MriComputeOverlapParameter
 
 class MriComputeOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeOverlapParameters(...)`.
+    Output object returned when calling `MriComputeOverlapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def mri_compute_overlap_params(
     quiet_mode: bool = False,
     translate_label: list[float] | None = None,
     help_: bool = False,
-) -> MriComputeOverlapParametersTagged:
+) -> MriComputeOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def mri_compute_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeOverlapParameters` object.
+    `MriComputeOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def mri_compute_overlap_validate(
 
 
 def mri_compute_overlap_cargs(
-    params: MriComputeOverlapParameters,
+    params: MriComputeOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def mri_compute_overlap_cargs(
 
 
 def mri_compute_overlap_outputs(
-    params: MriComputeOverlapParameters,
+    params: MriComputeOverlapParamsDict,
     execution: Execution,
 ) -> MriComputeOverlapOutputs:
     """
@@ -241,7 +241,7 @@ def mri_compute_overlap_outputs(
 
 
 def mri_compute_overlap_execute(
-    params: MriComputeOverlapParameters,
+    params: MriComputeOverlapParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeOverlapOutputs:
     """
@@ -334,6 +334,8 @@ def mri_compute_overlap(
 __all__ = [
     "MRI_COMPUTE_OVERLAP_METADATA",
     "MriComputeOverlapOutputs",
+    "MriComputeOverlapParamsDict",
+    "MriComputeOverlapParamsDictTagged",
     "mri_compute_overlap",
     "mri_compute_overlap_execute",
     "mri_compute_overlap_params",

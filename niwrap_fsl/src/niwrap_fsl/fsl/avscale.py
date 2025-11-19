@@ -13,14 +13,14 @@ AVSCALE_METADATA = Metadata(
 )
 
 
-AvscaleParameters = typing.TypedDict('AvscaleParameters', {
+AvscaleParamsDict = typing.TypedDict('AvscaleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/avscale"]],
     "allparams_flag": bool,
     "inverteddies_flag": bool,
     "matrix_file": InputPathType,
     "non_reference_volume": typing.NotRequired[InputPathType | None],
 })
-AvscaleParametersTagged = typing.TypedDict('AvscaleParametersTagged', {
+AvscaleParamsDictTagged = typing.TypedDict('AvscaleParamsDictTagged', {
     "@type": typing.Literal["fsl/avscale"],
     "allparams_flag": bool,
     "inverteddies_flag": bool,
@@ -31,7 +31,7 @@ AvscaleParametersTagged = typing.TypedDict('AvscaleParametersTagged', {
 
 class AvscaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AvscaleParameters(...)`.
+    Output object returned when calling `AvscaleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def avscale_params(
     allparams_flag: bool = False,
     inverteddies_flag: bool = False,
     non_reference_volume: InputPathType | None = None,
-) -> AvscaleParametersTagged:
+) -> AvscaleParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def avscale_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AvscaleParameters` object.
+    `AvscaleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def avscale_validate(
 
 
 def avscale_cargs(
-    params: AvscaleParameters,
+    params: AvscaleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def avscale_cargs(
 
 
 def avscale_outputs(
-    params: AvscaleParameters,
+    params: AvscaleParamsDict,
     execution: Execution,
 ) -> AvscaleOutputs:
     """
@@ -142,7 +142,7 @@ def avscale_outputs(
 
 
 def avscale_execute(
-    params: AvscaleParameters,
+    params: AvscaleParamsDict,
     runner: Runner | None = None,
 ) -> AvscaleOutputs:
     """
@@ -207,6 +207,8 @@ def avscale(
 __all__ = [
     "AVSCALE_METADATA",
     "AvscaleOutputs",
+    "AvscaleParamsDict",
+    "AvscaleParamsDictTagged",
     "avscale",
     "avscale_execute",
     "avscale_params",

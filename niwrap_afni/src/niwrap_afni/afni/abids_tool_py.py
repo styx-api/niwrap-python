@@ -13,7 +13,7 @@ ABIDS_TOOL_PY_METADATA = Metadata(
 )
 
 
-AbidsToolPyParameters = typing.TypedDict('AbidsToolPyParameters', {
+AbidsToolPyParamsDict = typing.TypedDict('AbidsToolPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/abids_tool.py"]],
     "input_files": list[InputPathType],
     "tr_match": bool,
@@ -22,7 +22,7 @@ AbidsToolPyParameters = typing.TypedDict('AbidsToolPyParameters', {
     "copy_prefix": typing.NotRequired[list[str] | None],
     "help_flag": bool,
 })
-AbidsToolPyParametersTagged = typing.TypedDict('AbidsToolPyParametersTagged', {
+AbidsToolPyParamsDictTagged = typing.TypedDict('AbidsToolPyParamsDictTagged', {
     "@type": typing.Literal["afni/abids_tool.py"],
     "input_files": list[InputPathType],
     "tr_match": bool,
@@ -35,7 +35,7 @@ AbidsToolPyParametersTagged = typing.TypedDict('AbidsToolPyParametersTagged', {
 
 class AbidsToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AbidsToolPyParameters(...)`.
+    Output object returned when calling `AbidsToolPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def abids_tool_py_params(
     add_slice_times: bool = False,
     copy_prefix: list[str] | None = None,
     help_flag: bool = False,
-) -> AbidsToolPyParametersTagged:
+) -> AbidsToolPyParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def abids_tool_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AbidsToolPyParameters` object.
+    `AbidsToolPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def abids_tool_py_validate(
 
 
 def abids_tool_py_cargs(
-    params: AbidsToolPyParameters,
+    params: AbidsToolPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def abids_tool_py_cargs(
 
 
 def abids_tool_py_outputs(
-    params: AbidsToolPyParameters,
+    params: AbidsToolPyParamsDict,
     execution: Execution,
 ) -> AbidsToolPyOutputs:
     """
@@ -174,7 +174,7 @@ def abids_tool_py_outputs(
 
 
 def abids_tool_py_execute(
-    params: AbidsToolPyParameters,
+    params: AbidsToolPyParamsDict,
     runner: Runner | None = None,
 ) -> AbidsToolPyOutputs:
     """
@@ -253,6 +253,8 @@ def abids_tool_py(
 __all__ = [
     "ABIDS_TOOL_PY_METADATA",
     "AbidsToolPyOutputs",
+    "AbidsToolPyParamsDict",
+    "AbidsToolPyParamsDictTagged",
     "abids_tool_py",
     "abids_tool_py_execute",
     "abids_tool_py_params",

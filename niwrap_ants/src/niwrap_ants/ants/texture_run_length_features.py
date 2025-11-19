@@ -13,7 +13,7 @@ TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
 )
 
 
-TextureRunLengthFeaturesParameters = typing.TypedDict('TextureRunLengthFeaturesParameters', {
+TextureRunLengthFeaturesParamsDict = typing.TypedDict('TextureRunLengthFeaturesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/TextureRunLengthFeatures"]],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -21,7 +21,7 @@ TextureRunLengthFeaturesParameters = typing.TypedDict('TextureRunLengthFeaturesP
     "mask_image": typing.NotRequired[InputPathType | None],
     "mask_label": typing.NotRequired[int | None],
 })
-TextureRunLengthFeaturesParametersTagged = typing.TypedDict('TextureRunLengthFeaturesParametersTagged', {
+TextureRunLengthFeaturesParamsDictTagged = typing.TypedDict('TextureRunLengthFeaturesParamsDictTagged', {
     "@type": typing.Literal["ants/TextureRunLengthFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -33,7 +33,7 @@ TextureRunLengthFeaturesParametersTagged = typing.TypedDict('TextureRunLengthFea
 
 class TextureRunLengthFeaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TextureRunLengthFeaturesParameters(...)`.
+    Output object returned when calling `TextureRunLengthFeaturesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def texture_run_length_features_params(
     number_of_bins_per_axis: int | None = None,
     mask_image: InputPathType | None = None,
     mask_label: int | None = None,
-) -> TextureRunLengthFeaturesParametersTagged:
+) -> TextureRunLengthFeaturesParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def texture_run_length_features_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TextureRunLengthFeaturesParameters` object.
+    `TextureRunLengthFeaturesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def texture_run_length_features_validate(
 
 
 def texture_run_length_features_cargs(
-    params: TextureRunLengthFeaturesParameters,
+    params: TextureRunLengthFeaturesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def texture_run_length_features_cargs(
 
 
 def texture_run_length_features_outputs(
-    params: TextureRunLengthFeaturesParameters,
+    params: TextureRunLengthFeaturesParamsDict,
     execution: Execution,
 ) -> TextureRunLengthFeaturesOutputs:
     """
@@ -179,7 +179,7 @@ def texture_run_length_features_outputs(
 
 
 def texture_run_length_features_execute(
-    params: TextureRunLengthFeaturesParameters,
+    params: TextureRunLengthFeaturesParamsDict,
     runner: Runner | None = None,
 ) -> TextureRunLengthFeaturesOutputs:
     """
@@ -247,6 +247,8 @@ def texture_run_length_features(
 __all__ = [
     "TEXTURE_RUN_LENGTH_FEATURES_METADATA",
     "TextureRunLengthFeaturesOutputs",
+    "TextureRunLengthFeaturesParamsDict",
+    "TextureRunLengthFeaturesParamsDictTagged",
     "texture_run_length_features",
     "texture_run_length_features_execute",
     "texture_run_length_features_params",

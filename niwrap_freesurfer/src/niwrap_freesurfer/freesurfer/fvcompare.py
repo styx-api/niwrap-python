@@ -13,7 +13,7 @@ FVCOMPARE_METADATA = Metadata(
 )
 
 
-FvcompareParameters = typing.TypedDict('FvcompareParameters', {
+FvcompareParamsDict = typing.TypedDict('FvcompareParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fvcompare"]],
     "subject1": str,
     "subject2": str,
@@ -41,7 +41,7 @@ FvcompareParameters = typing.TypedDict('FvcompareParameters', {
     "pointset": typing.NotRequired[InputPathType | None],
     "wot2": bool,
 })
-FvcompareParametersTagged = typing.TypedDict('FvcompareParametersTagged', {
+FvcompareParamsDictTagged = typing.TypedDict('FvcompareParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fvcompare"],
     "subject1": str,
     "subject2": str,
@@ -73,7 +73,7 @@ FvcompareParametersTagged = typing.TypedDict('FvcompareParametersTagged', {
 
 class FvcompareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FvcompareParameters(...)`.
+    Output object returned when calling `FvcompareParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def fvcompare_params(
     surf_name: str | None = None,
     pointset: InputPathType | None = None,
     wot2: bool = False,
-) -> FvcompareParametersTagged:
+) -> FvcompareParamsDictTagged:
     """
     Build parameters.
     
@@ -190,7 +190,7 @@ def fvcompare_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FvcompareParameters` object.
+    `FvcompareParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -297,7 +297,7 @@ def fvcompare_validate(
 
 
 def fvcompare_cargs(
-    params: FvcompareParameters,
+    params: FvcompareParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -408,7 +408,7 @@ def fvcompare_cargs(
 
 
 def fvcompare_outputs(
-    params: FvcompareParameters,
+    params: FvcompareParamsDict,
     execution: Execution,
 ) -> FvcompareOutputs:
     """
@@ -427,7 +427,7 @@ def fvcompare_outputs(
 
 
 def fvcompare_execute(
-    params: FvcompareParameters,
+    params: FvcompareParamsDict,
     runner: Runner | None = None,
 ) -> FvcompareOutputs:
     """
@@ -562,6 +562,8 @@ def fvcompare(
 __all__ = [
     "FVCOMPARE_METADATA",
     "FvcompareOutputs",
+    "FvcompareParamsDict",
+    "FvcompareParamsDictTagged",
     "fvcompare",
     "fvcompare_execute",
     "fvcompare_params",

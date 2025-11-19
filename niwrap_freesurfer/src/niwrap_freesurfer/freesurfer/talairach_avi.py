@@ -13,7 +13,7 @@ TALAIRACH_AVI_METADATA = Metadata(
 )
 
 
-TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
+TalairachAviParamsDict = typing.TypedDict('TalairachAviParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_avi"]],
     "input_file": InputPathType,
     "output_xfm": str,
@@ -21,7 +21,7 @@ TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
     "log": typing.NotRequired[str | None],
     "debug": bool,
 })
-TalairachAviParametersTagged = typing.TypedDict('TalairachAviParametersTagged', {
+TalairachAviParamsDictTagged = typing.TypedDict('TalairachAviParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talairach_avi"],
     "input_file": InputPathType,
     "output_xfm": str,
@@ -33,7 +33,7 @@ TalairachAviParametersTagged = typing.TypedDict('TalairachAviParametersTagged', 
 
 class TalairachAviOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalairachAviParameters(...)`.
+    Output object returned when calling `TalairachAviParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def talairach_avi_params(
     atlas: str | None = None,
     log: str | None = None,
     debug: bool = False,
-) -> TalairachAviParametersTagged:
+) -> TalairachAviParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def talairach_avi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalairachAviParameters` object.
+    `TalairachAviParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def talairach_avi_validate(
 
 
 def talairach_avi_cargs(
-    params: TalairachAviParameters,
+    params: TalairachAviParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def talairach_avi_cargs(
 
 
 def talairach_avi_outputs(
-    params: TalairachAviParameters,
+    params: TalairachAviParamsDict,
     execution: Execution,
 ) -> TalairachAviOutputs:
     """
@@ -164,7 +164,7 @@ def talairach_avi_outputs(
 
 
 def talairach_avi_execute(
-    params: TalairachAviParameters,
+    params: TalairachAviParamsDict,
     runner: Runner | None = None,
 ) -> TalairachAviOutputs:
     """
@@ -234,6 +234,8 @@ def talairach_avi(
 __all__ = [
     "TALAIRACH_AVI_METADATA",
     "TalairachAviOutputs",
+    "TalairachAviParamsDict",
+    "TalairachAviParamsDictTagged",
     "talairach_avi",
     "talairach_avi_execute",
     "talairach_avi_params",

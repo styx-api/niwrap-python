@@ -13,13 +13,13 @@ COLUMN_CAT_METADATA = Metadata(
 )
 
 
-ColumnCatParameters = typing.TypedDict('ColumnCatParameters', {
+ColumnCatParamsDict = typing.TypedDict('ColumnCatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/column_cat"]],
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
-ColumnCatParametersTagged = typing.TypedDict('ColumnCatParametersTagged', {
+ColumnCatParamsDictTagged = typing.TypedDict('ColumnCatParamsDictTagged', {
     "@type": typing.Literal["afni/column_cat"],
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ ColumnCatParametersTagged = typing.TypedDict('ColumnCatParametersTagged', {
 
 class ColumnCatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ColumnCatParameters(...)`.
+    Output object returned when calling `ColumnCatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def column_cat_params(
     input_files: list[InputPathType],
     line_number: float | None = None,
     separator_string: str | None = None,
-) -> ColumnCatParametersTagged:
+) -> ColumnCatParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def column_cat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ColumnCatParameters` object.
+    `ColumnCatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def column_cat_validate(
 
 
 def column_cat_cargs(
-    params: ColumnCatParameters,
+    params: ColumnCatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def column_cat_cargs(
 
 
 def column_cat_outputs(
-    params: ColumnCatParameters,
+    params: ColumnCatParamsDict,
     execution: Execution,
 ) -> ColumnCatOutputs:
     """
@@ -141,7 +141,7 @@ def column_cat_outputs(
 
 
 def column_cat_execute(
-    params: ColumnCatParameters,
+    params: ColumnCatParamsDict,
     runner: Runner | None = None,
 ) -> ColumnCatOutputs:
     """
@@ -208,6 +208,8 @@ def column_cat(
 __all__ = [
     "COLUMN_CAT_METADATA",
     "ColumnCatOutputs",
+    "ColumnCatParamsDict",
+    "ColumnCatParamsDictTagged",
     "column_cat",
     "column_cat_execute",
     "column_cat_params",

@@ -13,7 +13,7 @@ OXFORD_ASL_METADATA = Metadata(
 )
 
 
-OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
+OxfordAslParamsDict = typing.TypedDict('OxfordAslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/oxford_asl"]],
     "asl_data": InputPathType,
     "output_dir_name": str,
@@ -45,7 +45,7 @@ OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
     "calibration_image": typing.NotRequired[InputPathType | None],
     "calibration_method": typing.NotRequired[str | None],
 })
-OxfordAslParametersTagged = typing.TypedDict('OxfordAslParametersTagged', {
+OxfordAslParamsDictTagged = typing.TypedDict('OxfordAslParamsDictTagged', {
     "@type": typing.Literal["fsl/oxford_asl"],
     "asl_data": InputPathType,
     "output_dir_name": str,
@@ -81,7 +81,7 @@ OxfordAslParametersTagged = typing.TypedDict('OxfordAslParametersTagged', {
 
 class OxfordAslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `OxfordAslParameters(...)`.
+    Output object returned when calling `OxfordAslParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +119,7 @@ def oxford_asl_params(
     tr_calibration_data: float | None = None,
     calibration_image: InputPathType | None = None,
     calibration_method: str | None = None,
-) -> OxfordAslParametersTagged:
+) -> OxfordAslParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def oxford_asl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `OxfordAslParameters` object.
+    `OxfordAslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -325,7 +325,7 @@ def oxford_asl_validate(
 
 
 def oxford_asl_cargs(
-    params: OxfordAslParameters,
+    params: OxfordAslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -468,7 +468,7 @@ def oxford_asl_cargs(
 
 
 def oxford_asl_outputs(
-    params: OxfordAslParameters,
+    params: OxfordAslParamsDict,
     execution: Execution,
 ) -> OxfordAslOutputs:
     """
@@ -488,7 +488,7 @@ def oxford_asl_outputs(
 
 
 def oxford_asl_execute(
-    params: OxfordAslParameters,
+    params: OxfordAslParamsDict,
     runner: Runner | None = None,
 ) -> OxfordAslOutputs:
     """
@@ -631,6 +631,8 @@ def oxford_asl(
 __all__ = [
     "OXFORD_ASL_METADATA",
     "OxfordAslOutputs",
+    "OxfordAslParamsDict",
+    "OxfordAslParamsDictTagged",
     "oxford_asl",
     "oxford_asl_execute",
     "oxford_asl_params",

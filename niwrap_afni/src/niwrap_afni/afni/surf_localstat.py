@@ -13,7 +13,7 @@ SURF_LOCALSTAT_METADATA = Metadata(
 )
 
 
-SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
+SurfLocalstatParamsDict = typing.TypedDict('SurfLocalstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfLocalstat"]],
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
     "input_dataset": InputPathType,
     "surface": InputPathType,
 })
-SurfLocalstatParametersTagged = typing.TypedDict('SurfLocalstatParametersTagged', {
+SurfLocalstatParamsDictTagged = typing.TypedDict('SurfLocalstatParamsDictTagged', {
     "@type": typing.Literal["afni/SurfLocalstat"],
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ SurfLocalstatParametersTagged = typing.TypedDict('SurfLocalstatParametersTagged'
 
 class SurfLocalstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfLocalstatParameters(...)`.
+    Output object returned when calling `SurfLocalstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def surf_localstat_params(
     surface: InputPathType,
     hood: float | None = None,
     nbhd_rad: float | None = None,
-) -> SurfLocalstatParametersTagged:
+) -> SurfLocalstatParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def surf_localstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfLocalstatParameters` object.
+    `SurfLocalstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def surf_localstat_validate(
 
 
 def surf_localstat_cargs(
-    params: SurfLocalstatParameters,
+    params: SurfLocalstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def surf_localstat_cargs(
 
 
 def surf_localstat_outputs(
-    params: SurfLocalstatParameters,
+    params: SurfLocalstatParamsDict,
     execution: Execution,
 ) -> SurfLocalstatOutputs:
     """
@@ -183,7 +183,7 @@ def surf_localstat_outputs(
 
 
 def surf_localstat_execute(
-    params: SurfLocalstatParameters,
+    params: SurfLocalstatParamsDict,
     runner: Runner | None = None,
 ) -> SurfLocalstatOutputs:
     """
@@ -256,6 +256,8 @@ def surf_localstat(
 __all__ = [
     "SURF_LOCALSTAT_METADATA",
     "SurfLocalstatOutputs",
+    "SurfLocalstatParamsDict",
+    "SurfLocalstatParamsDictTagged",
     "surf_localstat",
     "surf_localstat_execute",
     "surf_localstat_params",

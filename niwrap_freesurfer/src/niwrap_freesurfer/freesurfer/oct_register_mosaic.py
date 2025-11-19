@@ -13,14 +13,14 @@ OCT_REGISTER_MOSAIC_METADATA = Metadata(
 )
 
 
-OctRegisterMosaicParameters = typing.TypedDict('OctRegisterMosaicParameters', {
+OctRegisterMosaicParamsDict = typing.TypedDict('OctRegisterMosaicParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/oct_register_mosaic"]],
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
     "downsample": typing.NotRequired[float | None],
     "weight_file": typing.NotRequired[InputPathType | None],
 })
-OctRegisterMosaicParametersTagged = typing.TypedDict('OctRegisterMosaicParametersTagged', {
+OctRegisterMosaicParamsDictTagged = typing.TypedDict('OctRegisterMosaicParamsDictTagged', {
     "@type": typing.Literal["freesurfer/oct_register_mosaic"],
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
@@ -31,7 +31,7 @@ OctRegisterMosaicParametersTagged = typing.TypedDict('OctRegisterMosaicParameter
 
 class OctRegisterMosaicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `OctRegisterMosaicParameters(...)`.
+    Output object returned when calling `OctRegisterMosaicParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def oct_register_mosaic_params(
     output_volume: str,
     downsample: float | None = None,
     weight_file: InputPathType | None = None,
-) -> OctRegisterMosaicParametersTagged:
+) -> OctRegisterMosaicParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def oct_register_mosaic_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `OctRegisterMosaicParameters` object.
+    `OctRegisterMosaicParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def oct_register_mosaic_validate(
 
 
 def oct_register_mosaic_cargs(
-    params: OctRegisterMosaicParameters,
+    params: OctRegisterMosaicParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def oct_register_mosaic_cargs(
 
 
 def oct_register_mosaic_outputs(
-    params: OctRegisterMosaicParameters,
+    params: OctRegisterMosaicParamsDict,
     execution: Execution,
 ) -> OctRegisterMosaicOutputs:
     """
@@ -151,7 +151,7 @@ def oct_register_mosaic_outputs(
 
 
 def oct_register_mosaic_execute(
-    params: OctRegisterMosaicParameters,
+    params: OctRegisterMosaicParamsDict,
     runner: Runner | None = None,
 ) -> OctRegisterMosaicOutputs:
     """
@@ -219,6 +219,8 @@ def oct_register_mosaic(
 __all__ = [
     "OCT_REGISTER_MOSAIC_METADATA",
     "OctRegisterMosaicOutputs",
+    "OctRegisterMosaicParamsDict",
+    "OctRegisterMosaicParamsDictTagged",
     "oct_register_mosaic",
     "oct_register_mosaic_execute",
     "oct_register_mosaic_params",

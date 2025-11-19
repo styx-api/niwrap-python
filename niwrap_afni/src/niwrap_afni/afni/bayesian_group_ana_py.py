@@ -13,7 +13,7 @@ BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
 )
 
 
-BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', {
+BayesianGroupAnaPyParamsDict = typing.TypedDict('BayesianGroupAnaPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/BayesianGroupAna.py"]],
     "dataTable": InputPathType,
     "y_variable": str,
@@ -30,7 +30,7 @@ BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', 
     "overwrite": bool,
     "help": bool,
 })
-BayesianGroupAnaPyParametersTagged = typing.TypedDict('BayesianGroupAnaPyParametersTagged', {
+BayesianGroupAnaPyParamsDictTagged = typing.TypedDict('BayesianGroupAnaPyParamsDictTagged', {
     "@type": typing.Literal["afni/BayesianGroupAna.py"],
     "dataTable": InputPathType,
     "y_variable": str,
@@ -51,7 +51,7 @@ BayesianGroupAnaPyParametersTagged = typing.TypedDict('BayesianGroupAnaPyParamet
 
 class BayesianGroupAnaPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BayesianGroupAnaPyParameters(...)`.
+    Output object returned when calling `BayesianGroupAnaPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def bayesian_group_ana_py_params(
     seed: float | None = None,
     overwrite: bool = False,
     help_: bool = False,
-) -> BayesianGroupAnaPyParametersTagged:
+) -> BayesianGroupAnaPyParamsDictTagged:
     """
     Build parameters.
     
@@ -139,7 +139,7 @@ def bayesian_group_ana_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BayesianGroupAnaPyParameters` object.
+    `BayesianGroupAnaPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def bayesian_group_ana_py_validate(
 
 
 def bayesian_group_ana_py_cargs(
-    params: BayesianGroupAnaPyParameters,
+    params: BayesianGroupAnaPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -269,7 +269,7 @@ def bayesian_group_ana_py_cargs(
 
 
 def bayesian_group_ana_py_outputs(
-    params: BayesianGroupAnaPyParameters,
+    params: BayesianGroupAnaPyParamsDict,
     execution: Execution,
 ) -> BayesianGroupAnaPyOutputs:
     """
@@ -292,7 +292,7 @@ def bayesian_group_ana_py_outputs(
 
 
 def bayesian_group_ana_py_execute(
-    params: BayesianGroupAnaPyParameters,
+    params: BayesianGroupAnaPyParamsDict,
     runner: Runner | None = None,
 ) -> BayesianGroupAnaPyOutputs:
     """
@@ -395,6 +395,8 @@ def bayesian_group_ana_py(
 __all__ = [
     "BAYESIAN_GROUP_ANA_PY_METADATA",
     "BayesianGroupAnaPyOutputs",
+    "BayesianGroupAnaPyParamsDict",
+    "BayesianGroupAnaPyParamsDictTagged",
     "bayesian_group_ana_py",
     "bayesian_group_ana_py_execute",
     "bayesian_group_ana_py_params",

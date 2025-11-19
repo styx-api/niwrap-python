@@ -13,7 +13,7 @@ V_3D_SLICE_NDICE_METADATA = Metadata(
 )
 
 
-V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
+V3dSliceNdiceParamsDict = typing.TypedDict('V3dSliceNdiceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSliceNDice"]],
     "infile_a": InputPathType,
     "infile_b": InputPathType,
@@ -21,7 +21,7 @@ V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
     "out_domain": typing.NotRequired[typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None],
     "no_cmd_echo": bool,
 })
-V3dSliceNdiceParametersTagged = typing.TypedDict('V3dSliceNdiceParametersTagged', {
+V3dSliceNdiceParamsDictTagged = typing.TypedDict('V3dSliceNdiceParamsDictTagged', {
     "@type": typing.Literal["afni/3dSliceNDice"],
     "infile_a": InputPathType,
     "infile_b": InputPathType,
@@ -33,7 +33,7 @@ V3dSliceNdiceParametersTagged = typing.TypedDict('V3dSliceNdiceParametersTagged'
 
 class V3dSliceNdiceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSliceNdiceParameters(...)`.
+    Output object returned when calling `V3dSliceNdiceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v_3d_slice_ndice_params(
     output_prefix: str,
     out_domain: typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None = None,
     no_cmd_echo: bool = False,
-) -> V3dSliceNdiceParametersTagged:
+) -> V3dSliceNdiceParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def v_3d_slice_ndice_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSliceNdiceParameters` object.
+    `V3dSliceNdiceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def v_3d_slice_ndice_validate(
 
 
 def v_3d_slice_ndice_cargs(
-    params: V3dSliceNdiceParameters,
+    params: V3dSliceNdiceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def v_3d_slice_ndice_cargs(
 
 
 def v_3d_slice_ndice_outputs(
-    params: V3dSliceNdiceParameters,
+    params: V3dSliceNdiceParamsDict,
     execution: Execution,
 ) -> V3dSliceNdiceOutputs:
     """
@@ -175,7 +175,7 @@ def v_3d_slice_ndice_outputs(
 
 
 def v_3d_slice_ndice_execute(
-    params: V3dSliceNdiceParameters,
+    params: V3dSliceNdiceParamsDict,
     runner: Runner | None = None,
 ) -> V3dSliceNdiceOutputs:
     """
@@ -246,6 +246,8 @@ def v_3d_slice_ndice(
 
 __all__ = [
     "V3dSliceNdiceOutputs",
+    "V3dSliceNdiceParamsDict",
+    "V3dSliceNdiceParamsDictTagged",
     "V_3D_SLICE_NDICE_METADATA",
     "v_3d_slice_ndice",
     "v_3d_slice_ndice_execute",

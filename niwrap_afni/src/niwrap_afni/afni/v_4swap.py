@@ -13,12 +13,12 @@ V_4SWAP_METADATA = Metadata(
 )
 
 
-V4swapParameters = typing.TypedDict('V4swapParameters', {
+V4swapParamsDict = typing.TypedDict('V4swapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/4swap"]],
     "files": list[InputPathType],
     "quiet": bool,
 })
-V4swapParametersTagged = typing.TypedDict('V4swapParametersTagged', {
+V4swapParamsDictTagged = typing.TypedDict('V4swapParamsDictTagged', {
     "@type": typing.Literal["afni/4swap"],
     "files": list[InputPathType],
     "quiet": bool,
@@ -27,7 +27,7 @@ V4swapParametersTagged = typing.TypedDict('V4swapParametersTagged', {
 
 class V4swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V4swapParameters(...)`.
+    Output object returned when calling `V4swapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V4swapOutputs(typing.NamedTuple):
 def v_4swap_params(
     files: list[InputPathType],
     quiet: bool = False,
-) -> V4swapParametersTagged:
+) -> V4swapParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v_4swap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V4swapParameters` object.
+    `V4swapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def v_4swap_validate(
 
 
 def v_4swap_cargs(
-    params: V4swapParameters,
+    params: V4swapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v_4swap_cargs(
 
 
 def v_4swap_outputs(
-    params: V4swapParameters,
+    params: V4swapParamsDict,
     execution: Execution,
 ) -> V4swapOutputs:
     """
@@ -120,7 +120,7 @@ def v_4swap_outputs(
 
 
 def v_4swap_execute(
-    params: V4swapParameters,
+    params: V4swapParamsDict,
     runner: Runner | None = None,
 ) -> V4swapOutputs:
     """
@@ -178,6 +178,8 @@ def v_4swap(
 
 __all__ = [
     "V4swapOutputs",
+    "V4swapParamsDict",
+    "V4swapParamsDictTagged",
     "V_4SWAP_METADATA",
     "v_4swap",
     "v_4swap_execute",

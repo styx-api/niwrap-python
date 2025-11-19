@@ -13,7 +13,7 @@ V_3D_TQUAL_METADATA = Metadata(
 )
 
 
-V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
+V3dTqualParamsDict = typing.TypedDict('V3dTqualParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTqual"]],
     "dataset": InputPathType,
     "spearman": bool,
@@ -24,7 +24,7 @@ V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "range": bool,
 })
-V3dTqualParametersTagged = typing.TypedDict('V3dTqualParametersTagged', {
+V3dTqualParamsDictTagged = typing.TypedDict('V3dTqualParamsDictTagged', {
     "@type": typing.Literal["afni/3dTqual"],
     "dataset": InputPathType,
     "spearman": bool,
@@ -39,7 +39,7 @@ V3dTqualParametersTagged = typing.TypedDict('V3dTqualParametersTagged', {
 
 class V3dTqualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTqualParameters(...)`.
+    Output object returned when calling `V3dTqualParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_tqual_params(
     clip: float | None = None,
     mask: InputPathType | None = None,
     range_: bool = False,
-) -> V3dTqualParametersTagged:
+) -> V3dTqualParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def v_3d_tqual_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTqualParameters` object.
+    `V3dTqualParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def v_3d_tqual_validate(
 
 
 def v_3d_tqual_cargs(
-    params: V3dTqualParameters,
+    params: V3dTqualParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def v_3d_tqual_cargs(
 
 
 def v_3d_tqual_outputs(
-    params: V3dTqualParameters,
+    params: V3dTqualParamsDict,
     execution: Execution,
 ) -> V3dTqualOutputs:
     """
@@ -199,7 +199,7 @@ def v_3d_tqual_outputs(
 
 
 def v_3d_tqual_execute(
-    params: V3dTqualParameters,
+    params: V3dTqualParamsDict,
     runner: Runner | None = None,
 ) -> V3dTqualOutputs:
     """
@@ -282,6 +282,8 @@ def v_3d_tqual(
 
 __all__ = [
     "V3dTqualOutputs",
+    "V3dTqualParamsDict",
+    "V3dTqualParamsDictTagged",
     "V_3D_TQUAL_METADATA",
     "v_3d_tqual",
     "v_3d_tqual_execute",

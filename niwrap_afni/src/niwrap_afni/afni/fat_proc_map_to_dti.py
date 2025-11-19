@@ -13,7 +13,7 @@ FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
 )
 
 
-FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
+FatProcMapToDtiParamsDict = typing.TypedDict('FatProcMapToDtiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_map_to_dti"]],
     "source": InputPathType,
     "base": InputPathType,
@@ -28,7 +28,7 @@ FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
     "no_cmd_out": bool,
     "no_clean": bool,
 })
-FatProcMapToDtiParametersTagged = typing.TypedDict('FatProcMapToDtiParametersTagged', {
+FatProcMapToDtiParamsDictTagged = typing.TypedDict('FatProcMapToDtiParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_map_to_dti"],
     "source": InputPathType,
     "base": InputPathType,
@@ -47,7 +47,7 @@ FatProcMapToDtiParametersTagged = typing.TypedDict('FatProcMapToDtiParametersTag
 
 class FatProcMapToDtiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcMapToDtiParameters(...)`.
+    Output object returned when calling `FatProcMapToDtiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def fat_proc_map_to_dti_params(
     workdir: str | None = None,
     no_cmd_out: bool = False,
     no_clean: bool = False,
-) -> FatProcMapToDtiParametersTagged:
+) -> FatProcMapToDtiParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def fat_proc_map_to_dti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcMapToDtiParameters` object.
+    `FatProcMapToDtiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def fat_proc_map_to_dti_validate(
 
 
 def fat_proc_map_to_dti_cargs(
-    params: FatProcMapToDtiParameters,
+    params: FatProcMapToDtiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -251,7 +251,7 @@ def fat_proc_map_to_dti_cargs(
 
 
 def fat_proc_map_to_dti_outputs(
-    params: FatProcMapToDtiParameters,
+    params: FatProcMapToDtiParamsDict,
     execution: Execution,
 ) -> FatProcMapToDtiOutputs:
     """
@@ -270,7 +270,7 @@ def fat_proc_map_to_dti_outputs(
 
 
 def fat_proc_map_to_dti_execute(
-    params: FatProcMapToDtiParameters,
+    params: FatProcMapToDtiParamsDict,
     runner: Runner | None = None,
 ) -> FatProcMapToDtiOutputs:
     """
@@ -361,6 +361,8 @@ def fat_proc_map_to_dti(
 __all__ = [
     "FAT_PROC_MAP_TO_DTI_METADATA",
     "FatProcMapToDtiOutputs",
+    "FatProcMapToDtiParamsDict",
+    "FatProcMapToDtiParamsDictTagged",
     "fat_proc_map_to_dti",
     "fat_proc_map_to_dti_execute",
     "fat_proc_map_to_dti_params",

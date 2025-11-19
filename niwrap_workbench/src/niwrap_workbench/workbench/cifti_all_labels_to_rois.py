@@ -12,13 +12,13 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-CiftiAllLabelsToRoisParameters = typing.TypedDict('CiftiAllLabelsToRoisParameters', {
+CiftiAllLabelsToRoisParamsDict = typing.TypedDict('CiftiAllLabelsToRoisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-all-labels-to-rois"]],
     "cifti-out": str,
     "label-in": InputPathType,
     "map": str,
 })
-CiftiAllLabelsToRoisParametersTagged = typing.TypedDict('CiftiAllLabelsToRoisParametersTagged', {
+CiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('CiftiAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-all-labels-to-rois"],
     "cifti-out": str,
     "label-in": InputPathType,
@@ -28,7 +28,7 @@ CiftiAllLabelsToRoisParametersTagged = typing.TypedDict('CiftiAllLabelsToRoisPar
 
 class CiftiAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiAllLabelsToRoisParameters(...)`.
+    Output object returned when calling `CiftiAllLabelsToRoisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def cifti_all_labels_to_rois_params(
     cifti_out: str,
     label_in: InputPathType,
     map_: str,
-) -> CiftiAllLabelsToRoisParametersTagged:
+) -> CiftiAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def cifti_all_labels_to_rois_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAllLabelsToRoisParameters` object.
+    `CiftiAllLabelsToRoisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def cifti_all_labels_to_rois_validate(
 
 
 def cifti_all_labels_to_rois_cargs(
-    params: CiftiAllLabelsToRoisParameters,
+    params: CiftiAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def cifti_all_labels_to_rois_cargs(
 
 
 def cifti_all_labels_to_rois_outputs(
-    params: CiftiAllLabelsToRoisParameters,
+    params: CiftiAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
@@ -131,7 +131,7 @@ def cifti_all_labels_to_rois_outputs(
 
 
 def cifti_all_labels_to_rois_execute(
-    params: CiftiAllLabelsToRoisParameters,
+    params: CiftiAllLabelsToRoisParamsDict,
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
@@ -195,6 +195,8 @@ def cifti_all_labels_to_rois(
 __all__ = [
     "CIFTI_ALL_LABELS_TO_ROIS_METADATA",
     "CiftiAllLabelsToRoisOutputs",
+    "CiftiAllLabelsToRoisParamsDict",
+    "CiftiAllLabelsToRoisParamsDictTagged",
     "cifti_all_labels_to_rois",
     "cifti_all_labels_to_rois_execute",
     "cifti_all_labels_to_rois_params",

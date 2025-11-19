@@ -13,19 +13,19 @@ MESHFILTER_METADATA = Metadata(
 )
 
 
-MeshfilterConfigParameters = typing.TypedDict('MeshfilterConfigParameters', {
+MeshfilterConfigParamsDict = typing.TypedDict('MeshfilterConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MeshfilterConfigParametersTagged = typing.TypedDict('MeshfilterConfigParametersTagged', {
+MeshfilterConfigParamsDictTagged = typing.TypedDict('MeshfilterConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MeshfilterParameters = typing.TypedDict('MeshfilterParameters', {
+MeshfilterParamsDict = typing.TypedDict('MeshfilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/meshfilter"]],
     "smooth_spatial": typing.NotRequired[float | None],
     "smooth_influence": typing.NotRequired[float | None],
@@ -34,14 +34,14 @@ MeshfilterParameters = typing.TypedDict('MeshfilterParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MeshfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MeshfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "filter": str,
     "output": str,
 })
-MeshfilterParametersTagged = typing.TypedDict('MeshfilterParametersTagged', {
+MeshfilterParamsDictTagged = typing.TypedDict('MeshfilterParamsDictTagged', {
     "@type": typing.Literal["mrtrix/meshfilter"],
     "smooth_spatial": typing.NotRequired[float | None],
     "smooth_influence": typing.NotRequired[float | None],
@@ -50,7 +50,7 @@ MeshfilterParametersTagged = typing.TypedDict('MeshfilterParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MeshfilterConfigParameters] | None],
+    "config": typing.NotRequired[list[MeshfilterConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -59,10 +59,10 @@ MeshfilterParametersTagged = typing.TypedDict('MeshfilterParametersTagged', {
 })
 
 
-def meshfilter_config_params(
+def meshfilter_config(
     key: str,
     value: str,
-) -> MeshfilterConfigParametersTagged:
+) -> MeshfilterConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def meshfilter_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeshfilterConfigParameters` object.
+    `MeshfilterConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def meshfilter_config_validate(
 
 
 def meshfilter_config_cargs(
-    params: MeshfilterConfigParameters,
+    params: MeshfilterConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def meshfilter_config_cargs(
 
 class MeshfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MeshfilterParameters(...)`.
+    Output object returned when calling `MeshfilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,10 +143,10 @@ def meshfilter_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MeshfilterConfigParameters] | None = None,
+    config: list[MeshfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MeshfilterParametersTagged:
+) -> MeshfilterParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def meshfilter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeshfilterParameters` object.
+    `MeshfilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def meshfilter_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MeshfilterConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MeshfilterConfigParamsDict] | None`')
         for e in params["config"]:
             meshfilter_config_validate(e)
     if params.get("help", False) is None:
@@ -259,7 +259,7 @@ def meshfilter_validate(
 
 
 def meshfilter_cargs(
-    params: MeshfilterParameters,
+    params: MeshfilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -309,7 +309,7 @@ def meshfilter_cargs(
 
 
 def meshfilter_outputs(
-    params: MeshfilterParameters,
+    params: MeshfilterParamsDict,
     execution: Execution,
 ) -> MeshfilterOutputs:
     """
@@ -329,7 +329,7 @@ def meshfilter_outputs(
 
 
 def meshfilter_execute(
-    params: MeshfilterParameters,
+    params: MeshfilterParamsDict,
     runner: Runner | None = None,
 ) -> MeshfilterOutputs:
     """
@@ -376,7 +376,7 @@ def meshfilter(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MeshfilterConfigParameters] | None = None,
+    config: list[MeshfilterConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -440,9 +440,13 @@ def meshfilter(
 
 __all__ = [
     "MESHFILTER_METADATA",
+    "MeshfilterConfigParamsDict",
+    "MeshfilterConfigParamsDictTagged",
     "MeshfilterOutputs",
+    "MeshfilterParamsDict",
+    "MeshfilterParamsDictTagged",
     "meshfilter",
-    "meshfilter_config_params",
+    "meshfilter_config",
     "meshfilter_execute",
     "meshfilter_params",
 ]

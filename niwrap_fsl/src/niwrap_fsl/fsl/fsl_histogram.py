@@ -13,7 +13,7 @@ FSL_HISTOGRAM_METADATA = Metadata(
 )
 
 
-FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
+FslHistogramParamsDict = typing.TypedDict('FslHistogramParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_histogram"]],
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
@@ -41,7 +41,7 @@ FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
     "zoom_factor_duplicate": typing.NotRequired[float | None],
     "use_gmm_flag": bool,
 })
-FslHistogramParametersTagged = typing.TypedDict('FslHistogramParametersTagged', {
+FslHistogramParamsDictTagged = typing.TypedDict('FslHistogramParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_histogram"],
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
@@ -73,7 +73,7 @@ FslHistogramParametersTagged = typing.TypedDict('FslHistogramParametersTagged', 
 
 class FslHistogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslHistogramParameters(...)`.
+    Output object returned when calling `FslHistogramParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def fsl_histogram_params(
     zoom_factor: float | None = None,
     zoom_factor_duplicate: float | None = None,
     use_gmm_flag: bool = False,
-) -> FslHistogramParametersTagged:
+) -> FslHistogramParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def fsl_histogram_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslHistogramParameters` object.
+    `FslHistogramParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -290,7 +290,7 @@ def fsl_histogram_validate(
 
 
 def fsl_histogram_cargs(
-    params: FslHistogramParameters,
+    params: FslHistogramParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -426,7 +426,7 @@ def fsl_histogram_cargs(
 
 
 def fsl_histogram_outputs(
-    params: FslHistogramParameters,
+    params: FslHistogramParamsDict,
     execution: Execution,
 ) -> FslHistogramOutputs:
     """
@@ -446,7 +446,7 @@ def fsl_histogram_outputs(
 
 
 def fsl_histogram_execute(
-    params: FslHistogramParameters,
+    params: FslHistogramParamsDict,
     runner: Runner | None = None,
 ) -> FslHistogramOutputs:
     """
@@ -578,6 +578,8 @@ def fsl_histogram(
 __all__ = [
     "FSL_HISTOGRAM_METADATA",
     "FslHistogramOutputs",
+    "FslHistogramParamsDict",
+    "FslHistogramParamsDictTagged",
     "fsl_histogram",
     "fsl_histogram_execute",
     "fsl_histogram_params",

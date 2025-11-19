@@ -13,12 +13,12 @@ FILMBABESCRIPT_METADATA = Metadata(
 )
 
 
-FilmbabescriptParameters = typing.TypedDict('FilmbabescriptParameters', {
+FilmbabescriptParamsDict = typing.TypedDict('FilmbabescriptParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/filmbabescript"]],
     "feat_dir": str,
     "flobs_dir": str,
 })
-FilmbabescriptParametersTagged = typing.TypedDict('FilmbabescriptParametersTagged', {
+FilmbabescriptParamsDictTagged = typing.TypedDict('FilmbabescriptParamsDictTagged', {
     "@type": typing.Literal["fsl/filmbabescript"],
     "feat_dir": str,
     "flobs_dir": str,
@@ -27,7 +27,7 @@ FilmbabescriptParametersTagged = typing.TypedDict('FilmbabescriptParametersTagge
 
 class FilmbabescriptOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FilmbabescriptParameters(...)`.
+    Output object returned when calling `FilmbabescriptParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FilmbabescriptOutputs(typing.NamedTuple):
 def filmbabescript_params(
     feat_dir: str,
     flobs_dir: str,
-) -> FilmbabescriptParametersTagged:
+) -> FilmbabescriptParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def filmbabescript_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FilmbabescriptParameters` object.
+    `FilmbabescriptParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def filmbabescript_validate(
 
 
 def filmbabescript_cargs(
-    params: FilmbabescriptParameters,
+    params: FilmbabescriptParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def filmbabescript_cargs(
 
 
 def filmbabescript_outputs(
-    params: FilmbabescriptParameters,
+    params: FilmbabescriptParamsDict,
     execution: Execution,
 ) -> FilmbabescriptOutputs:
     """
@@ -116,7 +116,7 @@ def filmbabescript_outputs(
 
 
 def filmbabescript_execute(
-    params: FilmbabescriptParameters,
+    params: FilmbabescriptParamsDict,
     runner: Runner | None = None,
 ) -> FilmbabescriptOutputs:
     """
@@ -175,6 +175,8 @@ def filmbabescript(
 __all__ = [
     "FILMBABESCRIPT_METADATA",
     "FilmbabescriptOutputs",
+    "FilmbabescriptParamsDict",
+    "FilmbabescriptParamsDictTagged",
     "filmbabescript",
     "filmbabescript_execute",
     "filmbabescript_params",

@@ -13,29 +13,29 @@ CONNECTOMESTATS_METADATA = Metadata(
 )
 
 
-ConnectomestatsColumnParameters = typing.TypedDict('ConnectomestatsColumnParameters', {
+ConnectomestatsColumnParamsDict = typing.TypedDict('ConnectomestatsColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "path": InputPathType,
 })
-ConnectomestatsColumnParametersTagged = typing.TypedDict('ConnectomestatsColumnParametersTagged', {
+ConnectomestatsColumnParamsDictTagged = typing.TypedDict('ConnectomestatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
-ConnectomestatsConfigParameters = typing.TypedDict('ConnectomestatsConfigParameters', {
+ConnectomestatsConfigParamsDict = typing.TypedDict('ConnectomestatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-ConnectomestatsConfigParametersTagged = typing.TypedDict('ConnectomestatsConfigParametersTagged', {
+ConnectomestatsConfigParamsDictTagged = typing.TypedDict('ConnectomestatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
+ConnectomestatsParamsDict = typing.TypedDict('ConnectomestatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/connectomestats"]],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -54,14 +54,14 @@ ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[ConnectomestatsColumnParameters] | None],
+    "column": typing.NotRequired[list[ConnectomestatsColumnParamsDict] | None],
     "threshold": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ConnectomestatsConfigParameters] | None],
+    "config": typing.NotRequired[list[ConnectomestatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -70,7 +70,7 @@ ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
     "contrast": InputPathType,
     "output": str,
 })
-ConnectomestatsParametersTagged = typing.TypedDict('ConnectomestatsParametersTagged', {
+ConnectomestatsParamsDictTagged = typing.TypedDict('ConnectomestatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/connectomestats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -89,14 +89,14 @@ ConnectomestatsParametersTagged = typing.TypedDict('ConnectomestatsParametersTag
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[ConnectomestatsColumnParameters] | None],
+    "column": typing.NotRequired[list[ConnectomestatsColumnParamsDict] | None],
     "threshold": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[ConnectomestatsConfigParameters] | None],
+    "config": typing.NotRequired[list[ConnectomestatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -107,9 +107,9 @@ ConnectomestatsParametersTagged = typing.TypedDict('ConnectomestatsParametersTag
 })
 
 
-def connectomestats_column_params(
+def connectomestats_column(
     path: InputPathType,
-) -> ConnectomestatsColumnParametersTagged:
+) -> ConnectomestatsColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def connectomestats_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectomestatsColumnParameters` object.
+    `ConnectomestatsColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def connectomestats_column_validate(
 
 
 def connectomestats_column_cargs(
-    params: ConnectomestatsColumnParameters,
+    params: ConnectomestatsColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,10 +165,10 @@ def connectomestats_column_cargs(
     return cargs
 
 
-def connectomestats_config_params(
+def connectomestats_config(
     key: str,
     value: str,
-) -> ConnectomestatsConfigParametersTagged:
+) -> ConnectomestatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def connectomestats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectomestatsConfigParameters` object.
+    `ConnectomestatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def connectomestats_config_validate(
 
 
 def connectomestats_config_cargs(
-    params: ConnectomestatsConfigParameters,
+    params: ConnectomestatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def connectomestats_config_cargs(
 
 class ConnectomestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConnectomestatsParameters(...)`.
+    Output object returned when calling `ConnectomestatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -259,17 +259,17 @@ def connectomestats_params(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[ConnectomestatsColumnParameters] | None = None,
+    column: list[ConnectomestatsColumnParamsDict] | None = None,
     threshold: float | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ConnectomestatsConfigParameters] | None = None,
+    config: list[ConnectomestatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ConnectomestatsParametersTagged:
+) -> ConnectomestatsParamsDictTagged:
     """
     Build parameters.
     
@@ -404,7 +404,7 @@ def connectomestats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConnectomestatsParameters` object.
+    `ConnectomestatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -468,7 +468,7 @@ def connectomestats_validate(
         raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[ConnectomestatsColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[ConnectomestatsColumnParamsDict] | None`')
         for e in params["column"]:
             connectomestats_column_validate(e)
     if params.get("threshold", None) is not None:
@@ -495,7 +495,7 @@ def connectomestats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ConnectomestatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[ConnectomestatsConfigParamsDict] | None`')
         for e in params["config"]:
             connectomestats_config_validate(e)
     if params.get("help", False) is None:
@@ -529,7 +529,7 @@ def connectomestats_validate(
 
 
 def connectomestats_cargs(
-    params: ConnectomestatsParameters,
+    params: ConnectomestatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -651,7 +651,7 @@ def connectomestats_cargs(
 
 
 def connectomestats_outputs(
-    params: ConnectomestatsParameters,
+    params: ConnectomestatsParamsDict,
     execution: Execution,
 ) -> ConnectomestatsOutputs:
     """
@@ -670,7 +670,7 @@ def connectomestats_outputs(
 
 
 def connectomestats_execute(
-    params: ConnectomestatsParameters,
+    params: ConnectomestatsParamsDict,
     runner: Runner | None = None,
 ) -> ConnectomestatsOutputs:
     """
@@ -765,14 +765,14 @@ def connectomestats(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[ConnectomestatsColumnParameters] | None = None,
+    column: list[ConnectomestatsColumnParamsDict] | None = None,
     threshold: float | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[ConnectomestatsConfigParameters] | None = None,
+    config: list[ConnectomestatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -941,10 +941,16 @@ def connectomestats(
 
 __all__ = [
     "CONNECTOMESTATS_METADATA",
+    "ConnectomestatsColumnParamsDict",
+    "ConnectomestatsColumnParamsDictTagged",
+    "ConnectomestatsConfigParamsDict",
+    "ConnectomestatsConfigParamsDictTagged",
     "ConnectomestatsOutputs",
+    "ConnectomestatsParamsDict",
+    "ConnectomestatsParamsDictTagged",
     "connectomestats",
-    "connectomestats_column_params",
-    "connectomestats_config_params",
+    "connectomestats_column",
+    "connectomestats_config",
     "connectomestats_execute",
     "connectomestats_params",
 ]

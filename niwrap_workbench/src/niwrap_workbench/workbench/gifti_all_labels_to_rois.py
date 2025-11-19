@@ -12,13 +12,13 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-GiftiAllLabelsToRoisParameters = typing.TypedDict('GiftiAllLabelsToRoisParameters', {
+GiftiAllLabelsToRoisParamsDict = typing.TypedDict('GiftiAllLabelsToRoisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-all-labels-to-rois"]],
     "metric-out": str,
     "label-in": InputPathType,
     "map": str,
 })
-GiftiAllLabelsToRoisParametersTagged = typing.TypedDict('GiftiAllLabelsToRoisParametersTagged', {
+GiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('GiftiAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-all-labels-to-rois"],
     "metric-out": str,
     "label-in": InputPathType,
@@ -28,7 +28,7 @@ GiftiAllLabelsToRoisParametersTagged = typing.TypedDict('GiftiAllLabelsToRoisPar
 
 class GiftiAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GiftiAllLabelsToRoisParameters(...)`.
+    Output object returned when calling `GiftiAllLabelsToRoisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def gifti_all_labels_to_rois_params(
     metric_out: str,
     label_in: InputPathType,
     map_: str,
-) -> GiftiAllLabelsToRoisParametersTagged:
+) -> GiftiAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def gifti_all_labels_to_rois_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GiftiAllLabelsToRoisParameters` object.
+    `GiftiAllLabelsToRoisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def gifti_all_labels_to_rois_validate(
 
 
 def gifti_all_labels_to_rois_cargs(
-    params: GiftiAllLabelsToRoisParameters,
+    params: GiftiAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def gifti_all_labels_to_rois_cargs(
 
 
 def gifti_all_labels_to_rois_outputs(
-    params: GiftiAllLabelsToRoisParameters,
+    params: GiftiAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
@@ -131,7 +131,7 @@ def gifti_all_labels_to_rois_outputs(
 
 
 def gifti_all_labels_to_rois_execute(
-    params: GiftiAllLabelsToRoisParameters,
+    params: GiftiAllLabelsToRoisParamsDict,
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
@@ -189,6 +189,8 @@ def gifti_all_labels_to_rois(
 __all__ = [
     "GIFTI_ALL_LABELS_TO_ROIS_METADATA",
     "GiftiAllLabelsToRoisOutputs",
+    "GiftiAllLabelsToRoisParamsDict",
+    "GiftiAllLabelsToRoisParamsDictTagged",
     "gifti_all_labels_to_rois",
     "gifti_all_labels_to_rois_execute",
     "gifti_all_labels_to_rois_params",

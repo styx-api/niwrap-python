@@ -13,7 +13,7 @@ MRIS_AA_SHRINKWRAP_METADATA = Metadata(
 )
 
 
-MrisAaShrinkwrapParameters = typing.TypedDict('MrisAaShrinkwrapParameters', {
+MrisAaShrinkwrapParamsDict = typing.TypedDict('MrisAaShrinkwrapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_AA_shrinkwrap"]],
     "t1_vol": InputPathType,
     "pd_vol": InputPathType,
@@ -23,7 +23,7 @@ MrisAaShrinkwrapParameters = typing.TypedDict('MrisAaShrinkwrapParameters', {
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
-MrisAaShrinkwrapParametersTagged = typing.TypedDict('MrisAaShrinkwrapParametersTagged', {
+MrisAaShrinkwrapParamsDictTagged = typing.TypedDict('MrisAaShrinkwrapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_AA_shrinkwrap"],
     "t1_vol": InputPathType,
     "pd_vol": InputPathType,
@@ -37,7 +37,7 @@ MrisAaShrinkwrapParametersTagged = typing.TypedDict('MrisAaShrinkwrapParametersT
 
 class MrisAaShrinkwrapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAaShrinkwrapParameters(...)`.
+    Output object returned when calling `MrisAaShrinkwrapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def mris_aa_shrinkwrap_params(
     create_curvature_area: bool = False,
     average_curvature: float | None = None,
     white_only: bool = False,
-) -> MrisAaShrinkwrapParametersTagged:
+) -> MrisAaShrinkwrapParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def mris_aa_shrinkwrap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAaShrinkwrapParameters` object.
+    `MrisAaShrinkwrapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mris_aa_shrinkwrap_validate(
 
 
 def mris_aa_shrinkwrap_cargs(
-    params: MrisAaShrinkwrapParameters,
+    params: MrisAaShrinkwrapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def mris_aa_shrinkwrap_cargs(
 
 
 def mris_aa_shrinkwrap_outputs(
-    params: MrisAaShrinkwrapParameters,
+    params: MrisAaShrinkwrapParamsDict,
     execution: Execution,
 ) -> MrisAaShrinkwrapOutputs:
     """
@@ -176,7 +176,7 @@ def mris_aa_shrinkwrap_outputs(
 
 
 def mris_aa_shrinkwrap_execute(
-    params: MrisAaShrinkwrapParameters,
+    params: MrisAaShrinkwrapParamsDict,
     runner: Runner | None = None,
 ) -> MrisAaShrinkwrapOutputs:
     """
@@ -259,6 +259,8 @@ def mris_aa_shrinkwrap(
 __all__ = [
     "MRIS_AA_SHRINKWRAP_METADATA",
     "MrisAaShrinkwrapOutputs",
+    "MrisAaShrinkwrapParamsDict",
+    "MrisAaShrinkwrapParamsDictTagged",
     "mris_aa_shrinkwrap",
     "mris_aa_shrinkwrap_execute",
     "mris_aa_shrinkwrap_params",

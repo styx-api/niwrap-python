@@ -13,7 +13,7 @@ ANNOT2STD_METADATA = Metadata(
 )
 
 
-Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
+Annot2stdParamsDict = typing.TypedDict('Annot2stdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/annot2std"]],
     "output_annot_path": str,
     "subjects": list[str],
@@ -34,7 +34,7 @@ Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
     "help": bool,
     "version": bool,
 })
-Annot2stdParametersTagged = typing.TypedDict('Annot2stdParametersTagged', {
+Annot2stdParamsDictTagged = typing.TypedDict('Annot2stdParamsDictTagged', {
     "@type": typing.Literal["freesurfer/annot2std"],
     "output_annot_path": str,
     "subjects": list[str],
@@ -59,7 +59,7 @@ Annot2stdParametersTagged = typing.TypedDict('Annot2stdParametersTagged', {
 
 class Annot2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Annot2stdParameters(...)`.
+    Output object returned when calling `Annot2stdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def annot2std_params(
     stack: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Annot2stdParametersTagged:
+) -> Annot2stdParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def annot2std_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Annot2stdParameters` object.
+    `Annot2stdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -232,7 +232,7 @@ def annot2std_validate(
 
 
 def annot2std_cargs(
-    params: Annot2stdParameters,
+    params: Annot2stdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -317,7 +317,7 @@ def annot2std_cargs(
 
 
 def annot2std_outputs(
-    params: Annot2stdParameters,
+    params: Annot2stdParamsDict,
     execution: Execution,
 ) -> Annot2stdOutputs:
     """
@@ -339,7 +339,7 @@ def annot2std_outputs(
 
 
 def annot2std_execute(
-    params: Annot2stdParameters,
+    params: Annot2stdParamsDict,
     runner: Runner | None = None,
 ) -> Annot2stdOutputs:
     """
@@ -452,6 +452,8 @@ def annot2std(
 __all__ = [
     "ANNOT2STD_METADATA",
     "Annot2stdOutputs",
+    "Annot2stdParamsDict",
+    "Annot2stdParamsDictTagged",
     "annot2std",
     "annot2std_execute",
     "annot2std_params",

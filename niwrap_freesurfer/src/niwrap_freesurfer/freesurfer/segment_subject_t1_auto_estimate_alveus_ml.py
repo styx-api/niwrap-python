@@ -13,12 +13,12 @@ SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 )
 
 
-SegmentSubjectT1AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParameters', {
+SegmentSubjectT1AutoEstimateAlveusMlParamsDict = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segmentSubjectT1_autoEstimateAlveusML"]],
     "t1_file": InputPathType,
     "output_folder": str,
 })
-SegmentSubjectT1AutoEstimateAlveusMlParametersTagged = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParametersTagged', {
+SegmentSubjectT1AutoEstimateAlveusMlParamsDictTagged = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentSubjectT1_autoEstimateAlveusML"],
     "t1_file": InputPathType,
     "output_folder": str,
@@ -27,7 +27,7 @@ SegmentSubjectT1AutoEstimateAlveusMlParametersTagged = typing.TypedDict('Segment
 
 class SegmentSubjectT1AutoEstimateAlveusMlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubjectT1AutoEstimateAlveusMlParameters(...)`.
+    Output object returned when calling `SegmentSubjectT1AutoEstimateAlveusMlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class SegmentSubjectT1AutoEstimateAlveusMlOutputs(typing.NamedTuple):
 def segment_subject_t1_auto_estimate_alveus_ml_params(
     t1_file: InputPathType,
     output_folder: str,
-) -> SegmentSubjectT1AutoEstimateAlveusMlParametersTagged:
+) -> SegmentSubjectT1AutoEstimateAlveusMlParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubjectT1AutoEstimateAlveusMlParameters` object.
+    `SegmentSubjectT1AutoEstimateAlveusMlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_validate(
 
 
 def segment_subject_t1_auto_estimate_alveus_ml_cargs(
-    params: SegmentSubjectT1AutoEstimateAlveusMlParameters,
+    params: SegmentSubjectT1AutoEstimateAlveusMlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_cargs(
 
 
 def segment_subject_t1_auto_estimate_alveus_ml_outputs(
-    params: SegmentSubjectT1AutoEstimateAlveusMlParameters,
+    params: SegmentSubjectT1AutoEstimateAlveusMlParamsDict,
     execution: Execution,
 ) -> SegmentSubjectT1AutoEstimateAlveusMlOutputs:
     """
@@ -119,7 +119,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_outputs(
 
 
 def segment_subject_t1_auto_estimate_alveus_ml_execute(
-    params: SegmentSubjectT1AutoEstimateAlveusMlParameters,
+    params: SegmentSubjectT1AutoEstimateAlveusMlParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubjectT1AutoEstimateAlveusMlOutputs:
     """
@@ -180,6 +180,8 @@ def segment_subject_t1_auto_estimate_alveus_ml(
 __all__ = [
     "SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA",
     "SegmentSubjectT1AutoEstimateAlveusMlOutputs",
+    "SegmentSubjectT1AutoEstimateAlveusMlParamsDict",
+    "SegmentSubjectT1AutoEstimateAlveusMlParamsDictTagged",
     "segment_subject_t1_auto_estimate_alveus_ml",
     "segment_subject_t1_auto_estimate_alveus_ml_execute",
     "segment_subject_t1_auto_estimate_alveus_ml_params",

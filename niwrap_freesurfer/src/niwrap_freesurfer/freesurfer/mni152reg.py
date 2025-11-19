@@ -13,7 +13,7 @@ MNI152REG_METADATA = Metadata(
 )
 
 
-Mni152regParameters = typing.TypedDict('Mni152regParameters', {
+Mni152regParamsDict = typing.TypedDict('Mni152regParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mni152reg"]],
     "subject": str,
     "register_1mm": bool,
@@ -21,7 +21,7 @@ Mni152regParameters = typing.TypedDict('Mni152regParameters', {
     "symmetric": bool,
     "save_volume": bool,
 })
-Mni152regParametersTagged = typing.TypedDict('Mni152regParametersTagged', {
+Mni152regParamsDictTagged = typing.TypedDict('Mni152regParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mni152reg"],
     "subject": str,
     "register_1mm": bool,
@@ -33,7 +33,7 @@ Mni152regParametersTagged = typing.TypedDict('Mni152regParametersTagged', {
 
 class Mni152regOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Mni152regParameters(...)`.
+    Output object returned when calling `Mni152regParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def mni152reg_params(
     output: str | None = None,
     symmetric: bool = False,
     save_volume: bool = False,
-) -> Mni152regParametersTagged:
+) -> Mni152regParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def mni152reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mni152regParameters` object.
+    `Mni152regParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def mni152reg_validate(
 
 
 def mni152reg_cargs(
-    params: Mni152regParameters,
+    params: Mni152regParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def mni152reg_cargs(
 
 
 def mni152reg_outputs(
-    params: Mni152regParameters,
+    params: Mni152regParamsDict,
     execution: Execution,
 ) -> Mni152regOutputs:
     """
@@ -162,7 +162,7 @@ def mni152reg_outputs(
 
 
 def mni152reg_execute(
-    params: Mni152regParameters,
+    params: Mni152regParamsDict,
     runner: Runner | None = None,
 ) -> Mni152regOutputs:
     """
@@ -232,6 +232,8 @@ def mni152reg(
 __all__ = [
     "MNI152REG_METADATA",
     "Mni152regOutputs",
+    "Mni152regParamsDict",
+    "Mni152regParamsDictTagged",
     "mni152reg",
     "mni152reg_execute",
     "mni152reg_params",

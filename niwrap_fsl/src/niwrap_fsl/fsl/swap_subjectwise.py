@@ -13,7 +13,7 @@ SWAP_SUBJECTWISE_METADATA = Metadata(
 )
 
 
-SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
+SwapSubjectwiseParamsDict = typing.TypedDict('SwapSubjectwiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/swap_subjectwise"]],
     "dyads": InputPathType,
     "fmean": InputPathType,
@@ -23,7 +23,7 @@ SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
     "averageonly_flag": bool,
     "verbose_flag": bool,
 })
-SwapSubjectwiseParametersTagged = typing.TypedDict('SwapSubjectwiseParametersTagged', {
+SwapSubjectwiseParamsDictTagged = typing.TypedDict('SwapSubjectwiseParamsDictTagged', {
     "@type": typing.Literal["fsl/swap_subjectwise"],
     "dyads": InputPathType,
     "fmean": InputPathType,
@@ -37,7 +37,7 @@ SwapSubjectwiseParametersTagged = typing.TypedDict('SwapSubjectwiseParametersTag
 
 class SwapSubjectwiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SwapSubjectwiseParameters(...)`.
+    Output object returned when calling `SwapSubjectwiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def swap_subjectwise_params(
     xthresh: float | None = None,
     averageonly_flag: bool = False,
     verbose_flag: bool = False,
-) -> SwapSubjectwiseParametersTagged:
+) -> SwapSubjectwiseParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def swap_subjectwise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SwapSubjectwiseParameters` object.
+    `SwapSubjectwiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -122,7 +122,7 @@ def swap_subjectwise_validate(
 
 
 def swap_subjectwise_cargs(
-    params: SwapSubjectwiseParameters,
+    params: SwapSubjectwiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,7 +167,7 @@ def swap_subjectwise_cargs(
 
 
 def swap_subjectwise_outputs(
-    params: SwapSubjectwiseParameters,
+    params: SwapSubjectwiseParamsDict,
     execution: Execution,
 ) -> SwapSubjectwiseOutputs:
     """
@@ -186,7 +186,7 @@ def swap_subjectwise_outputs(
 
 
 def swap_subjectwise_execute(
-    params: SwapSubjectwiseParameters,
+    params: SwapSubjectwiseParamsDict,
     runner: Runner | None = None,
 ) -> SwapSubjectwiseOutputs:
     """
@@ -262,6 +262,8 @@ def swap_subjectwise(
 __all__ = [
     "SWAP_SUBJECTWISE_METADATA",
     "SwapSubjectwiseOutputs",
+    "SwapSubjectwiseParamsDict",
+    "SwapSubjectwiseParamsDictTagged",
     "swap_subjectwise",
     "swap_subjectwise_execute",
     "swap_subjectwise_params",

@@ -13,7 +13,7 @@ MAP_CENTRAL_SULCUS_METADATA = Metadata(
 )
 
 
-MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
+MapCentralSulcusParamsDict = typing.TypedDict('MapCentralSulcusParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/map_central_sulcus"]],
     "subjid": str,
     "process_directive": str,
@@ -52,7 +52,7 @@ MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
     "mail_username": typing.NotRequired[str | None],
     "threads": typing.NotRequired[float | None],
 })
-MapCentralSulcusParametersTagged = typing.TypedDict('MapCentralSulcusParametersTagged', {
+MapCentralSulcusParamsDictTagged = typing.TypedDict('MapCentralSulcusParamsDictTagged', {
     "@type": typing.Literal["freesurfer/map_central_sulcus"],
     "subjid": str,
     "process_directive": str,
@@ -95,7 +95,7 @@ MapCentralSulcusParametersTagged = typing.TypedDict('MapCentralSulcusParametersT
 
 class MapCentralSulcusOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MapCentralSulcusParameters(...)`.
+    Output object returned when calling `MapCentralSulcusParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -142,7 +142,7 @@ def map_central_sulcus_params(
     schwartzya3t_atlas: bool = False,
     mail_username: str | None = None,
     threads: float | None = None,
-) -> MapCentralSulcusParametersTagged:
+) -> MapCentralSulcusParamsDictTagged:
     """
     Build parameters.
     
@@ -261,7 +261,7 @@ def map_central_sulcus_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MapCentralSulcusParameters` object.
+    `MapCentralSulcusParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -399,7 +399,7 @@ def map_central_sulcus_validate(
 
 
 def map_central_sulcus_cargs(
-    params: MapCentralSulcusParameters,
+    params: MapCentralSulcusParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -538,7 +538,7 @@ def map_central_sulcus_cargs(
 
 
 def map_central_sulcus_outputs(
-    params: MapCentralSulcusParameters,
+    params: MapCentralSulcusParamsDict,
     execution: Execution,
 ) -> MapCentralSulcusOutputs:
     """
@@ -559,7 +559,7 @@ def map_central_sulcus_outputs(
 
 
 def map_central_sulcus_execute(
-    params: MapCentralSulcusParameters,
+    params: MapCentralSulcusParamsDict,
     runner: Runner | None = None,
 ) -> MapCentralSulcusOutputs:
     """
@@ -734,6 +734,8 @@ def map_central_sulcus(
 __all__ = [
     "MAP_CENTRAL_SULCUS_METADATA",
     "MapCentralSulcusOutputs",
+    "MapCentralSulcusParamsDict",
+    "MapCentralSulcusParamsDictTagged",
     "map_central_sulcus",
     "map_central_sulcus_execute",
     "map_central_sulcus_params",

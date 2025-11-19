@@ -13,7 +13,7 @@ V_1D_TOOL_PY_METADATA = Metadata(
 )
 
 
-V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
+V1dToolPyParamsDict = typing.TypedDict('V1dToolPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1d_tool.py"]],
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
     "reverse": bool,
     "show_max_displace": bool,
 })
-V1dToolPyParametersTagged = typing.TypedDict('V1dToolPyParametersTagged', {
+V1dToolPyParamsDictTagged = typing.TypedDict('V1dToolPyParamsDictTagged', {
     "@type": typing.Literal["afni/1d_tool.py"],
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ V1dToolPyParametersTagged = typing.TypedDict('V1dToolPyParametersTagged', {
 
 class V1dToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dToolPyParameters(...)`.
+    Output object returned when calling `V1dToolPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def v_1d_tool_py_params(
     transpose: bool = False,
     reverse: bool = False,
     show_max_displace: bool = False,
-) -> V1dToolPyParametersTagged:
+) -> V1dToolPyParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def v_1d_tool_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dToolPyParameters` object.
+    `V1dToolPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def v_1d_tool_py_validate(
 
 
 def v_1d_tool_py_cargs(
-    params: V1dToolPyParameters,
+    params: V1dToolPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def v_1d_tool_py_cargs(
 
 
 def v_1d_tool_py_outputs(
-    params: V1dToolPyParameters,
+    params: V1dToolPyParamsDict,
     execution: Execution,
 ) -> V1dToolPyOutputs:
     """
@@ -268,7 +268,7 @@ def v_1d_tool_py_outputs(
 
 
 def v_1d_tool_py_execute(
-    params: V1dToolPyParameters,
+    params: V1dToolPyParamsDict,
     runner: Runner | None = None,
 ) -> V1dToolPyOutputs:
     """
@@ -359,6 +359,8 @@ def v_1d_tool_py(
 
 __all__ = [
     "V1dToolPyOutputs",
+    "V1dToolPyParamsDict",
+    "V1dToolPyParamsDictTagged",
     "V_1D_TOOL_PY_METADATA",
     "v_1d_tool_py",
     "v_1d_tool_py_execute",

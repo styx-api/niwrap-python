@@ -13,7 +13,7 @@ TRAIN_GCS_ATLAS_METADATA = Metadata(
 )
 
 
-TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
+TrainGcsAtlasParamsDict = typing.TypedDict('TrainGcsAtlasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/train-gcs-atlas"]],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
     "aseg_filename": typing.NotRequired[str | None],
     "threads": typing.NotRequired[float | None],
 })
-TrainGcsAtlasParametersTagged = typing.TypedDict('TrainGcsAtlasParametersTagged', {
+TrainGcsAtlasParamsDictTagged = typing.TypedDict('TrainGcsAtlasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/train-gcs-atlas"],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ TrainGcsAtlasParametersTagged = typing.TypedDict('TrainGcsAtlasParametersTagged'
 
 class TrainGcsAtlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TrainGcsAtlasParameters(...)`.
+    Output object returned when calling `TrainGcsAtlasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def train_gcs_atlas_params(
     jackknife_flag: bool = False,
     aseg_filename: str | None = None,
     threads: float | None = None,
-) -> TrainGcsAtlasParametersTagged:
+) -> TrainGcsAtlasParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def train_gcs_atlas_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TrainGcsAtlasParameters` object.
+    `TrainGcsAtlasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def train_gcs_atlas_validate(
 
 
 def train_gcs_atlas_cargs(
-    params: TrainGcsAtlasParameters,
+    params: TrainGcsAtlasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -237,7 +237,7 @@ def train_gcs_atlas_cargs(
 
 
 def train_gcs_atlas_outputs(
-    params: TrainGcsAtlasParameters,
+    params: TrainGcsAtlasParamsDict,
     execution: Execution,
 ) -> TrainGcsAtlasOutputs:
     """
@@ -257,7 +257,7 @@ def train_gcs_atlas_outputs(
 
 
 def train_gcs_atlas_execute(
-    params: TrainGcsAtlasParameters,
+    params: TrainGcsAtlasParamsDict,
     runner: Runner | None = None,
 ) -> TrainGcsAtlasOutputs:
     """
@@ -348,6 +348,8 @@ def train_gcs_atlas(
 __all__ = [
     "TRAIN_GCS_ATLAS_METADATA",
     "TrainGcsAtlasOutputs",
+    "TrainGcsAtlasParamsDict",
+    "TrainGcsAtlasParamsDictTagged",
     "train_gcs_atlas",
     "train_gcs_atlas_execute",
     "train_gcs_atlas_params",

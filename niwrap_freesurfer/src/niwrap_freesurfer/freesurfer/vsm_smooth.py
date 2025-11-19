@@ -13,14 +13,14 @@ VSM_SMOOTH_METADATA = Metadata(
 )
 
 
-VsmSmoothParameters = typing.TypedDict('VsmSmoothParameters', {
+VsmSmoothParamsDict = typing.TypedDict('VsmSmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vsm-smooth"]],
     "input_file": InputPathType,
     "output_file": str,
     "fwhm_value": float,
     "temp_dir": str,
 })
-VsmSmoothParametersTagged = typing.TypedDict('VsmSmoothParametersTagged', {
+VsmSmoothParamsDictTagged = typing.TypedDict('VsmSmoothParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vsm-smooth"],
     "input_file": InputPathType,
     "output_file": str,
@@ -31,7 +31,7 @@ VsmSmoothParametersTagged = typing.TypedDict('VsmSmoothParametersTagged', {
 
 class VsmSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VsmSmoothParameters(...)`.
+    Output object returned when calling `VsmSmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def vsm_smooth_params(
     output_file: str,
     fwhm_value: float,
     temp_dir: str,
-) -> VsmSmoothParametersTagged:
+) -> VsmSmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def vsm_smooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VsmSmoothParameters` object.
+    `VsmSmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def vsm_smooth_validate(
 
 
 def vsm_smooth_cargs(
-    params: VsmSmoothParameters,
+    params: VsmSmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def vsm_smooth_cargs(
 
 
 def vsm_smooth_outputs(
-    params: VsmSmoothParameters,
+    params: VsmSmoothParamsDict,
     execution: Execution,
 ) -> VsmSmoothOutputs:
     """
@@ -151,7 +151,7 @@ def vsm_smooth_outputs(
 
 
 def vsm_smooth_execute(
-    params: VsmSmoothParameters,
+    params: VsmSmoothParamsDict,
     runner: Runner | None = None,
 ) -> VsmSmoothOutputs:
     """
@@ -228,6 +228,8 @@ def vsm_smooth(
 __all__ = [
     "VSM_SMOOTH_METADATA",
     "VsmSmoothOutputs",
+    "VsmSmoothParamsDict",
+    "VsmSmoothParamsDictTagged",
     "vsm_smooth",
     "vsm_smooth_execute",
     "vsm_smooth_params",

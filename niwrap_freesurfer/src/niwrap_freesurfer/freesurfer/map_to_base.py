@@ -13,7 +13,7 @@ MAP_TO_BASE_METADATA = Metadata(
 )
 
 
-MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
+MapToBaseParamsDict = typing.TypedDict('MapToBaseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/map_to_base"]],
     "baseid": str,
     "tpid": str,
@@ -21,7 +21,7 @@ MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
     "resample_type": str,
     "cross": typing.NotRequired[str | None],
 })
-MapToBaseParametersTagged = typing.TypedDict('MapToBaseParametersTagged', {
+MapToBaseParamsDictTagged = typing.TypedDict('MapToBaseParamsDictTagged', {
     "@type": typing.Literal["freesurfer/map_to_base"],
     "baseid": str,
     "tpid": str,
@@ -33,7 +33,7 @@ MapToBaseParametersTagged = typing.TypedDict('MapToBaseParametersTagged', {
 
 class MapToBaseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MapToBaseParameters(...)`.
+    Output object returned when calling `MapToBaseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def map_to_base_params(
     input_image: str,
     resample_type: str,
     cross: str | None = None,
-) -> MapToBaseParametersTagged:
+) -> MapToBaseParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def map_to_base_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MapToBaseParameters` object.
+    `MapToBaseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def map_to_base_validate(
 
 
 def map_to_base_cargs(
-    params: MapToBaseParameters,
+    params: MapToBaseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def map_to_base_cargs(
 
 
 def map_to_base_outputs(
-    params: MapToBaseParameters,
+    params: MapToBaseParamsDict,
     execution: Execution,
 ) -> MapToBaseOutputs:
     """
@@ -165,7 +165,7 @@ def map_to_base_outputs(
 
 
 def map_to_base_execute(
-    params: MapToBaseParameters,
+    params: MapToBaseParamsDict,
     runner: Runner | None = None,
 ) -> MapToBaseOutputs:
     """
@@ -239,6 +239,8 @@ def map_to_base(
 __all__ = [
     "MAP_TO_BASE_METADATA",
     "MapToBaseOutputs",
+    "MapToBaseParamsDict",
+    "MapToBaseParamsDictTagged",
     "map_to_base",
     "map_to_base_execute",
     "map_to_base_params",

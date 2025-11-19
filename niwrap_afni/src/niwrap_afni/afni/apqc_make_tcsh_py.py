@@ -13,7 +13,7 @@ APQC_MAKE_TCSH_PY_METADATA = Metadata(
 )
 
 
-ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
+ApqcMakeTcshPyParamsDict = typing.TypedDict('ApqcMakeTcshPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/apqc_make_tcsh.py"]],
     "uvar_json": InputPathType,
     "subj_dir": str,
@@ -21,7 +21,7 @@ ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
     "mot_grayplot_off": bool,
     "vstat_list": typing.NotRequired[list[str] | None],
 })
-ApqcMakeTcshPyParametersTagged = typing.TypedDict('ApqcMakeTcshPyParametersTagged', {
+ApqcMakeTcshPyParamsDictTagged = typing.TypedDict('ApqcMakeTcshPyParamsDictTagged', {
     "@type": typing.Literal["afni/apqc_make_tcsh.py"],
     "uvar_json": InputPathType,
     "subj_dir": str,
@@ -33,7 +33,7 @@ ApqcMakeTcshPyParametersTagged = typing.TypedDict('ApqcMakeTcshPyParametersTagge
 
 class ApqcMakeTcshPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApqcMakeTcshPyParameters(...)`.
+    Output object returned when calling `ApqcMakeTcshPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def apqc_make_tcsh_py_params(
     review_style: str | None = None,
     mot_grayplot_off: bool = False,
     vstat_list: list[str] | None = None,
-) -> ApqcMakeTcshPyParametersTagged:
+) -> ApqcMakeTcshPyParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def apqc_make_tcsh_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApqcMakeTcshPyParameters` object.
+    `ApqcMakeTcshPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def apqc_make_tcsh_py_validate(
 
 
 def apqc_make_tcsh_py_cargs(
-    params: ApqcMakeTcshPyParameters,
+    params: ApqcMakeTcshPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def apqc_make_tcsh_py_cargs(
 
 
 def apqc_make_tcsh_py_outputs(
-    params: ApqcMakeTcshPyParameters,
+    params: ApqcMakeTcshPyParamsDict,
     execution: Execution,
 ) -> ApqcMakeTcshPyOutputs:
     """
@@ -172,7 +172,7 @@ def apqc_make_tcsh_py_outputs(
 
 
 def apqc_make_tcsh_py_execute(
-    params: ApqcMakeTcshPyParameters,
+    params: ApqcMakeTcshPyParamsDict,
     runner: Runner | None = None,
 ) -> ApqcMakeTcshPyOutputs:
     """
@@ -252,6 +252,8 @@ def apqc_make_tcsh_py(
 __all__ = [
     "APQC_MAKE_TCSH_PY_METADATA",
     "ApqcMakeTcshPyOutputs",
+    "ApqcMakeTcshPyParamsDict",
+    "ApqcMakeTcshPyParamsDictTagged",
     "apqc_make_tcsh_py",
     "apqc_make_tcsh_py_execute",
     "apqc_make_tcsh_py_params",

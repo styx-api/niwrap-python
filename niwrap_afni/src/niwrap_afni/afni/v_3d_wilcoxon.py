@@ -13,7 +13,7 @@ V_3D_WILCOXON_METADATA = Metadata(
 )
 
 
-V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
+V3dWilcoxonParamsDict = typing.TypedDict('V3dWilcoxonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dWilcoxon"]],
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
     "dset2_y": list[InputPathType],
     "output_prefix": str,
 })
-V3dWilcoxonParametersTagged = typing.TypedDict('V3dWilcoxonParametersTagged', {
+V3dWilcoxonParamsDictTagged = typing.TypedDict('V3dWilcoxonParamsDictTagged', {
     "@type": typing.Literal["afni/3dWilcoxon"],
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ V3dWilcoxonParametersTagged = typing.TypedDict('V3dWilcoxonParametersTagged', {
 
 class V3dWilcoxonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dWilcoxonParameters(...)`.
+    Output object returned when calling `V3dWilcoxonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3d_wilcoxon_params(
     output_prefix: str,
     workmem: float | None = None,
     voxel: float | None = None,
-) -> V3dWilcoxonParametersTagged:
+) -> V3dWilcoxonParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v_3d_wilcoxon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dWilcoxonParameters` object.
+    `V3dWilcoxonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def v_3d_wilcoxon_validate(
 
 
 def v_3d_wilcoxon_cargs(
-    params: V3dWilcoxonParameters,
+    params: V3dWilcoxonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def v_3d_wilcoxon_cargs(
 
 
 def v_3d_wilcoxon_outputs(
-    params: V3dWilcoxonParameters,
+    params: V3dWilcoxonParamsDict,
     execution: Execution,
 ) -> V3dWilcoxonOutputs:
     """
@@ -175,7 +175,7 @@ def v_3d_wilcoxon_outputs(
 
 
 def v_3d_wilcoxon_execute(
-    params: V3dWilcoxonParameters,
+    params: V3dWilcoxonParamsDict,
     runner: Runner | None = None,
 ) -> V3dWilcoxonOutputs:
     """
@@ -247,6 +247,8 @@ def v_3d_wilcoxon(
 
 __all__ = [
     "V3dWilcoxonOutputs",
+    "V3dWilcoxonParamsDict",
+    "V3dWilcoxonParamsDictTagged",
     "V_3D_WILCOXON_METADATA",
     "v_3d_wilcoxon",
     "v_3d_wilcoxon_execute",

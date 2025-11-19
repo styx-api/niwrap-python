@@ -13,7 +13,7 @@ RSFGEN_METADATA = Metadata(
 )
 
 
-RsfgenParameters = typing.TypedDict('RsfgenParameters', {
+RsfgenParamsDict = typing.TypedDict('RsfgenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/RSFgen"]],
     "length": int,
     "num_experimental_conditions": int,
@@ -29,7 +29,7 @@ RsfgenParameters = typing.TypedDict('RsfgenParameters', {
     "prob_zero": typing.NotRequired[float | None],
     "input_table": typing.NotRequired[InputPathType | None],
 })
-RsfgenParametersTagged = typing.TypedDict('RsfgenParametersTagged', {
+RsfgenParamsDictTagged = typing.TypedDict('RsfgenParamsDictTagged', {
     "@type": typing.Literal["afni/RSFgen"],
     "length": int,
     "num_experimental_conditions": int,
@@ -49,7 +49,7 @@ RsfgenParametersTagged = typing.TypedDict('RsfgenParametersTagged', {
 
 class RsfgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RsfgenParameters(...)`.
+    Output object returned when calling `RsfgenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def rsfgen_params(
     markov_file: InputPathType | None = None,
     prob_zero: float | None = None,
     input_table: InputPathType | None = None,
-) -> RsfgenParametersTagged:
+) -> RsfgenParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def rsfgen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RsfgenParameters` object.
+    `RsfgenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -183,7 +183,7 @@ def rsfgen_validate(
 
 
 def rsfgen_cargs(
-    params: RsfgenParameters,
+    params: RsfgenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -255,7 +255,7 @@ def rsfgen_cargs(
 
 
 def rsfgen_outputs(
-    params: RsfgenParameters,
+    params: RsfgenParamsDict,
     execution: Execution,
 ) -> RsfgenOutputs:
     """
@@ -275,7 +275,7 @@ def rsfgen_outputs(
 
 
 def rsfgen_execute(
-    params: RsfgenParameters,
+    params: RsfgenParamsDict,
     runner: Runner | None = None,
 ) -> RsfgenOutputs:
     """
@@ -371,6 +371,8 @@ def rsfgen(
 __all__ = [
     "RSFGEN_METADATA",
     "RsfgenOutputs",
+    "RsfgenParamsDict",
+    "RsfgenParamsDictTagged",
     "rsfgen",
     "rsfgen_execute",
     "rsfgen_params",

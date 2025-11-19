@@ -13,12 +13,12 @@ TALAIRACH2_METADATA = Metadata(
 )
 
 
-Talairach2Parameters = typing.TypedDict('Talairach2Parameters', {
+Talairach2ParamsDict = typing.TypedDict('Talairach2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talairach2"]],
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })
-Talairach2ParametersTagged = typing.TypedDict('Talairach2ParametersTagged', {
+Talairach2ParamsDictTagged = typing.TypedDict('Talairach2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talairach2"],
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ Talairach2ParametersTagged = typing.TypedDict('Talairach2ParametersTagged', {
 
 class Talairach2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Talairach2Parameters(...)`.
+    Output object returned when calling `Talairach2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class Talairach2Outputs(typing.NamedTuple):
 def talairach2_params(
     subject_id: str,
     mgz_flag: str | None = None,
-) -> Talairach2ParametersTagged:
+) -> Talairach2ParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def talairach2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Talairach2Parameters` object.
+    `Talairach2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def talairach2_validate(
 
 
 def talairach2_cargs(
-    params: Talairach2Parameters,
+    params: Talairach2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def talairach2_cargs(
 
 
 def talairach2_outputs(
-    params: Talairach2Parameters,
+    params: Talairach2ParamsDict,
     execution: Execution,
 ) -> Talairach2Outputs:
     """
@@ -117,7 +117,7 @@ def talairach2_outputs(
 
 
 def talairach2_execute(
-    params: Talairach2Parameters,
+    params: Talairach2ParamsDict,
     runner: Runner | None = None,
 ) -> Talairach2Outputs:
     """
@@ -176,6 +176,8 @@ def talairach2(
 __all__ = [
     "TALAIRACH2_METADATA",
     "Talairach2Outputs",
+    "Talairach2ParamsDict",
+    "Talairach2ParamsDictTagged",
     "talairach2",
     "talairach2_execute",
     "talairach2_params",

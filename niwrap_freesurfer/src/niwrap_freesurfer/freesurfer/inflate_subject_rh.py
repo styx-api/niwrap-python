@@ -13,11 +13,11 @@ INFLATE_SUBJECT_RH_METADATA = Metadata(
 )
 
 
-InflateSubjectRhParameters = typing.TypedDict('InflateSubjectRhParameters', {
+InflateSubjectRhParamsDict = typing.TypedDict('InflateSubjectRhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject-rh"]],
     "arguments": typing.NotRequired[str | None],
 })
-InflateSubjectRhParametersTagged = typing.TypedDict('InflateSubjectRhParametersTagged', {
+InflateSubjectRhParamsDictTagged = typing.TypedDict('InflateSubjectRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/inflate_subject-rh"],
     "arguments": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ InflateSubjectRhParametersTagged = typing.TypedDict('InflateSubjectRhParametersT
 
 class InflateSubjectRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InflateSubjectRhParameters(...)`.
+    Output object returned when calling `InflateSubjectRhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class InflateSubjectRhOutputs(typing.NamedTuple):
 
 def inflate_subject_rh_params(
     arguments: str | None = None,
-) -> InflateSubjectRhParametersTagged:
+) -> InflateSubjectRhParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def inflate_subject_rh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InflateSubjectRhParameters` object.
+    `InflateSubjectRhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def inflate_subject_rh_validate(
 
 
 def inflate_subject_rh_cargs(
-    params: InflateSubjectRhParameters,
+    params: InflateSubjectRhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def inflate_subject_rh_cargs(
 
 
 def inflate_subject_rh_outputs(
-    params: InflateSubjectRhParameters,
+    params: InflateSubjectRhParamsDict,
     execution: Execution,
 ) -> InflateSubjectRhOutputs:
     """
@@ -111,7 +111,7 @@ def inflate_subject_rh_outputs(
 
 
 def inflate_subject_rh_execute(
-    params: InflateSubjectRhParameters,
+    params: InflateSubjectRhParamsDict,
     runner: Runner | None = None,
 ) -> InflateSubjectRhOutputs:
     """
@@ -170,6 +170,8 @@ def inflate_subject_rh(
 __all__ = [
     "INFLATE_SUBJECT_RH_METADATA",
     "InflateSubjectRhOutputs",
+    "InflateSubjectRhParamsDict",
+    "InflateSubjectRhParamsDictTagged",
     "inflate_subject_rh",
     "inflate_subject_rh_execute",
     "inflate_subject_rh_params",

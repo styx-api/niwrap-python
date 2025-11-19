@@ -13,7 +13,7 @@ V_3D_TPROJECT_METADATA = Metadata(
 )
 
 
-V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
+V3dTprojectParamsDict = typing.TypedDict('V3dTprojectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTproject"]],
     "TR": typing.NotRequired[float | None],
     "automask": bool,
@@ -33,7 +33,7 @@ V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
     "stopband": typing.NotRequired[list[float] | None],
     "prefix": str,
 })
-V3dTprojectParametersTagged = typing.TypedDict('V3dTprojectParametersTagged', {
+V3dTprojectParamsDictTagged = typing.TypedDict('V3dTprojectParamsDictTagged', {
     "@type": typing.Literal["afni/3dTproject"],
     "TR": typing.NotRequired[float | None],
     "automask": bool,
@@ -57,7 +57,7 @@ V3dTprojectParametersTagged = typing.TypedDict('V3dTprojectParametersTagged', {
 
 class V3dTprojectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTprojectParameters(...)`.
+    Output object returned when calling `V3dTprojectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def v_3d_tproject_params(
     ort: InputPathType | None = None,
     polort: int | None = None,
     stopband: list[float] | None = None,
-) -> V3dTprojectParametersTagged:
+) -> V3dTprojectParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def v_3d_tproject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTprojectParameters` object.
+    `V3dTprojectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -279,7 +279,7 @@ def v_3d_tproject_validate(
 
 
 def v_3d_tproject_cargs(
-    params: V3dTprojectParameters,
+    params: V3dTprojectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -371,7 +371,7 @@ def v_3d_tproject_cargs(
 
 
 def v_3d_tproject_outputs(
-    params: V3dTprojectParameters,
+    params: V3dTprojectParamsDict,
     execution: Execution,
 ) -> V3dTprojectOutputs:
     """
@@ -391,7 +391,7 @@ def v_3d_tproject_outputs(
 
 
 def v_3d_tproject_execute(
-    params: V3dTprojectParameters,
+    params: V3dTprojectParamsDict,
     runner: Runner | None = None,
 ) -> V3dTprojectOutputs:
     """
@@ -551,6 +551,8 @@ def v_3d_tproject(
 
 __all__ = [
     "V3dTprojectOutputs",
+    "V3dTprojectParamsDict",
+    "V3dTprojectParamsDictTagged",
     "V_3D_TPROJECT_METADATA",
     "v_3d_tproject",
     "v_3d_tproject_execute",

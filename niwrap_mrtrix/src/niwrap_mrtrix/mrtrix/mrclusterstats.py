@@ -13,29 +13,29 @@ MRCLUSTERSTATS_METADATA = Metadata(
 )
 
 
-MrclusterstatsColumnParameters = typing.TypedDict('MrclusterstatsColumnParameters', {
+MrclusterstatsColumnParamsDict = typing.TypedDict('MrclusterstatsColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "path": InputPathType,
 })
-MrclusterstatsColumnParametersTagged = typing.TypedDict('MrclusterstatsColumnParametersTagged', {
+MrclusterstatsColumnParamsDictTagged = typing.TypedDict('MrclusterstatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
-MrclusterstatsConfigParameters = typing.TypedDict('MrclusterstatsConfigParameters', {
+MrclusterstatsConfigParamsDict = typing.TypedDict('MrclusterstatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrclusterstatsConfigParametersTagged = typing.TypedDict('MrclusterstatsConfigParametersTagged', {
+MrclusterstatsConfigParamsDictTagged = typing.TypedDict('MrclusterstatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
+MrclusterstatsParamsDict = typing.TypedDict('MrclusterstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrclusterstats"]],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -54,7 +54,7 @@ MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[MrclusterstatsColumnParameters] | None],
+    "column": typing.NotRequired[list[MrclusterstatsColumnParamsDict] | None],
     "threshold": typing.NotRequired[float | None],
     "connectivity": bool,
     "info": bool,
@@ -62,7 +62,7 @@ MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrclusterstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrclusterstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -71,7 +71,7 @@ MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
     "mask": InputPathType,
     "output": str,
 })
-MrclusterstatsParametersTagged = typing.TypedDict('MrclusterstatsParametersTagged', {
+MrclusterstatsParamsDictTagged = typing.TypedDict('MrclusterstatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrclusterstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -90,7 +90,7 @@ MrclusterstatsParametersTagged = typing.TypedDict('MrclusterstatsParametersTagge
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[MrclusterstatsColumnParameters] | None],
+    "column": typing.NotRequired[list[MrclusterstatsColumnParamsDict] | None],
     "threshold": typing.NotRequired[float | None],
     "connectivity": bool,
     "info": bool,
@@ -98,7 +98,7 @@ MrclusterstatsParametersTagged = typing.TypedDict('MrclusterstatsParametersTagge
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrclusterstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrclusterstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -109,9 +109,9 @@ MrclusterstatsParametersTagged = typing.TypedDict('MrclusterstatsParametersTagge
 })
 
 
-def mrclusterstats_column_params(
+def mrclusterstats_column(
     path: InputPathType,
-) -> MrclusterstatsColumnParametersTagged:
+) -> MrclusterstatsColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -135,7 +135,7 @@ def mrclusterstats_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrclusterstatsColumnParameters` object.
+    `MrclusterstatsColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def mrclusterstats_column_validate(
 
 
 def mrclusterstats_column_cargs(
-    params: MrclusterstatsColumnParameters,
+    params: MrclusterstatsColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,10 +167,10 @@ def mrclusterstats_column_cargs(
     return cargs
 
 
-def mrclusterstats_config_params(
+def mrclusterstats_config(
     key: str,
     value: str,
-) -> MrclusterstatsConfigParametersTagged:
+) -> MrclusterstatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def mrclusterstats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrclusterstatsConfigParameters` object.
+    `MrclusterstatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def mrclusterstats_config_validate(
 
 
 def mrclusterstats_config_cargs(
-    params: MrclusterstatsConfigParameters,
+    params: MrclusterstatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def mrclusterstats_config_cargs(
 
 class MrclusterstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrclusterstatsParameters(...)`.
+    Output object returned when calling `MrclusterstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -261,7 +261,7 @@ def mrclusterstats_params(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[MrclusterstatsColumnParameters] | None = None,
+    column: list[MrclusterstatsColumnParamsDict] | None = None,
     threshold: float | None = None,
     connectivity: bool = False,
     info: bool = False,
@@ -269,10 +269,10 @@ def mrclusterstats_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrclusterstatsConfigParameters] | None = None,
+    config: list[MrclusterstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrclusterstatsParametersTagged:
+) -> MrclusterstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -410,7 +410,7 @@ def mrclusterstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrclusterstatsParameters` object.
+    `MrclusterstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -474,7 +474,7 @@ def mrclusterstats_validate(
         raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[MrclusterstatsColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[MrclusterstatsColumnParamsDict] | None`')
         for e in params["column"]:
             mrclusterstats_column_validate(e)
     if params.get("threshold", None) is not None:
@@ -505,7 +505,7 @@ def mrclusterstats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrclusterstatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrclusterstatsConfigParamsDict] | None`')
         for e in params["config"]:
             mrclusterstats_config_validate(e)
     if params.get("help", False) is None:
@@ -539,7 +539,7 @@ def mrclusterstats_validate(
 
 
 def mrclusterstats_cargs(
-    params: MrclusterstatsParameters,
+    params: MrclusterstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -663,7 +663,7 @@ def mrclusterstats_cargs(
 
 
 def mrclusterstats_outputs(
-    params: MrclusterstatsParameters,
+    params: MrclusterstatsParamsDict,
     execution: Execution,
 ) -> MrclusterstatsOutputs:
     """
@@ -682,7 +682,7 @@ def mrclusterstats_outputs(
 
 
 def mrclusterstats_execute(
-    params: MrclusterstatsParameters,
+    params: MrclusterstatsParamsDict,
     runner: Runner | None = None,
 ) -> MrclusterstatsOutputs:
     """
@@ -756,7 +756,7 @@ def mrclusterstats(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[MrclusterstatsColumnParameters] | None = None,
+    column: list[MrclusterstatsColumnParamsDict] | None = None,
     threshold: float | None = None,
     connectivity: bool = False,
     info: bool = False,
@@ -764,7 +764,7 @@ def mrclusterstats(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrclusterstatsConfigParameters] | None = None,
+    config: list[MrclusterstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -915,10 +915,16 @@ def mrclusterstats(
 
 __all__ = [
     "MRCLUSTERSTATS_METADATA",
+    "MrclusterstatsColumnParamsDict",
+    "MrclusterstatsColumnParamsDictTagged",
+    "MrclusterstatsConfigParamsDict",
+    "MrclusterstatsConfigParamsDictTagged",
     "MrclusterstatsOutputs",
+    "MrclusterstatsParamsDict",
+    "MrclusterstatsParamsDictTagged",
     "mrclusterstats",
-    "mrclusterstats_column_params",
-    "mrclusterstats_config_params",
+    "mrclusterstats_column",
+    "mrclusterstats_config",
     "mrclusterstats_execute",
     "mrclusterstats_params",
 ]

@@ -13,14 +13,14 @@ AVI2TALXFM_METADATA = Metadata(
 )
 
 
-Avi2talxfmParameters = typing.TypedDict('Avi2talxfmParameters', {
+Avi2talxfmParamsDict = typing.TypedDict('Avi2talxfmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/avi2talxfm"]],
     "input_volume": InputPathType,
     "target_volume": InputPathType,
     "vox2vox_transform": InputPathType,
     "output_xfm": str,
 })
-Avi2talxfmParametersTagged = typing.TypedDict('Avi2talxfmParametersTagged', {
+Avi2talxfmParamsDictTagged = typing.TypedDict('Avi2talxfmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/avi2talxfm"],
     "input_volume": InputPathType,
     "target_volume": InputPathType,
@@ -31,7 +31,7 @@ Avi2talxfmParametersTagged = typing.TypedDict('Avi2talxfmParametersTagged', {
 
 class Avi2talxfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Avi2talxfmParameters(...)`.
+    Output object returned when calling `Avi2talxfmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def avi2talxfm_params(
     target_volume: InputPathType,
     vox2vox_transform: InputPathType,
     output_xfm: str,
-) -> Avi2talxfmParametersTagged:
+) -> Avi2talxfmParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def avi2talxfm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Avi2talxfmParameters` object.
+    `Avi2talxfmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def avi2talxfm_validate(
 
 
 def avi2talxfm_cargs(
-    params: Avi2talxfmParameters,
+    params: Avi2talxfmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def avi2talxfm_cargs(
 
 
 def avi2talxfm_outputs(
-    params: Avi2talxfmParameters,
+    params: Avi2talxfmParamsDict,
     execution: Execution,
 ) -> Avi2talxfmOutputs:
     """
@@ -139,7 +139,7 @@ def avi2talxfm_outputs(
 
 
 def avi2talxfm_execute(
-    params: Avi2talxfmParameters,
+    params: Avi2talxfmParamsDict,
     runner: Runner | None = None,
 ) -> Avi2talxfmOutputs:
     """
@@ -204,6 +204,8 @@ def avi2talxfm(
 __all__ = [
     "AVI2TALXFM_METADATA",
     "Avi2talxfmOutputs",
+    "Avi2talxfmParamsDict",
+    "Avi2talxfmParamsDictTagged",
     "avi2talxfm",
     "avi2talxfm_execute",
     "avi2talxfm_params",

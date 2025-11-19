@@ -13,12 +13,12 @@ MAKE_AVERAGE_SUBCORT_METADATA = Metadata(
 )
 
 
-MakeAverageSubcortParameters = typing.TypedDict('MakeAverageSubcortParameters', {
+MakeAverageSubcortParamsDict = typing.TypedDict('MakeAverageSubcortParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_subcort"]],
     "subjects": list[str],
     "output_volume": str,
 })
-MakeAverageSubcortParametersTagged = typing.TypedDict('MakeAverageSubcortParametersTagged', {
+MakeAverageSubcortParamsDictTagged = typing.TypedDict('MakeAverageSubcortParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_average_subcort"],
     "subjects": list[str],
     "output_volume": str,
@@ -27,7 +27,7 @@ MakeAverageSubcortParametersTagged = typing.TypedDict('MakeAverageSubcortParamet
 
 class MakeAverageSubcortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeAverageSubcortParameters(...)`.
+    Output object returned when calling `MakeAverageSubcortParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MakeAverageSubcortOutputs(typing.NamedTuple):
 def make_average_subcort_params(
     subjects: list[str],
     output_volume: str,
-) -> MakeAverageSubcortParametersTagged:
+) -> MakeAverageSubcortParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def make_average_subcort_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeAverageSubcortParameters` object.
+    `MakeAverageSubcortParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def make_average_subcort_validate(
 
 
 def make_average_subcort_cargs(
-    params: MakeAverageSubcortParameters,
+    params: MakeAverageSubcortParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -105,7 +105,7 @@ def make_average_subcort_cargs(
 
 
 def make_average_subcort_outputs(
-    params: MakeAverageSubcortParameters,
+    params: MakeAverageSubcortParamsDict,
     execution: Execution,
 ) -> MakeAverageSubcortOutputs:
     """
@@ -125,7 +125,7 @@ def make_average_subcort_outputs(
 
 
 def make_average_subcort_execute(
-    params: MakeAverageSubcortParameters,
+    params: MakeAverageSubcortParamsDict,
     runner: Runner | None = None,
 ) -> MakeAverageSubcortOutputs:
     """
@@ -188,6 +188,8 @@ def make_average_subcort(
 __all__ = [
     "MAKE_AVERAGE_SUBCORT_METADATA",
     "MakeAverageSubcortOutputs",
+    "MakeAverageSubcortParamsDict",
+    "MakeAverageSubcortParamsDictTagged",
     "make_average_subcort",
     "make_average_subcort_execute",
     "make_average_subcort_params",

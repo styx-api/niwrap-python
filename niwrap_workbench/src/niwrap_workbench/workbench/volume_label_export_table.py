@@ -12,14 +12,14 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-VolumeLabelExportTableParameters = typing.TypedDict('VolumeLabelExportTableParameters', {
+VolumeLabelExportTableParamsDict = typing.TypedDict('VolumeLabelExportTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-export-table"]],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
     "table-out": str,
 })
-VolumeLabelExportTableParametersTagged = typing.TypedDict('VolumeLabelExportTableParametersTagged', {
+VolumeLabelExportTableParamsDictTagged = typing.TypedDict('VolumeLabelExportTableParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-export-table"],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
@@ -30,7 +30,7 @@ VolumeLabelExportTableParametersTagged = typing.TypedDict('VolumeLabelExportTabl
 
 class VolumeLabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelExportTableParameters(...)`.
+    Output object returned when calling `VolumeLabelExportTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def volume_label_export_table_params(
     label_in: InputPathType,
     map_: str,
     table_out: str,
-) -> VolumeLabelExportTableParametersTagged:
+) -> VolumeLabelExportTableParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def volume_label_export_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelExportTableParameters` object.
+    `VolumeLabelExportTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def volume_label_export_table_validate(
 
 
 def volume_label_export_table_cargs(
-    params: VolumeLabelExportTableParameters,
+    params: VolumeLabelExportTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def volume_label_export_table_cargs(
 
 
 def volume_label_export_table_outputs(
-    params: VolumeLabelExportTableParameters,
+    params: VolumeLabelExportTableParamsDict,
     execution: Execution,
 ) -> VolumeLabelExportTableOutputs:
     """
@@ -142,7 +142,7 @@ def volume_label_export_table_outputs(
 
 
 def volume_label_export_table_execute(
-    params: VolumeLabelExportTableParameters,
+    params: VolumeLabelExportTableParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
@@ -203,6 +203,8 @@ def volume_label_export_table(
 __all__ = [
     "VOLUME_LABEL_EXPORT_TABLE_METADATA",
     "VolumeLabelExportTableOutputs",
+    "VolumeLabelExportTableParamsDict",
+    "VolumeLabelExportTableParamsDictTagged",
     "volume_label_export_table",
     "volume_label_export_table_execute",
     "volume_label_export_table_params",

@@ -13,7 +13,7 @@ FAT_MVM_PREP_PY_METADATA = Metadata(
 )
 
 
-FatMvmPrepPyParameters = typing.TypedDict('FatMvmPrepPyParameters', {
+FatMvmPrepPyParamsDict = typing.TypedDict('FatMvmPrepPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_prep.py"]],
     "prefix": str,
     "csv_file": InputPathType,
@@ -23,7 +23,7 @@ FatMvmPrepPyParameters = typing.TypedDict('FatMvmPrepPyParameters', {
     "na_warn_off": bool,
     "extern_labels_no": bool,
 })
-FatMvmPrepPyParametersTagged = typing.TypedDict('FatMvmPrepPyParametersTagged', {
+FatMvmPrepPyParamsDictTagged = typing.TypedDict('FatMvmPrepPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mvm_prep.py"],
     "prefix": str,
     "csv_file": InputPathType,
@@ -37,7 +37,7 @@ FatMvmPrepPyParametersTagged = typing.TypedDict('FatMvmPrepPyParametersTagged', 
 
 class FatMvmPrepPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMvmPrepPyParameters(...)`.
+    Output object returned when calling `FatMvmPrepPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def fat_mvm_prep_py_params(
     unionize_rois: bool = False,
     na_warn_off: bool = False,
     extern_labels_no: bool = False,
-) -> FatMvmPrepPyParametersTagged:
+) -> FatMvmPrepPyParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def fat_mvm_prep_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMvmPrepPyParameters` object.
+    `FatMvmPrepPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def fat_mvm_prep_py_validate(
 
 
 def fat_mvm_prep_py_cargs(
-    params: FatMvmPrepPyParameters,
+    params: FatMvmPrepPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def fat_mvm_prep_py_cargs(
 
 
 def fat_mvm_prep_py_outputs(
-    params: FatMvmPrepPyParameters,
+    params: FatMvmPrepPyParamsDict,
     execution: Execution,
 ) -> FatMvmPrepPyOutputs:
     """
@@ -194,7 +194,7 @@ def fat_mvm_prep_py_outputs(
 
 
 def fat_mvm_prep_py_execute(
-    params: FatMvmPrepPyParameters,
+    params: FatMvmPrepPyParamsDict,
     runner: Runner | None = None,
 ) -> FatMvmPrepPyOutputs:
     """
@@ -273,6 +273,8 @@ def fat_mvm_prep_py(
 __all__ = [
     "FAT_MVM_PREP_PY_METADATA",
     "FatMvmPrepPyOutputs",
+    "FatMvmPrepPyParamsDict",
+    "FatMvmPrepPyParamsDictTagged",
     "fat_mvm_prep_py",
     "fat_mvm_prep_py_execute",
     "fat_mvm_prep_py_params",

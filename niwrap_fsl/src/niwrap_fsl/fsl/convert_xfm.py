@@ -13,7 +13,7 @@ CONVERT_XFM_METADATA = Metadata(
 )
 
 
-ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
+ConvertXfmParamsDict = typing.TypedDict('ConvertXfmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/convert_xfm"]],
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
@@ -21,7 +21,7 @@ ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
     "fix_scale_skew": typing.NotRequired[InputPathType | None],
     "in_file": InputPathType,
 })
-ConvertXfmParametersTagged = typing.TypedDict('ConvertXfmParametersTagged', {
+ConvertXfmParamsDictTagged = typing.TypedDict('ConvertXfmParamsDictTagged', {
     "@type": typing.Literal["fsl/convert_xfm"],
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
@@ -33,7 +33,7 @@ ConvertXfmParametersTagged = typing.TypedDict('ConvertXfmParametersTagged', {
 
 class ConvertXfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertXfmParameters(...)`.
+    Output object returned when calling `ConvertXfmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def convert_xfm_params(
     invert_xfm: bool = False,
     concat_xfm: InputPathType | None = None,
     fix_scale_skew: InputPathType | None = None,
-) -> ConvertXfmParametersTagged:
+) -> ConvertXfmParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def convert_xfm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertXfmParameters` object.
+    `ConvertXfmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def convert_xfm_validate(
 
 
 def convert_xfm_cargs(
-    params: ConvertXfmParameters,
+    params: ConvertXfmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def convert_xfm_cargs(
 
 
 def convert_xfm_outputs(
-    params: ConvertXfmParameters,
+    params: ConvertXfmParamsDict,
     execution: Execution,
 ) -> ConvertXfmOutputs:
     """
@@ -162,7 +162,7 @@ def convert_xfm_outputs(
 
 
 def convert_xfm_execute(
-    params: ConvertXfmParameters,
+    params: ConvertXfmParamsDict,
     runner: Runner | None = None,
 ) -> ConvertXfmOutputs:
     """
@@ -238,6 +238,8 @@ def convert_xfm(
 __all__ = [
     "CONVERT_XFM_METADATA",
     "ConvertXfmOutputs",
+    "ConvertXfmParamsDict",
+    "ConvertXfmParamsDictTagged",
     "convert_xfm",
     "convert_xfm_execute",
     "convert_xfm_params",

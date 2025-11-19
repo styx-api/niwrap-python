@@ -13,7 +13,7 @@ V_3D_LOCAL_UNIFIZE_METADATA = Metadata(
 )
 
 
-V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
+V3dLocalUnifizeParamsDict = typing.TypedDict('V3dLocalUnifizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalUnifize"]],
     "input": InputPathType,
     "output": str,
@@ -25,7 +25,7 @@ V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
     "local_mask": typing.NotRequired[str | None],
     "filter_thr": typing.NotRequired[float | None],
 })
-V3dLocalUnifizeParametersTagged = typing.TypedDict('V3dLocalUnifizeParametersTagged', {
+V3dLocalUnifizeParamsDictTagged = typing.TypedDict('V3dLocalUnifizeParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalUnifize"],
     "input": InputPathType,
     "output": str,
@@ -41,7 +41,7 @@ V3dLocalUnifizeParametersTagged = typing.TypedDict('V3dLocalUnifizeParametersTag
 
 class V3dLocalUnifizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalUnifizeParameters(...)`.
+    Output object returned when calling `V3dLocalUnifizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_local_unifize_params(
     local_perc: float | None = None,
     local_mask: str | None = None,
     filter_thr: float | None = None,
-) -> V3dLocalUnifizeParametersTagged:
+) -> V3dLocalUnifizeParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def v_3d_local_unifize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalUnifizeParameters` object.
+    `V3dLocalUnifizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -148,7 +148,7 @@ def v_3d_local_unifize_validate(
 
 
 def v_3d_local_unifize_cargs(
-    params: V3dLocalUnifizeParameters,
+    params: V3dLocalUnifizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def v_3d_local_unifize_cargs(
 
 
 def v_3d_local_unifize_outputs(
-    params: V3dLocalUnifizeParameters,
+    params: V3dLocalUnifizeParamsDict,
     execution: Execution,
 ) -> V3dLocalUnifizeOutputs:
     """
@@ -220,7 +220,7 @@ def v_3d_local_unifize_outputs(
 
 
 def v_3d_local_unifize_execute(
-    params: V3dLocalUnifizeParameters,
+    params: V3dLocalUnifizeParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalUnifizeOutputs:
     """
@@ -309,6 +309,8 @@ def v_3d_local_unifize(
 
 __all__ = [
     "V3dLocalUnifizeOutputs",
+    "V3dLocalUnifizeParamsDict",
+    "V3dLocalUnifizeParamsDictTagged",
     "V_3D_LOCAL_UNIFIZE_METADATA",
     "v_3d_local_unifize",
     "v_3d_local_unifize_execute",

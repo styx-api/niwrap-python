@@ -13,7 +13,7 @@ AUTO_WARP_PY_METADATA = Metadata(
 )
 
 
-AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
+AutoWarpPyParamsDict = typing.TypedDict('AutoWarpPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/auto_warp.py"]],
     "base": InputPathType,
     "input": InputPathType,
@@ -49,7 +49,7 @@ AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
     "skullstrip_opts": typing.NotRequired[str | None],
     "at_opts": typing.NotRequired[str | None],
 })
-AutoWarpPyParametersTagged = typing.TypedDict('AutoWarpPyParametersTagged', {
+AutoWarpPyParamsDictTagged = typing.TypedDict('AutoWarpPyParamsDictTagged', {
     "@type": typing.Literal["afni/auto_warp.py"],
     "base": InputPathType,
     "input": InputPathType,
@@ -89,7 +89,7 @@ AutoWarpPyParametersTagged = typing.TypedDict('AutoWarpPyParametersTagged', {
 
 class AutoWarpPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AutoWarpPyParameters(...)`.
+    Output object returned when calling `AutoWarpPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +129,7 @@ def auto_warp_py_params(
     affine_followers_xmat: str | None = None,
     skullstrip_opts: str | None = None,
     at_opts: str | None = None,
-) -> AutoWarpPyParametersTagged:
+) -> AutoWarpPyParamsDictTagged:
     """
     Build parameters.
     
@@ -231,7 +231,7 @@ def auto_warp_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AutoWarpPyParameters` object.
+    `AutoWarpPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -359,7 +359,7 @@ def auto_warp_py_validate(
 
 
 def auto_warp_py_cargs(
-    params: AutoWarpPyParameters,
+    params: AutoWarpPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -489,7 +489,7 @@ def auto_warp_py_cargs(
 
 
 def auto_warp_py_outputs(
-    params: AutoWarpPyParameters,
+    params: AutoWarpPyParamsDict,
     execution: Execution,
 ) -> AutoWarpPyOutputs:
     """
@@ -508,7 +508,7 @@ def auto_warp_py_outputs(
 
 
 def auto_warp_py_execute(
-    params: AutoWarpPyParameters,
+    params: AutoWarpPyParamsDict,
     runner: Runner | None = None,
 ) -> AutoWarpPyOutputs:
     """
@@ -663,6 +663,8 @@ def auto_warp_py(
 __all__ = [
     "AUTO_WARP_PY_METADATA",
     "AutoWarpPyOutputs",
+    "AutoWarpPyParamsDict",
+    "AutoWarpPyParamsDictTagged",
     "auto_warp_py",
     "auto_warp_py_execute",
     "auto_warp_py_params",

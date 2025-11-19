@@ -13,7 +13,7 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 )
 
 
-VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', {
+VSumaMakeSpecCaretParamsDict = typing.TypedDict('VSumaMakeSpecCaretParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_Caret"]],
     "subject_id": str,
     "help": bool,
@@ -22,7 +22,7 @@ VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', 
     "surface_path": typing.NotRequired[str | None],
     "side_labels_style": typing.NotRequired[int | None],
 })
-VSumaMakeSpecCaretParametersTagged = typing.TypedDict('VSumaMakeSpecCaretParametersTagged', {
+VSumaMakeSpecCaretParamsDictTagged = typing.TypedDict('VSumaMakeSpecCaretParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_Make_Spec_Caret"],
     "subject_id": str,
     "help": bool,
@@ -35,7 +35,7 @@ VSumaMakeSpecCaretParametersTagged = typing.TypedDict('VSumaMakeSpecCaretParamet
 
 class VSumaMakeSpecCaretOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaMakeSpecCaretParameters(...)`.
+    Output object returned when calling `VSumaMakeSpecCaretParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v__suma_make_spec_caret_params(
     echo: bool = False,
     surface_path: str | None = None,
     side_labels_style: int | None = None,
-) -> VSumaMakeSpecCaretParametersTagged:
+) -> VSumaMakeSpecCaretParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v__suma_make_spec_caret_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaMakeSpecCaretParameters` object.
+    `VSumaMakeSpecCaretParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def v__suma_make_spec_caret_validate(
 
 
 def v__suma_make_spec_caret_cargs(
-    params: VSumaMakeSpecCaretParameters,
+    params: VSumaMakeSpecCaretParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def v__suma_make_spec_caret_cargs(
 
 
 def v__suma_make_spec_caret_outputs(
-    params: VSumaMakeSpecCaretParameters,
+    params: VSumaMakeSpecCaretParamsDict,
     execution: Execution,
 ) -> VSumaMakeSpecCaretOutputs:
     """
@@ -185,7 +185,7 @@ def v__suma_make_spec_caret_outputs(
 
 
 def v__suma_make_spec_caret_execute(
-    params: VSumaMakeSpecCaretParameters,
+    params: VSumaMakeSpecCaretParamsDict,
     runner: Runner | None = None,
 ) -> VSumaMakeSpecCaretOutputs:
     """
@@ -257,6 +257,8 @@ def v__suma_make_spec_caret(
 
 __all__ = [
     "VSumaMakeSpecCaretOutputs",
+    "VSumaMakeSpecCaretParamsDict",
+    "VSumaMakeSpecCaretParamsDictTagged",
     "V__SUMA_MAKE_SPEC_CARET_METADATA",
     "v__suma_make_spec_caret",
     "v__suma_make_spec_caret_execute",

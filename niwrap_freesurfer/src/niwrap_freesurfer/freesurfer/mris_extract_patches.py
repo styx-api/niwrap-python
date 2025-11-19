@@ -13,12 +13,12 @@ MRIS_EXTRACT_PATCHES_METADATA = Metadata(
 )
 
 
-MrisExtractPatchesParameters = typing.TypedDict('MrisExtractPatchesParameters', {
+MrisExtractPatchesParamsDict = typing.TypedDict('MrisExtractPatchesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_patches"]],
     "subject": str,
     "output_dir": str,
 })
-MrisExtractPatchesParametersTagged = typing.TypedDict('MrisExtractPatchesParametersTagged', {
+MrisExtractPatchesParamsDictTagged = typing.TypedDict('MrisExtractPatchesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_extract_patches"],
     "subject": str,
     "output_dir": str,
@@ -27,7 +27,7 @@ MrisExtractPatchesParametersTagged = typing.TypedDict('MrisExtractPatchesParamet
 
 class MrisExtractPatchesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisExtractPatchesParameters(...)`.
+    Output object returned when calling `MrisExtractPatchesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MrisExtractPatchesOutputs(typing.NamedTuple):
 def mris_extract_patches_params(
     subject: str,
     output_dir: str,
-) -> MrisExtractPatchesParametersTagged:
+) -> MrisExtractPatchesParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mris_extract_patches_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisExtractPatchesParameters` object.
+    `MrisExtractPatchesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mris_extract_patches_validate(
 
 
 def mris_extract_patches_cargs(
-    params: MrisExtractPatchesParameters,
+    params: MrisExtractPatchesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def mris_extract_patches_cargs(
 
 
 def mris_extract_patches_outputs(
-    params: MrisExtractPatchesParameters,
+    params: MrisExtractPatchesParamsDict,
     execution: Execution,
 ) -> MrisExtractPatchesOutputs:
     """
@@ -116,7 +116,7 @@ def mris_extract_patches_outputs(
 
 
 def mris_extract_patches_execute(
-    params: MrisExtractPatchesParameters,
+    params: MrisExtractPatchesParamsDict,
     runner: Runner | None = None,
 ) -> MrisExtractPatchesOutputs:
     """
@@ -175,6 +175,8 @@ def mris_extract_patches(
 __all__ = [
     "MRIS_EXTRACT_PATCHES_METADATA",
     "MrisExtractPatchesOutputs",
+    "MrisExtractPatchesParamsDict",
+    "MrisExtractPatchesParamsDictTagged",
     "mris_extract_patches",
     "mris_extract_patches_execute",
     "mris_extract_patches_params",

@@ -13,13 +13,13 @@ MRIS_COPY_HEADER_METADATA = Metadata(
 )
 
 
-MrisCopyHeaderParameters = typing.TypedDict('MrisCopyHeaderParameters', {
+MrisCopyHeaderParamsDict = typing.TypedDict('MrisCopyHeaderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_copy_header"]],
     "input_surface": InputPathType,
     "template_surface": InputPathType,
     "output_surface": str,
 })
-MrisCopyHeaderParametersTagged = typing.TypedDict('MrisCopyHeaderParametersTagged', {
+MrisCopyHeaderParamsDictTagged = typing.TypedDict('MrisCopyHeaderParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_copy_header"],
     "input_surface": InputPathType,
     "template_surface": InputPathType,
@@ -29,7 +29,7 @@ MrisCopyHeaderParametersTagged = typing.TypedDict('MrisCopyHeaderParametersTagge
 
 class MrisCopyHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCopyHeaderParameters(...)`.
+    Output object returned when calling `MrisCopyHeaderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_copy_header_params(
     input_surface: InputPathType,
     template_surface: InputPathType,
     output_surface: str,
-) -> MrisCopyHeaderParametersTagged:
+) -> MrisCopyHeaderParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def mris_copy_header_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCopyHeaderParameters` object.
+    `MrisCopyHeaderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mris_copy_header_validate(
 
 
 def mris_copy_header_cargs(
-    params: MrisCopyHeaderParameters,
+    params: MrisCopyHeaderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def mris_copy_header_cargs(
 
 
 def mris_copy_header_outputs(
-    params: MrisCopyHeaderParameters,
+    params: MrisCopyHeaderParamsDict,
     execution: Execution,
 ) -> MrisCopyHeaderOutputs:
     """
@@ -130,7 +130,7 @@ def mris_copy_header_outputs(
 
 
 def mris_copy_header_execute(
-    params: MrisCopyHeaderParameters,
+    params: MrisCopyHeaderParamsDict,
     runner: Runner | None = None,
 ) -> MrisCopyHeaderOutputs:
     """
@@ -195,6 +195,8 @@ def mris_copy_header(
 __all__ = [
     "MRIS_COPY_HEADER_METADATA",
     "MrisCopyHeaderOutputs",
+    "MrisCopyHeaderParamsDict",
+    "MrisCopyHeaderParamsDictTagged",
     "mris_copy_header",
     "mris_copy_header_execute",
     "mris_copy_header_params",

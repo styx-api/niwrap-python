@@ -13,14 +13,14 @@ QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
 )
 
 
-QuantifyHasubregionsShParameters = typing.TypedDict('QuantifyHasubregionsShParameters', {
+QuantifyHasubregionsShParamsDict = typing.TypedDict('QuantifyHasubregionsShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyHAsubregions.sh"]],
     "prefix": str,
     "suffix": str,
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
-QuantifyHasubregionsShParametersTagged = typing.TypedDict('QuantifyHasubregionsShParametersTagged', {
+QuantifyHasubregionsShParamsDictTagged = typing.TypedDict('QuantifyHasubregionsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/quantifyHAsubregions.sh"],
     "prefix": str,
     "suffix": str,
@@ -31,7 +31,7 @@ QuantifyHasubregionsShParametersTagged = typing.TypedDict('QuantifyHasubregionsS
 
 class QuantifyHasubregionsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuantifyHasubregionsShParameters(...)`.
+    Output object returned when calling `QuantifyHasubregionsShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def quantify_hasubregions_sh_params(
     suffix: str,
     output_file: str,
     subjects_directory: str | None = None,
-) -> QuantifyHasubregionsShParametersTagged:
+) -> QuantifyHasubregionsShParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def quantify_hasubregions_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuantifyHasubregionsShParameters` object.
+    `QuantifyHasubregionsShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def quantify_hasubregions_sh_validate(
 
 
 def quantify_hasubregions_sh_cargs(
-    params: QuantifyHasubregionsShParameters,
+    params: QuantifyHasubregionsShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def quantify_hasubregions_sh_cargs(
 
 
 def quantify_hasubregions_sh_outputs(
-    params: QuantifyHasubregionsShParameters,
+    params: QuantifyHasubregionsShParamsDict,
     execution: Execution,
 ) -> QuantifyHasubregionsShOutputs:
     """
@@ -141,7 +141,7 @@ def quantify_hasubregions_sh_outputs(
 
 
 def quantify_hasubregions_sh_execute(
-    params: QuantifyHasubregionsShParameters,
+    params: QuantifyHasubregionsShParamsDict,
     runner: Runner | None = None,
 ) -> QuantifyHasubregionsShOutputs:
     """
@@ -207,6 +207,8 @@ def quantify_hasubregions_sh(
 __all__ = [
     "QUANTIFY_HASUBREGIONS_SH_METADATA",
     "QuantifyHasubregionsShOutputs",
+    "QuantifyHasubregionsShParamsDict",
+    "QuantifyHasubregionsShParamsDictTagged",
     "quantify_hasubregions_sh",
     "quantify_hasubregions_sh_execute",
     "quantify_hasubregions_sh_params",

@@ -13,7 +13,7 @@ V__ADD_EDGE_METADATA = Metadata(
 )
 
 
-VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
+VAddEdgeParamsDict = typing.TypedDict('VAddEdgeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@AddEdge"]],
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
     "auto": bool,
     "no_auto": bool,
 })
-VAddEdgeParametersTagged = typing.TypedDict('VAddEdgeParametersTagged', {
+VAddEdgeParamsDictTagged = typing.TypedDict('VAddEdgeParamsDictTagged', {
     "@type": typing.Literal["afni/@AddEdge"],
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ VAddEdgeParametersTagged = typing.TypedDict('VAddEdgeParametersTagged', {
 
 class VAddEdgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAddEdgeParameters(...)`.
+    Output object returned when calling `VAddEdgeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def v__add_edge_params(
     auto_record: bool = False,
     auto: bool = False,
     no_auto: bool = False,
-) -> VAddEdgeParametersTagged:
+) -> VAddEdgeParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def v__add_edge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAddEdgeParameters` object.
+    `VAddEdgeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def v__add_edge_validate(
 
 
 def v__add_edge_cargs(
-    params: VAddEdgeParameters,
+    params: VAddEdgeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -275,7 +275,7 @@ def v__add_edge_cargs(
 
 
 def v__add_edge_outputs(
-    params: VAddEdgeParameters,
+    params: VAddEdgeParamsDict,
     execution: Execution,
 ) -> VAddEdgeOutputs:
     """
@@ -298,7 +298,7 @@ def v__add_edge_outputs(
 
 
 def v__add_edge_execute(
-    params: VAddEdgeParameters,
+    params: VAddEdgeParamsDict,
     runner: Runner | None = None,
 ) -> VAddEdgeOutputs:
     """
@@ -398,6 +398,8 @@ def v__add_edge(
 
 __all__ = [
     "VAddEdgeOutputs",
+    "VAddEdgeParamsDict",
+    "VAddEdgeParamsDictTagged",
     "V__ADD_EDGE_METADATA",
     "v__add_edge",
     "v__add_edge_execute",

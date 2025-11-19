@@ -13,7 +13,7 @@ APPLY_MORPH_METADATA = Metadata(
 )
 
 
-ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
+ApplyMorphParamsDict = typing.TypedDict('ApplyMorphParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/applyMorph"]],
     "inputs": list[InputPathType],
     "template": InputPathType,
@@ -21,7 +21,7 @@ ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
     "zlib_buffer": typing.NotRequired[float | None],
     "dbg_coords": typing.NotRequired[list[float] | None],
 })
-ApplyMorphParametersTagged = typing.TypedDict('ApplyMorphParametersTagged', {
+ApplyMorphParamsDictTagged = typing.TypedDict('ApplyMorphParamsDictTagged', {
     "@type": typing.Literal["freesurfer/applyMorph"],
     "inputs": list[InputPathType],
     "template": InputPathType,
@@ -33,7 +33,7 @@ ApplyMorphParametersTagged = typing.TypedDict('ApplyMorphParametersTagged', {
 
 class ApplyMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApplyMorphParameters(...)`.
+    Output object returned when calling `ApplyMorphParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def apply_morph_params(
     transform: InputPathType,
     zlib_buffer: float | None = None,
     dbg_coords: list[float] | None = None,
-) -> ApplyMorphParametersTagged:
+) -> ApplyMorphParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def apply_morph_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApplyMorphParameters` object.
+    `ApplyMorphParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def apply_morph_validate(
 
 
 def apply_morph_cargs(
-    params: ApplyMorphParameters,
+    params: ApplyMorphParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def apply_morph_cargs(
 
 
 def apply_morph_outputs(
-    params: ApplyMorphParameters,
+    params: ApplyMorphParamsDict,
     execution: Execution,
 ) -> ApplyMorphOutputs:
     """
@@ -168,7 +168,7 @@ def apply_morph_outputs(
 
 
 def apply_morph_execute(
-    params: ApplyMorphParameters,
+    params: ApplyMorphParamsDict,
     runner: Runner | None = None,
 ) -> ApplyMorphOutputs:
     """
@@ -236,6 +236,8 @@ def apply_morph(
 __all__ = [
     "APPLY_MORPH_METADATA",
     "ApplyMorphOutputs",
+    "ApplyMorphParamsDict",
+    "ApplyMorphParamsDictTagged",
     "apply_morph",
     "apply_morph_execute",
     "apply_morph_params",

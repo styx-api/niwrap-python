@@ -13,13 +13,13 @@ MRI_LINEAR_REGISTER_METADATA = Metadata(
 )
 
 
-MriLinearRegisterParameters = typing.TypedDict('MriLinearRegisterParameters', {
+MriLinearRegisterParamsDict = typing.TypedDict('MriLinearRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_register"]],
     "input_brain": InputPathType,
     "template": InputPathType,
     "output_file": str,
 })
-MriLinearRegisterParametersTagged = typing.TypedDict('MriLinearRegisterParametersTagged', {
+MriLinearRegisterParamsDictTagged = typing.TypedDict('MriLinearRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_linear_register"],
     "input_brain": InputPathType,
     "template": InputPathType,
@@ -29,7 +29,7 @@ MriLinearRegisterParametersTagged = typing.TypedDict('MriLinearRegisterParameter
 
 class MriLinearRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLinearRegisterParameters(...)`.
+    Output object returned when calling `MriLinearRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_linear_register_params(
     input_brain: InputPathType,
     template: InputPathType,
     output_file: str,
-) -> MriLinearRegisterParametersTagged:
+) -> MriLinearRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_linear_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLinearRegisterParameters` object.
+    `MriLinearRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_linear_register_validate(
 
 
 def mri_linear_register_cargs(
-    params: MriLinearRegisterParameters,
+    params: MriLinearRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_linear_register_cargs(
 
 
 def mri_linear_register_outputs(
-    params: MriLinearRegisterParameters,
+    params: MriLinearRegisterParamsDict,
     execution: Execution,
 ) -> MriLinearRegisterOutputs:
     """
@@ -129,7 +129,7 @@ def mri_linear_register_outputs(
 
 
 def mri_linear_register_execute(
-    params: MriLinearRegisterParameters,
+    params: MriLinearRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MriLinearRegisterOutputs:
     """
@@ -191,6 +191,8 @@ def mri_linear_register(
 __all__ = [
     "MRI_LINEAR_REGISTER_METADATA",
     "MriLinearRegisterOutputs",
+    "MriLinearRegisterParamsDict",
+    "MriLinearRegisterParamsDictTagged",
     "mri_linear_register",
     "mri_linear_register_execute",
     "mri_linear_register_params",

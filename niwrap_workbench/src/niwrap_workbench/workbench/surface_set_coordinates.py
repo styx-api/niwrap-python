@@ -12,13 +12,13 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 )
 
 
-SurfaceSetCoordinatesParameters = typing.TypedDict('SurfaceSetCoordinatesParameters', {
+SurfaceSetCoordinatesParamsDict = typing.TypedDict('SurfaceSetCoordinatesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-set-coordinates"]],
     "surface-out": str,
     "surface-in": InputPathType,
     "coord-metric": InputPathType,
 })
-SurfaceSetCoordinatesParametersTagged = typing.TypedDict('SurfaceSetCoordinatesParametersTagged', {
+SurfaceSetCoordinatesParamsDictTagged = typing.TypedDict('SurfaceSetCoordinatesParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-set-coordinates"],
     "surface-out": str,
     "surface-in": InputPathType,
@@ -28,7 +28,7 @@ SurfaceSetCoordinatesParametersTagged = typing.TypedDict('SurfaceSetCoordinatesP
 
 class SurfaceSetCoordinatesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceSetCoordinatesParameters(...)`.
+    Output object returned when calling `SurfaceSetCoordinatesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def surface_set_coordinates_params(
     surface_out: str,
     surface_in: InputPathType,
     coord_metric: InputPathType,
-) -> SurfaceSetCoordinatesParametersTagged:
+) -> SurfaceSetCoordinatesParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def surface_set_coordinates_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceSetCoordinatesParameters` object.
+    `SurfaceSetCoordinatesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def surface_set_coordinates_validate(
 
 
 def surface_set_coordinates_cargs(
-    params: SurfaceSetCoordinatesParameters,
+    params: SurfaceSetCoordinatesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def surface_set_coordinates_cargs(
 
 
 def surface_set_coordinates_outputs(
-    params: SurfaceSetCoordinatesParameters,
+    params: SurfaceSetCoordinatesParamsDict,
     execution: Execution,
 ) -> SurfaceSetCoordinatesOutputs:
     """
@@ -131,7 +131,7 @@ def surface_set_coordinates_outputs(
 
 
 def surface_set_coordinates_execute(
-    params: SurfaceSetCoordinatesParameters,
+    params: SurfaceSetCoordinatesParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
@@ -193,6 +193,8 @@ def surface_set_coordinates(
 __all__ = [
     "SURFACE_SET_COORDINATES_METADATA",
     "SurfaceSetCoordinatesOutputs",
+    "SurfaceSetCoordinatesParamsDict",
+    "SurfaceSetCoordinatesParamsDictTagged",
     "surface_set_coordinates",
     "surface_set_coordinates_execute",
     "surface_set_coordinates_params",

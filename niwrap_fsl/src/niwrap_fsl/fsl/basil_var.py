@@ -13,12 +13,12 @@ BASIL_VAR_METADATA = Metadata(
 )
 
 
-BasilVarParameters = typing.TypedDict('BasilVarParameters', {
+BasilVarParamsDict = typing.TypedDict('BasilVarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/basil_var"]],
     "results_dir": str,
     "mask_image": InputPathType,
 })
-BasilVarParametersTagged = typing.TypedDict('BasilVarParametersTagged', {
+BasilVarParamsDictTagged = typing.TypedDict('BasilVarParamsDictTagged', {
     "@type": typing.Literal["fsl/basil_var"],
     "results_dir": str,
     "mask_image": InputPathType,
@@ -27,7 +27,7 @@ BasilVarParametersTagged = typing.TypedDict('BasilVarParametersTagged', {
 
 class BasilVarOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BasilVarParameters(...)`.
+    Output object returned when calling `BasilVarParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class BasilVarOutputs(typing.NamedTuple):
 def basil_var_params(
     results_dir: str,
     mask_image: InputPathType,
-) -> BasilVarParametersTagged:
+) -> BasilVarParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def basil_var_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BasilVarParameters` object.
+    `BasilVarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def basil_var_validate(
 
 
 def basil_var_cargs(
-    params: BasilVarParameters,
+    params: BasilVarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def basil_var_cargs(
 
 
 def basil_var_outputs(
-    params: BasilVarParameters,
+    params: BasilVarParamsDict,
     execution: Execution,
 ) -> BasilVarOutputs:
     """
@@ -122,7 +122,7 @@ def basil_var_outputs(
 
 
 def basil_var_execute(
-    params: BasilVarParameters,
+    params: BasilVarParamsDict,
     runner: Runner | None = None,
 ) -> BasilVarOutputs:
     """
@@ -181,6 +181,8 @@ def basil_var(
 __all__ = [
     "BASIL_VAR_METADATA",
     "BasilVarOutputs",
+    "BasilVarParamsDict",
+    "BasilVarParamsDictTagged",
     "basil_var",
     "basil_var_execute",
     "basil_var_params",

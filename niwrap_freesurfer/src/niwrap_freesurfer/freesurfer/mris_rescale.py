@@ -13,12 +13,12 @@ MRIS_RESCALE_METADATA = Metadata(
 )
 
 
-MrisRescaleParameters = typing.TypedDict('MrisRescaleParameters', {
+MrisRescaleParamsDict = typing.TypedDict('MrisRescaleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rescale"]],
     "input_surface": InputPathType,
     "output_surface": str,
 })
-MrisRescaleParametersTagged = typing.TypedDict('MrisRescaleParametersTagged', {
+MrisRescaleParamsDictTagged = typing.TypedDict('MrisRescaleParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_rescale"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisRescaleParametersTagged = typing.TypedDict('MrisRescaleParametersTagged', {
 
 class MrisRescaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRescaleParameters(...)`.
+    Output object returned when calling `MrisRescaleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisRescaleOutputs(typing.NamedTuple):
 def mris_rescale_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisRescaleParametersTagged:
+) -> MrisRescaleParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_rescale_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRescaleParameters` object.
+    `MrisRescaleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_rescale_validate(
 
 
 def mris_rescale_cargs(
-    params: MrisRescaleParameters,
+    params: MrisRescaleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mris_rescale_cargs(
 
 
 def mris_rescale_outputs(
-    params: MrisRescaleParameters,
+    params: MrisRescaleParamsDict,
     execution: Execution,
 ) -> MrisRescaleOutputs:
     """
@@ -119,7 +119,7 @@ def mris_rescale_outputs(
 
 
 def mris_rescale_execute(
-    params: MrisRescaleParameters,
+    params: MrisRescaleParamsDict,
     runner: Runner | None = None,
 ) -> MrisRescaleOutputs:
     """
@@ -178,6 +178,8 @@ def mris_rescale(
 __all__ = [
     "MRIS_RESCALE_METADATA",
     "MrisRescaleOutputs",
+    "MrisRescaleParamsDict",
+    "MrisRescaleParamsDictTagged",
     "mris_rescale",
     "mris_rescale_execute",
     "mris_rescale_params",

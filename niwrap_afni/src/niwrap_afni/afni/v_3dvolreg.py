@@ -13,7 +13,7 @@ V_3DVOLREG_METADATA = Metadata(
 )
 
 
-V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
+V3dvolregParamsDict = typing.TypedDict('V3dvolregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dvolreg"]],
     "copyorigin": bool,
     "twopass": bool,
@@ -31,7 +31,7 @@ V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
     "Maxdisp1d": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
-V3dvolregParametersTagged = typing.TypedDict('V3dvolregParametersTagged', {
+V3dvolregParamsDictTagged = typing.TypedDict('V3dvolregParamsDictTagged', {
     "@type": typing.Literal["afni/3dvolreg"],
     "copyorigin": bool,
     "twopass": bool,
@@ -53,7 +53,7 @@ V3dvolregParametersTagged = typing.TypedDict('V3dvolregParametersTagged', {
 
 class V3dvolregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dvolregParameters(...)`.
+    Output object returned when calling `V3dvolregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def v_3dvolreg_params(
     basefile: InputPathType | None = None,
     zpad: int | None = None,
     maxdisp1d: str | None = None,
-) -> V3dvolregParametersTagged:
+) -> V3dvolregParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def v_3dvolreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dvolregParameters` object.
+    `V3dvolregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -221,7 +221,7 @@ def v_3dvolreg_validate(
 
 
 def v_3dvolreg_cargs(
-    params: V3dvolregParameters,
+    params: V3dvolregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def v_3dvolreg_cargs(
 
 
 def v_3dvolreg_outputs(
-    params: V3dvolregParameters,
+    params: V3dvolregParamsDict,
     execution: Execution,
 ) -> V3dvolregOutputs:
     """
@@ -314,7 +314,7 @@ def v_3dvolreg_outputs(
 
 
 def v_3dvolreg_execute(
-    params: V3dvolregParameters,
+    params: V3dvolregParamsDict,
     runner: Runner | None = None,
 ) -> V3dvolregOutputs:
     """
@@ -417,6 +417,8 @@ def v_3dvolreg(
 
 __all__ = [
     "V3dvolregOutputs",
+    "V3dvolregParamsDict",
+    "V3dvolregParamsDictTagged",
     "V_3DVOLREG_METADATA",
     "v_3dvolreg",
     "v_3dvolreg_execute",

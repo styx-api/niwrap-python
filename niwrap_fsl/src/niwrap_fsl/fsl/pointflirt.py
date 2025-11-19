@@ -13,7 +13,7 @@ POINTFLIRT_METADATA = Metadata(
 )
 
 
-PointflirtParameters = typing.TypedDict('PointflirtParameters', {
+PointflirtParamsDict = typing.TypedDict('PointflirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/pointflirt"]],
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
@@ -23,7 +23,7 @@ PointflirtParameters = typing.TypedDict('PointflirtParameters', {
     "vol_ref": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
 })
-PointflirtParametersTagged = typing.TypedDict('PointflirtParametersTagged', {
+PointflirtParamsDictTagged = typing.TypedDict('PointflirtParamsDictTagged', {
     "@type": typing.Literal["fsl/pointflirt"],
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
@@ -37,7 +37,7 @@ PointflirtParametersTagged = typing.TypedDict('PointflirtParametersTagged', {
 
 class PointflirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PointflirtParameters(...)`.
+    Output object returned when calling `PointflirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def pointflirt_params(
     vol_input: InputPathType | None = None,
     vol_ref: InputPathType | None = None,
     verbose_flag: bool = False,
-) -> PointflirtParametersTagged:
+) -> PointflirtParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def pointflirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PointflirtParameters` object.
+    `PointflirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def pointflirt_validate(
 
 
 def pointflirt_cargs(
-    params: PointflirtParameters,
+    params: PointflirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def pointflirt_cargs(
 
 
 def pointflirt_outputs(
-    params: PointflirtParameters,
+    params: PointflirtParamsDict,
     execution: Execution,
 ) -> PointflirtOutputs:
     """
@@ -189,7 +189,7 @@ def pointflirt_outputs(
 
 
 def pointflirt_execute(
-    params: PointflirtParameters,
+    params: PointflirtParamsDict,
     runner: Runner | None = None,
 ) -> PointflirtOutputs:
     """
@@ -265,6 +265,8 @@ def pointflirt(
 __all__ = [
     "POINTFLIRT_METADATA",
     "PointflirtOutputs",
+    "PointflirtParamsDict",
+    "PointflirtParamsDictTagged",
     "pointflirt",
     "pointflirt_execute",
     "pointflirt_params",

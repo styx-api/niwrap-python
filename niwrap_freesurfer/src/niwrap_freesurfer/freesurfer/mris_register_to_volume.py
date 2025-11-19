@@ -13,7 +13,7 @@ MRIS_REGISTER_TO_VOLUME_METADATA = Metadata(
 )
 
 
-MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameters', {
+MrisRegisterToVolumeParamsDict = typing.TypedDict('MrisRegisterToVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_volume"]],
     "surface": str,
     "pial": str,
@@ -44,7 +44,7 @@ MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameter
     "label": typing.NotRequired[str | None],
     "out_reg": typing.NotRequired[str | None],
 })
-MrisRegisterToVolumeParametersTagged = typing.TypedDict('MrisRegisterToVolumeParametersTagged', {
+MrisRegisterToVolumeParamsDictTagged = typing.TypedDict('MrisRegisterToVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_register_to_volume"],
     "surface": str,
     "pial": str,
@@ -79,7 +79,7 @@ MrisRegisterToVolumeParametersTagged = typing.TypedDict('MrisRegisterToVolumePar
 
 class MrisRegisterToVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRegisterToVolumeParameters(...)`.
+    Output object returned when calling `MrisRegisterToVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +114,7 @@ def mris_register_to_volume_params(
     patch: str | None = None,
     label: str | None = None,
     out_reg: str | None = None,
-) -> MrisRegisterToVolumeParametersTagged:
+) -> MrisRegisterToVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -210,7 +210,7 @@ def mris_register_to_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRegisterToVolumeParameters` object.
+    `MrisRegisterToVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -335,7 +335,7 @@ def mris_register_to_volume_validate(
 
 
 def mris_register_to_volume_cargs(
-    params: MrisRegisterToVolumeParameters,
+    params: MrisRegisterToVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -480,7 +480,7 @@ def mris_register_to_volume_cargs(
 
 
 def mris_register_to_volume_outputs(
-    params: MrisRegisterToVolumeParameters,
+    params: MrisRegisterToVolumeParamsDict,
     execution: Execution,
 ) -> MrisRegisterToVolumeOutputs:
     """
@@ -499,7 +499,7 @@ def mris_register_to_volume_outputs(
 
 
 def mris_register_to_volume_execute(
-    params: MrisRegisterToVolumeParameters,
+    params: MrisRegisterToVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MrisRegisterToVolumeOutputs:
     """
@@ -636,6 +636,8 @@ def mris_register_to_volume(
 __all__ = [
     "MRIS_REGISTER_TO_VOLUME_METADATA",
     "MrisRegisterToVolumeOutputs",
+    "MrisRegisterToVolumeParamsDict",
+    "MrisRegisterToVolumeParamsDictTagged",
     "mris_register_to_volume",
     "mris_register_to_volume_execute",
     "mris_register_to_volume_params",

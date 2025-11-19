@@ -13,14 +13,14 @@ SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
 )
 
 
-SimpleSynRegistrationParameters = typing.TypedDict('SimpleSynRegistrationParameters', {
+SimpleSynRegistrationParamsDict = typing.TypedDict('SimpleSynRegistrationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/simpleSynRegistration"]],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initial_transform": str,
     "output_prefix": str,
 })
-SimpleSynRegistrationParametersTagged = typing.TypedDict('SimpleSynRegistrationParametersTagged', {
+SimpleSynRegistrationParamsDictTagged = typing.TypedDict('SimpleSynRegistrationParamsDictTagged', {
     "@type": typing.Literal["ants/simpleSynRegistration"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -31,7 +31,7 @@ SimpleSynRegistrationParametersTagged = typing.TypedDict('SimpleSynRegistrationP
 
 class SimpleSynRegistrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SimpleSynRegistrationParameters(...)`.
+    Output object returned when calling `SimpleSynRegistrationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def simple_syn_registration_params(
     moving_image: InputPathType,
     initial_transform: str,
     output_prefix: str,
-) -> SimpleSynRegistrationParametersTagged:
+) -> SimpleSynRegistrationParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def simple_syn_registration_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SimpleSynRegistrationParameters` object.
+    `SimpleSynRegistrationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def simple_syn_registration_validate(
 
 
 def simple_syn_registration_cargs(
-    params: SimpleSynRegistrationParameters,
+    params: SimpleSynRegistrationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def simple_syn_registration_cargs(
 
 
 def simple_syn_registration_outputs(
-    params: SimpleSynRegistrationParameters,
+    params: SimpleSynRegistrationParamsDict,
     execution: Execution,
 ) -> SimpleSynRegistrationOutputs:
     """
@@ -142,7 +142,7 @@ def simple_syn_registration_outputs(
 
 
 def simple_syn_registration_execute(
-    params: SimpleSynRegistrationParameters,
+    params: SimpleSynRegistrationParamsDict,
     runner: Runner | None = None,
 ) -> SimpleSynRegistrationOutputs:
     """
@@ -207,6 +207,8 @@ def simple_syn_registration(
 __all__ = [
     "SIMPLE_SYN_REGISTRATION_METADATA",
     "SimpleSynRegistrationOutputs",
+    "SimpleSynRegistrationParamsDict",
+    "SimpleSynRegistrationParamsDictTagged",
     "simple_syn_registration",
     "simple_syn_registration_execute",
     "simple_syn_registration_params",

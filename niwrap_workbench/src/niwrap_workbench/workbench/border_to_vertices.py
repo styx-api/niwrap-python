@@ -12,14 +12,14 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 )
 
 
-BorderToVerticesParameters = typing.TypedDict('BorderToVerticesParameters', {
+BorderToVerticesParamsDict = typing.TypedDict('BorderToVerticesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-to-vertices"]],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "surface": InputPathType,
     "border-file": InputPathType,
 })
-BorderToVerticesParametersTagged = typing.TypedDict('BorderToVerticesParametersTagged', {
+BorderToVerticesParamsDictTagged = typing.TypedDict('BorderToVerticesParamsDictTagged', {
     "@type": typing.Literal["workbench/border-to-vertices"],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ BorderToVerticesParametersTagged = typing.TypedDict('BorderToVerticesParametersT
 
 class BorderToVerticesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderToVerticesParameters(...)`.
+    Output object returned when calling `BorderToVerticesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def border_to_vertices_params(
     name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
-) -> BorderToVerticesParametersTagged:
+) -> BorderToVerticesParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def border_to_vertices_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderToVerticesParameters` object.
+    `BorderToVerticesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def border_to_vertices_validate(
 
 
 def border_to_vertices_cargs(
-    params: BorderToVerticesParameters,
+    params: BorderToVerticesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def border_to_vertices_cargs(
 
 
 def border_to_vertices_outputs(
-    params: BorderToVerticesParameters,
+    params: BorderToVerticesParamsDict,
     execution: Execution,
 ) -> BorderToVerticesOutputs:
     """
@@ -145,7 +145,7 @@ def border_to_vertices_outputs(
 
 
 def border_to_vertices_execute(
-    params: BorderToVerticesParameters,
+    params: BorderToVerticesParamsDict,
     runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
     """
@@ -206,6 +206,8 @@ def border_to_vertices(
 __all__ = [
     "BORDER_TO_VERTICES_METADATA",
     "BorderToVerticesOutputs",
+    "BorderToVerticesParamsDict",
+    "BorderToVerticesParamsDictTagged",
     "border_to_vertices",
     "border_to_vertices_execute",
     "border_to_vertices_params",

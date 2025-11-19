@@ -13,7 +13,7 @@ WM_ANAT_SNR_METADATA = Metadata(
 )
 
 
-WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
+WmAnatSnrParamsDict = typing.TypedDict('WmAnatSnrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/wm-anat-snr"]],
     "subject": str,
     "output_file": str,
@@ -23,7 +23,7 @@ WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
     "cleanup": bool,
     "no_cleanup": bool,
 })
-WmAnatSnrParametersTagged = typing.TypedDict('WmAnatSnrParametersTagged', {
+WmAnatSnrParamsDictTagged = typing.TypedDict('WmAnatSnrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/wm-anat-snr"],
     "subject": str,
     "output_file": str,
@@ -37,7 +37,7 @@ WmAnatSnrParametersTagged = typing.TypedDict('WmAnatSnrParametersTagged', {
 
 class WmAnatSnrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WmAnatSnrParameters(...)`.
+    Output object returned when calling `WmAnatSnrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def wm_anat_snr_params(
     tmp_dir: str | None = None,
     cleanup: bool = False,
     no_cleanup: bool = False,
-) -> WmAnatSnrParametersTagged:
+) -> WmAnatSnrParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def wm_anat_snr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WmAnatSnrParameters` object.
+    `WmAnatSnrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def wm_anat_snr_validate(
 
 
 def wm_anat_snr_cargs(
-    params: WmAnatSnrParameters,
+    params: WmAnatSnrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def wm_anat_snr_cargs(
 
 
 def wm_anat_snr_outputs(
-    params: WmAnatSnrParameters,
+    params: WmAnatSnrParamsDict,
     execution: Execution,
 ) -> WmAnatSnrOutputs:
     """
@@ -186,7 +186,7 @@ def wm_anat_snr_outputs(
 
 
 def wm_anat_snr_execute(
-    params: WmAnatSnrParameters,
+    params: WmAnatSnrParamsDict,
     runner: Runner | None = None,
 ) -> WmAnatSnrOutputs:
     """
@@ -262,6 +262,8 @@ def wm_anat_snr(
 __all__ = [
     "WM_ANAT_SNR_METADATA",
     "WmAnatSnrOutputs",
+    "WmAnatSnrParamsDict",
+    "WmAnatSnrParamsDictTagged",
     "wm_anat_snr",
     "wm_anat_snr_execute",
     "wm_anat_snr_params",

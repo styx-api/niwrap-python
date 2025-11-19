@@ -13,7 +13,7 @@ MRI_MOTION_CORRECT2_METADATA = Metadata(
 )
 
 
-MriMotionCorrect2Parameters = typing.TypedDict('MriMotionCorrect2Parameters', {
+MriMotionCorrect2ParamsDict = typing.TypedDict('MriMotionCorrect2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_motion_correct2"]],
     "output_spec": str,
     "input_files": list[InputPathType],
@@ -26,7 +26,7 @@ MriMotionCorrect2Parameters = typing.TypedDict('MriMotionCorrect2Parameters', {
     "version": bool,
     "debug": bool,
 })
-MriMotionCorrect2ParametersTagged = typing.TypedDict('MriMotionCorrect2ParametersTagged', {
+MriMotionCorrect2ParamsDictTagged = typing.TypedDict('MriMotionCorrect2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_motion_correct2"],
     "output_spec": str,
     "input_files": list[InputPathType],
@@ -43,7 +43,7 @@ MriMotionCorrect2ParametersTagged = typing.TypedDict('MriMotionCorrect2Parameter
 
 class MriMotionCorrect2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMotionCorrect2Parameters(...)`.
+    Output object returned when calling `MriMotionCorrect2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def mri_motion_correct2_params(
     cm: bool = False,
     version: bool = False,
     debug: bool = False,
-) -> MriMotionCorrect2ParametersTagged:
+) -> MriMotionCorrect2ParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def mri_motion_correct2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMotionCorrect2Parameters` object.
+    `MriMotionCorrect2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def mri_motion_correct2_validate(
 
 
 def mri_motion_correct2_cargs(
-    params: MriMotionCorrect2Parameters,
+    params: MriMotionCorrect2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,7 +206,7 @@ def mri_motion_correct2_cargs(
 
 
 def mri_motion_correct2_outputs(
-    params: MriMotionCorrect2Parameters,
+    params: MriMotionCorrect2ParamsDict,
     execution: Execution,
 ) -> MriMotionCorrect2Outputs:
     """
@@ -226,7 +226,7 @@ def mri_motion_correct2_outputs(
 
 
 def mri_motion_correct2_execute(
-    params: MriMotionCorrect2Parameters,
+    params: MriMotionCorrect2ParamsDict,
     runner: Runner | None = None,
 ) -> MriMotionCorrect2Outputs:
     """
@@ -312,6 +312,8 @@ def mri_motion_correct2(
 __all__ = [
     "MRI_MOTION_CORRECT2_METADATA",
     "MriMotionCorrect2Outputs",
+    "MriMotionCorrect2ParamsDict",
+    "MriMotionCorrect2ParamsDictTagged",
     "mri_motion_correct2",
     "mri_motion_correct2_execute",
     "mri_motion_correct2_params",

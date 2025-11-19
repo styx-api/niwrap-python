@@ -13,7 +13,7 @@ ROIGROW_METADATA = Metadata(
 )
 
 
-RoigrowParameters = typing.TypedDict('RoigrowParameters', {
+RoigrowParamsDict = typing.TypedDict('RoigrowParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ROIgrow"]],
     "input_surface": str,
     "roi_labels": str,
@@ -24,7 +24,7 @@ RoigrowParameters = typing.TypedDict('RoigrowParameters', {
     "insphere_diameter": typing.NotRequired[float | None],
     "inbox_edges": typing.NotRequired[list[float] | None],
 })
-RoigrowParametersTagged = typing.TypedDict('RoigrowParametersTagged', {
+RoigrowParamsDictTagged = typing.TypedDict('RoigrowParamsDictTagged', {
     "@type": typing.Literal["afni/ROIgrow"],
     "input_surface": str,
     "roi_labels": str,
@@ -39,7 +39,7 @@ RoigrowParametersTagged = typing.TypedDict('RoigrowParametersTagged', {
 
 class RoigrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RoigrowParameters(...)`.
+    Output object returned when calling `RoigrowParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def roigrow_params(
     grow_from_edge: bool = False,
     insphere_diameter: float | None = None,
     inbox_edges: list[float] | None = None,
-) -> RoigrowParametersTagged:
+) -> RoigrowParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def roigrow_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RoigrowParameters` object.
+    `RoigrowParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def roigrow_validate(
 
 
 def roigrow_cargs(
-    params: RoigrowParameters,
+    params: RoigrowParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def roigrow_cargs(
 
 
 def roigrow_outputs(
-    params: RoigrowParameters,
+    params: RoigrowParamsDict,
     execution: Execution,
 ) -> RoigrowOutputs:
     """
@@ -216,7 +216,7 @@ def roigrow_outputs(
 
 
 def roigrow_execute(
-    params: RoigrowParameters,
+    params: RoigrowParamsDict,
     runner: Runner | None = None,
 ) -> RoigrowOutputs:
     """
@@ -302,6 +302,8 @@ def roigrow(
 __all__ = [
     "ROIGROW_METADATA",
     "RoigrowOutputs",
+    "RoigrowParamsDict",
+    "RoigrowParamsDictTagged",
     "roigrow",
     "roigrow_execute",
     "roigrow_params",

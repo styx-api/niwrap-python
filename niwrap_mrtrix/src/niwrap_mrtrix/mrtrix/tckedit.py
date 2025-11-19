@@ -13,124 +13,124 @@ TCKEDIT_METADATA = Metadata(
 )
 
 
-TckeditVariousStringParameters = typing.TypedDict('TckeditVariousStringParameters', {
+TckeditVariousStringParamsDict = typing.TypedDict('TckeditVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-TckeditVariousStringParametersTagged = typing.TypedDict('TckeditVariousStringParametersTagged', {
+TckeditVariousStringParamsDictTagged = typing.TypedDict('TckeditVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-TckeditVariousFileParameters = typing.TypedDict('TckeditVariousFileParameters', {
+TckeditVariousFileParamsDict = typing.TypedDict('TckeditVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-TckeditVariousFileParametersTagged = typing.TypedDict('TckeditVariousFileParametersTagged', {
+TckeditVariousFileParamsDictTagged = typing.TypedDict('TckeditVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-TckeditIncludeParameters = typing.TypedDict('TckeditIncludeParameters', {
+TckeditIncludeParamsDict = typing.TypedDict('TckeditIncludeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["include"]],
-    "spec": typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
+    "spec": typing.Union[TckeditVariousStringParamsDictTagged, TckeditVariousFileParamsDictTagged],
 })
-TckeditIncludeParametersTagged = typing.TypedDict('TckeditIncludeParametersTagged', {
+TckeditIncludeParamsDictTagged = typing.TypedDict('TckeditIncludeParamsDictTagged', {
     "@type": typing.Literal["include"],
-    "spec": typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
+    "spec": typing.Union[TckeditVariousStringParamsDictTagged, TckeditVariousFileParamsDictTagged],
 })
 
 
-TckeditIncludeOrderedParameters = typing.TypedDict('TckeditIncludeOrderedParameters', {
+TckeditIncludeOrderedParamsDict = typing.TypedDict('TckeditIncludeOrderedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["include_ordered"]],
     "image": str,
 })
-TckeditIncludeOrderedParametersTagged = typing.TypedDict('TckeditIncludeOrderedParametersTagged', {
+TckeditIncludeOrderedParamsDictTagged = typing.TypedDict('TckeditIncludeOrderedParamsDictTagged', {
     "@type": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
-TckeditVariousString1Parameters = typing.TypedDict('TckeditVariousString1Parameters', {
+TckeditVariousString1ParamsDict = typing.TypedDict('TckeditVariousString1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
     "obj": str,
 })
-TckeditVariousString1ParametersTagged = typing.TypedDict('TckeditVariousString1ParametersTagged', {
+TckeditVariousString1ParamsDictTagged = typing.TypedDict('TckeditVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
-TckeditVariousFile1Parameters = typing.TypedDict('TckeditVariousFile1Parameters', {
+TckeditVariousFile1ParamsDict = typing.TypedDict('TckeditVariousFile1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
     "obj": InputPathType,
 })
-TckeditVariousFile1ParametersTagged = typing.TypedDict('TckeditVariousFile1ParametersTagged', {
+TckeditVariousFile1ParamsDictTagged = typing.TypedDict('TckeditVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
-TckeditExcludeParameters = typing.TypedDict('TckeditExcludeParameters', {
+TckeditExcludeParamsDict = typing.TypedDict('TckeditExcludeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude"]],
-    "spec": typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
+    "spec": typing.Union[TckeditVariousString1ParamsDictTagged, TckeditVariousFile1ParamsDictTagged],
 })
-TckeditExcludeParametersTagged = typing.TypedDict('TckeditExcludeParametersTagged', {
+TckeditExcludeParamsDictTagged = typing.TypedDict('TckeditExcludeParamsDictTagged', {
     "@type": typing.Literal["exclude"],
-    "spec": typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
+    "spec": typing.Union[TckeditVariousString1ParamsDictTagged, TckeditVariousFile1ParamsDictTagged],
 })
 
 
-TckeditVariousString2Parameters = typing.TypedDict('TckeditVariousString2Parameters', {
+TckeditVariousString2ParamsDict = typing.TypedDict('TckeditVariousString2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
     "obj": str,
 })
-TckeditVariousString2ParametersTagged = typing.TypedDict('TckeditVariousString2ParametersTagged', {
+TckeditVariousString2ParamsDictTagged = typing.TypedDict('TckeditVariousString2ParamsDictTagged', {
     "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
-TckeditVariousFile2Parameters = typing.TypedDict('TckeditVariousFile2Parameters', {
+TckeditVariousFile2ParamsDict = typing.TypedDict('TckeditVariousFile2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
     "obj": InputPathType,
 })
-TckeditVariousFile2ParametersTagged = typing.TypedDict('TckeditVariousFile2ParametersTagged', {
+TckeditVariousFile2ParamsDictTagged = typing.TypedDict('TckeditVariousFile2ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
-TckeditMaskParameters = typing.TypedDict('TckeditMaskParameters', {
+TckeditMaskParamsDict = typing.TypedDict('TckeditMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mask"]],
-    "spec": typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
+    "spec": typing.Union[TckeditVariousString2ParamsDictTagged, TckeditVariousFile2ParamsDictTagged],
 })
-TckeditMaskParametersTagged = typing.TypedDict('TckeditMaskParametersTagged', {
+TckeditMaskParamsDictTagged = typing.TypedDict('TckeditMaskParamsDictTagged', {
     "@type": typing.Literal["mask"],
-    "spec": typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
+    "spec": typing.Union[TckeditVariousString2ParamsDictTagged, TckeditVariousFile2ParamsDictTagged],
 })
 
 
-TckeditConfigParameters = typing.TypedDict('TckeditConfigParameters', {
+TckeditConfigParamsDict = typing.TypedDict('TckeditConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckeditConfigParametersTagged = typing.TypedDict('TckeditConfigParametersTagged', {
+TckeditConfigParamsDictTagged = typing.TypedDict('TckeditConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckeditParameters = typing.TypedDict('TckeditParameters', {
+TckeditParamsDict = typing.TypedDict('TckeditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckedit"]],
-    "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
-    "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
-    "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],
-    "mask": typing.NotRequired[list[TckeditMaskParameters] | None],
+    "include": typing.NotRequired[list[TckeditIncludeParamsDict] | None],
+    "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParamsDict] | None],
+    "exclude": typing.NotRequired[list[TckeditExcludeParamsDict] | None],
+    "mask": typing.NotRequired[list[TckeditMaskParamsDict] | None],
     "maxlength": typing.NotRequired[float | None],
     "minlength": typing.NotRequired[float | None],
     "number": typing.NotRequired[int | None],
@@ -146,18 +146,18 @@ TckeditParameters = typing.TypedDict('TckeditParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckeditConfigParameters] | None],
+    "config": typing.NotRequired[list[TckeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": list[InputPathType],
     "tracks_out": str,
 })
-TckeditParametersTagged = typing.TypedDict('TckeditParametersTagged', {
+TckeditParamsDictTagged = typing.TypedDict('TckeditParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckedit"],
-    "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
-    "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
-    "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],
-    "mask": typing.NotRequired[list[TckeditMaskParameters] | None],
+    "include": typing.NotRequired[list[TckeditIncludeParamsDict] | None],
+    "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParamsDict] | None],
+    "exclude": typing.NotRequired[list[TckeditExcludeParamsDict] | None],
+    "mask": typing.NotRequired[list[TckeditMaskParamsDict] | None],
     "maxlength": typing.NotRequired[float | None],
     "minlength": typing.NotRequired[float | None],
     "number": typing.NotRequired[int | None],
@@ -173,7 +173,7 @@ TckeditParametersTagged = typing.TypedDict('TckeditParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckeditConfigParameters] | None],
+    "config": typing.NotRequired[list[TckeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks_in": list[InputPathType],
@@ -283,9 +283,9 @@ def tckedit_spec_validate_dyn_fn_2(
     }.get(t)
 
 
-def tckedit_various_string_params(
+def tckedit_various_string(
     obj: str,
-) -> TckeditVariousStringParametersTagged:
+) -> TckeditVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -306,7 +306,7 @@ def tckedit_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousStringParameters` object.
+    `TckeditVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -320,7 +320,7 @@ def tckedit_various_string_validate(
 
 
 def tckedit_various_string_cargs(
-    params: TckeditVariousStringParameters,
+    params: TckeditVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -337,9 +337,9 @@ def tckedit_various_string_cargs(
     return cargs
 
 
-def tckedit_various_file_params(
+def tckedit_various_file(
     obj: InputPathType,
-) -> TckeditVariousFileParametersTagged:
+) -> TckeditVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -360,7 +360,7 @@ def tckedit_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousFileParameters` object.
+    `TckeditVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -374,7 +374,7 @@ def tckedit_various_file_validate(
 
 
 def tckedit_various_file_cargs(
-    params: TckeditVariousFileParameters,
+    params: TckeditVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -391,9 +391,9 @@ def tckedit_various_file_cargs(
     return cargs
 
 
-def tckedit_include_params(
-    spec: typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
-) -> TckeditIncludeParametersTagged:
+def tckedit_include(
+    spec: typing.Union[TckeditVariousStringParamsDictTagged, TckeditVariousFileParamsDictTagged],
+) -> TckeditIncludeParamsDictTagged:
     """
     Build parameters.
     
@@ -416,7 +416,7 @@ def tckedit_include_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditIncludeParameters` object.
+    `TckeditIncludeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -429,11 +429,13 @@ def tckedit_include_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     tckedit_spec_validate_dyn_fn(params["spec"]["@type"])(params["spec"])
 
 
 def tckedit_include_cargs(
-    params: TckeditIncludeParameters,
+    params: TckeditIncludeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -451,9 +453,9 @@ def tckedit_include_cargs(
     return cargs
 
 
-def tckedit_include_ordered_params(
+def tckedit_include_ordered(
     image: str,
-) -> TckeditIncludeOrderedParametersTagged:
+) -> TckeditIncludeOrderedParamsDictTagged:
     """
     Build parameters.
     
@@ -477,7 +479,7 @@ def tckedit_include_ordered_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditIncludeOrderedParameters` object.
+    `TckeditIncludeOrderedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -491,7 +493,7 @@ def tckedit_include_ordered_validate(
 
 
 def tckedit_include_ordered_cargs(
-    params: TckeditIncludeOrderedParameters,
+    params: TckeditIncludeOrderedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -509,9 +511,9 @@ def tckedit_include_ordered_cargs(
     return cargs
 
 
-def tckedit_various_string_1_params(
+def tckedit_various_string_1(
     obj: str,
-) -> TckeditVariousString1ParametersTagged:
+) -> TckeditVariousString1ParamsDictTagged:
     """
     Build parameters.
     
@@ -532,7 +534,7 @@ def tckedit_various_string_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousString1Parameters` object.
+    `TckeditVariousString1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -546,7 +548,7 @@ def tckedit_various_string_1_validate(
 
 
 def tckedit_various_string_1_cargs(
-    params: TckeditVariousString1Parameters,
+    params: TckeditVariousString1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -563,9 +565,9 @@ def tckedit_various_string_1_cargs(
     return cargs
 
 
-def tckedit_various_file_1_params(
+def tckedit_various_file_1(
     obj: InputPathType,
-) -> TckeditVariousFile1ParametersTagged:
+) -> TckeditVariousFile1ParamsDictTagged:
     """
     Build parameters.
     
@@ -586,7 +588,7 @@ def tckedit_various_file_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousFile1Parameters` object.
+    `TckeditVariousFile1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -600,7 +602,7 @@ def tckedit_various_file_1_validate(
 
 
 def tckedit_various_file_1_cargs(
-    params: TckeditVariousFile1Parameters,
+    params: TckeditVariousFile1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -617,9 +619,9 @@ def tckedit_various_file_1_cargs(
     return cargs
 
 
-def tckedit_exclude_params(
-    spec: typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
-) -> TckeditExcludeParametersTagged:
+def tckedit_exclude(
+    spec: typing.Union[TckeditVariousString1ParamsDictTagged, TckeditVariousFile1ParamsDictTagged],
+) -> TckeditExcludeParamsDictTagged:
     """
     Build parameters.
     
@@ -642,7 +644,7 @@ def tckedit_exclude_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditExcludeParameters` object.
+    `TckeditExcludeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -655,11 +657,13 @@ def tckedit_exclude_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString_1", "VariousFile_1"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString_1\", \"VariousFile_1\"]")
     tckedit_spec_validate_dyn_fn_(params["spec"]["@type"])(params["spec"])
 
 
 def tckedit_exclude_cargs(
-    params: TckeditExcludeParameters,
+    params: TckeditExcludeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -677,9 +681,9 @@ def tckedit_exclude_cargs(
     return cargs
 
 
-def tckedit_various_string_2_params(
+def tckedit_various_string_2(
     obj: str,
-) -> TckeditVariousString2ParametersTagged:
+) -> TckeditVariousString2ParamsDictTagged:
     """
     Build parameters.
     
@@ -700,7 +704,7 @@ def tckedit_various_string_2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousString2Parameters` object.
+    `TckeditVariousString2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -714,7 +718,7 @@ def tckedit_various_string_2_validate(
 
 
 def tckedit_various_string_2_cargs(
-    params: TckeditVariousString2Parameters,
+    params: TckeditVariousString2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -731,9 +735,9 @@ def tckedit_various_string_2_cargs(
     return cargs
 
 
-def tckedit_various_file_2_params(
+def tckedit_various_file_2(
     obj: InputPathType,
-) -> TckeditVariousFile2ParametersTagged:
+) -> TckeditVariousFile2ParamsDictTagged:
     """
     Build parameters.
     
@@ -754,7 +758,7 @@ def tckedit_various_file_2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditVariousFile2Parameters` object.
+    `TckeditVariousFile2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -768,7 +772,7 @@ def tckedit_various_file_2_validate(
 
 
 def tckedit_various_file_2_cargs(
-    params: TckeditVariousFile2Parameters,
+    params: TckeditVariousFile2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -785,9 +789,9 @@ def tckedit_various_file_2_cargs(
     return cargs
 
 
-def tckedit_mask_params(
-    spec: typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
-) -> TckeditMaskParametersTagged:
+def tckedit_mask(
+    spec: typing.Union[TckeditVariousString2ParamsDictTagged, TckeditVariousFile2ParamsDictTagged],
+) -> TckeditMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -810,7 +814,7 @@ def tckedit_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditMaskParameters` object.
+    `TckeditMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -823,11 +827,13 @@ def tckedit_mask_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
     if "@type" not in params["spec"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["spec"]["@type"] not in ["VariousString_2", "VariousFile_2"]:
+        raise StyxValidationError("Parameter `spec`s `@type` must be one of [\"VariousString_2\", \"VariousFile_2\"]")
     tckedit_spec_validate_dyn_fn_2(params["spec"]["@type"])(params["spec"])
 
 
 def tckedit_mask_cargs(
-    params: TckeditMaskParameters,
+    params: TckeditMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -845,10 +851,10 @@ def tckedit_mask_cargs(
     return cargs
 
 
-def tckedit_config_params(
+def tckedit_config(
     key: str,
     value: str,
-) -> TckeditConfigParametersTagged:
+) -> TckeditConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -871,7 +877,7 @@ def tckedit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditConfigParameters` object.
+    `TckeditConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -889,7 +895,7 @@ def tckedit_config_validate(
 
 
 def tckedit_config_cargs(
-    params: TckeditConfigParameters,
+    params: TckeditConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -910,7 +916,7 @@ def tckedit_config_cargs(
 
 class TckeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckeditParameters(...)`.
+    Output object returned when calling `TckeditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -924,10 +930,10 @@ class TckeditOutputs(typing.NamedTuple):
 def tckedit_params(
     tracks_in: list[InputPathType],
     tracks_out: str,
-    include: list[TckeditIncludeParameters] | None = None,
-    include_ordered: list[TckeditIncludeOrderedParameters] | None = None,
-    exclude: list[TckeditExcludeParameters] | None = None,
-    mask: list[TckeditMaskParameters] | None = None,
+    include: list[TckeditIncludeParamsDict] | None = None,
+    include_ordered: list[TckeditIncludeOrderedParamsDict] | None = None,
+    exclude: list[TckeditExcludeParamsDict] | None = None,
+    mask: list[TckeditMaskParamsDict] | None = None,
     maxlength: float | None = None,
     minlength: float | None = None,
     number: int | None = None,
@@ -943,10 +949,10 @@ def tckedit_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckeditConfigParameters] | None = None,
+    config: list[TckeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckeditParametersTagged:
+) -> TckeditParamsDictTagged:
     """
     Build parameters.
     
@@ -1050,7 +1056,7 @@ def tckedit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckeditParameters` object.
+    `TckeditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1059,22 +1065,22 @@ def tckedit_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("include", None) is not None:
         if not isinstance(params["include"], list):
-            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckeditIncludeParameters] | None`')
+            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckeditIncludeParamsDict] | None`')
         for e in params["include"]:
             tckedit_include_validate(e)
     if params.get("include_ordered", None) is not None:
         if not isinstance(params["include_ordered"], list):
-            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckeditIncludeOrderedParameters] | None`')
+            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckeditIncludeOrderedParamsDict] | None`')
         for e in params["include_ordered"]:
             tckedit_include_ordered_validate(e)
     if params.get("exclude", None) is not None:
         if not isinstance(params["exclude"], list):
-            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckeditExcludeParameters] | None`')
+            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckeditExcludeParamsDict] | None`')
         for e in params["exclude"]:
             tckedit_exclude_validate(e)
     if params.get("mask", None) is not None:
         if not isinstance(params["mask"], list):
-            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckeditMaskParameters] | None`')
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckeditMaskParamsDict] | None`')
         for e in params["mask"]:
             tckedit_mask_validate(e)
     if params.get("maxlength", None) is not None:
@@ -1130,7 +1136,7 @@ def tckedit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckeditConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckeditConfigParamsDict] | None`')
         for e in params["config"]:
             tckedit_config_validate(e)
     if params.get("help", False) is None:
@@ -1155,7 +1161,7 @@ def tckedit_validate(
 
 
 def tckedit_cargs(
-    params: TckeditParameters,
+    params: TckeditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1246,7 +1252,7 @@ def tckedit_cargs(
 
 
 def tckedit_outputs(
-    params: TckeditParameters,
+    params: TckeditParamsDict,
     execution: Execution,
 ) -> TckeditOutputs:
     """
@@ -1267,7 +1273,7 @@ def tckedit_outputs(
 
 
 def tckedit_execute(
-    params: TckeditParameters,
+    params: TckeditParamsDict,
     runner: Runner | None = None,
 ) -> TckeditOutputs:
     """
@@ -1306,10 +1312,10 @@ def tckedit_execute(
 def tckedit(
     tracks_in: list[InputPathType],
     tracks_out: str,
-    include: list[TckeditIncludeParameters] | None = None,
-    include_ordered: list[TckeditIncludeOrderedParameters] | None = None,
-    exclude: list[TckeditExcludeParameters] | None = None,
-    mask: list[TckeditMaskParameters] | None = None,
+    include: list[TckeditIncludeParamsDict] | None = None,
+    include_ordered: list[TckeditIncludeOrderedParamsDict] | None = None,
+    exclude: list[TckeditExcludeParamsDict] | None = None,
+    mask: list[TckeditMaskParamsDict] | None = None,
     maxlength: float | None = None,
     minlength: float | None = None,
     number: int | None = None,
@@ -1325,7 +1331,7 @@ def tckedit(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckeditConfigParameters] | None = None,
+    config: list[TckeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1430,19 +1436,43 @@ def tckedit(
 
 __all__ = [
     "TCKEDIT_METADATA",
+    "TckeditConfigParamsDict",
+    "TckeditConfigParamsDictTagged",
+    "TckeditExcludeParamsDict",
+    "TckeditExcludeParamsDictTagged",
+    "TckeditIncludeOrderedParamsDict",
+    "TckeditIncludeOrderedParamsDictTagged",
+    "TckeditIncludeParamsDict",
+    "TckeditIncludeParamsDictTagged",
+    "TckeditMaskParamsDict",
+    "TckeditMaskParamsDictTagged",
     "TckeditOutputs",
+    "TckeditParamsDict",
+    "TckeditParamsDictTagged",
+    "TckeditVariousFile1ParamsDict",
+    "TckeditVariousFile1ParamsDictTagged",
+    "TckeditVariousFile2ParamsDict",
+    "TckeditVariousFile2ParamsDictTagged",
+    "TckeditVariousFileParamsDict",
+    "TckeditVariousFileParamsDictTagged",
+    "TckeditVariousString1ParamsDict",
+    "TckeditVariousString1ParamsDictTagged",
+    "TckeditVariousString2ParamsDict",
+    "TckeditVariousString2ParamsDictTagged",
+    "TckeditVariousStringParamsDict",
+    "TckeditVariousStringParamsDictTagged",
     "tckedit",
-    "tckedit_config_params",
-    "tckedit_exclude_params",
+    "tckedit_config",
+    "tckedit_exclude",
     "tckedit_execute",
-    "tckedit_include_ordered_params",
-    "tckedit_include_params",
-    "tckedit_mask_params",
+    "tckedit_include",
+    "tckedit_include_ordered",
+    "tckedit_mask",
     "tckedit_params",
-    "tckedit_various_file_1_params",
-    "tckedit_various_file_2_params",
-    "tckedit_various_file_params",
-    "tckedit_various_string_1_params",
-    "tckedit_various_string_2_params",
-    "tckedit_various_string_params",
+    "tckedit_various_file",
+    "tckedit_various_file_1",
+    "tckedit_various_file_2",
+    "tckedit_various_string",
+    "tckedit_various_string_1",
+    "tckedit_various_string_2",
 ]

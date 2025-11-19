@@ -13,7 +13,7 @@ BET_METADATA = Metadata(
 )
 
 
-BetParameters = typing.TypedDict('BetParameters', {
+BetParamsDict = typing.TypedDict('BetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bet"]],
     "infile": InputPathType,
     "maskfile": str,
@@ -37,7 +37,7 @@ BetParameters = typing.TypedDict('BetParameters', {
     "verbose": bool,
     "debug": bool,
 })
-BetParametersTagged = typing.TypedDict('BetParametersTagged', {
+BetParamsDictTagged = typing.TypedDict('BetParamsDictTagged', {
     "@type": typing.Literal["fsl/bet"],
     "infile": InputPathType,
     "maskfile": str,
@@ -65,7 +65,7 @@ BetParametersTagged = typing.TypedDict('BetParametersTagged', {
 
 class BetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BetParameters(...)`.
+    Output object returned when calling `BetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,7 +123,7 @@ def bet_params(
     additional_surfaces_t2: InputPathType | None = None,
     verbose: bool = False,
     debug: bool = False,
-) -> BetParametersTagged:
+) -> BetParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def bet_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `BetParameters`
+    Validate parameters. Throws an error if `params` is not a valid `BetParamsDict`
     object.
     
     Args:
@@ -319,7 +319,7 @@ def bet_validate(
 
 
 def bet_cargs(
-    params: BetParameters,
+    params: BetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -392,7 +392,7 @@ def bet_cargs(
 
 
 def bet_outputs(
-    params: BetParameters,
+    params: BetParamsDict,
     execution: Execution,
 ) -> BetOutputs:
     """
@@ -426,7 +426,7 @@ def bet_outputs(
 
 
 def bet_execute(
-    params: BetParameters,
+    params: BetParamsDict,
     runner: Runner | None = None,
 ) -> BetOutputs:
     """
@@ -574,6 +574,8 @@ def bet(
 __all__ = [
     "BET_METADATA",
     "BetOutputs",
+    "BetParamsDict",
+    "BetParamsDictTagged",
     "bet",
     "bet_execute",
     "bet_params",

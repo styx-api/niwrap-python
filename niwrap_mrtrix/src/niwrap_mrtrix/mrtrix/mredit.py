@@ -13,13 +13,13 @@ MREDIT_METADATA = Metadata(
 )
 
 
-MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
+MreditPlaneParamsDict = typing.TypedDict('MreditPlaneParamsDict', {
     "@type": typing.NotRequired[typing.Literal["plane"]],
     "axis": int,
     "coord": list[int],
     "value": float,
 })
-MreditPlaneParametersTagged = typing.TypedDict('MreditPlaneParametersTagged', {
+MreditPlaneParamsDictTagged = typing.TypedDict('MreditPlaneParamsDictTagged', {
     "@type": typing.Literal["plane"],
     "axis": int,
     "coord": list[int],
@@ -27,13 +27,13 @@ MreditPlaneParametersTagged = typing.TypedDict('MreditPlaneParametersTagged', {
 })
 
 
-MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
+MreditSphereParamsDict = typing.TypedDict('MreditSphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sphere"]],
     "position": list[float],
     "radius": float,
     "value": float,
 })
-MreditSphereParametersTagged = typing.TypedDict('MreditSphereParametersTagged', {
+MreditSphereParamsDictTagged = typing.TypedDict('MreditSphereParamsDictTagged', {
     "@type": typing.Literal["sphere"],
     "position": list[float],
     "radius": float,
@@ -41,59 +41,59 @@ MreditSphereParametersTagged = typing.TypedDict('MreditSphereParametersTagged', 
 })
 
 
-MreditVoxelParameters = typing.TypedDict('MreditVoxelParameters', {
+MreditVoxelParamsDict = typing.TypedDict('MreditVoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["voxel"]],
     "position": list[float],
     "value": float,
 })
-MreditVoxelParametersTagged = typing.TypedDict('MreditVoxelParametersTagged', {
+MreditVoxelParamsDictTagged = typing.TypedDict('MreditVoxelParamsDictTagged', {
     "@type": typing.Literal["voxel"],
     "position": list[float],
     "value": float,
 })
 
 
-MreditConfigParameters = typing.TypedDict('MreditConfigParameters', {
+MreditConfigParamsDict = typing.TypedDict('MreditConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MreditConfigParametersTagged = typing.TypedDict('MreditConfigParametersTagged', {
+MreditConfigParamsDictTagged = typing.TypedDict('MreditConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MreditParameters = typing.TypedDict('MreditParameters', {
+MreditParamsDict = typing.TypedDict('MreditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mredit"]],
-    "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
-    "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
-    "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],
+    "plane": typing.NotRequired[list[MreditPlaneParamsDict] | None],
+    "sphere": typing.NotRequired[list[MreditSphereParamsDict] | None],
+    "voxel": typing.NotRequired[list[MreditVoxelParamsDict] | None],
     "scanner": bool,
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MreditConfigParameters] | None],
+    "config": typing.NotRequired[list[MreditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
-MreditParametersTagged = typing.TypedDict('MreditParametersTagged', {
+MreditParamsDictTagged = typing.TypedDict('MreditParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mredit"],
-    "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
-    "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
-    "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],
+    "plane": typing.NotRequired[list[MreditPlaneParamsDict] | None],
+    "sphere": typing.NotRequired[list[MreditSphereParamsDict] | None],
+    "voxel": typing.NotRequired[list[MreditVoxelParamsDict] | None],
     "scanner": bool,
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MreditConfigParameters] | None],
+    "config": typing.NotRequired[list[MreditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -101,11 +101,11 @@ MreditParametersTagged = typing.TypedDict('MreditParametersTagged', {
 })
 
 
-def mredit_plane_params(
+def mredit_plane(
     axis: int,
     coord: list[int],
     value: float,
-) -> MreditPlaneParametersTagged:
+) -> MreditPlaneParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def mredit_plane_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MreditPlaneParameters` object.
+    `MreditPlaneParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def mredit_plane_validate(
 
 
 def mredit_plane_cargs(
-    params: MreditPlaneParameters,
+    params: MreditPlaneParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -175,11 +175,11 @@ def mredit_plane_cargs(
     return cargs
 
 
-def mredit_sphere_params(
+def mredit_sphere(
     position: list[float],
     radius: float,
     value: float,
-) -> MreditSphereParametersTagged:
+) -> MreditSphereParamsDictTagged:
     """
     Build parameters.
     
@@ -204,7 +204,7 @@ def mredit_sphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MreditSphereParameters` object.
+    `MreditSphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -229,7 +229,7 @@ def mredit_sphere_validate(
 
 
 def mredit_sphere_cargs(
-    params: MreditSphereParameters,
+    params: MreditSphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,10 +249,10 @@ def mredit_sphere_cargs(
     return cargs
 
 
-def mredit_voxel_params(
+def mredit_voxel(
     position: list[float],
     value: float,
-) -> MreditVoxelParametersTagged:
+) -> MreditVoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -275,7 +275,7 @@ def mredit_voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MreditVoxelParameters` object.
+    `MreditVoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -296,7 +296,7 @@ def mredit_voxel_validate(
 
 
 def mredit_voxel_cargs(
-    params: MreditVoxelParameters,
+    params: MreditVoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -315,10 +315,10 @@ def mredit_voxel_cargs(
     return cargs
 
 
-def mredit_config_params(
+def mredit_config(
     key: str,
     value: str,
-) -> MreditConfigParametersTagged:
+) -> MreditConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -341,7 +341,7 @@ def mredit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MreditConfigParameters` object.
+    `MreditConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -359,7 +359,7 @@ def mredit_config_validate(
 
 
 def mredit_config_cargs(
-    params: MreditConfigParameters,
+    params: MreditConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -380,7 +380,7 @@ def mredit_config_cargs(
 
 class MreditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MreditParameters(...)`.
+    Output object returned when calling `MreditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -390,20 +390,20 @@ class MreditOutputs(typing.NamedTuple):
 
 def mredit_params(
     input_: InputPathType,
-    plane: list[MreditPlaneParameters] | None = None,
-    sphere: list[MreditSphereParameters] | None = None,
-    voxel: list[MreditVoxelParameters] | None = None,
+    plane: list[MreditPlaneParamsDict] | None = None,
+    sphere: list[MreditSphereParamsDict] | None = None,
+    voxel: list[MreditVoxelParamsDict] | None = None,
     scanner: bool = False,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MreditConfigParameters] | None = None,
+    config: list[MreditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MreditParametersTagged:
+) -> MreditParamsDictTagged:
     """
     Build parameters.
     
@@ -461,7 +461,7 @@ def mredit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MreditParameters` object.
+    `MreditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -470,17 +470,17 @@ def mredit_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("plane", None) is not None:
         if not isinstance(params["plane"], list):
-            raise StyxValidationError(f'`plane` has the wrong type: Received `{type(params.get("plane", None))}` expected `list[MreditPlaneParameters] | None`')
+            raise StyxValidationError(f'`plane` has the wrong type: Received `{type(params.get("plane", None))}` expected `list[MreditPlaneParamsDict] | None`')
         for e in params["plane"]:
             mredit_plane_validate(e)
     if params.get("sphere", None) is not None:
         if not isinstance(params["sphere"], list):
-            raise StyxValidationError(f'`sphere` has the wrong type: Received `{type(params.get("sphere", None))}` expected `list[MreditSphereParameters] | None`')
+            raise StyxValidationError(f'`sphere` has the wrong type: Received `{type(params.get("sphere", None))}` expected `list[MreditSphereParamsDict] | None`')
         for e in params["sphere"]:
             mredit_sphere_validate(e)
     if params.get("voxel", None) is not None:
         if not isinstance(params["voxel"], list):
-            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `list[MreditVoxelParameters] | None`')
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `list[MreditVoxelParamsDict] | None`')
         for e in params["voxel"]:
             mredit_voxel_validate(e)
     if params.get("scanner", False) is None:
@@ -508,7 +508,7 @@ def mredit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MreditConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MreditConfigParamsDict] | None`')
         for e in params["config"]:
             mredit_config_validate(e)
     if params.get("help", False) is None:
@@ -529,7 +529,7 @@ def mredit_validate(
 
 
 def mredit_cargs(
-    params: MreditParameters,
+    params: MreditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -577,7 +577,7 @@ def mredit_cargs(
 
 
 def mredit_outputs(
-    params: MreditParameters,
+    params: MreditParamsDict,
     execution: Execution,
 ) -> MreditOutputs:
     """
@@ -597,7 +597,7 @@ def mredit_outputs(
 
 
 def mredit_execute(
-    params: MreditParameters,
+    params: MreditParamsDict,
     runner: Runner | None = None,
 ) -> MreditOutputs:
     """
@@ -637,16 +637,16 @@ def mredit_execute(
 
 def mredit(
     input_: InputPathType,
-    plane: list[MreditPlaneParameters] | None = None,
-    sphere: list[MreditSphereParameters] | None = None,
-    voxel: list[MreditVoxelParameters] | None = None,
+    plane: list[MreditPlaneParamsDict] | None = None,
+    sphere: list[MreditSphereParamsDict] | None = None,
+    voxel: list[MreditVoxelParamsDict] | None = None,
     scanner: bool = False,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MreditConfigParameters] | None = None,
+    config: list[MreditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
@@ -716,12 +716,22 @@ def mredit(
 
 __all__ = [
     "MREDIT_METADATA",
+    "MreditConfigParamsDict",
+    "MreditConfigParamsDictTagged",
     "MreditOutputs",
+    "MreditParamsDict",
+    "MreditParamsDictTagged",
+    "MreditPlaneParamsDict",
+    "MreditPlaneParamsDictTagged",
+    "MreditSphereParamsDict",
+    "MreditSphereParamsDictTagged",
+    "MreditVoxelParamsDict",
+    "MreditVoxelParamsDictTagged",
     "mredit",
-    "mredit_config_params",
+    "mredit_config",
     "mredit_execute",
     "mredit_params",
-    "mredit_plane_params",
-    "mredit_sphere_params",
-    "mredit_voxel_params",
+    "mredit_plane",
+    "mredit_sphere",
+    "mredit_voxel",
 ]

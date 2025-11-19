@@ -13,7 +13,7 @@ MULTIPLY_IMAGES_METADATA = Metadata(
 )
 
 
-MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
+MultiplyImagesParamsDict = typing.TypedDict('MultiplyImagesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/MultiplyImages"]],
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
@@ -22,7 +22,7 @@ MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
     "output_product_image": str,
     "num_threads": typing.NotRequired[int | None],
 })
-MultiplyImagesParametersTagged = typing.TypedDict('MultiplyImagesParametersTagged', {
+MultiplyImagesParamsDictTagged = typing.TypedDict('MultiplyImagesParamsDictTagged', {
     "@type": typing.Literal["ants/MultiplyImages"],
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
@@ -35,7 +35,7 @@ MultiplyImagesParametersTagged = typing.TypedDict('MultiplyImagesParametersTagge
 
 class MultiplyImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MultiplyImagesParameters(...)`.
+    Output object returned when calling `MultiplyImagesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def multiply_images_params(
     second_input: InputPathType | None = None,
     second_input_2: float | None = None,
     num_threads: int | None = None,
-) -> MultiplyImagesParametersTagged:
+) -> MultiplyImagesParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def multiply_images_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MultiplyImagesParameters` object.
+    `MultiplyImagesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -120,7 +120,7 @@ def multiply_images_validate(
 
 
 def multiply_images_cargs(
-    params: MultiplyImagesParameters,
+    params: MultiplyImagesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def multiply_images_cargs(
 
 
 def multiply_images_outputs(
-    params: MultiplyImagesParameters,
+    params: MultiplyImagesParamsDict,
     execution: Execution,
 ) -> MultiplyImagesOutputs:
     """
@@ -167,7 +167,7 @@ def multiply_images_outputs(
 
 
 def multiply_images_execute(
-    params: MultiplyImagesParameters,
+    params: MultiplyImagesParamsDict,
     runner: Runner | None = None,
 ) -> MultiplyImagesOutputs:
     """
@@ -245,6 +245,8 @@ def multiply_images(
 __all__ = [
     "MULTIPLY_IMAGES_METADATA",
     "MultiplyImagesOutputs",
+    "MultiplyImagesParamsDict",
+    "MultiplyImagesParamsDictTagged",
     "multiply_images",
     "multiply_images_execute",
     "multiply_images_params",

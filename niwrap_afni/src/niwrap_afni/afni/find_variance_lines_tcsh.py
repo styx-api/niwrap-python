@@ -13,7 +13,7 @@ FIND_VARIANCE_LINES_TCSH_METADATA = Metadata(
 )
 
 
-FindVarianceLinesTcshParameters = typing.TypedDict('FindVarianceLinesTcshParameters', {
+FindVarianceLinesTcshParamsDict = typing.TypedDict('FindVarianceLinesTcshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/find_variance_lines.tcsh"]],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ FindVarianceLinesTcshParameters = typing.TypedDict('FindVarianceLinesTcshParamet
     "hist": bool,
     "ver": bool,
 })
-FindVarianceLinesTcshParametersTagged = typing.TypedDict('FindVarianceLinesTcshParametersTagged', {
+FindVarianceLinesTcshParamsDictTagged = typing.TypedDict('FindVarianceLinesTcshParamsDictTagged', {
     "@type": typing.Literal["afni/find_variance_lines.tcsh"],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ FindVarianceLinesTcshParametersTagged = typing.TypedDict('FindVarianceLinesTcshP
 
 class FindVarianceLinesTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FindVarianceLinesTcshParameters(...)`.
+    Output object returned when calling `FindVarianceLinesTcshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def find_variance_lines_tcsh_params(
     help_: bool = False,
     hist: bool = False,
     ver: bool = False,
-) -> FindVarianceLinesTcshParametersTagged:
+) -> FindVarianceLinesTcshParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def find_variance_lines_tcsh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FindVarianceLinesTcshParameters` object.
+    `FindVarianceLinesTcshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def find_variance_lines_tcsh_validate(
 
 
 def find_variance_lines_tcsh_cargs(
-    params: FindVarianceLinesTcshParameters,
+    params: FindVarianceLinesTcshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def find_variance_lines_tcsh_cargs(
 
 
 def find_variance_lines_tcsh_outputs(
-    params: FindVarianceLinesTcshParameters,
+    params: FindVarianceLinesTcshParamsDict,
     execution: Execution,
 ) -> FindVarianceLinesTcshOutputs:
     """
@@ -302,7 +302,7 @@ def find_variance_lines_tcsh_outputs(
 
 
 def find_variance_lines_tcsh_execute(
-    params: FindVarianceLinesTcshParameters,
+    params: FindVarianceLinesTcshParamsDict,
     runner: Runner | None = None,
 ) -> FindVarianceLinesTcshOutputs:
     """
@@ -402,6 +402,8 @@ def find_variance_lines_tcsh(
 __all__ = [
     "FIND_VARIANCE_LINES_TCSH_METADATA",
     "FindVarianceLinesTcshOutputs",
+    "FindVarianceLinesTcshParamsDict",
+    "FindVarianceLinesTcshParamsDictTagged",
     "find_variance_lines_tcsh",
     "find_variance_lines_tcsh_execute",
     "find_variance_lines_tcsh_params",

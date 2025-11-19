@@ -13,7 +13,7 @@ MRIS_IMAGE2VTK_METADATA = Metadata(
 )
 
 
-MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
+MrisImage2vtkParamsDict = typing.TypedDict('MrisImage2vtkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_image2vtk"]],
     "input_filename": InputPathType,
     "output_filename": str,
@@ -23,7 +23,7 @@ MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
     "image_smoothing_size": float,
     "reduction_percent": float,
 })
-MrisImage2vtkParametersTagged = typing.TypedDict('MrisImage2vtkParametersTagged', {
+MrisImage2vtkParamsDictTagged = typing.TypedDict('MrisImage2vtkParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_image2vtk"],
     "input_filename": InputPathType,
     "output_filename": str,
@@ -37,7 +37,7 @@ MrisImage2vtkParametersTagged = typing.TypedDict('MrisImage2vtkParametersTagged'
 
 class MrisImage2vtkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisImage2vtkParameters(...)`.
+    Output object returned when calling `MrisImage2vtkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_image2vtk_params(
     vtk_smoothing_iters: float,
     image_smoothing_size: float,
     reduction_percent: float,
-) -> MrisImage2vtkParametersTagged:
+) -> MrisImage2vtkParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def mris_image2vtk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisImage2vtkParameters` object.
+    `MrisImage2vtkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def mris_image2vtk_validate(
 
 
 def mris_image2vtk_cargs(
-    params: MrisImage2vtkParameters,
+    params: MrisImage2vtkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def mris_image2vtk_cargs(
 
 
 def mris_image2vtk_outputs(
-    params: MrisImage2vtkParameters,
+    params: MrisImage2vtkParamsDict,
     execution: Execution,
 ) -> MrisImage2vtkOutputs:
     """
@@ -169,7 +169,7 @@ def mris_image2vtk_outputs(
 
 
 def mris_image2vtk_execute(
-    params: MrisImage2vtkParameters,
+    params: MrisImage2vtkParamsDict,
     runner: Runner | None = None,
 ) -> MrisImage2vtkOutputs:
     """
@@ -245,6 +245,8 @@ def mris_image2vtk(
 __all__ = [
     "MRIS_IMAGE2VTK_METADATA",
     "MrisImage2vtkOutputs",
+    "MrisImage2vtkParamsDict",
+    "MrisImage2vtkParamsDictTagged",
     "mris_image2vtk",
     "mris_image2vtk_execute",
     "mris_image2vtk_params",

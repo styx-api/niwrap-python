@@ -12,7 +12,7 @@ VOLUME_ERODE_METADATA = Metadata(
 )
 
 
-VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
+VolumeErodeParamsDict = typing.TypedDict('VolumeErodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-erode"]],
     "volume-out": str,
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -20,7 +20,7 @@ VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
     "volume": InputPathType,
     "distance": float,
 })
-VolumeErodeParametersTagged = typing.TypedDict('VolumeErodeParametersTagged', {
+VolumeErodeParamsDictTagged = typing.TypedDict('VolumeErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-erode"],
     "volume-out": str,
     "roi-volume": typing.NotRequired[InputPathType | None],
@@ -32,7 +32,7 @@ VolumeErodeParametersTagged = typing.TypedDict('VolumeErodeParametersTagged', {
 
 class VolumeErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeErodeParameters(...)`.
+    Output object returned when calling `VolumeErodeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def volume_erode_params(
     subvol: str | None,
     volume: InputPathType,
     distance: float,
-) -> VolumeErodeParametersTagged:
+) -> VolumeErodeParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def volume_erode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeErodeParameters` object.
+    `VolumeErodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def volume_erode_validate(
 
 
 def volume_erode_cargs(
-    params: VolumeErodeParameters,
+    params: VolumeErodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def volume_erode_cargs(
 
 
 def volume_erode_outputs(
-    params: VolumeErodeParameters,
+    params: VolumeErodeParamsDict,
     execution: Execution,
 ) -> VolumeErodeOutputs:
     """
@@ -158,7 +158,7 @@ def volume_erode_outputs(
 
 
 def volume_erode_execute(
-    params: VolumeErodeParameters,
+    params: VolumeErodeParamsDict,
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
@@ -226,6 +226,8 @@ def volume_erode(
 __all__ = [
     "VOLUME_ERODE_METADATA",
     "VolumeErodeOutputs",
+    "VolumeErodeParamsDict",
+    "VolumeErodeParamsDictTagged",
     "volume_erode",
     "volume_erode_execute",
     "volume_erode_params",

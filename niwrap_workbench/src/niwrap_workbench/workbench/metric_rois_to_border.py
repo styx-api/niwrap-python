@@ -12,7 +12,7 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 )
 
 
-MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', {
+MetricRoisToBorderParamsDict = typing.TypedDict('MetricRoisToBorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-to-border"]],
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', 
     "metric": InputPathType,
     "class-name": str,
 })
-MetricRoisToBorderParametersTagged = typing.TypedDict('MetricRoisToBorderParametersTagged', {
+MetricRoisToBorderParamsDictTagged = typing.TypedDict('MetricRoisToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-to-border"],
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ MetricRoisToBorderParametersTagged = typing.TypedDict('MetricRoisToBorderParamet
 
 class MetricRoisToBorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricRoisToBorderParameters(...)`.
+    Output object returned when calling `MetricRoisToBorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def metric_rois_to_border_params(
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
-) -> MetricRoisToBorderParametersTagged:
+) -> MetricRoisToBorderParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def metric_rois_to_border_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRoisToBorderParameters` object.
+    `MetricRoisToBorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def metric_rois_to_border_validate(
 
 
 def metric_rois_to_border_cargs(
-    params: MetricRoisToBorderParameters,
+    params: MetricRoisToBorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def metric_rois_to_border_cargs(
 
 
 def metric_rois_to_border_outputs(
-    params: MetricRoisToBorderParameters,
+    params: MetricRoisToBorderParamsDict,
     execution: Execution,
 ) -> MetricRoisToBorderOutputs:
     """
@@ -168,7 +168,7 @@ def metric_rois_to_border_outputs(
 
 
 def metric_rois_to_border_execute(
-    params: MetricRoisToBorderParameters,
+    params: MetricRoisToBorderParamsDict,
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
@@ -239,6 +239,8 @@ def metric_rois_to_border(
 __all__ = [
     "METRIC_ROIS_TO_BORDER_METADATA",
     "MetricRoisToBorderOutputs",
+    "MetricRoisToBorderParamsDict",
+    "MetricRoisToBorderParamsDictTagged",
     "metric_rois_to_border",
     "metric_rois_to_border_execute",
     "metric_rois_to_border_params",

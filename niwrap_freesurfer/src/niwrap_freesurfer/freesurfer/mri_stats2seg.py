@@ -13,7 +13,7 @@ MRI_STATS2SEG_METADATA = Metadata(
 )
 
 
-MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
+MriStats2segParamsDict = typing.TypedDict('MriStats2segParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stats2seg"]],
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
@@ -21,7 +21,7 @@ MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
     "debug": bool,
     "check_opts": bool,
 })
-MriStats2segParametersTagged = typing.TypedDict('MriStats2segParametersTagged', {
+MriStats2segParamsDictTagged = typing.TypedDict('MriStats2segParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_stats2seg"],
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
@@ -33,7 +33,7 @@ MriStats2segParametersTagged = typing.TypedDict('MriStats2segParametersTagged', 
 
 class MriStats2segOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriStats2segParameters(...)`.
+    Output object returned when calling `MriStats2segParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_stats2seg_params(
     output_file: str,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriStats2segParametersTagged:
+) -> MriStats2segParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_stats2seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriStats2segParameters` object.
+    `MriStats2segParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_stats2seg_validate(
 
 
 def mri_stats2seg_cargs(
-    params: MriStats2segParameters,
+    params: MriStats2segParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def mri_stats2seg_cargs(
 
 
 def mri_stats2seg_outputs(
-    params: MriStats2segParameters,
+    params: MriStats2segParamsDict,
     execution: Execution,
 ) -> MriStats2segOutputs:
     """
@@ -160,7 +160,7 @@ def mri_stats2seg_outputs(
 
 
 def mri_stats2seg_execute(
-    params: MriStats2segParameters,
+    params: MriStats2segParamsDict,
     runner: Runner | None = None,
 ) -> MriStats2segOutputs:
     """
@@ -228,6 +228,8 @@ def mri_stats2seg(
 __all__ = [
     "MRI_STATS2SEG_METADATA",
     "MriStats2segOutputs",
+    "MriStats2segParamsDict",
+    "MriStats2segParamsDictTagged",
     "mri_stats2seg",
     "mri_stats2seg_execute",
     "mri_stats2seg_params",

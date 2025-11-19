@@ -12,7 +12,7 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 )
 
 
-MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParameters', {
+MetricFalseCorrelationParamsDict = typing.TypedDict('MetricFalseCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-false-correlation"]],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParam
     "geo-outer": float,
     "geo-inner": float,
 })
-MetricFalseCorrelationParametersTagged = typing.TypedDict('MetricFalseCorrelationParametersTagged', {
+MetricFalseCorrelationParamsDictTagged = typing.TypedDict('MetricFalseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-false-correlation"],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ MetricFalseCorrelationParametersTagged = typing.TypedDict('MetricFalseCorrelatio
 
 class MetricFalseCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricFalseCorrelationParameters(...)`.
+    Output object returned when calling `MetricFalseCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def metric_false_correlation_params(
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-) -> MetricFalseCorrelationParametersTagged:
+) -> MetricFalseCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def metric_false_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricFalseCorrelationParameters` object.
+    `MetricFalseCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def metric_false_correlation_validate(
 
 
 def metric_false_correlation_cargs(
-    params: MetricFalseCorrelationParameters,
+    params: MetricFalseCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def metric_false_correlation_cargs(
 
 
 def metric_false_correlation_outputs(
-    params: MetricFalseCorrelationParameters,
+    params: MetricFalseCorrelationParamsDict,
     execution: Execution,
 ) -> MetricFalseCorrelationOutputs:
     """
@@ -188,7 +188,7 @@ def metric_false_correlation_outputs(
 
 
 def metric_false_correlation_execute(
-    params: MetricFalseCorrelationParameters,
+    params: MetricFalseCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
@@ -271,6 +271,8 @@ def metric_false_correlation(
 __all__ = [
     "METRIC_FALSE_CORRELATION_METADATA",
     "MetricFalseCorrelationOutputs",
+    "MetricFalseCorrelationParamsDict",
+    "MetricFalseCorrelationParamsDictTagged",
     "metric_false_correlation",
     "metric_false_correlation_execute",
     "metric_false_correlation_params",

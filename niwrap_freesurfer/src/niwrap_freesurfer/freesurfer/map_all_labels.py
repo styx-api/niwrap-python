@@ -13,7 +13,7 @@ MAP_ALL_LABELS_METADATA = Metadata(
 )
 
 
-MapAllLabelsParameters = typing.TypedDict('MapAllLabelsParameters', {
+MapAllLabelsParamsDict = typing.TypedDict('MapAllLabelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/map_all_labels"]],
     "which": str,
     "fname": str,
@@ -22,7 +22,7 @@ MapAllLabelsParameters = typing.TypedDict('MapAllLabelsParameters', {
     "subjects": list[str],
     "output": str,
 })
-MapAllLabelsParametersTagged = typing.TypedDict('MapAllLabelsParametersTagged', {
+MapAllLabelsParamsDictTagged = typing.TypedDict('MapAllLabelsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/map_all_labels"],
     "which": str,
     "fname": str,
@@ -35,7 +35,7 @@ MapAllLabelsParametersTagged = typing.TypedDict('MapAllLabelsParametersTagged', 
 
 class MapAllLabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MapAllLabelsParameters(...)`.
+    Output object returned when calling `MapAllLabelsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def map_all_labels_params(
     spherical_surf: str,
     subjects: list[str],
     output: str,
-) -> MapAllLabelsParametersTagged:
+) -> MapAllLabelsParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def map_all_labels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MapAllLabelsParameters` object.
+    `MapAllLabelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def map_all_labels_validate(
 
 
 def map_all_labels_cargs(
-    params: MapAllLabelsParameters,
+    params: MapAllLabelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def map_all_labels_cargs(
 
 
 def map_all_labels_outputs(
-    params: MapAllLabelsParameters,
+    params: MapAllLabelsParamsDict,
     execution: Execution,
 ) -> MapAllLabelsOutputs:
     """
@@ -162,7 +162,7 @@ def map_all_labels_outputs(
 
 
 def map_all_labels_execute(
-    params: MapAllLabelsParameters,
+    params: MapAllLabelsParamsDict,
     runner: Runner | None = None,
 ) -> MapAllLabelsOutputs:
     """
@@ -233,6 +233,8 @@ def map_all_labels(
 __all__ = [
     "MAP_ALL_LABELS_METADATA",
     "MapAllLabelsOutputs",
+    "MapAllLabelsParamsDict",
+    "MapAllLabelsParamsDictTagged",
     "map_all_labels",
     "map_all_labels_execute",
     "map_all_labels_params",

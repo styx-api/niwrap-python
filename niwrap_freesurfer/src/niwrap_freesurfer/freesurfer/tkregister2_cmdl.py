@@ -13,7 +13,7 @@ TKREGISTER2_CMDL_METADATA = Metadata(
 )
 
 
-Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
+Tkregister2CmdlParamsDict = typing.TypedDict('Tkregister2CmdlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2_cmdl"]],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
@@ -76,7 +76,7 @@ Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
     "rot": typing.NotRequired[list[float] | None],
     "conf_targ_flag": bool,
 })
-Tkregister2CmdlParametersTagged = typing.TypedDict('Tkregister2CmdlParametersTagged', {
+Tkregister2CmdlParamsDictTagged = typing.TypedDict('Tkregister2CmdlParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tkregister2_cmdl"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
@@ -143,7 +143,7 @@ Tkregister2CmdlParametersTagged = typing.TypedDict('Tkregister2CmdlParametersTag
 
 class Tkregister2CmdlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tkregister2CmdlParameters(...)`.
+    Output object returned when calling `Tkregister2CmdlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -210,7 +210,7 @@ def tkregister2_cmdl_params(
     trans: list[float] | None = None,
     rot: list[float] | None = None,
     conf_targ_flag: bool = False,
-) -> Tkregister2CmdlParametersTagged:
+) -> Tkregister2CmdlParamsDictTagged:
     """
     Build parameters.
     
@@ -388,7 +388,7 @@ def tkregister2_cmdl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tkregister2CmdlParameters` object.
+    `Tkregister2CmdlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -621,7 +621,7 @@ def tkregister2_cmdl_validate(
 
 
 def tkregister2_cmdl_cargs(
-    params: Tkregister2CmdlParameters,
+    params: Tkregister2CmdlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -874,7 +874,7 @@ def tkregister2_cmdl_cargs(
 
 
 def tkregister2_cmdl_outputs(
-    params: Tkregister2CmdlParameters,
+    params: Tkregister2CmdlParamsDict,
     execution: Execution,
 ) -> Tkregister2CmdlOutputs:
     """
@@ -893,7 +893,7 @@ def tkregister2_cmdl_outputs(
 
 
 def tkregister2_cmdl_execute(
-    params: Tkregister2CmdlParameters,
+    params: Tkregister2CmdlParamsDict,
     runner: Runner | None = None,
 ) -> Tkregister2CmdlOutputs:
     """
@@ -1132,6 +1132,8 @@ def tkregister2_cmdl(
 __all__ = [
     "TKREGISTER2_CMDL_METADATA",
     "Tkregister2CmdlOutputs",
+    "Tkregister2CmdlParamsDict",
+    "Tkregister2CmdlParamsDictTagged",
     "tkregister2_cmdl",
     "tkregister2_cmdl_execute",
     "tkregister2_cmdl_params",

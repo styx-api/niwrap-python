@@ -13,7 +13,7 @@ STRBLAST_METADATA = Metadata(
 )
 
 
-StrblastParameters = typing.TypedDict('StrblastParameters', {
+StrblastParamsDict = typing.TypedDict('StrblastParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/strblast"]],
     "targetstring": str,
     "input_files": list[InputPathType],
@@ -23,7 +23,7 @@ StrblastParameters = typing.TypedDict('StrblastParameters', {
     "quiet": bool,
     "help": bool,
 })
-StrblastParametersTagged = typing.TypedDict('StrblastParametersTagged', {
+StrblastParamsDictTagged = typing.TypedDict('StrblastParamsDictTagged', {
     "@type": typing.Literal["afni/strblast"],
     "targetstring": str,
     "input_files": list[InputPathType],
@@ -37,7 +37,7 @@ StrblastParametersTagged = typing.TypedDict('StrblastParametersTagged', {
 
 class StrblastOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `StrblastParameters(...)`.
+    Output object returned when calling `StrblastParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def strblast_params(
     unescape: bool = False,
     quiet: bool = False,
     help_: bool = False,
-) -> StrblastParametersTagged:
+) -> StrblastParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def strblast_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `StrblastParameters` object.
+    `StrblastParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def strblast_validate(
 
 
 def strblast_cargs(
-    params: StrblastParameters,
+    params: StrblastParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def strblast_cargs(
 
 
 def strblast_outputs(
-    params: StrblastParameters,
+    params: StrblastParamsDict,
     execution: Execution,
 ) -> StrblastOutputs:
     """
@@ -182,7 +182,7 @@ def strblast_outputs(
 
 
 def strblast_execute(
-    params: StrblastParameters,
+    params: StrblastParamsDict,
     runner: Runner | None = None,
 ) -> StrblastOutputs:
     """
@@ -260,6 +260,8 @@ def strblast(
 __all__ = [
     "STRBLAST_METADATA",
     "StrblastOutputs",
+    "StrblastParamsDict",
+    "StrblastParamsDictTagged",
     "strblast",
     "strblast_execute",
     "strblast_params",

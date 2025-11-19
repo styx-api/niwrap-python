@@ -13,7 +13,7 @@ MRI_MCSIM_METADATA = Metadata(
 )
 
 
-MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
+MriMcsimParamsDict = typing.TypedDict('MriMcsimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mcsim"]],
     "top_output_dir": str,
     "base_name": str,
@@ -39,7 +39,7 @@ MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
     "help": bool,
     "version": bool,
 })
-MriMcsimParametersTagged = typing.TypedDict('MriMcsimParametersTagged', {
+MriMcsimParamsDictTagged = typing.TypedDict('MriMcsimParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_mcsim"],
     "top_output_dir": str,
     "base_name": str,
@@ -69,7 +69,7 @@ MriMcsimParametersTagged = typing.TypedDict('MriMcsimParametersTagged', {
 
 class MriMcsimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMcsimParameters(...)`.
+    Output object returned when calling `MriMcsimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def mri_mcsim_params(
     check_opts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MriMcsimParametersTagged:
+) -> MriMcsimParamsDictTagged:
     """
     Build parameters.
     
@@ -184,7 +184,7 @@ def mri_mcsim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMcsimParameters` object.
+    `MriMcsimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def mri_mcsim_validate(
 
 
 def mri_mcsim_cargs(
-    params: MriMcsimParameters,
+    params: MriMcsimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -388,7 +388,7 @@ def mri_mcsim_cargs(
 
 
 def mri_mcsim_outputs(
-    params: MriMcsimParameters,
+    params: MriMcsimParamsDict,
     execution: Execution,
 ) -> MriMcsimOutputs:
     """
@@ -411,7 +411,7 @@ def mri_mcsim_outputs(
 
 
 def mri_mcsim_execute(
-    params: MriMcsimParameters,
+    params: MriMcsimParamsDict,
     runner: Runner | None = None,
 ) -> MriMcsimOutputs:
     """
@@ -534,6 +534,8 @@ def mri_mcsim(
 __all__ = [
     "MRI_MCSIM_METADATA",
     "MriMcsimOutputs",
+    "MriMcsimParamsDict",
+    "MriMcsimParamsDictTagged",
     "mri_mcsim",
     "mri_mcsim_execute",
     "mri_mcsim_params",

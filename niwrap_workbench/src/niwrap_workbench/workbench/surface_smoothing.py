@@ -12,14 +12,14 @@ SURFACE_SMOOTHING_METADATA = Metadata(
 )
 
 
-SurfaceSmoothingParameters = typing.TypedDict('SurfaceSmoothingParameters', {
+SurfaceSmoothingParamsDict = typing.TypedDict('SurfaceSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-smoothing"]],
     "surface-out": str,
     "surface-in": InputPathType,
     "smoothing-strength": float,
     "smoothing-iterations": int,
 })
-SurfaceSmoothingParametersTagged = typing.TypedDict('SurfaceSmoothingParametersTagged', {
+SurfaceSmoothingParamsDictTagged = typing.TypedDict('SurfaceSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-smoothing"],
     "surface-out": str,
     "surface-in": InputPathType,
@@ -30,7 +30,7 @@ SurfaceSmoothingParametersTagged = typing.TypedDict('SurfaceSmoothingParametersT
 
 class SurfaceSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceSmoothingParameters(...)`.
+    Output object returned when calling `SurfaceSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_smoothing_params(
     surface_in: InputPathType,
     smoothing_strength: float,
     smoothing_iterations: int,
-) -> SurfaceSmoothingParametersTagged:
+) -> SurfaceSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def surface_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceSmoothingParameters` object.
+    `SurfaceSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def surface_smoothing_validate(
 
 
 def surface_smoothing_cargs(
-    params: SurfaceSmoothingParameters,
+    params: SurfaceSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def surface_smoothing_cargs(
 
 
 def surface_smoothing_outputs(
-    params: SurfaceSmoothingParameters,
+    params: SurfaceSmoothingParamsDict,
     execution: Execution,
 ) -> SurfaceSmoothingOutputs:
     """
@@ -141,7 +141,7 @@ def surface_smoothing_outputs(
 
 
 def surface_smoothing_execute(
-    params: SurfaceSmoothingParameters,
+    params: SurfaceSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
@@ -200,6 +200,8 @@ def surface_smoothing(
 __all__ = [
     "SURFACE_SMOOTHING_METADATA",
     "SurfaceSmoothingOutputs",
+    "SurfaceSmoothingParamsDict",
+    "SurfaceSmoothingParamsDictTagged",
     "surface_smoothing",
     "surface_smoothing_execute",
     "surface_smoothing_params",

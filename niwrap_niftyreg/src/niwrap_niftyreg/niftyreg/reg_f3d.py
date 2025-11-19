@@ -13,7 +13,7 @@ REG_F3D_METADATA = Metadata(
 )
 
 
-RegF3dParameters = typing.TypedDict('RegF3dParameters', {
+RegF3dParamsDict = typing.TypedDict('RegF3dParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_f3d"]],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -56,7 +56,7 @@ RegF3dParameters = typing.TypedDict('RegF3dParameters', {
     "padding_value": typing.NotRequired[float | None],
     "verbose_off": bool,
 })
-RegF3dParametersTagged = typing.TypedDict('RegF3dParametersTagged', {
+RegF3dParamsDictTagged = typing.TypedDict('RegF3dParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_f3d"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
@@ -103,7 +103,7 @@ RegF3dParametersTagged = typing.TypedDict('RegF3dParametersTagged', {
 
 class RegF3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegF3dParameters(...)`.
+    Output object returned when calling `RegF3dParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -154,7 +154,7 @@ def reg_f3d_params(
     smooth_gradient: float | None = None,
     padding_value: float | None = None,
     verbose_off: bool = False,
-) -> RegF3dParametersTagged:
+) -> RegF3dParamsDictTagged:
     """
     Build parameters.
     
@@ -298,7 +298,7 @@ def reg_f3d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegF3dParameters` object.
+    `RegF3dParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -442,7 +442,7 @@ def reg_f3d_validate(
 
 
 def reg_f3d_cargs(
-    params: RegF3dParameters,
+    params: RegF3dParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -631,7 +631,7 @@ def reg_f3d_cargs(
 
 
 def reg_f3d_outputs(
-    params: RegF3dParameters,
+    params: RegF3dParamsDict,
     execution: Execution,
 ) -> RegF3dOutputs:
     """
@@ -652,7 +652,7 @@ def reg_f3d_outputs(
 
 
 def reg_f3d_execute(
-    params: RegF3dParameters,
+    params: RegF3dParamsDict,
     runner: Runner | None = None,
 ) -> RegF3dOutputs:
     """
@@ -843,6 +843,8 @@ def reg_f3d(
 __all__ = [
     "REG_F3D_METADATA",
     "RegF3dOutputs",
+    "RegF3dParamsDict",
+    "RegF3dParamsDictTagged",
     "reg_f3d",
     "reg_f3d_execute",
     "reg_f3d_params",

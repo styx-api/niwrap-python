@@ -13,7 +13,7 @@ VERTEXVOL_METADATA = Metadata(
 )
 
 
-VertexvolParameters = typing.TypedDict('VertexvolParameters', {
+VertexvolParamsDict = typing.TypedDict('VertexvolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/vertexvol"]],
     "subject": str,
     "left_hemisphere": bool,
@@ -22,7 +22,7 @@ VertexvolParameters = typing.TypedDict('VertexvolParameters', {
     "use_th3": bool,
     "no_th3": bool,
 })
-VertexvolParametersTagged = typing.TypedDict('VertexvolParametersTagged', {
+VertexvolParamsDictTagged = typing.TypedDict('VertexvolParamsDictTagged', {
     "@type": typing.Literal["freesurfer/vertexvol"],
     "subject": str,
     "left_hemisphere": bool,
@@ -35,7 +35,7 @@ VertexvolParametersTagged = typing.TypedDict('VertexvolParametersTagged', {
 
 class VertexvolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VertexvolParameters(...)`.
+    Output object returned when calling `VertexvolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def vertexvol_params(
     output_file: str | None = None,
     use_th3: bool = False,
     no_th3: bool = False,
-) -> VertexvolParametersTagged:
+) -> VertexvolParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def vertexvol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VertexvolParameters` object.
+    `VertexvolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def vertexvol_validate(
 
 
 def vertexvol_cargs(
-    params: VertexvolParameters,
+    params: VertexvolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def vertexvol_cargs(
 
 
 def vertexvol_outputs(
-    params: VertexvolParameters,
+    params: VertexvolParamsDict,
     execution: Execution,
 ) -> VertexvolOutputs:
     """
@@ -170,7 +170,7 @@ def vertexvol_outputs(
 
 
 def vertexvol_execute(
-    params: VertexvolParameters,
+    params: VertexvolParamsDict,
     runner: Runner | None = None,
 ) -> VertexvolOutputs:
     """
@@ -241,6 +241,8 @@ def vertexvol(
 __all__ = [
     "VERTEXVOL_METADATA",
     "VertexvolOutputs",
+    "VertexvolParamsDict",
+    "VertexvolParamsDictTagged",
     "vertexvol",
     "vertexvol_execute",
     "vertexvol_params",

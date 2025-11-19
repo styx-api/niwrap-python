@@ -13,7 +13,7 @@ FSL_SBCA_METADATA = Metadata(
 )
 
 
-FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
+FslSbcaParamsDict = typing.TypedDict('FslSbcaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_sbca"]],
     "infile": InputPathType,
     "seed": InputPathType,
@@ -33,7 +33,7 @@ FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-FslSbcaParametersTagged = typing.TypedDict('FslSbcaParametersTagged', {
+FslSbcaParamsDictTagged = typing.TypedDict('FslSbcaParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_sbca"],
     "infile": InputPathType,
     "seed": InputPathType,
@@ -57,7 +57,7 @@ FslSbcaParametersTagged = typing.TypedDict('FslSbcaParametersTagged', {
 
 class FslSbcaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslSbcaParameters(...)`.
+    Output object returned when calling `FslSbcaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def fsl_sbca_params(
     out_conf_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslSbcaParametersTagged:
+) -> FslSbcaParamsDictTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def fsl_sbca_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslSbcaParameters` object.
+    `FslSbcaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def fsl_sbca_validate(
 
 
 def fsl_sbca_cargs(
-    params: FslSbcaParameters,
+    params: FslSbcaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -295,7 +295,7 @@ def fsl_sbca_cargs(
 
 
 def fsl_sbca_outputs(
-    params: FslSbcaParameters,
+    params: FslSbcaParamsDict,
     execution: Execution,
 ) -> FslSbcaOutputs:
     """
@@ -317,7 +317,7 @@ def fsl_sbca_outputs(
 
 
 def fsl_sbca_execute(
-    params: FslSbcaParameters,
+    params: FslSbcaParamsDict,
     runner: Runner | None = None,
 ) -> FslSbcaOutputs:
     """
@@ -428,6 +428,8 @@ def fsl_sbca(
 __all__ = [
     "FSL_SBCA_METADATA",
     "FslSbcaOutputs",
+    "FslSbcaParamsDict",
+    "FslSbcaParamsDictTagged",
     "fsl_sbca",
     "fsl_sbca_execute",
     "fsl_sbca_params",

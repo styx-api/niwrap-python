@@ -13,7 +13,7 @@ SURF_FWHM_METADATA = Metadata(
 )
 
 
-SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
+SurfFwhmParamsDict = typing.TypedDict('SurfFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfFWHM"]],
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
     "examples": bool,
     "slice": bool,
 })
-SurfFwhmParametersTagged = typing.TypedDict('SurfFwhmParametersTagged', {
+SurfFwhmParamsDictTagged = typing.TypedDict('SurfFwhmParamsDictTagged', {
     "@type": typing.Literal["afni/SurfFWHM"],
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ SurfFwhmParametersTagged = typing.TypedDict('SurfFwhmParametersTagged', {
 
 class SurfFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfFwhmParameters(...)`.
+    Output object returned when calling `SurfFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def surf_fwhm_params(
     ok_warn: bool = False,
     examples: bool = False,
     slice_: bool = False,
-) -> SurfFwhmParametersTagged:
+) -> SurfFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def surf_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfFwhmParameters` object.
+    `SurfFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def surf_fwhm_validate(
 
 
 def surf_fwhm_cargs(
-    params: SurfFwhmParameters,
+    params: SurfFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -269,7 +269,7 @@ def surf_fwhm_cargs(
 
 
 def surf_fwhm_outputs(
-    params: SurfFwhmParameters,
+    params: SurfFwhmParamsDict,
     execution: Execution,
 ) -> SurfFwhmOutputs:
     """
@@ -292,7 +292,7 @@ def surf_fwhm_outputs(
 
 
 def surf_fwhm_execute(
-    params: SurfFwhmParameters,
+    params: SurfFwhmParamsDict,
     runner: Runner | None = None,
 ) -> SurfFwhmOutputs:
     """
@@ -391,6 +391,8 @@ def surf_fwhm(
 __all__ = [
     "SURF_FWHM_METADATA",
     "SurfFwhmOutputs",
+    "SurfFwhmParamsDict",
+    "SurfFwhmParamsDictTagged",
     "surf_fwhm",
     "surf_fwhm_execute",
     "surf_fwhm_params",

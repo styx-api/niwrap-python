@@ -13,11 +13,11 @@ FS_PRINT_HELP_METADATA = Metadata(
 )
 
 
-FsPrintHelpParameters = typing.TypedDict('FsPrintHelpParameters', {
+FsPrintHelpParamsDict = typing.TypedDict('FsPrintHelpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsPrintHelp"]],
     "arguments": typing.NotRequired[str | None],
 })
-FsPrintHelpParametersTagged = typing.TypedDict('FsPrintHelpParametersTagged', {
+FsPrintHelpParamsDictTagged = typing.TypedDict('FsPrintHelpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsPrintHelp"],
     "arguments": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ FsPrintHelpParametersTagged = typing.TypedDict('FsPrintHelpParametersTagged', {
 
 class FsPrintHelpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsPrintHelpParameters(...)`.
+    Output object returned when calling `FsPrintHelpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FsPrintHelpOutputs(typing.NamedTuple):
 
 def fs_print_help_params(
     arguments: str | None = None,
-) -> FsPrintHelpParametersTagged:
+) -> FsPrintHelpParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def fs_print_help_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsPrintHelpParameters` object.
+    `FsPrintHelpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def fs_print_help_validate(
 
 
 def fs_print_help_cargs(
-    params: FsPrintHelpParameters,
+    params: FsPrintHelpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def fs_print_help_cargs(
 
 
 def fs_print_help_outputs(
-    params: FsPrintHelpParameters,
+    params: FsPrintHelpParamsDict,
     execution: Execution,
 ) -> FsPrintHelpOutputs:
     """
@@ -107,7 +107,7 @@ def fs_print_help_outputs(
 
 
 def fs_print_help_execute(
-    params: FsPrintHelpParameters,
+    params: FsPrintHelpParamsDict,
     runner: Runner | None = None,
 ) -> FsPrintHelpOutputs:
     """
@@ -165,6 +165,8 @@ def fs_print_help(
 __all__ = [
     "FS_PRINT_HELP_METADATA",
     "FsPrintHelpOutputs",
+    "FsPrintHelpParamsDict",
+    "FsPrintHelpParamsDictTagged",
     "fs_print_help",
     "fs_print_help_execute",
     "fs_print_help_params",

@@ -13,7 +13,7 @@ SAMSEG_LONG_METADATA = Metadata(
 )
 
 
-SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
+SamsegLongParamsDict = typing.TypedDict('SamsegLongParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/samseg-long"]],
     "output_dir": str,
     "input_files": list[InputPathType],
@@ -23,7 +23,7 @@ SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
     "save_posteriors": bool,
     "force_update": bool,
 })
-SamsegLongParametersTagged = typing.TypedDict('SamsegLongParametersTagged', {
+SamsegLongParamsDictTagged = typing.TypedDict('SamsegLongParamsDictTagged', {
     "@type": typing.Literal["freesurfer/samseg-long"],
     "output_dir": str,
     "input_files": list[InputPathType],
@@ -37,7 +37,7 @@ SamsegLongParametersTagged = typing.TypedDict('SamsegLongParametersTagged', {
 
 class SamsegLongOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SamsegLongParameters(...)`.
+    Output object returned when calling `SamsegLongParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def samseg_long_params(
     threads: float | None = None,
     save_posteriors: bool = False,
     force_update: bool = False,
-) -> SamsegLongParametersTagged:
+) -> SamsegLongParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def samseg_long_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SamsegLongParameters` object.
+    `SamsegLongParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def samseg_long_validate(
 
 
 def samseg_long_cargs(
-    params: SamsegLongParameters,
+    params: SamsegLongParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def samseg_long_cargs(
 
 
 def samseg_long_outputs(
-    params: SamsegLongParameters,
+    params: SamsegLongParamsDict,
     execution: Execution,
 ) -> SamsegLongOutputs:
     """
@@ -192,7 +192,7 @@ def samseg_long_outputs(
 
 
 def samseg_long_execute(
-    params: SamsegLongParameters,
+    params: SamsegLongParamsDict,
     runner: Runner | None = None,
 ) -> SamsegLongOutputs:
     """
@@ -266,6 +266,8 @@ def samseg_long(
 __all__ = [
     "SAMSEG_LONG_METADATA",
     "SamsegLongOutputs",
+    "SamsegLongParamsDict",
+    "SamsegLongParamsDictTagged",
     "samseg_long",
     "samseg_long_execute",
     "samseg_long_params",

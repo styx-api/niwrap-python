@@ -6,21 +6,21 @@
     },
     "metric": {
       "var_param": "metric",
-      "fn_struct_make_params": "metric_merge_metric_params",
+      "fn_struct_make_params": "metric_merge_metric",
       "properties": {
         "metric-in": {
           "var_param": "metric_in"
         },
         "column": {
           "var_param": "column",
-          "fn_struct_make_params": "metric_merge_column_params",
+          "fn_struct_make_params": "metric_merge_column",
           "properties": {
             "column": {
               "var_param": "column"
             },
             "up-to": {
               "var_param": "up_to",
-              "fn_struct_make_params": "metric_merge_up_to_params",
+              "fn_struct_make_params": "metric_merge_up_to",
               "properties": {
                 "last-column": {
                   "var_param": "last_column"

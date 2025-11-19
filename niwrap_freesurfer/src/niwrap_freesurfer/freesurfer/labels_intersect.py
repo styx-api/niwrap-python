@@ -13,13 +13,13 @@ LABELS_INTERSECT_METADATA = Metadata(
 )
 
 
-LabelsIntersectParameters = typing.TypedDict('LabelsIntersectParameters', {
+LabelsIntersectParamsDict = typing.TypedDict('LabelsIntersectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/labels_intersect"]],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
-LabelsIntersectParametersTagged = typing.TypedDict('LabelsIntersectParametersTagged', {
+LabelsIntersectParamsDictTagged = typing.TypedDict('LabelsIntersectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/labels_intersect"],
     "label1": InputPathType,
     "label2": InputPathType,
@@ -29,7 +29,7 @@ LabelsIntersectParametersTagged = typing.TypedDict('LabelsIntersectParametersTag
 
 class LabelsIntersectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelsIntersectParameters(...)`.
+    Output object returned when calling `LabelsIntersectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def labels_intersect_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsIntersectParametersTagged:
+) -> LabelsIntersectParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def labels_intersect_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelsIntersectParameters` object.
+    `LabelsIntersectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def labels_intersect_validate(
 
 
 def labels_intersect_cargs(
-    params: LabelsIntersectParameters,
+    params: LabelsIntersectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def labels_intersect_cargs(
 
 
 def labels_intersect_outputs(
-    params: LabelsIntersectParameters,
+    params: LabelsIntersectParamsDict,
     execution: Execution,
 ) -> LabelsIntersectOutputs:
     """
@@ -129,7 +129,7 @@ def labels_intersect_outputs(
 
 
 def labels_intersect_execute(
-    params: LabelsIntersectParameters,
+    params: LabelsIntersectParamsDict,
     runner: Runner | None = None,
 ) -> LabelsIntersectOutputs:
     """
@@ -191,6 +191,8 @@ def labels_intersect(
 __all__ = [
     "LABELS_INTERSECT_METADATA",
     "LabelsIntersectOutputs",
+    "LabelsIntersectParamsDict",
+    "LabelsIntersectParamsDictTagged",
     "labels_intersect",
     "labels_intersect_execute",
     "labels_intersect_params",

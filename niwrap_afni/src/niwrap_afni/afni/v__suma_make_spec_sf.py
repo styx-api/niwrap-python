@@ -13,13 +13,13 @@ V__SUMA_MAKE_SPEC_SF_METADATA = Metadata(
 )
 
 
-VSumaMakeSpecSfParameters = typing.TypedDict('VSumaMakeSpecSfParameters', {
+VSumaMakeSpecSfParamsDict = typing.TypedDict('VSumaMakeSpecSfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_SF"]],
     "debug_level": typing.NotRequired[int | None],
     "surface_path": typing.NotRequired[str | None],
     "subject_id": str,
 })
-VSumaMakeSpecSfParametersTagged = typing.TypedDict('VSumaMakeSpecSfParametersTagged', {
+VSumaMakeSpecSfParamsDictTagged = typing.TypedDict('VSumaMakeSpecSfParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_Make_Spec_SF"],
     "debug_level": typing.NotRequired[int | None],
     "surface_path": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ VSumaMakeSpecSfParametersTagged = typing.TypedDict('VSumaMakeSpecSfParametersTag
 
 class VSumaMakeSpecSfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaMakeSpecSfParameters(...)`.
+    Output object returned when calling `VSumaMakeSpecSfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v__suma_make_spec_sf_params(
     subject_id: str,
     debug_level: int | None = None,
     surface_path: str | None = None,
-) -> VSumaMakeSpecSfParametersTagged:
+) -> VSumaMakeSpecSfParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def v__suma_make_spec_sf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaMakeSpecSfParameters` object.
+    `VSumaMakeSpecSfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v__suma_make_spec_sf_validate(
 
 
 def v__suma_make_spec_sf_cargs(
-    params: VSumaMakeSpecSfParameters,
+    params: VSumaMakeSpecSfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def v__suma_make_spec_sf_cargs(
 
 
 def v__suma_make_spec_sf_outputs(
-    params: VSumaMakeSpecSfParameters,
+    params: VSumaMakeSpecSfParamsDict,
     execution: Execution,
 ) -> VSumaMakeSpecSfOutputs:
     """
@@ -143,7 +143,7 @@ def v__suma_make_spec_sf_outputs(
 
 
 def v__suma_make_spec_sf_execute(
-    params: VSumaMakeSpecSfParameters,
+    params: VSumaMakeSpecSfParamsDict,
     runner: Runner | None = None,
 ) -> VSumaMakeSpecSfOutputs:
     """
@@ -205,6 +205,8 @@ def v__suma_make_spec_sf(
 
 __all__ = [
     "VSumaMakeSpecSfOutputs",
+    "VSumaMakeSpecSfParamsDict",
+    "VSumaMakeSpecSfParamsDictTagged",
     "V__SUMA_MAKE_SPEC_SF_METADATA",
     "v__suma_make_spec_sf",
     "v__suma_make_spec_sf_execute",

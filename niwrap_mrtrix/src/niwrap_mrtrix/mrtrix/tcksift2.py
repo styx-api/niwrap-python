@@ -13,19 +13,19 @@ TCKSIFT2_METADATA = Metadata(
 )
 
 
-Tcksift2ConfigParameters = typing.TypedDict('Tcksift2ConfigParameters', {
+Tcksift2ConfigParamsDict = typing.TypedDict('Tcksift2ConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Tcksift2ConfigParametersTagged = typing.TypedDict('Tcksift2ConfigParametersTagged', {
+Tcksift2ConfigParamsDictTagged = typing.TypedDict('Tcksift2ConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
+Tcksift2ParamsDict = typing.TypedDict('Tcksift2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tcksift2"]],
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
@@ -55,14 +55,14 @@ Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tcksift2ConfigParameters] | None],
+    "config": typing.NotRequired[list[Tcksift2ConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_tracks": InputPathType,
     "in_fod": InputPathType,
     "out_weights": str,
 })
-Tcksift2ParametersTagged = typing.TypedDict('Tcksift2ParametersTagged', {
+Tcksift2ParamsDictTagged = typing.TypedDict('Tcksift2ParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tcksift2"],
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
@@ -92,7 +92,7 @@ Tcksift2ParametersTagged = typing.TypedDict('Tcksift2ParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tcksift2ConfigParameters] | None],
+    "config": typing.NotRequired[list[Tcksift2ConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_tracks": InputPathType,
@@ -101,10 +101,10 @@ Tcksift2ParametersTagged = typing.TypedDict('Tcksift2ParametersTagged', {
 })
 
 
-def tcksift2_config_params(
+def tcksift2_config(
     key: str,
     value: str,
-) -> Tcksift2ConfigParametersTagged:
+) -> Tcksift2ConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def tcksift2_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tcksift2ConfigParameters` object.
+    `Tcksift2ConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def tcksift2_config_validate(
 
 
 def tcksift2_config_cargs(
-    params: Tcksift2ConfigParameters,
+    params: Tcksift2ConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -166,7 +166,7 @@ def tcksift2_config_cargs(
 
 class Tcksift2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tcksift2Parameters(...)`.
+    Output object returned when calling `Tcksift2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -214,10 +214,10 @@ def tcksift2_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tcksift2ConfigParameters] | None = None,
+    config: list[Tcksift2ConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Tcksift2ParametersTagged:
+) -> Tcksift2ParamsDictTagged:
     """
     Build parameters.
     
@@ -371,7 +371,7 @@ def tcksift2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tcksift2Parameters` object.
+    `Tcksift2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -474,7 +474,7 @@ def tcksift2_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tcksift2ConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tcksift2ConfigParamsDict] | None`')
         for e in params["config"]:
             tcksift2_config_validate(e)
     if params.get("help", False) is None:
@@ -500,7 +500,7 @@ def tcksift2_validate(
 
 
 def tcksift2_cargs(
-    params: Tcksift2Parameters,
+    params: Tcksift2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -637,7 +637,7 @@ def tcksift2_cargs(
 
 
 def tcksift2_outputs(
-    params: Tcksift2Parameters,
+    params: Tcksift2ParamsDict,
     execution: Execution,
 ) -> Tcksift2Outputs:
     """
@@ -660,7 +660,7 @@ def tcksift2_outputs(
 
 
 def tcksift2_execute(
-    params: Tcksift2Parameters,
+    params: Tcksift2ParamsDict,
     runner: Runner | None = None,
 ) -> Tcksift2Outputs:
     """
@@ -734,7 +734,7 @@ def tcksift2(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tcksift2ConfigParameters] | None = None,
+    config: list[Tcksift2ConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -890,9 +890,13 @@ def tcksift2(
 
 __all__ = [
     "TCKSIFT2_METADATA",
+    "Tcksift2ConfigParamsDict",
+    "Tcksift2ConfigParamsDictTagged",
     "Tcksift2Outputs",
+    "Tcksift2ParamsDict",
+    "Tcksift2ParamsDictTagged",
     "tcksift2",
-    "tcksift2_config_params",
+    "tcksift2_config",
     "tcksift2_execute",
     "tcksift2_params",
 ]

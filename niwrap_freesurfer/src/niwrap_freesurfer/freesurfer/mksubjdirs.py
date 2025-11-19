@@ -13,7 +13,7 @@ MKSUBJDIRS_METADATA = Metadata(
 )
 
 
-MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
+MksubjdirsParamsDict = typing.TypedDict('MksubjdirsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mksubjdirs"]],
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
     "help": bool,
     "version": bool,
 })
-MksubjdirsParametersTagged = typing.TypedDict('MksubjdirsParametersTagged', {
+MksubjdirsParamsDictTagged = typing.TypedDict('MksubjdirsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mksubjdirs"],
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ MksubjdirsParametersTagged = typing.TypedDict('MksubjdirsParametersTagged', {
 
 class MksubjdirsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MksubjdirsParameters(...)`.
+    Output object returned when calling `MksubjdirsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def mksubjdirs_params(
     selinux_context: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MksubjdirsParametersTagged:
+) -> MksubjdirsParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def mksubjdirs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MksubjdirsParameters` object.
+    `MksubjdirsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def mksubjdirs_validate(
 
 
 def mksubjdirs_cargs(
-    params: MksubjdirsParameters,
+    params: MksubjdirsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def mksubjdirs_cargs(
 
 
 def mksubjdirs_outputs(
-    params: MksubjdirsParameters,
+    params: MksubjdirsParamsDict,
     execution: Execution,
 ) -> MksubjdirsOutputs:
     """
@@ -176,7 +176,7 @@ def mksubjdirs_outputs(
 
 
 def mksubjdirs_execute(
-    params: MksubjdirsParameters,
+    params: MksubjdirsParamsDict,
     runner: Runner | None = None,
 ) -> MksubjdirsOutputs:
     """
@@ -251,6 +251,8 @@ def mksubjdirs(
 __all__ = [
     "MKSUBJDIRS_METADATA",
     "MksubjdirsOutputs",
+    "MksubjdirsParamsDict",
+    "MksubjdirsParamsDictTagged",
     "mksubjdirs",
     "mksubjdirs_execute",
     "mksubjdirs_params",

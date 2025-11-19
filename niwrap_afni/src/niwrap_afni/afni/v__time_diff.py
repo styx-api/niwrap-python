@@ -13,12 +13,12 @@ V__TIME_DIFF_METADATA = Metadata(
 )
 
 
-VTimeDiffParameters = typing.TypedDict('VTimeDiffParameters', {
+VTimeDiffParamsDict = typing.TypedDict('VTimeDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@TimeDiff"]],
     "file1": InputPathType,
     "file2": InputPathType,
 })
-VTimeDiffParametersTagged = typing.TypedDict('VTimeDiffParametersTagged', {
+VTimeDiffParamsDictTagged = typing.TypedDict('VTimeDiffParamsDictTagged', {
     "@type": typing.Literal["afni/@TimeDiff"],
     "file1": InputPathType,
     "file2": InputPathType,
@@ -27,7 +27,7 @@ VTimeDiffParametersTagged = typing.TypedDict('VTimeDiffParametersTagged', {
 
 class VTimeDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VTimeDiffParameters(...)`.
+    Output object returned when calling `VTimeDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VTimeDiffOutputs(typing.NamedTuple):
 def v__time_diff_params(
     file1: InputPathType,
     file2: InputPathType,
-) -> VTimeDiffParametersTagged:
+) -> VTimeDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v__time_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VTimeDiffParameters` object.
+    `VTimeDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v__time_diff_validate(
 
 
 def v__time_diff_cargs(
-    params: VTimeDiffParameters,
+    params: VTimeDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def v__time_diff_cargs(
 
 
 def v__time_diff_outputs(
-    params: VTimeDiffParameters,
+    params: VTimeDiffParamsDict,
     execution: Execution,
 ) -> VTimeDiffOutputs:
     """
@@ -116,7 +116,7 @@ def v__time_diff_outputs(
 
 
 def v__time_diff_execute(
-    params: VTimeDiffParameters,
+    params: VTimeDiffParamsDict,
     runner: Runner | None = None,
 ) -> VTimeDiffOutputs:
     """
@@ -174,6 +174,8 @@ def v__time_diff(
 
 __all__ = [
     "VTimeDiffOutputs",
+    "VTimeDiffParamsDict",
+    "VTimeDiffParamsDictTagged",
     "V__TIME_DIFF_METADATA",
     "v__time_diff",
     "v__time_diff_execute",

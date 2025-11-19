@@ -13,7 +13,7 @@ V_3D_ISC_METADATA = Metadata(
 )
 
 
-V3dIscParameters = typing.TypedDict('V3dIscParameters', {
+V3dIscParamsDict = typing.TypedDict('V3dIscParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dISC"]],
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
@@ -25,7 +25,7 @@ V3dIscParameters = typing.TypedDict('V3dIscParameters', {
     "io_functions": typing.NotRequired[typing.Literal["AFNI", "R"] | None],
     "data_table": str,
 })
-V3dIscParametersTagged = typing.TypedDict('V3dIscParametersTagged', {
+V3dIscParamsDictTagged = typing.TypedDict('V3dIscParamsDictTagged', {
     "@type": typing.Literal["afni/3dISC"],
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ V3dIscParametersTagged = typing.TypedDict('V3dIscParametersTagged', {
 
 class V3dIscOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dIscParameters(...)`.
+    Output object returned when calling `V3dIscParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_isc_params(
     quantitative_vars: str | None = None,
     fisher_transform: bool = False,
     io_functions: typing.Literal["AFNI", "R"] | None = None,
-) -> V3dIscParametersTagged:
+) -> V3dIscParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def v_3d_isc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dIscParameters` object.
+    `V3dIscParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def v_3d_isc_validate(
 
 
 def v_3d_isc_cargs(
-    params: V3dIscParameters,
+    params: V3dIscParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -212,7 +212,7 @@ def v_3d_isc_cargs(
 
 
 def v_3d_isc_outputs(
-    params: V3dIscParameters,
+    params: V3dIscParamsDict,
     execution: Execution,
 ) -> V3dIscOutputs:
     """
@@ -233,7 +233,7 @@ def v_3d_isc_outputs(
 
 
 def v_3d_isc_execute(
-    params: V3dIscParameters,
+    params: V3dIscParamsDict,
     runner: Runner | None = None,
 ) -> V3dIscOutputs:
     """
@@ -323,6 +323,8 @@ def v_3d_isc(
 
 __all__ = [
     "V3dIscOutputs",
+    "V3dIscParamsDict",
+    "V3dIscParamsDictTagged",
     "V_3D_ISC_METADATA",
     "v_3d_isc",
     "v_3d_isc_execute",

@@ -13,7 +13,7 @@ ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
 )
 
 
-AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParameters', {
+AdjunctTortPlotDpAlignParamsDict = typing.TypedDict('AdjunctTortPlotDpAlignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_tort_plot_dp_align"]],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -21,7 +21,7 @@ AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParam
     "enorm_hline": typing.NotRequired[float | None],
     "no_svg": bool,
 })
-AdjunctTortPlotDpAlignParametersTagged = typing.TypedDict('AdjunctTortPlotDpAlignParametersTagged', {
+AdjunctTortPlotDpAlignParamsDictTagged = typing.TypedDict('AdjunctTortPlotDpAlignParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_tort_plot_dp_align"],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -33,7 +33,7 @@ AdjunctTortPlotDpAlignParametersTagged = typing.TypedDict('AdjunctTortPlotDpAlig
 
 class AdjunctTortPlotDpAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctTortPlotDpAlignParameters(...)`.
+    Output object returned when calling `AdjunctTortPlotDpAlignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def adjunct_tort_plot_dp_align_params(
     enorm_max: float | None = None,
     enorm_hline: float | None = None,
     no_svg: bool = False,
-) -> AdjunctTortPlotDpAlignParametersTagged:
+) -> AdjunctTortPlotDpAlignParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def adjunct_tort_plot_dp_align_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctTortPlotDpAlignParameters` object.
+    `AdjunctTortPlotDpAlignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def adjunct_tort_plot_dp_align_validate(
 
 
 def adjunct_tort_plot_dp_align_cargs(
-    params: AdjunctTortPlotDpAlignParameters,
+    params: AdjunctTortPlotDpAlignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def adjunct_tort_plot_dp_align_cargs(
 
 
 def adjunct_tort_plot_dp_align_outputs(
-    params: AdjunctTortPlotDpAlignParameters,
+    params: AdjunctTortPlotDpAlignParamsDict,
     execution: Execution,
 ) -> AdjunctTortPlotDpAlignOutputs:
     """
@@ -180,7 +180,7 @@ def adjunct_tort_plot_dp_align_outputs(
 
 
 def adjunct_tort_plot_dp_align_execute(
-    params: AdjunctTortPlotDpAlignParameters,
+    params: AdjunctTortPlotDpAlignParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctTortPlotDpAlignOutputs:
     """
@@ -255,6 +255,8 @@ def adjunct_tort_plot_dp_align(
 __all__ = [
     "ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA",
     "AdjunctTortPlotDpAlignOutputs",
+    "AdjunctTortPlotDpAlignParamsDict",
+    "AdjunctTortPlotDpAlignParamsDictTagged",
     "adjunct_tort_plot_dp_align",
     "adjunct_tort_plot_dp_align_execute",
     "adjunct_tort_plot_dp_align_params",

@@ -13,19 +13,19 @@ MRHISTOGRAM_METADATA = Metadata(
 )
 
 
-MrhistogramConfigParameters = typing.TypedDict('MrhistogramConfigParameters', {
+MrhistogramConfigParamsDict = typing.TypedDict('MrhistogramConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrhistogramConfigParametersTagged = typing.TypedDict('MrhistogramConfigParametersTagged', {
+MrhistogramConfigParamsDictTagged = typing.TypedDict('MrhistogramConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
+MrhistogramParamsDict = typing.TypedDict('MrhistogramParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrhistogram"]],
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
@@ -37,13 +37,13 @@ MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrhistogramConfigParameters] | None],
+    "config": typing.NotRequired[list[MrhistogramConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
     "hist": str,
 })
-MrhistogramParametersTagged = typing.TypedDict('MrhistogramParametersTagged', {
+MrhistogramParamsDictTagged = typing.TypedDict('MrhistogramParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrhistogram"],
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
@@ -55,7 +55,7 @@ MrhistogramParametersTagged = typing.TypedDict('MrhistogramParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrhistogramConfigParameters] | None],
+    "config": typing.NotRequired[list[MrhistogramConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
@@ -63,10 +63,10 @@ MrhistogramParametersTagged = typing.TypedDict('MrhistogramParametersTagged', {
 })
 
 
-def mrhistogram_config_params(
+def mrhistogram_config(
     key: str,
     value: str,
-) -> MrhistogramConfigParametersTagged:
+) -> MrhistogramConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mrhistogram_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrhistogramConfigParameters` object.
+    `MrhistogramConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mrhistogram_config_validate(
 
 
 def mrhistogram_config_cargs(
-    params: MrhistogramConfigParameters,
+    params: MrhistogramConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def mrhistogram_config_cargs(
 
 class MrhistogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrhistogramParameters(...)`.
+    Output object returned when calling `MrhistogramParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def mrhistogram_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrhistogramConfigParameters] | None = None,
+    config: list[MrhistogramConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrhistogramParametersTagged:
+) -> MrhistogramParamsDictTagged:
     """
     Build parameters.
     
@@ -212,7 +212,7 @@ def mrhistogram_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrhistogramParameters` object.
+    `MrhistogramParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -257,7 +257,7 @@ def mrhistogram_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrhistogramConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrhistogramConfigParamsDict] | None`')
         for e in params["config"]:
             mrhistogram_config_validate(e)
     if params.get("help", False) is None:
@@ -279,7 +279,7 @@ def mrhistogram_validate(
 
 
 def mrhistogram_cargs(
-    params: MrhistogramParameters,
+    params: MrhistogramParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -337,7 +337,7 @@ def mrhistogram_cargs(
 
 
 def mrhistogram_outputs(
-    params: MrhistogramParameters,
+    params: MrhistogramParamsDict,
     execution: Execution,
 ) -> MrhistogramOutputs:
     """
@@ -357,7 +357,7 @@ def mrhistogram_outputs(
 
 
 def mrhistogram_execute(
-    params: MrhistogramParameters,
+    params: MrhistogramParamsDict,
     runner: Runner | None = None,
 ) -> MrhistogramOutputs:
     """
@@ -404,7 +404,7 @@ def mrhistogram(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrhistogramConfigParameters] | None = None,
+    config: list[MrhistogramConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -472,9 +472,13 @@ def mrhistogram(
 
 __all__ = [
     "MRHISTOGRAM_METADATA",
+    "MrhistogramConfigParamsDict",
+    "MrhistogramConfigParamsDictTagged",
     "MrhistogramOutputs",
+    "MrhistogramParamsDict",
+    "MrhistogramParamsDictTagged",
     "mrhistogram",
-    "mrhistogram_config_params",
+    "mrhistogram_config",
     "mrhistogram_execute",
     "mrhistogram_params",
 ]

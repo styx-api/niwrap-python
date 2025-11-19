@@ -13,14 +13,14 @@ LESION_FILLING_METADATA = Metadata(
 )
 
 
-LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
+LesionFillingParamsDict = typing.TypedDict('LesionFillingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/LesionFilling"]],
     "image_dimension": int,
     "t1_image": InputPathType,
     "lesion_mask": InputPathType,
     "output_lesion_filled": str,
 })
-LesionFillingParametersTagged = typing.TypedDict('LesionFillingParametersTagged', {
+LesionFillingParamsDictTagged = typing.TypedDict('LesionFillingParamsDictTagged', {
     "@type": typing.Literal["ants/LesionFilling"],
     "image_dimension": int,
     "t1_image": InputPathType,
@@ -31,7 +31,7 @@ LesionFillingParametersTagged = typing.TypedDict('LesionFillingParametersTagged'
 
 class LesionFillingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LesionFillingParameters(...)`.
+    Output object returned when calling `LesionFillingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def lesion_filling_params(
     t1_image: InputPathType,
     lesion_mask: InputPathType,
     output_lesion_filled: str,
-) -> LesionFillingParametersTagged:
+) -> LesionFillingParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def lesion_filling_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LesionFillingParameters` object.
+    `LesionFillingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def lesion_filling_validate(
 
 
 def lesion_filling_cargs(
-    params: LesionFillingParameters,
+    params: LesionFillingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def lesion_filling_cargs(
 
 
 def lesion_filling_outputs(
-    params: LesionFillingParameters,
+    params: LesionFillingParamsDict,
     execution: Execution,
 ) -> LesionFillingOutputs:
     """
@@ -139,7 +139,7 @@ def lesion_filling_outputs(
 
 
 def lesion_filling_execute(
-    params: LesionFillingParameters,
+    params: LesionFillingParamsDict,
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
@@ -204,6 +204,8 @@ def lesion_filling(
 __all__ = [
     "LESION_FILLING_METADATA",
     "LesionFillingOutputs",
+    "LesionFillingParamsDict",
+    "LesionFillingParamsDictTagged",
     "lesion_filling",
     "lesion_filling_execute",
     "lesion_filling_params",

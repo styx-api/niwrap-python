@@ -13,11 +13,11 @@ INFLATE_SUBJECT_METADATA = Metadata(
 )
 
 
-InflateSubjectParameters = typing.TypedDict('InflateSubjectParameters', {
+InflateSubjectParamsDict = typing.TypedDict('InflateSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject"]],
     "args": typing.NotRequired[str | None],
 })
-InflateSubjectParametersTagged = typing.TypedDict('InflateSubjectParametersTagged', {
+InflateSubjectParamsDictTagged = typing.TypedDict('InflateSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/inflate_subject"],
     "args": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ InflateSubjectParametersTagged = typing.TypedDict('InflateSubjectParametersTagge
 
 class InflateSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InflateSubjectParameters(...)`.
+    Output object returned when calling `InflateSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class InflateSubjectOutputs(typing.NamedTuple):
 
 def inflate_subject_params(
     args: str | None = None,
-) -> InflateSubjectParametersTagged:
+) -> InflateSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def inflate_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InflateSubjectParameters` object.
+    `InflateSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def inflate_subject_validate(
 
 
 def inflate_subject_cargs(
-    params: InflateSubjectParameters,
+    params: InflateSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def inflate_subject_cargs(
 
 
 def inflate_subject_outputs(
-    params: InflateSubjectParameters,
+    params: InflateSubjectParamsDict,
     execution: Execution,
 ) -> InflateSubjectOutputs:
     """
@@ -110,7 +110,7 @@ def inflate_subject_outputs(
 
 
 def inflate_subject_execute(
-    params: InflateSubjectParameters,
+    params: InflateSubjectParamsDict,
     runner: Runner | None = None,
 ) -> InflateSubjectOutputs:
     """
@@ -166,6 +166,8 @@ def inflate_subject(
 __all__ = [
     "INFLATE_SUBJECT_METADATA",
     "InflateSubjectOutputs",
+    "InflateSubjectParamsDict",
+    "InflateSubjectParamsDictTagged",
     "inflate_subject",
     "inflate_subject_execute",
     "inflate_subject_params",

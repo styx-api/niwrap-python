@@ -13,14 +13,14 @@ TAL_COMPARE_METADATA = Metadata(
 )
 
 
-TalCompareParameters = typing.TypedDict('TalCompareParameters', {
+TalCompareParamsDict = typing.TypedDict('TalCompareParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tal_compare"]],
     "ref_file": InputPathType,
     "moving_file": InputPathType,
     "output_file": str,
     "verbose": bool,
 })
-TalCompareParametersTagged = typing.TypedDict('TalCompareParametersTagged', {
+TalCompareParamsDictTagged = typing.TypedDict('TalCompareParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tal_compare"],
     "ref_file": InputPathType,
     "moving_file": InputPathType,
@@ -31,7 +31,7 @@ TalCompareParametersTagged = typing.TypedDict('TalCompareParametersTagged', {
 
 class TalCompareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalCompareParameters(...)`.
+    Output object returned when calling `TalCompareParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def tal_compare_params(
     moving_file: InputPathType,
     output_file: str,
     verbose: bool = False,
-) -> TalCompareParametersTagged:
+) -> TalCompareParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def tal_compare_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalCompareParameters` object.
+    `TalCompareParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def tal_compare_validate(
 
 
 def tal_compare_cargs(
-    params: TalCompareParameters,
+    params: TalCompareParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def tal_compare_cargs(
 
 
 def tal_compare_outputs(
-    params: TalCompareParameters,
+    params: TalCompareParamsDict,
     execution: Execution,
 ) -> TalCompareOutputs:
     """
@@ -140,7 +140,7 @@ def tal_compare_outputs(
 
 
 def tal_compare_execute(
-    params: TalCompareParameters,
+    params: TalCompareParamsDict,
     runner: Runner | None = None,
 ) -> TalCompareOutputs:
     """
@@ -205,6 +205,8 @@ def tal_compare(
 __all__ = [
     "TAL_COMPARE_METADATA",
     "TalCompareOutputs",
+    "TalCompareParamsDict",
+    "TalCompareParamsDictTagged",
     "tal_compare",
     "tal_compare_execute",
     "tal_compare_params",

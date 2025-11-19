@@ -13,14 +13,14 @@ V_3D_CLUST_COUNT_METADATA = Metadata(
 )
 
 
-V3dClustCountParameters = typing.TypedDict('V3dClustCountParameters', {
+V3dClustCountParamsDict = typing.TypedDict('V3dClustCountParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dClustCount"]],
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "final": bool,
     "quiet": bool,
 })
-V3dClustCountParametersTagged = typing.TypedDict('V3dClustCountParametersTagged', {
+V3dClustCountParamsDictTagged = typing.TypedDict('V3dClustCountParamsDictTagged', {
     "@type": typing.Literal["afni/3dClustCount"],
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dClustCountParametersTagged = typing.TypedDict('V3dClustCountParametersTagged'
 
 class V3dClustCountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dClustCountParameters(...)`.
+    Output object returned when calling `V3dClustCountParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v_3d_clust_count_params(
     prefix: str | None = None,
     final: bool = False,
     quiet: bool = False,
-) -> V3dClustCountParametersTagged:
+) -> V3dClustCountParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def v_3d_clust_count_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dClustCountParameters` object.
+    `V3dClustCountParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def v_3d_clust_count_validate(
 
 
 def v_3d_clust_count_cargs(
-    params: V3dClustCountParameters,
+    params: V3dClustCountParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def v_3d_clust_count_cargs(
 
 
 def v_3d_clust_count_outputs(
-    params: V3dClustCountParameters,
+    params: V3dClustCountParamsDict,
     execution: Execution,
 ) -> V3dClustCountOutputs:
     """
@@ -161,7 +161,7 @@ def v_3d_clust_count_outputs(
 
 
 def v_3d_clust_count_execute(
-    params: V3dClustCountParameters,
+    params: V3dClustCountParamsDict,
     runner: Runner | None = None,
 ) -> V3dClustCountOutputs:
     """
@@ -234,6 +234,8 @@ def v_3d_clust_count(
 
 __all__ = [
     "V3dClustCountOutputs",
+    "V3dClustCountParamsDict",
+    "V3dClustCountParamsDictTagged",
     "V_3D_CLUST_COUNT_METADATA",
     "v_3d_clust_count",
     "v_3d_clust_count_execute",

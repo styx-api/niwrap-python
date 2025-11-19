@@ -13,7 +13,7 @@ LABEL2SURF_METADATA = Metadata(
 )
 
 
-Label2surfParameters = typing.TypedDict('Label2surfParameters', {
+Label2surfParamsDict = typing.TypedDict('Label2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/label2surf"]],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -21,7 +21,7 @@ Label2surfParameters = typing.TypedDict('Label2surfParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-Label2surfParametersTagged = typing.TypedDict('Label2surfParametersTagged', {
+Label2surfParamsDictTagged = typing.TypedDict('Label2surfParamsDictTagged', {
     "@type": typing.Literal["fsl/label2surf"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -33,7 +33,7 @@ Label2surfParametersTagged = typing.TypedDict('Label2surfParametersTagged', {
 
 class Label2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Label2surfParameters(...)`.
+    Output object returned when calling `Label2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def label2surf_params(
     labels: InputPathType,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> Label2surfParametersTagged:
+) -> Label2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def label2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2surfParameters` object.
+    `Label2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def label2surf_validate(
 
 
 def label2surf_cargs(
-    params: Label2surfParameters,
+    params: Label2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def label2surf_cargs(
 
 
 def label2surf_outputs(
-    params: Label2surfParameters,
+    params: Label2surfParamsDict,
     execution: Execution,
 ) -> Label2surfOutputs:
     """
@@ -160,7 +160,7 @@ def label2surf_outputs(
 
 
 def label2surf_execute(
-    params: Label2surfParameters,
+    params: Label2surfParamsDict,
     runner: Runner | None = None,
 ) -> Label2surfOutputs:
     """
@@ -228,6 +228,8 @@ def label2surf(
 __all__ = [
     "LABEL2SURF_METADATA",
     "Label2surfOutputs",
+    "Label2surfParamsDict",
+    "Label2surfParamsDictTagged",
     "label2surf",
     "label2surf_execute",
     "label2surf_params",

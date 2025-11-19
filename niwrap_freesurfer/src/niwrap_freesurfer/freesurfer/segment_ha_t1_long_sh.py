@@ -13,12 +13,12 @@ SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
 )
 
 
-SegmentHaT1LongShParameters = typing.TypedDict('SegmentHaT1LongShParameters', {
+SegmentHaT1LongShParamsDict = typing.TypedDict('SegmentHaT1LongShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T1_long.sh"]],
     "subject_dir": str,
     "subject_id": str,
 })
-SegmentHaT1LongShParametersTagged = typing.TypedDict('SegmentHaT1LongShParametersTagged', {
+SegmentHaT1LongShParamsDictTagged = typing.TypedDict('SegmentHaT1LongShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentHA_T1_long.sh"],
     "subject_dir": str,
     "subject_id": str,
@@ -27,7 +27,7 @@ SegmentHaT1LongShParametersTagged = typing.TypedDict('SegmentHaT1LongShParameter
 
 class SegmentHaT1LongShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentHaT1LongShParameters(...)`.
+    Output object returned when calling `SegmentHaT1LongShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class SegmentHaT1LongShOutputs(typing.NamedTuple):
 def segment_ha_t1_long_sh_params(
     subject_dir: str,
     subject_id: str,
-) -> SegmentHaT1LongShParametersTagged:
+) -> SegmentHaT1LongShParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def segment_ha_t1_long_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentHaT1LongShParameters` object.
+    `SegmentHaT1LongShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def segment_ha_t1_long_sh_validate(
 
 
 def segment_ha_t1_long_sh_cargs(
-    params: SegmentHaT1LongShParameters,
+    params: SegmentHaT1LongShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def segment_ha_t1_long_sh_cargs(
 
 
 def segment_ha_t1_long_sh_outputs(
-    params: SegmentHaT1LongShParameters,
+    params: SegmentHaT1LongShParamsDict,
     execution: Execution,
 ) -> SegmentHaT1LongShOutputs:
     """
@@ -119,7 +119,7 @@ def segment_ha_t1_long_sh_outputs(
 
 
 def segment_ha_t1_long_sh_execute(
-    params: SegmentHaT1LongShParameters,
+    params: SegmentHaT1LongShParamsDict,
     runner: Runner | None = None,
 ) -> SegmentHaT1LongShOutputs:
     """
@@ -178,6 +178,8 @@ def segment_ha_t1_long_sh(
 __all__ = [
     "SEGMENT_HA_T1_LONG_SH_METADATA",
     "SegmentHaT1LongShOutputs",
+    "SegmentHaT1LongShParamsDict",
+    "SegmentHaT1LongShParamsDictTagged",
     "segment_ha_t1_long_sh",
     "segment_ha_t1_long_sh_execute",
     "segment_ha_t1_long_sh_params",

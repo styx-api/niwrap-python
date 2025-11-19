@@ -13,7 +13,7 @@ QBOOT_METADATA = Metadata(
 )
 
 
-QbootParameters = typing.TypedDict('QbootParameters', {
+QbootParamsDict = typing.TypedDict('QbootParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/qboot"]],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -37,7 +37,7 @@ QbootParameters = typing.TypedDict('QbootParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-QbootParametersTagged = typing.TypedDict('QbootParametersTagged', {
+QbootParamsDictTagged = typing.TypedDict('QbootParamsDictTagged', {
     "@type": typing.Literal["fsl/qboot"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
@@ -65,7 +65,7 @@ QbootParametersTagged = typing.TypedDict('QbootParametersTagged', {
 
 class QbootOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QbootParameters(...)`.
+    Output object returned when calling `QbootParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def qboot_params(
     savemeancoeff_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> QbootParametersTagged:
+) -> QbootParamsDictTagged:
     """
     Build parameters.
     
@@ -176,7 +176,7 @@ def qboot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QbootParameters` object.
+    `QbootParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -259,7 +259,7 @@ def qboot_validate(
 
 
 def qboot_cargs(
-    params: QbootParameters,
+    params: QbootParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -360,7 +360,7 @@ def qboot_cargs(
 
 
 def qboot_outputs(
-    params: QbootParameters,
+    params: QbootParamsDict,
     execution: Execution,
 ) -> QbootOutputs:
     """
@@ -380,7 +380,7 @@ def qboot_outputs(
 
 
 def qboot_execute(
-    params: QbootParameters,
+    params: QbootParamsDict,
     runner: Runner | None = None,
 ) -> QbootOutputs:
     """
@@ -505,6 +505,8 @@ def qboot(
 __all__ = [
     "QBOOT_METADATA",
     "QbootOutputs",
+    "QbootParamsDict",
+    "QbootParamsDictTagged",
     "qboot",
     "qboot_execute",
     "qboot_params",

@@ -13,12 +13,12 @@ RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubjectShParameters = typing.TypedDict('RunSegmentSubjectShParameters', {
+RunSegmentSubjectShParamsDict = typing.TypedDict('RunSegmentSubjectShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubject.sh"]],
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })
-RunSegmentSubjectShParametersTagged = typing.TypedDict('RunSegmentSubjectShParametersTagged', {
+RunSegmentSubjectShParamsDictTagged = typing.TypedDict('RunSegmentSubjectShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run_SegmentSubject.sh"],
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ RunSegmentSubjectShParametersTagged = typing.TypedDict('RunSegmentSubjectShParam
 
 class RunSegmentSubjectShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunSegmentSubjectShParameters(...)`.
+    Output object returned when calling `RunSegmentSubjectShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class RunSegmentSubjectShOutputs(typing.NamedTuple):
 def run_segment_subject_sh_params(
     deployed_mcrroot: str,
     arguments: str | None = None,
-) -> RunSegmentSubjectShParametersTagged:
+) -> RunSegmentSubjectShParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def run_segment_subject_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunSegmentSubjectShParameters` object.
+    `RunSegmentSubjectShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def run_segment_subject_sh_validate(
 
 
 def run_segment_subject_sh_cargs(
-    params: RunSegmentSubjectShParameters,
+    params: RunSegmentSubjectShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def run_segment_subject_sh_cargs(
 
 
 def run_segment_subject_sh_outputs(
-    params: RunSegmentSubjectShParameters,
+    params: RunSegmentSubjectShParamsDict,
     execution: Execution,
 ) -> RunSegmentSubjectShOutputs:
     """
@@ -122,7 +122,7 @@ def run_segment_subject_sh_outputs(
 
 
 def run_segment_subject_sh_execute(
-    params: RunSegmentSubjectShParameters,
+    params: RunSegmentSubjectShParamsDict,
     runner: Runner | None = None,
 ) -> RunSegmentSubjectShOutputs:
     """
@@ -183,6 +183,8 @@ def run_segment_subject_sh(
 __all__ = [
     "RUN_SEGMENT_SUBJECT_SH_METADATA",
     "RunSegmentSubjectShOutputs",
+    "RunSegmentSubjectShParamsDict",
+    "RunSegmentSubjectShParamsDictTagged",
     "run_segment_subject_sh",
     "run_segment_subject_sh_execute",
     "run_segment_subject_sh_params",

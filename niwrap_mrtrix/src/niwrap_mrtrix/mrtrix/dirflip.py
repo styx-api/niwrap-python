@@ -13,19 +13,19 @@ DIRFLIP_METADATA = Metadata(
 )
 
 
-DirflipConfigParameters = typing.TypedDict('DirflipConfigParameters', {
+DirflipConfigParamsDict = typing.TypedDict('DirflipConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirflipConfigParametersTagged = typing.TypedDict('DirflipConfigParametersTagged', {
+DirflipConfigParamsDictTagged = typing.TypedDict('DirflipConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirflipParameters = typing.TypedDict('DirflipParameters', {
+DirflipParamsDict = typing.TypedDict('DirflipParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirflip"]],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
@@ -34,13 +34,13 @@ DirflipParameters = typing.TypedDict('DirflipParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirflipConfigParameters] | None],
+    "config": typing.NotRequired[list[DirflipConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
     "out": str,
 })
-DirflipParametersTagged = typing.TypedDict('DirflipParametersTagged', {
+DirflipParamsDictTagged = typing.TypedDict('DirflipParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirflip"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
@@ -49,7 +49,7 @@ DirflipParametersTagged = typing.TypedDict('DirflipParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirflipConfigParameters] | None],
+    "config": typing.NotRequired[list[DirflipConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
@@ -57,10 +57,10 @@ DirflipParametersTagged = typing.TypedDict('DirflipParametersTagged', {
 })
 
 
-def dirflip_config_params(
+def dirflip_config(
     key: str,
     value: str,
-) -> DirflipConfigParametersTagged:
+) -> DirflipConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def dirflip_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirflipConfigParameters` object.
+    `DirflipConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def dirflip_config_validate(
 
 
 def dirflip_config_cargs(
-    params: DirflipConfigParameters,
+    params: DirflipConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def dirflip_config_cargs(
 
 class DirflipOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirflipParameters(...)`.
+    Output object returned when calling `DirflipParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def dirflip_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirflipConfigParameters] | None = None,
+    config: list[DirflipConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirflipParametersTagged:
+) -> DirflipParamsDictTagged:
     """
     Build parameters.
     
@@ -194,7 +194,7 @@ def dirflip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirflipParameters` object.
+    `DirflipParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -229,7 +229,7 @@ def dirflip_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirflipConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirflipConfigParamsDict] | None`')
         for e in params["config"]:
             dirflip_config_validate(e)
     if params.get("help", False) is None:
@@ -251,7 +251,7 @@ def dirflip_validate(
 
 
 def dirflip_cargs(
-    params: DirflipParameters,
+    params: DirflipParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -297,7 +297,7 @@ def dirflip_cargs(
 
 
 def dirflip_outputs(
-    params: DirflipParameters,
+    params: DirflipParamsDict,
     execution: Execution,
 ) -> DirflipOutputs:
     """
@@ -317,7 +317,7 @@ def dirflip_outputs(
 
 
 def dirflip_execute(
-    params: DirflipParameters,
+    params: DirflipParamsDict,
     runner: Runner | None = None,
 ) -> DirflipOutputs:
     """
@@ -364,7 +364,7 @@ def dirflip(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirflipConfigParameters] | None = None,
+    config: list[DirflipConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -428,9 +428,13 @@ def dirflip(
 
 __all__ = [
     "DIRFLIP_METADATA",
+    "DirflipConfigParamsDict",
+    "DirflipConfigParamsDictTagged",
     "DirflipOutputs",
+    "DirflipParamsDict",
+    "DirflipParamsDictTagged",
     "dirflip",
-    "dirflip_config_params",
+    "dirflip_config",
     "dirflip_execute",
     "dirflip_params",
 ]

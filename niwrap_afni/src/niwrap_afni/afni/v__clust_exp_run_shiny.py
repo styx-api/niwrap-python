@@ -13,12 +13,12 @@ V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
 )
 
 
-VClustExpRunShinyParameters = typing.TypedDict('VClustExpRunShinyParameters', {
+VClustExpRunShinyParamsDict = typing.TypedDict('VClustExpRunShinyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_run_shiny"]],
     "directory": str,
     "help": bool,
 })
-VClustExpRunShinyParametersTagged = typing.TypedDict('VClustExpRunShinyParametersTagged', {
+VClustExpRunShinyParamsDictTagged = typing.TypedDict('VClustExpRunShinyParamsDictTagged', {
     "@type": typing.Literal["afni/@ClustExp_run_shiny"],
     "directory": str,
     "help": bool,
@@ -27,7 +27,7 @@ VClustExpRunShinyParametersTagged = typing.TypedDict('VClustExpRunShinyParameter
 
 class VClustExpRunShinyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VClustExpRunShinyParameters(...)`.
+    Output object returned when calling `VClustExpRunShinyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VClustExpRunShinyOutputs(typing.NamedTuple):
 def v__clust_exp_run_shiny_params(
     directory: str,
     help_: bool = False,
-) -> VClustExpRunShinyParametersTagged:
+) -> VClustExpRunShinyParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v__clust_exp_run_shiny_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VClustExpRunShinyParameters` object.
+    `VClustExpRunShinyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v__clust_exp_run_shiny_validate(
 
 
 def v__clust_exp_run_shiny_cargs(
-    params: VClustExpRunShinyParameters,
+    params: VClustExpRunShinyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def v__clust_exp_run_shiny_cargs(
 
 
 def v__clust_exp_run_shiny_outputs(
-    params: VClustExpRunShinyParameters,
+    params: VClustExpRunShinyParamsDict,
     execution: Execution,
 ) -> VClustExpRunShinyOutputs:
     """
@@ -117,7 +117,7 @@ def v__clust_exp_run_shiny_outputs(
 
 
 def v__clust_exp_run_shiny_execute(
-    params: VClustExpRunShinyParameters,
+    params: VClustExpRunShinyParamsDict,
     runner: Runner | None = None,
 ) -> VClustExpRunShinyOutputs:
     """
@@ -175,6 +175,8 @@ def v__clust_exp_run_shiny(
 
 __all__ = [
     "VClustExpRunShinyOutputs",
+    "VClustExpRunShinyParamsDict",
+    "VClustExpRunShinyParamsDictTagged",
     "V__CLUST_EXP_RUN_SHINY_METADATA",
     "v__clust_exp_run_shiny",
     "v__clust_exp_run_shiny_execute",

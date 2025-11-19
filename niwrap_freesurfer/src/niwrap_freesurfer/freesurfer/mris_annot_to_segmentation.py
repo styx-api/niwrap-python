@@ -13,7 +13,7 @@ MRIS_ANNOT_TO_SEGMENTATION_METADATA = Metadata(
 )
 
 
-MrisAnnotToSegmentationParameters = typing.TypedDict('MrisAnnotToSegmentationParameters', {
+MrisAnnotToSegmentationParamsDict = typing.TypedDict('MrisAnnotToSegmentationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_annot_to_segmentation"]],
     "subject_name": str,
     "hemi": str,
@@ -22,7 +22,7 @@ MrisAnnotToSegmentationParameters = typing.TypedDict('MrisAnnotToSegmentationPar
     "color_table": InputPathType,
     "output_volume": str,
 })
-MrisAnnotToSegmentationParametersTagged = typing.TypedDict('MrisAnnotToSegmentationParametersTagged', {
+MrisAnnotToSegmentationParamsDictTagged = typing.TypedDict('MrisAnnotToSegmentationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_annot_to_segmentation"],
     "subject_name": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisAnnotToSegmentationParametersTagged = typing.TypedDict('MrisAnnotToSegmentat
 
 class MrisAnnotToSegmentationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAnnotToSegmentationParameters(...)`.
+    Output object returned when calling `MrisAnnotToSegmentationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_annot_to_segmentation_params(
     annot_file: InputPathType,
     color_table: InputPathType,
     output_volume: str,
-) -> MrisAnnotToSegmentationParametersTagged:
+) -> MrisAnnotToSegmentationParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mris_annot_to_segmentation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAnnotToSegmentationParameters` object.
+    `MrisAnnotToSegmentationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def mris_annot_to_segmentation_validate(
 
 
 def mris_annot_to_segmentation_cargs(
-    params: MrisAnnotToSegmentationParameters,
+    params: MrisAnnotToSegmentationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def mris_annot_to_segmentation_cargs(
 
 
 def mris_annot_to_segmentation_outputs(
-    params: MrisAnnotToSegmentationParameters,
+    params: MrisAnnotToSegmentationParamsDict,
     execution: Execution,
 ) -> MrisAnnotToSegmentationOutputs:
     """
@@ -159,7 +159,7 @@ def mris_annot_to_segmentation_outputs(
 
 
 def mris_annot_to_segmentation_execute(
-    params: MrisAnnotToSegmentationParameters,
+    params: MrisAnnotToSegmentationParamsDict,
     runner: Runner | None = None,
 ) -> MrisAnnotToSegmentationOutputs:
     """
@@ -230,6 +230,8 @@ def mris_annot_to_segmentation(
 __all__ = [
     "MRIS_ANNOT_TO_SEGMENTATION_METADATA",
     "MrisAnnotToSegmentationOutputs",
+    "MrisAnnotToSegmentationParamsDict",
+    "MrisAnnotToSegmentationParamsDictTagged",
     "mris_annot_to_segmentation",
     "mris_annot_to_segmentation_execute",
     "mris_annot_to_segmentation_params",

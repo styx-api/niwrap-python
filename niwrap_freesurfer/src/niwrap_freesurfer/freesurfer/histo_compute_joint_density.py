@@ -13,13 +13,13 @@ HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
 )
 
 
-HistoComputeJointDensityParameters = typing.TypedDict('HistoComputeJointDensityParameters', {
+HistoComputeJointDensityParamsDict = typing.TypedDict('HistoComputeJointDensityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/histo_compute_joint_density"]],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "joint_density_file": str,
 })
-HistoComputeJointDensityParametersTagged = typing.TypedDict('HistoComputeJointDensityParametersTagged', {
+HistoComputeJointDensityParamsDictTagged = typing.TypedDict('HistoComputeJointDensityParamsDictTagged', {
     "@type": typing.Literal["freesurfer/histo_compute_joint_density"],
     "volume1": InputPathType,
     "volume2": InputPathType,
@@ -29,7 +29,7 @@ HistoComputeJointDensityParametersTagged = typing.TypedDict('HistoComputeJointDe
 
 class HistoComputeJointDensityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HistoComputeJointDensityParameters(...)`.
+    Output object returned when calling `HistoComputeJointDensityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def histo_compute_joint_density_params(
     volume1: InputPathType,
     volume2: InputPathType,
     joint_density_file: str,
-) -> HistoComputeJointDensityParametersTagged:
+) -> HistoComputeJointDensityParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def histo_compute_joint_density_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HistoComputeJointDensityParameters` object.
+    `HistoComputeJointDensityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def histo_compute_joint_density_validate(
 
 
 def histo_compute_joint_density_cargs(
-    params: HistoComputeJointDensityParameters,
+    params: HistoComputeJointDensityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def histo_compute_joint_density_cargs(
 
 
 def histo_compute_joint_density_outputs(
-    params: HistoComputeJointDensityParameters,
+    params: HistoComputeJointDensityParamsDict,
     execution: Execution,
 ) -> HistoComputeJointDensityOutputs:
     """
@@ -129,7 +129,7 @@ def histo_compute_joint_density_outputs(
 
 
 def histo_compute_joint_density_execute(
-    params: HistoComputeJointDensityParameters,
+    params: HistoComputeJointDensityParamsDict,
     runner: Runner | None = None,
 ) -> HistoComputeJointDensityOutputs:
     """
@@ -191,6 +191,8 @@ def histo_compute_joint_density(
 __all__ = [
     "HISTO_COMPUTE_JOINT_DENSITY_METADATA",
     "HistoComputeJointDensityOutputs",
+    "HistoComputeJointDensityParamsDict",
+    "HistoComputeJointDensityParamsDictTagged",
     "histo_compute_joint_density",
     "histo_compute_joint_density_execute",
     "histo_compute_joint_density_params",

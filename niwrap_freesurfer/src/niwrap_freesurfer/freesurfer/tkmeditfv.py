@@ -13,7 +13,7 @@ TKMEDITFV_METADATA = Metadata(
 )
 
 
-TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
+TkmeditfvParamsDict = typing.TypedDict('TkmeditfvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tkmeditfv"]],
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
@@ -48,7 +48,7 @@ TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
     "use_tkmedit": bool,
     "load_aparc_aseg": bool,
 })
-TkmeditfvParametersTagged = typing.TypedDict('TkmeditfvParametersTagged', {
+TkmeditfvParamsDictTagged = typing.TypedDict('TkmeditfvParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tkmeditfv"],
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
@@ -87,7 +87,7 @@ TkmeditfvParametersTagged = typing.TypedDict('TkmeditfvParametersTagged', {
 
 class TkmeditfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TkmeditfvParameters(...)`.
+    Output object returned when calling `TkmeditfvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def tkmeditfv_params(
     vgl_display: bool = False,
     use_tkmedit: bool = False,
     load_aparc_aseg: bool = False,
-) -> TkmeditfvParametersTagged:
+) -> TkmeditfvParamsDictTagged:
     """
     Build parameters.
     
@@ -224,7 +224,7 @@ def tkmeditfv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TkmeditfvParameters` object.
+    `TkmeditfvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -367,7 +367,7 @@ def tkmeditfv_validate(
 
 
 def tkmeditfv_cargs(
-    params: TkmeditfvParameters,
+    params: TkmeditfvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -487,7 +487,7 @@ def tkmeditfv_cargs(
 
 
 def tkmeditfv_outputs(
-    params: TkmeditfvParameters,
+    params: TkmeditfvParamsDict,
     execution: Execution,
 ) -> TkmeditfvOutputs:
     """
@@ -506,7 +506,7 @@ def tkmeditfv_outputs(
 
 
 def tkmeditfv_execute(
-    params: TkmeditfvParameters,
+    params: TkmeditfvParamsDict,
     runner: Runner | None = None,
 ) -> TkmeditfvOutputs:
     """
@@ -658,6 +658,8 @@ def tkmeditfv(
 __all__ = [
     "TKMEDITFV_METADATA",
     "TkmeditfvOutputs",
+    "TkmeditfvParamsDict",
+    "TkmeditfvParamsDictTagged",
     "tkmeditfv",
     "tkmeditfv_execute",
     "tkmeditfv_params",

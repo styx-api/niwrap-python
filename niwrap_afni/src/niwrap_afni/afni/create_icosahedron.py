@@ -13,7 +13,7 @@ CREATE_ICOSAHEDRON_METADATA = Metadata(
 )
 
 
-CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
+CreateIcosahedronParamsDict = typing.TypedDict('CreateIcosahedronParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/CreateIcosahedron"]],
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
@@ -26,7 +26,7 @@ CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
     "output_prefix": typing.NotRequired[str | None],
     "help": bool,
 })
-CreateIcosahedronParametersTagged = typing.TypedDict('CreateIcosahedronParametersTagged', {
+CreateIcosahedronParamsDictTagged = typing.TypedDict('CreateIcosahedronParamsDictTagged', {
     "@type": typing.Literal["afni/CreateIcosahedron"],
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
@@ -43,7 +43,7 @@ CreateIcosahedronParametersTagged = typing.TypedDict('CreateIcosahedronParameter
 
 class CreateIcosahedronOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateIcosahedronParameters(...)`.
+    Output object returned when calling `CreateIcosahedronParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def create_icosahedron_params(
     to_sphere: bool = False,
     output_prefix: str | None = None,
     help_: bool = False,
-) -> CreateIcosahedronParametersTagged:
+) -> CreateIcosahedronParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def create_icosahedron_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateIcosahedronParameters` object.
+    `CreateIcosahedronParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def create_icosahedron_validate(
 
 
 def create_icosahedron_cargs(
-    params: CreateIcosahedronParameters,
+    params: CreateIcosahedronParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -212,7 +212,7 @@ def create_icosahedron_cargs(
 
 
 def create_icosahedron_outputs(
-    params: CreateIcosahedronParameters,
+    params: CreateIcosahedronParamsDict,
     execution: Execution,
 ) -> CreateIcosahedronOutputs:
     """
@@ -231,7 +231,7 @@ def create_icosahedron_outputs(
 
 
 def create_icosahedron_execute(
-    params: CreateIcosahedronParameters,
+    params: CreateIcosahedronParamsDict,
     runner: Runner | None = None,
 ) -> CreateIcosahedronOutputs:
     """
@@ -316,6 +316,8 @@ def create_icosahedron(
 __all__ = [
     "CREATE_ICOSAHEDRON_METADATA",
     "CreateIcosahedronOutputs",
+    "CreateIcosahedronParamsDict",
+    "CreateIcosahedronParamsDictTagged",
     "create_icosahedron",
     "create_icosahedron_execute",
     "create_icosahedron_params",

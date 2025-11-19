@@ -13,7 +13,7 @@ V__ANIMAL_WARPER_METADATA = Metadata(
 )
 
 
-VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
+VAnimalWarperParamsDict = typing.TypedDict('VAnimalWarperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@animal_warper"]],
     "input_file": InputPathType,
     "base_template": InputPathType,
@@ -50,7 +50,7 @@ VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
     "ok_to_exist": bool,
     "echo": bool,
 })
-VAnimalWarperParametersTagged = typing.TypedDict('VAnimalWarperParametersTagged', {
+VAnimalWarperParamsDictTagged = typing.TypedDict('VAnimalWarperParamsDictTagged', {
     "@type": typing.Literal["afni/@animal_warper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
@@ -91,7 +91,7 @@ VAnimalWarperParametersTagged = typing.TypedDict('VAnimalWarperParametersTagged'
 
 class VAnimalWarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAnimalWarperParameters(...)`.
+    Output object returned when calling `VAnimalWarperParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +145,7 @@ def v__animal_warper_params(
     version: bool = False,
     ok_to_exist: bool = False,
     echo: bool = False,
-) -> VAnimalWarperParametersTagged:
+) -> VAnimalWarperParamsDictTagged:
     """
     Build parameters.
     
@@ -266,7 +266,7 @@ def v__animal_warper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAnimalWarperParameters` object.
+    `VAnimalWarperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -423,7 +423,7 @@ def v__animal_warper_validate(
 
 
 def v__animal_warper_cargs(
-    params: VAnimalWarperParameters,
+    params: VAnimalWarperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -575,7 +575,7 @@ def v__animal_warper_cargs(
 
 
 def v__animal_warper_outputs(
-    params: VAnimalWarperParameters,
+    params: VAnimalWarperParamsDict,
     execution: Execution,
 ) -> VAnimalWarperOutputs:
     """
@@ -600,7 +600,7 @@ def v__animal_warper_outputs(
 
 
 def v__animal_warper_execute(
-    params: VAnimalWarperParameters,
+    params: VAnimalWarperParamsDict,
     runner: Runner | None = None,
 ) -> VAnimalWarperOutputs:
     """
@@ -766,6 +766,8 @@ def v__animal_warper(
 
 __all__ = [
     "VAnimalWarperOutputs",
+    "VAnimalWarperParamsDict",
+    "VAnimalWarperParamsDictTagged",
     "V__ANIMAL_WARPER_METADATA",
     "v__animal_warper",
     "v__animal_warper_execute",

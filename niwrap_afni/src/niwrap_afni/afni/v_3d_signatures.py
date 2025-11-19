@@ -13,7 +13,7 @@ V_3D_SIGNATURES_METADATA = Metadata(
 )
 
 
-V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
+V3dSignaturesParamsDict = typing.TypedDict('V3dSignaturesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSignatures"]],
     "infile": InputPathType,
     "outfile": str,
@@ -22,7 +22,7 @@ V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
     "threshold": typing.NotRequired[float | None],
     "smoothing": typing.NotRequired[float | None],
 })
-V3dSignaturesParametersTagged = typing.TypedDict('V3dSignaturesParametersTagged', {
+V3dSignaturesParamsDictTagged = typing.TypedDict('V3dSignaturesParamsDictTagged', {
     "@type": typing.Literal["afni/3dSignatures"],
     "infile": InputPathType,
     "outfile": str,
@@ -35,7 +35,7 @@ V3dSignaturesParametersTagged = typing.TypedDict('V3dSignaturesParametersTagged'
 
 class V3dSignaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSignaturesParameters(...)`.
+    Output object returned when calling `V3dSignaturesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_signatures_params(
     filter_: bool = False,
     threshold: float | None = None,
     smoothing: float | None = None,
-) -> V3dSignaturesParametersTagged:
+) -> V3dSignaturesParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def v_3d_signatures_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSignaturesParameters` object.
+    `V3dSignaturesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def v_3d_signatures_validate(
 
 
 def v_3d_signatures_cargs(
-    params: V3dSignaturesParameters,
+    params: V3dSignaturesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def v_3d_signatures_cargs(
 
 
 def v_3d_signatures_outputs(
-    params: V3dSignaturesParameters,
+    params: V3dSignaturesParamsDict,
     execution: Execution,
 ) -> V3dSignaturesOutputs:
     """
@@ -172,7 +172,7 @@ def v_3d_signatures_outputs(
 
 
 def v_3d_signatures_execute(
-    params: V3dSignaturesParameters,
+    params: V3dSignaturesParamsDict,
     runner: Runner | None = None,
 ) -> V3dSignaturesOutputs:
     """
@@ -243,6 +243,8 @@ def v_3d_signatures(
 
 __all__ = [
     "V3dSignaturesOutputs",
+    "V3dSignaturesParamsDict",
+    "V3dSignaturesParamsDictTagged",
     "V_3D_SIGNATURES_METADATA",
     "v_3d_signatures",
     "v_3d_signatures_execute",

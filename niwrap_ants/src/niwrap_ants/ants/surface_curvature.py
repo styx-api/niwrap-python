@@ -13,14 +13,14 @@ SURFACE_CURVATURE_METADATA = Metadata(
 )
 
 
-SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
+SurfaceCurvatureParamsDict = typing.TypedDict('SurfaceCurvatureParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SurfaceCurvature"]],
     "filename_in": InputPathType,
     "filename_out": str,
     "sigma": float,
     "option": float,
 })
-SurfaceCurvatureParametersTagged = typing.TypedDict('SurfaceCurvatureParametersTagged', {
+SurfaceCurvatureParamsDictTagged = typing.TypedDict('SurfaceCurvatureParamsDictTagged', {
     "@type": typing.Literal["ants/SurfaceCurvature"],
     "filename_in": InputPathType,
     "filename_out": str,
@@ -31,7 +31,7 @@ SurfaceCurvatureParametersTagged = typing.TypedDict('SurfaceCurvatureParametersT
 
 class SurfaceCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceCurvatureParameters(...)`.
+    Output object returned when calling `SurfaceCurvatureParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def surface_curvature_params(
     filename_out: str,
     sigma: float,
     option: float,
-) -> SurfaceCurvatureParametersTagged:
+) -> SurfaceCurvatureParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def surface_curvature_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceCurvatureParameters` object.
+    `SurfaceCurvatureParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def surface_curvature_validate(
 
 
 def surface_curvature_cargs(
-    params: SurfaceCurvatureParameters,
+    params: SurfaceCurvatureParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def surface_curvature_cargs(
 
 
 def surface_curvature_outputs(
-    params: SurfaceCurvatureParameters,
+    params: SurfaceCurvatureParamsDict,
     execution: Execution,
 ) -> SurfaceCurvatureOutputs:
     """
@@ -140,7 +140,7 @@ def surface_curvature_outputs(
 
 
 def surface_curvature_execute(
-    params: SurfaceCurvatureParameters,
+    params: SurfaceCurvatureParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
@@ -208,6 +208,8 @@ def surface_curvature(
 __all__ = [
     "SURFACE_CURVATURE_METADATA",
     "SurfaceCurvatureOutputs",
+    "SurfaceCurvatureParamsDict",
+    "SurfaceCurvatureParamsDictTagged",
     "surface_curvature",
     "surface_curvature_execute",
     "surface_curvature_params",

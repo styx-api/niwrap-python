@@ -13,13 +13,13 @@ SBTIV_METADATA = Metadata(
 )
 
 
-SbtivParameters = typing.TypedDict('SbtivParameters', {
+SbtivParamsDict = typing.TypedDict('SbtivParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/sbtiv"]],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],
 })
-SbtivParametersTagged = typing.TypedDict('SbtivParametersTagged', {
+SbtivParamsDictTagged = typing.TypedDict('SbtivParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sbtiv"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ SbtivParametersTagged = typing.TypedDict('SbtivParametersTagged', {
 
 class SbtivOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SbtivParameters(...)`.
+    Output object returned when calling `SbtivParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def sbtiv_params(
     input_file: InputPathType,
     output_file: str | None = None,
     labels_file: InputPathType | None = None,
-) -> SbtivParametersTagged:
+) -> SbtivParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def sbtiv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SbtivParameters` object.
+    `SbtivParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def sbtiv_validate(
 
 
 def sbtiv_cargs(
-    params: SbtivParameters,
+    params: SbtivParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def sbtiv_cargs(
 
 
 def sbtiv_outputs(
-    params: SbtivParameters,
+    params: SbtivParamsDict,
     execution: Execution,
 ) -> SbtivOutputs:
     """
@@ -138,7 +138,7 @@ def sbtiv_outputs(
 
 
 def sbtiv_execute(
-    params: SbtivParameters,
+    params: SbtivParamsDict,
     runner: Runner | None = None,
 ) -> SbtivOutputs:
     """
@@ -203,6 +203,8 @@ def sbtiv(
 __all__ = [
     "SBTIV_METADATA",
     "SbtivOutputs",
+    "SbtivParamsDict",
+    "SbtivParamsDictTagged",
     "sbtiv",
     "sbtiv_execute",
     "sbtiv_params",

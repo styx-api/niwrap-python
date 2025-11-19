@@ -6,7 +6,7 @@
     },
     "dynamic": {
       "var_param": "dynamic",
-      "fn_struct_make_params": "tckdfc_dynamic_params",
+      "fn_struct_make_params": "tckdfc_dynamic",
       "properties": {
         "shape": {
           "var_param": "shape"
@@ -48,7 +48,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "tckdfc_config_params",
+      "fn_struct_make_params": "tckdfc_config",
       "properties": {
         "key": {
           "var_param": "key"

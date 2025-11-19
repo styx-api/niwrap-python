@@ -13,7 +13,7 @@ V_1D_TSORT_METADATA = Metadata(
 )
 
 
-V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
+V1dTsortParamsDict = typing.TypedDict('V1dTsortParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dTsort"]],
     "inc_order": bool,
     "dec_order": bool,
@@ -22,7 +22,7 @@ V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
     "imode": bool,
     "infile": InputPathType,
 })
-V1dTsortParametersTagged = typing.TypedDict('V1dTsortParametersTagged', {
+V1dTsortParamsDictTagged = typing.TypedDict('V1dTsortParamsDictTagged', {
     "@type": typing.Literal["afni/1dTsort"],
     "inc_order": bool,
     "dec_order": bool,
@@ -35,7 +35,7 @@ V1dTsortParametersTagged = typing.TypedDict('V1dTsortParametersTagged', {
 
 class V1dTsortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dTsortParameters(...)`.
+    Output object returned when calling `V1dTsortParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v_1d_tsort_params(
     transpose: bool = False,
     column: float | None = None,
     imode: bool = False,
-) -> V1dTsortParametersTagged:
+) -> V1dTsortParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def v_1d_tsort_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dTsortParameters` object.
+    `V1dTsortParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def v_1d_tsort_validate(
 
 
 def v_1d_tsort_cargs(
-    params: V1dTsortParameters,
+    params: V1dTsortParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def v_1d_tsort_cargs(
 
 
 def v_1d_tsort_outputs(
-    params: V1dTsortParameters,
+    params: V1dTsortParamsDict,
     execution: Execution,
 ) -> V1dTsortOutputs:
     """
@@ -166,7 +166,7 @@ def v_1d_tsort_outputs(
 
 
 def v_1d_tsort_execute(
-    params: V1dTsortParameters,
+    params: V1dTsortParamsDict,
     runner: Runner | None = None,
 ) -> V1dTsortOutputs:
     """
@@ -238,6 +238,8 @@ def v_1d_tsort(
 
 __all__ = [
     "V1dTsortOutputs",
+    "V1dTsortParamsDict",
+    "V1dTsortParamsDictTagged",
     "V_1D_TSORT_METADATA",
     "v_1d_tsort",
     "v_1d_tsort_execute",

@@ -13,14 +13,14 @@ FFTEST_METADATA = Metadata(
 )
 
 
-FftestParameters = typing.TypedDict('FftestParameters', {
+FftestParamsDict = typing.TypedDict('FftestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fftest"]],
     "length": float,
     "num_tests": float,
     "vector_size": float,
     "quiet_mode": bool,
 })
-FftestParametersTagged = typing.TypedDict('FftestParametersTagged', {
+FftestParamsDictTagged = typing.TypedDict('FftestParamsDictTagged', {
     "@type": typing.Literal["afni/fftest"],
     "length": float,
     "num_tests": float,
@@ -31,7 +31,7 @@ FftestParametersTagged = typing.TypedDict('FftestParametersTagged', {
 
 class FftestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FftestParameters(...)`.
+    Output object returned when calling `FftestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def fftest_params(
     num_tests: float,
     vector_size: float,
     quiet_mode: bool = False,
-) -> FftestParametersTagged:
+) -> FftestParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def fftest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FftestParameters` object.
+    `FftestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def fftest_validate(
 
 
 def fftest_cargs(
-    params: FftestParameters,
+    params: FftestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def fftest_cargs(
 
 
 def fftest_outputs(
-    params: FftestParameters,
+    params: FftestParamsDict,
     execution: Execution,
 ) -> FftestOutputs:
     """
@@ -137,7 +137,7 @@ def fftest_outputs(
 
 
 def fftest_execute(
-    params: FftestParameters,
+    params: FftestParamsDict,
     runner: Runner | None = None,
 ) -> FftestOutputs:
     """
@@ -202,6 +202,8 @@ def fftest(
 __all__ = [
     "FFTEST_METADATA",
     "FftestOutputs",
+    "FftestParamsDict",
+    "FftestParamsDictTagged",
     "fftest",
     "fftest_execute",
     "fftest_params",

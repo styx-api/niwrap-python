@@ -13,7 +13,7 @@ DJPEG_METADATA = Metadata(
 )
 
 
-DjpegParameters = typing.TypedDict('DjpegParameters', {
+DjpegParamsDict = typing.TypedDict('DjpegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/djpeg"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -23,7 +23,7 @@ DjpegParameters = typing.TypedDict('DjpegParameters', {
     "pseudo_pixel_ratio": bool,
     "crop_region": typing.NotRequired[str | None],
 })
-DjpegParametersTagged = typing.TypedDict('DjpegParametersTagged', {
+DjpegParamsDictTagged = typing.TypedDict('DjpegParamsDictTagged', {
     "@type": typing.Literal["afni/djpeg"],
     "input_file": InputPathType,
     "output_file": str,
@@ -37,7 +37,7 @@ DjpegParametersTagged = typing.TypedDict('DjpegParametersTagged', {
 
 class DjpegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DjpegParameters(...)`.
+    Output object returned when calling `DjpegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def djpeg_params(
     one_pixel_height: bool = False,
     pseudo_pixel_ratio: bool = False,
     crop_region: str | None = None,
-) -> DjpegParametersTagged:
+) -> DjpegParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def djpeg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DjpegParameters` object.
+    `DjpegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def djpeg_validate(
 
 
 def djpeg_cargs(
-    params: DjpegParameters,
+    params: DjpegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def djpeg_cargs(
 
 
 def djpeg_outputs(
-    params: DjpegParameters,
+    params: DjpegParamsDict,
     execution: Execution,
 ) -> DjpegOutputs:
     """
@@ -177,7 +177,7 @@ def djpeg_outputs(
 
 
 def djpeg_execute(
-    params: DjpegParameters,
+    params: DjpegParamsDict,
     runner: Runner | None = None,
 ) -> DjpegOutputs:
     """
@@ -251,6 +251,8 @@ def djpeg(
 __all__ = [
     "DJPEG_METADATA",
     "DjpegOutputs",
+    "DjpegParamsDict",
+    "DjpegParamsDictTagged",
     "djpeg",
     "djpeg_execute",
     "djpeg_params",

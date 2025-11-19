@@ -12,58 +12,58 @@ LABEL_MERGE_METADATA = Metadata(
 )
 
 
-LabelMergeUpToParameters = typing.TypedDict('LabelMergeUpToParameters', {
+LabelMergeUpToParamsDict = typing.TypedDict('LabelMergeUpToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["up-to"]],
     "last-column": str,
     "reverse": bool,
 })
-LabelMergeUpToParametersTagged = typing.TypedDict('LabelMergeUpToParametersTagged', {
+LabelMergeUpToParamsDictTagged = typing.TypedDict('LabelMergeUpToParamsDictTagged', {
     "@type": typing.Literal["up-to"],
     "last-column": str,
     "reverse": bool,
 })
 
 
-LabelMergeColumnParameters = typing.TypedDict('LabelMergeColumnParameters', {
+LabelMergeColumnParamsDict = typing.TypedDict('LabelMergeColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "column": str,
-    "up-to": typing.NotRequired[LabelMergeUpToParameters | None],
+    "up-to": typing.NotRequired[LabelMergeUpToParamsDict | None],
 })
-LabelMergeColumnParametersTagged = typing.TypedDict('LabelMergeColumnParametersTagged', {
+LabelMergeColumnParamsDictTagged = typing.TypedDict('LabelMergeColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "column": str,
-    "up-to": typing.NotRequired[LabelMergeUpToParameters | None],
+    "up-to": typing.NotRequired[LabelMergeUpToParamsDict | None],
 })
 
 
-LabelMergeLabelParameters = typing.TypedDict('LabelMergeLabelParameters', {
+LabelMergeLabelParamsDict = typing.TypedDict('LabelMergeLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "label-in": InputPathType,
-    "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
+    "column": typing.NotRequired[list[LabelMergeColumnParamsDict] | None],
 })
-LabelMergeLabelParametersTagged = typing.TypedDict('LabelMergeLabelParametersTagged', {
+LabelMergeLabelParamsDictTagged = typing.TypedDict('LabelMergeLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "label-in": InputPathType,
-    "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
+    "column": typing.NotRequired[list[LabelMergeColumnParamsDict] | None],
 })
 
 
-LabelMergeParameters = typing.TypedDict('LabelMergeParameters', {
+LabelMergeParamsDict = typing.TypedDict('LabelMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-merge"]],
     "label-out": str,
-    "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
+    "label": typing.NotRequired[list[LabelMergeLabelParamsDict] | None],
 })
-LabelMergeParametersTagged = typing.TypedDict('LabelMergeParametersTagged', {
+LabelMergeParamsDictTagged = typing.TypedDict('LabelMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/label-merge"],
     "label-out": str,
-    "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
+    "label": typing.NotRequired[list[LabelMergeLabelParamsDict] | None],
 })
 
 
-def label_merge_up_to_params(
+def label_merge_up_to(
     last_column: str,
     reverse: bool = False,
-) -> LabelMergeUpToParametersTagged:
+) -> LabelMergeUpToParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def label_merge_up_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelMergeUpToParameters` object.
+    `LabelMergeUpToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def label_merge_up_to_validate(
 
 
 def label_merge_up_to_cargs(
-    params: LabelMergeUpToParameters,
+    params: LabelMergeUpToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,10 +126,10 @@ def label_merge_up_to_cargs(
     return cargs
 
 
-def label_merge_column_params(
+def label_merge_column(
     column: str,
-    up_to: LabelMergeUpToParameters | None = None,
-) -> LabelMergeColumnParametersTagged:
+    up_to: LabelMergeUpToParamsDict | None = None,
+) -> LabelMergeColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def label_merge_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelMergeColumnParameters` object.
+    `LabelMergeColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def label_merge_column_validate(
 
 
 def label_merge_column_cargs(
-    params: LabelMergeColumnParameters,
+    params: LabelMergeColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,10 +191,10 @@ def label_merge_column_cargs(
     return cargs
 
 
-def label_merge_label_params(
+def label_merge_label(
     label_in: InputPathType,
-    column: list[LabelMergeColumnParameters] | None = None,
-) -> LabelMergeLabelParametersTagged:
+    column: list[LabelMergeColumnParamsDict] | None = None,
+) -> LabelMergeLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def label_merge_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelMergeLabelParameters` object.
+    `LabelMergeLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,13 +231,13 @@ def label_merge_label_validate(
         raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[LabelMergeColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[LabelMergeColumnParamsDict] | None`')
         for e in params["column"]:
             label_merge_column_validate(e)
 
 
 def label_merge_label_cargs(
-    params: LabelMergeLabelParameters,
+    params: LabelMergeLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def label_merge_label_cargs(
 
 class LabelMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelMergeParameters(...)`.
+    Output object returned when calling `LabelMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -271,8 +271,8 @@ class LabelMergeOutputs(typing.NamedTuple):
 
 def label_merge_params(
     label_out: str,
-    label: list[LabelMergeLabelParameters] | None = None,
-) -> LabelMergeParametersTagged:
+    label: list[LabelMergeLabelParamsDict] | None = None,
+) -> LabelMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -296,7 +296,7 @@ def label_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelMergeParameters` object.
+    `LabelMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -309,13 +309,13 @@ def label_merge_validate(
         raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[LabelMergeLabelParameters] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[LabelMergeLabelParamsDict] | None`')
         for e in params["label"]:
             label_merge_label_validate(e)
 
 
 def label_merge_cargs(
-    params: LabelMergeParameters,
+    params: LabelMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def label_merge_cargs(
 
 
 def label_merge_outputs(
-    params: LabelMergeParameters,
+    params: LabelMergeParamsDict,
     execution: Execution,
 ) -> LabelMergeOutputs:
     """
@@ -359,7 +359,7 @@ def label_merge_outputs(
 
 
 def label_merge_execute(
-    params: LabelMergeParameters,
+    params: LabelMergeParamsDict,
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
@@ -393,7 +393,7 @@ def label_merge_execute(
 
 def label_merge(
     label_out: str,
-    label: list[LabelMergeLabelParameters] | None = None,
+    label: list[LabelMergeLabelParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
@@ -425,11 +425,19 @@ def label_merge(
 
 __all__ = [
     "LABEL_MERGE_METADATA",
+    "LabelMergeColumnParamsDict",
+    "LabelMergeColumnParamsDictTagged",
+    "LabelMergeLabelParamsDict",
+    "LabelMergeLabelParamsDictTagged",
     "LabelMergeOutputs",
+    "LabelMergeParamsDict",
+    "LabelMergeParamsDictTagged",
+    "LabelMergeUpToParamsDict",
+    "LabelMergeUpToParamsDictTagged",
     "label_merge",
-    "label_merge_column_params",
+    "label_merge_column",
     "label_merge_execute",
-    "label_merge_label_params",
+    "label_merge_label",
     "label_merge_params",
-    "label_merge_up_to_params",
+    "label_merge_up_to",
 ]

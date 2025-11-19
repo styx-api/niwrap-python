@@ -13,7 +13,7 @@ V_3DINFO_METADATA = Metadata(
 )
 
 
-V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
+V3dinfoParamsDict = typing.TypedDict('V3dinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dinfo"]],
     "orient": bool,
     "Lextent": bool,
@@ -129,7 +129,7 @@ V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
     "monog_pairs": bool,
     "dataset": list[InputPathType],
 })
-V3dinfoParametersTagged = typing.TypedDict('V3dinfoParametersTagged', {
+V3dinfoParamsDictTagged = typing.TypedDict('V3dinfoParamsDictTagged', {
     "@type": typing.Literal["afni/3dinfo"],
     "orient": bool,
     "Lextent": bool,
@@ -249,7 +249,7 @@ V3dinfoParametersTagged = typing.TypedDict('V3dinfoParametersTagged', {
 
 class V3dinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dinfoParameters(...)`.
+    Output object returned when calling `V3dinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -371,7 +371,7 @@ def v_3dinfo_params(
     val_diff: bool = False,
     sval_diff: bool = False,
     monog_pairs: bool = False,
-) -> V3dinfoParametersTagged:
+) -> V3dinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -654,7 +654,7 @@ def v_3dinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dinfoParameters` object.
+    `V3dinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1113,7 +1113,7 @@ def v_3dinfo_validate(
 
 
 def v_3dinfo_cargs(
-    params: V3dinfoParameters,
+    params: V3dinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1374,7 +1374,7 @@ def v_3dinfo_cargs(
 
 
 def v_3dinfo_outputs(
-    params: V3dinfoParameters,
+    params: V3dinfoParamsDict,
     execution: Execution,
 ) -> V3dinfoOutputs:
     """
@@ -1394,7 +1394,7 @@ def v_3dinfo_outputs(
 
 
 def v_3dinfo_execute(
-    params: V3dinfoParameters,
+    params: V3dinfoParamsDict,
     runner: Runner | None = None,
 ) -> V3dinfoOutputs:
     """
@@ -1817,6 +1817,8 @@ def v_3dinfo(
 
 __all__ = [
     "V3dinfoOutputs",
+    "V3dinfoParamsDict",
+    "V3dinfoParamsDictTagged",
     "V_3DINFO_METADATA",
     "v_3dinfo",
     "v_3dinfo_execute",

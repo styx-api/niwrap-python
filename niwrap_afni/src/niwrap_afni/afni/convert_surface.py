@@ -13,7 +13,7 @@ CONVERT_SURFACE_METADATA = Metadata(
 )
 
 
-ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
+ConvertSurfaceParamsDict = typing.TypedDict('ConvertSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ConvertSurface"]],
     "input_surface": str,
     "output_surface": str,
@@ -26,7 +26,7 @@ ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
     "seed": typing.NotRequired[str | None],
     "native": bool,
 })
-ConvertSurfaceParametersTagged = typing.TypedDict('ConvertSurfaceParametersTagged', {
+ConvertSurfaceParamsDictTagged = typing.TypedDict('ConvertSurfaceParamsDictTagged', {
     "@type": typing.Literal["afni/ConvertSurface"],
     "input_surface": str,
     "output_surface": str,
@@ -43,7 +43,7 @@ ConvertSurfaceParametersTagged = typing.TypedDict('ConvertSurfaceParametersTagge
 
 class ConvertSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertSurfaceParameters(...)`.
+    Output object returned when calling `ConvertSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def convert_surface_params(
     ixmat_1_d: str | None = None,
     seed: str | None = None,
     native: bool = False,
-) -> ConvertSurfaceParametersTagged:
+) -> ConvertSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def convert_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertSurfaceParameters` object.
+    `ConvertSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def convert_surface_validate(
 
 
 def convert_surface_cargs(
-    params: ConvertSurfaceParameters,
+    params: ConvertSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def convert_surface_cargs(
 
 
 def convert_surface_outputs(
-    params: ConvertSurfaceParameters,
+    params: ConvertSurfaceParamsDict,
     execution: Execution,
 ) -> ConvertSurfaceOutputs:
     """
@@ -227,7 +227,7 @@ def convert_surface_outputs(
 
 
 def convert_surface_execute(
-    params: ConvertSurfaceParameters,
+    params: ConvertSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> ConvertSurfaceOutputs:
     """
@@ -314,6 +314,8 @@ def convert_surface(
 __all__ = [
     "CONVERT_SURFACE_METADATA",
     "ConvertSurfaceOutputs",
+    "ConvertSurfaceParamsDict",
+    "ConvertSurfaceParamsDictTagged",
     "convert_surface",
     "convert_surface_execute",
     "convert_surface_params",

@@ -13,12 +13,12 @@ RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA = Metadata(
 )
 
 
-RunSegmentSubfieldsT1LongitudinalShParameters = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParameters', {
+RunSegmentSubfieldsT1LongitudinalShParamsDict = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubfieldsT1Longitudinal.sh"]],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
-RunSegmentSubfieldsT1LongitudinalShParametersTagged = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParametersTagged', {
+RunSegmentSubfieldsT1LongitudinalShParamsDictTagged = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/run_SegmentSubfieldsT1Longitudinal.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ RunSegmentSubfieldsT1LongitudinalShParametersTagged = typing.TypedDict('RunSegme
 
 class RunSegmentSubfieldsT1LongitudinalShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunSegmentSubfieldsT1LongitudinalShParameters(...)`.
+    Output object returned when calling `RunSegmentSubfieldsT1LongitudinalShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class RunSegmentSubfieldsT1LongitudinalShOutputs(typing.NamedTuple):
 def run_segment_subfields_t1_longitudinal_sh_params(
     deployed_mcr_root: str,
     additional_args: str | None = None,
-) -> RunSegmentSubfieldsT1LongitudinalShParametersTagged:
+) -> RunSegmentSubfieldsT1LongitudinalShParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def run_segment_subfields_t1_longitudinal_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunSegmentSubfieldsT1LongitudinalShParameters` object.
+    `RunSegmentSubfieldsT1LongitudinalShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def run_segment_subfields_t1_longitudinal_sh_validate(
 
 
 def run_segment_subfields_t1_longitudinal_sh_cargs(
-    params: RunSegmentSubfieldsT1LongitudinalShParameters,
+    params: RunSegmentSubfieldsT1LongitudinalShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def run_segment_subfields_t1_longitudinal_sh_cargs(
 
 
 def run_segment_subfields_t1_longitudinal_sh_outputs(
-    params: RunSegmentSubfieldsT1LongitudinalShParameters,
+    params: RunSegmentSubfieldsT1LongitudinalShParamsDict,
     execution: Execution,
 ) -> RunSegmentSubfieldsT1LongitudinalShOutputs:
     """
@@ -118,7 +118,7 @@ def run_segment_subfields_t1_longitudinal_sh_outputs(
 
 
 def run_segment_subfields_t1_longitudinal_sh_execute(
-    params: RunSegmentSubfieldsT1LongitudinalShParameters,
+    params: RunSegmentSubfieldsT1LongitudinalShParamsDict,
     runner: Runner | None = None,
 ) -> RunSegmentSubfieldsT1LongitudinalShOutputs:
     """
@@ -180,6 +180,8 @@ def run_segment_subfields_t1_longitudinal_sh(
 __all__ = [
     "RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA",
     "RunSegmentSubfieldsT1LongitudinalShOutputs",
+    "RunSegmentSubfieldsT1LongitudinalShParamsDict",
+    "RunSegmentSubfieldsT1LongitudinalShParamsDictTagged",
     "run_segment_subfields_t1_longitudinal_sh",
     "run_segment_subfields_t1_longitudinal_sh_execute",
     "run_segment_subfields_t1_longitudinal_sh_params",

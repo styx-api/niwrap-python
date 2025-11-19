@@ -13,12 +13,12 @@ FSLVAL_METADATA = Metadata(
 )
 
 
-FslvalParameters = typing.TypedDict('FslvalParameters', {
+FslvalParamsDict = typing.TypedDict('FslvalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslval"]],
     "input_file": InputPathType,
     "keyword": str,
 })
-FslvalParametersTagged = typing.TypedDict('FslvalParametersTagged', {
+FslvalParamsDictTagged = typing.TypedDict('FslvalParamsDictTagged', {
     "@type": typing.Literal["fsl/fslval"],
     "input_file": InputPathType,
     "keyword": str,
@@ -27,7 +27,7 @@ FslvalParametersTagged = typing.TypedDict('FslvalParametersTagged', {
 
 class FslvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslvalParameters(...)`.
+    Output object returned when calling `FslvalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FslvalOutputs(typing.NamedTuple):
 def fslval_params(
     input_file: InputPathType,
     keyword_: str,
-) -> FslvalParametersTagged:
+) -> FslvalParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def fslval_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslvalParameters` object.
+    `FslvalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fslval_validate(
 
 
 def fslval_cargs(
-    params: FslvalParameters,
+    params: FslvalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def fslval_cargs(
 
 
 def fslval_outputs(
-    params: FslvalParameters,
+    params: FslvalParamsDict,
     execution: Execution,
 ) -> FslvalOutputs:
     """
@@ -119,7 +119,7 @@ def fslval_outputs(
 
 
 def fslval_execute(
-    params: FslvalParameters,
+    params: FslvalParamsDict,
     runner: Runner | None = None,
 ) -> FslvalOutputs:
     """
@@ -178,6 +178,8 @@ def fslval(
 __all__ = [
     "FSLVAL_METADATA",
     "FslvalOutputs",
+    "FslvalParamsDict",
+    "FslvalParamsDictTagged",
     "fslval",
     "fslval_execute",
     "fslval_params",

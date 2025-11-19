@@ -13,13 +13,13 @@ V__DJUNCT_DWI_SELECTOR_TCSH_METADATA = Metadata(
 )
 
 
-VDjunctDwiSelectorTcshParameters = typing.TypedDict('VDjunctDwiSelectorTcshParameters', {
+VDjunctDwiSelectorTcshParamsDict = typing.TypedDict('VDjunctDwiSelectorTcshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_dwi_selector.tcsh"]],
     "dwi": InputPathType,
     "png": InputPathType,
     "outfile": str,
 })
-VDjunctDwiSelectorTcshParametersTagged = typing.TypedDict('VDjunctDwiSelectorTcshParametersTagged', {
+VDjunctDwiSelectorTcshParamsDictTagged = typing.TypedDict('VDjunctDwiSelectorTcshParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_dwi_selector.tcsh"],
     "dwi": InputPathType,
     "png": InputPathType,
@@ -29,7 +29,7 @@ VDjunctDwiSelectorTcshParametersTagged = typing.TypedDict('VDjunctDwiSelectorTcs
 
 class VDjunctDwiSelectorTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctDwiSelectorTcshParameters(...)`.
+    Output object returned when calling `VDjunctDwiSelectorTcshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v__djunct_dwi_selector_tcsh_params(
     dwi: InputPathType,
     png: InputPathType,
     outfile: str,
-) -> VDjunctDwiSelectorTcshParametersTagged:
+) -> VDjunctDwiSelectorTcshParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def v__djunct_dwi_selector_tcsh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctDwiSelectorTcshParameters` object.
+    `VDjunctDwiSelectorTcshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def v__djunct_dwi_selector_tcsh_validate(
 
 
 def v__djunct_dwi_selector_tcsh_cargs(
-    params: VDjunctDwiSelectorTcshParameters,
+    params: VDjunctDwiSelectorTcshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def v__djunct_dwi_selector_tcsh_cargs(
 
 
 def v__djunct_dwi_selector_tcsh_outputs(
-    params: VDjunctDwiSelectorTcshParameters,
+    params: VDjunctDwiSelectorTcshParamsDict,
     execution: Execution,
 ) -> VDjunctDwiSelectorTcshOutputs:
     """
@@ -129,7 +129,7 @@ def v__djunct_dwi_selector_tcsh_outputs(
 
 
 def v__djunct_dwi_selector_tcsh_execute(
-    params: VDjunctDwiSelectorTcshParameters,
+    params: VDjunctDwiSelectorTcshParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctDwiSelectorTcshOutputs:
     """
@@ -190,6 +190,8 @@ def v__djunct_dwi_selector_tcsh(
 
 __all__ = [
     "VDjunctDwiSelectorTcshOutputs",
+    "VDjunctDwiSelectorTcshParamsDict",
+    "VDjunctDwiSelectorTcshParamsDictTagged",
     "V__DJUNCT_DWI_SELECTOR_TCSH_METADATA",
     "v__djunct_dwi_selector_tcsh",
     "v__djunct_dwi_selector_tcsh_execute",

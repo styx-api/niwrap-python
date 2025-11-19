@@ -13,12 +13,12 @@ AFF2RIGID_METADATA = Metadata(
 )
 
 
-Aff2rigidParameters = typing.TypedDict('Aff2rigidParameters', {
+Aff2rigidParamsDict = typing.TypedDict('Aff2rigidParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/aff2rigid"]],
     "input_transform": InputPathType,
     "output_transform": str,
 })
-Aff2rigidParametersTagged = typing.TypedDict('Aff2rigidParametersTagged', {
+Aff2rigidParamsDictTagged = typing.TypedDict('Aff2rigidParamsDictTagged', {
     "@type": typing.Literal["fsl/aff2rigid"],
     "input_transform": InputPathType,
     "output_transform": str,
@@ -27,7 +27,7 @@ Aff2rigidParametersTagged = typing.TypedDict('Aff2rigidParametersTagged', {
 
 class Aff2rigidOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Aff2rigidParameters(...)`.
+    Output object returned when calling `Aff2rigidParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class Aff2rigidOutputs(typing.NamedTuple):
 def aff2rigid_params(
     input_transform: InputPathType,
     output_transform: str,
-) -> Aff2rigidParametersTagged:
+) -> Aff2rigidParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def aff2rigid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Aff2rigidParameters` object.
+    `Aff2rigidParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def aff2rigid_validate(
 
 
 def aff2rigid_cargs(
-    params: Aff2rigidParameters,
+    params: Aff2rigidParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def aff2rigid_cargs(
 
 
 def aff2rigid_outputs(
-    params: Aff2rigidParameters,
+    params: Aff2rigidParamsDict,
     execution: Execution,
 ) -> Aff2rigidOutputs:
     """
@@ -118,7 +118,7 @@ def aff2rigid_outputs(
 
 
 def aff2rigid_execute(
-    params: Aff2rigidParameters,
+    params: Aff2rigidParamsDict,
     runner: Runner | None = None,
 ) -> Aff2rigidOutputs:
     """
@@ -179,6 +179,8 @@ def aff2rigid(
 __all__ = [
     "AFF2RIGID_METADATA",
     "Aff2rigidOutputs",
+    "Aff2rigidParamsDict",
+    "Aff2rigidParamsDictTagged",
     "aff2rigid",
     "aff2rigid_execute",
     "aff2rigid_params",

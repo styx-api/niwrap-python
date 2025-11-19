@@ -13,31 +13,31 @@ SS3T_CSD_BETA1_METADATA = Metadata(
 )
 
 
-Ss3tCsdBeta1ConfigParameters = typing.TypedDict('Ss3tCsdBeta1ConfigParameters', {
+Ss3tCsdBeta1ConfigParamsDict = typing.TypedDict('Ss3tCsdBeta1ConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Ss3tCsdBeta1ConfigParametersTagged = typing.TypedDict('Ss3tCsdBeta1ConfigParametersTagged', {
+Ss3tCsdBeta1ConfigParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1ConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Ss3tCsdBeta1ResponseOdfParameters = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParameters', {
+Ss3tCsdBeta1ResponseOdfParamsDict = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["response_odf"]],
     "response": InputPathType,
     "odf": str,
 })
-Ss3tCsdBeta1ResponseOdfParametersTagged = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParametersTagged', {
+Ss3tCsdBeta1ResponseOdfParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParamsDictTagged', {
     "@type": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
-Ss3tCsdBeta1Parameters = typing.TypedDict('Ss3tCsdBeta1Parameters', {
+Ss3tCsdBeta1ParamsDict = typing.TypedDict('Ss3tCsdBeta1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix3tissue/ss3t_csd_beta1"]],
     "mask": typing.NotRequired[InputPathType | None],
     "bzero_pct": typing.NotRequired[float | None],
@@ -47,13 +47,13 @@ Ss3tCsdBeta1Parameters = typing.TypedDict('Ss3tCsdBeta1Parameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Ss3tCsdBeta1ConfigParameters] | None],
+    "config": typing.NotRequired[list[Ss3tCsdBeta1ConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
-    "response_odf": list[Ss3tCsdBeta1ResponseOdfParameters],
+    "response_odf": list[Ss3tCsdBeta1ResponseOdfParamsDict],
 })
-Ss3tCsdBeta1ParametersTagged = typing.TypedDict('Ss3tCsdBeta1ParametersTagged', {
+Ss3tCsdBeta1ParamsDictTagged = typing.TypedDict('Ss3tCsdBeta1ParamsDictTagged', {
     "@type": typing.Literal["mrtrix3tissue/ss3t_csd_beta1"],
     "mask": typing.NotRequired[InputPathType | None],
     "bzero_pct": typing.NotRequired[float | None],
@@ -63,18 +63,18 @@ Ss3tCsdBeta1ParametersTagged = typing.TypedDict('Ss3tCsdBeta1ParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Ss3tCsdBeta1ConfigParameters] | None],
+    "config": typing.NotRequired[list[Ss3tCsdBeta1ConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
-    "response_odf": list[Ss3tCsdBeta1ResponseOdfParameters],
+    "response_odf": list[Ss3tCsdBeta1ResponseOdfParamsDict],
 })
 
 
-def ss3t_csd_beta1_config_params(
+def ss3t_csd_beta1_config(
     key: str,
     value: str,
-) -> Ss3tCsdBeta1ConfigParametersTagged:
+) -> Ss3tCsdBeta1ConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def ss3t_csd_beta1_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Ss3tCsdBeta1ConfigParameters` object.
+    `Ss3tCsdBeta1ConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def ss3t_csd_beta1_config_validate(
 
 
 def ss3t_csd_beta1_config_cargs(
-    params: Ss3tCsdBeta1ConfigParameters,
+    params: Ss3tCsdBeta1ConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def ss3t_csd_beta1_config_cargs(
 
 class Ss3tCsdBeta1ResponseOdfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[Ss3tCsdBeta1ResponseOdfParameters](...)`.
+    Output object returned when calling `list[Ss3tCsdBeta1ResponseOdfParamsDict](...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,10 +144,10 @@ class Ss3tCsdBeta1ResponseOdfOutputs(typing.NamedTuple):
     """output ODF image"""
 
 
-def ss3t_csd_beta1_response_odf_params(
+def ss3t_csd_beta1_response_odf(
     response: InputPathType,
     odf: str,
-) -> Ss3tCsdBeta1ResponseOdfParametersTagged:
+) -> Ss3tCsdBeta1ResponseOdfParamsDictTagged:
     """
     Build parameters.
     
@@ -170,7 +170,7 @@ def ss3t_csd_beta1_response_odf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Ss3tCsdBeta1ResponseOdfParameters` object.
+    `Ss3tCsdBeta1ResponseOdfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -188,7 +188,7 @@ def ss3t_csd_beta1_response_odf_validate(
 
 
 def ss3t_csd_beta1_response_odf_cargs(
-    params: Ss3tCsdBeta1ResponseOdfParameters,
+    params: Ss3tCsdBeta1ResponseOdfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def ss3t_csd_beta1_response_odf_cargs(
 
 
 def ss3t_csd_beta1_response_odf_outputs(
-    params: Ss3tCsdBeta1ResponseOdfParameters,
+    params: Ss3tCsdBeta1ResponseOdfParamsDict,
     execution: Execution,
 ) -> Ss3tCsdBeta1ResponseOdfOutputs:
     """
@@ -228,7 +228,7 @@ def ss3t_csd_beta1_response_odf_outputs(
 
 class Ss3tCsdBeta1Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Ss3tCsdBeta1Parameters(...)`.
+    Output object returned when calling `Ss3tCsdBeta1ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -239,7 +239,7 @@ class Ss3tCsdBeta1Outputs(typing.NamedTuple):
 
 def ss3t_csd_beta1_params(
     dwi: InputPathType,
-    response_odf: list[Ss3tCsdBeta1ResponseOdfParameters],
+    response_odf: list[Ss3tCsdBeta1ResponseOdfParamsDict],
     mask: InputPathType | None = None,
     bzero_pct: float | None = None,
     niter: int | None = None,
@@ -248,10 +248,10 @@ def ss3t_csd_beta1_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Ss3tCsdBeta1ConfigParameters] | None = None,
+    config: list[Ss3tCsdBeta1ConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Ss3tCsdBeta1ParametersTagged:
+) -> Ss3tCsdBeta1ParamsDictTagged:
     """
     Build parameters.
     
@@ -309,7 +309,7 @@ def ss3t_csd_beta1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Ss3tCsdBeta1Parameters` object.
+    `Ss3tCsdBeta1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -346,7 +346,7 @@ def ss3t_csd_beta1_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Ss3tCsdBeta1ConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Ss3tCsdBeta1ConfigParamsDict] | None`')
         for e in params["config"]:
             ss3t_csd_beta1_config_validate(e)
     if params.get("help", False) is None:
@@ -364,13 +364,13 @@ def ss3t_csd_beta1_validate(
     if params.get("response_odf", None) is None:
         raise StyxValidationError("`response_odf` must not be None")
     if not isinstance(params["response_odf"], list):
-        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Ss3tCsdBeta1ResponseOdfParameters]`')
+        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Ss3tCsdBeta1ResponseOdfParamsDict]`')
     for e in params["response_odf"]:
         ss3t_csd_beta1_response_odf_validate(e)
 
 
 def ss3t_csd_beta1_cargs(
-    params: Ss3tCsdBeta1Parameters,
+    params: Ss3tCsdBeta1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -424,7 +424,7 @@ def ss3t_csd_beta1_cargs(
 
 
 def ss3t_csd_beta1_outputs(
-    params: Ss3tCsdBeta1Parameters,
+    params: Ss3tCsdBeta1ParamsDict,
     execution: Execution,
 ) -> Ss3tCsdBeta1Outputs:
     """
@@ -444,7 +444,7 @@ def ss3t_csd_beta1_outputs(
 
 
 def ss3t_csd_beta1_execute(
-    params: Ss3tCsdBeta1Parameters,
+    params: Ss3tCsdBeta1ParamsDict,
     runner: Runner | None = None,
 ) -> Ss3tCsdBeta1Outputs:
     """
@@ -478,7 +478,7 @@ def ss3t_csd_beta1_execute(
 
 def ss3t_csd_beta1(
     dwi: InputPathType,
-    response_odf: list[Ss3tCsdBeta1ResponseOdfParameters],
+    response_odf: list[Ss3tCsdBeta1ResponseOdfParamsDict],
     mask: InputPathType | None = None,
     bzero_pct: float | None = None,
     niter: int | None = None,
@@ -487,7 +487,7 @@ def ss3t_csd_beta1(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Ss3tCsdBeta1ConfigParameters] | None = None,
+    config: list[Ss3tCsdBeta1ConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -551,11 +551,17 @@ def ss3t_csd_beta1(
 
 __all__ = [
     "SS3T_CSD_BETA1_METADATA",
+    "Ss3tCsdBeta1ConfigParamsDict",
+    "Ss3tCsdBeta1ConfigParamsDictTagged",
     "Ss3tCsdBeta1Outputs",
+    "Ss3tCsdBeta1ParamsDict",
+    "Ss3tCsdBeta1ParamsDictTagged",
     "Ss3tCsdBeta1ResponseOdfOutputs",
+    "Ss3tCsdBeta1ResponseOdfParamsDict",
+    "Ss3tCsdBeta1ResponseOdfParamsDictTagged",
     "ss3t_csd_beta1",
-    "ss3t_csd_beta1_config_params",
+    "ss3t_csd_beta1_config",
     "ss3t_csd_beta1_execute",
     "ss3t_csd_beta1_params",
-    "ss3t_csd_beta1_response_odf_params",
+    "ss3t_csd_beta1_response_odf",
 ]

@@ -13,7 +13,7 @@ ROI2DATASET_METADATA = Metadata(
 )
 
 
-Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
+Roi2datasetParamsDict = typing.TypedDict('Roi2datasetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ROI2dataset"]],
     "prefix": str,
     "input_rois": list[InputPathType],
@@ -27,7 +27,7 @@ Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
     "pad_to_node": typing.NotRequired[float | None],
     "pad_label": typing.NotRequired[float | None],
 })
-Roi2datasetParametersTagged = typing.TypedDict('Roi2datasetParametersTagged', {
+Roi2datasetParamsDictTagged = typing.TypedDict('Roi2datasetParamsDictTagged', {
     "@type": typing.Literal["afni/ROI2dataset"],
     "prefix": str,
     "input_rois": list[InputPathType],
@@ -45,7 +45,7 @@ Roi2datasetParametersTagged = typing.TypedDict('Roi2datasetParametersTagged', {
 
 class Roi2datasetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Roi2datasetParameters(...)`.
+    Output object returned when calling `Roi2datasetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def roi2dataset_params(
     domain_parent_id: str | None = None,
     pad_to_node: float | None = None,
     pad_label: float | None = None,
-) -> Roi2datasetParametersTagged:
+) -> Roi2datasetParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def roi2dataset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Roi2datasetParameters` object.
+    `Roi2datasetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -170,7 +170,7 @@ def roi2dataset_validate(
 
 
 def roi2dataset_cargs(
-    params: Roi2datasetParameters,
+    params: Roi2datasetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def roi2dataset_cargs(
 
 
 def roi2dataset_outputs(
-    params: Roi2datasetParameters,
+    params: Roi2datasetParamsDict,
     execution: Execution,
 ) -> Roi2datasetOutputs:
     """
@@ -251,7 +251,7 @@ def roi2dataset_outputs(
 
 
 def roi2dataset_execute(
-    params: Roi2datasetParameters,
+    params: Roi2datasetParamsDict,
     runner: Runner | None = None,
 ) -> Roi2datasetOutputs:
     """
@@ -346,6 +346,8 @@ def roi2dataset(
 __all__ = [
     "ROI2DATASET_METADATA",
     "Roi2datasetOutputs",
+    "Roi2datasetParamsDict",
+    "Roi2datasetParamsDictTagged",
     "roi2dataset",
     "roi2dataset_execute",
     "roi2dataset_params",

@@ -13,7 +13,7 @@ MRIS_CA_DEFORM_METADATA = Metadata(
 )
 
 
-MrisCaDeformParameters = typing.TypedDict('MrisCaDeformParameters', {
+MrisCaDeformParamsDict = typing.TypedDict('MrisCaDeformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_deform"]],
     "input_surface": InputPathType,
     "label_vol": InputPathType,
@@ -21,7 +21,7 @@ MrisCaDeformParameters = typing.TypedDict('MrisCaDeformParameters', {
     "intensity_vol": InputPathType,
     "output_surface": str,
 })
-MrisCaDeformParametersTagged = typing.TypedDict('MrisCaDeformParametersTagged', {
+MrisCaDeformParamsDictTagged = typing.TypedDict('MrisCaDeformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_ca_deform"],
     "input_surface": InputPathType,
     "label_vol": InputPathType,
@@ -33,7 +33,7 @@ MrisCaDeformParametersTagged = typing.TypedDict('MrisCaDeformParametersTagged', 
 
 class MrisCaDeformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCaDeformParameters(...)`.
+    Output object returned when calling `MrisCaDeformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mris_ca_deform_params(
     transform: InputPathType,
     intensity_vol: InputPathType,
     output_surface: str,
-) -> MrisCaDeformParametersTagged:
+) -> MrisCaDeformParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def mris_ca_deform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCaDeformParameters` object.
+    `MrisCaDeformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def mris_ca_deform_validate(
 
 
 def mris_ca_deform_cargs(
-    params: MrisCaDeformParameters,
+    params: MrisCaDeformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def mris_ca_deform_cargs(
 
 
 def mris_ca_deform_outputs(
-    params: MrisCaDeformParameters,
+    params: MrisCaDeformParamsDict,
     execution: Execution,
 ) -> MrisCaDeformOutputs:
     """
@@ -151,7 +151,7 @@ def mris_ca_deform_outputs(
 
 
 def mris_ca_deform_execute(
-    params: MrisCaDeformParameters,
+    params: MrisCaDeformParamsDict,
     runner: Runner | None = None,
 ) -> MrisCaDeformOutputs:
     """
@@ -221,6 +221,8 @@ def mris_ca_deform(
 __all__ = [
     "MRIS_CA_DEFORM_METADATA",
     "MrisCaDeformOutputs",
+    "MrisCaDeformParamsDict",
+    "MrisCaDeformParamsDictTagged",
     "mris_ca_deform",
     "mris_ca_deform_execute",
     "mris_ca_deform_params",

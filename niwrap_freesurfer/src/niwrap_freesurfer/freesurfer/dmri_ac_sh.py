@@ -13,11 +13,11 @@ DMRI_AC_SH_METADATA = Metadata(
 )
 
 
-DmriAcShParameters = typing.TypedDict('DmriAcShParameters', {
+DmriAcShParamsDict = typing.TypedDict('DmriAcShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_ac.sh"]],
     "additional_args": typing.NotRequired[str | None],
 })
-DmriAcShParametersTagged = typing.TypedDict('DmriAcShParametersTagged', {
+DmriAcShParamsDictTagged = typing.TypedDict('DmriAcShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_ac.sh"],
     "additional_args": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ DmriAcShParametersTagged = typing.TypedDict('DmriAcShParametersTagged', {
 
 class DmriAcShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriAcShParameters(...)`.
+    Output object returned when calling `DmriAcShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class DmriAcShOutputs(typing.NamedTuple):
 
 def dmri_ac_sh_params(
     additional_args: str | None = None,
-) -> DmriAcShParametersTagged:
+) -> DmriAcShParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def dmri_ac_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriAcShParameters` object.
+    `DmriAcShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def dmri_ac_sh_validate(
 
 
 def dmri_ac_sh_cargs(
-    params: DmriAcShParameters,
+    params: DmriAcShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def dmri_ac_sh_cargs(
 
 
 def dmri_ac_sh_outputs(
-    params: DmriAcShParameters,
+    params: DmriAcShParamsDict,
     execution: Execution,
 ) -> DmriAcShOutputs:
     """
@@ -107,7 +107,7 @@ def dmri_ac_sh_outputs(
 
 
 def dmri_ac_sh_execute(
-    params: DmriAcShParameters,
+    params: DmriAcShParamsDict,
     runner: Runner | None = None,
 ) -> DmriAcShOutputs:
     """
@@ -163,6 +163,8 @@ def dmri_ac_sh(
 __all__ = [
     "DMRI_AC_SH_METADATA",
     "DmriAcShOutputs",
+    "DmriAcShParamsDict",
+    "DmriAcShParamsDictTagged",
     "dmri_ac_sh",
     "dmri_ac_sh_execute",
     "dmri_ac_sh_params",

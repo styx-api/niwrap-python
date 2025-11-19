@@ -13,12 +13,12 @@ OLD_BETALL_METADATA = Metadata(
 )
 
 
-OldBetallParameters = typing.TypedDict('OldBetallParameters', {
+OldBetallParamsDict = typing.TypedDict('OldBetallParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/old_betall"]],
     "t1_filerout": str,
     "t2_filerout": str,
 })
-OldBetallParametersTagged = typing.TypedDict('OldBetallParametersTagged', {
+OldBetallParamsDictTagged = typing.TypedDict('OldBetallParamsDictTagged', {
     "@type": typing.Literal["fsl/old_betall"],
     "t1_filerout": str,
     "t2_filerout": str,
@@ -27,7 +27,7 @@ OldBetallParametersTagged = typing.TypedDict('OldBetallParametersTagged', {
 
 class OldBetallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `OldBetallParameters(...)`.
+    Output object returned when calling `OldBetallParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class OldBetallOutputs(typing.NamedTuple):
 def old_betall_params(
     t1_filerout: str,
     t2_filerout: str,
-) -> OldBetallParametersTagged:
+) -> OldBetallParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def old_betall_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `OldBetallParameters` object.
+    `OldBetallParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def old_betall_validate(
 
 
 def old_betall_cargs(
-    params: OldBetallParameters,
+    params: OldBetallParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def old_betall_cargs(
 
 
 def old_betall_outputs(
-    params: OldBetallParameters,
+    params: OldBetallParamsDict,
     execution: Execution,
 ) -> OldBetallOutputs:
     """
@@ -122,7 +122,7 @@ def old_betall_outputs(
 
 
 def old_betall_execute(
-    params: OldBetallParameters,
+    params: OldBetallParamsDict,
     runner: Runner | None = None,
 ) -> OldBetallOutputs:
     """
@@ -181,6 +181,8 @@ def old_betall(
 __all__ = [
     "OLD_BETALL_METADATA",
     "OldBetallOutputs",
+    "OldBetallParamsDict",
+    "OldBetallParamsDictTagged",
     "old_betall",
     "old_betall_execute",
     "old_betall_params",

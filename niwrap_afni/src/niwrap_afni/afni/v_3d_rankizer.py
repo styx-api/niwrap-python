@@ -13,7 +13,7 @@ V_3D_RANKIZER_METADATA = Metadata(
 )
 
 
-V3dRankizerParameters = typing.TypedDict('V3dRankizerParameters', {
+V3dRankizerParamsDict = typing.TypedDict('V3dRankizerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRankizer"]],
     "dataset": InputPathType,
     "base_rank": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ V3dRankizerParameters = typing.TypedDict('V3dRankizerParameters', {
     "percentize": bool,
     "percentize_mask": bool,
 })
-V3dRankizerParametersTagged = typing.TypedDict('V3dRankizerParametersTagged', {
+V3dRankizerParamsDictTagged = typing.TypedDict('V3dRankizerParamsDictTagged', {
     "@type": typing.Literal["afni/3dRankizer"],
     "dataset": InputPathType,
     "base_rank": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ V3dRankizerParametersTagged = typing.TypedDict('V3dRankizerParametersTagged', {
 
 class V3dRankizerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRankizerParameters(...)`.
+    Output object returned when calling `V3dRankizerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_rankizer_params(
     mask: InputPathType | None = None,
     percentize: bool = False,
     percentize_mask: bool = False,
-) -> V3dRankizerParametersTagged:
+) -> V3dRankizerParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def v_3d_rankizer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRankizerParameters` object.
+    `V3dRankizerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def v_3d_rankizer_validate(
 
 
 def v_3d_rankizer_cargs(
-    params: V3dRankizerParameters,
+    params: V3dRankizerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v_3d_rankizer_cargs(
 
 
 def v_3d_rankizer_outputs(
-    params: V3dRankizerParameters,
+    params: V3dRankizerParamsDict,
     execution: Execution,
 ) -> V3dRankizerOutputs:
     """
@@ -176,7 +176,7 @@ def v_3d_rankizer_outputs(
 
 
 def v_3d_rankizer_execute(
-    params: V3dRankizerParameters,
+    params: V3dRankizerParamsDict,
     runner: Runner | None = None,
 ) -> V3dRankizerOutputs:
     """
@@ -252,6 +252,8 @@ def v_3d_rankizer(
 
 __all__ = [
     "V3dRankizerOutputs",
+    "V3dRankizerParamsDict",
+    "V3dRankizerParamsDictTagged",
     "V_3D_RANKIZER_METADATA",
     "v_3d_rankizer",
     "v_3d_rankizer_execute",

@@ -12,23 +12,23 @@ METRIC_SMOOTHING_METADATA = Metadata(
 )
 
 
-MetricSmoothingRoiParameters = typing.TypedDict('MetricSmoothingRoiParameters', {
+MetricSmoothingRoiParamsDict = typing.TypedDict('MetricSmoothingRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
-MetricSmoothingRoiParametersTagged = typing.TypedDict('MetricSmoothingRoiParametersTagged', {
+MetricSmoothingRoiParamsDictTagged = typing.TypedDict('MetricSmoothingRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
 
 
-MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
+MetricSmoothingParamsDict = typing.TypedDict('MetricSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-smoothing"]],
     "metric-out": str,
     "fwhm": bool,
-    "roi": typing.NotRequired[MetricSmoothingRoiParameters | None],
+    "roi": typing.NotRequired[MetricSmoothingRoiParamsDict | None],
     "fix-zeros": bool,
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -37,11 +37,11 @@ MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
     "metric-in": InputPathType,
     "smoothing-kernel": float,
 })
-MetricSmoothingParametersTagged = typing.TypedDict('MetricSmoothingParametersTagged', {
+MetricSmoothingParamsDictTagged = typing.TypedDict('MetricSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-smoothing"],
     "metric-out": str,
     "fwhm": bool,
-    "roi": typing.NotRequired[MetricSmoothingRoiParameters | None],
+    "roi": typing.NotRequired[MetricSmoothingRoiParamsDict | None],
     "fix-zeros": bool,
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -52,10 +52,10 @@ MetricSmoothingParametersTagged = typing.TypedDict('MetricSmoothingParametersTag
 })
 
 
-def metric_smoothing_roi_params(
+def metric_smoothing_roi(
     roi_metric: InputPathType,
     match_columns: bool = False,
-) -> MetricSmoothingRoiParametersTagged:
+) -> MetricSmoothingRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def metric_smoothing_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricSmoothingRoiParameters` object.
+    `MetricSmoothingRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def metric_smoothing_roi_validate(
 
 
 def metric_smoothing_roi_cargs(
-    params: MetricSmoothingRoiParameters,
+    params: MetricSmoothingRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def metric_smoothing_roi_cargs(
 
 class MetricSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricSmoothingParameters(...)`.
+    Output object returned when calling `MetricSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,9 +138,9 @@ def metric_smoothing_params(
     metric_in: InputPathType,
     smoothing_kernel: float,
     fwhm: bool = False,
-    roi: MetricSmoothingRoiParameters | None = None,
+    roi: MetricSmoothingRoiParamsDict | None = None,
     fix_zeros: bool = False,
-) -> MetricSmoothingParametersTagged:
+) -> MetricSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def metric_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricSmoothingParameters` object.
+    `MetricSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def metric_smoothing_validate(
 
 
 def metric_smoothing_cargs(
-    params: MetricSmoothingParameters,
+    params: MetricSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def metric_smoothing_cargs(
 
 
 def metric_smoothing_outputs(
-    params: MetricSmoothingParameters,
+    params: MetricSmoothingParamsDict,
     execution: Execution,
 ) -> MetricSmoothingOutputs:
     """
@@ -291,7 +291,7 @@ def metric_smoothing_outputs(
 
 
 def metric_smoothing_execute(
-    params: MetricSmoothingParameters,
+    params: MetricSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
@@ -366,7 +366,7 @@ def metric_smoothing(
     metric_in: InputPathType,
     smoothing_kernel: float,
     fwhm: bool = False,
-    roi: MetricSmoothingRoiParameters | None = None,
+    roi: MetricSmoothingRoiParamsDict | None = None,
     fix_zeros: bool = False,
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
@@ -458,8 +458,12 @@ def metric_smoothing(
 __all__ = [
     "METRIC_SMOOTHING_METADATA",
     "MetricSmoothingOutputs",
+    "MetricSmoothingParamsDict",
+    "MetricSmoothingParamsDictTagged",
+    "MetricSmoothingRoiParamsDict",
+    "MetricSmoothingRoiParamsDictTagged",
     "metric_smoothing",
     "metric_smoothing_execute",
     "metric_smoothing_params",
-    "metric_smoothing_roi_params",
+    "metric_smoothing_roi",
 ]

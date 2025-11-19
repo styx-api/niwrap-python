@@ -13,19 +13,19 @@ MRCHECKERBOARDMASK_METADATA = Metadata(
 )
 
 
-MrcheckerboardmaskConfigParameters = typing.TypedDict('MrcheckerboardmaskConfigParameters', {
+MrcheckerboardmaskConfigParamsDict = typing.TypedDict('MrcheckerboardmaskConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrcheckerboardmaskConfigParametersTagged = typing.TypedDict('MrcheckerboardmaskConfigParametersTagged', {
+MrcheckerboardmaskConfigParamsDictTagged = typing.TypedDict('MrcheckerboardmaskConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrcheckerboardmaskParameters = typing.TypedDict('MrcheckerboardmaskParameters', {
+MrcheckerboardmaskParamsDict = typing.TypedDict('MrcheckerboardmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrcheckerboardmask"]],
     "tiles": typing.NotRequired[int | None],
     "invert": bool,
@@ -35,13 +35,13 @@ MrcheckerboardmaskParameters = typing.TypedDict('MrcheckerboardmaskParameters', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcheckerboardmaskConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcheckerboardmaskConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-MrcheckerboardmaskParametersTagged = typing.TypedDict('MrcheckerboardmaskParametersTagged', {
+MrcheckerboardmaskParamsDictTagged = typing.TypedDict('MrcheckerboardmaskParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrcheckerboardmask"],
     "tiles": typing.NotRequired[int | None],
     "invert": bool,
@@ -51,7 +51,7 @@ MrcheckerboardmaskParametersTagged = typing.TypedDict('MrcheckerboardmaskParamet
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcheckerboardmaskConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcheckerboardmaskConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -59,10 +59,10 @@ MrcheckerboardmaskParametersTagged = typing.TypedDict('MrcheckerboardmaskParamet
 })
 
 
-def mrcheckerboardmask_config_params(
+def mrcheckerboardmask_config(
     key: str,
     value: str,
-) -> MrcheckerboardmaskConfigParametersTagged:
+) -> MrcheckerboardmaskConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def mrcheckerboardmask_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcheckerboardmaskConfigParameters` object.
+    `MrcheckerboardmaskConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def mrcheckerboardmask_config_validate(
 
 
 def mrcheckerboardmask_config_cargs(
-    params: MrcheckerboardmaskConfigParameters,
+    params: MrcheckerboardmaskConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def mrcheckerboardmask_config_cargs(
 
 class MrcheckerboardmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrcheckerboardmaskParameters(...)`.
+    Output object returned when calling `MrcheckerboardmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,10 +143,10 @@ def mrcheckerboardmask_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcheckerboardmaskConfigParameters] | None = None,
+    config: list[MrcheckerboardmaskConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcheckerboardmaskParametersTagged:
+) -> MrcheckerboardmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -198,7 +198,7 @@ def mrcheckerboardmask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcheckerboardmaskParameters` object.
+    `MrcheckerboardmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -237,7 +237,7 @@ def mrcheckerboardmask_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcheckerboardmaskConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcheckerboardmaskConfigParamsDict] | None`')
         for e in params["config"]:
             mrcheckerboardmask_config_validate(e)
     if params.get("help", False) is None:
@@ -259,7 +259,7 @@ def mrcheckerboardmask_validate(
 
 
 def mrcheckerboardmask_cargs(
-    params: MrcheckerboardmaskParameters,
+    params: MrcheckerboardmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def mrcheckerboardmask_cargs(
 
 
 def mrcheckerboardmask_outputs(
-    params: MrcheckerboardmaskParameters,
+    params: MrcheckerboardmaskParamsDict,
     execution: Execution,
 ) -> MrcheckerboardmaskOutputs:
     """
@@ -327,7 +327,7 @@ def mrcheckerboardmask_outputs(
 
 
 def mrcheckerboardmask_execute(
-    params: MrcheckerboardmaskParameters,
+    params: MrcheckerboardmaskParamsDict,
     runner: Runner | None = None,
 ) -> MrcheckerboardmaskOutputs:
     """
@@ -372,7 +372,7 @@ def mrcheckerboardmask(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcheckerboardmaskConfigParameters] | None = None,
+    config: list[MrcheckerboardmaskConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -434,9 +434,13 @@ def mrcheckerboardmask(
 
 __all__ = [
     "MRCHECKERBOARDMASK_METADATA",
+    "MrcheckerboardmaskConfigParamsDict",
+    "MrcheckerboardmaskConfigParamsDictTagged",
     "MrcheckerboardmaskOutputs",
+    "MrcheckerboardmaskParamsDict",
+    "MrcheckerboardmaskParamsDictTagged",
     "mrcheckerboardmask",
-    "mrcheckerboardmask_config_params",
+    "mrcheckerboardmask_config",
     "mrcheckerboardmask_execute",
     "mrcheckerboardmask_params",
 ]

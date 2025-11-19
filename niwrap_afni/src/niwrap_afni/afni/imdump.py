@@ -13,11 +13,11 @@ IMDUMP_METADATA = Metadata(
 )
 
 
-ImdumpParameters = typing.TypedDict('ImdumpParameters', {
+ImdumpParamsDict = typing.TypedDict('ImdumpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imdump"]],
     "input_image": InputPathType,
 })
-ImdumpParametersTagged = typing.TypedDict('ImdumpParametersTagged', {
+ImdumpParamsDictTagged = typing.TypedDict('ImdumpParamsDictTagged', {
     "@type": typing.Literal["afni/imdump"],
     "input_image": InputPathType,
 })
@@ -25,7 +25,7 @@ ImdumpParametersTagged = typing.TypedDict('ImdumpParametersTagged', {
 
 class ImdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImdumpParameters(...)`.
+    Output object returned when calling `ImdumpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class ImdumpOutputs(typing.NamedTuple):
 
 def imdump_params(
     input_image: InputPathType,
-) -> ImdumpParametersTagged:
+) -> ImdumpParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def imdump_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImdumpParameters` object.
+    `ImdumpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def imdump_validate(
 
 
 def imdump_cargs(
-    params: ImdumpParameters,
+    params: ImdumpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def imdump_cargs(
 
 
 def imdump_outputs(
-    params: ImdumpParameters,
+    params: ImdumpParamsDict,
     execution: Execution,
 ) -> ImdumpOutputs:
     """
@@ -110,7 +110,7 @@ def imdump_outputs(
 
 
 def imdump_execute(
-    params: ImdumpParameters,
+    params: ImdumpParamsDict,
     runner: Runner | None = None,
 ) -> ImdumpOutputs:
     """
@@ -166,6 +166,8 @@ def imdump(
 __all__ = [
     "IMDUMP_METADATA",
     "ImdumpOutputs",
+    "ImdumpParamsDict",
+    "ImdumpParamsDictTagged",
     "imdump",
     "imdump_execute",
     "imdump_params",

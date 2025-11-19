@@ -13,13 +13,13 @@ V__AFNI_RUN_ME_METADATA = Metadata(
 )
 
 
-VAfniRunMeParameters = typing.TypedDict('VAfniRunMeParameters', {
+VAfniRunMeParamsDict = typing.TypedDict('VAfniRunMeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@afni.run.me"]],
     "go": bool,
     "curl": bool,
     "help": bool,
 })
-VAfniRunMeParametersTagged = typing.TypedDict('VAfniRunMeParametersTagged', {
+VAfniRunMeParamsDictTagged = typing.TypedDict('VAfniRunMeParamsDictTagged', {
     "@type": typing.Literal["afni/@afni.run.me"],
     "go": bool,
     "curl": bool,
@@ -29,7 +29,7 @@ VAfniRunMeParametersTagged = typing.TypedDict('VAfniRunMeParametersTagged', {
 
 class VAfniRunMeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniRunMeParameters(...)`.
+    Output object returned when calling `VAfniRunMeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def v__afni_run_me_params(
     go: bool = False,
     curl: bool = False,
     help_: bool = False,
-) -> VAfniRunMeParametersTagged:
+) -> VAfniRunMeParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def v__afni_run_me_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniRunMeParameters` object.
+    `VAfniRunMeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def v__afni_run_me_validate(
 
 
 def v__afni_run_me_cargs(
-    params: VAfniRunMeParameters,
+    params: VAfniRunMeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def v__afni_run_me_cargs(
 
 
 def v__afni_run_me_outputs(
-    params: VAfniRunMeParameters,
+    params: VAfniRunMeParamsDict,
     execution: Execution,
 ) -> VAfniRunMeOutputs:
     """
@@ -129,7 +129,7 @@ def v__afni_run_me_outputs(
 
 
 def v__afni_run_me_execute(
-    params: VAfniRunMeParameters,
+    params: VAfniRunMeParamsDict,
     runner: Runner | None = None,
 ) -> VAfniRunMeOutputs:
     """
@@ -190,6 +190,8 @@ def v__afni_run_me(
 
 __all__ = [
     "VAfniRunMeOutputs",
+    "VAfniRunMeParamsDict",
+    "VAfniRunMeParamsDictTagged",
     "V__AFNI_RUN_ME_METADATA",
     "v__afni_run_me",
     "v__afni_run_me_execute",

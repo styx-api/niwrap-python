@@ -13,7 +13,7 @@ SERIAL_HELPER_METADATA = Metadata(
 )
 
 
-SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
+SerialHelperParamsDict = typing.TypedDict('SerialHelperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/serial_helper"]],
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
@@ -28,7 +28,7 @@ SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
     "no_serial": bool,
     "version": bool,
 })
-SerialHelperParametersTagged = typing.TypedDict('SerialHelperParametersTagged', {
+SerialHelperParamsDictTagged = typing.TypedDict('SerialHelperParamsDictTagged', {
     "@type": typing.Literal["afni/serial_helper"],
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ SerialHelperParametersTagged = typing.TypedDict('SerialHelperParametersTagged', 
 
 class SerialHelperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SerialHelperParameters(...)`.
+    Output object returned when calling `SerialHelperParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def serial_helper_params(
     hist: bool = False,
     no_serial: bool = False,
     version: bool = False,
-) -> SerialHelperParametersTagged:
+) -> SerialHelperParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def serial_helper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SerialHelperParameters` object.
+    `SerialHelperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def serial_helper_validate(
 
 
 def serial_helper_cargs(
-    params: SerialHelperParameters,
+    params: SerialHelperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,7 +229,7 @@ def serial_helper_cargs(
 
 
 def serial_helper_outputs(
-    params: SerialHelperParameters,
+    params: SerialHelperParamsDict,
     execution: Execution,
 ) -> SerialHelperOutputs:
     """
@@ -248,7 +248,7 @@ def serial_helper_outputs(
 
 
 def serial_helper_execute(
-    params: SerialHelperParameters,
+    params: SerialHelperParamsDict,
     runner: Runner | None = None,
 ) -> SerialHelperOutputs:
     """
@@ -337,6 +337,8 @@ def serial_helper(
 __all__ = [
     "SERIAL_HELPER_METADATA",
     "SerialHelperOutputs",
+    "SerialHelperParamsDict",
+    "SerialHelperParamsDictTagged",
     "serial_helper",
     "serial_helper_execute",
     "serial_helper_params",

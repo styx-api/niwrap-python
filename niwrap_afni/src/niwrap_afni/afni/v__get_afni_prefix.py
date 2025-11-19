@@ -13,12 +13,12 @@ V__GET_AFNI_PREFIX_METADATA = Metadata(
 )
 
 
-VGetAfniPrefixParameters = typing.TypedDict('VGetAfniPrefixParameters', {
+VGetAfniPrefixParamsDict = typing.TypedDict('VGetAfniPrefixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniPrefix"]],
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })
-VGetAfniPrefixParametersTagged = typing.TypedDict('VGetAfniPrefixParametersTagged', {
+VGetAfniPrefixParamsDictTagged = typing.TypedDict('VGetAfniPrefixParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniPrefix"],
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ VGetAfniPrefixParametersTagged = typing.TypedDict('VGetAfniPrefixParametersTagge
 
 class VGetAfniPrefixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniPrefixParameters(...)`.
+    Output object returned when calling `VGetAfniPrefixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VGetAfniPrefixOutputs(typing.NamedTuple):
 def v__get_afni_prefix_params(
     name: InputPathType,
     suffix: str | None = None,
-) -> VGetAfniPrefixParametersTagged:
+) -> VGetAfniPrefixParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__get_afni_prefix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniPrefixParameters` object.
+    `VGetAfniPrefixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v__get_afni_prefix_validate(
 
 
 def v__get_afni_prefix_cargs(
-    params: VGetAfniPrefixParameters,
+    params: VGetAfniPrefixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def v__get_afni_prefix_cargs(
 
 
 def v__get_afni_prefix_outputs(
-    params: VGetAfniPrefixParameters,
+    params: VGetAfniPrefixParamsDict,
     execution: Execution,
 ) -> VGetAfniPrefixOutputs:
     """
@@ -117,7 +117,7 @@ def v__get_afni_prefix_outputs(
 
 
 def v__get_afni_prefix_execute(
-    params: VGetAfniPrefixParameters,
+    params: VGetAfniPrefixParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniPrefixOutputs:
     """
@@ -175,6 +175,8 @@ def v__get_afni_prefix(
 
 __all__ = [
     "VGetAfniPrefixOutputs",
+    "VGetAfniPrefixParamsDict",
+    "VGetAfniPrefixParamsDictTagged",
     "V__GET_AFNI_PREFIX_METADATA",
     "v__get_afni_prefix",
     "v__get_afni_prefix_execute",

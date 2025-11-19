@@ -13,11 +13,11 @@ ISNIFTI_METADATA = Metadata(
 )
 
 
-IsniftiParameters = typing.TypedDict('IsniftiParameters', {
+IsniftiParamsDict = typing.TypedDict('IsniftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/isnifti"]],
     "infile": InputPathType,
 })
-IsniftiParametersTagged = typing.TypedDict('IsniftiParametersTagged', {
+IsniftiParamsDictTagged = typing.TypedDict('IsniftiParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isnifti"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ IsniftiParametersTagged = typing.TypedDict('IsniftiParametersTagged', {
 
 class IsniftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsniftiParameters(...)`.
+    Output object returned when calling `IsniftiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class IsniftiOutputs(typing.NamedTuple):
 
 def isnifti_params(
     infile: InputPathType,
-) -> IsniftiParametersTagged:
+) -> IsniftiParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def isnifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsniftiParameters` object.
+    `IsniftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def isnifti_validate(
 
 
 def isnifti_cargs(
-    params: IsniftiParameters,
+    params: IsniftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def isnifti_cargs(
 
 
 def isnifti_outputs(
-    params: IsniftiParameters,
+    params: IsniftiParamsDict,
     execution: Execution,
 ) -> IsniftiOutputs:
     """
@@ -106,7 +106,7 @@ def isnifti_outputs(
 
 
 def isnifti_execute(
-    params: IsniftiParameters,
+    params: IsniftiParamsDict,
     runner: Runner | None = None,
 ) -> IsniftiOutputs:
     """
@@ -162,6 +162,8 @@ def isnifti(
 __all__ = [
     "ISNIFTI_METADATA",
     "IsniftiOutputs",
+    "IsniftiParamsDict",
+    "IsniftiParamsDictTagged",
     "isnifti",
     "isnifti_execute",
     "isnifti_params",

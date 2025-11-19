@@ -13,7 +13,7 @@ GEN_SS_REVIEW_SCRIPTS_PY_METADATA = Metadata(
 )
 
 
-GenSsReviewScriptsPyParameters = typing.TypedDict('GenSsReviewScriptsPyParameters', {
+GenSsReviewScriptsPyParamsDict = typing.TypedDict('GenSsReviewScriptsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_scripts.py"]],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ GenSsReviewScriptsPyParameters = typing.TypedDict('GenSsReviewScriptsPyParameter
     "uvars_json": typing.NotRequired[InputPathType | None],
     "init_uvars_json": typing.NotRequired[InputPathType | None],
 })
-GenSsReviewScriptsPyParametersTagged = typing.TypedDict('GenSsReviewScriptsPyParametersTagged', {
+GenSsReviewScriptsPyParamsDictTagged = typing.TypedDict('GenSsReviewScriptsPyParamsDictTagged', {
     "@type": typing.Literal["afni/gen_ss_review_scripts.py"],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
@@ -61,7 +61,7 @@ GenSsReviewScriptsPyParametersTagged = typing.TypedDict('GenSsReviewScriptsPyPar
 
 class GenSsReviewScriptsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GenSsReviewScriptsPyParameters(...)`.
+    Output object returned when calling `GenSsReviewScriptsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def gen_ss_review_scripts_py_params(
     verbosity: float | None = None,
     uvars_json: InputPathType | None = None,
     init_uvars_json: InputPathType | None = None,
-) -> GenSsReviewScriptsPyParametersTagged:
+) -> GenSsReviewScriptsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -169,7 +169,7 @@ def gen_ss_review_scripts_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GenSsReviewScriptsPyParameters` object.
+    `GenSsReviewScriptsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def gen_ss_review_scripts_py_validate(
 
 
 def gen_ss_review_scripts_py_cargs(
-    params: GenSsReviewScriptsPyParameters,
+    params: GenSsReviewScriptsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -349,7 +349,7 @@ def gen_ss_review_scripts_py_cargs(
 
 
 def gen_ss_review_scripts_py_outputs(
-    params: GenSsReviewScriptsPyParameters,
+    params: GenSsReviewScriptsPyParamsDict,
     execution: Execution,
 ) -> GenSsReviewScriptsPyOutputs:
     """
@@ -371,7 +371,7 @@ def gen_ss_review_scripts_py_outputs(
 
 
 def gen_ss_review_scripts_py_execute(
-    params: GenSsReviewScriptsPyParameters,
+    params: GenSsReviewScriptsPyParamsDict,
     runner: Runner | None = None,
 ) -> GenSsReviewScriptsPyOutputs:
     """
@@ -481,6 +481,8 @@ def gen_ss_review_scripts_py(
 __all__ = [
     "GEN_SS_REVIEW_SCRIPTS_PY_METADATA",
     "GenSsReviewScriptsPyOutputs",
+    "GenSsReviewScriptsPyParamsDict",
+    "GenSsReviewScriptsPyParamsDictTagged",
     "gen_ss_review_scripts_py",
     "gen_ss_review_scripts_py_execute",
     "gen_ss_review_scripts_py_params",

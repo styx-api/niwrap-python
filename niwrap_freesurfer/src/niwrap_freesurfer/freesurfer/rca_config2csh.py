@@ -13,11 +13,11 @@ RCA_CONFIG2CSH_METADATA = Metadata(
 )
 
 
-RcaConfig2cshParameters = typing.TypedDict('RcaConfig2cshParameters', {
+RcaConfig2cshParamsDict = typing.TypedDict('RcaConfig2cshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config2csh"]],
     "configfile": InputPathType,
 })
-RcaConfig2cshParametersTagged = typing.TypedDict('RcaConfig2cshParametersTagged', {
+RcaConfig2cshParamsDictTagged = typing.TypedDict('RcaConfig2cshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-config2csh"],
     "configfile": InputPathType,
 })
@@ -25,7 +25,7 @@ RcaConfig2cshParametersTagged = typing.TypedDict('RcaConfig2cshParametersTagged'
 
 class RcaConfig2cshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcaConfig2cshParameters(...)`.
+    Output object returned when calling `RcaConfig2cshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class RcaConfig2cshOutputs(typing.NamedTuple):
 
 def rca_config2csh_params(
     configfile: InputPathType,
-) -> RcaConfig2cshParametersTagged:
+) -> RcaConfig2cshParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def rca_config2csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcaConfig2cshParameters` object.
+    `RcaConfig2cshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def rca_config2csh_validate(
 
 
 def rca_config2csh_cargs(
-    params: RcaConfig2cshParameters,
+    params: RcaConfig2cshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def rca_config2csh_cargs(
 
 
 def rca_config2csh_outputs(
-    params: RcaConfig2cshParameters,
+    params: RcaConfig2cshParamsDict,
     execution: Execution,
 ) -> RcaConfig2cshOutputs:
     """
@@ -109,7 +109,7 @@ def rca_config2csh_outputs(
 
 
 def rca_config2csh_execute(
-    params: RcaConfig2cshParameters,
+    params: RcaConfig2cshParamsDict,
     runner: Runner | None = None,
 ) -> RcaConfig2cshOutputs:
     """
@@ -167,6 +167,8 @@ def rca_config2csh(
 __all__ = [
     "RCA_CONFIG2CSH_METADATA",
     "RcaConfig2cshOutputs",
+    "RcaConfig2cshParamsDict",
+    "RcaConfig2cshParamsDictTagged",
     "rca_config2csh",
     "rca_config2csh_execute",
     "rca_config2csh_params",

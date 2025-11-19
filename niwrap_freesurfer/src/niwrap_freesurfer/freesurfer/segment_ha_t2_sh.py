@@ -13,12 +13,12 @@ SEGMENT_HA_T2_SH_METADATA = Metadata(
 )
 
 
-SegmentHaT2ShParameters = typing.TypedDict('SegmentHaT2ShParameters', {
+SegmentHaT2ShParamsDict = typing.TypedDict('SegmentHaT2ShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T2.sh"]],
     "input_image": InputPathType,
     "output_directory": str,
 })
-SegmentHaT2ShParametersTagged = typing.TypedDict('SegmentHaT2ShParametersTagged', {
+SegmentHaT2ShParamsDictTagged = typing.TypedDict('SegmentHaT2ShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segmentHA_T2.sh"],
     "input_image": InputPathType,
     "output_directory": str,
@@ -27,7 +27,7 @@ SegmentHaT2ShParametersTagged = typing.TypedDict('SegmentHaT2ShParametersTagged'
 
 class SegmentHaT2ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentHaT2ShParameters(...)`.
+    Output object returned when calling `SegmentHaT2ShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class SegmentHaT2ShOutputs(typing.NamedTuple):
 def segment_ha_t2_sh_params(
     input_image: InputPathType,
     output_directory: str,
-) -> SegmentHaT2ShParametersTagged:
+) -> SegmentHaT2ShParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def segment_ha_t2_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentHaT2ShParameters` object.
+    `SegmentHaT2ShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def segment_ha_t2_sh_validate(
 
 
 def segment_ha_t2_sh_cargs(
-    params: SegmentHaT2ShParameters,
+    params: SegmentHaT2ShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def segment_ha_t2_sh_cargs(
 
 
 def segment_ha_t2_sh_outputs(
-    params: SegmentHaT2ShParameters,
+    params: SegmentHaT2ShParamsDict,
     execution: Execution,
 ) -> SegmentHaT2ShOutputs:
     """
@@ -122,7 +122,7 @@ def segment_ha_t2_sh_outputs(
 
 
 def segment_ha_t2_sh_execute(
-    params: SegmentHaT2ShParameters,
+    params: SegmentHaT2ShParamsDict,
     runner: Runner | None = None,
 ) -> SegmentHaT2ShOutputs:
     """
@@ -183,6 +183,8 @@ def segment_ha_t2_sh(
 __all__ = [
     "SEGMENT_HA_T2_SH_METADATA",
     "SegmentHaT2ShOutputs",
+    "SegmentHaT2ShParamsDict",
+    "SegmentHaT2ShParamsDictTagged",
     "segment_ha_t2_sh",
     "segment_ha_t2_sh_execute",
     "segment_ha_t2_sh_params",

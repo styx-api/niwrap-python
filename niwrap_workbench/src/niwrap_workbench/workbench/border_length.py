@@ -12,7 +12,7 @@ BORDER_LENGTH_METADATA = Metadata(
 )
 
 
-BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
+BorderLengthParamsDict = typing.TypedDict('BorderLengthParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-length"]],
     "area-metric": typing.NotRequired[InputPathType | None],
     "separate-pieces": bool,
@@ -20,7 +20,7 @@ BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
     "border": InputPathType,
     "surface": InputPathType,
 })
-BorderLengthParametersTagged = typing.TypedDict('BorderLengthParametersTagged', {
+BorderLengthParamsDictTagged = typing.TypedDict('BorderLengthParamsDictTagged', {
     "@type": typing.Literal["workbench/border-length"],
     "area-metric": typing.NotRequired[InputPathType | None],
     "separate-pieces": bool,
@@ -32,7 +32,7 @@ BorderLengthParametersTagged = typing.TypedDict('BorderLengthParametersTagged', 
 
 class BorderLengthOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderLengthParameters(...)`.
+    Output object returned when calling `BorderLengthParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def border_length_params(
     surface: InputPathType,
     separate_pieces: bool = False,
     hide_border_name: bool = False,
-) -> BorderLengthParametersTagged:
+) -> BorderLengthParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def border_length_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderLengthParameters` object.
+    `BorderLengthParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def border_length_validate(
 
 
 def border_length_cargs(
-    params: BorderLengthParameters,
+    params: BorderLengthParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def border_length_cargs(
 
 
 def border_length_outputs(
-    params: BorderLengthParameters,
+    params: BorderLengthParamsDict,
     execution: Execution,
 ) -> BorderLengthOutputs:
     """
@@ -154,7 +154,7 @@ def border_length_outputs(
 
 
 def border_length_execute(
-    params: BorderLengthParameters,
+    params: BorderLengthParamsDict,
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
@@ -230,6 +230,8 @@ def border_length(
 __all__ = [
     "BORDER_LENGTH_METADATA",
     "BorderLengthOutputs",
+    "BorderLengthParamsDict",
+    "BorderLengthParamsDictTagged",
     "border_length",
     "border_length_execute",
     "border_length_params",

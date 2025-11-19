@@ -13,7 +13,7 @@ MRIS_RESAMPLE_METADATA = Metadata(
 )
 
 
-MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
+MrisResampleParamsDict = typing.TypedDict('MrisResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_resample"]],
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
@@ -22,7 +22,7 @@ MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
     "annot_in": typing.NotRequired[InputPathType | None],
     "annot_out": typing.NotRequired[str | None],
 })
-MrisResampleParametersTagged = typing.TypedDict('MrisResampleParametersTagged', {
+MrisResampleParamsDictTagged = typing.TypedDict('MrisResampleParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_resample"],
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
@@ -35,7 +35,7 @@ MrisResampleParametersTagged = typing.TypedDict('MrisResampleParametersTagged', 
 
 class MrisResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisResampleParameters(...)`.
+    Output object returned when calling `MrisResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def mris_resample_params(
     output: str,
     annot_in: InputPathType | None = None,
     annot_out: str | None = None,
-) -> MrisResampleParametersTagged:
+) -> MrisResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mris_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisResampleParameters` object.
+    `MrisResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def mris_resample_validate(
 
 
 def mris_resample_cargs(
-    params: MrisResampleParameters,
+    params: MrisResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def mris_resample_cargs(
 
 
 def mris_resample_outputs(
-    params: MrisResampleParameters,
+    params: MrisResampleParamsDict,
     execution: Execution,
 ) -> MrisResampleOutputs:
     """
@@ -184,7 +184,7 @@ def mris_resample_outputs(
 
 
 def mris_resample_execute(
-    params: MrisResampleParameters,
+    params: MrisResampleParamsDict,
     runner: Runner | None = None,
 ) -> MrisResampleOutputs:
     """
@@ -257,6 +257,8 @@ def mris_resample(
 __all__ = [
     "MRIS_RESAMPLE_METADATA",
     "MrisResampleOutputs",
+    "MrisResampleParamsDict",
+    "MrisResampleParamsDictTagged",
     "mris_resample",
     "mris_resample_execute",
     "mris_resample_params",

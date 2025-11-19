@@ -13,19 +13,19 @@ TSFINFO_METADATA = Metadata(
 )
 
 
-TsfinfoConfigParameters = typing.TypedDict('TsfinfoConfigParameters', {
+TsfinfoConfigParamsDict = typing.TypedDict('TsfinfoConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfinfoConfigParametersTagged = typing.TypedDict('TsfinfoConfigParametersTagged', {
+TsfinfoConfigParamsDictTagged = typing.TypedDict('TsfinfoConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
+TsfinfoParamsDict = typing.TypedDict('TsfinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfinfo"]],
     "count": bool,
     "ascii": typing.NotRequired[str | None],
@@ -34,12 +34,12 @@ TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": list[InputPathType],
 })
-TsfinfoParametersTagged = typing.TypedDict('TsfinfoParametersTagged', {
+TsfinfoParamsDictTagged = typing.TypedDict('TsfinfoParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfinfo"],
     "count": bool,
     "ascii": typing.NotRequired[str | None],
@@ -48,17 +48,17 @@ TsfinfoParametersTagged = typing.TypedDict('TsfinfoParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": list[InputPathType],
 })
 
 
-def tsfinfo_config_params(
+def tsfinfo_config(
     key: str,
     value: str,
-) -> TsfinfoConfigParametersTagged:
+) -> TsfinfoConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def tsfinfo_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfinfoConfigParameters` object.
+    `TsfinfoConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def tsfinfo_config_validate(
 
 
 def tsfinfo_config_cargs(
-    params: TsfinfoConfigParameters,
+    params: TsfinfoConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def tsfinfo_config_cargs(
 
 class TsfinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfinfoParameters(...)`.
+    Output object returned when calling `TsfinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,10 +135,10 @@ def tsfinfo_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfinfoConfigParameters] | None = None,
+    config: list[TsfinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfinfoParametersTagged:
+) -> TsfinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -187,7 +187,7 @@ def tsfinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfinfoParameters` object.
+    `TsfinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def tsfinfo_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfinfoConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfinfoConfigParamsDict] | None`')
         for e in params["config"]:
             tsfinfo_config_validate(e)
     if params.get("help", False) is None:
@@ -243,7 +243,7 @@ def tsfinfo_validate(
 
 
 def tsfinfo_cargs(
-    params: TsfinfoParameters,
+    params: TsfinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def tsfinfo_cargs(
 
 
 def tsfinfo_outputs(
-    params: TsfinfoParameters,
+    params: TsfinfoParamsDict,
     execution: Execution,
 ) -> TsfinfoOutputs:
     """
@@ -307,7 +307,7 @@ def tsfinfo_outputs(
 
 
 def tsfinfo_execute(
-    params: TsfinfoParameters,
+    params: TsfinfoParamsDict,
     runner: Runner | None = None,
 ) -> TsfinfoOutputs:
     """
@@ -350,7 +350,7 @@ def tsfinfo(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfinfoConfigParameters] | None = None,
+    config: list[TsfinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -409,9 +409,13 @@ def tsfinfo(
 
 __all__ = [
     "TSFINFO_METADATA",
+    "TsfinfoConfigParamsDict",
+    "TsfinfoConfigParamsDictTagged",
     "TsfinfoOutputs",
+    "TsfinfoParamsDict",
+    "TsfinfoParamsDictTagged",
     "tsfinfo",
-    "tsfinfo_config_params",
+    "tsfinfo_config",
     "tsfinfo_execute",
     "tsfinfo_params",
 ]

@@ -13,19 +13,19 @@ TSFSMOOTH_METADATA = Metadata(
 )
 
 
-TsfsmoothConfigParameters = typing.TypedDict('TsfsmoothConfigParameters', {
+TsfsmoothConfigParamsDict = typing.TypedDict('TsfsmoothConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfsmoothConfigParametersTagged = typing.TypedDict('TsfsmoothConfigParametersTagged', {
+TsfsmoothConfigParamsDictTagged = typing.TypedDict('TsfsmoothConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
+TsfsmoothParamsDict = typing.TypedDict('TsfsmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfsmooth"]],
     "stdev": typing.NotRequired[float | None],
     "info": bool,
@@ -33,13 +33,13 @@ TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfsmoothConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfsmoothConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-TsfsmoothParametersTagged = typing.TypedDict('TsfsmoothParametersTagged', {
+TsfsmoothParamsDictTagged = typing.TypedDict('TsfsmoothParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfsmooth"],
     "stdev": typing.NotRequired[float | None],
     "info": bool,
@@ -47,7 +47,7 @@ TsfsmoothParametersTagged = typing.TypedDict('TsfsmoothParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfsmoothConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfsmoothConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -55,10 +55,10 @@ TsfsmoothParametersTagged = typing.TypedDict('TsfsmoothParametersTagged', {
 })
 
 
-def tsfsmooth_config_params(
+def tsfsmooth_config(
     key: str,
     value: str,
-) -> TsfsmoothConfigParametersTagged:
+) -> TsfsmoothConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def tsfsmooth_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfsmoothConfigParameters` object.
+    `TsfsmoothConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def tsfsmooth_config_validate(
 
 
 def tsfsmooth_config_cargs(
-    params: TsfsmoothConfigParameters,
+    params: TsfsmoothConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def tsfsmooth_config_cargs(
 
 class TsfsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfsmoothParameters(...)`.
+    Output object returned when calling `TsfsmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def tsfsmooth_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfsmoothConfigParameters] | None = None,
+    config: list[TsfsmoothConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfsmoothParametersTagged:
+) -> TsfsmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def tsfsmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfsmoothParameters` object.
+    `TsfsmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def tsfsmooth_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfsmoothConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfsmoothConfigParamsDict] | None`')
         for e in params["config"]:
             tsfsmooth_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def tsfsmooth_validate(
 
 
 def tsfsmooth_cargs(
-    params: TsfsmoothParameters,
+    params: TsfsmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def tsfsmooth_cargs(
 
 
 def tsfsmooth_outputs(
-    params: TsfsmoothParameters,
+    params: TsfsmoothParamsDict,
     execution: Execution,
 ) -> TsfsmoothOutputs:
     """
@@ -306,7 +306,7 @@ def tsfsmooth_outputs(
 
 
 def tsfsmooth_execute(
-    params: TsfsmoothParameters,
+    params: TsfsmoothParamsDict,
     runner: Runner | None = None,
 ) -> TsfsmoothOutputs:
     """
@@ -349,7 +349,7 @@ def tsfsmooth(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfsmoothConfigParameters] | None = None,
+    config: list[TsfsmoothConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -408,9 +408,13 @@ def tsfsmooth(
 
 __all__ = [
     "TSFSMOOTH_METADATA",
+    "TsfsmoothConfigParamsDict",
+    "TsfsmoothConfigParamsDictTagged",
     "TsfsmoothOutputs",
+    "TsfsmoothParamsDict",
+    "TsfsmoothParamsDictTagged",
     "tsfsmooth",
-    "tsfsmooth_config_params",
+    "tsfsmooth_config",
     "tsfsmooth_execute",
     "tsfsmooth_params",
 ]

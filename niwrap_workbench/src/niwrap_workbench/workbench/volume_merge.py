@@ -12,58 +12,58 @@ VOLUME_MERGE_METADATA = Metadata(
 )
 
 
-VolumeMergeUpToParameters = typing.TypedDict('VolumeMergeUpToParameters', {
+VolumeMergeUpToParamsDict = typing.TypedDict('VolumeMergeUpToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["up-to"]],
     "last-subvol": str,
     "reverse": bool,
 })
-VolumeMergeUpToParametersTagged = typing.TypedDict('VolumeMergeUpToParametersTagged', {
+VolumeMergeUpToParamsDictTagged = typing.TypedDict('VolumeMergeUpToParamsDictTagged', {
     "@type": typing.Literal["up-to"],
     "last-subvol": str,
     "reverse": bool,
 })
 
 
-VolumeMergeSubvolumeParameters = typing.TypedDict('VolumeMergeSubvolumeParameters', {
+VolumeMergeSubvolumeParamsDict = typing.TypedDict('VolumeMergeSubvolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["subvolume"]],
     "subvol": str,
-    "up-to": typing.NotRequired[VolumeMergeUpToParameters | None],
+    "up-to": typing.NotRequired[VolumeMergeUpToParamsDict | None],
 })
-VolumeMergeSubvolumeParametersTagged = typing.TypedDict('VolumeMergeSubvolumeParametersTagged', {
+VolumeMergeSubvolumeParamsDictTagged = typing.TypedDict('VolumeMergeSubvolumeParamsDictTagged', {
     "@type": typing.Literal["subvolume"],
     "subvol": str,
-    "up-to": typing.NotRequired[VolumeMergeUpToParameters | None],
+    "up-to": typing.NotRequired[VolumeMergeUpToParamsDict | None],
 })
 
 
-VolumeMergeVolumeParameters = typing.TypedDict('VolumeMergeVolumeParameters', {
+VolumeMergeVolumeParamsDict = typing.TypedDict('VolumeMergeVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "volume-in": InputPathType,
-    "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
+    "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParamsDict] | None],
 })
-VolumeMergeVolumeParametersTagged = typing.TypedDict('VolumeMergeVolumeParametersTagged', {
+VolumeMergeVolumeParamsDictTagged = typing.TypedDict('VolumeMergeVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "volume-in": InputPathType,
-    "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
+    "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParamsDict] | None],
 })
 
 
-VolumeMergeParameters = typing.TypedDict('VolumeMergeParameters', {
+VolumeMergeParamsDict = typing.TypedDict('VolumeMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-merge"]],
     "volume-out": str,
-    "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
+    "volume": typing.NotRequired[list[VolumeMergeVolumeParamsDict] | None],
 })
-VolumeMergeParametersTagged = typing.TypedDict('VolumeMergeParametersTagged', {
+VolumeMergeParamsDictTagged = typing.TypedDict('VolumeMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-merge"],
     "volume-out": str,
-    "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
+    "volume": typing.NotRequired[list[VolumeMergeVolumeParamsDict] | None],
 })
 
 
-def volume_merge_up_to_params(
+def volume_merge_up_to(
     last_subvol: str,
     reverse: bool = False,
-) -> VolumeMergeUpToParametersTagged:
+) -> VolumeMergeUpToParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def volume_merge_up_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMergeUpToParameters` object.
+    `VolumeMergeUpToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def volume_merge_up_to_validate(
 
 
 def volume_merge_up_to_cargs(
-    params: VolumeMergeUpToParameters,
+    params: VolumeMergeUpToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,10 +126,10 @@ def volume_merge_up_to_cargs(
     return cargs
 
 
-def volume_merge_subvolume_params(
+def volume_merge_subvolume(
     subvol: str,
-    up_to: VolumeMergeUpToParameters | None = None,
-) -> VolumeMergeSubvolumeParametersTagged:
+    up_to: VolumeMergeUpToParamsDict | None = None,
+) -> VolumeMergeSubvolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def volume_merge_subvolume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMergeSubvolumeParameters` object.
+    `VolumeMergeSubvolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def volume_merge_subvolume_validate(
 
 
 def volume_merge_subvolume_cargs(
-    params: VolumeMergeSubvolumeParameters,
+    params: VolumeMergeSubvolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,10 +191,10 @@ def volume_merge_subvolume_cargs(
     return cargs
 
 
-def volume_merge_volume_params(
+def volume_merge_volume(
     volume_in: InputPathType,
-    subvolume: list[VolumeMergeSubvolumeParameters] | None = None,
-) -> VolumeMergeVolumeParametersTagged:
+    subvolume: list[VolumeMergeSubvolumeParamsDict] | None = None,
+) -> VolumeMergeVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def volume_merge_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMergeVolumeParameters` object.
+    `VolumeMergeVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,13 +231,13 @@ def volume_merge_volume_validate(
         raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
     if params.get("subvolume", None) is not None:
         if not isinstance(params["subvolume"], list):
-            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `list[VolumeMergeSubvolumeParameters] | None`')
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `list[VolumeMergeSubvolumeParamsDict] | None`')
         for e in params["subvolume"]:
             volume_merge_subvolume_validate(e)
 
 
 def volume_merge_volume_cargs(
-    params: VolumeMergeVolumeParameters,
+    params: VolumeMergeVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def volume_merge_volume_cargs(
 
 class VolumeMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeMergeParameters(...)`.
+    Output object returned when calling `VolumeMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -271,8 +271,8 @@ class VolumeMergeOutputs(typing.NamedTuple):
 
 def volume_merge_params(
     volume_out: str,
-    volume: list[VolumeMergeVolumeParameters] | None = None,
-) -> VolumeMergeParametersTagged:
+    volume: list[VolumeMergeVolumeParamsDict] | None = None,
+) -> VolumeMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -296,7 +296,7 @@ def volume_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMergeParameters` object.
+    `VolumeMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -309,13 +309,13 @@ def volume_merge_validate(
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
     if params.get("volume", None) is not None:
         if not isinstance(params["volume"], list):
-            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[VolumeMergeVolumeParameters] | None`')
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[VolumeMergeVolumeParamsDict] | None`')
         for e in params["volume"]:
             volume_merge_volume_validate(e)
 
 
 def volume_merge_cargs(
-    params: VolumeMergeParameters,
+    params: VolumeMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def volume_merge_cargs(
 
 
 def volume_merge_outputs(
-    params: VolumeMergeParameters,
+    params: VolumeMergeParamsDict,
     execution: Execution,
 ) -> VolumeMergeOutputs:
     """
@@ -359,7 +359,7 @@ def volume_merge_outputs(
 
 
 def volume_merge_execute(
-    params: VolumeMergeParameters,
+    params: VolumeMergeParamsDict,
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
@@ -393,7 +393,7 @@ def volume_merge_execute(
 
 def volume_merge(
     volume_out: str,
-    volume: list[VolumeMergeVolumeParameters] | None = None,
+    volume: list[VolumeMergeVolumeParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
@@ -426,10 +426,18 @@ def volume_merge(
 __all__ = [
     "VOLUME_MERGE_METADATA",
     "VolumeMergeOutputs",
+    "VolumeMergeParamsDict",
+    "VolumeMergeParamsDictTagged",
+    "VolumeMergeSubvolumeParamsDict",
+    "VolumeMergeSubvolumeParamsDictTagged",
+    "VolumeMergeUpToParamsDict",
+    "VolumeMergeUpToParamsDictTagged",
+    "VolumeMergeVolumeParamsDict",
+    "VolumeMergeVolumeParamsDictTagged",
     "volume_merge",
     "volume_merge_execute",
     "volume_merge_params",
-    "volume_merge_subvolume_params",
-    "volume_merge_up_to_params",
-    "volume_merge_volume_params",
+    "volume_merge_subvolume",
+    "volume_merge_up_to",
+    "volume_merge_volume",
 ]

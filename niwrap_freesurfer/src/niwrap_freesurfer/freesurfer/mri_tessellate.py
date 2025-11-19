@@ -13,7 +13,7 @@ MRI_TESSELLATE_METADATA = Metadata(
 )
 
 
-MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
+MriTessellateParamsDict = typing.TypedDict('MriTessellateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_tessellate"]],
     "input_volume": InputPathType,
     "label_value": int,
@@ -22,7 +22,7 @@ MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
     "max_vertices": typing.NotRequired[int | None],
     "real_ras": bool,
 })
-MriTessellateParametersTagged = typing.TypedDict('MriTessellateParametersTagged', {
+MriTessellateParamsDictTagged = typing.TypedDict('MriTessellateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_tessellate"],
     "input_volume": InputPathType,
     "label_value": int,
@@ -35,7 +35,7 @@ MriTessellateParametersTagged = typing.TypedDict('MriTessellateParametersTagged'
 
 class MriTessellateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriTessellateParameters(...)`.
+    Output object returned when calling `MriTessellateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_tessellate_params(
     different_labels: bool = False,
     max_vertices: int | None = None,
     real_ras: bool = False,
-) -> MriTessellateParametersTagged:
+) -> MriTessellateParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def mri_tessellate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriTessellateParameters` object.
+    `MriTessellateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def mri_tessellate_validate(
 
 
 def mri_tessellate_cargs(
-    params: MriTessellateParameters,
+    params: MriTessellateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def mri_tessellate_cargs(
 
 
 def mri_tessellate_outputs(
-    params: MriTessellateParameters,
+    params: MriTessellateParamsDict,
     execution: Execution,
 ) -> MriTessellateOutputs:
     """
@@ -168,7 +168,7 @@ def mri_tessellate_outputs(
 
 
 def mri_tessellate_execute(
-    params: MriTessellateParameters,
+    params: MriTessellateParamsDict,
     runner: Runner | None = None,
 ) -> MriTessellateOutputs:
     """
@@ -242,6 +242,8 @@ def mri_tessellate(
 __all__ = [
     "MRI_TESSELLATE_METADATA",
     "MriTessellateOutputs",
+    "MriTessellateParamsDict",
+    "MriTessellateParamsDictTagged",
     "mri_tessellate",
     "mri_tessellate_execute",
     "mri_tessellate_params",

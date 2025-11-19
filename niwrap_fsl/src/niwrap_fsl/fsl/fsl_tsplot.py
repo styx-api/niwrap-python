@@ -13,7 +13,7 @@ FSL_TSPLOT_METADATA = Metadata(
 )
 
 
-FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
+FslTsplotParamsDict = typing.TypedDict('FslTsplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_tsplot"]],
     "input_files": str,
     "output_file": str,
@@ -32,7 +32,7 @@ FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
     "start_col": typing.NotRequired[float | None],
     "end_col": typing.NotRequired[float | None],
 })
-FslTsplotParametersTagged = typing.TypedDict('FslTsplotParametersTagged', {
+FslTsplotParamsDictTagged = typing.TypedDict('FslTsplotParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_tsplot"],
     "input_files": str,
     "output_file": str,
@@ -55,7 +55,7 @@ FslTsplotParametersTagged = typing.TypedDict('FslTsplotParametersTagged', {
 
 class FslTsplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslTsplotParameters(...)`.
+    Output object returned when calling `FslTsplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def fsl_tsplot_params(
     sci_flag: bool = False,
     start_col: float | None = None,
     end_col: float | None = None,
-) -> FslTsplotParametersTagged:
+) -> FslTsplotParamsDictTagged:
     """
     Build parameters.
     
@@ -145,7 +145,7 @@ def fsl_tsplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslTsplotParameters` object.
+    `FslTsplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def fsl_tsplot_validate(
 
 
 def fsl_tsplot_cargs(
-    params: FslTsplotParameters,
+    params: FslTsplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -299,7 +299,7 @@ def fsl_tsplot_cargs(
 
 
 def fsl_tsplot_outputs(
-    params: FslTsplotParameters,
+    params: FslTsplotParamsDict,
     execution: Execution,
 ) -> FslTsplotOutputs:
     """
@@ -319,7 +319,7 @@ def fsl_tsplot_outputs(
 
 
 def fsl_tsplot_execute(
-    params: FslTsplotParameters,
+    params: FslTsplotParamsDict,
     runner: Runner | None = None,
 ) -> FslTsplotOutputs:
     """
@@ -421,6 +421,8 @@ def fsl_tsplot(
 __all__ = [
     "FSL_TSPLOT_METADATA",
     "FslTsplotOutputs",
+    "FslTsplotParamsDict",
+    "FslTsplotParamsDictTagged",
     "fsl_tsplot",
     "fsl_tsplot_execute",
     "fsl_tsplot_params",

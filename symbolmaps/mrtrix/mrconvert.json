@@ -3,7 +3,7 @@
   "properties": {
     "coord": {
       "var_param": "coord",
-      "fn_struct_make_params": "mrconvert_coord_params",
+      "fn_struct_make_params": "mrconvert_coord",
       "properties": {
         "axis": {
           "var_param": "axis"
@@ -30,7 +30,7 @@
     },
     "clear_property": {
       "var_param": "clear_property",
-      "fn_struct_make_params": "mrconvert_clear_property_params",
+      "fn_struct_make_params": "mrconvert_clear_property",
       "properties": {
         "key": {
           "var_param": "key"
@@ -39,7 +39,7 @@
     },
     "set_property": {
       "var_param": "set_property",
-      "fn_struct_make_params": "mrconvert_set_property_params",
+      "fn_struct_make_params": "mrconvert_set_property",
       "properties": {
         "key": {
           "var_param": "key"
@@ -51,7 +51,7 @@
     },
     "append_property": {
       "var_param": "append_property",
-      "fn_struct_make_params": "mrconvert_append_property_params",
+      "fn_struct_make_params": "mrconvert_append_property",
       "properties": {
         "key": {
           "var_param": "key"
@@ -65,7 +65,7 @@
       "var_param": "copy_properties",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "mrconvert_various_string_params",
+          "fn_struct_make_params": "mrconvert_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -73,7 +73,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "mrconvert_various_file_params",
+          "fn_struct_make_params": "mrconvert_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -86,7 +86,7 @@
       "var_param": "strides",
       "variants": {
         "VariousString_1": {
-          "fn_struct_make_params": "mrconvert_various_string_1_params",
+          "fn_struct_make_params": "mrconvert_various_string_1",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -94,7 +94,7 @@
           }
         },
         "VariousFile_1": {
-          "fn_struct_make_params": "mrconvert_various_file_1_params",
+          "fn_struct_make_params": "mrconvert_various_file_1",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -111,7 +111,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "mrconvert_fslgrad_params",
+      "fn_struct_make_params": "mrconvert_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -129,7 +129,7 @@
     },
     "export_grad_fsl": {
       "var_param": "export_grad_fsl",
-      "fn_struct_make_params": "mrconvert_export_grad_fsl_params",
+      "fn_struct_make_params": "mrconvert_export_grad_fsl",
       "properties": {
         "bvecs_path": {
           "var_param": "bvecs_path"
@@ -144,7 +144,7 @@
     },
     "import_pe_eddy": {
       "var_param": "import_pe_eddy",
-      "fn_struct_make_params": "mrconvert_import_pe_eddy_params",
+      "fn_struct_make_params": "mrconvert_import_pe_eddy",
       "properties": {
         "config": {
           "var_param": "config"
@@ -159,7 +159,7 @@
     },
     "export_pe_eddy": {
       "var_param": "export_pe_eddy",
-      "fn_struct_make_params": "mrconvert_export_pe_eddy_params",
+      "fn_struct_make_params": "mrconvert_export_pe_eddy",
       "properties": {
         "config": {
           "var_param": "config"
@@ -186,7 +186,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrconvert_config_params",
+      "fn_struct_make_params": "mrconvert_config",
       "properties": {
         "key": {
           "var_param": "key"

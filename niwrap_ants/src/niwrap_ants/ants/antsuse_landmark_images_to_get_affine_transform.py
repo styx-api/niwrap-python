@@ -13,14 +13,14 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 )
 
 
-AntsuseLandmarkImagesToGetAffineTransformParameters = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParameters', {
+AntsuseLandmarkImagesToGetAffineTransformParamsDict = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ANTSUseLandmarkImagesToGetAffineTransform"]],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "transform_type": typing.Literal["rigid", "affine"],
     "output_affine": str,
 })
-AntsuseLandmarkImagesToGetAffineTransformParametersTagged = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParametersTagged', {
+AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged', {
     "@type": typing.Literal["ants/ANTSUseLandmarkImagesToGetAffineTransform"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -31,7 +31,7 @@ AntsuseLandmarkImagesToGetAffineTransformParametersTagged = typing.TypedDict('An
 
 class AntsuseLandmarkImagesToGetAffineTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsuseLandmarkImagesToGetAffineTransformParameters(...)`.
+    Output object returned when calling `AntsuseLandmarkImagesToGetAffineTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def antsuse_landmark_images_to_get_affine_transform_params(
     moving_image: InputPathType,
     transform_type: typing.Literal["rigid", "affine"],
     output_affine: str,
-) -> AntsuseLandmarkImagesToGetAffineTransformParametersTagged:
+) -> AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def antsuse_landmark_images_to_get_affine_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsuseLandmarkImagesToGetAffineTransformParameters` object.
+    `AntsuseLandmarkImagesToGetAffineTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def antsuse_landmark_images_to_get_affine_transform_validate(
 
 
 def antsuse_landmark_images_to_get_affine_transform_cargs(
-    params: AntsuseLandmarkImagesToGetAffineTransformParameters,
+    params: AntsuseLandmarkImagesToGetAffineTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def antsuse_landmark_images_to_get_affine_transform_cargs(
 
 
 def antsuse_landmark_images_to_get_affine_transform_outputs(
-    params: AntsuseLandmarkImagesToGetAffineTransformParameters,
+    params: AntsuseLandmarkImagesToGetAffineTransformParamsDict,
     execution: Execution,
 ) -> AntsuseLandmarkImagesToGetAffineTransformOutputs:
     """
@@ -144,7 +144,7 @@ def antsuse_landmark_images_to_get_affine_transform_outputs(
 
 
 def antsuse_landmark_images_to_get_affine_transform_execute(
-    params: AntsuseLandmarkImagesToGetAffineTransformParameters,
+    params: AntsuseLandmarkImagesToGetAffineTransformParamsDict,
     runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetAffineTransformOutputs:
     """
@@ -222,6 +222,8 @@ def antsuse_landmark_images_to_get_affine_transform(
 __all__ = [
     "ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA",
     "AntsuseLandmarkImagesToGetAffineTransformOutputs",
+    "AntsuseLandmarkImagesToGetAffineTransformParamsDict",
+    "AntsuseLandmarkImagesToGetAffineTransformParamsDictTagged",
     "antsuse_landmark_images_to_get_affine_transform",
     "antsuse_landmark_images_to_get_affine_transform_execute",
     "antsuse_landmark_images_to_get_affine_transform_params",

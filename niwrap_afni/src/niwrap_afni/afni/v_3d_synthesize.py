@@ -13,7 +13,7 @@ V_3D_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
+V3dSynthesizeParamsDict = typing.TypedDict('V3dSynthesizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSynthesize"]],
     "c_bucket": InputPathType,
     "matrix": InputPathType,
@@ -23,7 +23,7 @@ V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
     "tr": typing.NotRequired[float | None],
     "cenfill": typing.NotRequired[typing.Literal["zero", "nbhr", "none"] | None],
 })
-V3dSynthesizeParametersTagged = typing.TypedDict('V3dSynthesizeParametersTagged', {
+V3dSynthesizeParamsDictTagged = typing.TypedDict('V3dSynthesizeParamsDictTagged', {
     "@type": typing.Literal["afni/3dSynthesize"],
     "c_bucket": InputPathType,
     "matrix": InputPathType,
@@ -37,7 +37,7 @@ V3dSynthesizeParametersTagged = typing.TypedDict('V3dSynthesizeParametersTagged'
 
 class V3dSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSynthesizeParameters(...)`.
+    Output object returned when calling `V3dSynthesizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v_3d_synthesize_params(
     dry_flag: bool = False,
     tr: float | None = None,
     cenfill: typing.Literal["zero", "nbhr", "none"] | None = None,
-) -> V3dSynthesizeParametersTagged:
+) -> V3dSynthesizeParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def v_3d_synthesize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSynthesizeParameters` object.
+    `V3dSynthesizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def v_3d_synthesize_validate(
 
 
 def v_3d_synthesize_cargs(
-    params: V3dSynthesizeParameters,
+    params: V3dSynthesizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def v_3d_synthesize_cargs(
 
 
 def v_3d_synthesize_outputs(
-    params: V3dSynthesizeParameters,
+    params: V3dSynthesizeParamsDict,
     execution: Execution,
 ) -> V3dSynthesizeOutputs:
     """
@@ -192,7 +192,7 @@ def v_3d_synthesize_outputs(
 
 
 def v_3d_synthesize_execute(
-    params: V3dSynthesizeParameters,
+    params: V3dSynthesizeParamsDict,
     runner: Runner | None = None,
 ) -> V3dSynthesizeOutputs:
     """
@@ -270,6 +270,8 @@ def v_3d_synthesize(
 
 __all__ = [
     "V3dSynthesizeOutputs",
+    "V3dSynthesizeParamsDict",
+    "V3dSynthesizeParamsDictTagged",
     "V_3D_SYNTHESIZE_METADATA",
     "v_3d_synthesize",
     "v_3d_synthesize_execute",

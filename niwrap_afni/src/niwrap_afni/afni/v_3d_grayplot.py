@@ -13,7 +13,7 @@ V_3D_GRAYPLOT_METADATA = Metadata(
 )
 
 
-V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
+V3dGrayplotParamsDict = typing.TypedDict('V3dGrayplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dGrayplot"]],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
     "percent": bool,
     "raw_with_bounds": typing.NotRequired[list[float] | None],
 })
-V3dGrayplotParametersTagged = typing.TypedDict('V3dGrayplotParametersTagged', {
+V3dGrayplotParamsDictTagged = typing.TypedDict('V3dGrayplotParamsDictTagged', {
     "@type": typing.Literal["afni/3dGrayplot"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ V3dGrayplotParametersTagged = typing.TypedDict('V3dGrayplotParametersTagged', {
 
 class V3dGrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dGrayplotParameters(...)`.
+    Output object returned when calling `V3dGrayplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v_3d_grayplot_params(
     range_: float | None = None,
     percent: bool = False,
     raw_with_bounds: list[float] | None = None,
-) -> V3dGrayplotParametersTagged:
+) -> V3dGrayplotParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def v_3d_grayplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dGrayplotParameters` object.
+    `V3dGrayplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def v_3d_grayplot_validate(
 
 
 def v_3d_grayplot_cargs(
-    params: V3dGrayplotParameters,
+    params: V3dGrayplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def v_3d_grayplot_cargs(
 
 
 def v_3d_grayplot_outputs(
-    params: V3dGrayplotParameters,
+    params: V3dGrayplotParamsDict,
     execution: Execution,
 ) -> V3dGrayplotOutputs:
     """
@@ -293,7 +293,7 @@ def v_3d_grayplot_outputs(
 
 
 def v_3d_grayplot_execute(
-    params: V3dGrayplotParameters,
+    params: V3dGrayplotParamsDict,
     runner: Runner | None = None,
 ) -> V3dGrayplotOutputs:
     """
@@ -399,6 +399,8 @@ def v_3d_grayplot(
 
 __all__ = [
     "V3dGrayplotOutputs",
+    "V3dGrayplotParamsDict",
+    "V3dGrayplotParamsDictTagged",
     "V_3D_GRAYPLOT_METADATA",
     "v_3d_grayplot",
     "v_3d_grayplot_execute",

@@ -13,7 +13,7 @@ ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
 )
 
 
-AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParameters', {
+AntsMultivariateTemplateConstruction2ShParamsDict = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsMultivariateTemplateConstruction2.sh"]],
     "dimension": typing.Literal[2, 3, 4],
     "output_prefix": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultiv
     "target_volume": typing.NotRequired[list[InputPathType] | None],
     "input_images": list[InputPathType],
 })
-AntsMultivariateTemplateConstruction2ShParametersTagged = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParametersTagged', {
+AntsMultivariateTemplateConstruction2ShParamsDictTagged = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParamsDictTagged', {
     "@type": typing.Literal["ants/antsMultivariateTemplateConstruction2.sh"],
     "dimension": typing.Literal[2, 3, 4],
     "output_prefix": typing.NotRequired[str | None],
@@ -77,7 +77,7 @@ AntsMultivariateTemplateConstruction2ShParametersTagged = typing.TypedDict('Ants
 
 class AntsMultivariateTemplateConstruction2ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsMultivariateTemplateConstruction2ShParameters(...)`.
+    Output object returned when calling `AntsMultivariateTemplateConstruction2ShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +114,7 @@ def ants_multivariate_template_construction2_sh_params(
     xgrid_args: str | None = None,
     update_template: bool | None = None,
     target_volume: list[InputPathType] | None = None,
-) -> AntsMultivariateTemplateConstruction2ShParametersTagged:
+) -> AntsMultivariateTemplateConstruction2ShParamsDictTagged:
     """
     Build parameters.
     
@@ -279,7 +279,7 @@ def ants_multivariate_template_construction2_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsMultivariateTemplateConstruction2ShParameters` object.
+    `AntsMultivariateTemplateConstruction2ShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -388,7 +388,7 @@ def ants_multivariate_template_construction2_sh_validate(
 
 
 def ants_multivariate_template_construction2_sh_cargs(
-    params: AntsMultivariateTemplateConstruction2ShParameters,
+    params: AntsMultivariateTemplateConstruction2ShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -536,7 +536,7 @@ def ants_multivariate_template_construction2_sh_cargs(
 
 
 def ants_multivariate_template_construction2_sh_outputs(
-    params: AntsMultivariateTemplateConstruction2ShParameters,
+    params: AntsMultivariateTemplateConstruction2ShParamsDict,
     execution: Execution,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:
     """
@@ -556,7 +556,7 @@ def ants_multivariate_template_construction2_sh_outputs(
 
 
 def ants_multivariate_template_construction2_sh_execute(
-    params: AntsMultivariateTemplateConstruction2ShParameters,
+    params: AntsMultivariateTemplateConstruction2ShParamsDict,
     runner: Runner | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:
     """
@@ -761,6 +761,8 @@ def ants_multivariate_template_construction2_sh(
 __all__ = [
     "ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA",
     "AntsMultivariateTemplateConstruction2ShOutputs",
+    "AntsMultivariateTemplateConstruction2ShParamsDict",
+    "AntsMultivariateTemplateConstruction2ShParamsDictTagged",
     "ants_multivariate_template_construction2_sh",
     "ants_multivariate_template_construction2_sh_execute",
     "ants_multivariate_template_construction2_sh_params",

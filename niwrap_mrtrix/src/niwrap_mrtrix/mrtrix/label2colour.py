@@ -13,19 +13,19 @@ LABEL2COLOUR_METADATA = Metadata(
 )
 
 
-Label2colourConfigParameters = typing.TypedDict('Label2colourConfigParameters', {
+Label2colourConfigParamsDict = typing.TypedDict('Label2colourConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Label2colourConfigParametersTagged = typing.TypedDict('Label2colourConfigParametersTagged', {
+Label2colourConfigParamsDictTagged = typing.TypedDict('Label2colourConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Label2colourParameters = typing.TypedDict('Label2colourParameters', {
+Label2colourParamsDict = typing.TypedDict('Label2colourParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/label2colour"]],
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -33,13 +33,13 @@ Label2colourParameters = typing.TypedDict('Label2colourParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Label2colourConfigParameters] | None],
+    "config": typing.NotRequired[list[Label2colourConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "nodes_in": InputPathType,
     "colour_out": str,
 })
-Label2colourParametersTagged = typing.TypedDict('Label2colourParametersTagged', {
+Label2colourParamsDictTagged = typing.TypedDict('Label2colourParamsDictTagged', {
     "@type": typing.Literal["mrtrix/label2colour"],
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -47,7 +47,7 @@ Label2colourParametersTagged = typing.TypedDict('Label2colourParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Label2colourConfigParameters] | None],
+    "config": typing.NotRequired[list[Label2colourConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "nodes_in": InputPathType,
@@ -55,10 +55,10 @@ Label2colourParametersTagged = typing.TypedDict('Label2colourParametersTagged', 
 })
 
 
-def label2colour_config_params(
+def label2colour_config(
     key: str,
     value: str,
-) -> Label2colourConfigParametersTagged:
+) -> Label2colourConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def label2colour_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2colourConfigParameters` object.
+    `Label2colourConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def label2colour_config_validate(
 
 
 def label2colour_config_cargs(
-    params: Label2colourConfigParameters,
+    params: Label2colourConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def label2colour_config_cargs(
 
 class Label2colourOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Label2colourParameters(...)`.
+    Output object returned when calling `Label2colourParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def label2colour_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Label2colourConfigParameters] | None = None,
+    config: list[Label2colourConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Label2colourParametersTagged:
+) -> Label2colourParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def label2colour_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2colourParameters` object.
+    `Label2colourParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -220,7 +220,7 @@ def label2colour_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Label2colourConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Label2colourConfigParamsDict] | None`')
         for e in params["config"]:
             label2colour_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def label2colour_validate(
 
 
 def label2colour_cargs(
-    params: Label2colourParameters,
+    params: Label2colourParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def label2colour_cargs(
 
 
 def label2colour_outputs(
-    params: Label2colourParameters,
+    params: Label2colourParamsDict,
     execution: Execution,
 ) -> Label2colourOutputs:
     """
@@ -306,7 +306,7 @@ def label2colour_outputs(
 
 
 def label2colour_execute(
-    params: Label2colourParameters,
+    params: Label2colourParamsDict,
     runner: Runner | None = None,
 ) -> Label2colourOutputs:
     """
@@ -352,7 +352,7 @@ def label2colour(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Label2colourConfigParameters] | None = None,
+    config: list[Label2colourConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -414,9 +414,13 @@ def label2colour(
 
 __all__ = [
     "LABEL2COLOUR_METADATA",
+    "Label2colourConfigParamsDict",
+    "Label2colourConfigParamsDictTagged",
     "Label2colourOutputs",
+    "Label2colourParamsDict",
+    "Label2colourParamsDictTagged",
     "label2colour",
-    "label2colour_config_params",
+    "label2colour_config",
     "label2colour_execute",
     "label2colour_params",
 ]

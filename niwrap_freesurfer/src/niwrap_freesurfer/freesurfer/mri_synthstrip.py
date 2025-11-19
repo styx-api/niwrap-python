@@ -13,7 +13,7 @@ MRI_SYNTHSTRIP_METADATA = Metadata(
 )
 
 
-MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
+MriSynthstripParamsDict = typing.TypedDict('MriSynthstripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthstrip"]],
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
     "exclude_csf": bool,
     "model_weights": typing.NotRequired[InputPathType | None],
 })
-MriSynthstripParametersTagged = typing.TypedDict('MriSynthstripParametersTagged', {
+MriSynthstripParamsDictTagged = typing.TypedDict('MriSynthstripParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_synthstrip"],
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ MriSynthstripParametersTagged = typing.TypedDict('MriSynthstripParametersTagged'
 
 class MriSynthstripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSynthstripParameters(...)`.
+    Output object returned when calling `MriSynthstripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def mri_synthstrip_params(
     border: float | None = None,
     exclude_csf: bool = False,
     model_weights: InputPathType | None = None,
-) -> MriSynthstripParametersTagged:
+) -> MriSynthstripParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def mri_synthstrip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSynthstripParameters` object.
+    `MriSynthstripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def mri_synthstrip_validate(
 
 
 def mri_synthstrip_cargs(
-    params: MriSynthstripParameters,
+    params: MriSynthstripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def mri_synthstrip_cargs(
 
 
 def mri_synthstrip_outputs(
-    params: MriSynthstripParameters,
+    params: MriSynthstripParamsDict,
     execution: Execution,
 ) -> MriSynthstripOutputs:
     """
@@ -193,7 +193,7 @@ def mri_synthstrip_outputs(
 
 
 def mri_synthstrip_execute(
-    params: MriSynthstripParameters,
+    params: MriSynthstripParamsDict,
     runner: Runner | None = None,
 ) -> MriSynthstripOutputs:
     """
@@ -267,6 +267,8 @@ def mri_synthstrip(
 __all__ = [
     "MRI_SYNTHSTRIP_METADATA",
     "MriSynthstripOutputs",
+    "MriSynthstripParamsDict",
+    "MriSynthstripParamsDictTagged",
     "mri_synthstrip",
     "mri_synthstrip_execute",
     "mri_synthstrip_params",

@@ -13,7 +13,7 @@ EXPORT_GCAM_METADATA = Metadata(
 )
 
 
-ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
+ExportGcamParamsDict = typing.TypedDict('ExportGcamParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/exportGcam"]],
     "fixed": InputPathType,
     "moving": InputPathType,
@@ -24,7 +24,7 @@ ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
     "interp_method": typing.NotRequired[typing.Literal["linear", "nearest"] | None],
     "test": bool,
 })
-ExportGcamParametersTagged = typing.TypedDict('ExportGcamParametersTagged', {
+ExportGcamParamsDictTagged = typing.TypedDict('ExportGcamParamsDictTagged', {
     "@type": typing.Literal["freesurfer/exportGcam"],
     "fixed": InputPathType,
     "moving": InputPathType,
@@ -39,7 +39,7 @@ ExportGcamParametersTagged = typing.TypedDict('ExportGcamParametersTagged', {
 
 class ExportGcamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExportGcamParameters(...)`.
+    Output object returned when calling `ExportGcamParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def export_gcam_params(
     bbox_threshold: float | None = None,
     interp_method: typing.Literal["linear", "nearest"] | None = None,
     test: bool = False,
-) -> ExportGcamParametersTagged:
+) -> ExportGcamParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def export_gcam_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExportGcamParameters` object.
+    `ExportGcamParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def export_gcam_validate(
 
 
 def export_gcam_cargs(
-    params: ExportGcamParameters,
+    params: ExportGcamParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -189,7 +189,7 @@ def export_gcam_cargs(
 
 
 def export_gcam_outputs(
-    params: ExportGcamParameters,
+    params: ExportGcamParamsDict,
     execution: Execution,
 ) -> ExportGcamOutputs:
     """
@@ -209,7 +209,7 @@ def export_gcam_outputs(
 
 
 def export_gcam_execute(
-    params: ExportGcamParameters,
+    params: ExportGcamParamsDict,
     runner: Runner | None = None,
 ) -> ExportGcamOutputs:
     """
@@ -291,6 +291,8 @@ def export_gcam(
 __all__ = [
     "EXPORT_GCAM_METADATA",
     "ExportGcamOutputs",
+    "ExportGcamParamsDict",
+    "ExportGcamParamsDictTagged",
     "export_gcam",
     "export_gcam_execute",
     "export_gcam_params",

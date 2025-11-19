@@ -13,13 +13,13 @@ DCMEDIT_METADATA = Metadata(
 )
 
 
-DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
+DcmeditTagParamsDict = typing.TypedDict('DcmeditTagParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tag"]],
     "group": str,
     "element": str,
     "newvalue": str,
 })
-DcmeditTagParametersTagged = typing.TypedDict('DcmeditTagParametersTagged', {
+DcmeditTagParamsDictTagged = typing.TypedDict('DcmeditTagParamsDictTagged', {
     "@type": typing.Literal["tag"],
     "group": str,
     "element": str,
@@ -27,55 +27,55 @@ DcmeditTagParametersTagged = typing.TypedDict('DcmeditTagParametersTagged', {
 })
 
 
-DcmeditConfigParameters = typing.TypedDict('DcmeditConfigParameters', {
+DcmeditConfigParamsDict = typing.TypedDict('DcmeditConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DcmeditConfigParametersTagged = typing.TypedDict('DcmeditConfigParametersTagged', {
+DcmeditConfigParamsDictTagged = typing.TypedDict('DcmeditConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DcmeditParameters = typing.TypedDict('DcmeditParameters', {
+DcmeditParamsDict = typing.TypedDict('DcmeditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dcmedit"]],
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
-    "tag": typing.NotRequired[list[DcmeditTagParameters] | None],
+    "tag": typing.NotRequired[list[DcmeditTagParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DcmeditConfigParameters] | None],
+    "config": typing.NotRequired[list[DcmeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "file": InputPathType,
 })
-DcmeditParametersTagged = typing.TypedDict('DcmeditParametersTagged', {
+DcmeditParamsDictTagged = typing.TypedDict('DcmeditParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dcmedit"],
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
-    "tag": typing.NotRequired[list[DcmeditTagParameters] | None],
+    "tag": typing.NotRequired[list[DcmeditTagParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DcmeditConfigParameters] | None],
+    "config": typing.NotRequired[list[DcmeditConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "file": InputPathType,
 })
 
 
-def dcmedit_tag_params(
+def dcmedit_tag(
     group: str,
     element: str,
     newvalue: str,
-) -> DcmeditTagParametersTagged:
+) -> DcmeditTagParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def dcmedit_tag_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmeditTagParameters` object.
+    `DcmeditTagParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -122,7 +122,7 @@ def dcmedit_tag_validate(
 
 
 def dcmedit_tag_cargs(
-    params: DcmeditTagParameters,
+    params: DcmeditTagParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,10 +142,10 @@ def dcmedit_tag_cargs(
     return cargs
 
 
-def dcmedit_config_params(
+def dcmedit_config(
     key: str,
     value: str,
-) -> DcmeditConfigParametersTagged:
+) -> DcmeditConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -168,7 +168,7 @@ def dcmedit_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmeditConfigParameters` object.
+    `DcmeditConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def dcmedit_config_validate(
 
 
 def dcmedit_config_cargs(
-    params: DcmeditConfigParameters,
+    params: DcmeditConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def dcmedit_config_cargs(
 
 class DcmeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmeditParameters(...)`.
+    Output object returned when calling `DcmeditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -217,16 +217,16 @@ def dcmedit_params(
     file: InputPathType,
     anonymise: bool = False,
     id_: str | None = None,
-    tag: list[DcmeditTagParameters] | None = None,
+    tag: list[DcmeditTagParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DcmeditConfigParameters] | None = None,
+    config: list[DcmeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DcmeditParametersTagged:
+) -> DcmeditParamsDictTagged:
     """
     Build parameters.
     
@@ -288,7 +288,7 @@ def dcmedit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmeditParameters` object.
+    `DcmeditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -304,7 +304,7 @@ def dcmedit_validate(
             raise StyxValidationError(f'`id` has the wrong type: Received `{type(params.get("id", None))}` expected `str | None`')
     if params.get("tag", None) is not None:
         if not isinstance(params["tag"], list):
-            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[DcmeditTagParameters] | None`')
+            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[DcmeditTagParamsDict] | None`')
         for e in params["tag"]:
             dcmedit_tag_validate(e)
     if params.get("info", False) is None:
@@ -328,7 +328,7 @@ def dcmedit_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DcmeditConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DcmeditConfigParamsDict] | None`')
         for e in params["config"]:
             dcmedit_config_validate(e)
     if params.get("help", False) is None:
@@ -346,7 +346,7 @@ def dcmedit_validate(
 
 
 def dcmedit_cargs(
-    params: DcmeditParameters,
+    params: DcmeditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -393,7 +393,7 @@ def dcmedit_cargs(
 
 
 def dcmedit_outputs(
-    params: DcmeditParameters,
+    params: DcmeditParamsDict,
     execution: Execution,
 ) -> DcmeditOutputs:
     """
@@ -412,7 +412,7 @@ def dcmedit_outputs(
 
 
 def dcmedit_execute(
-    params: DcmeditParameters,
+    params: DcmeditParamsDict,
     runner: Runner | None = None,
 ) -> DcmeditOutputs:
     """
@@ -455,13 +455,13 @@ def dcmedit(
     file: InputPathType,
     anonymise: bool = False,
     id_: str | None = None,
-    tag: list[DcmeditTagParameters] | None = None,
+    tag: list[DcmeditTagParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DcmeditConfigParameters] | None = None,
+    config: list[DcmeditConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -537,10 +537,16 @@ def dcmedit(
 
 __all__ = [
     "DCMEDIT_METADATA",
+    "DcmeditConfigParamsDict",
+    "DcmeditConfigParamsDictTagged",
     "DcmeditOutputs",
+    "DcmeditParamsDict",
+    "DcmeditParamsDictTagged",
+    "DcmeditTagParamsDict",
+    "DcmeditTagParamsDictTagged",
     "dcmedit",
-    "dcmedit_config_params",
+    "dcmedit_config",
     "dcmedit_execute",
     "dcmedit_params",
-    "dcmedit_tag_params",
+    "dcmedit_tag",
 ]

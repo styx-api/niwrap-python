@@ -13,7 +13,7 @@ MRI_MAP_CPDAT_METADATA = Metadata(
 )
 
 
-MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
+MriMapCpdatParamsDict = typing.TypedDict('MriMapCpdatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_map_cpdat"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -22,7 +22,7 @@ MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
     "from_mni305": typing.NotRequired[str | None],
     "subject_list_file": typing.NotRequired[InputPathType | None],
 })
-MriMapCpdatParametersTagged = typing.TypedDict('MriMapCpdatParametersTagged', {
+MriMapCpdatParamsDictTagged = typing.TypedDict('MriMapCpdatParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_map_cpdat"],
     "input_file": InputPathType,
     "output_file": str,
@@ -35,7 +35,7 @@ MriMapCpdatParametersTagged = typing.TypedDict('MriMapCpdatParametersTagged', {
 
 class MriMapCpdatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMapCpdatParameters(...)`.
+    Output object returned when calling `MriMapCpdatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_map_cpdat_params(
     to_mni305: str | None = None,
     from_mni305: str | None = None,
     subject_list_file: InputPathType | None = None,
-) -> MriMapCpdatParametersTagged:
+) -> MriMapCpdatParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def mri_map_cpdat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMapCpdatParameters` object.
+    `MriMapCpdatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def mri_map_cpdat_validate(
 
 
 def mri_map_cpdat_cargs(
-    params: MriMapCpdatParameters,
+    params: MriMapCpdatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def mri_map_cpdat_cargs(
 
 
 def mri_map_cpdat_outputs(
-    params: MriMapCpdatParameters,
+    params: MriMapCpdatParamsDict,
     execution: Execution,
 ) -> MriMapCpdatOutputs:
     """
@@ -182,7 +182,7 @@ def mri_map_cpdat_outputs(
 
 
 def mri_map_cpdat_execute(
-    params: MriMapCpdatParameters,
+    params: MriMapCpdatParamsDict,
     runner: Runner | None = None,
 ) -> MriMapCpdatOutputs:
     """
@@ -254,6 +254,8 @@ def mri_map_cpdat(
 __all__ = [
     "MRI_MAP_CPDAT_METADATA",
     "MriMapCpdatOutputs",
+    "MriMapCpdatParamsDict",
+    "MriMapCpdatParamsDictTagged",
     "mri_map_cpdat",
     "mri_map_cpdat_execute",
     "mri_map_cpdat_params",

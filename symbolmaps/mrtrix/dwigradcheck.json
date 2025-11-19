@@ -9,7 +9,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "dwigradcheck_fslgrad_params",
+      "fn_struct_make_params": "dwigradcheck_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -30,7 +30,7 @@
     },
     "export_grad_fsl": {
       "var_param": "export_grad_fsl",
-      "fn_struct_make_params": "dwigradcheck_export_grad_fsl_params",
+      "fn_struct_make_params": "dwigradcheck_export_grad_fsl",
       "properties": {
         "bvecs_path": {
           "var_param": "bvecs_path"

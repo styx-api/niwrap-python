@@ -13,12 +13,12 @@ SPM_T_TO_B_METADATA = Metadata(
 )
 
 
-SpmTToBParameters = typing.TypedDict('SpmTToBParameters', {
+SpmTToBParamsDict = typing.TypedDict('SpmTToBParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/spm_t_to_b"]],
     "spm_stem_format": str,
     "bshort_stem": str,
 })
-SpmTToBParametersTagged = typing.TypedDict('SpmTToBParametersTagged', {
+SpmTToBParamsDictTagged = typing.TypedDict('SpmTToBParamsDictTagged', {
     "@type": typing.Literal["freesurfer/spm_t_to_b"],
     "spm_stem_format": str,
     "bshort_stem": str,
@@ -27,7 +27,7 @@ SpmTToBParametersTagged = typing.TypedDict('SpmTToBParametersTagged', {
 
 class SpmTToBOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpmTToBParameters(...)`.
+    Output object returned when calling `SpmTToBParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class SpmTToBOutputs(typing.NamedTuple):
 def spm_t_to_b_params(
     spm_stem_format: str,
     bshort_stem: str,
-) -> SpmTToBParametersTagged:
+) -> SpmTToBParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def spm_t_to_b_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpmTToBParameters` object.
+    `SpmTToBParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def spm_t_to_b_validate(
 
 
 def spm_t_to_b_cargs(
-    params: SpmTToBParameters,
+    params: SpmTToBParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def spm_t_to_b_cargs(
 
 
 def spm_t_to_b_outputs(
-    params: SpmTToBParameters,
+    params: SpmTToBParamsDict,
     execution: Execution,
 ) -> SpmTToBOutputs:
     """
@@ -116,7 +116,7 @@ def spm_t_to_b_outputs(
 
 
 def spm_t_to_b_execute(
-    params: SpmTToBParameters,
+    params: SpmTToBParamsDict,
     runner: Runner | None = None,
 ) -> SpmTToBOutputs:
     """
@@ -175,6 +175,8 @@ def spm_t_to_b(
 __all__ = [
     "SPM_T_TO_B_METADATA",
     "SpmTToBOutputs",
+    "SpmTToBParamsDict",
+    "SpmTToBParamsDictTagged",
     "spm_t_to_b",
     "spm_t_to_b_execute",
     "spm_t_to_b_params",

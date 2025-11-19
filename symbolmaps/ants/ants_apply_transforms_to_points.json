@@ -20,11 +20,11 @@
       "var_param": "transform",
       "variants": {
         "single_transform": {
-          "fn_struct_make_params": "ants_apply_transforms_to_points_single_transform_params",
+          "fn_struct_make_params": "ants_apply_transforms_to_points_single_transform",
           "properties": {}
         },
         "inverse_transform": {
-          "fn_struct_make_params": "ants_apply_transforms_to_points_inverse_transform_params",
+          "fn_struct_make_params": "ants_apply_transforms_to_points_inverse_transform",
           "properties": {
             "transform_file": {
               "var_param": "transform_file"

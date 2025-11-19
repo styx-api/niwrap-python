@@ -13,7 +13,7 @@ MRI_THRESHOLD_METADATA = Metadata(
 )
 
 
-MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
+MriThresholdParamsDict = typing.TypedDict('MriThresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_threshold"]],
     "input_vol": InputPathType,
     "threshold": float,
@@ -22,7 +22,7 @@ MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
     "upper_threshold": bool,
     "frame_number": typing.NotRequired[float | None],
 })
-MriThresholdParametersTagged = typing.TypedDict('MriThresholdParametersTagged', {
+MriThresholdParamsDictTagged = typing.TypedDict('MriThresholdParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_threshold"],
     "input_vol": InputPathType,
     "threshold": float,
@@ -35,7 +35,7 @@ MriThresholdParametersTagged = typing.TypedDict('MriThresholdParametersTagged', 
 
 class MriThresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriThresholdParameters(...)`.
+    Output object returned when calling `MriThresholdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_threshold_params(
     binarize: float | None = None,
     upper_threshold: bool = False,
     frame_number: float | None = None,
-) -> MriThresholdParametersTagged:
+) -> MriThresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def mri_threshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriThresholdParameters` object.
+    `MriThresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def mri_threshold_validate(
 
 
 def mri_threshold_cargs(
-    params: MriThresholdParameters,
+    params: MriThresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def mri_threshold_cargs(
 
 
 def mri_threshold_outputs(
-    params: MriThresholdParameters,
+    params: MriThresholdParamsDict,
     execution: Execution,
 ) -> MriThresholdOutputs:
     """
@@ -169,7 +169,7 @@ def mri_threshold_outputs(
 
 
 def mri_threshold_execute(
-    params: MriThresholdParameters,
+    params: MriThresholdParamsDict,
     runner: Runner | None = None,
 ) -> MriThresholdOutputs:
     """
@@ -241,6 +241,8 @@ def mri_threshold(
 __all__ = [
     "MRI_THRESHOLD_METADATA",
     "MriThresholdOutputs",
+    "MriThresholdParamsDict",
+    "MriThresholdParamsDictTagged",
     "mri_threshold",
     "mri_threshold_execute",
     "mri_threshold_params",

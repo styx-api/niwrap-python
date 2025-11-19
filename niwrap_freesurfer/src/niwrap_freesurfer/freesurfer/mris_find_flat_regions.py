@@ -13,13 +13,13 @@ MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
 )
 
 
-MrisFindFlatRegionsParameters = typing.TypedDict('MrisFindFlatRegionsParameters', {
+MrisFindFlatRegionsParamsDict = typing.TypedDict('MrisFindFlatRegionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_find_flat_regions"]],
     "surface": InputPathType,
     "wfile": str,
     "threshold": typing.NotRequired[float | None],
 })
-MrisFindFlatRegionsParametersTagged = typing.TypedDict('MrisFindFlatRegionsParametersTagged', {
+MrisFindFlatRegionsParamsDictTagged = typing.TypedDict('MrisFindFlatRegionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_find_flat_regions"],
     "surface": InputPathType,
     "wfile": str,
@@ -29,7 +29,7 @@ MrisFindFlatRegionsParametersTagged = typing.TypedDict('MrisFindFlatRegionsParam
 
 class MrisFindFlatRegionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisFindFlatRegionsParameters(...)`.
+    Output object returned when calling `MrisFindFlatRegionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mris_find_flat_regions_params(
     surface: InputPathType,
     wfile: str,
     threshold: float | None = None,
-) -> MrisFindFlatRegionsParametersTagged:
+) -> MrisFindFlatRegionsParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def mris_find_flat_regions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisFindFlatRegionsParameters` object.
+    `MrisFindFlatRegionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def mris_find_flat_regions_validate(
 
 
 def mris_find_flat_regions_cargs(
-    params: MrisFindFlatRegionsParameters,
+    params: MrisFindFlatRegionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def mris_find_flat_regions_cargs(
 
 
 def mris_find_flat_regions_outputs(
-    params: MrisFindFlatRegionsParameters,
+    params: MrisFindFlatRegionsParamsDict,
     execution: Execution,
 ) -> MrisFindFlatRegionsOutputs:
     """
@@ -134,7 +134,7 @@ def mris_find_flat_regions_outputs(
 
 
 def mris_find_flat_regions_execute(
-    params: MrisFindFlatRegionsParameters,
+    params: MrisFindFlatRegionsParamsDict,
     runner: Runner | None = None,
 ) -> MrisFindFlatRegionsOutputs:
     """
@@ -198,6 +198,8 @@ def mris_find_flat_regions(
 __all__ = [
     "MRIS_FIND_FLAT_REGIONS_METADATA",
     "MrisFindFlatRegionsOutputs",
+    "MrisFindFlatRegionsParamsDict",
+    "MrisFindFlatRegionsParamsDictTagged",
     "mris_find_flat_regions",
     "mris_find_flat_regions_execute",
     "mris_find_flat_regions_params",

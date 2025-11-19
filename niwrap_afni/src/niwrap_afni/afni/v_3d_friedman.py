@@ -13,7 +13,7 @@ V_3D_FRIEDMAN_METADATA = Metadata(
 )
 
 
-V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
+V3dFriedmanParamsDict = typing.TypedDict('V3dFriedmanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dFriedman"]],
     "levels": int,
     "datasets": list[InputPathType],
@@ -21,7 +21,7 @@ V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
     "voxel_num": typing.NotRequired[int | None],
     "output_prefix": str,
 })
-V3dFriedmanParametersTagged = typing.TypedDict('V3dFriedmanParametersTagged', {
+V3dFriedmanParamsDictTagged = typing.TypedDict('V3dFriedmanParamsDictTagged', {
     "@type": typing.Literal["afni/3dFriedman"],
     "levels": int,
     "datasets": list[InputPathType],
@@ -33,7 +33,7 @@ V3dFriedmanParametersTagged = typing.TypedDict('V3dFriedmanParametersTagged', {
 
 class V3dFriedmanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dFriedmanParameters(...)`.
+    Output object returned when calling `V3dFriedmanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v_3d_friedman_params(
     output_prefix: str,
     workmem: int | None = None,
     voxel_num: int | None = None,
-) -> V3dFriedmanParametersTagged:
+) -> V3dFriedmanParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def v_3d_friedman_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dFriedmanParameters` object.
+    `V3dFriedmanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def v_3d_friedman_validate(
 
 
 def v_3d_friedman_cargs(
-    params: V3dFriedmanParameters,
+    params: V3dFriedmanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def v_3d_friedman_cargs(
 
 
 def v_3d_friedman_outputs(
-    params: V3dFriedmanParameters,
+    params: V3dFriedmanParamsDict,
     execution: Execution,
 ) -> V3dFriedmanOutputs:
     """
@@ -163,7 +163,7 @@ def v_3d_friedman_outputs(
 
 
 def v_3d_friedman_execute(
-    params: V3dFriedmanParameters,
+    params: V3dFriedmanParamsDict,
     runner: Runner | None = None,
 ) -> V3dFriedmanOutputs:
     """
@@ -232,6 +232,8 @@ def v_3d_friedman(
 
 __all__ = [
     "V3dFriedmanOutputs",
+    "V3dFriedmanParamsDict",
+    "V3dFriedmanParamsDictTagged",
     "V_3D_FRIEDMAN_METADATA",
     "v_3d_friedman",
     "v_3d_friedman_execute",

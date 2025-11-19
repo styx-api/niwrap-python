@@ -13,14 +13,14 @@ DICOM_RENAME_METADATA = Metadata(
 )
 
 
-DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
+DicomRenameParamsDict = typing.TypedDict('DicomRenameParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dicom-rename"]],
     "input_files": list[InputPathType],
     "output_base": str,
     "version": bool,
     "help": bool,
 })
-DicomRenameParametersTagged = typing.TypedDict('DicomRenameParametersTagged', {
+DicomRenameParamsDictTagged = typing.TypedDict('DicomRenameParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dicom-rename"],
     "input_files": list[InputPathType],
     "output_base": str,
@@ -31,7 +31,7 @@ DicomRenameParametersTagged = typing.TypedDict('DicomRenameParametersTagged', {
 
 class DicomRenameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DicomRenameParameters(...)`.
+    Output object returned when calling `DicomRenameParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def dicom_rename_params(
     output_base: str,
     version: bool = False,
     help_: bool = False,
-) -> DicomRenameParametersTagged:
+) -> DicomRenameParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def dicom_rename_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DicomRenameParameters` object.
+    `DicomRenameParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def dicom_rename_validate(
 
 
 def dicom_rename_cargs(
-    params: DicomRenameParameters,
+    params: DicomRenameParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def dicom_rename_cargs(
 
 
 def dicom_rename_outputs(
-    params: DicomRenameParameters,
+    params: DicomRenameParamsDict,
     execution: Execution,
 ) -> DicomRenameOutputs:
     """
@@ -151,7 +151,7 @@ def dicom_rename_outputs(
 
 
 def dicom_rename_execute(
-    params: DicomRenameParameters,
+    params: DicomRenameParamsDict,
     runner: Runner | None = None,
 ) -> DicomRenameOutputs:
     """
@@ -217,6 +217,8 @@ def dicom_rename(
 __all__ = [
     "DICOM_RENAME_METADATA",
     "DicomRenameOutputs",
+    "DicomRenameParamsDict",
+    "DicomRenameParamsDictTagged",
     "dicom_rename",
     "dicom_rename_execute",
     "dicom_rename_params",

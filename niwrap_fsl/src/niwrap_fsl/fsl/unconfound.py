@@ -13,13 +13,13 @@ UNCONFOUND_METADATA = Metadata(
 )
 
 
-UnconfoundParameters = typing.TypedDict('UnconfoundParameters', {
+UnconfoundParamsDict = typing.TypedDict('UnconfoundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/unconfound"]],
     "in4d": InputPathType,
     "out4d": str,
     "confound_mat": InputPathType,
 })
-UnconfoundParametersTagged = typing.TypedDict('UnconfoundParametersTagged', {
+UnconfoundParamsDictTagged = typing.TypedDict('UnconfoundParamsDictTagged', {
     "@type": typing.Literal["fsl/unconfound"],
     "in4d": InputPathType,
     "out4d": str,
@@ -29,7 +29,7 @@ UnconfoundParametersTagged = typing.TypedDict('UnconfoundParametersTagged', {
 
 class UnconfoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnconfoundParameters(...)`.
+    Output object returned when calling `UnconfoundParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def unconfound_params(
     in4d: InputPathType,
     out4d: str,
     confound_mat: InputPathType,
-) -> UnconfoundParametersTagged:
+) -> UnconfoundParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def unconfound_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnconfoundParameters` object.
+    `UnconfoundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def unconfound_validate(
 
 
 def unconfound_cargs(
-    params: UnconfoundParameters,
+    params: UnconfoundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def unconfound_cargs(
 
 
 def unconfound_outputs(
-    params: UnconfoundParameters,
+    params: UnconfoundParamsDict,
     execution: Execution,
 ) -> UnconfoundOutputs:
     """
@@ -130,7 +130,7 @@ def unconfound_outputs(
 
 
 def unconfound_execute(
-    params: UnconfoundParameters,
+    params: UnconfoundParamsDict,
     runner: Runner | None = None,
 ) -> UnconfoundOutputs:
     """
@@ -193,6 +193,8 @@ def unconfound(
 __all__ = [
     "UNCONFOUND_METADATA",
     "UnconfoundOutputs",
+    "UnconfoundParamsDict",
+    "UnconfoundParamsDictTagged",
     "unconfound",
     "unconfound_execute",
     "unconfound_params",

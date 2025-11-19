@@ -13,12 +13,12 @@ V_1DTRANSPOSE_METADATA = Metadata(
 )
 
 
-V1dtransposeParameters = typing.TypedDict('V1dtransposeParameters', {
+V1dtransposeParamsDict = typing.TypedDict('V1dtransposeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dtranspose"]],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
-V1dtransposeParametersTagged = typing.TypedDict('V1dtransposeParametersTagged', {
+V1dtransposeParamsDictTagged = typing.TypedDict('V1dtransposeParamsDictTagged', {
     "@type": typing.Literal["afni/1dtranspose"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ V1dtransposeParametersTagged = typing.TypedDict('V1dtransposeParametersTagged', 
 
 class V1dtransposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dtransposeParameters(...)`.
+    Output object returned when calling `V1dtransposeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class V1dtransposeOutputs(typing.NamedTuple):
 def v_1dtranspose_params(
     infile: InputPathType,
     outfile: str | None = None,
-) -> V1dtransposeParametersTagged:
+) -> V1dtransposeParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def v_1dtranspose_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dtransposeParameters` object.
+    `V1dtransposeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def v_1dtranspose_validate(
 
 
 def v_1dtranspose_cargs(
-    params: V1dtransposeParameters,
+    params: V1dtransposeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v_1dtranspose_cargs(
 
 
 def v_1dtranspose_outputs(
-    params: V1dtransposeParameters,
+    params: V1dtransposeParamsDict,
     execution: Execution,
 ) -> V1dtransposeOutputs:
     """
@@ -121,7 +121,7 @@ def v_1dtranspose_outputs(
 
 
 def v_1dtranspose_execute(
-    params: V1dtransposeParameters,
+    params: V1dtransposeParamsDict,
     runner: Runner | None = None,
 ) -> V1dtransposeOutputs:
     """
@@ -180,6 +180,8 @@ def v_1dtranspose(
 
 __all__ = [
     "V1dtransposeOutputs",
+    "V1dtransposeParamsDict",
+    "V1dtransposeParamsDictTagged",
     "V_1DTRANSPOSE_METADATA",
     "v_1dtranspose",
     "v_1dtranspose_execute",

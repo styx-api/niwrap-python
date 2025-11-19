@@ -13,7 +13,7 @@ MRI_EXTRACT_LARGEST_CC_METADATA = Metadata(
 )
 
 
-MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters', {
+MriExtractLargestCcParamsDict = typing.TypedDict('MriExtractLargestCcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_largest_CC"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -23,7 +23,7 @@ MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters'
     "original_volume": typing.NotRequired[InputPathType | None],
     "label_value": typing.NotRequired[float | None],
 })
-MriExtractLargestCcParametersTagged = typing.TypedDict('MriExtractLargestCcParametersTagged', {
+MriExtractLargestCcParamsDictTagged = typing.TypedDict('MriExtractLargestCcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_extract_largest_CC"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -37,7 +37,7 @@ MriExtractLargestCcParametersTagged = typing.TypedDict('MriExtractLargestCcParam
 
 class MriExtractLargestCcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExtractLargestCcParameters(...)`.
+    Output object returned when calling `MriExtractLargestCcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_extract_largest_cc_params(
     largest_cc_in_bg: bool = False,
     original_volume: InputPathType | None = None,
     label_value: float | None = None,
-) -> MriExtractLargestCcParametersTagged:
+) -> MriExtractLargestCcParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def mri_extract_largest_cc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExtractLargestCcParameters` object.
+    `MriExtractLargestCcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def mri_extract_largest_cc_validate(
 
 
 def mri_extract_largest_cc_cargs(
-    params: MriExtractLargestCcParameters,
+    params: MriExtractLargestCcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def mri_extract_largest_cc_cargs(
 
 
 def mri_extract_largest_cc_outputs(
-    params: MriExtractLargestCcParameters,
+    params: MriExtractLargestCcParamsDict,
     execution: Execution,
 ) -> MriExtractLargestCcOutputs:
     """
@@ -190,7 +190,7 @@ def mri_extract_largest_cc_outputs(
 
 
 def mri_extract_largest_cc_execute(
-    params: MriExtractLargestCcParameters,
+    params: MriExtractLargestCcParamsDict,
     runner: Runner | None = None,
 ) -> MriExtractLargestCcOutputs:
     """
@@ -266,6 +266,8 @@ def mri_extract_largest_cc(
 __all__ = [
     "MRI_EXTRACT_LARGEST_CC_METADATA",
     "MriExtractLargestCcOutputs",
+    "MriExtractLargestCcParamsDict",
+    "MriExtractLargestCcParamsDictTagged",
     "mri_extract_largest_cc",
     "mri_extract_largest_cc_execute",
     "mri_extract_largest_cc_params",

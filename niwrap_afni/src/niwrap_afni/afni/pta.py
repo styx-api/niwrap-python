@@ -13,7 +13,7 @@ PTA_METADATA = Metadata(
 )
 
 
-PtaParameters = typing.TypedDict('PtaParameters', {
+PtaParamsDict = typing.TypedDict('PtaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/PTA"]],
     "prefix": str,
     "input_file": InputPathType,
@@ -24,7 +24,7 @@ PtaParameters = typing.TypedDict('PtaParameters', {
     "response_var": typing.NotRequired[str | None],
     "dbg_args": bool,
 })
-PtaParametersTagged = typing.TypedDict('PtaParametersTagged', {
+PtaParamsDictTagged = typing.TypedDict('PtaParamsDictTagged', {
     "@type": typing.Literal["afni/PTA"],
     "prefix": str,
     "input_file": InputPathType,
@@ -39,7 +39,7 @@ PtaParametersTagged = typing.TypedDict('PtaParametersTagged', {
 
 class PtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PtaParameters(...)`.
+    Output object returned when calling `PtaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def pta_params(
     verbosity_level: float | None = None,
     response_var: str | None = None,
     dbg_args: bool = False,
-) -> PtaParametersTagged:
+) -> PtaParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def pta_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `PtaParameters`
+    Validate parameters. Throws an error if `params` is not a valid `PtaParamsDict`
     object.
     
     Args:
@@ -141,7 +141,7 @@ def pta_validate(
 
 
 def pta_cargs(
-    params: PtaParameters,
+    params: PtaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -193,7 +193,7 @@ def pta_cargs(
 
 
 def pta_outputs(
-    params: PtaParameters,
+    params: PtaParamsDict,
     execution: Execution,
 ) -> PtaOutputs:
     """
@@ -214,7 +214,7 @@ def pta_outputs(
 
 
 def pta_execute(
-    params: PtaParameters,
+    params: PtaParamsDict,
     runner: Runner | None = None,
 ) -> PtaOutputs:
     """
@@ -299,6 +299,8 @@ def pta(
 __all__ = [
     "PTA_METADATA",
     "PtaOutputs",
+    "PtaParamsDict",
+    "PtaParamsDictTagged",
     "pta",
     "pta_execute",
     "pta_params",

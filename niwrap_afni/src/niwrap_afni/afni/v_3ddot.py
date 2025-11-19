@@ -13,7 +13,7 @@ V_3DDOT_METADATA = Metadata(
 )
 
 
-V3ddotParameters = typing.TypedDict('V3ddotParameters', {
+V3ddotParamsDict = typing.TypedDict('V3ddotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3ddot"]],
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ V3ddotParameters = typing.TypedDict('V3ddotParameters', {
     "1D": bool,
     "NIML": bool,
 })
-V3ddotParametersTagged = typing.TypedDict('V3ddotParametersTagged', {
+V3ddotParamsDictTagged = typing.TypedDict('V3ddotParamsDictTagged', {
     "@type": typing.Literal["afni/3ddot"],
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ V3ddotParametersTagged = typing.TypedDict('V3ddotParametersTagged', {
 
 class V3ddotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3ddotParameters(...)`.
+    Output object returned when calling `V3ddotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def v_3ddot_params(
     full: bool = False,
     v_1_d: bool = False,
     niml: bool = False,
-) -> V3ddotParametersTagged:
+) -> V3ddotParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def v_3ddot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3ddotParameters` object.
+    `V3ddotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def v_3ddot_validate(
 
 
 def v_3ddot_cargs(
-    params: V3ddotParameters,
+    params: V3ddotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -263,7 +263,7 @@ def v_3ddot_cargs(
 
 
 def v_3ddot_outputs(
-    params: V3ddotParameters,
+    params: V3ddotParamsDict,
     execution: Execution,
 ) -> V3ddotOutputs:
     """
@@ -283,7 +283,7 @@ def v_3ddot_outputs(
 
 
 def v_3ddot_execute(
-    params: V3ddotParameters,
+    params: V3ddotParamsDict,
     runner: Runner | None = None,
 ) -> V3ddotOutputs:
     """
@@ -386,6 +386,8 @@ def v_3ddot(
 
 __all__ = [
     "V3ddotOutputs",
+    "V3ddotParamsDict",
+    "V3ddotParamsDictTagged",
     "V_3DDOT_METADATA",
     "v_3ddot",
     "v_3ddot_execute",

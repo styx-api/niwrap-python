@@ -13,7 +13,7 @@ V_3D_WINSOR_METADATA = Metadata(
 )
 
 
-V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
+V3dWinsorParamsDict = typing.TypedDict('V3dWinsorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dWinsor"]],
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
@@ -25,7 +25,7 @@ V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "dataset": InputPathType,
 })
-V3dWinsorParametersTagged = typing.TypedDict('V3dWinsorParametersTagged', {
+V3dWinsorParamsDictTagged = typing.TypedDict('V3dWinsorParamsDictTagged', {
     "@type": typing.Literal["afni/3dWinsor"],
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ V3dWinsorParametersTagged = typing.TypedDict('V3dWinsorParametersTagged', {
 
 class V3dWinsorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dWinsorParameters(...)`.
+    Output object returned when calling `V3dWinsorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_winsor_params(
     clip: float | None = None,
     prefix: str | None = None,
     mask: InputPathType | None = None,
-) -> V3dWinsorParametersTagged:
+) -> V3dWinsorParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v_3d_winsor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dWinsorParameters` object.
+    `V3dWinsorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -148,7 +148,7 @@ def v_3d_winsor_validate(
 
 
 def v_3d_winsor_cargs(
-    params: V3dWinsorParameters,
+    params: V3dWinsorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def v_3d_winsor_cargs(
 
 
 def v_3d_winsor_outputs(
-    params: V3dWinsorParameters,
+    params: V3dWinsorParamsDict,
     execution: Execution,
 ) -> V3dWinsorOutputs:
     """
@@ -225,7 +225,7 @@ def v_3d_winsor_outputs(
 
 
 def v_3d_winsor_execute(
-    params: V3dWinsorParameters,
+    params: V3dWinsorParamsDict,
     runner: Runner | None = None,
 ) -> V3dWinsorOutputs:
     """
@@ -308,6 +308,8 @@ def v_3d_winsor(
 
 __all__ = [
     "V3dWinsorOutputs",
+    "V3dWinsorParamsDict",
+    "V3dWinsorParamsDictTagged",
     "V_3D_WINSOR_METADATA",
     "v_3d_winsor",
     "v_3d_winsor_execute",

@@ -13,7 +13,7 @@ SURF_MESH_METADATA = Metadata(
 )
 
 
-SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
+SurfMeshParamsDict = typing.TypedDict('SurfMeshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfMesh"]],
     "input_surface": str,
     "output_surface": str,
@@ -24,7 +24,7 @@ SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
     "no_volume_registration": bool,
     "set_env": typing.NotRequired[str | None],
 })
-SurfMeshParametersTagged = typing.TypedDict('SurfMeshParametersTagged', {
+SurfMeshParamsDictTagged = typing.TypedDict('SurfMeshParamsDictTagged', {
     "@type": typing.Literal["afni/SurfMesh"],
     "input_surface": str,
     "output_surface": str,
@@ -39,7 +39,7 @@ SurfMeshParametersTagged = typing.TypedDict('SurfMeshParametersTagged', {
 
 class SurfMeshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfMeshParameters(...)`.
+    Output object returned when calling `SurfMeshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def surf_mesh_params(
     anatomical_label: bool = False,
     no_volume_registration: bool = False,
     set_env: str | None = None,
-) -> SurfMeshParametersTagged:
+) -> SurfMeshParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def surf_mesh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfMeshParameters` object.
+    `SurfMeshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def surf_mesh_validate(
 
 
 def surf_mesh_cargs(
-    params: SurfMeshParameters,
+    params: SurfMeshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -182,7 +182,7 @@ def surf_mesh_cargs(
 
 
 def surf_mesh_outputs(
-    params: SurfMeshParameters,
+    params: SurfMeshParamsDict,
     execution: Execution,
 ) -> SurfMeshOutputs:
     """
@@ -202,7 +202,7 @@ def surf_mesh_outputs(
 
 
 def surf_mesh_execute(
-    params: SurfMeshParameters,
+    params: SurfMeshParamsDict,
     runner: Runner | None = None,
 ) -> SurfMeshOutputs:
     """
@@ -280,6 +280,8 @@ def surf_mesh(
 __all__ = [
     "SURF_MESH_METADATA",
     "SurfMeshOutputs",
+    "SurfMeshParamsDict",
+    "SurfMeshParamsDictTagged",
     "surf_mesh",
     "surf_mesh_execute",
     "surf_mesh_params",

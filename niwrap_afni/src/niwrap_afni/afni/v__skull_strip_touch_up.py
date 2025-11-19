@@ -13,7 +13,7 @@ V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
 )
 
 
-VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', {
+VSkullStripTouchUpParamsDict = typing.TypedDict('VSkullStripTouchUpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SkullStrip_TouchUp"]],
     "prefix": str,
     "brain_dataset": InputPathType,
@@ -22,7 +22,7 @@ VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', 
     "orig_dim": bool,
     "help": bool,
 })
-VSkullStripTouchUpParametersTagged = typing.TypedDict('VSkullStripTouchUpParametersTagged', {
+VSkullStripTouchUpParamsDictTagged = typing.TypedDict('VSkullStripTouchUpParamsDictTagged', {
     "@type": typing.Literal["afni/@SkullStrip_TouchUp"],
     "prefix": str,
     "brain_dataset": InputPathType,
@@ -35,7 +35,7 @@ VSkullStripTouchUpParametersTagged = typing.TypedDict('VSkullStripTouchUpParamet
 
 class VSkullStripTouchUpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSkullStripTouchUpParameters(...)`.
+    Output object returned when calling `VSkullStripTouchUpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v__skull_strip_touch_up_params(
     mask_out: bool = False,
     orig_dim: bool = False,
     help_: bool = False,
-) -> VSkullStripTouchUpParametersTagged:
+) -> VSkullStripTouchUpParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def v__skull_strip_touch_up_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSkullStripTouchUpParameters` object.
+    `VSkullStripTouchUpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def v__skull_strip_touch_up_validate(
 
 
 def v__skull_strip_touch_up_cargs(
-    params: VSkullStripTouchUpParameters,
+    params: VSkullStripTouchUpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def v__skull_strip_touch_up_cargs(
 
 
 def v__skull_strip_touch_up_outputs(
-    params: VSkullStripTouchUpParameters,
+    params: VSkullStripTouchUpParamsDict,
     execution: Execution,
 ) -> VSkullStripTouchUpOutputs:
     """
@@ -174,7 +174,7 @@ def v__skull_strip_touch_up_outputs(
 
 
 def v__skull_strip_touch_up_execute(
-    params: VSkullStripTouchUpParameters,
+    params: VSkullStripTouchUpParamsDict,
     runner: Runner | None = None,
 ) -> VSkullStripTouchUpOutputs:
     """
@@ -246,6 +246,8 @@ def v__skull_strip_touch_up(
 
 __all__ = [
     "VSkullStripTouchUpOutputs",
+    "VSkullStripTouchUpParamsDict",
+    "VSkullStripTouchUpParamsDictTagged",
     "V__SKULL_STRIP_TOUCH_UP_METADATA",
     "v__skull_strip_touch_up",
     "v__skull_strip_touch_up_execute",

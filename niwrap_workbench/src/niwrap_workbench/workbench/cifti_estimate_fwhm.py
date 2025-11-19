@@ -12,40 +12,40 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
 )
 
 
-CiftiEstimateFwhmSurfaceParameters = typing.TypedDict('CiftiEstimateFwhmSurfaceParameters', {
+CiftiEstimateFwhmSurfaceParamsDict = typing.TypedDict('CiftiEstimateFwhmSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
     "structure": str,
     "surface": InputPathType,
 })
-CiftiEstimateFwhmSurfaceParametersTagged = typing.TypedDict('CiftiEstimateFwhmSurfaceParametersTagged', {
+CiftiEstimateFwhmSurfaceParamsDictTagged = typing.TypedDict('CiftiEstimateFwhmSurfaceParamsDictTagged', {
     "@type": typing.Literal["surface"],
     "structure": str,
     "surface": InputPathType,
 })
 
 
-CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
+CiftiEstimateFwhmParamsDict = typing.TypedDict('CiftiEstimateFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-estimate-fwhm"]],
     "merged-volume": bool,
     "column": typing.NotRequired[int | None],
     "demean": typing.NotRequired[bool | None],
-    "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParameters] | None],
+    "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParamsDict] | None],
     "cifti": InputPathType,
 })
-CiftiEstimateFwhmParametersTagged = typing.TypedDict('CiftiEstimateFwhmParametersTagged', {
+CiftiEstimateFwhmParamsDictTagged = typing.TypedDict('CiftiEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-estimate-fwhm"],
     "merged-volume": bool,
     "column": typing.NotRequired[int | None],
     "demean": typing.NotRequired[bool | None],
-    "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParameters] | None],
+    "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParamsDict] | None],
     "cifti": InputPathType,
 })
 
 
-def cifti_estimate_fwhm_surface_params(
+def cifti_estimate_fwhm_surface(
     structure: str,
     surface: InputPathType,
-) -> CiftiEstimateFwhmSurfaceParametersTagged:
+) -> CiftiEstimateFwhmSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def cifti_estimate_fwhm_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiEstimateFwhmSurfaceParameters` object.
+    `CiftiEstimateFwhmSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def cifti_estimate_fwhm_surface_validate(
 
 
 def cifti_estimate_fwhm_surface_cargs(
-    params: CiftiEstimateFwhmSurfaceParameters,
+    params: CiftiEstimateFwhmSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def cifti_estimate_fwhm_surface_cargs(
 
 class CiftiEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiEstimateFwhmParameters(...)`.
+    Output object returned when calling `CiftiEstimateFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -120,8 +120,8 @@ def cifti_estimate_fwhm_params(
     cifti: InputPathType,
     merged_volume: bool = False,
     demean: bool | None = False,
-    surface: list[CiftiEstimateFwhmSurfaceParameters] | None = None,
-) -> CiftiEstimateFwhmParametersTagged:
+    surface: list[CiftiEstimateFwhmSurfaceParamsDict] | None = None,
+) -> CiftiEstimateFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -158,7 +158,7 @@ def cifti_estimate_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiEstimateFwhmParameters` object.
+    `CiftiEstimateFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -177,7 +177,7 @@ def cifti_estimate_fwhm_validate(
             raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool | None`')
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiEstimateFwhmSurfaceParameters] | None`')
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiEstimateFwhmSurfaceParamsDict] | None`')
         for e in params["surface"]:
             cifti_estimate_fwhm_surface_validate(e)
     if params.get("cifti", None) is None:
@@ -187,7 +187,7 @@ def cifti_estimate_fwhm_validate(
 
 
 def cifti_estimate_fwhm_cargs(
-    params: CiftiEstimateFwhmParameters,
+    params: CiftiEstimateFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def cifti_estimate_fwhm_cargs(
 
 
 def cifti_estimate_fwhm_outputs(
-    params: CiftiEstimateFwhmParameters,
+    params: CiftiEstimateFwhmParamsDict,
     execution: Execution,
 ) -> CiftiEstimateFwhmOutputs:
     """
@@ -235,7 +235,7 @@ def cifti_estimate_fwhm_outputs(
 
 
 def cifti_estimate_fwhm_execute(
-    params: CiftiEstimateFwhmParameters,
+    params: CiftiEstimateFwhmParamsDict,
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
@@ -304,7 +304,7 @@ def cifti_estimate_fwhm(
     cifti: InputPathType,
     merged_volume: bool = False,
     demean: bool | None = False,
-    surface: list[CiftiEstimateFwhmSurfaceParameters] | None = None,
+    surface: list[CiftiEstimateFwhmSurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
@@ -380,8 +380,12 @@ def cifti_estimate_fwhm(
 __all__ = [
     "CIFTI_ESTIMATE_FWHM_METADATA",
     "CiftiEstimateFwhmOutputs",
+    "CiftiEstimateFwhmParamsDict",
+    "CiftiEstimateFwhmParamsDictTagged",
+    "CiftiEstimateFwhmSurfaceParamsDict",
+    "CiftiEstimateFwhmSurfaceParamsDictTagged",
     "cifti_estimate_fwhm",
     "cifti_estimate_fwhm_execute",
     "cifti_estimate_fwhm_params",
-    "cifti_estimate_fwhm_surface_params",
+    "cifti_estimate_fwhm_surface",
 ]

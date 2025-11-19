@@ -13,13 +13,13 @@ FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
 )
 
 
-FlirtNewdefault20080811SchParameters = typing.TypedDict('FlirtNewdefault20080811SchParameters', {
+FlirtNewdefault20080811SchParamsDict = typing.TypedDict('FlirtNewdefault20080811SchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/flirt.newdefault.20080811.sch"]],
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
     "scrollback_flag": bool,
 })
-FlirtNewdefault20080811SchParametersTagged = typing.TypedDict('FlirtNewdefault20080811SchParametersTagged', {
+FlirtNewdefault20080811SchParamsDictTagged = typing.TypedDict('FlirtNewdefault20080811SchParamsDictTagged', {
     "@type": typing.Literal["freesurfer/flirt.newdefault.20080811.sch"],
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
@@ -29,7 +29,7 @@ FlirtNewdefault20080811SchParametersTagged = typing.TypedDict('FlirtNewdefault20
 
 class FlirtNewdefault20080811SchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FlirtNewdefault20080811SchParameters(...)`.
+    Output object returned when calling `FlirtNewdefault20080811SchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def flirt_newdefault_20080811_sch_params(
     term_option: str | None = None,
     curses_flag: bool = False,
     scrollback_flag: bool = False,
-) -> FlirtNewdefault20080811SchParametersTagged:
+) -> FlirtNewdefault20080811SchParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def flirt_newdefault_20080811_sch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FlirtNewdefault20080811SchParameters` object.
+    `FlirtNewdefault20080811SchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def flirt_newdefault_20080811_sch_validate(
 
 
 def flirt_newdefault_20080811_sch_cargs(
-    params: FlirtNewdefault20080811SchParameters,
+    params: FlirtNewdefault20080811SchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def flirt_newdefault_20080811_sch_cargs(
 
 
 def flirt_newdefault_20080811_sch_outputs(
-    params: FlirtNewdefault20080811SchParameters,
+    params: FlirtNewdefault20080811SchParamsDict,
     execution: Execution,
 ) -> FlirtNewdefault20080811SchOutputs:
     """
@@ -132,7 +132,7 @@ def flirt_newdefault_20080811_sch_outputs(
 
 
 def flirt_newdefault_20080811_sch_execute(
-    params: FlirtNewdefault20080811SchParameters,
+    params: FlirtNewdefault20080811SchParamsDict,
     runner: Runner | None = None,
 ) -> FlirtNewdefault20080811SchOutputs:
     """
@@ -196,6 +196,8 @@ def flirt_newdefault_20080811_sch(
 __all__ = [
     "FLIRT_NEWDEFAULT_20080811_SCH_METADATA",
     "FlirtNewdefault20080811SchOutputs",
+    "FlirtNewdefault20080811SchParamsDict",
+    "FlirtNewdefault20080811SchParamsDictTagged",
     "flirt_newdefault_20080811_sch",
     "flirt_newdefault_20080811_sch_execute",
     "flirt_newdefault_20080811_sch_params",

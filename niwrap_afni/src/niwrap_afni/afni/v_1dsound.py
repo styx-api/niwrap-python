@@ -13,7 +13,7 @@ V_1DSOUND_METADATA = Metadata(
 )
 
 
-V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
+V1dsoundParamsDict = typing.TypedDict('V1dsoundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dsound"]],
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
     "despike_option": bool,
     "play_option": bool,
 })
-V1dsoundParametersTagged = typing.TypedDict('V1dsoundParametersTagged', {
+V1dsoundParamsDictTagged = typing.TypedDict('V1dsoundParamsDictTagged', {
     "@type": typing.Literal["afni/1dsound"],
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ V1dsoundParametersTagged = typing.TypedDict('V1dsoundParametersTagged', {
 
 class V1dsoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dsoundParameters(...)`.
+    Output object returned when calling `V1dsoundParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_1dsound_params(
     notewave_option: str | None = None,
     despike_option: bool = False,
     play_option: bool = False,
-) -> V1dsoundParametersTagged:
+) -> V1dsoundParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def v_1dsound_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dsoundParameters` object.
+    `V1dsoundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def v_1dsound_validate(
 
 
 def v_1dsound_cargs(
-    params: V1dsoundParameters,
+    params: V1dsoundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -217,7 +217,7 @@ def v_1dsound_cargs(
 
 
 def v_1dsound_outputs(
-    params: V1dsoundParameters,
+    params: V1dsoundParamsDict,
     execution: Execution,
 ) -> V1dsoundOutputs:
     """
@@ -237,7 +237,7 @@ def v_1dsound_outputs(
 
 
 def v_1dsound_execute(
-    params: V1dsoundParameters,
+    params: V1dsoundParamsDict,
     runner: Runner | None = None,
 ) -> V1dsoundOutputs:
     """
@@ -329,6 +329,8 @@ def v_1dsound(
 
 __all__ = [
     "V1dsoundOutputs",
+    "V1dsoundParamsDict",
+    "V1dsoundParamsDictTagged",
     "V_1DSOUND_METADATA",
     "v_1dsound",
     "v_1dsound_execute",

@@ -13,12 +13,12 @@ V__TO_RAI_METADATA = Metadata(
 )
 
 
-VToRaiParameters = typing.TypedDict('VToRaiParameters', {
+VToRaiParamsDict = typing.TypedDict('VToRaiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ToRAI"]],
     "coordinates": list[float],
     "orientation": str,
 })
-VToRaiParametersTagged = typing.TypedDict('VToRaiParametersTagged', {
+VToRaiParamsDictTagged = typing.TypedDict('VToRaiParamsDictTagged', {
     "@type": typing.Literal["afni/@ToRAI"],
     "coordinates": list[float],
     "orientation": str,
@@ -27,7 +27,7 @@ VToRaiParametersTagged = typing.TypedDict('VToRaiParametersTagged', {
 
 class VToRaiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VToRaiParameters(...)`.
+    Output object returned when calling `VToRaiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VToRaiOutputs(typing.NamedTuple):
 def v__to_rai_params(
     coordinates: list[float],
     orientation: str,
-) -> VToRaiParametersTagged:
+) -> VToRaiParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v__to_rai_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VToRaiParameters` object.
+    `VToRaiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def v__to_rai_validate(
 
 
 def v__to_rai_cargs(
-    params: VToRaiParameters,
+    params: VToRaiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -108,7 +108,7 @@ def v__to_rai_cargs(
 
 
 def v__to_rai_outputs(
-    params: VToRaiParameters,
+    params: VToRaiParamsDict,
     execution: Execution,
 ) -> VToRaiOutputs:
     """
@@ -127,7 +127,7 @@ def v__to_rai_outputs(
 
 
 def v__to_rai_execute(
-    params: VToRaiParameters,
+    params: VToRaiParamsDict,
     runner: Runner | None = None,
 ) -> VToRaiOutputs:
     """
@@ -185,6 +185,8 @@ def v__to_rai(
 
 __all__ = [
     "VToRaiOutputs",
+    "VToRaiParamsDict",
+    "VToRaiParamsDictTagged",
     "V__TO_RAI_METADATA",
     "v__to_rai",
     "v__to_rai_execute",

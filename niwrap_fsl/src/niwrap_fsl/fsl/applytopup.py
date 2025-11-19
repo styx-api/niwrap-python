@@ -13,7 +13,7 @@ APPLYTOPUP_METADATA = Metadata(
 )
 
 
-ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
+ApplytopupParamsDict = typing.TypedDict('ApplytopupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/applytopup"]],
     "imain": list[InputPathType],
     "datain": InputPathType,
@@ -25,7 +25,7 @@ ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
     "datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double"] | None],
     "verbose": bool,
 })
-ApplytopupParametersTagged = typing.TypedDict('ApplytopupParametersTagged', {
+ApplytopupParamsDictTagged = typing.TypedDict('ApplytopupParamsDictTagged', {
     "@type": typing.Literal["fsl/applytopup"],
     "imain": list[InputPathType],
     "datain": InputPathType,
@@ -41,7 +41,7 @@ ApplytopupParametersTagged = typing.TypedDict('ApplytopupParametersTagged', {
 
 class ApplytopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApplytopupParameters(...)`.
+    Output object returned when calling `ApplytopupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def applytopup_params(
     interp: typing.Literal["trilinear", "spline"] | None = None,
     datatype: typing.Literal["char", "short", "int", "float", "double"] | None = None,
     verbose: bool = False,
-) -> ApplytopupParametersTagged:
+) -> ApplytopupParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def applytopup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApplytopupParameters` object.
+    `ApplytopupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def applytopup_validate(
 
 
 def applytopup_cargs(
-    params: ApplytopupParameters,
+    params: ApplytopupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def applytopup_cargs(
 
 
 def applytopup_outputs(
-    params: ApplytopupParameters,
+    params: ApplytopupParamsDict,
     execution: Execution,
 ) -> ApplytopupOutputs:
     """
@@ -207,7 +207,7 @@ def applytopup_outputs(
 
 
 def applytopup_execute(
-    params: ApplytopupParameters,
+    params: ApplytopupParamsDict,
     runner: Runner | None = None,
 ) -> ApplytopupOutputs:
     """
@@ -291,6 +291,8 @@ def applytopup(
 __all__ = [
     "APPLYTOPUP_METADATA",
     "ApplytopupOutputs",
+    "ApplytopupParamsDict",
+    "ApplytopupParamsDictTagged",
     "applytopup",
     "applytopup_execute",
     "applytopup_params",

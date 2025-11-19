@@ -13,7 +13,7 @@ V_1DDOT_METADATA = Metadata(
 )
 
 
-V1ddotParameters = typing.TypedDict('V1ddotParameters', {
+V1ddotParamsDict = typing.TypedDict('V1ddotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1ddot"]],
     "one_flag": bool,
     "dem_flag": bool,
@@ -24,7 +24,7 @@ V1ddotParameters = typing.TypedDict('V1ddotParameters', {
     "okzero_flag": bool,
     "input_files": list[InputPathType],
 })
-V1ddotParametersTagged = typing.TypedDict('V1ddotParametersTagged', {
+V1ddotParamsDictTagged = typing.TypedDict('V1ddotParamsDictTagged', {
     "@type": typing.Literal["afni/1ddot"],
     "one_flag": bool,
     "dem_flag": bool,
@@ -39,7 +39,7 @@ V1ddotParametersTagged = typing.TypedDict('V1ddotParametersTagged', {
 
 class V1ddotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1ddotParameters(...)`.
+    Output object returned when calling `V1ddotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v_1ddot_params(
     rank_flag: bool = False,
     terse_flag: bool = False,
     okzero_flag: bool = False,
-) -> V1ddotParametersTagged:
+) -> V1ddotParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def v_1ddot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1ddotParameters` object.
+    `V1ddotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def v_1ddot_validate(
 
 
 def v_1ddot_cargs(
-    params: V1ddotParameters,
+    params: V1ddotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,7 +174,7 @@ def v_1ddot_cargs(
 
 
 def v_1ddot_outputs(
-    params: V1ddotParameters,
+    params: V1ddotParamsDict,
     execution: Execution,
 ) -> V1ddotOutputs:
     """
@@ -195,7 +195,7 @@ def v_1ddot_outputs(
 
 
 def v_1ddot_execute(
-    params: V1ddotParameters,
+    params: V1ddotParamsDict,
     runner: Runner | None = None,
 ) -> V1ddotOutputs:
     """
@@ -276,6 +276,8 @@ def v_1ddot(
 
 __all__ = [
     "V1ddotOutputs",
+    "V1ddotParamsDict",
+    "V1ddotParamsDictTagged",
     "V_1DDOT_METADATA",
     "v_1ddot",
     "v_1ddot_execute",

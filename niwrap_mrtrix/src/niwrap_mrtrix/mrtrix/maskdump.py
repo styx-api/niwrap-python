@@ -13,39 +13,39 @@ MASKDUMP_METADATA = Metadata(
 )
 
 
-MaskdumpConfigParameters = typing.TypedDict('MaskdumpConfigParameters', {
+MaskdumpConfigParamsDict = typing.TypedDict('MaskdumpConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MaskdumpConfigParametersTagged = typing.TypedDict('MaskdumpConfigParametersTagged', {
+MaskdumpConfigParamsDictTagged = typing.TypedDict('MaskdumpConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MaskdumpParameters = typing.TypedDict('MaskdumpParameters', {
+MaskdumpParamsDict = typing.TypedDict('MaskdumpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/maskdump"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MaskdumpConfigParameters] | None],
+    "config": typing.NotRequired[list[MaskdumpConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
-MaskdumpParametersTagged = typing.TypedDict('MaskdumpParametersTagged', {
+MaskdumpParamsDictTagged = typing.TypedDict('MaskdumpParamsDictTagged', {
     "@type": typing.Literal["mrtrix/maskdump"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MaskdumpConfigParameters] | None],
+    "config": typing.NotRequired[list[MaskdumpConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -53,10 +53,10 @@ MaskdumpParametersTagged = typing.TypedDict('MaskdumpParametersTagged', {
 })
 
 
-def maskdump_config_params(
+def maskdump_config(
     key: str,
     value: str,
-) -> MaskdumpConfigParametersTagged:
+) -> MaskdumpConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def maskdump_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskdumpConfigParameters` object.
+    `MaskdumpConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def maskdump_config_validate(
 
 
 def maskdump_config_cargs(
-    params: MaskdumpConfigParameters,
+    params: MaskdumpConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def maskdump_config_cargs(
 
 class MaskdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MaskdumpParameters(...)`.
+    Output object returned when calling `MaskdumpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,11 +133,11 @@ def maskdump_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MaskdumpConfigParameters] | None = None,
+    config: list[MaskdumpConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MaskdumpParametersTagged:
+) -> MaskdumpParamsDictTagged:
     """
     Build parameters.
     
@@ -183,7 +183,7 @@ def maskdump_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskdumpParameters` object.
+    `MaskdumpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def maskdump_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MaskdumpConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MaskdumpConfigParamsDict] | None`')
         for e in params["config"]:
             maskdump_config_validate(e)
     if params.get("help", False) is None:
@@ -232,7 +232,7 @@ def maskdump_validate(
 
 
 def maskdump_cargs(
-    params: MaskdumpParameters,
+    params: MaskdumpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -272,7 +272,7 @@ def maskdump_cargs(
 
 
 def maskdump_outputs(
-    params: MaskdumpParameters,
+    params: MaskdumpParamsDict,
     execution: Execution,
 ) -> MaskdumpOutputs:
     """
@@ -292,7 +292,7 @@ def maskdump_outputs(
 
 
 def maskdump_execute(
-    params: MaskdumpParameters,
+    params: MaskdumpParamsDict,
     runner: Runner | None = None,
 ) -> MaskdumpOutputs:
     """
@@ -334,7 +334,7 @@ def maskdump(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MaskdumpConfigParameters] | None = None,
+    config: list[MaskdumpConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
@@ -392,9 +392,13 @@ def maskdump(
 
 __all__ = [
     "MASKDUMP_METADATA",
+    "MaskdumpConfigParamsDict",
+    "MaskdumpConfigParamsDictTagged",
     "MaskdumpOutputs",
+    "MaskdumpParamsDict",
+    "MaskdumpParamsDictTagged",
     "maskdump",
-    "maskdump_config_params",
+    "maskdump_config",
     "maskdump_execute",
     "maskdump_params",
 ]

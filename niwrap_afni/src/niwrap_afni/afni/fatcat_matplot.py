@@ -13,12 +13,12 @@ FATCAT_MATPLOT_METADATA = Metadata(
 )
 
 
-FatcatMatplotParameters = typing.TypedDict('FatcatMatplotParameters', {
+FatcatMatplotParamsDict = typing.TypedDict('FatcatMatplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/FATCAT_matplot"]],
     "directory": str,
     "shiny_folder": bool,
 })
-FatcatMatplotParametersTagged = typing.TypedDict('FatcatMatplotParametersTagged', {
+FatcatMatplotParamsDictTagged = typing.TypedDict('FatcatMatplotParamsDictTagged', {
     "@type": typing.Literal["afni/FATCAT_matplot"],
     "directory": str,
     "shiny_folder": bool,
@@ -27,7 +27,7 @@ FatcatMatplotParametersTagged = typing.TypedDict('FatcatMatplotParametersTagged'
 
 class FatcatMatplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatcatMatplotParameters(...)`.
+    Output object returned when calling `FatcatMatplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FatcatMatplotOutputs(typing.NamedTuple):
 def fatcat_matplot_params(
     directory: str,
     shiny_folder: bool = False,
-) -> FatcatMatplotParametersTagged:
+) -> FatcatMatplotParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def fatcat_matplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatcatMatplotParameters` object.
+    `FatcatMatplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fatcat_matplot_validate(
 
 
 def fatcat_matplot_cargs(
-    params: FatcatMatplotParameters,
+    params: FatcatMatplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def fatcat_matplot_cargs(
 
 
 def fatcat_matplot_outputs(
-    params: FatcatMatplotParameters,
+    params: FatcatMatplotParamsDict,
     execution: Execution,
 ) -> FatcatMatplotOutputs:
     """
@@ -117,7 +117,7 @@ def fatcat_matplot_outputs(
 
 
 def fatcat_matplot_execute(
-    params: FatcatMatplotParameters,
+    params: FatcatMatplotParamsDict,
     runner: Runner | None = None,
 ) -> FatcatMatplotOutputs:
     """
@@ -176,6 +176,8 @@ def fatcat_matplot(
 __all__ = [
     "FATCAT_MATPLOT_METADATA",
     "FatcatMatplotOutputs",
+    "FatcatMatplotParamsDict",
+    "FatcatMatplotParamsDictTagged",
     "fatcat_matplot",
     "fatcat_matplot_execute",
     "fatcat_matplot_params",

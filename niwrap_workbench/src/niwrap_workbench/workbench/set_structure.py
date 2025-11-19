@@ -12,14 +12,14 @@ SET_STRUCTURE_METADATA = Metadata(
 )
 
 
-SetStructureParameters = typing.TypedDict('SetStructureParameters', {
+SetStructureParamsDict = typing.TypedDict('SetStructureParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/set-structure"]],
     "type": typing.NotRequired[str | None],
     "secondary type": typing.NotRequired[str | None],
     "data-file": str,
     "structure": str,
 })
-SetStructureParametersTagged = typing.TypedDict('SetStructureParametersTagged', {
+SetStructureParamsDictTagged = typing.TypedDict('SetStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/set-structure"],
     "type": typing.NotRequired[str | None],
     "secondary type": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ SetStructureParametersTagged = typing.TypedDict('SetStructureParametersTagged', 
 
 class SetStructureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SetStructureParameters(...)`.
+    Output object returned when calling `SetStructureParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def set_structure_params(
     secondary_type: str | None,
     data_file: str,
     structure: str,
-) -> SetStructureParametersTagged:
+) -> SetStructureParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def set_structure_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SetStructureParameters` object.
+    `SetStructureParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def set_structure_validate(
 
 
 def set_structure_cargs(
-    params: SetStructureParameters,
+    params: SetStructureParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def set_structure_cargs(
 
 
 def set_structure_outputs(
-    params: SetStructureParameters,
+    params: SetStructureParamsDict,
     execution: Execution,
 ) -> SetStructureOutputs:
     """
@@ -146,7 +146,7 @@ def set_structure_outputs(
 
 
 def set_structure_execute(
-    params: SetStructureParameters,
+    params: SetStructureParamsDict,
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
@@ -328,6 +328,8 @@ def set_structure(
 __all__ = [
     "SET_STRUCTURE_METADATA",
     "SetStructureOutputs",
+    "SetStructureParamsDict",
+    "SetStructureParamsDictTagged",
     "set_structure",
     "set_structure_execute",
     "set_structure_params",

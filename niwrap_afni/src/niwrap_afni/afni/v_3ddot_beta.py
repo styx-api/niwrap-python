@@ -13,14 +13,14 @@ V_3DDOT_BETA_METADATA = Metadata(
 )
 
 
-V3ddotBetaParameters = typing.TypedDict('V3ddotBetaParameters', {
+V3ddotBetaParamsDict = typing.TypedDict('V3ddotBetaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3ddot_beta"]],
     "input_file": InputPathType,
     "prefix": str,
     "doeta2": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
-V3ddotBetaParametersTagged = typing.TypedDict('V3ddotBetaParametersTagged', {
+V3ddotBetaParamsDictTagged = typing.TypedDict('V3ddotBetaParamsDictTagged', {
     "@type": typing.Literal["afni/3ddot_beta"],
     "input_file": InputPathType,
     "prefix": str,
@@ -31,7 +31,7 @@ V3ddotBetaParametersTagged = typing.TypedDict('V3ddotBetaParametersTagged', {
 
 class V3ddotBetaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3ddotBetaParameters(...)`.
+    Output object returned when calling `V3ddotBetaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3ddot_beta_params(
     prefix: str,
     doeta2: bool = False,
     mask: InputPathType | None = None,
-) -> V3ddotBetaParametersTagged:
+) -> V3ddotBetaParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3ddot_beta_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3ddotBetaParameters` object.
+    `V3ddotBetaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def v_3ddot_beta_validate(
 
 
 def v_3ddot_beta_cargs(
-    params: V3ddotBetaParameters,
+    params: V3ddotBetaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def v_3ddot_beta_cargs(
 
 
 def v_3ddot_beta_outputs(
-    params: V3ddotBetaParameters,
+    params: V3ddotBetaParamsDict,
     execution: Execution,
 ) -> V3ddotBetaOutputs:
     """
@@ -150,7 +150,7 @@ def v_3ddot_beta_outputs(
 
 
 def v_3ddot_beta_execute(
-    params: V3ddotBetaParameters,
+    params: V3ddotBetaParamsDict,
     runner: Runner | None = None,
 ) -> V3ddotBetaOutputs:
     """
@@ -216,6 +216,8 @@ def v_3ddot_beta(
 
 __all__ = [
     "V3ddotBetaOutputs",
+    "V3ddotBetaParamsDict",
+    "V3ddotBetaParamsDictTagged",
     "V_3DDOT_BETA_METADATA",
     "v_3ddot_beta",
     "v_3ddot_beta_execute",

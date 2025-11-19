@@ -3,7 +3,7 @@
   "properties": {
     "output": {
       "var_param": "output",
-      "fn_struct_make_params": "mrstats_output_params",
+      "fn_struct_make_params": "mrstats_output",
       "properties": {
         "field": {
           "var_param": "field"
@@ -36,7 +36,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrstats_config_params",
+      "fn_struct_make_params": "mrstats_config",
       "properties": {
         "key": {
           "var_param": "key"

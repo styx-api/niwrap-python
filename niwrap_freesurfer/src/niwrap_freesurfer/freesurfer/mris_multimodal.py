@@ -13,7 +13,7 @@ MRIS_MULTIMODAL_METADATA = Metadata(
 )
 
 
-MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
+MrisMultimodalParamsDict = typing.TypedDict('MrisMultimodalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal"]],
     "input_surface": InputPathType,
     "target_surface": InputPathType,
@@ -26,7 +26,7 @@ MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
     "csv_output": str,
     "vtk_output": bool,
 })
-MrisMultimodalParametersTagged = typing.TypedDict('MrisMultimodalParametersTagged', {
+MrisMultimodalParamsDictTagged = typing.TypedDict('MrisMultimodalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_multimodal"],
     "input_surface": InputPathType,
     "target_surface": InputPathType,
@@ -43,7 +43,7 @@ MrisMultimodalParametersTagged = typing.TypedDict('MrisMultimodalParametersTagge
 
 class MrisMultimodalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMultimodalParameters(...)`.
+    Output object returned when calling `MrisMultimodalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def mris_multimodal_params(
     curvature: bool = False,
     thickness: bool = False,
     vtk_output: bool = False,
-) -> MrisMultimodalParametersTagged:
+) -> MrisMultimodalParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def mris_multimodal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMultimodalParameters` object.
+    `MrisMultimodalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -157,7 +157,7 @@ def mris_multimodal_validate(
 
 
 def mris_multimodal_cargs(
-    params: MrisMultimodalParameters,
+    params: MrisMultimodalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def mris_multimodal_cargs(
 
 
 def mris_multimodal_outputs(
-    params: MrisMultimodalParameters,
+    params: MrisMultimodalParamsDict,
     execution: Execution,
 ) -> MrisMultimodalOutputs:
     """
@@ -230,7 +230,7 @@ def mris_multimodal_outputs(
 
 
 def mris_multimodal_execute(
-    params: MrisMultimodalParameters,
+    params: MrisMultimodalParamsDict,
     runner: Runner | None = None,
 ) -> MrisMultimodalOutputs:
     """
@@ -313,6 +313,8 @@ def mris_multimodal(
 __all__ = [
     "MRIS_MULTIMODAL_METADATA",
     "MrisMultimodalOutputs",
+    "MrisMultimodalParamsDict",
+    "MrisMultimodalParamsDictTagged",
     "mris_multimodal",
     "mris_multimodal_execute",
     "mris_multimodal_params",

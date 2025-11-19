@@ -13,11 +13,11 @@ CSVPRINT_METADATA = Metadata(
 )
 
 
-CsvprintParameters = typing.TypedDict('CsvprintParameters', {
+CsvprintParamsDict = typing.TypedDict('CsvprintParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/csvprint"]],
     "infile": InputPathType,
 })
-CsvprintParametersTagged = typing.TypedDict('CsvprintParametersTagged', {
+CsvprintParamsDictTagged = typing.TypedDict('CsvprintParamsDictTagged', {
     "@type": typing.Literal["freesurfer/csvprint"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ CsvprintParametersTagged = typing.TypedDict('CsvprintParametersTagged', {
 
 class CsvprintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CsvprintParameters(...)`.
+    Output object returned when calling `CsvprintParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class CsvprintOutputs(typing.NamedTuple):
 
 def csvprint_params(
     infile: InputPathType,
-) -> CsvprintParametersTagged:
+) -> CsvprintParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def csvprint_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CsvprintParameters` object.
+    `CsvprintParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def csvprint_validate(
 
 
 def csvprint_cargs(
-    params: CsvprintParameters,
+    params: CsvprintParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def csvprint_cargs(
 
 
 def csvprint_outputs(
-    params: CsvprintParameters,
+    params: CsvprintParamsDict,
     execution: Execution,
 ) -> CsvprintOutputs:
     """
@@ -106,7 +106,7 @@ def csvprint_outputs(
 
 
 def csvprint_execute(
-    params: CsvprintParameters,
+    params: CsvprintParamsDict,
     runner: Runner | None = None,
 ) -> CsvprintOutputs:
     """
@@ -162,6 +162,8 @@ def csvprint(
 __all__ = [
     "CSVPRINT_METADATA",
     "CsvprintOutputs",
+    "CsvprintParamsDict",
+    "CsvprintParamsDictTagged",
     "csvprint",
     "csvprint_execute",
     "csvprint_params",

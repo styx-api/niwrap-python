@@ -13,7 +13,7 @@ MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
 )
 
 
-MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters', {
+MriAddXformToHeaderParamsDict = typing.TypedDict('MriAddXformToHeaderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_xform_to_header"]],
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
@@ -21,7 +21,7 @@ MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters'
     "verbose": bool,
     "copy_name": bool,
 })
-MriAddXformToHeaderParametersTagged = typing.TypedDict('MriAddXformToHeaderParametersTagged', {
+MriAddXformToHeaderParamsDictTagged = typing.TypedDict('MriAddXformToHeaderParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_add_xform_to_header"],
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
@@ -33,7 +33,7 @@ MriAddXformToHeaderParametersTagged = typing.TypedDict('MriAddXformToHeaderParam
 
 class MriAddXformToHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAddXformToHeaderParameters(...)`.
+    Output object returned when calling `MriAddXformToHeaderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_add_xform_to_header_params(
     output_volume: str,
     verbose: bool = False,
     copy_name: bool = False,
-) -> MriAddXformToHeaderParametersTagged:
+) -> MriAddXformToHeaderParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_add_xform_to_header_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAddXformToHeaderParameters` object.
+    `MriAddXformToHeaderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_add_xform_to_header_validate(
 
 
 def mri_add_xform_to_header_cargs(
-    params: MriAddXformToHeaderParameters,
+    params: MriAddXformToHeaderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def mri_add_xform_to_header_cargs(
 
 
 def mri_add_xform_to_header_outputs(
-    params: MriAddXformToHeaderParameters,
+    params: MriAddXformToHeaderParamsDict,
     execution: Execution,
 ) -> MriAddXformToHeaderOutputs:
     """
@@ -151,7 +151,7 @@ def mri_add_xform_to_header_outputs(
 
 
 def mri_add_xform_to_header_execute(
-    params: MriAddXformToHeaderParameters,
+    params: MriAddXformToHeaderParamsDict,
     runner: Runner | None = None,
 ) -> MriAddXformToHeaderOutputs:
     """
@@ -219,6 +219,8 @@ def mri_add_xform_to_header(
 __all__ = [
     "MRI_ADD_XFORM_TO_HEADER_METADATA",
     "MriAddXformToHeaderOutputs",
+    "MriAddXformToHeaderParamsDict",
+    "MriAddXformToHeaderParamsDictTagged",
     "mri_add_xform_to_header",
     "mri_add_xform_to_header_execute",
     "mri_add_xform_to_header_params",

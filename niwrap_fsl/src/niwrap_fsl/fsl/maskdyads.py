@@ -13,13 +13,13 @@ MASKDYADS_METADATA = Metadata(
 )
 
 
-MaskdyadsParameters = typing.TypedDict('MaskdyadsParameters', {
+MaskdyadsParamsDict = typing.TypedDict('MaskdyadsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/maskdyads"]],
     "dyads": InputPathType,
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],
 })
-MaskdyadsParametersTagged = typing.TypedDict('MaskdyadsParametersTagged', {
+MaskdyadsParamsDictTagged = typing.TypedDict('MaskdyadsParamsDictTagged', {
     "@type": typing.Literal["fsl/maskdyads"],
     "dyads": InputPathType,
     "fsamples": InputPathType,
@@ -29,7 +29,7 @@ MaskdyadsParametersTagged = typing.TypedDict('MaskdyadsParametersTagged', {
 
 class MaskdyadsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MaskdyadsParameters(...)`.
+    Output object returned when calling `MaskdyadsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def maskdyads_params(
     dyads: InputPathType,
     fsamples: InputPathType,
     threshold: float | None = None,
-) -> MaskdyadsParametersTagged:
+) -> MaskdyadsParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def maskdyads_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MaskdyadsParameters` object.
+    `MaskdyadsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def maskdyads_validate(
 
 
 def maskdyads_cargs(
-    params: MaskdyadsParameters,
+    params: MaskdyadsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def maskdyads_cargs(
 
 
 def maskdyads_outputs(
-    params: MaskdyadsParameters,
+    params: MaskdyadsParamsDict,
     execution: Execution,
 ) -> MaskdyadsOutputs:
     """
@@ -130,7 +130,7 @@ def maskdyads_outputs(
 
 
 def maskdyads_execute(
-    params: MaskdyadsParameters,
+    params: MaskdyadsParamsDict,
     runner: Runner | None = None,
 ) -> MaskdyadsOutputs:
     """
@@ -192,6 +192,8 @@ def maskdyads(
 __all__ = [
     "MASKDYADS_METADATA",
     "MaskdyadsOutputs",
+    "MaskdyadsParamsDict",
+    "MaskdyadsParamsDictTagged",
     "maskdyads",
     "maskdyads_execute",
     "maskdyads_params",

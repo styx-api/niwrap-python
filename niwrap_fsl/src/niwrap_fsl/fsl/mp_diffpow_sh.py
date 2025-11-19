@@ -13,12 +13,12 @@ MP_DIFFPOW_SH_METADATA = Metadata(
 )
 
 
-MpDiffpowShParameters = typing.TypedDict('MpDiffpowShParameters', {
+MpDiffpowShParamsDict = typing.TypedDict('MpDiffpowShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mp_diffpow.sh"]],
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
-MpDiffpowShParametersTagged = typing.TypedDict('MpDiffpowShParametersTagged', {
+MpDiffpowShParamsDictTagged = typing.TypedDict('MpDiffpowShParamsDictTagged', {
     "@type": typing.Literal["fsl/mp_diffpow.sh"],
     "reg_file": InputPathType,
     "diff_reg_file": str,
@@ -27,7 +27,7 @@ MpDiffpowShParametersTagged = typing.TypedDict('MpDiffpowShParametersTagged', {
 
 class MpDiffpowShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MpDiffpowShParameters(...)`.
+    Output object returned when calling `MpDiffpowShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ class MpDiffpowShOutputs(typing.NamedTuple):
 def mp_diffpow_sh_params(
     reg_file: InputPathType,
     diff_reg_file: str,
-) -> MpDiffpowShParametersTagged:
+) -> MpDiffpowShParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mp_diffpow_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MpDiffpowShParameters` object.
+    `MpDiffpowShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def mp_diffpow_sh_validate(
 
 
 def mp_diffpow_sh_cargs(
-    params: MpDiffpowShParameters,
+    params: MpDiffpowShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def mp_diffpow_sh_cargs(
 
 
 def mp_diffpow_sh_outputs(
-    params: MpDiffpowShParameters,
+    params: MpDiffpowShParamsDict,
     execution: Execution,
 ) -> MpDiffpowShOutputs:
     """
@@ -122,7 +122,7 @@ def mp_diffpow_sh_outputs(
 
 
 def mp_diffpow_sh_execute(
-    params: MpDiffpowShParameters,
+    params: MpDiffpowShParamsDict,
     runner: Runner | None = None,
 ) -> MpDiffpowShOutputs:
     """
@@ -187,6 +187,8 @@ def mp_diffpow_sh(
 __all__ = [
     "MP_DIFFPOW_SH_METADATA",
     "MpDiffpowShOutputs",
+    "MpDiffpowShParamsDict",
+    "MpDiffpowShParamsDictTagged",
     "mp_diffpow_sh",
     "mp_diffpow_sh_execute",
     "mp_diffpow_sh_params",

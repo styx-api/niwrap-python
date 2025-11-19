@@ -13,12 +13,12 @@ LONG_CREATE_ORIG_METADATA = Metadata(
 )
 
 
-LongCreateOrigParameters = typing.TypedDict('LongCreateOrigParameters', {
+LongCreateOrigParamsDict = typing.TypedDict('LongCreateOrigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_orig"]],
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })
-LongCreateOrigParametersTagged = typing.TypedDict('LongCreateOrigParametersTagged', {
+LongCreateOrigParamsDictTagged = typing.TypedDict('LongCreateOrigParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_create_orig"],
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ LongCreateOrigParametersTagged = typing.TypedDict('LongCreateOrigParametersTagge
 
 class LongCreateOrigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongCreateOrigParameters(...)`.
+    Output object returned when calling `LongCreateOrigParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class LongCreateOrigOutputs(typing.NamedTuple):
 def long_create_orig_params(
     base_id: str,
     tp_id: str | None = None,
-) -> LongCreateOrigParametersTagged:
+) -> LongCreateOrigParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def long_create_orig_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongCreateOrigParameters` object.
+    `LongCreateOrigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def long_create_orig_validate(
 
 
 def long_create_orig_cargs(
-    params: LongCreateOrigParameters,
+    params: LongCreateOrigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def long_create_orig_cargs(
 
 
 def long_create_orig_outputs(
-    params: LongCreateOrigParameters,
+    params: LongCreateOrigParamsDict,
     execution: Execution,
 ) -> LongCreateOrigOutputs:
     """
@@ -120,7 +120,7 @@ def long_create_orig_outputs(
 
 
 def long_create_orig_execute(
-    params: LongCreateOrigParameters,
+    params: LongCreateOrigParamsDict,
     runner: Runner | None = None,
 ) -> LongCreateOrigOutputs:
     """
@@ -181,6 +181,8 @@ def long_create_orig(
 __all__ = [
     "LONG_CREATE_ORIG_METADATA",
     "LongCreateOrigOutputs",
+    "LongCreateOrigParamsDict",
+    "LongCreateOrigParamsDictTagged",
     "long_create_orig",
     "long_create_orig_execute",
     "long_create_orig_params",

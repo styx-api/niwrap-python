@@ -13,7 +13,7 @@ V_3D_QWARP_METADATA = Metadata(
 )
 
 
-V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
+V3dQwarpParamsDict = typing.TypedDict('V3dQwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dQwarp"]],
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
@@ -36,7 +36,7 @@ V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
     "verbose": bool,
     "quiet": bool,
 })
-V3dQwarpParametersTagged = typing.TypedDict('V3dQwarpParametersTagged', {
+V3dQwarpParamsDictTagged = typing.TypedDict('V3dQwarpParamsDictTagged', {
     "@type": typing.Literal["afni/3dQwarp"],
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
@@ -63,7 +63,7 @@ V3dQwarpParametersTagged = typing.TypedDict('V3dQwarpParametersTagged', {
 
 class V3dQwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dQwarpParameters(...)`.
+    Output object returned when calling `V3dQwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def v_3d_qwarp_params(
     maxlev: float | None = None,
     verbose: bool = False,
     quiet: bool = False,
-) -> V3dQwarpParametersTagged:
+) -> V3dQwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -157,7 +157,7 @@ def v_3d_qwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dQwarpParameters` object.
+    `V3dQwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -245,7 +245,7 @@ def v_3d_qwarp_validate(
 
 
 def v_3d_qwarp_cargs(
-    params: V3dQwarpParameters,
+    params: V3dQwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -306,7 +306,7 @@ def v_3d_qwarp_cargs(
 
 
 def v_3d_qwarp_outputs(
-    params: V3dQwarpParameters,
+    params: V3dQwarpParamsDict,
     execution: Execution,
 ) -> V3dQwarpOutputs:
     """
@@ -328,7 +328,7 @@ def v_3d_qwarp_outputs(
 
 
 def v_3d_qwarp_execute(
-    params: V3dQwarpParameters,
+    params: V3dQwarpParamsDict,
     runner: Runner | None = None,
 ) -> V3dQwarpOutputs:
     """
@@ -442,6 +442,8 @@ def v_3d_qwarp(
 
 __all__ = [
     "V3dQwarpOutputs",
+    "V3dQwarpParamsDict",
+    "V3dQwarpParamsDictTagged",
     "V_3D_QWARP_METADATA",
     "v_3d_qwarp",
     "v_3d_qwarp_execute",

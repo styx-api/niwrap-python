@@ -13,7 +13,7 @@ V_3DRETROICOR_METADATA = Metadata(
 )
 
 
-V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
+V3dretroicorParamsDict = typing.TypedDict('V3dretroicorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dretroicor"]],
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
     "order": typing.NotRequired[float | None],
     "dataset": InputPathType,
 })
-V3dretroicorParametersTagged = typing.TypedDict('V3dretroicorParametersTagged', {
+V3dretroicorParamsDictTagged = typing.TypedDict('V3dretroicorParamsDictTagged', {
     "@type": typing.Literal["afni/3dretroicor"],
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ V3dretroicorParametersTagged = typing.TypedDict('V3dretroicorParametersTagged', 
 
 class V3dretroicorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dretroicorParameters(...)`.
+    Output object returned when calling `V3dretroicorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def v_3dretroicor_params(
     resp: InputPathType | None = None,
     respphase: str | None = None,
     order: float | None = None,
-) -> V3dretroicorParametersTagged:
+) -> V3dretroicorParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def v_3dretroicor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dretroicorParameters` object.
+    `V3dretroicorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -150,7 +150,7 @@ def v_3dretroicor_validate(
 
 
 def v_3dretroicor_cargs(
-    params: V3dretroicorParameters,
+    params: V3dretroicorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -209,7 +209,7 @@ def v_3dretroicor_cargs(
 
 
 def v_3dretroicor_outputs(
-    params: V3dretroicorParameters,
+    params: V3dretroicorParamsDict,
     execution: Execution,
 ) -> V3dretroicorOutputs:
     """
@@ -231,7 +231,7 @@ def v_3dretroicor_outputs(
 
 
 def v_3dretroicor_execute(
-    params: V3dretroicorParameters,
+    params: V3dretroicorParamsDict,
     runner: Runner | None = None,
 ) -> V3dretroicorOutputs:
     """
@@ -316,6 +316,8 @@ def v_3dretroicor(
 
 __all__ = [
     "V3dretroicorOutputs",
+    "V3dretroicorParamsDict",
+    "V3dretroicorParamsDictTagged",
     "V_3DRETROICOR_METADATA",
     "v_3dretroicor",
     "v_3dretroicor_execute",

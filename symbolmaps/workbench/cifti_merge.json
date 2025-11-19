@@ -12,21 +12,21 @@
     },
     "cifti": {
       "var_param": "cifti",
-      "fn_struct_make_params": "cifti_merge_cifti_params",
+      "fn_struct_make_params": "cifti_merge_cifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"
         },
         "index": {
           "var_param": "index",
-          "fn_struct_make_params": "cifti_merge_index_params",
+          "fn_struct_make_params": "cifti_merge_index",
           "properties": {
             "index": {
               "var_param": "index"
             },
             "up-to": {
               "var_param": "up_to",
-              "fn_struct_make_params": "cifti_merge_up_to_params",
+              "fn_struct_make_params": "cifti_merge_up_to",
               "properties": {
                 "last-index": {
                   "var_param": "last_index"

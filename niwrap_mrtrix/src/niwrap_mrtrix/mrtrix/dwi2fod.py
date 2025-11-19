@@ -13,66 +13,66 @@ DWI2FOD_METADATA = Metadata(
 )
 
 
-Dwi2fodFslgradParameters = typing.TypedDict('Dwi2fodFslgradParameters', {
+Dwi2fodFslgradParamsDict = typing.TypedDict('Dwi2fodFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Dwi2fodFslgradParametersTagged = typing.TypedDict('Dwi2fodFslgradParametersTagged', {
+Dwi2fodFslgradParamsDictTagged = typing.TypedDict('Dwi2fodFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Dwi2fodVariousStringParameters = typing.TypedDict('Dwi2fodVariousStringParameters', {
+Dwi2fodVariousStringParamsDict = typing.TypedDict('Dwi2fodVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-Dwi2fodVariousStringParametersTagged = typing.TypedDict('Dwi2fodVariousStringParametersTagged', {
+Dwi2fodVariousStringParamsDictTagged = typing.TypedDict('Dwi2fodVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-Dwi2fodVariousFileParameters = typing.TypedDict('Dwi2fodVariousFileParameters', {
+Dwi2fodVariousFileParamsDict = typing.TypedDict('Dwi2fodVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-Dwi2fodVariousFileParametersTagged = typing.TypedDict('Dwi2fodVariousFileParametersTagged', {
+Dwi2fodVariousFileParamsDictTagged = typing.TypedDict('Dwi2fodVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-Dwi2fodConfigParameters = typing.TypedDict('Dwi2fodConfigParameters', {
+Dwi2fodConfigParamsDict = typing.TypedDict('Dwi2fodConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Dwi2fodConfigParametersTagged = typing.TypedDict('Dwi2fodConfigParametersTagged', {
+Dwi2fodConfigParamsDictTagged = typing.TypedDict('Dwi2fodConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Dwi2fodResponseOdfParameters = typing.TypedDict('Dwi2fodResponseOdfParameters', {
+Dwi2fodResponseOdfParamsDict = typing.TypedDict('Dwi2fodResponseOdfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["response_odf"]],
     "response": InputPathType,
     "odf": str,
 })
-Dwi2fodResponseOdfParametersTagged = typing.TypedDict('Dwi2fodResponseOdfParametersTagged', {
+Dwi2fodResponseOdfParamsDictTagged = typing.TypedDict('Dwi2fodResponseOdfParamsDictTagged', {
     "@type": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
-Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
+Dwi2fodParamsDict = typing.TypedDict('Dwi2fodParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2fod"]],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2fodFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
     "directions": typing.NotRequired[InputPathType | None],
     "lmax": typing.NotRequired[list[int] | None],
@@ -85,23 +85,23 @@ Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
     "norm_lambda_1": typing.NotRequired[float | None],
     "neg_lambda_1": typing.NotRequired[float | None],
     "predicted_signal": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParamsDictTagged, Dwi2fodVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2fodConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2fodConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "algorithm": str,
     "dwi": InputPathType,
-    "response_odf": list[Dwi2fodResponseOdfParameters],
+    "response_odf": list[Dwi2fodResponseOdfParamsDict],
 })
-Dwi2fodParametersTagged = typing.TypedDict('Dwi2fodParametersTagged', {
+Dwi2fodParamsDictTagged = typing.TypedDict('Dwi2fodParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwi2fod"],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2fodFslgradParamsDict | None],
     "shells": typing.NotRequired[list[float] | None],
     "directions": typing.NotRequired[InputPathType | None],
     "lmax": typing.NotRequired[list[int] | None],
@@ -114,18 +114,18 @@ Dwi2fodParametersTagged = typing.TypedDict('Dwi2fodParametersTagged', {
     "norm_lambda_1": typing.NotRequired[float | None],
     "neg_lambda_1": typing.NotRequired[float | None],
     "predicted_signal": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParamsDictTagged, Dwi2fodVariousFileParamsDictTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2fodConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2fodConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "algorithm": str,
     "dwi": InputPathType,
-    "response_odf": list[Dwi2fodResponseOdfParameters],
+    "response_odf": list[Dwi2fodResponseOdfParamsDict],
 })
 
 
@@ -163,10 +163,10 @@ def dwi2fod_strides_validate_dyn_fn(
     }.get(t)
 
 
-def dwi2fod_fslgrad_params(
+def dwi2fod_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2fodFslgradParametersTagged:
+) -> Dwi2fodFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def dwi2fod_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodFslgradParameters` object.
+    `Dwi2fodFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def dwi2fod_fslgrad_validate(
 
 
 def dwi2fod_fslgrad_cargs(
-    params: Dwi2fodFslgradParameters,
+    params: Dwi2fodFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,9 +232,9 @@ def dwi2fod_fslgrad_cargs(
     return cargs
 
 
-def dwi2fod_various_string_params(
+def dwi2fod_various_string(
     obj: str,
-) -> Dwi2fodVariousStringParametersTagged:
+) -> Dwi2fodVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -255,7 +255,7 @@ def dwi2fod_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodVariousStringParameters` object.
+    `Dwi2fodVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,7 +269,7 @@ def dwi2fod_various_string_validate(
 
 
 def dwi2fod_various_string_cargs(
-    params: Dwi2fodVariousStringParameters,
+    params: Dwi2fodVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,9 +286,9 @@ def dwi2fod_various_string_cargs(
     return cargs
 
 
-def dwi2fod_various_file_params(
+def dwi2fod_various_file(
     obj: InputPathType,
-) -> Dwi2fodVariousFileParametersTagged:
+) -> Dwi2fodVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -309,7 +309,7 @@ def dwi2fod_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodVariousFileParameters` object.
+    `Dwi2fodVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -323,7 +323,7 @@ def dwi2fod_various_file_validate(
 
 
 def dwi2fod_various_file_cargs(
-    params: Dwi2fodVariousFileParameters,
+    params: Dwi2fodVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -340,10 +340,10 @@ def dwi2fod_various_file_cargs(
     return cargs
 
 
-def dwi2fod_config_params(
+def dwi2fod_config(
     key: str,
     value: str,
-) -> Dwi2fodConfigParametersTagged:
+) -> Dwi2fodConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -366,7 +366,7 @@ def dwi2fod_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodConfigParameters` object.
+    `Dwi2fodConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -384,7 +384,7 @@ def dwi2fod_config_validate(
 
 
 def dwi2fod_config_cargs(
-    params: Dwi2fodConfigParameters,
+    params: Dwi2fodConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -405,7 +405,7 @@ def dwi2fod_config_cargs(
 
 class Dwi2fodResponseOdfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[Dwi2fodResponseOdfParameters](...)`.
+    Output object returned when calling `list[Dwi2fodResponseOdfParamsDict](...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -413,10 +413,10 @@ class Dwi2fodResponseOdfOutputs(typing.NamedTuple):
     """output ODF image"""
 
 
-def dwi2fod_response_odf_params(
+def dwi2fod_response_odf(
     response: InputPathType,
     odf: str,
-) -> Dwi2fodResponseOdfParametersTagged:
+) -> Dwi2fodResponseOdfParamsDictTagged:
     """
     Build parameters.
     
@@ -439,7 +439,7 @@ def dwi2fod_response_odf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodResponseOdfParameters` object.
+    `Dwi2fodResponseOdfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -457,7 +457,7 @@ def dwi2fod_response_odf_validate(
 
 
 def dwi2fod_response_odf_cargs(
-    params: Dwi2fodResponseOdfParameters,
+    params: Dwi2fodResponseOdfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -476,7 +476,7 @@ def dwi2fod_response_odf_cargs(
 
 
 def dwi2fod_response_odf_outputs(
-    params: Dwi2fodResponseOdfParameters,
+    params: Dwi2fodResponseOdfParamsDict,
     execution: Execution,
 ) -> Dwi2fodResponseOdfOutputs:
     """
@@ -497,7 +497,7 @@ def dwi2fod_response_odf_outputs(
 
 class Dwi2fodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2fodParameters(...)`.
+    Output object returned when calling `Dwi2fodParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -511,9 +511,9 @@ class Dwi2fodOutputs(typing.NamedTuple):
 def dwi2fod_params(
     algorithm: str,
     dwi: InputPathType,
-    response_odf: list[Dwi2fodResponseOdfParameters],
+    response_odf: list[Dwi2fodResponseOdfParamsDict],
     grad: InputPathType | None = None,
-    fslgrad: Dwi2fodFslgradParameters | None = None,
+    fslgrad: Dwi2fodFslgradParamsDict | None = None,
     shells: list[float] | None = None,
     directions: InputPathType | None = None,
     lmax: list[int] | None = None,
@@ -526,16 +526,16 @@ def dwi2fod_params(
     norm_lambda_1: float | None = None,
     neg_lambda_1: float | None = None,
     predicted_signal: str | None = None,
-    strides: typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None = None,
+    strides: typing.Union[Dwi2fodVariousStringParamsDictTagged, Dwi2fodVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2fodConfigParameters] | None = None,
+    config: list[Dwi2fodConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2fodParametersTagged:
+) -> Dwi2fodParamsDictTagged:
     """
     Build parameters.
     
@@ -669,7 +669,7 @@ def dwi2fod_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2fodParameters` object.
+    `Dwi2fodParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -728,6 +728,8 @@ def dwi2fod_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         dwi2fod_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("info", False) is None:
         raise StyxValidationError("`info` must not be None")
@@ -750,7 +752,7 @@ def dwi2fod_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2fodConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2fodConfigParamsDict] | None`')
         for e in params["config"]:
             dwi2fod_config_validate(e)
     if params.get("help", False) is None:
@@ -772,13 +774,13 @@ def dwi2fod_validate(
     if params.get("response_odf", None) is None:
         raise StyxValidationError("`response_odf` must not be None")
     if not isinstance(params["response_odf"], list):
-        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Dwi2fodResponseOdfParameters]`')
+        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Dwi2fodResponseOdfParamsDict]`')
     for e in params["response_odf"]:
         dwi2fod_response_odf_validate(e)
 
 
 def dwi2fod_cargs(
-    params: Dwi2fodParameters,
+    params: Dwi2fodParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -890,7 +892,7 @@ def dwi2fod_cargs(
 
 
 def dwi2fod_outputs(
-    params: Dwi2fodParameters,
+    params: Dwi2fodParamsDict,
     execution: Execution,
 ) -> Dwi2fodOutputs:
     """
@@ -911,7 +913,7 @@ def dwi2fod_outputs(
 
 
 def dwi2fod_execute(
-    params: Dwi2fodParameters,
+    params: Dwi2fodParamsDict,
     runner: Runner | None = None,
 ) -> Dwi2fodOutputs:
     """
@@ -963,9 +965,9 @@ def dwi2fod_execute(
 def dwi2fod(
     algorithm: str,
     dwi: InputPathType,
-    response_odf: list[Dwi2fodResponseOdfParameters],
+    response_odf: list[Dwi2fodResponseOdfParamsDict],
     grad: InputPathType | None = None,
-    fslgrad: Dwi2fodFslgradParameters | None = None,
+    fslgrad: Dwi2fodFslgradParamsDict | None = None,
     shells: list[float] | None = None,
     directions: InputPathType | None = None,
     lmax: list[int] | None = None,
@@ -978,13 +980,13 @@ def dwi2fod(
     norm_lambda_1: float | None = None,
     neg_lambda_1: float | None = None,
     predicted_signal: str | None = None,
-    strides: typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None = None,
+    strides: typing.Union[Dwi2fodVariousStringParamsDictTagged, Dwi2fodVariousFileParamsDictTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2fodConfigParameters] | None = None,
+    config: list[Dwi2fodConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1129,14 +1131,26 @@ def dwi2fod(
 
 __all__ = [
     "DWI2FOD_METADATA",
+    "Dwi2fodConfigParamsDict",
+    "Dwi2fodConfigParamsDictTagged",
+    "Dwi2fodFslgradParamsDict",
+    "Dwi2fodFslgradParamsDictTagged",
     "Dwi2fodOutputs",
+    "Dwi2fodParamsDict",
+    "Dwi2fodParamsDictTagged",
     "Dwi2fodResponseOdfOutputs",
+    "Dwi2fodResponseOdfParamsDict",
+    "Dwi2fodResponseOdfParamsDictTagged",
+    "Dwi2fodVariousFileParamsDict",
+    "Dwi2fodVariousFileParamsDictTagged",
+    "Dwi2fodVariousStringParamsDict",
+    "Dwi2fodVariousStringParamsDictTagged",
     "dwi2fod",
-    "dwi2fod_config_params",
+    "dwi2fod_config",
     "dwi2fod_execute",
-    "dwi2fod_fslgrad_params",
+    "dwi2fod_fslgrad",
     "dwi2fod_params",
-    "dwi2fod_response_odf_params",
-    "dwi2fod_various_file_params",
-    "dwi2fod_various_string_params",
+    "dwi2fod_response_odf",
+    "dwi2fod_various_file",
+    "dwi2fod_various_string",
 ]

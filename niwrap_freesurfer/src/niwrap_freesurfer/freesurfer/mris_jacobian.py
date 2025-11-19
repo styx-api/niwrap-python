@@ -13,7 +13,7 @@ MRIS_JACOBIAN_METADATA = Metadata(
 )
 
 
-MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
+MrisJacobianParamsDict = typing.TypedDict('MrisJacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_jacobian"]],
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
@@ -22,7 +22,7 @@ MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
     "noscale": bool,
     "invert": bool,
 })
-MrisJacobianParametersTagged = typing.TypedDict('MrisJacobianParametersTagged', {
+MrisJacobianParamsDictTagged = typing.TypedDict('MrisJacobianParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_jacobian"],
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
@@ -35,7 +35,7 @@ MrisJacobianParametersTagged = typing.TypedDict('MrisJacobianParametersTagged', 
 
 class MrisJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisJacobianParameters(...)`.
+    Output object returned when calling `MrisJacobianParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_jacobian_params(
     log: bool = False,
     noscale: bool = False,
     invert: bool = False,
-) -> MrisJacobianParametersTagged:
+) -> MrisJacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mris_jacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisJacobianParameters` object.
+    `MrisJacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def mris_jacobian_validate(
 
 
 def mris_jacobian_cargs(
-    params: MrisJacobianParameters,
+    params: MrisJacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def mris_jacobian_cargs(
 
 
 def mris_jacobian_outputs(
-    params: MrisJacobianParameters,
+    params: MrisJacobianParamsDict,
     execution: Execution,
 ) -> MrisJacobianOutputs:
     """
@@ -162,7 +162,7 @@ def mris_jacobian_outputs(
 
 
 def mris_jacobian_execute(
-    params: MrisJacobianParameters,
+    params: MrisJacobianParamsDict,
     runner: Runner | None = None,
 ) -> MrisJacobianOutputs:
     """
@@ -233,6 +233,8 @@ def mris_jacobian(
 __all__ = [
     "MRIS_JACOBIAN_METADATA",
     "MrisJacobianOutputs",
+    "MrisJacobianParamsDict",
+    "MrisJacobianParamsDictTagged",
     "mris_jacobian",
     "mris_jacobian_execute",
     "mris_jacobian_params",

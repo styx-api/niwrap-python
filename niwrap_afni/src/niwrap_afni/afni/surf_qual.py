@@ -13,7 +13,7 @@ SURF_QUAL_METADATA = Metadata(
 )
 
 
-SurfQualParameters = typing.TypedDict('SurfQualParameters', {
+SurfQualParamsDict = typing.TypedDict('SurfQualParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfQual"]],
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
@@ -22,7 +22,7 @@ SurfQualParameters = typing.TypedDict('SurfQualParameters', {
     "self_intersect_flag": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
-SurfQualParametersTagged = typing.TypedDict('SurfQualParametersTagged', {
+SurfQualParamsDictTagged = typing.TypedDict('SurfQualParamsDictTagged', {
     "@type": typing.Literal["afni/SurfQual"],
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
@@ -35,7 +35,7 @@ SurfQualParametersTagged = typing.TypedDict('SurfQualParametersTagged', {
 
 class SurfQualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfQualParameters(...)`.
+    Output object returned when calling `SurfQualParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def surf_qual_params(
     summary_flag: bool = False,
     self_intersect_flag: bool = False,
     output_prefix: str | None = None,
-) -> SurfQualParametersTagged:
+) -> SurfQualParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def surf_qual_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfQualParameters` object.
+    `SurfQualParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def surf_qual_validate(
 
 
 def surf_qual_cargs(
-    params: SurfQualParameters,
+    params: SurfQualParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def surf_qual_cargs(
 
 
 def surf_qual_outputs(
-    params: SurfQualParameters,
+    params: SurfQualParamsDict,
     execution: Execution,
 ) -> SurfQualOutputs:
     """
@@ -195,7 +195,7 @@ def surf_qual_outputs(
 
 
 def surf_qual_execute(
-    params: SurfQualParameters,
+    params: SurfQualParamsDict,
     runner: Runner | None = None,
 ) -> SurfQualOutputs:
     """
@@ -266,6 +266,8 @@ def surf_qual(
 __all__ = [
     "SURF_QUAL_METADATA",
     "SurfQualOutputs",
+    "SurfQualParamsDict",
+    "SurfQualParamsDictTagged",
     "surf_qual",
     "surf_qual_execute",
     "surf_qual_params",

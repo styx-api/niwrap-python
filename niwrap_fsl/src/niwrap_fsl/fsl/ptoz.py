@@ -13,13 +13,13 @@ PTOZ_METADATA = Metadata(
 )
 
 
-PtozParameters = typing.TypedDict('PtozParameters', {
+PtozParamsDict = typing.TypedDict('PtozParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ptoz"]],
     "p_value": float,
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],
 })
-PtozParametersTagged = typing.TypedDict('PtozParametersTagged', {
+PtozParamsDictTagged = typing.TypedDict('PtozParamsDictTagged', {
     "@type": typing.Literal["fsl/ptoz"],
     "p_value": float,
     "tail_flag": bool,
@@ -29,7 +29,7 @@ PtozParametersTagged = typing.TypedDict('PtozParametersTagged', {
 
 class PtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PtozParameters(...)`.
+    Output object returned when calling `PtozParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def ptoz_params(
     p_value: float,
     tail_flag: bool = False,
     grf_flag: float | None = None,
-) -> PtozParametersTagged:
+) -> PtozParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def ptoz_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `PtozParameters`
+    Validate parameters. Throws an error if `params` is not a valid `PtozParamsDict`
     object.
     
     Args:
@@ -86,7 +86,7 @@ def ptoz_validate(
 
 
 def ptoz_cargs(
-    params: PtozParameters,
+    params: PtozParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def ptoz_cargs(
 
 
 def ptoz_outputs(
-    params: PtozParameters,
+    params: PtozParamsDict,
     execution: Execution,
 ) -> PtozOutputs:
     """
@@ -131,7 +131,7 @@ def ptoz_outputs(
 
 
 def ptoz_execute(
-    params: PtozParameters,
+    params: PtozParamsDict,
     runner: Runner | None = None,
 ) -> PtozOutputs:
     """
@@ -193,6 +193,8 @@ def ptoz(
 __all__ = [
     "PTOZ_METADATA",
     "PtozOutputs",
+    "PtozParamsDict",
+    "PtozParamsDictTagged",
     "ptoz",
     "ptoz_execute",
     "ptoz_params",

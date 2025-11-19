@@ -13,7 +13,7 @@ MRIS_MEF_SURFACES_METADATA = Metadata(
 )
 
 
-MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
+MrisMefSurfacesParamsDict = typing.TypedDict('MrisMefSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mef_surfaces"]],
     "subject_name": str,
     "hemisphere": str,
@@ -22,7 +22,7 @@ MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
     "average_curvature": typing.NotRequired[float | None],
     "white_only": bool,
 })
-MrisMefSurfacesParametersTagged = typing.TypedDict('MrisMefSurfacesParametersTagged', {
+MrisMefSurfacesParamsDictTagged = typing.TypedDict('MrisMefSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_mef_surfaces"],
     "subject_name": str,
     "hemisphere": str,
@@ -35,7 +35,7 @@ MrisMefSurfacesParametersTagged = typing.TypedDict('MrisMefSurfacesParametersTag
 
 class MrisMefSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMefSurfacesParameters(...)`.
+    Output object returned when calling `MrisMefSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def mris_mef_surfaces_params(
     curvature: bool = False,
     average_curvature: float | None = None,
     white_only: bool = False,
-) -> MrisMefSurfacesParametersTagged:
+) -> MrisMefSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def mris_mef_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMefSurfacesParameters` object.
+    `MrisMefSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def mris_mef_surfaces_validate(
 
 
 def mris_mef_surfaces_cargs(
-    params: MrisMefSurfacesParameters,
+    params: MrisMefSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def mris_mef_surfaces_cargs(
 
 
 def mris_mef_surfaces_outputs(
-    params: MrisMefSurfacesParameters,
+    params: MrisMefSurfacesParamsDict,
     execution: Execution,
 ) -> MrisMefSurfacesOutputs:
     """
@@ -166,7 +166,7 @@ def mris_mef_surfaces_outputs(
 
 
 def mris_mef_surfaces_execute(
-    params: MrisMefSurfacesParameters,
+    params: MrisMefSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MrisMefSurfacesOutputs:
     """
@@ -246,6 +246,8 @@ def mris_mef_surfaces(
 __all__ = [
     "MRIS_MEF_SURFACES_METADATA",
     "MrisMefSurfacesOutputs",
+    "MrisMefSurfacesParamsDict",
+    "MrisMefSurfacesParamsDictTagged",
     "mris_mef_surfaces",
     "mris_mef_surfaces_execute",
     "mris_mef_surfaces_params",

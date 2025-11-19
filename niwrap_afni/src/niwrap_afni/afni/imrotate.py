@@ -13,7 +13,7 @@ IMROTATE_METADATA = Metadata(
 )
 
 
-ImrotateParameters = typing.TypedDict('ImrotateParameters', {
+ImrotateParamsDict = typing.TypedDict('ImrotateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imrotate"]],
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
@@ -23,7 +23,7 @@ ImrotateParameters = typing.TypedDict('ImrotateParameters', {
     "input_image": InputPathType,
     "output_image": str,
 })
-ImrotateParametersTagged = typing.TypedDict('ImrotateParametersTagged', {
+ImrotateParamsDictTagged = typing.TypedDict('ImrotateParamsDictTagged', {
     "@type": typing.Literal["afni/imrotate"],
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
@@ -37,7 +37,7 @@ ImrotateParametersTagged = typing.TypedDict('ImrotateParametersTagged', {
 
 class ImrotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImrotateParameters(...)`.
+    Output object returned when calling `ImrotateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def imrotate_params(
     output_image: str,
     linear_interpolation: bool = False,
     fourier_interpolation: bool = False,
-) -> ImrotateParametersTagged:
+) -> ImrotateParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def imrotate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImrotateParameters` object.
+    `ImrotateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def imrotate_validate(
 
 
 def imrotate_cargs(
-    params: ImrotateParameters,
+    params: ImrotateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def imrotate_cargs(
 
 
 def imrotate_outputs(
-    params: ImrotateParameters,
+    params: ImrotateParamsDict,
     execution: Execution,
 ) -> ImrotateOutputs:
     """
@@ -171,7 +171,7 @@ def imrotate_outputs(
 
 
 def imrotate_execute(
-    params: ImrotateParameters,
+    params: ImrotateParamsDict,
     runner: Runner | None = None,
 ) -> ImrotateOutputs:
     """
@@ -245,6 +245,8 @@ def imrotate(
 __all__ = [
     "IMROTATE_METADATA",
     "ImrotateOutputs",
+    "ImrotateParamsDict",
+    "ImrotateParamsDictTagged",
     "imrotate",
     "imrotate_execute",
     "imrotate_params",

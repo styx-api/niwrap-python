@@ -13,7 +13,7 @@ RESAMPLE_IMAGE_METADATA = Metadata(
 )
 
 
-ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
+ResampleImageParamsDict = typing.TypedDict('ResampleImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ResampleImage"]],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -22,7 +22,7 @@ ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
     "interpolate_type": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4"] | None],
     "pixeltype": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None],
 })
-ResampleImageParametersTagged = typing.TypedDict('ResampleImageParametersTagged', {
+ResampleImageParamsDictTagged = typing.TypedDict('ResampleImageParamsDictTagged', {
     "@type": typing.Literal["ants/ResampleImage"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -35,7 +35,7 @@ ResampleImageParametersTagged = typing.TypedDict('ResampleImageParametersTagged'
 
 class ResampleImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ResampleImageParameters(...)`.
+    Output object returned when calling `ResampleImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def resample_image_params(
     size_spacing: str,
     interpolate_type: typing.Literal["0", "1", "2", "3", "4"] | None = None,
     pixeltype: typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None = None,
-) -> ResampleImageParametersTagged:
+) -> ResampleImageParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def resample_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ResampleImageParameters` object.
+    `ResampleImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def resample_image_validate(
 
 
 def resample_image_cargs(
-    params: ResampleImageParameters,
+    params: ResampleImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def resample_image_cargs(
 
 
 def resample_image_outputs(
-    params: ResampleImageParameters,
+    params: ResampleImageParamsDict,
     execution: Execution,
 ) -> ResampleImageOutputs:
     """
@@ -169,7 +169,7 @@ def resample_image_outputs(
 
 
 def resample_image_execute(
-    params: ResampleImageParameters,
+    params: ResampleImageParamsDict,
     runner: Runner | None = None,
 ) -> ResampleImageOutputs:
     """
@@ -246,6 +246,8 @@ def resample_image(
 __all__ = [
     "RESAMPLE_IMAGE_METADATA",
     "ResampleImageOutputs",
+    "ResampleImageParamsDict",
+    "ResampleImageParamsDictTagged",
     "resample_image",
     "resample_image_execute",
     "resample_image_params",

@@ -12,13 +12,13 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
 )
 
 
-BorderExportColorTableParameters = typing.TypedDict('BorderExportColorTableParameters', {
+BorderExportColorTableParamsDict = typing.TypedDict('BorderExportColorTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-export-color-table"]],
     "class-colors": bool,
     "border-file": InputPathType,
     "table-out": str,
 })
-BorderExportColorTableParametersTagged = typing.TypedDict('BorderExportColorTableParametersTagged', {
+BorderExportColorTableParamsDictTagged = typing.TypedDict('BorderExportColorTableParamsDictTagged', {
     "@type": typing.Literal["workbench/border-export-color-table"],
     "class-colors": bool,
     "border-file": InputPathType,
@@ -28,7 +28,7 @@ BorderExportColorTableParametersTagged = typing.TypedDict('BorderExportColorTabl
 
 class BorderExportColorTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderExportColorTableParameters(...)`.
+    Output object returned when calling `BorderExportColorTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def border_export_color_table_params(
     border_file: InputPathType,
     table_out: str,
     class_colors: bool = False,
-) -> BorderExportColorTableParametersTagged:
+) -> BorderExportColorTableParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def border_export_color_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderExportColorTableParameters` object.
+    `BorderExportColorTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def border_export_color_table_validate(
 
 
 def border_export_color_table_cargs(
-    params: BorderExportColorTableParameters,
+    params: BorderExportColorTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def border_export_color_table_cargs(
 
 
 def border_export_color_table_outputs(
-    params: BorderExportColorTableParameters,
+    params: BorderExportColorTableParamsDict,
     execution: Execution,
 ) -> BorderExportColorTableOutputs:
     """
@@ -129,7 +129,7 @@ def border_export_color_table_outputs(
 
 
 def border_export_color_table_execute(
-    params: BorderExportColorTableParameters,
+    params: BorderExportColorTableParamsDict,
     runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
@@ -189,6 +189,8 @@ def border_export_color_table(
 __all__ = [
     "BORDER_EXPORT_COLOR_TABLE_METADATA",
     "BorderExportColorTableOutputs",
+    "BorderExportColorTableParamsDict",
+    "BorderExportColorTableParamsDictTagged",
     "border_export_color_table",
     "border_export_color_table_execute",
     "border_export_color_table_params",

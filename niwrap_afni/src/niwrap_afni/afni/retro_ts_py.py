@@ -13,7 +13,7 @@ RETRO_TS_PY_METADATA = Metadata(
 )
 
 
-RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
+RetroTsPyParamsDict = typing.TypedDict('RetroTsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/RetroTS.py"]],
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
     "zero_phase_offset": bool,
     "legacy_transform": typing.NotRequired[float | None],
 })
-RetroTsPyParametersTagged = typing.TypedDict('RetroTsPyParametersTagged', {
+RetroTsPyParamsDictTagged = typing.TypedDict('RetroTsPyParamsDictTagged', {
     "@type": typing.Literal["afni/RetroTS.py"],
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
@@ -73,7 +73,7 @@ RetroTsPyParametersTagged = typing.TypedDict('RetroTsPyParametersTagged', {
 
 class RetroTsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RetroTsPyParameters(...)`.
+    Output object returned when calling `RetroTsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def retro_ts_py_params(
     slice_order: str | None = None,
     zero_phase_offset: bool = False,
     legacy_transform: float | None = None,
-) -> RetroTsPyParametersTagged:
+) -> RetroTsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def retro_ts_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RetroTsPyParameters` object.
+    `RetroTsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -294,7 +294,7 @@ def retro_ts_py_validate(
 
 
 def retro_ts_py_cargs(
-    params: RetroTsPyParameters,
+    params: RetroTsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -411,7 +411,7 @@ def retro_ts_py_cargs(
 
 
 def retro_ts_py_outputs(
-    params: RetroTsPyParameters,
+    params: RetroTsPyParamsDict,
     execution: Execution,
 ) -> RetroTsPyOutputs:
     """
@@ -431,7 +431,7 @@ def retro_ts_py_outputs(
 
 
 def retro_ts_py_execute(
-    params: RetroTsPyParameters,
+    params: RetroTsPyParamsDict,
     runner: Runner | None = None,
 ) -> RetroTsPyOutputs:
     """
@@ -571,6 +571,8 @@ def retro_ts_py(
 __all__ = [
     "RETRO_TS_PY_METADATA",
     "RetroTsPyOutputs",
+    "RetroTsPyParamsDict",
+    "RetroTsPyParamsDictTagged",
     "retro_ts_py",
     "retro_ts_py_execute",
     "retro_ts_py_params",

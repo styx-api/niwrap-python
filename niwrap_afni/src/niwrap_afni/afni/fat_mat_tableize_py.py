@@ -13,7 +13,7 @@ FAT_MAT_TABLEIZE_PY_METADATA = Metadata(
 )
 
 
-FatMatTableizePyParameters = typing.TypedDict('FatMatTableizePyParameters', {
+FatMatTableizePyParamsDict = typing.TypedDict('FatMatTableizePyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mat_tableize.py"]],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ FatMatTableizePyParameters = typing.TypedDict('FatMatTableizePyParameters', {
     "help_short": bool,
     "help_view": bool,
 })
-FatMatTableizePyParametersTagged = typing.TypedDict('FatMatTableizePyParametersTagged', {
+FatMatTableizePyParamsDictTagged = typing.TypedDict('FatMatTableizePyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mat_tableize.py"],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ FatMatTableizePyParametersTagged = typing.TypedDict('FatMatTableizePyParametersT
 
 class FatMatTableizePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMatTableizePyParameters(...)`.
+    Output object returned when calling `FatMatTableizePyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def fat_mat_tableize_py_params(
     help_: bool = False,
     help_short: bool = False,
     help_view: bool = False,
-) -> FatMatTableizePyParametersTagged:
+) -> FatMatTableizePyParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def fat_mat_tableize_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMatTableizePyParameters` object.
+    `FatMatTableizePyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def fat_mat_tableize_py_validate(
 
 
 def fat_mat_tableize_py_cargs(
-    params: FatMatTableizePyParameters,
+    params: FatMatTableizePyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def fat_mat_tableize_py_cargs(
 
 
 def fat_mat_tableize_py_outputs(
-    params: FatMatTableizePyParameters,
+    params: FatMatTableizePyParamsDict,
     execution: Execution,
 ) -> FatMatTableizePyOutputs:
     """
@@ -237,7 +237,7 @@ def fat_mat_tableize_py_outputs(
 
 
 def fat_mat_tableize_py_execute(
-    params: FatMatTableizePyParameters,
+    params: FatMatTableizePyParamsDict,
     runner: Runner | None = None,
 ) -> FatMatTableizePyOutputs:
     """
@@ -329,6 +329,8 @@ def fat_mat_tableize_py(
 __all__ = [
     "FAT_MAT_TABLEIZE_PY_METADATA",
     "FatMatTableizePyOutputs",
+    "FatMatTableizePyParamsDict",
+    "FatMatTableizePyParamsDictTagged",
     "fat_mat_tableize_py",
     "fat_mat_tableize_py_execute",
     "fat_mat_tableize_py_params",

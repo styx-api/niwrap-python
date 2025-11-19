@@ -13,7 +13,7 @@ MRIS_CONVERT_METADATA = Metadata(
 )
 
 
-MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
+MrisConvertParamsDict = typing.TypedDict('MrisConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_convert"]],
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
@@ -54,7 +54,7 @@ MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
     "cras_add": bool,
     "cras_subtract": bool,
 })
-MrisConvertParametersTagged = typing.TypedDict('MrisConvertParametersTagged', {
+MrisConvertParamsDictTagged = typing.TypedDict('MrisConvertParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_convert"],
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
@@ -99,7 +99,7 @@ MrisConvertParametersTagged = typing.TypedDict('MrisConvertParametersTagged', {
 
 class MrisConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisConvertParameters(...)`.
+    Output object returned when calling `MrisConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,7 +146,7 @@ def mris_convert_params(
     label_to_mask: str | None = None,
     cras_add: bool = False,
     cras_subtract: bool = False,
-) -> MrisConvertParametersTagged:
+) -> MrisConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -268,7 +268,7 @@ def mris_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisConvertParameters` object.
+    `MrisConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -414,7 +414,7 @@ def mris_convert_validate(
 
 
 def mris_convert_cargs(
-    params: MrisConvertParameters,
+    params: MrisConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -560,7 +560,7 @@ def mris_convert_cargs(
 
 
 def mris_convert_outputs(
-    params: MrisConvertParameters,
+    params: MrisConvertParamsDict,
     execution: Execution,
 ) -> MrisConvertOutputs:
     """
@@ -580,7 +580,7 @@ def mris_convert_outputs(
 
 
 def mris_convert_execute(
-    params: MrisConvertParameters,
+    params: MrisConvertParamsDict,
     runner: Runner | None = None,
 ) -> MrisConvertOutputs:
     """
@@ -755,6 +755,8 @@ def mris_convert(
 __all__ = [
     "MRIS_CONVERT_METADATA",
     "MrisConvertOutputs",
+    "MrisConvertParamsDict",
+    "MrisConvertParamsDictTagged",
     "mris_convert",
     "mris_convert_execute",
     "mris_convert_params",

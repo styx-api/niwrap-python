@@ -41,7 +41,7 @@
       "var_param": "initial_moving_transform",
       "variants": {
         "initial_moving_transform": {
-          "fn_struct_make_params": "ants_registration_initial_moving_transform_params",
+          "fn_struct_make_params": "ants_registration_initial_moving_transform",
           "properties": {
             "initial_moving_transform": {
               "var_param": "initial_moving_transform"
@@ -49,7 +49,7 @@
           }
         },
         "initial_moving_transform_use_inverse": {
-          "fn_struct_make_params": "ants_registration_initial_moving_transform_use_inverse_params",
+          "fn_struct_make_params": "ants_registration_initial_moving_transform_use_inverse",
           "properties": {
             "initial_moving_transform": {
               "var_param": "initial_moving_transform"
@@ -60,7 +60,7 @@
           }
         },
         "initial_moving_transform_initialization_feature": {
-          "fn_struct_make_params": "ants_registration_initial_moving_transform_initialization_feature_params",
+          "fn_struct_make_params": "ants_registration_initial_moving_transform_initialization_feature",
           "properties": {
             "fixed_image": {
               "var_param": "fixed_image"
@@ -77,13 +77,13 @@
     },
     "stages": {
       "var_param": "stages",
-      "fn_struct_make_params": "ants_registration_stage_params",
+      "fn_struct_make_params": "ants_registration_stage",
       "properties": {
         "transform": {
           "var_param": "transform",
           "variants": {
             "transform_rigid": {
-              "fn_struct_make_params": "ants_registration_transform_rigid_params",
+              "fn_struct_make_params": "ants_registration_transform_rigid",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -91,7 +91,7 @@
               }
             },
             "transform_affine": {
-              "fn_struct_make_params": "ants_registration_transform_affine_params",
+              "fn_struct_make_params": "ants_registration_transform_affine",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -99,7 +99,7 @@
               }
             },
             "transform_composite_affine": {
-              "fn_struct_make_params": "ants_registration_transform_composite_affine_params",
+              "fn_struct_make_params": "ants_registration_transform_composite_affine",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -107,7 +107,7 @@
               }
             },
             "transform_similarity": {
-              "fn_struct_make_params": "ants_registration_transform_similarity_params",
+              "fn_struct_make_params": "ants_registration_transform_similarity",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -115,7 +115,7 @@
               }
             },
             "transform_translation": {
-              "fn_struct_make_params": "ants_registration_transform_translation_params",
+              "fn_struct_make_params": "ants_registration_transform_translation",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -123,7 +123,7 @@
               }
             },
             "transform_bspline": {
-              "fn_struct_make_params": "ants_registration_transform_bspline_params",
+              "fn_struct_make_params": "ants_registration_transform_bspline",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -134,7 +134,7 @@
               }
             },
             "transform_gaussian_displacement_field": {
-              "fn_struct_make_params": "ants_registration_transform_gaussian_displacement_field_params",
+              "fn_struct_make_params": "ants_registration_transform_gaussian_displacement_field",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -148,7 +148,7 @@
               }
             },
             "transform_bspline_displacement_field": {
-              "fn_struct_make_params": "ants_registration_transform_bspline_displacement_field_params",
+              "fn_struct_make_params": "ants_registration_transform_bspline_displacement_field",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -165,7 +165,7 @@
               }
             },
             "transform_time_varying_velocity_field": {
-              "fn_struct_make_params": "ants_registration_transform_time_varying_velocity_field_params",
+              "fn_struct_make_params": "ants_registration_transform_time_varying_velocity_field",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -188,7 +188,7 @@
               }
             },
             "transform_time_varying_bspline_velocity_field": {
-              "fn_struct_make_params": "ants_registration_transform_time_varying_bspline_velocity_field_params",
+              "fn_struct_make_params": "ants_registration_transform_time_varying_bspline_velocity_field",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -205,7 +205,7 @@
               }
             },
             "transform_syn": {
-              "fn_struct_make_params": "ants_registration_transform_syn_params",
+              "fn_struct_make_params": "ants_registration_transform_syn",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -219,7 +219,7 @@
               }
             },
             "transform_bspline_syn": {
-              "fn_struct_make_params": "ants_registration_transform_bspline_syn_params",
+              "fn_struct_make_params": "ants_registration_transform_bspline_syn",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -236,7 +236,7 @@
               }
             },
             "transform_exponential": {
-              "fn_struct_make_params": "ants_registration_transform_exponential_params",
+              "fn_struct_make_params": "ants_registration_transform_exponential",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -253,7 +253,7 @@
               }
             },
             "transform_bspline_exponential": {
-              "fn_struct_make_params": "ants_registration_transform_bspline_exponential_params",
+              "fn_struct_make_params": "ants_registration_transform_bspline_exponential",
               "properties": {
                 "gradient_step": {
                   "var_param": "gradient_step"
@@ -278,7 +278,7 @@
           "var_param": "metric",
           "variants": {
             "metric_ants_neighbourhood_cross_correlation": {
-              "fn_struct_make_params": "ants_registration_metric_ants_neighbourhood_cross_correlation_params",
+              "fn_struct_make_params": "ants_registration_metric_ants_neighbourhood_cross_correlation",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -304,7 +304,7 @@
               }
             },
             "metric_mutual_information": {
-              "fn_struct_make_params": "ants_registration_metric_mutual_information_params",
+              "fn_struct_make_params": "ants_registration_metric_mutual_information",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -330,7 +330,7 @@
               }
             },
             "metric_mattes": {
-              "fn_struct_make_params": "ants_registration_metric_mattes_params",
+              "fn_struct_make_params": "ants_registration_metric_mattes",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -356,7 +356,7 @@
               }
             },
             "metric_mean_squares": {
-              "fn_struct_make_params": "ants_registration_metric_mean_squares_params",
+              "fn_struct_make_params": "ants_registration_metric_mean_squares",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -382,7 +382,7 @@
               }
             },
             "metric_demons": {
-              "fn_struct_make_params": "ants_registration_metric_demons_params",
+              "fn_struct_make_params": "ants_registration_metric_demons",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -408,7 +408,7 @@
               }
             },
             "metric_global_correlation": {
-              "fn_struct_make_params": "ants_registration_metric_global_correlation_params",
+              "fn_struct_make_params": "ants_registration_metric_global_correlation",
               "properties": {
                 "fixed_image": {
                   "var_param": "fixed_image"
@@ -434,7 +434,7 @@
               }
             },
             "metric_euclidean_icp": {
-              "fn_struct_make_params": "ants_registration_metric_euclidean_icp_params",
+              "fn_struct_make_params": "ants_registration_metric_euclidean_icp",
               "properties": {
                 "fixed_point_set": {
                   "var_param": "fixed_point_set"
@@ -454,7 +454,7 @@
               }
             },
             "metric_point_set_expectation": {
-              "fn_struct_make_params": "ants_registration_metric_point_set_expectation_params",
+              "fn_struct_make_params": "ants_registration_metric_point_set_expectation",
               "properties": {
                 "metric_weight": {
                   "var_param": "metric_weight"
@@ -468,7 +468,7 @@
               }
             },
             "metric_jensen_havrda_charvet_tsallis": {
-              "fn_struct_make_params": "ants_registration_metric_jensen_havrda_charvet_tsallis_params",
+              "fn_struct_make_params": "ants_registration_metric_jensen_havrda_charvet_tsallis",
               "properties": {
                 "fixed_point_set": {
                   "var_param": "fixed_point_set"
@@ -494,14 +494,14 @@
               }
             },
             "metric_igdm": {
-              "fn_struct_make_params": "ants_registration_metric_igdm_params",
+              "fn_struct_make_params": "ants_registration_metric_igdm",
               "properties": {}
             }
           }
         },
         "convergence": {
           "var_param": "convergence",
-          "fn_struct_make_params": "ants_registration_convergence_params",
+          "fn_struct_make_params": "ants_registration_convergence",
           "properties": {
             "convergence": {
               "var_param": "convergence"
@@ -527,7 +527,7 @@
     },
     "winsorize_image_intensities": {
       "var_param": "winsorize_image_intensities",
-      "fn_struct_make_params": "ants_registration_winsorize_image_intensities_params",
+      "fn_struct_make_params": "ants_registration_winsorize_image_intensities",
       "properties": {
         "lower_quantile": {
           "var_param": "lower_quantile"
@@ -539,7 +539,7 @@
     },
     "masks": {
       "var_param": "masks",
-      "fn_struct_make_params": "ants_registration_masks_params",
+      "fn_struct_make_params": "ants_registration_masks",
       "properties": {
         "fixed_mask": {
           "var_param": "fixed_mask"

@@ -13,7 +13,7 @@ MRI_HEAD_METADATA = Metadata(
 )
 
 
-MriHeadParameters = typing.TypedDict('MriHeadParameters', {
+MriHeadParamsDict = typing.TypedDict('MriHeadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_head"]],
     "identify": bool,
     "read": bool,
@@ -22,7 +22,7 @@ MriHeadParameters = typing.TypedDict('MriHeadParameters', {
     "usage": bool,
     "question_mark_help": bool,
 })
-MriHeadParametersTagged = typing.TypedDict('MriHeadParametersTagged', {
+MriHeadParamsDictTagged = typing.TypedDict('MriHeadParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_head"],
     "identify": bool,
     "read": bool,
@@ -35,7 +35,7 @@ MriHeadParametersTagged = typing.TypedDict('MriHeadParametersTagged', {
 
 class MriHeadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriHeadParameters(...)`.
+    Output object returned when calling `MriHeadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def mri_head_params(
     help_: bool = False,
     usage: bool = False,
     question_mark_help: bool = False,
-) -> MriHeadParametersTagged:
+) -> MriHeadParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def mri_head_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriHeadParameters` object.
+    `MriHeadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def mri_head_validate(
 
 
 def mri_head_cargs(
-    params: MriHeadParameters,
+    params: MriHeadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def mri_head_cargs(
 
 
 def mri_head_outputs(
-    params: MriHeadParameters,
+    params: MriHeadParamsDict,
     execution: Execution,
 ) -> MriHeadOutputs:
     """
@@ -162,7 +162,7 @@ def mri_head_outputs(
 
 
 def mri_head_execute(
-    params: MriHeadParameters,
+    params: MriHeadParamsDict,
     runner: Runner | None = None,
 ) -> MriHeadOutputs:
     """
@@ -233,6 +233,8 @@ def mri_head(
 __all__ = [
     "MRI_HEAD_METADATA",
     "MriHeadOutputs",
+    "MriHeadParamsDict",
+    "MriHeadParamsDictTagged",
     "mri_head",
     "mri_head_execute",
     "mri_head_params",

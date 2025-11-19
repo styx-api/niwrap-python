@@ -13,13 +13,13 @@ POLYORDER_METADATA = Metadata(
 )
 
 
-PolyorderParameters = typing.TypedDict('PolyorderParameters', {
+PolyorderParamsDict = typing.TypedDict('PolyorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/polyorder"]],
     "ntp": float,
     "tr": float,
     "cutoff": float,
 })
-PolyorderParametersTagged = typing.TypedDict('PolyorderParametersTagged', {
+PolyorderParamsDictTagged = typing.TypedDict('PolyorderParamsDictTagged', {
     "@type": typing.Literal["freesurfer/polyorder"],
     "ntp": float,
     "tr": float,
@@ -29,7 +29,7 @@ PolyorderParametersTagged = typing.TypedDict('PolyorderParametersTagged', {
 
 class PolyorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PolyorderParameters(...)`.
+    Output object returned when calling `PolyorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def polyorder_params(
     ntp: float,
     tr: float,
     cutoff: float,
-) -> PolyorderParametersTagged:
+) -> PolyorderParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def polyorder_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PolyorderParameters` object.
+    `PolyorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def polyorder_validate(
 
 
 def polyorder_cargs(
-    params: PolyorderParameters,
+    params: PolyorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def polyorder_cargs(
 
 
 def polyorder_outputs(
-    params: PolyorderParameters,
+    params: PolyorderParamsDict,
     execution: Execution,
 ) -> PolyorderOutputs:
     """
@@ -135,7 +135,7 @@ def polyorder_outputs(
 
 
 def polyorder_execute(
-    params: PolyorderParameters,
+    params: PolyorderParamsDict,
     runner: Runner | None = None,
 ) -> PolyorderOutputs:
     """
@@ -199,6 +199,8 @@ def polyorder(
 __all__ = [
     "POLYORDER_METADATA",
     "PolyorderOutputs",
+    "PolyorderParamsDict",
+    "PolyorderParamsDictTagged",
     "polyorder",
     "polyorder_execute",
     "polyorder_params",

@@ -13,7 +13,7 @@ DMRI_TRK2TRK_METADATA = Metadata(
 )
 
 
-DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
+DmriTrk2trkParamsDict = typing.TypedDict('DmriTrk2trkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_trk2trk"]],
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
@@ -43,7 +43,7 @@ DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
     "debug_flag": bool,
     "check_opts": bool,
 })
-DmriTrk2trkParametersTagged = typing.TypedDict('DmriTrk2trkParametersTagged', {
+DmriTrk2trkParamsDictTagged = typing.TypedDict('DmriTrk2trkParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_trk2trk"],
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
@@ -77,7 +77,7 @@ DmriTrk2trkParametersTagged = typing.TypedDict('DmriTrk2trkParametersTagged', {
 
 class DmriTrk2trkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriTrk2trkParameters(...)`.
+    Output object returned when calling `DmriTrk2trkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +117,7 @@ def dmri_trk2trk_params(
     smooth_flag: bool = False,
     debug_flag: bool = False,
     check_opts: bool = False,
-) -> DmriTrk2trkParametersTagged:
+) -> DmriTrk2trkParamsDictTagged:
     """
     Build parameters.
     
@@ -215,7 +215,7 @@ def dmri_trk2trk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriTrk2trkParameters` object.
+    `DmriTrk2trkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -335,7 +335,7 @@ def dmri_trk2trk_validate(
 
 
 def dmri_trk2trk_cargs(
-    params: DmriTrk2trkParameters,
+    params: DmriTrk2trkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -466,7 +466,7 @@ def dmri_trk2trk_cargs(
 
 
 def dmri_trk2trk_outputs(
-    params: DmriTrk2trkParameters,
+    params: DmriTrk2trkParamsDict,
     execution: Execution,
 ) -> DmriTrk2trkOutputs:
     """
@@ -488,7 +488,7 @@ def dmri_trk2trk_outputs(
 
 
 def dmri_trk2trk_execute(
-    params: DmriTrk2trkParameters,
+    params: DmriTrk2trkParamsDict,
     runner: Runner | None = None,
 ) -> DmriTrk2trkOutputs:
     """
@@ -628,6 +628,8 @@ def dmri_trk2trk(
 __all__ = [
     "DMRI_TRK2TRK_METADATA",
     "DmriTrk2trkOutputs",
+    "DmriTrk2trkParamsDict",
+    "DmriTrk2trkParamsDictTagged",
     "dmri_trk2trk",
     "dmri_trk2trk_execute",
     "dmri_trk2trk_params",

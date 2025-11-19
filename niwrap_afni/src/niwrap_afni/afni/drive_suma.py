@@ -13,7 +13,7 @@ DRIVE_SUMA_METADATA = Metadata(
 )
 
 
-DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
+DriveSumaParamsDict = typing.TypedDict('DriveSumaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/DriveSuma"]],
     "command": str,
     "surf_label": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
     "c_demo": bool,
     "viewer_cont": bool,
 })
-DriveSumaParametersTagged = typing.TypedDict('DriveSumaParametersTagged', {
+DriveSumaParamsDictTagged = typing.TypedDict('DriveSumaParamsDictTagged', {
     "@type": typing.Literal["afni/DriveSuma"],
     "command": str,
     "surf_label": typing.NotRequired[str | None],
@@ -85,7 +85,7 @@ DriveSumaParametersTagged = typing.TypedDict('DriveSumaParametersTagged', {
 
 class DriveSumaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DriveSumaParameters(...)`.
+    Output object returned when calling `DriveSumaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,7 +123,7 @@ def drive_suma_params(
     help_nido: bool = False,
     c_demo: bool = False,
     viewer_cont: bool = False,
-) -> DriveSumaParametersTagged:
+) -> DriveSumaParamsDictTagged:
     """
     Build parameters.
     
@@ -224,7 +224,7 @@ def drive_suma_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DriveSumaParameters` object.
+    `DriveSumaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -339,7 +339,7 @@ def drive_suma_validate(
 
 
 def drive_suma_cargs(
-    params: DriveSumaParameters,
+    params: DriveSumaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -475,7 +475,7 @@ def drive_suma_cargs(
 
 
 def drive_suma_outputs(
-    params: DriveSumaParameters,
+    params: DriveSumaParamsDict,
     execution: Execution,
 ) -> DriveSumaOutputs:
     """
@@ -494,7 +494,7 @@ def drive_suma_outputs(
 
 
 def drive_suma_execute(
-    params: DriveSumaParameters,
+    params: DriveSumaParamsDict,
     runner: Runner | None = None,
 ) -> DriveSumaOutputs:
     """
@@ -641,6 +641,8 @@ def drive_suma(
 __all__ = [
     "DRIVE_SUMA_METADATA",
     "DriveSumaOutputs",
+    "DriveSumaParamsDict",
+    "DriveSumaParamsDictTagged",
     "drive_suma",
     "drive_suma_execute",
     "drive_suma_params",

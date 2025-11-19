@@ -13,7 +13,7 @@ PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
 )
 
 
-PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters', {
+PasteImageIntoImageParamsDict = typing.TypedDict('PasteImageIntoImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/PasteImageIntoImage"]],
     "image_dimension": int,
     "input_canvas_image": InputPathType,
@@ -24,7 +24,7 @@ PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters'
     "paint_over_non_background_voxels": typing.NotRequired[typing.Literal[0, 1, 2] | None],
     "conflict_label": typing.NotRequired[int | None],
 })
-PasteImageIntoImageParametersTagged = typing.TypedDict('PasteImageIntoImageParametersTagged', {
+PasteImageIntoImageParamsDictTagged = typing.TypedDict('PasteImageIntoImageParamsDictTagged', {
     "@type": typing.Literal["ants/PasteImageIntoImage"],
     "image_dimension": int,
     "input_canvas_image": InputPathType,
@@ -39,7 +39,7 @@ PasteImageIntoImageParametersTagged = typing.TypedDict('PasteImageIntoImageParam
 
 class PasteImageIntoImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PasteImageIntoImageParameters(...)`.
+    Output object returned when calling `PasteImageIntoImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def paste_image_into_image_params(
     background_label: int | None = None,
     paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = None,
     conflict_label: int | None = None,
-) -> PasteImageIntoImageParametersTagged:
+) -> PasteImageIntoImageParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def paste_image_into_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PasteImageIntoImageParameters` object.
+    `PasteImageIntoImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def paste_image_into_image_validate(
 
 
 def paste_image_into_image_cargs(
-    params: PasteImageIntoImageParameters,
+    params: PasteImageIntoImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def paste_image_into_image_cargs(
 
 
 def paste_image_into_image_outputs(
-    params: PasteImageIntoImageParameters,
+    params: PasteImageIntoImageParamsDict,
     execution: Execution,
 ) -> PasteImageIntoImageOutputs:
     """
@@ -190,7 +190,7 @@ def paste_image_into_image_outputs(
 
 
 def paste_image_into_image_execute(
-    params: PasteImageIntoImageParameters,
+    params: PasteImageIntoImageParamsDict,
     runner: Runner | None = None,
 ) -> PasteImageIntoImageOutputs:
     """
@@ -275,6 +275,8 @@ def paste_image_into_image(
 __all__ = [
     "PASTE_IMAGE_INTO_IMAGE_METADATA",
     "PasteImageIntoImageOutputs",
+    "PasteImageIntoImageParamsDict",
+    "PasteImageIntoImageParamsDictTagged",
     "paste_image_into_image",
     "paste_image_into_image_execute",
     "paste_image_into_image_params",

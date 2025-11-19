@@ -13,7 +13,7 @@ MRI_JACOBIAN_METADATA = Metadata(
 )
 
 
-MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
+MriJacobianParamsDict = typing.TypedDict('MriJacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_jacobian"]],
     "morph_file": InputPathType,
     "template_vol": InputPathType,
@@ -30,7 +30,7 @@ MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
     "debug_voxel": typing.NotRequired[list[float] | None],
     "remove": bool,
 })
-MriJacobianParametersTagged = typing.TypedDict('MriJacobianParametersTagged', {
+MriJacobianParamsDictTagged = typing.TypedDict('MriJacobianParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_jacobian"],
     "morph_file": InputPathType,
     "template_vol": InputPathType,
@@ -51,7 +51,7 @@ MriJacobianParametersTagged = typing.TypedDict('MriJacobianParametersTagged', {
 
 class MriJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriJacobianParameters(...)`.
+    Output object returned when calling `MriJacobianParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def mri_jacobian_params(
     dt: bool = False,
     debug_voxel: list[float] | None = None,
     remove: bool = False,
-) -> MriJacobianParametersTagged:
+) -> MriJacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -123,7 +123,7 @@ def mri_jacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriJacobianParameters` object.
+    `MriJacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def mri_jacobian_validate(
 
 
 def mri_jacobian_cargs(
-    params: MriJacobianParameters,
+    params: MriJacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -241,7 +241,7 @@ def mri_jacobian_cargs(
 
 
 def mri_jacobian_outputs(
-    params: MriJacobianParameters,
+    params: MriJacobianParamsDict,
     execution: Execution,
 ) -> MriJacobianOutputs:
     """
@@ -261,7 +261,7 @@ def mri_jacobian_outputs(
 
 
 def mri_jacobian_execute(
-    params: MriJacobianParameters,
+    params: MriJacobianParamsDict,
     runner: Runner | None = None,
 ) -> MriJacobianOutputs:
     """
@@ -356,6 +356,8 @@ def mri_jacobian(
 __all__ = [
     "MRI_JACOBIAN_METADATA",
     "MriJacobianOutputs",
+    "MriJacobianParamsDict",
+    "MriJacobianParamsDictTagged",
     "mri_jacobian",
     "mri_jacobian_execute",
     "mri_jacobian_params",

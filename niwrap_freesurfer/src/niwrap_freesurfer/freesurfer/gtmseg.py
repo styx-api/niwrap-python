@@ -13,7 +13,7 @@ GTMSEG_METADATA = Metadata(
 )
 
 
-GtmsegParameters = typing.TypedDict('GtmsegParameters', {
+GtmsegParamsDict = typing.TypedDict('GtmsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gtmseg"]],
     "subject": str,
     "outvol": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ GtmsegParameters = typing.TypedDict('GtmsegParameters', {
     "xcerseg": bool,
     "debug": bool,
 })
-GtmsegParametersTagged = typing.TypedDict('GtmsegParametersTagged', {
+GtmsegParamsDictTagged = typing.TypedDict('GtmsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gtmseg"],
     "subject": str,
     "outvol": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ GtmsegParametersTagged = typing.TypedDict('GtmsegParametersTagged', {
 
 class GtmsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GtmsegParameters(...)`.
+    Output object returned when calling `GtmsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +88,7 @@ def gtmseg_params(
     no_seg_stats: bool = False,
     xcerseg: bool = False,
     debug: bool = False,
-) -> GtmsegParametersTagged:
+) -> GtmsegParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def gtmseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GtmsegParameters` object.
+    `GtmsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def gtmseg_validate(
 
 
 def gtmseg_cargs(
-    params: GtmsegParameters,
+    params: GtmsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def gtmseg_cargs(
 
 
 def gtmseg_outputs(
-    params: GtmsegParameters,
+    params: GtmsegParamsDict,
     execution: Execution,
 ) -> GtmsegOutputs:
     """
@@ -328,7 +328,7 @@ def gtmseg_outputs(
 
 
 def gtmseg_execute(
-    params: GtmsegParameters,
+    params: GtmsegParamsDict,
     runner: Runner | None = None,
 ) -> GtmsegOutputs:
     """
@@ -439,6 +439,8 @@ def gtmseg(
 __all__ = [
     "GTMSEG_METADATA",
     "GtmsegOutputs",
+    "GtmsegParamsDict",
+    "GtmsegParamsDictTagged",
     "gtmseg",
     "gtmseg_execute",
     "gtmseg_params",

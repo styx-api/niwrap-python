@@ -13,7 +13,7 @@ CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
 )
 
 
-ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters', {
+ClustExpStatParsePyParamsDict = typing.TypedDict('ClustExpStatParsePyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/ClustExp_StatParse.py"]],
     "statdset": InputPathType,
     "meanbrik": float,
@@ -29,7 +29,7 @@ ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters'
     "noshiny": bool,
     "overwrite": bool,
 })
-ClustExpStatParsePyParametersTagged = typing.TypedDict('ClustExpStatParsePyParametersTagged', {
+ClustExpStatParsePyParamsDictTagged = typing.TypedDict('ClustExpStatParsePyParamsDictTagged', {
     "@type": typing.Literal["afni/ClustExp_StatParse.py"],
     "statdset": InputPathType,
     "meanbrik": float,
@@ -49,7 +49,7 @@ ClustExpStatParsePyParametersTagged = typing.TypedDict('ClustExpStatParsePyParam
 
 class ClustExpStatParsePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ClustExpStatParsePyParameters(...)`.
+    Output object returned when calling `ClustExpStatParsePyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def clust_exp_stat_parse_py_params(
     session: str | None = None,
     noshiny: bool = False,
     overwrite: bool = False,
-) -> ClustExpStatParsePyParametersTagged:
+) -> ClustExpStatParsePyParamsDictTagged:
     """
     Build parameters.
     
@@ -139,7 +139,7 @@ def clust_exp_stat_parse_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ClustExpStatParsePyParameters` object.
+    `ClustExpStatParsePyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def clust_exp_stat_parse_py_validate(
 
 
 def clust_exp_stat_parse_py_cargs(
-    params: ClustExpStatParsePyParameters,
+    params: ClustExpStatParsePyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,7 +267,7 @@ def clust_exp_stat_parse_py_cargs(
 
 
 def clust_exp_stat_parse_py_outputs(
-    params: ClustExpStatParsePyParameters,
+    params: ClustExpStatParsePyParamsDict,
     execution: Execution,
 ) -> ClustExpStatParsePyOutputs:
     """
@@ -294,7 +294,7 @@ def clust_exp_stat_parse_py_outputs(
 
 
 def clust_exp_stat_parse_py_execute(
-    params: ClustExpStatParsePyParameters,
+    params: ClustExpStatParsePyParamsDict,
     runner: Runner | None = None,
 ) -> ClustExpStatParsePyOutputs:
     """
@@ -390,6 +390,8 @@ def clust_exp_stat_parse_py(
 __all__ = [
     "CLUST_EXP_STAT_PARSE_PY_METADATA",
     "ClustExpStatParsePyOutputs",
+    "ClustExpStatParsePyParamsDict",
+    "ClustExpStatParsePyParamsDictTagged",
     "clust_exp_stat_parse_py",
     "clust_exp_stat_parse_py_execute",
     "clust_exp_stat_parse_py_params",

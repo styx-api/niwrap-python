@@ -13,13 +13,13 @@ V_3D_CONVOLVE_METADATA = Metadata(
 )
 
 
-V3dConvolveParameters = typing.TypedDict('V3dConvolveParameters', {
+V3dConvolveParamsDict = typing.TypedDict('V3dConvolveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dConvolve"]],
     "infile": InputPathType,
     "outfile": str,
     "options": typing.NotRequired[str | None],
 })
-V3dConvolveParametersTagged = typing.TypedDict('V3dConvolveParametersTagged', {
+V3dConvolveParamsDictTagged = typing.TypedDict('V3dConvolveParamsDictTagged', {
     "@type": typing.Literal["afni/3dConvolve"],
     "infile": InputPathType,
     "outfile": str,
@@ -29,7 +29,7 @@ V3dConvolveParametersTagged = typing.TypedDict('V3dConvolveParametersTagged', {
 
 class V3dConvolveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dConvolveParameters(...)`.
+    Output object returned when calling `V3dConvolveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3d_convolve_params(
     infile: InputPathType,
     outfile: str,
     options: str | None = None,
-) -> V3dConvolveParametersTagged:
+) -> V3dConvolveParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def v_3d_convolve_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dConvolveParameters` object.
+    `V3dConvolveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def v_3d_convolve_validate(
 
 
 def v_3d_convolve_cargs(
-    params: V3dConvolveParameters,
+    params: V3dConvolveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def v_3d_convolve_cargs(
 
 
 def v_3d_convolve_outputs(
-    params: V3dConvolveParameters,
+    params: V3dConvolveParamsDict,
     execution: Execution,
 ) -> V3dConvolveOutputs:
     """
@@ -133,7 +133,7 @@ def v_3d_convolve_outputs(
 
 
 def v_3d_convolve_execute(
-    params: V3dConvolveParameters,
+    params: V3dConvolveParamsDict,
     runner: Runner | None = None,
 ) -> V3dConvolveOutputs:
     """
@@ -194,6 +194,8 @@ def v_3d_convolve(
 
 __all__ = [
     "V3dConvolveOutputs",
+    "V3dConvolveParamsDict",
+    "V3dConvolveParamsDictTagged",
     "V_3D_CONVOLVE_METADATA",
     "v_3d_convolve",
     "v_3d_convolve_execute",

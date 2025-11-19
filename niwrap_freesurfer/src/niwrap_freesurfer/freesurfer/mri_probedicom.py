@@ -13,13 +13,13 @@ MRI_PROBEDICOM_METADATA = Metadata(
 )
 
 
-MriProbedicomParameters = typing.TypedDict('MriProbedicomParameters', {
+MriProbedicomParamsDict = typing.TypedDict('MriProbedicomParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probedicom"]],
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],
 })
-MriProbedicomParametersTagged = typing.TypedDict('MriProbedicomParametersTagged', {
+MriProbedicomParamsDictTagged = typing.TypedDict('MriProbedicomParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_probedicom"],
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ MriProbedicomParametersTagged = typing.TypedDict('MriProbedicomParametersTagged'
 
 class MriProbedicomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriProbedicomParameters(...)`.
+    Output object returned when calling `MriProbedicomParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_probedicom_params(
     dicom_file: InputPathType,
     option1: str | None = None,
     option2: str | None = None,
-) -> MriProbedicomParametersTagged:
+) -> MriProbedicomParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def mri_probedicom_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriProbedicomParameters` object.
+    `MriProbedicomParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_probedicom_validate(
 
 
 def mri_probedicom_cargs(
-    params: MriProbedicomParameters,
+    params: MriProbedicomParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -117,7 +117,7 @@ def mri_probedicom_cargs(
 
 
 def mri_probedicom_outputs(
-    params: MriProbedicomParameters,
+    params: MriProbedicomParamsDict,
     execution: Execution,
 ) -> MriProbedicomOutputs:
     """
@@ -137,7 +137,7 @@ def mri_probedicom_outputs(
 
 
 def mri_probedicom_execute(
-    params: MriProbedicomParameters,
+    params: MriProbedicomParamsDict,
     runner: Runner | None = None,
 ) -> MriProbedicomOutputs:
     """
@@ -199,6 +199,8 @@ def mri_probedicom(
 __all__ = [
     "MRI_PROBEDICOM_METADATA",
     "MriProbedicomOutputs",
+    "MriProbedicomParamsDict",
+    "MriProbedicomParamsDictTagged",
     "mri_probedicom",
     "mri_probedicom_execute",
     "mri_probedicom_params",

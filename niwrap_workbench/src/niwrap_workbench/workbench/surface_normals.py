@@ -12,12 +12,12 @@ SURFACE_NORMALS_METADATA = Metadata(
 )
 
 
-SurfaceNormalsParameters = typing.TypedDict('SurfaceNormalsParameters', {
+SurfaceNormalsParamsDict = typing.TypedDict('SurfaceNormalsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-normals"]],
     "metric-out": str,
     "surface": InputPathType,
 })
-SurfaceNormalsParametersTagged = typing.TypedDict('SurfaceNormalsParametersTagged', {
+SurfaceNormalsParamsDictTagged = typing.TypedDict('SurfaceNormalsParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-normals"],
     "metric-out": str,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfaceNormalsParametersTagged = typing.TypedDict('SurfaceNormalsParametersTagge
 
 class SurfaceNormalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceNormalsParameters(...)`.
+    Output object returned when calling `SurfaceNormalsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceNormalsOutputs(typing.NamedTuple):
 def surface_normals_params(
     metric_out: str,
     surface: InputPathType,
-) -> SurfaceNormalsParametersTagged:
+) -> SurfaceNormalsParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_normals_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceNormalsParameters` object.
+    `SurfaceNormalsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_normals_validate(
 
 
 def surface_normals_cargs(
-    params: SurfaceNormalsParameters,
+    params: SurfaceNormalsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_normals_cargs(
 
 
 def surface_normals_outputs(
-    params: SurfaceNormalsParameters,
+    params: SurfaceNormalsParamsDict,
     execution: Execution,
 ) -> SurfaceNormalsOutputs:
     """
@@ -121,7 +121,7 @@ def surface_normals_outputs(
 
 
 def surface_normals_execute(
-    params: SurfaceNormalsParameters,
+    params: SurfaceNormalsParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
@@ -174,6 +174,8 @@ def surface_normals(
 __all__ = [
     "SURFACE_NORMALS_METADATA",
     "SurfaceNormalsOutputs",
+    "SurfaceNormalsParamsDict",
+    "SurfaceNormalsParamsDictTagged",
     "surface_normals",
     "surface_normals_execute",
     "surface_normals_params",

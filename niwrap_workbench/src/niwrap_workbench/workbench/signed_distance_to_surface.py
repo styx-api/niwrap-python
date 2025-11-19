@@ -12,14 +12,14 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 )
 
 
-SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfaceParameters', {
+SignedDistanceToSurfaceParamsDict = typing.TypedDict('SignedDistanceToSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/signed-distance-to-surface"]],
     "metric": str,
     "method": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
 })
-SignedDistanceToSurfaceParametersTagged = typing.TypedDict('SignedDistanceToSurfaceParametersTagged', {
+SignedDistanceToSurfaceParamsDictTagged = typing.TypedDict('SignedDistanceToSurfaceParamsDictTagged', {
     "@type": typing.Literal["workbench/signed-distance-to-surface"],
     "metric": str,
     "method": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ SignedDistanceToSurfaceParametersTagged = typing.TypedDict('SignedDistanceToSurf
 
 class SignedDistanceToSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SignedDistanceToSurfaceParameters(...)`.
+    Output object returned when calling `SignedDistanceToSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def signed_distance_to_surface_params(
     method: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-) -> SignedDistanceToSurfaceParametersTagged:
+) -> SignedDistanceToSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def signed_distance_to_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SignedDistanceToSurfaceParameters` object.
+    `SignedDistanceToSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def signed_distance_to_surface_validate(
 
 
 def signed_distance_to_surface_cargs(
-    params: SignedDistanceToSurfaceParameters,
+    params: SignedDistanceToSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def signed_distance_to_surface_cargs(
 
 
 def signed_distance_to_surface_outputs(
-    params: SignedDistanceToSurfaceParameters,
+    params: SignedDistanceToSurfaceParamsDict,
     execution: Execution,
 ) -> SignedDistanceToSurfaceOutputs:
     """
@@ -146,7 +146,7 @@ def signed_distance_to_surface_outputs(
 
 
 def signed_distance_to_surface_execute(
-    params: SignedDistanceToSurfaceParameters,
+    params: SignedDistanceToSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
@@ -238,6 +238,8 @@ def signed_distance_to_surface(
 __all__ = [
     "SIGNED_DISTANCE_TO_SURFACE_METADATA",
     "SignedDistanceToSurfaceOutputs",
+    "SignedDistanceToSurfaceParamsDict",
+    "SignedDistanceToSurfaceParamsDictTagged",
     "signed_distance_to_surface",
     "signed_distance_to_surface_execute",
     "signed_distance_to_surface_params",

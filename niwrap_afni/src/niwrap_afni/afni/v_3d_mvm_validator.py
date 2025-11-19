@@ -13,12 +13,12 @@ V_3D_MVM_VALIDATOR_METADATA = Metadata(
 )
 
 
-V3dMvmValidatorParameters = typing.TypedDict('V3dMvmValidatorParameters', {
+V3dMvmValidatorParamsDict = typing.TypedDict('V3dMvmValidatorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMVM_validator"]],
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })
-V3dMvmValidatorParametersTagged = typing.TypedDict('V3dMvmValidatorParametersTagged', {
+V3dMvmValidatorParamsDictTagged = typing.TypedDict('V3dMvmValidatorParamsDictTagged', {
     "@type": typing.Literal["afni/3dMVM_validator"],
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ V3dMvmValidatorParametersTagged = typing.TypedDict('V3dMvmValidatorParametersTag
 
 class V3dMvmValidatorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMvmValidatorParameters(...)`.
+    Output object returned when calling `V3dMvmValidatorParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V3dMvmValidatorOutputs(typing.NamedTuple):
 def v_3d_mvm_validator_params(
     datatable: InputPathType,
     shinyfolder: str | None = None,
-) -> V3dMvmValidatorParametersTagged:
+) -> V3dMvmValidatorParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def v_3d_mvm_validator_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMvmValidatorParameters` object.
+    `V3dMvmValidatorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def v_3d_mvm_validator_validate(
 
 
 def v_3d_mvm_validator_cargs(
-    params: V3dMvmValidatorParameters,
+    params: V3dMvmValidatorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def v_3d_mvm_validator_cargs(
 
 
 def v_3d_mvm_validator_outputs(
-    params: V3dMvmValidatorParameters,
+    params: V3dMvmValidatorParamsDict,
     execution: Execution,
 ) -> V3dMvmValidatorOutputs:
     """
@@ -121,7 +121,7 @@ def v_3d_mvm_validator_outputs(
 
 
 def v_3d_mvm_validator_execute(
-    params: V3dMvmValidatorParameters,
+    params: V3dMvmValidatorParamsDict,
     runner: Runner | None = None,
 ) -> V3dMvmValidatorOutputs:
     """
@@ -180,6 +180,8 @@ def v_3d_mvm_validator(
 
 __all__ = [
     "V3dMvmValidatorOutputs",
+    "V3dMvmValidatorParamsDict",
+    "V3dMvmValidatorParamsDictTagged",
     "V_3D_MVM_VALIDATOR_METADATA",
     "v_3d_mvm_validator",
     "v_3d_mvm_validator_execute",

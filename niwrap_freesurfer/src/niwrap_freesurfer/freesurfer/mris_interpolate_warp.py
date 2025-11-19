@@ -13,13 +13,13 @@ MRIS_INTERPOLATE_WARP_METADATA = Metadata(
 )
 
 
-MrisInterpolateWarpParameters = typing.TypedDict('MrisInterpolateWarpParameters', {
+MrisInterpolateWarpParamsDict = typing.TypedDict('MrisInterpolateWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_interpolate_warp"]],
     "start_surface": InputPathType,
     "end_surface": InputPathType,
     "warp_field": InputPathType,
 })
-MrisInterpolateWarpParametersTagged = typing.TypedDict('MrisInterpolateWarpParametersTagged', {
+MrisInterpolateWarpParamsDictTagged = typing.TypedDict('MrisInterpolateWarpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_interpolate_warp"],
     "start_surface": InputPathType,
     "end_surface": InputPathType,
@@ -29,7 +29,7 @@ MrisInterpolateWarpParametersTagged = typing.TypedDict('MrisInterpolateWarpParam
 
 class MrisInterpolateWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisInterpolateWarpParameters(...)`.
+    Output object returned when calling `MrisInterpolateWarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mris_interpolate_warp_params(
     start_surface: InputPathType,
     end_surface: InputPathType,
     warp_field: InputPathType,
-) -> MrisInterpolateWarpParametersTagged:
+) -> MrisInterpolateWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mris_interpolate_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisInterpolateWarpParameters` object.
+    `MrisInterpolateWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def mris_interpolate_warp_validate(
 
 
 def mris_interpolate_warp_cargs(
-    params: MrisInterpolateWarpParameters,
+    params: MrisInterpolateWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def mris_interpolate_warp_cargs(
 
 
 def mris_interpolate_warp_outputs(
-    params: MrisInterpolateWarpParameters,
+    params: MrisInterpolateWarpParamsDict,
     execution: Execution,
 ) -> MrisInterpolateWarpOutputs:
     """
@@ -126,7 +126,7 @@ def mris_interpolate_warp_outputs(
 
 
 def mris_interpolate_warp_execute(
-    params: MrisInterpolateWarpParameters,
+    params: MrisInterpolateWarpParamsDict,
     runner: Runner | None = None,
 ) -> MrisInterpolateWarpOutputs:
     """
@@ -188,6 +188,8 @@ def mris_interpolate_warp(
 __all__ = [
     "MRIS_INTERPOLATE_WARP_METADATA",
     "MrisInterpolateWarpOutputs",
+    "MrisInterpolateWarpParamsDict",
+    "MrisInterpolateWarpParamsDictTagged",
     "mris_interpolate_warp",
     "mris_interpolate_warp_execute",
     "mris_interpolate_warp_params",

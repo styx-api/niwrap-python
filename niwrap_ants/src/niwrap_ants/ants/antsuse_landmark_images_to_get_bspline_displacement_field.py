@@ -13,7 +13,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters', {
+AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ANTSUseLandmarkImagesToGetBSplineDisplacementField"]],
     "fixed_image_with_labeled_landmarks": InputPathType,
     "moving_image_with_labeled_landmarks": InputPathType,
@@ -24,7 +24,7 @@ AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters = typing.TypedDict(
     "enforce_stationary_boundaries": typing.NotRequired[int | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
-AntsuseLandmarkImagesToGetBsplineDisplacementFieldParametersTagged = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParametersTagged', {
+AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged', {
     "@type": typing.Literal["ants/ANTSUseLandmarkImagesToGetBSplineDisplacementField"],
     "fixed_image_with_labeled_landmarks": InputPathType,
     "moving_image_with_labeled_landmarks": InputPathType,
@@ -39,7 +39,7 @@ AntsuseLandmarkImagesToGetBsplineDisplacementFieldParametersTagged = typing.Type
 
 class AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters(...)`.
+    Output object returned when calling `AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_params(
     order: int | None = None,
     enforce_stationary_boundaries: int | None = None,
     landmark_weights: InputPathType | None = None,
-) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldParametersTagged:
+) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters` object.
+    `AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_validate(
 
 
 def antsuse_landmark_images_to_get_bspline_displacement_field_cargs(
-    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters,
+    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_cargs(
 
 
 def antsuse_landmark_images_to_get_bspline_displacement_field_outputs(
-    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters,
+    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict,
     execution: Execution,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:
     """
@@ -188,7 +188,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_outputs(
 
 
 def antsuse_landmark_images_to_get_bspline_displacement_field_execute(
-    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters,
+    params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict,
     runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:
     """
@@ -285,6 +285,8 @@ def antsuse_landmark_images_to_get_bspline_displacement_field(
 __all__ = [
     "ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA",
     "AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs",
+    "AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDict",
+    "AntsuseLandmarkImagesToGetBsplineDisplacementFieldParamsDictTagged",
     "antsuse_landmark_images_to_get_bspline_displacement_field",
     "antsuse_landmark_images_to_get_bspline_displacement_field_execute",
     "antsuse_landmark_images_to_get_bspline_displacement_field_params",

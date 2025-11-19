@@ -13,7 +13,7 @@ VECWARP_METADATA = Metadata(
 )
 
 
-VecwarpParameters = typing.TypedDict('VecwarpParameters', {
+VecwarpParamsDict = typing.TypedDict('VecwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/Vecwarp"]],
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ VecwarpParameters = typing.TypedDict('VecwarpParameters', {
     "output": typing.NotRequired[str | None],
     "force": bool,
 })
-VecwarpParametersTagged = typing.TypedDict('VecwarpParametersTagged', {
+VecwarpParamsDictTagged = typing.TypedDict('VecwarpParamsDictTagged', {
     "@type": typing.Literal["afni/Vecwarp"],
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ VecwarpParametersTagged = typing.TypedDict('VecwarpParametersTagged', {
 
 class VecwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VecwarpParameters(...)`.
+    Output object returned when calling `VecwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def vecwarp_params(
     input_: InputPathType | None = None,
     output: str | None = None,
     force: bool = False,
-) -> VecwarpParametersTagged:
+) -> VecwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def vecwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VecwarpParameters` object.
+    `VecwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -132,7 +132,7 @@ def vecwarp_validate(
 
 
 def vecwarp_cargs(
-    params: VecwarpParameters,
+    params: VecwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def vecwarp_cargs(
 
 
 def vecwarp_outputs(
-    params: VecwarpParameters,
+    params: VecwarpParamsDict,
     execution: Execution,
 ) -> VecwarpOutputs:
     """
@@ -196,7 +196,7 @@ def vecwarp_outputs(
 
 
 def vecwarp_execute(
-    params: VecwarpParameters,
+    params: VecwarpParamsDict,
     runner: Runner | None = None,
 ) -> VecwarpOutputs:
     """
@@ -280,6 +280,8 @@ def vecwarp(
 __all__ = [
     "VECWARP_METADATA",
     "VecwarpOutputs",
+    "VecwarpParamsDict",
+    "VecwarpParamsDictTagged",
     "vecwarp",
     "vecwarp_execute",
     "vecwarp_params",

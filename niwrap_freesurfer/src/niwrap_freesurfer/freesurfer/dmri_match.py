@@ -13,7 +13,7 @@ DMRI_MATCH_METADATA = Metadata(
 )
 
 
-DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
+DmriMatchParamsDict = typing.TypedDict('DmriMatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_match"]],
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
@@ -27,7 +27,7 @@ DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
     "inter_hemi_ratio_removal": typing.NotRequired[str | None],
     "output": str,
 })
-DmriMatchParametersTagged = typing.TypedDict('DmriMatchParametersTagged', {
+DmriMatchParamsDictTagged = typing.TypedDict('DmriMatchParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_match"],
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
@@ -45,7 +45,7 @@ DmriMatchParametersTagged = typing.TypedDict('DmriMatchParametersTagged', {
 
 class DmriMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriMatchParameters(...)`.
+    Output object returned when calling `DmriMatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def dmri_match_params(
     bounding_box: bool = False,
     symmetry: bool = False,
     inter_hemi_ratio_removal: str | None = None,
-) -> DmriMatchParametersTagged:
+) -> DmriMatchParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def dmri_match_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriMatchParameters` object.
+    `DmriMatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def dmri_match_validate(
 
 
 def dmri_match_cargs(
-    params: DmriMatchParameters,
+    params: DmriMatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def dmri_match_cargs(
 
 
 def dmri_match_outputs(
-    params: DmriMatchParameters,
+    params: DmriMatchParamsDict,
     execution: Execution,
 ) -> DmriMatchOutputs:
     """
@@ -234,7 +234,7 @@ def dmri_match_outputs(
 
 
 def dmri_match_execute(
-    params: DmriMatchParameters,
+    params: DmriMatchParamsDict,
     runner: Runner | None = None,
 ) -> DmriMatchOutputs:
     """
@@ -322,6 +322,8 @@ def dmri_match(
 __all__ = [
     "DMRI_MATCH_METADATA",
     "DmriMatchOutputs",
+    "DmriMatchParamsDict",
+    "DmriMatchParamsDictTagged",
     "dmri_match",
     "dmri_match_execute",
     "dmri_match_params",

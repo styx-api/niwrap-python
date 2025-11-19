@@ -13,13 +13,13 @@ V_3D_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-V3dSkullStripParameters = typing.TypedDict('V3dSkullStripParameters', {
+V3dSkullStripParamsDict = typing.TypedDict('V3dSkullStripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSkullStrip"]],
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
-V3dSkullStripParametersTagged = typing.TypedDict('V3dSkullStripParametersTagged', {
+V3dSkullStripParamsDictTagged = typing.TypedDict('V3dSkullStripParamsDictTagged', {
     "@type": typing.Literal["afni/3dSkullStrip"],
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
@@ -29,7 +29,7 @@ V3dSkullStripParametersTagged = typing.TypedDict('V3dSkullStripParametersTagged'
 
 class V3dSkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSkullStripParameters(...)`.
+    Output object returned when calling `V3dSkullStripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v_3d_skull_strip_params(
     in_file: InputPathType,
     num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dSkullStripParametersTagged:
+) -> V3dSkullStripParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def v_3d_skull_strip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSkullStripParameters` object.
+    `V3dSkullStripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def v_3d_skull_strip_validate(
 
 
 def v_3d_skull_strip_cargs(
-    params: V3dSkullStripParameters,
+    params: V3dSkullStripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def v_3d_skull_strip_cargs(
 
 
 def v_3d_skull_strip_outputs(
-    params: V3dSkullStripParameters,
+    params: V3dSkullStripParamsDict,
     execution: Execution,
 ) -> V3dSkullStripOutputs:
     """
@@ -139,7 +139,7 @@ def v_3d_skull_strip_outputs(
 
 
 def v_3d_skull_strip_execute(
-    params: V3dSkullStripParameters,
+    params: V3dSkullStripParamsDict,
     runner: Runner | None = None,
 ) -> V3dSkullStripOutputs:
     """
@@ -202,6 +202,8 @@ def v_3d_skull_strip(
 
 __all__ = [
     "V3dSkullStripOutputs",
+    "V3dSkullStripParamsDict",
+    "V3dSkullStripParamsDictTagged",
     "V_3D_SKULL_STRIP_METADATA",
     "v_3d_skull_strip",
     "v_3d_skull_strip_execute",

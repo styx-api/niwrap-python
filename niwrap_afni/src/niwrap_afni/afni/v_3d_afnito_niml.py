@@ -13,14 +13,14 @@ V_3D_AFNITO_NIML_METADATA = Metadata(
 )
 
 
-V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
+V3dAfnitoNimlParamsDict = typing.TypedDict('V3dAfnitoNimlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoNIML"]],
     "dset": InputPathType,
     "data": bool,
     "ascii": bool,
     "tcp": typing.NotRequired[str | None],
 })
-V3dAfnitoNimlParametersTagged = typing.TypedDict('V3dAfnitoNimlParametersTagged', {
+V3dAfnitoNimlParamsDictTagged = typing.TypedDict('V3dAfnitoNimlParamsDictTagged', {
     "@type": typing.Literal["afni/3dAFNItoNIML"],
     "dset": InputPathType,
     "data": bool,
@@ -31,7 +31,7 @@ V3dAfnitoNimlParametersTagged = typing.TypedDict('V3dAfnitoNimlParametersTagged'
 
 class V3dAfnitoNimlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAfnitoNimlParameters(...)`.
+    Output object returned when calling `V3dAfnitoNimlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v_3d_afnito_niml_params(
     data: bool = False,
     ascii_: bool = False,
     tcp: str | None = None,
-) -> V3dAfnitoNimlParametersTagged:
+) -> V3dAfnitoNimlParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def v_3d_afnito_niml_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAfnitoNimlParameters` object.
+    `V3dAfnitoNimlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def v_3d_afnito_niml_validate(
 
 
 def v_3d_afnito_niml_cargs(
-    params: V3dAfnitoNimlParameters,
+    params: V3dAfnitoNimlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def v_3d_afnito_niml_cargs(
 
 
 def v_3d_afnito_niml_outputs(
-    params: V3dAfnitoNimlParameters,
+    params: V3dAfnitoNimlParamsDict,
     execution: Execution,
 ) -> V3dAfnitoNimlOutputs:
     """
@@ -143,7 +143,7 @@ def v_3d_afnito_niml_outputs(
 
 
 def v_3d_afnito_niml_execute(
-    params: V3dAfnitoNimlParameters,
+    params: V3dAfnitoNimlParamsDict,
     runner: Runner | None = None,
 ) -> V3dAfnitoNimlOutputs:
     """
@@ -210,6 +210,8 @@ def v_3d_afnito_niml(
 
 __all__ = [
     "V3dAfnitoNimlOutputs",
+    "V3dAfnitoNimlParamsDict",
+    "V3dAfnitoNimlParamsDictTagged",
     "V_3D_AFNITO_NIML_METADATA",
     "v_3d_afnito_niml",
     "v_3d_afnito_niml_execute",

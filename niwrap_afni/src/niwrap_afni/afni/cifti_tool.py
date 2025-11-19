@@ -13,7 +13,7 @@ CIFTI_TOOL_METADATA = Metadata(
 )
 
 
-CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
+CiftiToolParamsDict = typing.TypedDict('CiftiToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/cifti_tool"]],
     "input_file": InputPathType,
     "as_cext": bool,
@@ -25,7 +25,7 @@ CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
     "verbose_read_level": typing.NotRequired[float | None],
     "both_verbose_levels": typing.NotRequired[float | None],
 })
-CiftiToolParametersTagged = typing.TypedDict('CiftiToolParametersTagged', {
+CiftiToolParamsDictTagged = typing.TypedDict('CiftiToolParamsDictTagged', {
     "@type": typing.Literal["afni/cifti_tool"],
     "input_file": InputPathType,
     "as_cext": bool,
@@ -41,7 +41,7 @@ CiftiToolParametersTagged = typing.TypedDict('CiftiToolParametersTagged', {
 
 class CiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiToolParameters(...)`.
+    Output object returned when calling `CiftiToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def cifti_tool_params(
     verbose_level: float | None = None,
     verbose_read_level: float | None = None,
     both_verbose_levels: float | None = None,
-) -> CiftiToolParametersTagged:
+) -> CiftiToolParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def cifti_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiToolParameters` object.
+    `CiftiToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def cifti_tool_validate(
 
 
 def cifti_tool_cargs(
-    params: CiftiToolParameters,
+    params: CiftiToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,7 +197,7 @@ def cifti_tool_cargs(
 
 
 def cifti_tool_outputs(
-    params: CiftiToolParameters,
+    params: CiftiToolParamsDict,
     execution: Execution,
 ) -> CiftiToolOutputs:
     """
@@ -217,7 +217,7 @@ def cifti_tool_outputs(
 
 
 def cifti_tool_execute(
-    params: CiftiToolParameters,
+    params: CiftiToolParamsDict,
     runner: Runner | None = None,
 ) -> CiftiToolOutputs:
     """
@@ -297,6 +297,8 @@ def cifti_tool(
 __all__ = [
     "CIFTI_TOOL_METADATA",
     "CiftiToolOutputs",
+    "CiftiToolParamsDict",
+    "CiftiToolParamsDictTagged",
     "cifti_tool",
     "cifti_tool_execute",
     "cifti_tool_params",

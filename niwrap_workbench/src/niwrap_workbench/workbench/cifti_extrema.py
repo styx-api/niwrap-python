@@ -12,19 +12,19 @@ CIFTI_EXTREMA_METADATA = Metadata(
 )
 
 
-CiftiExtremaThresholdParameters = typing.TypedDict('CiftiExtremaThresholdParameters', {
+CiftiExtremaThresholdParamsDict = typing.TypedDict('CiftiExtremaThresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["threshold"]],
     "low": float,
     "high": float,
 })
-CiftiExtremaThresholdParametersTagged = typing.TypedDict('CiftiExtremaThresholdParametersTagged', {
+CiftiExtremaThresholdParamsDictTagged = typing.TypedDict('CiftiExtremaThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
-CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
+CiftiExtremaParamsDict = typing.TypedDict('CiftiExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-extrema"]],
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
     "surface-kernel": typing.NotRequired[float | None],
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
-    "threshold": typing.NotRequired[CiftiExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
     "merged-volume": bool,
     "sum-maps": bool,
     "consolidate-mode": bool,
@@ -44,7 +44,7 @@ CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
     "volume-distance": float,
     "direction": str,
 })
-CiftiExtremaParametersTagged = typing.TypedDict('CiftiExtremaParametersTagged', {
+CiftiExtremaParamsDictTagged = typing.TypedDict('CiftiExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-extrema"],
     "cifti-out": str,
     "surface": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ CiftiExtremaParametersTagged = typing.TypedDict('CiftiExtremaParametersTagged', 
     "surface-kernel": typing.NotRequired[float | None],
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
-    "threshold": typing.NotRequired[CiftiExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
     "merged-volume": bool,
     "sum-maps": bool,
     "consolidate-mode": bool,
@@ -66,10 +66,10 @@ CiftiExtremaParametersTagged = typing.TypedDict('CiftiExtremaParametersTagged', 
 })
 
 
-def cifti_extrema_threshold_params(
+def cifti_extrema_threshold(
     low: float,
     high: float,
-) -> CiftiExtremaThresholdParametersTagged:
+) -> CiftiExtremaThresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def cifti_extrema_threshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExtremaThresholdParameters` object.
+    `CiftiExtremaThresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def cifti_extrema_threshold_validate(
 
 
 def cifti_extrema_threshold_cargs(
-    params: CiftiExtremaThresholdParameters,
+    params: CiftiExtremaThresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def cifti_extrema_threshold_cargs(
 
 class CiftiExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiExtremaParameters(...)`.
+    Output object returned when calling `CiftiExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,13 +153,13 @@ def cifti_extrema_params(
     volume_distance: float,
     direction: str,
     presmooth_fwhm: bool = False,
-    threshold: CiftiExtremaThresholdParameters | None = None,
+    threshold: CiftiExtremaThresholdParamsDict | None = None,
     merged_volume: bool = False,
     sum_maps: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
-) -> CiftiExtremaParametersTagged:
+) -> CiftiExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -235,7 +235,7 @@ def cifti_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiExtremaParameters` object.
+    `CiftiExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -306,7 +306,7 @@ def cifti_extrema_validate(
 
 
 def cifti_extrema_cargs(
-    params: CiftiExtremaParameters,
+    params: CiftiExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -350,7 +350,7 @@ def cifti_extrema_cargs(
 
 
 def cifti_extrema_outputs(
-    params: CiftiExtremaParameters,
+    params: CiftiExtremaParamsDict,
     execution: Execution,
 ) -> CiftiExtremaOutputs:
     """
@@ -370,7 +370,7 @@ def cifti_extrema_outputs(
 
 
 def cifti_extrema_execute(
-    params: CiftiExtremaParameters,
+    params: CiftiExtremaParamsDict,
     runner: Runner | None = None,
 ) -> CiftiExtremaOutputs:
     """
@@ -410,7 +410,7 @@ def cifti_extrema(
     volume_distance: float,
     direction: str,
     presmooth_fwhm: bool = False,
-    threshold: CiftiExtremaThresholdParameters | None = None,
+    threshold: CiftiExtremaThresholdParamsDict | None = None,
     merged_volume: bool = False,
     sum_maps: bool = False,
     consolidate_mode: bool = False,
@@ -491,8 +491,12 @@ def cifti_extrema(
 __all__ = [
     "CIFTI_EXTREMA_METADATA",
     "CiftiExtremaOutputs",
+    "CiftiExtremaParamsDict",
+    "CiftiExtremaParamsDictTagged",
+    "CiftiExtremaThresholdParamsDict",
+    "CiftiExtremaThresholdParamsDictTagged",
     "cifti_extrema",
     "cifti_extrema_execute",
     "cifti_extrema_params",
-    "cifti_extrema_threshold_params",
+    "cifti_extrema_threshold",
 ]

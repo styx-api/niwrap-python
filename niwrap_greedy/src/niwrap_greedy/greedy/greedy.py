@@ -13,37 +13,37 @@ GREEDY_METADATA = Metadata(
 )
 
 
-GreedyInputImagesParameters = typing.TypedDict('GreedyInputImagesParameters', {
+GreedyInputImagesParamsDict = typing.TypedDict('GreedyInputImagesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["input_images"]],
     "fixed": InputPathType,
     "moving": InputPathType,
 })
-GreedyInputImagesParametersTagged = typing.TypedDict('GreedyInputImagesParametersTagged', {
+GreedyInputImagesParamsDictTagged = typing.TypedDict('GreedyInputImagesParamsDictTagged', {
     "@type": typing.Literal["input_images"],
     "fixed": InputPathType,
     "moving": InputPathType,
 })
 
 
-GreedyInvertParameters = typing.TypedDict('GreedyInvertParameters', {
+GreedyInvertParamsDict = typing.TypedDict('GreedyInvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["invert"]],
     "inwarp": InputPathType,
     "outwarp": str,
 })
-GreedyInvertParametersTagged = typing.TypedDict('GreedyInvertParametersTagged', {
+GreedyInvertParamsDictTagged = typing.TypedDict('GreedyInvertParamsDictTagged', {
     "@type": typing.Literal["invert"],
     "inwarp": InputPathType,
     "outwarp": str,
 })
 
 
-GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
+GreedyRootParamsDict = typing.TypedDict('GreedyRootParamsDict', {
     "@type": typing.NotRequired[typing.Literal["root"]],
     "inwarp": InputPathType,
     "outwarp": str,
     "n": int,
 })
-GreedyRootParametersTagged = typing.TypedDict('GreedyRootParametersTagged', {
+GreedyRootParamsDictTagged = typing.TypedDict('GreedyRootParamsDictTagged', {
     "@type": typing.Literal["root"],
     "inwarp": InputPathType,
     "outwarp": str,
@@ -51,49 +51,49 @@ GreedyRootParametersTagged = typing.TypedDict('GreedyRootParametersTagged', {
 })
 
 
-GreedyJacobianParameters = typing.TypedDict('GreedyJacobianParameters', {
+GreedyJacobianParamsDict = typing.TypedDict('GreedyJacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["jacobian"]],
     "inwarp": InputPathType,
     "outjac": str,
 })
-GreedyJacobianParametersTagged = typing.TypedDict('GreedyJacobianParametersTagged', {
+GreedyJacobianParamsDictTagged = typing.TypedDict('GreedyJacobianParamsDictTagged', {
     "@type": typing.Literal["jacobian"],
     "inwarp": InputPathType,
     "outjac": str,
 })
 
 
-GreedyMetricParameters = typing.TypedDict('GreedyMetricParameters', {
+GreedyMetricParamsDict = typing.TypedDict('GreedyMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
-GreedyMetricParametersTagged = typing.TypedDict('GreedyMetricParametersTagged', {
+GreedyMetricParamsDictTagged = typing.TypedDict('GreedyMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
 
 
-GreedyTjrParameters = typing.TypedDict('GreedyTjrParameters', {
+GreedyTjrParamsDict = typing.TypedDict('GreedyTjrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tjr"]],
     "mesh": InputPathType,
     "weight": float,
 })
-GreedyTjrParametersTagged = typing.TypedDict('GreedyTjrParametersTagged', {
+GreedyTjrParamsDictTagged = typing.TypedDict('GreedyTjrParamsDictTagged', {
     "@type": typing.Literal["tjr"],
     "mesh": InputPathType,
     "weight": float,
 })
 
 
-GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
+GreedySearchParamsDict = typing.TypedDict('GreedySearchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["search"]],
     "n": int,
     "rot": str,
     "tran": float,
 })
-GreedySearchParametersTagged = typing.TypedDict('GreedySearchParametersTagged', {
+GreedySearchParamsDictTagged = typing.TypedDict('GreedySearchParamsDictTagged', {
     "@type": typing.Literal["search"],
     "n": int,
     "rot": str,
@@ -101,84 +101,84 @@ GreedySearchParametersTagged = typing.TypedDict('GreedySearchParametersTagged', 
 })
 
 
-GreedyResliceMovingImageParameters = typing.TypedDict('GreedyResliceMovingImageParameters', {
+GreedyResliceMovingImageParamsDict = typing.TypedDict('GreedyResliceMovingImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_moving_image"]],
     "moving": InputPathType,
     "output": str,
 })
-GreedyResliceMovingImageParametersTagged = typing.TypedDict('GreedyResliceMovingImageParametersTagged', {
+GreedyResliceMovingImageParamsDictTagged = typing.TypedDict('GreedyResliceMovingImageParamsDictTagged', {
     "@type": typing.Literal["reslice_moving_image"],
     "moving": InputPathType,
     "output": str,
 })
 
 
-GreedyResliceSurfaceParameters = typing.TypedDict('GreedyResliceSurfaceParameters', {
+GreedyResliceSurfaceParamsDict = typing.TypedDict('GreedyResliceSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_surface"]],
     "inmesh": InputPathType,
     "outmesh": str,
 })
-GreedyResliceSurfaceParametersTagged = typing.TypedDict('GreedyResliceSurfaceParametersTagged', {
+GreedyResliceSurfaceParamsDictTagged = typing.TypedDict('GreedyResliceSurfaceParamsDictTagged', {
     "@type": typing.Literal["reslice_surface"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
-GreedyNnParameters = typing.TypedDict('GreedyNnParameters', {
+GreedyNnParamsDict = typing.TypedDict('GreedyNnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["nn"]],
 })
-GreedyNnParametersTagged = typing.TypedDict('GreedyNnParametersTagged', {
+GreedyNnParamsDictTagged = typing.TypedDict('GreedyNnParamsDictTagged', {
     "@type": typing.Literal["nn"],
 })
 
 
-GreedyLinearParameters = typing.TypedDict('GreedyLinearParameters', {
+GreedyLinearParamsDict = typing.TypedDict('GreedyLinearParamsDict', {
     "@type": typing.NotRequired[typing.Literal["linear"]],
 })
-GreedyLinearParametersTagged = typing.TypedDict('GreedyLinearParametersTagged', {
+GreedyLinearParamsDictTagged = typing.TypedDict('GreedyLinearParamsDictTagged', {
     "@type": typing.Literal["linear"],
 })
 
 
-GreedyLabelParameters = typing.TypedDict('GreedyLabelParameters', {
+GreedyLabelParamsDict = typing.TypedDict('GreedyLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "sigma_spec": str,
 })
-GreedyLabelParametersTagged = typing.TypedDict('GreedyLabelParametersTagged', {
+GreedyLabelParamsDictTagged = typing.TypedDict('GreedyLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "sigma_spec": str,
 })
 
 
-GreedyResliceSimplexJacobianParameters = typing.TypedDict('GreedyResliceSimplexJacobianParameters', {
+GreedyResliceSimplexJacobianParamsDict = typing.TypedDict('GreedyResliceSimplexJacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_simplex_jacobian"]],
     "inmesh": InputPathType,
     "outmesh": str,
 })
-GreedyResliceSimplexJacobianParametersTagged = typing.TypedDict('GreedyResliceSimplexJacobianParametersTagged', {
+GreedyResliceSimplexJacobianParamsDictTagged = typing.TypedDict('GreedyResliceSimplexJacobianParamsDictTagged', {
     "@type": typing.Literal["reslice_simplex_jacobian"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
-GreedyParameters = typing.TypedDict('GreedyParameters', {
+GreedyParamsDict = typing.TypedDict('GreedyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["greedy/greedy"]],
     "dimensions": int,
-    "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
+    "input_images": typing.NotRequired[GreedyInputImagesParamsDict | None],
     "output": typing.NotRequired[str | None],
     "affine": bool,
     "brute": typing.NotRequired[str | None],
     "moments": typing.NotRequired[typing.Literal[1, 2] | None],
     "reslice": typing.NotRequired[list[InputPathType] | None],
-    "invert": typing.NotRequired[GreedyInvertParameters | None],
-    "root": typing.NotRequired[GreedyRootParameters | None],
-    "jacobian": typing.NotRequired[GreedyJacobianParameters | None],
+    "invert": typing.NotRequired[GreedyInvertParamsDict | None],
+    "root": typing.NotRequired[GreedyRootParamsDict | None],
+    "jacobian": typing.NotRequired[GreedyJacobianParamsDict | None],
     "metric_mode": bool,
     "defopt": bool,
     "weight": typing.NotRequired[float | None],
-    "metric": typing.NotRequired[GreedyMetricParameters | None],
+    "metric": typing.NotRequired[GreedyMetricParamsDict | None],
     "step_size": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[str | None],
     "threads": typing.NotRequired[int | None],
@@ -202,7 +202,7 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
     "svlb": bool,
     "sv_incompr": bool,
     "initial_warp": typing.NotRequired[InputPathType | None],
-    "tjr": typing.NotRequired[GreedyTjrParameters | None],
+    "tjr": typing.NotRequired[GreedyTjrParamsDict | None],
     "wr": typing.NotRequired[float | None],
     "initial_affine": typing.NotRequired[InputPathType | None],
     "ia_identity": bool,
@@ -212,18 +212,18 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
     "ia_moments": typing.NotRequired[typing.Literal[1, 2] | None],
     "affine_dof": typing.NotRequired[typing.Literal[6, 7, 12] | None],
     "jitter": typing.NotRequired[float | None],
-    "search": typing.NotRequired[GreedySearchParameters | None],
+    "search": typing.NotRequired[GreedySearchParamsDict | None],
     "det": typing.NotRequired[typing.Literal[-1, 1] | None],
     "cov_id": bool,
     "fixed_reslicing_image": typing.NotRequired[InputPathType | None],
-    "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParameters | None],
-    "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParameters | None],
-    "interpolation": typing.NotRequired[typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None],
+    "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParamsDict | None],
+    "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParamsDict | None],
+    "interpolation": typing.NotRequired[typing.Union[GreedyNnParamsDictTagged, GreedyLinearParamsDictTagged, GreedyLabelParamsDictTagged] | None],
     "reslice_background": typing.NotRequired[float | None],
     "reslice_datatype": typing.NotRequired[typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None],
     "reslice_composite": typing.NotRequired[InputPathType | None],
     "reslice_jacobian": typing.NotRequired[InputPathType | None],
-    "reslice_simplex_jacobian": typing.NotRequired[GreedyResliceSimplexJacobianParameters | None],
+    "reslice_simplex_jacobian": typing.NotRequired[GreedyResliceSimplexJacobianParamsDict | None],
     "reslice_mask": typing.NotRequired[InputPathType | None],
     "metric_gradient": typing.NotRequired[InputPathType | None],
     "debug_deriv": bool,
@@ -238,22 +238,22 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
     "version": bool,
     "verbosity": typing.NotRequired[typing.Literal[0, 1, 2] | None],
 })
-GreedyParametersTagged = typing.TypedDict('GreedyParametersTagged', {
+GreedyParamsDictTagged = typing.TypedDict('GreedyParamsDictTagged', {
     "@type": typing.Literal["greedy/greedy"],
     "dimensions": int,
-    "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
+    "input_images": typing.NotRequired[GreedyInputImagesParamsDict | None],
     "output": typing.NotRequired[str | None],
     "affine": bool,
     "brute": typing.NotRequired[str | None],
     "moments": typing.NotRequired[typing.Literal[1, 2] | None],
     "reslice": typing.NotRequired[list[InputPathType] | None],
-    "invert": typing.NotRequired[GreedyInvertParameters | None],
-    "root": typing.NotRequired[GreedyRootParameters | None],
-    "jacobian": typing.NotRequired[GreedyJacobianParameters | None],
+    "invert": typing.NotRequired[GreedyInvertParamsDict | None],
+    "root": typing.NotRequired[GreedyRootParamsDict | None],
+    "jacobian": typing.NotRequired[GreedyJacobianParamsDict | None],
     "metric_mode": bool,
     "defopt": bool,
     "weight": typing.NotRequired[float | None],
-    "metric": typing.NotRequired[GreedyMetricParameters | None],
+    "metric": typing.NotRequired[GreedyMetricParamsDict | None],
     "step_size": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[str | None],
     "threads": typing.NotRequired[int | None],
@@ -277,7 +277,7 @@ GreedyParametersTagged = typing.TypedDict('GreedyParametersTagged', {
     "svlb": bool,
     "sv_incompr": bool,
     "initial_warp": typing.NotRequired[InputPathType | None],
-    "tjr": typing.NotRequired[GreedyTjrParameters | None],
+    "tjr": typing.NotRequired[GreedyTjrParamsDict | None],
     "wr": typing.NotRequired[float | None],
     "initial_affine": typing.NotRequired[InputPathType | None],
     "ia_identity": bool,
@@ -287,18 +287,18 @@ GreedyParametersTagged = typing.TypedDict('GreedyParametersTagged', {
     "ia_moments": typing.NotRequired[typing.Literal[1, 2] | None],
     "affine_dof": typing.NotRequired[typing.Literal[6, 7, 12] | None],
     "jitter": typing.NotRequired[float | None],
-    "search": typing.NotRequired[GreedySearchParameters | None],
+    "search": typing.NotRequired[GreedySearchParamsDict | None],
     "det": typing.NotRequired[typing.Literal[-1, 1] | None],
     "cov_id": bool,
     "fixed_reslicing_image": typing.NotRequired[InputPathType | None],
-    "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParameters | None],
-    "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParameters | None],
-    "interpolation": typing.NotRequired[typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None],
+    "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParamsDict | None],
+    "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParamsDict | None],
+    "interpolation": typing.NotRequired[typing.Union[GreedyNnParamsDictTagged, GreedyLinearParamsDictTagged, GreedyLabelParamsDictTagged] | None],
     "reslice_background": typing.NotRequired[float | None],
     "reslice_datatype": typing.NotRequired[typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None],
     "reslice_composite": typing.NotRequired[InputPathType | None],
     "reslice_jacobian": typing.NotRequired[InputPathType | None],
-    "reslice_simplex_jacobian": typing.NotRequired[GreedyResliceSimplexJacobianParameters | None],
+    "reslice_simplex_jacobian": typing.NotRequired[GreedyResliceSimplexJacobianParamsDict | None],
     "reslice_mask": typing.NotRequired[InputPathType | None],
     "metric_gradient": typing.NotRequired[InputPathType | None],
     "debug_deriv": bool,
@@ -351,10 +351,10 @@ def greedy_interpolation_validate_dyn_fn(
     }.get(t)
 
 
-def greedy_input_images_params(
+def greedy_input_images(
     fixed: InputPathType,
     moving: InputPathType,
-) -> GreedyInputImagesParametersTagged:
+) -> GreedyInputImagesParamsDictTagged:
     """
     Build parameters.
     
@@ -377,7 +377,7 @@ def greedy_input_images_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyInputImagesParameters` object.
+    `GreedyInputImagesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -395,7 +395,7 @@ def greedy_input_images_validate(
 
 
 def greedy_input_images_cargs(
-    params: GreedyInputImagesParameters,
+    params: GreedyInputImagesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -415,7 +415,7 @@ def greedy_input_images_cargs(
 
 class GreedyInvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyInvertParameters | None(...)`.
+    Output object returned when calling `GreedyInvertParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -423,10 +423,10 @@ class GreedyInvertOutputs(typing.NamedTuple):
     """The inverted warp file"""
 
 
-def greedy_invert_params(
+def greedy_invert(
     inwarp: InputPathType,
     outwarp: str,
-) -> GreedyInvertParametersTagged:
+) -> GreedyInvertParamsDictTagged:
     """
     Build parameters.
     
@@ -449,7 +449,7 @@ def greedy_invert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyInvertParameters` object.
+    `GreedyInvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -467,7 +467,7 @@ def greedy_invert_validate(
 
 
 def greedy_invert_cargs(
-    params: GreedyInvertParameters,
+    params: GreedyInvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -486,7 +486,7 @@ def greedy_invert_cargs(
 
 
 def greedy_invert_outputs(
-    params: GreedyInvertParameters,
+    params: GreedyInvertParamsDict,
     execution: Execution,
 ) -> GreedyInvertOutputs:
     """
@@ -507,7 +507,7 @@ def greedy_invert_outputs(
 
 class GreedyRootOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyRootParameters | None(...)`.
+    Output object returned when calling `GreedyRootParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -515,11 +515,11 @@ class GreedyRootOutputs(typing.NamedTuple):
     """The 2^N-th root of the input warp"""
 
 
-def greedy_root_params(
+def greedy_root(
     inwarp: InputPathType,
     outwarp: str,
     n: int,
-) -> GreedyRootParametersTagged:
+) -> GreedyRootParamsDictTagged:
     """
     Build parameters.
     
@@ -544,7 +544,7 @@ def greedy_root_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyRootParameters` object.
+    `GreedyRootParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -566,7 +566,7 @@ def greedy_root_validate(
 
 
 def greedy_root_cargs(
-    params: GreedyRootParameters,
+    params: GreedyRootParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -586,7 +586,7 @@ def greedy_root_cargs(
 
 
 def greedy_root_outputs(
-    params: GreedyRootParameters,
+    params: GreedyRootParamsDict,
     execution: Execution,
 ) -> GreedyRootOutputs:
     """
@@ -607,7 +607,7 @@ def greedy_root_outputs(
 
 class GreedyJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyJacobianParameters | None(...)`.
+    Output object returned when calling `GreedyJacobianParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -615,10 +615,10 @@ class GreedyJacobianOutputs(typing.NamedTuple):
     """The Jacobian determinant of the warp"""
 
 
-def greedy_jacobian_params(
+def greedy_jacobian(
     inwarp: InputPathType,
     outjac: str,
-) -> GreedyJacobianParametersTagged:
+) -> GreedyJacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -641,7 +641,7 @@ def greedy_jacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyJacobianParameters` object.
+    `GreedyJacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -659,7 +659,7 @@ def greedy_jacobian_validate(
 
 
 def greedy_jacobian_cargs(
-    params: GreedyJacobianParameters,
+    params: GreedyJacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -678,7 +678,7 @@ def greedy_jacobian_cargs(
 
 
 def greedy_jacobian_outputs(
-    params: GreedyJacobianParameters,
+    params: GreedyJacobianParamsDict,
     execution: Execution,
 ) -> GreedyJacobianOutputs:
     """
@@ -697,10 +697,10 @@ def greedy_jacobian_outputs(
     return ret
 
 
-def greedy_metric_params(
+def greedy_metric(
     metric_type: typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     metric_param: float | None = None,
-) -> GreedyMetricParametersTagged:
+) -> GreedyMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -724,7 +724,7 @@ def greedy_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyMetricParameters` object.
+    `GreedyMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -743,7 +743,7 @@ def greedy_metric_validate(
 
 
 def greedy_metric_cargs(
-    params: GreedyMetricParameters,
+    params: GreedyMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -762,10 +762,10 @@ def greedy_metric_cargs(
     return cargs
 
 
-def greedy_tjr_params(
+def greedy_tjr(
     mesh: InputPathType,
     weight: float,
-) -> GreedyTjrParametersTagged:
+) -> GreedyTjrParamsDictTagged:
     """
     Build parameters.
     
@@ -788,7 +788,7 @@ def greedy_tjr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyTjrParameters` object.
+    `GreedyTjrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -806,7 +806,7 @@ def greedy_tjr_validate(
 
 
 def greedy_tjr_cargs(
-    params: GreedyTjrParameters,
+    params: GreedyTjrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -824,11 +824,11 @@ def greedy_tjr_cargs(
     return cargs
 
 
-def greedy_search_params(
+def greedy_search(
     n: int,
     rot: str,
     tran: float,
-) -> GreedySearchParametersTagged:
+) -> GreedySearchParamsDictTagged:
     """
     Build parameters.
     
@@ -854,7 +854,7 @@ def greedy_search_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedySearchParameters` object.
+    `GreedySearchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -876,7 +876,7 @@ def greedy_search_validate(
 
 
 def greedy_search_cargs(
-    params: GreedySearchParameters,
+    params: GreedySearchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -897,7 +897,7 @@ def greedy_search_cargs(
 
 class GreedyResliceMovingImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyResliceMovingImageParameters | None(...)`.
+    Output object returned when calling `GreedyResliceMovingImageParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -905,10 +905,10 @@ class GreedyResliceMovingImageOutputs(typing.NamedTuple):
     """The resliced output image"""
 
 
-def greedy_reslice_moving_image_params(
+def greedy_reslice_moving_image(
     moving: InputPathType,
     output: str,
-) -> GreedyResliceMovingImageParametersTagged:
+) -> GreedyResliceMovingImageParamsDictTagged:
     """
     Build parameters.
     
@@ -931,7 +931,7 @@ def greedy_reslice_moving_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyResliceMovingImageParameters` object.
+    `GreedyResliceMovingImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -949,7 +949,7 @@ def greedy_reslice_moving_image_validate(
 
 
 def greedy_reslice_moving_image_cargs(
-    params: GreedyResliceMovingImageParameters,
+    params: GreedyResliceMovingImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -968,7 +968,7 @@ def greedy_reslice_moving_image_cargs(
 
 
 def greedy_reslice_moving_image_outputs(
-    params: GreedyResliceMovingImageParameters,
+    params: GreedyResliceMovingImageParamsDict,
     execution: Execution,
 ) -> GreedyResliceMovingImageOutputs:
     """
@@ -989,7 +989,7 @@ def greedy_reslice_moving_image_outputs(
 
 class GreedyResliceSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyResliceSurfaceParameters | None(...)`.
+    Output object returned when calling `GreedyResliceSurfaceParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -997,10 +997,10 @@ class GreedyResliceSurfaceOutputs(typing.NamedTuple):
     """The warped output mesh"""
 
 
-def greedy_reslice_surface_params(
+def greedy_reslice_surface(
     inmesh: InputPathType,
     outmesh: str,
-) -> GreedyResliceSurfaceParametersTagged:
+) -> GreedyResliceSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -1023,7 +1023,7 @@ def greedy_reslice_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyResliceSurfaceParameters` object.
+    `GreedyResliceSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1041,7 +1041,7 @@ def greedy_reslice_surface_validate(
 
 
 def greedy_reslice_surface_cargs(
-    params: GreedyResliceSurfaceParameters,
+    params: GreedyResliceSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1060,7 +1060,7 @@ def greedy_reslice_surface_cargs(
 
 
 def greedy_reslice_surface_outputs(
-    params: GreedyResliceSurfaceParameters,
+    params: GreedyResliceSurfaceParamsDict,
     execution: Execution,
 ) -> GreedyResliceSurfaceOutputs:
     """
@@ -1079,8 +1079,8 @@ def greedy_reslice_surface_outputs(
     return ret
 
 
-def greedy_nn_params(
-) -> GreedyNnParametersTagged:
+def greedy_nn(
+) -> GreedyNnParamsDictTagged:
     """
     Build parameters.
     
@@ -1099,7 +1099,7 @@ def greedy_nn_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyNnParameters` object.
+    `GreedyNnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1109,7 +1109,7 @@ def greedy_nn_validate(
 
 
 def greedy_nn_cargs(
-    params: GreedyNnParameters,
+    params: GreedyNnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1126,8 +1126,8 @@ def greedy_nn_cargs(
     return cargs
 
 
-def greedy_linear_params(
-) -> GreedyLinearParametersTagged:
+def greedy_linear(
+) -> GreedyLinearParamsDictTagged:
     """
     Build parameters.
     
@@ -1146,7 +1146,7 @@ def greedy_linear_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyLinearParameters` object.
+    `GreedyLinearParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1156,7 +1156,7 @@ def greedy_linear_validate(
 
 
 def greedy_linear_cargs(
-    params: GreedyLinearParameters,
+    params: GreedyLinearParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1173,9 +1173,9 @@ def greedy_linear_cargs(
     return cargs
 
 
-def greedy_label_params(
+def greedy_label(
     sigma_spec: str,
-) -> GreedyLabelParametersTagged:
+) -> GreedyLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -1200,7 +1200,7 @@ def greedy_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyLabelParameters` object.
+    `GreedyLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1214,7 +1214,7 @@ def greedy_label_validate(
 
 
 def greedy_label_cargs(
-    params: GreedyLabelParameters,
+    params: GreedyLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1234,7 +1234,7 @@ def greedy_label_cargs(
 
 class GreedyResliceSimplexJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyResliceSimplexJacobianParameters | None(...)`.
+    Output object returned when calling `GreedyResliceSimplexJacobianParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1242,10 +1242,10 @@ class GreedyResliceSimplexJacobianOutputs(typing.NamedTuple):
     """The output mesh with computed Jacobian determinants"""
 
 
-def greedy_reslice_simplex_jacobian_params(
+def greedy_reslice_simplex_jacobian(
     inmesh: InputPathType,
     outmesh: str,
-) -> GreedyResliceSimplexJacobianParametersTagged:
+) -> GreedyResliceSimplexJacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -1268,7 +1268,7 @@ def greedy_reslice_simplex_jacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyResliceSimplexJacobianParameters` object.
+    `GreedyResliceSimplexJacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1286,7 +1286,7 @@ def greedy_reslice_simplex_jacobian_validate(
 
 
 def greedy_reslice_simplex_jacobian_cargs(
-    params: GreedyResliceSimplexJacobianParameters,
+    params: GreedyResliceSimplexJacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1305,7 +1305,7 @@ def greedy_reslice_simplex_jacobian_cargs(
 
 
 def greedy_reslice_simplex_jacobian_outputs(
-    params: GreedyResliceSimplexJacobianParameters,
+    params: GreedyResliceSimplexJacobianParamsDict,
     execution: Execution,
 ) -> GreedyResliceSimplexJacobianOutputs:
     """
@@ -1326,7 +1326,7 @@ def greedy_reslice_simplex_jacobian_outputs(
 
 class GreedyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GreedyParameters(...)`.
+    Output object returned when calling `GreedyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1348,19 +1348,19 @@ class GreedyOutputs(typing.NamedTuple):
 
 def greedy_params(
     dimensions: int,
-    input_images: GreedyInputImagesParameters | None = None,
+    input_images: GreedyInputImagesParamsDict | None = None,
     output: str | None = None,
     affine: bool = False,
     brute: str | None = None,
     moments: typing.Literal[1, 2] | None = None,
     reslice: list[InputPathType] | None = None,
-    invert: GreedyInvertParameters | None = None,
-    root: GreedyRootParameters | None = None,
-    jacobian: GreedyJacobianParameters | None = None,
+    invert: GreedyInvertParamsDict | None = None,
+    root: GreedyRootParamsDict | None = None,
+    jacobian: GreedyJacobianParamsDict | None = None,
     metric_mode: bool = False,
     defopt: bool = False,
     weight: float | None = None,
-    metric: GreedyMetricParameters | None = None,
+    metric: GreedyMetricParamsDict | None = None,
     step_size: str | None = None,
     iterations: str | None = None,
     threads: int | None = None,
@@ -1384,7 +1384,7 @@ def greedy_params(
     svlb: bool = False,
     sv_incompr: bool = False,
     initial_warp: InputPathType | None = None,
-    tjr: GreedyTjrParameters | None = None,
+    tjr: GreedyTjrParamsDict | None = None,
     wr: float | None = None,
     initial_affine: InputPathType | None = None,
     ia_identity: bool = False,
@@ -1394,18 +1394,18 @@ def greedy_params(
     ia_moments: typing.Literal[1, 2] | None = None,
     affine_dof: typing.Literal[6, 7, 12] | None = None,
     jitter: float | None = None,
-    search: GreedySearchParameters | None = None,
+    search: GreedySearchParamsDict | None = None,
     det: typing.Literal[-1, 1] | None = None,
     cov_id: bool = False,
     fixed_reslicing_image: InputPathType | None = None,
-    reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
-    reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None = None,
+    reslice_moving_image: GreedyResliceMovingImageParamsDict | None = None,
+    reslice_surface: GreedyResliceSurfaceParamsDict | None = None,
+    interpolation: typing.Union[GreedyNnParamsDictTagged, GreedyLinearParamsDictTagged, GreedyLabelParamsDictTagged] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
     reslice_jacobian: InputPathType | None = None,
-    reslice_simplex_jacobian: GreedyResliceSimplexJacobianParameters | None = None,
+    reslice_simplex_jacobian: GreedyResliceSimplexJacobianParamsDict | None = None,
     reslice_mask: InputPathType | None = None,
     metric_gradient: InputPathType | None = None,
     debug_deriv: bool = False,
@@ -1419,7 +1419,7 @@ def greedy_params(
     float_: bool = False,
     version: bool = False,
     verbosity: typing.Literal[0, 1, 2] | None = None,
-) -> GreedyParametersTagged:
+) -> GreedyParamsDictTagged:
     """
     Build parameters.
     
@@ -1666,7 +1666,7 @@ def greedy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GreedyParameters` object.
+    `GreedyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1854,6 +1854,8 @@ def greedy_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["interpolation"])}\'')
         if "@type" not in params["interpolation"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["interpolation"]["@type"] not in ["nn", "linear", "label"]:
+            raise StyxValidationError("Parameter `interpolation`s `@type` must be one of [\"nn\", \"linear\", \"label\"]")
         greedy_interpolation_validate_dyn_fn(params["interpolation"]["@type"])(params["interpolation"])
     if params.get("reslice_background", None) is not None:
         if not isinstance(params["reslice_background"], (float, int)):
@@ -1922,7 +1924,7 @@ def greedy_validate(
 
 
 def greedy_cargs(
-    params: GreedyParameters,
+    params: GreedyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2242,7 +2244,7 @@ def greedy_cargs(
 
 
 def greedy_outputs(
-    params: GreedyParameters,
+    params: GreedyParamsDict,
     execution: Execution,
 ) -> GreedyOutputs:
     """
@@ -2268,7 +2270,7 @@ def greedy_outputs(
 
 
 def greedy_execute(
-    params: GreedyParameters,
+    params: GreedyParamsDict,
     runner: Runner | None = None,
 ) -> GreedyOutputs:
     """
@@ -2298,19 +2300,19 @@ def greedy_execute(
 
 def greedy_(
     dimensions: int,
-    input_images: GreedyInputImagesParameters | None = None,
+    input_images: GreedyInputImagesParamsDict | None = None,
     output: str | None = None,
     affine: bool = False,
     brute: str | None = None,
     moments: typing.Literal[1, 2] | None = None,
     reslice: list[InputPathType] | None = None,
-    invert: GreedyInvertParameters | None = None,
-    root: GreedyRootParameters | None = None,
-    jacobian: GreedyJacobianParameters | None = None,
+    invert: GreedyInvertParamsDict | None = None,
+    root: GreedyRootParamsDict | None = None,
+    jacobian: GreedyJacobianParamsDict | None = None,
     metric_mode: bool = False,
     defopt: bool = False,
     weight: float | None = None,
-    metric: GreedyMetricParameters | None = None,
+    metric: GreedyMetricParamsDict | None = None,
     step_size: str | None = None,
     iterations: str | None = None,
     threads: int | None = None,
@@ -2334,7 +2336,7 @@ def greedy_(
     svlb: bool = False,
     sv_incompr: bool = False,
     initial_warp: InputPathType | None = None,
-    tjr: GreedyTjrParameters | None = None,
+    tjr: GreedyTjrParamsDict | None = None,
     wr: float | None = None,
     initial_affine: InputPathType | None = None,
     ia_identity: bool = False,
@@ -2344,18 +2346,18 @@ def greedy_(
     ia_moments: typing.Literal[1, 2] | None = None,
     affine_dof: typing.Literal[6, 7, 12] | None = None,
     jitter: float | None = None,
-    search: GreedySearchParameters | None = None,
+    search: GreedySearchParamsDict | None = None,
     det: typing.Literal[-1, 1] | None = None,
     cov_id: bool = False,
     fixed_reslicing_image: InputPathType | None = None,
-    reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
-    reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None = None,
+    reslice_moving_image: GreedyResliceMovingImageParamsDict | None = None,
+    reslice_surface: GreedyResliceSurfaceParamsDict | None = None,
+    interpolation: typing.Union[GreedyNnParamsDictTagged, GreedyLinearParamsDictTagged, GreedyLabelParamsDictTagged] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
     reslice_jacobian: InputPathType | None = None,
-    reslice_simplex_jacobian: GreedyResliceSimplexJacobianParameters | None = None,
+    reslice_simplex_jacobian: GreedyResliceSimplexJacobianParamsDict | None = None,
     reslice_mask: InputPathType | None = None,
     metric_gradient: InputPathType | None = None,
     debug_deriv: bool = False,
@@ -2568,27 +2570,55 @@ def greedy_(
 
 __all__ = [
     "GREEDY_METADATA",
+    "GreedyInputImagesParamsDict",
+    "GreedyInputImagesParamsDictTagged",
     "GreedyInvertOutputs",
+    "GreedyInvertParamsDict",
+    "GreedyInvertParamsDictTagged",
     "GreedyJacobianOutputs",
+    "GreedyJacobianParamsDict",
+    "GreedyJacobianParamsDictTagged",
+    "GreedyLabelParamsDict",
+    "GreedyLabelParamsDictTagged",
+    "GreedyLinearParamsDict",
+    "GreedyLinearParamsDictTagged",
+    "GreedyMetricParamsDict",
+    "GreedyMetricParamsDictTagged",
+    "GreedyNnParamsDict",
+    "GreedyNnParamsDictTagged",
     "GreedyOutputs",
+    "GreedyParamsDict",
+    "GreedyParamsDictTagged",
     "GreedyResliceMovingImageOutputs",
+    "GreedyResliceMovingImageParamsDict",
+    "GreedyResliceMovingImageParamsDictTagged",
     "GreedyResliceSimplexJacobianOutputs",
+    "GreedyResliceSimplexJacobianParamsDict",
+    "GreedyResliceSimplexJacobianParamsDictTagged",
     "GreedyResliceSurfaceOutputs",
+    "GreedyResliceSurfaceParamsDict",
+    "GreedyResliceSurfaceParamsDictTagged",
     "GreedyRootOutputs",
+    "GreedyRootParamsDict",
+    "GreedyRootParamsDictTagged",
+    "GreedySearchParamsDict",
+    "GreedySearchParamsDictTagged",
+    "GreedyTjrParamsDict",
+    "GreedyTjrParamsDictTagged",
     "greedy_",
     "greedy_execute",
-    "greedy_input_images_params",
-    "greedy_invert_params",
-    "greedy_jacobian_params",
-    "greedy_label_params",
-    "greedy_linear_params",
-    "greedy_metric_params",
-    "greedy_nn_params",
+    "greedy_input_images",
+    "greedy_invert",
+    "greedy_jacobian",
+    "greedy_label",
+    "greedy_linear",
+    "greedy_metric",
+    "greedy_nn",
     "greedy_params",
-    "greedy_reslice_moving_image_params",
-    "greedy_reslice_simplex_jacobian_params",
-    "greedy_reslice_surface_params",
-    "greedy_root_params",
-    "greedy_search_params",
-    "greedy_tjr_params",
+    "greedy_reslice_moving_image",
+    "greedy_reslice_simplex_jacobian",
+    "greedy_reslice_surface",
+    "greedy_root",
+    "greedy_search",
+    "greedy_tjr",
 ]

@@ -13,7 +13,7 @@ TTOLOGP_METADATA = Metadata(
 )
 
 
-TtologpParameters = typing.TypedDict('TtologpParameters', {
+TtologpParamsDict = typing.TypedDict('TtologpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ttologp"]],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
@@ -21,7 +21,7 @@ TtologpParameters = typing.TypedDict('TtologpParameters', {
     "outputvol": typing.NotRequired[str | None],
     "help_flag": bool,
 })
-TtologpParametersTagged = typing.TypedDict('TtologpParametersTagged', {
+TtologpParamsDictTagged = typing.TypedDict('TtologpParamsDictTagged', {
     "@type": typing.Literal["fsl/ttologp"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
@@ -33,7 +33,7 @@ TtologpParametersTagged = typing.TypedDict('TtologpParametersTagged', {
 
 class TtologpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TtologpParameters(...)`.
+    Output object returned when calling `TtologpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def ttologp_params(
     dof: str,
     outputvol: str | None = None,
     help_flag: bool = False,
-) -> TtologpParametersTagged:
+) -> TtologpParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def ttologp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TtologpParameters` object.
+    `TtologpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def ttologp_validate(
 
 
 def ttologp_cargs(
-    params: TtologpParameters,
+    params: TtologpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def ttologp_cargs(
 
 
 def ttologp_outputs(
-    params: TtologpParameters,
+    params: TtologpParamsDict,
     execution: Execution,
 ) -> TtologpOutputs:
     """
@@ -154,7 +154,7 @@ def ttologp_outputs(
 
 
 def ttologp_execute(
-    params: TtologpParameters,
+    params: TtologpParamsDict,
     runner: Runner | None = None,
 ) -> TtologpOutputs:
     """
@@ -222,6 +222,8 @@ def ttologp(
 __all__ = [
     "TTOLOGP_METADATA",
     "TtologpOutputs",
+    "TtologpParamsDict",
+    "TtologpParamsDictTagged",
     "ttologp",
     "ttologp_execute",
     "ttologp_params",

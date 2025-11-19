@@ -13,7 +13,7 @@ IMG2STDCOORD_METADATA = Metadata(
 )
 
 
-Img2stdcoordParameters = typing.TypedDict('Img2stdcoordParameters', {
+Img2stdcoordParamsDict = typing.TypedDict('Img2stdcoordParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/img2stdcoord"]],
     "coordinate_file": str,
     "input_image": InputPathType,
@@ -27,7 +27,7 @@ Img2stdcoordParameters = typing.TypedDict('Img2stdcoordParameters', {
     "verbose_flag_2": bool,
     "help_flag": bool,
 })
-Img2stdcoordParametersTagged = typing.TypedDict('Img2stdcoordParametersTagged', {
+Img2stdcoordParamsDictTagged = typing.TypedDict('Img2stdcoordParamsDictTagged', {
     "@type": typing.Literal["fsl/img2stdcoord"],
     "coordinate_file": str,
     "input_image": InputPathType,
@@ -45,7 +45,7 @@ Img2stdcoordParametersTagged = typing.TypedDict('Img2stdcoordParametersTagged', 
 
 class Img2stdcoordOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Img2stdcoordParameters(...)`.
+    Output object returned when calling `Img2stdcoordParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def img2stdcoord_params(
     verbose_flag_1: bool = False,
     verbose_flag_2: bool = False,
     help_flag: bool = False,
-) -> Img2stdcoordParametersTagged:
+) -> Img2stdcoordParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def img2stdcoord_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Img2stdcoordParameters` object.
+    `Img2stdcoordParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def img2stdcoord_validate(
 
 
 def img2stdcoord_cargs(
-    params: Img2stdcoordParameters,
+    params: Img2stdcoordParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def img2stdcoord_cargs(
 
 
 def img2stdcoord_outputs(
-    params: Img2stdcoordParameters,
+    params: Img2stdcoordParamsDict,
     execution: Execution,
 ) -> Img2stdcoordOutputs:
     """
@@ -234,7 +234,7 @@ def img2stdcoord_outputs(
 
 
 def img2stdcoord_execute(
-    params: Img2stdcoordParameters,
+    params: Img2stdcoordParamsDict,
     runner: Runner | None = None,
 ) -> Img2stdcoordOutputs:
     """
@@ -324,6 +324,8 @@ def img2stdcoord(
 __all__ = [
     "IMG2STDCOORD_METADATA",
     "Img2stdcoordOutputs",
+    "Img2stdcoordParamsDict",
+    "Img2stdcoordParamsDictTagged",
     "img2stdcoord",
     "img2stdcoord_execute",
     "img2stdcoord_params",

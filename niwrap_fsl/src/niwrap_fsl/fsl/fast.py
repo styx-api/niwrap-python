@@ -13,7 +13,7 @@ FAST_METADATA = Metadata(
 )
 
 
-FastParameters = typing.TypedDict('FastParameters', {
+FastParamsDict = typing.TypedDict('FastParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fast"]],
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
@@ -38,7 +38,7 @@ FastParameters = typing.TypedDict('FastParameters', {
     "iters_afterbias": typing.NotRequired[int | None],
     "in_files": list[InputPathType],
 })
-FastParametersTagged = typing.TypedDict('FastParametersTagged', {
+FastParamsDictTagged = typing.TypedDict('FastParamsDictTagged', {
     "@type": typing.Literal["fsl/fast"],
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
@@ -67,7 +67,7 @@ FastParametersTagged = typing.TypedDict('FastParametersTagged', {
 
 class FastOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FastParameters(...)`.
+    Output object returned when calling `FastParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +106,7 @@ def fast_params(
     verbose: bool = False,
     manual_seg: InputPathType | None = None,
     iters_afterbias: int | None = None,
-) -> FastParametersTagged:
+) -> FastParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def fast_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `FastParameters`
+    Validate parameters. Throws an error if `params` is not a valid `FastParamsDict`
     object.
     
     Args:
@@ -293,7 +293,7 @@ def fast_validate(
 
 
 def fast_cargs(
-    params: FastParameters,
+    params: FastParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -396,7 +396,7 @@ def fast_cargs(
 
 
 def fast_outputs(
-    params: FastParameters,
+    params: FastParamsDict,
     execution: Execution,
 ) -> FastOutputs:
     """
@@ -420,7 +420,7 @@ def fast_outputs(
 
 
 def fast_execute(
-    params: FastParameters,
+    params: FastParamsDict,
     runner: Runner | None = None,
 ) -> FastOutputs:
     """
@@ -561,6 +561,8 @@ def fast(
 __all__ = [
     "FAST_METADATA",
     "FastOutputs",
+    "FastParamsDict",
+    "FastParamsDictTagged",
     "fast",
     "fast_execute",
     "fast_params",

@@ -13,12 +13,12 @@ SEGMENT_THALAMIC_NUCLEI_METADATA = Metadata(
 )
 
 
-SegmentThalamicNucleiParameters = typing.TypedDict('SegmentThalamicNucleiParameters', {
+SegmentThalamicNucleiParamsDict = typing.TypedDict('SegmentThalamicNucleiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/SegmentThalamicNuclei"]],
     "t1_image": InputPathType,
     "output_dir": str,
 })
-SegmentThalamicNucleiParametersTagged = typing.TypedDict('SegmentThalamicNucleiParametersTagged', {
+SegmentThalamicNucleiParamsDictTagged = typing.TypedDict('SegmentThalamicNucleiParamsDictTagged', {
     "@type": typing.Literal["freesurfer/SegmentThalamicNuclei"],
     "t1_image": InputPathType,
     "output_dir": str,
@@ -27,7 +27,7 @@ SegmentThalamicNucleiParametersTagged = typing.TypedDict('SegmentThalamicNucleiP
 
 class SegmentThalamicNucleiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentThalamicNucleiParameters(...)`.
+    Output object returned when calling `SegmentThalamicNucleiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class SegmentThalamicNucleiOutputs(typing.NamedTuple):
 def segment_thalamic_nuclei_params(
     t1_image: InputPathType,
     output_dir: str,
-) -> SegmentThalamicNucleiParametersTagged:
+) -> SegmentThalamicNucleiParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def segment_thalamic_nuclei_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentThalamicNucleiParameters` object.
+    `SegmentThalamicNucleiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def segment_thalamic_nuclei_validate(
 
 
 def segment_thalamic_nuclei_cargs(
-    params: SegmentThalamicNucleiParameters,
+    params: SegmentThalamicNucleiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def segment_thalamic_nuclei_cargs(
 
 
 def segment_thalamic_nuclei_outputs(
-    params: SegmentThalamicNucleiParameters,
+    params: SegmentThalamicNucleiParamsDict,
     execution: Execution,
 ) -> SegmentThalamicNucleiOutputs:
     """
@@ -119,7 +119,7 @@ def segment_thalamic_nuclei_outputs(
 
 
 def segment_thalamic_nuclei_execute(
-    params: SegmentThalamicNucleiParameters,
+    params: SegmentThalamicNucleiParamsDict,
     runner: Runner | None = None,
 ) -> SegmentThalamicNucleiOutputs:
     """
@@ -178,6 +178,8 @@ def segment_thalamic_nuclei(
 __all__ = [
     "SEGMENT_THALAMIC_NUCLEI_METADATA",
     "SegmentThalamicNucleiOutputs",
+    "SegmentThalamicNucleiParamsDict",
+    "SegmentThalamicNucleiParamsDictTagged",
     "segment_thalamic_nuclei",
     "segment_thalamic_nuclei_execute",
     "segment_thalamic_nuclei_params",

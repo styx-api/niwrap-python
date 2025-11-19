@@ -13,7 +13,7 @@ PLUGOUT_TT_METADATA = Metadata(
 )
 
 
-PlugoutTtParameters = typing.TypedDict('PlugoutTtParameters', {
+PlugoutTtParamsDict = typing.TypedDict('PlugoutTtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/plugout_tt"]],
     "host": typing.NotRequired[str | None],
     "ijk_option": bool,
@@ -28,7 +28,7 @@ PlugoutTtParameters = typing.TypedDict('PlugoutTtParameters', {
     "num_assigned_ports": bool,
     "num_assigned_ports_quiet": bool,
 })
-PlugoutTtParametersTagged = typing.TypedDict('PlugoutTtParametersTagged', {
+PlugoutTtParamsDictTagged = typing.TypedDict('PlugoutTtParamsDictTagged', {
     "@type": typing.Literal["afni/plugout_tt"],
     "host": typing.NotRequired[str | None],
     "ijk_option": bool,
@@ -47,7 +47,7 @@ PlugoutTtParametersTagged = typing.TypedDict('PlugoutTtParametersTagged', {
 
 class PlugoutTtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PlugoutTtParameters(...)`.
+    Output object returned when calling `PlugoutTtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def plugout_tt_params(
     max_port_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutTtParametersTagged:
+) -> PlugoutTtParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def plugout_tt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PlugoutTtParameters` object.
+    `PlugoutTtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def plugout_tt_validate(
 
 
 def plugout_tt_cargs(
-    params: PlugoutTtParameters,
+    params: PlugoutTtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -241,7 +241,7 @@ def plugout_tt_cargs(
 
 
 def plugout_tt_outputs(
-    params: PlugoutTtParameters,
+    params: PlugoutTtParamsDict,
     execution: Execution,
 ) -> PlugoutTtOutputs:
     """
@@ -260,7 +260,7 @@ def plugout_tt_outputs(
 
 
 def plugout_tt_execute(
-    params: PlugoutTtParameters,
+    params: PlugoutTtParamsDict,
     runner: Runner | None = None,
 ) -> PlugoutTtOutputs:
     """
@@ -365,6 +365,8 @@ def plugout_tt(
 __all__ = [
     "PLUGOUT_TT_METADATA",
     "PlugoutTtOutputs",
+    "PlugoutTtParamsDict",
+    "PlugoutTtParamsDictTagged",
     "plugout_tt",
     "plugout_tt_execute",
     "plugout_tt_params",

@@ -13,14 +13,14 @@ MRI_LABEL_VALS_METADATA = Metadata(
 )
 
 
-MriLabelValsParameters = typing.TypedDict('MriLabelValsParameters', {
+MriLabelValsParamsDict = typing.TypedDict('MriLabelValsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_vals"]],
     "volume": InputPathType,
     "label_file": InputPathType,
     "cras_flag": bool,
     "help_flag": bool,
 })
-MriLabelValsParametersTagged = typing.TypedDict('MriLabelValsParametersTagged', {
+MriLabelValsParamsDictTagged = typing.TypedDict('MriLabelValsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_label_vals"],
     "volume": InputPathType,
     "label_file": InputPathType,
@@ -31,7 +31,7 @@ MriLabelValsParametersTagged = typing.TypedDict('MriLabelValsParametersTagged', 
 
 class MriLabelValsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLabelValsParameters(...)`.
+    Output object returned when calling `MriLabelValsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mri_label_vals_params(
     label_file: InputPathType,
     cras_flag: bool = False,
     help_flag: bool = False,
-) -> MriLabelValsParametersTagged:
+) -> MriLabelValsParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def mri_label_vals_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLabelValsParameters` object.
+    `MriLabelValsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def mri_label_vals_validate(
 
 
 def mri_label_vals_cargs(
-    params: MriLabelValsParameters,
+    params: MriLabelValsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mri_label_vals_cargs(
 
 
 def mri_label_vals_outputs(
-    params: MriLabelValsParameters,
+    params: MriLabelValsParamsDict,
     execution: Execution,
 ) -> MriLabelValsOutputs:
     """
@@ -139,7 +139,7 @@ def mri_label_vals_outputs(
 
 
 def mri_label_vals_execute(
-    params: MriLabelValsParameters,
+    params: MriLabelValsParamsDict,
     runner: Runner | None = None,
 ) -> MriLabelValsOutputs:
     """
@@ -205,6 +205,8 @@ def mri_label_vals(
 __all__ = [
     "MRI_LABEL_VALS_METADATA",
     "MriLabelValsOutputs",
+    "MriLabelValsParamsDict",
+    "MriLabelValsParamsDictTagged",
     "mri_label_vals",
     "mri_label_vals_execute",
     "mri_label_vals_params",

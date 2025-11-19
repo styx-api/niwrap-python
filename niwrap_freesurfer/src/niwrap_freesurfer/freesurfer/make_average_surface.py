@@ -13,7 +13,7 @@ MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 )
 
 
-MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', {
+MakeAverageSurfaceParamsDict = typing.TypedDict('MakeAverageSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_surface"]],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', 
     "version": bool,
     "echo": bool,
 })
-MakeAverageSurfaceParametersTagged = typing.TypedDict('MakeAverageSurfaceParametersTagged', {
+MakeAverageSurfaceParamsDictTagged = typing.TypedDict('MakeAverageSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make_average_surface"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -67,7 +67,7 @@ MakeAverageSurfaceParametersTagged = typing.TypedDict('MakeAverageSurfaceParamet
 
 class MakeAverageSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeAverageSurfaceParameters(...)`.
+    Output object returned when calling `MakeAverageSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def make_average_surface_params(
     no_symlink: bool = False,
     version: bool = False,
     echo: bool = False,
-) -> MakeAverageSurfaceParametersTagged:
+) -> MakeAverageSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -169,7 +169,7 @@ def make_average_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeAverageSurfaceParameters` object.
+    `MakeAverageSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -267,7 +267,7 @@ def make_average_surface_validate(
 
 
 def make_average_surface_cargs(
-    params: MakeAverageSurfaceParameters,
+    params: MakeAverageSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def make_average_surface_cargs(
 
 
 def make_average_surface_outputs(
-    params: MakeAverageSurfaceParameters,
+    params: MakeAverageSurfaceParamsDict,
     execution: Execution,
 ) -> MakeAverageSurfaceOutputs:
     """
@@ -374,7 +374,7 @@ def make_average_surface_outputs(
 
 
 def make_average_surface_execute(
-    params: MakeAverageSurfaceParameters,
+    params: MakeAverageSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> MakeAverageSurfaceOutputs:
     """
@@ -494,6 +494,8 @@ def make_average_surface(
 __all__ = [
     "MAKE_AVERAGE_SURFACE_METADATA",
     "MakeAverageSurfaceOutputs",
+    "MakeAverageSurfaceParamsDict",
+    "MakeAverageSurfaceParamsDictTagged",
     "make_average_surface",
     "make_average_surface_execute",
     "make_average_surface_params",

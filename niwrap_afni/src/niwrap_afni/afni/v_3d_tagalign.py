@@ -13,7 +13,7 @@ V_3D_TAGALIGN_METADATA = Metadata(
 )
 
 
-V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
+V3dTagalignParamsDict = typing.TypedDict('V3dTagalignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTagalign"]],
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
@@ -31,7 +31,7 @@ V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
     "nearest_neighbor_interpolation": bool,
     "quintic_interpolation": bool,
 })
-V3dTagalignParametersTagged = typing.TypedDict('V3dTagalignParametersTagged', {
+V3dTagalignParamsDictTagged = typing.TypedDict('V3dTagalignParamsDictTagged', {
     "@type": typing.Literal["afni/3dTagalign"],
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
@@ -53,7 +53,7 @@ V3dTagalignParametersTagged = typing.TypedDict('V3dTagalignParametersTagged', {
 
 class V3dTagalignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTagalignParameters(...)`.
+    Output object returned when calling `V3dTagalignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def v_3d_tagalign_params(
     cubic_interpolation: bool = False,
     nearest_neighbor_interpolation: bool = False,
     quintic_interpolation: bool = False,
-) -> V3dTagalignParametersTagged:
+) -> V3dTagalignParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def v_3d_tagalign_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTagalignParameters` object.
+    `V3dTagalignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def v_3d_tagalign_validate(
 
 
 def v_3d_tagalign_cargs(
-    params: V3dTagalignParameters,
+    params: V3dTagalignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,7 +267,7 @@ def v_3d_tagalign_cargs(
 
 
 def v_3d_tagalign_outputs(
-    params: V3dTagalignParameters,
+    params: V3dTagalignParamsDict,
     execution: Execution,
 ) -> V3dTagalignOutputs:
     """
@@ -289,7 +289,7 @@ def v_3d_tagalign_outputs(
 
 
 def v_3d_tagalign_execute(
-    params: V3dTagalignParameters,
+    params: V3dTagalignParamsDict,
     runner: Runner | None = None,
 ) -> V3dTagalignOutputs:
     """
@@ -397,6 +397,8 @@ def v_3d_tagalign(
 
 __all__ = [
     "V3dTagalignOutputs",
+    "V3dTagalignParamsDict",
+    "V3dTagalignParamsDictTagged",
     "V_3D_TAGALIGN_METADATA",
     "v_3d_tagalign",
     "v_3d_tagalign_execute",

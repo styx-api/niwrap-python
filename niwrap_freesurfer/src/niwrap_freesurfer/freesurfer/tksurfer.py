@@ -13,14 +13,14 @@ TKSURFER_METADATA = Metadata(
 )
 
 
-TksurferParameters = typing.TypedDict('TksurferParameters', {
+TksurferParamsDict = typing.TypedDict('TksurferParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tksurfer"]],
     "subject_id": str,
     "hemisphere": str,
     "surface_name": str,
     "options": typing.NotRequired[str | None],
 })
-TksurferParametersTagged = typing.TypedDict('TksurferParametersTagged', {
+TksurferParamsDictTagged = typing.TypedDict('TksurferParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tksurfer"],
     "subject_id": str,
     "hemisphere": str,
@@ -31,7 +31,7 @@ TksurferParametersTagged = typing.TypedDict('TksurferParametersTagged', {
 
 class TksurferOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TksurferParameters(...)`.
+    Output object returned when calling `TksurferParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def tksurfer_params(
     hemisphere: str,
     surface_name: str,
     options: str | None = None,
-) -> TksurferParametersTagged:
+) -> TksurferParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def tksurfer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TksurferParameters` object.
+    `TksurferParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def tksurfer_validate(
 
 
 def tksurfer_cargs(
-    params: TksurferParameters,
+    params: TksurferParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def tksurfer_cargs(
 
 
 def tksurfer_outputs(
-    params: TksurferParameters,
+    params: TksurferParamsDict,
     execution: Execution,
 ) -> TksurferOutputs:
     """
@@ -137,7 +137,7 @@ def tksurfer_outputs(
 
 
 def tksurfer_execute(
-    params: TksurferParameters,
+    params: TksurferParamsDict,
     runner: Runner | None = None,
 ) -> TksurferOutputs:
     """
@@ -202,6 +202,8 @@ def tksurfer(
 __all__ = [
     "TKSURFER_METADATA",
     "TksurferOutputs",
+    "TksurferParamsDict",
+    "TksurferParamsDictTagged",
     "tksurfer",
     "tksurfer_execute",
     "tksurfer_params",

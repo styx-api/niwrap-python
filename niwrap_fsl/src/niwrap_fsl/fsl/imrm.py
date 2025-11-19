@@ -13,11 +13,11 @@ IMRM_METADATA = Metadata(
 )
 
 
-ImrmParameters = typing.TypedDict('ImrmParameters', {
+ImrmParamsDict = typing.TypedDict('ImrmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/imrm"]],
     "images_to_remove": list[str],
 })
-ImrmParametersTagged = typing.TypedDict('ImrmParametersTagged', {
+ImrmParamsDictTagged = typing.TypedDict('ImrmParamsDictTagged', {
     "@type": typing.Literal["fsl/imrm"],
     "images_to_remove": list[str],
 })
@@ -25,7 +25,7 @@ ImrmParametersTagged = typing.TypedDict('ImrmParametersTagged', {
 
 class ImrmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImrmParameters(...)`.
+    Output object returned when calling `ImrmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class ImrmOutputs(typing.NamedTuple):
 
 def imrm_params(
     images_to_remove: list[str],
-) -> ImrmParametersTagged:
+) -> ImrmParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def imrm_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `ImrmParameters`
+    Validate parameters. Throws an error if `params` is not a valid `ImrmParamsDict`
     object.
     
     Args:
@@ -72,7 +72,7 @@ def imrm_validate(
 
 
 def imrm_cargs(
-    params: ImrmParameters,
+    params: ImrmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def imrm_cargs(
 
 
 def imrm_outputs(
-    params: ImrmParameters,
+    params: ImrmParamsDict,
     execution: Execution,
 ) -> ImrmOutputs:
     """
@@ -110,7 +110,7 @@ def imrm_outputs(
 
 
 def imrm_execute(
-    params: ImrmParameters,
+    params: ImrmParamsDict,
     runner: Runner | None = None,
 ) -> ImrmOutputs:
     """
@@ -167,6 +167,8 @@ def imrm(
 __all__ = [
     "IMRM_METADATA",
     "ImrmOutputs",
+    "ImrmParamsDict",
+    "ImrmParamsDictTagged",
     "imrm",
     "imrm_execute",
     "imrm_params",

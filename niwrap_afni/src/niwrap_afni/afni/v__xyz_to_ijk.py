@@ -13,7 +13,7 @@ V__XYZ_TO_IJK_METADATA = Metadata(
 )
 
 
-VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
+VXyzToIjkParamsDict = typing.TypedDict('VXyzToIjkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@xyz_to_ijk"]],
     "inset": InputPathType,
     "x_coord": float,
@@ -21,7 +21,7 @@ VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
     "z_coord": float,
     "prefix": typing.NotRequired[str | None],
 })
-VXyzToIjkParametersTagged = typing.TypedDict('VXyzToIjkParametersTagged', {
+VXyzToIjkParamsDictTagged = typing.TypedDict('VXyzToIjkParamsDictTagged', {
     "@type": typing.Literal["afni/@xyz_to_ijk"],
     "inset": InputPathType,
     "x_coord": float,
@@ -33,7 +33,7 @@ VXyzToIjkParametersTagged = typing.TypedDict('VXyzToIjkParametersTagged', {
 
 class VXyzToIjkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VXyzToIjkParameters(...)`.
+    Output object returned when calling `VXyzToIjkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v__xyz_to_ijk_params(
     y_coord: float,
     z_coord: float,
     prefix: str | None = None,
-) -> VXyzToIjkParametersTagged:
+) -> VXyzToIjkParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def v__xyz_to_ijk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VXyzToIjkParameters` object.
+    `VXyzToIjkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def v__xyz_to_ijk_validate(
 
 
 def v__xyz_to_ijk_cargs(
-    params: VXyzToIjkParameters,
+    params: VXyzToIjkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -139,7 +139,7 @@ def v__xyz_to_ijk_cargs(
 
 
 def v__xyz_to_ijk_outputs(
-    params: VXyzToIjkParameters,
+    params: VXyzToIjkParamsDict,
     execution: Execution,
 ) -> VXyzToIjkOutputs:
     """
@@ -159,7 +159,7 @@ def v__xyz_to_ijk_outputs(
 
 
 def v__xyz_to_ijk_execute(
-    params: VXyzToIjkParameters,
+    params: VXyzToIjkParamsDict,
     runner: Runner | None = None,
 ) -> VXyzToIjkOutputs:
     """
@@ -228,6 +228,8 @@ def v__xyz_to_ijk(
 
 __all__ = [
     "VXyzToIjkOutputs",
+    "VXyzToIjkParamsDict",
+    "VXyzToIjkParamsDictTagged",
     "V__XYZ_TO_IJK_METADATA",
     "v__xyz_to_ijk",
     "v__xyz_to_ijk_execute",

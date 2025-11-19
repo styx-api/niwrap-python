@@ -6,7 +6,7 @@
     },
     "plumb": {
       "var_param": "plumb",
-      "fn_struct_make_params": "volume_create_plumb_params",
+      "fn_struct_make_params": "volume_create_plumb",
       "properties": {
         "axis-order": {
           "var_param": "axis_order"
@@ -33,7 +33,7 @@
     },
     "sform": {
       "var_param": "sform",
-      "fn_struct_make_params": "volume_create_sform_params",
+      "fn_struct_make_params": "volume_create_sform",
       "properties": {
         "xi-spacing": {
           "var_param": "xi_spacing"

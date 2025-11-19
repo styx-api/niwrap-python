@@ -12,35 +12,35 @@ VOLUME_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-VolumeWeightedStatsWeightVolumeParameters = typing.TypedDict('VolumeWeightedStatsWeightVolumeParameters', {
+VolumeWeightedStatsWeightVolumeParamsDict = typing.TypedDict('VolumeWeightedStatsWeightVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["weight-volume"]],
     "weight-volume": InputPathType,
     "match-maps": bool,
 })
-VolumeWeightedStatsWeightVolumeParametersTagged = typing.TypedDict('VolumeWeightedStatsWeightVolumeParametersTagged', {
+VolumeWeightedStatsWeightVolumeParamsDictTagged = typing.TypedDict('VolumeWeightedStatsWeightVolumeParamsDictTagged', {
     "@type": typing.Literal["weight-volume"],
     "weight-volume": InputPathType,
     "match-maps": bool,
 })
 
 
-VolumeWeightedStatsRoiParameters = typing.TypedDict('VolumeWeightedStatsRoiParameters', {
+VolumeWeightedStatsRoiParamsDict = typing.TypedDict('VolumeWeightedStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
-VolumeWeightedStatsRoiParametersTagged = typing.TypedDict('VolumeWeightedStatsRoiParametersTagged', {
+VolumeWeightedStatsRoiParamsDictTagged = typing.TypedDict('VolumeWeightedStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-volume": InputPathType,
     "match-maps": bool,
 })
 
 
-VolumeWeightedStatsParameters = typing.TypedDict('VolumeWeightedStatsParameters', {
+VolumeWeightedStatsParamsDict = typing.TypedDict('VolumeWeightedStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-weighted-stats"]],
-    "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParameters | None],
+    "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[VolumeWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -48,11 +48,11 @@ VolumeWeightedStatsParameters = typing.TypedDict('VolumeWeightedStatsParameters'
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
-VolumeWeightedStatsParametersTagged = typing.TypedDict('VolumeWeightedStatsParametersTagged', {
+VolumeWeightedStatsParamsDictTagged = typing.TypedDict('VolumeWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-weighted-stats"],
-    "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParameters | None],
+    "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
-    "roi": typing.NotRequired[VolumeWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -62,10 +62,10 @@ VolumeWeightedStatsParametersTagged = typing.TypedDict('VolumeWeightedStatsParam
 })
 
 
-def volume_weighted_stats_weight_volume_params(
+def volume_weighted_stats_weight_volume(
     weight_volume: InputPathType,
     match_maps: bool = False,
-) -> VolumeWeightedStatsWeightVolumeParametersTagged:
+) -> VolumeWeightedStatsWeightVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def volume_weighted_stats_weight_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeWeightedStatsWeightVolumeParameters` object.
+    `VolumeWeightedStatsWeightVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def volume_weighted_stats_weight_volume_validate(
 
 
 def volume_weighted_stats_weight_volume_cargs(
-    params: VolumeWeightedStatsWeightVolumeParameters,
+    params: VolumeWeightedStatsWeightVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,10 +129,10 @@ def volume_weighted_stats_weight_volume_cargs(
     return cargs
 
 
-def volume_weighted_stats_roi_params(
+def volume_weighted_stats_roi(
     roi_volume: InputPathType,
     match_maps: bool = False,
-) -> VolumeWeightedStatsRoiParametersTagged:
+) -> VolumeWeightedStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def volume_weighted_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeWeightedStatsRoiParameters` object.
+    `VolumeWeightedStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def volume_weighted_stats_roi_validate(
 
 
 def volume_weighted_stats_roi_cargs(
-    params: VolumeWeightedStatsRoiParameters,
+    params: VolumeWeightedStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def volume_weighted_stats_roi_cargs(
 
 class VolumeWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeWeightedStatsParameters(...)`.
+    Output object returned when calling `VolumeWeightedStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -208,13 +208,13 @@ def volume_weighted_stats_params(
     subvolume: str | None,
     percent: float | None,
     volume_in: InputPathType,
-    weight_volume: VolumeWeightedStatsWeightVolumeParameters | None = None,
-    roi: VolumeWeightedStatsRoiParameters | None = None,
+    weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
+    roi: VolumeWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
     show_map_name: bool = False,
-) -> VolumeWeightedStatsParametersTagged:
+) -> VolumeWeightedStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -262,7 +262,7 @@ def volume_weighted_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeWeightedStatsParameters` object.
+    `VolumeWeightedStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -301,7 +301,7 @@ def volume_weighted_stats_validate(
 
 
 def volume_weighted_stats_cargs(
-    params: VolumeWeightedStatsParameters,
+    params: VolumeWeightedStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -335,7 +335,7 @@ def volume_weighted_stats_cargs(
 
 
 def volume_weighted_stats_outputs(
-    params: VolumeWeightedStatsParameters,
+    params: VolumeWeightedStatsParamsDict,
     execution: Execution,
 ) -> VolumeWeightedStatsOutputs:
     """
@@ -354,7 +354,7 @@ def volume_weighted_stats_outputs(
 
 
 def volume_weighted_stats_execute(
-    params: VolumeWeightedStatsParameters,
+    params: VolumeWeightedStatsParamsDict,
     runner: Runner | None = None,
 ) -> VolumeWeightedStatsOutputs:
     """
@@ -391,8 +391,8 @@ def volume_weighted_stats(
     subvolume: str | None,
     percent: float | None,
     volume_in: InputPathType,
-    weight_volume: VolumeWeightedStatsWeightVolumeParameters | None = None,
-    roi: VolumeWeightedStatsRoiParameters | None = None,
+    weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
+    roi: VolumeWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
@@ -450,9 +450,15 @@ def volume_weighted_stats(
 __all__ = [
     "VOLUME_WEIGHTED_STATS_METADATA",
     "VolumeWeightedStatsOutputs",
+    "VolumeWeightedStatsParamsDict",
+    "VolumeWeightedStatsParamsDictTagged",
+    "VolumeWeightedStatsRoiParamsDict",
+    "VolumeWeightedStatsRoiParamsDictTagged",
+    "VolumeWeightedStatsWeightVolumeParamsDict",
+    "VolumeWeightedStatsWeightVolumeParamsDictTagged",
     "volume_weighted_stats",
     "volume_weighted_stats_execute",
     "volume_weighted_stats_params",
-    "volume_weighted_stats_roi_params",
-    "volume_weighted_stats_weight_volume_params",
+    "volume_weighted_stats_roi",
+    "volume_weighted_stats_weight_volume",
 ]

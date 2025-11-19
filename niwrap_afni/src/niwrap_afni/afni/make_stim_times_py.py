@@ -13,7 +13,7 @@ MAKE_STIM_TIMES_PY_METADATA = Metadata(
 )
 
 
-MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
+MakeStimTimesPyParamsDict = typing.TypedDict('MakeStimTimesPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/make_stim_times.py"]],
     "files": list[InputPathType],
     "prefix": str,
@@ -28,7 +28,7 @@ MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
     "show_valid_opts": bool,
     "verbose": typing.NotRequired[float | None],
 })
-MakeStimTimesPyParametersTagged = typing.TypedDict('MakeStimTimesPyParametersTagged', {
+MakeStimTimesPyParamsDictTagged = typing.TypedDict('MakeStimTimesPyParamsDictTagged', {
     "@type": typing.Literal["afni/make_stim_times.py"],
     "files": list[InputPathType],
     "prefix": str,
@@ -47,7 +47,7 @@ MakeStimTimesPyParametersTagged = typing.TypedDict('MakeStimTimesPyParametersTag
 
 class MakeStimTimesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeStimTimesPyParameters(...)`.
+    Output object returned when calling `MakeStimTimesPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def make_stim_times_py_params(
     amplitudes: bool = False,
     show_valid_opts: bool = False,
     verbose: float | None = None,
-) -> MakeStimTimesPyParametersTagged:
+) -> MakeStimTimesPyParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def make_stim_times_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeStimTimesPyParameters` object.
+    `MakeStimTimesPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def make_stim_times_py_validate(
 
 
 def make_stim_times_py_cargs(
-    params: MakeStimTimesPyParameters,
+    params: MakeStimTimesPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,7 +240,7 @@ def make_stim_times_py_cargs(
 
 
 def make_stim_times_py_outputs(
-    params: MakeStimTimesPyParameters,
+    params: MakeStimTimesPyParamsDict,
     execution: Execution,
 ) -> MakeStimTimesPyOutputs:
     """
@@ -262,7 +262,7 @@ def make_stim_times_py_outputs(
 
 
 def make_stim_times_py_execute(
-    params: MakeStimTimesPyParameters,
+    params: MakeStimTimesPyParamsDict,
     runner: Runner | None = None,
 ) -> MakeStimTimesPyOutputs:
     """
@@ -353,6 +353,8 @@ def make_stim_times_py(
 __all__ = [
     "MAKE_STIM_TIMES_PY_METADATA",
     "MakeStimTimesPyOutputs",
+    "MakeStimTimesPyParamsDict",
+    "MakeStimTimesPyParamsDictTagged",
     "make_stim_times_py",
     "make_stim_times_py_execute",
     "make_stim_times_py_params",

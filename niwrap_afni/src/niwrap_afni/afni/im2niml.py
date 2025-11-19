@@ -13,11 +13,11 @@ IM2NIML_METADATA = Metadata(
 )
 
 
-Im2nimlParameters = typing.TypedDict('Im2nimlParameters', {
+Im2nimlParamsDict = typing.TypedDict('Im2nimlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/im2niml"]],
     "input_files": list[InputPathType],
 })
-Im2nimlParametersTagged = typing.TypedDict('Im2nimlParametersTagged', {
+Im2nimlParamsDictTagged = typing.TypedDict('Im2nimlParamsDictTagged', {
     "@type": typing.Literal["afni/im2niml"],
     "input_files": list[InputPathType],
 })
@@ -25,7 +25,7 @@ Im2nimlParametersTagged = typing.TypedDict('Im2nimlParametersTagged', {
 
 class Im2nimlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Im2nimlParameters(...)`.
+    Output object returned when calling `Im2nimlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class Im2nimlOutputs(typing.NamedTuple):
 
 def im2niml_params(
     input_files: list[InputPathType],
-) -> Im2nimlParametersTagged:
+) -> Im2nimlParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def im2niml_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Im2nimlParameters` object.
+    `Im2nimlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def im2niml_validate(
 
 
 def im2niml_cargs(
-    params: Im2nimlParameters,
+    params: Im2nimlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def im2niml_cargs(
 
 
 def im2niml_outputs(
-    params: Im2nimlParameters,
+    params: Im2nimlParamsDict,
     execution: Execution,
 ) -> Im2nimlOutputs:
     """
@@ -112,7 +112,7 @@ def im2niml_outputs(
 
 
 def im2niml_execute(
-    params: Im2nimlParameters,
+    params: Im2nimlParamsDict,
     runner: Runner | None = None,
 ) -> Im2nimlOutputs:
     """
@@ -170,6 +170,8 @@ def im2niml(
 __all__ = [
     "IM2NIML_METADATA",
     "Im2nimlOutputs",
+    "Im2nimlParamsDict",
+    "Im2nimlParamsDictTagged",
     "im2niml",
     "im2niml_execute",
     "im2niml_params",

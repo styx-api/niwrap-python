@@ -13,7 +13,7 @@ DMRI_STATS_AC_METADATA = Metadata(
 )
 
 
-DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
+DmriStatsAcParamsDict = typing.TypedDict('DmriStatsAcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_stats_ac"]],
     "anatomicuts_folder": str,
     "num_clusters": int,
@@ -21,7 +21,7 @@ DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
     "measures": list[str],
     "output_file": str,
 })
-DmriStatsAcParametersTagged = typing.TypedDict('DmriStatsAcParametersTagged', {
+DmriStatsAcParamsDictTagged = typing.TypedDict('DmriStatsAcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_stats_ac"],
     "anatomicuts_folder": str,
     "num_clusters": int,
@@ -33,7 +33,7 @@ DmriStatsAcParametersTagged = typing.TypedDict('DmriStatsAcParametersTagged', {
 
 class DmriStatsAcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriStatsAcParameters(...)`.
+    Output object returned when calling `DmriStatsAcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def dmri_stats_ac_params(
     correspondence_file: str,
     measures: list[str],
     output_file: str,
-) -> DmriStatsAcParametersTagged:
+) -> DmriStatsAcParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def dmri_stats_ac_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriStatsAcParameters` object.
+    `DmriStatsAcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def dmri_stats_ac_validate(
 
 
 def dmri_stats_ac_cargs(
-    params: DmriStatsAcParameters,
+    params: DmriStatsAcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def dmri_stats_ac_cargs(
 
 
 def dmri_stats_ac_outputs(
-    params: DmriStatsAcParameters,
+    params: DmriStatsAcParamsDict,
     execution: Execution,
 ) -> DmriStatsAcOutputs:
     """
@@ -167,7 +167,7 @@ def dmri_stats_ac_outputs(
 
 
 def dmri_stats_ac_execute(
-    params: DmriStatsAcParameters,
+    params: DmriStatsAcParamsDict,
     runner: Runner | None = None,
 ) -> DmriStatsAcOutputs:
     """
@@ -235,6 +235,8 @@ def dmri_stats_ac(
 __all__ = [
     "DMRI_STATS_AC_METADATA",
     "DmriStatsAcOutputs",
+    "DmriStatsAcParamsDict",
+    "DmriStatsAcParamsDictTagged",
     "dmri_stats_ac",
     "dmri_stats_ac_execute",
     "dmri_stats_ac_params",

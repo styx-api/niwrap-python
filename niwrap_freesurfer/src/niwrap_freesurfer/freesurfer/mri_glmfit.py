@@ -13,7 +13,7 @@ MRI_GLMFIT_METADATA = Metadata(
 )
 
 
-MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
+MriGlmfitParamsDict = typing.TypedDict('MriGlmfitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_glmfit"]],
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
@@ -88,7 +88,7 @@ MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
     "sim_done_file": typing.NotRequired[InputPathType | None],
     "no_sig_double_flag": bool,
 })
-MriGlmfitParametersTagged = typing.TypedDict('MriGlmfitParametersTagged', {
+MriGlmfitParamsDictTagged = typing.TypedDict('MriGlmfitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_glmfit"],
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
@@ -167,7 +167,7 @@ MriGlmfitParametersTagged = typing.TypedDict('MriGlmfitParametersTagged', {
 
 class MriGlmfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGlmfitParameters(...)`.
+    Output object returned when calling `MriGlmfitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -266,7 +266,7 @@ def mri_glmfit_params(
     illcond_flag: bool = False,
     sim_done_file: InputPathType | None = None,
     no_sig_double_flag: bool = False,
-) -> MriGlmfitParametersTagged:
+) -> MriGlmfitParamsDictTagged:
     """
     Build parameters.
     
@@ -485,7 +485,7 @@ def mri_glmfit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGlmfitParameters` object.
+    `MriGlmfitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -784,7 +784,7 @@ def mri_glmfit_validate(
 
 
 def mri_glmfit_cargs(
-    params: MriGlmfitParameters,
+    params: MriGlmfitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1047,7 +1047,7 @@ def mri_glmfit_cargs(
 
 
 def mri_glmfit_outputs(
-    params: MriGlmfitParameters,
+    params: MriGlmfitParamsDict,
     execution: Execution,
 ) -> MriGlmfitOutputs:
     """
@@ -1076,7 +1076,7 @@ def mri_glmfit_outputs(
 
 
 def mri_glmfit_execute(
-    params: MriGlmfitParameters,
+    params: MriGlmfitParamsDict,
     runner: Runner | None = None,
 ) -> MriGlmfitOutputs:
     """
@@ -1368,6 +1368,8 @@ def mri_glmfit(
 __all__ = [
     "MRI_GLMFIT_METADATA",
     "MriGlmfitOutputs",
+    "MriGlmfitParamsDict",
+    "MriGlmfitParamsDictTagged",
     "mri_glmfit",
     "mri_glmfit_execute",
     "mri_glmfit_params",

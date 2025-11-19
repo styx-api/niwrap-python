@@ -13,7 +13,7 @@ LONG_STATS_SLOPES_METADATA = Metadata(
 )
 
 
-LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
+LongStatsSlopesParamsDict = typing.TypedDict('LongStatsSlopesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_slopes"]],
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
@@ -43,7 +43,7 @@ LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
     "stack_spc": typing.NotRequired[str | None],
     "stack_resid": typing.NotRequired[str | None],
 })
-LongStatsSlopesParametersTagged = typing.TypedDict('LongStatsSlopesParametersTagged', {
+LongStatsSlopesParamsDictTagged = typing.TypedDict('LongStatsSlopesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_stats_slopes"],
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
@@ -77,7 +77,7 @@ LongStatsSlopesParametersTagged = typing.TypedDict('LongStatsSlopesParametersTag
 
 class LongStatsSlopesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongStatsSlopesParameters(...)`.
+    Output object returned when calling `LongStatsSlopesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +111,7 @@ def long_stats_slopes_params(
     stack_pc1: str | None = None,
     stack_spc: str | None = None,
     stack_resid: str | None = None,
-) -> LongStatsSlopesParametersTagged:
+) -> LongStatsSlopesParamsDictTagged:
     """
     Build parameters.
     
@@ -210,7 +210,7 @@ def long_stats_slopes_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongStatsSlopesParameters` object.
+    `LongStatsSlopesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -313,7 +313,7 @@ def long_stats_slopes_validate(
 
 
 def long_stats_slopes_cargs(
-    params: LongStatsSlopesParameters,
+    params: LongStatsSlopesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -438,7 +438,7 @@ def long_stats_slopes_cargs(
 
 
 def long_stats_slopes_outputs(
-    params: LongStatsSlopesParameters,
+    params: LongStatsSlopesParamsDict,
     execution: Execution,
 ) -> LongStatsSlopesOutputs:
     """
@@ -457,7 +457,7 @@ def long_stats_slopes_outputs(
 
 
 def long_stats_slopes_execute(
-    params: LongStatsSlopesParameters,
+    params: LongStatsSlopesParamsDict,
     runner: Runner | None = None,
 ) -> LongStatsSlopesOutputs:
     """
@@ -606,6 +606,8 @@ def long_stats_slopes(
 __all__ = [
     "LONG_STATS_SLOPES_METADATA",
     "LongStatsSlopesOutputs",
+    "LongStatsSlopesParamsDict",
+    "LongStatsSlopesParamsDictTagged",
     "long_stats_slopes",
     "long_stats_slopes_execute",
     "long_stats_slopes_params",

@@ -13,7 +13,7 @@ V_3D_POLYFIT_METADATA = Metadata(
 )
 
 
-V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
+V3dPolyfitParamsDict = typing.TypedDict('V3dPolyfitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dPolyfit"]],
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
@@ -30,7 +30,7 @@ V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
     "base_dataset": typing.NotRequired[InputPathType | None],
     "verbose": bool,
 })
-V3dPolyfitParametersTagged = typing.TypedDict('V3dPolyfitParametersTagged', {
+V3dPolyfitParamsDictTagged = typing.TypedDict('V3dPolyfitParamsDictTagged', {
     "@type": typing.Literal["afni/3dPolyfit"],
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
@@ -51,7 +51,7 @@ V3dPolyfitParametersTagged = typing.TypedDict('V3dPolyfitParametersTagged', {
 
 class V3dPolyfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dPolyfitParameters(...)`.
+    Output object returned when calling `V3dPolyfitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v_3d_polyfit_params(
     fit_method: int | None = None,
     base_dataset: InputPathType | None = None,
     verbose: bool = False,
-) -> V3dPolyfitParametersTagged:
+) -> V3dPolyfitParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def v_3d_polyfit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dPolyfitParameters` object.
+    `V3dPolyfitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def v_3d_polyfit_validate(
 
 
 def v_3d_polyfit_cargs(
-    params: V3dPolyfitParameters,
+    params: V3dPolyfitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -277,7 +277,7 @@ def v_3d_polyfit_cargs(
 
 
 def v_3d_polyfit_outputs(
-    params: V3dPolyfitParameters,
+    params: V3dPolyfitParamsDict,
     execution: Execution,
 ) -> V3dPolyfitOutputs:
     """
@@ -299,7 +299,7 @@ def v_3d_polyfit_outputs(
 
 
 def v_3d_polyfit_execute(
-    params: V3dPolyfitParameters,
+    params: V3dPolyfitParamsDict,
     runner: Runner | None = None,
 ) -> V3dPolyfitOutputs:
     """
@@ -405,6 +405,8 @@ def v_3d_polyfit(
 
 __all__ = [
     "V3dPolyfitOutputs",
+    "V3dPolyfitParamsDict",
+    "V3dPolyfitParamsDictTagged",
     "V_3D_POLYFIT_METADATA",
     "v_3d_polyfit",
     "v_3d_polyfit_execute",

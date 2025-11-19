@@ -13,11 +13,11 @@ V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
 )
 
 
-VShowDynamicRangeParameters = typing.TypedDict('VShowDynamicRangeParameters', {
+VShowDynamicRangeParamsDict = typing.TypedDict('VShowDynamicRangeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ShowDynamicRange"]],
     "infile": InputPathType,
 })
-VShowDynamicRangeParametersTagged = typing.TypedDict('VShowDynamicRangeParametersTagged', {
+VShowDynamicRangeParamsDictTagged = typing.TypedDict('VShowDynamicRangeParamsDictTagged', {
     "@type": typing.Literal["afni/@ShowDynamicRange"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ VShowDynamicRangeParametersTagged = typing.TypedDict('VShowDynamicRangeParameter
 
 class VShowDynamicRangeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VShowDynamicRangeParameters(...)`.
+    Output object returned when calling `VShowDynamicRangeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ class VShowDynamicRangeOutputs(typing.NamedTuple):
 
 def v__show_dynamic_range_params(
     infile: InputPathType,
-) -> VShowDynamicRangeParametersTagged:
+) -> VShowDynamicRangeParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__show_dynamic_range_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VShowDynamicRangeParameters` object.
+    `VShowDynamicRangeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -74,7 +74,7 @@ def v__show_dynamic_range_validate(
 
 
 def v__show_dynamic_range_cargs(
-    params: VShowDynamicRangeParameters,
+    params: VShowDynamicRangeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -93,7 +93,7 @@ def v__show_dynamic_range_cargs(
 
 
 def v__show_dynamic_range_outputs(
-    params: VShowDynamicRangeParameters,
+    params: VShowDynamicRangeParamsDict,
     execution: Execution,
 ) -> VShowDynamicRangeOutputs:
     """
@@ -114,7 +114,7 @@ def v__show_dynamic_range_outputs(
 
 
 def v__show_dynamic_range_execute(
-    params: VShowDynamicRangeParameters,
+    params: VShowDynamicRangeParamsDict,
     runner: Runner | None = None,
 ) -> VShowDynamicRangeOutputs:
     """
@@ -171,6 +171,8 @@ def v__show_dynamic_range(
 
 __all__ = [
     "VShowDynamicRangeOutputs",
+    "VShowDynamicRangeParamsDict",
+    "VShowDynamicRangeParamsDictTagged",
     "V__SHOW_DYNAMIC_RANGE_METADATA",
     "v__show_dynamic_range",
     "v__show_dynamic_range_execute",

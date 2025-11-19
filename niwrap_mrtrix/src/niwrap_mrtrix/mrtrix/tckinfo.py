@@ -13,19 +13,19 @@ TCKINFO_METADATA = Metadata(
 )
 
 
-TckinfoConfigParameters = typing.TypedDict('TckinfoConfigParameters', {
+TckinfoConfigParamsDict = typing.TypedDict('TckinfoConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckinfoConfigParametersTagged = typing.TypedDict('TckinfoConfigParametersTagged', {
+TckinfoConfigParamsDictTagged = typing.TypedDict('TckinfoConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckinfoParameters = typing.TypedDict('TckinfoParameters', {
+TckinfoParamsDict = typing.TypedDict('TckinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckinfo"]],
     "count": bool,
     "info": bool,
@@ -33,12 +33,12 @@ TckinfoParameters = typing.TypedDict('TckinfoParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[TckinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": list[InputPathType],
 })
-TckinfoParametersTagged = typing.TypedDict('TckinfoParametersTagged', {
+TckinfoParamsDictTagged = typing.TypedDict('TckinfoParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckinfo"],
     "count": bool,
     "info": bool,
@@ -46,17 +46,17 @@ TckinfoParametersTagged = typing.TypedDict('TckinfoParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckinfoConfigParameters] | None],
+    "config": typing.NotRequired[list[TckinfoConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": list[InputPathType],
 })
 
 
-def tckinfo_config_params(
+def tckinfo_config(
     key: str,
     value: str,
-) -> TckinfoConfigParametersTagged:
+) -> TckinfoConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def tckinfo_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckinfoConfigParameters` object.
+    `TckinfoConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def tckinfo_config_validate(
 
 
 def tckinfo_config_cargs(
-    params: TckinfoConfigParameters,
+    params: TckinfoConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def tckinfo_config_cargs(
 
 class TckinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckinfoParameters(...)`.
+    Output object returned when calling `TckinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,10 +132,10 @@ def tckinfo_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckinfoConfigParameters] | None = None,
+    config: list[TckinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckinfoParametersTagged:
+) -> TckinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -180,7 +180,7 @@ def tckinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckinfoParameters` object.
+    `TckinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -212,7 +212,7 @@ def tckinfo_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckinfoConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckinfoConfigParamsDict] | None`')
         for e in params["config"]:
             tckinfo_config_validate(e)
     if params.get("help", False) is None:
@@ -233,7 +233,7 @@ def tckinfo_validate(
 
 
 def tckinfo_cargs(
-    params: TckinfoParameters,
+    params: TckinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def tckinfo_cargs(
 
 
 def tckinfo_outputs(
-    params: TckinfoParameters,
+    params: TckinfoParamsDict,
     execution: Execution,
 ) -> TckinfoOutputs:
     """
@@ -292,7 +292,7 @@ def tckinfo_outputs(
 
 
 def tckinfo_execute(
-    params: TckinfoParameters,
+    params: TckinfoParamsDict,
     runner: Runner | None = None,
 ) -> TckinfoOutputs:
     """
@@ -334,7 +334,7 @@ def tckinfo(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckinfoConfigParameters] | None = None,
+    config: list[TckinfoConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -390,9 +390,13 @@ def tckinfo(
 
 __all__ = [
     "TCKINFO_METADATA",
+    "TckinfoConfigParamsDict",
+    "TckinfoConfigParamsDictTagged",
     "TckinfoOutputs",
+    "TckinfoParamsDict",
+    "TckinfoParamsDictTagged",
     "tckinfo",
-    "tckinfo_config_params",
+    "tckinfo_config",
     "tckinfo_execute",
     "tckinfo_params",
 ]

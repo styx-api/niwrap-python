@@ -13,13 +13,13 @@ FSLREORIENT2STD_METADATA = Metadata(
 )
 
 
-Fslreorient2stdParameters = typing.TypedDict('Fslreorient2stdParameters', {
+Fslreorient2stdParamsDict = typing.TypedDict('Fslreorient2stdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslreorient2std"]],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],
 })
-Fslreorient2stdParametersTagged = typing.TypedDict('Fslreorient2stdParametersTagged', {
+Fslreorient2stdParamsDictTagged = typing.TypedDict('Fslreorient2stdParamsDictTagged', {
     "@type": typing.Literal["fsl/fslreorient2std"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ Fslreorient2stdParametersTagged = typing.TypedDict('Fslreorient2stdParametersTag
 
 class Fslreorient2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fslreorient2stdParameters(...)`.
+    Output object returned when calling `Fslreorient2stdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def fslreorient2std_params(
     input_image: InputPathType,
     output_image: str | None = None,
     matrix_file: str | None = None,
-) -> Fslreorient2stdParametersTagged:
+) -> Fslreorient2stdParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def fslreorient2std_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fslreorient2stdParameters` object.
+    `Fslreorient2stdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def fslreorient2std_validate(
 
 
 def fslreorient2std_cargs(
-    params: Fslreorient2stdParameters,
+    params: Fslreorient2stdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def fslreorient2std_cargs(
 
 
 def fslreorient2std_outputs(
-    params: Fslreorient2stdParameters,
+    params: Fslreorient2stdParamsDict,
     execution: Execution,
 ) -> Fslreorient2stdOutputs:
     """
@@ -140,7 +140,7 @@ def fslreorient2std_outputs(
 
 
 def fslreorient2std_execute(
-    params: Fslreorient2stdParameters,
+    params: Fslreorient2stdParamsDict,
     runner: Runner | None = None,
 ) -> Fslreorient2stdOutputs:
     """
@@ -207,6 +207,8 @@ def fslreorient2std(
 __all__ = [
     "FSLREORIENT2STD_METADATA",
     "Fslreorient2stdOutputs",
+    "Fslreorient2stdParamsDict",
+    "Fslreorient2stdParamsDictTagged",
     "fslreorient2std",
     "fslreorient2std_execute",
     "fslreorient2std_params",

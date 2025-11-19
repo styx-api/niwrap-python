@@ -13,7 +13,7 @@ LONG_STATS_TPS_METADATA = Metadata(
 )
 
 
-LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
+LongStatsTpsParamsDict = typing.TypedDict('LongStatsTpsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_tps"]],
     "qdec_table": InputPathType,
     "stats_file": str,
@@ -24,7 +24,7 @@ LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
     "qcolumn": typing.NotRequired[str | None],
     "cross_sectional": bool,
 })
-LongStatsTpsParametersTagged = typing.TypedDict('LongStatsTpsParametersTagged', {
+LongStatsTpsParamsDictTagged = typing.TypedDict('LongStatsTpsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_stats_tps"],
     "qdec_table": InputPathType,
     "stats_file": str,
@@ -39,7 +39,7 @@ LongStatsTpsParametersTagged = typing.TypedDict('LongStatsTpsParametersTagged', 
 
 class LongStatsTpsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongStatsTpsParameters(...)`.
+    Output object returned when calling `LongStatsTpsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def long_stats_tps_params(
     output_file: str,
     qcolumn: str | None = None,
     cross_sectional: bool = False,
-) -> LongStatsTpsParametersTagged:
+) -> LongStatsTpsParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def long_stats_tps_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongStatsTpsParameters` object.
+    `LongStatsTpsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def long_stats_tps_validate(
 
 
 def long_stats_tps_cargs(
-    params: LongStatsTpsParameters,
+    params: LongStatsTpsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def long_stats_tps_cargs(
 
 
 def long_stats_tps_outputs(
-    params: LongStatsTpsParameters,
+    params: LongStatsTpsParamsDict,
     execution: Execution,
 ) -> LongStatsTpsOutputs:
     """
@@ -203,7 +203,7 @@ def long_stats_tps_outputs(
 
 
 def long_stats_tps_execute(
-    params: LongStatsTpsParameters,
+    params: LongStatsTpsParamsDict,
     runner: Runner | None = None,
 ) -> LongStatsTpsOutputs:
     """
@@ -281,6 +281,8 @@ def long_stats_tps(
 __all__ = [
     "LONG_STATS_TPS_METADATA",
     "LongStatsTpsOutputs",
+    "LongStatsTpsParamsDict",
+    "LongStatsTpsParamsDictTagged",
     "long_stats_tps",
     "long_stats_tps_execute",
     "long_stats_tps_params",

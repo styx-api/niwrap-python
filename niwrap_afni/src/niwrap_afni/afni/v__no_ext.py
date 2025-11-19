@@ -13,12 +13,12 @@ V__NO_EXT_METADATA = Metadata(
 )
 
 
-VNoExtParameters = typing.TypedDict('VNoExtParameters', {
+VNoExtParamsDict = typing.TypedDict('VNoExtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@NoExt"]],
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
-VNoExtParametersTagged = typing.TypedDict('VNoExtParametersTagged', {
+VNoExtParamsDictTagged = typing.TypedDict('VNoExtParamsDictTagged', {
     "@type": typing.Literal["afni/@NoExt"],
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
@@ -27,7 +27,7 @@ VNoExtParametersTagged = typing.TypedDict('VNoExtParametersTagged', {
 
 class VNoExtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VNoExtParameters(...)`.
+    Output object returned when calling `VNoExtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class VNoExtOutputs(typing.NamedTuple):
 def v__no_ext_params(
     inputfile: str,
     extensions: list[str] | None = None,
-) -> VNoExtParametersTagged:
+) -> VNoExtParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def v__no_ext_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VNoExtParameters` object.
+    `VNoExtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def v__no_ext_validate(
 
 
 def v__no_ext_cargs(
-    params: VNoExtParameters,
+    params: VNoExtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def v__no_ext_cargs(
 
 
 def v__no_ext_outputs(
-    params: VNoExtParameters,
+    params: VNoExtParamsDict,
     execution: Execution,
 ) -> VNoExtOutputs:
     """
@@ -123,7 +123,7 @@ def v__no_ext_outputs(
 
 
 def v__no_ext_execute(
-    params: VNoExtParameters,
+    params: VNoExtParamsDict,
     runner: Runner | None = None,
 ) -> VNoExtOutputs:
     """
@@ -181,6 +181,8 @@ def v__no_ext(
 
 __all__ = [
     "VNoExtOutputs",
+    "VNoExtParamsDict",
+    "VNoExtParamsDictTagged",
     "V__NO_EXT_METADATA",
     "v__no_ext",
     "v__no_ext_execute",

@@ -12,58 +12,58 @@ SCENE_FILE_MERGE_METADATA = Metadata(
 )
 
 
-SceneFileMergeUpToParameters = typing.TypedDict('SceneFileMergeUpToParameters', {
+SceneFileMergeUpToParamsDict = typing.TypedDict('SceneFileMergeUpToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["up-to"]],
     "last-column": str,
     "reverse": bool,
 })
-SceneFileMergeUpToParametersTagged = typing.TypedDict('SceneFileMergeUpToParametersTagged', {
+SceneFileMergeUpToParamsDictTagged = typing.TypedDict('SceneFileMergeUpToParamsDictTagged', {
     "@type": typing.Literal["up-to"],
     "last-column": str,
     "reverse": bool,
 })
 
 
-SceneFileMergeSceneParameters = typing.TypedDict('SceneFileMergeSceneParameters', {
+SceneFileMergeSceneParamsDict = typing.TypedDict('SceneFileMergeSceneParamsDict', {
     "@type": typing.NotRequired[typing.Literal["scene"]],
     "scene": str,
-    "up-to": typing.NotRequired[SceneFileMergeUpToParameters | None],
+    "up-to": typing.NotRequired[SceneFileMergeUpToParamsDict | None],
 })
-SceneFileMergeSceneParametersTagged = typing.TypedDict('SceneFileMergeSceneParametersTagged', {
+SceneFileMergeSceneParamsDictTagged = typing.TypedDict('SceneFileMergeSceneParamsDictTagged', {
     "@type": typing.Literal["scene"],
     "scene": str,
-    "up-to": typing.NotRequired[SceneFileMergeUpToParameters | None],
+    "up-to": typing.NotRequired[SceneFileMergeUpToParamsDict | None],
 })
 
 
-SceneFileMergeSceneFileParameters = typing.TypedDict('SceneFileMergeSceneFileParameters', {
+SceneFileMergeSceneFileParamsDict = typing.TypedDict('SceneFileMergeSceneFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["scene-file"]],
     "scene-file": str,
-    "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
+    "scene": typing.NotRequired[list[SceneFileMergeSceneParamsDict] | None],
 })
-SceneFileMergeSceneFileParametersTagged = typing.TypedDict('SceneFileMergeSceneFileParametersTagged', {
+SceneFileMergeSceneFileParamsDictTagged = typing.TypedDict('SceneFileMergeSceneFileParamsDictTagged', {
     "@type": typing.Literal["scene-file"],
     "scene-file": str,
-    "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
+    "scene": typing.NotRequired[list[SceneFileMergeSceneParamsDict] | None],
 })
 
 
-SceneFileMergeParameters = typing.TypedDict('SceneFileMergeParameters', {
+SceneFileMergeParamsDict = typing.TypedDict('SceneFileMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-merge"]],
-    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
 })
-SceneFileMergeParametersTagged = typing.TypedDict('SceneFileMergeParametersTagged', {
+SceneFileMergeParamsDictTagged = typing.TypedDict('SceneFileMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-file-merge"],
-    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
 })
 
 
-def scene_file_merge_up_to_params(
+def scene_file_merge_up_to(
     last_column: str,
     reverse: bool = False,
-) -> SceneFileMergeUpToParametersTagged:
+) -> SceneFileMergeUpToParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def scene_file_merge_up_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileMergeUpToParameters` object.
+    `SceneFileMergeUpToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def scene_file_merge_up_to_validate(
 
 
 def scene_file_merge_up_to_cargs(
-    params: SceneFileMergeUpToParameters,
+    params: SceneFileMergeUpToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,10 +126,10 @@ def scene_file_merge_up_to_cargs(
     return cargs
 
 
-def scene_file_merge_scene_params(
+def scene_file_merge_scene(
     scene: str,
-    up_to: SceneFileMergeUpToParameters | None = None,
-) -> SceneFileMergeSceneParametersTagged:
+    up_to: SceneFileMergeUpToParamsDict | None = None,
+) -> SceneFileMergeSceneParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def scene_file_merge_scene_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileMergeSceneParameters` object.
+    `SceneFileMergeSceneParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def scene_file_merge_scene_validate(
 
 
 def scene_file_merge_scene_cargs(
-    params: SceneFileMergeSceneParameters,
+    params: SceneFileMergeSceneParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,10 +191,10 @@ def scene_file_merge_scene_cargs(
     return cargs
 
 
-def scene_file_merge_scene_file_params(
+def scene_file_merge_scene_file(
     scene_file: str,
-    scene: list[SceneFileMergeSceneParameters] | None = None,
-) -> SceneFileMergeSceneFileParametersTagged:
+    scene: list[SceneFileMergeSceneParamsDict] | None = None,
+) -> SceneFileMergeSceneFileParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def scene_file_merge_scene_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileMergeSceneFileParameters` object.
+    `SceneFileMergeSceneFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,13 +231,13 @@ def scene_file_merge_scene_file_validate(
         raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
     if params.get("scene", None) is not None:
         if not isinstance(params["scene"], list):
-            raise StyxValidationError(f'`scene` has the wrong type: Received `{type(params.get("scene", None))}` expected `list[SceneFileMergeSceneParameters] | None`')
+            raise StyxValidationError(f'`scene` has the wrong type: Received `{type(params.get("scene", None))}` expected `list[SceneFileMergeSceneParamsDict] | None`')
         for e in params["scene"]:
             scene_file_merge_scene_validate(e)
 
 
 def scene_file_merge_scene_file_cargs(
-    params: SceneFileMergeSceneFileParameters,
+    params: SceneFileMergeSceneFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def scene_file_merge_scene_file_cargs(
 
 class SceneFileMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SceneFileMergeParameters(...)`.
+    Output object returned when calling `SceneFileMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -269,8 +269,8 @@ class SceneFileMergeOutputs(typing.NamedTuple):
 
 def scene_file_merge_params(
     scene_file_out: str,
-    scene_file: list[SceneFileMergeSceneFileParameters] | None = None,
-) -> SceneFileMergeParametersTagged:
+    scene_file: list[SceneFileMergeSceneFileParamsDict] | None = None,
+) -> SceneFileMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -294,7 +294,7 @@ def scene_file_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileMergeParameters` object.
+    `SceneFileMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -303,7 +303,7 @@ def scene_file_merge_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("scene-file", None) is not None:
         if not isinstance(params["scene-file"], list):
-            raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `list[SceneFileMergeSceneFileParameters] | None`')
+            raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `list[SceneFileMergeSceneFileParamsDict] | None`')
         for e in params["scene-file"]:
             scene_file_merge_scene_file_validate(e)
     if params.get("scene-file-out", None) is None:
@@ -313,7 +313,7 @@ def scene_file_merge_validate(
 
 
 def scene_file_merge_cargs(
-    params: SceneFileMergeParameters,
+    params: SceneFileMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -337,7 +337,7 @@ def scene_file_merge_cargs(
 
 
 def scene_file_merge_outputs(
-    params: SceneFileMergeParameters,
+    params: SceneFileMergeParamsDict,
     execution: Execution,
 ) -> SceneFileMergeOutputs:
     """
@@ -356,7 +356,7 @@ def scene_file_merge_outputs(
 
 
 def scene_file_merge_execute(
-    params: SceneFileMergeParameters,
+    params: SceneFileMergeParamsDict,
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
@@ -389,7 +389,7 @@ def scene_file_merge_execute(
 
 def scene_file_merge(
     scene_file_out: str,
-    scene_file: list[SceneFileMergeSceneFileParameters] | None = None,
+    scene_file: list[SceneFileMergeSceneFileParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
@@ -421,10 +421,18 @@ def scene_file_merge(
 __all__ = [
     "SCENE_FILE_MERGE_METADATA",
     "SceneFileMergeOutputs",
+    "SceneFileMergeParamsDict",
+    "SceneFileMergeParamsDictTagged",
+    "SceneFileMergeSceneFileParamsDict",
+    "SceneFileMergeSceneFileParamsDictTagged",
+    "SceneFileMergeSceneParamsDict",
+    "SceneFileMergeSceneParamsDictTagged",
+    "SceneFileMergeUpToParamsDict",
+    "SceneFileMergeUpToParamsDictTagged",
     "scene_file_merge",
     "scene_file_merge_execute",
     "scene_file_merge_params",
-    "scene_file_merge_scene_file_params",
-    "scene_file_merge_scene_params",
-    "scene_file_merge_up_to_params",
+    "scene_file_merge_scene",
+    "scene_file_merge_scene_file",
+    "scene_file_merge_up_to",
 ]

@@ -13,19 +13,19 @@ FIXELCONNECTIVITY_METADATA = Metadata(
 )
 
 
-FixelconnectivityConfigParameters = typing.TypedDict('FixelconnectivityConfigParameters', {
+FixelconnectivityConfigParamsDict = typing.TypedDict('FixelconnectivityConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelconnectivityConfigParametersTagged = typing.TypedDict('FixelconnectivityConfigParametersTagged', {
+FixelconnectivityConfigParamsDictTagged = typing.TypedDict('FixelconnectivityConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelconnectivityParameters = typing.TypedDict('FixelconnectivityParameters', {
+FixelconnectivityParamsDict = typing.TypedDict('FixelconnectivityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelconnectivity"]],
     "threshold": typing.NotRequired[float | None],
     "angle": typing.NotRequired[float | None],
@@ -35,14 +35,14 @@ FixelconnectivityParameters = typing.TypedDict('FixelconnectivityParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelconnectivityConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelconnectivityConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_directory": InputPathType,
     "tracks": InputPathType,
     "matrix": str,
 })
-FixelconnectivityParametersTagged = typing.TypedDict('FixelconnectivityParametersTagged', {
+FixelconnectivityParamsDictTagged = typing.TypedDict('FixelconnectivityParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelconnectivity"],
     "threshold": typing.NotRequired[float | None],
     "angle": typing.NotRequired[float | None],
@@ -52,7 +52,7 @@ FixelconnectivityParametersTagged = typing.TypedDict('FixelconnectivityParameter
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelconnectivityConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelconnectivityConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_directory": InputPathType,
@@ -61,10 +61,10 @@ FixelconnectivityParametersTagged = typing.TypedDict('FixelconnectivityParameter
 })
 
 
-def fixelconnectivity_config_params(
+def fixelconnectivity_config(
     key: str,
     value: str,
-) -> FixelconnectivityConfigParametersTagged:
+) -> FixelconnectivityConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def fixelconnectivity_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconnectivityConfigParameters` object.
+    `FixelconnectivityConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def fixelconnectivity_config_validate(
 
 
 def fixelconnectivity_config_cargs(
-    params: FixelconnectivityConfigParameters,
+    params: FixelconnectivityConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def fixelconnectivity_config_cargs(
 
 class FixelconnectivityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelconnectivityParameters(...)`.
+    Output object returned when calling `FixelconnectivityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def fixelconnectivity_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelconnectivityConfigParameters] | None = None,
+    config: list[FixelconnectivityConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelconnectivityParametersTagged:
+) -> FixelconnectivityParamsDictTagged:
     """
     Build parameters.
     
@@ -209,7 +209,7 @@ def fixelconnectivity_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconnectivityParameters` object.
+    `FixelconnectivityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -246,7 +246,7 @@ def fixelconnectivity_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelconnectivityConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelconnectivityConfigParamsDict] | None`')
         for e in params["config"]:
             fixelconnectivity_config_validate(e)
     if params.get("help", False) is None:
@@ -272,7 +272,7 @@ def fixelconnectivity_validate(
 
 
 def fixelconnectivity_cargs(
-    params: FixelconnectivityParameters,
+    params: FixelconnectivityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -327,7 +327,7 @@ def fixelconnectivity_cargs(
 
 
 def fixelconnectivity_outputs(
-    params: FixelconnectivityParameters,
+    params: FixelconnectivityParamsDict,
     execution: Execution,
 ) -> FixelconnectivityOutputs:
     """
@@ -347,7 +347,7 @@ def fixelconnectivity_outputs(
 
 
 def fixelconnectivity_execute(
-    params: FixelconnectivityParameters,
+    params: FixelconnectivityParamsDict,
     runner: Runner | None = None,
 ) -> FixelconnectivityOutputs:
     """
@@ -395,7 +395,7 @@ def fixelconnectivity(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelconnectivityConfigParameters] | None = None,
+    config: list[FixelconnectivityConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -465,9 +465,13 @@ def fixelconnectivity(
 
 __all__ = [
     "FIXELCONNECTIVITY_METADATA",
+    "FixelconnectivityConfigParamsDict",
+    "FixelconnectivityConfigParamsDictTagged",
     "FixelconnectivityOutputs",
+    "FixelconnectivityParamsDict",
+    "FixelconnectivityParamsDictTagged",
     "fixelconnectivity",
-    "fixelconnectivity_config_params",
+    "fixelconnectivity_config",
     "fixelconnectivity_execute",
     "fixelconnectivity_params",
 ]

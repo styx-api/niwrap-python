@@ -13,7 +13,7 @@ NIFTI_TOOL_METADATA = Metadata(
 )
 
 
-NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
+NiftiToolParamsDict = typing.TypedDict('NiftiToolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/nifti_tool"]],
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
@@ -28,7 +28,7 @@ NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
     "add_comment_ext": typing.NotRequired[str | None],
     "rm_ext": typing.NotRequired[str | None],
 })
-NiftiToolParametersTagged = typing.TypedDict('NiftiToolParametersTagged', {
+NiftiToolParamsDictTagged = typing.TypedDict('NiftiToolParamsDictTagged', {
     "@type": typing.Literal["afni/nifti_tool"],
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
@@ -47,7 +47,7 @@ NiftiToolParametersTagged = typing.TypedDict('NiftiToolParametersTagged', {
 
 class NiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NiftiToolParameters(...)`.
+    Output object returned when calling `NiftiToolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def nifti_tool_params(
     convert_verify: bool = False,
     add_comment_ext: str | None = None,
     rm_ext: str | None = None,
-) -> NiftiToolParametersTagged:
+) -> NiftiToolParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def nifti_tool_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NiftiToolParameters` object.
+    `NiftiToolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -172,7 +172,7 @@ def nifti_tool_validate(
 
 
 def nifti_tool_cargs(
-    params: NiftiToolParameters,
+    params: NiftiToolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,7 +240,7 @@ def nifti_tool_cargs(
 
 
 def nifti_tool_outputs(
-    params: NiftiToolParameters,
+    params: NiftiToolParamsDict,
     execution: Execution,
 ) -> NiftiToolOutputs:
     """
@@ -260,7 +260,7 @@ def nifti_tool_outputs(
 
 
 def nifti_tool_execute(
-    params: NiftiToolParameters,
+    params: NiftiToolParamsDict,
     runner: Runner | None = None,
 ) -> NiftiToolOutputs:
     """
@@ -349,6 +349,8 @@ def nifti_tool(
 __all__ = [
     "NIFTI_TOOL_METADATA",
     "NiftiToolOutputs",
+    "NiftiToolParamsDict",
+    "NiftiToolParamsDictTagged",
     "nifti_tool",
     "nifti_tool_execute",
     "nifti_tool_params",

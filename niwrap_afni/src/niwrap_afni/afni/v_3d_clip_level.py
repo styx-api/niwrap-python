@@ -13,14 +13,14 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 )
 
 
-V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
+V3dClipLevelParamsDict = typing.TypedDict('V3dClipLevelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dClipLevel"]],
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
     "doall": bool,
     "grad": typing.NotRequired[str | None],
 })
-V3dClipLevelParametersTagged = typing.TypedDict('V3dClipLevelParametersTagged', {
+V3dClipLevelParamsDictTagged = typing.TypedDict('V3dClipLevelParamsDictTagged', {
     "@type": typing.Literal["afni/3dClipLevel"],
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
@@ -31,7 +31,7 @@ V3dClipLevelParametersTagged = typing.TypedDict('V3dClipLevelParametersTagged', 
 
 class V3dClipLevelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dClipLevelParameters(...)`.
+    Output object returned when calling `V3dClipLevelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v_3d_clip_level_params(
     mfrac: float | None = None,
     doall: bool = False,
     grad: str | None = None,
-) -> V3dClipLevelParametersTagged:
+) -> V3dClipLevelParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_clip_level_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dClipLevelParameters` object.
+    `V3dClipLevelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def v_3d_clip_level_validate(
 
 
 def v_3d_clip_level_cargs(
-    params: V3dClipLevelParameters,
+    params: V3dClipLevelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def v_3d_clip_level_cargs(
 
 
 def v_3d_clip_level_outputs(
-    params: V3dClipLevelParameters,
+    params: V3dClipLevelParamsDict,
     execution: Execution,
 ) -> V3dClipLevelOutputs:
     """
@@ -146,7 +146,7 @@ def v_3d_clip_level_outputs(
 
 
 def v_3d_clip_level_execute(
-    params: V3dClipLevelParameters,
+    params: V3dClipLevelParamsDict,
     runner: Runner | None = None,
 ) -> V3dClipLevelOutputs:
     """
@@ -213,6 +213,8 @@ def v_3d_clip_level(
 
 __all__ = [
     "V3dClipLevelOutputs",
+    "V3dClipLevelParamsDict",
+    "V3dClipLevelParamsDictTagged",
     "V_3D_CLIP_LEVEL_METADATA",
     "v_3d_clip_level",
     "v_3d_clip_level_execute",

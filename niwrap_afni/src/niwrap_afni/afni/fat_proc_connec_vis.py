@@ -13,7 +13,7 @@ FAT_PROC_CONNEC_VIS_METADATA = Metadata(
 )
 
 
-FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
+FatProcConnecVisParamsDict = typing.TypedDict('FatProcConnecVisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_connec_vis"]],
     "in_rois": str,
     "prefix": str,
@@ -27,7 +27,7 @@ FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
     "wdir": typing.NotRequired[str | None],
     "no_clean": bool,
 })
-FatProcConnecVisParametersTagged = typing.TypedDict('FatProcConnecVisParametersTagged', {
+FatProcConnecVisParamsDictTagged = typing.TypedDict('FatProcConnecVisParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_connec_vis"],
     "in_rois": str,
     "prefix": str,
@@ -45,7 +45,7 @@ FatProcConnecVisParametersTagged = typing.TypedDict('FatProcConnecVisParametersT
 
 class FatProcConnecVisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcConnecVisParameters(...)`.
+    Output object returned when calling `FatProcConnecVisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ def fat_proc_connec_vis_params(
     output_tstat: bool = False,
     wdir: str | None = None,
     no_clean: bool = False,
-) -> FatProcConnecVisParametersTagged:
+) -> FatProcConnecVisParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def fat_proc_connec_vis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcConnecVisParameters` object.
+    `FatProcConnecVisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -189,7 +189,7 @@ def fat_proc_connec_vis_validate(
 
 
 def fat_proc_connec_vis_cargs(
-    params: FatProcConnecVisParameters,
+    params: FatProcConnecVisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def fat_proc_connec_vis_cargs(
 
 
 def fat_proc_connec_vis_outputs(
-    params: FatProcConnecVisParameters,
+    params: FatProcConnecVisParamsDict,
     execution: Execution,
 ) -> FatProcConnecVisOutputs:
     """
@@ -264,7 +264,7 @@ def fat_proc_connec_vis_outputs(
 
 
 def fat_proc_connec_vis_execute(
-    params: FatProcConnecVisParameters,
+    params: FatProcConnecVisParamsDict,
     runner: Runner | None = None,
 ) -> FatProcConnecVisOutputs:
     """
@@ -380,6 +380,8 @@ def fat_proc_connec_vis(
 __all__ = [
     "FAT_PROC_CONNEC_VIS_METADATA",
     "FatProcConnecVisOutputs",
+    "FatProcConnecVisParamsDict",
+    "FatProcConnecVisParamsDictTagged",
     "fat_proc_connec_vis",
     "fat_proc_connec_vis_execute",
     "fat_proc_connec_vis_params",

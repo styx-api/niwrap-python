@@ -13,7 +13,7 @@ V_3D_ANOVA2_METADATA = Metadata(
 )
 
 
-V3dAnova2Parameters = typing.TypedDict('V3dAnova2Parameters', {
+V3dAnova2ParamsDict = typing.TypedDict('V3dAnova2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dANOVA2"]],
     "type": int,
     "alevels": int,
@@ -40,7 +40,7 @@ V3dAnova2Parameters = typing.TypedDict('V3dAnova2Parameters', {
     "ok": bool,
     "assume_sph": bool,
 })
-V3dAnova2ParametersTagged = typing.TypedDict('V3dAnova2ParametersTagged', {
+V3dAnova2ParamsDictTagged = typing.TypedDict('V3dAnova2ParamsDictTagged', {
     "@type": typing.Literal["afni/3dANOVA2"],
     "type": int,
     "alevels": int,
@@ -71,7 +71,7 @@ V3dAnova2ParametersTagged = typing.TypedDict('V3dAnova2ParametersTagged', {
 
 class V3dAnova2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAnova2Parameters(...)`.
+    Output object returned when calling `V3dAnova2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +132,7 @@ def v_3d_anova2_params(
     old_method: bool = False,
     ok: bool = False,
     assume_sph: bool = False,
-) -> V3dAnova2ParametersTagged:
+) -> V3dAnova2ParamsDictTagged:
     """
     Build parameters.
     
@@ -224,7 +224,7 @@ def v_3d_anova2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAnova2Parameters` object.
+    `V3dAnova2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -320,7 +320,7 @@ def v_3d_anova2_validate(
 
 
 def v_3d_anova2_cargs(
-    params: V3dAnova2Parameters,
+    params: V3dAnova2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -443,7 +443,7 @@ def v_3d_anova2_cargs(
 
 
 def v_3d_anova2_outputs(
-    params: V3dAnova2Parameters,
+    params: V3dAnova2ParamsDict,
     execution: Execution,
 ) -> V3dAnova2Outputs:
     """
@@ -476,7 +476,7 @@ def v_3d_anova2_outputs(
 
 
 def v_3d_anova2_execute(
-    params: V3dAnova2Parameters,
+    params: V3dAnova2ParamsDict,
     runner: Runner | None = None,
 ) -> V3dAnova2Outputs:
     """
@@ -610,6 +610,8 @@ def v_3d_anova2(
 
 __all__ = [
     "V3dAnova2Outputs",
+    "V3dAnova2ParamsDict",
+    "V3dAnova2ParamsDictTagged",
     "V_3D_ANOVA2_METADATA",
     "v_3d_anova2",
     "v_3d_anova2_execute",

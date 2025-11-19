@@ -13,7 +13,7 @@ SLICESDIR_METADATA = Metadata(
 )
 
 
-SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
+SlicesdirParamsDict = typing.TypedDict('SlicesdirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slicesdir"]],
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
     "slice_option": bool,
     "filelist": list[str],
 })
-SlicesdirParametersTagged = typing.TypedDict('SlicesdirParametersTagged', {
+SlicesdirParamsDictTagged = typing.TypedDict('SlicesdirParamsDictTagged', {
     "@type": typing.Literal["fsl/slicesdir"],
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ SlicesdirParametersTagged = typing.TypedDict('SlicesdirParametersTagged', {
 
 class SlicesdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicesdirParameters(...)`.
+    Output object returned when calling `SlicesdirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def slicesdir_params(
     outline_image: InputPathType | None = None,
     edge_threshold: float | None = None,
     slice_option: bool = False,
-) -> SlicesdirParametersTagged:
+) -> SlicesdirParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def slicesdir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicesdirParameters` object.
+    `SlicesdirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def slicesdir_validate(
 
 
 def slicesdir_cargs(
-    params: SlicesdirParameters,
+    params: SlicesdirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def slicesdir_cargs(
 
 
 def slicesdir_outputs(
-    params: SlicesdirParameters,
+    params: SlicesdirParamsDict,
     execution: Execution,
 ) -> SlicesdirOutputs:
     """
@@ -162,7 +162,7 @@ def slicesdir_outputs(
 
 
 def slicesdir_execute(
-    params: SlicesdirParameters,
+    params: SlicesdirParamsDict,
     runner: Runner | None = None,
 ) -> SlicesdirOutputs:
     """
@@ -235,6 +235,8 @@ def slicesdir(
 __all__ = [
     "SLICESDIR_METADATA",
     "SlicesdirOutputs",
+    "SlicesdirParamsDict",
+    "SlicesdirParamsDictTagged",
     "slicesdir",
     "slicesdir_execute",
     "slicesdir_params",

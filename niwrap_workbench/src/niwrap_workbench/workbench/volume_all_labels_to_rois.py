@@ -12,13 +12,13 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 )
 
 
-VolumeAllLabelsToRoisParameters = typing.TypedDict('VolumeAllLabelsToRoisParameters', {
+VolumeAllLabelsToRoisParamsDict = typing.TypedDict('VolumeAllLabelsToRoisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-all-labels-to-rois"]],
     "volume-out": str,
     "label-in": InputPathType,
     "map": str,
 })
-VolumeAllLabelsToRoisParametersTagged = typing.TypedDict('VolumeAllLabelsToRoisParametersTagged', {
+VolumeAllLabelsToRoisParamsDictTagged = typing.TypedDict('VolumeAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-all-labels-to-rois"],
     "volume-out": str,
     "label-in": InputPathType,
@@ -28,7 +28,7 @@ VolumeAllLabelsToRoisParametersTagged = typing.TypedDict('VolumeAllLabelsToRoisP
 
 class VolumeAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeAllLabelsToRoisParameters(...)`.
+    Output object returned when calling `VolumeAllLabelsToRoisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def volume_all_labels_to_rois_params(
     volume_out: str,
     label_in: InputPathType,
     map_: str,
-) -> VolumeAllLabelsToRoisParametersTagged:
+) -> VolumeAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def volume_all_labels_to_rois_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeAllLabelsToRoisParameters` object.
+    `VolumeAllLabelsToRoisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def volume_all_labels_to_rois_validate(
 
 
 def volume_all_labels_to_rois_cargs(
-    params: VolumeAllLabelsToRoisParameters,
+    params: VolumeAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def volume_all_labels_to_rois_cargs(
 
 
 def volume_all_labels_to_rois_outputs(
-    params: VolumeAllLabelsToRoisParameters,
+    params: VolumeAllLabelsToRoisParamsDict,
     execution: Execution,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
@@ -131,7 +131,7 @@ def volume_all_labels_to_rois_outputs(
 
 
 def volume_all_labels_to_rois_execute(
-    params: VolumeAllLabelsToRoisParameters,
+    params: VolumeAllLabelsToRoisParamsDict,
     runner: Runner | None = None,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
@@ -189,6 +189,8 @@ def volume_all_labels_to_rois(
 __all__ = [
     "VOLUME_ALL_LABELS_TO_ROIS_METADATA",
     "VolumeAllLabelsToRoisOutputs",
+    "VolumeAllLabelsToRoisParamsDict",
+    "VolumeAllLabelsToRoisParamsDictTagged",
     "volume_all_labels_to_rois",
     "volume_all_labels_to_rois_execute",
     "volume_all_labels_to_rois_params",

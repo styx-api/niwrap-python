@@ -13,7 +13,7 @@ MRI_CA_LABEL_METADATA = Metadata(
 )
 
 
-MriCaLabelParameters = typing.TypedDict('MriCaLabelParameters', {
+MriCaLabelParamsDict = typing.TypedDict('MriCaLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_label"]],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
@@ -68,7 +68,7 @@ MriCaLabelParameters = typing.TypedDict('MriCaLabelParameters', {
     "sa_cblum_from_seg": typing.NotRequired[str | None],
     "threads": typing.NotRequired[int | None],
 })
-MriCaLabelParametersTagged = typing.TypedDict('MriCaLabelParametersTagged', {
+MriCaLabelParamsDictTagged = typing.TypedDict('MriCaLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ca_label"],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
@@ -127,7 +127,7 @@ MriCaLabelParametersTagged = typing.TypedDict('MriCaLabelParametersTagged', {
 
 class MriCaLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCaLabelParameters(...)`.
+    Output object returned when calling `MriCaLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -188,7 +188,7 @@ def mri_ca_label_params(
     cblum_from_seg: str | None = None,
     sa_cblum_from_seg: str | None = None,
     threads: int | None = None,
-) -> MriCaLabelParametersTagged:
+) -> MriCaLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -357,7 +357,7 @@ def mri_ca_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCaLabelParameters` object.
+    `MriCaLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -554,7 +554,7 @@ def mri_ca_label_validate(
 
 
 def mri_ca_label_cargs(
-    params: MriCaLabelParameters,
+    params: MriCaLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -789,7 +789,7 @@ def mri_ca_label_cargs(
 
 
 def mri_ca_label_outputs(
-    params: MriCaLabelParameters,
+    params: MriCaLabelParamsDict,
     execution: Execution,
 ) -> MriCaLabelOutputs:
     """
@@ -809,7 +809,7 @@ def mri_ca_label_outputs(
 
 
 def mri_ca_label_execute(
-    params: MriCaLabelParameters,
+    params: MriCaLabelParamsDict,
     runner: Runner | None = None,
 ) -> MriCaLabelOutputs:
     """
@@ -1025,6 +1025,8 @@ def mri_ca_label(
 __all__ = [
     "MRI_CA_LABEL_METADATA",
     "MriCaLabelOutputs",
+    "MriCaLabelParamsDict",
+    "MriCaLabelParamsDictTagged",
     "mri_ca_label",
     "mri_ca_label_execute",
     "mri_ca_label_params",

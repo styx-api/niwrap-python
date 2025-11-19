@@ -13,7 +13,7 @@ V_3D_BANDPASS_METADATA = Metadata(
 )
 
 
-V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
+V3dBandpassParamsDict = typing.TypedDict('V3dBandpassParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBandpass"]],
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
@@ -33,7 +33,7 @@ V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "tr": typing.NotRequired[float | None],
 })
-V3dBandpassParametersTagged = typing.TypedDict('V3dBandpassParametersTagged', {
+V3dBandpassParamsDictTagged = typing.TypedDict('V3dBandpassParamsDictTagged', {
     "@type": typing.Literal["afni/3dBandpass"],
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
@@ -57,7 +57,7 @@ V3dBandpassParametersTagged = typing.TypedDict('V3dBandpassParametersTagged', {
 
 class V3dBandpassOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBandpassParameters(...)`.
+    Output object returned when calling `V3dBandpassParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def v_3d_bandpass_params(
     orthogonalize_file: list[InputPathType] | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     tr: float | None = None,
-) -> V3dBandpassParametersTagged:
+) -> V3dBandpassParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def v_3d_bandpass_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBandpassParameters` object.
+    `V3dBandpassParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def v_3d_bandpass_validate(
 
 
 def v_3d_bandpass_cargs(
-    params: V3dBandpassParameters,
+    params: V3dBandpassParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -306,7 +306,7 @@ def v_3d_bandpass_cargs(
 
 
 def v_3d_bandpass_outputs(
-    params: V3dBandpassParameters,
+    params: V3dBandpassParamsDict,
     execution: Execution,
 ) -> V3dBandpassOutputs:
     """
@@ -326,7 +326,7 @@ def v_3d_bandpass_outputs(
 
 
 def v_3d_bandpass_execute(
-    params: V3dBandpassParameters,
+    params: V3dBandpassParamsDict,
     runner: Runner | None = None,
 ) -> V3dBandpassOutputs:
     """
@@ -445,6 +445,8 @@ def v_3d_bandpass(
 
 __all__ = [
     "V3dBandpassOutputs",
+    "V3dBandpassParamsDict",
+    "V3dBandpassParamsDictTagged",
     "V_3D_BANDPASS_METADATA",
     "v_3d_bandpass",
     "v_3d_bandpass_execute",

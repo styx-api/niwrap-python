@@ -13,7 +13,7 @@ UBER_ALIGN_TEST_PY_METADATA = Metadata(
 )
 
 
-UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
+UberAlignTestPyParamsDict = typing.TypedDict('UberAlignTestPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/uber_align_test.py"]],
     "no_gui": bool,
     "print_script": bool,
@@ -26,7 +26,7 @@ UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
     "show_valid_opts": bool,
     "version": bool,
 })
-UberAlignTestPyParametersTagged = typing.TypedDict('UberAlignTestPyParametersTagged', {
+UberAlignTestPyParamsDictTagged = typing.TypedDict('UberAlignTestPyParamsDictTagged', {
     "@type": typing.Literal["afni/uber_align_test.py"],
     "no_gui": bool,
     "print_script": bool,
@@ -43,7 +43,7 @@ UberAlignTestPyParametersTagged = typing.TypedDict('UberAlignTestPyParametersTag
 
 class UberAlignTestPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UberAlignTestPyParameters(...)`.
+    Output object returned when calling `UberAlignTestPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def uber_align_test_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> UberAlignTestPyParametersTagged:
+) -> UberAlignTestPyParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def uber_align_test_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UberAlignTestPyParameters` object.
+    `UberAlignTestPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -152,7 +152,7 @@ def uber_align_test_py_validate(
 
 
 def uber_align_test_py_cargs(
-    params: UberAlignTestPyParameters,
+    params: UberAlignTestPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -199,7 +199,7 @@ def uber_align_test_py_cargs(
 
 
 def uber_align_test_py_outputs(
-    params: UberAlignTestPyParameters,
+    params: UberAlignTestPyParamsDict,
     execution: Execution,
 ) -> UberAlignTestPyOutputs:
     """
@@ -218,7 +218,7 @@ def uber_align_test_py_outputs(
 
 
 def uber_align_test_py_execute(
-    params: UberAlignTestPyParameters,
+    params: UberAlignTestPyParamsDict,
     runner: Runner | None = None,
 ) -> UberAlignTestPyOutputs:
     """
@@ -301,6 +301,8 @@ def uber_align_test_py(
 __all__ = [
     "UBER_ALIGN_TEST_PY_METADATA",
     "UberAlignTestPyOutputs",
+    "UberAlignTestPyParamsDict",
+    "UberAlignTestPyParamsDictTagged",
     "uber_align_test_py",
     "uber_align_test_py_execute",
     "uber_align_test_py_params",

@@ -13,68 +13,68 @@ DIRSTAT_METADATA = Metadata(
 )
 
 
-DirstatFslgradParameters = typing.TypedDict('DirstatFslgradParameters', {
+DirstatFslgradParamsDict = typing.TypedDict('DirstatFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-DirstatFslgradParametersTagged = typing.TypedDict('DirstatFslgradParametersTagged', {
+DirstatFslgradParamsDictTagged = typing.TypedDict('DirstatFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-DirstatConfigParameters = typing.TypedDict('DirstatConfigParameters', {
+DirstatConfigParamsDict = typing.TypedDict('DirstatConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirstatConfigParametersTagged = typing.TypedDict('DirstatConfigParametersTagged', {
+DirstatConfigParamsDictTagged = typing.TypedDict('DirstatConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirstatParameters = typing.TypedDict('DirstatParameters', {
+DirstatParamsDict = typing.TypedDict('DirstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirstat"]],
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DirstatFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DirstatFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirstatConfigParameters] | None],
+    "config": typing.NotRequired[list[DirstatConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dirs": InputPathType,
 })
-DirstatParametersTagged = typing.TypedDict('DirstatParametersTagged', {
+DirstatParamsDictTagged = typing.TypedDict('DirstatParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirstat"],
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DirstatFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DirstatFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirstatConfigParameters] | None],
+    "config": typing.NotRequired[list[DirstatConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dirs": InputPathType,
 })
 
 
-def dirstat_fslgrad_params(
+def dirstat_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DirstatFslgradParametersTagged:
+) -> DirstatFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def dirstat_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirstatFslgradParameters` object.
+    `DirstatFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def dirstat_fslgrad_validate(
 
 
 def dirstat_fslgrad_cargs(
-    params: DirstatFslgradParameters,
+    params: DirstatFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,10 +140,10 @@ def dirstat_fslgrad_cargs(
     return cargs
 
 
-def dirstat_config_params(
+def dirstat_config(
     key: str,
     value: str,
-) -> DirstatConfigParametersTagged:
+) -> DirstatConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def dirstat_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirstatConfigParameters` object.
+    `DirstatConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def dirstat_config_validate(
 
 
 def dirstat_config_cargs(
-    params: DirstatConfigParameters,
+    params: DirstatConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def dirstat_config_cargs(
 
 class DirstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirstatParameters(...)`.
+    Output object returned when calling `DirstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -216,16 +216,16 @@ def dirstat_params(
     output: str | None = None,
     shells: list[float] | None = None,
     grad: InputPathType | None = None,
-    fslgrad: DirstatFslgradParameters | None = None,
+    fslgrad: DirstatFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirstatConfigParameters] | None = None,
+    config: list[DirstatConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirstatParametersTagged:
+) -> DirstatParamsDictTagged:
     """
     Build parameters.
     
@@ -299,7 +299,7 @@ def dirstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirstatParameters` object.
+    `DirstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -341,7 +341,7 @@ def dirstat_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirstatConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirstatConfigParamsDict] | None`')
         for e in params["config"]:
             dirstat_config_validate(e)
     if params.get("help", False) is None:
@@ -359,7 +359,7 @@ def dirstat_validate(
 
 
 def dirstat_cargs(
-    params: DirstatParameters,
+    params: DirstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -414,7 +414,7 @@ def dirstat_cargs(
 
 
 def dirstat_outputs(
-    params: DirstatParameters,
+    params: DirstatParamsDict,
     execution: Execution,
 ) -> DirstatOutputs:
     """
@@ -433,7 +433,7 @@ def dirstat_outputs(
 
 
 def dirstat_execute(
-    params: DirstatParameters,
+    params: DirstatParamsDict,
     runner: Runner | None = None,
 ) -> DirstatOutputs:
     """
@@ -505,13 +505,13 @@ def dirstat(
     output: str | None = None,
     shells: list[float] | None = None,
     grad: InputPathType | None = None,
-    fslgrad: DirstatFslgradParameters | None = None,
+    fslgrad: DirstatFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirstatConfigParameters] | None = None,
+    config: list[DirstatConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -625,10 +625,16 @@ def dirstat(
 
 __all__ = [
     "DIRSTAT_METADATA",
+    "DirstatConfigParamsDict",
+    "DirstatConfigParamsDictTagged",
+    "DirstatFslgradParamsDict",
+    "DirstatFslgradParamsDictTagged",
     "DirstatOutputs",
+    "DirstatParamsDict",
+    "DirstatParamsDictTagged",
     "dirstat",
-    "dirstat_config_params",
+    "dirstat_config",
     "dirstat_execute",
-    "dirstat_fslgrad_params",
+    "dirstat_fslgrad",
     "dirstat_params",
 ]

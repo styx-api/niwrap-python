@@ -13,14 +13,14 @@ V__DJUNCT_ANONYMIZE_METADATA = Metadata(
 )
 
 
-VDjunctAnonymizeParameters = typing.TypedDict('VDjunctAnonymizeParameters', {
+VDjunctAnonymizeParamsDict = typing.TypedDict('VDjunctAnonymizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_anonymize"]],
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
     "copy_to": typing.NotRequired[InputPathType | None],
     "overwrite": bool,
 })
-VDjunctAnonymizeParametersTagged = typing.TypedDict('VDjunctAnonymizeParametersTagged', {
+VDjunctAnonymizeParamsDictTagged = typing.TypedDict('VDjunctAnonymizeParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_anonymize"],
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ VDjunctAnonymizeParametersTagged = typing.TypedDict('VDjunctAnonymizeParametersT
 
 class VDjunctAnonymizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctAnonymizeParameters(...)`.
+    Output object returned when calling `VDjunctAnonymizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v__djunct_anonymize_params(
     add_note: str | None = None,
     copy_to: InputPathType | None = None,
     overwrite: bool = False,
-) -> VDjunctAnonymizeParametersTagged:
+) -> VDjunctAnonymizeParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def v__djunct_anonymize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctAnonymizeParameters` object.
+    `VDjunctAnonymizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def v__djunct_anonymize_validate(
 
 
 def v__djunct_anonymize_cargs(
-    params: VDjunctAnonymizeParameters,
+    params: VDjunctAnonymizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def v__djunct_anonymize_cargs(
 
 
 def v__djunct_anonymize_outputs(
-    params: VDjunctAnonymizeParameters,
+    params: VDjunctAnonymizeParamsDict,
     execution: Execution,
 ) -> VDjunctAnonymizeOutputs:
     """
@@ -145,7 +145,7 @@ def v__djunct_anonymize_outputs(
 
 
 def v__djunct_anonymize_execute(
-    params: VDjunctAnonymizeParameters,
+    params: VDjunctAnonymizeParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctAnonymizeOutputs:
     """
@@ -209,6 +209,8 @@ def v__djunct_anonymize(
 
 __all__ = [
     "VDjunctAnonymizeOutputs",
+    "VDjunctAnonymizeParamsDict",
+    "VDjunctAnonymizeParamsDictTagged",
     "V__DJUNCT_ANONYMIZE_METADATA",
     "v__djunct_anonymize",
     "v__djunct_anonymize_execute",

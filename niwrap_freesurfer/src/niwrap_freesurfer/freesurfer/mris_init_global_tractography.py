@@ -13,13 +13,13 @@ MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
 )
 
 
-MrisInitGlobalTractographyParameters = typing.TypedDict('MrisInitGlobalTractographyParameters', {
+MrisInitGlobalTractographyParamsDict = typing.TypedDict('MrisInitGlobalTractographyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_init_global_tractography"]],
     "subject": str,
     "parcellation": str,
     "output_volume": str,
 })
-MrisInitGlobalTractographyParametersTagged = typing.TypedDict('MrisInitGlobalTractographyParametersTagged', {
+MrisInitGlobalTractographyParamsDictTagged = typing.TypedDict('MrisInitGlobalTractographyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_init_global_tractography"],
     "subject": str,
     "parcellation": str,
@@ -29,7 +29,7 @@ MrisInitGlobalTractographyParametersTagged = typing.TypedDict('MrisInitGlobalTra
 
 class MrisInitGlobalTractographyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisInitGlobalTractographyParameters(...)`.
+    Output object returned when calling `MrisInitGlobalTractographyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mris_init_global_tractography_params(
     subject: str,
     parcellation: str,
     output_volume: str,
-) -> MrisInitGlobalTractographyParametersTagged:
+) -> MrisInitGlobalTractographyParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mris_init_global_tractography_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisInitGlobalTractographyParameters` object.
+    `MrisInitGlobalTractographyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def mris_init_global_tractography_validate(
 
 
 def mris_init_global_tractography_cargs(
-    params: MrisInitGlobalTractographyParameters,
+    params: MrisInitGlobalTractographyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def mris_init_global_tractography_cargs(
 
 
 def mris_init_global_tractography_outputs(
-    params: MrisInitGlobalTractographyParameters,
+    params: MrisInitGlobalTractographyParamsDict,
     execution: Execution,
 ) -> MrisInitGlobalTractographyOutputs:
     """
@@ -126,7 +126,7 @@ def mris_init_global_tractography_outputs(
 
 
 def mris_init_global_tractography_execute(
-    params: MrisInitGlobalTractographyParameters,
+    params: MrisInitGlobalTractographyParamsDict,
     runner: Runner | None = None,
 ) -> MrisInitGlobalTractographyOutputs:
     """
@@ -188,6 +188,8 @@ def mris_init_global_tractography(
 __all__ = [
     "MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA",
     "MrisInitGlobalTractographyOutputs",
+    "MrisInitGlobalTractographyParamsDict",
+    "MrisInitGlobalTractographyParamsDictTagged",
     "mris_init_global_tractography",
     "mris_init_global_tractography_execute",
     "mris_init_global_tractography_params",

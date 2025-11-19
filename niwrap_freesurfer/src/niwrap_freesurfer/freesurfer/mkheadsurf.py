@@ -13,7 +13,7 @@ MKHEADSURF_METADATA = Metadata(
 )
 
 
-MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
+MkheadsurfParamsDict = typing.TypedDict('MkheadsurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mkheadsurf"]],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -43,7 +43,7 @@ MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
     "umask": typing.NotRequired[float | None],
     "logfile": typing.NotRequired[str | None],
 })
-MkheadsurfParametersTagged = typing.TypedDict('MkheadsurfParametersTagged', {
+MkheadsurfParamsDictTagged = typing.TypedDict('MkheadsurfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mkheadsurf"],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -77,7 +77,7 @@ MkheadsurfParametersTagged = typing.TypedDict('MkheadsurfParametersTagged', {
 
 class MkheadsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MkheadsurfParameters(...)`.
+    Output object returned when calling `MkheadsurfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +111,7 @@ def mkheadsurf_params(
     subjects_dir: str | None = None,
     umask: float | None = None,
     logfile: str | None = None,
-) -> MkheadsurfParametersTagged:
+) -> MkheadsurfParamsDictTagged:
     """
     Build parameters.
     
@@ -203,7 +203,7 @@ def mkheadsurf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MkheadsurfParameters` object.
+    `MkheadsurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -303,7 +303,7 @@ def mkheadsurf_validate(
 
 
 def mkheadsurf_cargs(
-    params: MkheadsurfParameters,
+    params: MkheadsurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -437,7 +437,7 @@ def mkheadsurf_cargs(
 
 
 def mkheadsurf_outputs(
-    params: MkheadsurfParameters,
+    params: MkheadsurfParamsDict,
     execution: Execution,
 ) -> MkheadsurfOutputs:
     """
@@ -456,7 +456,7 @@ def mkheadsurf_outputs(
 
 
 def mkheadsurf_execute(
-    params: MkheadsurfParameters,
+    params: MkheadsurfParamsDict,
     runner: Runner | None = None,
 ) -> MkheadsurfOutputs:
     """
@@ -593,6 +593,8 @@ def mkheadsurf(
 __all__ = [
     "MKHEADSURF_METADATA",
     "MkheadsurfOutputs",
+    "MkheadsurfParamsDict",
+    "MkheadsurfParamsDictTagged",
     "mkheadsurf",
     "mkheadsurf_execute",
     "mkheadsurf_params",

@@ -13,7 +13,7 @@ GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
 )
 
 
-GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParameters', {
+GemsComputeAtlasProbsParamsDict = typing.TypedDict('GemsComputeAtlasProbsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gems_compute_atlas_probs"]],
     "subjects_dir": str,
     "mesh_collections": list[str],
@@ -32,7 +32,7 @@ GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParamet
     "labels_file": typing.NotRequired[str | None],
     "samseg_subdir": typing.NotRequired[str | None],
 })
-GemsComputeAtlasProbsParametersTagged = typing.TypedDict('GemsComputeAtlasProbsParametersTagged', {
+GemsComputeAtlasProbsParamsDictTagged = typing.TypedDict('GemsComputeAtlasProbsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gems_compute_atlas_probs"],
     "subjects_dir": str,
     "mesh_collections": list[str],
@@ -55,7 +55,7 @@ GemsComputeAtlasProbsParametersTagged = typing.TypedDict('GemsComputeAtlasProbsP
 
 class GemsComputeAtlasProbsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GemsComputeAtlasProbsParameters(...)`.
+    Output object returned when calling `GemsComputeAtlasProbsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def gems_compute_atlas_probs_params(
     subjects_file: str | None = None,
     labels_file: str | None = None,
     samseg_subdir: str | None = None,
-) -> GemsComputeAtlasProbsParametersTagged:
+) -> GemsComputeAtlasProbsParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def gems_compute_atlas_probs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GemsComputeAtlasProbsParameters` object.
+    `GemsComputeAtlasProbsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def gems_compute_atlas_probs_validate(
 
 
 def gems_compute_atlas_probs_cargs(
-    params: GemsComputeAtlasProbsParameters,
+    params: GemsComputeAtlasProbsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def gems_compute_atlas_probs_cargs(
 
 
 def gems_compute_atlas_probs_outputs(
-    params: GemsComputeAtlasProbsParameters,
+    params: GemsComputeAtlasProbsParamsDict,
     execution: Execution,
 ) -> GemsComputeAtlasProbsOutputs:
     """
@@ -307,7 +307,7 @@ def gems_compute_atlas_probs_outputs(
 
 
 def gems_compute_atlas_probs_execute(
-    params: GemsComputeAtlasProbsParameters,
+    params: GemsComputeAtlasProbsParamsDict,
     runner: Runner | None = None,
 ) -> GemsComputeAtlasProbsOutputs:
     """
@@ -410,6 +410,8 @@ def gems_compute_atlas_probs(
 __all__ = [
     "GEMS_COMPUTE_ATLAS_PROBS_METADATA",
     "GemsComputeAtlasProbsOutputs",
+    "GemsComputeAtlasProbsParamsDict",
+    "GemsComputeAtlasProbsParamsDictTagged",
     "gems_compute_atlas_probs",
     "gems_compute_atlas_probs_execute",
     "gems_compute_atlas_probs_params",

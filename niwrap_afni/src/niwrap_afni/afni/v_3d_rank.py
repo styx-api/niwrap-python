@@ -13,14 +13,14 @@ V_3D_RANK_METADATA = Metadata(
 )
 
 
-V3dRankParameters = typing.TypedDict('V3dRankParameters', {
+V3dRankParamsDict = typing.TypedDict('V3dRankParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dRank"]],
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
     "version_info": bool,
     "help_info": bool,
 })
-V3dRankParametersTagged = typing.TypedDict('V3dRankParametersTagged', {
+V3dRankParamsDictTagged = typing.TypedDict('V3dRankParamsDictTagged', {
     "@type": typing.Literal["afni/3dRank"],
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dRankParametersTagged = typing.TypedDict('V3dRankParametersTagged', {
 
 class V3dRankOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRankParameters(...)`.
+    Output object returned when calling `V3dRankParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_3d_rank_params(
     output_prefix: str | None = None,
     version_info: bool = False,
     help_info: bool = False,
-) -> V3dRankParametersTagged:
+) -> V3dRankParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def v_3d_rank_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRankParameters` object.
+    `V3dRankParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def v_3d_rank_validate(
 
 
 def v_3d_rank_cargs(
-    params: V3dRankParameters,
+    params: V3dRankParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,7 +136,7 @@ def v_3d_rank_cargs(
 
 
 def v_3d_rank_outputs(
-    params: V3dRankParameters,
+    params: V3dRankParamsDict,
     execution: Execution,
 ) -> V3dRankOutputs:
     """
@@ -158,7 +158,7 @@ def v_3d_rank_outputs(
 
 
 def v_3d_rank_execute(
-    params: V3dRankParameters,
+    params: V3dRankParamsDict,
     runner: Runner | None = None,
 ) -> V3dRankOutputs:
     """
@@ -227,6 +227,8 @@ def v_3d_rank(
 
 __all__ = [
     "V3dRankOutputs",
+    "V3dRankParamsDict",
+    "V3dRankParamsDictTagged",
     "V_3D_RANK_METADATA",
     "v_3d_rank",
     "v_3d_rank_execute",

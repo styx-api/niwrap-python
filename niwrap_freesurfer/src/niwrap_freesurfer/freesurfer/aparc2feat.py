@@ -13,7 +13,7 @@ APARC2FEAT_METADATA = Metadata(
 )
 
 
-Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
+Aparc2featParamsDict = typing.TypedDict('Aparc2featParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/aparc2feat"]],
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
     "help_flag": bool,
     "version_flag": bool,
 })
-Aparc2featParametersTagged = typing.TypedDict('Aparc2featParametersTagged', {
+Aparc2featParamsDictTagged = typing.TypedDict('Aparc2featParamsDictTagged', {
     "@type": typing.Literal["freesurfer/aparc2feat"],
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ Aparc2featParametersTagged = typing.TypedDict('Aparc2featParametersTagged', {
 
 class Aparc2featOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Aparc2featParameters(...)`.
+    Output object returned when calling `Aparc2featParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def aparc2feat_params(
     debug_flag: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> Aparc2featParametersTagged:
+) -> Aparc2featParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def aparc2feat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Aparc2featParameters` object.
+    `Aparc2featParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def aparc2feat_validate(
 
 
 def aparc2feat_cargs(
-    params: Aparc2featParameters,
+    params: Aparc2featParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -193,7 +193,7 @@ def aparc2feat_cargs(
 
 
 def aparc2feat_outputs(
-    params: Aparc2featParameters,
+    params: Aparc2featParamsDict,
     execution: Execution,
 ) -> Aparc2featOutputs:
     """
@@ -214,7 +214,7 @@ def aparc2feat_outputs(
 
 
 def aparc2feat_execute(
-    params: Aparc2featParameters,
+    params: Aparc2featParamsDict,
     runner: Runner | None = None,
 ) -> Aparc2featOutputs:
     """
@@ -298,6 +298,8 @@ def aparc2feat(
 __all__ = [
     "APARC2FEAT_METADATA",
     "Aparc2featOutputs",
+    "Aparc2featParamsDict",
+    "Aparc2featParamsDictTagged",
     "aparc2feat",
     "aparc2feat_execute",
     "aparc2feat_params",

@@ -13,7 +13,7 @@ V_3D_MEAN_METADATA = Metadata(
 )
 
 
-V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
+V3dMeanParamsDict = typing.TypedDict('V3dMeanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMean"]],
     "input_files": list[InputPathType],
     "verbose": bool,
@@ -35,7 +35,7 @@ V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
     "mask_union": bool,
     "weightset": typing.NotRequired[InputPathType | None],
 })
-V3dMeanParametersTagged = typing.TypedDict('V3dMeanParametersTagged', {
+V3dMeanParamsDictTagged = typing.TypedDict('V3dMeanParamsDictTagged', {
     "@type": typing.Literal["afni/3dMean"],
     "input_files": list[InputPathType],
     "verbose": bool,
@@ -61,7 +61,7 @@ V3dMeanParametersTagged = typing.TypedDict('V3dMeanParametersTagged', {
 
 class V3dMeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMeanParameters(...)`.
+    Output object returned when calling `V3dMeanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def v_3d_mean_params(
     mask_inter: bool = False,
     mask_union: bool = False,
     weightset: InputPathType | None = None,
-) -> V3dMeanParametersTagged:
+) -> V3dMeanParamsDictTagged:
     """
     Build parameters.
     
@@ -155,7 +155,7 @@ def v_3d_mean_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMeanParameters` object.
+    `V3dMeanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,7 +241,7 @@ def v_3d_mean_validate(
 
 
 def v_3d_mean_cargs(
-    params: V3dMeanParameters,
+    params: V3dMeanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -305,7 +305,7 @@ def v_3d_mean_cargs(
 
 
 def v_3d_mean_outputs(
-    params: V3dMeanParameters,
+    params: V3dMeanParamsDict,
     execution: Execution,
 ) -> V3dMeanOutputs:
     """
@@ -325,7 +325,7 @@ def v_3d_mean_outputs(
 
 
 def v_3d_mean_execute(
-    params: V3dMeanParameters,
+    params: V3dMeanParamsDict,
     runner: Runner | None = None,
 ) -> V3dMeanOutputs:
     """
@@ -442,6 +442,8 @@ def v_3d_mean(
 
 __all__ = [
     "V3dMeanOutputs",
+    "V3dMeanParamsDict",
+    "V3dMeanParamsDictTagged",
     "V_3D_MEAN_METADATA",
     "v_3d_mean",
     "v_3d_mean_execute",

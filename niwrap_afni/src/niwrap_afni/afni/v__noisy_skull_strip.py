@@ -13,13 +13,13 @@ V__NOISY_SKULL_STRIP_METADATA = Metadata(
 )
 
 
-VNoisySkullStripParameters = typing.TypedDict('VNoisySkullStripParameters', {
+VNoisySkullStripParamsDict = typing.TypedDict('VNoisySkullStripParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@NoisySkullStrip"]],
     "input_file": InputPathType,
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],
 })
-VNoisySkullStripParametersTagged = typing.TypedDict('VNoisySkullStripParametersTagged', {
+VNoisySkullStripParamsDictTagged = typing.TypedDict('VNoisySkullStripParamsDictTagged', {
     "@type": typing.Literal["afni/@NoisySkullStrip"],
     "input_file": InputPathType,
     "keep_tmp": bool,
@@ -29,7 +29,7 @@ VNoisySkullStripParametersTagged = typing.TypedDict('VNoisySkullStripParametersT
 
 class VNoisySkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VNoisySkullStripParameters(...)`.
+    Output object returned when calling `VNoisySkullStripParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v__noisy_skull_strip_params(
     input_file: InputPathType,
     keep_tmp: bool = False,
     v_3dskullstrip_opts: str | None = None,
-) -> VNoisySkullStripParametersTagged:
+) -> VNoisySkullStripParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def v__noisy_skull_strip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VNoisySkullStripParameters` object.
+    `VNoisySkullStripParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def v__noisy_skull_strip_validate(
 
 
 def v__noisy_skull_strip_cargs(
-    params: VNoisySkullStripParameters,
+    params: VNoisySkullStripParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def v__noisy_skull_strip_cargs(
 
 
 def v__noisy_skull_strip_outputs(
-    params: VNoisySkullStripParameters,
+    params: VNoisySkullStripParamsDict,
     execution: Execution,
 ) -> VNoisySkullStripOutputs:
     """
@@ -147,7 +147,7 @@ def v__noisy_skull_strip_outputs(
 
 
 def v__noisy_skull_strip_execute(
-    params: VNoisySkullStripParameters,
+    params: VNoisySkullStripParamsDict,
     runner: Runner | None = None,
 ) -> VNoisySkullStripOutputs:
     """
@@ -209,6 +209,8 @@ def v__noisy_skull_strip(
 
 __all__ = [
     "VNoisySkullStripOutputs",
+    "VNoisySkullStripParamsDict",
+    "VNoisySkullStripParamsDictTagged",
     "V__NOISY_SKULL_STRIP_METADATA",
     "v__noisy_skull_strip",
     "v__noisy_skull_strip_execute",

@@ -13,7 +13,7 @@ RTVIEW_METADATA = Metadata(
 )
 
 
-RtviewParameters = typing.TypedDict('RtviewParameters', {
+RtviewParamsDict = typing.TypedDict('RtviewParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rtview"]],
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ RtviewParameters = typing.TypedDict('RtviewParameters', {
     "tcl_file": typing.NotRequired[InputPathType | None],
     "no_cleanup": bool,
 })
-RtviewParametersTagged = typing.TypedDict('RtviewParametersTagged', {
+RtviewParamsDictTagged = typing.TypedDict('RtviewParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rtview"],
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ RtviewParametersTagged = typing.TypedDict('RtviewParametersTagged', {
 
 class RtviewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RtviewParameters(...)`.
+    Output object returned when calling `RtviewParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def rtview_params(
     patch: str | None = None,
     tcl_file: InputPathType | None = None,
     no_cleanup: bool = False,
-) -> RtviewParametersTagged:
+) -> RtviewParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def rtview_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RtviewParameters` object.
+    `RtviewParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def rtview_validate(
 
 
 def rtview_cargs(
-    params: RtviewParameters,
+    params: RtviewParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def rtview_cargs(
 
 
 def rtview_outputs(
-    params: RtviewParameters,
+    params: RtviewParamsDict,
     execution: Execution,
 ) -> RtviewOutputs:
     """
@@ -275,7 +275,7 @@ def rtview_outputs(
 
 
 def rtview_execute(
-    params: RtviewParameters,
+    params: RtviewParamsDict,
     runner: Runner | None = None,
 ) -> RtviewOutputs:
     """
@@ -375,6 +375,8 @@ def rtview(
 __all__ = [
     "RTVIEW_METADATA",
     "RtviewOutputs",
+    "RtviewParamsDict",
+    "RtviewParamsDictTagged",
     "rtview",
     "rtview_execute",
     "rtview_params",

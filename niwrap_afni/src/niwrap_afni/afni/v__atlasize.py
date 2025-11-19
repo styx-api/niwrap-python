@@ -13,7 +13,7 @@ V__ATLASIZE_METADATA = Metadata(
 )
 
 
-VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
+VAtlasizeParamsDict = typing.TypedDict('VAtlasizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Atlasize"]],
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
     "all_opts": bool,
     "h_find": typing.NotRequired[str | None],
 })
-VAtlasizeParametersTagged = typing.TypedDict('VAtlasizeParametersTagged', {
+VAtlasizeParamsDictTagged = typing.TypedDict('VAtlasizeParamsDictTagged', {
     "@type": typing.Literal["afni/@Atlasize"],
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ VAtlasizeParametersTagged = typing.TypedDict('VAtlasizeParametersTagged', {
 
 class VAtlasizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAtlasizeParameters(...)`.
+    Output object returned when calling `VAtlasizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def v__atlasize_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find: str | None = None,
-) -> VAtlasizeParametersTagged:
+) -> VAtlasizeParamsDictTagged:
     """
     Build parameters.
     
@@ -165,7 +165,7 @@ def v__atlasize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAtlasizeParameters` object.
+    `VAtlasizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -240,7 +240,7 @@ def v__atlasize_validate(
 
 
 def v__atlasize_cargs(
-    params: VAtlasizeParameters,
+    params: VAtlasizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -330,7 +330,7 @@ def v__atlasize_cargs(
 
 
 def v__atlasize_outputs(
-    params: VAtlasizeParameters,
+    params: VAtlasizeParamsDict,
     execution: Execution,
 ) -> VAtlasizeOutputs:
     """
@@ -350,7 +350,7 @@ def v__atlasize_outputs(
 
 
 def v__atlasize_execute(
-    params: VAtlasizeParameters,
+    params: VAtlasizeParamsDict,
     runner: Runner | None = None,
 ) -> VAtlasizeOutputs:
     """
@@ -468,6 +468,8 @@ def v__atlasize(
 
 __all__ = [
     "VAtlasizeOutputs",
+    "VAtlasizeParamsDict",
+    "VAtlasizeParamsDictTagged",
     "V__ATLASIZE_METADATA",
     "v__atlasize",
     "v__atlasize_execute",

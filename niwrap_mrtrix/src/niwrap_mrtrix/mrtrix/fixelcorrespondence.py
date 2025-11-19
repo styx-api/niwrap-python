@@ -13,19 +13,19 @@ FIXELCORRESPONDENCE_METADATA = Metadata(
 )
 
 
-FixelcorrespondenceConfigParameters = typing.TypedDict('FixelcorrespondenceConfigParameters', {
+FixelcorrespondenceConfigParamsDict = typing.TypedDict('FixelcorrespondenceConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelcorrespondenceConfigParametersTagged = typing.TypedDict('FixelcorrespondenceConfigParametersTagged', {
+FixelcorrespondenceConfigParamsDictTagged = typing.TypedDict('FixelcorrespondenceConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters', {
+FixelcorrespondenceParamsDict = typing.TypedDict('FixelcorrespondenceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcorrespondence"]],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -33,7 +33,7 @@ FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters'
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcorrespondenceConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcorrespondenceConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "subject_data": InputPathType,
@@ -41,7 +41,7 @@ FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters'
     "output_directory": str,
     "output_data": str,
 })
-FixelcorrespondenceParametersTagged = typing.TypedDict('FixelcorrespondenceParametersTagged', {
+FixelcorrespondenceParamsDictTagged = typing.TypedDict('FixelcorrespondenceParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelcorrespondence"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -49,7 +49,7 @@ FixelcorrespondenceParametersTagged = typing.TypedDict('FixelcorrespondenceParam
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcorrespondenceConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcorrespondenceConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "subject_data": InputPathType,
@@ -59,10 +59,10 @@ FixelcorrespondenceParametersTagged = typing.TypedDict('FixelcorrespondenceParam
 })
 
 
-def fixelcorrespondence_config_params(
+def fixelcorrespondence_config(
     key: str,
     value: str,
-) -> FixelcorrespondenceConfigParametersTagged:
+) -> FixelcorrespondenceConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def fixelcorrespondence_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcorrespondenceConfigParameters` object.
+    `FixelcorrespondenceConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def fixelcorrespondence_config_validate(
 
 
 def fixelcorrespondence_config_cargs(
-    params: FixelcorrespondenceConfigParameters,
+    params: FixelcorrespondenceConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def fixelcorrespondence_config_cargs(
 
 class FixelcorrespondenceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelcorrespondenceParameters(...)`.
+    Output object returned when calling `FixelcorrespondenceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,10 +141,10 @@ def fixelcorrespondence_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcorrespondenceConfigParameters] | None = None,
+    config: list[FixelcorrespondenceConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcorrespondenceParametersTagged:
+) -> FixelcorrespondenceParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def fixelcorrespondence_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcorrespondenceParameters` object.
+    `FixelcorrespondenceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,7 +231,7 @@ def fixelcorrespondence_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcorrespondenceConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcorrespondenceConfigParamsDict] | None`')
         for e in params["config"]:
             fixelcorrespondence_config_validate(e)
     if params.get("help", False) is None:
@@ -261,7 +261,7 @@ def fixelcorrespondence_validate(
 
 
 def fixelcorrespondence_cargs(
-    params: FixelcorrespondenceParameters,
+    params: FixelcorrespondenceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def fixelcorrespondence_cargs(
 
 
 def fixelcorrespondence_outputs(
-    params: FixelcorrespondenceParameters,
+    params: FixelcorrespondenceParamsDict,
     execution: Execution,
 ) -> FixelcorrespondenceOutputs:
     """
@@ -326,7 +326,7 @@ def fixelcorrespondence_outputs(
 
 
 def fixelcorrespondence_execute(
-    params: FixelcorrespondenceParameters,
+    params: FixelcorrespondenceParamsDict,
     runner: Runner | None = None,
 ) -> FixelcorrespondenceOutputs:
     """
@@ -374,7 +374,7 @@ def fixelcorrespondence(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcorrespondenceConfigParameters] | None = None,
+    config: list[FixelcorrespondenceConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -443,9 +443,13 @@ def fixelcorrespondence(
 
 __all__ = [
     "FIXELCORRESPONDENCE_METADATA",
+    "FixelcorrespondenceConfigParamsDict",
+    "FixelcorrespondenceConfigParamsDictTagged",
     "FixelcorrespondenceOutputs",
+    "FixelcorrespondenceParamsDict",
+    "FixelcorrespondenceParamsDictTagged",
     "fixelcorrespondence",
-    "fixelcorrespondence_config_params",
+    "fixelcorrespondence_config",
     "fixelcorrespondence_execute",
     "fixelcorrespondence_params",
 ]

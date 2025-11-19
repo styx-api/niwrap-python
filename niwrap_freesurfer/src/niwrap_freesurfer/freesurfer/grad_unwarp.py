@@ -13,7 +13,7 @@ GRAD_UNWARP_METADATA = Metadata(
 )
 
 
-GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
+GradUnwarpParamsDict = typing.TypedDict('GradUnwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/grad_unwarp"]],
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
     "outfile": str,
     "matlab_binary": typing.NotRequired[str | None],
 })
-GradUnwarpParametersTagged = typing.TypedDict('GradUnwarpParametersTagged', {
+GradUnwarpParamsDictTagged = typing.TypedDict('GradUnwarpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/grad_unwarp"],
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ GradUnwarpParametersTagged = typing.TypedDict('GradUnwarpParametersTagged', {
 
 class GradUnwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GradUnwarpParameters(...)`.
+    Output object returned when calling `GradUnwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def grad_unwarp_params(
     cor: bool = False,
     interp: str | None = None,
     matlab_binary: str | None = None,
-) -> GradUnwarpParametersTagged:
+) -> GradUnwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def grad_unwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GradUnwarpParameters` object.
+    `GradUnwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def grad_unwarp_validate(
 
 
 def grad_unwarp_cargs(
-    params: GradUnwarpParameters,
+    params: GradUnwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def grad_unwarp_cargs(
 
 
 def grad_unwarp_outputs(
-    params: GradUnwarpParameters,
+    params: GradUnwarpParamsDict,
     execution: Execution,
 ) -> GradUnwarpOutputs:
     """
@@ -216,7 +216,7 @@ def grad_unwarp_outputs(
 
 
 def grad_unwarp_execute(
-    params: GradUnwarpParameters,
+    params: GradUnwarpParamsDict,
     runner: Runner | None = None,
 ) -> GradUnwarpOutputs:
     """
@@ -298,6 +298,8 @@ def grad_unwarp(
 __all__ = [
     "GRAD_UNWARP_METADATA",
     "GradUnwarpOutputs",
+    "GradUnwarpParamsDict",
+    "GradUnwarpParamsDictTagged",
     "grad_unwarp",
     "grad_unwarp_execute",
     "grad_unwarp_params",

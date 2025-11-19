@@ -13,7 +13,7 @@ SPLIT_PARTS_GPU_METADATA = Metadata(
 )
 
 
-SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
+SplitPartsGpuParamsDict = typing.TypedDict('SplitPartsGpuParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/split_parts_gpu"]],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -24,7 +24,7 @@ SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
     "total_num_parts": int,
     "output_directory": str,
 })
-SplitPartsGpuParametersTagged = typing.TypedDict('SplitPartsGpuParametersTagged', {
+SplitPartsGpuParamsDictTagged = typing.TypedDict('SplitPartsGpuParamsDictTagged', {
     "@type": typing.Literal["fsl/split_parts_gpu"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
@@ -39,7 +39,7 @@ SplitPartsGpuParametersTagged = typing.TypedDict('SplitPartsGpuParametersTagged'
 
 class SplitPartsGpuOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SplitPartsGpuParameters(...)`.
+    Output object returned when calling `SplitPartsGpuParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def split_parts_gpu_params(
     total_num_parts: int,
     output_directory: str,
     grad_file: str | None = None,
-) -> SplitPartsGpuParametersTagged:
+) -> SplitPartsGpuParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def split_parts_gpu_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SplitPartsGpuParameters` object.
+    `SplitPartsGpuParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def split_parts_gpu_validate(
 
 
 def split_parts_gpu_cargs(
-    params: SplitPartsGpuParameters,
+    params: SplitPartsGpuParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -158,7 +158,7 @@ def split_parts_gpu_cargs(
 
 
 def split_parts_gpu_outputs(
-    params: SplitPartsGpuParameters,
+    params: SplitPartsGpuParamsDict,
     execution: Execution,
 ) -> SplitPartsGpuOutputs:
     """
@@ -177,7 +177,7 @@ def split_parts_gpu_outputs(
 
 
 def split_parts_gpu_execute(
-    params: SplitPartsGpuParameters,
+    params: SplitPartsGpuParamsDict,
     runner: Runner | None = None,
 ) -> SplitPartsGpuOutputs:
     """
@@ -254,6 +254,8 @@ def split_parts_gpu(
 __all__ = [
     "SPLIT_PARTS_GPU_METADATA",
     "SplitPartsGpuOutputs",
+    "SplitPartsGpuParamsDict",
+    "SplitPartsGpuParamsDictTagged",
     "split_parts_gpu",
     "split_parts_gpu_execute",
     "split_parts_gpu_params",

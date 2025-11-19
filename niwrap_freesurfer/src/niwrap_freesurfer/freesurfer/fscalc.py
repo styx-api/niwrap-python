@@ -13,7 +13,7 @@ FSCALC_METADATA = Metadata(
 )
 
 
-FscalcParameters = typing.TypedDict('FscalcParameters', {
+FscalcParamsDict = typing.TypedDict('FscalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fscalc"]],
     "input1": str,
     "operation": str,
@@ -25,7 +25,7 @@ FscalcParameters = typing.TypedDict('FscalcParameters', {
     "nocleanup": bool,
     "log_file": typing.NotRequired[str | None],
 })
-FscalcParametersTagged = typing.TypedDict('FscalcParametersTagged', {
+FscalcParamsDictTagged = typing.TypedDict('FscalcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fscalc"],
     "input1": str,
     "operation": str,
@@ -41,7 +41,7 @@ FscalcParametersTagged = typing.TypedDict('FscalcParametersTagged', {
 
 class FscalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FscalcParameters(...)`.
+    Output object returned when calling `FscalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def fscalc_params(
     tmpdir: str | None = None,
     nocleanup: bool = False,
     log_file: str | None = None,
-) -> FscalcParametersTagged:
+) -> FscalcParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def fscalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FscalcParameters` object.
+    `FscalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def fscalc_validate(
 
 
 def fscalc_cargs(
-    params: FscalcParameters,
+    params: FscalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def fscalc_cargs(
 
 
 def fscalc_outputs(
-    params: FscalcParameters,
+    params: FscalcParamsDict,
     execution: Execution,
 ) -> FscalcOutputs:
     """
@@ -208,7 +208,7 @@ def fscalc_outputs(
 
 
 def fscalc_execute(
-    params: FscalcParameters,
+    params: FscalcParamsDict,
     runner: Runner | None = None,
 ) -> FscalcOutputs:
     """
@@ -291,6 +291,8 @@ def fscalc(
 __all__ = [
     "FSCALC_METADATA",
     "FscalcOutputs",
+    "FscalcParamsDict",
+    "FscalcParamsDictTagged",
     "fscalc",
     "fscalc_execute",
     "fscalc_params",

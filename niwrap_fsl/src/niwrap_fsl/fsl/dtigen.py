@@ -13,7 +13,7 @@ DTIGEN_METADATA = Metadata(
 )
 
 
-DtigenParameters = typing.TypedDict('DtigenParameters', {
+DtigenParamsDict = typing.TypedDict('DtigenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/dtigen"]],
     "tensor": InputPathType,
     "s0": InputPathType,
@@ -24,7 +24,7 @@ DtigenParameters = typing.TypedDict('DtigenParameters', {
     "kurtosis": typing.NotRequired[InputPathType | None],
     "help": bool,
 })
-DtigenParametersTagged = typing.TypedDict('DtigenParametersTagged', {
+DtigenParamsDictTagged = typing.TypedDict('DtigenParamsDictTagged', {
     "@type": typing.Literal["fsl/dtigen"],
     "tensor": InputPathType,
     "s0": InputPathType,
@@ -39,7 +39,7 @@ DtigenParametersTagged = typing.TypedDict('DtigenParametersTagged', {
 
 class DtigenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DtigenParameters(...)`.
+    Output object returned when calling `DtigenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def dtigen_params(
     brainmask: InputPathType,
     kurtosis: InputPathType | None = None,
     help_: bool = False,
-) -> DtigenParametersTagged:
+) -> DtigenParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def dtigen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DtigenParameters` object.
+    `DtigenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def dtigen_validate(
 
 
 def dtigen_cargs(
-    params: DtigenParameters,
+    params: DtigenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -184,7 +184,7 @@ def dtigen_cargs(
 
 
 def dtigen_outputs(
-    params: DtigenParameters,
+    params: DtigenParamsDict,
     execution: Execution,
 ) -> DtigenOutputs:
     """
@@ -205,7 +205,7 @@ def dtigen_outputs(
 
 
 def dtigen_execute(
-    params: DtigenParameters,
+    params: DtigenParamsDict,
     runner: Runner | None = None,
 ) -> DtigenOutputs:
     """
@@ -282,6 +282,8 @@ def dtigen(
 __all__ = [
     "DTIGEN_METADATA",
     "DtigenOutputs",
+    "DtigenParamsDict",
+    "DtigenParamsDictTagged",
     "dtigen",
     "dtigen_execute",
     "dtigen_params",

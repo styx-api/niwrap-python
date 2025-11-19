@@ -6,7 +6,7 @@
     },
     "smooth": {
       "var_param": "smooth",
-      "fn_struct_make_params": "surface_distortion_smooth_params",
+      "fn_struct_make_params": "surface_distortion_smooth",
       "properties": {
         "sigma": {
           "var_param": "sigma"
@@ -18,7 +18,7 @@
     },
     "match-surface-area": {
       "var_param": "match_surface_area",
-      "fn_struct_make_params": "surface_distortion_match_surface_area_params",
+      "fn_struct_make_params": "surface_distortion_match_surface_area",
       "properties": {
         "roi-metric": {
           "var_param": "roi_metric"

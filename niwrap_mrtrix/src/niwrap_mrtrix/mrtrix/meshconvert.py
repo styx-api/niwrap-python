@@ -13,55 +13,55 @@ MESHCONVERT_METADATA = Metadata(
 )
 
 
-MeshconvertTransformParameters = typing.TypedDict('MeshconvertTransformParameters', {
+MeshconvertTransformParamsDict = typing.TypedDict('MeshconvertTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["transform"]],
     "mode": str,
     "image": InputPathType,
 })
-MeshconvertTransformParametersTagged = typing.TypedDict('MeshconvertTransformParametersTagged', {
+MeshconvertTransformParamsDictTagged = typing.TypedDict('MeshconvertTransformParamsDictTagged', {
     "@type": typing.Literal["transform"],
     "mode": str,
     "image": InputPathType,
 })
 
 
-MeshconvertConfigParameters = typing.TypedDict('MeshconvertConfigParameters', {
+MeshconvertConfigParamsDict = typing.TypedDict('MeshconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MeshconvertConfigParametersTagged = typing.TypedDict('MeshconvertConfigParametersTagged', {
+MeshconvertConfigParamsDictTagged = typing.TypedDict('MeshconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MeshconvertParameters = typing.TypedDict('MeshconvertParameters', {
+MeshconvertParamsDict = typing.TypedDict('MeshconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/meshconvert"]],
     "binary": bool,
-    "transform": typing.NotRequired[MeshconvertTransformParameters | None],
+    "transform": typing.NotRequired[MeshconvertTransformParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MeshconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[MeshconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-MeshconvertParametersTagged = typing.TypedDict('MeshconvertParametersTagged', {
+MeshconvertParamsDictTagged = typing.TypedDict('MeshconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/meshconvert"],
     "binary": bool,
-    "transform": typing.NotRequired[MeshconvertTransformParameters | None],
+    "transform": typing.NotRequired[MeshconvertTransformParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MeshconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[MeshconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -69,10 +69,10 @@ MeshconvertParametersTagged = typing.TypedDict('MeshconvertParametersTagged', {
 })
 
 
-def meshconvert_transform_params(
+def meshconvert_transform(
     mode: str,
     image: InputPathType,
-) -> MeshconvertTransformParametersTagged:
+) -> MeshconvertTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -99,7 +99,7 @@ def meshconvert_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeshconvertTransformParameters` object.
+    `MeshconvertTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def meshconvert_transform_validate(
 
 
 def meshconvert_transform_cargs(
-    params: MeshconvertTransformParameters,
+    params: MeshconvertTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -136,10 +136,10 @@ def meshconvert_transform_cargs(
     return cargs
 
 
-def meshconvert_config_params(
+def meshconvert_config(
     key: str,
     value: str,
-) -> MeshconvertConfigParametersTagged:
+) -> MeshconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def meshconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeshconvertConfigParameters` object.
+    `MeshconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def meshconvert_config_validate(
 
 
 def meshconvert_config_cargs(
-    params: MeshconvertConfigParameters,
+    params: MeshconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -201,7 +201,7 @@ def meshconvert_config_cargs(
 
 class MeshconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MeshconvertParameters(...)`.
+    Output object returned when calling `MeshconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -213,16 +213,16 @@ def meshconvert_params(
     input_: InputPathType,
     output: str,
     binary: bool = False,
-    transform: MeshconvertTransformParameters | None = None,
+    transform: MeshconvertTransformParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MeshconvertConfigParameters] | None = None,
+    config: list[MeshconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MeshconvertParametersTagged:
+) -> MeshconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -274,7 +274,7 @@ def meshconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeshconvertParameters` object.
+    `MeshconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -308,7 +308,7 @@ def meshconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MeshconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MeshconvertConfigParamsDict] | None`')
         for e in params["config"]:
             meshconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -330,7 +330,7 @@ def meshconvert_validate(
 
 
 def meshconvert_cargs(
-    params: MeshconvertParameters,
+    params: MeshconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -373,7 +373,7 @@ def meshconvert_cargs(
 
 
 def meshconvert_outputs(
-    params: MeshconvertParameters,
+    params: MeshconvertParamsDict,
     execution: Execution,
 ) -> MeshconvertOutputs:
     """
@@ -393,7 +393,7 @@ def meshconvert_outputs(
 
 
 def meshconvert_execute(
-    params: MeshconvertParameters,
+    params: MeshconvertParamsDict,
     runner: Runner | None = None,
 ) -> MeshconvertOutputs:
     """
@@ -431,13 +431,13 @@ def meshconvert(
     input_: InputPathType,
     output: str,
     binary: bool = False,
-    transform: MeshconvertTransformParameters | None = None,
+    transform: MeshconvertTransformParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MeshconvertConfigParameters] | None = None,
+    config: list[MeshconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -499,10 +499,16 @@ def meshconvert(
 
 __all__ = [
     "MESHCONVERT_METADATA",
+    "MeshconvertConfigParamsDict",
+    "MeshconvertConfigParamsDictTagged",
     "MeshconvertOutputs",
+    "MeshconvertParamsDict",
+    "MeshconvertParamsDictTagged",
+    "MeshconvertTransformParamsDict",
+    "MeshconvertTransformParamsDictTagged",
     "meshconvert",
-    "meshconvert_config_params",
+    "meshconvert_config",
     "meshconvert_execute",
     "meshconvert_params",
-    "meshconvert_transform_params",
+    "meshconvert_transform",
 ]

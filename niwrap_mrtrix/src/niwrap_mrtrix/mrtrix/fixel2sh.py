@@ -13,19 +13,19 @@ FIXEL2SH_METADATA = Metadata(
 )
 
 
-Fixel2shConfigParameters = typing.TypedDict('Fixel2shConfigParameters', {
+Fixel2shConfigParamsDict = typing.TypedDict('Fixel2shConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fixel2shConfigParametersTagged = typing.TypedDict('Fixel2shConfigParametersTagged', {
+Fixel2shConfigParamsDictTagged = typing.TypedDict('Fixel2shConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fixel2shParameters = typing.TypedDict('Fixel2shParameters', {
+Fixel2shParamsDict = typing.TypedDict('Fixel2shParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2sh"]],
     "lmax": typing.NotRequired[int | None],
     "info": bool,
@@ -33,13 +33,13 @@ Fixel2shParameters = typing.TypedDict('Fixel2shParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2shConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2shConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
     "sh_out": str,
 })
-Fixel2shParametersTagged = typing.TypedDict('Fixel2shParametersTagged', {
+Fixel2shParamsDictTagged = typing.TypedDict('Fixel2shParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixel2sh"],
     "lmax": typing.NotRequired[int | None],
     "info": bool,
@@ -47,7 +47,7 @@ Fixel2shParametersTagged = typing.TypedDict('Fixel2shParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2shConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2shConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
@@ -55,10 +55,10 @@ Fixel2shParametersTagged = typing.TypedDict('Fixel2shParametersTagged', {
 })
 
 
-def fixel2sh_config_params(
+def fixel2sh_config(
     key: str,
     value: str,
-) -> Fixel2shConfigParametersTagged:
+) -> Fixel2shConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def fixel2sh_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2shConfigParameters` object.
+    `Fixel2shConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def fixel2sh_config_validate(
 
 
 def fixel2sh_config_cargs(
-    params: Fixel2shConfigParameters,
+    params: Fixel2shConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def fixel2sh_config_cargs(
 
 class Fixel2shOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fixel2shParameters(...)`.
+    Output object returned when calling `Fixel2shParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def fixel2sh_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2shConfigParameters] | None = None,
+    config: list[Fixel2shConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2shParametersTagged:
+) -> Fixel2shParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def fixel2sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2shParameters` object.
+    `Fixel2shParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -219,7 +219,7 @@ def fixel2sh_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2shConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2shConfigParamsDict] | None`')
         for e in params["config"]:
             fixel2sh_config_validate(e)
     if params.get("help", False) is None:
@@ -241,7 +241,7 @@ def fixel2sh_validate(
 
 
 def fixel2sh_cargs(
-    params: Fixel2shParameters,
+    params: Fixel2shParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def fixel2sh_cargs(
 
 
 def fixel2sh_outputs(
-    params: Fixel2shParameters,
+    params: Fixel2shParamsDict,
     execution: Execution,
 ) -> Fixel2shOutputs:
     """
@@ -305,7 +305,7 @@ def fixel2sh_outputs(
 
 
 def fixel2sh_execute(
-    params: Fixel2shParameters,
+    params: Fixel2shParamsDict,
     runner: Runner | None = None,
 ) -> Fixel2shOutputs:
     """
@@ -354,7 +354,7 @@ def fixel2sh(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2shConfigParameters] | None = None,
+    config: list[Fixel2shConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -418,9 +418,13 @@ def fixel2sh(
 
 __all__ = [
     "FIXEL2SH_METADATA",
+    "Fixel2shConfigParamsDict",
+    "Fixel2shConfigParamsDictTagged",
     "Fixel2shOutputs",
+    "Fixel2shParamsDict",
+    "Fixel2shParamsDictTagged",
     "fixel2sh",
-    "fixel2sh_config_params",
+    "fixel2sh_config",
     "fixel2sh_execute",
     "fixel2sh_params",
 ]

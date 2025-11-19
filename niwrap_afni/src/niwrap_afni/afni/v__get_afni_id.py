@@ -13,11 +13,11 @@ V__GET_AFNI_ID_METADATA = Metadata(
 )
 
 
-VGetAfniIdParameters = typing.TypedDict('VGetAfniIdParameters', {
+VGetAfniIdParamsDict = typing.TypedDict('VGetAfniIdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniID"]],
     "dset": InputPathType,
 })
-VGetAfniIdParametersTagged = typing.TypedDict('VGetAfniIdParametersTagged', {
+VGetAfniIdParamsDictTagged = typing.TypedDict('VGetAfniIdParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniID"],
     "dset": InputPathType,
 })
@@ -25,7 +25,7 @@ VGetAfniIdParametersTagged = typing.TypedDict('VGetAfniIdParametersTagged', {
 
 class VGetAfniIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniIdParameters(...)`.
+    Output object returned when calling `VGetAfniIdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VGetAfniIdOutputs(typing.NamedTuple):
 
 def v__get_afni_id_params(
     dset: InputPathType,
-) -> VGetAfniIdParametersTagged:
+) -> VGetAfniIdParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__get_afni_id_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniIdParameters` object.
+    `VGetAfniIdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__get_afni_id_validate(
 
 
 def v__get_afni_id_cargs(
-    params: VGetAfniIdParameters,
+    params: VGetAfniIdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__get_afni_id_cargs(
 
 
 def v__get_afni_id_outputs(
-    params: VGetAfniIdParameters,
+    params: VGetAfniIdParamsDict,
     execution: Execution,
 ) -> VGetAfniIdOutputs:
     """
@@ -109,7 +109,7 @@ def v__get_afni_id_outputs(
 
 
 def v__get_afni_id_execute(
-    params: VGetAfniIdParameters,
+    params: VGetAfniIdParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniIdOutputs:
     """
@@ -164,6 +164,8 @@ def v__get_afni_id(
 
 __all__ = [
     "VGetAfniIdOutputs",
+    "VGetAfniIdParamsDict",
+    "VGetAfniIdParamsDictTagged",
     "V__GET_AFNI_ID_METADATA",
     "v__get_afni_id",
     "v__get_afni_id_execute",

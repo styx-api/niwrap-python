@@ -13,7 +13,7 @@ LTA_CONVERT_METADATA = Metadata(
 )
 
 
-LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
+LtaConvertParamsDict = typing.TypedDict('LtaConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/lta_convert"]],
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
     "trg_conform": bool,
     "subject_name": typing.NotRequired[str | None],
 })
-LtaConvertParametersTagged = typing.TypedDict('LtaConvertParametersTagged', {
+LtaConvertParamsDictTagged = typing.TypedDict('LtaConvertParamsDictTagged', {
     "@type": typing.Literal["freesurfer/lta_convert"],
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
@@ -65,7 +65,7 @@ LtaConvertParametersTagged = typing.TypedDict('LtaConvertParametersTagged', {
 
 class LtaConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LtaConvertParameters(...)`.
+    Output object returned when calling `LtaConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def lta_convert_params(
     trg_geometry: InputPathType | None = None,
     trg_conform: bool = False,
     subject_name: str | None = None,
-) -> LtaConvertParametersTagged:
+) -> LtaConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def lta_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LtaConvertParameters` object.
+    `LtaConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -252,7 +252,7 @@ def lta_convert_validate(
 
 
 def lta_convert_cargs(
-    params: LtaConvertParameters,
+    params: LtaConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -363,7 +363,7 @@ def lta_convert_cargs(
 
 
 def lta_convert_outputs(
-    params: LtaConvertParameters,
+    params: LtaConvertParamsDict,
     execution: Execution,
 ) -> LtaConvertOutputs:
     """
@@ -383,7 +383,7 @@ def lta_convert_outputs(
 
 
 def lta_convert_execute(
-    params: LtaConvertParameters,
+    params: LtaConvertParamsDict,
     runner: Runner | None = None,
 ) -> LtaConvertOutputs:
     """
@@ -501,6 +501,8 @@ def lta_convert(
 __all__ = [
     "LTA_CONVERT_METADATA",
     "LtaConvertOutputs",
+    "LtaConvertParamsDict",
+    "LtaConvertParamsDictTagged",
     "lta_convert",
     "lta_convert_execute",
     "lta_convert_params",

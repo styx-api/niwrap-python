@@ -13,14 +13,14 @@ MRI_DEFACE_METADATA = Metadata(
 )
 
 
-MriDefaceParameters = typing.TypedDict('MriDefaceParameters', {
+MriDefaceParamsDict = typing.TypedDict('MriDefaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_deface"]],
     "input_volume": InputPathType,
     "brain_template": InputPathType,
     "face_template": InputPathType,
     "output_volume": str,
 })
-MriDefaceParametersTagged = typing.TypedDict('MriDefaceParametersTagged', {
+MriDefaceParamsDictTagged = typing.TypedDict('MriDefaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_deface"],
     "input_volume": InputPathType,
     "brain_template": InputPathType,
@@ -31,7 +31,7 @@ MriDefaceParametersTagged = typing.TypedDict('MriDefaceParametersTagged', {
 
 class MriDefaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDefaceParameters(...)`.
+    Output object returned when calling `MriDefaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_deface_params(
     brain_template: InputPathType,
     face_template: InputPathType,
     output_volume: str,
-) -> MriDefaceParametersTagged:
+) -> MriDefaceParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mri_deface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDefaceParameters` object.
+    `MriDefaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mri_deface_validate(
 
 
 def mri_deface_cargs(
-    params: MriDefaceParameters,
+    params: MriDefaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mri_deface_cargs(
 
 
 def mri_deface_outputs(
-    params: MriDefaceParameters,
+    params: MriDefaceParamsDict,
     execution: Execution,
 ) -> MriDefaceOutputs:
     """
@@ -140,7 +140,7 @@ def mri_deface_outputs(
 
 
 def mri_deface_execute(
-    params: MriDefaceParameters,
+    params: MriDefaceParamsDict,
     runner: Runner | None = None,
 ) -> MriDefaceOutputs:
     """
@@ -206,6 +206,8 @@ def mri_deface(
 __all__ = [
     "MRI_DEFACE_METADATA",
     "MriDefaceOutputs",
+    "MriDefaceParamsDict",
+    "MriDefaceParamsDictTagged",
     "mri_deface",
     "mri_deface_execute",
     "mri_deface_params",

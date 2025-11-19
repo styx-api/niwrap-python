@@ -13,13 +13,13 @@ SPHERE_SUBJECT_METADATA = Metadata(
 )
 
 
-SphereSubjectParameters = typing.TypedDict('SphereSubjectParameters', {
+SphereSubjectParamsDict = typing.TypedDict('SphereSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject"]],
     "input_dir": str,
     "output_file": str,
     "license_file": typing.NotRequired[str | None],
 })
-SphereSubjectParametersTagged = typing.TypedDict('SphereSubjectParametersTagged', {
+SphereSubjectParamsDictTagged = typing.TypedDict('SphereSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sphere_subject"],
     "input_dir": str,
     "output_file": str,
@@ -29,7 +29,7 @@ SphereSubjectParametersTagged = typing.TypedDict('SphereSubjectParametersTagged'
 
 class SphereSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SphereSubjectParameters(...)`.
+    Output object returned when calling `SphereSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def sphere_subject_params(
     input_dir: str,
     output_file: str,
     license_file: str | None = None,
-) -> SphereSubjectParametersTagged:
+) -> SphereSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def sphere_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SphereSubjectParameters` object.
+    `SphereSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def sphere_subject_validate(
 
 
 def sphere_subject_cargs(
-    params: SphereSubjectParameters,
+    params: SphereSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def sphere_subject_cargs(
 
 
 def sphere_subject_outputs(
-    params: SphereSubjectParameters,
+    params: SphereSubjectParamsDict,
     execution: Execution,
 ) -> SphereSubjectOutputs:
     """
@@ -130,7 +130,7 @@ def sphere_subject_outputs(
 
 
 def sphere_subject_execute(
-    params: SphereSubjectParameters,
+    params: SphereSubjectParamsDict,
     runner: Runner | None = None,
 ) -> SphereSubjectOutputs:
     """
@@ -192,6 +192,8 @@ def sphere_subject(
 __all__ = [
     "SPHERE_SUBJECT_METADATA",
     "SphereSubjectOutputs",
+    "SphereSubjectParamsDict",
+    "SphereSubjectParamsDictTagged",
     "sphere_subject",
     "sphere_subject_execute",
     "sphere_subject_params",

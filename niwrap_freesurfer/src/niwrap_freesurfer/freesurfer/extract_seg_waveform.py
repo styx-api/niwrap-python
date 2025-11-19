@@ -13,7 +13,7 @@ EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
 )
 
 
-ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', {
+ExtractSegWaveformParamsDict = typing.TypedDict('ExtractSegWaveformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/extract_seg_waveform"]],
     "seg_file": InputPathType,
     "seg_indices": list[float],
@@ -24,7 +24,7 @@ ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', 
     "demean_flag": bool,
     "output_file": str,
 })
-ExtractSegWaveformParametersTagged = typing.TypedDict('ExtractSegWaveformParametersTagged', {
+ExtractSegWaveformParamsDictTagged = typing.TypedDict('ExtractSegWaveformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/extract_seg_waveform"],
     "seg_file": InputPathType,
     "seg_indices": list[float],
@@ -39,7 +39,7 @@ ExtractSegWaveformParametersTagged = typing.TypedDict('ExtractSegWaveformParamet
 
 class ExtractSegWaveformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExtractSegWaveformParameters(...)`.
+    Output object returned when calling `ExtractSegWaveformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def extract_seg_waveform_params(
     vsm_file: InputPathType | None = None,
     regheader_flag: bool = False,
     demean_flag: bool = False,
-) -> ExtractSegWaveformParametersTagged:
+) -> ExtractSegWaveformParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def extract_seg_waveform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractSegWaveformParameters` object.
+    `ExtractSegWaveformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def extract_seg_waveform_validate(
 
 
 def extract_seg_waveform_cargs(
-    params: ExtractSegWaveformParameters,
+    params: ExtractSegWaveformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def extract_seg_waveform_cargs(
 
 
 def extract_seg_waveform_outputs(
-    params: ExtractSegWaveformParameters,
+    params: ExtractSegWaveformParamsDict,
     execution: Execution,
 ) -> ExtractSegWaveformOutputs:
     """
@@ -200,7 +200,7 @@ def extract_seg_waveform_outputs(
 
 
 def extract_seg_waveform_execute(
-    params: ExtractSegWaveformParameters,
+    params: ExtractSegWaveformParamsDict,
     runner: Runner | None = None,
 ) -> ExtractSegWaveformOutputs:
     """
@@ -285,6 +285,8 @@ def extract_seg_waveform(
 __all__ = [
     "EXTRACT_SEG_WAVEFORM_METADATA",
     "ExtractSegWaveformOutputs",
+    "ExtractSegWaveformParamsDict",
+    "ExtractSegWaveformParamsDictTagged",
     "extract_seg_waveform",
     "extract_seg_waveform_execute",
     "extract_seg_waveform_params",

@@ -13,14 +13,14 @@ MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
 )
 
 
-MakePqScriptPyParameters = typing.TypedDict('MakePqScriptPyParameters', {
+MakePqScriptPyParamsDict = typing.TypedDict('MakePqScriptPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/make_pq_script.py"]],
     "dataset": InputPathType,
     "brick_index": float,
     "mask": InputPathType,
     "out_script": str,
 })
-MakePqScriptPyParametersTagged = typing.TypedDict('MakePqScriptPyParametersTagged', {
+MakePqScriptPyParamsDictTagged = typing.TypedDict('MakePqScriptPyParamsDictTagged', {
     "@type": typing.Literal["afni/make_pq_script.py"],
     "dataset": InputPathType,
     "brick_index": float,
@@ -31,7 +31,7 @@ MakePqScriptPyParametersTagged = typing.TypedDict('MakePqScriptPyParametersTagge
 
 class MakePqScriptPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakePqScriptPyParameters(...)`.
+    Output object returned when calling `MakePqScriptPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def make_pq_script_py_params(
     brick_index: float,
     mask: InputPathType,
     out_script: str,
-) -> MakePqScriptPyParametersTagged:
+) -> MakePqScriptPyParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def make_pq_script_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakePqScriptPyParameters` object.
+    `MakePqScriptPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def make_pq_script_py_validate(
 
 
 def make_pq_script_py_cargs(
-    params: MakePqScriptPyParameters,
+    params: MakePqScriptPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def make_pq_script_py_cargs(
 
 
 def make_pq_script_py_outputs(
-    params: MakePqScriptPyParameters,
+    params: MakePqScriptPyParamsDict,
     execution: Execution,
 ) -> MakePqScriptPyOutputs:
     """
@@ -139,7 +139,7 @@ def make_pq_script_py_outputs(
 
 
 def make_pq_script_py_execute(
-    params: MakePqScriptPyParameters,
+    params: MakePqScriptPyParamsDict,
     runner: Runner | None = None,
 ) -> MakePqScriptPyOutputs:
     """
@@ -204,6 +204,8 @@ def make_pq_script_py(
 __all__ = [
     "MAKE_PQ_SCRIPT_PY_METADATA",
     "MakePqScriptPyOutputs",
+    "MakePqScriptPyParamsDict",
+    "MakePqScriptPyParamsDictTagged",
     "make_pq_script_py",
     "make_pq_script_py_execute",
     "make_pq_script_py_params",

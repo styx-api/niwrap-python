@@ -13,12 +13,12 @@ DMRI_COLORED_FA_METADATA = Metadata(
 )
 
 
-DmriColoredFaParameters = typing.TypedDict('DmriColoredFaParameters', {
+DmriColoredFaParamsDict = typing.TypedDict('DmriColoredFaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_coloredFA"]],
     "input_volume": InputPathType,
     "output_volume": str,
 })
-DmriColoredFaParametersTagged = typing.TypedDict('DmriColoredFaParametersTagged', {
+DmriColoredFaParamsDictTagged = typing.TypedDict('DmriColoredFaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_coloredFA"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -27,7 +27,7 @@ DmriColoredFaParametersTagged = typing.TypedDict('DmriColoredFaParametersTagged'
 
 class DmriColoredFaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriColoredFaParameters(...)`.
+    Output object returned when calling `DmriColoredFaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class DmriColoredFaOutputs(typing.NamedTuple):
 def dmri_colored_fa_params(
     input_volume: InputPathType,
     output_volume: str = "colored_FA",
-) -> DmriColoredFaParametersTagged:
+) -> DmriColoredFaParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def dmri_colored_fa_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriColoredFaParameters` object.
+    `DmriColoredFaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def dmri_colored_fa_validate(
 
 
 def dmri_colored_fa_cargs(
-    params: DmriColoredFaParameters,
+    params: DmriColoredFaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def dmri_colored_fa_cargs(
 
 
 def dmri_colored_fa_outputs(
-    params: DmriColoredFaParameters,
+    params: DmriColoredFaParamsDict,
     execution: Execution,
 ) -> DmriColoredFaOutputs:
     """
@@ -119,7 +119,7 @@ def dmri_colored_fa_outputs(
 
 
 def dmri_colored_fa_execute(
-    params: DmriColoredFaParameters,
+    params: DmriColoredFaParamsDict,
     runner: Runner | None = None,
 ) -> DmriColoredFaOutputs:
     """
@@ -178,6 +178,8 @@ def dmri_colored_fa(
 __all__ = [
     "DMRI_COLORED_FA_METADATA",
     "DmriColoredFaOutputs",
+    "DmriColoredFaParamsDict",
+    "DmriColoredFaParamsDictTagged",
     "dmri_colored_fa",
     "dmri_colored_fa_execute",
     "dmri_colored_fa_params",

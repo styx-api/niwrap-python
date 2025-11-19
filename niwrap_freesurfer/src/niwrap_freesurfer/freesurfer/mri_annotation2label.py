@@ -13,7 +13,7 @@ MRI_ANNOTATION2LABEL_METADATA = Metadata(
 )
 
 
-MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters', {
+MriAnnotation2labelParamsDict = typing.TypedDict('MriAnnotation2labelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_annotation2label"]],
     "subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters'
     "help": bool,
     "version": bool,
 })
-MriAnnotation2labelParametersTagged = typing.TypedDict('MriAnnotation2labelParametersTagged', {
+MriAnnotation2labelParamsDictTagged = typing.TypedDict('MriAnnotation2labelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_annotation2label"],
     "subject": str,
     "hemi": str,
@@ -61,7 +61,7 @@ MriAnnotation2labelParametersTagged = typing.TypedDict('MriAnnotation2labelParam
 
 class MriAnnotation2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAnnotation2labelParameters(...)`.
+    Output object returned when calling `MriAnnotation2labelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def mri_annotation2label_params(
     stat_: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriAnnotation2labelParametersTagged:
+) -> MriAnnotation2labelParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def mri_annotation2label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAnnotation2labelParameters` object.
+    `MriAnnotation2labelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def mri_annotation2label_validate(
 
 
 def mri_annotation2label_cargs(
-    params: MriAnnotation2labelParameters,
+    params: MriAnnotation2labelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -338,7 +338,7 @@ def mri_annotation2label_cargs(
 
 
 def mri_annotation2label_outputs(
-    params: MriAnnotation2labelParameters,
+    params: MriAnnotation2labelParamsDict,
     execution: Execution,
 ) -> MriAnnotation2labelOutputs:
     """
@@ -357,7 +357,7 @@ def mri_annotation2label_outputs(
 
 
 def mri_annotation2label_execute(
-    params: MriAnnotation2labelParameters,
+    params: MriAnnotation2labelParamsDict,
     runner: Runner | None = None,
 ) -> MriAnnotation2labelOutputs:
     """
@@ -472,6 +472,8 @@ def mri_annotation2label(
 __all__ = [
     "MRI_ANNOTATION2LABEL_METADATA",
     "MriAnnotation2labelOutputs",
+    "MriAnnotation2labelParamsDict",
+    "MriAnnotation2labelParamsDictTagged",
     "mri_annotation2label",
     "mri_annotation2label_execute",
     "mri_annotation2label_params",

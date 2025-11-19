@@ -13,7 +13,7 @@ MRIS_COMPUTE_LGI_METADATA = Metadata(
 )
 
 
-MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
+MrisComputeLgiParamsDict = typing.TypedDict('MrisComputeLgiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_lgi"]],
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
     "echo": bool,
     "dontrun": bool,
 })
-MrisComputeLgiParametersTagged = typing.TypedDict('MrisComputeLgiParametersTagged', {
+MrisComputeLgiParamsDictTagged = typing.TypedDict('MrisComputeLgiParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_compute_lgi"],
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ MrisComputeLgiParametersTagged = typing.TypedDict('MrisComputeLgiParametersTagge
 
 class MrisComputeLgiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisComputeLgiParameters(...)`.
+    Output object returned when calling `MrisComputeLgiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_compute_lgi_params(
     step_size: float | None = None,
     echo: bool = False,
     dontrun: bool = False,
-) -> MrisComputeLgiParametersTagged:
+) -> MrisComputeLgiParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mris_compute_lgi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisComputeLgiParameters` object.
+    `MrisComputeLgiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def mris_compute_lgi_validate(
 
 
 def mris_compute_lgi_cargs(
-    params: MrisComputeLgiParameters,
+    params: MrisComputeLgiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def mris_compute_lgi_cargs(
 
 
 def mris_compute_lgi_outputs(
-    params: MrisComputeLgiParameters,
+    params: MrisComputeLgiParamsDict,
     execution: Execution,
 ) -> MrisComputeLgiOutputs:
     """
@@ -179,7 +179,7 @@ def mris_compute_lgi_outputs(
 
 
 def mris_compute_lgi_execute(
-    params: MrisComputeLgiParameters,
+    params: MrisComputeLgiParamsDict,
     runner: Runner | None = None,
 ) -> MrisComputeLgiOutputs:
     """
@@ -255,6 +255,8 @@ def mris_compute_lgi(
 __all__ = [
     "MRIS_COMPUTE_LGI_METADATA",
     "MrisComputeLgiOutputs",
+    "MrisComputeLgiParamsDict",
+    "MrisComputeLgiParamsDictTagged",
     "mris_compute_lgi",
     "mris_compute_lgi_execute",
     "mris_compute_lgi_params",

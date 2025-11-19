@@ -13,7 +13,7 @@ V__SUMA_REPREFIXIZE_SPEC_METADATA = Metadata(
 )
 
 
-VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameters', {
+VSumaReprefixizeSpecParamsDict = typing.TypedDict('VSumaReprefixizeSpecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@suma_reprefixize_spec"]],
     "input_file": InputPathType,
     "prefix": str,
@@ -21,7 +21,7 @@ VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameter
     "work_dir": str,
     "no_clean": bool,
 })
-VSumaReprefixizeSpecParametersTagged = typing.TypedDict('VSumaReprefixizeSpecParametersTagged', {
+VSumaReprefixizeSpecParamsDictTagged = typing.TypedDict('VSumaReprefixizeSpecParamsDictTagged', {
     "@type": typing.Literal["afni/@suma_reprefixize_spec"],
     "input_file": InputPathType,
     "prefix": str,
@@ -33,7 +33,7 @@ VSumaReprefixizeSpecParametersTagged = typing.TypedDict('VSumaReprefixizeSpecPar
 
 class VSumaReprefixizeSpecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaReprefixizeSpecParameters(...)`.
+    Output object returned when calling `VSumaReprefixizeSpecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v__suma_reprefixize_spec_params(
     output_dir: str,
     work_dir: str,
     no_clean: bool = False,
-) -> VSumaReprefixizeSpecParametersTagged:
+) -> VSumaReprefixizeSpecParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def v__suma_reprefixize_spec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaReprefixizeSpecParameters` object.
+    `VSumaReprefixizeSpecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def v__suma_reprefixize_spec_validate(
 
 
 def v__suma_reprefixize_spec_cargs(
-    params: VSumaReprefixizeSpecParameters,
+    params: VSumaReprefixizeSpecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def v__suma_reprefixize_spec_cargs(
 
 
 def v__suma_reprefixize_spec_outputs(
-    params: VSumaReprefixizeSpecParameters,
+    params: VSumaReprefixizeSpecParamsDict,
     execution: Execution,
 ) -> VSumaReprefixizeSpecOutputs:
     """
@@ -159,7 +159,7 @@ def v__suma_reprefixize_spec_outputs(
 
 
 def v__suma_reprefixize_spec_execute(
-    params: VSumaReprefixizeSpecParameters,
+    params: VSumaReprefixizeSpecParamsDict,
     runner: Runner | None = None,
 ) -> VSumaReprefixizeSpecOutputs:
     """
@@ -226,6 +226,8 @@ def v__suma_reprefixize_spec(
 
 __all__ = [
     "VSumaReprefixizeSpecOutputs",
+    "VSumaReprefixizeSpecParamsDict",
+    "VSumaReprefixizeSpecParamsDictTagged",
     "V__SUMA_REPREFIXIZE_SPEC_METADATA",
     "v__suma_reprefixize_spec",
     "v__suma_reprefixize_spec_execute",

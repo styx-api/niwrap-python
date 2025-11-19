@@ -13,13 +13,13 @@ QUOTIZE_METADATA = Metadata(
 )
 
 
-QuotizeParameters = typing.TypedDict('QuotizeParameters', {
+QuotizeParamsDict = typing.TypedDict('QuotizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/quotize"]],
     "name": str,
     "input_file": InputPathType,
     "output_file": str,
 })
-QuotizeParametersTagged = typing.TypedDict('QuotizeParametersTagged', {
+QuotizeParamsDictTagged = typing.TypedDict('QuotizeParamsDictTagged', {
     "@type": typing.Literal["afni/quotize"],
     "name": str,
     "input_file": InputPathType,
@@ -29,7 +29,7 @@ QuotizeParametersTagged = typing.TypedDict('QuotizeParametersTagged', {
 
 class QuotizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuotizeParameters(...)`.
+    Output object returned when calling `QuotizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def quotize_params(
     name: str,
     input_file: InputPathType,
     output_file: str,
-) -> QuotizeParametersTagged:
+) -> QuotizeParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def quotize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuotizeParameters` object.
+    `QuotizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def quotize_validate(
 
 
 def quotize_cargs(
-    params: QuotizeParameters,
+    params: QuotizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def quotize_cargs(
 
 
 def quotize_outputs(
-    params: QuotizeParameters,
+    params: QuotizeParamsDict,
     execution: Execution,
 ) -> QuotizeOutputs:
     """
@@ -129,7 +129,7 @@ def quotize_outputs(
 
 
 def quotize_execute(
-    params: QuotizeParameters,
+    params: QuotizeParamsDict,
     runner: Runner | None = None,
 ) -> QuotizeOutputs:
     """
@@ -193,6 +193,8 @@ def quotize(
 __all__ = [
     "QUOTIZE_METADATA",
     "QuotizeOutputs",
+    "QuotizeParamsDict",
+    "QuotizeParamsDictTagged",
     "quotize",
     "quotize_execute",
     "quotize_params",

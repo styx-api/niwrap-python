@@ -12,7 +12,7 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 )
 
 
-CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVolumeParameters', {
+CreateSignedDistanceVolumeParamsDict = typing.TypedDict('CreateSignedDistanceVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/create-signed-distance-volume"]],
     "outvol": str,
     "roi-vol": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVol
     "surface": InputPathType,
     "refspace": str,
 })
-CreateSignedDistanceVolumeParametersTagged = typing.TypedDict('CreateSignedDistanceVolumeParametersTagged', {
+CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDistanceVolumeParamsDictTagged', {
     "@type": typing.Literal["workbench/create-signed-distance-volume"],
     "outvol": str,
     "roi-vol": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ CreateSignedDistanceVolumeParametersTagged = typing.TypedDict('CreateSignedDista
 
 class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateSignedDistanceVolumeParameters(...)`.
+    Output object returned when calling `CreateSignedDistanceVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def create_signed_distance_volume_params(
     method: str | None,
     surface: InputPathType,
     refspace: str,
-) -> CreateSignedDistanceVolumeParametersTagged:
+) -> CreateSignedDistanceVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def create_signed_distance_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateSignedDistanceVolumeParameters` object.
+    `CreateSignedDistanceVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def create_signed_distance_volume_validate(
 
 
 def create_signed_distance_volume_cargs(
-    params: CreateSignedDistanceVolumeParameters,
+    params: CreateSignedDistanceVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def create_signed_distance_volume_cargs(
 
 
 def create_signed_distance_volume_outputs(
-    params: CreateSignedDistanceVolumeParameters,
+    params: CreateSignedDistanceVolumeParamsDict,
     execution: Execution,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
@@ -212,7 +212,7 @@ def create_signed_distance_volume_outputs(
 
 
 def create_signed_distance_volume_execute(
-    params: CreateSignedDistanceVolumeParameters,
+    params: CreateSignedDistanceVolumeParamsDict,
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
@@ -332,6 +332,8 @@ def create_signed_distance_volume(
 __all__ = [
     "CREATE_SIGNED_DISTANCE_VOLUME_METADATA",
     "CreateSignedDistanceVolumeOutputs",
+    "CreateSignedDistanceVolumeParamsDict",
+    "CreateSignedDistanceVolumeParamsDictTagged",
     "create_signed_distance_volume",
     "create_signed_distance_volume_execute",
     "create_signed_distance_volume_params",

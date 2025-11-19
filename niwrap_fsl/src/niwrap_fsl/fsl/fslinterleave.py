@@ -13,14 +13,14 @@ FSLINTERLEAVE_METADATA = Metadata(
 )
 
 
-FslinterleaveParameters = typing.TypedDict('FslinterleaveParameters', {
+FslinterleaveParamsDict = typing.TypedDict('FslinterleaveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslinterleave"]],
     "infile1": InputPathType,
     "infile2": InputPathType,
     "outfile": str,
     "reverse_slice_order_flag": bool,
 })
-FslinterleaveParametersTagged = typing.TypedDict('FslinterleaveParametersTagged', {
+FslinterleaveParamsDictTagged = typing.TypedDict('FslinterleaveParamsDictTagged', {
     "@type": typing.Literal["fsl/fslinterleave"],
     "infile1": InputPathType,
     "infile2": InputPathType,
@@ -31,7 +31,7 @@ FslinterleaveParametersTagged = typing.TypedDict('FslinterleaveParametersTagged'
 
 class FslinterleaveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslinterleaveParameters(...)`.
+    Output object returned when calling `FslinterleaveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def fslinterleave_params(
     infile2: InputPathType,
     outfile: str,
     reverse_slice_order_flag: bool = False,
-) -> FslinterleaveParametersTagged:
+) -> FslinterleaveParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def fslinterleave_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslinterleaveParameters` object.
+    `FslinterleaveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def fslinterleave_validate(
 
 
 def fslinterleave_cargs(
-    params: FslinterleaveParameters,
+    params: FslinterleaveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def fslinterleave_cargs(
 
 
 def fslinterleave_outputs(
-    params: FslinterleaveParameters,
+    params: FslinterleaveParamsDict,
     execution: Execution,
 ) -> FslinterleaveOutputs:
     """
@@ -140,7 +140,7 @@ def fslinterleave_outputs(
 
 
 def fslinterleave_execute(
-    params: FslinterleaveParameters,
+    params: FslinterleaveParamsDict,
     runner: Runner | None = None,
 ) -> FslinterleaveOutputs:
     """
@@ -205,6 +205,8 @@ def fslinterleave(
 __all__ = [
     "FSLINTERLEAVE_METADATA",
     "FslinterleaveOutputs",
+    "FslinterleaveParamsDict",
+    "FslinterleaveParamsDictTagged",
     "fslinterleave",
     "fslinterleave_execute",
     "fslinterleave_params",

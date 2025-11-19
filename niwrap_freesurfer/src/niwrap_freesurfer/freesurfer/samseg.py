@@ -13,7 +13,7 @@ SAMSEG_METADATA = Metadata(
 )
 
 
-SamsegParameters = typing.TypedDict('SamsegParameters', {
+SamsegParamsDict = typing.TypedDict('SamsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/samseg"]],
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
@@ -60,7 +60,7 @@ SamsegParameters = typing.TypedDict('SamsegParameters', {
     "smooth_wm_cortex": typing.NotRequired[float | None],
     "profile_file": typing.NotRequired[InputPathType | None],
 })
-SamsegParametersTagged = typing.TypedDict('SamsegParametersTagged', {
+SamsegParamsDictTagged = typing.TypedDict('SamsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/samseg"],
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
@@ -111,7 +111,7 @@ SamsegParametersTagged = typing.TypedDict('SamsegParametersTagged', {
 
 class SamsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SamsegParameters(...)`.
+    Output object returned when calling `SamsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -170,7 +170,7 @@ def samseg_params(
     ignore_unknown: bool = False,
     smooth_wm_cortex: float | None = None,
     profile_file: InputPathType | None = None,
-) -> SamsegParametersTagged:
+) -> SamsegParamsDictTagged:
     """
     Build parameters.
     
@@ -313,7 +313,7 @@ def samseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SamsegParameters` object.
+    `SamsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -495,7 +495,7 @@ def samseg_validate(
 
 
 def samseg_cargs(
-    params: SamsegParameters,
+    params: SamsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -671,7 +671,7 @@ def samseg_cargs(
 
 
 def samseg_outputs(
-    params: SamsegParameters,
+    params: SamsegParamsDict,
     execution: Execution,
 ) -> SamsegOutputs:
     """
@@ -694,7 +694,7 @@ def samseg_outputs(
 
 
 def samseg_execute(
-    params: SamsegParameters,
+    params: SamsegParamsDict,
     runner: Runner | None = None,
 ) -> SamsegOutputs:
     """
@@ -895,6 +895,8 @@ def samseg(
 __all__ = [
     "SAMSEG_METADATA",
     "SamsegOutputs",
+    "SamsegParamsDict",
+    "SamsegParamsDictTagged",
     "samseg",
     "samseg_execute",
     "samseg_params",

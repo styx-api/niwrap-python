@@ -36,7 +36,7 @@
     },
     "timeseriesimage_to_matrix": {
       "var_param": "timeseriesimage_to_matrix",
-      "fn_struct_make_params": "time_sccan_timeseriesimage_to_matrix_params",
+      "fn_struct_make_params": "time_sccan_timeseriesimage_to_matrix",
       "properties": {
         "timeseries_image": {
           "var_param": "timeseries_image"
@@ -53,7 +53,7 @@
       "var_param": "network",
       "variants": {
         "network_scca": {
-          "fn_struct_make_params": "time_sccan_network_scca_params",
+          "fn_struct_make_params": "time_sccan_network_scca",
           "properties": {
             "time_matrix": {
               "var_param": "time_matrix"
@@ -64,7 +64,7 @@
           }
         },
         "network_region_averaging": {
-          "fn_struct_make_params": "time_sccan_network_region_averaging_params",
+          "fn_struct_make_params": "time_sccan_network_region_averaging",
           "properties": {
             "time_matrix": {
               "var_param": "time_matrix"

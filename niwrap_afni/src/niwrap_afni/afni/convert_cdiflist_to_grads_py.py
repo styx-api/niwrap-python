@@ -13,7 +13,7 @@ CONVERT_CDIFLIST_TO_GRADS_PY_METADATA = Metadata(
 )
 
 
-ConvertCdiflistToGradsPyParameters = typing.TypedDict('ConvertCdiflistToGradsPyParameters', {
+ConvertCdiflistToGradsPyParamsDict = typing.TypedDict('ConvertCdiflistToGradsPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/convert_cdiflist_to_grads.py"]],
     "cdiflist": InputPathType,
     "bval_max": float,
@@ -23,7 +23,7 @@ ConvertCdiflistToGradsPyParameters = typing.TypedDict('ConvertCdiflistToGradsPyP
     "help": bool,
     "hview": bool,
 })
-ConvertCdiflistToGradsPyParametersTagged = typing.TypedDict('ConvertCdiflistToGradsPyParametersTagged', {
+ConvertCdiflistToGradsPyParamsDictTagged = typing.TypedDict('ConvertCdiflistToGradsPyParamsDictTagged', {
     "@type": typing.Literal["afni/convert_cdiflist_to_grads.py"],
     "cdiflist": InputPathType,
     "bval_max": float,
@@ -37,7 +37,7 @@ ConvertCdiflistToGradsPyParametersTagged = typing.TypedDict('ConvertCdiflistToGr
 
 class ConvertCdiflistToGradsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertCdiflistToGradsPyParameters(...)`.
+    Output object returned when calling `ConvertCdiflistToGradsPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def convert_cdiflist_to_grads_py_params(
     date: bool = False,
     help_: bool = False,
     hview: bool = False,
-) -> ConvertCdiflistToGradsPyParametersTagged:
+) -> ConvertCdiflistToGradsPyParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def convert_cdiflist_to_grads_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertCdiflistToGradsPyParameters` object.
+    `ConvertCdiflistToGradsPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def convert_cdiflist_to_grads_py_validate(
 
 
 def convert_cdiflist_to_grads_py_cargs(
-    params: ConvertCdiflistToGradsPyParameters,
+    params: ConvertCdiflistToGradsPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def convert_cdiflist_to_grads_py_cargs(
 
 
 def convert_cdiflist_to_grads_py_outputs(
-    params: ConvertCdiflistToGradsPyParameters,
+    params: ConvertCdiflistToGradsPyParamsDict,
     execution: Execution,
 ) -> ConvertCdiflistToGradsPyOutputs:
     """
@@ -191,7 +191,7 @@ def convert_cdiflist_to_grads_py_outputs(
 
 
 def convert_cdiflist_to_grads_py_execute(
-    params: ConvertCdiflistToGradsPyParameters,
+    params: ConvertCdiflistToGradsPyParamsDict,
     runner: Runner | None = None,
 ) -> ConvertCdiflistToGradsPyOutputs:
     """
@@ -270,6 +270,8 @@ def convert_cdiflist_to_grads_py(
 __all__ = [
     "CONVERT_CDIFLIST_TO_GRADS_PY_METADATA",
     "ConvertCdiflistToGradsPyOutputs",
+    "ConvertCdiflistToGradsPyParamsDict",
+    "ConvertCdiflistToGradsPyParamsDictTagged",
     "convert_cdiflist_to_grads_py",
     "convert_cdiflist_to_grads_py_execute",
     "convert_cdiflist_to_grads_py_params",

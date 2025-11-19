@@ -13,7 +13,7 @@ MRI_AVERAGE_METADATA = Metadata(
 )
 
 
-MriAverageParameters = typing.TypedDict('MriAverageParameters', {
+MriAverageParamsDict = typing.TypedDict('MriAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_average"]],
     "input_volumes": list[InputPathType],
     "output_volume": str,
@@ -37,7 +37,7 @@ MriAverageParameters = typing.TypedDict('MriAverageParameters', {
     "binarize": typing.NotRequired[float | None],
     "absolute": bool,
 })
-MriAverageParametersTagged = typing.TypedDict('MriAverageParametersTagged', {
+MriAverageParamsDictTagged = typing.TypedDict('MriAverageParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_average"],
     "input_volumes": list[InputPathType],
     "output_volume": str,
@@ -65,7 +65,7 @@ MriAverageParametersTagged = typing.TypedDict('MriAverageParametersTagged', {
 
 class MriAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAverageParameters(...)`.
+    Output object returned when calling `MriAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def mri_average_params(
     percent: bool = False,
     binarize: float | None = None,
     absolute: bool = False,
-) -> MriAverageParametersTagged:
+) -> MriAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def mri_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAverageParameters` object.
+    `MriAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -265,7 +265,7 @@ def mri_average_validate(
 
 
 def mri_average_cargs(
-    params: MriAverageParameters,
+    params: MriAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -350,7 +350,7 @@ def mri_average_cargs(
 
 
 def mri_average_outputs(
-    params: MriAverageParameters,
+    params: MriAverageParamsDict,
     execution: Execution,
 ) -> MriAverageOutputs:
     """
@@ -370,7 +370,7 @@ def mri_average_outputs(
 
 
 def mri_average_execute(
-    params: MriAverageParameters,
+    params: MriAverageParamsDict,
     runner: Runner | None = None,
 ) -> MriAverageOutputs:
     """
@@ -490,6 +490,8 @@ def mri_average(
 __all__ = [
     "MRI_AVERAGE_METADATA",
     "MriAverageOutputs",
+    "MriAverageParamsDict",
+    "MriAverageParamsDictTagged",
     "mri_average",
     "mri_average_execute",
     "mri_average_params",

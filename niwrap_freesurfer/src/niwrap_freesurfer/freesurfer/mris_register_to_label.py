@@ -13,7 +13,7 @@ MRIS_REGISTER_TO_LABEL_METADATA = Metadata(
 )
 
 
-MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters', {
+MrisRegisterToLabelParamsDict = typing.TypedDict('MrisRegisterToLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_label"]],
     "surface": InputPathType,
     "regfile": InputPathType,
@@ -28,7 +28,7 @@ MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters'
     "downsample": typing.NotRequired[float | None],
     "cost_file": typing.NotRequired[InputPathType | None],
 })
-MrisRegisterToLabelParametersTagged = typing.TypedDict('MrisRegisterToLabelParametersTagged', {
+MrisRegisterToLabelParamsDictTagged = typing.TypedDict('MrisRegisterToLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_register_to_label"],
     "surface": InputPathType,
     "regfile": InputPathType,
@@ -47,7 +47,7 @@ MrisRegisterToLabelParametersTagged = typing.TypedDict('MrisRegisterToLabelParam
 
 class MrisRegisterToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRegisterToLabelParameters(...)`.
+    Output object returned when calling `MrisRegisterToLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def mris_register_to_label_params(
     out_reg: str | None = None,
     downsample: float | None = None,
     cost_file: InputPathType | None = None,
-) -> MrisRegisterToLabelParametersTagged:
+) -> MrisRegisterToLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def mris_register_to_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRegisterToLabelParameters` object.
+    `MrisRegisterToLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def mris_register_to_label_validate(
 
 
 def mris_register_to_label_cargs(
-    params: MrisRegisterToLabelParameters,
+    params: MrisRegisterToLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,7 +240,7 @@ def mris_register_to_label_cargs(
 
 
 def mris_register_to_label_outputs(
-    params: MrisRegisterToLabelParameters,
+    params: MrisRegisterToLabelParamsDict,
     execution: Execution,
 ) -> MrisRegisterToLabelOutputs:
     """
@@ -259,7 +259,7 @@ def mris_register_to_label_outputs(
 
 
 def mris_register_to_label_execute(
-    params: MrisRegisterToLabelParameters,
+    params: MrisRegisterToLabelParamsDict,
     runner: Runner | None = None,
 ) -> MrisRegisterToLabelOutputs:
     """
@@ -348,6 +348,8 @@ def mris_register_to_label(
 __all__ = [
     "MRIS_REGISTER_TO_LABEL_METADATA",
     "MrisRegisterToLabelOutputs",
+    "MrisRegisterToLabelParamsDict",
+    "MrisRegisterToLabelParamsDictTagged",
     "mris_register_to_label",
     "mris_register_to_label_execute",
     "mris_register_to_label_params",

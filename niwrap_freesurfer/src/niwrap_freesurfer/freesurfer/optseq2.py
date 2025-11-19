@@ -13,7 +13,7 @@ OPTSEQ2_METADATA = Metadata(
 )
 
 
-Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
+Optseq2ParamsDict = typing.TypedDict('Optseq2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/optseq2"]],
     "ntp": float,
     "tr": float,
@@ -48,7 +48,7 @@ Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
     "help": bool,
     "version": bool,
 })
-Optseq2ParametersTagged = typing.TypedDict('Optseq2ParametersTagged', {
+Optseq2ParamsDictTagged = typing.TypedDict('Optseq2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/optseq2"],
     "ntp": float,
     "tr": float,
@@ -87,7 +87,7 @@ Optseq2ParametersTagged = typing.TypedDict('Optseq2ParametersTagged', {
 
 class Optseq2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `Optseq2Parameters(...)`.
+    Output object returned when calling `Optseq2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +138,7 @@ def optseq2_params(
     nosearch: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> Optseq2ParametersTagged:
+) -> Optseq2ParamsDictTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def optseq2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Optseq2Parameters` object.
+    `Optseq2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -387,7 +387,7 @@ def optseq2_validate(
 
 
 def optseq2_cargs(
-    params: Optseq2Parameters,
+    params: Optseq2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -549,7 +549,7 @@ def optseq2_cargs(
 
 
 def optseq2_outputs(
-    params: Optseq2Parameters,
+    params: Optseq2ParamsDict,
     execution: Execution,
 ) -> Optseq2Outputs:
     """
@@ -574,7 +574,7 @@ def optseq2_outputs(
 
 
 def optseq2_execute(
-    params: Optseq2Parameters,
+    params: Optseq2ParamsDict,
     runner: Runner | None = None,
 ) -> Optseq2Outputs:
     """
@@ -730,6 +730,8 @@ def optseq2(
 __all__ = [
     "OPTSEQ2_METADATA",
     "Optseq2Outputs",
+    "Optseq2ParamsDict",
+    "Optseq2ParamsDictTagged",
     "optseq2",
     "optseq2_execute",
     "optseq2_params",

@@ -13,7 +13,7 @@ NICCC_METADATA = Metadata(
 )
 
 
-NicccParameters = typing.TypedDict('NicccParameters', {
+NicccParamsDict = typing.TypedDict('NicccParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/niccc"]],
     "streamspec": str,
     "duplicate": bool,
@@ -28,7 +28,7 @@ NicccParameters = typing.TypedDict('NicccParameters', {
     "find_attr": typing.NotRequired[list[str] | None],
     "skip_attr": typing.NotRequired[list[str] | None],
 })
-NicccParametersTagged = typing.TypedDict('NicccParametersTagged', {
+NicccParamsDictTagged = typing.TypedDict('NicccParamsDictTagged', {
     "@type": typing.Literal["afni/niccc"],
     "streamspec": str,
     "duplicate": bool,
@@ -47,7 +47,7 @@ NicccParametersTagged = typing.TypedDict('NicccParametersTagged', {
 
 class NicccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NicccParameters(...)`.
+    Output object returned when calling `NicccParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def niccc_params(
     quiet: bool = False,
     find_attr: list[str] | None = None,
     skip_attr: list[str] | None = None,
-) -> NicccParametersTagged:
+) -> NicccParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def niccc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NicccParameters` object.
+    `NicccParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def niccc_validate(
 
 
 def niccc_cargs(
-    params: NicccParameters,
+    params: NicccParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -239,7 +239,7 @@ def niccc_cargs(
 
 
 def niccc_outputs(
-    params: NicccParameters,
+    params: NicccParamsDict,
     execution: Execution,
 ) -> NicccOutputs:
     """
@@ -259,7 +259,7 @@ def niccc_outputs(
 
 
 def niccc_execute(
-    params: NicccParameters,
+    params: NicccParamsDict,
     runner: Runner | None = None,
 ) -> NicccOutputs:
     """
@@ -357,6 +357,8 @@ def niccc(
 __all__ = [
     "NICCC_METADATA",
     "NicccOutputs",
+    "NicccParamsDict",
+    "NicccParamsDictTagged",
     "niccc",
     "niccc_execute",
     "niccc_params",

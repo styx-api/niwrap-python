@@ -13,13 +13,13 @@ INFLATE_SUBJECT_SC_METADATA = Metadata(
 )
 
 
-InflateSubjectScParameters = typing.TypedDict('InflateSubjectScParameters', {
+InflateSubjectScParamsDict = typing.TypedDict('InflateSubjectScParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_sc"]],
     "subject_dir": str,
     "verbose": bool,
     "debug": bool,
 })
-InflateSubjectScParametersTagged = typing.TypedDict('InflateSubjectScParametersTagged', {
+InflateSubjectScParamsDictTagged = typing.TypedDict('InflateSubjectScParamsDictTagged', {
     "@type": typing.Literal["freesurfer/inflate_subject_sc"],
     "subject_dir": str,
     "verbose": bool,
@@ -29,7 +29,7 @@ InflateSubjectScParametersTagged = typing.TypedDict('InflateSubjectScParametersT
 
 class InflateSubjectScOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InflateSubjectScParameters(...)`.
+    Output object returned when calling `InflateSubjectScParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def inflate_subject_sc_params(
     subject_dir: str,
     verbose: bool = False,
     debug: bool = False,
-) -> InflateSubjectScParametersTagged:
+) -> InflateSubjectScParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def inflate_subject_sc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InflateSubjectScParameters` object.
+    `InflateSubjectScParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def inflate_subject_sc_validate(
 
 
 def inflate_subject_sc_cargs(
-    params: InflateSubjectScParameters,
+    params: InflateSubjectScParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def inflate_subject_sc_cargs(
 
 
 def inflate_subject_sc_outputs(
-    params: InflateSubjectScParameters,
+    params: InflateSubjectScParamsDict,
     execution: Execution,
 ) -> InflateSubjectScOutputs:
     """
@@ -131,7 +131,7 @@ def inflate_subject_sc_outputs(
 
 
 def inflate_subject_sc_execute(
-    params: InflateSubjectScParameters,
+    params: InflateSubjectScParamsDict,
     runner: Runner | None = None,
 ) -> InflateSubjectScOutputs:
     """
@@ -195,6 +195,8 @@ def inflate_subject_sc(
 __all__ = [
     "INFLATE_SUBJECT_SC_METADATA",
     "InflateSubjectScOutputs",
+    "InflateSubjectScParamsDict",
+    "InflateSubjectScParamsDictTagged",
     "inflate_subject_sc",
     "inflate_subject_sc_execute",
     "inflate_subject_sc_params",

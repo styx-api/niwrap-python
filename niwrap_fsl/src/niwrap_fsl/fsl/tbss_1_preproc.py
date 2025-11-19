@@ -13,11 +13,11 @@ TBSS_1_PREPROC_METADATA = Metadata(
 )
 
 
-Tbss1PreprocParameters = typing.TypedDict('Tbss1PreprocParameters', {
+Tbss1PreprocParamsDict = typing.TypedDict('Tbss1PreprocParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_1_preproc"]],
     "images": list[InputPathType],
 })
-Tbss1PreprocParametersTagged = typing.TypedDict('Tbss1PreprocParametersTagged', {
+Tbss1PreprocParamsDictTagged = typing.TypedDict('Tbss1PreprocParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_1_preproc"],
     "images": list[InputPathType],
 })
@@ -25,7 +25,7 @@ Tbss1PreprocParametersTagged = typing.TypedDict('Tbss1PreprocParametersTagged', 
 
 class Tbss1PreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tbss1PreprocParameters(...)`.
+    Output object returned when calling `Tbss1PreprocParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Tbss1PreprocOutputs(typing.NamedTuple):
 
 def tbss_1_preproc_params(
     images: list[InputPathType],
-) -> Tbss1PreprocParametersTagged:
+) -> Tbss1PreprocParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def tbss_1_preproc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tbss1PreprocParameters` object.
+    `Tbss1PreprocParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def tbss_1_preproc_validate(
 
 
 def tbss_1_preproc_cargs(
-    params: Tbss1PreprocParameters,
+    params: Tbss1PreprocParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def tbss_1_preproc_cargs(
 
 
 def tbss_1_preproc_outputs(
-    params: Tbss1PreprocParameters,
+    params: Tbss1PreprocParamsDict,
     execution: Execution,
 ) -> Tbss1PreprocOutputs:
     """
@@ -109,7 +109,7 @@ def tbss_1_preproc_outputs(
 
 
 def tbss_1_preproc_execute(
-    params: Tbss1PreprocParameters,
+    params: Tbss1PreprocParamsDict,
     runner: Runner | None = None,
 ) -> Tbss1PreprocOutputs:
     """
@@ -165,6 +165,8 @@ def tbss_1_preproc(
 __all__ = [
     "TBSS_1_PREPROC_METADATA",
     "Tbss1PreprocOutputs",
+    "Tbss1PreprocParamsDict",
+    "Tbss1PreprocParamsDictTagged",
     "tbss_1_preproc",
     "tbss_1_preproc_execute",
     "tbss_1_preproc_params",

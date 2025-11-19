@@ -13,7 +13,7 @@ MRIS_APPLY_REG_METADATA = Metadata(
 )
 
 
-MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
+MrisApplyRegParamsDict = typing.TypedDict('MrisApplyRegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_apply_reg"]],
     "src_input": InputPathType,
     "trg_output": str,
@@ -39,7 +39,7 @@ MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
     "debug_mode": bool,
     "check_options": bool,
 })
-MrisApplyRegParametersTagged = typing.TypedDict('MrisApplyRegParametersTagged', {
+MrisApplyRegParamsDictTagged = typing.TypedDict('MrisApplyRegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_apply_reg"],
     "src_input": InputPathType,
     "trg_output": str,
@@ -69,7 +69,7 @@ MrisApplyRegParametersTagged = typing.TypedDict('MrisApplyRegParametersTagged', 
 
 class MrisApplyRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisApplyRegParameters(...)`.
+    Output object returned when calling `MrisApplyRegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +101,7 @@ def mris_apply_reg_params(
     trg_reg_scale: float | None = None,
     debug_mode: bool = False,
     check_options: bool = False,
-) -> MrisApplyRegParametersTagged:
+) -> MrisApplyRegParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def mris_apply_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisApplyRegParameters` object.
+    `MrisApplyRegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -268,7 +268,7 @@ def mris_apply_reg_validate(
 
 
 def mris_apply_reg_cargs(
-    params: MrisApplyRegParameters,
+    params: MrisApplyRegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -374,7 +374,7 @@ def mris_apply_reg_cargs(
 
 
 def mris_apply_reg_outputs(
-    params: MrisApplyRegParameters,
+    params: MrisApplyRegParamsDict,
     execution: Execution,
 ) -> MrisApplyRegOutputs:
     """
@@ -394,7 +394,7 @@ def mris_apply_reg_outputs(
 
 
 def mris_apply_reg_execute(
-    params: MrisApplyRegParameters,
+    params: MrisApplyRegParamsDict,
     runner: Runner | None = None,
 ) -> MrisApplyRegOutputs:
     """
@@ -516,6 +516,8 @@ def mris_apply_reg(
 __all__ = [
     "MRIS_APPLY_REG_METADATA",
     "MrisApplyRegOutputs",
+    "MrisApplyRegParamsDict",
+    "MrisApplyRegParamsDictTagged",
     "mris_apply_reg",
     "mris_apply_reg_execute",
     "mris_apply_reg_params",

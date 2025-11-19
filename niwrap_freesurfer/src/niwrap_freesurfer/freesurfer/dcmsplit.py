@@ -13,7 +13,7 @@ DCMSPLIT_METADATA = Metadata(
 )
 
 
-DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
+DcmsplitParamsDict = typing.TypedDict('DcmsplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dcmsplit"]],
     "dcm_dir": str,
     "out_dir": str,
@@ -26,7 +26,7 @@ DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
     "dicom_tag": typing.NotRequired[str | None],
     "study_description": bool,
 })
-DcmsplitParametersTagged = typing.TypedDict('DcmsplitParametersTagged', {
+DcmsplitParamsDictTagged = typing.TypedDict('DcmsplitParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dcmsplit"],
     "dcm_dir": str,
     "out_dir": str,
@@ -43,7 +43,7 @@ DcmsplitParametersTagged = typing.TypedDict('DcmsplitParametersTagged', {
 
 class DcmsplitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmsplitParameters(...)`.
+    Output object returned when calling `DcmsplitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def dcmsplit_params(
     series_plus: bool = False,
     dicom_tag: str | None = None,
     study_description: bool = False,
-) -> DcmsplitParametersTagged:
+) -> DcmsplitParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def dcmsplit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmsplitParameters` object.
+    `DcmsplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def dcmsplit_validate(
 
 
 def dcmsplit_cargs(
-    params: DcmsplitParameters,
+    params: DcmsplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def dcmsplit_cargs(
 
 
 def dcmsplit_outputs(
-    params: DcmsplitParameters,
+    params: DcmsplitParamsDict,
     execution: Execution,
 ) -> DcmsplitOutputs:
     """
@@ -213,7 +213,7 @@ def dcmsplit_outputs(
 
 
 def dcmsplit_execute(
-    params: DcmsplitParameters,
+    params: DcmsplitParamsDict,
     runner: Runner | None = None,
 ) -> DcmsplitOutputs:
     """
@@ -296,6 +296,8 @@ def dcmsplit(
 __all__ = [
     "DCMSPLIT_METADATA",
     "DcmsplitOutputs",
+    "DcmsplitParamsDict",
+    "DcmsplitParamsDictTagged",
     "dcmsplit",
     "dcmsplit_execute",
     "dcmsplit_params",

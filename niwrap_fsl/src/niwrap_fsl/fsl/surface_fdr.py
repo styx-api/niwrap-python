@@ -13,11 +13,11 @@ SURFACE_FDR_METADATA = Metadata(
 )
 
 
-SurfaceFdrParameters = typing.TypedDict('SurfaceFdrParameters', {
+SurfaceFdrParamsDict = typing.TypedDict('SurfaceFdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/surface_fdr"]],
     "input_vtk": InputPathType,
 })
-SurfaceFdrParametersTagged = typing.TypedDict('SurfaceFdrParametersTagged', {
+SurfaceFdrParamsDictTagged = typing.TypedDict('SurfaceFdrParamsDictTagged', {
     "@type": typing.Literal["fsl/surface_fdr"],
     "input_vtk": InputPathType,
 })
@@ -25,7 +25,7 @@ SurfaceFdrParametersTagged = typing.TypedDict('SurfaceFdrParametersTagged', {
 
 class SurfaceFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceFdrParameters(...)`.
+    Output object returned when calling `SurfaceFdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceFdrOutputs(typing.NamedTuple):
 
 def surface_fdr_params(
     input_vtk: InputPathType,
-) -> SurfaceFdrParametersTagged:
+) -> SurfaceFdrParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def surface_fdr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceFdrParameters` object.
+    `SurfaceFdrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def surface_fdr_validate(
 
 
 def surface_fdr_cargs(
-    params: SurfaceFdrParameters,
+    params: SurfaceFdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def surface_fdr_cargs(
 
 
 def surface_fdr_outputs(
-    params: SurfaceFdrParameters,
+    params: SurfaceFdrParamsDict,
     execution: Execution,
 ) -> SurfaceFdrOutputs:
     """
@@ -112,7 +112,7 @@ def surface_fdr_outputs(
 
 
 def surface_fdr_execute(
-    params: SurfaceFdrParameters,
+    params: SurfaceFdrParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceFdrOutputs:
     """
@@ -168,6 +168,8 @@ def surface_fdr(
 __all__ = [
     "SURFACE_FDR_METADATA",
     "SurfaceFdrOutputs",
+    "SurfaceFdrParamsDict",
+    "SurfaceFdrParamsDictTagged",
     "surface_fdr",
     "surface_fdr_execute",
     "surface_fdr_params",

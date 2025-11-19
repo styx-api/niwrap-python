@@ -13,7 +13,7 @@ POSSUM_INTERPMOT_PY_METADATA = Metadata(
 )
 
 
-PossumInterpmotPyParameters = typing.TypedDict('PossumInterpmotPyParameters', {
+PossumInterpmotPyParamsDict = typing.TypedDict('PossumInterpmotPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/possum_interpmot.py"]],
     "motion_type": int,
     "tr": float,
@@ -23,7 +23,7 @@ PossumInterpmotPyParameters = typing.TypedDict('PossumInterpmotPyParameters', {
     "custom_motion_file": InputPathType,
     "output_file": str,
 })
-PossumInterpmotPyParametersTagged = typing.TypedDict('PossumInterpmotPyParametersTagged', {
+PossumInterpmotPyParamsDictTagged = typing.TypedDict('PossumInterpmotPyParamsDictTagged', {
     "@type": typing.Literal["fsl/possum_interpmot.py"],
     "motion_type": int,
     "tr": float,
@@ -37,7 +37,7 @@ PossumInterpmotPyParametersTagged = typing.TypedDict('PossumInterpmotPyParameter
 
 class PossumInterpmotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PossumInterpmotPyParameters(...)`.
+    Output object returned when calling `PossumInterpmotPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def possum_interpmot_py_params(
     nvols: int,
     custom_motion_file: InputPathType,
     output_file: str,
-) -> PossumInterpmotPyParametersTagged:
+) -> PossumInterpmotPyParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def possum_interpmot_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PossumInterpmotPyParameters` object.
+    `PossumInterpmotPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def possum_interpmot_py_validate(
 
 
 def possum_interpmot_py_cargs(
-    params: PossumInterpmotPyParameters,
+    params: PossumInterpmotPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def possum_interpmot_py_cargs(
 
 
 def possum_interpmot_py_outputs(
-    params: PossumInterpmotPyParameters,
+    params: PossumInterpmotPyParamsDict,
     execution: Execution,
 ) -> PossumInterpmotPyOutputs:
     """
@@ -172,7 +172,7 @@ def possum_interpmot_py_outputs(
 
 
 def possum_interpmot_py_execute(
-    params: PossumInterpmotPyParameters,
+    params: PossumInterpmotPyParamsDict,
     runner: Runner | None = None,
 ) -> PossumInterpmotPyOutputs:
     """
@@ -247,6 +247,8 @@ def possum_interpmot_py(
 __all__ = [
     "POSSUM_INTERPMOT_PY_METADATA",
     "PossumInterpmotPyOutputs",
+    "PossumInterpmotPyParamsDict",
+    "PossumInterpmotPyParamsDictTagged",
     "possum_interpmot_py",
     "possum_interpmot_py_execute",
     "possum_interpmot_py_params",

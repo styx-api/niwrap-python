@@ -13,7 +13,7 @@ FDR_METADATA = Metadata(
 )
 
 
-FdrParameters = typing.TypedDict('FdrParameters', {
+FdrParamsDict = typing.TypedDict('FdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fdr"]],
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ FdrParameters = typing.TypedDict('FdrParameters', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
-FdrParametersTagged = typing.TypedDict('FdrParametersTagged', {
+FdrParamsDictTagged = typing.TypedDict('FdrParamsDictTagged', {
     "@type": typing.Literal["fsl/fdr"],
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ FdrParametersTagged = typing.TypedDict('FdrParametersTagged', {
 
 class FdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FdrParameters(...)`.
+    Output object returned when calling `FdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def fdr_params(
     conservative_flag: bool = False,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> FdrParametersTagged:
+) -> FdrParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def fdr_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `FdrParameters`
+    Validate parameters. Throws an error if `params` is not a valid `FdrParamsDict`
     object.
     
     Args:
@@ -175,7 +175,7 @@ def fdr_validate(
 
 
 def fdr_cargs(
-    params: FdrParameters,
+    params: FdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def fdr_cargs(
 
 
 def fdr_outputs(
-    params: FdrParameters,
+    params: FdrParamsDict,
     execution: Execution,
 ) -> FdrOutputs:
     """
@@ -250,7 +250,7 @@ def fdr_outputs(
 
 
 def fdr_execute(
-    params: FdrParameters,
+    params: FdrParamsDict,
     runner: Runner | None = None,
 ) -> FdrOutputs:
     """
@@ -341,6 +341,8 @@ def fdr(
 __all__ = [
     "FDR_METADATA",
     "FdrOutputs",
+    "FdrParamsDict",
+    "FdrParamsDictTagged",
     "fdr",
     "fdr_execute",
     "fdr_params",

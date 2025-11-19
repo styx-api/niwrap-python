@@ -13,14 +13,14 @@ MRI_EXTRACT_METADATA = Metadata(
 )
 
 
-MriExtractParameters = typing.TypedDict('MriExtractParameters', {
+MriExtractParamsDict = typing.TypedDict('MriExtractParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract"]],
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
     "dst_volume": InputPathType,
     "coordinates": typing.NotRequired[list[float] | None],
 })
-MriExtractParametersTagged = typing.TypedDict('MriExtractParametersTagged', {
+MriExtractParamsDictTagged = typing.TypedDict('MriExtractParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_extract"],
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
@@ -31,7 +31,7 @@ MriExtractParametersTagged = typing.TypedDict('MriExtractParametersTagged', {
 
 class MriExtractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExtractParameters(...)`.
+    Output object returned when calling `MriExtractParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_extract_params(
     dst_volume: InputPathType,
     like_template: InputPathType | None = None,
     coordinates: list[float] | None = None,
-) -> MriExtractParametersTagged:
+) -> MriExtractParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def mri_extract_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExtractParameters` object.
+    `MriExtractParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def mri_extract_validate(
 
 
 def mri_extract_cargs(
-    params: MriExtractParameters,
+    params: MriExtractParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def mri_extract_cargs(
 
 
 def mri_extract_outputs(
-    params: MriExtractParameters,
+    params: MriExtractParamsDict,
     execution: Execution,
 ) -> MriExtractOutputs:
     """
@@ -151,7 +151,7 @@ def mri_extract_outputs(
 
 
 def mri_extract_execute(
-    params: MriExtractParameters,
+    params: MriExtractParamsDict,
     runner: Runner | None = None,
 ) -> MriExtractOutputs:
     """
@@ -218,6 +218,8 @@ def mri_extract(
 __all__ = [
     "MRI_EXTRACT_METADATA",
     "MriExtractOutputs",
+    "MriExtractParamsDict",
+    "MriExtractParamsDictTagged",
     "mri_extract",
     "mri_extract_execute",
     "mri_extract_params",

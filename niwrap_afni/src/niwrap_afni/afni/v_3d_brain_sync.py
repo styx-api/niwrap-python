@@ -13,7 +13,7 @@ V_3D_BRAIN_SYNC_METADATA = Metadata(
 )
 
 
-V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
+V3dBrainSyncParamsDict = typing.TypedDict('V3dBrainSyncParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBrainSync"]],
     "inset1": InputPathType,
     "inset2": InputPathType,
@@ -23,7 +23,7 @@ V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "verb": bool,
 })
-V3dBrainSyncParametersTagged = typing.TypedDict('V3dBrainSyncParametersTagged', {
+V3dBrainSyncParamsDictTagged = typing.TypedDict('V3dBrainSyncParamsDictTagged', {
     "@type": typing.Literal["afni/3dBrainSync"],
     "inset1": InputPathType,
     "inset2": InputPathType,
@@ -37,7 +37,7 @@ V3dBrainSyncParametersTagged = typing.TypedDict('V3dBrainSyncParametersTagged', 
 
 class V3dBrainSyncOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBrainSyncParameters(...)`.
+    Output object returned when calling `V3dBrainSyncParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_brain_sync_params(
     normalize: bool = False,
     mask: InputPathType | None = None,
     verb: bool = False,
-) -> V3dBrainSyncParametersTagged:
+) -> V3dBrainSyncParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def v_3d_brain_sync_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBrainSyncParameters` object.
+    `V3dBrainSyncParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def v_3d_brain_sync_validate(
 
 
 def v_3d_brain_sync_cargs(
-    params: V3dBrainSyncParameters,
+    params: V3dBrainSyncParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def v_3d_brain_sync_cargs(
 
 
 def v_3d_brain_sync_outputs(
-    params: V3dBrainSyncParameters,
+    params: V3dBrainSyncParamsDict,
     execution: Execution,
 ) -> V3dBrainSyncOutputs:
     """
@@ -204,7 +204,7 @@ def v_3d_brain_sync_outputs(
 
 
 def v_3d_brain_sync_execute(
-    params: V3dBrainSyncParameters,
+    params: V3dBrainSyncParamsDict,
     runner: Runner | None = None,
 ) -> V3dBrainSyncOutputs:
     """
@@ -282,6 +282,8 @@ def v_3d_brain_sync(
 
 __all__ = [
     "V3dBrainSyncOutputs",
+    "V3dBrainSyncParamsDict",
+    "V3dBrainSyncParamsDictTagged",
     "V_3D_BRAIN_SYNC_METADATA",
     "v_3d_brain_sync",
     "v_3d_brain_sync_execute",

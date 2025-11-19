@@ -12,12 +12,12 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 )
 
 
-SurfaceFlipNormalsParameters = typing.TypedDict('SurfaceFlipNormalsParameters', {
+SurfaceFlipNormalsParamsDict = typing.TypedDict('SurfaceFlipNormalsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-normals"]],
     "surface-out": str,
     "surface": InputPathType,
 })
-SurfaceFlipNormalsParametersTagged = typing.TypedDict('SurfaceFlipNormalsParametersTagged', {
+SurfaceFlipNormalsParamsDictTagged = typing.TypedDict('SurfaceFlipNormalsParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-flip-normals"],
     "surface-out": str,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfaceFlipNormalsParametersTagged = typing.TypedDict('SurfaceFlipNormalsParamet
 
 class SurfaceFlipNormalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceFlipNormalsParameters(...)`.
+    Output object returned when calling `SurfaceFlipNormalsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class SurfaceFlipNormalsOutputs(typing.NamedTuple):
 def surface_flip_normals_params(
     surface_out: str,
     surface: InputPathType,
-) -> SurfaceFlipNormalsParametersTagged:
+) -> SurfaceFlipNormalsParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def surface_flip_normals_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceFlipNormalsParameters` object.
+    `SurfaceFlipNormalsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def surface_flip_normals_validate(
 
 
 def surface_flip_normals_cargs(
-    params: SurfaceFlipNormalsParameters,
+    params: SurfaceFlipNormalsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def surface_flip_normals_cargs(
 
 
 def surface_flip_normals_outputs(
-    params: SurfaceFlipNormalsParameters,
+    params: SurfaceFlipNormalsParamsDict,
     execution: Execution,
 ) -> SurfaceFlipNormalsOutputs:
     """
@@ -121,7 +121,7 @@ def surface_flip_normals_outputs(
 
 
 def surface_flip_normals_execute(
-    params: SurfaceFlipNormalsParameters,
+    params: SurfaceFlipNormalsParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
@@ -182,6 +182,8 @@ def surface_flip_normals(
 __all__ = [
     "SURFACE_FLIP_NORMALS_METADATA",
     "SurfaceFlipNormalsOutputs",
+    "SurfaceFlipNormalsParamsDict",
+    "SurfaceFlipNormalsParamsDictTagged",
     "surface_flip_normals",
     "surface_flip_normals_execute",
     "surface_flip_normals_params",

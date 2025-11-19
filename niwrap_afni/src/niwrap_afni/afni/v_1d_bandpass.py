@@ -13,7 +13,7 @@ V_1D_BANDPASS_METADATA = Metadata(
 )
 
 
-V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
+V1dBandpassParamsDict = typing.TypedDict('V1dBandpassParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dBandpass"]],
     "fbot": float,
     "ftop": float,
@@ -23,7 +23,7 @@ V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
     "nodetrend": bool,
     "norm": bool,
 })
-V1dBandpassParametersTagged = typing.TypedDict('V1dBandpassParametersTagged', {
+V1dBandpassParamsDictTagged = typing.TypedDict('V1dBandpassParamsDictTagged', {
     "@type": typing.Literal["afni/1dBandpass"],
     "fbot": float,
     "ftop": float,
@@ -37,7 +37,7 @@ V1dBandpassParametersTagged = typing.TypedDict('V1dBandpassParametersTagged', {
 
 class V1dBandpassOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dBandpassParameters(...)`.
+    Output object returned when calling `V1dBandpassParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v_1d_bandpass_params(
     ortfile: InputPathType | None = None,
     nodetrend: bool = False,
     norm: bool = False,
-) -> V1dBandpassParametersTagged:
+) -> V1dBandpassParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def v_1d_bandpass_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dBandpassParameters` object.
+    `V1dBandpassParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def v_1d_bandpass_validate(
 
 
 def v_1d_bandpass_cargs(
-    params: V1dBandpassParameters,
+    params: V1dBandpassParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def v_1d_bandpass_cargs(
 
 
 def v_1d_bandpass_outputs(
-    params: V1dBandpassParameters,
+    params: V1dBandpassParamsDict,
     execution: Execution,
 ) -> V1dBandpassOutputs:
     """
@@ -181,7 +181,7 @@ def v_1d_bandpass_outputs(
 
 
 def v_1d_bandpass_execute(
-    params: V1dBandpassParameters,
+    params: V1dBandpassParamsDict,
     runner: Runner | None = None,
 ) -> V1dBandpassOutputs:
     """
@@ -257,6 +257,8 @@ def v_1d_bandpass(
 
 __all__ = [
     "V1dBandpassOutputs",
+    "V1dBandpassParamsDict",
+    "V1dBandpassParamsDictTagged",
     "V_1D_BANDPASS_METADATA",
     "v_1d_bandpass",
     "v_1d_bandpass_execute",

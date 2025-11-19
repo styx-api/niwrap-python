@@ -13,7 +13,7 @@ SIGNAL2IMAGE_METADATA = Metadata(
 )
 
 
-Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
+Signal2imageParamsDict = typing.TypedDict('Signal2imageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/signal2image"]],
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
@@ -29,7 +29,7 @@ Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
     "save_flag": bool,
     "help_flag": bool,
 })
-Signal2imageParametersTagged = typing.TypedDict('Signal2imageParametersTagged', {
+Signal2imageParamsDictTagged = typing.TypedDict('Signal2imageParamsDictTagged', {
     "@type": typing.Literal["fsl/signal2image"],
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
@@ -49,7 +49,7 @@ Signal2imageParametersTagged = typing.TypedDict('Signal2imageParametersTagged', 
 
 class Signal2imageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Signal2imageParameters(...)`.
+    Output object returned when calling `Signal2imageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def signal2image_params(
     rolloff: float | None = None,
     save_flag: bool = False,
     help_flag: bool = False,
-) -> Signal2imageParametersTagged:
+) -> Signal2imageParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def signal2image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Signal2imageParameters` object.
+    `Signal2imageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def signal2image_validate(
 
 
 def signal2image_cargs(
-    params: Signal2imageParameters,
+    params: Signal2imageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -245,7 +245,7 @@ def signal2image_cargs(
 
 
 def signal2image_outputs(
-    params: Signal2imageParameters,
+    params: Signal2imageParamsDict,
     execution: Execution,
 ) -> Signal2imageOutputs:
     """
@@ -266,7 +266,7 @@ def signal2image_outputs(
 
 
 def signal2image_execute(
-    params: Signal2imageParameters,
+    params: Signal2imageParamsDict,
     runner: Runner | None = None,
 ) -> Signal2imageOutputs:
     """
@@ -361,6 +361,8 @@ def signal2image(
 __all__ = [
     "SIGNAL2IMAGE_METADATA",
     "Signal2imageOutputs",
+    "Signal2imageParamsDict",
+    "Signal2imageParamsDictTagged",
     "signal2image",
     "signal2image_execute",
     "signal2image_params",

@@ -13,12 +13,12 @@ MRIS_REVERSE_METADATA = Metadata(
 )
 
 
-MrisReverseParameters = typing.TypedDict('MrisReverseParameters', {
+MrisReverseParamsDict = typing.TypedDict('MrisReverseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_reverse"]],
     "input_surface": InputPathType,
     "output_surface": str,
 })
-MrisReverseParametersTagged = typing.TypedDict('MrisReverseParametersTagged', {
+MrisReverseParamsDictTagged = typing.TypedDict('MrisReverseParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_reverse"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisReverseParametersTagged = typing.TypedDict('MrisReverseParametersTagged', {
 
 class MrisReverseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisReverseParameters(...)`.
+    Output object returned when calling `MrisReverseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisReverseOutputs(typing.NamedTuple):
 def mris_reverse_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisReverseParametersTagged:
+) -> MrisReverseParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_reverse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisReverseParameters` object.
+    `MrisReverseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_reverse_validate(
 
 
 def mris_reverse_cargs(
-    params: MrisReverseParameters,
+    params: MrisReverseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mris_reverse_cargs(
 
 
 def mris_reverse_outputs(
-    params: MrisReverseParameters,
+    params: MrisReverseParamsDict,
     execution: Execution,
 ) -> MrisReverseOutputs:
     """
@@ -119,7 +119,7 @@ def mris_reverse_outputs(
 
 
 def mris_reverse_execute(
-    params: MrisReverseParameters,
+    params: MrisReverseParamsDict,
     runner: Runner | None = None,
 ) -> MrisReverseOutputs:
     """
@@ -178,6 +178,8 @@ def mris_reverse(
 __all__ = [
     "MRIS_REVERSE_METADATA",
     "MrisReverseOutputs",
+    "MrisReverseParamsDict",
+    "MrisReverseParamsDictTagged",
     "mris_reverse",
     "mris_reverse_execute",
     "mris_reverse_params",

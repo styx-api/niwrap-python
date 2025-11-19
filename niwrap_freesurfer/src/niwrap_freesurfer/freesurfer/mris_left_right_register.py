@@ -13,14 +13,14 @@ MRIS_LEFT_RIGHT_REGISTER_METADATA = Metadata(
 )
 
 
-MrisLeftRightRegisterParameters = typing.TypedDict('MrisLeftRightRegisterParameters', {
+MrisLeftRightRegisterParamsDict = typing.TypedDict('MrisLeftRightRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_left_right_register"]],
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
     "lh_sphere_left_right": str,
     "rh_sphere_left_right": str,
 })
-MrisLeftRightRegisterParametersTagged = typing.TypedDict('MrisLeftRightRegisterParametersTagged', {
+MrisLeftRightRegisterParamsDictTagged = typing.TypedDict('MrisLeftRightRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_left_right_register"],
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
@@ -31,7 +31,7 @@ MrisLeftRightRegisterParametersTagged = typing.TypedDict('MrisLeftRightRegisterP
 
 class MrisLeftRightRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisLeftRightRegisterParameters(...)`.
+    Output object returned when calling `MrisLeftRightRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def mris_left_right_register_params(
     rh_sphere: InputPathType,
     lh_sphere_left_right: str,
     rh_sphere_left_right: str,
-) -> MrisLeftRightRegisterParametersTagged:
+) -> MrisLeftRightRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def mris_left_right_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisLeftRightRegisterParameters` object.
+    `MrisLeftRightRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def mris_left_right_register_validate(
 
 
 def mris_left_right_register_cargs(
-    params: MrisLeftRightRegisterParameters,
+    params: MrisLeftRightRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def mris_left_right_register_cargs(
 
 
 def mris_left_right_register_outputs(
-    params: MrisLeftRightRegisterParameters,
+    params: MrisLeftRightRegisterParamsDict,
     execution: Execution,
 ) -> MrisLeftRightRegisterOutputs:
     """
@@ -144,7 +144,7 @@ def mris_left_right_register_outputs(
 
 
 def mris_left_right_register_execute(
-    params: MrisLeftRightRegisterParameters,
+    params: MrisLeftRightRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MrisLeftRightRegisterOutputs:
     """
@@ -211,6 +211,8 @@ def mris_left_right_register(
 __all__ = [
     "MRIS_LEFT_RIGHT_REGISTER_METADATA",
     "MrisLeftRightRegisterOutputs",
+    "MrisLeftRightRegisterParamsDict",
+    "MrisLeftRightRegisterParamsDictTagged",
     "mris_left_right_register",
     "mris_left_right_register_execute",
     "mris_left_right_register_params",

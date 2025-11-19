@@ -13,7 +13,7 @@ MRI_TRANSFORM_METADATA = Metadata(
 )
 
 
-MriTransformParameters = typing.TypedDict('MriTransformParameters', {
+MriTransformParamsDict = typing.TypedDict('MriTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_transform"]],
     "input_volume": InputPathType,
     "lta_file": InputPathType,
@@ -21,7 +21,7 @@ MriTransformParameters = typing.TypedDict('MriTransformParameters', {
     "out_like": typing.NotRequired[InputPathType | None],
     "invert": bool,
 })
-MriTransformParametersTagged = typing.TypedDict('MriTransformParametersTagged', {
+MriTransformParamsDictTagged = typing.TypedDict('MriTransformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_transform"],
     "input_volume": InputPathType,
     "lta_file": InputPathType,
@@ -33,7 +33,7 @@ MriTransformParametersTagged = typing.TypedDict('MriTransformParametersTagged', 
 
 class MriTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriTransformParameters(...)`.
+    Output object returned when calling `MriTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_transform_params(
     output_file: str,
     out_like: InputPathType | None = None,
     invert: bool = False,
-) -> MriTransformParametersTagged:
+) -> MriTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def mri_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriTransformParameters` object.
+    `MriTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_transform_validate(
 
 
 def mri_transform_cargs(
-    params: MriTransformParameters,
+    params: MriTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def mri_transform_cargs(
 
 
 def mri_transform_outputs(
-    params: MriTransformParameters,
+    params: MriTransformParamsDict,
     execution: Execution,
 ) -> MriTransformOutputs:
     """
@@ -154,7 +154,7 @@ def mri_transform_outputs(
 
 
 def mri_transform_execute(
-    params: MriTransformParameters,
+    params: MriTransformParamsDict,
     runner: Runner | None = None,
 ) -> MriTransformOutputs:
     """
@@ -222,6 +222,8 @@ def mri_transform(
 __all__ = [
     "MRI_TRANSFORM_METADATA",
     "MriTransformOutputs",
+    "MriTransformParamsDict",
+    "MriTransformParamsDictTagged",
     "mri_transform",
     "mri_transform_execute",
     "mri_transform_params",

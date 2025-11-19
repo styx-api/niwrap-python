@@ -13,7 +13,7 @@ V_3D_TCORR1_D_METADATA = Metadata(
 )
 
 
-V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
+V3dTcorr1DParamsDict = typing.TypedDict('V3dTcorr1DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTcorr1D"]],
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
@@ -24,7 +24,7 @@ V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
     "xset": InputPathType,
     "y_1d": InputPathType,
 })
-V3dTcorr1DParametersTagged = typing.TypedDict('V3dTcorr1DParametersTagged', {
+V3dTcorr1DParamsDictTagged = typing.TypedDict('V3dTcorr1DParamsDictTagged', {
     "@type": typing.Literal["afni/3dTcorr1D"],
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
@@ -39,7 +39,7 @@ V3dTcorr1DParametersTagged = typing.TypedDict('V3dTcorr1DParametersTagged', {
 
 class V3dTcorr1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTcorr1DParameters(...)`.
+    Output object returned when calling `V3dTcorr1DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def v_3d_tcorr1_d_params(
     pearson: bool = False,
     quadrant: bool = False,
     spearman: bool = False,
-) -> V3dTcorr1DParametersTagged:
+) -> V3dTcorr1DParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def v_3d_tcorr1_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTcorr1DParameters` object.
+    `V3dTcorr1DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def v_3d_tcorr1_d_validate(
 
 
 def v_3d_tcorr1_d_cargs(
-    params: V3dTcorr1DParameters,
+    params: V3dTcorr1DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -167,7 +167,7 @@ def v_3d_tcorr1_d_cargs(
 
 
 def v_3d_tcorr1_d_outputs(
-    params: V3dTcorr1DParameters,
+    params: V3dTcorr1DParamsDict,
     execution: Execution,
 ) -> V3dTcorr1DOutputs:
     """
@@ -188,7 +188,7 @@ def v_3d_tcorr1_d_outputs(
 
 
 def v_3d_tcorr1_d_execute(
-    params: V3dTcorr1DParameters,
+    params: V3dTcorr1DParamsDict,
     runner: Runner | None = None,
 ) -> V3dTcorr1DOutputs:
     """
@@ -266,6 +266,8 @@ def v_3d_tcorr1_d(
 
 __all__ = [
     "V3dTcorr1DOutputs",
+    "V3dTcorr1DParamsDict",
+    "V3dTcorr1DParamsDictTagged",
     "V_3D_TCORR1_D_METADATA",
     "v_3d_tcorr1_d",
     "v_3d_tcorr1_d_execute",

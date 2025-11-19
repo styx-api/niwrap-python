@@ -13,11 +13,11 @@ V__DO_EXAMPLES_METADATA = Metadata(
 )
 
 
-VDoExamplesParameters = typing.TypedDict('VDoExamplesParameters', {
+VDoExamplesParamsDict = typing.TypedDict('VDoExamplesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@DO.examples"]],
     "auto_test": bool,
 })
-VDoExamplesParametersTagged = typing.TypedDict('VDoExamplesParametersTagged', {
+VDoExamplesParamsDictTagged = typing.TypedDict('VDoExamplesParamsDictTagged', {
     "@type": typing.Literal["afni/@DO.examples"],
     "auto_test": bool,
 })
@@ -25,7 +25,7 @@ VDoExamplesParametersTagged = typing.TypedDict('VDoExamplesParametersTagged', {
 
 class VDoExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDoExamplesParameters(...)`.
+    Output object returned when calling `VDoExamplesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VDoExamplesOutputs(typing.NamedTuple):
 
 def v__do_examples_params(
     auto_test: bool = False,
-) -> VDoExamplesParametersTagged:
+) -> VDoExamplesParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def v__do_examples_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDoExamplesParameters` object.
+    `VDoExamplesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def v__do_examples_validate(
 
 
 def v__do_examples_cargs(
-    params: VDoExamplesParameters,
+    params: VDoExamplesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def v__do_examples_cargs(
 
 
 def v__do_examples_outputs(
-    params: VDoExamplesParameters,
+    params: VDoExamplesParamsDict,
     execution: Execution,
 ) -> VDoExamplesOutputs:
     """
@@ -112,7 +112,7 @@ def v__do_examples_outputs(
 
 
 def v__do_examples_execute(
-    params: VDoExamplesParameters,
+    params: VDoExamplesParamsDict,
     runner: Runner | None = None,
 ) -> VDoExamplesOutputs:
     """
@@ -169,6 +169,8 @@ def v__do_examples(
 
 __all__ = [
     "VDoExamplesOutputs",
+    "VDoExamplesParamsDict",
+    "VDoExamplesParamsDictTagged",
     "V__DO_EXAMPLES_METADATA",
     "v__do_examples",
     "v__do_examples_execute",

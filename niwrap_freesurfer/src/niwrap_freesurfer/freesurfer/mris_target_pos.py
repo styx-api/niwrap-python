@@ -13,7 +13,7 @@ MRIS_TARGET_POS_METADATA = Metadata(
 )
 
 
-MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
+MrisTargetPosParamsDict = typing.TypedDict('MrisTargetPosParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_target_pos"]],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
@@ -29,7 +29,7 @@ MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
     "help_flag": bool,
     "version_flag": bool,
 })
-MrisTargetPosParametersTagged = typing.TypedDict('MrisTargetPosParametersTagged', {
+MrisTargetPosParamsDictTagged = typing.TypedDict('MrisTargetPosParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_target_pos"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
@@ -49,7 +49,7 @@ MrisTargetPosParametersTagged = typing.TypedDict('MrisTargetPosParametersTagged'
 
 class MrisTargetPosOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTargetPosParameters(...)`.
+    Output object returned when calling `MrisTargetPosParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def mris_target_pos_params(
     check_options: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MrisTargetPosParametersTagged:
+) -> MrisTargetPosParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def mris_target_pos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTargetPosParameters` object.
+    `MrisTargetPosParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def mris_target_pos_validate(
 
 
 def mris_target_pos_cargs(
-    params: MrisTargetPosParameters,
+    params: MrisTargetPosParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -246,7 +246,7 @@ def mris_target_pos_cargs(
 
 
 def mris_target_pos_outputs(
-    params: MrisTargetPosParameters,
+    params: MrisTargetPosParamsDict,
     execution: Execution,
 ) -> MrisTargetPosOutputs:
     """
@@ -265,7 +265,7 @@ def mris_target_pos_outputs(
 
 
 def mris_target_pos_execute(
-    params: MrisTargetPosParameters,
+    params: MrisTargetPosParamsDict,
     runner: Runner | None = None,
 ) -> MrisTargetPosOutputs:
     """
@@ -360,6 +360,8 @@ def mris_target_pos(
 __all__ = [
     "MRIS_TARGET_POS_METADATA",
     "MrisTargetPosOutputs",
+    "MrisTargetPosParamsDict",
+    "MrisTargetPosParamsDictTagged",
     "mris_target_pos",
     "mris_target_pos_execute",
     "mris_target_pos_params",

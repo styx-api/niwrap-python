@@ -13,7 +13,7 @@ WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 )
 
 
-WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMultiTransformParameters', {
+WarpTensorImageMultiTransformParamsDict = typing.TypedDict('WarpTensorImageMultiTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/WarpTensorImageMultiTransform"]],
     "image_dimension": int,
     "moving_image": InputPathType,
@@ -26,7 +26,7 @@ WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMulti
     "ants_prefix": typing.NotRequired[str | None],
     "ants_prefix_invert": typing.NotRequired[str | None],
 })
-WarpTensorImageMultiTransformParametersTagged = typing.TypedDict('WarpTensorImageMultiTransformParametersTagged', {
+WarpTensorImageMultiTransformParamsDictTagged = typing.TypedDict('WarpTensorImageMultiTransformParamsDictTagged', {
     "@type": typing.Literal["ants/WarpTensorImageMultiTransform"],
     "image_dimension": int,
     "moving_image": InputPathType,
@@ -43,7 +43,7 @@ WarpTensorImageMultiTransformParametersTagged = typing.TypedDict('WarpTensorImag
 
 class WarpTensorImageMultiTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WarpTensorImageMultiTransformParameters(...)`.
+    Output object returned when calling `WarpTensorImageMultiTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def warp_tensor_image_multi_transform_params(
     use_nearest_neighbor: bool = False,
     ants_prefix: str | None = None,
     ants_prefix_invert: str | None = None,
-) -> WarpTensorImageMultiTransformParametersTagged:
+) -> WarpTensorImageMultiTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def warp_tensor_image_multi_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpTensorImageMultiTransformParameters` object.
+    `WarpTensorImageMultiTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def warp_tensor_image_multi_transform_validate(
 
 
 def warp_tensor_image_multi_transform_cargs(
-    params: WarpTensorImageMultiTransformParameters,
+    params: WarpTensorImageMultiTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def warp_tensor_image_multi_transform_cargs(
 
 
 def warp_tensor_image_multi_transform_outputs(
-    params: WarpTensorImageMultiTransformParameters,
+    params: WarpTensorImageMultiTransformParamsDict,
     execution: Execution,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
@@ -224,7 +224,7 @@ def warp_tensor_image_multi_transform_outputs(
 
 
 def warp_tensor_image_multi_transform_execute(
-    params: WarpTensorImageMultiTransformParameters,
+    params: WarpTensorImageMultiTransformParamsDict,
     runner: Runner | None = None,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
@@ -320,6 +320,8 @@ def warp_tensor_image_multi_transform(
 __all__ = [
     "WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA",
     "WarpTensorImageMultiTransformOutputs",
+    "WarpTensorImageMultiTransformParamsDict",
+    "WarpTensorImageMultiTransformParamsDictTagged",
     "warp_tensor_image_multi_transform",
     "warp_tensor_image_multi_transform_execute",
     "warp_tensor_image_multi_transform_params",

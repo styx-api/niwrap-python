@@ -13,7 +13,7 @@ XHEMIREG_METADATA = Metadata(
 )
 
 
-XhemiregParameters = typing.TypedDict('XhemiregParameters', {
+XhemiregParamsDict = typing.TypedDict('XhemiregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xhemireg"]],
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ XhemiregParameters = typing.TypedDict('XhemiregParameters', {
     "version": bool,
     "help": bool,
 })
-XhemiregParametersTagged = typing.TypedDict('XhemiregParametersTagged', {
+XhemiregParamsDictTagged = typing.TypedDict('XhemiregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xhemireg"],
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ XhemiregParametersTagged = typing.TypedDict('XhemiregParametersTagged', {
 
 class XhemiregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XhemiregParameters(...)`.
+    Output object returned when calling `XhemiregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def xhemireg_params(
     threads: float | None = None,
     version: bool = False,
     help_: bool = False,
-) -> XhemiregParametersTagged:
+) -> XhemiregParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def xhemireg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XhemiregParameters` object.
+    `XhemiregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -177,7 +177,7 @@ def xhemireg_validate(
 
 
 def xhemireg_cargs(
-    params: XhemiregParameters,
+    params: XhemiregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def xhemireg_cargs(
 
 
 def xhemireg_outputs(
-    params: XhemiregParameters,
+    params: XhemiregParamsDict,
     execution: Execution,
 ) -> XhemiregOutputs:
     """
@@ -251,7 +251,7 @@ def xhemireg_outputs(
 
 
 def xhemireg_execute(
-    params: XhemiregParameters,
+    params: XhemiregParamsDict,
     runner: Runner | None = None,
 ) -> XhemiregOutputs:
     """
@@ -344,6 +344,8 @@ def xhemireg(
 __all__ = [
     "XHEMIREG_METADATA",
     "XhemiregOutputs",
+    "XhemiregParamsDict",
+    "XhemiregParamsDictTagged",
     "xhemireg",
     "xhemireg_execute",
     "xhemireg_params",

@@ -13,7 +13,7 @@ TIMING_TOOL_PY_METADATA = Metadata(
 )
 
 
-TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
+TimingToolPyParamsDict = typing.TypedDict('TimingToolPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/timing_tool.py"]],
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
     "truncate_times": bool,
     "multi_timing_event_list": typing.NotRequired[str | None],
 })
-TimingToolPyParametersTagged = typing.TypedDict('TimingToolPyParametersTagged', {
+TimingToolPyParamsDictTagged = typing.TypedDict('TimingToolPyParamsDictTagged', {
     "@type": typing.Literal["afni/timing_tool.py"],
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
@@ -61,7 +61,7 @@ TimingToolPyParametersTagged = typing.TypedDict('TimingToolPyParametersTagged', 
 
 class TimingToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TimingToolPyParameters(...)`.
+    Output object returned when calling `TimingToolPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +91,7 @@ def timing_tool_py_params(
     round_times_frac: float | None = None,
     truncate_times: bool = False,
     multi_timing_event_list: str | None = None,
-) -> TimingToolPyParametersTagged:
+) -> TimingToolPyParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def timing_tool_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TimingToolPyParameters` object.
+    `TimingToolPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -247,7 +247,7 @@ def timing_tool_py_validate(
 
 
 def timing_tool_py_cargs(
-    params: TimingToolPyParameters,
+    params: TimingToolPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -345,7 +345,7 @@ def timing_tool_py_cargs(
 
 
 def timing_tool_py_outputs(
-    params: TimingToolPyParameters,
+    params: TimingToolPyParamsDict,
     execution: Execution,
 ) -> TimingToolPyOutputs:
     """
@@ -366,7 +366,7 @@ def timing_tool_py_outputs(
 
 
 def timing_tool_py_execute(
-    params: TimingToolPyParameters,
+    params: TimingToolPyParamsDict,
     runner: Runner | None = None,
 ) -> TimingToolPyOutputs:
     """
@@ -480,6 +480,8 @@ def timing_tool_py(
 __all__ = [
     "TIMING_TOOL_PY_METADATA",
     "TimingToolPyOutputs",
+    "TimingToolPyParamsDict",
+    "TimingToolPyParamsDictTagged",
     "timing_tool_py",
     "timing_tool_py_execute",
     "timing_tool_py_params",

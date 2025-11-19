@@ -13,7 +13,7 @@ BETSURF_METADATA = Metadata(
 )
 
 
-BetsurfParameters = typing.TypedDict('BetsurfParameters', {
+BetsurfParamsDict = typing.TypedDict('BetsurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/betsurf"]],
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ BetsurfParameters = typing.TypedDict('BetsurfParameters', {
     "skull_mask_flag": bool,
     "increased_precision": typing.NotRequired[int | None],
 })
-BetsurfParametersTagged = typing.TypedDict('BetsurfParametersTagged', {
+BetsurfParamsDictTagged = typing.TypedDict('BetsurfParamsDictTagged', {
     "@type": typing.Literal["fsl/betsurf"],
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ BetsurfParametersTagged = typing.TypedDict('BetsurfParametersTagged', {
 
 class BetsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BetsurfParameters(...)`.
+    Output object returned when calling `BetsurfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def betsurf_params(
     mask_flag: bool = False,
     skull_mask_flag: bool = False,
     increased_precision: int | None = None,
-) -> BetsurfParametersTagged:
+) -> BetsurfParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def betsurf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BetsurfParameters` object.
+    `BetsurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def betsurf_validate(
 
 
 def betsurf_cargs(
-    params: BetsurfParameters,
+    params: BetsurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -216,7 +216,7 @@ def betsurf_cargs(
 
 
 def betsurf_outputs(
-    params: BetsurfParameters,
+    params: BetsurfParamsDict,
     execution: Execution,
 ) -> BetsurfOutputs:
     """
@@ -238,7 +238,7 @@ def betsurf_outputs(
 
 
 def betsurf_execute(
-    params: BetsurfParameters,
+    params: BetsurfParamsDict,
     runner: Runner | None = None,
 ) -> BetsurfOutputs:
     """
@@ -329,6 +329,8 @@ def betsurf(
 __all__ = [
     "BETSURF_METADATA",
     "BetsurfOutputs",
+    "BetsurfParamsDict",
+    "BetsurfParamsDictTagged",
     "betsurf",
     "betsurf_execute",
     "betsurf_params",

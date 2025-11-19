@@ -13,7 +13,7 @@ V_3D_MATCH_METADATA = Metadata(
 )
 
 
-V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
+V3dMatchParamsDict = typing.TypedDict('V3dMatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMatch"]],
     "inset": InputPathType,
     "refset": InputPathType,
@@ -25,7 +25,7 @@ V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
     "prefix": str,
     "only_dice_thr": bool,
 })
-V3dMatchParametersTagged = typing.TypedDict('V3dMatchParametersTagged', {
+V3dMatchParamsDictTagged = typing.TypedDict('V3dMatchParamsDictTagged', {
     "@type": typing.Literal["afni/3dMatch"],
     "inset": InputPathType,
     "refset": InputPathType,
@@ -41,7 +41,7 @@ V3dMatchParametersTagged = typing.TypedDict('V3dMatchParametersTagged', {
 
 class V3dMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMatchParameters(...)`.
+    Output object returned when calling `V3dMatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def v_3d_match_params(
     ref_min: float | None = None,
     ref_max: float | None = None,
     only_dice_thr: bool = False,
-) -> V3dMatchParametersTagged:
+) -> V3dMatchParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def v_3d_match_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMatchParameters` object.
+    `V3dMatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def v_3d_match_validate(
 
 
 def v_3d_match_cargs(
-    params: V3dMatchParameters,
+    params: V3dMatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -213,7 +213,7 @@ def v_3d_match_cargs(
 
 
 def v_3d_match_outputs(
-    params: V3dMatchParameters,
+    params: V3dMatchParamsDict,
     execution: Execution,
 ) -> V3dMatchOutputs:
     """
@@ -236,7 +236,7 @@ def v_3d_match_outputs(
 
 
 def v_3d_match_execute(
-    params: V3dMatchParameters,
+    params: V3dMatchParamsDict,
     runner: Runner | None = None,
 ) -> V3dMatchOutputs:
     """
@@ -323,6 +323,8 @@ def v_3d_match(
 
 __all__ = [
     "V3dMatchOutputs",
+    "V3dMatchParamsDict",
+    "V3dMatchParamsDictTagged",
     "V_3D_MATCH_METADATA",
     "v_3d_match",
     "v_3d_match_execute",

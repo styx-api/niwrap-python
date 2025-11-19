@@ -12,7 +12,7 @@ VOLUME_VECTOR_OPERATION_METADATA = Metadata(
 )
 
 
-VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParameters', {
+VolumeVectorOperationParamsDict = typing.TypedDict('VolumeVectorOperationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-vector-operation"]],
     "volume-out": str,
     "normalize-a": bool,
@@ -23,7 +23,7 @@ VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParamet
     "vectors-b": InputPathType,
     "operation": str,
 })
-VolumeVectorOperationParametersTagged = typing.TypedDict('VolumeVectorOperationParametersTagged', {
+VolumeVectorOperationParamsDictTagged = typing.TypedDict('VolumeVectorOperationParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-vector-operation"],
     "volume-out": str,
     "normalize-a": bool,
@@ -38,7 +38,7 @@ VolumeVectorOperationParametersTagged = typing.TypedDict('VolumeVectorOperationP
 
 class VolumeVectorOperationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeVectorOperationParameters(...)`.
+    Output object returned when calling `VolumeVectorOperationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def volume_vector_operation_params(
     normalize_b: bool = False,
     normalize_output: bool = False,
     magnitude: bool = False,
-) -> VolumeVectorOperationParametersTagged:
+) -> VolumeVectorOperationParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def volume_vector_operation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeVectorOperationParameters` object.
+    `VolumeVectorOperationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def volume_vector_operation_validate(
 
 
 def volume_vector_operation_cargs(
-    params: VolumeVectorOperationParameters,
+    params: VolumeVectorOperationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def volume_vector_operation_cargs(
 
 
 def volume_vector_operation_outputs(
-    params: VolumeVectorOperationParameters,
+    params: VolumeVectorOperationParamsDict,
     execution: Execution,
 ) -> VolumeVectorOperationOutputs:
     """
@@ -183,7 +183,7 @@ def volume_vector_operation_outputs(
 
 
 def volume_vector_operation_execute(
-    params: VolumeVectorOperationParameters,
+    params: VolumeVectorOperationParamsDict,
     runner: Runner | None = None,
 ) -> VolumeVectorOperationOutputs:
     """
@@ -273,6 +273,8 @@ def volume_vector_operation(
 __all__ = [
     "VOLUME_VECTOR_OPERATION_METADATA",
     "VolumeVectorOperationOutputs",
+    "VolumeVectorOperationParamsDict",
+    "VolumeVectorOperationParamsDictTagged",
     "volume_vector_operation",
     "volume_vector_operation_execute",
     "volume_vector_operation_params",

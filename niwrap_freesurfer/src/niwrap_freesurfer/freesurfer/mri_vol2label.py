@@ -13,7 +13,7 @@ MRI_VOL2LABEL_METADATA = Metadata(
 )
 
 
-MriVol2labelParameters = typing.TypedDict('MriVol2labelParameters', {
+MriVol2labelParamsDict = typing.TypedDict('MriVol2labelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2label"]],
     "input": InputPathType,
     "label_id": typing.NotRequired[float | None],
@@ -28,7 +28,7 @@ MriVol2labelParameters = typing.TypedDict('MriVol2labelParameters', {
     "erosions": typing.NotRequired[float | None],
     "help": bool,
 })
-MriVol2labelParametersTagged = typing.TypedDict('MriVol2labelParametersTagged', {
+MriVol2labelParamsDictTagged = typing.TypedDict('MriVol2labelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_vol2label"],
     "input": InputPathType,
     "label_id": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ MriVol2labelParametersTagged = typing.TypedDict('MriVol2labelParametersTagged', 
 
 class MriVol2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVol2labelParameters(...)`.
+    Output object returned when calling `MriVol2labelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ def mri_vol2label_params(
     dilations: float | None = None,
     erosions: float | None = None,
     help_: bool = False,
-) -> MriVol2labelParametersTagged:
+) -> MriVol2labelParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def mri_vol2label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVol2labelParameters` object.
+    `MriVol2labelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def mri_vol2label_validate(
 
 
 def mri_vol2label_cargs(
-    params: MriVol2labelParameters,
+    params: MriVol2labelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,7 +244,7 @@ def mri_vol2label_cargs(
 
 
 def mri_vol2label_outputs(
-    params: MriVol2labelParameters,
+    params: MriVol2labelParamsDict,
     execution: Execution,
 ) -> MriVol2labelOutputs:
     """
@@ -265,7 +265,7 @@ def mri_vol2label_outputs(
 
 
 def mri_vol2label_execute(
-    params: MriVol2labelParameters,
+    params: MriVol2labelParamsDict,
     runner: Runner | None = None,
 ) -> MriVol2labelOutputs:
     """
@@ -359,6 +359,8 @@ def mri_vol2label(
 __all__ = [
     "MRI_VOL2LABEL_METADATA",
     "MriVol2labelOutputs",
+    "MriVol2labelParamsDict",
+    "MriVol2labelParamsDictTagged",
     "mri_vol2label",
     "mri_vol2label_execute",
     "mri_vol2label_params",

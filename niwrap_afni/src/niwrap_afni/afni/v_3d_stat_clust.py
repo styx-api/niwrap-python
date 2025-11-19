@@ -13,7 +13,7 @@ V_3D_STAT_CLUST_METADATA = Metadata(
 )
 
 
-V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
+V3dStatClustParamsDict = typing.TypedDict('V3dStatClustParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dStatClust"]],
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
     "nclust": float,
     "datasets": list[str],
 })
-V3dStatClustParametersTagged = typing.TypedDict('V3dStatClustParametersTagged', {
+V3dStatClustParamsDictTagged = typing.TypedDict('V3dStatClustParamsDictTagged', {
     "@type": typing.Literal["afni/3dStatClust"],
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ V3dStatClustParametersTagged = typing.TypedDict('V3dStatClustParametersTagged', 
 
 class V3dStatClustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dStatClustParameters(...)`.
+    Output object returned when calling `V3dStatClustParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def v_3d_stat_clust_params(
     dist_euc: bool = False,
     dist_ind: bool = False,
     dist_cor: bool = False,
-) -> V3dStatClustParametersTagged:
+) -> V3dStatClustParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def v_3d_stat_clust_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dStatClustParameters` object.
+    `V3dStatClustParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def v_3d_stat_clust_validate(
 
 
 def v_3d_stat_clust_cargs(
-    params: V3dStatClustParameters,
+    params: V3dStatClustParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def v_3d_stat_clust_cargs(
 
 
 def v_3d_stat_clust_outputs(
-    params: V3dStatClustParameters,
+    params: V3dStatClustParamsDict,
     execution: Execution,
 ) -> V3dStatClustOutputs:
     """
@@ -217,7 +217,7 @@ def v_3d_stat_clust_outputs(
 
 
 def v_3d_stat_clust_execute(
-    params: V3dStatClustParameters,
+    params: V3dStatClustParamsDict,
     runner: Runner | None = None,
 ) -> V3dStatClustOutputs:
     """
@@ -304,6 +304,8 @@ def v_3d_stat_clust(
 
 __all__ = [
     "V3dStatClustOutputs",
+    "V3dStatClustParamsDict",
+    "V3dStatClustParamsDictTagged",
     "V_3D_STAT_CLUST_METADATA",
     "v_3d_stat_clust",
     "v_3d_stat_clust_execute",

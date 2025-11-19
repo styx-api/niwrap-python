@@ -13,7 +13,7 @@ FSLASCII2IMG_METADATA = Metadata(
 )
 
 
-Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
+Fslascii2imgParamsDict = typing.TypedDict('Fslascii2imgParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslascii2img"]],
     "infile": InputPathType,
     "xsize": int,
@@ -26,7 +26,7 @@ Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
     "tr": float,
     "outfile": str,
 })
-Fslascii2imgParametersTagged = typing.TypedDict('Fslascii2imgParametersTagged', {
+Fslascii2imgParamsDictTagged = typing.TypedDict('Fslascii2imgParamsDictTagged', {
     "@type": typing.Literal["fsl/fslascii2img"],
     "infile": InputPathType,
     "xsize": int,
@@ -43,7 +43,7 @@ Fslascii2imgParametersTagged = typing.TypedDict('Fslascii2imgParametersTagged', 
 
 class Fslascii2imgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fslascii2imgParameters(...)`.
+    Output object returned when calling `Fslascii2imgParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def fslascii2img_params(
     zdim: float,
     tr: float,
     outfile: str = "output",
-) -> Fslascii2imgParametersTagged:
+) -> Fslascii2imgParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def fslascii2img_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fslascii2imgParameters` object.
+    `Fslascii2imgParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def fslascii2img_validate(
 
 
 def fslascii2img_cargs(
-    params: Fslascii2imgParameters,
+    params: Fslascii2imgParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def fslascii2img_cargs(
 
 
 def fslascii2img_outputs(
-    params: Fslascii2imgParameters,
+    params: Fslascii2imgParamsDict,
     execution: Execution,
 ) -> Fslascii2imgOutputs:
     """
@@ -199,7 +199,7 @@ def fslascii2img_outputs(
 
 
 def fslascii2img_execute(
-    params: Fslascii2imgParameters,
+    params: Fslascii2imgParamsDict,
     runner: Runner | None = None,
 ) -> Fslascii2imgOutputs:
     """
@@ -282,6 +282,8 @@ def fslascii2img(
 __all__ = [
     "FSLASCII2IMG_METADATA",
     "Fslascii2imgOutputs",
+    "Fslascii2imgParamsDict",
+    "Fslascii2imgParamsDictTagged",
     "fslascii2img",
     "fslascii2img_execute",
     "fslascii2img_params",

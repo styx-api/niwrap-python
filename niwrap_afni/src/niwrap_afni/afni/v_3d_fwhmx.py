@@ -13,7 +13,7 @@ V_3D_FWHMX_METADATA = Metadata(
 )
 
 
-V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
+V3dFwhmxParamsDict = typing.TypedDict('V3dFwhmxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dFWHMx"]],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -29,7 +29,7 @@ V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
     "acf": typing.NotRequired[str | None],
     "infile": InputPathType,
 })
-V3dFwhmxParametersTagged = typing.TypedDict('V3dFwhmxParametersTagged', {
+V3dFwhmxParamsDictTagged = typing.TypedDict('V3dFwhmxParamsDictTagged', {
     "@type": typing.Literal["afni/3dFWHMx"],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -49,7 +49,7 @@ V3dFwhmxParametersTagged = typing.TypedDict('V3dFwhmxParametersTagged', {
 
 class V3dFwhmxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dFwhmxParameters(...)`.
+    Output object returned when calling `V3dFwhmxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def v_3d_fwhmx_params(
     out: str | None = None,
     compat: bool = False,
     acf: str | None = None,
-) -> V3dFwhmxParametersTagged:
+) -> V3dFwhmxParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def v_3d_fwhmx_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dFwhmxParameters` object.
+    `V3dFwhmxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -186,7 +186,7 @@ def v_3d_fwhmx_validate(
 
 
 def v_3d_fwhmx_cargs(
-    params: V3dFwhmxParameters,
+    params: V3dFwhmxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,7 +244,7 @@ def v_3d_fwhmx_cargs(
 
 
 def v_3d_fwhmx_outputs(
-    params: V3dFwhmxParameters,
+    params: V3dFwhmxParamsDict,
     execution: Execution,
 ) -> V3dFwhmxOutputs:
     """
@@ -265,7 +265,7 @@ def v_3d_fwhmx_outputs(
 
 
 def v_3d_fwhmx_execute(
-    params: V3dFwhmxParameters,
+    params: V3dFwhmxParamsDict,
     runner: Runner | None = None,
 ) -> V3dFwhmxOutputs:
     """
@@ -364,6 +364,8 @@ def v_3d_fwhmx(
 
 __all__ = [
     "V3dFwhmxOutputs",
+    "V3dFwhmxParamsDict",
+    "V3dFwhmxParamsDictTagged",
     "V_3D_FWHMX_METADATA",
     "v_3d_fwhmx",
     "v_3d_fwhmx_execute",

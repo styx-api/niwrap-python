@@ -13,7 +13,7 @@ GCATRAIN_METADATA = Metadata(
 )
 
 
-GcatrainParameters = typing.TypedDict('GcatrainParameters', {
+GcatrainParamsDict = typing.TypedDict('GcatrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrain"]],
     "gcadir": str,
     "subjectlistfile": InputPathType,
@@ -35,7 +35,7 @@ GcatrainParameters = typing.TypedDict('GcatrainParameters', {
     "nu12_flag": bool,
     "no_emreg": bool,
 })
-GcatrainParametersTagged = typing.TypedDict('GcatrainParametersTagged', {
+GcatrainParamsDictTagged = typing.TypedDict('GcatrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcatrain"],
     "gcadir": str,
     "subjectlistfile": InputPathType,
@@ -61,7 +61,7 @@ GcatrainParametersTagged = typing.TypedDict('GcatrainParametersTagged', {
 
 class GcatrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GcatrainParameters(...)`.
+    Output object returned when calling `GcatrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def gcatrain_params(
     nu10_flag: bool = False,
     nu12_flag: bool = False,
     no_emreg: bool = False,
-) -> GcatrainParametersTagged:
+) -> GcatrainParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def gcatrain_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GcatrainParameters` object.
+    `GcatrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -236,7 +236,7 @@ def gcatrain_validate(
 
 
 def gcatrain_cargs(
-    params: GcatrainParameters,
+    params: GcatrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -317,7 +317,7 @@ def gcatrain_cargs(
 
 
 def gcatrain_outputs(
-    params: GcatrainParameters,
+    params: GcatrainParamsDict,
     execution: Execution,
 ) -> GcatrainOutputs:
     """
@@ -336,7 +336,7 @@ def gcatrain_outputs(
 
 
 def gcatrain_execute(
-    params: GcatrainParameters,
+    params: GcatrainParamsDict,
     runner: Runner | None = None,
 ) -> GcatrainOutputs:
     """
@@ -449,6 +449,8 @@ def gcatrain(
 __all__ = [
     "GCATRAIN_METADATA",
     "GcatrainOutputs",
+    "GcatrainParamsDict",
+    "GcatrainParamsDictTagged",
     "gcatrain",
     "gcatrain_execute",
     "gcatrain_params",

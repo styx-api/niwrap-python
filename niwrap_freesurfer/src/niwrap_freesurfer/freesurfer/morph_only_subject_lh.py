@@ -13,11 +13,11 @@ MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
 )
 
 
-MorphOnlySubjectLhParameters = typing.TypedDict('MorphOnlySubjectLhParameters', {
+MorphOnlySubjectLhParamsDict = typing.TypedDict('MorphOnlySubjectLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/morph_only_subject-lh"]],
     "subject_dir": str,
 })
-MorphOnlySubjectLhParametersTagged = typing.TypedDict('MorphOnlySubjectLhParametersTagged', {
+MorphOnlySubjectLhParamsDictTagged = typing.TypedDict('MorphOnlySubjectLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_only_subject-lh"],
     "subject_dir": str,
 })
@@ -25,7 +25,7 @@ MorphOnlySubjectLhParametersTagged = typing.TypedDict('MorphOnlySubjectLhParamet
 
 class MorphOnlySubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphOnlySubjectLhParameters(...)`.
+    Output object returned when calling `MorphOnlySubjectLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class MorphOnlySubjectLhOutputs(typing.NamedTuple):
 
 def morph_only_subject_lh_params(
     subject_dir: str,
-) -> MorphOnlySubjectLhParametersTagged:
+) -> MorphOnlySubjectLhParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def morph_only_subject_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphOnlySubjectLhParameters` object.
+    `MorphOnlySubjectLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def morph_only_subject_lh_validate(
 
 
 def morph_only_subject_lh_cargs(
-    params: MorphOnlySubjectLhParameters,
+    params: MorphOnlySubjectLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def morph_only_subject_lh_cargs(
 
 
 def morph_only_subject_lh_outputs(
-    params: MorphOnlySubjectLhParameters,
+    params: MorphOnlySubjectLhParamsDict,
     execution: Execution,
 ) -> MorphOnlySubjectLhOutputs:
     """
@@ -112,7 +112,7 @@ def morph_only_subject_lh_outputs(
 
 
 def morph_only_subject_lh_execute(
-    params: MorphOnlySubjectLhParameters,
+    params: MorphOnlySubjectLhParamsDict,
     runner: Runner | None = None,
 ) -> MorphOnlySubjectLhOutputs:
     """
@@ -168,6 +168,8 @@ def morph_only_subject_lh(
 __all__ = [
     "MORPH_ONLY_SUBJECT_LH_METADATA",
     "MorphOnlySubjectLhOutputs",
+    "MorphOnlySubjectLhParamsDict",
+    "MorphOnlySubjectLhParamsDictTagged",
     "morph_only_subject_lh",
     "morph_only_subject_lh_execute",
     "morph_only_subject_lh_params",

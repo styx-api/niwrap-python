@@ -13,7 +13,7 @@ ANALYZE_TRACE_METADATA = Metadata(
 )
 
 
-AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
+AnalyzeTraceParamsDict = typing.TypedDict('AnalyzeTraceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/AnalyzeTrace"]],
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
@@ -27,7 +27,7 @@ AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
     "nomall": bool,
     "yesmall": bool,
 })
-AnalyzeTraceParametersTagged = typing.TypedDict('AnalyzeTraceParametersTagged', {
+AnalyzeTraceParamsDictTagged = typing.TypedDict('AnalyzeTraceParamsDictTagged', {
     "@type": typing.Literal["afni/AnalyzeTrace"],
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ AnalyzeTraceParametersTagged = typing.TypedDict('AnalyzeTraceParametersTagged', 
 
 class AnalyzeTraceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AnalyzeTraceParameters(...)`.
+    Output object returned when calling `AnalyzeTraceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def analyze_trace_params(
     extreme_trace: bool = False,
     nomall: bool = False,
     yesmall: bool = False,
-) -> AnalyzeTraceParametersTagged:
+) -> AnalyzeTraceParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def analyze_trace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AnalyzeTraceParameters` object.
+    `AnalyzeTraceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def analyze_trace_validate(
 
 
 def analyze_trace_cargs(
-    params: AnalyzeTraceParameters,
+    params: AnalyzeTraceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def analyze_trace_cargs(
 
 
 def analyze_trace_outputs(
-    params: AnalyzeTraceParameters,
+    params: AnalyzeTraceParamsDict,
     execution: Execution,
 ) -> AnalyzeTraceOutputs:
     """
@@ -234,7 +234,7 @@ def analyze_trace_outputs(
 
 
 def analyze_trace_execute(
-    params: AnalyzeTraceParameters,
+    params: AnalyzeTraceParamsDict,
     runner: Runner | None = None,
 ) -> AnalyzeTraceOutputs:
     """
@@ -328,6 +328,8 @@ def analyze_trace(
 __all__ = [
     "ANALYZE_TRACE_METADATA",
     "AnalyzeTraceOutputs",
+    "AnalyzeTraceParamsDict",
+    "AnalyzeTraceParamsDictTagged",
     "analyze_trace",
     "analyze_trace_execute",
     "analyze_trace_params",

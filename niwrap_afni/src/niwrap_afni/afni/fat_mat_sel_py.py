@@ -13,7 +13,7 @@ FAT_MAT_SEL_PY_METADATA = Metadata(
 )
 
 
-FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
+FatMatSelPyParamsDict = typing.TypedDict('FatMatSelPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mat_sel.py"]],
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
     "specifier": typing.NotRequired[str | None],
     "xtick_lab_off": bool,
 })
-FatMatSelPyParametersTagged = typing.TypedDict('FatMatSelPyParametersTagged', {
+FatMatSelPyParamsDictTagged = typing.TypedDict('FatMatSelPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mat_sel.py"],
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
@@ -69,7 +69,7 @@ FatMatSelPyParametersTagged = typing.TypedDict('FatMatSelPyParametersTagged', {
 
 class FatMatSelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMatSelPyParameters(...)`.
+    Output object returned when calling `FatMatSelPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def fat_mat_sel_py_params(
     width_cbar_perc: float | None = None,
     specifier: str | None = None,
     xtick_lab_off: bool = False,
-) -> FatMatSelPyParametersTagged:
+) -> FatMatSelPyParamsDictTagged:
     """
     Build parameters.
     
@@ -198,7 +198,7 @@ def fat_mat_sel_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMatSelPyParameters` object.
+    `FatMatSelPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -286,7 +286,7 @@ def fat_mat_sel_py_validate(
 
 
 def fat_mat_sel_py_cargs(
-    params: FatMatSelPyParameters,
+    params: FatMatSelPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -394,7 +394,7 @@ def fat_mat_sel_py_cargs(
 
 
 def fat_mat_sel_py_outputs(
-    params: FatMatSelPyParameters,
+    params: FatMatSelPyParamsDict,
     execution: Execution,
 ) -> FatMatSelPyOutputs:
     """
@@ -416,7 +416,7 @@ def fat_mat_sel_py_outputs(
 
 
 def fat_mat_sel_py_execute(
-    params: FatMatSelPyParameters,
+    params: FatMatSelPyParamsDict,
     runner: Runner | None = None,
 ) -> FatMatSelPyOutputs:
     """
@@ -554,6 +554,8 @@ def fat_mat_sel_py(
 __all__ = [
     "FAT_MAT_SEL_PY_METADATA",
     "FatMatSelPyOutputs",
+    "FatMatSelPyParamsDict",
+    "FatMatSelPyParamsDictTagged",
     "fat_mat_sel_py",
     "fat_mat_sel_py_execute",
     "fat_mat_sel_py_params",

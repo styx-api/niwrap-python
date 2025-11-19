@@ -13,7 +13,7 @@ MRIS_ANATOMICAL_STATS_METADATA = Metadata(
 )
 
 
-MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters', {
+MrisAnatomicalStatsParamsDict = typing.TypedDict('MrisAnatomicalStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_anatomical_stats"]],
     "subjectname": str,
     "hemisphere": str,
@@ -30,7 +30,7 @@ MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters'
     "noglobal": bool,
     "th3_computation": bool,
 })
-MrisAnatomicalStatsParametersTagged = typing.TypedDict('MrisAnatomicalStatsParametersTagged', {
+MrisAnatomicalStatsParamsDictTagged = typing.TypedDict('MrisAnatomicalStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_anatomical_stats"],
     "subjectname": str,
     "hemisphere": str,
@@ -51,7 +51,7 @@ MrisAnatomicalStatsParametersTagged = typing.TypedDict('MrisAnatomicalStatsParam
 
 class MrisAnatomicalStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAnatomicalStatsParameters(...)`.
+    Output object returned when calling `MrisAnatomicalStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def mris_anatomical_stats_params(
     color_table: str | None = None,
     noglobal: bool = False,
     th3_computation: bool = False,
-) -> MrisAnatomicalStatsParametersTagged:
+) -> MrisAnatomicalStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def mris_anatomical_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAnatomicalStatsParameters` object.
+    `MrisAnatomicalStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -199,7 +199,7 @@ def mris_anatomical_stats_validate(
 
 
 def mris_anatomical_stats_cargs(
-    params: MrisAnatomicalStatsParameters,
+    params: MrisAnatomicalStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -267,7 +267,7 @@ def mris_anatomical_stats_cargs(
 
 
 def mris_anatomical_stats_outputs(
-    params: MrisAnatomicalStatsParameters,
+    params: MrisAnatomicalStatsParamsDict,
     execution: Execution,
 ) -> MrisAnatomicalStatsOutputs:
     """
@@ -289,7 +289,7 @@ def mris_anatomical_stats_outputs(
 
 
 def mris_anatomical_stats_execute(
-    params: MrisAnatomicalStatsParameters,
+    params: MrisAnatomicalStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisAnatomicalStatsOutputs:
     """
@@ -387,6 +387,8 @@ def mris_anatomical_stats(
 __all__ = [
     "MRIS_ANATOMICAL_STATS_METADATA",
     "MrisAnatomicalStatsOutputs",
+    "MrisAnatomicalStatsParamsDict",
+    "MrisAnatomicalStatsParamsDictTagged",
     "mris_anatomical_stats",
     "mris_anatomical_stats_execute",
     "mris_anatomical_stats_params",

@@ -13,7 +13,7 @@ FDRVAL_METADATA = Metadata(
 )
 
 
-FdrvalParameters = typing.TypedDict('FdrvalParameters', {
+FdrvalParamsDict = typing.TypedDict('FdrvalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fdrval"]],
     "dset": InputPathType,
     "sub": float,
@@ -24,7 +24,7 @@ FdrvalParameters = typing.TypedDict('FdrvalParameters', {
     "qinput": bool,
     "inverse": bool,
 })
-FdrvalParametersTagged = typing.TypedDict('FdrvalParametersTagged', {
+FdrvalParamsDictTagged = typing.TypedDict('FdrvalParamsDictTagged', {
     "@type": typing.Literal["afni/fdrval"],
     "dset": InputPathType,
     "sub": float,
@@ -39,7 +39,7 @@ FdrvalParametersTagged = typing.TypedDict('FdrvalParametersTagged', {
 
 class FdrvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FdrvalParameters(...)`.
+    Output object returned when calling `FdrvalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def fdrval_params(
     qonly: bool = False,
     qinput: bool = False,
     inverse: bool = False,
-) -> FdrvalParametersTagged:
+) -> FdrvalParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def fdrval_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FdrvalParameters` object.
+    `FdrvalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def fdrval_validate(
 
 
 def fdrval_cargs(
-    params: FdrvalParameters,
+    params: FdrvalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def fdrval_cargs(
 
 
 def fdrval_outputs(
-    params: FdrvalParameters,
+    params: FdrvalParamsDict,
     execution: Execution,
 ) -> FdrvalOutputs:
     """
@@ -189,7 +189,7 @@ def fdrval_outputs(
 
 
 def fdrval_execute(
-    params: FdrvalParameters,
+    params: FdrvalParamsDict,
     runner: Runner | None = None,
 ) -> FdrvalOutputs:
     """
@@ -268,6 +268,8 @@ def fdrval(
 __all__ = [
     "FDRVAL_METADATA",
     "FdrvalOutputs",
+    "FdrvalParamsDict",
+    "FdrvalParamsDictTagged",
     "fdrval",
     "fdrval_execute",
     "fdrval_params",

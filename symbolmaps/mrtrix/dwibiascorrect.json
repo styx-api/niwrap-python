@@ -15,7 +15,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "dwibiascorrect_fslgrad_params",
+      "fn_struct_make_params": "dwibiascorrect_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -57,7 +57,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "dwibiascorrect_config_params",
+      "fn_struct_make_params": "dwibiascorrect_config",
       "properties": {
         "key": {
           "var_param": "key"

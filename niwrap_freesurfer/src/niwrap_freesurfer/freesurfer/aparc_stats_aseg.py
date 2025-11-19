@@ -13,7 +13,7 @@ APARC_STATS_ASEG_METADATA = Metadata(
 )
 
 
-AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
+AparcStatsAsegParamsDict = typing.TypedDict('AparcStatsAsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/aparc_stats_aseg"]],
     "subject_name": str,
     "gcs_name": str,
@@ -38,7 +38,7 @@ AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
     "expert_clean_flag": bool,
     "expert_overwrite_flag": bool,
 })
-AparcStatsAsegParametersTagged = typing.TypedDict('AparcStatsAsegParametersTagged', {
+AparcStatsAsegParamsDictTagged = typing.TypedDict('AparcStatsAsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/aparc_stats_aseg"],
     "subject_name": str,
     "gcs_name": str,
@@ -67,7 +67,7 @@ AparcStatsAsegParametersTagged = typing.TypedDict('AparcStatsAsegParametersTagge
 
 class AparcStatsAsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AparcStatsAsegParameters(...)`.
+    Output object returned when calling `AparcStatsAsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def aparc_stats_aseg_params(
     expert_use_flag: bool = False,
     expert_clean_flag: bool = False,
     expert_overwrite_flag: bool = False,
-) -> AparcStatsAsegParametersTagged:
+) -> AparcStatsAsegParamsDictTagged:
     """
     Build parameters.
     
@@ -169,7 +169,7 @@ def aparc_stats_aseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AparcStatsAsegParameters` object.
+    `AparcStatsAsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -264,7 +264,7 @@ def aparc_stats_aseg_validate(
 
 
 def aparc_stats_aseg_cargs(
-    params: AparcStatsAsegParameters,
+    params: AparcStatsAsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -354,7 +354,7 @@ def aparc_stats_aseg_cargs(
 
 
 def aparc_stats_aseg_outputs(
-    params: AparcStatsAsegParameters,
+    params: AparcStatsAsegParamsDict,
     execution: Execution,
 ) -> AparcStatsAsegOutputs:
     """
@@ -373,7 +373,7 @@ def aparc_stats_aseg_outputs(
 
 
 def aparc_stats_aseg_execute(
-    params: AparcStatsAsegParameters,
+    params: AparcStatsAsegParamsDict,
     runner: Runner | None = None,
 ) -> AparcStatsAsegOutputs:
     """
@@ -494,6 +494,8 @@ def aparc_stats_aseg(
 __all__ = [
     "APARC_STATS_ASEG_METADATA",
     "AparcStatsAsegOutputs",
+    "AparcStatsAsegParamsDict",
+    "AparcStatsAsegParamsDictTagged",
     "aparc_stats_aseg",
     "aparc_stats_aseg_execute",
     "aparc_stats_aseg_params",

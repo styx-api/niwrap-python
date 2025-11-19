@@ -13,7 +13,7 @@ ASEG2FEAT_METADATA = Metadata(
 )
 
 
-Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
+Aseg2featParamsDict = typing.TypedDict('Aseg2featParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/aseg2feat"]],
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
     "help": bool,
     "version": bool,
 })
-Aseg2featParametersTagged = typing.TypedDict('Aseg2featParametersTagged', {
+Aseg2featParamsDictTagged = typing.TypedDict('Aseg2featParamsDictTagged', {
     "@type": typing.Literal["freesurfer/aseg2feat"],
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ Aseg2featParametersTagged = typing.TypedDict('Aseg2featParametersTagged', {
 
 class Aseg2featOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Aseg2featParameters(...)`.
+    Output object returned when calling `Aseg2featParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def aseg2feat_params(
     debug: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> Aseg2featParametersTagged:
+) -> Aseg2featParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def aseg2feat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Aseg2featParameters` object.
+    `Aseg2featParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def aseg2feat_validate(
 
 
 def aseg2feat_cargs(
-    params: Aseg2featParameters,
+    params: Aseg2featParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def aseg2feat_cargs(
 
 
 def aseg2feat_outputs(
-    params: Aseg2featParameters,
+    params: Aseg2featParamsDict,
     execution: Execution,
 ) -> Aseg2featOutputs:
     """
@@ -211,7 +211,7 @@ def aseg2feat_outputs(
 
 
 def aseg2feat_execute(
-    params: Aseg2featParameters,
+    params: Aseg2featParamsDict,
     runner: Runner | None = None,
 ) -> Aseg2featOutputs:
     """
@@ -295,6 +295,8 @@ def aseg2feat(
 __all__ = [
     "ASEG2FEAT_METADATA",
     "Aseg2featOutputs",
+    "Aseg2featParamsDict",
+    "Aseg2featParamsDictTagged",
     "aseg2feat",
     "aseg2feat_execute",
     "aseg2feat_params",

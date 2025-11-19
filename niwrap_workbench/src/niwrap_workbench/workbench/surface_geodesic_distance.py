@@ -12,7 +12,7 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistanceParameters', {
+SurfaceGeodesicDistanceParamsDict = typing.TypedDict('SurfaceGeodesicDistanceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance"]],
     "metric-out": str,
     "naive": bool,
@@ -21,7 +21,7 @@ SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistancePar
     "surface": InputPathType,
     "vertex": int,
 })
-SurfaceGeodesicDistanceParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceParametersTagged', {
+SurfaceGeodesicDistanceParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance"],
     "metric-out": str,
     "naive": bool,
@@ -34,7 +34,7 @@ SurfaceGeodesicDistanceParametersTagged = typing.TypedDict('SurfaceGeodesicDista
 
 class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceGeodesicDistanceParameters(...)`.
+    Output object returned when calling `SurfaceGeodesicDistanceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def surface_geodesic_distance_params(
     surface: InputPathType,
     vertex: int,
     naive: bool = False,
-) -> SurfaceGeodesicDistanceParametersTagged:
+) -> SurfaceGeodesicDistanceParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def surface_geodesic_distance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceGeodesicDistanceParameters` object.
+    `SurfaceGeodesicDistanceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def surface_geodesic_distance_validate(
 
 
 def surface_geodesic_distance_cargs(
-    params: SurfaceGeodesicDistanceParameters,
+    params: SurfaceGeodesicDistanceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def surface_geodesic_distance_cargs(
 
 
 def surface_geodesic_distance_outputs(
-    params: SurfaceGeodesicDistanceParameters,
+    params: SurfaceGeodesicDistanceParamsDict,
     execution: Execution,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
@@ -169,7 +169,7 @@ def surface_geodesic_distance_outputs(
 
 
 def surface_geodesic_distance_execute(
-    params: SurfaceGeodesicDistanceParameters,
+    params: SurfaceGeodesicDistanceParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
@@ -265,6 +265,8 @@ def surface_geodesic_distance(
 __all__ = [
     "SURFACE_GEODESIC_DISTANCE_METADATA",
     "SurfaceGeodesicDistanceOutputs",
+    "SurfaceGeodesicDistanceParamsDict",
+    "SurfaceGeodesicDistanceParamsDictTagged",
     "surface_geodesic_distance",
     "surface_geodesic_distance_execute",
     "surface_geodesic_distance_params",

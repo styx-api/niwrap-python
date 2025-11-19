@@ -13,11 +13,11 @@ MORPH_SUBJECT_METADATA = Metadata(
 )
 
 
-MorphSubjectParameters = typing.TypedDict('MorphSubjectParameters', {
+MorphSubjectParamsDict = typing.TypedDict('MorphSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/morph_subject"]],
     "subjid": str,
 })
-MorphSubjectParametersTagged = typing.TypedDict('MorphSubjectParametersTagged', {
+MorphSubjectParamsDictTagged = typing.TypedDict('MorphSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_subject"],
     "subjid": str,
 })
@@ -25,7 +25,7 @@ MorphSubjectParametersTagged = typing.TypedDict('MorphSubjectParametersTagged', 
 
 class MorphSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphSubjectParameters(...)`.
+    Output object returned when calling `MorphSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MorphSubjectOutputs(typing.NamedTuple):
 
 def morph_subject_params(
     subjid: str,
-) -> MorphSubjectParametersTagged:
+) -> MorphSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def morph_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphSubjectParameters` object.
+    `MorphSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def morph_subject_validate(
 
 
 def morph_subject_cargs(
-    params: MorphSubjectParameters,
+    params: MorphSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def morph_subject_cargs(
 
 
 def morph_subject_outputs(
-    params: MorphSubjectParameters,
+    params: MorphSubjectParamsDict,
     execution: Execution,
 ) -> MorphSubjectOutputs:
     """
@@ -106,7 +106,7 @@ def morph_subject_outputs(
 
 
 def morph_subject_execute(
-    params: MorphSubjectParameters,
+    params: MorphSubjectParamsDict,
     runner: Runner | None = None,
 ) -> MorphSubjectOutputs:
     """
@@ -164,6 +164,8 @@ def morph_subject(
 __all__ = [
     "MORPH_SUBJECT_METADATA",
     "MorphSubjectOutputs",
+    "MorphSubjectParamsDict",
+    "MorphSubjectParamsDictTagged",
     "morph_subject",
     "morph_subject_execute",
     "morph_subject_params",

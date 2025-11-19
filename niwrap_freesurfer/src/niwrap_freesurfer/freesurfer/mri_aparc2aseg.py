@@ -13,7 +13,7 @@ MRI_APARC2ASEG_METADATA = Metadata(
 )
 
 
-MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
+MriAparc2asegParamsDict = typing.TypedDict('MriAparc2asegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2aseg"]],
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
     "help": bool,
     "version": bool,
 })
-MriAparc2asegParametersTagged = typing.TypedDict('MriAparc2asegParametersTagged', {
+MriAparc2asegParamsDictTagged = typing.TypedDict('MriAparc2asegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_aparc2aseg"],
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ MriAparc2asegParametersTagged = typing.TypedDict('MriAparc2asegParametersTagged'
 
 class MriAparc2asegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriAparc2asegParameters(...)`.
+    Output object returned when calling `MriAparc2asegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def mri_aparc2aseg_params(
     threads: float | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriAparc2asegParametersTagged:
+) -> MriAparc2asegParamsDictTagged:
     """
     Build parameters.
     
@@ -173,7 +173,7 @@ def mri_aparc2aseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriAparc2asegParameters` object.
+    `MriAparc2asegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -258,7 +258,7 @@ def mri_aparc2aseg_validate(
 
 
 def mri_aparc2aseg_cargs(
-    params: MriAparc2asegParameters,
+    params: MriAparc2asegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -345,7 +345,7 @@ def mri_aparc2aseg_cargs(
 
 
 def mri_aparc2aseg_outputs(
-    params: MriAparc2asegParameters,
+    params: MriAparc2asegParamsDict,
     execution: Execution,
 ) -> MriAparc2asegOutputs:
     """
@@ -365,7 +365,7 @@ def mri_aparc2aseg_outputs(
 
 
 def mri_aparc2aseg_execute(
-    params: MriAparc2asegParameters,
+    params: MriAparc2asegParamsDict,
     runner: Runner | None = None,
 ) -> MriAparc2asegOutputs:
     """
@@ -491,6 +491,8 @@ def mri_aparc2aseg(
 __all__ = [
     "MRI_APARC2ASEG_METADATA",
     "MriAparc2asegOutputs",
+    "MriAparc2asegParamsDict",
+    "MriAparc2asegParamsDictTagged",
     "mri_aparc2aseg",
     "mri_aparc2aseg_execute",
     "mri_aparc2aseg_params",

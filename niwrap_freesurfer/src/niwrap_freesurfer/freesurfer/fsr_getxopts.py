@@ -13,11 +13,11 @@ FSR_GETXOPTS_METADATA = Metadata(
 )
 
 
-FsrGetxoptsParameters = typing.TypedDict('FsrGetxoptsParameters', {
+FsrGetxoptsParamsDict = typing.TypedDict('FsrGetxoptsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-getxopts"]],
     "help": bool,
 })
-FsrGetxoptsParametersTagged = typing.TypedDict('FsrGetxoptsParametersTagged', {
+FsrGetxoptsParamsDictTagged = typing.TypedDict('FsrGetxoptsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsr-getxopts"],
     "help": bool,
 })
@@ -25,7 +25,7 @@ FsrGetxoptsParametersTagged = typing.TypedDict('FsrGetxoptsParametersTagged', {
 
 class FsrGetxoptsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsrGetxoptsParameters(...)`.
+    Output object returned when calling `FsrGetxoptsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FsrGetxoptsOutputs(typing.NamedTuple):
 
 def fsr_getxopts_params(
     help_: bool = False,
-) -> FsrGetxoptsParametersTagged:
+) -> FsrGetxoptsParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def fsr_getxopts_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsrGetxoptsParameters` object.
+    `FsrGetxoptsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def fsr_getxopts_validate(
 
 
 def fsr_getxopts_cargs(
-    params: FsrGetxoptsParameters,
+    params: FsrGetxoptsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def fsr_getxopts_cargs(
 
 
 def fsr_getxopts_outputs(
-    params: FsrGetxoptsParameters,
+    params: FsrGetxoptsParamsDict,
     execution: Execution,
 ) -> FsrGetxoptsOutputs:
     """
@@ -107,7 +107,7 @@ def fsr_getxopts_outputs(
 
 
 def fsr_getxopts_execute(
-    params: FsrGetxoptsParameters,
+    params: FsrGetxoptsParamsDict,
     runner: Runner | None = None,
 ) -> FsrGetxoptsOutputs:
     """
@@ -163,6 +163,8 @@ def fsr_getxopts(
 __all__ = [
     "FSR_GETXOPTS_METADATA",
     "FsrGetxoptsOutputs",
+    "FsrGetxoptsParamsDict",
+    "FsrGetxoptsParamsDictTagged",
     "fsr_getxopts",
     "fsr_getxopts_execute",
     "fsr_getxopts_params",

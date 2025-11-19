@@ -13,7 +13,7 @@ FILM_GLS_METADATA = Metadata(
 )
 
 
-FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
+FilmGlsParamsDict = typing.TypedDict('FilmGlsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/film_gls"]],
     "infile": InputPathType,
     "ac_flag": bool,
@@ -39,7 +39,7 @@ FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
     "ven": typing.NotRequired[list[str] | None],
     "vef": typing.NotRequired[list[InputPathType] | None],
 })
-FilmGlsParametersTagged = typing.TypedDict('FilmGlsParametersTagged', {
+FilmGlsParamsDictTagged = typing.TypedDict('FilmGlsParamsDictTagged', {
     "@type": typing.Literal["fsl/film_gls"],
     "infile": InputPathType,
     "ac_flag": bool,
@@ -69,7 +69,7 @@ FilmGlsParametersTagged = typing.TypedDict('FilmGlsParametersTagged', {
 
 class FilmGlsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FilmGlsParameters(...)`.
+    Output object returned when calling `FilmGlsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def film_gls_params(
     mt: float | None = None,
     ven: list[str] | None = None,
     vef: list[InputPathType] | None = None,
-) -> FilmGlsParametersTagged:
+) -> FilmGlsParamsDictTagged:
     """
     Build parameters.
     
@@ -198,7 +198,7 @@ def film_gls_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FilmGlsParameters` object.
+    `FilmGlsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -291,7 +291,7 @@ def film_gls_validate(
 
 
 def film_gls_cargs(
-    params: FilmGlsParameters,
+    params: FilmGlsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -399,7 +399,7 @@ def film_gls_cargs(
 
 
 def film_gls_outputs(
-    params: FilmGlsParameters,
+    params: FilmGlsParamsDict,
     execution: Execution,
 ) -> FilmGlsOutputs:
     """
@@ -421,7 +421,7 @@ def film_gls_outputs(
 
 
 def film_gls_execute(
-    params: FilmGlsParameters,
+    params: FilmGlsParamsDict,
     runner: Runner | None = None,
 ) -> FilmGlsOutputs:
     """
@@ -556,6 +556,8 @@ def film_gls(
 __all__ = [
     "FILM_GLS_METADATA",
     "FilmGlsOutputs",
+    "FilmGlsParamsDict",
+    "FilmGlsParamsDictTagged",
     "film_gls",
     "film_gls_execute",
     "film_gls_params",

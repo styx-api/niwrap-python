@@ -13,7 +13,7 @@ MRIS_CURVATURE2IMAGE_METADATA = Metadata(
 )
 
 
-MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters', {
+MrisCurvature2imageParamsDict = typing.TypedDict('MrisCurvature2imageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature2image"]],
     "surface": InputPathType,
     "mask": InputPathType,
@@ -24,7 +24,7 @@ MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters'
     "invert_flag": bool,
     "radius": float,
 })
-MrisCurvature2imageParametersTagged = typing.TypedDict('MrisCurvature2imageParametersTagged', {
+MrisCurvature2imageParamsDictTagged = typing.TypedDict('MrisCurvature2imageParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_curvature2image"],
     "surface": InputPathType,
     "mask": InputPathType,
@@ -39,7 +39,7 @@ MrisCurvature2imageParametersTagged = typing.TypedDict('MrisCurvature2imageParam
 
 class MrisCurvature2imageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCurvature2imageParameters(...)`.
+    Output object returned when calling `MrisCurvature2imageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def mris_curvature2image_params(
     label: InputPathType,
     radius: float,
     invert_flag: bool = False,
-) -> MrisCurvature2imageParametersTagged:
+) -> MrisCurvature2imageParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def mris_curvature2image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCurvature2imageParameters` object.
+    `MrisCurvature2imageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def mris_curvature2image_validate(
 
 
 def mris_curvature2image_cargs(
-    params: MrisCurvature2imageParameters,
+    params: MrisCurvature2imageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def mris_curvature2image_cargs(
 
 
 def mris_curvature2image_outputs(
-    params: MrisCurvature2imageParameters,
+    params: MrisCurvature2imageParamsDict,
     execution: Execution,
 ) -> MrisCurvature2imageOutputs:
     """
@@ -204,7 +204,7 @@ def mris_curvature2image_outputs(
 
 
 def mris_curvature2image_execute(
-    params: MrisCurvature2imageParameters,
+    params: MrisCurvature2imageParamsDict,
     runner: Runner | None = None,
 ) -> MrisCurvature2imageOutputs:
     """
@@ -281,6 +281,8 @@ def mris_curvature2image(
 __all__ = [
     "MRIS_CURVATURE2IMAGE_METADATA",
     "MrisCurvature2imageOutputs",
+    "MrisCurvature2imageParamsDict",
+    "MrisCurvature2imageParamsDictTagged",
     "mris_curvature2image",
     "mris_curvature2image_execute",
     "mris_curvature2image_params",

@@ -54,7 +54,7 @@
     },
     "optfile": {
       "var_param": "optfile",
-      "fn_struct_make_params": "fabber_optfile_params",
+      "fn_struct_make_params": "fabber_optfile",
       "properties": {
         "optfile_short": {
           "var_param": "optfile_short"

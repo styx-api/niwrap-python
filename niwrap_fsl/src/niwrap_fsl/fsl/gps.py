@@ -13,7 +13,7 @@ GPS_METADATA = Metadata(
 )
 
 
-GpsParameters = typing.TypedDict('GpsParameters', {
+GpsParamsDict = typing.TypedDict('GpsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/gps"]],
     "ndir": float,
     "optws": bool,
@@ -24,7 +24,7 @@ GpsParameters = typing.TypedDict('GpsParameters', {
     "verbose": bool,
     "help": bool,
 })
-GpsParametersTagged = typing.TypedDict('GpsParametersTagged', {
+GpsParamsDictTagged = typing.TypedDict('GpsParamsDictTagged', {
     "@type": typing.Literal["fsl/gps"],
     "ndir": float,
     "optws": bool,
@@ -39,7 +39,7 @@ GpsParametersTagged = typing.TypedDict('GpsParametersTagged', {
 
 class GpsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GpsParameters(...)`.
+    Output object returned when calling `GpsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def gps_params(
     report: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> GpsParametersTagged:
+) -> GpsParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def gps_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `GpsParameters`
+    Validate parameters. Throws an error if `params` is not a valid `GpsParamsDict`
     object.
     
     Args:
@@ -134,7 +134,7 @@ def gps_validate(
 
 
 def gps_cargs(
-    params: GpsParameters,
+    params: GpsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def gps_cargs(
 
 
 def gps_outputs(
-    params: GpsParameters,
+    params: GpsParamsDict,
     execution: Execution,
 ) -> GpsOutputs:
     """
@@ -199,7 +199,7 @@ def gps_outputs(
 
 
 def gps_execute(
-    params: GpsParameters,
+    params: GpsParamsDict,
     runner: Runner | None = None,
 ) -> GpsOutputs:
     """
@@ -277,6 +277,8 @@ def gps(
 __all__ = [
     "GPS_METADATA",
     "GpsOutputs",
+    "GpsParamsDict",
+    "GpsParamsDictTagged",
     "gps",
     "gps_execute",
     "gps_params",

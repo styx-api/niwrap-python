@@ -13,12 +13,12 @@ MRI_COMPUTE_BIAS_METADATA = Metadata(
 )
 
 
-MriComputeBiasParameters = typing.TypedDict('MriComputeBiasParameters', {
+MriComputeBiasParamsDict = typing.TypedDict('MriComputeBiasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_bias"]],
     "subjects": list[str],
     "output_volume": str,
 })
-MriComputeBiasParametersTagged = typing.TypedDict('MriComputeBiasParametersTagged', {
+MriComputeBiasParamsDictTagged = typing.TypedDict('MriComputeBiasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_bias"],
     "subjects": list[str],
     "output_volume": str,
@@ -27,7 +27,7 @@ MriComputeBiasParametersTagged = typing.TypedDict('MriComputeBiasParametersTagge
 
 class MriComputeBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeBiasParameters(...)`.
+    Output object returned when calling `MriComputeBiasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriComputeBiasOutputs(typing.NamedTuple):
 def mri_compute_bias_params(
     subjects: list[str],
     output_volume: str,
-) -> MriComputeBiasParametersTagged:
+) -> MriComputeBiasParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_compute_bias_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeBiasParameters` object.
+    `MriComputeBiasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def mri_compute_bias_validate(
 
 
 def mri_compute_bias_cargs(
-    params: MriComputeBiasParameters,
+    params: MriComputeBiasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def mri_compute_bias_cargs(
 
 
 def mri_compute_bias_outputs(
-    params: MriComputeBiasParameters,
+    params: MriComputeBiasParamsDict,
     execution: Execution,
 ) -> MriComputeBiasOutputs:
     """
@@ -122,7 +122,7 @@ def mri_compute_bias_outputs(
 
 
 def mri_compute_bias_execute(
-    params: MriComputeBiasParameters,
+    params: MriComputeBiasParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeBiasOutputs:
     """
@@ -183,6 +183,8 @@ def mri_compute_bias(
 __all__ = [
     "MRI_COMPUTE_BIAS_METADATA",
     "MriComputeBiasOutputs",
+    "MriComputeBiasParamsDict",
+    "MriComputeBiasParamsDictTagged",
     "mri_compute_bias",
     "mri_compute_bias_execute",
     "mri_compute_bias_params",

@@ -12,7 +12,7 @@ CIFTI_PARCELLATE_METADATA = Metadata(
 )
 
 
-CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpatialWeightsParameters', {
+CiftiParcellateSpatialWeightsParamsDict = typing.TypedDict('CiftiParcellateSpatialWeightsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["spatial-weights"]],
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpati
     "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiParcellateSpatialWeightsParametersTagged = typing.TypedDict('CiftiParcellateSpatialWeightsParametersTagged', {
+CiftiParcellateSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiParcellateSpatialWeightsParamsDictTagged', {
     "@type": typing.Literal["spatial-weights"],
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
@@ -32,25 +32,25 @@ CiftiParcellateSpatialWeightsParametersTagged = typing.TypedDict('CiftiParcellat
 })
 
 
-CiftiParcellateExcludeOutliersParameters = typing.TypedDict('CiftiParcellateExcludeOutliersParameters', {
+CiftiParcellateExcludeOutliersParamsDict = typing.TypedDict('CiftiParcellateExcludeOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
     "sigma-below": float,
     "sigma-above": float,
 })
-CiftiParcellateExcludeOutliersParametersTagged = typing.TypedDict('CiftiParcellateExcludeOutliersParametersTagged', {
+CiftiParcellateExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiParcellateExcludeOutliersParamsDictTagged', {
     "@type": typing.Literal["exclude-outliers"],
     "sigma-below": float,
     "sigma-above": float,
 })
 
 
-CiftiParcellateParameters = typing.TypedDict('CiftiParcellateParameters', {
+CiftiParcellateParamsDict = typing.TypedDict('CiftiParcellateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcellate"]],
     "cifti-out": str,
-    "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParameters | None],
+    "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
     "method": typing.NotRequired[str | None],
-    "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "value": typing.NotRequired[float | None],
     "mask-out": typing.NotRequired[str | None],
@@ -60,13 +60,13 @@ CiftiParcellateParameters = typing.TypedDict('CiftiParcellateParameters', {
     "cifti-label": InputPathType,
     "direction": str,
 })
-CiftiParcellateParametersTagged = typing.TypedDict('CiftiParcellateParametersTagged', {
+CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-parcellate"],
     "cifti-out": str,
-    "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParameters | None],
+    "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
     "method": typing.NotRequired[str | None],
-    "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "value": typing.NotRequired[float | None],
     "mask-out": typing.NotRequired[str | None],
@@ -78,14 +78,14 @@ CiftiParcellateParametersTagged = typing.TypedDict('CiftiParcellateParametersTag
 })
 
 
-def cifti_parcellate_spatial_weights_params(
+def cifti_parcellate_spatial_weights(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
     left_metric: InputPathType | None,
     right_metric: InputPathType | None,
     cerebellum_metric: InputPathType | None,
-) -> CiftiParcellateSpatialWeightsParametersTagged:
+) -> CiftiParcellateSpatialWeightsParamsDictTagged:
     """
     Build parameters.
     
@@ -134,7 +134,7 @@ def cifti_parcellate_spatial_weights_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiParcellateSpatialWeightsParameters` object.
+    `CiftiParcellateSpatialWeightsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def cifti_parcellate_spatial_weights_validate(
 
 
 def cifti_parcellate_spatial_weights_cargs(
-    params: CiftiParcellateSpatialWeightsParameters,
+    params: CiftiParcellateSpatialWeightsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,10 +194,10 @@ def cifti_parcellate_spatial_weights_cargs(
     return cargs
 
 
-def cifti_parcellate_exclude_outliers_params(
+def cifti_parcellate_exclude_outliers(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiParcellateExcludeOutliersParametersTagged:
+) -> CiftiParcellateExcludeOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def cifti_parcellate_exclude_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiParcellateExcludeOutliersParameters` object.
+    `CiftiParcellateExcludeOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -238,7 +238,7 @@ def cifti_parcellate_exclude_outliers_validate(
 
 
 def cifti_parcellate_exclude_outliers_cargs(
-    params: CiftiParcellateExcludeOutliersParameters,
+    params: CiftiParcellateExcludeOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def cifti_parcellate_exclude_outliers_cargs(
 
 class CiftiParcellateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiParcellateParameters(...)`.
+    Output object returned when calling `CiftiParcellateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -278,12 +278,12 @@ def cifti_parcellate_params(
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
-    spatial_weights: CiftiParcellateSpatialWeightsParameters | None = None,
-    exclude_outliers: CiftiParcellateExcludeOutliersParameters | None = None,
+    spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
+    exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     legacy_mode: bool = False,
     include_empty: bool = False,
-) -> CiftiParcellateParametersTagged:
+) -> CiftiParcellateParamsDictTagged:
     """
     Build parameters.
     
@@ -349,7 +349,7 @@ def cifti_parcellate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiParcellateParameters` object.
+    `CiftiParcellateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -403,7 +403,7 @@ def cifti_parcellate_validate(
 
 
 def cifti_parcellate_cargs(
-    params: CiftiParcellateParameters,
+    params: CiftiParcellateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -442,7 +442,7 @@ def cifti_parcellate_cargs(
 
 
 def cifti_parcellate_outputs(
-    params: CiftiParcellateParameters,
+    params: CiftiParcellateParamsDict,
     execution: Execution,
 ) -> CiftiParcellateOutputs:
     """
@@ -462,7 +462,7 @@ def cifti_parcellate_outputs(
 
 
 def cifti_parcellate_execute(
-    params: CiftiParcellateParameters,
+    params: CiftiParcellateParamsDict,
     runner: Runner | None = None,
 ) -> CiftiParcellateOutputs:
     """
@@ -529,8 +529,8 @@ def cifti_parcellate(
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
-    spatial_weights: CiftiParcellateSpatialWeightsParameters | None = None,
-    exclude_outliers: CiftiParcellateExcludeOutliersParameters | None = None,
+    spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
+    exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     legacy_mode: bool = False,
     include_empty: bool = False,
@@ -628,10 +628,16 @@ def cifti_parcellate(
 
 __all__ = [
     "CIFTI_PARCELLATE_METADATA",
+    "CiftiParcellateExcludeOutliersParamsDict",
+    "CiftiParcellateExcludeOutliersParamsDictTagged",
     "CiftiParcellateOutputs",
+    "CiftiParcellateParamsDict",
+    "CiftiParcellateParamsDictTagged",
+    "CiftiParcellateSpatialWeightsParamsDict",
+    "CiftiParcellateSpatialWeightsParamsDictTagged",
     "cifti_parcellate",
-    "cifti_parcellate_exclude_outliers_params",
+    "cifti_parcellate_exclude_outliers",
     "cifti_parcellate_execute",
     "cifti_parcellate_params",
-    "cifti_parcellate_spatial_weights_params",
+    "cifti_parcellate_spatial_weights",
 ]

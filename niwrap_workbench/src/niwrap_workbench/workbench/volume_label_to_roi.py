@@ -12,7 +12,7 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
 )
 
 
-VolumeLabelToRoiParameters = typing.TypedDict('VolumeLabelToRoiParameters', {
+VolumeLabelToRoiParamsDict = typing.TypedDict('VolumeLabelToRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-to-roi"]],
     "volume-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -20,7 +20,7 @@ VolumeLabelToRoiParameters = typing.TypedDict('VolumeLabelToRoiParameters', {
     "map": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
-VolumeLabelToRoiParametersTagged = typing.TypedDict('VolumeLabelToRoiParametersTagged', {
+VolumeLabelToRoiParamsDictTagged = typing.TypedDict('VolumeLabelToRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-to-roi"],
     "volume-out": str,
     "label-name": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ VolumeLabelToRoiParametersTagged = typing.TypedDict('VolumeLabelToRoiParametersT
 
 class VolumeLabelToRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeLabelToRoiParameters(...)`.
+    Output object returned when calling `VolumeLabelToRoiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def volume_label_to_roi_params(
     label_key: int | None,
     map_: str | None,
     label_in: InputPathType,
-) -> VolumeLabelToRoiParametersTagged:
+) -> VolumeLabelToRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def volume_label_to_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeLabelToRoiParameters` object.
+    `VolumeLabelToRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def volume_label_to_roi_validate(
 
 
 def volume_label_to_roi_cargs(
-    params: VolumeLabelToRoiParameters,
+    params: VolumeLabelToRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def volume_label_to_roi_cargs(
 
 
 def volume_label_to_roi_outputs(
-    params: VolumeLabelToRoiParameters,
+    params: VolumeLabelToRoiParamsDict,
     execution: Execution,
 ) -> VolumeLabelToRoiOutputs:
     """
@@ -161,7 +161,7 @@ def volume_label_to_roi_outputs(
 
 
 def volume_label_to_roi_execute(
-    params: VolumeLabelToRoiParameters,
+    params: VolumeLabelToRoiParamsDict,
     runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
@@ -233,6 +233,8 @@ def volume_label_to_roi(
 __all__ = [
     "VOLUME_LABEL_TO_ROI_METADATA",
     "VolumeLabelToRoiOutputs",
+    "VolumeLabelToRoiParamsDict",
+    "VolumeLabelToRoiParamsDictTagged",
     "volume_label_to_roi",
     "volume_label_to_roi_execute",
     "volume_label_to_roi_params",

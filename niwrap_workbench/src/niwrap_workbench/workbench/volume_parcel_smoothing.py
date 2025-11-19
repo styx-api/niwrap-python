@@ -12,7 +12,7 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 )
 
 
-VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParameters', {
+VolumeParcelSmoothingParamsDict = typing.TypedDict('VolumeParcelSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-smoothing"]],
     "volume-out": str,
     "fwhm": bool,
@@ -22,7 +22,7 @@ VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParamet
     "label-volume": InputPathType,
     "kernel": float,
 })
-VolumeParcelSmoothingParametersTagged = typing.TypedDict('VolumeParcelSmoothingParametersTagged', {
+VolumeParcelSmoothingParamsDictTagged = typing.TypedDict('VolumeParcelSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-parcel-smoothing"],
     "volume-out": str,
     "fwhm": bool,
@@ -36,7 +36,7 @@ VolumeParcelSmoothingParametersTagged = typing.TypedDict('VolumeParcelSmoothingP
 
 class VolumeParcelSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeParcelSmoothingParameters(...)`.
+    Output object returned when calling `VolumeParcelSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def volume_parcel_smoothing_params(
     kernel: float,
     fwhm: bool = False,
     fix_zeros: bool = False,
-) -> VolumeParcelSmoothingParametersTagged:
+) -> VolumeParcelSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def volume_parcel_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeParcelSmoothingParameters` object.
+    `VolumeParcelSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def volume_parcel_smoothing_validate(
 
 
 def volume_parcel_smoothing_cargs(
-    params: VolumeParcelSmoothingParameters,
+    params: VolumeParcelSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def volume_parcel_smoothing_cargs(
 
 
 def volume_parcel_smoothing_outputs(
-    params: VolumeParcelSmoothingParameters,
+    params: VolumeParcelSmoothingParamsDict,
     execution: Execution,
 ) -> VolumeParcelSmoothingOutputs:
     """
@@ -176,7 +176,7 @@ def volume_parcel_smoothing_outputs(
 
 
 def volume_parcel_smoothing_execute(
-    params: VolumeParcelSmoothingParameters,
+    params: VolumeParcelSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
@@ -251,6 +251,8 @@ def volume_parcel_smoothing(
 __all__ = [
     "VOLUME_PARCEL_SMOOTHING_METADATA",
     "VolumeParcelSmoothingOutputs",
+    "VolumeParcelSmoothingParamsDict",
+    "VolumeParcelSmoothingParamsDictTagged",
     "volume_parcel_smoothing",
     "volume_parcel_smoothing_execute",
     "volume_parcel_smoothing_params",

@@ -13,11 +13,11 @@ INVFEATREG_METADATA = Metadata(
 )
 
 
-InvfeatregParameters = typing.TypedDict('InvfeatregParameters', {
+InvfeatregParamsDict = typing.TypedDict('InvfeatregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/invfeatreg"]],
     "feat_directory": str,
 })
-InvfeatregParametersTagged = typing.TypedDict('InvfeatregParametersTagged', {
+InvfeatregParamsDictTagged = typing.TypedDict('InvfeatregParamsDictTagged', {
     "@type": typing.Literal["fsl/invfeatreg"],
     "feat_directory": str,
 })
@@ -25,7 +25,7 @@ InvfeatregParametersTagged = typing.TypedDict('InvfeatregParametersTagged', {
 
 class InvfeatregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `InvfeatregParameters(...)`.
+    Output object returned when calling `InvfeatregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class InvfeatregOutputs(typing.NamedTuple):
 
 def invfeatreg_params(
     feat_directory: str,
-) -> InvfeatregParametersTagged:
+) -> InvfeatregParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def invfeatreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `InvfeatregParameters` object.
+    `InvfeatregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def invfeatreg_validate(
 
 
 def invfeatreg_cargs(
-    params: InvfeatregParameters,
+    params: InvfeatregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def invfeatreg_cargs(
 
 
 def invfeatreg_outputs(
-    params: InvfeatregParameters,
+    params: InvfeatregParamsDict,
     execution: Execution,
 ) -> InvfeatregOutputs:
     """
@@ -106,7 +106,7 @@ def invfeatreg_outputs(
 
 
 def invfeatreg_execute(
-    params: InvfeatregParameters,
+    params: InvfeatregParamsDict,
     runner: Runner | None = None,
 ) -> InvfeatregOutputs:
     """
@@ -162,6 +162,8 @@ def invfeatreg(
 __all__ = [
     "INVFEATREG_METADATA",
     "InvfeatregOutputs",
+    "InvfeatregParamsDict",
+    "InvfeatregParamsDictTagged",
     "invfeatreg",
     "invfeatreg_execute",
     "invfeatreg_params",

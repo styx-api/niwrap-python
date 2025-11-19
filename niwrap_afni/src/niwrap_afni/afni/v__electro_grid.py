@@ -13,7 +13,7 @@ V__ELECTRO_GRID_METADATA = Metadata(
 )
 
 
-VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
+VElectroGridParamsDict = typing.TypedDict('VElectroGridParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ElectroGrid"]],
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
@@ -22,7 +22,7 @@ VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
     "with_markers": bool,
     "echo": bool,
 })
-VElectroGridParametersTagged = typing.TypedDict('VElectroGridParametersTagged', {
+VElectroGridParamsDictTagged = typing.TypedDict('VElectroGridParamsDictTagged', {
     "@type": typing.Literal["afni/@ElectroGrid"],
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
@@ -35,7 +35,7 @@ VElectroGridParametersTagged = typing.TypedDict('VElectroGridParametersTagged', 
 
 class VElectroGridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VElectroGridParameters(...)`.
+    Output object returned when calling `VElectroGridParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__electro_grid_params(
     coords: InputPathType | None = None,
     with_markers: bool = False,
     echo: bool = False,
-) -> VElectroGridParametersTagged:
+) -> VElectroGridParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v__electro_grid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VElectroGridParameters` object.
+    `VElectroGridParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def v__electro_grid_validate(
 
 
 def v__electro_grid_cargs(
-    params: VElectroGridParameters,
+    params: VElectroGridParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,7 +165,7 @@ def v__electro_grid_cargs(
 
 
 def v__electro_grid_outputs(
-    params: VElectroGridParameters,
+    params: VElectroGridParamsDict,
     execution: Execution,
 ) -> VElectroGridOutputs:
     """
@@ -185,7 +185,7 @@ def v__electro_grid_outputs(
 
 
 def v__electro_grid_execute(
-    params: VElectroGridParameters,
+    params: VElectroGridParamsDict,
     runner: Runner | None = None,
 ) -> VElectroGridOutputs:
     """
@@ -258,6 +258,8 @@ def v__electro_grid(
 
 __all__ = [
     "VElectroGridOutputs",
+    "VElectroGridParamsDict",
+    "VElectroGridParamsDictTagged",
     "V__ELECTRO_GRID_METADATA",
     "v__electro_grid",
     "v__electro_grid_execute",

@@ -13,19 +13,19 @@ V_5TT2GMWMI_METADATA = Metadata(
 )
 
 
-V5tt2gmwmiConfigParameters = typing.TypedDict('V5tt2gmwmiConfigParameters', {
+V5tt2gmwmiConfigParamsDict = typing.TypedDict('V5tt2gmwmiConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-V5tt2gmwmiConfigParametersTagged = typing.TypedDict('V5tt2gmwmiConfigParametersTagged', {
+V5tt2gmwmiConfigParamsDictTagged = typing.TypedDict('V5tt2gmwmiConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-V5tt2gmwmiParameters = typing.TypedDict('V5tt2gmwmiParameters', {
+V5tt2gmwmiParamsDict = typing.TypedDict('V5tt2gmwmiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/5tt2gmwmi"]],
     "mask_in": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -33,13 +33,13 @@ V5tt2gmwmiParameters = typing.TypedDict('V5tt2gmwmiParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tt2gmwmiConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tt2gmwmiConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "5tt_in": InputPathType,
     "mask_out": str,
 })
-V5tt2gmwmiParametersTagged = typing.TypedDict('V5tt2gmwmiParametersTagged', {
+V5tt2gmwmiParamsDictTagged = typing.TypedDict('V5tt2gmwmiParamsDictTagged', {
     "@type": typing.Literal["mrtrix/5tt2gmwmi"],
     "mask_in": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -47,7 +47,7 @@ V5tt2gmwmiParametersTagged = typing.TypedDict('V5tt2gmwmiParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tt2gmwmiConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tt2gmwmiConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "5tt_in": InputPathType,
@@ -55,10 +55,10 @@ V5tt2gmwmiParametersTagged = typing.TypedDict('V5tt2gmwmiParametersTagged', {
 })
 
 
-def v_5tt2gmwmi_config_params(
+def v_5tt2gmwmi_config(
     key: str,
     value: str,
-) -> V5tt2gmwmiConfigParametersTagged:
+) -> V5tt2gmwmiConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v_5tt2gmwmi_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tt2gmwmiConfigParameters` object.
+    `V5tt2gmwmiConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def v_5tt2gmwmi_config_validate(
 
 
 def v_5tt2gmwmi_config_cargs(
-    params: V5tt2gmwmiConfigParameters,
+    params: V5tt2gmwmiConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def v_5tt2gmwmi_config_cargs(
 
 class V5tt2gmwmiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5tt2gmwmiParameters(...)`.
+    Output object returned when calling `V5tt2gmwmiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def v_5tt2gmwmi_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tt2gmwmiConfigParameters] | None = None,
+    config: list[V5tt2gmwmiConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5tt2gmwmiParametersTagged:
+) -> V5tt2gmwmiParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def v_5tt2gmwmi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tt2gmwmiParameters` object.
+    `V5tt2gmwmiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def v_5tt2gmwmi_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tt2gmwmiConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tt2gmwmiConfigParamsDict] | None`')
         for e in params["config"]:
             v_5tt2gmwmi_config_validate(e)
     if params.get("help", False) is None:
@@ -244,7 +244,7 @@ def v_5tt2gmwmi_validate(
 
 
 def v_5tt2gmwmi_cargs(
-    params: V5tt2gmwmiParameters,
+    params: V5tt2gmwmiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def v_5tt2gmwmi_cargs(
 
 
 def v_5tt2gmwmi_outputs(
-    params: V5tt2gmwmiParameters,
+    params: V5tt2gmwmiParamsDict,
     execution: Execution,
 ) -> V5tt2gmwmiOutputs:
     """
@@ -308,7 +308,7 @@ def v_5tt2gmwmi_outputs(
 
 
 def v_5tt2gmwmi_execute(
-    params: V5tt2gmwmiParameters,
+    params: V5tt2gmwmiParamsDict,
     runner: Runner | None = None,
 ) -> V5tt2gmwmiOutputs:
     """
@@ -355,7 +355,7 @@ def v_5tt2gmwmi(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tt2gmwmiConfigParameters] | None = None,
+    config: list[V5tt2gmwmiConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -419,10 +419,14 @@ def v_5tt2gmwmi(
 
 
 __all__ = [
+    "V5tt2gmwmiConfigParamsDict",
+    "V5tt2gmwmiConfigParamsDictTagged",
     "V5tt2gmwmiOutputs",
+    "V5tt2gmwmiParamsDict",
+    "V5tt2gmwmiParamsDictTagged",
     "V_5TT2GMWMI_METADATA",
     "v_5tt2gmwmi",
-    "v_5tt2gmwmi_config_params",
+    "v_5tt2gmwmi_config",
     "v_5tt2gmwmi_execute",
     "v_5tt2gmwmi_params",
 ]

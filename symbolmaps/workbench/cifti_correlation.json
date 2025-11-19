@@ -6,7 +6,7 @@
     },
     "roi-override": {
       "var_param": "roi_override",
-      "fn_struct_make_params": "cifti_correlation_roi_override_params",
+      "fn_struct_make_params": "cifti_correlation_roi_override",
       "properties": {
         "roi-metric": {
           "var_param": "roi_metric_2"

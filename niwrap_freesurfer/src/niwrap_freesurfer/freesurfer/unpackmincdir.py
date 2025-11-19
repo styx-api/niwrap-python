@@ -13,7 +13,7 @@ UNPACKMINCDIR_METADATA = Metadata(
 )
 
 
-UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
+UnpackmincdirParamsDict = typing.TypedDict('UnpackmincdirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpackmincdir"]],
     "source_directory": str,
     "target_directory": str,
@@ -24,7 +24,7 @@ UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
     "no_copy": bool,
     "umask": typing.NotRequired[str | None],
 })
-UnpackmincdirParametersTagged = typing.TypedDict('UnpackmincdirParametersTagged', {
+UnpackmincdirParamsDictTagged = typing.TypedDict('UnpackmincdirParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpackmincdir"],
     "source_directory": str,
     "target_directory": str,
@@ -39,7 +39,7 @@ UnpackmincdirParametersTagged = typing.TypedDict('UnpackmincdirParametersTagged'
 
 class UnpackmincdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnpackmincdirParameters(...)`.
+    Output object returned when calling `UnpackmincdirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def unpackmincdir_params(
     minc_only: bool = False,
     no_copy: bool = False,
     umask: str | None = None,
-) -> UnpackmincdirParametersTagged:
+) -> UnpackmincdirParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def unpackmincdir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnpackmincdirParameters` object.
+    `UnpackmincdirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def unpackmincdir_validate(
 
 
 def unpackmincdir_cargs(
-    params: UnpackmincdirParameters,
+    params: UnpackmincdirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def unpackmincdir_cargs(
 
 
 def unpackmincdir_outputs(
-    params: UnpackmincdirParameters,
+    params: UnpackmincdirParamsDict,
     execution: Execution,
 ) -> UnpackmincdirOutputs:
     """
@@ -202,7 +202,7 @@ def unpackmincdir_outputs(
 
 
 def unpackmincdir_execute(
-    params: UnpackmincdirParameters,
+    params: UnpackmincdirParamsDict,
     runner: Runner | None = None,
 ) -> UnpackmincdirOutputs:
     """
@@ -281,6 +281,8 @@ def unpackmincdir(
 __all__ = [
     "UNPACKMINCDIR_METADATA",
     "UnpackmincdirOutputs",
+    "UnpackmincdirParamsDict",
+    "UnpackmincdirParamsDictTagged",
     "unpackmincdir",
     "unpackmincdir_execute",
     "unpackmincdir_params",

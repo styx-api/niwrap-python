@@ -6,7 +6,7 @@
     },
     "left-surface": {
       "var_param": "left_surface",
-      "fn_struct_make_params": "cifti_correlation_gradient_left_surface_params",
+      "fn_struct_make_params": "cifti_correlation_gradient_left_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -18,7 +18,7 @@
     },
     "right-surface": {
       "var_param": "right_surface",
-      "fn_struct_make_params": "cifti_correlation_gradient_right_surface_params",
+      "fn_struct_make_params": "cifti_correlation_gradient_right_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -30,7 +30,7 @@
     },
     "cerebellum-surface": {
       "var_param": "cerebellum_surface",
-      "fn_struct_make_params": "cifti_correlation_gradient_cerebellum_surface_params",
+      "fn_struct_make_params": "cifti_correlation_gradient_cerebellum_surface",
       "properties": {
         "surface": {
           "var_param": "surface"
@@ -66,7 +66,7 @@
     },
     "double-correlation": {
       "var_param": "double_correlation",
-      "fn_struct_make_params": "cifti_correlation_gradient_double_correlation_params",
+      "fn_struct_make_params": "cifti_correlation_gradient_double_correlation",
       "properties": {
         "fisher-z-first": {
           "var_param": "fisher_z_first"

@@ -13,7 +13,7 @@ SURF_MEASURES_METADATA = Metadata(
 )
 
 
-SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
+SurfMeasuresParamsDict = typing.TypedDict('SurfMeasuresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfMeasures"]],
     "spec_file": InputPathType,
     "surf_A": str,
@@ -34,7 +34,7 @@ SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
     "info_volg": bool,
     "ver": bool,
 })
-SurfMeasuresParametersTagged = typing.TypedDict('SurfMeasuresParametersTagged', {
+SurfMeasuresParamsDictTagged = typing.TypedDict('SurfMeasuresParamsDictTagged', {
     "@type": typing.Literal["afni/SurfMeasures"],
     "spec_file": InputPathType,
     "surf_A": str,
@@ -59,7 +59,7 @@ SurfMeasuresParametersTagged = typing.TypedDict('SurfMeasuresParametersTagged', 
 
 class SurfMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfMeasuresParameters(...)`.
+    Output object returned when calling `SurfMeasuresParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +88,7 @@ def surf_measures_params(
     info_vol: bool = False,
     info_volg: bool = False,
     ver: bool = False,
-) -> SurfMeasuresParametersTagged:
+) -> SurfMeasuresParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def surf_measures_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfMeasuresParameters` object.
+    `SurfMeasuresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,7 +231,7 @@ def surf_measures_validate(
 
 
 def surf_measures_cargs(
-    params: SurfMeasuresParameters,
+    params: SurfMeasuresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -315,7 +315,7 @@ def surf_measures_cargs(
 
 
 def surf_measures_outputs(
-    params: SurfMeasuresParameters,
+    params: SurfMeasuresParamsDict,
     execution: Execution,
 ) -> SurfMeasuresOutputs:
     """
@@ -336,7 +336,7 @@ def surf_measures_outputs(
 
 
 def surf_measures_execute(
-    params: SurfMeasuresParameters,
+    params: SurfMeasuresParamsDict,
     runner: Runner | None = None,
 ) -> SurfMeasuresOutputs:
     """
@@ -444,6 +444,8 @@ def surf_measures(
 __all__ = [
     "SURF_MEASURES_METADATA",
     "SurfMeasuresOutputs",
+    "SurfMeasuresParamsDict",
+    "SurfMeasuresParamsDictTagged",
     "surf_measures",
     "surf_measures_execute",
     "surf_measures_params",

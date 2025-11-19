@@ -13,7 +13,7 @@ MRI_VOLCLUSTER_METADATA = Metadata(
 )
 
 
-MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
+MriVolclusterParamsDict = typing.TypedDict('MriVolclusterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volcluster"]],
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
@@ -64,7 +64,7 @@ MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
     "fill_params": typing.NotRequired[str | None],
     "help_flag": bool,
 })
-MriVolclusterParametersTagged = typing.TypedDict('MriVolclusterParametersTagged', {
+MriVolclusterParamsDictTagged = typing.TypedDict('MriVolclusterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_volcluster"],
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
@@ -119,7 +119,7 @@ MriVolclusterParametersTagged = typing.TypedDict('MriVolclusterParametersTagged'
 
 class MriVolclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVolclusterParameters(...)`.
+    Output object returned when calling `MriVolclusterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -182,7 +182,7 @@ def mri_volcluster_params(
     diagnostic_level: float | None = None,
     fill_params: str | None = None,
     help_flag: bool = False,
-) -> MriVolclusterParametersTagged:
+) -> MriVolclusterParamsDictTagged:
     """
     Build parameters.
     
@@ -336,7 +336,7 @@ def mri_volcluster_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVolclusterParameters` object.
+    `MriVolclusterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -503,7 +503,7 @@ def mri_volcluster_validate(
 
 
 def mri_volcluster_cargs(
-    params: MriVolclusterParameters,
+    params: MriVolclusterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -733,7 +733,7 @@ def mri_volcluster_cargs(
 
 
 def mri_volcluster_outputs(
-    params: MriVolclusterParameters,
+    params: MriVolclusterParamsDict,
     execution: Execution,
 ) -> MriVolclusterOutputs:
     """
@@ -756,7 +756,7 @@ def mri_volcluster_outputs(
 
 
 def mri_volcluster_execute(
-    params: MriVolclusterParameters,
+    params: MriVolclusterParamsDict,
     runner: Runner | None = None,
 ) -> MriVolclusterOutputs:
     """
@@ -954,6 +954,8 @@ def mri_volcluster(
 __all__ = [
     "MRI_VOLCLUSTER_METADATA",
     "MriVolclusterOutputs",
+    "MriVolclusterParamsDict",
+    "MriVolclusterParamsDictTagged",
     "mri_volcluster",
     "mri_volcluster_execute",
     "mri_volcluster_params",

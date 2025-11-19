@@ -5,7 +5,7 @@
       "var_param": "algorithm",
       "variants": {
         "freesurfer": {
-          "fn_struct_make_params": "v_5ttgen_freesurfer_params",
+          "fn_struct_make_params": "v_5ttgen_freesurfer",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -19,7 +19,7 @@
           }
         },
         "fsl": {
-          "fn_struct_make_params": "v_5ttgen_fsl_params",
+          "fn_struct_make_params": "v_5ttgen_fsl",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -39,7 +39,7 @@
           }
         },
         "gif": {
-          "fn_struct_make_params": "v_5ttgen_gif_params",
+          "fn_struct_make_params": "v_5ttgen_gif",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -50,7 +50,7 @@
           }
         },
         "hsvs": {
-          "fn_struct_make_params": "v_5ttgen_hsvs_params",
+          "fn_struct_make_params": "v_5ttgen_hsvs",
           "properties": {
             "input": {
               "var_param": "input_"
@@ -106,7 +106,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "v_5ttgen_config_params",
+      "fn_struct_make_params": "v_5ttgen_config",
       "properties": {
         "key": {
           "var_param": "key"

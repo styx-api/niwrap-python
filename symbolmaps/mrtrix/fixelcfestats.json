@@ -63,7 +63,7 @@
     },
     "column": {
       "var_param": "column",
-      "fn_struct_make_params": "fixelcfestats_column_params",
+      "fn_struct_make_params": "fixelcfestats_column",
       "properties": {
         "path": {
           "var_param": "path"
@@ -87,7 +87,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "fixelcfestats_config_params",
+      "fn_struct_make_params": "fixelcfestats_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -119,7 +119,7 @@
       "var_param": "connectivity",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "fixelcfestats_various_string_params",
+          "fn_struct_make_params": "fixelcfestats_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -127,7 +127,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "fixelcfestats_various_file_params",
+          "fn_struct_make_params": "fixelcfestats_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"

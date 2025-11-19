@@ -13,7 +13,7 @@ CREATE_WARPED_GRID_IMAGE_METADATA = Metadata(
 )
 
 
-CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParameters', {
+CreateWarpedGridImageParamsDict = typing.TypedDict('CreateWarpedGridImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/CreateWarpedGridImage"]],
     "image_dimension": int,
     "deformation_field": InputPathType,
@@ -22,7 +22,7 @@ CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParamet
     "grid_spacing": typing.NotRequired[str | None],
     "grid_sigma": typing.NotRequired[str | None],
 })
-CreateWarpedGridImageParametersTagged = typing.TypedDict('CreateWarpedGridImageParametersTagged', {
+CreateWarpedGridImageParamsDictTagged = typing.TypedDict('CreateWarpedGridImageParamsDictTagged', {
     "@type": typing.Literal["ants/CreateWarpedGridImage"],
     "image_dimension": int,
     "deformation_field": InputPathType,
@@ -35,7 +35,7 @@ CreateWarpedGridImageParametersTagged = typing.TypedDict('CreateWarpedGridImageP
 
 class CreateWarpedGridImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateWarpedGridImageParameters(...)`.
+    Output object returned when calling `CreateWarpedGridImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def create_warped_grid_image_params(
     directions: str | None = None,
     grid_spacing: str | None = None,
     grid_sigma: str | None = None,
-) -> CreateWarpedGridImageParametersTagged:
+) -> CreateWarpedGridImageParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def create_warped_grid_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateWarpedGridImageParameters` object.
+    `CreateWarpedGridImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def create_warped_grid_image_validate(
 
 
 def create_warped_grid_image_cargs(
-    params: CreateWarpedGridImageParameters,
+    params: CreateWarpedGridImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def create_warped_grid_image_cargs(
 
 
 def create_warped_grid_image_outputs(
-    params: CreateWarpedGridImageParameters,
+    params: CreateWarpedGridImageParamsDict,
     execution: Execution,
 ) -> CreateWarpedGridImageOutputs:
     """
@@ -162,7 +162,7 @@ def create_warped_grid_image_outputs(
 
 
 def create_warped_grid_image_execute(
-    params: CreateWarpedGridImageParameters,
+    params: CreateWarpedGridImageParamsDict,
     runner: Runner | None = None,
 ) -> CreateWarpedGridImageOutputs:
     """
@@ -233,6 +233,8 @@ def create_warped_grid_image(
 __all__ = [
     "CREATE_WARPED_GRID_IMAGE_METADATA",
     "CreateWarpedGridImageOutputs",
+    "CreateWarpedGridImageParamsDict",
+    "CreateWarpedGridImageParamsDictTagged",
     "create_warped_grid_image",
     "create_warped_grid_image_execute",
     "create_warped_grid_image_params",

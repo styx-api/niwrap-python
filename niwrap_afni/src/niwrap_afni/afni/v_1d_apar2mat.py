@@ -13,7 +13,7 @@ V_1D_APAR2MAT_METADATA = Metadata(
 )
 
 
-V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
+V1dApar2matParamsDict = typing.TypedDict('V1dApar2matParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dApar2mat"]],
     "x_shift": float,
     "y_shift": float,
@@ -28,7 +28,7 @@ V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
     "z_x_shear": float,
     "z_y_shear": float,
 })
-V1dApar2matParametersTagged = typing.TypedDict('V1dApar2matParametersTagged', {
+V1dApar2matParamsDictTagged = typing.TypedDict('V1dApar2matParamsDictTagged', {
     "@type": typing.Literal["afni/1dApar2mat"],
     "x_shift": float,
     "y_shift": float,
@@ -47,7 +47,7 @@ V1dApar2matParametersTagged = typing.TypedDict('V1dApar2matParametersTagged', {
 
 class V1dApar2matOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dApar2matParameters(...)`.
+    Output object returned when calling `V1dApar2matParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def v_1d_apar2mat_params(
     y_x_shear: float,
     z_x_shear: float,
     z_y_shear: float,
-) -> V1dApar2matParametersTagged:
+) -> V1dApar2matParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v_1d_apar2mat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dApar2matParameters` object.
+    `V1dApar2matParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -179,7 +179,7 @@ def v_1d_apar2mat_validate(
 
 
 def v_1d_apar2mat_cargs(
-    params: V1dApar2matParameters,
+    params: V1dApar2matParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -209,7 +209,7 @@ def v_1d_apar2mat_cargs(
 
 
 def v_1d_apar2mat_outputs(
-    params: V1dApar2matParameters,
+    params: V1dApar2matParamsDict,
     execution: Execution,
 ) -> V1dApar2matOutputs:
     """
@@ -228,7 +228,7 @@ def v_1d_apar2mat_outputs(
 
 
 def v_1d_apar2mat_execute(
-    params: V1dApar2matParameters,
+    params: V1dApar2matParamsDict,
     runner: Runner | None = None,
 ) -> V1dApar2matOutputs:
     """
@@ -318,6 +318,8 @@ def v_1d_apar2mat(
 
 __all__ = [
     "V1dApar2matOutputs",
+    "V1dApar2matParamsDict",
+    "V1dApar2matParamsDictTagged",
     "V_1D_APAR2MAT_METADATA",
     "v_1d_apar2mat",
     "v_1d_apar2mat_execute",

@@ -13,29 +13,29 @@ VECTORSTATS_METADATA = Metadata(
 )
 
 
-VectorstatsColumnParameters = typing.TypedDict('VectorstatsColumnParameters', {
+VectorstatsColumnParamsDict = typing.TypedDict('VectorstatsColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "path": InputPathType,
 })
-VectorstatsColumnParametersTagged = typing.TypedDict('VectorstatsColumnParametersTagged', {
+VectorstatsColumnParamsDictTagged = typing.TypedDict('VectorstatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
-VectorstatsConfigParameters = typing.TypedDict('VectorstatsConfigParameters', {
+VectorstatsConfigParamsDict = typing.TypedDict('VectorstatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-VectorstatsConfigParametersTagged = typing.TypedDict('VectorstatsConfigParametersTagged', {
+VectorstatsConfigParamsDictTagged = typing.TypedDict('VectorstatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-VectorstatsParameters = typing.TypedDict('VectorstatsParameters', {
+VectorstatsParamsDict = typing.TypedDict('VectorstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/vectorstats"]],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -47,13 +47,13 @@ VectorstatsParameters = typing.TypedDict('VectorstatsParameters', {
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[VectorstatsColumnParameters] | None],
+    "column": typing.NotRequired[list[VectorstatsColumnParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[VectorstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[VectorstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -61,7 +61,7 @@ VectorstatsParameters = typing.TypedDict('VectorstatsParameters', {
     "contrast": InputPathType,
     "output": str,
 })
-VectorstatsParametersTagged = typing.TypedDict('VectorstatsParametersTagged', {
+VectorstatsParamsDictTagged = typing.TypedDict('VectorstatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/vectorstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -73,13 +73,13 @@ VectorstatsParametersTagged = typing.TypedDict('VectorstatsParametersTagged', {
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[VectorstatsColumnParameters] | None],
+    "column": typing.NotRequired[list[VectorstatsColumnParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[VectorstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[VectorstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -89,9 +89,9 @@ VectorstatsParametersTagged = typing.TypedDict('VectorstatsParametersTagged', {
 })
 
 
-def vectorstats_column_params(
+def vectorstats_column(
     path: InputPathType,
-) -> VectorstatsColumnParametersTagged:
+) -> VectorstatsColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def vectorstats_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VectorstatsColumnParameters` object.
+    `VectorstatsColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -129,7 +129,7 @@ def vectorstats_column_validate(
 
 
 def vectorstats_column_cargs(
-    params: VectorstatsColumnParameters,
+    params: VectorstatsColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,10 +147,10 @@ def vectorstats_column_cargs(
     return cargs
 
 
-def vectorstats_config_params(
+def vectorstats_config(
     key: str,
     value: str,
-) -> VectorstatsConfigParametersTagged:
+) -> VectorstatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -173,7 +173,7 @@ def vectorstats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VectorstatsConfigParameters` object.
+    `VectorstatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def vectorstats_config_validate(
 
 
 def vectorstats_config_cargs(
-    params: VectorstatsConfigParameters,
+    params: VectorstatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -212,7 +212,7 @@ def vectorstats_config_cargs(
 
 class VectorstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VectorstatsParameters(...)`.
+    Output object returned when calling `VectorstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -233,16 +233,16 @@ def vectorstats_params(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[VectorstatsColumnParameters] | None = None,
+    column: list[VectorstatsColumnParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[VectorstatsConfigParameters] | None = None,
+    config: list[VectorstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> VectorstatsParametersTagged:
+) -> VectorstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -339,7 +339,7 @@ def vectorstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VectorstatsParameters` object.
+    `VectorstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -381,7 +381,7 @@ def vectorstats_validate(
         raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[VectorstatsColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[VectorstatsColumnParamsDict] | None`')
         for e in params["column"]:
             vectorstats_column_validate(e)
     if params.get("info", False) is None:
@@ -405,7 +405,7 @@ def vectorstats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[VectorstatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[VectorstatsConfigParamsDict] | None`')
         for e in params["config"]:
             vectorstats_config_validate(e)
     if params.get("help", False) is None:
@@ -435,7 +435,7 @@ def vectorstats_validate(
 
 
 def vectorstats_cargs(
-    params: VectorstatsParameters,
+    params: VectorstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -519,7 +519,7 @@ def vectorstats_cargs(
 
 
 def vectorstats_outputs(
-    params: VectorstatsParameters,
+    params: VectorstatsParamsDict,
     execution: Execution,
 ) -> VectorstatsOutputs:
     """
@@ -538,7 +538,7 @@ def vectorstats_outputs(
 
 
 def vectorstats_execute(
-    params: VectorstatsParameters,
+    params: VectorstatsParamsDict,
     runner: Runner | None = None,
 ) -> VectorstatsOutputs:
     """
@@ -601,13 +601,13 @@ def vectorstats(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[VectorstatsColumnParameters] | None = None,
+    column: list[VectorstatsColumnParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[VectorstatsConfigParameters] | None = None,
+    config: list[VectorstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -721,10 +721,16 @@ def vectorstats(
 
 __all__ = [
     "VECTORSTATS_METADATA",
+    "VectorstatsColumnParamsDict",
+    "VectorstatsColumnParamsDictTagged",
+    "VectorstatsConfigParamsDict",
+    "VectorstatsConfigParamsDictTagged",
     "VectorstatsOutputs",
+    "VectorstatsParamsDict",
+    "VectorstatsParamsDictTagged",
     "vectorstats",
-    "vectorstats_column_params",
-    "vectorstats_config_params",
+    "vectorstats_column",
+    "vectorstats_config",
     "vectorstats_execute",
     "vectorstats_params",
 ]

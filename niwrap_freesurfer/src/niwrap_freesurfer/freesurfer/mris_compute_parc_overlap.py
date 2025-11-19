@@ -13,7 +13,7 @@ MRIS_COMPUTE_PARC_OVERLAP_METADATA = Metadata(
 )
 
 
-MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParameters', {
+MrisComputeParcOverlapParamsDict = typing.TypedDict('MrisComputeParcOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_parc_overlap"]],
     "subject": str,
     "hemi": str,
@@ -32,7 +32,7 @@ MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParam
     "use_label_xyz": bool,
     "debug_overlap": bool,
 })
-MrisComputeParcOverlapParametersTagged = typing.TypedDict('MrisComputeParcOverlapParametersTagged', {
+MrisComputeParcOverlapParamsDictTagged = typing.TypedDict('MrisComputeParcOverlapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_compute_parc_overlap"],
     "subject": str,
     "hemi": str,
@@ -55,7 +55,7 @@ MrisComputeParcOverlapParametersTagged = typing.TypedDict('MrisComputeParcOverla
 
 class MrisComputeParcOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisComputeParcOverlapParameters(...)`.
+    Output object returned when calling `MrisComputeParcOverlapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def mris_compute_parc_overlap_params(
     use_label2_xyz: bool = False,
     use_label_xyz: bool = False,
     debug_overlap: bool = False,
-) -> MrisComputeParcOverlapParametersTagged:
+) -> MrisComputeParcOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def mris_compute_parc_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisComputeParcOverlapParameters` object.
+    `MrisComputeParcOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def mris_compute_parc_overlap_validate(
 
 
 def mris_compute_parc_overlap_cargs(
-    params: MrisComputeParcOverlapParameters,
+    params: MrisComputeParcOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def mris_compute_parc_overlap_cargs(
 
 
 def mris_compute_parc_overlap_outputs(
-    params: MrisComputeParcOverlapParameters,
+    params: MrisComputeParcOverlapParamsDict,
     execution: Execution,
 ) -> MrisComputeParcOverlapOutputs:
     """
@@ -299,7 +299,7 @@ def mris_compute_parc_overlap_outputs(
 
 
 def mris_compute_parc_overlap_execute(
-    params: MrisComputeParcOverlapParameters,
+    params: MrisComputeParcOverlapParamsDict,
     runner: Runner | None = None,
 ) -> MrisComputeParcOverlapOutputs:
     """
@@ -404,6 +404,8 @@ def mris_compute_parc_overlap(
 __all__ = [
     "MRIS_COMPUTE_PARC_OVERLAP_METADATA",
     "MrisComputeParcOverlapOutputs",
+    "MrisComputeParcOverlapParamsDict",
+    "MrisComputeParcOverlapParamsDictTagged",
     "mris_compute_parc_overlap",
     "mris_compute_parc_overlap_execute",
     "mris_compute_parc_overlap_params",

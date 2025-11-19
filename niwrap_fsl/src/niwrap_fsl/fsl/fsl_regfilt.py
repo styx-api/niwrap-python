@@ -13,7 +13,7 @@ FSL_REGFILT_METADATA = Metadata(
 )
 
 
-FslRegfiltParameters = typing.TypedDict('FslRegfiltParameters', {
+FslRegfiltParamsDict = typing.TypedDict('FslRegfiltParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_regfilt"]],
     "infile": InputPathType,
     "designfile": InputPathType,
@@ -33,7 +33,7 @@ FslRegfiltParameters = typing.TypedDict('FslRegfiltParameters', {
     "out_mix": typing.NotRequired[str | None],
     "out_vnscales": typing.NotRequired[str | None],
 })
-FslRegfiltParametersTagged = typing.TypedDict('FslRegfiltParametersTagged', {
+FslRegfiltParamsDictTagged = typing.TypedDict('FslRegfiltParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_regfilt"],
     "infile": InputPathType,
     "designfile": InputPathType,
@@ -57,7 +57,7 @@ FslRegfiltParametersTagged = typing.TypedDict('FslRegfiltParametersTagged', {
 
 class FslRegfiltOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslRegfiltParameters(...)`.
+    Output object returned when calling `FslRegfiltParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def fsl_regfilt_params(
     out_data: str | None = None,
     out_mix: str | None = None,
     out_vnscales: str | None = None,
-) -> FslRegfiltParametersTagged:
+) -> FslRegfiltParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def fsl_regfilt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslRegfiltParameters` object.
+    `FslRegfiltParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -226,7 +226,7 @@ def fsl_regfilt_validate(
 
 
 def fsl_regfilt_cargs(
-    params: FslRegfiltParameters,
+    params: FslRegfiltParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -308,7 +308,7 @@ def fsl_regfilt_cargs(
 
 
 def fsl_regfilt_outputs(
-    params: FslRegfiltParameters,
+    params: FslRegfiltParamsDict,
     execution: Execution,
 ) -> FslRegfiltOutputs:
     """
@@ -331,7 +331,7 @@ def fsl_regfilt_outputs(
 
 
 def fsl_regfilt_execute(
-    params: FslRegfiltParameters,
+    params: FslRegfiltParamsDict,
     runner: Runner | None = None,
 ) -> FslRegfiltOutputs:
     """
@@ -443,6 +443,8 @@ def fsl_regfilt(
 __all__ = [
     "FSL_REGFILT_METADATA",
     "FslRegfiltOutputs",
+    "FslRegfiltParamsDict",
+    "FslRegfiltParamsDictTagged",
     "fsl_regfilt",
     "fsl_regfilt_execute",
     "fsl_regfilt_params",

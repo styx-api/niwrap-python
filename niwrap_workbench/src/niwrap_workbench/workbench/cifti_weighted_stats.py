@@ -12,7 +12,7 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
 )
 
 
-CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParameters', {
+CiftiWeightedStatsSpatialWeightsParamsDict = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["spatial-weights"]],
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStat
     "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiWeightedStatsSpatialWeightsParametersTagged = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParametersTagged', {
+CiftiWeightedStatsSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParamsDictTagged', {
     "@type": typing.Literal["spatial-weights"],
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
@@ -32,24 +32,24 @@ CiftiWeightedStatsSpatialWeightsParametersTagged = typing.TypedDict('CiftiWeight
 })
 
 
-CiftiWeightedStatsRoiParameters = typing.TypedDict('CiftiWeightedStatsRoiParameters', {
+CiftiWeightedStatsRoiParamsDict = typing.TypedDict('CiftiWeightedStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
-CiftiWeightedStatsRoiParametersTagged = typing.TypedDict('CiftiWeightedStatsRoiParametersTagged', {
+CiftiWeightedStatsRoiParamsDictTagged = typing.TypedDict('CiftiWeightedStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
 
 
-CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', {
+CiftiWeightedStatsParamsDict = typing.TypedDict('CiftiWeightedStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-weighted-stats"]],
-    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
+    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[int | None],
-    "roi": typing.NotRequired[CiftiWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -57,12 +57,12 @@ CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', 
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
-CiftiWeightedStatsParametersTagged = typing.TypedDict('CiftiWeightedStatsParametersTagged', {
+CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-weighted-stats"],
-    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
+    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
     "weight-cifti": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[int | None],
-    "roi": typing.NotRequired[CiftiWeightedStatsRoiParameters | None],
+    "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
     "mean": bool,
     "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
@@ -72,14 +72,14 @@ CiftiWeightedStatsParametersTagged = typing.TypedDict('CiftiWeightedStatsParamet
 })
 
 
-def cifti_weighted_stats_spatial_weights_params(
+def cifti_weighted_stats_spatial_weights(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
     left_metric: InputPathType | None,
     right_metric: InputPathType | None,
     cerebellum_metric: InputPathType | None,
-) -> CiftiWeightedStatsSpatialWeightsParametersTagged:
+) -> CiftiWeightedStatsSpatialWeightsParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def cifti_weighted_stats_spatial_weights_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiWeightedStatsSpatialWeightsParameters` object.
+    `CiftiWeightedStatsSpatialWeightsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -156,7 +156,7 @@ def cifti_weighted_stats_spatial_weights_validate(
 
 
 def cifti_weighted_stats_spatial_weights_cargs(
-    params: CiftiWeightedStatsSpatialWeightsParameters,
+    params: CiftiWeightedStatsSpatialWeightsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,10 +188,10 @@ def cifti_weighted_stats_spatial_weights_cargs(
     return cargs
 
 
-def cifti_weighted_stats_roi_params(
+def cifti_weighted_stats_roi(
     roi_cifti: InputPathType,
     match_maps: bool = False,
-) -> CiftiWeightedStatsRoiParametersTagged:
+) -> CiftiWeightedStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -215,7 +215,7 @@ def cifti_weighted_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiWeightedStatsRoiParameters` object.
+    `CiftiWeightedStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def cifti_weighted_stats_roi_validate(
 
 
 def cifti_weighted_stats_roi_cargs(
-    params: CiftiWeightedStatsRoiParameters,
+    params: CiftiWeightedStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -257,7 +257,7 @@ def cifti_weighted_stats_roi_cargs(
 
 class CiftiWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiWeightedStatsParameters(...)`.
+    Output object returned when calling `CiftiWeightedStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -268,13 +268,13 @@ def cifti_weighted_stats_params(
     column: int | None,
     percent: float | None,
     cifti_in: InputPathType,
-    spatial_weights: CiftiWeightedStatsSpatialWeightsParameters | None = None,
-    roi: CiftiWeightedStatsRoiParameters | None = None,
+    spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
+    roi: CiftiWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
     show_map_name: bool = False,
-) -> CiftiWeightedStatsParametersTagged:
+) -> CiftiWeightedStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -327,7 +327,7 @@ def cifti_weighted_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiWeightedStatsParameters` object.
+    `CiftiWeightedStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -369,7 +369,7 @@ def cifti_weighted_stats_validate(
 
 
 def cifti_weighted_stats_cargs(
-    params: CiftiWeightedStatsParameters,
+    params: CiftiWeightedStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -405,7 +405,7 @@ def cifti_weighted_stats_cargs(
 
 
 def cifti_weighted_stats_outputs(
-    params: CiftiWeightedStatsParameters,
+    params: CiftiWeightedStatsParamsDict,
     execution: Execution,
 ) -> CiftiWeightedStatsOutputs:
     """
@@ -424,7 +424,7 @@ def cifti_weighted_stats_outputs(
 
 
 def cifti_weighted_stats_execute(
-    params: CiftiWeightedStatsParameters,
+    params: CiftiWeightedStatsParamsDict,
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
@@ -466,8 +466,8 @@ def cifti_weighted_stats(
     column: int | None,
     percent: float | None,
     cifti_in: InputPathType,
-    spatial_weights: CiftiWeightedStatsSpatialWeightsParameters | None = None,
-    roi: CiftiWeightedStatsRoiParameters | None = None,
+    spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
+    roi: CiftiWeightedStatsRoiParamsDict | None = None,
     mean: bool = False,
     sample: bool | None = False,
     sum_: bool = False,
@@ -533,9 +533,15 @@ def cifti_weighted_stats(
 __all__ = [
     "CIFTI_WEIGHTED_STATS_METADATA",
     "CiftiWeightedStatsOutputs",
+    "CiftiWeightedStatsParamsDict",
+    "CiftiWeightedStatsParamsDictTagged",
+    "CiftiWeightedStatsRoiParamsDict",
+    "CiftiWeightedStatsRoiParamsDictTagged",
+    "CiftiWeightedStatsSpatialWeightsParamsDict",
+    "CiftiWeightedStatsSpatialWeightsParamsDictTagged",
     "cifti_weighted_stats",
     "cifti_weighted_stats_execute",
     "cifti_weighted_stats_params",
-    "cifti_weighted_stats_roi_params",
-    "cifti_weighted_stats_spatial_weights_params",
+    "cifti_weighted_stats_roi",
+    "cifti_weighted_stats_spatial_weights",
 ]

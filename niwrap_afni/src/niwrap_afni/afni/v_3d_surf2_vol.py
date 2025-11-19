@@ -13,7 +13,7 @@ V_3D_SURF2_VOL_METADATA = Metadata(
 )
 
 
-V3dSurf2VolParameters = typing.TypedDict('V3dSurf2VolParameters', {
+V3dSurf2VolParamsDict = typing.TypedDict('V3dSurf2VolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSurf2Vol"]],
     "spec": InputPathType,
     "surface_volume": InputPathType,
@@ -41,7 +41,7 @@ V3dSurf2VolParameters = typing.TypedDict('V3dSurf2VolParameters', {
     "noscale": bool,
     "sxyz_orient_as_gpar": bool,
 })
-V3dSurf2VolParametersTagged = typing.TypedDict('V3dSurf2VolParametersTagged', {
+V3dSurf2VolParamsDictTagged = typing.TypedDict('V3dSurf2VolParamsDictTagged', {
     "@type": typing.Literal["afni/3dSurf2Vol"],
     "spec": InputPathType,
     "surface_volume": InputPathType,
@@ -73,7 +73,7 @@ V3dSurf2VolParametersTagged = typing.TypedDict('V3dSurf2VolParametersTagged', {
 
 class V3dSurf2VolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSurf2VolParameters(...)`.
+    Output object returned when calling `V3dSurf2VolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def v_3d_surf2_vol_params(
     dvoxel: int | None = None,
     noscale: bool = False,
     sxyz_orient_as_gpar: bool = False,
-) -> V3dSurf2VolParametersTagged:
+) -> V3dSurf2VolParamsDictTagged:
     """
     Build parameters.
     
@@ -190,7 +190,7 @@ def v_3d_surf2_vol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSurf2VolParameters` object.
+    `V3dSurf2VolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -284,7 +284,7 @@ def v_3d_surf2_vol_validate(
 
 
 def v_3d_surf2_vol_cargs(
-    params: V3dSurf2VolParameters,
+    params: V3dSurf2VolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -412,7 +412,7 @@ def v_3d_surf2_vol_cargs(
 
 
 def v_3d_surf2_vol_outputs(
-    params: V3dSurf2VolParameters,
+    params: V3dSurf2VolParamsDict,
     execution: Execution,
 ) -> V3dSurf2VolOutputs:
     """
@@ -431,7 +431,7 @@ def v_3d_surf2_vol_outputs(
 
 
 def v_3d_surf2_vol_execute(
-    params: V3dSurf2VolParameters,
+    params: V3dSurf2VolParamsDict,
     runner: Runner | None = None,
 ) -> V3dSurf2VolOutputs:
     """
@@ -558,6 +558,8 @@ def v_3d_surf2_vol(
 
 __all__ = [
     "V3dSurf2VolOutputs",
+    "V3dSurf2VolParamsDict",
+    "V3dSurf2VolParamsDictTagged",
     "V_3D_SURF2_VOL_METADATA",
     "v_3d_surf2_vol",
     "v_3d_surf2_vol_execute",

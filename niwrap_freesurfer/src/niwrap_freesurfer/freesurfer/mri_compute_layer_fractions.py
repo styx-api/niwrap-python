@@ -13,7 +13,7 @@ MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
 )
 
 
-MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsParameters', {
+MriComputeLayerFractionsParamsDict = typing.TypedDict('MriComputeLayerFractionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_layer_fractions"]],
     "reg_file": InputPathType,
     "input_volume": InputPathType,
@@ -30,7 +30,7 @@ MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsP
     "random_file": typing.NotRequired[InputPathType | None],
     "identity_file": typing.NotRequired[str | None],
 })
-MriComputeLayerFractionsParametersTagged = typing.TypedDict('MriComputeLayerFractionsParametersTagged', {
+MriComputeLayerFractionsParamsDictTagged = typing.TypedDict('MriComputeLayerFractionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_layer_fractions"],
     "reg_file": InputPathType,
     "input_volume": InputPathType,
@@ -51,7 +51,7 @@ MriComputeLayerFractionsParametersTagged = typing.TypedDict('MriComputeLayerFrac
 
 class MriComputeLayerFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeLayerFractionsParameters(...)`.
+    Output object returned when calling `MriComputeLayerFractionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def mri_compute_layer_fractions_params(
     thickness: float | None = None,
     random_file: InputPathType | None = None,
     identity_file: str | None = None,
-) -> MriComputeLayerFractionsParametersTagged:
+) -> MriComputeLayerFractionsParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def mri_compute_layer_fractions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeLayerFractionsParameters` object.
+    `MriComputeLayerFractionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -190,7 +190,7 @@ def mri_compute_layer_fractions_validate(
 
 
 def mri_compute_layer_fractions_cargs(
-    params: MriComputeLayerFractionsParameters,
+    params: MriComputeLayerFractionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -251,7 +251,7 @@ def mri_compute_layer_fractions_cargs(
 
 
 def mri_compute_layer_fractions_outputs(
-    params: MriComputeLayerFractionsParameters,
+    params: MriComputeLayerFractionsParamsDict,
     execution: Execution,
 ) -> MriComputeLayerFractionsOutputs:
     """
@@ -272,7 +272,7 @@ def mri_compute_layer_fractions_outputs(
 
 
 def mri_compute_layer_fractions_execute(
-    params: MriComputeLayerFractionsParameters,
+    params: MriComputeLayerFractionsParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeLayerFractionsOutputs:
     """
@@ -370,6 +370,8 @@ def mri_compute_layer_fractions(
 __all__ = [
     "MRI_COMPUTE_LAYER_FRACTIONS_METADATA",
     "MriComputeLayerFractionsOutputs",
+    "MriComputeLayerFractionsParamsDict",
+    "MriComputeLayerFractionsParamsDictTagged",
     "mri_compute_layer_fractions",
     "mri_compute_layer_fractions_execute",
     "mri_compute_layer_fractions_params",

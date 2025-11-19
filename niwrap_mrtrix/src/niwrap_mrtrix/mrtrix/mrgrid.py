@@ -13,51 +13,51 @@ MRGRID_METADATA = Metadata(
 )
 
 
-MrgridAxisParameters = typing.TypedDict('MrgridAxisParameters', {
+MrgridAxisParamsDict = typing.TypedDict('MrgridAxisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["axis"]],
     "index": int,
     "spec": str,
 })
-MrgridAxisParametersTagged = typing.TypedDict('MrgridAxisParametersTagged', {
+MrgridAxisParamsDictTagged = typing.TypedDict('MrgridAxisParamsDictTagged', {
     "@type": typing.Literal["axis"],
     "index": int,
     "spec": str,
 })
 
 
-MrgridVariousStringParameters = typing.TypedDict('MrgridVariousStringParameters', {
+MrgridVariousStringParamsDict = typing.TypedDict('MrgridVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-MrgridVariousStringParametersTagged = typing.TypedDict('MrgridVariousStringParametersTagged', {
+MrgridVariousStringParamsDictTagged = typing.TypedDict('MrgridVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-MrgridVariousFileParameters = typing.TypedDict('MrgridVariousFileParameters', {
+MrgridVariousFileParamsDict = typing.TypedDict('MrgridVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-MrgridVariousFileParametersTagged = typing.TypedDict('MrgridVariousFileParametersTagged', {
+MrgridVariousFileParamsDictTagged = typing.TypedDict('MrgridVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-MrgridConfigParameters = typing.TypedDict('MrgridConfigParameters', {
+MrgridConfigParamsDict = typing.TypedDict('MrgridConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrgridConfigParametersTagged = typing.TypedDict('MrgridConfigParametersTagged', {
+MrgridConfigParamsDictTagged = typing.TypedDict('MrgridConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrgridParameters = typing.TypedDict('MrgridParameters', {
+MrgridParamsDict = typing.TypedDict('MrgridParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrgrid"]],
     "template": typing.NotRequired[InputPathType | None],
     "size": typing.NotRequired[list[int] | None],
@@ -69,24 +69,24 @@ MrgridParameters = typing.TypedDict('MrgridParameters', {
     "uniform": typing.NotRequired[int | None],
     "mask": typing.NotRequired[InputPathType | None],
     "crop_unbound": bool,
-    "axis": typing.NotRequired[list[MrgridAxisParameters] | None],
+    "axis": typing.NotRequired[list[MrgridAxisParamsDict] | None],
     "all_axes": bool,
     "fill": typing.NotRequired[float | None],
-    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParamsDictTagged, MrgridVariousFileParamsDictTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrgridConfigParameters] | None],
+    "config": typing.NotRequired[list[MrgridConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "operation": str,
     "output": str,
 })
-MrgridParametersTagged = typing.TypedDict('MrgridParametersTagged', {
+MrgridParamsDictTagged = typing.TypedDict('MrgridParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrgrid"],
     "template": typing.NotRequired[InputPathType | None],
     "size": typing.NotRequired[list[int] | None],
@@ -98,17 +98,17 @@ MrgridParametersTagged = typing.TypedDict('MrgridParametersTagged', {
     "uniform": typing.NotRequired[int | None],
     "mask": typing.NotRequired[InputPathType | None],
     "crop_unbound": bool,
-    "axis": typing.NotRequired[list[MrgridAxisParameters] | None],
+    "axis": typing.NotRequired[list[MrgridAxisParamsDict] | None],
     "all_axes": bool,
     "fill": typing.NotRequired[float | None],
-    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParamsDictTagged, MrgridVariousFileParamsDictTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrgridConfigParameters] | None],
+    "config": typing.NotRequired[list[MrgridConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -151,10 +151,10 @@ def mrgrid_strides_validate_dyn_fn(
     }.get(t)
 
 
-def mrgrid_axis_params(
+def mrgrid_axis(
     index: int,
     spec: str,
-) -> MrgridAxisParametersTagged:
+) -> MrgridAxisParamsDictTagged:
     """
     Build parameters.
     
@@ -195,7 +195,7 @@ def mrgrid_axis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrgridAxisParameters` object.
+    `MrgridAxisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def mrgrid_axis_validate(
 
 
 def mrgrid_axis_cargs(
-    params: MrgridAxisParameters,
+    params: MrgridAxisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,9 +232,9 @@ def mrgrid_axis_cargs(
     return cargs
 
 
-def mrgrid_various_string_params(
+def mrgrid_various_string(
     obj: str,
-) -> MrgridVariousStringParametersTagged:
+) -> MrgridVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -255,7 +255,7 @@ def mrgrid_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrgridVariousStringParameters` object.
+    `MrgridVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,7 +269,7 @@ def mrgrid_various_string_validate(
 
 
 def mrgrid_various_string_cargs(
-    params: MrgridVariousStringParameters,
+    params: MrgridVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,9 +286,9 @@ def mrgrid_various_string_cargs(
     return cargs
 
 
-def mrgrid_various_file_params(
+def mrgrid_various_file(
     obj: InputPathType,
-) -> MrgridVariousFileParametersTagged:
+) -> MrgridVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -309,7 +309,7 @@ def mrgrid_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrgridVariousFileParameters` object.
+    `MrgridVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -323,7 +323,7 @@ def mrgrid_various_file_validate(
 
 
 def mrgrid_various_file_cargs(
-    params: MrgridVariousFileParameters,
+    params: MrgridVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -340,10 +340,10 @@ def mrgrid_various_file_cargs(
     return cargs
 
 
-def mrgrid_config_params(
+def mrgrid_config(
     key: str,
     value: str,
-) -> MrgridConfigParametersTagged:
+) -> MrgridConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -366,7 +366,7 @@ def mrgrid_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrgridConfigParameters` object.
+    `MrgridConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -384,7 +384,7 @@ def mrgrid_config_validate(
 
 
 def mrgrid_config_cargs(
-    params: MrgridConfigParameters,
+    params: MrgridConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -405,7 +405,7 @@ def mrgrid_config_cargs(
 
 class MrgridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrgridParameters(...)`.
+    Output object returned when calling `MrgridParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -427,20 +427,20 @@ def mrgrid_params(
     uniform: int | None = None,
     mask: InputPathType | None = None,
     crop_unbound: bool = False,
-    axis: list[MrgridAxisParameters] | None = None,
+    axis: list[MrgridAxisParamsDict] | None = None,
     all_axes: bool = False,
     fill: float | None = None,
-    strides: typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrgridVariousStringParamsDictTagged, MrgridVariousFileParamsDictTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrgridConfigParameters] | None = None,
+    config: list[MrgridConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrgridParametersTagged:
+) -> MrgridParamsDictTagged:
     """
     Build parameters.
     
@@ -575,7 +575,7 @@ def mrgrid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrgridParameters` object.
+    `MrgridParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -627,7 +627,7 @@ def mrgrid_validate(
         raise StyxValidationError(f'`crop_unbound` has the wrong type: Received `{type(params.get("crop_unbound", False))}` expected `bool`')
     if params.get("axis", None) is not None:
         if not isinstance(params["axis"], list):
-            raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `list[MrgridAxisParameters] | None`')
+            raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `list[MrgridAxisParamsDict] | None`')
         for e in params["axis"]:
             mrgrid_axis_validate(e)
     if params.get("all_axes", False) is None:
@@ -642,6 +642,8 @@ def mrgrid_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         mrgrid_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("datatype", None) is not None:
         if not isinstance(params["datatype"], str):
@@ -667,7 +669,7 @@ def mrgrid_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrgridConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrgridConfigParamsDict] | None`')
         for e in params["config"]:
             mrgrid_config_validate(e)
     if params.get("help", False) is None:
@@ -693,7 +695,7 @@ def mrgrid_validate(
 
 
 def mrgrid_cargs(
-    params: MrgridParameters,
+    params: MrgridParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -799,7 +801,7 @@ def mrgrid_cargs(
 
 
 def mrgrid_outputs(
-    params: MrgridParameters,
+    params: MrgridParamsDict,
     execution: Execution,
 ) -> MrgridOutputs:
     """
@@ -819,7 +821,7 @@ def mrgrid_outputs(
 
 
 def mrgrid_execute(
-    params: MrgridParameters,
+    params: MrgridParamsDict,
     runner: Runner | None = None,
 ) -> MrgridOutputs:
     """
@@ -890,17 +892,17 @@ def mrgrid(
     uniform: int | None = None,
     mask: InputPathType | None = None,
     crop_unbound: bool = False,
-    axis: list[MrgridAxisParameters] | None = None,
+    axis: list[MrgridAxisParamsDict] | None = None,
     all_axes: bool = False,
     fill: float | None = None,
-    strides: typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrgridVariousStringParamsDictTagged, MrgridVariousFileParamsDictTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrgridConfigParameters] | None = None,
+    config: list[MrgridConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1056,12 +1058,22 @@ def mrgrid(
 
 __all__ = [
     "MRGRID_METADATA",
+    "MrgridAxisParamsDict",
+    "MrgridAxisParamsDictTagged",
+    "MrgridConfigParamsDict",
+    "MrgridConfigParamsDictTagged",
     "MrgridOutputs",
+    "MrgridParamsDict",
+    "MrgridParamsDictTagged",
+    "MrgridVariousFileParamsDict",
+    "MrgridVariousFileParamsDictTagged",
+    "MrgridVariousStringParamsDict",
+    "MrgridVariousStringParamsDictTagged",
     "mrgrid",
-    "mrgrid_axis_params",
-    "mrgrid_config_params",
+    "mrgrid_axis",
+    "mrgrid_config",
     "mrgrid_execute",
     "mrgrid_params",
-    "mrgrid_various_file_params",
-    "mrgrid_various_string_params",
+    "mrgrid_various_file",
+    "mrgrid_various_string",
 ]

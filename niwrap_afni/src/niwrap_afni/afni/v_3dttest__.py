@@ -13,7 +13,7 @@ V_3DTTEST___METADATA = Metadata(
 )
 
 
-V3dttestParameters = typing.TypedDict('V3dttestParameters', {
+V3dttestParamsDict = typing.TypedDict('V3dttestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dttest++"]],
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
@@ -37,7 +37,7 @@ V3dttestParameters = typing.TypedDict('V3dttestParameters', {
     "ETAC_opt": typing.NotRequired[list[str] | None],
     "seed": typing.NotRequired[float | None],
 })
-V3dttestParametersTagged = typing.TypedDict('V3dttestParametersTagged', {
+V3dttestParamsDictTagged = typing.TypedDict('V3dttestParamsDictTagged', {
     "@type": typing.Literal["afni/3dttest++"],
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
@@ -65,7 +65,7 @@ V3dttestParametersTagged = typing.TypedDict('V3dttestParametersTagged', {
 
 class V3dttestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dttestParameters(...)`.
+    Output object returned when calling `V3dttestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +97,7 @@ def v_3dttest___params(
     etac_blur: list[float] | None = None,
     etac_opt: list[str] | None = None,
     seed: float | None = None,
-) -> V3dttestParametersTagged:
+) -> V3dttestParamsDictTagged:
     """
     Build parameters.
     
@@ -184,7 +184,7 @@ def v_3dttest___validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dttestParameters` object.
+    `V3dttestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def v_3dttest___validate(
 
 
 def v_3dttest___cargs(
-    params: V3dttestParameters,
+    params: V3dttestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -390,7 +390,7 @@ def v_3dttest___cargs(
 
 
 def v_3dttest___outputs(
-    params: V3dttestParameters,
+    params: V3dttestParamsDict,
     execution: Execution,
 ) -> V3dttestOutputs:
     """
@@ -411,7 +411,7 @@ def v_3dttest___outputs(
 
 
 def v_3dttest___execute(
-    params: V3dttestParameters,
+    params: V3dttestParamsDict,
     runner: Runner | None = None,
 ) -> V3dttestOutputs:
     """
@@ -537,6 +537,8 @@ def v_3dttest__(
 
 __all__ = [
     "V3dttestOutputs",
+    "V3dttestParamsDict",
+    "V3dttestParamsDictTagged",
     "V_3DTTEST___METADATA",
     "v_3dttest__",
     "v_3dttest___execute",

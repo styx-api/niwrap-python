@@ -13,14 +13,14 @@ BIANCA_CLUSTER_STATS_METADATA = Metadata(
 )
 
 
-BiancaClusterStatsParameters = typing.TypedDict('BiancaClusterStatsParameters', {
+BiancaClusterStatsParamsDict = typing.TypedDict('BiancaClusterStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bianca_cluster_stats"]],
     "bianca_output_map": InputPathType,
     "threshold": float,
     "min_cluster_size": float,
     "mask": typing.NotRequired[InputPathType | None],
 })
-BiancaClusterStatsParametersTagged = typing.TypedDict('BiancaClusterStatsParametersTagged', {
+BiancaClusterStatsParamsDictTagged = typing.TypedDict('BiancaClusterStatsParamsDictTagged', {
     "@type": typing.Literal["fsl/bianca_cluster_stats"],
     "bianca_output_map": InputPathType,
     "threshold": float,
@@ -31,7 +31,7 @@ BiancaClusterStatsParametersTagged = typing.TypedDict('BiancaClusterStatsParamet
 
 class BiancaClusterStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BiancaClusterStatsParameters(...)`.
+    Output object returned when calling `BiancaClusterStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def bianca_cluster_stats_params(
     threshold: float,
     min_cluster_size: float,
     mask: InputPathType | None = None,
-) -> BiancaClusterStatsParametersTagged:
+) -> BiancaClusterStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def bianca_cluster_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BiancaClusterStatsParameters` object.
+    `BiancaClusterStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def bianca_cluster_stats_validate(
 
 
 def bianca_cluster_stats_cargs(
-    params: BiancaClusterStatsParameters,
+    params: BiancaClusterStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def bianca_cluster_stats_cargs(
 
 
 def bianca_cluster_stats_outputs(
-    params: BiancaClusterStatsParameters,
+    params: BiancaClusterStatsParamsDict,
     execution: Execution,
 ) -> BiancaClusterStatsOutputs:
     """
@@ -137,7 +137,7 @@ def bianca_cluster_stats_outputs(
 
 
 def bianca_cluster_stats_execute(
-    params: BiancaClusterStatsParameters,
+    params: BiancaClusterStatsParamsDict,
     runner: Runner | None = None,
 ) -> BiancaClusterStatsOutputs:
     """
@@ -202,6 +202,8 @@ def bianca_cluster_stats(
 __all__ = [
     "BIANCA_CLUSTER_STATS_METADATA",
     "BiancaClusterStatsOutputs",
+    "BiancaClusterStatsParamsDict",
+    "BiancaClusterStatsParamsDictTagged",
     "bianca_cluster_stats",
     "bianca_cluster_stats_execute",
     "bianca_cluster_stats_params",

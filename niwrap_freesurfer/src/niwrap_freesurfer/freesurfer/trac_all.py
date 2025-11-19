@@ -13,7 +13,7 @@ TRAC_ALL_METADATA = Metadata(
 )
 
 
-TracAllParameters = typing.TypedDict('TracAllParameters', {
+TracAllParamsDict = typing.TypedDict('TracAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/trac-all"]],
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ TracAllParameters = typing.TypedDict('TracAllParameters', {
     "version_info": bool,
     "help": bool,
 })
-TracAllParametersTagged = typing.TypedDict('TracAllParametersTagged', {
+TracAllParamsDictTagged = typing.TypedDict('TracAllParamsDictTagged', {
     "@type": typing.Literal["freesurfer/trac-all"],
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
@@ -91,7 +91,7 @@ TracAllParametersTagged = typing.TypedDict('TracAllParametersTagged', {
 
 class TracAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TracAllParameters(...)`.
+    Output object returned when calling `TracAllParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +136,7 @@ def trac_all_params(
     only_versions: bool = False,
     version_info: bool = False,
     help_: bool = False,
-) -> TracAllParametersTagged:
+) -> TracAllParamsDictTagged:
     """
     Build parameters.
     
@@ -236,7 +236,7 @@ def trac_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TracAllParameters` object.
+    `TracAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -373,7 +373,7 @@ def trac_all_validate(
 
 
 def trac_all_cargs(
-    params: TracAllParameters,
+    params: TracAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -486,7 +486,7 @@ def trac_all_cargs(
 
 
 def trac_all_outputs(
-    params: TracAllParameters,
+    params: TracAllParamsDict,
     execution: Execution,
 ) -> TracAllOutputs:
     """
@@ -507,7 +507,7 @@ def trac_all_outputs(
 
 
 def trac_all_execute(
-    params: TracAllParameters,
+    params: TracAllParamsDict,
     runner: Runner | None = None,
 ) -> TracAllOutputs:
     """
@@ -666,6 +666,8 @@ def trac_all(
 __all__ = [
     "TRAC_ALL_METADATA",
     "TracAllOutputs",
+    "TracAllParamsDict",
+    "TracAllParamsDictTagged",
     "trac_all",
     "trac_all_execute",
     "trac_all_params",

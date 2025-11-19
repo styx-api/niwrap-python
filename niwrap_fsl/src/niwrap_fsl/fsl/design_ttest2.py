@@ -13,14 +13,14 @@ DESIGN_TTEST2_METADATA = Metadata(
 )
 
 
-DesignTtest2Parameters = typing.TypedDict('DesignTtest2Parameters', {
+DesignTtest2ParamsDict = typing.TypedDict('DesignTtest2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/design_ttest2"]],
     "design_files_rootname": str,
     "ngroupa": float,
     "ngroupb": float,
     "include_mean_contrasts": bool,
 })
-DesignTtest2ParametersTagged = typing.TypedDict('DesignTtest2ParametersTagged', {
+DesignTtest2ParamsDictTagged = typing.TypedDict('DesignTtest2ParamsDictTagged', {
     "@type": typing.Literal["fsl/design_ttest2"],
     "design_files_rootname": str,
     "ngroupa": float,
@@ -31,7 +31,7 @@ DesignTtest2ParametersTagged = typing.TypedDict('DesignTtest2ParametersTagged', 
 
 class DesignTtest2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `DesignTtest2Parameters(...)`.
+    Output object returned when calling `DesignTtest2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def design_ttest2_params(
     ngroupa: float,
     ngroupb: float,
     include_mean_contrasts: bool = False,
-) -> DesignTtest2ParametersTagged:
+) -> DesignTtest2ParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def design_ttest2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DesignTtest2Parameters` object.
+    `DesignTtest2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def design_ttest2_validate(
 
 
 def design_ttest2_cargs(
-    params: DesignTtest2Parameters,
+    params: DesignTtest2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def design_ttest2_cargs(
 
 
 def design_ttest2_outputs(
-    params: DesignTtest2Parameters,
+    params: DesignTtest2ParamsDict,
     execution: Execution,
 ) -> DesignTtest2Outputs:
     """
@@ -137,7 +137,7 @@ def design_ttest2_outputs(
 
 
 def design_ttest2_execute(
-    params: DesignTtest2Parameters,
+    params: DesignTtest2ParamsDict,
     runner: Runner | None = None,
 ) -> DesignTtest2Outputs:
     """
@@ -202,6 +202,8 @@ def design_ttest2(
 __all__ = [
     "DESIGN_TTEST2_METADATA",
     "DesignTtest2Outputs",
+    "DesignTtest2ParamsDict",
+    "DesignTtest2ParamsDictTagged",
     "design_ttest2",
     "design_ttest2_execute",
     "design_ttest2_params",

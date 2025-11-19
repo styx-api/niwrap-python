@@ -13,7 +13,7 @@ V__SPHARM_EXAMPLES_METADATA = Metadata(
 )
 
 
-VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
+VSpharmExamplesParamsDict = typing.TypedDict('VSpharmExamplesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Spharm.examples"]],
     "help_web": bool,
     "help_web_alias": bool,
@@ -22,7 +22,7 @@ VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
     "all_opts": bool,
     "help_find": typing.NotRequired[str | None],
 })
-VSpharmExamplesParametersTagged = typing.TypedDict('VSpharmExamplesParametersTagged', {
+VSpharmExamplesParamsDictTagged = typing.TypedDict('VSpharmExamplesParamsDictTagged', {
     "@type": typing.Literal["afni/@Spharm.examples"],
     "help_web": bool,
     "help_web_alias": bool,
@@ -35,7 +35,7 @@ VSpharmExamplesParametersTagged = typing.TypedDict('VSpharmExamplesParametersTag
 
 class VSpharmExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSpharmExamplesParameters(...)`.
+    Output object returned when calling `VSpharmExamplesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v__spharm_examples_params(
     help_view_alias: bool = False,
     all_opts: bool = False,
     help_find: str | None = None,
-) -> VSpharmExamplesParametersTagged:
+) -> VSpharmExamplesParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v__spharm_examples_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSpharmExamplesParameters` object.
+    `VSpharmExamplesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -114,7 +114,7 @@ def v__spharm_examples_validate(
 
 
 def v__spharm_examples_cargs(
-    params: VSpharmExamplesParameters,
+    params: VSpharmExamplesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def v__spharm_examples_cargs(
 
 
 def v__spharm_examples_outputs(
-    params: VSpharmExamplesParameters,
+    params: VSpharmExamplesParamsDict,
     execution: Execution,
 ) -> VSpharmExamplesOutputs:
     """
@@ -166,7 +166,7 @@ def v__spharm_examples_outputs(
 
 
 def v__spharm_examples_execute(
-    params: VSpharmExamplesParameters,
+    params: VSpharmExamplesParamsDict,
     runner: Runner | None = None,
 ) -> VSpharmExamplesOutputs:
     """
@@ -239,6 +239,8 @@ def v__spharm_examples(
 
 __all__ = [
     "VSpharmExamplesOutputs",
+    "VSpharmExamplesParamsDict",
+    "VSpharmExamplesParamsDictTagged",
     "V__SPHARM_EXAMPLES_METADATA",
     "v__spharm_examples",
     "v__spharm_examples_execute",

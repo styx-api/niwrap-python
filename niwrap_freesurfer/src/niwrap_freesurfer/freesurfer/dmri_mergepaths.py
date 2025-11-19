@@ -13,7 +13,7 @@ DMRI_MERGEPATHS_METADATA = Metadata(
 )
 
 
-DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
+DmriMergepathsParamsDict = typing.TypedDict('DmriMergepathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_mergepaths"]],
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
     "debug": bool,
     "check_opts": bool,
 })
-DmriMergepathsParametersTagged = typing.TypedDict('DmriMergepathsParametersTagged', {
+DmriMergepathsParamsDictTagged = typing.TypedDict('DmriMergepathsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_mergepaths"],
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ DmriMergepathsParametersTagged = typing.TypedDict('DmriMergepathsParametersTagge
 
 class DmriMergepathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriMergepathsParameters(...)`.
+    Output object returned when calling `DmriMergepathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def dmri_mergepaths_params(
     input_directory: str | None = None,
     debug: bool = False,
     check_opts: bool = False,
-) -> DmriMergepathsParametersTagged:
+) -> DmriMergepathsParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def dmri_mergepaths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriMergepathsParameters` object.
+    `DmriMergepathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def dmri_mergepaths_validate(
 
 
 def dmri_mergepaths_cargs(
-    params: DmriMergepathsParameters,
+    params: DmriMergepathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def dmri_mergepaths_cargs(
 
 
 def dmri_mergepaths_outputs(
-    params: DmriMergepathsParameters,
+    params: DmriMergepathsParamsDict,
     execution: Execution,
 ) -> DmriMergepathsOutputs:
     """
@@ -187,7 +187,7 @@ def dmri_mergepaths_outputs(
 
 
 def dmri_mergepaths_execute(
-    params: DmriMergepathsParameters,
+    params: DmriMergepathsParamsDict,
     runner: Runner | None = None,
 ) -> DmriMergepathsOutputs:
     """
@@ -262,6 +262,8 @@ def dmri_mergepaths(
 __all__ = [
     "DMRI_MERGEPATHS_METADATA",
     "DmriMergepathsOutputs",
+    "DmriMergepathsParamsDict",
+    "DmriMergepathsParamsDictTagged",
     "dmri_mergepaths",
     "dmri_mergepaths_execute",
     "dmri_mergepaths_params",

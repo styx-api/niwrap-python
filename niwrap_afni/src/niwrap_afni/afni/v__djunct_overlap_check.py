@@ -13,7 +13,7 @@ V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
 )
 
 
-VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters', {
+VDjunctOverlapCheckParamsDict = typing.TypedDict('VDjunctOverlapCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_overlap_check"]],
     "ulay": InputPathType,
     "olay": InputPathType,
@@ -40,7 +40,7 @@ VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters'
     "no_sag": bool,
     "no_clean": bool,
 })
-VDjunctOverlapCheckParametersTagged = typing.TypedDict('VDjunctOverlapCheckParametersTagged', {
+VDjunctOverlapCheckParamsDictTagged = typing.TypedDict('VDjunctOverlapCheckParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_overlap_check"],
     "ulay": InputPathType,
     "olay": InputPathType,
@@ -71,7 +71,7 @@ VDjunctOverlapCheckParametersTagged = typing.TypedDict('VDjunctOverlapCheckParam
 
 class VDjunctOverlapCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctOverlapCheckParameters(...)`.
+    Output object returned when calling `VDjunctOverlapCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def v__djunct_overlap_check_params(
     no_axi: bool = False,
     no_sag: bool = False,
     no_clean: bool = False,
-) -> VDjunctOverlapCheckParametersTagged:
+) -> VDjunctOverlapCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -183,7 +183,7 @@ def v__djunct_overlap_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctOverlapCheckParameters` object.
+    `VDjunctOverlapCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -290,7 +290,7 @@ def v__djunct_overlap_check_validate(
 
 
 def v__djunct_overlap_check_cargs(
-    params: VDjunctOverlapCheckParameters,
+    params: VDjunctOverlapCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -392,7 +392,7 @@ def v__djunct_overlap_check_cargs(
 
 
 def v__djunct_overlap_check_outputs(
-    params: VDjunctOverlapCheckParameters,
+    params: VDjunctOverlapCheckParamsDict,
     execution: Execution,
 ) -> VDjunctOverlapCheckOutputs:
     """
@@ -411,7 +411,7 @@ def v__djunct_overlap_check_outputs(
 
 
 def v__djunct_overlap_check_execute(
-    params: VDjunctOverlapCheckParameters,
+    params: VDjunctOverlapCheckParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctOverlapCheckOutputs:
     """
@@ -535,6 +535,8 @@ def v__djunct_overlap_check(
 
 __all__ = [
     "VDjunctOverlapCheckOutputs",
+    "VDjunctOverlapCheckParamsDict",
+    "VDjunctOverlapCheckParamsDictTagged",
     "V__DJUNCT_OVERLAP_CHECK_METADATA",
     "v__djunct_overlap_check",
     "v__djunct_overlap_check_execute",

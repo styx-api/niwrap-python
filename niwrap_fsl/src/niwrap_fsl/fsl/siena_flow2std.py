@@ -13,14 +13,14 @@ SIENA_FLOW2STD_METADATA = Metadata(
 )
 
 
-SienaFlow2stdParameters = typing.TypedDict('SienaFlow2stdParameters', {
+SienaFlow2stdParamsDict = typing.TypedDict('SienaFlow2stdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/siena_flow2std"]],
     "fileroot1": str,
     "fileroot2": str,
     "sigma": typing.NotRequired[float | None],
     "debug_flag": bool,
 })
-SienaFlow2stdParametersTagged = typing.TypedDict('SienaFlow2stdParametersTagged', {
+SienaFlow2stdParamsDictTagged = typing.TypedDict('SienaFlow2stdParamsDictTagged', {
     "@type": typing.Literal["fsl/siena_flow2std"],
     "fileroot1": str,
     "fileroot2": str,
@@ -31,7 +31,7 @@ SienaFlow2stdParametersTagged = typing.TypedDict('SienaFlow2stdParametersTagged'
 
 class SienaFlow2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaFlow2stdParameters(...)`.
+    Output object returned when calling `SienaFlow2stdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def siena_flow2std_params(
     fileroot2: str,
     sigma: float | None = None,
     debug_flag: bool = False,
-) -> SienaFlow2stdParametersTagged:
+) -> SienaFlow2stdParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def siena_flow2std_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaFlow2stdParameters` object.
+    `SienaFlow2stdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def siena_flow2std_validate(
 
 
 def siena_flow2std_cargs(
-    params: SienaFlow2stdParameters,
+    params: SienaFlow2stdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def siena_flow2std_cargs(
 
 
 def siena_flow2std_outputs(
-    params: SienaFlow2stdParameters,
+    params: SienaFlow2stdParamsDict,
     execution: Execution,
 ) -> SienaFlow2stdOutputs:
     """
@@ -142,7 +142,7 @@ def siena_flow2std_outputs(
 
 
 def siena_flow2std_execute(
-    params: SienaFlow2stdParameters,
+    params: SienaFlow2stdParamsDict,
     runner: Runner | None = None,
 ) -> SienaFlow2stdOutputs:
     """
@@ -208,6 +208,8 @@ def siena_flow2std(
 __all__ = [
     "SIENA_FLOW2STD_METADATA",
     "SienaFlow2stdOutputs",
+    "SienaFlow2stdParamsDict",
+    "SienaFlow2stdParamsDictTagged",
     "siena_flow2std",
     "siena_flow2std_execute",
     "siena_flow2std_params",

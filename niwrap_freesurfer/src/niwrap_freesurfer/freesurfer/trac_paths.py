@@ -13,7 +13,7 @@ TRAC_PATHS_METADATA = Metadata(
 )
 
 
-TracPathsParameters = typing.TypedDict('TracPathsParameters', {
+TracPathsParamsDict = typing.TypedDict('TracPathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/trac-paths"]],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ TracPathsParameters = typing.TypedDict('TracPathsParameters', {
     "version": bool,
     "help": bool,
 })
-TracPathsParametersTagged = typing.TypedDict('TracPathsParametersTagged', {
+TracPathsParamsDictTagged = typing.TypedDict('TracPathsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/trac-paths"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ TracPathsParametersTagged = typing.TypedDict('TracPathsParametersTagged', {
 
 class TracPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TracPathsParameters(...)`.
+    Output object returned when calling `TracPathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def trac_paths_params(
     dontrun: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> TracPathsParametersTagged:
+) -> TracPathsParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def trac_paths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TracPathsParameters` object.
+    `TracPathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -179,7 +179,7 @@ def trac_paths_validate(
 
 
 def trac_paths_cargs(
-    params: TracPathsParameters,
+    params: TracPathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -237,7 +237,7 @@ def trac_paths_cargs(
 
 
 def trac_paths_outputs(
-    params: TracPathsParameters,
+    params: TracPathsParamsDict,
     execution: Execution,
 ) -> TracPathsOutputs:
     """
@@ -256,7 +256,7 @@ def trac_paths_outputs(
 
 
 def trac_paths_execute(
-    params: TracPathsParameters,
+    params: TracPathsParamsDict,
     runner: Runner | None = None,
 ) -> TracPathsOutputs:
     """
@@ -351,6 +351,8 @@ def trac_paths(
 __all__ = [
     "TRAC_PATHS_METADATA",
     "TracPathsOutputs",
+    "TracPathsParamsDict",
+    "TracPathsParamsDictTagged",
     "trac_paths",
     "trac_paths_execute",
     "trac_paths_params",

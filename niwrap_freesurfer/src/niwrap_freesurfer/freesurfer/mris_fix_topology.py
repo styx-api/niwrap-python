@@ -13,7 +13,7 @@ MRIS_FIX_TOPOLOGY_METADATA = Metadata(
 )
 
 
-MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
+MrisFixTopologyParamsDict = typing.TypedDict('MrisFixTopologyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fix_topology"]],
     "subject_name": str,
     "hemisphere": str,
@@ -42,7 +42,7 @@ MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
     "diagnostic_level": typing.NotRequired[float | None],
     "threads": typing.NotRequired[float | None],
 })
-MrisFixTopologyParametersTagged = typing.TypedDict('MrisFixTopologyParametersTagged', {
+MrisFixTopologyParamsDictTagged = typing.TypedDict('MrisFixTopologyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_fix_topology"],
     "subject_name": str,
     "hemisphere": str,
@@ -75,7 +75,7 @@ MrisFixTopologyParametersTagged = typing.TypedDict('MrisFixTopologyParametersTag
 
 class MrisFixTopologyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisFixTopologyParameters(...)`.
+    Output object returned when calling `MrisFixTopologyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +108,7 @@ def mris_fix_topology_params(
     smooth: float | None = None,
     diagnostic_level: float | None = None,
     threads: float | None = None,
-) -> MrisFixTopologyParametersTagged:
+) -> MrisFixTopologyParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def mris_fix_topology_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisFixTopologyParameters` object.
+    `MrisFixTopologyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -293,7 +293,7 @@ def mris_fix_topology_validate(
 
 
 def mris_fix_topology_cargs(
-    params: MrisFixTopologyParameters,
+    params: MrisFixTopologyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -397,7 +397,7 @@ def mris_fix_topology_cargs(
 
 
 def mris_fix_topology_outputs(
-    params: MrisFixTopologyParameters,
+    params: MrisFixTopologyParamsDict,
     execution: Execution,
 ) -> MrisFixTopologyOutputs:
     """
@@ -416,7 +416,7 @@ def mris_fix_topology_outputs(
 
 
 def mris_fix_topology_execute(
-    params: MrisFixTopologyParameters,
+    params: MrisFixTopologyParamsDict,
     runner: Runner | None = None,
 ) -> MrisFixTopologyOutputs:
     """
@@ -549,6 +549,8 @@ def mris_fix_topology(
 __all__ = [
     "MRIS_FIX_TOPOLOGY_METADATA",
     "MrisFixTopologyOutputs",
+    "MrisFixTopologyParamsDict",
+    "MrisFixTopologyParamsDictTagged",
     "mris_fix_topology",
     "mris_fix_topology_execute",
     "mris_fix_topology_params",

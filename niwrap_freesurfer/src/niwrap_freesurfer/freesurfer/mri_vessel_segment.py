@@ -13,7 +13,7 @@ MRI_VESSEL_SEGMENT_METADATA = Metadata(
 )
 
 
-MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
+MriVesselSegmentParamsDict = typing.TypedDict('MriVesselSegmentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vessel_segment"]],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
@@ -21,7 +21,7 @@ MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
     "output_file": str,
     "shape_flag": bool,
 })
-MriVesselSegmentParametersTagged = typing.TypedDict('MriVesselSegmentParametersTagged', {
+MriVesselSegmentParamsDictTagged = typing.TypedDict('MriVesselSegmentParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_vessel_segment"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
@@ -33,7 +33,7 @@ MriVesselSegmentParametersTagged = typing.TypedDict('MriVesselSegmentParametersT
 
 class MriVesselSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVesselSegmentParameters(...)`.
+    Output object returned when calling `MriVesselSegmentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_vessel_segment_params(
     aseg_file: InputPathType,
     output_file: str,
     shape_flag: bool = False,
-) -> MriVesselSegmentParametersTagged:
+) -> MriVesselSegmentParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_vessel_segment_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVesselSegmentParameters` object.
+    `MriVesselSegmentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_vessel_segment_validate(
 
 
 def mri_vessel_segment_cargs(
-    params: MriVesselSegmentParameters,
+    params: MriVesselSegmentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def mri_vessel_segment_cargs(
 
 
 def mri_vessel_segment_outputs(
-    params: MriVesselSegmentParameters,
+    params: MriVesselSegmentParamsDict,
     execution: Execution,
 ) -> MriVesselSegmentOutputs:
     """
@@ -162,7 +162,7 @@ def mri_vessel_segment_outputs(
 
 
 def mri_vessel_segment_execute(
-    params: MriVesselSegmentParameters,
+    params: MriVesselSegmentParamsDict,
     runner: Runner | None = None,
 ) -> MriVesselSegmentOutputs:
     """
@@ -230,6 +230,8 @@ def mri_vessel_segment(
 __all__ = [
     "MRI_VESSEL_SEGMENT_METADATA",
     "MriVesselSegmentOutputs",
+    "MriVesselSegmentParamsDict",
+    "MriVesselSegmentParamsDictTagged",
     "mri_vessel_segment",
     "mri_vessel_segment_execute",
     "mri_vessel_segment_params",

@@ -13,7 +13,7 @@ FIRST_MULT_BCORR_METADATA = Metadata(
 )
 
 
-FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
+FirstMultBcorrParamsDict = typing.TypedDict('FirstMultBcorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/first_mult_bcorr"]],
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
@@ -22,7 +22,7 @@ FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-FirstMultBcorrParametersTagged = typing.TypedDict('FirstMultBcorrParametersTagged', {
+FirstMultBcorrParamsDictTagged = typing.TypedDict('FirstMultBcorrParamsDictTagged', {
     "@type": typing.Literal["fsl/first_mult_bcorr"],
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
@@ -35,7 +35,7 @@ FirstMultBcorrParametersTagged = typing.TypedDict('FirstMultBcorrParametersTagge
 
 class FirstMultBcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirstMultBcorrParameters(...)`.
+    Output object returned when calling `FirstMultBcorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def first_mult_bcorr_params(
     output_image: str,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FirstMultBcorrParametersTagged:
+) -> FirstMultBcorrParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def first_mult_bcorr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirstMultBcorrParameters` object.
+    `FirstMultBcorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def first_mult_bcorr_validate(
 
 
 def first_mult_bcorr_cargs(
-    params: FirstMultBcorrParameters,
+    params: FirstMultBcorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def first_mult_bcorr_cargs(
 
 
 def first_mult_bcorr_outputs(
-    params: FirstMultBcorrParameters,
+    params: FirstMultBcorrParamsDict,
     execution: Execution,
 ) -> FirstMultBcorrOutputs:
     """
@@ -175,7 +175,7 @@ def first_mult_bcorr_outputs(
 
 
 def first_mult_bcorr_execute(
-    params: FirstMultBcorrParameters,
+    params: FirstMultBcorrParamsDict,
     runner: Runner | None = None,
 ) -> FirstMultBcorrOutputs:
     """
@@ -250,6 +250,8 @@ def first_mult_bcorr(
 __all__ = [
     "FIRST_MULT_BCORR_METADATA",
     "FirstMultBcorrOutputs",
+    "FirstMultBcorrParamsDict",
+    "FirstMultBcorrParamsDictTagged",
     "first_mult_bcorr",
     "first_mult_bcorr_execute",
     "first_mult_bcorr_params",

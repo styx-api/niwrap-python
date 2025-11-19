@@ -13,7 +13,7 @@ AFNI_HISTORY_METADATA = Metadata(
 )
 
 
-AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
+AfniHistoryParamsDict = typing.TypedDict('AfniHistoryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_history"]],
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
     "show_field": typing.NotRequired[str | None],
     "show_field_names": bool,
 })
-AfniHistoryParametersTagged = typing.TypedDict('AfniHistoryParametersTagged', {
+AfniHistoryParamsDictTagged = typing.TypedDict('AfniHistoryParamsDictTagged', {
     "@type": typing.Literal["afni/afni_history"],
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ AfniHistoryParametersTagged = typing.TypedDict('AfniHistoryParametersTagged', {
 
 class AfniHistoryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniHistoryParameters(...)`.
+    Output object returned when calling `AfniHistoryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def afni_history_params(
     reverse: bool = False,
     show_field: str | None = None,
     show_field_names: bool = False,
-) -> AfniHistoryParametersTagged:
+) -> AfniHistoryParamsDictTagged:
     """
     Build parameters.
     
@@ -172,7 +172,7 @@ def afni_history_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniHistoryParameters` object.
+    `AfniHistoryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -260,7 +260,7 @@ def afni_history_validate(
 
 
 def afni_history_cargs(
-    params: AfniHistoryParameters,
+    params: AfniHistoryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def afni_history_cargs(
 
 
 def afni_history_outputs(
-    params: AfniHistoryParameters,
+    params: AfniHistoryParamsDict,
     execution: Execution,
 ) -> AfniHistoryOutputs:
     """
@@ -375,7 +375,7 @@ def afni_history_outputs(
 
 
 def afni_history_execute(
-    params: AfniHistoryParameters,
+    params: AfniHistoryParamsDict,
     runner: Runner | None = None,
 ) -> AfniHistoryOutputs:
     """
@@ -497,6 +497,8 @@ def afni_history(
 __all__ = [
     "AFNI_HISTORY_METADATA",
     "AfniHistoryOutputs",
+    "AfniHistoryParamsDict",
+    "AfniHistoryParamsDictTagged",
     "afni_history",
     "afni_history_execute",
     "afni_history_params",

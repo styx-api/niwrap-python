@@ -13,7 +13,7 @@ FABBER_DCE_METADATA = Metadata(
 )
 
 
-FabberDceParameters = typing.TypedDict('FabberDceParameters', {
+FabberDceParamsDict = typing.TypedDict('FabberDceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_dce"]],
     "output_directory": str,
     "inference_method": str,
@@ -52,7 +52,7 @@ FabberDceParameters = typing.TypedDict('FabberDceParameters', {
     "option_file": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
-FabberDceParametersTagged = typing.TypedDict('FabberDceParametersTagged', {
+FabberDceParamsDictTagged = typing.TypedDict('FabberDceParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_dce"],
     "output_directory": str,
     "inference_method": str,
@@ -95,7 +95,7 @@ FabberDceParametersTagged = typing.TypedDict('FabberDceParametersTagged', {
 
 class FabberDceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberDceParameters(...)`.
+    Output object returned when calling `FabberDceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +140,7 @@ def fabber_dce_params(
     save_free_energy: bool = False,
     option_file: InputPathType | None = None,
     debug: bool = False,
-) -> FabberDceParametersTagged:
+) -> FabberDceParamsDictTagged:
     """
     Build parameters.
     
@@ -261,7 +261,7 @@ def fabber_dce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberDceParameters` object.
+    `FabberDceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -414,7 +414,7 @@ def fabber_dce_validate(
 
 
 def fabber_dce_cargs(
-    params: FabberDceParameters,
+    params: FabberDceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -542,7 +542,7 @@ def fabber_dce_cargs(
 
 
 def fabber_dce_outputs(
-    params: FabberDceParameters,
+    params: FabberDceParamsDict,
     execution: Execution,
 ) -> FabberDceOutputs:
     """
@@ -562,7 +562,7 @@ def fabber_dce_outputs(
 
 
 def fabber_dce_execute(
-    params: FabberDceParameters,
+    params: FabberDceParamsDict,
     runner: Runner | None = None,
 ) -> FabberDceOutputs:
     """
@@ -745,6 +745,8 @@ def fabber_dce(
 __all__ = [
     "FABBER_DCE_METADATA",
     "FabberDceOutputs",
+    "FabberDceParamsDict",
+    "FabberDceParamsDictTagged",
     "fabber_dce",
     "fabber_dce_execute",
     "fabber_dce_params",

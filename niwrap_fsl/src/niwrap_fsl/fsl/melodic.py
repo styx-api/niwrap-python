@@ -13,7 +13,7 @@ MELODIC_METADATA = Metadata(
 )
 
 
-MelodicParameters = typing.TypedDict('MelodicParameters', {
+MelodicParamsDict = typing.TypedDict('MelodicParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/melodic"]],
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ MelodicParameters = typing.TypedDict('MelodicParameters', {
     "report_maps": typing.NotRequired[str | None],
     "keep_meanvol": bool,
 })
-MelodicParametersTagged = typing.TypedDict('MelodicParametersTagged', {
+MelodicParamsDictTagged = typing.TypedDict('MelodicParamsDictTagged', {
     "@type": typing.Literal["fsl/melodic"],
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
@@ -121,7 +121,7 @@ MelodicParametersTagged = typing.TypedDict('MelodicParametersTagged', {
 
 class MelodicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MelodicParameters(...)`.
+    Output object returned when calling `MelodicParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -187,7 +187,7 @@ def melodic_params(
     debug: bool = False,
     report_maps: str | None = None,
     keep_meanvol: bool = False,
-) -> MelodicParametersTagged:
+) -> MelodicParamsDictTagged:
     """
     Build parameters.
     
@@ -343,7 +343,7 @@ def melodic_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MelodicParameters` object.
+    `MelodicParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -523,7 +523,7 @@ def melodic_validate(
 
 
 def melodic_cargs(
-    params: MelodicParameters,
+    params: MelodicParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -719,7 +719,7 @@ def melodic_cargs(
 
 
 def melodic_outputs(
-    params: MelodicParameters,
+    params: MelodicParamsDict,
     execution: Execution,
 ) -> MelodicOutputs:
     """
@@ -743,7 +743,7 @@ def melodic_outputs(
 
 
 def melodic_execute(
-    params: MelodicParameters,
+    params: MelodicParamsDict,
     runner: Runner | None = None,
 ) -> MelodicOutputs:
     """
@@ -958,6 +958,8 @@ def melodic(
 __all__ = [
     "MELODIC_METADATA",
     "MelodicOutputs",
+    "MelodicParamsDict",
+    "MelodicParamsDictTagged",
     "melodic",
     "melodic_execute",
     "melodic_params",

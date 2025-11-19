@@ -13,11 +13,11 @@ TBSS_4_PRESTATS_METADATA = Metadata(
 )
 
 
-Tbss4PrestatsParameters = typing.TypedDict('Tbss4PrestatsParameters', {
+Tbss4PrestatsParamsDict = typing.TypedDict('Tbss4PrestatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_4_prestats"]],
     "threshold": float,
 })
-Tbss4PrestatsParametersTagged = typing.TypedDict('Tbss4PrestatsParametersTagged', {
+Tbss4PrestatsParamsDictTagged = typing.TypedDict('Tbss4PrestatsParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_4_prestats"],
     "threshold": float,
 })
@@ -25,7 +25,7 @@ Tbss4PrestatsParametersTagged = typing.TypedDict('Tbss4PrestatsParametersTagged'
 
 class Tbss4PrestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tbss4PrestatsParameters(...)`.
+    Output object returned when calling `Tbss4PrestatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class Tbss4PrestatsOutputs(typing.NamedTuple):
 
 def tbss_4_prestats_params(
     threshold: float = 0.2,
-) -> Tbss4PrestatsParametersTagged:
+) -> Tbss4PrestatsParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def tbss_4_prestats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tbss4PrestatsParameters` object.
+    `Tbss4PrestatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def tbss_4_prestats_validate(
 
 
 def tbss_4_prestats_cargs(
-    params: Tbss4PrestatsParameters,
+    params: Tbss4PrestatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def tbss_4_prestats_cargs(
 
 
 def tbss_4_prestats_outputs(
-    params: Tbss4PrestatsParameters,
+    params: Tbss4PrestatsParamsDict,
     execution: Execution,
 ) -> Tbss4PrestatsOutputs:
     """
@@ -107,7 +107,7 @@ def tbss_4_prestats_outputs(
 
 
 def tbss_4_prestats_execute(
-    params: Tbss4PrestatsParameters,
+    params: Tbss4PrestatsParamsDict,
     runner: Runner | None = None,
 ) -> Tbss4PrestatsOutputs:
     """
@@ -164,6 +164,8 @@ def tbss_4_prestats(
 __all__ = [
     "TBSS_4_PRESTATS_METADATA",
     "Tbss4PrestatsOutputs",
+    "Tbss4PrestatsParamsDict",
+    "Tbss4PrestatsParamsDictTagged",
     "tbss_4_prestats",
     "tbss_4_prestats_execute",
     "tbss_4_prestats_params",

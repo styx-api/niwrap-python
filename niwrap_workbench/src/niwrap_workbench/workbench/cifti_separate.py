@@ -12,14 +12,14 @@ CIFTI_SEPARATE_METADATA = Metadata(
 )
 
 
-CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParameters', {
+CiftiSeparateVolumeAllParamsDict = typing.TypedDict('CiftiSeparateVolumeAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-all"]],
     "volume-out": str,
     "roi-out": typing.NotRequired[str | None],
     "label-out": typing.NotRequired[str | None],
     "crop": bool,
 })
-CiftiSeparateVolumeAllParametersTagged = typing.TypedDict('CiftiSeparateVolumeAllParametersTagged', {
+CiftiSeparateVolumeAllParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "volume-out": str,
     "roi-out": typing.NotRequired[str | None],
@@ -28,13 +28,13 @@ CiftiSeparateVolumeAllParametersTagged = typing.TypedDict('CiftiSeparateVolumeAl
 })
 
 
-CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', {
+CiftiSeparateLabelParamsDict = typing.TypedDict('CiftiSeparateLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label"]],
     "structure": str,
     "label-out": str,
     "roi-out": typing.NotRequired[str | None],
 })
-CiftiSeparateLabelParametersTagged = typing.TypedDict('CiftiSeparateLabelParametersTagged', {
+CiftiSeparateLabelParamsDictTagged = typing.TypedDict('CiftiSeparateLabelParamsDictTagged', {
     "@type": typing.Literal["label"],
     "structure": str,
     "label-out": str,
@@ -42,13 +42,13 @@ CiftiSeparateLabelParametersTagged = typing.TypedDict('CiftiSeparateLabelParamet
 })
 
 
-CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters', {
+CiftiSeparateMetricParamsDict = typing.TypedDict('CiftiSeparateMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "structure": str,
     "metric-out": str,
     "roi-out": typing.NotRequired[str | None],
 })
-CiftiSeparateMetricParametersTagged = typing.TypedDict('CiftiSeparateMetricParametersTagged', {
+CiftiSeparateMetricParamsDictTagged = typing.TypedDict('CiftiSeparateMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric-out": str,
@@ -56,14 +56,14 @@ CiftiSeparateMetricParametersTagged = typing.TypedDict('CiftiSeparateMetricParam
 })
 
 
-CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters', {
+CiftiSeparateVolumeParamsDict = typing.TypedDict('CiftiSeparateVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
     "volume-out": str,
     "roi-out": typing.NotRequired[str | None],
     "crop": bool,
 })
-CiftiSeparateVolumeParametersTagged = typing.TypedDict('CiftiSeparateVolumeParametersTagged', {
+CiftiSeparateVolumeParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "volume-out": str,
@@ -72,21 +72,21 @@ CiftiSeparateVolumeParametersTagged = typing.TypedDict('CiftiSeparateVolumeParam
 })
 
 
-CiftiSeparateParameters = typing.TypedDict('CiftiSeparateParameters', {
+CiftiSeparateParamsDict = typing.TypedDict('CiftiSeparateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-separate"]],
-    "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],
-    "label": typing.NotRequired[list[CiftiSeparateLabelParameters] | None],
-    "metric": typing.NotRequired[list[CiftiSeparateMetricParameters] | None],
-    "volume": typing.NotRequired[list[CiftiSeparateVolumeParameters] | None],
+    "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
+    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
     "cifti-in": InputPathType,
     "direction": str,
 })
-CiftiSeparateParametersTagged = typing.TypedDict('CiftiSeparateParametersTagged', {
+CiftiSeparateParamsDictTagged = typing.TypedDict('CiftiSeparateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-separate"],
-    "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],
-    "label": typing.NotRequired[list[CiftiSeparateLabelParameters] | None],
-    "metric": typing.NotRequired[list[CiftiSeparateMetricParameters] | None],
-    "volume": typing.NotRequired[list[CiftiSeparateVolumeParameters] | None],
+    "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
+    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict] | None],
+    "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
+    "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
     "cifti-in": InputPathType,
     "direction": str,
 })
@@ -94,7 +94,7 @@ CiftiSeparateParametersTagged = typing.TypedDict('CiftiSeparateParametersTagged'
 
 class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiSeparateVolumeAllParameters | None(...)`.
+    Output object returned when calling `CiftiSeparateVolumeAllParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,12 +102,12 @@ class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
     """the output volume"""
 
 
-def cifti_separate_volume_all_params(
+def cifti_separate_volume_all(
     volume_out: str,
     roi_out: str | None,
     label_out: str | None,
     crop: bool = False,
-) -> CiftiSeparateVolumeAllParametersTagged:
+) -> CiftiSeparateVolumeAllParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def cifti_separate_volume_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateVolumeAllParameters` object.
+    `CiftiSeparateVolumeAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def cifti_separate_volume_all_validate(
 
 
 def cifti_separate_volume_all_cargs(
-    params: CiftiSeparateVolumeAllParameters,
+    params: CiftiSeparateVolumeAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -193,7 +193,7 @@ def cifti_separate_volume_all_cargs(
 
 
 def cifti_separate_volume_all_outputs(
-    params: CiftiSeparateVolumeAllParameters,
+    params: CiftiSeparateVolumeAllParamsDict,
     execution: Execution,
 ) -> CiftiSeparateVolumeAllOutputs:
     """
@@ -214,7 +214,7 @@ def cifti_separate_volume_all_outputs(
 
 class CiftiSeparateLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[CiftiSeparateLabelParameters] | None(...)`.
+    Output object returned when calling `list[CiftiSeparateLabelParamsDict] | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -222,11 +222,11 @@ class CiftiSeparateLabelOutputs(typing.NamedTuple):
     """the output label file"""
 
 
-def cifti_separate_label_params(
+def cifti_separate_label(
     structure: str,
     label_out: str,
     roi_out: str | None,
-) -> CiftiSeparateLabelParametersTagged:
+) -> CiftiSeparateLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -254,7 +254,7 @@ def cifti_separate_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateLabelParameters` object.
+    `CiftiSeparateLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def cifti_separate_label_validate(
 
 
 def cifti_separate_label_cargs(
-    params: CiftiSeparateLabelParameters,
+    params: CiftiSeparateLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -300,7 +300,7 @@ def cifti_separate_label_cargs(
 
 
 def cifti_separate_label_outputs(
-    params: CiftiSeparateLabelParameters,
+    params: CiftiSeparateLabelParamsDict,
     execution: Execution,
 ) -> CiftiSeparateLabelOutputs:
     """
@@ -321,7 +321,7 @@ def cifti_separate_label_outputs(
 
 class CiftiSeparateMetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[CiftiSeparateMetricParameters] | None(...)`.
+    Output object returned when calling `list[CiftiSeparateMetricParamsDict] | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -329,11 +329,11 @@ class CiftiSeparateMetricOutputs(typing.NamedTuple):
     """the output metric"""
 
 
-def cifti_separate_metric_params(
+def cifti_separate_metric(
     structure: str,
     metric_out: str,
     roi_out: str | None,
-) -> CiftiSeparateMetricParametersTagged:
+) -> CiftiSeparateMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -361,7 +361,7 @@ def cifti_separate_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateMetricParameters` object.
+    `CiftiSeparateMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -382,7 +382,7 @@ def cifti_separate_metric_validate(
 
 
 def cifti_separate_metric_cargs(
-    params: CiftiSeparateMetricParameters,
+    params: CiftiSeparateMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -407,7 +407,7 @@ def cifti_separate_metric_cargs(
 
 
 def cifti_separate_metric_outputs(
-    params: CiftiSeparateMetricParameters,
+    params: CiftiSeparateMetricParamsDict,
     execution: Execution,
 ) -> CiftiSeparateMetricOutputs:
     """
@@ -428,7 +428,7 @@ def cifti_separate_metric_outputs(
 
 class CiftiSeparateVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[CiftiSeparateVolumeParameters] | None(...)`.
+    Output object returned when calling `list[CiftiSeparateVolumeParamsDict] | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -436,12 +436,12 @@ class CiftiSeparateVolumeOutputs(typing.NamedTuple):
     """the output volume"""
 
 
-def cifti_separate_volume_params(
+def cifti_separate_volume(
     structure: str,
     volume_out: str,
     roi_out: str | None,
     crop: bool = False,
-) -> CiftiSeparateVolumeParametersTagged:
+) -> CiftiSeparateVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -472,7 +472,7 @@ def cifti_separate_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateVolumeParameters` object.
+    `CiftiSeparateVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -497,7 +497,7 @@ def cifti_separate_volume_validate(
 
 
 def cifti_separate_volume_cargs(
-    params: CiftiSeparateVolumeParameters,
+    params: CiftiSeparateVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -523,7 +523,7 @@ def cifti_separate_volume_cargs(
 
 
 def cifti_separate_volume_outputs(
-    params: CiftiSeparateVolumeParameters,
+    params: CiftiSeparateVolumeParamsDict,
     execution: Execution,
 ) -> CiftiSeparateVolumeOutputs:
     """
@@ -544,7 +544,7 @@ def cifti_separate_volume_outputs(
 
 class CiftiSeparateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiSeparateParameters(...)`.
+    Output object returned when calling `CiftiSeparateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -564,11 +564,11 @@ class CiftiSeparateOutputs(typing.NamedTuple):
 def cifti_separate_params(
     cifti_in: InputPathType,
     direction: str,
-    volume_all: CiftiSeparateVolumeAllParameters | None = None,
-    label: list[CiftiSeparateLabelParameters] | None = None,
-    metric: list[CiftiSeparateMetricParameters] | None = None,
-    volume: list[CiftiSeparateVolumeParameters] | None = None,
-) -> CiftiSeparateParametersTagged:
+    volume_all: CiftiSeparateVolumeAllParamsDict | None = None,
+    label: list[CiftiSeparateLabelParamsDict] | None = None,
+    metric: list[CiftiSeparateMetricParamsDict] | None = None,
+    volume: list[CiftiSeparateVolumeParamsDict] | None = None,
+) -> CiftiSeparateParamsDictTagged:
     """
     Build parameters.
     
@@ -603,7 +603,7 @@ def cifti_separate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateParameters` object.
+    `CiftiSeparateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -614,17 +614,17 @@ def cifti_separate_validate(
         cifti_separate_volume_all_validate(params["volume-all"])
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiSeparateLabelParameters] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiSeparateLabelParamsDict] | None`')
         for e in params["label"]:
             cifti_separate_label_validate(e)
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiSeparateMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiSeparateMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_separate_metric_validate(e)
     if params.get("volume", None) is not None:
         if not isinstance(params["volume"], list):
-            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiSeparateVolumeParameters] | None`')
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiSeparateVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_separate_volume_validate(e)
     if params.get("cifti-in", None) is None:
@@ -638,7 +638,7 @@ def cifti_separate_validate(
 
 
 def cifti_separate_cargs(
-    params: CiftiSeparateParameters,
+    params: CiftiSeparateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -666,7 +666,7 @@ def cifti_separate_cargs(
 
 
 def cifti_separate_outputs(
-    params: CiftiSeparateParameters,
+    params: CiftiSeparateParamsDict,
     execution: Execution,
 ) -> CiftiSeparateOutputs:
     """
@@ -689,7 +689,7 @@ def cifti_separate_outputs(
 
 
 def cifti_separate_execute(
-    params: CiftiSeparateParameters,
+    params: CiftiSeparateParamsDict,
     runner: Runner | None = None,
 ) -> CiftiSeparateOutputs:
     """
@@ -761,10 +761,10 @@ def cifti_separate_execute(
 def cifti_separate(
     cifti_in: InputPathType,
     direction: str,
-    volume_all: CiftiSeparateVolumeAllParameters | None = None,
-    label: list[CiftiSeparateLabelParameters] | None = None,
-    metric: list[CiftiSeparateMetricParameters] | None = None,
-    volume: list[CiftiSeparateVolumeParameters] | None = None,
+    volume_all: CiftiSeparateVolumeAllParamsDict | None = None,
+    label: list[CiftiSeparateLabelParamsDict] | None = None,
+    metric: list[CiftiSeparateMetricParamsDict] | None = None,
+    volume: list[CiftiSeparateVolumeParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiSeparateOutputs:
     """
@@ -842,15 +842,25 @@ def cifti_separate(
 __all__ = [
     "CIFTI_SEPARATE_METADATA",
     "CiftiSeparateLabelOutputs",
+    "CiftiSeparateLabelParamsDict",
+    "CiftiSeparateLabelParamsDictTagged",
     "CiftiSeparateMetricOutputs",
+    "CiftiSeparateMetricParamsDict",
+    "CiftiSeparateMetricParamsDictTagged",
     "CiftiSeparateOutputs",
+    "CiftiSeparateParamsDict",
+    "CiftiSeparateParamsDictTagged",
     "CiftiSeparateVolumeAllOutputs",
+    "CiftiSeparateVolumeAllParamsDict",
+    "CiftiSeparateVolumeAllParamsDictTagged",
     "CiftiSeparateVolumeOutputs",
+    "CiftiSeparateVolumeParamsDict",
+    "CiftiSeparateVolumeParamsDictTagged",
     "cifti_separate",
     "cifti_separate_execute",
-    "cifti_separate_label_params",
-    "cifti_separate_metric_params",
+    "cifti_separate_label",
+    "cifti_separate_metric",
     "cifti_separate_params",
-    "cifti_separate_volume_all_params",
-    "cifti_separate_volume_params",
+    "cifti_separate_volume",
+    "cifti_separate_volume_all",
 ]

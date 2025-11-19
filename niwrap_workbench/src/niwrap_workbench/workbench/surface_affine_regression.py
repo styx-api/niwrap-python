@@ -12,13 +12,13 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
 )
 
 
-SurfaceAffineRegressionParameters = typing.TypedDict('SurfaceAffineRegressionParameters', {
+SurfaceAffineRegressionParamsDict = typing.TypedDict('SurfaceAffineRegressionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-affine-regression"]],
     "source": InputPathType,
     "target": InputPathType,
     "affine-out": str,
 })
-SurfaceAffineRegressionParametersTagged = typing.TypedDict('SurfaceAffineRegressionParametersTagged', {
+SurfaceAffineRegressionParamsDictTagged = typing.TypedDict('SurfaceAffineRegressionParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-affine-regression"],
     "source": InputPathType,
     "target": InputPathType,
@@ -28,7 +28,7 @@ SurfaceAffineRegressionParametersTagged = typing.TypedDict('SurfaceAffineRegress
 
 class SurfaceAffineRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceAffineRegressionParameters(...)`.
+    Output object returned when calling `SurfaceAffineRegressionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def surface_affine_regression_params(
     source: InputPathType,
     target: InputPathType,
     affine_out: str,
-) -> SurfaceAffineRegressionParametersTagged:
+) -> SurfaceAffineRegressionParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def surface_affine_regression_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceAffineRegressionParameters` object.
+    `SurfaceAffineRegressionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def surface_affine_regression_validate(
 
 
 def surface_affine_regression_cargs(
-    params: SurfaceAffineRegressionParameters,
+    params: SurfaceAffineRegressionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def surface_affine_regression_cargs(
 
 
 def surface_affine_regression_outputs(
-    params: SurfaceAffineRegressionParameters,
+    params: SurfaceAffineRegressionParamsDict,
     execution: Execution,
 ) -> SurfaceAffineRegressionOutputs:
     """
@@ -128,7 +128,7 @@ def surface_affine_regression_outputs(
 
 
 def surface_affine_regression_execute(
-    params: SurfaceAffineRegressionParameters,
+    params: SurfaceAffineRegressionParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
@@ -190,6 +190,8 @@ def surface_affine_regression(
 __all__ = [
     "SURFACE_AFFINE_REGRESSION_METADATA",
     "SurfaceAffineRegressionOutputs",
+    "SurfaceAffineRegressionParamsDict",
+    "SurfaceAffineRegressionParamsDictTagged",
     "surface_affine_regression",
     "surface_affine_regression_execute",
     "surface_affine_regression_params",

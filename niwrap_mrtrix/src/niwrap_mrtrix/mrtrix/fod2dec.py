@@ -13,19 +13,19 @@ FOD2DEC_METADATA = Metadata(
 )
 
 
-Fod2decConfigParameters = typing.TypedDict('Fod2decConfigParameters', {
+Fod2decConfigParamsDict = typing.TypedDict('Fod2decConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fod2decConfigParametersTagged = typing.TypedDict('Fod2decConfigParametersTagged', {
+Fod2decConfigParamsDictTagged = typing.TypedDict('Fod2decConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fod2decParameters = typing.TypedDict('Fod2decParameters', {
+Fod2decParamsDict = typing.TypedDict('Fod2decParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fod2dec"]],
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
@@ -39,13 +39,13 @@ Fod2decParameters = typing.TypedDict('Fod2decParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fod2decConfigParameters] | None],
+    "config": typing.NotRequired[list[Fod2decConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-Fod2decParametersTagged = typing.TypedDict('Fod2decParametersTagged', {
+Fod2decParamsDictTagged = typing.TypedDict('Fod2decParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fod2dec"],
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ Fod2decParametersTagged = typing.TypedDict('Fod2decParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fod2decConfigParameters] | None],
+    "config": typing.NotRequired[list[Fod2decConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -67,10 +67,10 @@ Fod2decParametersTagged = typing.TypedDict('Fod2decParametersTagged', {
 })
 
 
-def fod2dec_config_params(
+def fod2dec_config(
     key: str,
     value: str,
-) -> Fod2decConfigParametersTagged:
+) -> Fod2decConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def fod2dec_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fod2decConfigParameters` object.
+    `Fod2decConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def fod2dec_config_validate(
 
 
 def fod2dec_config_cargs(
-    params: Fod2decConfigParameters,
+    params: Fod2decConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def fod2dec_config_cargs(
 
 class Fod2decOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fod2decParameters(...)`.
+    Output object returned when calling `Fod2decParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,10 +155,10 @@ def fod2dec_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fod2decConfigParameters] | None = None,
+    config: list[Fod2decConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fod2decParametersTagged:
+) -> Fod2decParamsDictTagged:
     """
     Build parameters.
     
@@ -239,7 +239,7 @@ def fod2dec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fod2decParameters` object.
+    `Fod2decParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -293,7 +293,7 @@ def fod2dec_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fod2decConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fod2decConfigParamsDict] | None`')
         for e in params["config"]:
             fod2dec_config_validate(e)
     if params.get("help", False) is None:
@@ -315,7 +315,7 @@ def fod2dec_validate(
 
 
 def fod2dec_cargs(
-    params: Fod2decParameters,
+    params: Fod2decParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -383,7 +383,7 @@ def fod2dec_cargs(
 
 
 def fod2dec_outputs(
-    params: Fod2decParameters,
+    params: Fod2decParamsDict,
     execution: Execution,
 ) -> Fod2decOutputs:
     """
@@ -403,7 +403,7 @@ def fod2dec_outputs(
 
 
 def fod2dec_execute(
-    params: Fod2decParameters,
+    params: Fod2decParamsDict,
     runner: Runner | None = None,
 ) -> Fod2decOutputs:
     """
@@ -462,7 +462,7 @@ def fod2dec(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fod2decConfigParameters] | None = None,
+    config: list[Fod2decConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -559,9 +559,13 @@ def fod2dec(
 
 __all__ = [
     "FOD2DEC_METADATA",
+    "Fod2decConfigParamsDict",
+    "Fod2decConfigParamsDictTagged",
     "Fod2decOutputs",
+    "Fod2decParamsDict",
+    "Fod2decParamsDictTagged",
     "fod2dec",
-    "fod2dec_config_params",
+    "fod2dec_config",
     "fod2dec_execute",
     "fod2dec_params",
 ]

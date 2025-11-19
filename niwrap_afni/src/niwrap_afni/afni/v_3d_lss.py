@@ -13,7 +13,7 @@ V_3D_LSS_METADATA = Metadata(
 )
 
 
-V3dLssParameters = typing.TypedDict('V3dLssParameters', {
+V3dLssParamsDict = typing.TypedDict('V3dLssParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLSS"]],
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ V3dLssParameters = typing.TypedDict('V3dLssParameters', {
     "save1D": typing.NotRequired[str | None],
     "verbose": bool,
 })
-V3dLssParametersTagged = typing.TypedDict('V3dLssParametersTagged', {
+V3dLssParamsDictTagged = typing.TypedDict('V3dLssParamsDictTagged', {
     "@type": typing.Literal["afni/3dLSS"],
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ V3dLssParametersTagged = typing.TypedDict('V3dLssParametersTagged', {
 
 class V3dLssOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLssParameters(...)`.
+    Output object returned when calling `V3dLssParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_lss_params(
     prefix: str | None = None,
     save1_d: str | None = None,
     verbose: bool = False,
-) -> V3dLssParametersTagged:
+) -> V3dLssParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def v_3d_lss_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLssParameters` object.
+    `V3dLssParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -143,7 +143,7 @@ def v_3d_lss_validate(
 
 
 def v_3d_lss_cargs(
-    params: V3dLssParameters,
+    params: V3dLssParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def v_3d_lss_cargs(
 
 
 def v_3d_lss_outputs(
-    params: V3dLssParameters,
+    params: V3dLssParamsDict,
     execution: Execution,
 ) -> V3dLssOutputs:
     """
@@ -212,7 +212,7 @@ def v_3d_lss_outputs(
 
 
 def v_3d_lss_execute(
-    params: V3dLssParameters,
+    params: V3dLssParamsDict,
     runner: Runner | None = None,
 ) -> V3dLssOutputs:
     """
@@ -297,6 +297,8 @@ def v_3d_lss(
 
 __all__ = [
     "V3dLssOutputs",
+    "V3dLssParamsDict",
+    "V3dLssParamsDictTagged",
     "V_3D_LSS_METADATA",
     "v_3d_lss",
     "v_3d_lss_execute",

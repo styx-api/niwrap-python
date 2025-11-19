@@ -13,12 +13,12 @@ MRI_SEGREG_METADATA = Metadata(
 )
 
 
-MriSegregParameters = typing.TypedDict('MriSegregParameters', {
+MriSegregParamsDict = typing.TypedDict('MriSegregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segreg"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-MriSegregParametersTagged = typing.TypedDict('MriSegregParametersTagged', {
+MriSegregParamsDictTagged = typing.TypedDict('MriSegregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segreg"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ MriSegregParametersTagged = typing.TypedDict('MriSegregParametersTagged', {
 
 class MriSegregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegregParameters(...)`.
+    Output object returned when calling `MriSegregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriSegregOutputs(typing.NamedTuple):
 def mri_segreg_params(
     input_file: InputPathType,
     output_file: str = "output.mgz",
-) -> MriSegregParametersTagged:
+) -> MriSegregParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def mri_segreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegregParameters` object.
+    `MriSegregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def mri_segreg_validate(
 
 
 def mri_segreg_cargs(
-    params: MriSegregParameters,
+    params: MriSegregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def mri_segreg_cargs(
 
 
 def mri_segreg_outputs(
-    params: MriSegregParameters,
+    params: MriSegregParamsDict,
     execution: Execution,
 ) -> MriSegregOutputs:
     """
@@ -120,7 +120,7 @@ def mri_segreg_outputs(
 
 
 def mri_segreg_execute(
-    params: MriSegregParameters,
+    params: MriSegregParamsDict,
     runner: Runner | None = None,
 ) -> MriSegregOutputs:
     """
@@ -180,6 +180,8 @@ def mri_segreg(
 __all__ = [
     "MRI_SEGREG_METADATA",
     "MriSegregOutputs",
+    "MriSegregParamsDict",
+    "MriSegregParamsDictTagged",
     "mri_segreg",
     "mri_segreg_execute",
     "mri_segreg_params",

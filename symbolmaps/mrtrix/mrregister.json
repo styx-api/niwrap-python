@@ -6,7 +6,7 @@
     },
     "transformed": {
       "var_param": "transformed",
-      "fn_struct_make_params": "mrregister_transformed_params",
+      "fn_struct_make_params": "mrregister_transformed",
       "properties": {
         "image": {
           "var_param": "image"
@@ -15,7 +15,7 @@
     },
     "transformed_midway": {
       "var_param": "transformed_midway",
-      "fn_struct_make_params": "mrregister_transformed_midway_params",
+      "fn_struct_make_params": "mrregister_transformed_midway",
       "properties": {
         "image1_transformed": {
           "var_param": "image1_transformed"
@@ -150,7 +150,7 @@
     },
     "nl_warp": {
       "var_param": "nl_warp",
-      "fn_struct_make_params": "mrregister_nl_warp_params",
+      "fn_struct_make_params": "mrregister_nl_warp",
       "properties": {
         "warp1": {
           "var_param": "warp1"
@@ -216,7 +216,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrregister_config_params",
+      "fn_struct_make_params": "mrregister_config",
       "properties": {
         "key": {
           "var_param": "key"

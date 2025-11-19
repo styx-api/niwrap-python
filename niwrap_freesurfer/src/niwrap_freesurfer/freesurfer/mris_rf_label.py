@@ -13,7 +13,7 @@ MRIS_RF_LABEL_METADATA = Metadata(
 )
 
 
-MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
+MrisRfLabelParamsDict = typing.TypedDict('MrisRfLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_label"]],
     "subject": str,
     "rf_classifier": str,
@@ -21,7 +21,7 @@ MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
     "hemi": typing.NotRequired[str | None],
     "surf": typing.NotRequired[str | None],
 })
-MrisRfLabelParametersTagged = typing.TypedDict('MrisRfLabelParametersTagged', {
+MrisRfLabelParamsDictTagged = typing.TypedDict('MrisRfLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_rf_label"],
     "subject": str,
     "rf_classifier": str,
@@ -33,7 +33,7 @@ MrisRfLabelParametersTagged = typing.TypedDict('MrisRfLabelParametersTagged', {
 
 class MrisRfLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRfLabelParameters(...)`.
+    Output object returned when calling `MrisRfLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mris_rf_label_params(
     output_name: str,
     hemi: str | None = None,
     surf: str | None = None,
-) -> MrisRfLabelParametersTagged:
+) -> MrisRfLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mris_rf_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRfLabelParameters` object.
+    `MrisRfLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def mris_rf_label_validate(
 
 
 def mris_rf_label_cargs(
-    params: MrisRfLabelParameters,
+    params: MrisRfLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def mris_rf_label_cargs(
 
 
 def mris_rf_label_outputs(
-    params: MrisRfLabelParameters,
+    params: MrisRfLabelParamsDict,
     execution: Execution,
 ) -> MrisRfLabelOutputs:
     """
@@ -154,7 +154,7 @@ def mris_rf_label_outputs(
 
 
 def mris_rf_label_execute(
-    params: MrisRfLabelParameters,
+    params: MrisRfLabelParamsDict,
     runner: Runner | None = None,
 ) -> MrisRfLabelOutputs:
     """
@@ -222,6 +222,8 @@ def mris_rf_label(
 __all__ = [
     "MRIS_RF_LABEL_METADATA",
     "MrisRfLabelOutputs",
+    "MrisRfLabelParamsDict",
+    "MrisRfLabelParamsDictTagged",
     "mris_rf_label",
     "mris_rf_label_execute",
     "mris_rf_label_params",

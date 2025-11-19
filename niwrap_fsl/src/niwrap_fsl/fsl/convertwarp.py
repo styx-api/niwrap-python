@@ -13,7 +13,7 @@ CONVERTWARP_METADATA = Metadata(
 )
 
 
-ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
+ConvertwarpParamsDict = typing.TypedDict('ConvertwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/convertwarp"]],
     "abswarp": bool,
     "cons_jacobian": bool,
@@ -32,7 +32,7 @@ ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
     "warp1": typing.NotRequired[InputPathType | None],
     "warp2": typing.NotRequired[InputPathType | None],
 })
-ConvertwarpParametersTagged = typing.TypedDict('ConvertwarpParametersTagged', {
+ConvertwarpParamsDictTagged = typing.TypedDict('ConvertwarpParamsDictTagged', {
     "@type": typing.Literal["fsl/convertwarp"],
     "abswarp": bool,
     "cons_jacobian": bool,
@@ -55,7 +55,7 @@ ConvertwarpParametersTagged = typing.TypedDict('ConvertwarpParametersTagged', {
 
 class ConvertwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertwarpParameters(...)`.
+    Output object returned when calling `ConvertwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def convertwarp_params(
     shift_in_file: InputPathType | None = None,
     warp1: InputPathType | None = None,
     warp2: InputPathType | None = None,
-) -> ConvertwarpParametersTagged:
+) -> ConvertwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -173,7 +173,7 @@ def convertwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertwarpParameters` object.
+    `ConvertwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,7 +241,7 @@ def convertwarp_validate(
 
 
 def convertwarp_cargs(
-    params: ConvertwarpParameters,
+    params: ConvertwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -290,7 +290,7 @@ def convertwarp_cargs(
 
 
 def convertwarp_outputs(
-    params: ConvertwarpParameters,
+    params: ConvertwarpParamsDict,
     execution: Execution,
 ) -> ConvertwarpOutputs:
     """
@@ -311,7 +311,7 @@ def convertwarp_outputs(
 
 
 def convertwarp_execute(
-    params: ConvertwarpParameters,
+    params: ConvertwarpParamsDict,
     runner: Runner | None = None,
 ) -> ConvertwarpOutputs:
     """
@@ -440,6 +440,8 @@ def convertwarp(
 __all__ = [
     "CONVERTWARP_METADATA",
     "ConvertwarpOutputs",
+    "ConvertwarpParamsDict",
+    "ConvertwarpParamsDictTagged",
     "convertwarp",
     "convertwarp_execute",
     "convertwarp_params",

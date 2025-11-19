@@ -13,7 +13,7 @@ MRI_VOLDIFF_METADATA = Metadata(
 )
 
 
-MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
+MriVoldiffParamsDict = typing.TypedDict('MriVoldiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_voldiff"]],
     "volume1": InputPathType,
     "volume2": InputPathType,
@@ -25,7 +25,7 @@ MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
     "debug": bool,
     "checkopts": bool,
 })
-MriVoldiffParametersTagged = typing.TypedDict('MriVoldiffParametersTagged', {
+MriVoldiffParamsDictTagged = typing.TypedDict('MriVoldiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_voldiff"],
     "volume1": InputPathType,
     "volume2": InputPathType,
@@ -41,7 +41,7 @@ MriVoldiffParametersTagged = typing.TypedDict('MriVoldiffParametersTagged', {
 
 class MriVoldiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriVoldiffParameters(...)`.
+    Output object returned when calling `MriVoldiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def mri_voldiff_params(
     allow_vox2ras: bool = False,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriVoldiffParametersTagged:
+) -> MriVoldiffParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def mri_voldiff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriVoldiffParameters` object.
+    `MriVoldiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def mri_voldiff_validate(
 
 
 def mri_voldiff_cargs(
-    params: MriVoldiffParameters,
+    params: MriVoldiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,7 +186,7 @@ def mri_voldiff_cargs(
 
 
 def mri_voldiff_outputs(
-    params: MriVoldiffParameters,
+    params: MriVoldiffParamsDict,
     execution: Execution,
 ) -> MriVoldiffOutputs:
     """
@@ -205,7 +205,7 @@ def mri_voldiff_outputs(
 
 
 def mri_voldiff_execute(
-    params: MriVoldiffParameters,
+    params: MriVoldiffParamsDict,
     runner: Runner | None = None,
 ) -> MriVoldiffOutputs:
     """
@@ -287,6 +287,8 @@ def mri_voldiff(
 __all__ = [
     "MRI_VOLDIFF_METADATA",
     "MriVoldiffOutputs",
+    "MriVoldiffParamsDict",
+    "MriVoldiffParamsDictTagged",
     "mri_voldiff",
     "mri_voldiff_execute",
     "mri_voldiff_params",

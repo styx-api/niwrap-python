@@ -13,203 +13,203 @@ ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
 )
 
 
-AntsApplyTransformsWarpedOutputParameters = typing.TypedDict('AntsApplyTransformsWarpedOutputParameters', {
+AntsApplyTransformsWarpedOutputParamsDict = typing.TypedDict('AntsApplyTransformsWarpedOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warpedOutput"]],
     "warpedOutputFileName": str,
 })
-AntsApplyTransformsWarpedOutputParametersTagged = typing.TypedDict('AntsApplyTransformsWarpedOutputParametersTagged', {
+AntsApplyTransformsWarpedOutputParamsDictTagged = typing.TypedDict('AntsApplyTransformsWarpedOutputParamsDictTagged', {
     "@type": typing.Literal["warpedOutput"],
     "warpedOutputFileName": str,
 })
 
 
-AntsApplyTransformsCompositeDisplacementFieldOutputParameters = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParameters', {
+AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["compositeDisplacementFieldOutput"]],
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[bool | None],
 })
-AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged', {
+AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged', {
     "@type": typing.Literal["compositeDisplacementFieldOutput"],
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[bool | None],
 })
 
 
-AntsApplyTransformsGenericAffineTransformOutputParameters = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParameters', {
+AntsApplyTransformsGenericAffineTransformOutputParamsDict = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["genericAffineTransformOutput"]],
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[bool | None],
 })
-AntsApplyTransformsGenericAffineTransformOutputParametersTagged = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParametersTagged', {
+AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged', {
     "@type": typing.Literal["genericAffineTransformOutput"],
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[bool | None],
 })
 
 
-AntsApplyTransformsLinearParameters = typing.TypedDict('AntsApplyTransformsLinearParameters', {
+AntsApplyTransformsLinearParamsDict = typing.TypedDict('AntsApplyTransformsLinearParamsDict', {
     "@type": typing.NotRequired[typing.Literal["linear"]],
 })
-AntsApplyTransformsLinearParametersTagged = typing.TypedDict('AntsApplyTransformsLinearParametersTagged', {
+AntsApplyTransformsLinearParamsDictTagged = typing.TypedDict('AntsApplyTransformsLinearParamsDictTagged', {
     "@type": typing.Literal["linear"],
 })
 
 
-AntsApplyTransformsNearestNeighborParameters = typing.TypedDict('AntsApplyTransformsNearestNeighborParameters', {
+AntsApplyTransformsNearestNeighborParamsDict = typing.TypedDict('AntsApplyTransformsNearestNeighborParamsDict', {
     "@type": typing.NotRequired[typing.Literal["nearestNeighbor"]],
 })
-AntsApplyTransformsNearestNeighborParametersTagged = typing.TypedDict('AntsApplyTransformsNearestNeighborParametersTagged', {
+AntsApplyTransformsNearestNeighborParamsDictTagged = typing.TypedDict('AntsApplyTransformsNearestNeighborParamsDictTagged', {
     "@type": typing.Literal["nearestNeighbor"],
 })
 
 
-AntsApplyTransformsMultiLabelnoparamsParameters = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParameters', {
+AntsApplyTransformsMultiLabelnoparamsParamsDict = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["multiLabelnoparams"]],
 })
-AntsApplyTransformsMultiLabelnoparamsParametersTagged = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParametersTagged', {
+AntsApplyTransformsMultiLabelnoparamsParamsDictTagged = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParamsDictTagged', {
     "@type": typing.Literal["multiLabelnoparams"],
 })
 
 
-AntsApplyTransformsSigmaParameters = typing.TypedDict('AntsApplyTransformsSigmaParameters', {
+AntsApplyTransformsSigmaParamsDict = typing.TypedDict('AntsApplyTransformsSigmaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sigma"]],
     "sigma": float,
 })
-AntsApplyTransformsSigmaParametersTagged = typing.TypedDict('AntsApplyTransformsSigmaParametersTagged', {
+AntsApplyTransformsSigmaParamsDictTagged = typing.TypedDict('AntsApplyTransformsSigmaParamsDictTagged', {
     "@type": typing.Literal["sigma"],
     "sigma": float,
 })
 
 
-AntsApplyTransformsAlphaParameters = typing.TypedDict('AntsApplyTransformsAlphaParameters', {
+AntsApplyTransformsAlphaParamsDict = typing.TypedDict('AntsApplyTransformsAlphaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["alpha"]],
     "alpha": float,
 })
-AntsApplyTransformsAlphaParametersTagged = typing.TypedDict('AntsApplyTransformsAlphaParametersTagged', {
+AntsApplyTransformsAlphaParamsDictTagged = typing.TypedDict('AntsApplyTransformsAlphaParamsDictTagged', {
     "@type": typing.Literal["alpha"],
     "alpha": float,
 })
 
 
-AntsApplyTransformsMultiLabelParameters = typing.TypedDict('AntsApplyTransformsMultiLabelParameters', {
+AntsApplyTransformsMultiLabelParamsDict = typing.TypedDict('AntsApplyTransformsMultiLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["multiLabel"]],
-    "params": list[typing.Union[AntsApplyTransformsSigmaParametersTagged, AntsApplyTransformsAlphaParametersTagged]],
+    "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
 })
-AntsApplyTransformsMultiLabelParametersTagged = typing.TypedDict('AntsApplyTransformsMultiLabelParametersTagged', {
+AntsApplyTransformsMultiLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsMultiLabelParamsDictTagged', {
     "@type": typing.Literal["multiLabel"],
-    "params": list[typing.Union[AntsApplyTransformsSigmaParametersTagged, AntsApplyTransformsAlphaParametersTagged]],
+    "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
 })
 
 
-AntsApplyTransformsGaussianParameters = typing.TypedDict('AntsApplyTransformsGaussianParameters', {
+AntsApplyTransformsGaussianParamsDict = typing.TypedDict('AntsApplyTransformsGaussianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["gaussian"]],
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
-AntsApplyTransformsGaussianParametersTagged = typing.TypedDict('AntsApplyTransformsGaussianParametersTagged', {
+AntsApplyTransformsGaussianParamsDictTagged = typing.TypedDict('AntsApplyTransformsGaussianParamsDictTagged', {
     "@type": typing.Literal["gaussian"],
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
 
 
-AntsApplyTransformsBsplineParameters = typing.TypedDict('AntsApplyTransformsBsplineParameters', {
+AntsApplyTransformsBsplineParamsDict = typing.TypedDict('AntsApplyTransformsBsplineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["bspline"]],
     "order": typing.NotRequired[int | None],
 })
-AntsApplyTransformsBsplineParametersTagged = typing.TypedDict('AntsApplyTransformsBsplineParametersTagged', {
+AntsApplyTransformsBsplineParamsDictTagged = typing.TypedDict('AntsApplyTransformsBsplineParamsDictTagged', {
     "@type": typing.Literal["bspline"],
     "order": typing.NotRequired[int | None],
 })
 
 
-AntsApplyTransformsCosineWindowedSincParameters = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParameters', {
+AntsApplyTransformsCosineWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cosineWindowedSinc"]],
 })
-AntsApplyTransformsCosineWindowedSincParametersTagged = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParametersTagged', {
+AntsApplyTransformsCosineWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParamsDictTagged', {
     "@type": typing.Literal["cosineWindowedSinc"],
 })
 
 
-AntsApplyTransformsWelchWindowedSincParameters = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParameters', {
+AntsApplyTransformsWelchWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParamsDict', {
     "@type": typing.NotRequired[typing.Literal["welchWindowedSinc"]],
 })
-AntsApplyTransformsWelchWindowedSincParametersTagged = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParametersTagged', {
+AntsApplyTransformsWelchWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParamsDictTagged', {
     "@type": typing.Literal["welchWindowedSinc"],
 })
 
 
-AntsApplyTransformsHammingWindowedSincParameters = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParameters', {
+AntsApplyTransformsHammingWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParamsDict', {
     "@type": typing.NotRequired[typing.Literal["hammingWindowedSinc"]],
 })
-AntsApplyTransformsHammingWindowedSincParametersTagged = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParametersTagged', {
+AntsApplyTransformsHammingWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParamsDictTagged', {
     "@type": typing.Literal["hammingWindowedSinc"],
 })
 
 
-AntsApplyTransformsLanczosWindowedSincParameters = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParameters', {
+AntsApplyTransformsLanczosWindowedSincParamsDict = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParamsDict', {
     "@type": typing.NotRequired[typing.Literal["lanczosWindowedSinc"]],
 })
-AntsApplyTransformsLanczosWindowedSincParametersTagged = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParametersTagged', {
+AntsApplyTransformsLanczosWindowedSincParamsDictTagged = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParamsDictTagged', {
     "@type": typing.Literal["lanczosWindowedSinc"],
 })
 
 
-AntsApplyTransformsGenericLabelParameters = typing.TypedDict('AntsApplyTransformsGenericLabelParameters', {
+AntsApplyTransformsGenericLabelParamsDict = typing.TypedDict('AntsApplyTransformsGenericLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["genericLabel"]],
     "interpolator": typing.NotRequired[str | None],
 })
-AntsApplyTransformsGenericLabelParametersTagged = typing.TypedDict('AntsApplyTransformsGenericLabelParametersTagged', {
+AntsApplyTransformsGenericLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsGenericLabelParamsDictTagged', {
     "@type": typing.Literal["genericLabel"],
     "interpolator": typing.NotRequired[str | None],
 })
 
 
-AntsApplyTransformsTransformFileNameParameters = typing.TypedDict('AntsApplyTransformsTransformFileNameParameters', {
+AntsApplyTransformsTransformFileNameParamsDict = typing.TypedDict('AntsApplyTransformsTransformFileNameParamsDict', {
     "@type": typing.NotRequired[typing.Literal["transformFileName"]],
     "transformFileName": InputPathType,
 })
-AntsApplyTransformsTransformFileNameParametersTagged = typing.TypedDict('AntsApplyTransformsTransformFileNameParametersTagged', {
+AntsApplyTransformsTransformFileNameParamsDictTagged = typing.TypedDict('AntsApplyTransformsTransformFileNameParamsDictTagged', {
     "@type": typing.Literal["transformFileName"],
     "transformFileName": InputPathType,
 })
 
 
-AntsApplyTransformsUseInverseParameters = typing.TypedDict('AntsApplyTransformsUseInverseParameters', {
+AntsApplyTransformsUseInverseParamsDict = typing.TypedDict('AntsApplyTransformsUseInverseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["useInverse"]],
     "transformFileName": InputPathType,
 })
-AntsApplyTransformsUseInverseParametersTagged = typing.TypedDict('AntsApplyTransformsUseInverseParametersTagged', {
+AntsApplyTransformsUseInverseParamsDictTagged = typing.TypedDict('AntsApplyTransformsUseInverseParamsDictTagged', {
     "@type": typing.Literal["useInverse"],
     "transformFileName": InputPathType,
 })
 
 
-AntsApplyTransformsParameters = typing.TypedDict('AntsApplyTransformsParameters', {
+AntsApplyTransformsParamsDict = typing.TypedDict('AntsApplyTransformsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransforms"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
     "input_image": typing.NotRequired[InputPathType | None],
     "reference_image": InputPathType,
-    "output": typing.Union[AntsApplyTransformsWarpedOutputParametersTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged, AntsApplyTransformsGenericAffineTransformOutputParametersTagged],
-    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParametersTagged, AntsApplyTransformsNearestNeighborParametersTagged, AntsApplyTransformsMultiLabelnoparamsParametersTagged, AntsApplyTransformsMultiLabelParametersTagged, AntsApplyTransformsGaussianParametersTagged, AntsApplyTransformsBsplineParametersTagged, AntsApplyTransformsCosineWindowedSincParametersTagged, AntsApplyTransformsWelchWindowedSincParametersTagged, AntsApplyTransformsHammingWindowedSincParametersTagged, AntsApplyTransformsLanczosWindowedSincParametersTagged, AntsApplyTransformsGenericLabelParametersTagged] | None],
+    "output": typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
+    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
     "output_data_type": typing.NotRequired[typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None],
-    "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None],
+    "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None],
     "default_value": typing.NotRequired[float | None],
     "static_cast_for_R": typing.NotRequired[str | None],
     "float": typing.NotRequired[bool | None],
     "verbose": typing.NotRequired[bool | None],
 })
-AntsApplyTransformsParametersTagged = typing.TypedDict('AntsApplyTransformsParametersTagged', {
+AntsApplyTransformsParamsDictTagged = typing.TypedDict('AntsApplyTransformsParamsDictTagged', {
     "@type": typing.Literal["ants/antsApplyTransforms"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
     "input_image": typing.NotRequired[InputPathType | None],
     "reference_image": InputPathType,
-    "output": typing.Union[AntsApplyTransformsWarpedOutputParametersTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged, AntsApplyTransformsGenericAffineTransformOutputParametersTagged],
-    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParametersTagged, AntsApplyTransformsNearestNeighborParametersTagged, AntsApplyTransformsMultiLabelnoparamsParametersTagged, AntsApplyTransformsMultiLabelParametersTagged, AntsApplyTransformsGaussianParametersTagged, AntsApplyTransformsBsplineParametersTagged, AntsApplyTransformsCosineWindowedSincParametersTagged, AntsApplyTransformsWelchWindowedSincParametersTagged, AntsApplyTransformsHammingWindowedSincParametersTagged, AntsApplyTransformsLanczosWindowedSincParametersTagged, AntsApplyTransformsGenericLabelParametersTagged] | None],
+    "output": typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
+    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
     "output_data_type": typing.NotRequired[typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None],
-    "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None],
+    "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None],
     "default_value": typing.NotRequired[float | None],
     "static_cast_for_R": typing.NotRequired[str | None],
     "float": typing.NotRequired[bool | None],
@@ -375,7 +375,7 @@ def ants_apply_transforms_transform_validate_dyn_fn(
 
 class AntsApplyTransformsWarpedOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsApplyTransformsWarpedOutputParameters(...)`.
+    Output object returned when calling `AntsApplyTransformsWarpedOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -383,9 +383,9 @@ class AntsApplyTransformsWarpedOutputOutputs(typing.NamedTuple):
     """Warped image."""
 
 
-def ants_apply_transforms_warped_output_params(
+def ants_apply_transforms_warped_output(
     warped_output_file_name: str,
-) -> AntsApplyTransformsWarpedOutputParametersTagged:
+) -> AntsApplyTransformsWarpedOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -406,7 +406,7 @@ def ants_apply_transforms_warped_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsWarpedOutputParameters` object.
+    `AntsApplyTransformsWarpedOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -420,7 +420,7 @@ def ants_apply_transforms_warped_output_validate(
 
 
 def ants_apply_transforms_warped_output_cargs(
-    params: AntsApplyTransformsWarpedOutputParameters,
+    params: AntsApplyTransformsWarpedOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -438,7 +438,7 @@ def ants_apply_transforms_warped_output_cargs(
 
 
 def ants_apply_transforms_warped_output_outputs(
-    params: AntsApplyTransformsWarpedOutputParameters,
+    params: AntsApplyTransformsWarpedOutputParamsDict,
     execution: Execution,
 ) -> AntsApplyTransformsWarpedOutputOutputs:
     """
@@ -459,7 +459,7 @@ def ants_apply_transforms_warped_output_outputs(
 
 class AntsApplyTransformsCompositeDisplacementFieldOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsApplyTransformsCompositeDisplacementFieldOutputParameters(...)`.
+    Output object returned when calling `AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -467,10 +467,10 @@ class AntsApplyTransformsCompositeDisplacementFieldOutputOutputs(typing.NamedTup
     """Warped image."""
 
 
-def ants_apply_transforms_composite_displacement_field_output_params(
+def ants_apply_transforms_composite_displacement_field_output(
     composite_displacement_field: str,
     print_out_composite_warp_file: bool | None = None,
-) -> AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged:
+) -> AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -495,7 +495,7 @@ def ants_apply_transforms_composite_displacement_field_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsCompositeDisplacementFieldOutputParameters` object.
+    `AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -512,7 +512,7 @@ def ants_apply_transforms_composite_displacement_field_output_validate(
 
 
 def ants_apply_transforms_composite_displacement_field_output_cargs(
-    params: AntsApplyTransformsCompositeDisplacementFieldOutputParameters,
+    params: AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -531,7 +531,7 @@ def ants_apply_transforms_composite_displacement_field_output_cargs(
 
 
 def ants_apply_transforms_composite_displacement_field_output_outputs(
-    params: AntsApplyTransformsCompositeDisplacementFieldOutputParameters,
+    params: AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict,
     execution: Execution,
 ) -> AntsApplyTransformsCompositeDisplacementFieldOutputOutputs:
     """
@@ -552,7 +552,7 @@ def ants_apply_transforms_composite_displacement_field_output_outputs(
 
 class AntsApplyTransformsGenericAffineTransformOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsApplyTransformsGenericAffineTransformOutputParameters(...)`.
+    Output object returned when calling `AntsApplyTransformsGenericAffineTransformOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -560,10 +560,10 @@ class AntsApplyTransformsGenericAffineTransformOutputOutputs(typing.NamedTuple):
     """Warped image."""
 
 
-def ants_apply_transforms_generic_affine_transform_output_params(
+def ants_apply_transforms_generic_affine_transform_output(
     generic_affine_transform_file: str,
     calculate_inverse: bool | None = None,
-) -> AntsApplyTransformsGenericAffineTransformOutputParametersTagged:
+) -> AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -587,7 +587,7 @@ def ants_apply_transforms_generic_affine_transform_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsGenericAffineTransformOutputParameters` object.
+    `AntsApplyTransformsGenericAffineTransformOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -604,7 +604,7 @@ def ants_apply_transforms_generic_affine_transform_output_validate(
 
 
 def ants_apply_transforms_generic_affine_transform_output_cargs(
-    params: AntsApplyTransformsGenericAffineTransformOutputParameters,
+    params: AntsApplyTransformsGenericAffineTransformOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -623,7 +623,7 @@ def ants_apply_transforms_generic_affine_transform_output_cargs(
 
 
 def ants_apply_transforms_generic_affine_transform_output_outputs(
-    params: AntsApplyTransformsGenericAffineTransformOutputParameters,
+    params: AntsApplyTransformsGenericAffineTransformOutputParamsDict,
     execution: Execution,
 ) -> AntsApplyTransformsGenericAffineTransformOutputOutputs:
     """
@@ -642,8 +642,8 @@ def ants_apply_transforms_generic_affine_transform_output_outputs(
     return ret
 
 
-def ants_apply_transforms_linear_params(
-) -> AntsApplyTransformsLinearParametersTagged:
+def ants_apply_transforms_linear(
+) -> AntsApplyTransformsLinearParamsDictTagged:
     """
     Build parameters.
     
@@ -662,7 +662,7 @@ def ants_apply_transforms_linear_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsLinearParameters` object.
+    `AntsApplyTransformsLinearParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -672,7 +672,7 @@ def ants_apply_transforms_linear_validate(
 
 
 def ants_apply_transforms_linear_cargs(
-    params: AntsApplyTransformsLinearParameters,
+    params: AntsApplyTransformsLinearParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -689,8 +689,8 @@ def ants_apply_transforms_linear_cargs(
     return cargs
 
 
-def ants_apply_transforms_nearest_neighbor_params(
-) -> AntsApplyTransformsNearestNeighborParametersTagged:
+def ants_apply_transforms_nearest_neighbor(
+) -> AntsApplyTransformsNearestNeighborParamsDictTagged:
     """
     Build parameters.
     
@@ -709,7 +709,7 @@ def ants_apply_transforms_nearest_neighbor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsNearestNeighborParameters` object.
+    `AntsApplyTransformsNearestNeighborParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -719,7 +719,7 @@ def ants_apply_transforms_nearest_neighbor_validate(
 
 
 def ants_apply_transforms_nearest_neighbor_cargs(
-    params: AntsApplyTransformsNearestNeighborParameters,
+    params: AntsApplyTransformsNearestNeighborParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -736,8 +736,8 @@ def ants_apply_transforms_nearest_neighbor_cargs(
     return cargs
 
 
-def ants_apply_transforms_multi_labelnoparams_params(
-) -> AntsApplyTransformsMultiLabelnoparamsParametersTagged:
+def ants_apply_transforms_multi_labelnoparams(
+) -> AntsApplyTransformsMultiLabelnoparamsParamsDictTagged:
     """
     Build parameters.
     
@@ -756,7 +756,7 @@ def ants_apply_transforms_multi_labelnoparams_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsMultiLabelnoparamsParameters` object.
+    `AntsApplyTransformsMultiLabelnoparamsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -766,7 +766,7 @@ def ants_apply_transforms_multi_labelnoparams_validate(
 
 
 def ants_apply_transforms_multi_labelnoparams_cargs(
-    params: AntsApplyTransformsMultiLabelnoparamsParameters,
+    params: AntsApplyTransformsMultiLabelnoparamsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -783,9 +783,9 @@ def ants_apply_transforms_multi_labelnoparams_cargs(
     return cargs
 
 
-def ants_apply_transforms_sigma_params(
+def ants_apply_transforms_sigma(
     sigma: float,
-) -> AntsApplyTransformsSigmaParametersTagged:
+) -> AntsApplyTransformsSigmaParamsDictTagged:
     """
     Build parameters.
     
@@ -806,7 +806,7 @@ def ants_apply_transforms_sigma_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsSigmaParameters` object.
+    `AntsApplyTransformsSigmaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -820,7 +820,7 @@ def ants_apply_transforms_sigma_validate(
 
 
 def ants_apply_transforms_sigma_cargs(
-    params: AntsApplyTransformsSigmaParameters,
+    params: AntsApplyTransformsSigmaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -837,9 +837,9 @@ def ants_apply_transforms_sigma_cargs(
     return cargs
 
 
-def ants_apply_transforms_alpha_params(
+def ants_apply_transforms_alpha(
     alpha: float,
-) -> AntsApplyTransformsAlphaParametersTagged:
+) -> AntsApplyTransformsAlphaParamsDictTagged:
     """
     Build parameters.
     
@@ -860,7 +860,7 @@ def ants_apply_transforms_alpha_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsAlphaParameters` object.
+    `AntsApplyTransformsAlphaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -874,7 +874,7 @@ def ants_apply_transforms_alpha_validate(
 
 
 def ants_apply_transforms_alpha_cargs(
-    params: AntsApplyTransformsAlphaParameters,
+    params: AntsApplyTransformsAlphaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -891,9 +891,9 @@ def ants_apply_transforms_alpha_cargs(
     return cargs
 
 
-def ants_apply_transforms_multi_label_params(
-    params_: list[typing.Union[AntsApplyTransformsSigmaParametersTagged, AntsApplyTransformsAlphaParametersTagged]],
-) -> AntsApplyTransformsMultiLabelParametersTagged:
+def ants_apply_transforms_multi_label(
+    params_: list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
+) -> AntsApplyTransformsMultiLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -914,7 +914,7 @@ def ants_apply_transforms_multi_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsMultiLabelParameters` object.
+    `AntsApplyTransformsMultiLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -924,17 +924,19 @@ def ants_apply_transforms_multi_label_validate(
     if params.get("params", None) is None:
         raise StyxValidationError("`params` must not be None")
     if not isinstance(params["params"], list):
-        raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[typing.Union[AntsApplyTransformsSigmaParametersTagged, AntsApplyTransformsAlphaParametersTagged]]`')
+        raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]]`')
     for e in params["params"]:
         if not isinstance(e, dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
         if "@type" not in e:
             raise StyxValidationError("Params object is missing `@type`")
+        if e["@type"] not in ["sigma", "alpha"]:
+            raise StyxValidationError("Parameter `params`s `@type` must be one of [\"sigma\", \"alpha\"]")
         ants_apply_transforms_params_validate_dyn_fn(e["@type"])(e)
 
 
 def ants_apply_transforms_multi_label_cargs(
-    params: AntsApplyTransformsMultiLabelParameters,
+    params: AntsApplyTransformsMultiLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -951,10 +953,10 @@ def ants_apply_transforms_multi_label_cargs(
     return cargs
 
 
-def ants_apply_transforms_gaussian_params(
+def ants_apply_transforms_gaussian(
     sigma: float | None = None,
     alpha: float | None = None,
-) -> AntsApplyTransformsGaussianParametersTagged:
+) -> AntsApplyTransformsGaussianParamsDictTagged:
     """
     Build parameters.
     
@@ -979,7 +981,7 @@ def ants_apply_transforms_gaussian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsGaussianParameters` object.
+    `AntsApplyTransformsGaussianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -995,7 +997,7 @@ def ants_apply_transforms_gaussian_validate(
 
 
 def ants_apply_transforms_gaussian_cargs(
-    params: AntsApplyTransformsGaussianParameters,
+    params: AntsApplyTransformsGaussianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1013,9 +1015,9 @@ def ants_apply_transforms_gaussian_cargs(
     return cargs
 
 
-def ants_apply_transforms_bspline_params(
+def ants_apply_transforms_bspline(
     order: int | None = None,
-) -> AntsApplyTransformsBsplineParametersTagged:
+) -> AntsApplyTransformsBsplineParamsDictTagged:
     """
     Build parameters.
     
@@ -1037,7 +1039,7 @@ def ants_apply_transforms_bspline_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsBsplineParameters` object.
+    `AntsApplyTransformsBsplineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1050,7 +1052,7 @@ def ants_apply_transforms_bspline_validate(
 
 
 def ants_apply_transforms_bspline_cargs(
-    params: AntsApplyTransformsBsplineParameters,
+    params: AntsApplyTransformsBsplineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1068,8 +1070,8 @@ def ants_apply_transforms_bspline_cargs(
     return cargs
 
 
-def ants_apply_transforms_cosine_windowed_sinc_params(
-) -> AntsApplyTransformsCosineWindowedSincParametersTagged:
+def ants_apply_transforms_cosine_windowed_sinc(
+) -> AntsApplyTransformsCosineWindowedSincParamsDictTagged:
     """
     Build parameters.
     
@@ -1088,7 +1090,7 @@ def ants_apply_transforms_cosine_windowed_sinc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsCosineWindowedSincParameters` object.
+    `AntsApplyTransformsCosineWindowedSincParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1098,7 +1100,7 @@ def ants_apply_transforms_cosine_windowed_sinc_validate(
 
 
 def ants_apply_transforms_cosine_windowed_sinc_cargs(
-    params: AntsApplyTransformsCosineWindowedSincParameters,
+    params: AntsApplyTransformsCosineWindowedSincParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1115,8 +1117,8 @@ def ants_apply_transforms_cosine_windowed_sinc_cargs(
     return cargs
 
 
-def ants_apply_transforms_welch_windowed_sinc_params(
-) -> AntsApplyTransformsWelchWindowedSincParametersTagged:
+def ants_apply_transforms_welch_windowed_sinc(
+) -> AntsApplyTransformsWelchWindowedSincParamsDictTagged:
     """
     Build parameters.
     
@@ -1135,7 +1137,7 @@ def ants_apply_transforms_welch_windowed_sinc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsWelchWindowedSincParameters` object.
+    `AntsApplyTransformsWelchWindowedSincParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1145,7 +1147,7 @@ def ants_apply_transforms_welch_windowed_sinc_validate(
 
 
 def ants_apply_transforms_welch_windowed_sinc_cargs(
-    params: AntsApplyTransformsWelchWindowedSincParameters,
+    params: AntsApplyTransformsWelchWindowedSincParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1162,8 +1164,8 @@ def ants_apply_transforms_welch_windowed_sinc_cargs(
     return cargs
 
 
-def ants_apply_transforms_hamming_windowed_sinc_params(
-) -> AntsApplyTransformsHammingWindowedSincParametersTagged:
+def ants_apply_transforms_hamming_windowed_sinc(
+) -> AntsApplyTransformsHammingWindowedSincParamsDictTagged:
     """
     Build parameters.
     
@@ -1182,7 +1184,7 @@ def ants_apply_transforms_hamming_windowed_sinc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsHammingWindowedSincParameters` object.
+    `AntsApplyTransformsHammingWindowedSincParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1192,7 +1194,7 @@ def ants_apply_transforms_hamming_windowed_sinc_validate(
 
 
 def ants_apply_transforms_hamming_windowed_sinc_cargs(
-    params: AntsApplyTransformsHammingWindowedSincParameters,
+    params: AntsApplyTransformsHammingWindowedSincParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1209,8 +1211,8 @@ def ants_apply_transforms_hamming_windowed_sinc_cargs(
     return cargs
 
 
-def ants_apply_transforms_lanczos_windowed_sinc_params(
-) -> AntsApplyTransformsLanczosWindowedSincParametersTagged:
+def ants_apply_transforms_lanczos_windowed_sinc(
+) -> AntsApplyTransformsLanczosWindowedSincParamsDictTagged:
     """
     Build parameters.
     
@@ -1229,7 +1231,7 @@ def ants_apply_transforms_lanczos_windowed_sinc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsLanczosWindowedSincParameters` object.
+    `AntsApplyTransformsLanczosWindowedSincParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1239,7 +1241,7 @@ def ants_apply_transforms_lanczos_windowed_sinc_validate(
 
 
 def ants_apply_transforms_lanczos_windowed_sinc_cargs(
-    params: AntsApplyTransformsLanczosWindowedSincParameters,
+    params: AntsApplyTransformsLanczosWindowedSincParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1256,9 +1258,9 @@ def ants_apply_transforms_lanczos_windowed_sinc_cargs(
     return cargs
 
 
-def ants_apply_transforms_generic_label_params(
+def ants_apply_transforms_generic_label(
     interpolator: str | None = None,
-) -> AntsApplyTransformsGenericLabelParametersTagged:
+) -> AntsApplyTransformsGenericLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -1280,7 +1282,7 @@ def ants_apply_transforms_generic_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsGenericLabelParameters` object.
+    `AntsApplyTransformsGenericLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1293,7 +1295,7 @@ def ants_apply_transforms_generic_label_validate(
 
 
 def ants_apply_transforms_generic_label_cargs(
-    params: AntsApplyTransformsGenericLabelParameters,
+    params: AntsApplyTransformsGenericLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1311,9 +1313,9 @@ def ants_apply_transforms_generic_label_cargs(
     return cargs
 
 
-def ants_apply_transforms_transform_file_name_params(
+def ants_apply_transforms_transform_file_name(
     transform_file_name: InputPathType,
-) -> AntsApplyTransformsTransformFileNameParametersTagged:
+) -> AntsApplyTransformsTransformFileNameParamsDictTagged:
     """
     Build parameters.
     
@@ -1334,7 +1336,7 @@ def ants_apply_transforms_transform_file_name_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsTransformFileNameParameters` object.
+    `AntsApplyTransformsTransformFileNameParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1348,7 +1350,7 @@ def ants_apply_transforms_transform_file_name_validate(
 
 
 def ants_apply_transforms_transform_file_name_cargs(
-    params: AntsApplyTransformsTransformFileNameParameters,
+    params: AntsApplyTransformsTransformFileNameParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1365,9 +1367,9 @@ def ants_apply_transforms_transform_file_name_cargs(
     return cargs
 
 
-def ants_apply_transforms_use_inverse_params(
+def ants_apply_transforms_use_inverse(
     transform_file_name: InputPathType,
-) -> AntsApplyTransformsUseInverseParametersTagged:
+) -> AntsApplyTransformsUseInverseParamsDictTagged:
     """
     Build parameters.
     
@@ -1388,7 +1390,7 @@ def ants_apply_transforms_use_inverse_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsUseInverseParameters` object.
+    `AntsApplyTransformsUseInverseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1402,7 +1404,7 @@ def ants_apply_transforms_use_inverse_validate(
 
 
 def ants_apply_transforms_use_inverse_cargs(
-    params: AntsApplyTransformsUseInverseParameters,
+    params: AntsApplyTransformsUseInverseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1421,30 +1423,30 @@ def ants_apply_transforms_use_inverse_cargs(
 
 class AntsApplyTransformsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsApplyTransformsParameters(...)`.
+    Output object returned when calling `AntsApplyTransformsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     output: typing.Union[AntsApplyTransformsWarpedOutputOutputs, AntsApplyTransformsCompositeDisplacementFieldOutputOutputs, AntsApplyTransformsGenericAffineTransformOutputOutputs]
-    """Outputs from `AntsApplyTransformsWarpedOutputParameters` or
-    `AntsApplyTransformsCompositeDisplacementFieldOutputParameters` or
-    `AntsApplyTransformsGenericAffineTransformOutputParameters`."""
+    """Outputs from `AntsApplyTransformsWarpedOutputParamsDict` or
+    `AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict` or
+    `AntsApplyTransformsGenericAffineTransformOutputParamsDict`."""
 
 
 def ants_apply_transforms_params(
     reference_image: InputPathType,
-    output: typing.Union[AntsApplyTransformsWarpedOutputParametersTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged, AntsApplyTransformsGenericAffineTransformOutputParametersTagged],
+    output: typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
     input_image: InputPathType | None = None,
-    interpolation: typing.Union[AntsApplyTransformsLinearParametersTagged, AntsApplyTransformsNearestNeighborParametersTagged, AntsApplyTransformsMultiLabelnoparamsParametersTagged, AntsApplyTransformsMultiLabelParametersTagged, AntsApplyTransformsGaussianParametersTagged, AntsApplyTransformsBsplineParametersTagged, AntsApplyTransformsCosineWindowedSincParametersTagged, AntsApplyTransformsWelchWindowedSincParametersTagged, AntsApplyTransformsHammingWindowedSincParametersTagged, AntsApplyTransformsLanczosWindowedSincParametersTagged, AntsApplyTransformsGenericLabelParametersTagged] | None = None,
+    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
-    transform: list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None = None,
+    transform: list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None = None,
     default_value: float | None = None,
     static_cast_for_r: str | None = None,
     float_: bool | None = None,
     verbose: bool | None = None,
-) -> AntsApplyTransformsParametersTagged:
+) -> AntsApplyTransformsParamsDictTagged:
     """
     Build parameters.
     
@@ -1530,7 +1532,7 @@ def ants_apply_transforms_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsApplyTransformsParameters` object.
+    `AntsApplyTransformsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1560,12 +1562,16 @@ def ants_apply_transforms_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
     if "@type" not in params["output"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["output"]["@type"] not in ["warpedOutput", "compositeDisplacementFieldOutput", "genericAffineTransformOutput"]:
+        raise StyxValidationError("Parameter `output`s `@type` must be one of [\"warpedOutput\", \"compositeDisplacementFieldOutput\", \"genericAffineTransformOutput\"]")
     ants_apply_transforms_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
     if params.get("interpolation", None) is not None:
         if not isinstance(params["interpolation"], dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["interpolation"])}\'')
         if "@type" not in params["interpolation"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["interpolation"]["@type"] not in ["linear", "nearestNeighbor", "multiLabelnoparams", "multiLabel", "gaussian", "bspline", "cosineWindowedSinc", "welchWindowedSinc", "hammingWindowedSinc", "lanczosWindowedSinc", "genericLabel"]:
+            raise StyxValidationError("Parameter `interpolation`s `@type` must be one of [\"linear\", \"nearestNeighbor\", \"multiLabelnoparams\", \"multiLabel\", \"gaussian\", \"bspline\", \"cosineWindowedSinc\", \"welchWindowedSinc\", \"hammingWindowedSinc\", \"lanczosWindowedSinc\", \"genericLabel\"]")
         ants_apply_transforms_interpolation_validate_dyn_fn(params["interpolation"]["@type"])(params["interpolation"])
     if params.get("output_data_type", None) is not None:
         if not isinstance(params["output_data_type"], str):
@@ -1574,12 +1580,14 @@ def ants_apply_transforms_validate(
             raise StyxValidationError("Parameter `output_data_type` must be one of [\"char\", \"uchar\", \"short\", \"int\", \"float\", \"double\", \"default\"]")
     if params.get("transform", None) is not None:
         if not isinstance(params["transform"], list):
-            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None`')
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None`')
         for e in params["transform"]:
             if not isinstance(e, dict):
                 raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
             if "@type" not in e:
                 raise StyxValidationError("Params object is missing `@type`")
+            if e["@type"] not in ["transformFileName", "useInverse"]:
+                raise StyxValidationError("Parameter `transform`s `@type` must be one of [\"transformFileName\", \"useInverse\"]")
             ants_apply_transforms_transform_validate_dyn_fn(e["@type"])(e)
     if params.get("default_value", None) is not None:
         if not isinstance(params["default_value"], (float, int)):
@@ -1596,7 +1604,7 @@ def ants_apply_transforms_validate(
 
 
 def ants_apply_transforms_cargs(
-    params: AntsApplyTransformsParameters,
+    params: AntsApplyTransformsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1672,7 +1680,7 @@ def ants_apply_transforms_cargs(
 
 
 def ants_apply_transforms_outputs(
-    params: AntsApplyTransformsParameters,
+    params: AntsApplyTransformsParamsDict,
     execution: Execution,
 ) -> AntsApplyTransformsOutputs:
     """
@@ -1692,7 +1700,7 @@ def ants_apply_transforms_outputs(
 
 
 def ants_apply_transforms_execute(
-    params: AntsApplyTransformsParameters,
+    params: AntsApplyTransformsParamsDict,
     runner: Runner | None = None,
 ) -> AntsApplyTransformsOutputs:
     """
@@ -1723,13 +1731,13 @@ def ants_apply_transforms_execute(
 
 def ants_apply_transforms(
     reference_image: InputPathType,
-    output: typing.Union[AntsApplyTransformsWarpedOutputParametersTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParametersTagged, AntsApplyTransformsGenericAffineTransformOutputParametersTagged],
+    output: typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
     input_image: InputPathType | None = None,
-    interpolation: typing.Union[AntsApplyTransformsLinearParametersTagged, AntsApplyTransformsNearestNeighborParametersTagged, AntsApplyTransformsMultiLabelnoparamsParametersTagged, AntsApplyTransformsMultiLabelParametersTagged, AntsApplyTransformsGaussianParametersTagged, AntsApplyTransformsBsplineParametersTagged, AntsApplyTransformsCosineWindowedSincParametersTagged, AntsApplyTransformsWelchWindowedSincParametersTagged, AntsApplyTransformsHammingWindowedSincParametersTagged, AntsApplyTransformsLanczosWindowedSincParametersTagged, AntsApplyTransformsGenericLabelParametersTagged] | None = None,
+    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
-    transform: list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None = None,
+    transform: list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None = None,
     default_value: float | None = None,
     static_cast_for_r: str | None = None,
     float_: bool | None = None,
@@ -1815,29 +1823,67 @@ def ants_apply_transforms(
 
 __all__ = [
     "ANTS_APPLY_TRANSFORMS_METADATA",
+    "AntsApplyTransformsAlphaParamsDict",
+    "AntsApplyTransformsAlphaParamsDictTagged",
+    "AntsApplyTransformsBsplineParamsDict",
+    "AntsApplyTransformsBsplineParamsDictTagged",
     "AntsApplyTransformsCompositeDisplacementFieldOutputOutputs",
+    "AntsApplyTransformsCompositeDisplacementFieldOutputParamsDict",
+    "AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged",
+    "AntsApplyTransformsCosineWindowedSincParamsDict",
+    "AntsApplyTransformsCosineWindowedSincParamsDictTagged",
+    "AntsApplyTransformsGaussianParamsDict",
+    "AntsApplyTransformsGaussianParamsDictTagged",
     "AntsApplyTransformsGenericAffineTransformOutputOutputs",
+    "AntsApplyTransformsGenericAffineTransformOutputParamsDict",
+    "AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged",
+    "AntsApplyTransformsGenericLabelParamsDict",
+    "AntsApplyTransformsGenericLabelParamsDictTagged",
+    "AntsApplyTransformsHammingWindowedSincParamsDict",
+    "AntsApplyTransformsHammingWindowedSincParamsDictTagged",
+    "AntsApplyTransformsLanczosWindowedSincParamsDict",
+    "AntsApplyTransformsLanczosWindowedSincParamsDictTagged",
+    "AntsApplyTransformsLinearParamsDict",
+    "AntsApplyTransformsLinearParamsDictTagged",
+    "AntsApplyTransformsMultiLabelParamsDict",
+    "AntsApplyTransformsMultiLabelParamsDictTagged",
+    "AntsApplyTransformsMultiLabelnoparamsParamsDict",
+    "AntsApplyTransformsMultiLabelnoparamsParamsDictTagged",
+    "AntsApplyTransformsNearestNeighborParamsDict",
+    "AntsApplyTransformsNearestNeighborParamsDictTagged",
     "AntsApplyTransformsOutputs",
+    "AntsApplyTransformsParamsDict",
+    "AntsApplyTransformsParamsDictTagged",
+    "AntsApplyTransformsSigmaParamsDict",
+    "AntsApplyTransformsSigmaParamsDictTagged",
+    "AntsApplyTransformsTransformFileNameParamsDict",
+    "AntsApplyTransformsTransformFileNameParamsDictTagged",
+    "AntsApplyTransformsUseInverseParamsDict",
+    "AntsApplyTransformsUseInverseParamsDictTagged",
     "AntsApplyTransformsWarpedOutputOutputs",
+    "AntsApplyTransformsWarpedOutputParamsDict",
+    "AntsApplyTransformsWarpedOutputParamsDictTagged",
+    "AntsApplyTransformsWelchWindowedSincParamsDict",
+    "AntsApplyTransformsWelchWindowedSincParamsDictTagged",
     "ants_apply_transforms",
-    "ants_apply_transforms_alpha_params",
-    "ants_apply_transforms_bspline_params",
-    "ants_apply_transforms_composite_displacement_field_output_params",
-    "ants_apply_transforms_cosine_windowed_sinc_params",
+    "ants_apply_transforms_alpha",
+    "ants_apply_transforms_bspline",
+    "ants_apply_transforms_composite_displacement_field_output",
+    "ants_apply_transforms_cosine_windowed_sinc",
     "ants_apply_transforms_execute",
-    "ants_apply_transforms_gaussian_params",
-    "ants_apply_transforms_generic_affine_transform_output_params",
-    "ants_apply_transforms_generic_label_params",
-    "ants_apply_transforms_hamming_windowed_sinc_params",
-    "ants_apply_transforms_lanczos_windowed_sinc_params",
-    "ants_apply_transforms_linear_params",
-    "ants_apply_transforms_multi_label_params",
-    "ants_apply_transforms_multi_labelnoparams_params",
-    "ants_apply_transforms_nearest_neighbor_params",
+    "ants_apply_transforms_gaussian",
+    "ants_apply_transforms_generic_affine_transform_output",
+    "ants_apply_transforms_generic_label",
+    "ants_apply_transforms_hamming_windowed_sinc",
+    "ants_apply_transforms_lanczos_windowed_sinc",
+    "ants_apply_transforms_linear",
+    "ants_apply_transforms_multi_label",
+    "ants_apply_transforms_multi_labelnoparams",
+    "ants_apply_transforms_nearest_neighbor",
     "ants_apply_transforms_params",
-    "ants_apply_transforms_sigma_params",
-    "ants_apply_transforms_transform_file_name_params",
-    "ants_apply_transforms_use_inverse_params",
-    "ants_apply_transforms_warped_output_params",
-    "ants_apply_transforms_welch_windowed_sinc_params",
+    "ants_apply_transforms_sigma",
+    "ants_apply_transforms_transform_file_name",
+    "ants_apply_transforms_use_inverse",
+    "ants_apply_transforms_warped_output",
+    "ants_apply_transforms_welch_windowed_sinc",
 ]

@@ -13,7 +13,7 @@ BMEDITS2SURF_METADATA = Metadata(
 )
 
 
-Bmedits2surfParameters = typing.TypedDict('Bmedits2surfParameters', {
+Bmedits2surfParamsDict = typing.TypedDict('Bmedits2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bmedits2surf"]],
     "subject": str,
     "self": bool,
@@ -26,7 +26,7 @@ Bmedits2surfParameters = typing.TypedDict('Bmedits2surfParameters', {
     "right_hemisphere": bool,
     "no_surfs": bool,
 })
-Bmedits2surfParametersTagged = typing.TypedDict('Bmedits2surfParametersTagged', {
+Bmedits2surfParamsDictTagged = typing.TypedDict('Bmedits2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bmedits2surf"],
     "subject": str,
     "self": bool,
@@ -43,7 +43,7 @@ Bmedits2surfParametersTagged = typing.TypedDict('Bmedits2surfParametersTagged', 
 
 class Bmedits2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Bmedits2surfParameters(...)`.
+    Output object returned when calling `Bmedits2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def bmedits2surf_params(
     left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     no_surfs: bool = False,
-) -> Bmedits2surfParametersTagged:
+) -> Bmedits2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def bmedits2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Bmedits2surfParameters` object.
+    `Bmedits2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def bmedits2surf_validate(
 
 
 def bmedits2surf_cargs(
-    params: Bmedits2surfParameters,
+    params: Bmedits2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def bmedits2surf_cargs(
 
 
 def bmedits2surf_outputs(
-    params: Bmedits2surfParameters,
+    params: Bmedits2surfParamsDict,
     execution: Execution,
 ) -> Bmedits2surfOutputs:
     """
@@ -232,7 +232,7 @@ def bmedits2surf_outputs(
 
 
 def bmedits2surf_execute(
-    params: Bmedits2surfParameters,
+    params: Bmedits2surfParamsDict,
     runner: Runner | None = None,
 ) -> Bmedits2surfOutputs:
     """
@@ -316,6 +316,8 @@ def bmedits2surf(
 __all__ = [
     "BMEDITS2SURF_METADATA",
     "Bmedits2surfOutputs",
+    "Bmedits2surfParamsDict",
+    "Bmedits2surfParamsDictTagged",
     "bmedits2surf",
     "bmedits2surf_execute",
     "bmedits2surf_params",

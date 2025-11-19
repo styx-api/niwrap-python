@@ -13,7 +13,7 @@ ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
 )
 
 
-AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParameters', {
+AdjunctSumaFsMaskAndQcParamsDict = typing.TypedDict('AdjunctSumaFsMaskAndQcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_mask_and_qc"]],
     "subj_id": str,
     "suma_dir": str,
@@ -22,7 +22,7 @@ AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParam
     "hview": bool,
     "version": bool,
 })
-AdjunctSumaFsMaskAndQcParametersTagged = typing.TypedDict('AdjunctSumaFsMaskAndQcParametersTagged', {
+AdjunctSumaFsMaskAndQcParamsDictTagged = typing.TypedDict('AdjunctSumaFsMaskAndQcParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_suma_fs_mask_and_qc"],
     "subj_id": str,
     "suma_dir": str,
@@ -35,7 +35,7 @@ AdjunctSumaFsMaskAndQcParametersTagged = typing.TypedDict('AdjunctSumaFsMaskAndQ
 
 class AdjunctSumaFsMaskAndQcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctSumaFsMaskAndQcParameters(...)`.
+    Output object returned when calling `AdjunctSumaFsMaskAndQcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def adjunct_suma_fs_mask_and_qc_params(
     help_: bool = False,
     hview: bool = False,
     version: bool = False,
-) -> AdjunctSumaFsMaskAndQcParametersTagged:
+) -> AdjunctSumaFsMaskAndQcParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def adjunct_suma_fs_mask_and_qc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctSumaFsMaskAndQcParameters` object.
+    `AdjunctSumaFsMaskAndQcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -129,7 +129,7 @@ def adjunct_suma_fs_mask_and_qc_validate(
 
 
 def adjunct_suma_fs_mask_and_qc_cargs(
-    params: AdjunctSumaFsMaskAndQcParameters,
+    params: AdjunctSumaFsMaskAndQcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,7 +163,7 @@ def adjunct_suma_fs_mask_and_qc_cargs(
 
 
 def adjunct_suma_fs_mask_and_qc_outputs(
-    params: AdjunctSumaFsMaskAndQcParameters,
+    params: AdjunctSumaFsMaskAndQcParamsDict,
     execution: Execution,
 ) -> AdjunctSumaFsMaskAndQcOutputs:
     """
@@ -189,7 +189,7 @@ def adjunct_suma_fs_mask_and_qc_outputs(
 
 
 def adjunct_suma_fs_mask_and_qc_execute(
-    params: AdjunctSumaFsMaskAndQcParameters,
+    params: AdjunctSumaFsMaskAndQcParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctSumaFsMaskAndQcOutputs:
     """
@@ -263,6 +263,8 @@ def adjunct_suma_fs_mask_and_qc(
 __all__ = [
     "ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA",
     "AdjunctSumaFsMaskAndQcOutputs",
+    "AdjunctSumaFsMaskAndQcParamsDict",
+    "AdjunctSumaFsMaskAndQcParamsDictTagged",
     "adjunct_suma_fs_mask_and_qc",
     "adjunct_suma_fs_mask_and_qc_execute",
     "adjunct_suma_fs_mask_and_qc_params",

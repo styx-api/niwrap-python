@@ -81,7 +81,7 @@
     },
     "outfile_abcontr": {
       "var_param": "outfile_abcontr",
-      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr_params",
+      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr",
       "properties": {
         "outfile_abcontr": {
           "var_param": "outfile_abcontr"
@@ -93,7 +93,7 @@
     },
     "outfile_abdiff": {
       "var_param": "outfile_abdiff",
-      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr_1_params",
+      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr_1",
       "properties": {
         "outfile_abdiff": {
           "var_param": "outfile_abdiff"

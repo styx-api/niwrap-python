@@ -13,12 +13,12 @@ RECONBATCHJOBS_METADATA = Metadata(
 )
 
 
-ReconbatchjobsParameters = typing.TypedDict('ReconbatchjobsParameters', {
+ReconbatchjobsParamsDict = typing.TypedDict('ReconbatchjobsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reconbatchjobs"]],
     "logfile": str,
     "cmdfiles": list[str],
 })
-ReconbatchjobsParametersTagged = typing.TypedDict('ReconbatchjobsParametersTagged', {
+ReconbatchjobsParamsDictTagged = typing.TypedDict('ReconbatchjobsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reconbatchjobs"],
     "logfile": str,
     "cmdfiles": list[str],
@@ -27,7 +27,7 @@ ReconbatchjobsParametersTagged = typing.TypedDict('ReconbatchjobsParametersTagge
 
 class ReconbatchjobsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReconbatchjobsParameters(...)`.
+    Output object returned when calling `ReconbatchjobsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class ReconbatchjobsOutputs(typing.NamedTuple):
 def reconbatchjobs_params(
     logfile: str,
     cmdfiles: list[str],
-) -> ReconbatchjobsParametersTagged:
+) -> ReconbatchjobsParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def reconbatchjobs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReconbatchjobsParameters` object.
+    `ReconbatchjobsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def reconbatchjobs_validate(
 
 
 def reconbatchjobs_cargs(
-    params: ReconbatchjobsParameters,
+    params: ReconbatchjobsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def reconbatchjobs_cargs(
 
 
 def reconbatchjobs_outputs(
-    params: ReconbatchjobsParameters,
+    params: ReconbatchjobsParamsDict,
     execution: Execution,
 ) -> ReconbatchjobsOutputs:
     """
@@ -119,7 +119,7 @@ def reconbatchjobs_outputs(
 
 
 def reconbatchjobs_execute(
-    params: ReconbatchjobsParameters,
+    params: ReconbatchjobsParamsDict,
     runner: Runner | None = None,
 ) -> ReconbatchjobsOutputs:
     """
@@ -178,6 +178,8 @@ def reconbatchjobs(
 __all__ = [
     "RECONBATCHJOBS_METADATA",
     "ReconbatchjobsOutputs",
+    "ReconbatchjobsParamsDict",
+    "ReconbatchjobsParamsDictTagged",
     "reconbatchjobs",
     "reconbatchjobs_execute",
     "reconbatchjobs_params",

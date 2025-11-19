@@ -13,7 +13,7 @@ COMPARE_SURFACES_METADATA = Metadata(
 )
 
 
-CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
+CompareSurfacesParamsDict = typing.TypedDict('CompareSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/CompareSurfaces"]],
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
@@ -31,7 +31,7 @@ CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
     "no_memory_trace": bool,
     "yes_memory_trace": bool,
 })
-CompareSurfacesParametersTagged = typing.TypedDict('CompareSurfacesParametersTagged', {
+CompareSurfacesParamsDictTagged = typing.TypedDict('CompareSurfacesParamsDictTagged', {
     "@type": typing.Literal["afni/CompareSurfaces"],
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
@@ -53,7 +53,7 @@ CompareSurfacesParametersTagged = typing.TypedDict('CompareSurfacesParametersTag
 
 class CompareSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CompareSurfacesParameters(...)`.
+    Output object returned when calling `CompareSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def compare_surfaces_params(
     extreme_trace: bool = False,
     no_memory_trace: bool = False,
     yes_memory_trace: bool = False,
-) -> CompareSurfacesParametersTagged:
+) -> CompareSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def compare_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CompareSurfacesParameters` object.
+    `CompareSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def compare_surfaces_validate(
 
 
 def compare_surfaces_cargs(
-    params: CompareSurfacesParameters,
+    params: CompareSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -279,7 +279,7 @@ def compare_surfaces_cargs(
 
 
 def compare_surfaces_outputs(
-    params: CompareSurfacesParameters,
+    params: CompareSurfacesParamsDict,
     execution: Execution,
 ) -> CompareSurfacesOutputs:
     """
@@ -300,7 +300,7 @@ def compare_surfaces_outputs(
 
 
 def compare_surfaces_execute(
-    params: CompareSurfacesParameters,
+    params: CompareSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> CompareSurfacesOutputs:
     """
@@ -406,6 +406,8 @@ def compare_surfaces(
 __all__ = [
     "COMPARE_SURFACES_METADATA",
     "CompareSurfacesOutputs",
+    "CompareSurfacesParamsDict",
+    "CompareSurfacesParamsDictTagged",
     "compare_surfaces",
     "compare_surfaces_execute",
     "compare_surfaces_params",

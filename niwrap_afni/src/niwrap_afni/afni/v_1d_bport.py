@@ -13,7 +13,7 @@ V_1D_BPORT_METADATA = Metadata(
 )
 
 
-V1dBportParameters = typing.TypedDict('V1dBportParameters', {
+V1dBportParamsDict = typing.TypedDict('V1dBportParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dBport"]],
     "band": list[float],
     "invert": bool,
@@ -26,7 +26,7 @@ V1dBportParameters = typing.TypedDict('V1dBportParameters', {
     "tr": typing.NotRequired[float | None],
     "concat": typing.NotRequired[InputPathType | None],
 })
-V1dBportParametersTagged = typing.TypedDict('V1dBportParametersTagged', {
+V1dBportParamsDictTagged = typing.TypedDict('V1dBportParamsDictTagged', {
     "@type": typing.Literal["afni/1dBport"],
     "band": list[float],
     "invert": bool,
@@ -43,7 +43,7 @@ V1dBportParametersTagged = typing.TypedDict('V1dBportParametersTagged', {
 
 class V1dBportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dBportParameters(...)`.
+    Output object returned when calling `V1dBportParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v_1d_bport_params(
     nodata: list[float] | None = None,
     tr: float | None = None,
     concat: InputPathType | None = None,
-) -> V1dBportParametersTagged:
+) -> V1dBportParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def v_1d_bport_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dBportParameters` object.
+    `V1dBportParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def v_1d_bport_validate(
 
 
 def v_1d_bport_cargs(
-    params: V1dBportParameters,
+    params: V1dBportParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -220,7 +220,7 @@ def v_1d_bport_cargs(
 
 
 def v_1d_bport_outputs(
-    params: V1dBportParameters,
+    params: V1dBportParamsDict,
     execution: Execution,
 ) -> V1dBportOutputs:
     """
@@ -240,7 +240,7 @@ def v_1d_bport_outputs(
 
 
 def v_1d_bport_execute(
-    params: V1dBportParameters,
+    params: V1dBportParamsDict,
     runner: Runner | None = None,
 ) -> V1dBportOutputs:
     """
@@ -328,6 +328,8 @@ def v_1d_bport(
 
 __all__ = [
     "V1dBportOutputs",
+    "V1dBportParamsDict",
+    "V1dBportParamsDictTagged",
     "V_1D_BPORT_METADATA",
     "v_1d_bport",
     "v_1d_bport_execute",

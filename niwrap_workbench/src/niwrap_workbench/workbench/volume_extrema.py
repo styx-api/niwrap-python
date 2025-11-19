@@ -12,36 +12,36 @@ VOLUME_EXTREMA_METADATA = Metadata(
 )
 
 
-VolumeExtremaPresmoothParameters = typing.TypedDict('VolumeExtremaPresmoothParameters', {
+VolumeExtremaPresmoothParamsDict = typing.TypedDict('VolumeExtremaPresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-VolumeExtremaPresmoothParametersTagged = typing.TypedDict('VolumeExtremaPresmoothParametersTagged', {
+VolumeExtremaPresmoothParamsDictTagged = typing.TypedDict('VolumeExtremaPresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-VolumeExtremaThresholdParameters = typing.TypedDict('VolumeExtremaThresholdParameters', {
+VolumeExtremaThresholdParamsDict = typing.TypedDict('VolumeExtremaThresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["threshold"]],
     "low": float,
     "high": float,
 })
-VolumeExtremaThresholdParametersTagged = typing.TypedDict('VolumeExtremaThresholdParametersTagged', {
+VolumeExtremaThresholdParamsDictTagged = typing.TypedDict('VolumeExtremaThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
-VolumeExtremaParameters = typing.TypedDict('VolumeExtremaParameters', {
+VolumeExtremaParamsDict = typing.TypedDict('VolumeExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-extrema"]],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeExtremaPresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "threshold": typing.NotRequired[VolumeExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
     "sum-subvols": bool,
     "consolidate-mode": bool,
     "only-maxima": bool,
@@ -50,12 +50,12 @@ VolumeExtremaParameters = typing.TypedDict('VolumeExtremaParameters', {
     "volume-in": InputPathType,
     "distance": float,
 })
-VolumeExtremaParametersTagged = typing.TypedDict('VolumeExtremaParametersTagged', {
+VolumeExtremaParamsDictTagged = typing.TypedDict('VolumeExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-extrema"],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeExtremaPresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "threshold": typing.NotRequired[VolumeExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
     "sum-subvols": bool,
     "consolidate-mode": bool,
     "only-maxima": bool,
@@ -66,10 +66,10 @@ VolumeExtremaParametersTagged = typing.TypedDict('VolumeExtremaParametersTagged'
 })
 
 
-def volume_extrema_presmooth_params(
+def volume_extrema_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> VolumeExtremaPresmoothParametersTagged:
+) -> VolumeExtremaPresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def volume_extrema_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeExtremaPresmoothParameters` object.
+    `VolumeExtremaPresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -111,7 +111,7 @@ def volume_extrema_presmooth_validate(
 
 
 def volume_extrema_presmooth_cargs(
-    params: VolumeExtremaPresmoothParameters,
+    params: VolumeExtremaPresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,10 +133,10 @@ def volume_extrema_presmooth_cargs(
     return cargs
 
 
-def volume_extrema_threshold_params(
+def volume_extrema_threshold(
     low: float,
     high: float,
-) -> VolumeExtremaThresholdParametersTagged:
+) -> VolumeExtremaThresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def volume_extrema_threshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeExtremaThresholdParameters` object.
+    `VolumeExtremaThresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -177,7 +177,7 @@ def volume_extrema_threshold_validate(
 
 
 def volume_extrema_threshold_cargs(
-    params: VolumeExtremaThresholdParameters,
+    params: VolumeExtremaThresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def volume_extrema_threshold_cargs(
 
 class VolumeExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeExtremaParameters(...)`.
+    Output object returned when calling `VolumeExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -214,13 +214,13 @@ def volume_extrema_params(
     subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
-    presmooth: VolumeExtremaPresmoothParameters | None = None,
-    threshold: VolumeExtremaThresholdParameters | None = None,
+    presmooth: VolumeExtremaPresmoothParamsDict | None = None,
+    threshold: VolumeExtremaThresholdParamsDict | None = None,
     sum_subvols: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
-) -> VolumeExtremaParametersTagged:
+) -> VolumeExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -272,7 +272,7 @@ def volume_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeExtremaParameters` object.
+    `VolumeExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -320,7 +320,7 @@ def volume_extrema_validate(
 
 
 def volume_extrema_cargs(
-    params: VolumeExtremaParameters,
+    params: VolumeExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def volume_extrema_cargs(
 
 
 def volume_extrema_outputs(
-    params: VolumeExtremaParameters,
+    params: VolumeExtremaParamsDict,
     execution: Execution,
 ) -> VolumeExtremaOutputs:
     """
@@ -375,7 +375,7 @@ def volume_extrema_outputs(
 
 
 def volume_extrema_execute(
-    params: VolumeExtremaParameters,
+    params: VolumeExtremaParamsDict,
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
@@ -424,8 +424,8 @@ def volume_extrema(
     subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
-    presmooth: VolumeExtremaPresmoothParameters | None = None,
-    threshold: VolumeExtremaThresholdParameters | None = None,
+    presmooth: VolumeExtremaPresmoothParamsDict | None = None,
+    threshold: VolumeExtremaThresholdParamsDict | None = None,
     sum_subvols: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
@@ -498,9 +498,15 @@ def volume_extrema(
 __all__ = [
     "VOLUME_EXTREMA_METADATA",
     "VolumeExtremaOutputs",
+    "VolumeExtremaParamsDict",
+    "VolumeExtremaParamsDictTagged",
+    "VolumeExtremaPresmoothParamsDict",
+    "VolumeExtremaPresmoothParamsDictTagged",
+    "VolumeExtremaThresholdParamsDict",
+    "VolumeExtremaThresholdParamsDictTagged",
     "volume_extrema",
     "volume_extrema_execute",
     "volume_extrema_params",
-    "volume_extrema_presmooth_params",
-    "volume_extrema_threshold_params",
+    "volume_extrema_presmooth",
+    "volume_extrema_threshold",
 ]

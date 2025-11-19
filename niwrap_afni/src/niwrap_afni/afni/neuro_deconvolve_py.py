@@ -13,7 +13,7 @@ NEURO_DECONVOLVE_PY_METADATA = Metadata(
 )
 
 
-NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
+NeuroDeconvolvePyParamsDict = typing.TypedDict('NeuroDeconvolvePyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/neuro_deconvolve.py"]],
     "input_file": InputPathType,
     "prefix": str,
@@ -26,7 +26,7 @@ NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
     "tr_nup": typing.NotRequired[float | None],
     "verbosity": typing.NotRequired[float | None],
 })
-NeuroDeconvolvePyParametersTagged = typing.TypedDict('NeuroDeconvolvePyParametersTagged', {
+NeuroDeconvolvePyParamsDictTagged = typing.TypedDict('NeuroDeconvolvePyParamsDictTagged', {
     "@type": typing.Literal["afni/neuro_deconvolve.py"],
     "input_file": InputPathType,
     "prefix": str,
@@ -43,7 +43,7 @@ NeuroDeconvolvePyParametersTagged = typing.TypedDict('NeuroDeconvolvePyParameter
 
 class NeuroDeconvolvePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NeuroDeconvolvePyParameters(...)`.
+    Output object returned when calling `NeuroDeconvolvePyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def neuro_deconvolve_py_params(
     tr: float | None = None,
     tr_nup: float | None = None,
     verbosity: float | None = None,
-) -> NeuroDeconvolvePyParametersTagged:
+) -> NeuroDeconvolvePyParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def neuro_deconvolve_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NeuroDeconvolvePyParameters` object.
+    `NeuroDeconvolvePyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -157,7 +157,7 @@ def neuro_deconvolve_py_validate(
 
 
 def neuro_deconvolve_py_cargs(
-    params: NeuroDeconvolvePyParameters,
+    params: NeuroDeconvolvePyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def neuro_deconvolve_py_cargs(
 
 
 def neuro_deconvolve_py_outputs(
-    params: NeuroDeconvolvePyParameters,
+    params: NeuroDeconvolvePyParamsDict,
     execution: Execution,
 ) -> NeuroDeconvolvePyOutputs:
     """
@@ -232,7 +232,7 @@ def neuro_deconvolve_py_outputs(
 
 
 def neuro_deconvolve_py_execute(
-    params: NeuroDeconvolvePyParameters,
+    params: NeuroDeconvolvePyParamsDict,
     runner: Runner | None = None,
 ) -> NeuroDeconvolvePyOutputs:
     """
@@ -319,6 +319,8 @@ def neuro_deconvolve_py(
 __all__ = [
     "NEURO_DECONVOLVE_PY_METADATA",
     "NeuroDeconvolvePyOutputs",
+    "NeuroDeconvolvePyParamsDict",
+    "NeuroDeconvolvePyParamsDictTagged",
     "neuro_deconvolve_py",
     "neuro_deconvolve_py_execute",
     "neuro_deconvolve_py_params",

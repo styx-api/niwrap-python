@@ -9,7 +9,7 @@
     },
     "label_L": {
       "var_param": "label_l",
-      "fn_struct_make_params": "compute_label_volumes_csh_label_l_params",
+      "fn_struct_make_params": "compute_label_volumes_csh_label_l",
       "properties": {
         "upper_L": {
           "var_param": "upper_l"

@@ -13,7 +13,7 @@ MRI_NL_ALIGN_METADATA = Metadata(
 )
 
 
-MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
+MriNlAlignParamsDict = typing.TypedDict('MriNlAlignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nl_align"]],
     "source": InputPathType,
     "target": InputPathType,
@@ -64,7 +64,7 @@ MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
     "exp_k": typing.NotRequired[float | None],
     "diagnostics": typing.NotRequired[float | None],
 })
-MriNlAlignParametersTagged = typing.TypedDict('MriNlAlignParametersTagged', {
+MriNlAlignParamsDictTagged = typing.TypedDict('MriNlAlignParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_nl_align"],
     "source": InputPathType,
     "target": InputPathType,
@@ -119,7 +119,7 @@ MriNlAlignParametersTagged = typing.TypedDict('MriNlAlignParametersTagged', {
 
 class MriNlAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNlAlignParameters(...)`.
+    Output object returned when calling `MriNlAlignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -176,7 +176,7 @@ def mri_nl_align_params(
     smooth_averages: float | None = None,
     exp_k: float | None = None,
     diagnostics: float | None = None,
-) -> MriNlAlignParametersTagged:
+) -> MriNlAlignParamsDictTagged:
     """
     Build parameters.
     
@@ -329,7 +329,7 @@ def mri_nl_align_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNlAlignParameters` object.
+    `MriNlAlignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -508,7 +508,7 @@ def mri_nl_align_validate(
 
 
 def mri_nl_align_cargs(
-    params: MriNlAlignParameters,
+    params: MriNlAlignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -733,7 +733,7 @@ def mri_nl_align_cargs(
 
 
 def mri_nl_align_outputs(
-    params: MriNlAlignParameters,
+    params: MriNlAlignParamsDict,
     execution: Execution,
 ) -> MriNlAlignOutputs:
     """
@@ -753,7 +753,7 @@ def mri_nl_align_outputs(
 
 
 def mri_nl_align_execute(
-    params: MriNlAlignParameters,
+    params: MriNlAlignParamsDict,
     runner: Runner | None = None,
 ) -> MriNlAlignOutputs:
     """
@@ -950,6 +950,8 @@ def mri_nl_align(
 __all__ = [
     "MRI_NL_ALIGN_METADATA",
     "MriNlAlignOutputs",
+    "MriNlAlignParamsDict",
+    "MriNlAlignParamsDictTagged",
     "mri_nl_align",
     "mri_nl_align_execute",
     "mri_nl_align_params",

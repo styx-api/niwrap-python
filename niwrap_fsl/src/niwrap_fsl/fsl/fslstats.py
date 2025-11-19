@@ -13,7 +13,7 @@ FSLSTATS_METADATA = Metadata(
 )
 
 
-FslstatsParameters = typing.TypedDict('FslstatsParameters', {
+FslstatsParamsDict = typing.TypedDict('FslstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslstats"]],
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ FslstatsParameters = typing.TypedDict('FslstatsParameters', {
     "mean_entropy_flag": bool,
     "nonzero_mean_entropy_flag": bool,
 })
-FslstatsParametersTagged = typing.TypedDict('FslstatsParametersTagged', {
+FslstatsParamsDictTagged = typing.TypedDict('FslstatsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslstats"],
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
@@ -79,7 +79,7 @@ FslstatsParametersTagged = typing.TypedDict('FslstatsParametersTagged', {
 
 class FslstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslstatsParameters(...)`.
+    Output object returned when calling `FslstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +116,7 @@ def fslstats_params(
     timeseries_flag: bool = False,
     mean_entropy_flag: bool = False,
     nonzero_mean_entropy_flag: bool = False,
-) -> FslstatsParametersTagged:
+) -> FslstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -208,7 +208,7 @@ def fslstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslstatsParameters` object.
+    `FslstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -321,7 +321,7 @@ def fslstats_validate(
 
 
 def fslstats_cargs(
-    params: FslstatsParameters,
+    params: FslstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -421,7 +421,7 @@ def fslstats_cargs(
 
 
 def fslstats_outputs(
-    params: FslstatsParameters,
+    params: FslstatsParamsDict,
     execution: Execution,
 ) -> FslstatsOutputs:
     """
@@ -441,7 +441,7 @@ def fslstats_outputs(
 
 
 def fslstats_execute(
-    params: FslstatsParameters,
+    params: FslstatsParamsDict,
     runner: Runner | None = None,
 ) -> FslstatsOutputs:
     """
@@ -586,6 +586,8 @@ def fslstats(
 __all__ = [
     "FSLSTATS_METADATA",
     "FslstatsOutputs",
+    "FslstatsParamsDict",
+    "FslstatsParamsDictTagged",
     "fslstats",
     "fslstats_execute",
     "fslstats_params",

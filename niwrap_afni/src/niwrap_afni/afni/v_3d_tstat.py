@@ -13,7 +13,7 @@ V_3D_TSTAT_METADATA = Metadata(
 )
 
 
-V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
+V3dTstatParamsDict = typing.TypedDict('V3dTstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTstat"]],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -77,7 +77,7 @@ V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
     "mrange": typing.NotRequired[str | None],
     "cmask": typing.NotRequired[str | None],
 })
-V3dTstatParametersTagged = typing.TypedDict('V3dTstatParametersTagged', {
+V3dTstatParamsDictTagged = typing.TypedDict('V3dTstatParamsDictTagged', {
     "@type": typing.Literal["afni/3dTstat"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -145,7 +145,7 @@ V3dTstatParametersTagged = typing.TypedDict('V3dTstatParametersTagged', {
 
 class V3dTstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTstatParameters(...)`.
+    Output object returned when calling `V3dTstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -215,7 +215,7 @@ def v_3d_tstat_params(
     mask_mset: InputPathType | None = None,
     mrange: str | None = None,
     cmask: str | None = None,
-) -> V3dTstatParametersTagged:
+) -> V3dTstatParamsDictTagged:
     """
     Build parameters.
     
@@ -383,7 +383,7 @@ def v_3d_tstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTstatParameters` object.
+    `V3dTstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -629,7 +629,7 @@ def v_3d_tstat_validate(
 
 
 def v_3d_tstat_cargs(
-    params: V3dTstatParameters,
+    params: V3dTstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -789,7 +789,7 @@ def v_3d_tstat_cargs(
 
 
 def v_3d_tstat_outputs(
-    params: V3dTstatParameters,
+    params: V3dTstatParamsDict,
     execution: Execution,
 ) -> V3dTstatOutputs:
     """
@@ -809,7 +809,7 @@ def v_3d_tstat_outputs(
 
 
 def v_3d_tstat_execute(
-    params: V3dTstatParameters,
+    params: V3dTstatParamsDict,
     runner: Runner | None = None,
 ) -> V3dTstatOutputs:
     """
@@ -1061,6 +1061,8 @@ def v_3d_tstat(
 
 __all__ = [
     "V3dTstatOutputs",
+    "V3dTstatParamsDict",
+    "V3dTstatParamsDictTagged",
     "V_3D_TSTAT_METADATA",
     "v_3d_tstat",
     "v_3d_tstat_execute",

@@ -13,7 +13,7 @@ MMPPSP_METADATA = Metadata(
 )
 
 
-MmppspParameters = typing.TypedDict('MmppspParameters', {
+MmppspParamsDict = typing.TypedDict('MmppspParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mmppsp"]],
     "samseg_dir": str,
     "outdir": str,
@@ -27,7 +27,7 @@ MmppspParameters = typing.TypedDict('MmppspParameters', {
     "stop_after": typing.NotRequired[str | None],
     "wexpanddist": typing.NotRequired[float | None],
 })
-MmppspParametersTagged = typing.TypedDict('MmppspParametersTagged', {
+MmppspParamsDictTagged = typing.TypedDict('MmppspParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mmppsp"],
     "samseg_dir": str,
     "outdir": str,
@@ -45,7 +45,7 @@ MmppspParametersTagged = typing.TypedDict('MmppspParametersTagged', {
 
 class MmppspOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MmppspParameters(...)`.
+    Output object returned when calling `MmppspParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def mmppsp_params(
     no_initsphreg_flag: bool = False,
     stop_after: str | None = None,
     wexpanddist: float | None = None,
-) -> MmppspParametersTagged:
+) -> MmppspParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def mmppsp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MmppspParameters` object.
+    `MmppspParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def mmppsp_validate(
 
 
 def mmppsp_cargs(
-    params: MmppspParameters,
+    params: MmppspParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def mmppsp_cargs(
 
 
 def mmppsp_outputs(
-    params: MmppspParameters,
+    params: MmppspParamsDict,
     execution: Execution,
 ) -> MmppspOutputs:
     """
@@ -235,7 +235,7 @@ def mmppsp_outputs(
 
 
 def mmppsp_execute(
-    params: MmppspParameters,
+    params: MmppspParamsDict,
     runner: Runner | None = None,
 ) -> MmppspOutputs:
     """
@@ -323,6 +323,8 @@ def mmppsp(
 __all__ = [
     "MMPPSP_METADATA",
     "MmppspOutputs",
+    "MmppspParamsDict",
+    "MmppspParamsDictTagged",
     "mmppsp",
     "mmppsp_execute",
     "mmppsp_params",

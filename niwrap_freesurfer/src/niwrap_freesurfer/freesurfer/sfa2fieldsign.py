@@ -13,7 +13,7 @@ SFA2FIELDSIGN_METADATA = Metadata(
 )
 
 
-Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
+Sfa2fieldsignParamsDict = typing.TypedDict('Sfa2fieldsignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/sfa2fieldsign"]],
     "sfadir": str,
     "register_dat": str,
@@ -26,7 +26,7 @@ Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
     "lh": bool,
     "rh": bool,
 })
-Sfa2fieldsignParametersTagged = typing.TypedDict('Sfa2fieldsignParametersTagged', {
+Sfa2fieldsignParamsDictTagged = typing.TypedDict('Sfa2fieldsignParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sfa2fieldsign"],
     "sfadir": str,
     "register_dat": str,
@@ -43,7 +43,7 @@ Sfa2fieldsignParametersTagged = typing.TypedDict('Sfa2fieldsignParametersTagged'
 
 class Sfa2fieldsignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Sfa2fieldsignParameters(...)`.
+    Output object returned when calling `Sfa2fieldsignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def sfa2fieldsign_params(
     osd: str | None = None,
     lh: bool = False,
     rh: bool = False,
-) -> Sfa2fieldsignParametersTagged:
+) -> Sfa2fieldsignParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def sfa2fieldsign_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sfa2fieldsignParameters` object.
+    `Sfa2fieldsignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def sfa2fieldsign_validate(
 
 
 def sfa2fieldsign_cargs(
-    params: Sfa2fieldsignParameters,
+    params: Sfa2fieldsignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -224,7 +224,7 @@ def sfa2fieldsign_cargs(
 
 
 def sfa2fieldsign_outputs(
-    params: Sfa2fieldsignParameters,
+    params: Sfa2fieldsignParamsDict,
     execution: Execution,
 ) -> Sfa2fieldsignOutputs:
     """
@@ -252,7 +252,7 @@ def sfa2fieldsign_outputs(
 
 
 def sfa2fieldsign_execute(
-    params: Sfa2fieldsignParameters,
+    params: Sfa2fieldsignParamsDict,
     runner: Runner | None = None,
 ) -> Sfa2fieldsignOutputs:
     """
@@ -337,6 +337,8 @@ def sfa2fieldsign(
 __all__ = [
     "SFA2FIELDSIGN_METADATA",
     "Sfa2fieldsignOutputs",
+    "Sfa2fieldsignParamsDict",
+    "Sfa2fieldsignParamsDictTagged",
     "sfa2fieldsign",
     "sfa2fieldsign_execute",
     "sfa2fieldsign_params",

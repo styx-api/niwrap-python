@@ -9,7 +9,7 @@
     },
     "border": {
       "var_param": "border",
-      "fn_struct_make_params": "cifti_label_to_border_border_params",
+      "fn_struct_make_params": "cifti_label_to_border_border",
       "properties": {
         "surface": {
           "var_param": "surface"

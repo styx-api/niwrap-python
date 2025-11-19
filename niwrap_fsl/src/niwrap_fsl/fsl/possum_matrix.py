@@ -13,7 +13,7 @@ POSSUM_MATRIX_METADATA = Metadata(
 )
 
 
-PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
+PossumMatrixParamsDict = typing.TypedDict('PossumMatrixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/possum_matrix"]],
     "pulse_sequence": str,
     "motion_matrix": str,
@@ -23,7 +23,7 @@ PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
     "old_version_flag": bool,
     "segment_size": typing.NotRequired[float | None],
 })
-PossumMatrixParametersTagged = typing.TypedDict('PossumMatrixParametersTagged', {
+PossumMatrixParamsDictTagged = typing.TypedDict('PossumMatrixParamsDictTagged', {
     "@type": typing.Literal["fsl/possum_matrix"],
     "pulse_sequence": str,
     "motion_matrix": str,
@@ -37,7 +37,7 @@ PossumMatrixParametersTagged = typing.TypedDict('PossumMatrixParametersTagged', 
 
 class PossumMatrixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PossumMatrixParameters(...)`.
+    Output object returned when calling `PossumMatrixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def possum_matrix_params(
     help_flag: bool = False,
     old_version_flag: bool = False,
     segment_size: float | None = None,
-) -> PossumMatrixParametersTagged:
+) -> PossumMatrixParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def possum_matrix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PossumMatrixParameters` object.
+    `PossumMatrixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def possum_matrix_validate(
 
 
 def possum_matrix_cargs(
-    params: PossumMatrixParameters,
+    params: PossumMatrixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -171,7 +171,7 @@ def possum_matrix_cargs(
 
 
 def possum_matrix_outputs(
-    params: PossumMatrixParameters,
+    params: PossumMatrixParamsDict,
     execution: Execution,
 ) -> PossumMatrixOutputs:
     """
@@ -191,7 +191,7 @@ def possum_matrix_outputs(
 
 
 def possum_matrix_execute(
-    params: PossumMatrixParameters,
+    params: PossumMatrixParamsDict,
     runner: Runner | None = None,
 ) -> PossumMatrixOutputs:
     """
@@ -271,6 +271,8 @@ def possum_matrix(
 __all__ = [
     "POSSUM_MATRIX_METADATA",
     "PossumMatrixOutputs",
+    "PossumMatrixParamsDict",
+    "PossumMatrixParamsDictTagged",
     "possum_matrix",
     "possum_matrix_execute",
     "possum_matrix_params",

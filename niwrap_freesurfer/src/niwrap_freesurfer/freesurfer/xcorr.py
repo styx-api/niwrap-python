@@ -13,7 +13,7 @@ XCORR_METADATA = Metadata(
 )
 
 
-XcorrParameters = typing.TypedDict('XcorrParameters', {
+XcorrParamsDict = typing.TypedDict('XcorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xcorr"]],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -22,7 +22,7 @@ XcorrParameters = typing.TypedDict('XcorrParameters', {
     "tmp_dir": typing.NotRequired[str | None],
     "no_cleanup": bool,
 })
-XcorrParametersTagged = typing.TypedDict('XcorrParametersTagged', {
+XcorrParamsDictTagged = typing.TypedDict('XcorrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xcorr"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -35,7 +35,7 @@ XcorrParametersTagged = typing.TypedDict('XcorrParametersTagged', {
 
 class XcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XcorrParameters(...)`.
+    Output object returned when calling `XcorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def xcorr_params(
     log_file: str | None = None,
     tmp_dir: str | None = None,
     no_cleanup: bool = False,
-) -> XcorrParametersTagged:
+) -> XcorrParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def xcorr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XcorrParameters` object.
+    `XcorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def xcorr_validate(
 
 
 def xcorr_cargs(
-    params: XcorrParameters,
+    params: XcorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def xcorr_cargs(
 
 
 def xcorr_outputs(
-    params: XcorrParameters,
+    params: XcorrParamsDict,
     execution: Execution,
 ) -> XcorrOutputs:
     """
@@ -180,7 +180,7 @@ def xcorr_outputs(
 
 
 def xcorr_execute(
-    params: XcorrParameters,
+    params: XcorrParamsDict,
     runner: Runner | None = None,
 ) -> XcorrOutputs:
     """
@@ -251,6 +251,8 @@ def xcorr(
 __all__ = [
     "XCORR_METADATA",
     "XcorrOutputs",
+    "XcorrParamsDict",
+    "XcorrParamsDictTagged",
     "xcorr",
     "xcorr_execute",
     "xcorr_params",

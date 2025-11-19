@@ -13,14 +13,14 @@ SRATIO_METADATA = Metadata(
 )
 
 
-SratioParameters = typing.TypedDict('SratioParameters', {
+SratioParamsDict = typing.TypedDict('SratioParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/sratio"]],
     "value_a": float,
     "value_b": float,
     "abs_flag": bool,
     "mask_threshold": typing.NotRequired[float | None],
 })
-SratioParametersTagged = typing.TypedDict('SratioParametersTagged', {
+SratioParamsDictTagged = typing.TypedDict('SratioParamsDictTagged', {
     "@type": typing.Literal["freesurfer/sratio"],
     "value_a": float,
     "value_b": float,
@@ -31,7 +31,7 @@ SratioParametersTagged = typing.TypedDict('SratioParametersTagged', {
 
 class SratioOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SratioParameters(...)`.
+    Output object returned when calling `SratioParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def sratio_params(
     value_b: float,
     abs_flag: bool = False,
     mask_threshold: float | None = None,
-) -> SratioParametersTagged:
+) -> SratioParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def sratio_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SratioParameters` object.
+    `SratioParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def sratio_validate(
 
 
 def sratio_cargs(
-    params: SratioParameters,
+    params: SratioParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def sratio_cargs(
 
 
 def sratio_outputs(
-    params: SratioParameters,
+    params: SratioParamsDict,
     execution: Execution,
 ) -> SratioOutputs:
     """
@@ -144,7 +144,7 @@ def sratio_outputs(
 
 
 def sratio_execute(
-    params: SratioParameters,
+    params: SratioParamsDict,
     runner: Runner | None = None,
 ) -> SratioOutputs:
     """
@@ -211,6 +211,8 @@ def sratio(
 __all__ = [
     "SRATIO_METADATA",
     "SratioOutputs",
+    "SratioParamsDict",
+    "SratioParamsDictTagged",
     "sratio",
     "sratio_execute",
     "sratio_params",

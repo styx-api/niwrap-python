@@ -13,7 +13,7 @@ FS_TIME_METADATA = Metadata(
 )
 
 
-FsTimeParameters = typing.TypedDict('FsTimeParameters', {
+FsTimeParamsDict = typing.TypedDict('FsTimeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_time"]],
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ FsTimeParameters = typing.TypedDict('FsTimeParameters', {
     "command": str,
     "args": typing.NotRequired[list[str] | None],
 })
-FsTimeParametersTagged = typing.TypedDict('FsTimeParametersTagged', {
+FsTimeParamsDictTagged = typing.TypedDict('FsTimeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_time"],
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ FsTimeParametersTagged = typing.TypedDict('FsTimeParametersTagged', {
 
 class FsTimeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsTimeParameters(...)`.
+    Output object returned when calling `FsTimeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def fs_time_params(
     key: str | None = None,
     load_avg: bool = False,
     args: list[str] | None = None,
-) -> FsTimeParametersTagged:
+) -> FsTimeParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def fs_time_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsTimeParameters` object.
+    `FsTimeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def fs_time_validate(
 
 
 def fs_time_cargs(
-    params: FsTimeParameters,
+    params: FsTimeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def fs_time_cargs(
 
 
 def fs_time_outputs(
-    params: FsTimeParameters,
+    params: FsTimeParamsDict,
     execution: Execution,
 ) -> FsTimeOutputs:
     """
@@ -162,7 +162,7 @@ def fs_time_outputs(
 
 
 def fs_time_execute(
-    params: FsTimeParameters,
+    params: FsTimeParamsDict,
     runner: Runner | None = None,
 ) -> FsTimeOutputs:
     """
@@ -232,6 +232,8 @@ def fs_time(
 __all__ = [
     "FS_TIME_METADATA",
     "FsTimeOutputs",
+    "FsTimeParamsDict",
+    "FsTimeParamsDictTagged",
     "fs_time",
     "fs_time_execute",
     "fs_time_params",

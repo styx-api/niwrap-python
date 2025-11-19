@@ -12,227 +12,227 @@ CIFTI_RESAMPLE_METADATA = Metadata(
 )
 
 
-CiftiResampleWeightedParameters = typing.TypedDict('CiftiResampleWeightedParameters', {
+CiftiResampleWeightedParamsDict = typing.TypedDict('CiftiResampleWeightedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["weighted"]],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
-CiftiResampleWeightedParametersTagged = typing.TypedDict('CiftiResampleWeightedParametersTagged', {
+CiftiResampleWeightedParamsDictTagged = typing.TypedDict('CiftiResampleWeightedParamsDictTagged', {
     "@type": typing.Literal["weighted"],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
 
 
-CiftiResampleVolumePredilateParameters = typing.TypedDict('CiftiResampleVolumePredilateParameters', {
+CiftiResampleVolumePredilateParamsDict = typing.TypedDict('CiftiResampleVolumePredilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume-predilate"]],
     "dilate-mm": float,
     "nearest": bool,
-    "weighted": typing.NotRequired[CiftiResampleWeightedParameters | None],
+    "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict | None],
 })
-CiftiResampleVolumePredilateParametersTagged = typing.TypedDict('CiftiResampleVolumePredilateParametersTagged', {
+CiftiResampleVolumePredilateParamsDictTagged = typing.TypedDict('CiftiResampleVolumePredilateParamsDictTagged', {
     "@type": typing.Literal["volume-predilate"],
     "dilate-mm": float,
     "nearest": bool,
-    "weighted": typing.NotRequired[CiftiResampleWeightedParameters | None],
+    "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict | None],
 })
 
 
-CiftiResampleWeightedParameters_ = typing.TypedDict('CiftiResampleWeightedParameters_', {
+CiftiResampleWeightedParamsDict_ = typing.TypedDict('CiftiResampleWeightedParamsDict_', {
     "@type": typing.NotRequired[typing.Literal["weighted"]],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
-CiftiResampleWeightedParametersTagged_ = typing.TypedDict('CiftiResampleWeightedParametersTagged_', {
+CiftiResampleWeightedParamsDictTagged_ = typing.TypedDict('CiftiResampleWeightedParamsDictTagged_', {
     "@type": typing.Literal["weighted"],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
 })
 
 
-CiftiResampleSurfacePostdilateParameters = typing.TypedDict('CiftiResampleSurfacePostdilateParameters', {
+CiftiResampleSurfacePostdilateParamsDict = typing.TypedDict('CiftiResampleSurfacePostdilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface-postdilate"]],
     "dilate-mm": float,
     "nearest": bool,
     "linear": bool,
-    "weighted": typing.NotRequired[CiftiResampleWeightedParameters_ | None],
+    "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict_ | None],
 })
-CiftiResampleSurfacePostdilateParametersTagged = typing.TypedDict('CiftiResampleSurfacePostdilateParametersTagged', {
+CiftiResampleSurfacePostdilateParamsDictTagged = typing.TypedDict('CiftiResampleSurfacePostdilateParamsDictTagged', {
     "@type": typing.Literal["surface-postdilate"],
     "dilate-mm": float,
     "nearest": bool,
     "linear": bool,
-    "weighted": typing.NotRequired[CiftiResampleWeightedParameters_ | None],
+    "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict_ | None],
 })
 
 
-CiftiResampleFlirtParameters = typing.TypedDict('CiftiResampleFlirtParameters', {
+CiftiResampleFlirtParamsDict = typing.TypedDict('CiftiResampleFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
     "source-volume": str,
     "target-volume": str,
 })
-CiftiResampleFlirtParametersTagged = typing.TypedDict('CiftiResampleFlirtParametersTagged', {
+CiftiResampleFlirtParamsDictTagged = typing.TypedDict('CiftiResampleFlirtParamsDictTagged', {
     "@type": typing.Literal["flirt"],
     "source-volume": str,
     "target-volume": str,
 })
 
 
-CiftiResampleAffineParameters = typing.TypedDict('CiftiResampleAffineParameters', {
+CiftiResampleAffineParamsDict = typing.TypedDict('CiftiResampleAffineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["affine"]],
     "affine-file": str,
-    "flirt": typing.NotRequired[CiftiResampleFlirtParameters | None],
+    "flirt": typing.NotRequired[CiftiResampleFlirtParamsDict | None],
 })
-CiftiResampleAffineParametersTagged = typing.TypedDict('CiftiResampleAffineParametersTagged', {
+CiftiResampleAffineParamsDictTagged = typing.TypedDict('CiftiResampleAffineParamsDictTagged', {
     "@type": typing.Literal["affine"],
     "affine-file": str,
-    "flirt": typing.NotRequired[CiftiResampleFlirtParameters | None],
+    "flirt": typing.NotRequired[CiftiResampleFlirtParamsDict | None],
 })
 
 
-CiftiResampleWarpfieldParameters = typing.TypedDict('CiftiResampleWarpfieldParameters', {
+CiftiResampleWarpfieldParamsDict = typing.TypedDict('CiftiResampleWarpfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warpfield"]],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
-CiftiResampleWarpfieldParametersTagged = typing.TypedDict('CiftiResampleWarpfieldParametersTagged', {
+CiftiResampleWarpfieldParamsDictTagged = typing.TypedDict('CiftiResampleWarpfieldParamsDictTagged', {
     "@type": typing.Literal["warpfield"],
     "warpfield": str,
     "source-volume": typing.NotRequired[str | None],
 })
 
 
-CiftiResampleLeftAreaSurfsParameters = typing.TypedDict('CiftiResampleLeftAreaSurfsParameters', {
+CiftiResampleLeftAreaSurfsParamsDict = typing.TypedDict('CiftiResampleLeftAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleLeftAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleLeftAreaSurfsParametersTagged', {
+CiftiResampleLeftAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleLeftAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["left-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleLeftAreaMetricsParameters = typing.TypedDict('CiftiResampleLeftAreaMetricsParameters', {
+CiftiResampleLeftAreaMetricsParamsDict = typing.TypedDict('CiftiResampleLeftAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleLeftAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleLeftAreaMetricsParametersTagged', {
+CiftiResampleLeftAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleLeftAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["left-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleLeftSpheresParameters = typing.TypedDict('CiftiResampleLeftSpheresParameters', {
+CiftiResampleLeftSpheresParamsDict = typing.TypedDict('CiftiResampleLeftSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "left-area-surfs": typing.NotRequired[CiftiResampleLeftAreaSurfsParameters | None],
-    "left-area-metrics": typing.NotRequired[CiftiResampleLeftAreaMetricsParameters | None],
+    "left-area-surfs": typing.NotRequired[CiftiResampleLeftAreaSurfsParamsDict | None],
+    "left-area-metrics": typing.NotRequired[CiftiResampleLeftAreaMetricsParamsDict | None],
 })
-CiftiResampleLeftSpheresParametersTagged = typing.TypedDict('CiftiResampleLeftSpheresParametersTagged', {
+CiftiResampleLeftSpheresParamsDictTagged = typing.TypedDict('CiftiResampleLeftSpheresParamsDictTagged', {
     "@type": typing.Literal["left-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "left-area-surfs": typing.NotRequired[CiftiResampleLeftAreaSurfsParameters | None],
-    "left-area-metrics": typing.NotRequired[CiftiResampleLeftAreaMetricsParameters | None],
+    "left-area-surfs": typing.NotRequired[CiftiResampleLeftAreaSurfsParamsDict | None],
+    "left-area-metrics": typing.NotRequired[CiftiResampleLeftAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleRightAreaSurfsParameters = typing.TypedDict('CiftiResampleRightAreaSurfsParameters', {
+CiftiResampleRightAreaSurfsParamsDict = typing.TypedDict('CiftiResampleRightAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleRightAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleRightAreaSurfsParametersTagged', {
+CiftiResampleRightAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleRightAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["right-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleRightAreaMetricsParameters = typing.TypedDict('CiftiResampleRightAreaMetricsParameters', {
+CiftiResampleRightAreaMetricsParamsDict = typing.TypedDict('CiftiResampleRightAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleRightAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleRightAreaMetricsParametersTagged', {
+CiftiResampleRightAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleRightAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["right-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleRightSpheresParameters = typing.TypedDict('CiftiResampleRightSpheresParameters', {
+CiftiResampleRightSpheresParamsDict = typing.TypedDict('CiftiResampleRightSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "right-area-surfs": typing.NotRequired[CiftiResampleRightAreaSurfsParameters | None],
-    "right-area-metrics": typing.NotRequired[CiftiResampleRightAreaMetricsParameters | None],
+    "right-area-surfs": typing.NotRequired[CiftiResampleRightAreaSurfsParamsDict | None],
+    "right-area-metrics": typing.NotRequired[CiftiResampleRightAreaMetricsParamsDict | None],
 })
-CiftiResampleRightSpheresParametersTagged = typing.TypedDict('CiftiResampleRightSpheresParametersTagged', {
+CiftiResampleRightSpheresParamsDictTagged = typing.TypedDict('CiftiResampleRightSpheresParamsDictTagged', {
     "@type": typing.Literal["right-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "right-area-surfs": typing.NotRequired[CiftiResampleRightAreaSurfsParameters | None],
-    "right-area-metrics": typing.NotRequired[CiftiResampleRightAreaMetricsParameters | None],
+    "right-area-surfs": typing.NotRequired[CiftiResampleRightAreaSurfsParamsDict | None],
+    "right-area-metrics": typing.NotRequired[CiftiResampleRightAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleCerebellumAreaSurfsParameters = typing.TypedDict('CiftiResampleCerebellumAreaSurfsParameters', {
+CiftiResampleCerebellumAreaSurfsParamsDict = typing.TypedDict('CiftiResampleCerebellumAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleCerebellumAreaSurfsParametersTagged = typing.TypedDict('CiftiResampleCerebellumAreaSurfsParametersTagged', {
+CiftiResampleCerebellumAreaSurfsParamsDictTagged = typing.TypedDict('CiftiResampleCerebellumAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["cerebellum-area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleCerebellumAreaMetricsParameters = typing.TypedDict('CiftiResampleCerebellumAreaMetricsParameters', {
+CiftiResampleCerebellumAreaMetricsParamsDict = typing.TypedDict('CiftiResampleCerebellumAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-CiftiResampleCerebellumAreaMetricsParametersTagged = typing.TypedDict('CiftiResampleCerebellumAreaMetricsParametersTagged', {
+CiftiResampleCerebellumAreaMetricsParamsDictTagged = typing.TypedDict('CiftiResampleCerebellumAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["cerebellum-area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-CiftiResampleCerebellumSpheresParameters = typing.TypedDict('CiftiResampleCerebellumSpheresParameters', {
+CiftiResampleCerebellumSpheresParamsDict = typing.TypedDict('CiftiResampleCerebellumSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-spheres"]],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleCerebellumAreaSurfsParameters | None],
-    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleCerebellumAreaMetricsParameters | None],
+    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleCerebellumAreaSurfsParamsDict | None],
+    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleCerebellumAreaMetricsParamsDict | None],
 })
-CiftiResampleCerebellumSpheresParametersTagged = typing.TypedDict('CiftiResampleCerebellumSpheresParametersTagged', {
+CiftiResampleCerebellumSpheresParamsDictTagged = typing.TypedDict('CiftiResampleCerebellumSpheresParamsDictTagged', {
     "@type": typing.Literal["cerebellum-spheres"],
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
-    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleCerebellumAreaSurfsParameters | None],
-    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleCerebellumAreaMetricsParameters | None],
+    "cerebellum-area-surfs": typing.NotRequired[CiftiResampleCerebellumAreaSurfsParamsDict | None],
+    "cerebellum-area-metrics": typing.NotRequired[CiftiResampleCerebellumAreaMetricsParamsDict | None],
 })
 
 
-CiftiResampleParameters = typing.TypedDict('CiftiResampleParameters', {
+CiftiResampleParamsDict = typing.TypedDict('CiftiResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-resample"]],
     "cifti-out": str,
     "surface-largest": bool,
-    "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParameters | None],
-    "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParameters | None],
-    "affine": typing.NotRequired[CiftiResampleAffineParameters | None],
-    "warpfield": typing.NotRequired[CiftiResampleWarpfieldParameters | None],
-    "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParameters | None],
-    "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParameters | None],
-    "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParameters | None],
+    "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
+    "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
+    "affine": typing.NotRequired[CiftiResampleAffineParamsDict | None],
+    "warpfield": typing.NotRequired[CiftiResampleWarpfieldParamsDict | None],
+    "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParamsDict | None],
+    "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
+    "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
     "cifti-in": InputPathType,
     "direction": str,
     "cifti-template": InputPathType,
@@ -240,17 +240,17 @@ CiftiResampleParameters = typing.TypedDict('CiftiResampleParameters', {
     "surface-method": str,
     "volume-method": str,
 })
-CiftiResampleParametersTagged = typing.TypedDict('CiftiResampleParametersTagged', {
+CiftiResampleParamsDictTagged = typing.TypedDict('CiftiResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-resample"],
     "cifti-out": str,
     "surface-largest": bool,
-    "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParameters | None],
-    "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParameters | None],
-    "affine": typing.NotRequired[CiftiResampleAffineParameters | None],
-    "warpfield": typing.NotRequired[CiftiResampleWarpfieldParameters | None],
-    "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParameters | None],
-    "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParameters | None],
-    "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParameters | None],
+    "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
+    "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
+    "affine": typing.NotRequired[CiftiResampleAffineParamsDict | None],
+    "warpfield": typing.NotRequired[CiftiResampleWarpfieldParamsDict | None],
+    "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParamsDict | None],
+    "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
+    "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
     "cifti-in": InputPathType,
     "direction": str,
     "cifti-template": InputPathType,
@@ -260,10 +260,10 @@ CiftiResampleParametersTagged = typing.TypedDict('CiftiResampleParametersTagged'
 })
 
 
-def cifti_resample_weighted_params(
+def cifti_resample_weighted(
     exponent: float | None,
     legacy_cutoff: bool = False,
-) -> CiftiResampleWeightedParametersTagged:
+) -> CiftiResampleWeightedParamsDictTagged:
     """
     Build parameters.
     
@@ -290,7 +290,7 @@ def cifti_resample_weighted_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleWeightedParameters` object.
+    `CiftiResampleWeightedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -307,7 +307,7 @@ def cifti_resample_weighted_validate(
 
 
 def cifti_resample_weighted_cargs(
-    params: CiftiResampleWeightedParameters,
+    params: CiftiResampleWeightedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -330,11 +330,11 @@ def cifti_resample_weighted_cargs(
     return cargs
 
 
-def cifti_resample_volume_predilate_params(
+def cifti_resample_volume_predilate(
     dilate_mm: float,
     nearest: bool = False,
-    weighted: CiftiResampleWeightedParameters | None = None,
-) -> CiftiResampleVolumePredilateParametersTagged:
+    weighted: CiftiResampleWeightedParamsDict | None = None,
+) -> CiftiResampleVolumePredilateParamsDictTagged:
     """
     Build parameters.
     
@@ -360,7 +360,7 @@ def cifti_resample_volume_predilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleVolumePredilateParameters` object.
+    `CiftiResampleVolumePredilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -380,7 +380,7 @@ def cifti_resample_volume_predilate_validate(
 
 
 def cifti_resample_volume_predilate_cargs(
-    params: CiftiResampleVolumePredilateParameters,
+    params: CiftiResampleVolumePredilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -403,10 +403,10 @@ def cifti_resample_volume_predilate_cargs(
     return cargs
 
 
-def cifti_resample_weighted_params_(
+def cifti_resample_weighted_(
     exponent: float | None,
     legacy_cutoff: bool = False,
-) -> CiftiResampleWeightedParametersTagged_:
+) -> CiftiResampleWeightedParamsDictTagged_:
     """
     Build parameters.
     
@@ -433,7 +433,7 @@ def cifti_resample_weighted_validate_(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleWeightedParameters_` object.
+    `CiftiResampleWeightedParamsDict_` object.
     
     Args:
         params: The parameters object to validate.
@@ -450,7 +450,7 @@ def cifti_resample_weighted_validate_(
 
 
 def cifti_resample_weighted_cargs_(
-    params: CiftiResampleWeightedParameters_,
+    params: CiftiResampleWeightedParamsDict_,
     execution: Execution,
 ) -> list[str]:
     """
@@ -473,12 +473,12 @@ def cifti_resample_weighted_cargs_(
     return cargs
 
 
-def cifti_resample_surface_postdilate_params(
+def cifti_resample_surface_postdilate(
     dilate_mm: float,
     nearest: bool = False,
     linear: bool = False,
-    weighted: CiftiResampleWeightedParameters_ | None = None,
-) -> CiftiResampleSurfacePostdilateParametersTagged:
+    weighted: CiftiResampleWeightedParamsDict_ | None = None,
+) -> CiftiResampleSurfacePostdilateParamsDictTagged:
     """
     Build parameters.
     
@@ -506,7 +506,7 @@ def cifti_resample_surface_postdilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleSurfacePostdilateParameters` object.
+    `CiftiResampleSurfacePostdilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -530,7 +530,7 @@ def cifti_resample_surface_postdilate_validate(
 
 
 def cifti_resample_surface_postdilate_cargs(
-    params: CiftiResampleSurfacePostdilateParameters,
+    params: CiftiResampleSurfacePostdilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -554,10 +554,10 @@ def cifti_resample_surface_postdilate_cargs(
     return cargs
 
 
-def cifti_resample_flirt_params(
+def cifti_resample_flirt(
     source_volume: str,
     target_volume: str,
-) -> CiftiResampleFlirtParametersTagged:
+) -> CiftiResampleFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -580,7 +580,7 @@ def cifti_resample_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleFlirtParameters` object.
+    `CiftiResampleFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -598,7 +598,7 @@ def cifti_resample_flirt_validate(
 
 
 def cifti_resample_flirt_cargs(
-    params: CiftiResampleFlirtParameters,
+    params: CiftiResampleFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -619,10 +619,10 @@ def cifti_resample_flirt_cargs(
     return cargs
 
 
-def cifti_resample_affine_params(
+def cifti_resample_affine(
     affine_file: str,
-    flirt: CiftiResampleFlirtParameters | None = None,
-) -> CiftiResampleAffineParametersTagged:
+    flirt: CiftiResampleFlirtParamsDict | None = None,
+) -> CiftiResampleAffineParamsDictTagged:
     """
     Build parameters.
     
@@ -646,7 +646,7 @@ def cifti_resample_affine_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleAffineParameters` object.
+    `CiftiResampleAffineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -662,7 +662,7 @@ def cifti_resample_affine_validate(
 
 
 def cifti_resample_affine_cargs(
-    params: CiftiResampleAffineParameters,
+    params: CiftiResampleAffineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -684,10 +684,10 @@ def cifti_resample_affine_cargs(
     return cargs
 
 
-def cifti_resample_warpfield_params(
+def cifti_resample_warpfield(
     warpfield: str,
     source_volume: str | None,
-) -> CiftiResampleWarpfieldParametersTagged:
+) -> CiftiResampleWarpfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -713,7 +713,7 @@ def cifti_resample_warpfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleWarpfieldParameters` object.
+    `CiftiResampleWarpfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -730,7 +730,7 @@ def cifti_resample_warpfield_validate(
 
 
 def cifti_resample_warpfield_cargs(
-    params: CiftiResampleWarpfieldParameters,
+    params: CiftiResampleWarpfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -753,10 +753,10 @@ def cifti_resample_warpfield_cargs(
     return cargs
 
 
-def cifti_resample_left_area_surfs_params(
+def cifti_resample_left_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleLeftAreaSurfsParametersTagged:
+) -> CiftiResampleLeftAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -779,7 +779,7 @@ def cifti_resample_left_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleLeftAreaSurfsParameters` object.
+    `CiftiResampleLeftAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -797,7 +797,7 @@ def cifti_resample_left_area_surfs_validate(
 
 
 def cifti_resample_left_area_surfs_cargs(
-    params: CiftiResampleLeftAreaSurfsParameters,
+    params: CiftiResampleLeftAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -818,10 +818,10 @@ def cifti_resample_left_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_left_area_metrics_params(
+def cifti_resample_left_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleLeftAreaMetricsParametersTagged:
+) -> CiftiResampleLeftAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -844,7 +844,7 @@ def cifti_resample_left_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleLeftAreaMetricsParameters` object.
+    `CiftiResampleLeftAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -862,7 +862,7 @@ def cifti_resample_left_area_metrics_validate(
 
 
 def cifti_resample_left_area_metrics_cargs(
-    params: CiftiResampleLeftAreaMetricsParameters,
+    params: CiftiResampleLeftAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -883,12 +883,12 @@ def cifti_resample_left_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_left_spheres_params(
+def cifti_resample_left_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    left_area_surfs: CiftiResampleLeftAreaSurfsParameters | None = None,
-    left_area_metrics: CiftiResampleLeftAreaMetricsParameters | None = None,
-) -> CiftiResampleLeftSpheresParametersTagged:
+    left_area_surfs: CiftiResampleLeftAreaSurfsParamsDict | None = None,
+    left_area_metrics: CiftiResampleLeftAreaMetricsParamsDict | None = None,
+) -> CiftiResampleLeftSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -920,7 +920,7 @@ def cifti_resample_left_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleLeftSpheresParameters` object.
+    `CiftiResampleLeftSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -942,7 +942,7 @@ def cifti_resample_left_spheres_validate(
 
 
 def cifti_resample_left_spheres_cargs(
-    params: CiftiResampleLeftSpheresParameters,
+    params: CiftiResampleLeftSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -966,10 +966,10 @@ def cifti_resample_left_spheres_cargs(
     return cargs
 
 
-def cifti_resample_right_area_surfs_params(
+def cifti_resample_right_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleRightAreaSurfsParametersTagged:
+) -> CiftiResampleRightAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -992,7 +992,7 @@ def cifti_resample_right_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleRightAreaSurfsParameters` object.
+    `CiftiResampleRightAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1010,7 +1010,7 @@ def cifti_resample_right_area_surfs_validate(
 
 
 def cifti_resample_right_area_surfs_cargs(
-    params: CiftiResampleRightAreaSurfsParameters,
+    params: CiftiResampleRightAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1031,10 +1031,10 @@ def cifti_resample_right_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_right_area_metrics_params(
+def cifti_resample_right_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleRightAreaMetricsParametersTagged:
+) -> CiftiResampleRightAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -1057,7 +1057,7 @@ def cifti_resample_right_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleRightAreaMetricsParameters` object.
+    `CiftiResampleRightAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1075,7 +1075,7 @@ def cifti_resample_right_area_metrics_validate(
 
 
 def cifti_resample_right_area_metrics_cargs(
-    params: CiftiResampleRightAreaMetricsParameters,
+    params: CiftiResampleRightAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1096,12 +1096,12 @@ def cifti_resample_right_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_right_spheres_params(
+def cifti_resample_right_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    right_area_surfs: CiftiResampleRightAreaSurfsParameters | None = None,
-    right_area_metrics: CiftiResampleRightAreaMetricsParameters | None = None,
-) -> CiftiResampleRightSpheresParametersTagged:
+    right_area_surfs: CiftiResampleRightAreaSurfsParamsDict | None = None,
+    right_area_metrics: CiftiResampleRightAreaMetricsParamsDict | None = None,
+) -> CiftiResampleRightSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -1134,7 +1134,7 @@ def cifti_resample_right_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleRightSpheresParameters` object.
+    `CiftiResampleRightSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1156,7 +1156,7 @@ def cifti_resample_right_spheres_validate(
 
 
 def cifti_resample_right_spheres_cargs(
-    params: CiftiResampleRightSpheresParameters,
+    params: CiftiResampleRightSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1180,10 +1180,10 @@ def cifti_resample_right_spheres_cargs(
     return cargs
 
 
-def cifti_resample_cerebellum_area_surfs_params(
+def cifti_resample_cerebellum_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleCerebellumAreaSurfsParametersTagged:
+) -> CiftiResampleCerebellumAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -1207,7 +1207,7 @@ def cifti_resample_cerebellum_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleCerebellumAreaSurfsParameters` object.
+    `CiftiResampleCerebellumAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1225,7 +1225,7 @@ def cifti_resample_cerebellum_area_surfs_validate(
 
 
 def cifti_resample_cerebellum_area_surfs_cargs(
-    params: CiftiResampleCerebellumAreaSurfsParameters,
+    params: CiftiResampleCerebellumAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1246,10 +1246,10 @@ def cifti_resample_cerebellum_area_surfs_cargs(
     return cargs
 
 
-def cifti_resample_cerebellum_area_metrics_params(
+def cifti_resample_cerebellum_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> CiftiResampleCerebellumAreaMetricsParametersTagged:
+) -> CiftiResampleCerebellumAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -1272,7 +1272,7 @@ def cifti_resample_cerebellum_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleCerebellumAreaMetricsParameters` object.
+    `CiftiResampleCerebellumAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1290,7 +1290,7 @@ def cifti_resample_cerebellum_area_metrics_validate(
 
 
 def cifti_resample_cerebellum_area_metrics_cargs(
-    params: CiftiResampleCerebellumAreaMetricsParameters,
+    params: CiftiResampleCerebellumAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1311,12 +1311,12 @@ def cifti_resample_cerebellum_area_metrics_cargs(
     return cargs
 
 
-def cifti_resample_cerebellum_spheres_params(
+def cifti_resample_cerebellum_spheres(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    cerebellum_area_surfs: CiftiResampleCerebellumAreaSurfsParameters | None = None,
-    cerebellum_area_metrics: CiftiResampleCerebellumAreaMetricsParameters | None = None,
-) -> CiftiResampleCerebellumSpheresParametersTagged:
+    cerebellum_area_surfs: CiftiResampleCerebellumAreaSurfsParamsDict | None = None,
+    cerebellum_area_metrics: CiftiResampleCerebellumAreaMetricsParamsDict | None = None,
+) -> CiftiResampleCerebellumSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -1349,7 +1349,7 @@ def cifti_resample_cerebellum_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleCerebellumSpheresParameters` object.
+    `CiftiResampleCerebellumSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1371,7 +1371,7 @@ def cifti_resample_cerebellum_spheres_validate(
 
 
 def cifti_resample_cerebellum_spheres_cargs(
-    params: CiftiResampleCerebellumSpheresParameters,
+    params: CiftiResampleCerebellumSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1397,7 +1397,7 @@ def cifti_resample_cerebellum_spheres_cargs(
 
 class CiftiResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiResampleParameters(...)`.
+    Output object returned when calling `CiftiResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1414,14 +1414,14 @@ def cifti_resample_params(
     surface_method: str,
     volume_method: str,
     surface_largest: bool = False,
-    volume_predilate: CiftiResampleVolumePredilateParameters | None = None,
-    surface_postdilate: CiftiResampleSurfacePostdilateParameters | None = None,
-    affine: CiftiResampleAffineParameters | None = None,
-    warpfield: CiftiResampleWarpfieldParameters | None = None,
-    left_spheres: CiftiResampleLeftSpheresParameters | None = None,
-    right_spheres: CiftiResampleRightSpheresParameters | None = None,
-    cerebellum_spheres: CiftiResampleCerebellumSpheresParameters | None = None,
-) -> CiftiResampleParametersTagged:
+    volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
+    surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
+    affine: CiftiResampleAffineParamsDict | None = None,
+    warpfield: CiftiResampleWarpfieldParamsDict | None = None,
+    left_spheres: CiftiResampleLeftSpheresParamsDict | None = None,
+    right_spheres: CiftiResampleRightSpheresParamsDict | None = None,
+    cerebellum_spheres: CiftiResampleCerebellumSpheresParamsDict | None = None,
+) -> CiftiResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -1480,7 +1480,7 @@ def cifti_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiResampleParameters` object.
+    `CiftiResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1536,7 +1536,7 @@ def cifti_resample_validate(
 
 
 def cifti_resample_cargs(
-    params: CiftiResampleParameters,
+    params: CiftiResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1573,7 +1573,7 @@ def cifti_resample_cargs(
 
 
 def cifti_resample_outputs(
-    params: CiftiResampleParameters,
+    params: CiftiResampleParamsDict,
     execution: Execution,
 ) -> CiftiResampleOutputs:
     """
@@ -1593,7 +1593,7 @@ def cifti_resample_outputs(
 
 
 def cifti_resample_execute(
-    params: CiftiResampleParameters,
+    params: CiftiResampleParamsDict,
     runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
@@ -1657,13 +1657,13 @@ def cifti_resample(
     surface_method: str,
     volume_method: str,
     surface_largest: bool = False,
-    volume_predilate: CiftiResampleVolumePredilateParameters | None = None,
-    surface_postdilate: CiftiResampleSurfacePostdilateParameters | None = None,
-    affine: CiftiResampleAffineParameters | None = None,
-    warpfield: CiftiResampleWarpfieldParameters | None = None,
-    left_spheres: CiftiResampleLeftSpheresParameters | None = None,
-    right_spheres: CiftiResampleRightSpheresParameters | None = None,
-    cerebellum_spheres: CiftiResampleCerebellumSpheresParameters | None = None,
+    volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
+    surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
+    affine: CiftiResampleAffineParamsDict | None = None,
+    warpfield: CiftiResampleWarpfieldParamsDict | None = None,
+    left_spheres: CiftiResampleLeftSpheresParamsDict | None = None,
+    right_spheres: CiftiResampleRightSpheresParamsDict | None = None,
+    cerebellum_spheres: CiftiResampleCerebellumSpheresParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
@@ -1747,24 +1747,58 @@ def cifti_resample(
 
 __all__ = [
     "CIFTI_RESAMPLE_METADATA",
+    "CiftiResampleAffineParamsDict",
+    "CiftiResampleAffineParamsDictTagged",
+    "CiftiResampleCerebellumAreaMetricsParamsDict",
+    "CiftiResampleCerebellumAreaMetricsParamsDictTagged",
+    "CiftiResampleCerebellumAreaSurfsParamsDict",
+    "CiftiResampleCerebellumAreaSurfsParamsDictTagged",
+    "CiftiResampleCerebellumSpheresParamsDict",
+    "CiftiResampleCerebellumSpheresParamsDictTagged",
+    "CiftiResampleFlirtParamsDict",
+    "CiftiResampleFlirtParamsDictTagged",
+    "CiftiResampleLeftAreaMetricsParamsDict",
+    "CiftiResampleLeftAreaMetricsParamsDictTagged",
+    "CiftiResampleLeftAreaSurfsParamsDict",
+    "CiftiResampleLeftAreaSurfsParamsDictTagged",
+    "CiftiResampleLeftSpheresParamsDict",
+    "CiftiResampleLeftSpheresParamsDictTagged",
     "CiftiResampleOutputs",
+    "CiftiResampleParamsDict",
+    "CiftiResampleParamsDictTagged",
+    "CiftiResampleRightAreaMetricsParamsDict",
+    "CiftiResampleRightAreaMetricsParamsDictTagged",
+    "CiftiResampleRightAreaSurfsParamsDict",
+    "CiftiResampleRightAreaSurfsParamsDictTagged",
+    "CiftiResampleRightSpheresParamsDict",
+    "CiftiResampleRightSpheresParamsDictTagged",
+    "CiftiResampleSurfacePostdilateParamsDict",
+    "CiftiResampleSurfacePostdilateParamsDictTagged",
+    "CiftiResampleVolumePredilateParamsDict",
+    "CiftiResampleVolumePredilateParamsDictTagged",
+    "CiftiResampleWarpfieldParamsDict",
+    "CiftiResampleWarpfieldParamsDictTagged",
+    "CiftiResampleWeightedParamsDict",
+    "CiftiResampleWeightedParamsDictTagged",
+    "CiftiResampleWeightedParamsDictTagged_",
+    "CiftiResampleWeightedParamsDict_",
     "cifti_resample",
-    "cifti_resample_affine_params",
-    "cifti_resample_cerebellum_area_metrics_params",
-    "cifti_resample_cerebellum_area_surfs_params",
-    "cifti_resample_cerebellum_spheres_params",
+    "cifti_resample_affine",
+    "cifti_resample_cerebellum_area_metrics",
+    "cifti_resample_cerebellum_area_surfs",
+    "cifti_resample_cerebellum_spheres",
     "cifti_resample_execute",
-    "cifti_resample_flirt_params",
-    "cifti_resample_left_area_metrics_params",
-    "cifti_resample_left_area_surfs_params",
-    "cifti_resample_left_spheres_params",
+    "cifti_resample_flirt",
+    "cifti_resample_left_area_metrics",
+    "cifti_resample_left_area_surfs",
+    "cifti_resample_left_spheres",
     "cifti_resample_params",
-    "cifti_resample_right_area_metrics_params",
-    "cifti_resample_right_area_surfs_params",
-    "cifti_resample_right_spheres_params",
-    "cifti_resample_surface_postdilate_params",
-    "cifti_resample_volume_predilate_params",
-    "cifti_resample_warpfield_params",
-    "cifti_resample_weighted_params",
-    "cifti_resample_weighted_params_",
+    "cifti_resample_right_area_metrics",
+    "cifti_resample_right_area_surfs",
+    "cifti_resample_right_spheres",
+    "cifti_resample_surface_postdilate",
+    "cifti_resample_volume_predilate",
+    "cifti_resample_warpfield",
+    "cifti_resample_weighted",
+    "cifti_resample_weighted_",
 ]

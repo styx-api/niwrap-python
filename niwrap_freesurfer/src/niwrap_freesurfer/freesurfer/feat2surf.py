@@ -13,7 +13,7 @@ FEAT2SURF_METADATA = Metadata(
 )
 
 
-Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
+Feat2surfParamsDict = typing.TypedDict('Feat2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/feat2surf"]],
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
     "nolog_flag": bool,
     "out_dir": typing.NotRequired[str | None],
 })
-Feat2surfParametersTagged = typing.TypedDict('Feat2surfParametersTagged', {
+Feat2surfParamsDictTagged = typing.TypedDict('Feat2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/feat2surf"],
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ Feat2surfParametersTagged = typing.TypedDict('Feat2surfParametersTagged', {
 
 class Feat2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Feat2surfParameters(...)`.
+    Output object returned when calling `Feat2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def feat2surf_params(
     debug_flag: bool = False,
     nolog_flag: bool = False,
     out_dir: str | None = None,
-) -> Feat2surfParametersTagged:
+) -> Feat2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def feat2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Feat2surfParameters` object.
+    `Feat2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def feat2surf_validate(
 
 
 def feat2surf_cargs(
-    params: Feat2surfParameters,
+    params: Feat2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -223,7 +223,7 @@ def feat2surf_cargs(
 
 
 def feat2surf_outputs(
-    params: Feat2surfParameters,
+    params: Feat2surfParamsDict,
     execution: Execution,
 ) -> Feat2surfOutputs:
     """
@@ -246,7 +246,7 @@ def feat2surf_outputs(
 
 
 def feat2surf_execute(
-    params: Feat2surfParameters,
+    params: Feat2surfParamsDict,
     runner: Runner | None = None,
 ) -> Feat2surfOutputs:
     """
@@ -336,6 +336,8 @@ def feat2surf(
 __all__ = [
     "FEAT2SURF_METADATA",
     "Feat2surfOutputs",
+    "Feat2surfParamsDict",
+    "Feat2surfParamsDictTagged",
     "feat2surf",
     "feat2surf_execute",
     "feat2surf_params",

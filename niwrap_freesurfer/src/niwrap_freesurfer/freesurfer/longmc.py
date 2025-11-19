@@ -13,7 +13,7 @@ LONGMC_METADATA = Metadata(
 )
 
 
-LongmcParameters = typing.TypedDict('LongmcParameters', {
+LongmcParamsDict = typing.TypedDict('LongmcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/longmc"]],
     "cross_tp_name": str,
     "base_name": str,
@@ -23,7 +23,7 @@ LongmcParameters = typing.TypedDict('LongmcParameters', {
     "subject_name": typing.NotRequired[str | None],
     "no_force_update": bool,
 })
-LongmcParametersTagged = typing.TypedDict('LongmcParametersTagged', {
+LongmcParamsDictTagged = typing.TypedDict('LongmcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/longmc"],
     "cross_tp_name": str,
     "base_name": str,
@@ -37,7 +37,7 @@ LongmcParametersTagged = typing.TypedDict('LongmcParametersTagged', {
 
 class LongmcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongmcParameters(...)`.
+    Output object returned when calling `LongmcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def longmc_params(
     no_conform_to_hires: bool = False,
     subject_name: str | None = None,
     no_force_update: bool = False,
-) -> LongmcParametersTagged:
+) -> LongmcParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def longmc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongmcParameters` object.
+    `LongmcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -122,7 +122,7 @@ def longmc_validate(
 
 
 def longmc_cargs(
-    params: LongmcParameters,
+    params: LongmcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,7 +160,7 @@ def longmc_cargs(
 
 
 def longmc_outputs(
-    params: LongmcParameters,
+    params: LongmcParamsDict,
     execution: Execution,
 ) -> LongmcOutputs:
     """
@@ -179,7 +179,7 @@ def longmc_outputs(
 
 
 def longmc_execute(
-    params: LongmcParameters,
+    params: LongmcParamsDict,
     runner: Runner | None = None,
 ) -> LongmcOutputs:
     """
@@ -255,6 +255,8 @@ def longmc(
 __all__ = [
     "LONGMC_METADATA",
     "LongmcOutputs",
+    "LongmcParamsDict",
+    "LongmcParamsDictTagged",
     "longmc",
     "longmc_execute",
     "longmc_params",

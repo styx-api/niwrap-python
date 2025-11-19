@@ -13,11 +13,11 @@ UBER_PROC_PY_METADATA = Metadata(
 )
 
 
-UberProcPyParameters = typing.TypedDict('UberProcPyParameters', {
+UberProcPyParamsDict = typing.TypedDict('UberProcPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/uber_proc.py"]],
     "results_dir": typing.NotRequired[str | None],
 })
-UberProcPyParametersTagged = typing.TypedDict('UberProcPyParametersTagged', {
+UberProcPyParamsDictTagged = typing.TypedDict('UberProcPyParamsDictTagged', {
     "@type": typing.Literal["afni/uber_proc.py"],
     "results_dir": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ UberProcPyParametersTagged = typing.TypedDict('UberProcPyParametersTagged', {
 
 class UberProcPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UberProcPyParameters(...)`.
+    Output object returned when calling `UberProcPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class UberProcPyOutputs(typing.NamedTuple):
 
 def uber_proc_py_params(
     results_dir: str | None = None,
-) -> UberProcPyParametersTagged:
+) -> UberProcPyParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def uber_proc_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UberProcPyParameters` object.
+    `UberProcPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def uber_proc_py_validate(
 
 
 def uber_proc_py_cargs(
-    params: UberProcPyParameters,
+    params: UberProcPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def uber_proc_py_cargs(
 
 
 def uber_proc_py_outputs(
-    params: UberProcPyParameters,
+    params: UberProcPyParamsDict,
     execution: Execution,
 ) -> UberProcPyOutputs:
     """
@@ -108,7 +108,7 @@ def uber_proc_py_outputs(
 
 
 def uber_proc_py_execute(
-    params: UberProcPyParameters,
+    params: UberProcPyParamsDict,
     runner: Runner | None = None,
 ) -> UberProcPyOutputs:
     """
@@ -165,6 +165,8 @@ def uber_proc_py(
 __all__ = [
     "UBER_PROC_PY_METADATA",
     "UberProcPyOutputs",
+    "UberProcPyParamsDict",
+    "UberProcPyParamsDictTagged",
     "uber_proc_py",
     "uber_proc_py_execute",
     "uber_proc_py_params",

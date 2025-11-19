@@ -13,14 +13,14 @@ DEFACE_SUBJECT_METADATA = Metadata(
 )
 
 
-DefaceSubjectParameters = typing.TypedDict('DefaceSubjectParameters', {
+DefaceSubjectParamsDict = typing.TypedDict('DefaceSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/deface_subject"]],
     "subjects_dir": str,
     "subject_id": str,
     "volume_input": InputPathType,
     "volume_output": str,
 })
-DefaceSubjectParametersTagged = typing.TypedDict('DefaceSubjectParametersTagged', {
+DefaceSubjectParamsDictTagged = typing.TypedDict('DefaceSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/deface_subject"],
     "subjects_dir": str,
     "subject_id": str,
@@ -31,7 +31,7 @@ DefaceSubjectParametersTagged = typing.TypedDict('DefaceSubjectParametersTagged'
 
 class DefaceSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DefaceSubjectParameters(...)`.
+    Output object returned when calling `DefaceSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def deface_subject_params(
     subject_id: str,
     volume_input: InputPathType,
     volume_output: str,
-) -> DefaceSubjectParametersTagged:
+) -> DefaceSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def deface_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DefaceSubjectParameters` object.
+    `DefaceSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def deface_subject_validate(
 
 
 def deface_subject_cargs(
-    params: DefaceSubjectParameters,
+    params: DefaceSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def deface_subject_cargs(
 
 
 def deface_subject_outputs(
-    params: DefaceSubjectParameters,
+    params: DefaceSubjectParamsDict,
     execution: Execution,
 ) -> DefaceSubjectOutputs:
     """
@@ -151,7 +151,7 @@ def deface_subject_outputs(
 
 
 def deface_subject_execute(
-    params: DefaceSubjectParameters,
+    params: DefaceSubjectParamsDict,
     runner: Runner | None = None,
 ) -> DefaceSubjectOutputs:
     """
@@ -216,6 +216,8 @@ def deface_subject(
 __all__ = [
     "DEFACE_SUBJECT_METADATA",
     "DefaceSubjectOutputs",
+    "DefaceSubjectParamsDict",
+    "DefaceSubjectParamsDictTagged",
     "deface_subject",
     "deface_subject_execute",
     "deface_subject_params",

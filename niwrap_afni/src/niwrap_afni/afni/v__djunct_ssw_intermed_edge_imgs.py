@@ -13,7 +13,7 @@ V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA = Metadata(
 )
 
 
-VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeImgsParameters', {
+VDjunctSswIntermedEdgeImgsParamsDict = typing.TypedDict('VDjunctSswIntermedEdgeImgsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@djunct_ssw_intermed_edge_imgs"]],
     "prefix": str,
     "ulay": InputPathType,
@@ -29,7 +29,7 @@ VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeI
     "version": bool,
     "no_clean": bool,
 })
-VDjunctSswIntermedEdgeImgsParametersTagged = typing.TypedDict('VDjunctSswIntermedEdgeImgsParametersTagged', {
+VDjunctSswIntermedEdgeImgsParamsDictTagged = typing.TypedDict('VDjunctSswIntermedEdgeImgsParamsDictTagged', {
     "@type": typing.Literal["afni/@djunct_ssw_intermed_edge_imgs"],
     "prefix": str,
     "ulay": InputPathType,
@@ -49,7 +49,7 @@ VDjunctSswIntermedEdgeImgsParametersTagged = typing.TypedDict('VDjunctSswInterme
 
 class VDjunctSswIntermedEdgeImgsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDjunctSswIntermedEdgeImgsParameters(...)`.
+    Output object returned when calling `VDjunctSswIntermedEdgeImgsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def v__djunct_ssw_intermed_edge_imgs_params(
     help_: bool = False,
     version: bool = False,
     no_clean: bool = False,
-) -> VDjunctSswIntermedEdgeImgsParametersTagged:
+) -> VDjunctSswIntermedEdgeImgsParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def v__djunct_ssw_intermed_edge_imgs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDjunctSswIntermedEdgeImgsParameters` object.
+    `VDjunctSswIntermedEdgeImgsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def v__djunct_ssw_intermed_edge_imgs_validate(
 
 
 def v__djunct_ssw_intermed_edge_imgs_cargs(
-    params: VDjunctSswIntermedEdgeImgsParameters,
+    params: VDjunctSswIntermedEdgeImgsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,7 +244,7 @@ def v__djunct_ssw_intermed_edge_imgs_cargs(
 
 
 def v__djunct_ssw_intermed_edge_imgs_outputs(
-    params: VDjunctSswIntermedEdgeImgsParameters,
+    params: VDjunctSswIntermedEdgeImgsParamsDict,
     execution: Execution,
 ) -> VDjunctSswIntermedEdgeImgsOutputs:
     """
@@ -263,7 +263,7 @@ def v__djunct_ssw_intermed_edge_imgs_outputs(
 
 
 def v__djunct_ssw_intermed_edge_imgs_execute(
-    params: VDjunctSswIntermedEdgeImgsParameters,
+    params: VDjunctSswIntermedEdgeImgsParamsDict,
     runner: Runner | None = None,
 ) -> VDjunctSswIntermedEdgeImgsOutputs:
     """
@@ -356,6 +356,8 @@ def v__djunct_ssw_intermed_edge_imgs(
 
 __all__ = [
     "VDjunctSswIntermedEdgeImgsOutputs",
+    "VDjunctSswIntermedEdgeImgsParamsDict",
+    "VDjunctSswIntermedEdgeImgsParamsDictTagged",
     "V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA",
     "v__djunct_ssw_intermed_edge_imgs",
     "v__djunct_ssw_intermed_edge_imgs_execute",

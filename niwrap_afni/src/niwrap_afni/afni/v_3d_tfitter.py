@@ -13,7 +13,7 @@ V_3D_TFITTER_METADATA = Metadata(
 )
 
 
-V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
+V3dTfitterParamsDict = typing.TypedDict('V3dTfitterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTfitter"]],
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
@@ -34,7 +34,7 @@ V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
     "mask": typing.NotRequired[str | None],
     "quiet": bool,
 })
-V3dTfitterParametersTagged = typing.TypedDict('V3dTfitterParametersTagged', {
+V3dTfitterParamsDictTagged = typing.TypedDict('V3dTfitterParamsDictTagged', {
     "@type": typing.Literal["afni/3dTfitter"],
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
@@ -59,7 +59,7 @@ V3dTfitterParametersTagged = typing.TypedDict('V3dTfitterParametersTagged', {
 
 class V3dTfitterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTfitterParameters(...)`.
+    Output object returned when calling `V3dTfitterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def v_3d_tfitter_params(
     errsum: str | None = None,
     mask: str | None = None,
     quiet: bool = False,
-) -> V3dTfitterParametersTagged:
+) -> V3dTfitterParamsDictTagged:
     """
     Build parameters.
     
@@ -171,7 +171,7 @@ def v_3d_tfitter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTfitterParameters` object.
+    `V3dTfitterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -260,7 +260,7 @@ def v_3d_tfitter_validate(
 
 
 def v_3d_tfitter_cargs(
-    params: V3dTfitterParameters,
+    params: V3dTfitterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -358,7 +358,7 @@ def v_3d_tfitter_cargs(
 
 
 def v_3d_tfitter_outputs(
-    params: V3dTfitterParameters,
+    params: V3dTfitterParamsDict,
     execution: Execution,
 ) -> V3dTfitterOutputs:
     """
@@ -380,7 +380,7 @@ def v_3d_tfitter_outputs(
 
 
 def v_3d_tfitter_execute(
-    params: V3dTfitterParameters,
+    params: V3dTfitterParamsDict,
     runner: Runner | None = None,
 ) -> V3dTfitterOutputs:
     """
@@ -510,6 +510,8 @@ def v_3d_tfitter(
 
 __all__ = [
     "V3dTfitterOutputs",
+    "V3dTfitterParamsDict",
+    "V3dTfitterParamsDictTagged",
     "V_3D_TFITTER_METADATA",
     "v_3d_tfitter",
     "v_3d_tfitter_execute",

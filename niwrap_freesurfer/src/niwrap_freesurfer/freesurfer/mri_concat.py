@@ -13,7 +13,7 @@ MRI_CONCAT_METADATA = Metadata(
 )
 
 
-MriConcatParameters = typing.TypedDict('MriConcatParameters', {
+MriConcatParamsDict = typing.TypedDict('MriConcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concat"]],
     "input_files": list[InputPathType],
     "output_file": str,
@@ -64,7 +64,7 @@ MriConcatParameters = typing.TypedDict('MriConcatParameters', {
     "rms": bool,
     "no_check": bool,
 })
-MriConcatParametersTagged = typing.TypedDict('MriConcatParametersTagged', {
+MriConcatParamsDictTagged = typing.TypedDict('MriConcatParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_concat"],
     "input_files": list[InputPathType],
     "output_file": str,
@@ -119,7 +119,7 @@ MriConcatParametersTagged = typing.TypedDict('MriConcatParametersTagged', {
 
 class MriConcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriConcatParameters(...)`.
+    Output object returned when calling `MriConcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -174,7 +174,7 @@ def mri_concat_params(
     mask_file: InputPathType | None = None,
     rms: bool = False,
     no_check: bool = False,
-) -> MriConcatParametersTagged:
+) -> MriConcatParamsDictTagged:
     """
     Build parameters.
     
@@ -305,7 +305,7 @@ def mri_concat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriConcatParameters` object.
+    `MriConcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -498,7 +498,7 @@ def mri_concat_validate(
 
 
 def mri_concat_cargs(
-    params: MriConcatParameters,
+    params: MriConcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -649,7 +649,7 @@ def mri_concat_cargs(
 
 
 def mri_concat_outputs(
-    params: MriConcatParameters,
+    params: MriConcatParamsDict,
     execution: Execution,
 ) -> MriConcatOutputs:
     """
@@ -668,7 +668,7 @@ def mri_concat_outputs(
 
 
 def mri_concat_execute(
-    params: MriConcatParameters,
+    params: MriConcatParamsDict,
     runner: Runner | None = None,
 ) -> MriConcatOutputs:
     """
@@ -869,6 +869,8 @@ def mri_concat(
 __all__ = [
     "MRI_CONCAT_METADATA",
     "MriConcatOutputs",
+    "MriConcatParamsDict",
+    "MriConcatParamsDictTagged",
     "mri_concat",
     "mri_concat_execute",
     "mri_concat_params",

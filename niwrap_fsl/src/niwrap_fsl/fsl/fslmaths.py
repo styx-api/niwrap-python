@@ -13,7 +13,7 @@ FSLMATHS_METADATA = Metadata(
 )
 
 
-FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
+FslmathsOperationParamsDict = typing.TypedDict('FslmathsOperationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["operation"]],
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
@@ -114,7 +114,7 @@ FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
     "bptf": typing.NotRequired[list[float] | None],
     "roc": typing.NotRequired[list[float] | None],
 })
-FslmathsOperationParametersTagged = typing.TypedDict('FslmathsOperationParametersTagged', {
+FslmathsOperationParamsDictTagged = typing.TypedDict('FslmathsOperationParamsDictTagged', {
     "@type": typing.Literal["operation"],
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
@@ -217,25 +217,25 @@ FslmathsOperationParametersTagged = typing.TypedDict('FslmathsOperationParameter
 })
 
 
-FslmathsParameters = typing.TypedDict('FslmathsParameters', {
+FslmathsParamsDict = typing.TypedDict('FslmathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslmaths"]],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
-    "operations": list[FslmathsOperationParameters],
+    "operations": list[FslmathsOperationParamsDict],
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
-FslmathsParametersTagged = typing.TypedDict('FslmathsParametersTagged', {
+FslmathsParamsDictTagged = typing.TypedDict('FslmathsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslmaths"],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
-    "operations": list[FslmathsOperationParameters],
+    "operations": list[FslmathsOperationParamsDict],
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
 
 
-def fslmaths_operation_params(
+def fslmaths_operation(
     add: float | None = None,
     sub: float | None = None,
     mul: float | None = None,
@@ -334,7 +334,7 @@ def fslmaths_operation_params(
     roi: list[float] | None = None,
     bptf: list[float] | None = None,
     roc: list[float] | None = None,
-) -> FslmathsOperationParametersTagged:
+) -> FslmathsOperationParamsDictTagged:
     """
     Build parameters.
     
@@ -608,7 +608,7 @@ def fslmaths_operation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmathsOperationParameters` object.
+    `FslmathsOperationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1018,7 +1018,7 @@ def fslmaths_operation_validate(
 
 
 def fslmaths_operation_cargs(
-    params: FslmathsOperationParameters,
+    params: FslmathsOperationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1337,7 +1337,7 @@ def fslmaths_operation_cargs(
 
 class FslmathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslmathsParameters(...)`.
+    Output object returned when calling `FslmathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1347,11 +1347,11 @@ class FslmathsOutputs(typing.NamedTuple):
 
 def fslmaths_params(
     input_files: list[InputPathType],
-    operations: list[FslmathsOperationParameters],
+    operations: list[FslmathsOperationParamsDict],
     output: str,
     datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
-) -> FslmathsParametersTagged:
+) -> FslmathsParamsDictTagged:
     """
     Build parameters.
     
@@ -1382,7 +1382,7 @@ def fslmaths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmathsParameters` object.
+    `FslmathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1404,7 +1404,7 @@ def fslmaths_validate(
     if params.get("operations", None) is None:
         raise StyxValidationError("`operations` must not be None")
     if not isinstance(params["operations"], list):
-        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[FslmathsOperationParameters]`')
+        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[FslmathsOperationParamsDict]`')
     for e in params["operations"]:
         fslmaths_operation_validate(e)
     if params.get("output", None) is None:
@@ -1419,7 +1419,7 @@ def fslmaths_validate(
 
 
 def fslmaths_cargs(
-    params: FslmathsParameters,
+    params: FslmathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1450,7 +1450,7 @@ def fslmaths_cargs(
 
 
 def fslmaths_outputs(
-    params: FslmathsParameters,
+    params: FslmathsParamsDict,
     execution: Execution,
 ) -> FslmathsOutputs:
     """
@@ -1470,7 +1470,7 @@ def fslmaths_outputs(
 
 
 def fslmaths_execute(
-    params: FslmathsParameters,
+    params: FslmathsParamsDict,
     runner: Runner | None = None,
 ) -> FslmathsOutputs:
     """
@@ -1500,7 +1500,7 @@ def fslmaths_execute(
 
 def fslmaths(
     input_files: list[InputPathType],
-    operations: list[FslmathsOperationParameters],
+    operations: list[FslmathsOperationParamsDict],
     output: str,
     datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
@@ -1537,9 +1537,13 @@ def fslmaths(
 
 __all__ = [
     "FSLMATHS_METADATA",
+    "FslmathsOperationParamsDict",
+    "FslmathsOperationParamsDictTagged",
     "FslmathsOutputs",
+    "FslmathsParamsDict",
+    "FslmathsParamsDictTagged",
     "fslmaths",
     "fslmaths_execute",
-    "fslmaths_operation_params",
+    "fslmaths_operation",
     "fslmaths_params",
 ]

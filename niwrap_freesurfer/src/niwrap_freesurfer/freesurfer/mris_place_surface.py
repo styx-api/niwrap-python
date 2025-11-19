@@ -13,7 +13,7 @@ MRIS_PLACE_SURFACE_METADATA = Metadata(
 )
 
 
-MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
+MrisPlaceSurfaceParamsDict = typing.TypedDict('MrisPlaceSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_place_surface"]],
     "output_surface": str,
     "input_surface": str,
@@ -60,7 +60,7 @@ MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
     "white_border_low_factor": typing.NotRequired[float | None],
     "fill_lateral_ventricles": typing.NotRequired[list[float] | None],
 })
-MrisPlaceSurfaceParametersTagged = typing.TypedDict('MrisPlaceSurfaceParametersTagged', {
+MrisPlaceSurfaceParamsDictTagged = typing.TypedDict('MrisPlaceSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_place_surface"],
     "output_surface": str,
     "input_surface": str,
@@ -111,7 +111,7 @@ MrisPlaceSurfaceParametersTagged = typing.TypedDict('MrisPlaceSurfaceParametersT
 
 class MrisPlaceSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisPlaceSurfaceParameters(...)`.
+    Output object returned when calling `MrisPlaceSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -162,7 +162,7 @@ def mris_place_surface_params(
     first_peak_d2: bool = False,
     white_border_low_factor: float | None = None,
     fill_lateral_ventricles: list[float] | None = None,
-) -> MrisPlaceSurfaceParametersTagged:
+) -> MrisPlaceSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -316,7 +316,7 @@ def mris_place_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisPlaceSurfaceParameters` object.
+    `MrisPlaceSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -492,7 +492,7 @@ def mris_place_surface_validate(
 
 
 def mris_place_surface_cargs(
-    params: MrisPlaceSurfaceParameters,
+    params: MrisPlaceSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -676,7 +676,7 @@ def mris_place_surface_cargs(
 
 
 def mris_place_surface_outputs(
-    params: MrisPlaceSurfaceParameters,
+    params: MrisPlaceSurfaceParamsDict,
     execution: Execution,
 ) -> MrisPlaceSurfaceOutputs:
     """
@@ -695,7 +695,7 @@ def mris_place_surface_outputs(
 
 
 def mris_place_surface_execute(
-    params: MrisPlaceSurfaceParameters,
+    params: MrisPlaceSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> MrisPlaceSurfaceOutputs:
     """
@@ -907,6 +907,8 @@ def mris_place_surface(
 __all__ = [
     "MRIS_PLACE_SURFACE_METADATA",
     "MrisPlaceSurfaceOutputs",
+    "MrisPlaceSurfaceParamsDict",
+    "MrisPlaceSurfaceParamsDictTagged",
     "mris_place_surface",
     "mris_place_surface_execute",
     "mris_place_surface_params",

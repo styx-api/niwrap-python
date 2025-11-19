@@ -12,7 +12,7 @@ CIFTI_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOverrideParameters', {
+CiftiCorrelationRoiOverrideParamsDict = typing.TypedDict('CiftiCorrelationRoiOverrideParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi-override"]],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -20,7 +20,7 @@ CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOve
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
 })
-CiftiCorrelationRoiOverrideParametersTagged = typing.TypedDict('CiftiCorrelationRoiOverrideParametersTagged', {
+CiftiCorrelationRoiOverrideParamsDictTagged = typing.TypedDict('CiftiCorrelationRoiOverrideParamsDictTagged', {
     "@type": typing.Literal["roi-override"],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -30,10 +30,10 @@ CiftiCorrelationRoiOverrideParametersTagged = typing.TypedDict('CiftiCorrelation
 })
 
 
-CiftiCorrelationParameters = typing.TypedDict('CiftiCorrelationParameters', {
+CiftiCorrelationParamsDict = typing.TypedDict('CiftiCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation"]],
     "cifti-out": str,
-    "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParameters | None],
+    "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
     "no-demean": bool,
@@ -41,10 +41,10 @@ CiftiCorrelationParameters = typing.TypedDict('CiftiCorrelationParameters', {
     "limit-GB": typing.NotRequired[float | None],
     "cifti": InputPathType,
 })
-CiftiCorrelationParametersTagged = typing.TypedDict('CiftiCorrelationParametersTagged', {
+CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-correlation"],
     "cifti-out": str,
-    "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParameters | None],
+    "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
     "no-demean": bool,
@@ -54,13 +54,13 @@ CiftiCorrelationParametersTagged = typing.TypedDict('CiftiCorrelationParametersT
 })
 
 
-def cifti_correlation_roi_override_params(
+def cifti_correlation_roi_override(
     roi_metric: InputPathType | None,
     roi_metric_: InputPathType | None,
     roi_metric_2: InputPathType | None,
     roi_vol: InputPathType | None,
     roi_cifti: InputPathType | None,
-) -> CiftiCorrelationRoiOverrideParametersTagged:
+) -> CiftiCorrelationRoiOverrideParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def cifti_correlation_roi_override_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationRoiOverrideParameters` object.
+    `CiftiCorrelationRoiOverrideParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -129,7 +129,7 @@ def cifti_correlation_roi_override_validate(
 
 
 def cifti_correlation_roi_override_cargs(
-    params: CiftiCorrelationRoiOverrideParameters,
+    params: CiftiCorrelationRoiOverrideParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def cifti_correlation_roi_override_cargs(
 
 class CiftiCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCorrelationParameters(...)`.
+    Output object returned when calling `CiftiCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -174,11 +174,11 @@ def cifti_correlation_params(
     weight_file: str | None,
     limit_gb: float | None,
     cifti: InputPathType,
-    roi_override: CiftiCorrelationRoiOverrideParameters | None = None,
+    roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
     fisher_z: bool = False,
     no_demean: bool = False,
     covariance: bool = False,
-) -> CiftiCorrelationParametersTagged:
+) -> CiftiCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -221,7 +221,7 @@ def cifti_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCorrelationParameters` object.
+    `CiftiCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -259,7 +259,7 @@ def cifti_correlation_validate(
 
 
 def cifti_correlation_cargs(
-    params: CiftiCorrelationParameters,
+    params: CiftiCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -291,7 +291,7 @@ def cifti_correlation_cargs(
 
 
 def cifti_correlation_outputs(
-    params: CiftiCorrelationParameters,
+    params: CiftiCorrelationParamsDict,
     execution: Execution,
 ) -> CiftiCorrelationOutputs:
     """
@@ -311,7 +311,7 @@ def cifti_correlation_outputs(
 
 
 def cifti_correlation_execute(
-    params: CiftiCorrelationParameters,
+    params: CiftiCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
@@ -353,7 +353,7 @@ def cifti_correlation(
     weight_file: str | None,
     limit_gb: float | None,
     cifti: InputPathType,
-    roi_override: CiftiCorrelationRoiOverrideParameters | None = None,
+    roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
     fisher_z: bool = False,
     no_demean: bool = False,
     covariance: bool = False,
@@ -411,8 +411,12 @@ def cifti_correlation(
 __all__ = [
     "CIFTI_CORRELATION_METADATA",
     "CiftiCorrelationOutputs",
+    "CiftiCorrelationParamsDict",
+    "CiftiCorrelationParamsDictTagged",
+    "CiftiCorrelationRoiOverrideParamsDict",
+    "CiftiCorrelationRoiOverrideParamsDictTagged",
     "cifti_correlation",
     "cifti_correlation_execute",
     "cifti_correlation_params",
-    "cifti_correlation_roi_override_params",
+    "cifti_correlation_roi_override",
 ]

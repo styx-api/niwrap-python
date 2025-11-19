@@ -12,61 +12,61 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
 )
 
 
-CiftiCreateDenseScalarVolumeParameters = typing.TypedDict('CiftiCreateDenseScalarVolumeParameters', {
+CiftiCreateDenseScalarVolumeParamsDict = typing.TypedDict('CiftiCreateDenseScalarVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
-CiftiCreateDenseScalarVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseScalarVolumeParametersTagged', {
+CiftiCreateDenseScalarVolumeParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "volume-data": InputPathType,
     "structure-label-volume": InputPathType,
 })
 
 
-CiftiCreateDenseScalarLeftMetricParameters = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParameters', {
+CiftiCreateDenseScalarLeftMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseScalarLeftMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParametersTagged', {
+CiftiCreateDenseScalarLeftMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParamsDictTagged', {
     "@type": typing.Literal["left-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseScalarRightMetricParameters = typing.TypedDict('CiftiCreateDenseScalarRightMetricParameters', {
+CiftiCreateDenseScalarRightMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarRightMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseScalarRightMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarRightMetricParametersTagged', {
+CiftiCreateDenseScalarRightMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarRightMetricParamsDictTagged', {
     "@type": typing.Literal["right-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseScalarCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParameters', {
+CiftiCreateDenseScalarCerebellumMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-metric"]],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseScalarCerebellumMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParametersTagged', {
+CiftiCreateDenseScalarCerebellumMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParamsDictTagged', {
     "@type": typing.Literal["cerebellum-metric"],
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiCreateDenseScalarMetricParameters = typing.TypedDict('CiftiCreateDenseScalarMetricParameters', {
+CiftiCreateDenseScalarMetricParamsDict = typing.TypedDict('CiftiCreateDenseScalarMetricParamsDict', {
     "@type": typing.NotRequired[typing.Literal["metric"]],
     "structure": str,
     "metric": InputPathType,
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiCreateDenseScalarMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarMetricParametersTagged', {
+CiftiCreateDenseScalarMetricParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric": InputPathType,
@@ -74,32 +74,32 @@ CiftiCreateDenseScalarMetricParametersTagged = typing.TypedDict('CiftiCreateDens
 })
 
 
-CiftiCreateDenseScalarParameters = typing.TypedDict('CiftiCreateDenseScalarParameters', {
+CiftiCreateDenseScalarParamsDict = typing.TypedDict('CiftiCreateDenseScalarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-scalar"]],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
-    "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],
-    "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParameters | None],
-    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParameters | None],
+    "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParamsDict | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParamsDict | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParamsDict | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParamsDict | None],
     "file": typing.NotRequired[str | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParameters] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParamsDict] | None],
 })
-CiftiCreateDenseScalarParametersTagged = typing.TypedDict('CiftiCreateDenseScalarParametersTagged', {
+CiftiCreateDenseScalarParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-scalar"],
     "cifti-out": str,
-    "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
-    "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],
-    "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParameters | None],
-    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParameters | None],
+    "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParamsDict | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParamsDict | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParamsDict | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParamsDict | None],
     "file": typing.NotRequired[str | None],
-    "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParameters] | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParamsDict] | None],
 })
 
 
-def cifti_create_dense_scalar_volume_params(
+def cifti_create_dense_scalar_volume(
     volume_data: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateDenseScalarVolumeParametersTagged:
+) -> CiftiCreateDenseScalarVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def cifti_create_dense_scalar_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarVolumeParameters` object.
+    `CiftiCreateDenseScalarVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def cifti_create_dense_scalar_volume_validate(
 
 
 def cifti_create_dense_scalar_volume_cargs(
-    params: CiftiCreateDenseScalarVolumeParameters,
+    params: CiftiCreateDenseScalarVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,10 +163,10 @@ def cifti_create_dense_scalar_volume_cargs(
     return cargs
 
 
-def cifti_create_dense_scalar_left_metric_params(
+def cifti_create_dense_scalar_left_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseScalarLeftMetricParametersTagged:
+) -> CiftiCreateDenseScalarLeftMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -192,7 +192,7 @@ def cifti_create_dense_scalar_left_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarLeftMetricParameters` object.
+    `CiftiCreateDenseScalarLeftMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def cifti_create_dense_scalar_left_metric_validate(
 
 
 def cifti_create_dense_scalar_left_metric_cargs(
-    params: CiftiCreateDenseScalarLeftMetricParameters,
+    params: CiftiCreateDenseScalarLeftMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,10 +232,10 @@ def cifti_create_dense_scalar_left_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_scalar_right_metric_params(
+def cifti_create_dense_scalar_right_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseScalarRightMetricParametersTagged:
+) -> CiftiCreateDenseScalarRightMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -261,7 +261,7 @@ def cifti_create_dense_scalar_right_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarRightMetricParameters` object.
+    `CiftiCreateDenseScalarRightMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -278,7 +278,7 @@ def cifti_create_dense_scalar_right_metric_validate(
 
 
 def cifti_create_dense_scalar_right_metric_cargs(
-    params: CiftiCreateDenseScalarRightMetricParameters,
+    params: CiftiCreateDenseScalarRightMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -301,10 +301,10 @@ def cifti_create_dense_scalar_right_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_scalar_cerebellum_metric_params(
+def cifti_create_dense_scalar_cerebellum_metric(
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseScalarCerebellumMetricParametersTagged:
+) -> CiftiCreateDenseScalarCerebellumMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -330,7 +330,7 @@ def cifti_create_dense_scalar_cerebellum_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarCerebellumMetricParameters` object.
+    `CiftiCreateDenseScalarCerebellumMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -347,7 +347,7 @@ def cifti_create_dense_scalar_cerebellum_metric_validate(
 
 
 def cifti_create_dense_scalar_cerebellum_metric_cargs(
-    params: CiftiCreateDenseScalarCerebellumMetricParameters,
+    params: CiftiCreateDenseScalarCerebellumMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -370,11 +370,11 @@ def cifti_create_dense_scalar_cerebellum_metric_cargs(
     return cargs
 
 
-def cifti_create_dense_scalar_metric_params(
+def cifti_create_dense_scalar_metric(
     structure: str,
     metric: InputPathType,
     roi_metric: InputPathType | None,
-) -> CiftiCreateDenseScalarMetricParametersTagged:
+) -> CiftiCreateDenseScalarMetricParamsDictTagged:
     """
     Build parameters.
     
@@ -402,7 +402,7 @@ def cifti_create_dense_scalar_metric_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarMetricParameters` object.
+    `CiftiCreateDenseScalarMetricParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -423,7 +423,7 @@ def cifti_create_dense_scalar_metric_validate(
 
 
 def cifti_create_dense_scalar_metric_cargs(
-    params: CiftiCreateDenseScalarMetricParameters,
+    params: CiftiCreateDenseScalarMetricParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -449,7 +449,7 @@ def cifti_create_dense_scalar_metric_cargs(
 
 class CiftiCreateDenseScalarOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCreateDenseScalarParameters(...)`.
+    Output object returned when calling `CiftiCreateDenseScalarParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -460,12 +460,12 @@ class CiftiCreateDenseScalarOutputs(typing.NamedTuple):
 def cifti_create_dense_scalar_params(
     cifti_out: str,
     file: str | None,
-    volume: CiftiCreateDenseScalarVolumeParameters | None = None,
-    left_metric: CiftiCreateDenseScalarLeftMetricParameters | None = None,
-    right_metric: CiftiCreateDenseScalarRightMetricParameters | None = None,
-    cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParameters | None = None,
-    metric: list[CiftiCreateDenseScalarMetricParameters] | None = None,
-) -> CiftiCreateDenseScalarParametersTagged:
+    volume: CiftiCreateDenseScalarVolumeParamsDict | None = None,
+    left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
+    right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
+    cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
+    metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
+) -> CiftiCreateDenseScalarParamsDictTagged:
     """
     Build parameters.
     
@@ -506,7 +506,7 @@ def cifti_create_dense_scalar_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCreateDenseScalarParameters` object.
+    `CiftiCreateDenseScalarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -530,13 +530,13 @@ def cifti_create_dense_scalar_validate(
             raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
-            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseScalarMetricParameters] | None`')
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseScalarMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_create_dense_scalar_metric_validate(e)
 
 
 def cifti_create_dense_scalar_cargs(
-    params: CiftiCreateDenseScalarParameters,
+    params: CiftiCreateDenseScalarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -566,7 +566,7 @@ def cifti_create_dense_scalar_cargs(
 
 
 def cifti_create_dense_scalar_outputs(
-    params: CiftiCreateDenseScalarParameters,
+    params: CiftiCreateDenseScalarParamsDict,
     execution: Execution,
 ) -> CiftiCreateDenseScalarOutputs:
     """
@@ -586,7 +586,7 @@ def cifti_create_dense_scalar_outputs(
 
 
 def cifti_create_dense_scalar_execute(
-    params: CiftiCreateDenseScalarParameters,
+    params: CiftiCreateDenseScalarParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseScalarOutputs:
     """
@@ -656,11 +656,11 @@ def cifti_create_dense_scalar_execute(
 def cifti_create_dense_scalar(
     cifti_out: str,
     file: str | None,
-    volume: CiftiCreateDenseScalarVolumeParameters | None = None,
-    left_metric: CiftiCreateDenseScalarLeftMetricParameters | None = None,
-    right_metric: CiftiCreateDenseScalarRightMetricParameters | None = None,
-    cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParameters | None = None,
-    metric: list[CiftiCreateDenseScalarMetricParameters] | None = None,
+    volume: CiftiCreateDenseScalarVolumeParamsDict | None = None,
+    left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
+    right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
+    cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
+    metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseScalarOutputs:
     """
@@ -739,13 +739,25 @@ def cifti_create_dense_scalar(
 
 __all__ = [
     "CIFTI_CREATE_DENSE_SCALAR_METADATA",
+    "CiftiCreateDenseScalarCerebellumMetricParamsDict",
+    "CiftiCreateDenseScalarCerebellumMetricParamsDictTagged",
+    "CiftiCreateDenseScalarLeftMetricParamsDict",
+    "CiftiCreateDenseScalarLeftMetricParamsDictTagged",
+    "CiftiCreateDenseScalarMetricParamsDict",
+    "CiftiCreateDenseScalarMetricParamsDictTagged",
     "CiftiCreateDenseScalarOutputs",
+    "CiftiCreateDenseScalarParamsDict",
+    "CiftiCreateDenseScalarParamsDictTagged",
+    "CiftiCreateDenseScalarRightMetricParamsDict",
+    "CiftiCreateDenseScalarRightMetricParamsDictTagged",
+    "CiftiCreateDenseScalarVolumeParamsDict",
+    "CiftiCreateDenseScalarVolumeParamsDictTagged",
     "cifti_create_dense_scalar",
-    "cifti_create_dense_scalar_cerebellum_metric_params",
+    "cifti_create_dense_scalar_cerebellum_metric",
     "cifti_create_dense_scalar_execute",
-    "cifti_create_dense_scalar_left_metric_params",
-    "cifti_create_dense_scalar_metric_params",
+    "cifti_create_dense_scalar_left_metric",
+    "cifti_create_dense_scalar_metric",
     "cifti_create_dense_scalar_params",
-    "cifti_create_dense_scalar_right_metric_params",
-    "cifti_create_dense_scalar_volume_params",
+    "cifti_create_dense_scalar_right_metric",
+    "cifti_create_dense_scalar_volume",
 ]

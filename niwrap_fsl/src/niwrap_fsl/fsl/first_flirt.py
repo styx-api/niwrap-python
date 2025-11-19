@@ -13,7 +13,7 @@ FIRST_FLIRT_METADATA = Metadata(
 )
 
 
-FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
+FirstFlirtParamsDict = typing.TypedDict('FirstFlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/first_flirt"]],
     "input_image": InputPathType,
     "output_basename": str,
@@ -24,7 +24,7 @@ FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
     "cort_flag": bool,
     "cost_function": typing.NotRequired[str | None],
 })
-FirstFlirtParametersTagged = typing.TypedDict('FirstFlirtParametersTagged', {
+FirstFlirtParamsDictTagged = typing.TypedDict('FirstFlirtParamsDictTagged', {
     "@type": typing.Literal["fsl/first_flirt"],
     "input_image": InputPathType,
     "output_basename": str,
@@ -39,7 +39,7 @@ FirstFlirtParametersTagged = typing.TypedDict('FirstFlirtParametersTagged', {
 
 class FirstFlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirstFlirtParameters(...)`.
+    Output object returned when calling `FirstFlirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def first_flirt_params(
     strucweight_mask: InputPathType | None = None,
     cort_flag: bool = False,
     cost_function: str | None = None,
-) -> FirstFlirtParametersTagged:
+) -> FirstFlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def first_flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirstFlirtParameters` object.
+    `FirstFlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def first_flirt_validate(
 
 
 def first_flirt_cargs(
-    params: FirstFlirtParameters,
+    params: FirstFlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def first_flirt_cargs(
 
 
 def first_flirt_outputs(
-    params: FirstFlirtParameters,
+    params: FirstFlirtParamsDict,
     execution: Execution,
 ) -> FirstFlirtOutputs:
     """
@@ -201,7 +201,7 @@ def first_flirt_outputs(
 
 
 def first_flirt_execute(
-    params: FirstFlirtParameters,
+    params: FirstFlirtParamsDict,
     runner: Runner | None = None,
 ) -> FirstFlirtOutputs:
     """
@@ -284,6 +284,8 @@ def first_flirt(
 __all__ = [
     "FIRST_FLIRT_METADATA",
     "FirstFlirtOutputs",
+    "FirstFlirtParamsDict",
+    "FirstFlirtParamsDictTagged",
     "first_flirt",
     "first_flirt_execute",
     "first_flirt_params",

@@ -13,7 +13,7 @@ V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
 )
 
 
-V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
+V1dDwGradOMatParamsDict = typing.TypedDict('V1dDwGradOMatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dDW_Grad_o_Mat++"]],
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
@@ -37,7 +37,7 @@ V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
     "put_zeros_top": bool,
     "bmax_ref": typing.NotRequired[float | None],
 })
-V1dDwGradOMatParametersTagged = typing.TypedDict('V1dDwGradOMatParametersTagged', {
+V1dDwGradOMatParamsDictTagged = typing.TypedDict('V1dDwGradOMatParamsDictTagged', {
     "@type": typing.Literal["afni/1dDW_Grad_o_Mat++"],
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
@@ -65,7 +65,7 @@ V1dDwGradOMatParametersTagged = typing.TypedDict('V1dDwGradOMatParametersTagged'
 
 class V1dDwGradOMatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dDwGradOMatParameters(...)`.
+    Output object returned when calling `V1dDwGradOMatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +99,7 @@ def v_1d_dw_grad_o_mat___params(
     bref_mean_top: bool = False,
     put_zeros_top: bool = False,
     bmax_ref: float | None = None,
-) -> V1dDwGradOMatParametersTagged:
+) -> V1dDwGradOMatParamsDictTagged:
     """
     Build parameters.
     
@@ -179,7 +179,7 @@ def v_1d_dw_grad_o_mat___validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dDwGradOMatParameters` object.
+    `V1dDwGradOMatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -268,7 +268,7 @@ def v_1d_dw_grad_o_mat___validate(
 
 
 def v_1d_dw_grad_o_mat___cargs(
-    params: V1dDwGradOMatParameters,
+    params: V1dDwGradOMatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -359,7 +359,7 @@ def v_1d_dw_grad_o_mat___cargs(
 
 
 def v_1d_dw_grad_o_mat___outputs(
-    params: V1dDwGradOMatParameters,
+    params: V1dDwGradOMatParamsDict,
     execution: Execution,
 ) -> V1dDwGradOMatOutputs:
     """
@@ -381,7 +381,7 @@ def v_1d_dw_grad_o_mat___outputs(
 
 
 def v_1d_dw_grad_o_mat___execute(
-    params: V1dDwGradOMatParameters,
+    params: V1dDwGradOMatParamsDict,
     runner: Runner | None = None,
 ) -> V1dDwGradOMatOutputs:
     """
@@ -512,6 +512,8 @@ def v_1d_dw_grad_o_mat__(
 
 __all__ = [
     "V1dDwGradOMatOutputs",
+    "V1dDwGradOMatParamsDict",
+    "V1dDwGradOMatParamsDictTagged",
     "V_1D_DW_GRAD_O_MAT___METADATA",
     "v_1d_dw_grad_o_mat__",
     "v_1d_dw_grad_o_mat___execute",

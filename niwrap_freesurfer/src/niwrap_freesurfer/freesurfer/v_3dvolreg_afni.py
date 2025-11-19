@@ -13,13 +13,13 @@ V_3DVOLREG_AFNI_METADATA = Metadata(
 )
 
 
-V3dvolregAfniParameters = typing.TypedDict('V3dvolregAfniParameters', {
+V3dvolregAfniParamsDict = typing.TypedDict('V3dvolregAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/3dvolreg.afni"]],
     "input_file": InputPathType,
     "output_file": str,
     "options": typing.NotRequired[str | None],
 })
-V3dvolregAfniParametersTagged = typing.TypedDict('V3dvolregAfniParametersTagged', {
+V3dvolregAfniParamsDictTagged = typing.TypedDict('V3dvolregAfniParamsDictTagged', {
     "@type": typing.Literal["freesurfer/3dvolreg.afni"],
     "input_file": InputPathType,
     "output_file": str,
@@ -29,7 +29,7 @@ V3dvolregAfniParametersTagged = typing.TypedDict('V3dvolregAfniParametersTagged'
 
 class V3dvolregAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dvolregAfniParameters(...)`.
+    Output object returned when calling `V3dvolregAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3dvolreg_afni_params(
     input_file: InputPathType,
     output_file: str,
     options: str | None = None,
-) -> V3dvolregAfniParametersTagged:
+) -> V3dvolregAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def v_3dvolreg_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dvolregAfniParameters` object.
+    `V3dvolregAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def v_3dvolreg_afni_validate(
 
 
 def v_3dvolreg_afni_cargs(
-    params: V3dvolregAfniParameters,
+    params: V3dvolregAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def v_3dvolreg_afni_cargs(
 
 
 def v_3dvolreg_afni_outputs(
-    params: V3dvolregAfniParameters,
+    params: V3dvolregAfniParamsDict,
     execution: Execution,
 ) -> V3dvolregAfniOutputs:
     """
@@ -130,7 +130,7 @@ def v_3dvolreg_afni_outputs(
 
 
 def v_3dvolreg_afni_execute(
-    params: V3dvolregAfniParameters,
+    params: V3dvolregAfniParamsDict,
     runner: Runner | None = None,
 ) -> V3dvolregAfniOutputs:
     """
@@ -191,6 +191,8 @@ def v_3dvolreg_afni(
 
 __all__ = [
     "V3dvolregAfniOutputs",
+    "V3dvolregAfniParamsDict",
+    "V3dvolregAfniParamsDictTagged",
     "V_3DVOLREG_AFNI_METADATA",
     "v_3dvolreg_afni",
     "v_3dvolreg_afni_execute",

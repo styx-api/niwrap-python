@@ -13,19 +13,19 @@ DWIDENOISE_METADATA = Metadata(
 )
 
 
-DwidenoiseConfigParameters = typing.TypedDict('DwidenoiseConfigParameters', {
+DwidenoiseConfigParamsDict = typing.TypedDict('DwidenoiseConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DwidenoiseConfigParametersTagged = typing.TypedDict('DwidenoiseConfigParametersTagged', {
+DwidenoiseConfigParamsDictTagged = typing.TypedDict('DwidenoiseConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
+DwidenoiseParamsDict = typing.TypedDict('DwidenoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwidenoise"]],
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
@@ -37,13 +37,13 @@ DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DwidenoiseConfigParameters] | None],
+    "config": typing.NotRequired[list[DwidenoiseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
     "out": str,
 })
-DwidenoiseParametersTagged = typing.TypedDict('DwidenoiseParametersTagged', {
+DwidenoiseParamsDictTagged = typing.TypedDict('DwidenoiseParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwidenoise"],
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
@@ -55,7 +55,7 @@ DwidenoiseParametersTagged = typing.TypedDict('DwidenoiseParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DwidenoiseConfigParameters] | None],
+    "config": typing.NotRequired[list[DwidenoiseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "dwi": InputPathType,
@@ -63,10 +63,10 @@ DwidenoiseParametersTagged = typing.TypedDict('DwidenoiseParametersTagged', {
 })
 
 
-def dwidenoise_config_params(
+def dwidenoise_config(
     key: str,
     value: str,
-) -> DwidenoiseConfigParametersTagged:
+) -> DwidenoiseConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def dwidenoise_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwidenoiseConfigParameters` object.
+    `DwidenoiseConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def dwidenoise_config_validate(
 
 
 def dwidenoise_config_cargs(
-    params: DwidenoiseConfigParameters,
+    params: DwidenoiseConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def dwidenoise_config_cargs(
 
 class DwidenoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwidenoiseParameters(...)`.
+    Output object returned when calling `DwidenoiseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,10 +153,10 @@ def dwidenoise_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DwidenoiseConfigParameters] | None = None,
+    config: list[DwidenoiseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DwidenoiseParametersTagged:
+) -> DwidenoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -227,7 +227,7 @@ def dwidenoise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwidenoiseParameters` object.
+    `DwidenoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -273,7 +273,7 @@ def dwidenoise_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwidenoiseConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwidenoiseConfigParamsDict] | None`')
         for e in params["config"]:
             dwidenoise_config_validate(e)
     if params.get("help", False) is None:
@@ -295,7 +295,7 @@ def dwidenoise_validate(
 
 
 def dwidenoise_cargs(
-    params: DwidenoiseParameters,
+    params: DwidenoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -359,7 +359,7 @@ def dwidenoise_cargs(
 
 
 def dwidenoise_outputs(
-    params: DwidenoiseParameters,
+    params: DwidenoiseParamsDict,
     execution: Execution,
 ) -> DwidenoiseOutputs:
     """
@@ -380,7 +380,7 @@ def dwidenoise_outputs(
 
 
 def dwidenoise_execute(
-    params: DwidenoiseParameters,
+    params: DwidenoiseParamsDict,
     runner: Runner | None = None,
 ) -> DwidenoiseOutputs:
     """
@@ -454,7 +454,7 @@ def dwidenoise(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DwidenoiseConfigParameters] | None = None,
+    config: list[DwidenoiseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -558,9 +558,13 @@ def dwidenoise(
 
 __all__ = [
     "DWIDENOISE_METADATA",
+    "DwidenoiseConfigParamsDict",
+    "DwidenoiseConfigParamsDictTagged",
     "DwidenoiseOutputs",
+    "DwidenoiseParamsDict",
+    "DwidenoiseParamsDictTagged",
     "dwidenoise",
-    "dwidenoise_config_params",
+    "dwidenoise_config",
     "dwidenoise_execute",
     "dwidenoise_params",
 ]

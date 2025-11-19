@@ -13,19 +13,19 @@ MRCOLOUR_METADATA = Metadata(
 )
 
 
-MrcolourConfigParameters = typing.TypedDict('MrcolourConfigParameters', {
+MrcolourConfigParamsDict = typing.TypedDict('MrcolourConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrcolourConfigParametersTagged = typing.TypedDict('MrcolourConfigParametersTagged', {
+MrcolourConfigParamsDictTagged = typing.TypedDict('MrcolourConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrcolourParameters = typing.TypedDict('MrcolourParameters', {
+MrcolourParamsDict = typing.TypedDict('MrcolourParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrcolour"]],
     "upper": typing.NotRequired[float | None],
     "lower": typing.NotRequired[float | None],
@@ -35,14 +35,14 @@ MrcolourParameters = typing.TypedDict('MrcolourParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcolourConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcolourConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "map": str,
     "output": str,
 })
-MrcolourParametersTagged = typing.TypedDict('MrcolourParametersTagged', {
+MrcolourParamsDictTagged = typing.TypedDict('MrcolourParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrcolour"],
     "upper": typing.NotRequired[float | None],
     "lower": typing.NotRequired[float | None],
@@ -52,7 +52,7 @@ MrcolourParametersTagged = typing.TypedDict('MrcolourParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcolourConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcolourConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -61,10 +61,10 @@ MrcolourParametersTagged = typing.TypedDict('MrcolourParametersTagged', {
 })
 
 
-def mrcolour_config_params(
+def mrcolour_config(
     key: str,
     value: str,
-) -> MrcolourConfigParametersTagged:
+) -> MrcolourConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mrcolour_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcolourConfigParameters` object.
+    `MrcolourConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def mrcolour_config_validate(
 
 
 def mrcolour_config_cargs(
-    params: MrcolourConfigParameters,
+    params: MrcolourConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def mrcolour_config_cargs(
 
 class MrcolourOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrcolourParameters(...)`.
+    Output object returned when calling `MrcolourParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def mrcolour_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcolourConfigParameters] | None = None,
+    config: list[MrcolourConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcolourParametersTagged:
+) -> MrcolourParamsDictTagged:
     """
     Build parameters.
     
@@ -207,7 +207,7 @@ def mrcolour_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcolourParameters` object.
+    `MrcolourParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -247,7 +247,7 @@ def mrcolour_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcolourConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcolourConfigParamsDict] | None`')
         for e in params["config"]:
             mrcolour_config_validate(e)
     if params.get("help", False) is None:
@@ -273,7 +273,7 @@ def mrcolour_validate(
 
 
 def mrcolour_cargs(
-    params: MrcolourParameters,
+    params: MrcolourParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def mrcolour_cargs(
 
 
 def mrcolour_outputs(
-    params: MrcolourParameters,
+    params: MrcolourParamsDict,
     execution: Execution,
 ) -> MrcolourOutputs:
     """
@@ -348,7 +348,7 @@ def mrcolour_outputs(
 
 
 def mrcolour_execute(
-    params: MrcolourParameters,
+    params: MrcolourParamsDict,
     runner: Runner | None = None,
 ) -> MrcolourOutputs:
     """
@@ -403,7 +403,7 @@ def mrcolour(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcolourConfigParameters] | None = None,
+    config: list[MrcolourConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -478,9 +478,13 @@ def mrcolour(
 
 __all__ = [
     "MRCOLOUR_METADATA",
+    "MrcolourConfigParamsDict",
+    "MrcolourConfigParamsDictTagged",
     "MrcolourOutputs",
+    "MrcolourParamsDict",
+    "MrcolourParamsDictTagged",
     "mrcolour",
-    "mrcolour_config_params",
+    "mrcolour_config",
     "mrcolour_execute",
     "mrcolour_params",
 ]

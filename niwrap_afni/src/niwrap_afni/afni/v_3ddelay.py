@@ -13,7 +13,7 @@ V_3DDELAY_METADATA = Metadata(
 )
 
 
-V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
+V3ddelayParamsDict = typing.TypedDict('V3ddelayParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3ddelay"]],
     "input_file": InputPathType,
     "reference_file": InputPathType,
@@ -40,7 +40,7 @@ V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
     "asc": typing.NotRequired[str | None],
     "ascts": typing.NotRequired[str | None],
 })
-V3ddelayParametersTagged = typing.TypedDict('V3ddelayParametersTagged', {
+V3ddelayParamsDictTagged = typing.TypedDict('V3ddelayParamsDictTagged', {
     "@type": typing.Literal["afni/3ddelay"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
@@ -71,7 +71,7 @@ V3ddelayParametersTagged = typing.TypedDict('V3ddelayParametersTagged', {
 
 class V3ddelayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3ddelayParameters(...)`.
+    Output object returned when calling `V3ddelayParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +110,7 @@ def v_3ddelay_params(
     co: float | None = None,
     asc: str | None = None,
     ascts: str | None = None,
-) -> V3ddelayParametersTagged:
+) -> V3ddelayParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def v_3ddelay_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3ddelayParameters` object.
+    `V3ddelayParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -288,7 +288,7 @@ def v_3ddelay_validate(
 
 
 def v_3ddelay_cargs(
-    params: V3ddelayParameters,
+    params: V3ddelayParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -383,7 +383,7 @@ def v_3ddelay_cargs(
 
 
 def v_3ddelay_outputs(
-    params: V3ddelayParameters,
+    params: V3ddelayParamsDict,
     execution: Execution,
 ) -> V3ddelayOutputs:
     """
@@ -406,7 +406,7 @@ def v_3ddelay_outputs(
 
 
 def v_3ddelay_execute(
-    params: V3ddelayParameters,
+    params: V3ddelayParamsDict,
     runner: Runner | None = None,
 ) -> V3ddelayOutputs:
     """
@@ -537,6 +537,8 @@ def v_3ddelay(
 
 __all__ = [
     "V3ddelayOutputs",
+    "V3ddelayParamsDict",
+    "V3ddelayParamsDictTagged",
     "V_3DDELAY_METADATA",
     "v_3ddelay",
     "v_3ddelay_execute",

@@ -13,12 +13,12 @@ MRI_OR_METADATA = Metadata(
 )
 
 
-MriOrParameters = typing.TypedDict('MriOrParameters', {
+MriOrParamsDict = typing.TypedDict('MriOrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_or"]],
     "original_labels": bool,
     "input_files": list[InputPathType],
 })
-MriOrParametersTagged = typing.TypedDict('MriOrParametersTagged', {
+MriOrParamsDictTagged = typing.TypedDict('MriOrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_or"],
     "original_labels": bool,
     "input_files": list[InputPathType],
@@ -27,7 +27,7 @@ MriOrParametersTagged = typing.TypedDict('MriOrParametersTagged', {
 
 class MriOrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriOrParameters(...)`.
+    Output object returned when calling `MriOrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriOrOutputs(typing.NamedTuple):
 def mri_or_params(
     input_files: list[InputPathType],
     original_labels: bool = False,
-) -> MriOrParametersTagged:
+) -> MriOrParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_or_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriOrParameters` object.
+    `MriOrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def mri_or_validate(
 
 
 def mri_or_cargs(
-    params: MriOrParameters,
+    params: MriOrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def mri_or_cargs(
 
 
 def mri_or_outputs(
-    params: MriOrParameters,
+    params: MriOrParamsDict,
     execution: Execution,
 ) -> MriOrOutputs:
     """
@@ -122,7 +122,7 @@ def mri_or_outputs(
 
 
 def mri_or_execute(
-    params: MriOrParameters,
+    params: MriOrParamsDict,
     runner: Runner | None = None,
 ) -> MriOrOutputs:
     """
@@ -183,6 +183,8 @@ def mri_or(
 __all__ = [
     "MRI_OR_METADATA",
     "MriOrOutputs",
+    "MriOrParamsDict",
+    "MriOrParamsDictTagged",
     "mri_or",
     "mri_or_execute",
     "mri_or_params",

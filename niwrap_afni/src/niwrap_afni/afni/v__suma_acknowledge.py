@@ -13,7 +13,7 @@ V__SUMA_ACKNOWLEDGE_METADATA = Metadata(
 )
 
 
-VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
+VSumaAcknowledgeParamsDict = typing.TypedDict('VSumaAcknowledgeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@suma_acknowledge"]],
     "input_file": InputPathType,
     "surface_file": InputPathType,
@@ -23,7 +23,7 @@ VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
     "scale_factor": typing.NotRequired[float | None],
     "reduce_factor": typing.NotRequired[float | None],
 })
-VSumaAcknowledgeParametersTagged = typing.TypedDict('VSumaAcknowledgeParametersTagged', {
+VSumaAcknowledgeParamsDictTagged = typing.TypedDict('VSumaAcknowledgeParamsDictTagged', {
     "@type": typing.Literal["afni/@suma_acknowledge"],
     "input_file": InputPathType,
     "surface_file": InputPathType,
@@ -37,7 +37,7 @@ VSumaAcknowledgeParametersTagged = typing.TypedDict('VSumaAcknowledgeParametersT
 
 class VSumaAcknowledgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaAcknowledgeParameters(...)`.
+    Output object returned when calling `VSumaAcknowledgeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def v__suma_acknowledge_params(
     subsurface_file: str | None = None,
     scale_factor: float | None = None,
     reduce_factor: float | None = None,
-) -> VSumaAcknowledgeParametersTagged:
+) -> VSumaAcknowledgeParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def v__suma_acknowledge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaAcknowledgeParameters` object.
+    `VSumaAcknowledgeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def v__suma_acknowledge_validate(
 
 
 def v__suma_acknowledge_cargs(
-    params: VSumaAcknowledgeParameters,
+    params: VSumaAcknowledgeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -175,7 +175,7 @@ def v__suma_acknowledge_cargs(
 
 
 def v__suma_acknowledge_outputs(
-    params: VSumaAcknowledgeParameters,
+    params: VSumaAcknowledgeParamsDict,
     execution: Execution,
 ) -> VSumaAcknowledgeOutputs:
     """
@@ -195,7 +195,7 @@ def v__suma_acknowledge_outputs(
 
 
 def v__suma_acknowledge_execute(
-    params: VSumaAcknowledgeParameters,
+    params: VSumaAcknowledgeParamsDict,
     runner: Runner | None = None,
 ) -> VSumaAcknowledgeOutputs:
     """
@@ -274,6 +274,8 @@ def v__suma_acknowledge(
 
 __all__ = [
     "VSumaAcknowledgeOutputs",
+    "VSumaAcknowledgeParamsDict",
+    "VSumaAcknowledgeParamsDictTagged",
     "V__SUMA_ACKNOWLEDGE_METADATA",
     "v__suma_acknowledge",
     "v__suma_acknowledge_execute",

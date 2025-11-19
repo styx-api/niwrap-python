@@ -13,7 +13,7 @@ POPP_METADATA = Metadata(
 )
 
 
-PoppParameters = typing.TypedDict('PoppParameters', {
+PoppParamsDict = typing.TypedDict('PoppParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/popp"]],
     "input_file": InputPathType,
     "output_basename": str,
@@ -49,7 +49,7 @@ PoppParameters = typing.TypedDict('PoppParameters', {
     "debug_flag": bool,
     "help_flag": bool,
 })
-PoppParametersTagged = typing.TypedDict('PoppParametersTagged', {
+PoppParamsDictTagged = typing.TypedDict('PoppParamsDictTagged', {
     "@type": typing.Literal["fsl/popp"],
     "input_file": InputPathType,
     "output_basename": str,
@@ -89,7 +89,7 @@ PoppParametersTagged = typing.TypedDict('PoppParametersTagged', {
 
 class PoppOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PoppParameters(...)`.
+    Output object returned when calling `PoppParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +137,7 @@ def popp_params(
     verbose_flag: bool = False,
     debug_flag: bool = False,
     help_flag: bool = False,
-) -> PoppParametersTagged:
+) -> PoppParamsDictTagged:
     """
     Build parameters.
     
@@ -252,7 +252,7 @@ def popp_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `PoppParameters`
+    Validate parameters. Throws an error if `params` is not a valid `PoppParamsDict`
     object.
     
     Args:
@@ -374,7 +374,7 @@ def popp_validate(
 
 
 def popp_cargs(
-    params: PoppParameters,
+    params: PoppParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -525,7 +525,7 @@ def popp_cargs(
 
 
 def popp_outputs(
-    params: PoppParameters,
+    params: PoppParamsDict,
     execution: Execution,
 ) -> PoppOutputs:
     """
@@ -548,7 +548,7 @@ def popp_outputs(
 
 
 def popp_execute(
-    params: PoppParameters,
+    params: PoppParamsDict,
     runner: Runner | None = None,
 ) -> PoppOutputs:
     """
@@ -710,6 +710,8 @@ def popp(
 __all__ = [
     "POPP_METADATA",
     "PoppOutputs",
+    "PoppParamsDict",
+    "PoppParamsDictTagged",
     "popp",
     "popp_execute",
     "popp_params",

@@ -13,7 +13,7 @@ MRIS_VOLMASK_METADATA = Metadata(
 )
 
 
-MrisVolmaskParameters = typing.TypedDict('MrisVolmaskParameters', {
+MrisVolmaskParamsDict = typing.TypedDict('MrisVolmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask"]],
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ MrisVolmaskParameters = typing.TypedDict('MrisVolmaskParameters', {
     "save_ribbon": bool,
     "io": str,
 })
-MrisVolmaskParametersTagged = typing.TypedDict('MrisVolmaskParametersTagged', {
+MrisVolmaskParamsDictTagged = typing.TypedDict('MrisVolmaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_volmask"],
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
@@ -59,7 +59,7 @@ MrisVolmaskParametersTagged = typing.TypedDict('MrisVolmaskParametersTagged', {
 
 class MrisVolmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisVolmaskParameters(...)`.
+    Output object returned when calling `MrisVolmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def mris_volmask_params(
     parallel: bool = False,
     edit_aseg: bool = False,
     save_ribbon: bool = False,
-) -> MrisVolmaskParametersTagged:
+) -> MrisVolmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -161,7 +161,7 @@ def mris_volmask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisVolmaskParameters` object.
+    `MrisVolmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -232,7 +232,7 @@ def mris_volmask_validate(
 
 
 def mris_volmask_cargs(
-    params: MrisVolmaskParameters,
+    params: MrisVolmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -318,7 +318,7 @@ def mris_volmask_cargs(
 
 
 def mris_volmask_outputs(
-    params: MrisVolmaskParameters,
+    params: MrisVolmaskParamsDict,
     execution: Execution,
 ) -> MrisVolmaskOutputs:
     """
@@ -337,7 +337,7 @@ def mris_volmask_outputs(
 
 
 def mris_volmask_execute(
-    params: MrisVolmaskParameters,
+    params: MrisVolmaskParamsDict,
     runner: Runner | None = None,
 ) -> MrisVolmaskOutputs:
     """
@@ -459,6 +459,8 @@ def mris_volmask(
 __all__ = [
     "MRIS_VOLMASK_METADATA",
     "MrisVolmaskOutputs",
+    "MrisVolmaskParamsDict",
+    "MrisVolmaskParamsDictTagged",
     "mris_volmask",
     "mris_volmask_execute",
     "mris_volmask_params",

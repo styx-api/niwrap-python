@@ -13,7 +13,7 @@ EPI_B0_CORRECT_PY_METADATA = Metadata(
 )
 
 
-EpiB0CorrectPyParameters = typing.TypedDict('EpiB0CorrectPyParameters', {
+EpiB0CorrectPyParamsDict = typing.TypedDict('EpiB0CorrectPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/epi_b0_correct.py"]],
     "prefix": str,
     "input_freq": InputPathType,
@@ -40,7 +40,7 @@ EpiB0CorrectPyParameters = typing.TypedDict('EpiB0CorrectPyParameters', {
     "ver": bool,
     "date": bool,
 })
-EpiB0CorrectPyParametersTagged = typing.TypedDict('EpiB0CorrectPyParametersTagged', {
+EpiB0CorrectPyParamsDictTagged = typing.TypedDict('EpiB0CorrectPyParamsDictTagged', {
     "@type": typing.Literal["afni/epi_b0_correct.py"],
     "prefix": str,
     "input_freq": InputPathType,
@@ -71,7 +71,7 @@ EpiB0CorrectPyParametersTagged = typing.TypedDict('EpiB0CorrectPyParametersTagge
 
 class EpiB0CorrectPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EpiB0CorrectPyParameters(...)`.
+    Output object returned when calling `EpiB0CorrectPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,7 +112,7 @@ def epi_b0_correct_py_params(
     help_: bool = False,
     ver: bool = False,
     date: bool = False,
-) -> EpiB0CorrectPyParametersTagged:
+) -> EpiB0CorrectPyParamsDictTagged:
     """
     Build parameters.
     
@@ -207,7 +207,7 @@ def epi_b0_correct_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EpiB0CorrectPyParameters` object.
+    `EpiB0CorrectPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -302,7 +302,7 @@ def epi_b0_correct_py_validate(
 
 
 def epi_b0_correct_py_cargs(
-    params: EpiB0CorrectPyParameters,
+    params: EpiB0CorrectPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -415,7 +415,7 @@ def epi_b0_correct_py_cargs(
 
 
 def epi_b0_correct_py_outputs(
-    params: EpiB0CorrectPyParameters,
+    params: EpiB0CorrectPyParamsDict,
     execution: Execution,
 ) -> EpiB0CorrectPyOutputs:
     """
@@ -439,7 +439,7 @@ def epi_b0_correct_py_outputs(
 
 
 def epi_b0_correct_py_execute(
-    params: EpiB0CorrectPyParameters,
+    params: EpiB0CorrectPyParamsDict,
     runner: Runner | None = None,
 ) -> EpiB0CorrectPyOutputs:
     """
@@ -578,6 +578,8 @@ def epi_b0_correct_py(
 __all__ = [
     "EPI_B0_CORRECT_PY_METADATA",
     "EpiB0CorrectPyOutputs",
+    "EpiB0CorrectPyParamsDict",
+    "EpiB0CorrectPyParamsDictTagged",
     "epi_b0_correct_py",
     "epi_b0_correct_py_execute",
     "epi_b0_correct_py_params",

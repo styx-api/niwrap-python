@@ -13,7 +13,7 @@ CUTOFFCALC_METADATA = Metadata(
 )
 
 
-CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
+CutoffcalcParamsDict = typing.TypedDict('CutoffcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/cutoffcalc"]],
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
@@ -23,7 +23,7 @@ CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
     "verbose_flag": bool,
     "debug_flag": bool,
 })
-CutoffcalcParametersTagged = typing.TypedDict('CutoffcalcParametersTagged', {
+CutoffcalcParamsDictTagged = typing.TypedDict('CutoffcalcParamsDictTagged', {
     "@type": typing.Literal["fsl/cutoffcalc"],
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ CutoffcalcParametersTagged = typing.TypedDict('CutoffcalcParametersTagged', {
 
 class CutoffcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CutoffcalcParameters(...)`.
+    Output object returned when calling `CutoffcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def cutoffcalc_params(
     example_sigma: float | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,
-) -> CutoffcalcParametersTagged:
+) -> CutoffcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def cutoffcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CutoffcalcParameters` object.
+    `CutoffcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def cutoffcalc_validate(
 
 
 def cutoffcalc_cargs(
-    params: CutoffcalcParameters,
+    params: CutoffcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def cutoffcalc_cargs(
 
 
 def cutoffcalc_outputs(
-    params: CutoffcalcParameters,
+    params: CutoffcalcParamsDict,
     execution: Execution,
 ) -> CutoffcalcOutputs:
     """
@@ -177,7 +177,7 @@ def cutoffcalc_outputs(
 
 
 def cutoffcalc_execute(
-    params: CutoffcalcParameters,
+    params: CutoffcalcParamsDict,
     runner: Runner | None = None,
 ) -> CutoffcalcOutputs:
     """
@@ -255,6 +255,8 @@ def cutoffcalc(
 __all__ = [
     "CUTOFFCALC_METADATA",
     "CutoffcalcOutputs",
+    "CutoffcalcParamsDict",
+    "CutoffcalcParamsDictTagged",
     "cutoffcalc",
     "cutoffcalc_execute",
     "cutoffcalc_params",

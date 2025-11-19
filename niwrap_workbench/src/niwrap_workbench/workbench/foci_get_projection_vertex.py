@@ -12,14 +12,14 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 )
 
 
-FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexParameters', {
+FociGetProjectionVertexParamsDict = typing.TypedDict('FociGetProjectionVertexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/foci-get-projection-vertex"]],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "foci": InputPathType,
     "surface": InputPathType,
 })
-FociGetProjectionVertexParametersTagged = typing.TypedDict('FociGetProjectionVertexParametersTagged', {
+FociGetProjectionVertexParamsDictTagged = typing.TypedDict('FociGetProjectionVertexParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-get-projection-vertex"],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ FociGetProjectionVertexParametersTagged = typing.TypedDict('FociGetProjectionVer
 
 class FociGetProjectionVertexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FociGetProjectionVertexParameters(...)`.
+    Output object returned when calling `FociGetProjectionVertexParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def foci_get_projection_vertex_params(
     name: str | None,
     foci: InputPathType,
     surface: InputPathType,
-) -> FociGetProjectionVertexParametersTagged:
+) -> FociGetProjectionVertexParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def foci_get_projection_vertex_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FociGetProjectionVertexParameters` object.
+    `FociGetProjectionVertexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def foci_get_projection_vertex_validate(
 
 
 def foci_get_projection_vertex_cargs(
-    params: FociGetProjectionVertexParameters,
+    params: FociGetProjectionVertexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def foci_get_projection_vertex_cargs(
 
 
 def foci_get_projection_vertex_outputs(
-    params: FociGetProjectionVertexParameters,
+    params: FociGetProjectionVertexParamsDict,
     execution: Execution,
 ) -> FociGetProjectionVertexOutputs:
     """
@@ -145,7 +145,7 @@ def foci_get_projection_vertex_outputs(
 
 
 def foci_get_projection_vertex_execute(
-    params: FociGetProjectionVertexParameters,
+    params: FociGetProjectionVertexParamsDict,
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
@@ -208,6 +208,8 @@ def foci_get_projection_vertex(
 __all__ = [
     "FOCI_GET_PROJECTION_VERTEX_METADATA",
     "FociGetProjectionVertexOutputs",
+    "FociGetProjectionVertexParamsDict",
+    "FociGetProjectionVertexParamsDictTagged",
     "foci_get_projection_vertex",
     "foci_get_projection_vertex_execute",
     "foci_get_projection_vertex_params",

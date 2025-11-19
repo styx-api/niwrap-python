@@ -13,12 +13,12 @@ REG_MNI305_2MM_METADATA = Metadata(
 )
 
 
-RegMni3052mmParameters = typing.TypedDict('RegMni3052mmParameters', {
+RegMni3052mmParamsDict = typing.TypedDict('RegMni3052mmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reg-mni305.2mm"]],
     "subject_id": str,
     "regfile": InputPathType,
 })
-RegMni3052mmParametersTagged = typing.TypedDict('RegMni3052mmParametersTagged', {
+RegMni3052mmParamsDictTagged = typing.TypedDict('RegMni3052mmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reg-mni305.2mm"],
     "subject_id": str,
     "regfile": InputPathType,
@@ -27,7 +27,7 @@ RegMni3052mmParametersTagged = typing.TypedDict('RegMni3052mmParametersTagged', 
 
 class RegMni3052mmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegMni3052mmParameters(...)`.
+    Output object returned when calling `RegMni3052mmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class RegMni3052mmOutputs(typing.NamedTuple):
 def reg_mni305_2mm_params(
     subject_id: str,
     regfile: InputPathType,
-) -> RegMni3052mmParametersTagged:
+) -> RegMni3052mmParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def reg_mni305_2mm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegMni3052mmParameters` object.
+    `RegMni3052mmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def reg_mni305_2mm_validate(
 
 
 def reg_mni305_2mm_cargs(
-    params: RegMni3052mmParameters,
+    params: RegMni3052mmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -106,7 +106,7 @@ def reg_mni305_2mm_cargs(
 
 
 def reg_mni305_2mm_outputs(
-    params: RegMni3052mmParameters,
+    params: RegMni3052mmParamsDict,
     execution: Execution,
 ) -> RegMni3052mmOutputs:
     """
@@ -126,7 +126,7 @@ def reg_mni305_2mm_outputs(
 
 
 def reg_mni305_2mm_execute(
-    params: RegMni3052mmParameters,
+    params: RegMni3052mmParamsDict,
     runner: Runner | None = None,
 ) -> RegMni3052mmOutputs:
     """
@@ -188,6 +188,8 @@ def reg_mni305_2mm(
 __all__ = [
     "REG_MNI305_2MM_METADATA",
     "RegMni3052mmOutputs",
+    "RegMni3052mmParamsDict",
+    "RegMni3052mmParamsDictTagged",
     "reg_mni305_2mm",
     "reg_mni305_2mm_execute",
     "reg_mni305_2mm_params",

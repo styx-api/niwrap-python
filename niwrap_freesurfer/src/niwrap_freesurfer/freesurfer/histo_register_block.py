@@ -13,7 +13,7 @@ HISTO_REGISTER_BLOCK_METADATA = Metadata(
 )
 
 
-HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', {
+HistoRegisterBlockParamsDict = typing.TypedDict('HistoRegisterBlockParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/histo_register_block"]],
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
@@ -23,7 +23,7 @@ HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', 
     "out_like": typing.NotRequired[InputPathType | None],
     "invert_transform": bool,
 })
-HistoRegisterBlockParametersTagged = typing.TypedDict('HistoRegisterBlockParametersTagged', {
+HistoRegisterBlockParamsDictTagged = typing.TypedDict('HistoRegisterBlockParamsDictTagged', {
     "@type": typing.Literal["freesurfer/histo_register_block"],
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
@@ -37,7 +37,7 @@ HistoRegisterBlockParametersTagged = typing.TypedDict('HistoRegisterBlockParamet
 
 class HistoRegisterBlockOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HistoRegisterBlockParameters(...)`.
+    Output object returned when calling `HistoRegisterBlockParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def histo_register_block_params(
     output_file: str,
     out_like: InputPathType | None = None,
     invert_transform: bool = False,
-) -> HistoRegisterBlockParametersTagged:
+) -> HistoRegisterBlockParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def histo_register_block_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HistoRegisterBlockParameters` object.
+    `HistoRegisterBlockParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def histo_register_block_validate(
 
 
 def histo_register_block_cargs(
-    params: HistoRegisterBlockParameters,
+    params: HistoRegisterBlockParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,7 +154,7 @@ def histo_register_block_cargs(
 
 
 def histo_register_block_outputs(
-    params: HistoRegisterBlockParameters,
+    params: HistoRegisterBlockParamsDict,
     execution: Execution,
 ) -> HistoRegisterBlockOutputs:
     """
@@ -174,7 +174,7 @@ def histo_register_block_outputs(
 
 
 def histo_register_block_execute(
-    params: HistoRegisterBlockParameters,
+    params: HistoRegisterBlockParamsDict,
     runner: Runner | None = None,
 ) -> HistoRegisterBlockOutputs:
     """
@@ -248,6 +248,8 @@ def histo_register_block(
 __all__ = [
     "HISTO_REGISTER_BLOCK_METADATA",
     "HistoRegisterBlockOutputs",
+    "HistoRegisterBlockParamsDict",
+    "HistoRegisterBlockParamsDictTagged",
     "histo_register_block",
     "histo_register_block_execute",
     "histo_register_block_params",

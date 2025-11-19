@@ -12,33 +12,33 @@ BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
 )
 
 
-BorderFileExportToCaret5SurfaceParameters = typing.TypedDict('BorderFileExportToCaret5SurfaceParameters', {
+BorderFileExportToCaret5SurfaceParamsDict = typing.TypedDict('BorderFileExportToCaret5SurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
     "surface-in": InputPathType,
 })
-BorderFileExportToCaret5SurfaceParametersTagged = typing.TypedDict('BorderFileExportToCaret5SurfaceParametersTagged', {
+BorderFileExportToCaret5SurfaceParamsDictTagged = typing.TypedDict('BorderFileExportToCaret5SurfaceParamsDictTagged', {
     "@type": typing.Literal["surface"],
     "surface-in": InputPathType,
 })
 
 
-BorderFileExportToCaret5Parameters = typing.TypedDict('BorderFileExportToCaret5Parameters', {
+BorderFileExportToCaret5ParamsDict = typing.TypedDict('BorderFileExportToCaret5ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-file-export-to-caret5"]],
-    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
+    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
     "border-file": str,
     "output-file-prefix": str,
 })
-BorderFileExportToCaret5ParametersTagged = typing.TypedDict('BorderFileExportToCaret5ParametersTagged', {
+BorderFileExportToCaret5ParamsDictTagged = typing.TypedDict('BorderFileExportToCaret5ParamsDictTagged', {
     "@type": typing.Literal["workbench/border-file-export-to-caret5"],
-    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
+    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
     "border-file": str,
     "output-file-prefix": str,
 })
 
 
-def border_file_export_to_caret5_surface_params(
+def border_file_export_to_caret5_surface(
     surface_in: InputPathType,
-) -> BorderFileExportToCaret5SurfaceParametersTagged:
+) -> BorderFileExportToCaret5SurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def border_file_export_to_caret5_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderFileExportToCaret5SurfaceParameters` object.
+    `BorderFileExportToCaret5SurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def border_file_export_to_caret5_surface_validate(
 
 
 def border_file_export_to_caret5_surface_cargs(
-    params: BorderFileExportToCaret5SurfaceParameters,
+    params: BorderFileExportToCaret5SurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -95,7 +95,7 @@ def border_file_export_to_caret5_surface_cargs(
 
 class BorderFileExportToCaret5Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `BorderFileExportToCaret5Parameters(...)`.
+    Output object returned when calling `BorderFileExportToCaret5ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,8 +104,8 @@ class BorderFileExportToCaret5Outputs(typing.NamedTuple):
 def border_file_export_to_caret5_params(
     border_file: str,
     output_file_prefix: str,
-    surface: list[BorderFileExportToCaret5SurfaceParameters] | None = None,
-) -> BorderFileExportToCaret5ParametersTagged:
+    surface: list[BorderFileExportToCaret5SurfaceParamsDict] | None = None,
+) -> BorderFileExportToCaret5ParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def border_file_export_to_caret5_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BorderFileExportToCaret5Parameters` object.
+    `BorderFileExportToCaret5ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -141,7 +141,7 @@ def border_file_export_to_caret5_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[BorderFileExportToCaret5SurfaceParameters] | None`')
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[BorderFileExportToCaret5SurfaceParamsDict] | None`')
         for e in params["surface"]:
             border_file_export_to_caret5_surface_validate(e)
     if params.get("border-file", None) is None:
@@ -155,7 +155,7 @@ def border_file_export_to_caret5_validate(
 
 
 def border_file_export_to_caret5_cargs(
-    params: BorderFileExportToCaret5Parameters,
+    params: BorderFileExportToCaret5ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def border_file_export_to_caret5_cargs(
 
 
 def border_file_export_to_caret5_outputs(
-    params: BorderFileExportToCaret5Parameters,
+    params: BorderFileExportToCaret5ParamsDict,
     execution: Execution,
 ) -> BorderFileExportToCaret5Outputs:
     """
@@ -199,7 +199,7 @@ def border_file_export_to_caret5_outputs(
 
 
 def border_file_export_to_caret5_execute(
-    params: BorderFileExportToCaret5Parameters,
+    params: BorderFileExportToCaret5ParamsDict,
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
@@ -249,7 +249,7 @@ def border_file_export_to_caret5_execute(
 def border_file_export_to_caret5(
     border_file: str,
     output_file_prefix: str,
-    surface: list[BorderFileExportToCaret5SurfaceParameters] | None = None,
+    surface: list[BorderFileExportToCaret5SurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
@@ -300,8 +300,12 @@ def border_file_export_to_caret5(
 __all__ = [
     "BORDER_FILE_EXPORT_TO_CARET5_METADATA",
     "BorderFileExportToCaret5Outputs",
+    "BorderFileExportToCaret5ParamsDict",
+    "BorderFileExportToCaret5ParamsDictTagged",
+    "BorderFileExportToCaret5SurfaceParamsDict",
+    "BorderFileExportToCaret5SurfaceParamsDictTagged",
     "border_file_export_to_caret5",
     "border_file_export_to_caret5_execute",
     "border_file_export_to_caret5_params",
-    "border_file_export_to_caret5_surface_params",
+    "border_file_export_to_caret5_surface",
 ]

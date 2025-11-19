@@ -13,7 +13,7 @@ SFIM_METADATA = Metadata(
 )
 
 
-SfimParameters = typing.TypedDict('SfimParameters', {
+SfimParamsDict = typing.TypedDict('SfimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/sfim"]],
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ SfimParameters = typing.TypedDict('SfimParameters', {
     "local_base_option": bool,
     "output_prefix": typing.NotRequired[str | None],
 })
-SfimParametersTagged = typing.TypedDict('SfimParametersTagged', {
+SfimParamsDictTagged = typing.TypedDict('SfimParamsDictTagged', {
     "@type": typing.Literal["afni/sfim"],
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ SfimParametersTagged = typing.TypedDict('SfimParametersTagged', {
 
 class SfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SfimParameters(...)`.
+    Output object returned when calling `SfimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def sfim_params(
     baseline_state: str | None = None,
     local_base_option: bool = False,
     output_prefix: str | None = None,
-) -> SfimParametersTagged:
+) -> SfimParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def sfim_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `SfimParameters`
+    Validate parameters. Throws an error if `params` is not a valid `SfimParamsDict`
     object.
     
     Args:
@@ -113,7 +113,7 @@ def sfim_validate(
 
 
 def sfim_cargs(
-    params: SfimParameters,
+    params: SfimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def sfim_cargs(
 
 
 def sfim_outputs(
-    params: SfimParameters,
+    params: SfimParamsDict,
     execution: Execution,
 ) -> SfimOutputs:
     """
@@ -168,7 +168,7 @@ def sfim_outputs(
 
 
 def sfim_execute(
-    params: SfimParameters,
+    params: SfimParamsDict,
     runner: Runner | None = None,
 ) -> SfimOutputs:
     """
@@ -242,6 +242,8 @@ def sfim(
 __all__ = [
     "SFIM_METADATA",
     "SfimOutputs",
+    "SfimParamsDict",
+    "SfimParamsDictTagged",
     "sfim",
     "sfim_execute",
     "sfim_params",

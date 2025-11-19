@@ -13,12 +13,12 @@ VENTFIX_METADATA = Metadata(
 )
 
 
-VentfixParameters = typing.TypedDict('VentfixParameters', {
+VentfixParamsDict = typing.TypedDict('VentfixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/ventfix"]],
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })
-VentfixParametersTagged = typing.TypedDict('VentfixParametersTagged', {
+VentfixParamsDictTagged = typing.TypedDict('VentfixParamsDictTagged', {
     "@type": typing.Literal["freesurfer/ventfix"],
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ VentfixParametersTagged = typing.TypedDict('VentfixParametersTagged', {
 
 class VentfixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VentfixParameters(...)`.
+    Output object returned when calling `VentfixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class VentfixOutputs(typing.NamedTuple):
 def ventfix_params(
     subject_dir: str,
     option1: str | None = None,
-) -> VentfixParametersTagged:
+) -> VentfixParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def ventfix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VentfixParameters` object.
+    `VentfixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def ventfix_validate(
 
 
 def ventfix_cargs(
-    params: VentfixParameters,
+    params: VentfixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def ventfix_cargs(
 
 
 def ventfix_outputs(
-    params: VentfixParameters,
+    params: VentfixParamsDict,
     execution: Execution,
 ) -> VentfixOutputs:
     """
@@ -123,7 +123,7 @@ def ventfix_outputs(
 
 
 def ventfix_execute(
-    params: VentfixParameters,
+    params: VentfixParamsDict,
     runner: Runner | None = None,
 ) -> VentfixOutputs:
     """
@@ -182,6 +182,8 @@ def ventfix(
 __all__ = [
     "VENTFIX_METADATA",
     "VentfixOutputs",
+    "VentfixParamsDict",
+    "VentfixParamsDictTagged",
     "ventfix",
     "ventfix_execute",
     "ventfix_params",

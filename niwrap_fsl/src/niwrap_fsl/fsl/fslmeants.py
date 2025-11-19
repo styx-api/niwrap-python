@@ -13,7 +13,7 @@ FSLMEANTS_METADATA = Metadata(
 )
 
 
-FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
+FslmeantsParamsDict = typing.TypedDict('FslmeantsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslmeants"]],
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-FslmeantsParametersTagged = typing.TypedDict('FslmeantsParametersTagged', {
+FslmeantsParamsDictTagged = typing.TypedDict('FslmeantsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslmeants"],
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
@@ -51,7 +51,7 @@ FslmeantsParametersTagged = typing.TypedDict('FslmeantsParametersTagged', {
 
 class FslmeantsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslmeantsParameters(...)`.
+    Output object returned when calling `FslmeantsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def fslmeants_params(
     weighted_mean_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslmeantsParametersTagged:
+) -> FslmeantsParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def fslmeants_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmeantsParameters` object.
+    `FslmeantsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def fslmeants_validate(
 
 
 def fslmeants_cargs(
-    params: FslmeantsParameters,
+    params: FslmeantsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -261,7 +261,7 @@ def fslmeants_cargs(
 
 
 def fslmeants_outputs(
-    params: FslmeantsParameters,
+    params: FslmeantsParamsDict,
     execution: Execution,
 ) -> FslmeantsOutputs:
     """
@@ -281,7 +281,7 @@ def fslmeants_outputs(
 
 
 def fslmeants_execute(
-    params: FslmeantsParameters,
+    params: FslmeantsParamsDict,
     runner: Runner | None = None,
 ) -> FslmeantsOutputs:
     """
@@ -382,6 +382,8 @@ def fslmeants(
 __all__ = [
     "FSLMEANTS_METADATA",
     "FslmeantsOutputs",
+    "FslmeantsParamsDict",
+    "FslmeantsParamsDictTagged",
     "fslmeants",
     "fslmeants_execute",
     "fslmeants_params",

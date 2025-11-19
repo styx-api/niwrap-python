@@ -13,19 +13,19 @@ MRCAT_METADATA = Metadata(
 )
 
 
-MrcatConfigParameters = typing.TypedDict('MrcatConfigParameters', {
+MrcatConfigParamsDict = typing.TypedDict('MrcatConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrcatConfigParametersTagged = typing.TypedDict('MrcatConfigParametersTagged', {
+MrcatConfigParamsDictTagged = typing.TypedDict('MrcatConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrcatParameters = typing.TypedDict('MrcatParameters', {
+MrcatParamsDict = typing.TypedDict('MrcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrcat"]],
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
@@ -34,14 +34,14 @@ MrcatParameters = typing.TypedDict('MrcatParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcatConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcatConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1": InputPathType,
     "image2": list[InputPathType],
     "output": str,
 })
-MrcatParametersTagged = typing.TypedDict('MrcatParametersTagged', {
+MrcatParamsDictTagged = typing.TypedDict('MrcatParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrcat"],
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ MrcatParametersTagged = typing.TypedDict('MrcatParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrcatConfigParameters] | None],
+    "config": typing.NotRequired[list[MrcatConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image1": InputPathType,
@@ -59,10 +59,10 @@ MrcatParametersTagged = typing.TypedDict('MrcatParametersTagged', {
 })
 
 
-def mrcat_config_params(
+def mrcat_config(
     key: str,
     value: str,
-) -> MrcatConfigParametersTagged:
+) -> MrcatConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def mrcat_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcatConfigParameters` object.
+    `MrcatConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def mrcat_config_validate(
 
 
 def mrcat_config_cargs(
-    params: MrcatConfigParameters,
+    params: MrcatConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def mrcat_config_cargs(
 
 class MrcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrcatParameters(...)`.
+    Output object returned when calling `MrcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,10 +143,10 @@ def mrcat_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcatConfigParameters] | None = None,
+    config: list[MrcatConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcatParametersTagged:
+) -> MrcatParamsDictTagged:
     """
     Build parameters.
     
@@ -207,7 +207,7 @@ def mrcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrcatParameters` object.
+    `MrcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,7 +241,7 @@ def mrcat_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcatConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrcatConfigParamsDict] | None`')
         for e in params["config"]:
             mrcat_config_validate(e)
     if params.get("help", False) is None:
@@ -270,7 +270,7 @@ def mrcat_validate(
 
 
 def mrcat_cargs(
-    params: MrcatParameters,
+    params: MrcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -320,7 +320,7 @@ def mrcat_cargs(
 
 
 def mrcat_outputs(
-    params: MrcatParameters,
+    params: MrcatParamsDict,
     execution: Execution,
 ) -> MrcatOutputs:
     """
@@ -340,7 +340,7 @@ def mrcat_outputs(
 
 
 def mrcat_execute(
-    params: MrcatParameters,
+    params: MrcatParamsDict,
     runner: Runner | None = None,
 ) -> MrcatOutputs:
     """
@@ -385,7 +385,7 @@ def mrcat(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrcatConfigParameters] | None = None,
+    config: list[MrcatConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -455,9 +455,13 @@ def mrcat(
 
 __all__ = [
     "MRCAT_METADATA",
+    "MrcatConfigParamsDict",
+    "MrcatConfigParamsDictTagged",
     "MrcatOutputs",
+    "MrcatParamsDict",
+    "MrcatParamsDictTagged",
     "mrcat",
-    "mrcat_config_params",
+    "mrcat_config",
     "mrcat_execute",
     "mrcat_params",
 ]

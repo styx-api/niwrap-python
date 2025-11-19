@@ -13,39 +13,39 @@ FIXEL2PEAKS_METADATA = Metadata(
 )
 
 
-Fixel2peaksConfigParameters = typing.TypedDict('Fixel2peaksConfigParameters', {
+Fixel2peaksConfigParamsDict = typing.TypedDict('Fixel2peaksConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fixel2peaksConfigParametersTagged = typing.TypedDict('Fixel2peaksConfigParametersTagged', {
+Fixel2peaksConfigParamsDictTagged = typing.TypedDict('Fixel2peaksConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fixel2peaksVariousStringParameters = typing.TypedDict('Fixel2peaksVariousStringParameters', {
+Fixel2peaksVariousStringParamsDict = typing.TypedDict('Fixel2peaksVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-Fixel2peaksVariousStringParametersTagged = typing.TypedDict('Fixel2peaksVariousStringParametersTagged', {
+Fixel2peaksVariousStringParamsDictTagged = typing.TypedDict('Fixel2peaksVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-Fixel2peaksVariousFileParameters = typing.TypedDict('Fixel2peaksVariousFileParameters', {
+Fixel2peaksVariousFileParamsDict = typing.TypedDict('Fixel2peaksVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-Fixel2peaksVariousFileParametersTagged = typing.TypedDict('Fixel2peaksVariousFileParametersTagged', {
+Fixel2peaksVariousFileParamsDictTagged = typing.TypedDict('Fixel2peaksVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
+Fixel2peaksParamsDict = typing.TypedDict('Fixel2peaksParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2peaks"]],
     "number": typing.NotRequired[int | None],
     "nan": bool,
@@ -54,13 +54,13 @@ Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2peaksConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2peaksConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "in": typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
+    "in": typing.Union[Fixel2peaksVariousStringParamsDictTagged, Fixel2peaksVariousFileParamsDictTagged],
     "out": str,
 })
-Fixel2peaksParametersTagged = typing.TypedDict('Fixel2peaksParametersTagged', {
+Fixel2peaksParamsDictTagged = typing.TypedDict('Fixel2peaksParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixel2peaks"],
     "number": typing.NotRequired[int | None],
     "nan": bool,
@@ -69,10 +69,10 @@ Fixel2peaksParametersTagged = typing.TypedDict('Fixel2peaksParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2peaksConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2peaksConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "in": typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
+    "in": typing.Union[Fixel2peaksVariousStringParamsDictTagged, Fixel2peaksVariousFileParamsDictTagged],
     "out": str,
 })
 
@@ -111,10 +111,10 @@ def fixel2peaks_in_validate_dyn_fn(
     }.get(t)
 
 
-def fixel2peaks_config_params(
+def fixel2peaks_config(
     key: str,
     value: str,
-) -> Fixel2peaksConfigParametersTagged:
+) -> Fixel2peaksConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def fixel2peaks_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2peaksConfigParameters` object.
+    `Fixel2peaksConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def fixel2peaks_config_validate(
 
 
 def fixel2peaks_config_cargs(
-    params: Fixel2peaksConfigParameters,
+    params: Fixel2peaksConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,9 +174,9 @@ def fixel2peaks_config_cargs(
     return cargs
 
 
-def fixel2peaks_various_string_params(
+def fixel2peaks_various_string(
     obj: str,
-) -> Fixel2peaksVariousStringParametersTagged:
+) -> Fixel2peaksVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -197,7 +197,7 @@ def fixel2peaks_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2peaksVariousStringParameters` object.
+    `Fixel2peaksVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def fixel2peaks_various_string_validate(
 
 
 def fixel2peaks_various_string_cargs(
-    params: Fixel2peaksVariousStringParameters,
+    params: Fixel2peaksVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,9 +228,9 @@ def fixel2peaks_various_string_cargs(
     return cargs
 
 
-def fixel2peaks_various_file_params(
+def fixel2peaks_various_file(
     obj: InputPathType,
-) -> Fixel2peaksVariousFileParametersTagged:
+) -> Fixel2peaksVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -251,7 +251,7 @@ def fixel2peaks_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2peaksVariousFileParameters` object.
+    `Fixel2peaksVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -265,7 +265,7 @@ def fixel2peaks_various_file_validate(
 
 
 def fixel2peaks_various_file_cargs(
-    params: Fixel2peaksVariousFileParameters,
+    params: Fixel2peaksVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def fixel2peaks_various_file_cargs(
 
 class Fixel2peaksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fixel2peaksParameters(...)`.
+    Output object returned when calling `Fixel2peaksParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -293,7 +293,7 @@ class Fixel2peaksOutputs(typing.NamedTuple):
 
 
 def fixel2peaks_params(
-    in_: typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
+    in_: typing.Union[Fixel2peaksVariousStringParamsDictTagged, Fixel2peaksVariousFileParamsDictTagged],
     out: str,
     number: int | None = None,
     nan: bool = False,
@@ -302,10 +302,10 @@ def fixel2peaks_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2peaksConfigParameters] | None = None,
+    config: list[Fixel2peaksConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2peaksParametersTagged:
+) -> Fixel2peaksParamsDictTagged:
     """
     Build parameters.
     
@@ -356,7 +356,7 @@ def fixel2peaks_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2peaksParameters` object.
+    `Fixel2peaksParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -391,7 +391,7 @@ def fixel2peaks_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2peaksConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2peaksConfigParamsDict] | None`')
         for e in params["config"]:
             fixel2peaks_config_validate(e)
     if params.get("help", False) is None:
@@ -408,6 +408,8 @@ def fixel2peaks_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["in"])}\'')
     if "@type" not in params["in"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["in"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `in`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     fixel2peaks_in_validate_dyn_fn(params["in"]["@type"])(params["in"])
     if params.get("out", None) is None:
         raise StyxValidationError("`out` must not be None")
@@ -416,7 +418,7 @@ def fixel2peaks_validate(
 
 
 def fixel2peaks_cargs(
-    params: Fixel2peaksParameters,
+    params: Fixel2peaksParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -462,7 +464,7 @@ def fixel2peaks_cargs(
 
 
 def fixel2peaks_outputs(
-    params: Fixel2peaksParameters,
+    params: Fixel2peaksParamsDict,
     execution: Execution,
 ) -> Fixel2peaksOutputs:
     """
@@ -482,7 +484,7 @@ def fixel2peaks_outputs(
 
 
 def fixel2peaks_execute(
-    params: Fixel2peaksParameters,
+    params: Fixel2peaksParamsDict,
     runner: Runner | None = None,
 ) -> Fixel2peaksOutputs:
     """
@@ -520,7 +522,7 @@ def fixel2peaks_execute(
 
 
 def fixel2peaks(
-    in_: typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
+    in_: typing.Union[Fixel2peaksVariousStringParamsDictTagged, Fixel2peaksVariousFileParamsDictTagged],
     out: str,
     number: int | None = None,
     nan: bool = False,
@@ -529,7 +531,7 @@ def fixel2peaks(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2peaksConfigParameters] | None = None,
+    config: list[Fixel2peaksConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -593,11 +595,19 @@ def fixel2peaks(
 
 __all__ = [
     "FIXEL2PEAKS_METADATA",
+    "Fixel2peaksConfigParamsDict",
+    "Fixel2peaksConfigParamsDictTagged",
     "Fixel2peaksOutputs",
+    "Fixel2peaksParamsDict",
+    "Fixel2peaksParamsDictTagged",
+    "Fixel2peaksVariousFileParamsDict",
+    "Fixel2peaksVariousFileParamsDictTagged",
+    "Fixel2peaksVariousStringParamsDict",
+    "Fixel2peaksVariousStringParamsDictTagged",
     "fixel2peaks",
-    "fixel2peaks_config_params",
+    "fixel2peaks_config",
     "fixel2peaks_execute",
     "fixel2peaks_params",
-    "fixel2peaks_various_file_params",
-    "fixel2peaks_various_string_params",
+    "fixel2peaks_various_file",
+    "fixel2peaks_various_string",
 ]

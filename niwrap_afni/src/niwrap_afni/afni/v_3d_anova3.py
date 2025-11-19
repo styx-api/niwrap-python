@@ -13,31 +13,31 @@ V_3D_ANOVA3_METADATA = Metadata(
 )
 
 
-V3dAnova3OutfileAbcontrParameters = typing.TypedDict('V3dAnova3OutfileAbcontrParameters', {
+V3dAnova3OutfileAbcontrParamsDict = typing.TypedDict('V3dAnova3OutfileAbcontrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["outfile_abcontr"]],
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
-V3dAnova3OutfileAbcontrParametersTagged = typing.TypedDict('V3dAnova3OutfileAbcontrParametersTagged', {
+V3dAnova3OutfileAbcontrParamsDictTagged = typing.TypedDict('V3dAnova3OutfileAbcontrParamsDictTagged', {
     "@type": typing.Literal["outfile_abcontr"],
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
 
 
-V3dAnova3OutfileAbcontr1Parameters = typing.TypedDict('V3dAnova3OutfileAbcontr1Parameters', {
+V3dAnova3OutfileAbcontr1ParamsDict = typing.TypedDict('V3dAnova3OutfileAbcontr1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["outfile_abcontr_1"]],
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
-V3dAnova3OutfileAbcontr1ParametersTagged = typing.TypedDict('V3dAnova3OutfileAbcontr1ParametersTagged', {
+V3dAnova3OutfileAbcontr1ParamsDictTagged = typing.TypedDict('V3dAnova3OutfileAbcontr1ParamsDictTagged', {
     "@type": typing.Literal["outfile_abcontr_1"],
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
 
 
-V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
+V3dAnova3ParamsDict = typing.TypedDict('V3dAnova3ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dANOVA3"]],
     "type": int,
     "alevels": int,
@@ -65,13 +65,13 @@ V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
     "outfile_acontr": typing.NotRequired[str | None],
     "outfile_bcontr": typing.NotRequired[str | None],
     "outfile_ccontr": typing.NotRequired[str | None],
-    "outfile_abcontr": typing.NotRequired[V3dAnova3OutfileAbcontrParameters | None],
-    "outfile_abdiff": typing.NotRequired[V3dAnova3OutfileAbcontr1Parameters | None],
+    "outfile_abcontr": typing.NotRequired[V3dAnova3OutfileAbcontrParamsDict | None],
+    "outfile_abdiff": typing.NotRequired[V3dAnova3OutfileAbcontr1ParamsDict | None],
     "outfile_abmean": typing.NotRequired[str | None],
     "outfile_bucket": typing.NotRequired[str | None],
     "anova_options": typing.NotRequired[list[str] | None],
 })
-V3dAnova3ParametersTagged = typing.TypedDict('V3dAnova3ParametersTagged', {
+V3dAnova3ParamsDictTagged = typing.TypedDict('V3dAnova3ParamsDictTagged', {
     "@type": typing.Literal["afni/3dANOVA3"],
     "type": int,
     "alevels": int,
@@ -99,18 +99,18 @@ V3dAnova3ParametersTagged = typing.TypedDict('V3dAnova3ParametersTagged', {
     "outfile_acontr": typing.NotRequired[str | None],
     "outfile_bcontr": typing.NotRequired[str | None],
     "outfile_ccontr": typing.NotRequired[str | None],
-    "outfile_abcontr": typing.NotRequired[V3dAnova3OutfileAbcontrParameters | None],
-    "outfile_abdiff": typing.NotRequired[V3dAnova3OutfileAbcontr1Parameters | None],
+    "outfile_abcontr": typing.NotRequired[V3dAnova3OutfileAbcontrParamsDict | None],
+    "outfile_abdiff": typing.NotRequired[V3dAnova3OutfileAbcontr1ParamsDict | None],
     "outfile_abmean": typing.NotRequired[str | None],
     "outfile_bucket": typing.NotRequired[str | None],
     "anova_options": typing.NotRequired[list[str] | None],
 })
 
 
-def v_3d_anova3_outfile_abcontr_params(
+def v_3d_anova3_outfile_abcontr(
     outfile_abcontr: str | None = None,
     outfile_abcontr_: str | None = None,
-) -> V3dAnova3OutfileAbcontrParametersTagged:
+) -> V3dAnova3OutfileAbcontrParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def v_3d_anova3_outfile_abcontr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAnova3OutfileAbcontrParameters` object.
+    `V3dAnova3OutfileAbcontrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def v_3d_anova3_outfile_abcontr_validate(
 
 
 def v_3d_anova3_outfile_abcontr_cargs(
-    params: V3dAnova3OutfileAbcontrParameters,
+    params: V3dAnova3OutfileAbcontrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,10 +179,10 @@ def v_3d_anova3_outfile_abcontr_cargs(
     return cargs
 
 
-def v_3d_anova3_outfile_abcontr_1_params(
+def v_3d_anova3_outfile_abcontr_1(
     outfile_abdiff: str | None = None,
     outfile_abdiff_: str | None = None,
-) -> V3dAnova3OutfileAbcontr1ParametersTagged:
+) -> V3dAnova3OutfileAbcontr1ParamsDictTagged:
     """
     Build parameters.
     
@@ -209,7 +209,7 @@ def v_3d_anova3_outfile_abcontr_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAnova3OutfileAbcontr1Parameters` object.
+    `V3dAnova3OutfileAbcontr1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def v_3d_anova3_outfile_abcontr_1_validate(
 
 
 def v_3d_anova3_outfile_abcontr_1_cargs(
-    params: V3dAnova3OutfileAbcontr1Parameters,
+    params: V3dAnova3OutfileAbcontr1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -253,7 +253,7 @@ def v_3d_anova3_outfile_abcontr_1_cargs(
 
 class V3dAnova3Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAnova3Parameters(...)`.
+    Output object returned when calling `V3dAnova3ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -304,12 +304,12 @@ def v_3d_anova3_params(
     outfile_acontr: str | None = None,
     outfile_bcontr: str | None = None,
     outfile_ccontr: str | None = None,
-    outfile_abcontr: V3dAnova3OutfileAbcontrParameters | None = None,
-    outfile_abdiff: V3dAnova3OutfileAbcontr1Parameters | None = None,
+    outfile_abcontr: V3dAnova3OutfileAbcontrParamsDict | None = None,
+    outfile_abdiff: V3dAnova3OutfileAbcontr1ParamsDict | None = None,
     outfile_abmean: str | None = None,
     outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
-) -> V3dAnova3ParametersTagged:
+) -> V3dAnova3ParamsDictTagged:
     """
     Build parameters.
     
@@ -427,7 +427,7 @@ def v_3d_anova3_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAnova3Parameters` object.
+    `V3dAnova3ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -542,7 +542,7 @@ def v_3d_anova3_validate(
 
 
 def v_3d_anova3_cargs(
-    params: V3dAnova3Parameters,
+    params: V3dAnova3ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -701,7 +701,7 @@ def v_3d_anova3_cargs(
 
 
 def v_3d_anova3_outputs(
-    params: V3dAnova3Parameters,
+    params: V3dAnova3ParamsDict,
     execution: Execution,
 ) -> V3dAnova3Outputs:
     """
@@ -729,7 +729,7 @@ def v_3d_anova3_outputs(
 
 
 def v_3d_anova3_execute(
-    params: V3dAnova3Parameters,
+    params: V3dAnova3ParamsDict,
     runner: Runner | None = None,
 ) -> V3dAnova3Outputs:
     """
@@ -784,8 +784,8 @@ def v_3d_anova3(
     outfile_acontr: str | None = None,
     outfile_bcontr: str | None = None,
     outfile_ccontr: str | None = None,
-    outfile_abcontr: V3dAnova3OutfileAbcontrParameters | None = None,
-    outfile_abdiff: V3dAnova3OutfileAbcontr1Parameters | None = None,
+    outfile_abcontr: V3dAnova3OutfileAbcontrParamsDict | None = None,
+    outfile_abdiff: V3dAnova3OutfileAbcontr1ParamsDict | None = None,
     outfile_abmean: str | None = None,
     outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
@@ -885,11 +885,17 @@ def v_3d_anova3(
 
 
 __all__ = [
+    "V3dAnova3OutfileAbcontr1ParamsDict",
+    "V3dAnova3OutfileAbcontr1ParamsDictTagged",
+    "V3dAnova3OutfileAbcontrParamsDict",
+    "V3dAnova3OutfileAbcontrParamsDictTagged",
     "V3dAnova3Outputs",
+    "V3dAnova3ParamsDict",
+    "V3dAnova3ParamsDictTagged",
     "V_3D_ANOVA3_METADATA",
     "v_3d_anova3",
     "v_3d_anova3_execute",
-    "v_3d_anova3_outfile_abcontr_1_params",
-    "v_3d_anova3_outfile_abcontr_params",
+    "v_3d_anova3_outfile_abcontr",
+    "v_3d_anova3_outfile_abcontr_1",
     "v_3d_anova3_params",
 ]

@@ -13,14 +13,14 @@ MRI_REMOVE_NECK_METADATA = Metadata(
 )
 
 
-MriRemoveNeckParameters = typing.TypedDict('MriRemoveNeckParameters', {
+MriRemoveNeckParamsDict = typing.TypedDict('MriRemoveNeckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_remove_neck"]],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "gca": InputPathType,
     "output_volume": str,
 })
-MriRemoveNeckParametersTagged = typing.TypedDict('MriRemoveNeckParametersTagged', {
+MriRemoveNeckParamsDictTagged = typing.TypedDict('MriRemoveNeckParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_remove_neck"],
     "input_volume": InputPathType,
     "transform": InputPathType,
@@ -31,7 +31,7 @@ MriRemoveNeckParametersTagged = typing.TypedDict('MriRemoveNeckParametersTagged'
 
 class MriRemoveNeckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriRemoveNeckParameters(...)`.
+    Output object returned when calling `MriRemoveNeckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_remove_neck_params(
     transform: InputPathType,
     gca: InputPathType,
     output_volume: str,
-) -> MriRemoveNeckParametersTagged:
+) -> MriRemoveNeckParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_remove_neck_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriRemoveNeckParameters` object.
+    `MriRemoveNeckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mri_remove_neck_validate(
 
 
 def mri_remove_neck_cargs(
-    params: MriRemoveNeckParameters,
+    params: MriRemoveNeckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mri_remove_neck_cargs(
 
 
 def mri_remove_neck_outputs(
-    params: MriRemoveNeckParameters,
+    params: MriRemoveNeckParamsDict,
     execution: Execution,
 ) -> MriRemoveNeckOutputs:
     """
@@ -139,7 +139,7 @@ def mri_remove_neck_outputs(
 
 
 def mri_remove_neck_execute(
-    params: MriRemoveNeckParameters,
+    params: MriRemoveNeckParamsDict,
     runner: Runner | None = None,
 ) -> MriRemoveNeckOutputs:
     """
@@ -204,6 +204,8 @@ def mri_remove_neck(
 __all__ = [
     "MRI_REMOVE_NECK_METADATA",
     "MriRemoveNeckOutputs",
+    "MriRemoveNeckParamsDict",
+    "MriRemoveNeckParamsDictTagged",
     "mri_remove_neck",
     "mri_remove_neck_execute",
     "mri_remove_neck_params",

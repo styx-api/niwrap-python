@@ -13,7 +13,7 @@ FEATREGAPPLY_METADATA = Metadata(
 )
 
 
-FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
+FeatregapplyParamsDict = typing.TypedDict('FeatregapplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/featregapply"]],
     "feat_directory": str,
     "force_flag": bool,
@@ -23,7 +23,7 @@ FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
     "standard_space_res": typing.NotRequired[float | None],
     "exclude_filtered_func_flag": bool,
 })
-FeatregapplyParametersTagged = typing.TypedDict('FeatregapplyParametersTagged', {
+FeatregapplyParamsDictTagged = typing.TypedDict('FeatregapplyParamsDictTagged', {
     "@type": typing.Literal["fsl/featregapply"],
     "feat_directory": str,
     "force_flag": bool,
@@ -37,7 +37,7 @@ FeatregapplyParametersTagged = typing.TypedDict('FeatregapplyParametersTagged', 
 
 class FeatregapplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FeatregapplyParameters(...)`.
+    Output object returned when calling `FeatregapplyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def featregapply_params(
     upsample_spline: InputPathType | None = None,
     standard_space_res: float | None = None,
     exclude_filtered_func_flag: bool = False,
-) -> FeatregapplyParametersTagged:
+) -> FeatregapplyParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def featregapply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FeatregapplyParameters` object.
+    `FeatregapplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def featregapply_validate(
 
 
 def featregapply_cargs(
-    params: FeatregapplyParameters,
+    params: FeatregapplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def featregapply_cargs(
 
 
 def featregapply_outputs(
-    params: FeatregapplyParameters,
+    params: FeatregapplyParamsDict,
     execution: Execution,
 ) -> FeatregapplyOutputs:
     """
@@ -190,7 +190,7 @@ def featregapply_outputs(
 
 
 def featregapply_execute(
-    params: FeatregapplyParameters,
+    params: FeatregapplyParamsDict,
     runner: Runner | None = None,
 ) -> FeatregapplyOutputs:
     """
@@ -270,6 +270,8 @@ def featregapply(
 __all__ = [
     "FEATREGAPPLY_METADATA",
     "FeatregapplyOutputs",
+    "FeatregapplyParamsDict",
+    "FeatregapplyParamsDictTagged",
     "featregapply",
     "featregapply_execute",
     "featregapply_params",

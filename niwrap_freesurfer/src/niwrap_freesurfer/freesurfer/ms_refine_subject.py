@@ -13,11 +13,11 @@ MS_REFINE_SUBJECT_METADATA = Metadata(
 )
 
 
-MsRefineSubjectParameters = typing.TypedDict('MsRefineSubjectParameters', {
+MsRefineSubjectParamsDict = typing.TypedDict('MsRefineSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/ms_refine_subject"]],
     "subjects_dir": str,
 })
-MsRefineSubjectParametersTagged = typing.TypedDict('MsRefineSubjectParametersTagged', {
+MsRefineSubjectParamsDictTagged = typing.TypedDict('MsRefineSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/ms_refine_subject"],
     "subjects_dir": str,
 })
@@ -25,7 +25,7 @@ MsRefineSubjectParametersTagged = typing.TypedDict('MsRefineSubjectParametersTag
 
 class MsRefineSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MsRefineSubjectParameters(...)`.
+    Output object returned when calling `MsRefineSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MsRefineSubjectOutputs(typing.NamedTuple):
 
 def ms_refine_subject_params(
     subjects_dir: str,
-) -> MsRefineSubjectParametersTagged:
+) -> MsRefineSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def ms_refine_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MsRefineSubjectParameters` object.
+    `MsRefineSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def ms_refine_subject_validate(
 
 
 def ms_refine_subject_cargs(
-    params: MsRefineSubjectParameters,
+    params: MsRefineSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def ms_refine_subject_cargs(
 
 
 def ms_refine_subject_outputs(
-    params: MsRefineSubjectParameters,
+    params: MsRefineSubjectParamsDict,
     execution: Execution,
 ) -> MsRefineSubjectOutputs:
     """
@@ -107,7 +107,7 @@ def ms_refine_subject_outputs(
 
 
 def ms_refine_subject_execute(
-    params: MsRefineSubjectParameters,
+    params: MsRefineSubjectParamsDict,
     runner: Runner | None = None,
 ) -> MsRefineSubjectOutputs:
     """
@@ -164,6 +164,8 @@ def ms_refine_subject(
 __all__ = [
     "MS_REFINE_SUBJECT_METADATA",
     "MsRefineSubjectOutputs",
+    "MsRefineSubjectParamsDict",
+    "MsRefineSubjectParamsDictTagged",
     "ms_refine_subject",
     "ms_refine_subject_execute",
     "ms_refine_subject_params",

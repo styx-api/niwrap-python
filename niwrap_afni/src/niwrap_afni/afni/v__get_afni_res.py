@@ -13,12 +13,12 @@ V__GET_AFNI_RES_METADATA = Metadata(
 )
 
 
-VGetAfniResParameters = typing.TypedDict('VGetAfniResParameters', {
+VGetAfniResParamsDict = typing.TypedDict('VGetAfniResParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniRes"]],
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })
-VGetAfniResParametersTagged = typing.TypedDict('VGetAfniResParametersTagged', {
+VGetAfniResParamsDictTagged = typing.TypedDict('VGetAfniResParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniRes"],
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
@@ -27,7 +27,7 @@ VGetAfniResParametersTagged = typing.TypedDict('VGetAfniResParametersTagged', {
 
 class VGetAfniResOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniResParameters(...)`.
+    Output object returned when calling `VGetAfniResParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VGetAfniResOutputs(typing.NamedTuple):
 def v__get_afni_res_params(
     input_dataset: InputPathType,
     output_type: typing.Literal["-min", "-max", "-mean"] | None = None,
-) -> VGetAfniResParametersTagged:
+) -> VGetAfniResParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def v__get_afni_res_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniResParameters` object.
+    `VGetAfniResParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def v__get_afni_res_validate(
 
 
 def v__get_afni_res_cargs(
-    params: VGetAfniResParameters,
+    params: VGetAfniResParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v__get_afni_res_cargs(
 
 
 def v__get_afni_res_outputs(
-    params: VGetAfniResParameters,
+    params: VGetAfniResParamsDict,
     execution: Execution,
 ) -> VGetAfniResOutputs:
     """
@@ -120,7 +120,7 @@ def v__get_afni_res_outputs(
 
 
 def v__get_afni_res_execute(
-    params: VGetAfniResParameters,
+    params: VGetAfniResParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniResOutputs:
     """
@@ -179,6 +179,8 @@ def v__get_afni_res(
 
 __all__ = [
     "VGetAfniResOutputs",
+    "VGetAfniResParamsDict",
+    "VGetAfniResParamsDictTagged",
     "V__GET_AFNI_RES_METADATA",
     "v__get_afni_res",
     "v__get_afni_res_execute",

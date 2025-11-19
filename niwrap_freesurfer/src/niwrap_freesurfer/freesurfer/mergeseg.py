@@ -13,7 +13,7 @@ MERGESEG_METADATA = Metadata(
 )
 
 
-MergesegParameters = typing.TypedDict('MergesegParameters', {
+MergesegParamsDict = typing.TypedDict('MergesegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mergeseg"]],
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
@@ -23,7 +23,7 @@ MergesegParameters = typing.TypedDict('MergesegParameters', {
     "segid_erode": typing.NotRequired[float | None],
     "ctab": typing.NotRequired[InputPathType | None],
 })
-MergesegParametersTagged = typing.TypedDict('MergesegParametersTagged', {
+MergesegParamsDictTagged = typing.TypedDict('MergesegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mergeseg"],
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
@@ -37,7 +37,7 @@ MergesegParametersTagged = typing.TypedDict('MergesegParametersTagged', {
 
 class MergesegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MergesegParameters(...)`.
+    Output object returned when calling `MergesegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mergeseg_params(
     segid_only: float | None = None,
     segid_erode: float | None = None,
     ctab: InputPathType | None = None,
-) -> MergesegParametersTagged:
+) -> MergesegParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def mergeseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MergesegParameters` object.
+    `MergesegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def mergeseg_validate(
 
 
 def mergeseg_cargs(
-    params: MergesegParameters,
+    params: MergesegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def mergeseg_cargs(
 
 
 def mergeseg_outputs(
-    params: MergesegParameters,
+    params: MergesegParamsDict,
     execution: Execution,
 ) -> MergesegOutputs:
     """
@@ -190,7 +190,7 @@ def mergeseg_outputs(
 
 
 def mergeseg_execute(
-    params: MergesegParameters,
+    params: MergesegParamsDict,
     runner: Runner | None = None,
 ) -> MergesegOutputs:
     """
@@ -268,6 +268,8 @@ def mergeseg(
 __all__ = [
     "MERGESEG_METADATA",
     "MergesegOutputs",
+    "MergesegParamsDict",
+    "MergesegParamsDictTagged",
     "mergeseg",
     "mergeseg_execute",
     "mergeseg_params",

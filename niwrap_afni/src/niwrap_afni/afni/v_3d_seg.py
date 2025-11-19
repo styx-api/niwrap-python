@@ -13,7 +13,7 @@ V_3D_SEG_METADATA = Metadata(
 )
 
 
-V3dSegParameters = typing.TypedDict('V3dSegParameters', {
+V3dSegParamsDict = typing.TypedDict('V3dSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dSeg"]],
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ V3dSegParameters = typing.TypedDict('V3dSegParameters', {
     "vox_debug": typing.NotRequired[str | None],
     "vox_debug_file": typing.NotRequired[str | None],
 })
-V3dSegParametersTagged = typing.TypedDict('V3dSegParametersTagged', {
+V3dSegParamsDictTagged = typing.TypedDict('V3dSegParamsDictTagged', {
     "@type": typing.Literal["afni/3dSeg"],
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
@@ -61,7 +61,7 @@ V3dSegParametersTagged = typing.TypedDict('V3dSegParametersTagged', {
 
 class V3dSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dSegParameters(...)`.
+    Output object returned when calling `V3dSegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +93,7 @@ def v_3d_seg_params(
     labeltable: InputPathType | None = None,
     vox_debug: str | None = None,
     vox_debug_file: str | None = None,
-) -> V3dSegParametersTagged:
+) -> V3dSegParamsDictTagged:
     """
     Build parameters.
     
@@ -177,7 +177,7 @@ def v_3d_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dSegParameters` object.
+    `V3dSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -246,7 +246,7 @@ def v_3d_seg_validate(
 
 
 def v_3d_seg_cargs(
-    params: V3dSegParameters,
+    params: V3dSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def v_3d_seg_cargs(
 
 
 def v_3d_seg_outputs(
-    params: V3dSegParameters,
+    params: V3dSegParamsDict,
     execution: Execution,
 ) -> V3dSegOutputs:
     """
@@ -377,7 +377,7 @@ def v_3d_seg_outputs(
 
 
 def v_3d_seg_execute(
-    params: V3dSegParameters,
+    params: V3dSegParamsDict,
     runner: Runner | None = None,
 ) -> V3dSegOutputs:
     """
@@ -498,6 +498,8 @@ def v_3d_seg(
 
 __all__ = [
     "V3dSegOutputs",
+    "V3dSegParamsDict",
+    "V3dSegParamsDictTagged",
     "V_3D_SEG_METADATA",
     "v_3d_seg",
     "v_3d_seg_execute",

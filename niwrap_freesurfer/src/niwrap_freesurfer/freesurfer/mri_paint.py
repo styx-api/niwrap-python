@@ -13,7 +13,7 @@ MRI_PAINT_METADATA = Metadata(
 )
 
 
-MriPaintParameters = typing.TypedDict('MriPaintParameters', {
+MriPaintParamsDict = typing.TypedDict('MriPaintParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_paint"]],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
@@ -22,7 +22,7 @@ MriPaintParameters = typing.TypedDict('MriPaintParameters', {
     "image_offset": typing.NotRequired[float | None],
     "paint_surf_coords": bool,
 })
-MriPaintParametersTagged = typing.TypedDict('MriPaintParametersTagged', {
+MriPaintParamsDictTagged = typing.TypedDict('MriPaintParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_paint"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
@@ -35,7 +35,7 @@ MriPaintParametersTagged = typing.TypedDict('MriPaintParametersTagged', {
 
 class MriPaintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriPaintParameters(...)`.
+    Output object returned when calling `MriPaintParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mri_paint_params(
     output_float_file: str,
     image_offset: float | None = None,
     paint_surf_coords: bool = False,
-) -> MriPaintParametersTagged:
+) -> MriPaintParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def mri_paint_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriPaintParameters` object.
+    `MriPaintParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def mri_paint_validate(
 
 
 def mri_paint_cargs(
-    params: MriPaintParameters,
+    params: MriPaintParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def mri_paint_cargs(
 
 
 def mri_paint_outputs(
-    params: MriPaintParameters,
+    params: MriPaintParamsDict,
     execution: Execution,
 ) -> MriPaintOutputs:
     """
@@ -164,7 +164,7 @@ def mri_paint_outputs(
 
 
 def mri_paint_execute(
-    params: MriPaintParameters,
+    params: MriPaintParamsDict,
     runner: Runner | None = None,
 ) -> MriPaintOutputs:
     """
@@ -235,6 +235,8 @@ def mri_paint(
 __all__ = [
     "MRI_PAINT_METADATA",
     "MriPaintOutputs",
+    "MriPaintParamsDict",
+    "MriPaintParamsDictTagged",
     "mri_paint",
     "mri_paint_execute",
     "mri_paint_params",

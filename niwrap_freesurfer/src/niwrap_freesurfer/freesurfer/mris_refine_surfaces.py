@@ -13,7 +13,7 @@ MRIS_REFINE_SURFACES_METADATA = Metadata(
 )
 
 
-MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', {
+MrisRefineSurfacesParamsDict = typing.TypedDict('MrisRefineSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_refine_surfaces"]],
     "subject_name": str,
     "hemi": str,
@@ -24,7 +24,7 @@ MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', 
     "use_mgz": bool,
     "suffix": typing.NotRequired[str | None],
 })
-MrisRefineSurfacesParametersTagged = typing.TypedDict('MrisRefineSurfacesParametersTagged', {
+MrisRefineSurfacesParamsDictTagged = typing.TypedDict('MrisRefineSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_refine_surfaces"],
     "subject_name": str,
     "hemi": str,
@@ -39,7 +39,7 @@ MrisRefineSurfacesParametersTagged = typing.TypedDict('MrisRefineSurfacesParamet
 
 class MrisRefineSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRefineSurfacesParameters(...)`.
+    Output object returned when calling `MrisRefineSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def mris_refine_surfaces_params(
     sdir: str | None = None,
     use_mgz: bool = False,
     suffix: str | None = None,
-) -> MrisRefineSurfacesParametersTagged:
+) -> MrisRefineSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def mris_refine_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRefineSurfacesParameters` object.
+    `MrisRefineSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def mris_refine_surfaces_validate(
 
 
 def mris_refine_surfaces_cargs(
-    params: MrisRefineSurfacesParameters,
+    params: MrisRefineSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def mris_refine_surfaces_cargs(
 
 
 def mris_refine_surfaces_outputs(
-    params: MrisRefineSurfacesParameters,
+    params: MrisRefineSurfacesParamsDict,
     execution: Execution,
 ) -> MrisRefineSurfacesOutputs:
     """
@@ -193,7 +193,7 @@ def mris_refine_surfaces_outputs(
 
 
 def mris_refine_surfaces_execute(
-    params: MrisRefineSurfacesParameters,
+    params: MrisRefineSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MrisRefineSurfacesOutputs:
     """
@@ -271,6 +271,8 @@ def mris_refine_surfaces(
 __all__ = [
     "MRIS_REFINE_SURFACES_METADATA",
     "MrisRefineSurfacesOutputs",
+    "MrisRefineSurfacesParamsDict",
+    "MrisRefineSurfacesParamsDictTagged",
     "mris_refine_surfaces",
     "mris_refine_surfaces_execute",
     "mris_refine_surfaces_params",

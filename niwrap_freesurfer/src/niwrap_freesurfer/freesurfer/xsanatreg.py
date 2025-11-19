@@ -13,7 +13,7 @@ XSANATREG_METADATA = Metadata(
 )
 
 
-XsanatregParameters = typing.TypedDict('XsanatregParameters', {
+XsanatregParamsDict = typing.TypedDict('XsanatregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xsanatreg"]],
     "src_cordir": str,
     "targ_cordir": str,
@@ -25,7 +25,7 @@ XsanatregParameters = typing.TypedDict('XsanatregParameters', {
     "version": bool,
     "umask": typing.NotRequired[str | None],
 })
-XsanatregParametersTagged = typing.TypedDict('XsanatregParametersTagged', {
+XsanatregParamsDictTagged = typing.TypedDict('XsanatregParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xsanatreg"],
     "src_cordir": str,
     "targ_cordir": str,
@@ -41,7 +41,7 @@ XsanatregParametersTagged = typing.TypedDict('XsanatregParametersTagged', {
 
 class XsanatregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XsanatregParameters(...)`.
+    Output object returned when calling `XsanatregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def xsanatreg_params(
     no_cleanup: bool = False,
     version: bool = False,
     umask: str | None = None,
-) -> XsanatregParametersTagged:
+) -> XsanatregParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def xsanatreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XsanatregParameters` object.
+    `XsanatregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def xsanatreg_validate(
 
 
 def xsanatreg_cargs(
-    params: XsanatregParameters,
+    params: XsanatregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def xsanatreg_cargs(
 
 
 def xsanatreg_outputs(
-    params: XsanatregParameters,
+    params: XsanatregParamsDict,
     execution: Execution,
 ) -> XsanatregOutputs:
     """
@@ -215,7 +215,7 @@ def xsanatreg_outputs(
 
 
 def xsanatreg_execute(
-    params: XsanatregParameters,
+    params: XsanatregParamsDict,
     runner: Runner | None = None,
 ) -> XsanatregOutputs:
     """
@@ -297,6 +297,8 @@ def xsanatreg(
 __all__ = [
     "XSANATREG_METADATA",
     "XsanatregOutputs",
+    "XsanatregParamsDict",
+    "XsanatregParamsDictTagged",
     "xsanatreg",
     "xsanatreg_execute",
     "xsanatreg_params",

@@ -12,36 +12,36 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
 )
 
 
-AnnotationResampleSurfacePairParameters = typing.TypedDict('AnnotationResampleSurfacePairParameters', {
+AnnotationResampleSurfacePairParamsDict = typing.TypedDict('AnnotationResampleSurfacePairParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface-pair"]],
     "source-surface": InputPathType,
     "target-surface": InputPathType,
 })
-AnnotationResampleSurfacePairParametersTagged = typing.TypedDict('AnnotationResampleSurfacePairParametersTagged', {
+AnnotationResampleSurfacePairParamsDictTagged = typing.TypedDict('AnnotationResampleSurfacePairParamsDictTagged', {
     "@type": typing.Literal["surface-pair"],
     "source-surface": InputPathType,
     "target-surface": InputPathType,
 })
 
 
-AnnotationResampleParameters = typing.TypedDict('AnnotationResampleParameters', {
+AnnotationResampleParamsDict = typing.TypedDict('AnnotationResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/annotation-resample"]],
-    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParamsDict] | None],
     "annotation-in": InputPathType,
     "annotation-out": str,
 })
-AnnotationResampleParametersTagged = typing.TypedDict('AnnotationResampleParametersTagged', {
+AnnotationResampleParamsDictTagged = typing.TypedDict('AnnotationResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/annotation-resample"],
-    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParamsDict] | None],
     "annotation-in": InputPathType,
     "annotation-out": str,
 })
 
 
-def annotation_resample_surface_pair_params(
+def annotation_resample_surface_pair(
     source_surface: InputPathType,
     target_surface: InputPathType,
-) -> AnnotationResampleSurfacePairParametersTagged:
+) -> AnnotationResampleSurfacePairParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def annotation_resample_surface_pair_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AnnotationResampleSurfacePairParameters` object.
+    `AnnotationResampleSurfacePairParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -84,7 +84,7 @@ def annotation_resample_surface_pair_validate(
 
 
 def annotation_resample_surface_pair_cargs(
-    params: AnnotationResampleSurfacePairParameters,
+    params: AnnotationResampleSurfacePairParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def annotation_resample_surface_pair_cargs(
 
 class AnnotationResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AnnotationResampleParameters(...)`.
+    Output object returned when calling `AnnotationResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,8 +116,8 @@ class AnnotationResampleOutputs(typing.NamedTuple):
 def annotation_resample_params(
     annotation_in: InputPathType,
     annotation_out: str,
-    surface_pair: list[AnnotationResampleSurfacePairParameters] | None = None,
-) -> AnnotationResampleParametersTagged:
+    surface_pair: list[AnnotationResampleSurfacePairParamsDict] | None = None,
+) -> AnnotationResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def annotation_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AnnotationResampleParameters` object.
+    `AnnotationResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def annotation_resample_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("surface-pair", None) is not None:
         if not isinstance(params["surface-pair"], list):
-            raise StyxValidationError(f'`surface-pair` has the wrong type: Received `{type(params.get("surface-pair", None))}` expected `list[AnnotationResampleSurfacePairParameters] | None`')
+            raise StyxValidationError(f'`surface-pair` has the wrong type: Received `{type(params.get("surface-pair", None))}` expected `list[AnnotationResampleSurfacePairParamsDict] | None`')
         for e in params["surface-pair"]:
             annotation_resample_surface_pair_validate(e)
     if params.get("annotation-in", None) is None:
@@ -167,7 +167,7 @@ def annotation_resample_validate(
 
 
 def annotation_resample_cargs(
-    params: AnnotationResampleParameters,
+    params: AnnotationResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def annotation_resample_cargs(
 
 
 def annotation_resample_outputs(
-    params: AnnotationResampleParameters,
+    params: AnnotationResampleParamsDict,
     execution: Execution,
 ) -> AnnotationResampleOutputs:
     """
@@ -211,7 +211,7 @@ def annotation_resample_outputs(
 
 
 def annotation_resample_execute(
-    params: AnnotationResampleParameters,
+    params: AnnotationResampleParamsDict,
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
@@ -242,7 +242,7 @@ def annotation_resample_execute(
 def annotation_resample(
     annotation_in: InputPathType,
     annotation_out: str,
-    surface_pair: list[AnnotationResampleSurfacePairParameters] | None = None,
+    surface_pair: list[AnnotationResampleSurfacePairParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
@@ -274,8 +274,12 @@ def annotation_resample(
 __all__ = [
     "ANNOTATION_RESAMPLE_METADATA",
     "AnnotationResampleOutputs",
+    "AnnotationResampleParamsDict",
+    "AnnotationResampleParamsDictTagged",
+    "AnnotationResampleSurfacePairParamsDict",
+    "AnnotationResampleSurfacePairParamsDictTagged",
     "annotation_resample",
     "annotation_resample_execute",
     "annotation_resample_params",
-    "annotation_resample_surface_pair_params",
+    "annotation_resample_surface_pair",
 ]

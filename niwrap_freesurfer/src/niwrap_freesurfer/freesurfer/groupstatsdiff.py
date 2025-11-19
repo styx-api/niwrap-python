@@ -13,7 +13,7 @@ GROUPSTATSDIFF_METADATA = Metadata(
 )
 
 
-GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
+GroupstatsdiffParamsDict = typing.TypedDict('GroupstatsdiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/groupstatsdiff"]],
     "group1_dir": str,
     "group2_dir": str,
@@ -36,7 +36,7 @@ GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
     "no_dice": bool,
     "dice_ctab": typing.NotRequired[str | None],
 })
-GroupstatsdiffParametersTagged = typing.TypedDict('GroupstatsdiffParametersTagged', {
+GroupstatsdiffParamsDictTagged = typing.TypedDict('GroupstatsdiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/groupstatsdiff"],
     "group1_dir": str,
     "group2_dir": str,
@@ -63,7 +63,7 @@ GroupstatsdiffParametersTagged = typing.TypedDict('GroupstatsdiffParametersTagge
 
 class GroupstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GroupstatsdiffParameters(...)`.
+    Output object returned when calling `GroupstatsdiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def groupstatsdiff_params(
     subjects_dir2: str | None = None,
     no_dice: bool = False,
     dice_ctab: str | None = None,
-) -> GroupstatsdiffParametersTagged:
+) -> GroupstatsdiffParamsDictTagged:
     """
     Build parameters.
     
@@ -157,7 +157,7 @@ def groupstatsdiff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GroupstatsdiffParameters` object.
+    `GroupstatsdiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -243,7 +243,7 @@ def groupstatsdiff_validate(
 
 
 def groupstatsdiff_cargs(
-    params: GroupstatsdiffParameters,
+    params: GroupstatsdiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -319,7 +319,7 @@ def groupstatsdiff_cargs(
 
 
 def groupstatsdiff_outputs(
-    params: GroupstatsdiffParameters,
+    params: GroupstatsdiffParamsDict,
     execution: Execution,
 ) -> GroupstatsdiffOutputs:
     """
@@ -338,7 +338,7 @@ def groupstatsdiff_outputs(
 
 
 def groupstatsdiff_execute(
-    params: GroupstatsdiffParameters,
+    params: GroupstatsdiffParamsDict,
     runner: Runner | None = None,
 ) -> GroupstatsdiffOutputs:
     """
@@ -457,6 +457,8 @@ def groupstatsdiff(
 __all__ = [
     "GROUPSTATSDIFF_METADATA",
     "GroupstatsdiffOutputs",
+    "GroupstatsdiffParamsDict",
+    "GroupstatsdiffParamsDictTagged",
     "groupstatsdiff",
     "groupstatsdiff_execute",
     "groupstatsdiff_params",

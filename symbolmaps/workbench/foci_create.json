@@ -6,7 +6,7 @@
     },
     "class": {
       "var_param": "class_",
-      "fn_struct_make_params": "foci_create_class_params",
+      "fn_struct_make_params": "foci_create_class",
       "properties": {
         "class-name": {
           "var_param": "class_name"

@@ -13,12 +13,12 @@ CHECK_FEAT_METADATA = Metadata(
 )
 
 
-CheckFeatParameters = typing.TypedDict('CheckFeatParameters', {
+CheckFeatParamsDict = typing.TypedDict('CheckFeatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/checkFEAT"]],
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })
-CheckFeatParametersTagged = typing.TypedDict('CheckFeatParametersTagged', {
+CheckFeatParamsDictTagged = typing.TypedDict('CheckFeatParamsDictTagged', {
     "@type": typing.Literal["fsl/checkFEAT"],
     "report_file": InputPathType,
     "report_log_file": InputPathType,
@@ -27,7 +27,7 @@ CheckFeatParametersTagged = typing.TypedDict('CheckFeatParametersTagged', {
 
 class CheckFeatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CheckFeatParameters(...)`.
+    Output object returned when calling `CheckFeatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ class CheckFeatOutputs(typing.NamedTuple):
 def check_feat_params(
     report_file: InputPathType,
     report_log_file: InputPathType,
-) -> CheckFeatParametersTagged:
+) -> CheckFeatParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def check_feat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CheckFeatParameters` object.
+    `CheckFeatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def check_feat_validate(
 
 
 def check_feat_cargs(
-    params: CheckFeatParameters,
+    params: CheckFeatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def check_feat_cargs(
 
 
 def check_feat_outputs(
-    params: CheckFeatParameters,
+    params: CheckFeatParamsDict,
     execution: Execution,
 ) -> CheckFeatOutputs:
     """
@@ -122,7 +122,7 @@ def check_feat_outputs(
 
 
 def check_feat_execute(
-    params: CheckFeatParameters,
+    params: CheckFeatParamsDict,
     runner: Runner | None = None,
 ) -> CheckFeatOutputs:
     """
@@ -181,6 +181,8 @@ def check_feat(
 __all__ = [
     "CHECK_FEAT_METADATA",
     "CheckFeatOutputs",
+    "CheckFeatParamsDict",
+    "CheckFeatParamsDictTagged",
     "check_feat",
     "check_feat_execute",
     "check_feat_params",

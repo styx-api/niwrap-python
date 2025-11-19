@@ -13,7 +13,7 @@ ATLASQUERY_METADATA = Metadata(
 )
 
 
-AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
+AtlasqueryParamsDict = typing.TypedDict('AtlasqueryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/atlasquery"]],
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-AtlasqueryParametersTagged = typing.TypedDict('AtlasqueryParametersTagged', {
+AtlasqueryParamsDictTagged = typing.TypedDict('AtlasqueryParamsDictTagged', {
     "@type": typing.Literal["fsl/atlasquery"],
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ AtlasqueryParametersTagged = typing.TypedDict('AtlasqueryParametersTagged', {
 
 class AtlasqueryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AtlasqueryParameters(...)`.
+    Output object returned when calling `AtlasqueryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def atlasquery_params(
     mask: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> AtlasqueryParametersTagged:
+) -> AtlasqueryParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def atlasquery_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AtlasqueryParameters` object.
+    `AtlasqueryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def atlasquery_validate(
 
 
 def atlasquery_cargs(
-    params: AtlasqueryParameters,
+    params: AtlasqueryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def atlasquery_cargs(
 
 
 def atlasquery_outputs(
-    params: AtlasqueryParameters,
+    params: AtlasqueryParamsDict,
     execution: Execution,
 ) -> AtlasqueryOutputs:
     """
@@ -171,7 +171,7 @@ def atlasquery_outputs(
 
 
 def atlasquery_execute(
-    params: AtlasqueryParameters,
+    params: AtlasqueryParamsDict,
     runner: Runner | None = None,
 ) -> AtlasqueryOutputs:
     """
@@ -242,6 +242,8 @@ def atlasquery(
 __all__ = [
     "ATLASQUERY_METADATA",
     "AtlasqueryOutputs",
+    "AtlasqueryParamsDict",
+    "AtlasqueryParamsDictTagged",
     "atlasquery",
     "atlasquery_execute",
     "atlasquery_params",

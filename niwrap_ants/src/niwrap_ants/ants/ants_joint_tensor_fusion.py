@@ -13,7 +13,7 @@ ANTS_JOINT_TENSOR_FUSION_METADATA = Metadata(
 )
 
 
-AntsJointTensorFusionParameters = typing.TypedDict('AntsJointTensorFusionParameters', {
+AntsJointTensorFusionParamsDict = typing.TypedDict('AntsJointTensorFusionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsJointTensorFusion"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[str],
@@ -33,7 +33,7 @@ AntsJointTensorFusionParameters = typing.TypedDict('AntsJointTensorFusionParamet
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-AntsJointTensorFusionParametersTagged = typing.TypedDict('AntsJointTensorFusionParametersTagged', {
+AntsJointTensorFusionParamsDictTagged = typing.TypedDict('AntsJointTensorFusionParamsDictTagged', {
     "@type": typing.Literal["ants/antsJointTensorFusion"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[str],
@@ -57,7 +57,7 @@ AntsJointTensorFusionParametersTagged = typing.TypedDict('AntsJointTensorFusionP
 
 class AntsJointTensorFusionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsJointTensorFusionParameters(...)`.
+    Output object returned when calling `AntsJointTensorFusionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def ants_joint_tensor_fusion_params(
     exclusion_image: str | None = None,
     mask_image: InputPathType | None = None,
     verbose: bool | None = None,
-) -> AntsJointTensorFusionParametersTagged:
+) -> AntsJointTensorFusionParamsDictTagged:
     """
     Build parameters.
     
@@ -169,7 +169,7 @@ def ants_joint_tensor_fusion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsJointTensorFusionParameters` object.
+    `AntsJointTensorFusionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -244,7 +244,7 @@ def ants_joint_tensor_fusion_validate(
 
 
 def ants_joint_tensor_fusion_cargs(
-    params: AntsJointTensorFusionParameters,
+    params: AntsJointTensorFusionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -343,7 +343,7 @@ def ants_joint_tensor_fusion_cargs(
 
 
 def ants_joint_tensor_fusion_outputs(
-    params: AntsJointTensorFusionParameters,
+    params: AntsJointTensorFusionParamsDict,
     execution: Execution,
 ) -> AntsJointTensorFusionOutputs:
     """
@@ -366,7 +366,7 @@ def ants_joint_tensor_fusion_outputs(
 
 
 def ants_joint_tensor_fusion_execute(
-    params: AntsJointTensorFusionParameters,
+    params: AntsJointTensorFusionParamsDict,
     runner: Runner | None = None,
 ) -> AntsJointTensorFusionOutputs:
     """
@@ -492,6 +492,8 @@ def ants_joint_tensor_fusion(
 __all__ = [
     "ANTS_JOINT_TENSOR_FUSION_METADATA",
     "AntsJointTensorFusionOutputs",
+    "AntsJointTensorFusionParamsDict",
+    "AntsJointTensorFusionParamsDictTagged",
     "ants_joint_tensor_fusion",
     "ants_joint_tensor_fusion_execute",
     "ants_joint_tensor_fusion_params",

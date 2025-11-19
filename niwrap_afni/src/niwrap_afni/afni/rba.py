@@ -13,7 +13,7 @@ RBA_METADATA = Metadata(
 )
 
 
-RbaParameters = typing.TypedDict('RbaParameters', {
+RbaParamsDict = typing.TypedDict('RbaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/RBA"]],
     "prefix": str,
     "dataTable": InputPathType,
@@ -42,7 +42,7 @@ RbaParameters = typing.TypedDict('RbaParameters', {
     "md": bool,
     "r2z": bool,
 })
-RbaParametersTagged = typing.TypedDict('RbaParametersTagged', {
+RbaParamsDictTagged = typing.TypedDict('RbaParamsDictTagged', {
     "@type": typing.Literal["afni/RBA"],
     "prefix": str,
     "dataTable": InputPathType,
@@ -75,7 +75,7 @@ RbaParametersTagged = typing.TypedDict('RbaParametersTagged', {
 
 class RbaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RbaParameters(...)`.
+    Output object returned when calling `RbaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def rba_params(
     verbose: float | None = None,
     md: bool = False,
     r2z: bool = False,
-) -> RbaParametersTagged:
+) -> RbaParamsDictTagged:
     """
     Build parameters.
     
@@ -211,7 +211,7 @@ def rba_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `RbaParameters`
+    Validate parameters. Throws an error if `params` is not a valid `RbaParamsDict`
     object.
     
     Args:
@@ -305,7 +305,7 @@ def rba_validate(
 
 
 def rba_cargs(
-    params: RbaParameters,
+    params: RbaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -442,7 +442,7 @@ def rba_cargs(
 
 
 def rba_outputs(
-    params: RbaParameters,
+    params: RbaParamsDict,
     execution: Execution,
 ) -> RbaOutputs:
     """
@@ -463,7 +463,7 @@ def rba_outputs(
 
 
 def rba_execute(
-    params: RbaParameters,
+    params: RbaParamsDict,
     runner: Runner | None = None,
 ) -> RbaOutputs:
     """
@@ -601,6 +601,8 @@ def rba(
 __all__ = [
     "RBA_METADATA",
     "RbaOutputs",
+    "RbaParamsDict",
+    "RbaParamsDictTagged",
     "rba",
     "rba_execute",
     "rba_params",

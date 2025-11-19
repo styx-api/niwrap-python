@@ -13,12 +13,12 @@ ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
 )
 
 
-AdjunctIsLabelPyParameters = typing.TypedDict('AdjunctIsLabelPyParameters', {
+AdjunctIsLabelPyParamsDict = typing.TypedDict('AdjunctIsLabelPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_is_label.py"]],
     "infile": InputPathType,
     "label": str,
 })
-AdjunctIsLabelPyParametersTagged = typing.TypedDict('AdjunctIsLabelPyParametersTagged', {
+AdjunctIsLabelPyParamsDictTagged = typing.TypedDict('AdjunctIsLabelPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_is_label.py"],
     "infile": InputPathType,
     "label": str,
@@ -27,7 +27,7 @@ AdjunctIsLabelPyParametersTagged = typing.TypedDict('AdjunctIsLabelPyParametersT
 
 class AdjunctIsLabelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctIsLabelPyParameters(...)`.
+    Output object returned when calling `AdjunctIsLabelPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class AdjunctIsLabelPyOutputs(typing.NamedTuple):
 def adjunct_is_label_py_params(
     infile: InputPathType,
     label: str,
-) -> AdjunctIsLabelPyParametersTagged:
+) -> AdjunctIsLabelPyParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def adjunct_is_label_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctIsLabelPyParameters` object.
+    `AdjunctIsLabelPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def adjunct_is_label_py_validate(
 
 
 def adjunct_is_label_py_cargs(
-    params: AdjunctIsLabelPyParameters,
+    params: AdjunctIsLabelPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def adjunct_is_label_py_cargs(
 
 
 def adjunct_is_label_py_outputs(
-    params: AdjunctIsLabelPyParameters,
+    params: AdjunctIsLabelPyParamsDict,
     execution: Execution,
 ) -> AdjunctIsLabelPyOutputs:
     """
@@ -116,7 +116,7 @@ def adjunct_is_label_py_outputs(
 
 
 def adjunct_is_label_py_execute(
-    params: AdjunctIsLabelPyParameters,
+    params: AdjunctIsLabelPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctIsLabelPyOutputs:
     """
@@ -175,6 +175,8 @@ def adjunct_is_label_py(
 __all__ = [
     "ADJUNCT_IS_LABEL_PY_METADATA",
     "AdjunctIsLabelPyOutputs",
+    "AdjunctIsLabelPyParamsDict",
+    "AdjunctIsLabelPyParamsDictTagged",
     "adjunct_is_label_py",
     "adjunct_is_label_py_execute",
     "adjunct_is_label_py_params",

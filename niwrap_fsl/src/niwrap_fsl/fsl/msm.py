@@ -13,7 +13,7 @@ MSM_METADATA = Metadata(
 )
 
 
-MsmParameters = typing.TypedDict('MsmParameters', {
+MsmParamsDict = typing.TypedDict('MsmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/msm"]],
     "inmesh": InputPathType,
     "out": str,
@@ -32,7 +32,7 @@ MsmParameters = typing.TypedDict('MsmParameters', {
     "verbose": bool,
     "printoptions": bool,
 })
-MsmParametersTagged = typing.TypedDict('MsmParametersTagged', {
+MsmParamsDictTagged = typing.TypedDict('MsmParamsDictTagged', {
     "@type": typing.Literal["fsl/msm"],
     "inmesh": InputPathType,
     "out": str,
@@ -55,7 +55,7 @@ MsmParametersTagged = typing.TypedDict('MsmParametersTagged', {
 
 class MsmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MsmParameters(...)`.
+    Output object returned when calling `MsmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def msm_params(
     help_: bool = False,
     verbose: bool = False,
     printoptions: bool = False,
-) -> MsmParametersTagged:
+) -> MsmParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def msm_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `MsmParameters`
+    Validate parameters. Throws an error if `params` is not a valid `MsmParamsDict`
     object.
     
     Args:
@@ -220,7 +220,7 @@ def msm_validate(
 
 
 def msm_cargs(
-    params: MsmParameters,
+    params: MsmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -301,7 +301,7 @@ def msm_cargs(
 
 
 def msm_outputs(
-    params: MsmParameters,
+    params: MsmParamsDict,
     execution: Execution,
 ) -> MsmOutputs:
     """
@@ -321,7 +321,7 @@ def msm_outputs(
 
 
 def msm_execute(
-    params: MsmParameters,
+    params: MsmParamsDict,
     runner: Runner | None = None,
 ) -> MsmOutputs:
     """
@@ -439,6 +439,8 @@ def msm(
 __all__ = [
     "MSM_METADATA",
     "MsmOutputs",
+    "MsmParamsDict",
+    "MsmParamsDictTagged",
     "msm",
     "msm_execute",
     "msm_params",

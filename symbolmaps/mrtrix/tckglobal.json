@@ -9,7 +9,7 @@
     },
     "riso": {
       "var_param": "riso",
-      "fn_struct_make_params": "tckglobal_riso_params",
+      "fn_struct_make_params": "tckglobal_riso",
       "properties": {
         "response": {
           "var_param": "response"
@@ -87,7 +87,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "tckglobal_config_params",
+      "fn_struct_make_params": "tckglobal_config",
       "properties": {
         "key": {
           "var_param": "key"

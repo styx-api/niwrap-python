@@ -13,12 +13,12 @@ COR_TO_MINC_METADATA = Metadata(
 )
 
 
-CorToMincParameters = typing.TypedDict('CorToMincParameters', {
+CorToMincParamsDict = typing.TypedDict('CorToMincParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/cor_to_minc"]],
     "cor_directory": str,
     "minc_file": str,
 })
-CorToMincParametersTagged = typing.TypedDict('CorToMincParametersTagged', {
+CorToMincParamsDictTagged = typing.TypedDict('CorToMincParamsDictTagged', {
     "@type": typing.Literal["freesurfer/cor_to_minc"],
     "cor_directory": str,
     "minc_file": str,
@@ -27,7 +27,7 @@ CorToMincParametersTagged = typing.TypedDict('CorToMincParametersTagged', {
 
 class CorToMincOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CorToMincParameters(...)`.
+    Output object returned when calling `CorToMincParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class CorToMincOutputs(typing.NamedTuple):
 def cor_to_minc_params(
     cor_directory: str,
     minc_file: str,
-) -> CorToMincParametersTagged:
+) -> CorToMincParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def cor_to_minc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CorToMincParameters` object.
+    `CorToMincParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def cor_to_minc_validate(
 
 
 def cor_to_minc_cargs(
-    params: CorToMincParameters,
+    params: CorToMincParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def cor_to_minc_cargs(
 
 
 def cor_to_minc_outputs(
-    params: CorToMincParameters,
+    params: CorToMincParamsDict,
     execution: Execution,
 ) -> CorToMincOutputs:
     """
@@ -119,7 +119,7 @@ def cor_to_minc_outputs(
 
 
 def cor_to_minc_execute(
-    params: CorToMincParameters,
+    params: CorToMincParamsDict,
     runner: Runner | None = None,
 ) -> CorToMincOutputs:
     """
@@ -178,6 +178,8 @@ def cor_to_minc(
 __all__ = [
     "COR_TO_MINC_METADATA",
     "CorToMincOutputs",
+    "CorToMincParamsDict",
+    "CorToMincParamsDictTagged",
     "cor_to_minc",
     "cor_to_minc_execute",
     "cor_to_minc_params",

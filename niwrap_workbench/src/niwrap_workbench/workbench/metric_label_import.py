@@ -12,7 +12,7 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
 )
 
 
-MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
+MetricLabelImportParamsDict = typing.TypedDict('MetricLabelImportParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-label-import"]],
     "output": str,
     "discard-others": bool,
@@ -23,7 +23,7 @@ MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
     "input": InputPathType,
     "label-list-file": str,
 })
-MetricLabelImportParametersTagged = typing.TypedDict('MetricLabelImportParametersTagged', {
+MetricLabelImportParamsDictTagged = typing.TypedDict('MetricLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-label-import"],
     "output": str,
     "discard-others": bool,
@@ -38,7 +38,7 @@ MetricLabelImportParametersTagged = typing.TypedDict('MetricLabelImportParameter
 
 class MetricLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricLabelImportParameters(...)`.
+    Output object returned when calling `MetricLabelImportParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def metric_label_import_params(
     label_list_file: str,
     discard_others: bool = False,
     drop_unused_labels: bool = False,
-) -> MetricLabelImportParametersTagged:
+) -> MetricLabelImportParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def metric_label_import_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricLabelImportParameters` object.
+    `MetricLabelImportParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def metric_label_import_validate(
 
 
 def metric_label_import_cargs(
-    params: MetricLabelImportParameters,
+    params: MetricLabelImportParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def metric_label_import_cargs(
 
 
 def metric_label_import_outputs(
-    params: MetricLabelImportParameters,
+    params: MetricLabelImportParamsDict,
     execution: Execution,
 ) -> MetricLabelImportOutputs:
     """
@@ -192,7 +192,7 @@ def metric_label_import_outputs(
 
 
 def metric_label_import_execute(
-    params: MetricLabelImportParameters,
+    params: MetricLabelImportParamsDict,
     runner: Runner | None = None,
 ) -> MetricLabelImportOutputs:
     """
@@ -312,6 +312,8 @@ def metric_label_import(
 __all__ = [
     "METRIC_LABEL_IMPORT_METADATA",
     "MetricLabelImportOutputs",
+    "MetricLabelImportParamsDict",
+    "MetricLabelImportParamsDictTagged",
     "metric_label_import",
     "metric_label_import_execute",
     "metric_label_import_params",

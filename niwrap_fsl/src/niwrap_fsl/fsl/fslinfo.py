@@ -13,11 +13,11 @@ FSLINFO_METADATA = Metadata(
 )
 
 
-FslinfoParameters = typing.TypedDict('FslinfoParameters', {
+FslinfoParamsDict = typing.TypedDict('FslinfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslinfo"]],
     "filename": InputPathType,
 })
-FslinfoParametersTagged = typing.TypedDict('FslinfoParametersTagged', {
+FslinfoParamsDictTagged = typing.TypedDict('FslinfoParamsDictTagged', {
     "@type": typing.Literal["fsl/fslinfo"],
     "filename": InputPathType,
 })
@@ -25,7 +25,7 @@ FslinfoParametersTagged = typing.TypedDict('FslinfoParametersTagged', {
 
 class FslinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslinfoParameters(...)`.
+    Output object returned when calling `FslinfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FslinfoOutputs(typing.NamedTuple):
 
 def fslinfo_params(
     filename: InputPathType,
-) -> FslinfoParametersTagged:
+) -> FslinfoParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def fslinfo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslinfoParameters` object.
+    `FslinfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def fslinfo_validate(
 
 
 def fslinfo_cargs(
-    params: FslinfoParameters,
+    params: FslinfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def fslinfo_cargs(
 
 
 def fslinfo_outputs(
-    params: FslinfoParameters,
+    params: FslinfoParamsDict,
     execution: Execution,
 ) -> FslinfoOutputs:
     """
@@ -106,7 +106,7 @@ def fslinfo_outputs(
 
 
 def fslinfo_execute(
-    params: FslinfoParameters,
+    params: FslinfoParamsDict,
     runner: Runner | None = None,
 ) -> FslinfoOutputs:
     """
@@ -162,6 +162,8 @@ def fslinfo(
 __all__ = [
     "FSLINFO_METADATA",
     "FslinfoOutputs",
+    "FslinfoParamsDict",
+    "FslinfoParamsDictTagged",
     "fslinfo",
     "fslinfo_execute",
     "fslinfo_params",

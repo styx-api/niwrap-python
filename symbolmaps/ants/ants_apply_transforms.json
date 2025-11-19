@@ -17,7 +17,7 @@
       "var_param": "output",
       "variants": {
         "warpedOutput": {
-          "fn_struct_make_params": "ants_apply_transforms_warped_output_params",
+          "fn_struct_make_params": "ants_apply_transforms_warped_output",
           "properties": {
             "warpedOutputFileName": {
               "var_param": "warped_output_file_name"
@@ -25,7 +25,7 @@
           }
         },
         "compositeDisplacementFieldOutput": {
-          "fn_struct_make_params": "ants_apply_transforms_composite_displacement_field_output_params",
+          "fn_struct_make_params": "ants_apply_transforms_composite_displacement_field_output",
           "properties": {
             "compositeDisplacementField": {
               "var_param": "composite_displacement_field"
@@ -36,7 +36,7 @@
           }
         },
         "genericAffineTransformOutput": {
-          "fn_struct_make_params": "ants_apply_transforms_generic_affine_transform_output_params",
+          "fn_struct_make_params": "ants_apply_transforms_generic_affine_transform_output",
           "properties": {
             "genericAffineTransformFile": {
               "var_param": "generic_affine_transform_file"
@@ -52,25 +52,25 @@
       "var_param": "interpolation",
       "variants": {
         "linear": {
-          "fn_struct_make_params": "ants_apply_transforms_linear_params",
+          "fn_struct_make_params": "ants_apply_transforms_linear",
           "properties": {}
         },
         "nearestNeighbor": {
-          "fn_struct_make_params": "ants_apply_transforms_nearest_neighbor_params",
+          "fn_struct_make_params": "ants_apply_transforms_nearest_neighbor",
           "properties": {}
         },
         "multiLabelnoparams": {
-          "fn_struct_make_params": "ants_apply_transforms_multi_labelnoparams_params",
+          "fn_struct_make_params": "ants_apply_transforms_multi_labelnoparams",
           "properties": {}
         },
         "multiLabel": {
-          "fn_struct_make_params": "ants_apply_transforms_multi_label_params",
+          "fn_struct_make_params": "ants_apply_transforms_multi_label",
           "properties": {
             "params": {
               "var_param": "params_",
               "variants": {
                 "sigma": {
-                  "fn_struct_make_params": "ants_apply_transforms_sigma_params",
+                  "fn_struct_make_params": "ants_apply_transforms_sigma",
                   "properties": {
                     "sigma": {
                       "var_param": "sigma"
@@ -78,7 +78,7 @@
                   }
                 },
                 "alpha": {
-                  "fn_struct_make_params": "ants_apply_transforms_alpha_params",
+                  "fn_struct_make_params": "ants_apply_transforms_alpha",
                   "properties": {
                     "alpha": {
                       "var_param": "alpha"
@@ -90,7 +90,7 @@
           }
         },
         "gaussian": {
-          "fn_struct_make_params": "ants_apply_transforms_gaussian_params",
+          "fn_struct_make_params": "ants_apply_transforms_gaussian",
           "properties": {
             "sigma": {
               "var_param": "sigma"
@@ -101,7 +101,7 @@
           }
         },
         "bspline": {
-          "fn_struct_make_params": "ants_apply_transforms_bspline_params",
+          "fn_struct_make_params": "ants_apply_transforms_bspline",
           "properties": {
             "order": {
               "var_param": "order"
@@ -109,23 +109,23 @@
           }
         },
         "cosineWindowedSinc": {
-          "fn_struct_make_params": "ants_apply_transforms_cosine_windowed_sinc_params",
+          "fn_struct_make_params": "ants_apply_transforms_cosine_windowed_sinc",
           "properties": {}
         },
         "welchWindowedSinc": {
-          "fn_struct_make_params": "ants_apply_transforms_welch_windowed_sinc_params",
+          "fn_struct_make_params": "ants_apply_transforms_welch_windowed_sinc",
           "properties": {}
         },
         "hammingWindowedSinc": {
-          "fn_struct_make_params": "ants_apply_transforms_hamming_windowed_sinc_params",
+          "fn_struct_make_params": "ants_apply_transforms_hamming_windowed_sinc",
           "properties": {}
         },
         "lanczosWindowedSinc": {
-          "fn_struct_make_params": "ants_apply_transforms_lanczos_windowed_sinc_params",
+          "fn_struct_make_params": "ants_apply_transforms_lanczos_windowed_sinc",
           "properties": {}
         },
         "genericLabel": {
-          "fn_struct_make_params": "ants_apply_transforms_generic_label_params",
+          "fn_struct_make_params": "ants_apply_transforms_generic_label",
           "properties": {
             "interpolator": {
               "var_param": "interpolator"
@@ -141,7 +141,7 @@
       "var_param": "transform",
       "variants": {
         "transformFileName": {
-          "fn_struct_make_params": "ants_apply_transforms_transform_file_name_params",
+          "fn_struct_make_params": "ants_apply_transforms_transform_file_name",
           "properties": {
             "transformFileName": {
               "var_param": "transform_file_name"
@@ -149,7 +149,7 @@
           }
         },
         "useInverse": {
-          "fn_struct_make_params": "ants_apply_transforms_use_inverse_params",
+          "fn_struct_make_params": "ants_apply_transforms_use_inverse",
           "properties": {
             "transformFileName": {
               "var_param": "transform_file_name"

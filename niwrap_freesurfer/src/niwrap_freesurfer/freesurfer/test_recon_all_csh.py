@@ -13,7 +13,7 @@ TEST_RECON_ALL_CSH_METADATA = Metadata(
 )
 
 
-TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
+TestReconAllCshParamsDict = typing.TypedDict('TestReconAllCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/test_recon-all.csh"]],
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
     "freesurfer_home": typing.NotRequired[str | None],
     "norecon": bool,
 })
-TestReconAllCshParametersTagged = typing.TypedDict('TestReconAllCshParametersTagged', {
+TestReconAllCshParamsDictTagged = typing.TypedDict('TestReconAllCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/test_recon-all.csh"],
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ TestReconAllCshParametersTagged = typing.TypedDict('TestReconAllCshParametersTag
 
 class TestReconAllCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TestReconAllCshParameters(...)`.
+    Output object returned when calling `TestReconAllCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def test_recon_all_csh_params(
     test_subjid: str | None = None,
     freesurfer_home: str | None = None,
     norecon: bool = False,
-) -> TestReconAllCshParametersTagged:
+) -> TestReconAllCshParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def test_recon_all_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TestReconAllCshParameters` object.
+    `TestReconAllCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def test_recon_all_csh_validate(
 
 
 def test_recon_all_csh_cargs(
-    params: TestReconAllCshParameters,
+    params: TestReconAllCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def test_recon_all_csh_cargs(
 
 
 def test_recon_all_csh_outputs(
-    params: TestReconAllCshParameters,
+    params: TestReconAllCshParamsDict,
     execution: Execution,
 ) -> TestReconAllCshOutputs:
     """
@@ -204,7 +204,7 @@ def test_recon_all_csh_outputs(
 
 
 def test_recon_all_csh_execute(
-    params: TestReconAllCshParameters,
+    params: TestReconAllCshParamsDict,
     runner: Runner | None = None,
 ) -> TestReconAllCshOutputs:
     """
@@ -275,6 +275,8 @@ def test_recon_all_csh(
 __all__ = [
     "TEST_RECON_ALL_CSH_METADATA",
     "TestReconAllCshOutputs",
+    "TestReconAllCshParamsDict",
+    "TestReconAllCshParamsDictTagged",
     "test_recon_all_csh",
     "test_recon_all_csh_execute",
     "test_recon_all_csh_params",

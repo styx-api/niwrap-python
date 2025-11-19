@@ -13,7 +13,7 @@ SLICETIMER_METADATA = Metadata(
 )
 
 
-SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
+SlicetimerParamsDict = typing.TypedDict('SlicetimerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slicetimer"]],
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
     "tglobal_value": typing.NotRequired[float | None],
     "ocustom_file": typing.NotRequired[InputPathType | None],
 })
-SlicetimerParametersTagged = typing.TypedDict('SlicetimerParametersTagged', {
+SlicetimerParamsDictTagged = typing.TypedDict('SlicetimerParamsDictTagged', {
     "@type": typing.Literal["fsl/slicetimer"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ SlicetimerParametersTagged = typing.TypedDict('SlicetimerParametersTagged', {
 
 class SlicetimerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicetimerParameters(...)`.
+    Output object returned when calling `SlicetimerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def slicetimer_params(
     tcustom_file: InputPathType | None = None,
     tglobal_value: float | None = None,
     ocustom_file: InputPathType | None = None,
-) -> SlicetimerParametersTagged:
+) -> SlicetimerParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def slicetimer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicetimerParameters` object.
+    `SlicetimerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def slicetimer_validate(
 
 
 def slicetimer_cargs(
-    params: SlicetimerParameters,
+    params: SlicetimerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -212,7 +212,7 @@ def slicetimer_cargs(
 
 
 def slicetimer_outputs(
-    params: SlicetimerParameters,
+    params: SlicetimerParamsDict,
     execution: Execution,
 ) -> SlicetimerOutputs:
     """
@@ -232,7 +232,7 @@ def slicetimer_outputs(
 
 
 def slicetimer_execute(
-    params: SlicetimerParameters,
+    params: SlicetimerParamsDict,
     runner: Runner | None = None,
 ) -> SlicetimerOutputs:
     """
@@ -318,6 +318,8 @@ def slicetimer(
 __all__ = [
     "SLICETIMER_METADATA",
     "SlicetimerOutputs",
+    "SlicetimerParamsDict",
+    "SlicetimerParamsDictTagged",
     "slicetimer",
     "slicetimer_execute",
     "slicetimer_params",

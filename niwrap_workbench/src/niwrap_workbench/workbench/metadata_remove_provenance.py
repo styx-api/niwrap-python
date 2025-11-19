@@ -12,12 +12,12 @@ METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
 )
 
 
-MetadataRemoveProvenanceParameters = typing.TypedDict('MetadataRemoveProvenanceParameters', {
+MetadataRemoveProvenanceParamsDict = typing.TypedDict('MetadataRemoveProvenanceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metadata-remove-provenance"]],
     "input-file": str,
     "output-file": str,
 })
-MetadataRemoveProvenanceParametersTagged = typing.TypedDict('MetadataRemoveProvenanceParametersTagged', {
+MetadataRemoveProvenanceParamsDictTagged = typing.TypedDict('MetadataRemoveProvenanceParamsDictTagged', {
     "@type": typing.Literal["workbench/metadata-remove-provenance"],
     "input-file": str,
     "output-file": str,
@@ -26,7 +26,7 @@ MetadataRemoveProvenanceParametersTagged = typing.TypedDict('MetadataRemoveProve
 
 class MetadataRemoveProvenanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetadataRemoveProvenanceParameters(...)`.
+    Output object returned when calling `MetadataRemoveProvenanceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class MetadataRemoveProvenanceOutputs(typing.NamedTuple):
 def metadata_remove_provenance_params(
     input_file: str,
     output_file: str,
-) -> MetadataRemoveProvenanceParametersTagged:
+) -> MetadataRemoveProvenanceParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def metadata_remove_provenance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetadataRemoveProvenanceParameters` object.
+    `MetadataRemoveProvenanceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -76,7 +76,7 @@ def metadata_remove_provenance_validate(
 
 
 def metadata_remove_provenance_cargs(
-    params: MetadataRemoveProvenanceParameters,
+    params: MetadataRemoveProvenanceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def metadata_remove_provenance_cargs(
 
 
 def metadata_remove_provenance_outputs(
-    params: MetadataRemoveProvenanceParameters,
+    params: MetadataRemoveProvenanceParamsDict,
     execution: Execution,
 ) -> MetadataRemoveProvenanceOutputs:
     """
@@ -118,7 +118,7 @@ def metadata_remove_provenance_outputs(
 
 
 def metadata_remove_provenance_execute(
-    params: MetadataRemoveProvenanceParameters,
+    params: MetadataRemoveProvenanceParamsDict,
     runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
@@ -169,6 +169,8 @@ def metadata_remove_provenance(
 __all__ = [
     "METADATA_REMOVE_PROVENANCE_METADATA",
     "MetadataRemoveProvenanceOutputs",
+    "MetadataRemoveProvenanceParamsDict",
+    "MetadataRemoveProvenanceParamsDictTagged",
     "metadata_remove_provenance",
     "metadata_remove_provenance_execute",
     "metadata_remove_provenance_params",

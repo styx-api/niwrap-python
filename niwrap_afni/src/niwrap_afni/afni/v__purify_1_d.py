@@ -13,13 +13,13 @@ V__PURIFY_1_D_METADATA = Metadata(
 )
 
 
-VPurify1DParameters = typing.TypedDict('VPurify1DParameters', {
+VPurify1DParamsDict = typing.TypedDict('VPurify1DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Purify_1D"]],
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
-VPurify1DParametersTagged = typing.TypedDict('VPurify1DParametersTagged', {
+VPurify1DParamsDictTagged = typing.TypedDict('VPurify1DParamsDictTagged', {
     "@type": typing.Literal["afni/@Purify_1D"],
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ VPurify1DParametersTagged = typing.TypedDict('VPurify1DParametersTagged', {
 
 class VPurify1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VPurify1DParameters(...)`.
+    Output object returned when calling `VPurify1DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def v__purify_1_d_params(
     input_files: list[InputPathType],
     sub_brick: str | None = None,
     suffix: str | None = None,
-) -> VPurify1DParametersTagged:
+) -> VPurify1DParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def v__purify_1_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VPurify1DParameters` object.
+    `VPurify1DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v__purify_1_d_validate(
 
 
 def v__purify_1_d_cargs(
-    params: VPurify1DParameters,
+    params: VPurify1DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def v__purify_1_d_cargs(
 
 
 def v__purify_1_d_outputs(
-    params: VPurify1DParameters,
+    params: VPurify1DParamsDict,
     execution: Execution,
 ) -> VPurify1DOutputs:
     """
@@ -139,7 +139,7 @@ def v__purify_1_d_outputs(
 
 
 def v__purify_1_d_execute(
-    params: VPurify1DParameters,
+    params: VPurify1DParamsDict,
     runner: Runner | None = None,
 ) -> VPurify1DOutputs:
     """
@@ -202,6 +202,8 @@ def v__purify_1_d(
 
 __all__ = [
     "VPurify1DOutputs",
+    "VPurify1DParamsDict",
+    "VPurify1DParamsDictTagged",
     "V__PURIFY_1_D_METADATA",
     "v__purify_1_d",
     "v__purify_1_d_execute",

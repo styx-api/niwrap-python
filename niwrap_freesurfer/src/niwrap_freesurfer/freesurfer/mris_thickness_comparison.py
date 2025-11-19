@@ -13,7 +13,7 @@ MRIS_THICKNESS_COMPARISON_METADATA = Metadata(
 )
 
 
-MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonParameters', {
+MrisThicknessComparisonParamsDict = typing.TypedDict('MrisThicknessComparisonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_comparison"]],
     "subject": str,
     "hemi": str,
@@ -21,7 +21,7 @@ MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonPar
     "w_file": InputPathType,
     "labels": list[str],
 })
-MrisThicknessComparisonParametersTagged = typing.TypedDict('MrisThicknessComparisonParametersTagged', {
+MrisThicknessComparisonParamsDictTagged = typing.TypedDict('MrisThicknessComparisonParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_thickness_comparison"],
     "subject": str,
     "hemi": str,
@@ -33,7 +33,7 @@ MrisThicknessComparisonParametersTagged = typing.TypedDict('MrisThicknessCompari
 
 class MrisThicknessComparisonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisThicknessComparisonParameters(...)`.
+    Output object returned when calling `MrisThicknessComparisonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def mris_thickness_comparison_params(
     thickness_file: InputPathType,
     w_file: InputPathType,
     labels: list[str],
-) -> MrisThicknessComparisonParametersTagged:
+) -> MrisThicknessComparisonParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def mris_thickness_comparison_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisThicknessComparisonParameters` object.
+    `MrisThicknessComparisonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def mris_thickness_comparison_validate(
 
 
 def mris_thickness_comparison_cargs(
-    params: MrisThicknessComparisonParameters,
+    params: MrisThicknessComparisonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def mris_thickness_comparison_cargs(
 
 
 def mris_thickness_comparison_outputs(
-    params: MrisThicknessComparisonParameters,
+    params: MrisThicknessComparisonParamsDict,
     execution: Execution,
 ) -> MrisThicknessComparisonOutputs:
     """
@@ -149,7 +149,7 @@ def mris_thickness_comparison_outputs(
 
 
 def mris_thickness_comparison_execute(
-    params: MrisThicknessComparisonParameters,
+    params: MrisThicknessComparisonParamsDict,
     runner: Runner | None = None,
 ) -> MrisThicknessComparisonOutputs:
     """
@@ -219,6 +219,8 @@ def mris_thickness_comparison(
 __all__ = [
     "MRIS_THICKNESS_COMPARISON_METADATA",
     "MrisThicknessComparisonOutputs",
+    "MrisThicknessComparisonParamsDict",
+    "MrisThicknessComparisonParamsDictTagged",
     "mris_thickness_comparison",
     "mris_thickness_comparison_execute",
     "mris_thickness_comparison_params",

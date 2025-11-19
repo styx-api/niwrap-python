@@ -13,13 +13,13 @@ V_3DTO_XDATASET_METADATA = Metadata(
 )
 
 
-V3dtoXdatasetParameters = typing.TypedDict('V3dtoXdatasetParameters', {
+V3dtoXdatasetParamsDict = typing.TypedDict('V3dtoXdatasetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dtoXdataset"]],
     "prefix": str,
     "mask": InputPathType,
     "input_files": list[InputPathType],
 })
-V3dtoXdatasetParametersTagged = typing.TypedDict('V3dtoXdatasetParametersTagged', {
+V3dtoXdatasetParamsDictTagged = typing.TypedDict('V3dtoXdatasetParamsDictTagged', {
     "@type": typing.Literal["afni/3dtoXdataset"],
     "prefix": str,
     "mask": InputPathType,
@@ -29,7 +29,7 @@ V3dtoXdatasetParametersTagged = typing.TypedDict('V3dtoXdatasetParametersTagged'
 
 class V3dtoXdatasetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dtoXdatasetParameters(...)`.
+    Output object returned when calling `V3dtoXdatasetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3dto_xdataset_params(
     prefix: str,
     mask: InputPathType,
     input_files: list[InputPathType],
-) -> V3dtoXdatasetParametersTagged:
+) -> V3dtoXdatasetParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def v_3dto_xdataset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dtoXdatasetParameters` object.
+    `V3dtoXdatasetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v_3dto_xdataset_validate(
 
 
 def v_3dto_xdataset_cargs(
-    params: V3dtoXdatasetParameters,
+    params: V3dtoXdatasetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def v_3dto_xdataset_cargs(
 
 
 def v_3dto_xdataset_outputs(
-    params: V3dtoXdatasetParameters,
+    params: V3dtoXdatasetParamsDict,
     execution: Execution,
 ) -> V3dtoXdatasetOutputs:
     """
@@ -135,7 +135,7 @@ def v_3dto_xdataset_outputs(
 
 
 def v_3dto_xdataset_execute(
-    params: V3dtoXdatasetParameters,
+    params: V3dtoXdatasetParamsDict,
     runner: Runner | None = None,
 ) -> V3dtoXdatasetOutputs:
     """
@@ -196,6 +196,8 @@ def v_3dto_xdataset(
 
 __all__ = [
     "V3dtoXdatasetOutputs",
+    "V3dtoXdatasetParamsDict",
+    "V3dtoXdatasetParamsDictTagged",
     "V_3DTO_XDATASET_METADATA",
     "v_3dto_xdataset",
     "v_3dto_xdataset_execute",

@@ -13,13 +13,13 @@ QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 )
 
 
-QuantifyThalamicNucleiShParameters = typing.TypedDict('QuantifyThalamicNucleiShParameters', {
+QuantifyThalamicNucleiShParamsDict = typing.TypedDict('QuantifyThalamicNucleiShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyThalamicNuclei.sh"]],
     "output_file": str,
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
-QuantifyThalamicNucleiShParametersTagged = typing.TypedDict('QuantifyThalamicNucleiShParametersTagged', {
+QuantifyThalamicNucleiShParamsDictTagged = typing.TypedDict('QuantifyThalamicNucleiShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/quantifyThalamicNuclei.sh"],
     "output_file": str,
     "analysis_id": str,
@@ -29,7 +29,7 @@ QuantifyThalamicNucleiShParametersTagged = typing.TypedDict('QuantifyThalamicNuc
 
 class QuantifyThalamicNucleiShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuantifyThalamicNucleiShParameters(...)`.
+    Output object returned when calling `QuantifyThalamicNucleiShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def quantify_thalamic_nuclei_sh_params(
     output_file: str,
     analysis_id: str,
     subjects_directory: str | None = None,
-) -> QuantifyThalamicNucleiShParametersTagged:
+) -> QuantifyThalamicNucleiShParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def quantify_thalamic_nuclei_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuantifyThalamicNucleiShParameters` object.
+    `QuantifyThalamicNucleiShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def quantify_thalamic_nuclei_sh_validate(
 
 
 def quantify_thalamic_nuclei_sh_cargs(
-    params: QuantifyThalamicNucleiShParameters,
+    params: QuantifyThalamicNucleiShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def quantify_thalamic_nuclei_sh_cargs(
 
 
 def quantify_thalamic_nuclei_sh_outputs(
-    params: QuantifyThalamicNucleiShParameters,
+    params: QuantifyThalamicNucleiShParamsDict,
     execution: Execution,
 ) -> QuantifyThalamicNucleiShOutputs:
     """
@@ -130,7 +130,7 @@ def quantify_thalamic_nuclei_sh_outputs(
 
 
 def quantify_thalamic_nuclei_sh_execute(
-    params: QuantifyThalamicNucleiShParameters,
+    params: QuantifyThalamicNucleiShParamsDict,
     runner: Runner | None = None,
 ) -> QuantifyThalamicNucleiShOutputs:
     """
@@ -192,6 +192,8 @@ def quantify_thalamic_nuclei_sh(
 __all__ = [
     "QUANTIFY_THALAMIC_NUCLEI_SH_METADATA",
     "QuantifyThalamicNucleiShOutputs",
+    "QuantifyThalamicNucleiShParamsDict",
+    "QuantifyThalamicNucleiShParamsDictTagged",
     "quantify_thalamic_nuclei_sh",
     "quantify_thalamic_nuclei_sh_execute",
     "quantify_thalamic_nuclei_sh_params",

@@ -13,7 +13,7 @@ MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA = Metadata(
 )
 
 
-MrisTransmantleDysplasiaPathsParameters = typing.TypedDict('MrisTransmantleDysplasiaPathsParameters', {
+MrisTransmantleDysplasiaPathsParamsDict = typing.TypedDict('MrisTransmantleDysplasiaPathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_transmantle_dysplasia_paths"]],
     "surface": InputPathType,
     "aseg_volume": InputPathType,
@@ -23,7 +23,7 @@ MrisTransmantleDysplasiaPathsParameters = typing.TypedDict('MrisTransmantleDyspl
     "filter": typing.NotRequired[list[float] | None],
     "noise_sensitivity": bool,
 })
-MrisTransmantleDysplasiaPathsParametersTagged = typing.TypedDict('MrisTransmantleDysplasiaPathsParametersTagged', {
+MrisTransmantleDysplasiaPathsParamsDictTagged = typing.TypedDict('MrisTransmantleDysplasiaPathsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_transmantle_dysplasia_paths"],
     "surface": InputPathType,
     "aseg_volume": InputPathType,
@@ -37,7 +37,7 @@ MrisTransmantleDysplasiaPathsParametersTagged = typing.TypedDict('MrisTransmantl
 
 class MrisTransmantleDysplasiaPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisTransmantleDysplasiaPathsParameters(...)`.
+    Output object returned when calling `MrisTransmantleDysplasiaPathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_transmantle_dysplasia_paths_params(
     output_volume: str,
     filter_: list[float] | None = None,
     noise_sensitivity: bool = False,
-) -> MrisTransmantleDysplasiaPathsParametersTagged:
+) -> MrisTransmantleDysplasiaPathsParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def mris_transmantle_dysplasia_paths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisTransmantleDysplasiaPathsParameters` object.
+    `MrisTransmantleDysplasiaPathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def mris_transmantle_dysplasia_paths_validate(
 
 
 def mris_transmantle_dysplasia_paths_cargs(
-    params: MrisTransmantleDysplasiaPathsParameters,
+    params: MrisTransmantleDysplasiaPathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,7 +160,7 @@ def mris_transmantle_dysplasia_paths_cargs(
 
 
 def mris_transmantle_dysplasia_paths_outputs(
-    params: MrisTransmantleDysplasiaPathsParameters,
+    params: MrisTransmantleDysplasiaPathsParamsDict,
     execution: Execution,
 ) -> MrisTransmantleDysplasiaPathsOutputs:
     """
@@ -180,7 +180,7 @@ def mris_transmantle_dysplasia_paths_outputs(
 
 
 def mris_transmantle_dysplasia_paths_execute(
-    params: MrisTransmantleDysplasiaPathsParameters,
+    params: MrisTransmantleDysplasiaPathsParamsDict,
     runner: Runner | None = None,
 ) -> MrisTransmantleDysplasiaPathsOutputs:
     """
@@ -255,6 +255,8 @@ def mris_transmantle_dysplasia_paths(
 __all__ = [
     "MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA",
     "MrisTransmantleDysplasiaPathsOutputs",
+    "MrisTransmantleDysplasiaPathsParamsDict",
+    "MrisTransmantleDysplasiaPathsParamsDictTagged",
     "mris_transmantle_dysplasia_paths",
     "mris_transmantle_dysplasia_paths_execute",
     "mris_transmantle_dysplasia_paths_params",

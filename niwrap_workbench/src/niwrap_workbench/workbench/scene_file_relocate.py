@@ -12,12 +12,12 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
 )
 
 
-SceneFileRelocateParameters = typing.TypedDict('SceneFileRelocateParameters', {
+SceneFileRelocateParamsDict = typing.TypedDict('SceneFileRelocateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-relocate"]],
     "input-scene": str,
     "output-scene": str,
 })
-SceneFileRelocateParametersTagged = typing.TypedDict('SceneFileRelocateParametersTagged', {
+SceneFileRelocateParamsDictTagged = typing.TypedDict('SceneFileRelocateParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-file-relocate"],
     "input-scene": str,
     "output-scene": str,
@@ -26,7 +26,7 @@ SceneFileRelocateParametersTagged = typing.TypedDict('SceneFileRelocateParameter
 
 class SceneFileRelocateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SceneFileRelocateParameters(...)`.
+    Output object returned when calling `SceneFileRelocateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class SceneFileRelocateOutputs(typing.NamedTuple):
 def scene_file_relocate_params(
     input_scene: str,
     output_scene: str,
-) -> SceneFileRelocateParametersTagged:
+) -> SceneFileRelocateParamsDictTagged:
     """
     Build parameters.
     
@@ -58,7 +58,7 @@ def scene_file_relocate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SceneFileRelocateParameters` object.
+    `SceneFileRelocateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -76,7 +76,7 @@ def scene_file_relocate_validate(
 
 
 def scene_file_relocate_cargs(
-    params: SceneFileRelocateParameters,
+    params: SceneFileRelocateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def scene_file_relocate_cargs(
 
 
 def scene_file_relocate_outputs(
-    params: SceneFileRelocateParameters,
+    params: SceneFileRelocateParamsDict,
     execution: Execution,
 ) -> SceneFileRelocateOutputs:
     """
@@ -118,7 +118,7 @@ def scene_file_relocate_outputs(
 
 
 def scene_file_relocate_execute(
-    params: SceneFileRelocateParameters,
+    params: SceneFileRelocateParamsDict,
     runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
@@ -175,6 +175,8 @@ def scene_file_relocate(
 __all__ = [
     "SCENE_FILE_RELOCATE_METADATA",
     "SceneFileRelocateOutputs",
+    "SceneFileRelocateParamsDict",
+    "SceneFileRelocateParamsDictTagged",
     "scene_file_relocate",
     "scene_file_relocate_execute",
     "scene_file_relocate_params",

@@ -13,7 +13,7 @@ DCM2NIIX_AFNI_METADATA = Metadata(
 )
 
 
-Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
+Dcm2niixAfniParamsDict = typing.TypedDict('Dcm2niixAfniParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/dcm2niix_afni"]],
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
     "version": bool,
     "xml": bool,
 })
-Dcm2niixAfniParametersTagged = typing.TypedDict('Dcm2niixAfniParametersTagged', {
+Dcm2niixAfniParamsDictTagged = typing.TypedDict('Dcm2niixAfniParamsDictTagged', {
     "@type": typing.Literal["afni/dcm2niix_afni"],
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
@@ -81,7 +81,7 @@ Dcm2niixAfniParametersTagged = typing.TypedDict('Dcm2niixAfniParametersTagged', 
 
 class Dcm2niixAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dcm2niixAfniParameters(...)`.
+    Output object returned when calling `Dcm2niixAfniParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +119,7 @@ def dcm2niix_afni_params(
     terse: bool = False,
     version: bool = False,
     xml_: bool = False,
-) -> Dcm2niixAfniParametersTagged:
+) -> Dcm2niixAfniParamsDictTagged:
     """
     Build parameters.
     
@@ -234,7 +234,7 @@ def dcm2niix_afni_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dcm2niixAfniParameters` object.
+    `Dcm2niixAfniParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -342,7 +342,7 @@ def dcm2niix_afni_validate(
 
 
 def dcm2niix_afni_cargs(
-    params: Dcm2niixAfniParameters,
+    params: Dcm2niixAfniParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -486,7 +486,7 @@ def dcm2niix_afni_cargs(
 
 
 def dcm2niix_afni_outputs(
-    params: Dcm2niixAfniParameters,
+    params: Dcm2niixAfniParamsDict,
     execution: Execution,
 ) -> Dcm2niixAfniOutputs:
     """
@@ -506,7 +506,7 @@ def dcm2niix_afni_outputs(
 
 
 def dcm2niix_afni_execute(
-    params: Dcm2niixAfniParameters,
+    params: Dcm2niixAfniParamsDict,
     runner: Runner | None = None,
 ) -> Dcm2niixAfniOutputs:
     """
@@ -661,6 +661,8 @@ def dcm2niix_afni(
 __all__ = [
     "DCM2NIIX_AFNI_METADATA",
     "Dcm2niixAfniOutputs",
+    "Dcm2niixAfniParamsDict",
+    "Dcm2niixAfniParamsDictTagged",
     "dcm2niix_afni",
     "dcm2niix_afni_execute",
     "dcm2niix_afni_params",

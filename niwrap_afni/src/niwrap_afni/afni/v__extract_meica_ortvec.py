@@ -13,7 +13,7 @@ V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
 )
 
 
-VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters', {
+VExtractMeicaOrtvecParamsDict = typing.TypedDict('VExtractMeicaOrtvecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@extract_meica_ortvec"]],
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters'
     "work_dir": typing.NotRequired[str | None],
     "verbosity": typing.NotRequired[str | None],
 })
-VExtractMeicaOrtvecParametersTagged = typing.TypedDict('VExtractMeicaOrtvecParametersTagged', {
+VExtractMeicaOrtvecParamsDictTagged = typing.TypedDict('VExtractMeicaOrtvecParamsDictTagged', {
     "@type": typing.Literal["afni/@extract_meica_ortvec"],
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ VExtractMeicaOrtvecParametersTagged = typing.TypedDict('VExtractMeicaOrtvecParam
 
 class VExtractMeicaOrtvecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VExtractMeicaOrtvecParameters(...)`.
+    Output object returned when calling `VExtractMeicaOrtvecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__extract_meica_ortvec_params(
     reject_midk: int | None = None,
     work_dir: str | None = None,
     verbosity: str | None = None,
-) -> VExtractMeicaOrtvecParametersTagged:
+) -> VExtractMeicaOrtvecParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v__extract_meica_ortvec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VExtractMeicaOrtvecParameters` object.
+    `VExtractMeicaOrtvecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def v__extract_meica_ortvec_validate(
 
 
 def v__extract_meica_ortvec_cargs(
-    params: VExtractMeicaOrtvecParameters,
+    params: VExtractMeicaOrtvecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def v__extract_meica_ortvec_cargs(
 
 
 def v__extract_meica_ortvec_outputs(
-    params: VExtractMeicaOrtvecParameters,
+    params: VExtractMeicaOrtvecParamsDict,
     execution: Execution,
 ) -> VExtractMeicaOrtvecOutputs:
     """
@@ -188,7 +188,7 @@ def v__extract_meica_ortvec_outputs(
 
 
 def v__extract_meica_ortvec_execute(
-    params: VExtractMeicaOrtvecParameters,
+    params: VExtractMeicaOrtvecParamsDict,
     runner: Runner | None = None,
 ) -> VExtractMeicaOrtvecOutputs:
     """
@@ -260,6 +260,8 @@ def v__extract_meica_ortvec(
 
 __all__ = [
     "VExtractMeicaOrtvecOutputs",
+    "VExtractMeicaOrtvecParamsDict",
+    "VExtractMeicaOrtvecParamsDictTagged",
     "V__EXTRACT_MEICA_ORTVEC_METADATA",
     "v__extract_meica_ortvec",
     "v__extract_meica_ortvec_execute",

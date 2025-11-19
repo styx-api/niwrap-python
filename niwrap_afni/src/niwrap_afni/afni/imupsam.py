@@ -13,14 +13,14 @@ IMUPSAM_METADATA = Metadata(
 )
 
 
-ImupsamParameters = typing.TypedDict('ImupsamParameters', {
+ImupsamParamsDict = typing.TypedDict('ImupsamParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imupsam"]],
     "ascii_flag": bool,
     "factor": int,
     "input_image": InputPathType,
     "output_image": str,
 })
-ImupsamParametersTagged = typing.TypedDict('ImupsamParametersTagged', {
+ImupsamParamsDictTagged = typing.TypedDict('ImupsamParamsDictTagged', {
     "@type": typing.Literal["afni/imupsam"],
     "ascii_flag": bool,
     "factor": int,
@@ -31,7 +31,7 @@ ImupsamParametersTagged = typing.TypedDict('ImupsamParametersTagged', {
 
 class ImupsamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImupsamParameters(...)`.
+    Output object returned when calling `ImupsamParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def imupsam_params(
     input_image: InputPathType,
     output_image: str,
     ascii_flag: bool = False,
-) -> ImupsamParametersTagged:
+) -> ImupsamParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def imupsam_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImupsamParameters` object.
+    `ImupsamParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def imupsam_validate(
 
 
 def imupsam_cargs(
-    params: ImupsamParameters,
+    params: ImupsamParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def imupsam_cargs(
 
 
 def imupsam_outputs(
-    params: ImupsamParameters,
+    params: ImupsamParamsDict,
     execution: Execution,
 ) -> ImupsamOutputs:
     """
@@ -144,7 +144,7 @@ def imupsam_outputs(
 
 
 def imupsam_execute(
-    params: ImupsamParameters,
+    params: ImupsamParamsDict,
     runner: Runner | None = None,
 ) -> ImupsamOutputs:
     """
@@ -211,6 +211,8 @@ def imupsam(
 __all__ = [
     "IMUPSAM_METADATA",
     "ImupsamOutputs",
+    "ImupsamParamsDict",
+    "ImupsamParamsDictTagged",
     "imupsam",
     "imupsam_execute",
     "imupsam_params",

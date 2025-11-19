@@ -13,7 +13,7 @@ V_1DGRAYPLOT_METADATA = Metadata(
 )
 
 
-V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
+V1dgrayplotParamsDict = typing.TypedDict('V1dgrayplotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dgrayplot"]],
     "tsfile": InputPathType,
     "install": bool,
@@ -23,7 +23,7 @@ V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
     "use": typing.NotRequired[float | None],
     "ps": bool,
 })
-V1dgrayplotParametersTagged = typing.TypedDict('V1dgrayplotParametersTagged', {
+V1dgrayplotParamsDictTagged = typing.TypedDict('V1dgrayplotParamsDictTagged', {
     "@type": typing.Literal["afni/1dgrayplot"],
     "tsfile": InputPathType,
     "install": bool,
@@ -37,7 +37,7 @@ V1dgrayplotParametersTagged = typing.TypedDict('V1dgrayplotParametersTagged', {
 
 class V1dgrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dgrayplotParameters(...)`.
+    Output object returned when calling `V1dgrayplotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def v_1dgrayplot_params(
     sep: bool = False,
     use: float | None = None,
     ps: bool = False,
-) -> V1dgrayplotParametersTagged:
+) -> V1dgrayplotParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v_1dgrayplot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dgrayplotParameters` object.
+    `V1dgrayplotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def v_1dgrayplot_validate(
 
 
 def v_1dgrayplot_cargs(
-    params: V1dgrayplotParameters,
+    params: V1dgrayplotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def v_1dgrayplot_cargs(
 
 
 def v_1dgrayplot_outputs(
-    params: V1dgrayplotParameters,
+    params: V1dgrayplotParamsDict,
     execution: Execution,
 ) -> V1dgrayplotOutputs:
     """
@@ -180,7 +180,7 @@ def v_1dgrayplot_outputs(
 
 
 def v_1dgrayplot_execute(
-    params: V1dgrayplotParameters,
+    params: V1dgrayplotParamsDict,
     runner: Runner | None = None,
 ) -> V1dgrayplotOutputs:
     """
@@ -257,6 +257,8 @@ def v_1dgrayplot(
 
 __all__ = [
     "V1dgrayplotOutputs",
+    "V1dgrayplotParamsDict",
+    "V1dgrayplotParamsDictTagged",
     "V_1DGRAYPLOT_METADATA",
     "v_1dgrayplot",
     "v_1dgrayplot_execute",

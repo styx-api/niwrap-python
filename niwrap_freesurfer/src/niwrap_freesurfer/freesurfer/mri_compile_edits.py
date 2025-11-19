@@ -13,12 +13,12 @@ MRI_COMPILE_EDITS_METADATA = Metadata(
 )
 
 
-MriCompileEditsParameters = typing.TypedDict('MriCompileEditsParameters', {
+MriCompileEditsParamsDict = typing.TypedDict('MriCompileEditsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compile_edits"]],
     "subject_name": str,
     "output_volume": str,
 })
-MriCompileEditsParametersTagged = typing.TypedDict('MriCompileEditsParametersTagged', {
+MriCompileEditsParamsDictTagged = typing.TypedDict('MriCompileEditsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compile_edits"],
     "subject_name": str,
     "output_volume": str,
@@ -27,7 +27,7 @@ MriCompileEditsParametersTagged = typing.TypedDict('MriCompileEditsParametersTag
 
 class MriCompileEditsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCompileEditsParameters(...)`.
+    Output object returned when calling `MriCompileEditsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriCompileEditsOutputs(typing.NamedTuple):
 def mri_compile_edits_params(
     subject_name: str,
     output_volume: str,
-) -> MriCompileEditsParametersTagged:
+) -> MriCompileEditsParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_compile_edits_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCompileEditsParameters` object.
+    `MriCompileEditsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mri_compile_edits_validate(
 
 
 def mri_compile_edits_cargs(
-    params: MriCompileEditsParameters,
+    params: MriCompileEditsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mri_compile_edits_cargs(
 
 
 def mri_compile_edits_outputs(
-    params: MriCompileEditsParameters,
+    params: MriCompileEditsParamsDict,
     execution: Execution,
 ) -> MriCompileEditsOutputs:
     """
@@ -119,7 +119,7 @@ def mri_compile_edits_outputs(
 
 
 def mri_compile_edits_execute(
-    params: MriCompileEditsParameters,
+    params: MriCompileEditsParamsDict,
     runner: Runner | None = None,
 ) -> MriCompileEditsOutputs:
     """
@@ -180,6 +180,8 @@ def mri_compile_edits(
 __all__ = [
     "MRI_COMPILE_EDITS_METADATA",
     "MriCompileEditsOutputs",
+    "MriCompileEditsParamsDict",
+    "MriCompileEditsParamsDictTagged",
     "mri_compile_edits",
     "mri_compile_edits_execute",
     "mri_compile_edits_params",

@@ -13,7 +13,7 @@ MRIS_FWHM_METADATA = Metadata(
 )
 
 
-MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
+MrisFwhmParamsDict = typing.TypedDict('MrisFwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fwhm"]],
     "input_file": InputPathType,
     "subject": str,
@@ -47,7 +47,7 @@ MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
     "checkopts_flag": bool,
     "version_flag": bool,
 })
-MrisFwhmParametersTagged = typing.TypedDict('MrisFwhmParametersTagged', {
+MrisFwhmParamsDictTagged = typing.TypedDict('MrisFwhmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_fwhm"],
     "input_file": InputPathType,
     "subject": str,
@@ -85,7 +85,7 @@ MrisFwhmParametersTagged = typing.TypedDict('MrisFwhmParametersTagged', {
 
 class MrisFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisFwhmParameters(...)`.
+    Output object returned when calling `MrisFwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,7 +123,7 @@ def mris_fwhm_params(
     debug_flag: bool = False,
     checkopts_flag: bool = False,
     version_flag: bool = False,
-) -> MrisFwhmParametersTagged:
+) -> MrisFwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -223,7 +223,7 @@ def mris_fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisFwhmParameters` object.
+    `MrisFwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -341,7 +341,7 @@ def mris_fwhm_validate(
 
 
 def mris_fwhm_cargs(
-    params: MrisFwhmParameters,
+    params: MrisFwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -477,7 +477,7 @@ def mris_fwhm_cargs(
 
 
 def mris_fwhm_outputs(
-    params: MrisFwhmParameters,
+    params: MrisFwhmParamsDict,
     execution: Execution,
 ) -> MrisFwhmOutputs:
     """
@@ -496,7 +496,7 @@ def mris_fwhm_outputs(
 
 
 def mris_fwhm_execute(
-    params: MrisFwhmParameters,
+    params: MrisFwhmParamsDict,
     runner: Runner | None = None,
 ) -> MrisFwhmOutputs:
     """
@@ -645,6 +645,8 @@ def mris_fwhm(
 __all__ = [
     "MRIS_FWHM_METADATA",
     "MrisFwhmOutputs",
+    "MrisFwhmParamsDict",
+    "MrisFwhmParamsDictTagged",
     "mris_fwhm",
     "mris_fwhm_execute",
     "mris_fwhm_params",

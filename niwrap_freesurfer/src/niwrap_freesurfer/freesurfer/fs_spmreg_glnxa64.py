@@ -13,12 +13,12 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 )
 
 
-FsSpmregGlnxa64Parameters = typing.TypedDict('FsSpmregGlnxa64Parameters', {
+FsSpmregGlnxa64ParamsDict = typing.TypedDict('FsSpmregGlnxa64ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_spmreg.glnxa64"]],
     "input_volume": InputPathType,
     "output_matrix": str,
 })
-FsSpmregGlnxa64ParametersTagged = typing.TypedDict('FsSpmregGlnxa64ParametersTagged', {
+FsSpmregGlnxa64ParamsDictTagged = typing.TypedDict('FsSpmregGlnxa64ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_spmreg.glnxa64"],
     "input_volume": InputPathType,
     "output_matrix": str,
@@ -27,7 +27,7 @@ FsSpmregGlnxa64ParametersTagged = typing.TypedDict('FsSpmregGlnxa64ParametersTag
 
 class FsSpmregGlnxa64Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsSpmregGlnxa64Parameters(...)`.
+    Output object returned when calling `FsSpmregGlnxa64ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FsSpmregGlnxa64Outputs(typing.NamedTuple):
 def fs_spmreg_glnxa64_params(
     input_volume: InputPathType,
     output_matrix: str = "output.mat",
-) -> FsSpmregGlnxa64ParametersTagged:
+) -> FsSpmregGlnxa64ParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def fs_spmreg_glnxa64_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsSpmregGlnxa64Parameters` object.
+    `FsSpmregGlnxa64ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fs_spmreg_glnxa64_validate(
 
 
 def fs_spmreg_glnxa64_cargs(
-    params: FsSpmregGlnxa64Parameters,
+    params: FsSpmregGlnxa64ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def fs_spmreg_glnxa64_cargs(
 
 
 def fs_spmreg_glnxa64_outputs(
-    params: FsSpmregGlnxa64Parameters,
+    params: FsSpmregGlnxa64ParamsDict,
     execution: Execution,
 ) -> FsSpmregGlnxa64Outputs:
     """
@@ -119,7 +119,7 @@ def fs_spmreg_glnxa64_outputs(
 
 
 def fs_spmreg_glnxa64_execute(
-    params: FsSpmregGlnxa64Parameters,
+    params: FsSpmregGlnxa64ParamsDict,
     runner: Runner | None = None,
 ) -> FsSpmregGlnxa64Outputs:
     """
@@ -178,6 +178,8 @@ def fs_spmreg_glnxa64(
 __all__ = [
     "FS_SPMREG_GLNXA64_METADATA",
     "FsSpmregGlnxa64Outputs",
+    "FsSpmregGlnxa64ParamsDict",
+    "FsSpmregGlnxa64ParamsDictTagged",
     "fs_spmreg_glnxa64",
     "fs_spmreg_glnxa64_execute",
     "fs_spmreg_glnxa64_params",

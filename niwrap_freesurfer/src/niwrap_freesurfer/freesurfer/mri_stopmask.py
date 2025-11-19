@@ -13,7 +13,7 @@ MRI_STOPMASK_METADATA = Metadata(
 )
 
 
-MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
+MriStopmaskParamsDict = typing.TypedDict('MriStopmaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stopmask"]],
     "output_mask": str,
     "filled": list[InputPathType],
@@ -28,7 +28,7 @@ MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
     "no_wm": bool,
     "no_bfs": bool,
 })
-MriStopmaskParametersTagged = typing.TypedDict('MriStopmaskParametersTagged', {
+MriStopmaskParamsDictTagged = typing.TypedDict('MriStopmaskParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_stopmask"],
     "output_mask": str,
     "filled": list[InputPathType],
@@ -47,7 +47,7 @@ MriStopmaskParametersTagged = typing.TypedDict('MriStopmaskParametersTagged', {
 
 class MriStopmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriStopmaskParameters(...)`.
+    Output object returned when calling `MriStopmaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def mri_stopmask_params(
     no_wmsa: bool = False,
     no_wm: bool = False,
     no_bfs: bool = False,
-) -> MriStopmaskParametersTagged:
+) -> MriStopmaskParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def mri_stopmask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriStopmaskParameters` object.
+    `MriStopmaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -178,7 +178,7 @@ def mri_stopmask_validate(
 
 
 def mri_stopmask_cargs(
-    params: MriStopmaskParameters,
+    params: MriStopmaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -235,7 +235,7 @@ def mri_stopmask_cargs(
 
 
 def mri_stopmask_outputs(
-    params: MriStopmaskParameters,
+    params: MriStopmaskParamsDict,
     execution: Execution,
 ) -> MriStopmaskOutputs:
     """
@@ -255,7 +255,7 @@ def mri_stopmask_outputs(
 
 
 def mri_stopmask_execute(
-    params: MriStopmaskParameters,
+    params: MriStopmaskParamsDict,
     runner: Runner | None = None,
 ) -> MriStopmaskOutputs:
     """
@@ -352,6 +352,8 @@ def mri_stopmask(
 __all__ = [
     "MRI_STOPMASK_METADATA",
     "MriStopmaskOutputs",
+    "MriStopmaskParamsDict",
+    "MriStopmaskParamsDictTagged",
     "mri_stopmask",
     "mri_stopmask_execute",
     "mri_stopmask_params",

@@ -9,7 +9,7 @@
     },
     "var": {
       "var_param": "var",
-      "fn_struct_make_params": "volume_math_var_params",
+      "fn_struct_make_params": "volume_math_var",
       "properties": {
         "name": {
           "var_param": "name"

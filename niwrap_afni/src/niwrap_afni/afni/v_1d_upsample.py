@@ -13,13 +13,13 @@ V_1D_UPSAMPLE_METADATA = Metadata(
 )
 
 
-V1dUpsampleParameters = typing.TypedDict('V1dUpsampleParameters', {
+V1dUpsampleParamsDict = typing.TypedDict('V1dUpsampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dUpsample"]],
     "upsample_factor": float,
     "input_file": InputPathType,
     "linear_interpolation": bool,
 })
-V1dUpsampleParametersTagged = typing.TypedDict('V1dUpsampleParametersTagged', {
+V1dUpsampleParamsDictTagged = typing.TypedDict('V1dUpsampleParamsDictTagged', {
     "@type": typing.Literal["afni/1dUpsample"],
     "upsample_factor": float,
     "input_file": InputPathType,
@@ -29,7 +29,7 @@ V1dUpsampleParametersTagged = typing.TypedDict('V1dUpsampleParametersTagged', {
 
 class V1dUpsampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dUpsampleParameters(...)`.
+    Output object returned when calling `V1dUpsampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_1d_upsample_params(
     upsample_factor: float,
     input_file: InputPathType,
     linear_interpolation: bool = False,
-) -> V1dUpsampleParametersTagged:
+) -> V1dUpsampleParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def v_1d_upsample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dUpsampleParameters` object.
+    `V1dUpsampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v_1d_upsample_validate(
 
 
 def v_1d_upsample_cargs(
-    params: V1dUpsampleParameters,
+    params: V1dUpsampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def v_1d_upsample_cargs(
 
 
 def v_1d_upsample_outputs(
-    params: V1dUpsampleParameters,
+    params: V1dUpsampleParamsDict,
     execution: Execution,
 ) -> V1dUpsampleOutputs:
     """
@@ -133,7 +133,7 @@ def v_1d_upsample_outputs(
 
 
 def v_1d_upsample_execute(
-    params: V1dUpsampleParameters,
+    params: V1dUpsampleParamsDict,
     runner: Runner | None = None,
 ) -> V1dUpsampleOutputs:
     """
@@ -195,6 +195,8 @@ def v_1d_upsample(
 
 __all__ = [
     "V1dUpsampleOutputs",
+    "V1dUpsampleParamsDict",
+    "V1dUpsampleParamsDictTagged",
     "V_1D_UPSAMPLE_METADATA",
     "v_1d_upsample",
     "v_1d_upsample_execute",

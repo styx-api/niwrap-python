@@ -13,7 +13,7 @@ FNIRTFILEUTILS_METADATA = Metadata(
 )
 
 
-FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
+FnirtfileutilsParamsDict = typing.TypedDict('FnirtfileutilsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fnirtfileutils"]],
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-FnirtfileutilsParametersTagged = typing.TypedDict('FnirtfileutilsParametersTagged', {
+FnirtfileutilsParamsDictTagged = typing.TypedDict('FnirtfileutilsParamsDictTagged', {
     "@type": typing.Literal["fsl/fnirtfileutils"],
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ FnirtfileutilsParametersTagged = typing.TypedDict('FnirtfileutilsParametersTagge
 
 class FnirtfileutilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FnirtfileutilsParameters(...)`.
+    Output object returned when calling `FnirtfileutilsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def fnirtfileutils_params(
     with_aff: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FnirtfileutilsParametersTagged:
+) -> FnirtfileutilsParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def fnirtfileutils_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FnirtfileutilsParameters` object.
+    `FnirtfileutilsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def fnirtfileutils_validate(
 
 
 def fnirtfileutils_cargs(
-    params: FnirtfileutilsParameters,
+    params: FnirtfileutilsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -231,7 +231,7 @@ def fnirtfileutils_cargs(
 
 
 def fnirtfileutils_outputs(
-    params: FnirtfileutilsParameters,
+    params: FnirtfileutilsParamsDict,
     execution: Execution,
 ) -> FnirtfileutilsOutputs:
     """
@@ -253,7 +253,7 @@ def fnirtfileutils_outputs(
 
 
 def fnirtfileutils_execute(
-    params: FnirtfileutilsParameters,
+    params: FnirtfileutilsParamsDict,
     runner: Runner | None = None,
 ) -> FnirtfileutilsOutputs:
     """
@@ -345,6 +345,8 @@ def fnirtfileutils(
 __all__ = [
     "FNIRTFILEUTILS_METADATA",
     "FnirtfileutilsOutputs",
+    "FnirtfileutilsParamsDict",
+    "FnirtfileutilsParamsDictTagged",
     "fnirtfileutils",
     "fnirtfileutils_execute",
     "fnirtfileutils_params",

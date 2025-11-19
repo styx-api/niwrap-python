@@ -13,12 +13,12 @@ MRIS_DISTANCE_MAP_METADATA = Metadata(
 )
 
 
-MrisDistanceMapParameters = typing.TypedDict('MrisDistanceMapParameters', {
+MrisDistanceMapParamsDict = typing.TypedDict('MrisDistanceMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_map"]],
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })
-MrisDistanceMapParametersTagged = typing.TypedDict('MrisDistanceMapParametersTagged', {
+MrisDistanceMapParamsDictTagged = typing.TypedDict('MrisDistanceMapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_distance_map"],
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
@@ -27,7 +27,7 @@ MrisDistanceMapParametersTagged = typing.TypedDict('MrisDistanceMapParametersTag
 
 class MrisDistanceMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDistanceMapParameters(...)`.
+    Output object returned when calling `MrisDistanceMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MrisDistanceMapOutputs(typing.NamedTuple):
 def mris_distance_map_params(
     input_surface_file: InputPathType,
     output_scalar_field: str,
-) -> MrisDistanceMapParametersTagged:
+) -> MrisDistanceMapParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mris_distance_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDistanceMapParameters` object.
+    `MrisDistanceMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mris_distance_map_validate(
 
 
 def mris_distance_map_cargs(
-    params: MrisDistanceMapParameters,
+    params: MrisDistanceMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mris_distance_map_cargs(
 
 
 def mris_distance_map_outputs(
-    params: MrisDistanceMapParameters,
+    params: MrisDistanceMapParamsDict,
     execution: Execution,
 ) -> MrisDistanceMapOutputs:
     """
@@ -119,7 +119,7 @@ def mris_distance_map_outputs(
 
 
 def mris_distance_map_execute(
-    params: MrisDistanceMapParameters,
+    params: MrisDistanceMapParamsDict,
     runner: Runner | None = None,
 ) -> MrisDistanceMapOutputs:
     """
@@ -180,6 +180,8 @@ def mris_distance_map(
 __all__ = [
     "MRIS_DISTANCE_MAP_METADATA",
     "MrisDistanceMapOutputs",
+    "MrisDistanceMapParamsDict",
+    "MrisDistanceMapParamsDictTagged",
     "mris_distance_map",
     "mris_distance_map_execute",
     "mris_distance_map_params",

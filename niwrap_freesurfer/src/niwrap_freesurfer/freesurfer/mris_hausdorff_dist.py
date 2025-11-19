@@ -13,14 +13,14 @@ MRIS_HAUSDORFF_DIST_METADATA = Metadata(
 )
 
 
-MrisHausdorffDistParameters = typing.TypedDict('MrisHausdorffDistParameters', {
+MrisHausdorffDistParamsDict = typing.TypedDict('MrisHausdorffDistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_hausdorff_dist"]],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
     "annot_name": typing.NotRequired[str | None],
 })
-MrisHausdorffDistParametersTagged = typing.TypedDict('MrisHausdorffDistParametersTagged', {
+MrisHausdorffDistParamsDictTagged = typing.TypedDict('MrisHausdorffDistParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_hausdorff_dist"],
     "surface": InputPathType,
     "label1": InputPathType,
@@ -31,7 +31,7 @@ MrisHausdorffDistParametersTagged = typing.TypedDict('MrisHausdorffDistParameter
 
 class MrisHausdorffDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisHausdorffDistParameters(...)`.
+    Output object returned when calling `MrisHausdorffDistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_hausdorff_dist_params(
     label1: InputPathType,
     label2: InputPathType,
     annot_name: str | None = None,
-) -> MrisHausdorffDistParametersTagged:
+) -> MrisHausdorffDistParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def mris_hausdorff_dist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisHausdorffDistParameters` object.
+    `MrisHausdorffDistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mris_hausdorff_dist_validate(
 
 
 def mris_hausdorff_dist_cargs(
-    params: MrisHausdorffDistParameters,
+    params: MrisHausdorffDistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def mris_hausdorff_dist_cargs(
 
 
 def mris_hausdorff_dist_outputs(
-    params: MrisHausdorffDistParameters,
+    params: MrisHausdorffDistParamsDict,
     execution: Execution,
 ) -> MrisHausdorffDistOutputs:
     """
@@ -144,7 +144,7 @@ def mris_hausdorff_dist_outputs(
 
 
 def mris_hausdorff_dist_execute(
-    params: MrisHausdorffDistParameters,
+    params: MrisHausdorffDistParamsDict,
     runner: Runner | None = None,
 ) -> MrisHausdorffDistOutputs:
     """
@@ -212,6 +212,8 @@ def mris_hausdorff_dist(
 __all__ = [
     "MRIS_HAUSDORFF_DIST_METADATA",
     "MrisHausdorffDistOutputs",
+    "MrisHausdorffDistParamsDict",
+    "MrisHausdorffDistParamsDictTagged",
     "mris_hausdorff_dist",
     "mris_hausdorff_dist_execute",
     "mris_hausdorff_dist_params",

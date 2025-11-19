@@ -13,7 +13,7 @@ PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
 )
 
 
-ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParameters', {
+ParcAtlasJackknifeTestParamsDict = typing.TypedDict('ParcAtlasJackknifeTestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/parc_atlas_jackknife_test"]],
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParam
     "binaries_path": typing.NotRequired[str | None],
     "dontrun": bool,
 })
-ParcAtlasJackknifeTestParametersTagged = typing.TypedDict('ParcAtlasJackknifeTestParametersTagged', {
+ParcAtlasJackknifeTestParamsDictTagged = typing.TypedDict('ParcAtlasJackknifeTestParamsDictTagged', {
     "@type": typing.Literal["freesurfer/parc_atlas_jackknife_test"],
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ ParcAtlasJackknifeTestParametersTagged = typing.TypedDict('ParcAtlasJackknifeTes
 
 class ParcAtlasJackknifeTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ParcAtlasJackknifeTestParameters(...)`.
+    Output object returned when calling `ParcAtlasJackknifeTestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def parc_atlas_jackknife_test_params(
     freesurfer_home: str | None = None,
     binaries_path: str | None = None,
     dontrun: bool = False,
-) -> ParcAtlasJackknifeTestParametersTagged:
+) -> ParcAtlasJackknifeTestParamsDictTagged:
     """
     Build parameters.
     
@@ -117,7 +117,7 @@ def parc_atlas_jackknife_test_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ParcAtlasJackknifeTestParameters` object.
+    `ParcAtlasJackknifeTestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def parc_atlas_jackknife_test_validate(
 
 
 def parc_atlas_jackknife_test_cargs(
-    params: ParcAtlasJackknifeTestParameters,
+    params: ParcAtlasJackknifeTestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,7 +229,7 @@ def parc_atlas_jackknife_test_cargs(
 
 
 def parc_atlas_jackknife_test_outputs(
-    params: ParcAtlasJackknifeTestParameters,
+    params: ParcAtlasJackknifeTestParamsDict,
     execution: Execution,
 ) -> ParcAtlasJackknifeTestOutputs:
     """
@@ -249,7 +249,7 @@ def parc_atlas_jackknife_test_outputs(
 
 
 def parc_atlas_jackknife_test_execute(
-    params: ParcAtlasJackknifeTestParameters,
+    params: ParcAtlasJackknifeTestParamsDict,
     runner: Runner | None = None,
 ) -> ParcAtlasJackknifeTestOutputs:
     """
@@ -338,6 +338,8 @@ def parc_atlas_jackknife_test(
 __all__ = [
     "PARC_ATLAS_JACKKNIFE_TEST_METADATA",
     "ParcAtlasJackknifeTestOutputs",
+    "ParcAtlasJackknifeTestParamsDict",
+    "ParcAtlasJackknifeTestParamsDictTagged",
     "parc_atlas_jackknife_test",
     "parc_atlas_jackknife_test_execute",
     "parc_atlas_jackknife_test_params",

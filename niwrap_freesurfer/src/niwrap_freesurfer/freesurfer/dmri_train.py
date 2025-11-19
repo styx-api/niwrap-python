@@ -13,7 +13,7 @@ DMRI_TRAIN_METADATA = Metadata(
 )
 
 
-DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
+DmriTrainParamsDict = typing.TypedDict('DmriTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_train"]],
     "slist": InputPathType,
     "trk_files": list[InputPathType],
@@ -44,7 +44,7 @@ DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
     "help": bool,
     "version": bool,
 })
-DmriTrainParametersTagged = typing.TypedDict('DmriTrainParametersTagged', {
+DmriTrainParamsDictTagged = typing.TypedDict('DmriTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_train"],
     "slist": InputPathType,
     "trk_files": list[InputPathType],
@@ -79,7 +79,7 @@ DmriTrainParametersTagged = typing.TypedDict('DmriTrainParametersTagged', {
 
 class DmriTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriTrainParameters(...)`.
+    Output object returned when calling `DmriTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +114,7 @@ def dmri_train_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriTrainParametersTagged:
+) -> DmriTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def dmri_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriTrainParameters` object.
+    `DmriTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -345,7 +345,7 @@ def dmri_train_validate(
 
 
 def dmri_train_cargs(
-    params: DmriTrainParameters,
+    params: DmriTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -468,7 +468,7 @@ def dmri_train_cargs(
 
 
 def dmri_train_outputs(
-    params: DmriTrainParameters,
+    params: DmriTrainParamsDict,
     execution: Execution,
 ) -> DmriTrainOutputs:
     """
@@ -487,7 +487,7 @@ def dmri_train_outputs(
 
 
 def dmri_train_execute(
-    params: DmriTrainParameters,
+    params: DmriTrainParamsDict,
     runner: Runner | None = None,
 ) -> DmriTrainOutputs:
     """
@@ -625,6 +625,8 @@ def dmri_train(
 __all__ = [
     "DMRI_TRAIN_METADATA",
     "DmriTrainOutputs",
+    "DmriTrainParamsDict",
+    "DmriTrainParamsDictTagged",
     "dmri_train",
     "dmri_train_execute",
     "dmri_train_params",

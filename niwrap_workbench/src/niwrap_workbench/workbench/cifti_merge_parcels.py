@@ -12,33 +12,33 @@ CIFTI_MERGE_PARCELS_METADATA = Metadata(
 )
 
 
-CiftiMergeParcelsCiftiParameters = typing.TypedDict('CiftiMergeParcelsCiftiParameters', {
+CiftiMergeParcelsCiftiParamsDict = typing.TypedDict('CiftiMergeParcelsCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiMergeParcelsCiftiParametersTagged = typing.TypedDict('CiftiMergeParcelsCiftiParametersTagged', {
+CiftiMergeParcelsCiftiParamsDictTagged = typing.TypedDict('CiftiMergeParcelsCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiMergeParcelsParameters = typing.TypedDict('CiftiMergeParcelsParameters', {
+CiftiMergeParcelsParamsDict = typing.TypedDict('CiftiMergeParcelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge-parcels"]],
     "cifti-out": str,
-    "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParamsDict] | None],
     "direction": str,
 })
-CiftiMergeParcelsParametersTagged = typing.TypedDict('CiftiMergeParcelsParametersTagged', {
+CiftiMergeParcelsParamsDictTagged = typing.TypedDict('CiftiMergeParcelsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-merge-parcels"],
     "cifti-out": str,
-    "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParamsDict] | None],
     "direction": str,
 })
 
 
-def cifti_merge_parcels_cifti_params(
+def cifti_merge_parcels_cifti(
     cifti_in: InputPathType,
-) -> CiftiMergeParcelsCiftiParametersTagged:
+) -> CiftiMergeParcelsCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def cifti_merge_parcels_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMergeParcelsCiftiParameters` object.
+    `CiftiMergeParcelsCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def cifti_merge_parcels_cifti_validate(
 
 
 def cifti_merge_parcels_cifti_cargs(
-    params: CiftiMergeParcelsCiftiParameters,
+    params: CiftiMergeParcelsCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -95,7 +95,7 @@ def cifti_merge_parcels_cifti_cargs(
 
 class CiftiMergeParcelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiMergeParcelsParameters(...)`.
+    Output object returned when calling `CiftiMergeParcelsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,8 +106,8 @@ class CiftiMergeParcelsOutputs(typing.NamedTuple):
 def cifti_merge_parcels_params(
     cifti_out: str,
     direction: str,
-    cifti: list[CiftiMergeParcelsCiftiParameters] | None = None,
-) -> CiftiMergeParcelsParametersTagged:
+    cifti: list[CiftiMergeParcelsCiftiParamsDict] | None = None,
+) -> CiftiMergeParcelsParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def cifti_merge_parcels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMergeParcelsParameters` object.
+    `CiftiMergeParcelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def cifti_merge_parcels_validate(
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeParcelsCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeParcelsCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_merge_parcels_cifti_validate(e)
     if params.get("direction", None) is None:
@@ -156,7 +156,7 @@ def cifti_merge_parcels_validate(
 
 
 def cifti_merge_parcels_cargs(
-    params: CiftiMergeParcelsParameters,
+    params: CiftiMergeParcelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def cifti_merge_parcels_cargs(
 
 
 def cifti_merge_parcels_outputs(
-    params: CiftiMergeParcelsParameters,
+    params: CiftiMergeParcelsParamsDict,
     execution: Execution,
 ) -> CiftiMergeParcelsOutputs:
     """
@@ -201,7 +201,7 @@ def cifti_merge_parcels_outputs(
 
 
 def cifti_merge_parcels_execute(
-    params: CiftiMergeParcelsParameters,
+    params: CiftiMergeParcelsParamsDict,
     runner: Runner | None = None,
 ) -> CiftiMergeParcelsOutputs:
     """
@@ -231,7 +231,7 @@ def cifti_merge_parcels_execute(
 def cifti_merge_parcels(
     cifti_out: str,
     direction: str,
-    cifti: list[CiftiMergeParcelsCiftiParameters] | None = None,
+    cifti: list[CiftiMergeParcelsCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMergeParcelsOutputs:
     """
@@ -260,9 +260,13 @@ def cifti_merge_parcels(
 
 __all__ = [
     "CIFTI_MERGE_PARCELS_METADATA",
+    "CiftiMergeParcelsCiftiParamsDict",
+    "CiftiMergeParcelsCiftiParamsDictTagged",
     "CiftiMergeParcelsOutputs",
+    "CiftiMergeParcelsParamsDict",
+    "CiftiMergeParcelsParamsDictTagged",
     "cifti_merge_parcels",
-    "cifti_merge_parcels_cifti_params",
+    "cifti_merge_parcels_cifti",
     "cifti_merge_parcels_execute",
     "cifti_merge_parcels_params",
 ]

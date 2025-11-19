@@ -13,14 +13,14 @@ TILE_IMAGES_METADATA = Metadata(
 )
 
 
-TileImagesParameters = typing.TypedDict('TileImagesParameters', {
+TileImagesParamsDict = typing.TypedDict('TileImagesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/TileImages"]],
     "image_dimension": int,
     "output_image": str,
     "layout": str,
     "input_images": list[InputPathType],
 })
-TileImagesParametersTagged = typing.TypedDict('TileImagesParametersTagged', {
+TileImagesParamsDictTagged = typing.TypedDict('TileImagesParamsDictTagged', {
     "@type": typing.Literal["ants/TileImages"],
     "image_dimension": int,
     "output_image": str,
@@ -31,7 +31,7 @@ TileImagesParametersTagged = typing.TypedDict('TileImagesParametersTagged', {
 
 class TileImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TileImagesParameters(...)`.
+    Output object returned when calling `TileImagesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def tile_images_params(
     output_image: str,
     layout: str,
     input_images: list[InputPathType],
-) -> TileImagesParametersTagged:
+) -> TileImagesParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def tile_images_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TileImagesParameters` object.
+    `TileImagesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def tile_images_validate(
 
 
 def tile_images_cargs(
-    params: TileImagesParameters,
+    params: TileImagesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def tile_images_cargs(
 
 
 def tile_images_outputs(
-    params: TileImagesParameters,
+    params: TileImagesParamsDict,
     execution: Execution,
 ) -> TileImagesOutputs:
     """
@@ -147,7 +147,7 @@ def tile_images_outputs(
 
 
 def tile_images_execute(
-    params: TileImagesParameters,
+    params: TileImagesParamsDict,
     runner: Runner | None = None,
 ) -> TileImagesOutputs:
     """
@@ -219,6 +219,8 @@ def tile_images(
 __all__ = [
     "TILE_IMAGES_METADATA",
     "TileImagesOutputs",
+    "TileImagesParamsDict",
+    "TileImagesParamsDictTagged",
     "tile_images",
     "tile_images_execute",
     "tile_images_params",

@@ -13,7 +13,7 @@ MRIS_DISTANCE_TRANSFORM_METADATA = Metadata(
 )
 
 
-MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParameters', {
+MrisDistanceTransformParamsDict = typing.TypedDict('MrisDistanceTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_transform"]],
     "surface": InputPathType,
     "label": InputPathType,
@@ -24,7 +24,7 @@ MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParamet
     "divide": typing.NotRequired[float | None],
     "olabel": bool,
 })
-MrisDistanceTransformParametersTagged = typing.TypedDict('MrisDistanceTransformParametersTagged', {
+MrisDistanceTransformParamsDictTagged = typing.TypedDict('MrisDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_distance_transform"],
     "surface": InputPathType,
     "label": InputPathType,
@@ -39,7 +39,7 @@ MrisDistanceTransformParametersTagged = typing.TypedDict('MrisDistanceTransformP
 
 class MrisDistanceTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDistanceTransformParameters(...)`.
+    Output object returned when calling `MrisDistanceTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def mris_distance_transform_params(
     posterior: float | None = None,
     divide: float | None = None,
     olabel: bool = False,
-) -> MrisDistanceTransformParametersTagged:
+) -> MrisDistanceTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def mris_distance_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDistanceTransformParameters` object.
+    `MrisDistanceTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def mris_distance_transform_validate(
 
 
 def mris_distance_transform_cargs(
-    params: MrisDistanceTransformParameters,
+    params: MrisDistanceTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -175,7 +175,7 @@ def mris_distance_transform_cargs(
 
 
 def mris_distance_transform_outputs(
-    params: MrisDistanceTransformParameters,
+    params: MrisDistanceTransformParamsDict,
     execution: Execution,
 ) -> MrisDistanceTransformOutputs:
     """
@@ -195,7 +195,7 @@ def mris_distance_transform_outputs(
 
 
 def mris_distance_transform_execute(
-    params: MrisDistanceTransformParameters,
+    params: MrisDistanceTransformParamsDict,
     runner: Runner | None = None,
 ) -> MrisDistanceTransformOutputs:
     """
@@ -273,6 +273,8 @@ def mris_distance_transform(
 __all__ = [
     "MRIS_DISTANCE_TRANSFORM_METADATA",
     "MrisDistanceTransformOutputs",
+    "MrisDistanceTransformParamsDict",
+    "MrisDistanceTransformParamsDictTagged",
     "mris_distance_transform",
     "mris_distance_transform_execute",
     "mris_distance_transform_params",

@@ -13,7 +13,7 @@ FIRST_UTILS_METADATA = Metadata(
 )
 
 
-FirstUtilsParameters = typing.TypedDict('FirstUtilsParameters', {
+FirstUtilsParamsDict = typing.TypedDict('FirstUtilsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/first_utils"]],
     "input_file": InputPathType,
     "output_name": str,
@@ -48,7 +48,7 @@ FirstUtilsParameters = typing.TypedDict('FirstUtilsParameters', {
     "debug_mode": bool,
     "help": bool,
 })
-FirstUtilsParametersTagged = typing.TypedDict('FirstUtilsParametersTagged', {
+FirstUtilsParamsDictTagged = typing.TypedDict('FirstUtilsParamsDictTagged', {
     "@type": typing.Literal["fsl/first_utils"],
     "input_file": InputPathType,
     "output_name": str,
@@ -87,7 +87,7 @@ FirstUtilsParametersTagged = typing.TypedDict('FirstUtilsParametersTagged', {
 
 class FirstUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FirstUtilsParameters(...)`.
+    Output object returned when calling `FirstUtilsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +126,7 @@ def first_utils_params(
     concat_bvars: bool = False,
     debug_mode: bool = False,
     help_: bool = False,
-) -> FirstUtilsParametersTagged:
+) -> FirstUtilsParamsDictTagged:
     """
     Build parameters.
     
@@ -221,7 +221,7 @@ def first_utils_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FirstUtilsParameters` object.
+    `FirstUtilsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -353,7 +353,7 @@ def first_utils_validate(
 
 
 def first_utils_cargs(
-    params: FirstUtilsParameters,
+    params: FirstUtilsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -469,7 +469,7 @@ def first_utils_cargs(
 
 
 def first_utils_outputs(
-    params: FirstUtilsParameters,
+    params: FirstUtilsParamsDict,
     execution: Execution,
 ) -> FirstUtilsOutputs:
     """
@@ -488,7 +488,7 @@ def first_utils_outputs(
 
 
 def first_utils_execute(
-    params: FirstUtilsParameters,
+    params: FirstUtilsParamsDict,
     runner: Runner | None = None,
 ) -> FirstUtilsOutputs:
     """
@@ -639,6 +639,8 @@ def first_utils(
 __all__ = [
     "FIRST_UTILS_METADATA",
     "FirstUtilsOutputs",
+    "FirstUtilsParamsDict",
+    "FirstUtilsParamsDictTagged",
     "first_utils",
     "first_utils_execute",
     "first_utils_params",

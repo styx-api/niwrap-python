@@ -13,7 +13,7 @@ V_3D_TRFIX_METADATA = Metadata(
 )
 
 
-V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
+V3dTrfixParamsDict = typing.TypedDict('V3dTrfixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTRfix"]],
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
     "prefix": str,
     "output_tr": typing.NotRequired[float | None],
 })
-V3dTrfixParametersTagged = typing.TypedDict('V3dTrfixParametersTagged', {
+V3dTrfixParamsDictTagged = typing.TypedDict('V3dTrfixParamsDictTagged', {
     "@type": typing.Literal["afni/3dTRfix"],
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ V3dTrfixParametersTagged = typing.TypedDict('V3dTrfixParametersTagged', {
 
 class V3dTrfixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTrfixParameters(...)`.
+    Output object returned when calling `V3dTrfixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def v_3d_trfix_params(
     tr_list: InputPathType | None = None,
     time_list: InputPathType | None = None,
     output_tr: float | None = None,
-) -> V3dTrfixParametersTagged:
+) -> V3dTrfixParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v_3d_trfix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTrfixParameters` object.
+    `V3dTrfixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def v_3d_trfix_validate(
 
 
 def v_3d_trfix_cargs(
-    params: V3dTrfixParameters,
+    params: V3dTrfixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -149,7 +149,7 @@ def v_3d_trfix_cargs(
 
 
 def v_3d_trfix_outputs(
-    params: V3dTrfixParameters,
+    params: V3dTrfixParamsDict,
     execution: Execution,
 ) -> V3dTrfixOutputs:
     """
@@ -170,7 +170,7 @@ def v_3d_trfix_outputs(
 
 
 def v_3d_trfix_execute(
-    params: V3dTrfixParameters,
+    params: V3dTrfixParamsDict,
     runner: Runner | None = None,
 ) -> V3dTrfixOutputs:
     """
@@ -239,6 +239,8 @@ def v_3d_trfix(
 
 __all__ = [
     "V3dTrfixOutputs",
+    "V3dTrfixParamsDict",
+    "V3dTrfixParamsDictTagged",
     "V_3D_TRFIX_METADATA",
     "v_3d_trfix",
     "v_3d_trfix_execute",

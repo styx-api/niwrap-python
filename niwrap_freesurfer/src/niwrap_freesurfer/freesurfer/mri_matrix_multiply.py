@@ -13,7 +13,7 @@ MRI_MATRIX_MULTIPLY_METADATA = Metadata(
 )
 
 
-MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
+MriMatrixMultiplyParamsDict = typing.TypedDict('MriMatrixMultiplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_matrix_multiply"]],
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
@@ -23,7 +23,7 @@ MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
     "binarize": bool,
     "subject_name": typing.NotRequired[str | None],
 })
-MriMatrixMultiplyParametersTagged = typing.TypedDict('MriMatrixMultiplyParametersTagged', {
+MriMatrixMultiplyParamsDictTagged = typing.TypedDict('MriMatrixMultiplyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_matrix_multiply"],
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
@@ -37,7 +37,7 @@ MriMatrixMultiplyParametersTagged = typing.TypedDict('MriMatrixMultiplyParameter
 
 class MriMatrixMultiplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMatrixMultiplyParameters(...)`.
+    Output object returned when calling `MriMatrixMultiplyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_matrix_multiply_params(
     fsl: bool = False,
     binarize: bool = False,
     subject_name: str | None = None,
-) -> MriMatrixMultiplyParametersTagged:
+) -> MriMatrixMultiplyParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def mri_matrix_multiply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMatrixMultiplyParameters` object.
+    `MriMatrixMultiplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def mri_matrix_multiply_validate(
 
 
 def mri_matrix_multiply_cargs(
-    params: MriMatrixMultiplyParameters,
+    params: MriMatrixMultiplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -173,7 +173,7 @@ def mri_matrix_multiply_cargs(
 
 
 def mri_matrix_multiply_outputs(
-    params: MriMatrixMultiplyParameters,
+    params: MriMatrixMultiplyParamsDict,
     execution: Execution,
 ) -> MriMatrixMultiplyOutputs:
     """
@@ -193,7 +193,7 @@ def mri_matrix_multiply_outputs(
 
 
 def mri_matrix_multiply_execute(
-    params: MriMatrixMultiplyParameters,
+    params: MriMatrixMultiplyParamsDict,
     runner: Runner | None = None,
 ) -> MriMatrixMultiplyOutputs:
     """
@@ -270,6 +270,8 @@ def mri_matrix_multiply(
 __all__ = [
     "MRI_MATRIX_MULTIPLY_METADATA",
     "MriMatrixMultiplyOutputs",
+    "MriMatrixMultiplyParamsDict",
+    "MriMatrixMultiplyParamsDictTagged",
     "mri_matrix_multiply",
     "mri_matrix_multiply_execute",
     "mri_matrix_multiply_params",

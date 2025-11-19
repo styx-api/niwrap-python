@@ -13,7 +13,7 @@ APARCSTATSDIFF_METADATA = Metadata(
 )
 
 
-AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
+AparcstatsdiffParamsDict = typing.TypedDict('AparcstatsdiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstatsdiff"]],
     "subj1": str,
     "subj2": str,
@@ -22,7 +22,7 @@ AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
     "meas": str,
     "outdir": typing.NotRequired[str | None],
 })
-AparcstatsdiffParametersTagged = typing.TypedDict('AparcstatsdiffParametersTagged', {
+AparcstatsdiffParamsDictTagged = typing.TypedDict('AparcstatsdiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/aparcstatsdiff"],
     "subj1": str,
     "subj2": str,
@@ -35,7 +35,7 @@ AparcstatsdiffParametersTagged = typing.TypedDict('AparcstatsdiffParametersTagge
 
 class AparcstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AparcstatsdiffParameters(...)`.
+    Output object returned when calling `AparcstatsdiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def aparcstatsdiff_params(
     parc: str,
     meas: str,
     outdir: str | None = None,
-) -> AparcstatsdiffParametersTagged:
+) -> AparcstatsdiffParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def aparcstatsdiff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AparcstatsdiffParameters` object.
+    `AparcstatsdiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def aparcstatsdiff_validate(
 
 
 def aparcstatsdiff_cargs(
-    params: AparcstatsdiffParameters,
+    params: AparcstatsdiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def aparcstatsdiff_cargs(
 
 
 def aparcstatsdiff_outputs(
-    params: AparcstatsdiffParameters,
+    params: AparcstatsdiffParamsDict,
     execution: Execution,
 ) -> AparcstatsdiffOutputs:
     """
@@ -160,7 +160,7 @@ def aparcstatsdiff_outputs(
 
 
 def aparcstatsdiff_execute(
-    params: AparcstatsdiffParameters,
+    params: AparcstatsdiffParamsDict,
     runner: Runner | None = None,
 ) -> AparcstatsdiffOutputs:
     """
@@ -233,6 +233,8 @@ def aparcstatsdiff(
 __all__ = [
     "APARCSTATSDIFF_METADATA",
     "AparcstatsdiffOutputs",
+    "AparcstatsdiffParamsDict",
+    "AparcstatsdiffParamsDictTagged",
     "aparcstatsdiff",
     "aparcstatsdiff_execute",
     "aparcstatsdiff_params",

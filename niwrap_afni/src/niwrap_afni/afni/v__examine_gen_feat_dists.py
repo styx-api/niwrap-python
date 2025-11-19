@@ -13,7 +13,7 @@ V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
 )
 
 
-VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameters', {
+VExamineGenFeatDistsParamsDict = typing.TypedDict('VExamineGenFeatDistsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ExamineGenFeatDists"]],
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
@@ -25,7 +25,7 @@ VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameter
     "echo": bool,
     "help": bool,
 })
-VExamineGenFeatDistsParametersTagged = typing.TypedDict('VExamineGenFeatDistsParametersTagged', {
+VExamineGenFeatDistsParamsDictTagged = typing.TypedDict('VExamineGenFeatDistsParamsDictTagged', {
     "@type": typing.Literal["afni/@ExamineGenFeatDists"],
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
@@ -41,7 +41,7 @@ VExamineGenFeatDistsParametersTagged = typing.TypedDict('VExamineGenFeatDistsPar
 
 class VExamineGenFeatDistsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VExamineGenFeatDistsParameters(...)`.
+    Output object returned when calling `VExamineGenFeatDistsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def v__examine_gen_feat_dists_params(
     panels_horizontal: float | None = None,
     echo: bool = False,
     help_: bool = False,
-) -> VExamineGenFeatDistsParametersTagged:
+) -> VExamineGenFeatDistsParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v__examine_gen_feat_dists_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VExamineGenFeatDistsParameters` object.
+    `VExamineGenFeatDistsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -152,7 +152,7 @@ def v__examine_gen_feat_dists_validate(
 
 
 def v__examine_gen_feat_dists_cargs(
-    params: VExamineGenFeatDistsParameters,
+    params: VExamineGenFeatDistsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -208,7 +208,7 @@ def v__examine_gen_feat_dists_cargs(
 
 
 def v__examine_gen_feat_dists_outputs(
-    params: VExamineGenFeatDistsParameters,
+    params: VExamineGenFeatDistsParamsDict,
     execution: Execution,
 ) -> VExamineGenFeatDistsOutputs:
     """
@@ -227,7 +227,7 @@ def v__examine_gen_feat_dists_outputs(
 
 
 def v__examine_gen_feat_dists_execute(
-    params: VExamineGenFeatDistsParameters,
+    params: VExamineGenFeatDistsParamsDict,
     runner: Runner | None = None,
 ) -> VExamineGenFeatDistsOutputs:
     """
@@ -309,6 +309,8 @@ def v__examine_gen_feat_dists(
 
 __all__ = [
     "VExamineGenFeatDistsOutputs",
+    "VExamineGenFeatDistsParamsDict",
+    "VExamineGenFeatDistsParamsDictTagged",
     "V__EXAMINE_GEN_FEAT_DISTS_METADATA",
     "v__examine_gen_feat_dists",
     "v__examine_gen_feat_dists_execute",

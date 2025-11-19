@@ -13,7 +13,7 @@ V_3DROTATE_METADATA = Metadata(
 )
 
 
-V3drotateParameters = typing.TypedDict('V3drotateParameters', {
+V3drotateParamsDict = typing.TypedDict('V3drotateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3drotate"]],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ V3drotateParameters = typing.TypedDict('V3drotateParameters', {
     "noclip": bool,
     "zpad": typing.NotRequired[float | None],
 })
-V3drotateParametersTagged = typing.TypedDict('V3drotateParametersTagged', {
+V3drotateParamsDictTagged = typing.TypedDict('V3drotateParamsDictTagged', {
     "@type": typing.Literal["afni/3drotate"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -73,7 +73,7 @@ V3drotateParametersTagged = typing.TypedDict('V3drotateParametersTagged', {
 
 class V3drotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3drotateParameters(...)`.
+    Output object returned when calling `V3drotateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +109,7 @@ def v_3drotate_params(
     clipit: bool = False,
     noclip: bool = False,
     zpad: float | None = None,
-) -> V3drotateParametersTagged:
+) -> V3drotateParamsDictTagged:
     """
     Build parameters.
     
@@ -206,7 +206,7 @@ def v_3drotate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3drotateParameters` object.
+    `V3drotateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -323,7 +323,7 @@ def v_3drotate_validate(
 
 
 def v_3drotate_cargs(
-    params: V3drotateParameters,
+    params: V3drotateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -429,7 +429,7 @@ def v_3drotate_cargs(
 
 
 def v_3drotate_outputs(
-    params: V3drotateParameters,
+    params: V3drotateParamsDict,
     execution: Execution,
 ) -> V3drotateOutputs:
     """
@@ -450,7 +450,7 @@ def v_3drotate_outputs(
 
 
 def v_3drotate_execute(
-    params: V3drotateParameters,
+    params: V3drotateParamsDict,
     runner: Runner | None = None,
 ) -> V3drotateOutputs:
     """
@@ -592,6 +592,8 @@ def v_3drotate(
 
 __all__ = [
     "V3drotateOutputs",
+    "V3drotateParamsDict",
+    "V3drotateParamsDictTagged",
     "V_3DROTATE_METADATA",
     "v_3drotate",
     "v_3drotate_execute",

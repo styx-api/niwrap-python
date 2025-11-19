@@ -13,13 +13,13 @@ FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
 )
 
 
-Fsl502XyztransSchParameters = typing.TypedDict('Fsl502XyztransSchParameters', {
+Fsl502XyztransSchParamsDict = typing.TypedDict('Fsl502XyztransSchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsl.5.0.2.xyztrans.sch"]],
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
     "no_scrollback_flag": bool,
 })
-Fsl502XyztransSchParametersTagged = typing.TypedDict('Fsl502XyztransSchParametersTagged', {
+Fsl502XyztransSchParamsDictTagged = typing.TypedDict('Fsl502XyztransSchParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsl.5.0.2.xyztrans.sch"],
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
@@ -29,7 +29,7 @@ Fsl502XyztransSchParametersTagged = typing.TypedDict('Fsl502XyztransSchParameter
 
 class Fsl502XyztransSchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fsl502XyztransSchParameters(...)`.
+    Output object returned when calling `Fsl502XyztransSchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def fsl_5_0_2_xyztrans_sch_params(
     term_option: str | None = None,
     version_flag: bool = False,
     no_scrollback_flag: bool = False,
-) -> Fsl502XyztransSchParametersTagged:
+) -> Fsl502XyztransSchParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def fsl_5_0_2_xyztrans_sch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fsl502XyztransSchParameters` object.
+    `Fsl502XyztransSchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def fsl_5_0_2_xyztrans_sch_validate(
 
 
 def fsl_5_0_2_xyztrans_sch_cargs(
-    params: Fsl502XyztransSchParameters,
+    params: Fsl502XyztransSchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def fsl_5_0_2_xyztrans_sch_cargs(
 
 
 def fsl_5_0_2_xyztrans_sch_outputs(
-    params: Fsl502XyztransSchParameters,
+    params: Fsl502XyztransSchParamsDict,
     execution: Execution,
 ) -> Fsl502XyztransSchOutputs:
     """
@@ -132,7 +132,7 @@ def fsl_5_0_2_xyztrans_sch_outputs(
 
 
 def fsl_5_0_2_xyztrans_sch_execute(
-    params: Fsl502XyztransSchParameters,
+    params: Fsl502XyztransSchParamsDict,
     runner: Runner | None = None,
 ) -> Fsl502XyztransSchOutputs:
     """
@@ -196,6 +196,8 @@ def fsl_5_0_2_xyztrans_sch(
 __all__ = [
     "FSL_5_0_2_XYZTRANS_SCH_METADATA",
     "Fsl502XyztransSchOutputs",
+    "Fsl502XyztransSchParamsDict",
+    "Fsl502XyztransSchParamsDictTagged",
     "fsl_5_0_2_xyztrans_sch",
     "fsl_5_0_2_xyztrans_sch_execute",
     "fsl_5_0_2_xyztrans_sch_params",

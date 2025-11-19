@@ -13,7 +13,7 @@ MRI_PRETESS_METADATA = Metadata(
 )
 
 
-MriPretessParameters = typing.TypedDict('MriPretessParameters', {
+MriPretessParamsDict = typing.TypedDict('MriPretessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_pretess"]],
     "filledvol": InputPathType,
     "labelstring": str,
@@ -25,7 +25,7 @@ MriPretessParameters = typing.TypedDict('MriPretessParameters', {
     "keep": bool,
     "test": bool,
 })
-MriPretessParametersTagged = typing.TypedDict('MriPretessParametersTagged', {
+MriPretessParamsDictTagged = typing.TypedDict('MriPretessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_pretess"],
     "filledvol": InputPathType,
     "labelstring": str,
@@ -41,7 +41,7 @@ MriPretessParametersTagged = typing.TypedDict('MriPretessParametersTagged', {
 
 class MriPretessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriPretessParameters(...)`.
+    Output object returned when calling `MriPretessParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mri_pretess_params(
     write: bool = False,
     keep: bool = False,
     test: bool = False,
-) -> MriPretessParametersTagged:
+) -> MriPretessParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def mri_pretess_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriPretessParameters` object.
+    `MriPretessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -148,7 +148,7 @@ def mri_pretess_validate(
 
 
 def mri_pretess_cargs(
-    params: MriPretessParameters,
+    params: MriPretessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def mri_pretess_cargs(
 
 
 def mri_pretess_outputs(
-    params: MriPretessParameters,
+    params: MriPretessParamsDict,
     execution: Execution,
 ) -> MriPretessOutputs:
     """
@@ -203,7 +203,7 @@ def mri_pretess_outputs(
 
 
 def mri_pretess_execute(
-    params: MriPretessParameters,
+    params: MriPretessParamsDict,
     runner: Runner | None = None,
 ) -> MriPretessOutputs:
     """
@@ -286,6 +286,8 @@ def mri_pretess(
 __all__ = [
     "MRI_PRETESS_METADATA",
     "MriPretessOutputs",
+    "MriPretessParamsDict",
+    "MriPretessParamsDictTagged",
     "mri_pretess",
     "mri_pretess_execute",
     "mri_pretess_params",

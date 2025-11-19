@@ -13,11 +13,11 @@ V__STATAUXCODE_METADATA = Metadata(
 )
 
 
-VStatauxcodeParameters = typing.TypedDict('VStatauxcodeParameters', {
+VStatauxcodeParamsDict = typing.TypedDict('VStatauxcodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@statauxcode"]],
     "code": str,
 })
-VStatauxcodeParametersTagged = typing.TypedDict('VStatauxcodeParametersTagged', {
+VStatauxcodeParamsDictTagged = typing.TypedDict('VStatauxcodeParamsDictTagged', {
     "@type": typing.Literal["afni/@statauxcode"],
     "code": str,
 })
@@ -25,7 +25,7 @@ VStatauxcodeParametersTagged = typing.TypedDict('VStatauxcodeParametersTagged', 
 
 class VStatauxcodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VStatauxcodeParameters(...)`.
+    Output object returned when calling `VStatauxcodeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VStatauxcodeOutputs(typing.NamedTuple):
 
 def v__statauxcode_params(
     code_: str,
-) -> VStatauxcodeParametersTagged:
+) -> VStatauxcodeParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__statauxcode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VStatauxcodeParameters` object.
+    `VStatauxcodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def v__statauxcode_validate(
 
 
 def v__statauxcode_cargs(
-    params: VStatauxcodeParameters,
+    params: VStatauxcodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__statauxcode_cargs(
 
 
 def v__statauxcode_outputs(
-    params: VStatauxcodeParameters,
+    params: VStatauxcodeParamsDict,
     execution: Execution,
 ) -> VStatauxcodeOutputs:
     """
@@ -110,7 +110,7 @@ def v__statauxcode_outputs(
 
 
 def v__statauxcode_execute(
-    params: VStatauxcodeParameters,
+    params: VStatauxcodeParamsDict,
     runner: Runner | None = None,
 ) -> VStatauxcodeOutputs:
     """
@@ -166,6 +166,8 @@ def v__statauxcode(
 
 __all__ = [
     "VStatauxcodeOutputs",
+    "VStatauxcodeParamsDict",
+    "VStatauxcodeParamsDictTagged",
     "V__STATAUXCODE_METADATA",
     "v__statauxcode",
     "v__statauxcode_execute",

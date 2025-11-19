@@ -12,14 +12,14 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 )
 
 
-MetricFillHolesParameters = typing.TypedDict('MetricFillHolesParameters', {
+MetricFillHolesParamsDict = typing.TypedDict('MetricFillHolesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-fill-holes"]],
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
-MetricFillHolesParametersTagged = typing.TypedDict('MetricFillHolesParametersTagged', {
+MetricFillHolesParamsDictTagged = typing.TypedDict('MetricFillHolesParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-fill-holes"],
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ MetricFillHolesParametersTagged = typing.TypedDict('MetricFillHolesParametersTag
 
 class MetricFillHolesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricFillHolesParameters(...)`.
+    Output object returned when calling `MetricFillHolesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def metric_fill_holes_params(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-) -> MetricFillHolesParametersTagged:
+) -> MetricFillHolesParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def metric_fill_holes_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricFillHolesParameters` object.
+    `MetricFillHolesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def metric_fill_holes_validate(
 
 
 def metric_fill_holes_cargs(
-    params: MetricFillHolesParameters,
+    params: MetricFillHolesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def metric_fill_holes_cargs(
 
 
 def metric_fill_holes_outputs(
-    params: MetricFillHolesParameters,
+    params: MetricFillHolesParamsDict,
     execution: Execution,
 ) -> MetricFillHolesOutputs:
     """
@@ -146,7 +146,7 @@ def metric_fill_holes_outputs(
 
 
 def metric_fill_holes_execute(
-    params: MetricFillHolesParameters,
+    params: MetricFillHolesParamsDict,
     runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
     """
@@ -208,6 +208,8 @@ def metric_fill_holes(
 __all__ = [
     "METRIC_FILL_HOLES_METADATA",
     "MetricFillHolesOutputs",
+    "MetricFillHolesParamsDict",
+    "MetricFillHolesParamsDictTagged",
     "metric_fill_holes",
     "metric_fill_holes_execute",
     "metric_fill_holes_params",

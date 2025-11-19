@@ -13,7 +13,7 @@ ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA = Metadata(
 )
 
 
-AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegularizedRegistrationParameters', {
+AntsSliceRegularizedRegistrationParamsDict = typing.TypedDict('AntsSliceRegularizedRegistrationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsSliceRegularizedRegistration"]],
     "polydegree": int,
     "output": str,
@@ -26,7 +26,7 @@ AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegulari
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
     "verbose": typing.NotRequired[typing.Literal[0] | None],
 })
-AntsSliceRegularizedRegistrationParametersTagged = typing.TypedDict('AntsSliceRegularizedRegistrationParametersTagged', {
+AntsSliceRegularizedRegistrationParamsDictTagged = typing.TypedDict('AntsSliceRegularizedRegistrationParamsDictTagged', {
     "@type": typing.Literal["ants/antsSliceRegularizedRegistration"],
     "polydegree": int,
     "output": str,
@@ -43,7 +43,7 @@ AntsSliceRegularizedRegistrationParametersTagged = typing.TypedDict('AntsSliceRe
 
 class AntsSliceRegularizedRegistrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsSliceRegularizedRegistrationParameters(...)`.
+    Output object returned when calling `AntsSliceRegularizedRegistrationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def ants_slice_regularized_registration_params(
     mask: InputPathType | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
     verbose: typing.Literal[0] | None = None,
-) -> AntsSliceRegularizedRegistrationParametersTagged:
+) -> AntsSliceRegularizedRegistrationParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def ants_slice_regularized_registration_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsSliceRegularizedRegistrationParameters` object.
+    `AntsSliceRegularizedRegistrationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -165,7 +165,7 @@ def ants_slice_regularized_registration_validate(
 
 
 def ants_slice_regularized_registration_cargs(
-    params: AntsSliceRegularizedRegistrationParameters,
+    params: AntsSliceRegularizedRegistrationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,7 +226,7 @@ def ants_slice_regularized_registration_cargs(
 
 
 def ants_slice_regularized_registration_outputs(
-    params: AntsSliceRegularizedRegistrationParameters,
+    params: AntsSliceRegularizedRegistrationParamsDict,
     execution: Execution,
 ) -> AntsSliceRegularizedRegistrationOutputs:
     """
@@ -247,7 +247,7 @@ def ants_slice_regularized_registration_outputs(
 
 
 def ants_slice_regularized_registration_execute(
-    params: AntsSliceRegularizedRegistrationParameters,
+    params: AntsSliceRegularizedRegistrationParamsDict,
     runner: Runner | None = None,
 ) -> AntsSliceRegularizedRegistrationOutputs:
     """
@@ -352,6 +352,8 @@ def ants_slice_regularized_registration(
 __all__ = [
     "ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA",
     "AntsSliceRegularizedRegistrationOutputs",
+    "AntsSliceRegularizedRegistrationParamsDict",
+    "AntsSliceRegularizedRegistrationParamsDictTagged",
     "ants_slice_regularized_registration",
     "ants_slice_regularized_registration_execute",
     "ants_slice_regularized_registration_params",

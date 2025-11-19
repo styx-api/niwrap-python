@@ -12,7 +12,7 @@ LABEL_TO_VOLUME_MAPPING_METADATA = Metadata(
 )
 
 
-LabelToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParameters', {
+LabelToVolumeMappingRibbonConstrainedParamsDict = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -20,7 +20,7 @@ LabelToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('LabelToVolum
     "greedy": bool,
     "thick-columns": bool,
 })
-LabelToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParametersTagged', {
+LabelToVolumeMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
@@ -30,33 +30,33 @@ LabelToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('LabelT
 })
 
 
-LabelToVolumeMappingParameters = typing.TypedDict('LabelToVolumeMappingParameters', {
+LabelToVolumeMappingParamsDict = typing.TypedDict('LabelToVolumeMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-to-volume-mapping"]],
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
-    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParamsDict | None],
     "label": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
-LabelToVolumeMappingParametersTagged = typing.TypedDict('LabelToVolumeMappingParametersTagged', {
+LabelToVolumeMappingParamsDictTagged = typing.TypedDict('LabelToVolumeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/label-to-volume-mapping"],
     "volume-out": str,
     "distance": typing.NotRequired[float | None],
-    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
+    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParamsDict | None],
     "label": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
 })
 
 
-def label_to_volume_mapping_ribbon_constrained_params(
+def label_to_volume_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     subdiv_num: int | None,
     greedy: bool = False,
     thick_columns: bool = False,
-) -> LabelToVolumeMappingRibbonConstrainedParametersTagged:
+) -> LabelToVolumeMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def label_to_volume_mapping_ribbon_constrained_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelToVolumeMappingRibbonConstrainedParameters` object.
+    `LabelToVolumeMappingRibbonConstrainedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def label_to_volume_mapping_ribbon_constrained_validate(
 
 
 def label_to_volume_mapping_ribbon_constrained_cargs(
-    params: LabelToVolumeMappingRibbonConstrainedParameters,
+    params: LabelToVolumeMappingRibbonConstrainedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def label_to_volume_mapping_ribbon_constrained_cargs(
 
 class LabelToVolumeMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelToVolumeMappingParameters(...)`.
+    Output object returned when calling `LabelToVolumeMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -160,8 +160,8 @@ def label_to_volume_mapping_params(
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParameters | None = None,
-) -> LabelToVolumeMappingParametersTagged:
+    ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
+) -> LabelToVolumeMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def label_to_volume_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelToVolumeMappingParameters` object.
+    `LabelToVolumeMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def label_to_volume_mapping_validate(
 
 
 def label_to_volume_mapping_cargs(
-    params: LabelToVolumeMappingParameters,
+    params: LabelToVolumeMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def label_to_volume_mapping_cargs(
 
 
 def label_to_volume_mapping_outputs(
-    params: LabelToVolumeMappingParameters,
+    params: LabelToVolumeMappingParamsDict,
     execution: Execution,
 ) -> LabelToVolumeMappingOutputs:
     """
@@ -276,7 +276,7 @@ def label_to_volume_mapping_outputs(
 
 
 def label_to_volume_mapping_execute(
-    params: LabelToVolumeMappingParameters,
+    params: LabelToVolumeMappingParamsDict,
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
@@ -310,7 +310,7 @@ def label_to_volume_mapping(
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParameters | None = None,
+    ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
@@ -349,8 +349,12 @@ def label_to_volume_mapping(
 __all__ = [
     "LABEL_TO_VOLUME_MAPPING_METADATA",
     "LabelToVolumeMappingOutputs",
+    "LabelToVolumeMappingParamsDict",
+    "LabelToVolumeMappingParamsDictTagged",
+    "LabelToVolumeMappingRibbonConstrainedParamsDict",
+    "LabelToVolumeMappingRibbonConstrainedParamsDictTagged",
     "label_to_volume_mapping",
     "label_to_volume_mapping_execute",
     "label_to_volume_mapping_params",
-    "label_to_volume_mapping_ribbon_constrained_params",
+    "label_to_volume_mapping_ribbon_constrained",
 ]

@@ -13,7 +13,7 @@ MRI_BINARIZE_METADATA = Metadata(
 )
 
 
-MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
+MriBinarizeParamsDict = typing.TypedDict('MriBinarizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_binarize"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -50,7 +50,7 @@ MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
     "noverbose_flag": bool,
     "debug_flag": bool,
 })
-MriBinarizeParametersTagged = typing.TypedDict('MriBinarizeParametersTagged', {
+MriBinarizeParamsDictTagged = typing.TypedDict('MriBinarizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_binarize"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -91,7 +91,7 @@ MriBinarizeParametersTagged = typing.TypedDict('MriBinarizeParametersTagged', {
 
 class MriBinarizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriBinarizeParameters(...)`.
+    Output object returned when calling `MriBinarizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +134,7 @@ def mri_binarize_params(
     fill_holes_flag: bool = False,
     noverbose_flag: bool = False,
     debug_flag: bool = False,
-) -> MriBinarizeParametersTagged:
+) -> MriBinarizeParamsDictTagged:
     """
     Build parameters.
     
@@ -243,7 +243,7 @@ def mri_binarize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriBinarizeParameters` object.
+    `MriBinarizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -377,7 +377,7 @@ def mri_binarize_validate(
 
 
 def mri_binarize_cargs(
-    params: MriBinarizeParameters,
+    params: MriBinarizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -521,7 +521,7 @@ def mri_binarize_cargs(
 
 
 def mri_binarize_outputs(
-    params: MriBinarizeParameters,
+    params: MriBinarizeParamsDict,
     execution: Execution,
 ) -> MriBinarizeOutputs:
     """
@@ -541,7 +541,7 @@ def mri_binarize_outputs(
 
 
 def mri_binarize_execute(
-    params: MriBinarizeParameters,
+    params: MriBinarizeParamsDict,
     runner: Runner | None = None,
 ) -> MriBinarizeOutputs:
     """
@@ -702,6 +702,8 @@ def mri_binarize(
 __all__ = [
     "MRI_BINARIZE_METADATA",
     "MriBinarizeOutputs",
+    "MriBinarizeParamsDict",
+    "MriBinarizeParamsDictTagged",
     "mri_binarize",
     "mri_binarize_execute",
     "mri_binarize_params",

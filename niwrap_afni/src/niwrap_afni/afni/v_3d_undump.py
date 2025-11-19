@@ -13,7 +13,7 @@ V_3D_UNDUMP_METADATA = Metadata(
 )
 
 
-V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
+V3dUndumpParamsDict = typing.TypedDict('V3dUndumpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dUndump"]],
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
@@ -32,7 +32,7 @@ V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
     "roimask": typing.NotRequired[InputPathType | None],
     "allow_nan": bool,
 })
-V3dUndumpParametersTagged = typing.TypedDict('V3dUndumpParametersTagged', {
+V3dUndumpParamsDictTagged = typing.TypedDict('V3dUndumpParamsDictTagged', {
     "@type": typing.Literal["afni/3dUndump"],
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ V3dUndumpParametersTagged = typing.TypedDict('V3dUndumpParametersTagged', {
 
 class V3dUndumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dUndumpParameters(...)`.
+    Output object returned when calling `V3dUndumpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v_3d_undump_params(
     head_only: bool = False,
     roimask: InputPathType | None = None,
     allow_nan: bool = False,
-) -> V3dUndumpParametersTagged:
+) -> V3dUndumpParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def v_3d_undump_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dUndumpParameters` object.
+    `V3dUndumpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def v_3d_undump_validate(
 
 
 def v_3d_undump_cargs(
-    params: V3dUndumpParameters,
+    params: V3dUndumpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def v_3d_undump_cargs(
 
 
 def v_3d_undump_outputs(
-    params: V3dUndumpParameters,
+    params: V3dUndumpParamsDict,
     execution: Execution,
 ) -> V3dUndumpOutputs:
     """
@@ -324,7 +324,7 @@ def v_3d_undump_outputs(
 
 
 def v_3d_undump_execute(
-    params: V3dUndumpParameters,
+    params: V3dUndumpParamsDict,
     runner: Runner | None = None,
 ) -> V3dUndumpOutputs:
     """
@@ -438,6 +438,8 @@ def v_3d_undump(
 
 __all__ = [
     "V3dUndumpOutputs",
+    "V3dUndumpParamsDict",
+    "V3dUndumpParamsDictTagged",
     "V_3D_UNDUMP_METADATA",
     "v_3d_undump",
     "v_3d_undump_execute",

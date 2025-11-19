@@ -13,7 +13,7 @@ FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
 )
 
 
-FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters', {
+FatProcAxializeAnatParamsDict = typing.TypedDict('FatProcAxializeAnatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_axialize_anat"]],
     "in_file": InputPathType,
     "ref_file": InputPathType,
@@ -38,7 +38,7 @@ FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters'
     "no_qc_view": bool,
     "qc_prefix": typing.NotRequired[str | None],
 })
-FatProcAxializeAnatParametersTagged = typing.TypedDict('FatProcAxializeAnatParametersTagged', {
+FatProcAxializeAnatParamsDictTagged = typing.TypedDict('FatProcAxializeAnatParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_axialize_anat"],
     "in_file": InputPathType,
     "ref_file": InputPathType,
@@ -67,7 +67,7 @@ FatProcAxializeAnatParametersTagged = typing.TypedDict('FatProcAxializeAnatParam
 
 class FatProcAxializeAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcAxializeAnatParameters(...)`.
+    Output object returned when calling `FatProcAxializeAnatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +101,7 @@ def fat_proc_axialize_anat_params(
     qc_ulay_range: list[float] | None = None,
     no_qc_view: bool = False,
     qc_prefix: str | None = None,
-) -> FatProcAxializeAnatParametersTagged:
+) -> FatProcAxializeAnatParamsDictTagged:
     """
     Build parameters.
     
@@ -179,7 +179,7 @@ def fat_proc_axialize_anat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcAxializeAnatParameters` object.
+    `FatProcAxializeAnatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -274,7 +274,7 @@ def fat_proc_axialize_anat_validate(
 
 
 def fat_proc_axialize_anat_cargs(
-    params: FatProcAxializeAnatParameters,
+    params: FatProcAxializeAnatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -357,7 +357,7 @@ def fat_proc_axialize_anat_cargs(
 
 
 def fat_proc_axialize_anat_outputs(
-    params: FatProcAxializeAnatParameters,
+    params: FatProcAxializeAnatParamsDict,
     execution: Execution,
 ) -> FatProcAxializeAnatOutputs:
     """
@@ -378,7 +378,7 @@ def fat_proc_axialize_anat_outputs(
 
 
 def fat_proc_axialize_anat_execute(
-    params: FatProcAxializeAnatParameters,
+    params: FatProcAxializeAnatParamsDict,
     runner: Runner | None = None,
 ) -> FatProcAxializeAnatOutputs:
     """
@@ -506,6 +506,8 @@ def fat_proc_axialize_anat(
 __all__ = [
     "FAT_PROC_AXIALIZE_ANAT_METADATA",
     "FatProcAxializeAnatOutputs",
+    "FatProcAxializeAnatParamsDict",
+    "FatProcAxializeAnatParamsDictTagged",
     "fat_proc_axialize_anat",
     "fat_proc_axialize_anat_execute",
     "fat_proc_axialize_anat_params",

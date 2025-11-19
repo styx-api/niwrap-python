@@ -13,7 +13,7 @@ THICKDIFFMAP_METADATA = Metadata(
 )
 
 
-ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
+ThickdiffmapParamsDict = typing.TypedDict('ThickdiffmapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/thickdiffmap"]],
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
@@ -21,7 +21,7 @@ ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
     "hemi": str,
     "steps": typing.NotRequired[list[str] | None],
 })
-ThickdiffmapParametersTagged = typing.TypedDict('ThickdiffmapParametersTagged', {
+ThickdiffmapParamsDictTagged = typing.TypedDict('ThickdiffmapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/thickdiffmap"],
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
@@ -33,7 +33,7 @@ ThickdiffmapParametersTagged = typing.TypedDict('ThickdiffmapParametersTagged', 
 
 class ThickdiffmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ThickdiffmapParameters(...)`.
+    Output object returned when calling `ThickdiffmapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def thickdiffmap_params(
     commonsubj: str,
     hemi: str,
     steps: list[str] | None = None,
-) -> ThickdiffmapParametersTagged:
+) -> ThickdiffmapParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def thickdiffmap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ThickdiffmapParameters` object.
+    `ThickdiffmapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def thickdiffmap_validate(
 
 
 def thickdiffmap_cargs(
-    params: ThickdiffmapParameters,
+    params: ThickdiffmapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def thickdiffmap_cargs(
 
 
 def thickdiffmap_outputs(
-    params: ThickdiffmapParameters,
+    params: ThickdiffmapParamsDict,
     execution: Execution,
 ) -> ThickdiffmapOutputs:
     """
@@ -150,7 +150,7 @@ def thickdiffmap_outputs(
 
 
 def thickdiffmap_execute(
-    params: ThickdiffmapParameters,
+    params: ThickdiffmapParamsDict,
     runner: Runner | None = None,
 ) -> ThickdiffmapOutputs:
     """
@@ -218,6 +218,8 @@ def thickdiffmap(
 __all__ = [
     "THICKDIFFMAP_METADATA",
     "ThickdiffmapOutputs",
+    "ThickdiffmapParamsDict",
+    "ThickdiffmapParamsDictTagged",
     "thickdiffmap",
     "thickdiffmap_execute",
     "thickdiffmap_params",

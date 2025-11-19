@@ -12,13 +12,13 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-LabelExportTableParameters = typing.TypedDict('LabelExportTableParameters', {
+LabelExportTableParamsDict = typing.TypedDict('LabelExportTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-export-table"]],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "table-out": str,
 })
-LabelExportTableParametersTagged = typing.TypedDict('LabelExportTableParametersTagged', {
+LabelExportTableParamsDictTagged = typing.TypedDict('LabelExportTableParamsDictTagged', {
     "@type": typing.Literal["workbench/label-export-table"],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
@@ -28,7 +28,7 @@ LabelExportTableParametersTagged = typing.TypedDict('LabelExportTableParametersT
 
 class LabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelExportTableParameters(...)`.
+    Output object returned when calling `LabelExportTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def label_export_table_params(
     json_out: str | None,
     label_in: InputPathType,
     table_out: str,
-) -> LabelExportTableParametersTagged:
+) -> LabelExportTableParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def label_export_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelExportTableParameters` object.
+    `LabelExportTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def label_export_table_validate(
 
 
 def label_export_table_cargs(
-    params: LabelExportTableParameters,
+    params: LabelExportTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def label_export_table_cargs(
 
 
 def label_export_table_outputs(
-    params: LabelExportTableParameters,
+    params: LabelExportTableParamsDict,
     execution: Execution,
 ) -> LabelExportTableOutputs:
     """
@@ -132,7 +132,7 @@ def label_export_table_outputs(
 
 
 def label_export_table_execute(
-    params: LabelExportTableParameters,
+    params: LabelExportTableParamsDict,
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
@@ -190,6 +190,8 @@ def label_export_table(
 __all__ = [
     "LABEL_EXPORT_TABLE_METADATA",
     "LabelExportTableOutputs",
+    "LabelExportTableParamsDict",
+    "LabelExportTableParamsDictTagged",
     "label_export_table",
     "label_export_table_execute",
     "label_export_table_params",

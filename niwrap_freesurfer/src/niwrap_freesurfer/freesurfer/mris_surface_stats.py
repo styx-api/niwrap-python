@@ -13,7 +13,7 @@ MRIS_SURFACE_STATS_METADATA = Metadata(
 )
 
 
-MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
+MrisSurfaceStatsParamsDict = typing.TypedDict('MrisSurfaceStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_stats"]],
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
@@ -29,7 +29,7 @@ MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
     "debug": typing.NotRequired[float | None],
     "data_files": list[InputPathType],
 })
-MrisSurfaceStatsParametersTagged = typing.TypedDict('MrisSurfaceStatsParametersTagged', {
+MrisSurfaceStatsParamsDictTagged = typing.TypedDict('MrisSurfaceStatsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_surface_stats"],
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
@@ -49,7 +49,7 @@ MrisSurfaceStatsParametersTagged = typing.TypedDict('MrisSurfaceStatsParametersT
 
 class MrisSurfaceStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSurfaceStatsParameters(...)`.
+    Output object returned when calling `MrisSurfaceStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def mris_surface_stats_params(
     src_type: str | None = None,
     trg_type: str | None = None,
     debug: float | None = None,
-) -> MrisSurfaceStatsParametersTagged:
+) -> MrisSurfaceStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def mris_surface_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSurfaceStatsParameters` object.
+    `MrisSurfaceStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def mris_surface_stats_validate(
 
 
 def mris_surface_stats_cargs(
-    params: MrisSurfaceStatsParameters,
+    params: MrisSurfaceStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -268,7 +268,7 @@ def mris_surface_stats_cargs(
 
 
 def mris_surface_stats_outputs(
-    params: MrisSurfaceStatsParameters,
+    params: MrisSurfaceStatsParamsDict,
     execution: Execution,
 ) -> MrisSurfaceStatsOutputs:
     """
@@ -292,7 +292,7 @@ def mris_surface_stats_outputs(
 
 
 def mris_surface_stats_execute(
-    params: MrisSurfaceStatsParameters,
+    params: MrisSurfaceStatsParamsDict,
     runner: Runner | None = None,
 ) -> MrisSurfaceStatsOutputs:
     """
@@ -388,6 +388,8 @@ def mris_surface_stats(
 __all__ = [
     "MRIS_SURFACE_STATS_METADATA",
     "MrisSurfaceStatsOutputs",
+    "MrisSurfaceStatsParamsDict",
+    "MrisSurfaceStatsParamsDictTagged",
     "mris_surface_stats",
     "mris_surface_stats_execute",
     "mris_surface_stats_params",

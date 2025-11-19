@@ -13,14 +13,14 @@ LABEL2FLAT_METADATA = Metadata(
 )
 
 
-Label2flatParameters = typing.TypedDict('Label2flatParameters', {
+Label2flatParamsDict = typing.TypedDict('Label2flatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label2flat"]],
     "subject_name": str,
     "label_file": InputPathType,
     "patch_file": InputPathType,
     "output_file": str,
 })
-Label2flatParametersTagged = typing.TypedDict('Label2flatParametersTagged', {
+Label2flatParamsDictTagged = typing.TypedDict('Label2flatParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label2flat"],
     "subject_name": str,
     "label_file": InputPathType,
@@ -31,7 +31,7 @@ Label2flatParametersTagged = typing.TypedDict('Label2flatParametersTagged', {
 
 class Label2flatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Label2flatParameters(...)`.
+    Output object returned when calling `Label2flatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def label2flat_params(
     label_file: InputPathType,
     patch_file: InputPathType,
     output_file: str,
-) -> Label2flatParametersTagged:
+) -> Label2flatParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def label2flat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Label2flatParameters` object.
+    `Label2flatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def label2flat_validate(
 
 
 def label2flat_cargs(
-    params: Label2flatParameters,
+    params: Label2flatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def label2flat_cargs(
 
 
 def label2flat_outputs(
-    params: Label2flatParameters,
+    params: Label2flatParamsDict,
     execution: Execution,
 ) -> Label2flatOutputs:
     """
@@ -139,7 +139,7 @@ def label2flat_outputs(
 
 
 def label2flat_execute(
-    params: Label2flatParameters,
+    params: Label2flatParamsDict,
     runner: Runner | None = None,
 ) -> Label2flatOutputs:
     """
@@ -204,6 +204,8 @@ def label2flat(
 __all__ = [
     "LABEL2FLAT_METADATA",
     "Label2flatOutputs",
+    "Label2flatParamsDict",
+    "Label2flatParamsDictTagged",
     "label2flat",
     "label2flat_execute",
     "label2flat_params",

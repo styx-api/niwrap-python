@@ -13,11 +13,11 @@ RENORMALIZE_T1_SUBJECT_METADATA = Metadata(
 )
 
 
-RenormalizeT1SubjectParameters = typing.TypedDict('RenormalizeT1SubjectParameters', {
+RenormalizeT1SubjectParamsDict = typing.TypedDict('RenormalizeT1SubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_T1_subject"]],
     "subject_dir": str,
 })
-RenormalizeT1SubjectParametersTagged = typing.TypedDict('RenormalizeT1SubjectParametersTagged', {
+RenormalizeT1SubjectParamsDictTagged = typing.TypedDict('RenormalizeT1SubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/renormalize_T1_subject"],
     "subject_dir": str,
 })
@@ -25,7 +25,7 @@ RenormalizeT1SubjectParametersTagged = typing.TypedDict('RenormalizeT1SubjectPar
 
 class RenormalizeT1SubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RenormalizeT1SubjectParameters(...)`.
+    Output object returned when calling `RenormalizeT1SubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class RenormalizeT1SubjectOutputs(typing.NamedTuple):
 
 def renormalize_t1_subject_params(
     subject_dir: str,
-) -> RenormalizeT1SubjectParametersTagged:
+) -> RenormalizeT1SubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def renormalize_t1_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RenormalizeT1SubjectParameters` object.
+    `RenormalizeT1SubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def renormalize_t1_subject_validate(
 
 
 def renormalize_t1_subject_cargs(
-    params: RenormalizeT1SubjectParameters,
+    params: RenormalizeT1SubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def renormalize_t1_subject_cargs(
 
 
 def renormalize_t1_subject_outputs(
-    params: RenormalizeT1SubjectParameters,
+    params: RenormalizeT1SubjectParamsDict,
     execution: Execution,
 ) -> RenormalizeT1SubjectOutputs:
     """
@@ -107,7 +107,7 @@ def renormalize_t1_subject_outputs(
 
 
 def renormalize_t1_subject_execute(
-    params: RenormalizeT1SubjectParameters,
+    params: RenormalizeT1SubjectParamsDict,
     runner: Runner | None = None,
 ) -> RenormalizeT1SubjectOutputs:
     """
@@ -164,6 +164,8 @@ def renormalize_t1_subject(
 __all__ = [
     "RENORMALIZE_T1_SUBJECT_METADATA",
     "RenormalizeT1SubjectOutputs",
+    "RenormalizeT1SubjectParamsDict",
+    "RenormalizeT1SubjectParamsDictTagged",
     "renormalize_t1_subject",
     "renormalize_t1_subject_execute",
     "renormalize_t1_subject_params",

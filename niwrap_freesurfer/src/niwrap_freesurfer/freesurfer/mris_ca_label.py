@@ -13,7 +13,7 @@ MRIS_CA_LABEL_METADATA = Metadata(
 )
 
 
-MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
+MrisCaLabelParamsDict = typing.TypedDict('MrisCaLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_label"]],
     "subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
     "help_flag": bool,
     "version_flag": bool,
 })
-MrisCaLabelParametersTagged = typing.TypedDict('MrisCaLabelParametersTagged', {
+MrisCaLabelParamsDictTagged = typing.TypedDict('MrisCaLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_ca_label"],
     "subject": str,
     "hemi": str,
@@ -61,7 +61,7 @@ MrisCaLabelParametersTagged = typing.TypedDict('MrisCaLabelParametersTagged', {
 
 class MrisCaLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCaLabelParameters(...)`.
+    Output object returned when calling `MrisCaLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +89,7 @@ def mris_ca_label_params(
     w: str | None = None,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MrisCaLabelParametersTagged:
+) -> MrisCaLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def mris_ca_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCaLabelParameters` object.
+    `MrisCaLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -238,7 +238,7 @@ def mris_ca_label_validate(
 
 
 def mris_ca_label_cargs(
-    params: MrisCaLabelParameters,
+    params: MrisCaLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -319,7 +319,7 @@ def mris_ca_label_cargs(
 
 
 def mris_ca_label_outputs(
-    params: MrisCaLabelParameters,
+    params: MrisCaLabelParamsDict,
     execution: Execution,
 ) -> MrisCaLabelOutputs:
     """
@@ -339,7 +339,7 @@ def mris_ca_label_outputs(
 
 
 def mris_ca_label_execute(
-    params: MrisCaLabelParameters,
+    params: MrisCaLabelParamsDict,
     runner: Runner | None = None,
 ) -> MrisCaLabelOutputs:
     """
@@ -457,6 +457,8 @@ def mris_ca_label(
 __all__ = [
     "MRIS_CA_LABEL_METADATA",
     "MrisCaLabelOutputs",
+    "MrisCaLabelParamsDict",
+    "MrisCaLabelParamsDictTagged",
     "mris_ca_label",
     "mris_ca_label_execute",
     "mris_ca_label_params",

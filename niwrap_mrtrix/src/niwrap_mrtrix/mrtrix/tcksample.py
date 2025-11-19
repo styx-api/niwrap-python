@@ -13,19 +13,19 @@ TCKSAMPLE_METADATA = Metadata(
 )
 
 
-TcksampleConfigParameters = typing.TypedDict('TcksampleConfigParameters', {
+TcksampleConfigParamsDict = typing.TypedDict('TcksampleConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TcksampleConfigParametersTagged = typing.TypedDict('TcksampleConfigParametersTagged', {
+TcksampleConfigParamsDictTagged = typing.TypedDict('TcksampleConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TcksampleParameters = typing.TypedDict('TcksampleParameters', {
+TcksampleParamsDict = typing.TypedDict('TcksampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tcksample"]],
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
@@ -36,14 +36,14 @@ TcksampleParameters = typing.TypedDict('TcksampleParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TcksampleConfigParameters] | None],
+    "config": typing.NotRequired[list[TcksampleConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
     "image": InputPathType,
     "values": str,
 })
-TcksampleParametersTagged = typing.TypedDict('TcksampleParametersTagged', {
+TcksampleParamsDictTagged = typing.TypedDict('TcksampleParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tcksample"],
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
@@ -54,7 +54,7 @@ TcksampleParametersTagged = typing.TypedDict('TcksampleParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TcksampleConfigParameters] | None],
+    "config": typing.NotRequired[list[TcksampleConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -63,10 +63,10 @@ TcksampleParametersTagged = typing.TypedDict('TcksampleParametersTagged', {
 })
 
 
-def tcksample_config_params(
+def tcksample_config(
     key: str,
     value: str,
-) -> TcksampleConfigParametersTagged:
+) -> TcksampleConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def tcksample_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TcksampleConfigParameters` object.
+    `TcksampleConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def tcksample_config_validate(
 
 
 def tcksample_config_cargs(
-    params: TcksampleConfigParameters,
+    params: TcksampleConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def tcksample_config_cargs(
 
 class TcksampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TcksampleParameters(...)`.
+    Output object returned when calling `TcksampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def tcksample_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TcksampleConfigParameters] | None = None,
+    config: list[TcksampleConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TcksampleParametersTagged:
+) -> TcksampleParamsDictTagged:
     """
     Build parameters.
     
@@ -215,7 +215,7 @@ def tcksample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TcksampleParameters` object.
+    `TcksampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -258,7 +258,7 @@ def tcksample_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TcksampleConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TcksampleConfigParamsDict] | None`')
         for e in params["config"]:
             tcksample_config_validate(e)
     if params.get("help", False) is None:
@@ -284,7 +284,7 @@ def tcksample_validate(
 
 
 def tcksample_cargs(
-    params: TcksampleParameters,
+    params: TcksampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -335,7 +335,7 @@ def tcksample_cargs(
 
 
 def tcksample_outputs(
-    params: TcksampleParameters,
+    params: TcksampleParamsDict,
     execution: Execution,
 ) -> TcksampleOutputs:
     """
@@ -355,7 +355,7 @@ def tcksample_outputs(
 
 
 def tcksample_execute(
-    params: TcksampleParameters,
+    params: TcksampleParamsDict,
     runner: Runner | None = None,
 ) -> TcksampleOutputs:
     """
@@ -407,7 +407,7 @@ def tcksample(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TcksampleConfigParameters] | None = None,
+    config: list[TcksampleConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -485,9 +485,13 @@ def tcksample(
 
 __all__ = [
     "TCKSAMPLE_METADATA",
+    "TcksampleConfigParamsDict",
+    "TcksampleConfigParamsDictTagged",
     "TcksampleOutputs",
+    "TcksampleParamsDict",
+    "TcksampleParamsDictTagged",
     "tcksample",
-    "tcksample_config_params",
+    "tcksample_config",
     "tcksample_execute",
     "tcksample_params",
 ]

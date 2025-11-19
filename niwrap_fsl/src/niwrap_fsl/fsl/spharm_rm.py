@@ -13,7 +13,7 @@ SPHARM_RM_METADATA = Metadata(
 )
 
 
-SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
+SpharmRmParamsDict = typing.TypedDict('SpharmRmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/spharm_rm"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -21,7 +21,7 @@ SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
     "number_of_terms": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
-SpharmRmParametersTagged = typing.TypedDict('SpharmRmParametersTagged', {
+SpharmRmParamsDictTagged = typing.TypedDict('SpharmRmParamsDictTagged', {
     "@type": typing.Literal["fsl/spharm_rm"],
     "input_file": InputPathType,
     "output_file": str,
@@ -33,7 +33,7 @@ SpharmRmParametersTagged = typing.TypedDict('SpharmRmParametersTagged', {
 
 class SpharmRmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpharmRmParameters(...)`.
+    Output object returned when calling `SpharmRmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def spharm_rm_params(
     mask_file: InputPathType | None = None,
     number_of_terms: float | None = None,
     verbose_flag: bool = False,
-) -> SpharmRmParametersTagged:
+) -> SpharmRmParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def spharm_rm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpharmRmParameters` object.
+    `SpharmRmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def spharm_rm_validate(
 
 
 def spharm_rm_cargs(
-    params: SpharmRmParameters,
+    params: SpharmRmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def spharm_rm_cargs(
 
 
 def spharm_rm_outputs(
-    params: SpharmRmParameters,
+    params: SpharmRmParamsDict,
     execution: Execution,
 ) -> SpharmRmOutputs:
     """
@@ -165,7 +165,7 @@ def spharm_rm_outputs(
 
 
 def spharm_rm_execute(
-    params: SpharmRmParameters,
+    params: SpharmRmParamsDict,
     runner: Runner | None = None,
 ) -> SpharmRmOutputs:
     """
@@ -234,6 +234,8 @@ def spharm_rm(
 __all__ = [
     "SPHARM_RM_METADATA",
     "SpharmRmOutputs",
+    "SpharmRmParamsDict",
+    "SpharmRmParamsDictTagged",
     "spharm_rm",
     "spharm_rm_execute",
     "spharm_rm_params",

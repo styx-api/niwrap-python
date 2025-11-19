@@ -13,12 +13,12 @@ IMMV_METADATA = Metadata(
 )
 
 
-ImmvParameters = typing.TypedDict('ImmvParameters', {
+ImmvParamsDict = typing.TypedDict('ImmvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/immv"]],
     "source_files": list[InputPathType],
     "destination": str,
 })
-ImmvParametersTagged = typing.TypedDict('ImmvParametersTagged', {
+ImmvParamsDictTagged = typing.TypedDict('ImmvParamsDictTagged', {
     "@type": typing.Literal["fsl/immv"],
     "source_files": list[InputPathType],
     "destination": str,
@@ -27,7 +27,7 @@ ImmvParametersTagged = typing.TypedDict('ImmvParametersTagged', {
 
 class ImmvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImmvParameters(...)`.
+    Output object returned when calling `ImmvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class ImmvOutputs(typing.NamedTuple):
 def immv_params(
     source_files: list[InputPathType],
     destination: str,
-) -> ImmvParametersTagged:
+) -> ImmvParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def immv_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `ImmvParameters`
+    Validate parameters. Throws an error if `params` is not a valid `ImmvParamsDict`
     object.
     
     Args:
@@ -81,7 +81,7 @@ def immv_validate(
 
 
 def immv_cargs(
-    params: ImmvParameters,
+    params: ImmvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def immv_cargs(
 
 
 def immv_outputs(
-    params: ImmvParameters,
+    params: ImmvParamsDict,
     execution: Execution,
 ) -> ImmvOutputs:
     """
@@ -120,7 +120,7 @@ def immv_outputs(
 
 
 def immv_execute(
-    params: ImmvParameters,
+    params: ImmvParamsDict,
     runner: Runner | None = None,
 ) -> ImmvOutputs:
     """
@@ -180,6 +180,8 @@ def immv(
 __all__ = [
     "IMMV_METADATA",
     "ImmvOutputs",
+    "ImmvParamsDict",
+    "ImmvParamsDictTagged",
     "immv",
     "immv_execute",
     "immv_params",

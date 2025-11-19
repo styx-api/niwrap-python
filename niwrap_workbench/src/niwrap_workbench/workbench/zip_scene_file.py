@@ -12,7 +12,7 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 )
 
 
-ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
+ZipSceneFileParamsDict = typing.TypedDict('ZipSceneFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/zip-scene-file"]],
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
@@ -21,7 +21,7 @@ ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
     "extract-folder": str,
     "zip-file": str,
 })
-ZipSceneFileParametersTagged = typing.TypedDict('ZipSceneFileParametersTagged', {
+ZipSceneFileParamsDictTagged = typing.TypedDict('ZipSceneFileParamsDictTagged', {
     "@type": typing.Literal["workbench/zip-scene-file"],
     "directory": typing.NotRequired[str | None],
     "skip-missing": bool,
@@ -34,7 +34,7 @@ ZipSceneFileParametersTagged = typing.TypedDict('ZipSceneFileParametersTagged', 
 
 class ZipSceneFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ZipSceneFileParameters(...)`.
+    Output object returned when calling `ZipSceneFileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def zip_scene_file_params(
     zip_file: str,
     skip_missing: bool = False,
     write_scene_file: bool = False,
-) -> ZipSceneFileParametersTagged:
+) -> ZipSceneFileParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def zip_scene_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ZipSceneFileParameters` object.
+    `ZipSceneFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def zip_scene_file_validate(
 
 
 def zip_scene_file_cargs(
-    params: ZipSceneFileParameters,
+    params: ZipSceneFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def zip_scene_file_cargs(
 
 
 def zip_scene_file_outputs(
-    params: ZipSceneFileParameters,
+    params: ZipSceneFileParamsDict,
     execution: Execution,
 ) -> ZipSceneFileOutputs:
     """
@@ -166,7 +166,7 @@ def zip_scene_file_outputs(
 
 
 def zip_scene_file_execute(
-    params: ZipSceneFileParameters,
+    params: ZipSceneFileParamsDict,
     runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
@@ -241,6 +241,8 @@ def zip_scene_file(
 __all__ = [
     "ZIP_SCENE_FILE_METADATA",
     "ZipSceneFileOutputs",
+    "ZipSceneFileParamsDict",
+    "ZipSceneFileParamsDictTagged",
     "zip_scene_file",
     "zip_scene_file_execute",
     "zip_scene_file_params",

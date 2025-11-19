@@ -13,7 +13,7 @@ V_3D_REMLFIT_METADATA = Metadata(
 )
 
 
-V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
+V3dRemlfitParamsDict = typing.TypedDict('V3dRemlfitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dREMLfit"]],
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
@@ -31,7 +31,7 @@ V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
     "quiet": bool,
     "verbose": bool,
 })
-V3dRemlfitParametersTagged = typing.TypedDict('V3dRemlfitParametersTagged', {
+V3dRemlfitParamsDictTagged = typing.TypedDict('V3dRemlfitParamsDictTagged', {
     "@type": typing.Literal["afni/3dREMLfit"],
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
@@ -53,7 +53,7 @@ V3dRemlfitParametersTagged = typing.TypedDict('V3dRemlfitParametersTagged', {
 
 class V3dRemlfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRemlfitParameters(...)`.
+    Output object returned when calling `V3dRemlfitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def v_3d_remlfit_params(
     negative_corr: bool = False,
     quiet: bool = False,
     verbose: bool = False,
-) -> V3dRemlfitParametersTagged:
+) -> V3dRemlfitParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def v_3d_remlfit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRemlfitParameters` object.
+    `V3dRemlfitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -216,7 +216,7 @@ def v_3d_remlfit_validate(
 
 
 def v_3d_remlfit_cargs(
-    params: V3dRemlfitParameters,
+    params: V3dRemlfitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -286,7 +286,7 @@ def v_3d_remlfit_cargs(
 
 
 def v_3d_remlfit_outputs(
-    params: V3dRemlfitParameters,
+    params: V3dRemlfitParamsDict,
     execution: Execution,
 ) -> V3dRemlfitOutputs:
     """
@@ -311,7 +311,7 @@ def v_3d_remlfit_outputs(
 
 
 def v_3d_remlfit_execute(
-    params: V3dRemlfitParameters,
+    params: V3dRemlfitParamsDict,
     runner: Runner | None = None,
 ) -> V3dRemlfitOutputs:
     """
@@ -417,6 +417,8 @@ def v_3d_remlfit(
 
 __all__ = [
     "V3dRemlfitOutputs",
+    "V3dRemlfitParamsDict",
+    "V3dRemlfitParamsDictTagged",
     "V_3D_REMLFIT_METADATA",
     "v_3d_remlfit",
     "v_3d_remlfit_execute",

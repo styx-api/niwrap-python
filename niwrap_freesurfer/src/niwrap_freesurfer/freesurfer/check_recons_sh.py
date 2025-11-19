@@ -13,11 +13,11 @@ CHECK_RECONS_SH_METADATA = Metadata(
 )
 
 
-CheckReconsShParameters = typing.TypedDict('CheckReconsShParameters', {
+CheckReconsShParamsDict = typing.TypedDict('CheckReconsShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/check_recons.sh"]],
     "subject_directory": typing.NotRequired[str | None],
 })
-CheckReconsShParametersTagged = typing.TypedDict('CheckReconsShParametersTagged', {
+CheckReconsShParamsDictTagged = typing.TypedDict('CheckReconsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/check_recons.sh"],
     "subject_directory": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ CheckReconsShParametersTagged = typing.TypedDict('CheckReconsShParametersTagged'
 
 class CheckReconsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CheckReconsShParameters(...)`.
+    Output object returned when calling `CheckReconsShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class CheckReconsShOutputs(typing.NamedTuple):
 
 def check_recons_sh_params(
     subject_directory: str | None = None,
-) -> CheckReconsShParametersTagged:
+) -> CheckReconsShParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def check_recons_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CheckReconsShParameters` object.
+    `CheckReconsShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -69,7 +69,7 @@ def check_recons_sh_validate(
 
 
 def check_recons_sh_cargs(
-    params: CheckReconsShParameters,
+    params: CheckReconsShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def check_recons_sh_cargs(
 
 
 def check_recons_sh_outputs(
-    params: CheckReconsShParameters,
+    params: CheckReconsShParamsDict,
     execution: Execution,
 ) -> CheckReconsShOutputs:
     """
@@ -108,7 +108,7 @@ def check_recons_sh_outputs(
 
 
 def check_recons_sh_execute(
-    params: CheckReconsShParameters,
+    params: CheckReconsShParamsDict,
     runner: Runner | None = None,
 ) -> CheckReconsShOutputs:
     """
@@ -167,6 +167,8 @@ def check_recons_sh(
 __all__ = [
     "CHECK_RECONS_SH_METADATA",
     "CheckReconsShOutputs",
+    "CheckReconsShParamsDict",
+    "CheckReconsShParamsDictTagged",
     "check_recons_sh",
     "check_recons_sh_execute",
     "check_recons_sh_params",

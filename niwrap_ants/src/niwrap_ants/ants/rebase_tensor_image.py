@@ -13,7 +13,7 @@ REBASE_TENSOR_IMAGE_METADATA = Metadata(
 )
 
 
-RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
+RebaseTensorImageParamsDict = typing.TypedDict('RebaseTensorImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/RebaseTensorImage"]],
     "dimension": int,
     "infile": InputPathType,
@@ -21,7 +21,7 @@ RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
     "method": typing.Literal["PHYSICAL", "LOCAL"],
     "reference": typing.NotRequired[InputPathType | None],
 })
-RebaseTensorImageParametersTagged = typing.TypedDict('RebaseTensorImageParametersTagged', {
+RebaseTensorImageParamsDictTagged = typing.TypedDict('RebaseTensorImageParamsDictTagged', {
     "@type": typing.Literal["ants/RebaseTensorImage"],
     "dimension": int,
     "infile": InputPathType,
@@ -33,7 +33,7 @@ RebaseTensorImageParametersTagged = typing.TypedDict('RebaseTensorImageParameter
 
 class RebaseTensorImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RebaseTensorImageParameters(...)`.
+    Output object returned when calling `RebaseTensorImageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def rebase_tensor_image_params(
     outfile: InputPathType,
     method: typing.Literal["PHYSICAL", "LOCAL"],
     reference: InputPathType | None = None,
-) -> RebaseTensorImageParametersTagged:
+) -> RebaseTensorImageParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def rebase_tensor_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RebaseTensorImageParameters` object.
+    `RebaseTensorImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def rebase_tensor_image_validate(
 
 
 def rebase_tensor_image_cargs(
-    params: RebaseTensorImageParameters,
+    params: RebaseTensorImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def rebase_tensor_image_cargs(
 
 
 def rebase_tensor_image_outputs(
-    params: RebaseTensorImageParameters,
+    params: RebaseTensorImageParamsDict,
     execution: Execution,
 ) -> RebaseTensorImageOutputs:
     """
@@ -153,7 +153,7 @@ def rebase_tensor_image_outputs(
 
 
 def rebase_tensor_image_execute(
-    params: RebaseTensorImageParameters,
+    params: RebaseTensorImageParamsDict,
     runner: Runner | None = None,
 ) -> RebaseTensorImageOutputs:
     """
@@ -222,6 +222,8 @@ def rebase_tensor_image(
 __all__ = [
     "REBASE_TENSOR_IMAGE_METADATA",
     "RebaseTensorImageOutputs",
+    "RebaseTensorImageParamsDict",
+    "RebaseTensorImageParamsDictTagged",
     "rebase_tensor_image",
     "rebase_tensor_image_execute",
     "rebase_tensor_image_params",

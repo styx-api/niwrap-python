@@ -13,7 +13,7 @@ WMSASEG_METADATA = Metadata(
 )
 
 
-WmsasegParameters = typing.TypedDict('WmsasegParameters', {
+WmsasegParamsDict = typing.TypedDict('WmsasegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/wmsaseg"]],
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ WmsasegParameters = typing.TypedDict('WmsasegParameters', {
     "halo1": bool,
     "halo2": bool,
 })
-WmsasegParametersTagged = typing.TypedDict('WmsasegParametersTagged', {
+WmsasegParamsDictTagged = typing.TypedDict('WmsasegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/wmsaseg"],
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ WmsasegParametersTagged = typing.TypedDict('WmsasegParametersTagged', {
 
 class WmsasegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WmsasegParameters(...)`.
+    Output object returned when calling `WmsasegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def wmsaseg_params(
     reg_only: bool = False,
     halo1: bool = False,
     halo2: bool = False,
-) -> WmsasegParametersTagged:
+) -> WmsasegParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def wmsaseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WmsasegParameters` object.
+    `WmsasegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def wmsaseg_validate(
 
 
 def wmsaseg_cargs(
-    params: WmsasegParameters,
+    params: WmsasegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -213,7 +213,7 @@ def wmsaseg_cargs(
 
 
 def wmsaseg_outputs(
-    params: WmsasegParameters,
+    params: WmsasegParamsDict,
     execution: Execution,
 ) -> WmsasegOutputs:
     """
@@ -234,7 +234,7 @@ def wmsaseg_outputs(
 
 
 def wmsaseg_execute(
-    params: WmsasegParameters,
+    params: WmsasegParamsDict,
     runner: Runner | None = None,
 ) -> WmsasegOutputs:
     """
@@ -320,6 +320,8 @@ def wmsaseg(
 __all__ = [
     "WMSASEG_METADATA",
     "WmsasegOutputs",
+    "WmsasegParamsDict",
+    "WmsasegParamsDictTagged",
     "wmsaseg",
     "wmsaseg_execute",
     "wmsaseg_params",

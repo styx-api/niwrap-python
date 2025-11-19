@@ -13,7 +13,7 @@ MRI_SURFCLUSTER_METADATA = Metadata(
 )
 
 
-MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
+MriSurfclusterParamsDict = typing.TypedDict('MriSurfclusterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surfcluster"]],
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
@@ -57,7 +57,7 @@ MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
     "sd": typing.NotRequired[str | None],
     "thmax": typing.NotRequired[float | None],
 })
-MriSurfclusterParametersTagged = typing.TypedDict('MriSurfclusterParametersTagged', {
+MriSurfclusterParamsDictTagged = typing.TypedDict('MriSurfclusterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_surfcluster"],
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
@@ -105,7 +105,7 @@ MriSurfclusterParametersTagged = typing.TypedDict('MriSurfclusterParametersTagge
 
 class MriSurfclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSurfclusterParameters(...)`.
+    Output object returned when calling `MriSurfclusterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -165,7 +165,7 @@ def mri_surfcluster_params(
     no_fixmni_flag: bool = False,
     sd: str | None = None,
     thmax: float | None = None,
-) -> MriSurfclusterParametersTagged:
+) -> MriSurfclusterParamsDictTagged:
     """
     Build parameters.
     
@@ -299,7 +299,7 @@ def mri_surfcluster_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSurfclusterParameters` object.
+    `MriSurfclusterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -443,7 +443,7 @@ def mri_surfcluster_validate(
 
 
 def mri_surfcluster_cargs(
-    params: MriSurfclusterParameters,
+    params: MriSurfclusterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -644,7 +644,7 @@ def mri_surfcluster_cargs(
 
 
 def mri_surfcluster_outputs(
-    params: MriSurfclusterParameters,
+    params: MriSurfclusterParamsDict,
     execution: Execution,
 ) -> MriSurfclusterOutputs:
     """
@@ -669,7 +669,7 @@ def mri_surfcluster_outputs(
 
 
 def mri_surfcluster_execute(
-    params: MriSurfclusterParameters,
+    params: MriSurfclusterParamsDict,
     runner: Runner | None = None,
 ) -> MriSurfclusterOutputs:
     """
@@ -847,6 +847,8 @@ def mri_surfcluster(
 __all__ = [
     "MRI_SURFCLUSTER_METADATA",
     "MriSurfclusterOutputs",
+    "MriSurfclusterParamsDict",
+    "MriSurfclusterParamsDictTagged",
     "mri_surfcluster",
     "mri_surfcluster_execute",
     "mri_surfcluster_params",

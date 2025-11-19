@@ -13,12 +13,12 @@ MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
 )
 
 
-MriTopologycorrectionParameters = typing.TypedDict('MriTopologycorrectionParameters', {
+MriTopologycorrectionParamsDict = typing.TypedDict('MriTopologycorrectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_topologycorrection"]],
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })
-MriTopologycorrectionParametersTagged = typing.TypedDict('MriTopologycorrectionParametersTagged', {
+MriTopologycorrectionParamsDictTagged = typing.TypedDict('MriTopologycorrectionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_topologycorrection"],
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
@@ -27,7 +27,7 @@ MriTopologycorrectionParametersTagged = typing.TypedDict('MriTopologycorrectionP
 
 class MriTopologycorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriTopologycorrectionParameters(...)`.
+    Output object returned when calling `MriTopologycorrectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriTopologycorrectionOutputs(typing.NamedTuple):
 def mri_topologycorrection_params(
     input_orig_file: InputPathType,
     input_segmented_file: InputPathType,
-) -> MriTopologycorrectionParametersTagged:
+) -> MriTopologycorrectionParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_topologycorrection_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriTopologycorrectionParameters` object.
+    `MriTopologycorrectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mri_topologycorrection_validate(
 
 
 def mri_topologycorrection_cargs(
-    params: MriTopologycorrectionParameters,
+    params: MriTopologycorrectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mri_topologycorrection_cargs(
 
 
 def mri_topologycorrection_outputs(
-    params: MriTopologycorrectionParameters,
+    params: MriTopologycorrectionParamsDict,
     execution: Execution,
 ) -> MriTopologycorrectionOutputs:
     """
@@ -119,7 +119,7 @@ def mri_topologycorrection_outputs(
 
 
 def mri_topologycorrection_execute(
-    params: MriTopologycorrectionParameters,
+    params: MriTopologycorrectionParamsDict,
     runner: Runner | None = None,
 ) -> MriTopologycorrectionOutputs:
     """
@@ -178,6 +178,8 @@ def mri_topologycorrection(
 __all__ = [
     "MRI_TOPOLOGYCORRECTION_METADATA",
     "MriTopologycorrectionOutputs",
+    "MriTopologycorrectionParamsDict",
+    "MriTopologycorrectionParamsDictTagged",
     "mri_topologycorrection",
     "mri_topologycorrection_execute",
     "mri_topologycorrection_params",

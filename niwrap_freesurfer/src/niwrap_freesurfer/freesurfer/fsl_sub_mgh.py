@@ -13,7 +13,7 @@ FSL_SUB_MGH_METADATA = Metadata(
 )
 
 
-FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
+FslSubMghParamsDict = typing.TypedDict('FslSubMghParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_sub_mgh"]],
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
     "verbose": bool,
     "shell_path": typing.NotRequired[str | None],
 })
-FslSubMghParametersTagged = typing.TypedDict('FslSubMghParametersTagged', {
+FslSubMghParamsDictTagged = typing.TypedDict('FslSubMghParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsl_sub_mgh"],
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ FslSubMghParametersTagged = typing.TypedDict('FslSubMghParametersTagged', {
 
 class FslSubMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslSubMghParameters(...)`.
+    Output object returned when calling `FslSubMghParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def fsl_sub_mgh_params(
     flags_in_scripts: bool = False,
     verbose: bool = False,
     shell_path: str | None = None,
-) -> FslSubMghParametersTagged:
+) -> FslSubMghParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def fsl_sub_mgh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslSubMghParameters` object.
+    `FslSubMghParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def fsl_sub_mgh_validate(
 
 
 def fsl_sub_mgh_cargs(
-    params: FslSubMghParameters,
+    params: FslSubMghParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -257,7 +257,7 @@ def fsl_sub_mgh_cargs(
 
 
 def fsl_sub_mgh_outputs(
-    params: FslSubMghParameters,
+    params: FslSubMghParamsDict,
     execution: Execution,
 ) -> FslSubMghOutputs:
     """
@@ -276,7 +276,7 @@ def fsl_sub_mgh_outputs(
 
 
 def fsl_sub_mgh_execute(
-    params: FslSubMghParameters,
+    params: FslSubMghParamsDict,
     runner: Runner | None = None,
 ) -> FslSubMghOutputs:
     """
@@ -374,6 +374,8 @@ def fsl_sub_mgh(
 __all__ = [
     "FSL_SUB_MGH_METADATA",
     "FslSubMghOutputs",
+    "FslSubMghParamsDict",
+    "FslSubMghParamsDictTagged",
     "fsl_sub_mgh",
     "fsl_sub_mgh_execute",
     "fsl_sub_mgh_params",

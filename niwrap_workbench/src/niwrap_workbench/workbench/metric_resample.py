@@ -12,35 +12,35 @@ METRIC_RESAMPLE_METADATA = Metadata(
 )
 
 
-MetricResampleAreaSurfsParameters = typing.TypedDict('MetricResampleAreaSurfsParameters', {
+MetricResampleAreaSurfsParamsDict = typing.TypedDict('MetricResampleAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-MetricResampleAreaSurfsParametersTagged = typing.TypedDict('MetricResampleAreaSurfsParametersTagged', {
+MetricResampleAreaSurfsParamsDictTagged = typing.TypedDict('MetricResampleAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-MetricResampleAreaMetricsParameters = typing.TypedDict('MetricResampleAreaMetricsParameters', {
+MetricResampleAreaMetricsParamsDict = typing.TypedDict('MetricResampleAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-MetricResampleAreaMetricsParametersTagged = typing.TypedDict('MetricResampleAreaMetricsParametersTagged', {
+MetricResampleAreaMetricsParamsDictTagged = typing.TypedDict('MetricResampleAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-MetricResampleParameters = typing.TypedDict('MetricResampleParameters', {
+MetricResampleParamsDict = typing.TypedDict('MetricResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-resample"]],
     "metric-out": str,
-    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-out": typing.NotRequired[str | None],
     "largest": bool,
@@ -50,11 +50,11 @@ MetricResampleParameters = typing.TypedDict('MetricResampleParameters', {
     "new-sphere": InputPathType,
     "method": str,
 })
-MetricResampleParametersTagged = typing.TypedDict('MetricResampleParametersTagged', {
+MetricResampleParamsDictTagged = typing.TypedDict('MetricResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-resample"],
     "metric-out": str,
-    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-out": typing.NotRequired[str | None],
     "largest": bool,
@@ -66,10 +66,10 @@ MetricResampleParametersTagged = typing.TypedDict('MetricResampleParametersTagge
 })
 
 
-def metric_resample_area_surfs_params(
+def metric_resample_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> MetricResampleAreaSurfsParametersTagged:
+) -> MetricResampleAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def metric_resample_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricResampleAreaSurfsParameters` object.
+    `MetricResampleAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def metric_resample_area_surfs_validate(
 
 
 def metric_resample_area_surfs_cargs(
-    params: MetricResampleAreaSurfsParameters,
+    params: MetricResampleAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,10 +131,10 @@ def metric_resample_area_surfs_cargs(
     return cargs
 
 
-def metric_resample_area_metrics_params(
+def metric_resample_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> MetricResampleAreaMetricsParametersTagged:
+) -> MetricResampleAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -157,7 +157,7 @@ def metric_resample_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricResampleAreaMetricsParameters` object.
+    `MetricResampleAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -175,7 +175,7 @@ def metric_resample_area_metrics_validate(
 
 
 def metric_resample_area_metrics_cargs(
-    params: MetricResampleAreaMetricsParameters,
+    params: MetricResampleAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def metric_resample_area_metrics_cargs(
 
 class MetricResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricResampleParameters(...)`.
+    Output object returned when calling `MetricResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -214,11 +214,11 @@ def metric_resample_params(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: MetricResampleAreaSurfsParameters | None = None,
-    area_metrics: MetricResampleAreaMetricsParameters | None = None,
+    area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
+    area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
-) -> MetricResampleParametersTagged:
+) -> MetricResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -273,7 +273,7 @@ def metric_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricResampleParameters` object.
+    `MetricResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -321,7 +321,7 @@ def metric_resample_validate(
 
 
 def metric_resample_cargs(
-    params: MetricResampleParameters,
+    params: MetricResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -356,7 +356,7 @@ def metric_resample_cargs(
 
 
 def metric_resample_outputs(
-    params: MetricResampleParameters,
+    params: MetricResampleParamsDict,
     execution: Execution,
 ) -> MetricResampleOutputs:
     """
@@ -376,7 +376,7 @@ def metric_resample_outputs(
 
 
 def metric_resample_execute(
-    params: MetricResampleParameters,
+    params: MetricResampleParamsDict,
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
@@ -430,8 +430,8 @@ def metric_resample(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: MetricResampleAreaSurfsParameters | None = None,
-    area_metrics: MetricResampleAreaMetricsParameters | None = None,
+    area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
+    area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
@@ -507,10 +507,16 @@ def metric_resample(
 
 __all__ = [
     "METRIC_RESAMPLE_METADATA",
+    "MetricResampleAreaMetricsParamsDict",
+    "MetricResampleAreaMetricsParamsDictTagged",
+    "MetricResampleAreaSurfsParamsDict",
+    "MetricResampleAreaSurfsParamsDictTagged",
     "MetricResampleOutputs",
+    "MetricResampleParamsDict",
+    "MetricResampleParamsDictTagged",
     "metric_resample",
-    "metric_resample_area_metrics_params",
-    "metric_resample_area_surfs_params",
+    "metric_resample_area_metrics",
+    "metric_resample_area_surfs",
     "metric_resample_execute",
     "metric_resample_params",
 ]

@@ -12,13 +12,13 @@ VOLUME_REORIENT_METADATA = Metadata(
 )
 
 
-VolumeReorientParameters = typing.TypedDict('VolumeReorientParameters', {
+VolumeReorientParamsDict = typing.TypedDict('VolumeReorientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-reorient"]],
     "volume": InputPathType,
     "orient-string": str,
     "volume-out": str,
 })
-VolumeReorientParametersTagged = typing.TypedDict('VolumeReorientParametersTagged', {
+VolumeReorientParamsDictTagged = typing.TypedDict('VolumeReorientParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-reorient"],
     "volume": InputPathType,
     "orient-string": str,
@@ -28,7 +28,7 @@ VolumeReorientParametersTagged = typing.TypedDict('VolumeReorientParametersTagge
 
 class VolumeReorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeReorientParameters(...)`.
+    Output object returned when calling `VolumeReorientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def volume_reorient_params(
     volume: InputPathType,
     orient_string: str,
     volume_out: str,
-) -> VolumeReorientParametersTagged:
+) -> VolumeReorientParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def volume_reorient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeReorientParameters` object.
+    `VolumeReorientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def volume_reorient_validate(
 
 
 def volume_reorient_cargs(
-    params: VolumeReorientParameters,
+    params: VolumeReorientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def volume_reorient_cargs(
 
 
 def volume_reorient_outputs(
-    params: VolumeReorientParameters,
+    params: VolumeReorientParamsDict,
     execution: Execution,
 ) -> VolumeReorientOutputs:
     """
@@ -128,7 +128,7 @@ def volume_reorient_outputs(
 
 
 def volume_reorient_execute(
-    params: VolumeReorientParameters,
+    params: VolumeReorientParamsDict,
     runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
@@ -202,6 +202,8 @@ def volume_reorient(
 __all__ = [
     "VOLUME_REORIENT_METADATA",
     "VolumeReorientOutputs",
+    "VolumeReorientParamsDict",
+    "VolumeReorientParamsDictTagged",
     "volume_reorient",
     "volume_reorient_execute",
     "volume_reorient_params",

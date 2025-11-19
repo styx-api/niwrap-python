@@ -13,7 +13,7 @@ SURF_PROJ_METADATA = Metadata(
 )
 
 
-SurfProjParameters = typing.TypedDict('SurfProjParameters', {
+SurfProjParamsDict = typing.TypedDict('SurfProjParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/surf_proj"]],
     "data": InputPathType,
     "surface": InputPathType,
@@ -26,7 +26,7 @@ SurfProjParameters = typing.TypedDict('SurfProjParameters', {
     "operation": typing.NotRequired[str | None],
     "surface_output": typing.NotRequired[str | None],
 })
-SurfProjParametersTagged = typing.TypedDict('SurfProjParametersTagged', {
+SurfProjParamsDictTagged = typing.TypedDict('SurfProjParamsDictTagged', {
     "@type": typing.Literal["fsl/surf_proj"],
     "data": InputPathType,
     "surface": InputPathType,
@@ -43,7 +43,7 @@ SurfProjParametersTagged = typing.TypedDict('SurfProjParametersTagged', {
 
 class SurfProjOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfProjParameters(...)`.
+    Output object returned when calling `SurfProjParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def surf_proj_params(
     direction: float | None = None,
     operation: str | None = None,
     surface_output: str | None = None,
-) -> SurfProjParametersTagged:
+) -> SurfProjParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def surf_proj_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfProjParameters` object.
+    `SurfProjParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def surf_proj_validate(
 
 
 def surf_proj_cargs(
-    params: SurfProjParameters,
+    params: SurfProjParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -220,7 +220,7 @@ def surf_proj_cargs(
 
 
 def surf_proj_outputs(
-    params: SurfProjParameters,
+    params: SurfProjParamsDict,
     execution: Execution,
 ) -> SurfProjOutputs:
     """
@@ -241,7 +241,7 @@ def surf_proj_outputs(
 
 
 def surf_proj_execute(
-    params: SurfProjParameters,
+    params: SurfProjParamsDict,
     runner: Runner | None = None,
 ) -> SurfProjOutputs:
     """
@@ -326,6 +326,8 @@ def surf_proj(
 __all__ = [
     "SURF_PROJ_METADATA",
     "SurfProjOutputs",
+    "SurfProjParamsDict",
+    "SurfProjParamsDictTagged",
     "surf_proj",
     "surf_proj_execute",
     "surf_proj_params",

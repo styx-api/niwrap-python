@@ -18,7 +18,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mesh2voxel_config_params",
+      "fn_struct_make_params": "mesh2voxel_config",
       "properties": {
         "key": {
           "var_param": "key"

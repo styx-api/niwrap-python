@@ -13,7 +13,7 @@ CONVERT_TRANSFORM_FILE_METADATA = Metadata(
 )
 
 
-ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameters', {
+ConvertTransformFileParamsDict = typing.TypedDict('ConvertTransformFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ConvertTransformFile"]],
     "dimensions": int,
     "input_transform_file": InputPathType,
@@ -23,7 +23,7 @@ ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameter
     "RAS": bool,
     "convert_to_affine_type": bool,
 })
-ConvertTransformFileParametersTagged = typing.TypedDict('ConvertTransformFileParametersTagged', {
+ConvertTransformFileParamsDictTagged = typing.TypedDict('ConvertTransformFileParamsDictTagged', {
     "@type": typing.Literal["ants/ConvertTransformFile"],
     "dimensions": int,
     "input_transform_file": InputPathType,
@@ -37,7 +37,7 @@ ConvertTransformFileParametersTagged = typing.TypedDict('ConvertTransformFilePar
 
 class ConvertTransformFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertTransformFileParameters(...)`.
+    Output object returned when calling `ConvertTransformFileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def convert_transform_file_params(
     homogeneous_matrix: bool = False,
     ras: bool = False,
     convert_to_affine_type: bool = False,
-) -> ConvertTransformFileParametersTagged:
+) -> ConvertTransformFileParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def convert_transform_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertTransformFileParameters` object.
+    `ConvertTransformFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def convert_transform_file_validate(
 
 
 def convert_transform_file_cargs(
-    params: ConvertTransformFileParameters,
+    params: ConvertTransformFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def convert_transform_file_cargs(
 
 
 def convert_transform_file_outputs(
-    params: ConvertTransformFileParameters,
+    params: ConvertTransformFileParamsDict,
     execution: Execution,
 ) -> ConvertTransformFileOutputs:
     """
@@ -175,7 +175,7 @@ def convert_transform_file_outputs(
 
 
 def convert_transform_file_execute(
-    params: ConvertTransformFileParameters,
+    params: ConvertTransformFileParamsDict,
     runner: Runner | None = None,
 ) -> ConvertTransformFileOutputs:
     """
@@ -260,6 +260,8 @@ def convert_transform_file(
 __all__ = [
     "CONVERT_TRANSFORM_FILE_METADATA",
     "ConvertTransformFileOutputs",
+    "ConvertTransformFileParamsDict",
+    "ConvertTransformFileParamsDictTagged",
     "convert_transform_file",
     "convert_transform_file_execute",
     "convert_transform_file_params",

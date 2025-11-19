@@ -13,13 +13,13 @@ DMRI_GROUP_BY_ENDPOINTS_METADATA = Metadata(
 )
 
 
-DmriGroupByEndpointsParameters = typing.TypedDict('DmriGroupByEndpointsParameters', {
+DmriGroupByEndpointsParamsDict = typing.TypedDict('DmriGroupByEndpointsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_groupByEndpoints"]],
     "streamline_file": InputPathType,
     "image_file": InputPathType,
     "output_directory": str,
 })
-DmriGroupByEndpointsParametersTagged = typing.TypedDict('DmriGroupByEndpointsParametersTagged', {
+DmriGroupByEndpointsParamsDictTagged = typing.TypedDict('DmriGroupByEndpointsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_groupByEndpoints"],
     "streamline_file": InputPathType,
     "image_file": InputPathType,
@@ -29,7 +29,7 @@ DmriGroupByEndpointsParametersTagged = typing.TypedDict('DmriGroupByEndpointsPar
 
 class DmriGroupByEndpointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriGroupByEndpointsParameters(...)`.
+    Output object returned when calling `DmriGroupByEndpointsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def dmri_group_by_endpoints_params(
     streamline_file: InputPathType,
     image_file: InputPathType,
     output_directory: str,
-) -> DmriGroupByEndpointsParametersTagged:
+) -> DmriGroupByEndpointsParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def dmri_group_by_endpoints_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriGroupByEndpointsParameters` object.
+    `DmriGroupByEndpointsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def dmri_group_by_endpoints_validate(
 
 
 def dmri_group_by_endpoints_cargs(
-    params: DmriGroupByEndpointsParameters,
+    params: DmriGroupByEndpointsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def dmri_group_by_endpoints_cargs(
 
 
 def dmri_group_by_endpoints_outputs(
-    params: DmriGroupByEndpointsParameters,
+    params: DmriGroupByEndpointsParamsDict,
     execution: Execution,
 ) -> DmriGroupByEndpointsOutputs:
     """
@@ -135,7 +135,7 @@ def dmri_group_by_endpoints_outputs(
 
 
 def dmri_group_by_endpoints_execute(
-    params: DmriGroupByEndpointsParameters,
+    params: DmriGroupByEndpointsParamsDict,
     runner: Runner | None = None,
 ) -> DmriGroupByEndpointsOutputs:
     """
@@ -197,6 +197,8 @@ def dmri_group_by_endpoints(
 __all__ = [
     "DMRI_GROUP_BY_ENDPOINTS_METADATA",
     "DmriGroupByEndpointsOutputs",
+    "DmriGroupByEndpointsParamsDict",
+    "DmriGroupByEndpointsParamsDictTagged",
     "dmri_group_by_endpoints",
     "dmri_group_by_endpoints_execute",
     "dmri_group_by_endpoints_params",

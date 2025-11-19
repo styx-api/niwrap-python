@@ -13,7 +13,7 @@ V_3D_ROIMAKER_METADATA = Metadata(
 )
 
 
-V3dRoimakerParameters = typing.TypedDict('V3dRoimakerParameters', {
+V3dRoimakerParamsDict = typing.TypedDict('V3dRoimakerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dROIMaker"]],
     "inset": InputPathType,
     "thresh": float,
@@ -36,7 +36,7 @@ V3dRoimakerParameters = typing.TypedDict('V3dRoimakerParameters', {
     "preinfl_inflate": typing.NotRequired[float | None],
     "dump_no_labtab": bool,
 })
-V3dRoimakerParametersTagged = typing.TypedDict('V3dRoimakerParametersTagged', {
+V3dRoimakerParamsDictTagged = typing.TypedDict('V3dRoimakerParamsDictTagged', {
     "@type": typing.Literal["afni/3dROIMaker"],
     "inset": InputPathType,
     "thresh": float,
@@ -63,7 +63,7 @@ V3dRoimakerParametersTagged = typing.TypedDict('V3dRoimakerParametersTagged', {
 
 class V3dRoimakerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dRoimakerParameters(...)`.
+    Output object returned when calling `V3dRoimakerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +96,7 @@ def v_3d_roimaker_params(
     preinfl_inset: InputPathType | None = None,
     preinfl_inflate: float | None = None,
     dump_no_labtab: bool = False,
-) -> V3dRoimakerParametersTagged:
+) -> V3dRoimakerParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def v_3d_roimaker_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dRoimakerParameters` object.
+    `V3dRoimakerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -261,7 +261,7 @@ def v_3d_roimaker_validate(
 
 
 def v_3d_roimaker_cargs(
-    params: V3dRoimakerParameters,
+    params: V3dRoimakerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def v_3d_roimaker_cargs(
 
 
 def v_3d_roimaker_outputs(
-    params: V3dRoimakerParameters,
+    params: V3dRoimakerParamsDict,
     execution: Execution,
 ) -> V3dRoimakerOutputs:
     """
@@ -376,7 +376,7 @@ def v_3d_roimaker_outputs(
 
 
 def v_3d_roimaker_execute(
-    params: V3dRoimakerParameters,
+    params: V3dRoimakerParamsDict,
     runner: Runner | None = None,
 ) -> V3dRoimakerOutputs:
     """
@@ -506,6 +506,8 @@ def v_3d_roimaker(
 
 __all__ = [
     "V3dRoimakerOutputs",
+    "V3dRoimakerParamsDict",
+    "V3dRoimakerParamsDictTagged",
     "V_3D_ROIMAKER_METADATA",
     "v_3d_roimaker",
     "v_3d_roimaker_execute",

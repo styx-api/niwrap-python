@@ -13,11 +13,11 @@ ANATOMI_CUTS_UTILS_METADATA = Metadata(
 )
 
 
-AnatomiCutsUtilsParameters = typing.TypedDict('AnatomiCutsUtilsParameters', {
+AnatomiCutsUtilsParamsDict = typing.TypedDict('AnatomiCutsUtilsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/anatomiCutsUtils"]],
     "modules": typing.NotRequired[list[str] | None],
 })
-AnatomiCutsUtilsParametersTagged = typing.TypedDict('AnatomiCutsUtilsParametersTagged', {
+AnatomiCutsUtilsParamsDictTagged = typing.TypedDict('AnatomiCutsUtilsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/anatomiCutsUtils"],
     "modules": typing.NotRequired[list[str] | None],
 })
@@ -25,7 +25,7 @@ AnatomiCutsUtilsParametersTagged = typing.TypedDict('AnatomiCutsUtilsParametersT
 
 class AnatomiCutsUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AnatomiCutsUtilsParameters(...)`.
+    Output object returned when calling `AnatomiCutsUtilsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class AnatomiCutsUtilsOutputs(typing.NamedTuple):
 
 def anatomi_cuts_utils_params(
     modules: list[str] | None = None,
-) -> AnatomiCutsUtilsParametersTagged:
+) -> AnatomiCutsUtilsParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def anatomi_cuts_utils_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AnatomiCutsUtilsParameters` object.
+    `AnatomiCutsUtilsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def anatomi_cuts_utils_validate(
 
 
 def anatomi_cuts_utils_cargs(
-    params: AnatomiCutsUtilsParameters,
+    params: AnatomiCutsUtilsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def anatomi_cuts_utils_cargs(
 
 
 def anatomi_cuts_utils_outputs(
-    params: AnatomiCutsUtilsParameters,
+    params: AnatomiCutsUtilsParamsDict,
     execution: Execution,
 ) -> AnatomiCutsUtilsOutputs:
     """
@@ -111,7 +111,7 @@ def anatomi_cuts_utils_outputs(
 
 
 def anatomi_cuts_utils_execute(
-    params: AnatomiCutsUtilsParameters,
+    params: AnatomiCutsUtilsParamsDict,
     runner: Runner | None = None,
 ) -> AnatomiCutsUtilsOutputs:
     """
@@ -168,6 +168,8 @@ def anatomi_cuts_utils(
 __all__ = [
     "ANATOMI_CUTS_UTILS_METADATA",
     "AnatomiCutsUtilsOutputs",
+    "AnatomiCutsUtilsParamsDict",
+    "AnatomiCutsUtilsParamsDictTagged",
     "anatomi_cuts_utils",
     "anatomi_cuts_utils_execute",
     "anatomi_cuts_utils_params",

@@ -13,13 +13,13 @@ LABELS_UNION_METADATA = Metadata(
 )
 
 
-LabelsUnionParameters = typing.TypedDict('LabelsUnionParameters', {
+LabelsUnionParamsDict = typing.TypedDict('LabelsUnionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/labels_union"]],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
-LabelsUnionParametersTagged = typing.TypedDict('LabelsUnionParametersTagged', {
+LabelsUnionParamsDictTagged = typing.TypedDict('LabelsUnionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/labels_union"],
     "label1": InputPathType,
     "label2": InputPathType,
@@ -29,7 +29,7 @@ LabelsUnionParametersTagged = typing.TypedDict('LabelsUnionParametersTagged', {
 
 class LabelsUnionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelsUnionParameters(...)`.
+    Output object returned when calling `LabelsUnionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def labels_union_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsUnionParametersTagged:
+) -> LabelsUnionParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def labels_union_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelsUnionParameters` object.
+    `LabelsUnionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def labels_union_validate(
 
 
 def labels_union_cargs(
-    params: LabelsUnionParameters,
+    params: LabelsUnionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def labels_union_cargs(
 
 
 def labels_union_outputs(
-    params: LabelsUnionParameters,
+    params: LabelsUnionParamsDict,
     execution: Execution,
 ) -> LabelsUnionOutputs:
     """
@@ -130,7 +130,7 @@ def labels_union_outputs(
 
 
 def labels_union_execute(
-    params: LabelsUnionParameters,
+    params: LabelsUnionParamsDict,
     runner: Runner | None = None,
 ) -> LabelsUnionOutputs:
     """
@@ -193,6 +193,8 @@ def labels_union(
 __all__ = [
     "LABELS_UNION_METADATA",
     "LabelsUnionOutputs",
+    "LabelsUnionParamsDict",
+    "LabelsUnionParamsDictTagged",
     "labels_union",
     "labels_union_execute",
     "labels_union_params",

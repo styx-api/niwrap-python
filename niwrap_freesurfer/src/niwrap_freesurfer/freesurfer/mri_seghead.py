@@ -13,7 +13,7 @@ MRI_SEGHEAD_METADATA = Metadata(
 )
 
 
-MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
+MriSegheadParamsDict = typing.TypedDict('MriSegheadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seghead"]],
     "input_volume": str,
     "output_volume": str,
@@ -31,7 +31,7 @@ MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
     "or_mask_file": typing.NotRequired[InputPathType | None],
     "gdiag_option": typing.NotRequired[str | None],
 })
-MriSegheadParametersTagged = typing.TypedDict('MriSegheadParametersTagged', {
+MriSegheadParamsDictTagged = typing.TypedDict('MriSegheadParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_seghead"],
     "input_volume": str,
     "output_volume": str,
@@ -53,7 +53,7 @@ MriSegheadParametersTagged = typing.TypedDict('MriSegheadParametersTagged', {
 
 class MriSegheadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegheadParameters(...)`.
+    Output object returned when calling `MriSegheadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def mri_seghead_params(
     seed_point: list[float] | None = None,
     or_mask_file: InputPathType | None = None,
     gdiag_option: str | None = None,
-) -> MriSegheadParametersTagged:
+) -> MriSegheadParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def mri_seghead_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegheadParameters` object.
+    `MriSegheadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -203,7 +203,7 @@ def mri_seghead_validate(
 
 
 def mri_seghead_cargs(
-    params: MriSegheadParameters,
+    params: MriSegheadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def mri_seghead_cargs(
 
 
 def mri_seghead_outputs(
-    params: MriSegheadParameters,
+    params: MriSegheadParamsDict,
     execution: Execution,
 ) -> MriSegheadOutputs:
     """
@@ -304,7 +304,7 @@ def mri_seghead_outputs(
 
 
 def mri_seghead_execute(
-    params: MriSegheadParameters,
+    params: MriSegheadParamsDict,
     runner: Runner | None = None,
 ) -> MriSegheadOutputs:
     """
@@ -406,6 +406,8 @@ def mri_seghead(
 __all__ = [
     "MRI_SEGHEAD_METADATA",
     "MriSegheadOutputs",
+    "MriSegheadParamsDict",
+    "MriSegheadParamsDictTagged",
     "mri_seghead",
     "mri_seghead_execute",
     "mri_seghead_params",

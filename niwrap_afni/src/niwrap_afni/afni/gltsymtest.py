@@ -13,13 +13,13 @@ GLTSYMTEST_METADATA = Metadata(
 )
 
 
-GltsymtestParameters = typing.TypedDict('GltsymtestParameters', {
+GltsymtestParamsDict = typing.TypedDict('GltsymtestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/GLTsymtest"]],
     "badonly": bool,
     "varlist": str,
     "expr": list[str],
 })
-GltsymtestParametersTagged = typing.TypedDict('GltsymtestParametersTagged', {
+GltsymtestParamsDictTagged = typing.TypedDict('GltsymtestParamsDictTagged', {
     "@type": typing.Literal["afni/GLTsymtest"],
     "badonly": bool,
     "varlist": str,
@@ -29,7 +29,7 @@ GltsymtestParametersTagged = typing.TypedDict('GltsymtestParametersTagged', {
 
 class GltsymtestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GltsymtestParameters(...)`.
+    Output object returned when calling `GltsymtestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def gltsymtest_params(
     varlist: str,
     expr: list[str],
     badonly: bool = False,
-) -> GltsymtestParametersTagged:
+) -> GltsymtestParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def gltsymtest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GltsymtestParameters` object.
+    `GltsymtestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def gltsymtest_validate(
 
 
 def gltsymtest_cargs(
-    params: GltsymtestParameters,
+    params: GltsymtestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -112,7 +112,7 @@ def gltsymtest_cargs(
 
 
 def gltsymtest_outputs(
-    params: GltsymtestParameters,
+    params: GltsymtestParamsDict,
     execution: Execution,
 ) -> GltsymtestOutputs:
     """
@@ -131,7 +131,7 @@ def gltsymtest_outputs(
 
 
 def gltsymtest_execute(
-    params: GltsymtestParameters,
+    params: GltsymtestParamsDict,
     runner: Runner | None = None,
 ) -> GltsymtestOutputs:
     """
@@ -196,6 +196,8 @@ def gltsymtest(
 __all__ = [
     "GLTSYMTEST_METADATA",
     "GltsymtestOutputs",
+    "GltsymtestParamsDict",
+    "GltsymtestParamsDictTagged",
     "gltsymtest",
     "gltsymtest_execute",
     "gltsymtest_params",

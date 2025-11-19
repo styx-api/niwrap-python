@@ -18,7 +18,7 @@
     },
     "convergence": {
       "var_param": "convergence",
-      "fn_struct_make_params": "n4_bias_field_correction_convergence_params",
+      "fn_struct_make_params": "n4_bias_field_correction_convergence",
       "properties": {
         "convergence": {
           "var_param": "convergence"
@@ -30,7 +30,7 @@
     },
     "bspline_fitting": {
       "var_param": "bspline_fitting",
-      "fn_struct_make_params": "n4_bias_field_correction_bspline_fitting_params",
+      "fn_struct_make_params": "n4_bias_field_correction_bspline_fitting",
       "properties": {
         "spline_distance": {
           "var_param": "spline_distance"
@@ -42,7 +42,7 @@
     },
     "histogram_sharpening": {
       "var_param": "histogram_sharpening",
-      "fn_struct_make_params": "n4_bias_field_correction_histogram_sharpening_params",
+      "fn_struct_make_params": "n4_bias_field_correction_histogram_sharpening",
       "properties": {
         "fwhm": {
           "var_param": "fwhm"
@@ -65,7 +65,7 @@
       "var_param": "output",
       "variants": {
         "correctedOutput": {
-          "fn_struct_make_params": "n4_bias_field_correction_corrected_output_params",
+          "fn_struct_make_params": "n4_bias_field_correction_corrected_output",
           "properties": {
             "correctedOutputFileName": {
               "var_param": "corrected_output_file_name"
@@ -73,7 +73,7 @@
           }
         },
         "correctedOutputNoise": {
-          "fn_struct_make_params": "n4_bias_field_correction_corrected_output_noise_params",
+          "fn_struct_make_params": "n4_bias_field_correction_corrected_output_noise",
           "properties": {
             "correctedOutputFileName": {
               "var_param": "corrected_output_file_name"

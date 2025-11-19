@@ -13,7 +13,7 @@ DCMDIR_INFO_MGH_METADATA = Metadata(
 )
 
 
-DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
+DcmdirInfoMghParamsDict = typing.TypedDict('DcmdirInfoMghParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdir-info-mgh"]],
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
     "help": bool,
     "nopre": bool,
 })
-DcmdirInfoMghParametersTagged = typing.TypedDict('DcmdirInfoMghParametersTagged', {
+DcmdirInfoMghParamsDictTagged = typing.TypedDict('DcmdirInfoMghParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dcmdir-info-mgh"],
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ DcmdirInfoMghParametersTagged = typing.TypedDict('DcmdirInfoMghParametersTagged'
 
 class DcmdirInfoMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DcmdirInfoMghParameters(...)`.
+    Output object returned when calling `DcmdirInfoMghParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def dcmdir_info_mgh_params(
     version: bool = False,
     help_: bool = False,
     nopre: bool = False,
-) -> DcmdirInfoMghParametersTagged:
+) -> DcmdirInfoMghParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def dcmdir_info_mgh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DcmdirInfoMghParameters` object.
+    `DcmdirInfoMghParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def dcmdir_info_mgh_validate(
 
 
 def dcmdir_info_mgh_cargs(
-    params: DcmdirInfoMghParameters,
+    params: DcmdirInfoMghParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def dcmdir_info_mgh_cargs(
 
 
 def dcmdir_info_mgh_outputs(
-    params: DcmdirInfoMghParameters,
+    params: DcmdirInfoMghParamsDict,
     execution: Execution,
 ) -> DcmdirInfoMghOutputs:
     """
@@ -154,7 +154,7 @@ def dcmdir_info_mgh_outputs(
 
 
 def dcmdir_info_mgh_execute(
-    params: DcmdirInfoMghParameters,
+    params: DcmdirInfoMghParamsDict,
     runner: Runner | None = None,
 ) -> DcmdirInfoMghOutputs:
     """
@@ -223,6 +223,8 @@ def dcmdir_info_mgh(
 __all__ = [
     "DCMDIR_INFO_MGH_METADATA",
     "DcmdirInfoMghOutputs",
+    "DcmdirInfoMghParamsDict",
+    "DcmdirInfoMghParamsDictTagged",
     "dcmdir_info_mgh",
     "dcmdir_info_mgh_execute",
     "dcmdir_info_mgh_params",

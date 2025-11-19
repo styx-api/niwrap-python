@@ -13,7 +13,7 @@ TTOZ_METADATA = Metadata(
 )
 
 
-TtozParameters = typing.TypedDict('TtozParameters', {
+TtozParamsDict = typing.TypedDict('TtozParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/ttoz"]],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
@@ -21,7 +21,7 @@ TtozParameters = typing.TypedDict('TtozParameters', {
     "outputvol": typing.NotRequired[str | None],
     "help_flag": bool,
 })
-TtozParametersTagged = typing.TypedDict('TtozParametersTagged', {
+TtozParamsDictTagged = typing.TypedDict('TtozParamsDictTagged', {
     "@type": typing.Literal["fsl/ttoz"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
@@ -33,7 +33,7 @@ TtozParametersTagged = typing.TypedDict('TtozParametersTagged', {
 
 class TtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TtozParameters(...)`.
+    Output object returned when calling `TtozParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def ttoz_params(
     dof: int,
     outputvol: str | None = None,
     help_flag: bool = False,
-) -> TtozParametersTagged:
+) -> TtozParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def ttoz_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `TtozParameters`
+    Validate parameters. Throws an error if `params` is not a valid `TtozParamsDict`
     object.
     
     Args:
@@ -106,7 +106,7 @@ def ttoz_validate(
 
 
 def ttoz_cargs(
-    params: TtozParameters,
+    params: TtozParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def ttoz_cargs(
 
 
 def ttoz_outputs(
-    params: TtozParameters,
+    params: TtozParamsDict,
     execution: Execution,
 ) -> TtozOutputs:
     """
@@ -154,7 +154,7 @@ def ttoz_outputs(
 
 
 def ttoz_execute(
-    params: TtozParameters,
+    params: TtozParamsDict,
     runner: Runner | None = None,
 ) -> TtozOutputs:
     """
@@ -222,6 +222,8 @@ def ttoz(
 __all__ = [
     "TTOZ_METADATA",
     "TtozOutputs",
+    "TtozParamsDict",
+    "TtozParamsDictTagged",
     "ttoz",
     "ttoz_execute",
     "ttoz_params",

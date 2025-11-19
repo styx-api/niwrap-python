@@ -13,12 +13,12 @@ REINFLATE_SUBJECT_RH_METADATA = Metadata(
 )
 
 
-ReinflateSubjectRhParameters = typing.TypedDict('ReinflateSubjectRhParameters', {
+ReinflateSubjectRhParamsDict = typing.TypedDict('ReinflateSubjectRhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject-rh"]],
     "subject_dir": str,
     "additional_options": typing.NotRequired[str | None],
 })
-ReinflateSubjectRhParametersTagged = typing.TypedDict('ReinflateSubjectRhParametersTagged', {
+ReinflateSubjectRhParamsDictTagged = typing.TypedDict('ReinflateSubjectRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/reinflate_subject-rh"],
     "subject_dir": str,
     "additional_options": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ ReinflateSubjectRhParametersTagged = typing.TypedDict('ReinflateSubjectRhParamet
 
 class ReinflateSubjectRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReinflateSubjectRhParameters(...)`.
+    Output object returned when calling `ReinflateSubjectRhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class ReinflateSubjectRhOutputs(typing.NamedTuple):
 def reinflate_subject_rh_params(
     subject_dir: str,
     additional_options: str | None = None,
-) -> ReinflateSubjectRhParametersTagged:
+) -> ReinflateSubjectRhParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def reinflate_subject_rh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReinflateSubjectRhParameters` object.
+    `ReinflateSubjectRhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def reinflate_subject_rh_validate(
 
 
 def reinflate_subject_rh_cargs(
-    params: ReinflateSubjectRhParameters,
+    params: ReinflateSubjectRhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def reinflate_subject_rh_cargs(
 
 
 def reinflate_subject_rh_outputs(
-    params: ReinflateSubjectRhParameters,
+    params: ReinflateSubjectRhParamsDict,
     execution: Execution,
 ) -> ReinflateSubjectRhOutputs:
     """
@@ -121,7 +121,7 @@ def reinflate_subject_rh_outputs(
 
 
 def reinflate_subject_rh_execute(
-    params: ReinflateSubjectRhParameters,
+    params: ReinflateSubjectRhParamsDict,
     runner: Runner | None = None,
 ) -> ReinflateSubjectRhOutputs:
     """
@@ -183,6 +183,8 @@ def reinflate_subject_rh(
 __all__ = [
     "REINFLATE_SUBJECT_RH_METADATA",
     "ReinflateSubjectRhOutputs",
+    "ReinflateSubjectRhParamsDict",
+    "ReinflateSubjectRhParamsDictTagged",
     "reinflate_subject_rh",
     "reinflate_subject_rh_execute",
     "reinflate_subject_rh_params",

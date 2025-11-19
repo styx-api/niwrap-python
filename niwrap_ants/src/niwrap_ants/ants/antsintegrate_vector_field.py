@@ -13,14 +13,14 @@ ANTSINTEGRATE_VECTOR_FIELD_METADATA = Metadata(
 )
 
 
-AntsintegrateVectorFieldParameters = typing.TypedDict('AntsintegrateVectorFieldParameters', {
+AntsintegrateVectorFieldParamsDict = typing.TypedDict('AntsintegrateVectorFieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ANTSIntegrateVectorField"]],
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
     "fibers_output": str,
     "length_image_output": str,
 })
-AntsintegrateVectorFieldParametersTagged = typing.TypedDict('AntsintegrateVectorFieldParametersTagged', {
+AntsintegrateVectorFieldParamsDictTagged = typing.TypedDict('AntsintegrateVectorFieldParamsDictTagged', {
     "@type": typing.Literal["ants/ANTSIntegrateVectorField"],
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
@@ -31,7 +31,7 @@ AntsintegrateVectorFieldParametersTagged = typing.TypedDict('AntsintegrateVector
 
 class AntsintegrateVectorFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsintegrateVectorFieldParameters(...)`.
+    Output object returned when calling `AntsintegrateVectorFieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def antsintegrate_vector_field_params(
     roi_mask_input: InputPathType,
     fibers_output: str,
     length_image_output: str,
-) -> AntsintegrateVectorFieldParametersTagged:
+) -> AntsintegrateVectorFieldParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def antsintegrate_vector_field_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsintegrateVectorFieldParameters` object.
+    `AntsintegrateVectorFieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def antsintegrate_vector_field_validate(
 
 
 def antsintegrate_vector_field_cargs(
-    params: AntsintegrateVectorFieldParameters,
+    params: AntsintegrateVectorFieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def antsintegrate_vector_field_cargs(
 
 
 def antsintegrate_vector_field_outputs(
-    params: AntsintegrateVectorFieldParameters,
+    params: AntsintegrateVectorFieldParamsDict,
     execution: Execution,
 ) -> AntsintegrateVectorFieldOutputs:
     """
@@ -144,7 +144,7 @@ def antsintegrate_vector_field_outputs(
 
 
 def antsintegrate_vector_field_execute(
-    params: AntsintegrateVectorFieldParameters,
+    params: AntsintegrateVectorFieldParamsDict,
     runner: Runner | None = None,
 ) -> AntsintegrateVectorFieldOutputs:
     """
@@ -215,6 +215,8 @@ def antsintegrate_vector_field(
 __all__ = [
     "ANTSINTEGRATE_VECTOR_FIELD_METADATA",
     "AntsintegrateVectorFieldOutputs",
+    "AntsintegrateVectorFieldParamsDict",
+    "AntsintegrateVectorFieldParamsDictTagged",
     "antsintegrate_vector_field",
     "antsintegrate_vector_field_execute",
     "antsintegrate_vector_field_params",

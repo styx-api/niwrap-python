@@ -13,12 +13,12 @@ IREPIFITVOL_METADATA = Metadata(
 )
 
 
-IrepifitvolParameters = typing.TypedDict('IrepifitvolParameters', {
+IrepifitvolParamsDict = typing.TypedDict('IrepifitvolParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-IrepifitvolParametersTagged = typing.TypedDict('IrepifitvolParametersTagged', {
+IrepifitvolParamsDictTagged = typing.TypedDict('IrepifitvolParamsDictTagged', {
     "@type": typing.Literal["freesurfer/irepifitvol"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ IrepifitvolParametersTagged = typing.TypedDict('IrepifitvolParametersTagged', {
 
 class IrepifitvolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IrepifitvolParameters(...)`.
+    Output object returned when calling `IrepifitvolParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class IrepifitvolOutputs(typing.NamedTuple):
 def irepifitvol_params(
     input_file: InputPathType,
     output_file: str = "fitted_output",
-) -> IrepifitvolParametersTagged:
+) -> IrepifitvolParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def irepifitvol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IrepifitvolParameters` object.
+    `IrepifitvolParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def irepifitvol_validate(
 
 
 def irepifitvol_cargs(
-    params: IrepifitvolParameters,
+    params: IrepifitvolParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def irepifitvol_cargs(
 
 
 def irepifitvol_outputs(
-    params: IrepifitvolParameters,
+    params: IrepifitvolParamsDict,
     execution: Execution,
 ) -> IrepifitvolOutputs:
     """
@@ -119,7 +119,7 @@ def irepifitvol_outputs(
 
 
 def irepifitvol_execute(
-    params: IrepifitvolParameters,
+    params: IrepifitvolParamsDict,
     runner: Runner | None = None,
 ) -> IrepifitvolOutputs:
     """
@@ -178,6 +178,8 @@ def irepifitvol(
 __all__ = [
     "IREPIFITVOL_METADATA",
     "IrepifitvolOutputs",
+    "IrepifitvolParamsDict",
+    "IrepifitvolParamsDictTagged",
     "irepifitvol",
     "irepifitvol_execute",
     "irepifitvol_params",

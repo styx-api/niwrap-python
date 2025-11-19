@@ -13,7 +13,7 @@ V_3D_LMER_METADATA = Metadata(
 )
 
 
-V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
+V3dLmerParamsDict = typing.TypedDict('V3dLmerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLMEr"]],
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
     "vvar_centers": typing.NotRequired[str | None],
     "vvars": typing.NotRequired[str | None],
 })
-V3dLmerParametersTagged = typing.TypedDict('V3dLmerParametersTagged', {
+V3dLmerParamsDictTagged = typing.TypedDict('V3dLmerParamsDictTagged', {
     "@type": typing.Literal["afni/3dLMEr"],
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
@@ -67,7 +67,7 @@ V3dLmerParametersTagged = typing.TypedDict('V3dLmerParametersTagged', {
 
 class V3dLmerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLmerParameters(...)`.
+    Output object returned when calling `V3dLmerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -100,7 +100,7 @@ def v_3d_lmer_params(
     trr: bool = False,
     vvar_centers: str | None = None,
     vvars: str | None = None,
-) -> V3dLmerParametersTagged:
+) -> V3dLmerParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def v_3d_lmer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLmerParameters` object.
+    `V3dLmerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def v_3d_lmer_validate(
 
 
 def v_3d_lmer_cargs(
-    params: V3dLmerParameters,
+    params: V3dLmerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -364,7 +364,7 @@ def v_3d_lmer_cargs(
 
 
 def v_3d_lmer_outputs(
-    params: V3dLmerParameters,
+    params: V3dLmerParamsDict,
     execution: Execution,
 ) -> V3dLmerOutputs:
     """
@@ -385,7 +385,7 @@ def v_3d_lmer_outputs(
 
 
 def v_3d_lmer_execute(
-    params: V3dLmerParameters,
+    params: V3dLmerParamsDict,
     runner: Runner | None = None,
 ) -> V3dLmerOutputs:
     """
@@ -505,6 +505,8 @@ def v_3d_lmer(
 
 __all__ = [
     "V3dLmerOutputs",
+    "V3dLmerParamsDict",
+    "V3dLmerParamsDictTagged",
     "V_3D_LMER_METADATA",
     "v_3d_lmer",
     "v_3d_lmer_execute",

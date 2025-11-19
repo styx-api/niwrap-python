@@ -12,13 +12,13 @@ SPEC_FILE_MERGE_METADATA = Metadata(
 )
 
 
-SpecFileMergeParameters = typing.TypedDict('SpecFileMergeParameters', {
+SpecFileMergeParamsDict = typing.TypedDict('SpecFileMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/spec-file-merge"]],
     "spec-1": str,
     "spec-2": str,
     "out-spec": str,
 })
-SpecFileMergeParametersTagged = typing.TypedDict('SpecFileMergeParametersTagged', {
+SpecFileMergeParamsDictTagged = typing.TypedDict('SpecFileMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/spec-file-merge"],
     "spec-1": str,
     "spec-2": str,
@@ -28,7 +28,7 @@ SpecFileMergeParametersTagged = typing.TypedDict('SpecFileMergeParametersTagged'
 
 class SpecFileMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SpecFileMergeParameters(...)`.
+    Output object returned when calling `SpecFileMergeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def spec_file_merge_params(
     spec_1: str,
     spec_2: str,
     out_spec: str,
-) -> SpecFileMergeParametersTagged:
+) -> SpecFileMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def spec_file_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SpecFileMergeParameters` object.
+    `SpecFileMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -85,7 +85,7 @@ def spec_file_merge_validate(
 
 
 def spec_file_merge_cargs(
-    params: SpecFileMergeParameters,
+    params: SpecFileMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def spec_file_merge_cargs(
 
 
 def spec_file_merge_outputs(
-    params: SpecFileMergeParameters,
+    params: SpecFileMergeParamsDict,
     execution: Execution,
 ) -> SpecFileMergeOutputs:
     """
@@ -128,7 +128,7 @@ def spec_file_merge_outputs(
 
 
 def spec_file_merge_execute(
-    params: SpecFileMergeParameters,
+    params: SpecFileMergeParamsDict,
     runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
@@ -184,6 +184,8 @@ def spec_file_merge(
 __all__ = [
     "SPEC_FILE_MERGE_METADATA",
     "SpecFileMergeOutputs",
+    "SpecFileMergeParamsDict",
+    "SpecFileMergeParamsDictTagged",
     "spec_file_merge",
     "spec_file_merge_execute",
     "spec_file_merge_params",

@@ -13,7 +13,7 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 )
 
 
-FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParameters', {
+FatProcConvertDcmAnatParamsDict = typing.TypedDict('FatProcConvertDcmAnatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_anat"]],
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParamet
     "no_cmd_out": bool,
     "no_qc_view": bool,
 })
-FatProcConvertDcmAnatParametersTagged = typing.TypedDict('FatProcConvertDcmAnatParametersTagged', {
+FatProcConvertDcmAnatParamsDictTagged = typing.TypedDict('FatProcConvertDcmAnatParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_convert_dcm_anat"],
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ FatProcConvertDcmAnatParametersTagged = typing.TypedDict('FatProcConvertDcmAnatP
 
 class FatProcConvertDcmAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcConvertDcmAnatParameters(...)`.
+    Output object returned when calling `FatProcConvertDcmAnatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def fat_proc_convert_dcm_anat_params(
     qc_prefix: str | None = None,
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
-) -> FatProcConvertDcmAnatParametersTagged:
+) -> FatProcConvertDcmAnatParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def fat_proc_convert_dcm_anat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcConvertDcmAnatParameters` object.
+    `FatProcConvertDcmAnatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def fat_proc_convert_dcm_anat_validate(
 
 
 def fat_proc_convert_dcm_anat_cargs(
-    params: FatProcConvertDcmAnatParameters,
+    params: FatProcConvertDcmAnatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def fat_proc_convert_dcm_anat_cargs(
 
 
 def fat_proc_convert_dcm_anat_outputs(
-    params: FatProcConvertDcmAnatParameters,
+    params: FatProcConvertDcmAnatParamsDict,
     execution: Execution,
 ) -> FatProcConvertDcmAnatOutputs:
     """
@@ -234,7 +234,7 @@ def fat_proc_convert_dcm_anat_outputs(
 
 
 def fat_proc_convert_dcm_anat_execute(
-    params: FatProcConvertDcmAnatParameters,
+    params: FatProcConvertDcmAnatParamsDict,
     runner: Runner | None = None,
 ) -> FatProcConvertDcmAnatOutputs:
     """
@@ -327,6 +327,8 @@ def fat_proc_convert_dcm_anat(
 __all__ = [
     "FAT_PROC_CONVERT_DCM_ANAT_METADATA",
     "FatProcConvertDcmAnatOutputs",
+    "FatProcConvertDcmAnatParamsDict",
+    "FatProcConvertDcmAnatParamsDictTagged",
     "fat_proc_convert_dcm_anat",
     "fat_proc_convert_dcm_anat_execute",
     "fat_proc_convert_dcm_anat_params",

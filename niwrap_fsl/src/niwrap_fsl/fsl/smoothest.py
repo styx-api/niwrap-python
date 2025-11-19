@@ -13,7 +13,7 @@ SMOOTHEST_METADATA = Metadata(
 )
 
 
-SmoothestParameters = typing.TypedDict('SmoothestParameters', {
+SmoothestParamsDict = typing.TypedDict('SmoothestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/smoothest"]],
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ SmoothestParameters = typing.TypedDict('SmoothestParameters', {
     "mask": InputPathType,
     "verbose_flag": bool,
 })
-SmoothestParametersTagged = typing.TypedDict('SmoothestParametersTagged', {
+SmoothestParamsDictTagged = typing.TypedDict('SmoothestParamsDictTagged', {
     "@type": typing.Literal["fsl/smoothest"],
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ SmoothestParametersTagged = typing.TypedDict('SmoothestParametersTagged', {
 
 class SmoothestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SmoothestParameters(...)`.
+    Output object returned when calling `SmoothestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def smoothest_params(
     residual_fit_image: InputPathType | None = None,
     zstat_image: InputPathType | None = None,
     verbose_flag: bool = False,
-) -> SmoothestParametersTagged:
+) -> SmoothestParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def smoothest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SmoothestParameters` object.
+    `SmoothestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def smoothest_validate(
 
 
 def smoothest_cargs(
-    params: SmoothestParameters,
+    params: SmoothestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -143,7 +143,7 @@ def smoothest_cargs(
 
 
 def smoothest_outputs(
-    params: SmoothestParameters,
+    params: SmoothestParamsDict,
     execution: Execution,
 ) -> SmoothestOutputs:
     """
@@ -162,7 +162,7 @@ def smoothest_outputs(
 
 
 def smoothest_execute(
-    params: SmoothestParameters,
+    params: SmoothestParamsDict,
     runner: Runner | None = None,
 ) -> SmoothestOutputs:
     """
@@ -230,6 +230,8 @@ def smoothest(
 __all__ = [
     "SMOOTHEST_METADATA",
     "SmoothestOutputs",
+    "SmoothestParamsDict",
+    "SmoothestParamsDictTagged",
     "smoothest",
     "smoothest_execute",
     "smoothest_params",

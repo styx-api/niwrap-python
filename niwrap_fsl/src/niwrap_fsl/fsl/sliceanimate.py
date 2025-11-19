@@ -13,12 +13,12 @@ SLICEANIMATE_METADATA = Metadata(
 )
 
 
-SliceanimateParameters = typing.TypedDict('SliceanimateParameters', {
+SliceanimateParamsDict = typing.TypedDict('SliceanimateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/sliceanimate"]],
     "output_file": str,
     "input_files": list[InputPathType],
 })
-SliceanimateParametersTagged = typing.TypedDict('SliceanimateParametersTagged', {
+SliceanimateParamsDictTagged = typing.TypedDict('SliceanimateParamsDictTagged', {
     "@type": typing.Literal["fsl/sliceanimate"],
     "output_file": str,
     "input_files": list[InputPathType],
@@ -27,7 +27,7 @@ SliceanimateParametersTagged = typing.TypedDict('SliceanimateParametersTagged', 
 
 class SliceanimateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SliceanimateParameters(...)`.
+    Output object returned when calling `SliceanimateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class SliceanimateOutputs(typing.NamedTuple):
 def sliceanimate_params(
     output_file: str,
     input_files: list[InputPathType],
-) -> SliceanimateParametersTagged:
+) -> SliceanimateParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def sliceanimate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SliceanimateParameters` object.
+    `SliceanimateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def sliceanimate_validate(
 
 
 def sliceanimate_cargs(
-    params: SliceanimateParameters,
+    params: SliceanimateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def sliceanimate_cargs(
 
 
 def sliceanimate_outputs(
-    params: SliceanimateParameters,
+    params: SliceanimateParamsDict,
     execution: Execution,
 ) -> SliceanimateOutputs:
     """
@@ -122,7 +122,7 @@ def sliceanimate_outputs(
 
 
 def sliceanimate_execute(
-    params: SliceanimateParameters,
+    params: SliceanimateParamsDict,
     runner: Runner | None = None,
 ) -> SliceanimateOutputs:
     """
@@ -181,6 +181,8 @@ def sliceanimate(
 __all__ = [
     "SLICEANIMATE_METADATA",
     "SliceanimateOutputs",
+    "SliceanimateParamsDict",
+    "SliceanimateParamsDictTagged",
     "sliceanimate",
     "sliceanimate_execute",
     "sliceanimate_params",

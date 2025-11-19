@@ -13,7 +13,7 @@ RESPONSEMEAN_METADATA = Metadata(
 )
 
 
-ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
+ResponsemeanParamsDict = typing.TypedDict('ResponsemeanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/responsemean"]],
     "input_response": list[InputPathType],
     "output_response": str,
@@ -30,7 +30,7 @@ ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
     "help": bool,
     "version": bool,
 })
-ResponsemeanParametersTagged = typing.TypedDict('ResponsemeanParametersTagged', {
+ResponsemeanParamsDictTagged = typing.TypedDict('ResponsemeanParamsDictTagged', {
     "@type": typing.Literal["mrtrix/responsemean"],
     "input_response": list[InputPathType],
     "output_response": str,
@@ -51,7 +51,7 @@ ResponsemeanParametersTagged = typing.TypedDict('ResponsemeanParametersTagged', 
 
 class ResponsemeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ResponsemeanParameters(...)`.
+    Output object returned when calling `ResponsemeanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def responsemean_params(
     config: list[str] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ResponsemeanParametersTagged:
+) -> ResponsemeanParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def responsemean_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ResponsemeanParameters` object.
+    `ResponsemeanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -202,7 +202,7 @@ def responsemean_validate(
 
 
 def responsemean_cargs(
-    params: ResponsemeanParameters,
+    params: ResponsemeanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -258,7 +258,7 @@ def responsemean_cargs(
 
 
 def responsemean_outputs(
-    params: ResponsemeanParameters,
+    params: ResponsemeanParamsDict,
     execution: Execution,
 ) -> ResponsemeanOutputs:
     """
@@ -278,7 +278,7 @@ def responsemean_outputs(
 
 
 def responsemean_execute(
-    params: ResponsemeanParameters,
+    params: ResponsemeanParamsDict,
     runner: Runner | None = None,
 ) -> ResponsemeanOutputs:
     """
@@ -377,6 +377,8 @@ def responsemean(
 __all__ = [
     "RESPONSEMEAN_METADATA",
     "ResponsemeanOutputs",
+    "ResponsemeanParamsDict",
+    "ResponsemeanParamsDictTagged",
     "responsemean",
     "responsemean_execute",
     "responsemean_params",

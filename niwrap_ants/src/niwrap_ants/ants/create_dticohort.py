@@ -13,7 +13,7 @@ CREATE_DTICOHORT_METADATA = Metadata(
 )
 
 
-CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
+CreateDticohortParamsDict = typing.TypedDict('CreateDticohortParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/CreateDTICohort"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
@@ -24,7 +24,7 @@ CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
     "registered_population": typing.NotRequired[InputPathType | None],
     "output": str,
 })
-CreateDticohortParametersTagged = typing.TypedDict('CreateDticohortParametersTagged', {
+CreateDticohortParamsDictTagged = typing.TypedDict('CreateDticohortParamsDictTagged', {
     "@type": typing.Literal["ants/CreateDTICohort"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
@@ -39,7 +39,7 @@ CreateDticohortParametersTagged = typing.TypedDict('CreateDticohortParametersTag
 
 class CreateDticohortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateDticohortParameters(...)`.
+    Output object returned when calling `CreateDticohortParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def create_dticohort_params(
     noise_sigma: float | None = None,
     pathology: str | None = None,
     registered_population: InputPathType | None = None,
-) -> CreateDticohortParametersTagged:
+) -> CreateDticohortParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def create_dticohort_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateDticohortParameters` object.
+    `CreateDticohortParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -152,7 +152,7 @@ def create_dticohort_validate(
 
 
 def create_dticohort_cargs(
-    params: CreateDticohortParameters,
+    params: CreateDticohortParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def create_dticohort_cargs(
 
 
 def create_dticohort_outputs(
-    params: CreateDticohortParameters,
+    params: CreateDticohortParamsDict,
     execution: Execution,
 ) -> CreateDticohortOutputs:
     """
@@ -227,7 +227,7 @@ def create_dticohort_outputs(
 
 
 def create_dticohort_execute(
-    params: CreateDticohortParameters,
+    params: CreateDticohortParamsDict,
     runner: Runner | None = None,
 ) -> CreateDticohortOutputs:
     """
@@ -327,6 +327,8 @@ def create_dticohort(
 __all__ = [
     "CREATE_DTICOHORT_METADATA",
     "CreateDticohortOutputs",
+    "CreateDticohortParamsDict",
+    "CreateDticohortParamsDictTagged",
     "create_dticohort",
     "create_dticohort_execute",
     "create_dticohort_params",

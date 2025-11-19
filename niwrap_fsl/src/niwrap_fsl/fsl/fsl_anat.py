@@ -13,7 +13,7 @@ FSL_ANAT_METADATA = Metadata(
 )
 
 
-FslAnatParameters = typing.TypedDict('FslAnatParameters', {
+FslAnatParamsDict = typing.TypedDict('FslAnatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_anat"]],
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ FslAnatParameters = typing.TypedDict('FslAnatParameters', {
     "bet_f_param": typing.NotRequired[float | None],
     "nocleanup_flag": bool,
 })
-FslAnatParametersTagged = typing.TypedDict('FslAnatParametersTagged', {
+FslAnatParamsDictTagged = typing.TypedDict('FslAnatParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_anat"],
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ FslAnatParametersTagged = typing.TypedDict('FslAnatParametersTagged', {
 
 class FslAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslAnatParameters(...)`.
+    Output object returned when calling `FslAnatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def fsl_anat_params(
     nosearch_flag: bool = False,
     bet_f_param: float | None = None,
     nocleanup_flag: bool = False,
-) -> FslAnatParametersTagged:
+) -> FslAnatParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def fsl_anat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslAnatParameters` object.
+    `FslAnatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -235,7 +235,7 @@ def fsl_anat_validate(
 
 
 def fsl_anat_cargs(
-    params: FslAnatParameters,
+    params: FslAnatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def fsl_anat_cargs(
 
 
 def fsl_anat_outputs(
-    params: FslAnatParameters,
+    params: FslAnatParamsDict,
     execution: Execution,
 ) -> FslAnatOutputs:
     """
@@ -327,7 +327,7 @@ def fsl_anat_outputs(
 
 
 def fsl_anat_execute(
-    params: FslAnatParameters,
+    params: FslAnatParamsDict,
     runner: Runner | None = None,
 ) -> FslAnatOutputs:
     """
@@ -446,6 +446,8 @@ def fsl_anat(
 __all__ = [
     "FSL_ANAT_METADATA",
     "FslAnatOutputs",
+    "FslAnatParamsDict",
+    "FslAnatParamsDictTagged",
     "fsl_anat",
     "fsl_anat_execute",
     "fsl_anat_params",

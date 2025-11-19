@@ -13,7 +13,7 @@ FLIRT_METADATA = Metadata(
 )
 
 
-FlirtParameters = typing.TypedDict('FlirtParameters', {
+FlirtParamsDict = typing.TypedDict('FlirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/flirt"]],
     "in_file": InputPathType,
     "reference": InputPathType,
@@ -61,7 +61,7 @@ FlirtParameters = typing.TypedDict('FlirtParameters', {
     "wmcoords": typing.NotRequired[InputPathType | None],
     "wmnorms": typing.NotRequired[InputPathType | None],
 })
-FlirtParametersTagged = typing.TypedDict('FlirtParametersTagged', {
+FlirtParamsDictTagged = typing.TypedDict('FlirtParamsDictTagged', {
     "@type": typing.Literal["fsl/flirt"],
     "in_file": InputPathType,
     "reference": InputPathType,
@@ -113,7 +113,7 @@ FlirtParametersTagged = typing.TypedDict('FlirtParametersTagged', {
 
 class FlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FlirtParameters(...)`.
+    Output object returned when calling `FlirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -169,7 +169,7 @@ def flirt_params(
     wm_seg: InputPathType | None = None,
     wmcoords: InputPathType | None = None,
     wmnorms: InputPathType | None = None,
-) -> FlirtParametersTagged:
+) -> FlirtParamsDictTagged:
     """
     Build parameters.
     
@@ -317,7 +317,7 @@ def flirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FlirtParameters` object.
+    `FlirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -504,7 +504,7 @@ def flirt_validate(
 
 
 def flirt_cargs(
-    params: FlirtParameters,
+    params: FlirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -716,7 +716,7 @@ def flirt_cargs(
 
 
 def flirt_outputs(
-    params: FlirtParameters,
+    params: FlirtParamsDict,
     execution: Execution,
 ) -> FlirtOutputs:
     """
@@ -737,7 +737,7 @@ def flirt_outputs(
 
 
 def flirt_execute(
-    params: FlirtParameters,
+    params: FlirtParamsDict,
     runner: Runner | None = None,
 ) -> FlirtOutputs:
     """
@@ -936,6 +936,8 @@ def flirt(
 __all__ = [
     "FLIRT_METADATA",
     "FlirtOutputs",
+    "FlirtParamsDict",
+    "FlirtParamsDictTagged",
     "flirt",
     "flirt_execute",
     "flirt_params",

@@ -12,35 +12,35 @@ METRIC_GRADIENT_METADATA = Metadata(
 )
 
 
-MetricGradientPresmoothParameters = typing.TypedDict('MetricGradientPresmoothParameters', {
+MetricGradientPresmoothParamsDict = typing.TypedDict('MetricGradientPresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-MetricGradientPresmoothParametersTagged = typing.TypedDict('MetricGradientPresmoothParametersTagged', {
+MetricGradientPresmoothParamsDictTagged = typing.TypedDict('MetricGradientPresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-MetricGradientRoiParameters = typing.TypedDict('MetricGradientRoiParameters', {
+MetricGradientRoiParamsDict = typing.TypedDict('MetricGradientRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
-MetricGradientRoiParametersTagged = typing.TypedDict('MetricGradientRoiParametersTagged', {
+MetricGradientRoiParamsDictTagged = typing.TypedDict('MetricGradientRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-metric": InputPathType,
     "match-columns": bool,
 })
 
 
-MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
+MetricGradientParamsDict = typing.TypedDict('MetricGradientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-gradient"]],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricGradientPresmoothParameters | None],
-    "roi": typing.NotRequired[MetricGradientRoiParameters | None],
+    "presmooth": typing.NotRequired[MetricGradientPresmoothParamsDict | None],
+    "roi": typing.NotRequired[MetricGradientRoiParamsDict | None],
     "vector-metric-out": typing.NotRequired[str | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -48,11 +48,11 @@ MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
-MetricGradientParametersTagged = typing.TypedDict('MetricGradientParametersTagged', {
+MetricGradientParamsDictTagged = typing.TypedDict('MetricGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-gradient"],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricGradientPresmoothParameters | None],
-    "roi": typing.NotRequired[MetricGradientRoiParameters | None],
+    "presmooth": typing.NotRequired[MetricGradientPresmoothParamsDict | None],
+    "roi": typing.NotRequired[MetricGradientRoiParamsDict | None],
     "vector-metric-out": typing.NotRequired[str | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
@@ -62,10 +62,10 @@ MetricGradientParametersTagged = typing.TypedDict('MetricGradientParametersTagge
 })
 
 
-def metric_gradient_presmooth_params(
+def metric_gradient_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> MetricGradientPresmoothParametersTagged:
+) -> MetricGradientPresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def metric_gradient_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricGradientPresmoothParameters` object.
+    `MetricGradientPresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def metric_gradient_presmooth_validate(
 
 
 def metric_gradient_presmooth_cargs(
-    params: MetricGradientPresmoothParameters,
+    params: MetricGradientPresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,10 +129,10 @@ def metric_gradient_presmooth_cargs(
     return cargs
 
 
-def metric_gradient_roi_params(
+def metric_gradient_roi(
     roi_metric: InputPathType,
     match_columns: bool = False,
-) -> MetricGradientRoiParametersTagged:
+) -> MetricGradientRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def metric_gradient_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricGradientRoiParameters` object.
+    `MetricGradientRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def metric_gradient_roi_validate(
 
 
 def metric_gradient_roi_cargs(
-    params: MetricGradientRoiParameters,
+    params: MetricGradientRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -198,7 +198,7 @@ def metric_gradient_roi_cargs(
 
 class MetricGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricGradientParameters(...)`.
+    Output object returned when calling `MetricGradientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -213,10 +213,10 @@ def metric_gradient_params(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    presmooth: MetricGradientPresmoothParameters | None = None,
-    roi: MetricGradientRoiParameters | None = None,
+    presmooth: MetricGradientPresmoothParamsDict | None = None,
+    roi: MetricGradientRoiParamsDict | None = None,
     average_normals: bool = False,
-) -> MetricGradientParametersTagged:
+) -> MetricGradientParamsDictTagged:
     """
     Build parameters.
     
@@ -266,7 +266,7 @@ def metric_gradient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricGradientParameters` object.
+    `MetricGradientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -305,7 +305,7 @@ def metric_gradient_validate(
 
 
 def metric_gradient_cargs(
-    params: MetricGradientParameters,
+    params: MetricGradientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def metric_gradient_cargs(
 
 
 def metric_gradient_outputs(
-    params: MetricGradientParameters,
+    params: MetricGradientParamsDict,
     execution: Execution,
 ) -> MetricGradientOutputs:
     """
@@ -359,7 +359,7 @@ def metric_gradient_outputs(
 
 
 def metric_gradient_execute(
-    params: MetricGradientParameters,
+    params: MetricGradientParamsDict,
     runner: Runner | None = None,
 ) -> MetricGradientOutputs:
     """
@@ -416,8 +416,8 @@ def metric_gradient(
     area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    presmooth: MetricGradientPresmoothParameters | None = None,
-    roi: MetricGradientRoiParameters | None = None,
+    presmooth: MetricGradientPresmoothParamsDict | None = None,
+    roi: MetricGradientRoiParamsDict | None = None,
     average_normals: bool = False,
     runner: Runner | None = None,
 ) -> MetricGradientOutputs:
@@ -491,9 +491,15 @@ def metric_gradient(
 __all__ = [
     "METRIC_GRADIENT_METADATA",
     "MetricGradientOutputs",
+    "MetricGradientParamsDict",
+    "MetricGradientParamsDictTagged",
+    "MetricGradientPresmoothParamsDict",
+    "MetricGradientPresmoothParamsDictTagged",
+    "MetricGradientRoiParamsDict",
+    "MetricGradientRoiParamsDictTagged",
     "metric_gradient",
     "metric_gradient_execute",
     "metric_gradient_params",
-    "metric_gradient_presmooth_params",
-    "metric_gradient_roi_params",
+    "metric_gradient_presmooth",
+    "metric_gradient_roi",
 ]

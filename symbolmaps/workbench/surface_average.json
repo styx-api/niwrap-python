@@ -12,7 +12,7 @@
     },
     "surf": {
       "var_param": "surf",
-      "fn_struct_make_params": "surface_average_surf_params",
+      "fn_struct_make_params": "surface_average_surf",
       "properties": {
         "surface": {
           "var_param": "surface"

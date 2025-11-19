@@ -13,7 +13,7 @@ V_3DEDGEDOG_METADATA = Metadata(
 )
 
 
-V3dedgedogParameters = typing.TypedDict('V3dedgedogParameters', {
+V3dedgedogParamsDict = typing.TypedDict('V3dedgedogParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dedgedog"]],
     "input": InputPathType,
     "prefix": str,
@@ -28,7 +28,7 @@ V3dedgedogParameters = typing.TypedDict('V3dedgedogParameters', {
     "edge_bnd_scale": bool,
     "only2d": typing.NotRequired[str | None],
 })
-V3dedgedogParametersTagged = typing.TypedDict('V3dedgedogParametersTagged', {
+V3dedgedogParamsDictTagged = typing.TypedDict('V3dedgedogParamsDictTagged', {
     "@type": typing.Literal["afni/3dedgedog"],
     "input": InputPathType,
     "prefix": str,
@@ -47,7 +47,7 @@ V3dedgedogParametersTagged = typing.TypedDict('V3dedgedogParametersTagged', {
 
 class V3dedgedogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dedgedogParameters(...)`.
+    Output object returned when calling `V3dedgedogParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def v_3dedgedog_params(
     edge_bnd_side: str | None = None,
     edge_bnd_scale: bool = False,
     only2d: str | None = None,
-) -> V3dedgedogParametersTagged:
+) -> V3dedgedogParamsDictTagged:
     """
     Build parameters.
     
@@ -139,7 +139,7 @@ def v_3dedgedog_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dedgedogParameters` object.
+    `V3dedgedogParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -189,7 +189,7 @@ def v_3dedgedog_validate(
 
 
 def v_3dedgedog_cargs(
-    params: V3dedgedogParameters,
+    params: V3dedgedogParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -253,7 +253,7 @@ def v_3dedgedog_cargs(
 
 
 def v_3dedgedog_outputs(
-    params: V3dedgedogParameters,
+    params: V3dedgedogParamsDict,
     execution: Execution,
 ) -> V3dedgedogOutputs:
     """
@@ -277,7 +277,7 @@ def v_3dedgedog_outputs(
 
 
 def v_3dedgedog_execute(
-    params: V3dedgedogParameters,
+    params: V3dedgedogParamsDict,
     runner: Runner | None = None,
 ) -> V3dedgedogOutputs:
     """
@@ -379,6 +379,8 @@ def v_3dedgedog(
 
 __all__ = [
     "V3dedgedogOutputs",
+    "V3dedgedogParamsDict",
+    "V3dedgedogParamsDictTagged",
     "V_3DEDGEDOG_METADATA",
     "v_3dedgedog",
     "v_3dedgedog_execute",

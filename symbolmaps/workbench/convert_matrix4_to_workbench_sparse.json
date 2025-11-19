@@ -6,7 +6,7 @@
     },
     "volume-seeds": {
       "var_param": "volume_seeds",
-      "fn_struct_make_params": "convert_matrix4_to_workbench_sparse_volume_seeds_params",
+      "fn_struct_make_params": "convert_matrix4_to_workbench_sparse_volume_seeds",
       "properties": {
         "cifti-template": {
           "var_param": "cifti_template"

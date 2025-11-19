@@ -13,7 +13,7 @@ MRIS_WARP_METADATA = Metadata(
 )
 
 
-MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
+MrisWarpParamsDict = typing.TypedDict('MrisWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_warp"]],
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
     "help": bool,
     "version": bool,
 })
-MrisWarpParametersTagged = typing.TypedDict('MrisWarpParametersTagged', {
+MrisWarpParamsDictTagged = typing.TypedDict('MrisWarpParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_warp"],
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ MrisWarpParametersTagged = typing.TypedDict('MrisWarpParametersTagged', {
 
 class MrisWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisWarpParameters(...)`.
+    Output object returned when calling `MrisWarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def mris_warp_params(
     abs_: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisWarpParametersTagged:
+) -> MrisWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def mris_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisWarpParameters` object.
+    `MrisWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def mris_warp_validate(
 
 
 def mris_warp_cargs(
-    params: MrisWarpParameters,
+    params: MrisWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def mris_warp_cargs(
 
 
 def mris_warp_outputs(
-    params: MrisWarpParameters,
+    params: MrisWarpParamsDict,
     execution: Execution,
 ) -> MrisWarpOutputs:
     """
@@ -203,7 +203,7 @@ def mris_warp_outputs(
 
 
 def mris_warp_execute(
-    params: MrisWarpParameters,
+    params: MrisWarpParamsDict,
     runner: Runner | None = None,
 ) -> MrisWarpOutputs:
     """
@@ -281,6 +281,8 @@ def mris_warp(
 __all__ = [
     "MRIS_WARP_METADATA",
     "MrisWarpOutputs",
+    "MrisWarpParamsDict",
+    "MrisWarpParamsDictTagged",
     "mris_warp",
     "mris_warp_execute",
     "mris_warp_params",

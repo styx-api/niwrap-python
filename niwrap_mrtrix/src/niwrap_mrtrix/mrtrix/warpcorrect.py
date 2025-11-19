@@ -13,19 +13,19 @@ WARPCORRECT_METADATA = Metadata(
 )
 
 
-WarpcorrectConfigParameters = typing.TypedDict('WarpcorrectConfigParameters', {
+WarpcorrectConfigParamsDict = typing.TypedDict('WarpcorrectConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-WarpcorrectConfigParametersTagged = typing.TypedDict('WarpcorrectConfigParametersTagged', {
+WarpcorrectConfigParamsDictTagged = typing.TypedDict('WarpcorrectConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-WarpcorrectParameters = typing.TypedDict('WarpcorrectParameters', {
+WarpcorrectParamsDict = typing.TypedDict('WarpcorrectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/warpcorrect"]],
     "marker": typing.NotRequired[list[float] | None],
     "tolerance": typing.NotRequired[float | None],
@@ -34,13 +34,13 @@ WarpcorrectParameters = typing.TypedDict('WarpcorrectParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpcorrectConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpcorrectConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
     "out": str,
 })
-WarpcorrectParametersTagged = typing.TypedDict('WarpcorrectParametersTagged', {
+WarpcorrectParamsDictTagged = typing.TypedDict('WarpcorrectParamsDictTagged', {
     "@type": typing.Literal["mrtrix/warpcorrect"],
     "marker": typing.NotRequired[list[float] | None],
     "tolerance": typing.NotRequired[float | None],
@@ -49,7 +49,7 @@ WarpcorrectParametersTagged = typing.TypedDict('WarpcorrectParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpcorrectConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpcorrectConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
@@ -57,10 +57,10 @@ WarpcorrectParametersTagged = typing.TypedDict('WarpcorrectParametersTagged', {
 })
 
 
-def warpcorrect_config_params(
+def warpcorrect_config(
     key: str,
     value: str,
-) -> WarpcorrectConfigParametersTagged:
+) -> WarpcorrectConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def warpcorrect_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpcorrectConfigParameters` object.
+    `WarpcorrectConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def warpcorrect_config_validate(
 
 
 def warpcorrect_config_cargs(
-    params: WarpcorrectConfigParameters,
+    params: WarpcorrectConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def warpcorrect_config_cargs(
 
 class WarpcorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WarpcorrectParameters(...)`.
+    Output object returned when calling `WarpcorrectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def warpcorrect_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpcorrectConfigParameters] | None = None,
+    config: list[WarpcorrectConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpcorrectParametersTagged:
+) -> WarpcorrectParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def warpcorrect_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpcorrectParameters` object.
+    `WarpcorrectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def warpcorrect_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpcorrectConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpcorrectConfigParamsDict] | None`')
         for e in params["config"]:
             warpcorrect_config_validate(e)
     if params.get("help", False) is None:
@@ -255,7 +255,7 @@ def warpcorrect_validate(
 
 
 def warpcorrect_cargs(
-    params: WarpcorrectParameters,
+    params: WarpcorrectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def warpcorrect_cargs(
 
 
 def warpcorrect_outputs(
-    params: WarpcorrectParameters,
+    params: WarpcorrectParamsDict,
     execution: Execution,
 ) -> WarpcorrectOutputs:
     """
@@ -324,7 +324,7 @@ def warpcorrect_outputs(
 
 
 def warpcorrect_execute(
-    params: WarpcorrectParameters,
+    params: WarpcorrectParamsDict,
     runner: Runner | None = None,
 ) -> WarpcorrectOutputs:
     """
@@ -371,7 +371,7 @@ def warpcorrect(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpcorrectConfigParameters] | None = None,
+    config: list[WarpcorrectConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -436,9 +436,13 @@ def warpcorrect(
 
 __all__ = [
     "WARPCORRECT_METADATA",
+    "WarpcorrectConfigParamsDict",
+    "WarpcorrectConfigParamsDictTagged",
     "WarpcorrectOutputs",
+    "WarpcorrectParamsDict",
+    "WarpcorrectParamsDictTagged",
     "warpcorrect",
-    "warpcorrect_config_params",
+    "warpcorrect_config",
     "warpcorrect_execute",
     "warpcorrect_params",
 ]

@@ -9,7 +9,7 @@
     },
     "ribbon-constrained": {
       "var_param": "ribbon_constrained",
-      "fn_struct_make_params": "label_to_volume_mapping_ribbon_constrained_params",
+      "fn_struct_make_params": "label_to_volume_mapping_ribbon_constrained",
       "properties": {
         "inner-surf": {
           "var_param": "inner_surf"

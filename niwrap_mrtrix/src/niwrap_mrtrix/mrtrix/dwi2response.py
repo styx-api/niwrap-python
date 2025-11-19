@@ -13,7 +13,7 @@ DWI2RESPONSE_METADATA = Metadata(
 )
 
 
-Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParameters', {
+Dwi2responseDhollanderParamsDict = typing.TypedDict('Dwi2responseDhollanderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dhollander"]],
     "input": InputPathType,
     "out_sfwm": str,
@@ -26,7 +26,7 @@ Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParam
     "csf": typing.NotRequired[float | None],
     "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
 })
-Dwi2responseDhollanderParametersTagged = typing.TypedDict('Dwi2responseDhollanderParametersTagged', {
+Dwi2responseDhollanderParamsDictTagged = typing.TypedDict('Dwi2responseDhollanderParamsDictTagged', {
     "@type": typing.Literal["dhollander"],
     "input": InputPathType,
     "out_sfwm": str,
@@ -41,7 +41,7 @@ Dwi2responseDhollanderParametersTagged = typing.TypedDict('Dwi2responseDhollande
 })
 
 
-Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
+Dwi2responseFaParamsDict = typing.TypedDict('Dwi2responseFaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fa"]],
     "input": InputPathType,
     "output": str,
@@ -49,7 +49,7 @@ Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
     "number": typing.NotRequired[int | None],
     "threshold": typing.NotRequired[float | None],
 })
-Dwi2responseFaParametersTagged = typing.TypedDict('Dwi2responseFaParametersTagged', {
+Dwi2responseFaParamsDictTagged = typing.TypedDict('Dwi2responseFaParamsDictTagged', {
     "@type": typing.Literal["fa"],
     "input": InputPathType,
     "output": str,
@@ -59,14 +59,14 @@ Dwi2responseFaParametersTagged = typing.TypedDict('Dwi2responseFaParametersTagge
 })
 
 
-Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', {
+Dwi2responseManualParamsDict = typing.TypedDict('Dwi2responseManualParamsDict', {
     "@type": typing.NotRequired[typing.Literal["manual"]],
     "input": InputPathType,
     "in_voxels": InputPathType,
     "output": str,
     "dirs": typing.NotRequired[InputPathType | None],
 })
-Dwi2responseManualParametersTagged = typing.TypedDict('Dwi2responseManualParametersTagged', {
+Dwi2responseManualParamsDictTagged = typing.TypedDict('Dwi2responseManualParamsDictTagged', {
     "@type": typing.Literal["manual"],
     "input": InputPathType,
     "in_voxels": InputPathType,
@@ -75,7 +75,7 @@ Dwi2responseManualParametersTagged = typing.TypedDict('Dwi2responseManualParamet
 })
 
 
-Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters', {
+Dwi2responseMsmt5ttParamsDict = typing.TypedDict('Dwi2responseMsmt5ttParamsDict', {
     "@type": typing.NotRequired[typing.Literal["msmt_5tt"]],
     "input": InputPathType,
     "in_5tt": InputPathType,
@@ -88,7 +88,7 @@ Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters'
     "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
     "sfwm_fa_threshold": typing.NotRequired[float | None],
 })
-Dwi2responseMsmt5ttParametersTagged = typing.TypedDict('Dwi2responseMsmt5ttParametersTagged', {
+Dwi2responseMsmt5ttParamsDictTagged = typing.TypedDict('Dwi2responseMsmt5ttParamsDictTagged', {
     "@type": typing.Literal["msmt_5tt"],
     "input": InputPathType,
     "in_5tt": InputPathType,
@@ -103,7 +103,7 @@ Dwi2responseMsmt5ttParametersTagged = typing.TypedDict('Dwi2responseMsmt5ttParam
 })
 
 
-Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
+Dwi2responseTaxParamsDict = typing.TypedDict('Dwi2responseTaxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tax"]],
     "input": InputPathType,
     "output": str,
@@ -111,7 +111,7 @@ Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
     "max_iters": typing.NotRequired[int | None],
     "convergence": typing.NotRequired[float | None],
 })
-Dwi2responseTaxParametersTagged = typing.TypedDict('Dwi2responseTaxParametersTagged', {
+Dwi2responseTaxParamsDictTagged = typing.TypedDict('Dwi2responseTaxParamsDictTagged', {
     "@type": typing.Literal["tax"],
     "input": InputPathType,
     "output": str,
@@ -121,7 +121,7 @@ Dwi2responseTaxParametersTagged = typing.TypedDict('Dwi2responseTaxParametersTag
 })
 
 
-Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameters', {
+Dwi2responseTournierParamsDict = typing.TypedDict('Dwi2responseTournierParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tournier"]],
     "input": InputPathType,
     "output": str,
@@ -130,7 +130,7 @@ Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameter
     "dilate": typing.NotRequired[int | None],
     "max_iters": typing.NotRequired[int | None],
 })
-Dwi2responseTournierParametersTagged = typing.TypedDict('Dwi2responseTournierParametersTagged', {
+Dwi2responseTournierParamsDictTagged = typing.TypedDict('Dwi2responseTournierParamsDictTagged', {
     "@type": typing.Literal["tournier"],
     "input": InputPathType,
     "output": str,
@@ -141,35 +141,35 @@ Dwi2responseTournierParametersTagged = typing.TypedDict('Dwi2responseTournierPar
 })
 
 
-Dwi2responseFslgradParameters = typing.TypedDict('Dwi2responseFslgradParameters', {
+Dwi2responseFslgradParamsDict = typing.TypedDict('Dwi2responseFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Dwi2responseFslgradParametersTagged = typing.TypedDict('Dwi2responseFslgradParametersTagged', {
+Dwi2responseFslgradParamsDictTagged = typing.TypedDict('Dwi2responseFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Dwi2responseConfigParameters = typing.TypedDict('Dwi2responseConfigParameters', {
+Dwi2responseConfigParamsDict = typing.TypedDict('Dwi2responseConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Dwi2responseConfigParametersTagged = typing.TypedDict('Dwi2responseConfigParametersTagged', {
+Dwi2responseConfigParamsDictTagged = typing.TypedDict('Dwi2responseConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
+Dwi2responseParamsDict = typing.TypedDict('Dwi2responseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2response"]],
-    "algorithm": typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
+    "algorithm": typing.Union[Dwi2responseDhollanderParamsDictTagged, Dwi2responseFaParamsDictTagged, Dwi2responseManualParamsDictTagged, Dwi2responseMsmt5ttParamsDictTagged, Dwi2responseTaxParamsDictTagged, Dwi2responseTournierParamsDictTagged],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2responseFslgradParamsDict | None],
     "mask": typing.NotRequired[InputPathType | None],
     "voxels": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[int] | None],
@@ -182,15 +182,15 @@ Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
 })
-Dwi2responseParametersTagged = typing.TypedDict('Dwi2responseParametersTagged', {
+Dwi2responseParamsDictTagged = typing.TypedDict('Dwi2responseParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwi2response"],
-    "algorithm": typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
+    "algorithm": typing.Union[Dwi2responseDhollanderParamsDictTagged, Dwi2responseFaParamsDictTagged, Dwi2responseManualParamsDictTagged, Dwi2responseMsmt5ttParamsDictTagged, Dwi2responseTaxParamsDictTagged, Dwi2responseTournierParamsDictTagged],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2responseFslgradParamsDict | None],
     "mask": typing.NotRequired[InputPathType | None],
     "voxels": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[int] | None],
@@ -203,7 +203,7 @@ Dwi2responseParametersTagged = typing.TypedDict('Dwi2responseParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2responseConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2responseConfigParamsDict] | None],
     "help": bool,
     "version": bool,
 })
@@ -253,7 +253,7 @@ def dwi2response_algorithm_validate_dyn_fn(
 
 class Dwi2responseDhollanderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseDhollanderParameters(...)`.
+    Output object returned when calling `Dwi2responseDhollanderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -265,7 +265,7 @@ class Dwi2responseDhollanderOutputs(typing.NamedTuple):
     """Output CSF response function text file"""
 
 
-def dwi2response_dhollander_params(
+def dwi2response_dhollander(
     input_: InputPathType,
     out_sfwm: str,
     out_gm: str,
@@ -276,7 +276,7 @@ def dwi2response_dhollander_params(
     gm: float | None = None,
     csf: float | None = None,
     wm_algo: typing.Literal["fa", "tax", "tournier"] | None = None,
-) -> Dwi2responseDhollanderParametersTagged:
+) -> Dwi2responseDhollanderParamsDictTagged:
     """
     Build parameters.
     
@@ -327,7 +327,7 @@ def dwi2response_dhollander_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseDhollanderParameters` object.
+    `Dwi2responseDhollanderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -373,7 +373,7 @@ def dwi2response_dhollander_validate(
 
 
 def dwi2response_dhollander_cargs(
-    params: Dwi2responseDhollanderParameters,
+    params: Dwi2responseDhollanderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -425,7 +425,7 @@ def dwi2response_dhollander_cargs(
 
 
 def dwi2response_dhollander_outputs(
-    params: Dwi2responseDhollanderParameters,
+    params: Dwi2responseDhollanderParamsDict,
     execution: Execution,
 ) -> Dwi2responseDhollanderOutputs:
     """
@@ -448,7 +448,7 @@ def dwi2response_dhollander_outputs(
 
 class Dwi2responseFaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseFaParameters(...)`.
+    Output object returned when calling `Dwi2responseFaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -456,13 +456,13 @@ class Dwi2responseFaOutputs(typing.NamedTuple):
     """The output response function text file"""
 
 
-def dwi2response_fa_params(
+def dwi2response_fa(
     input_: InputPathType,
     output: str,
     erode: int | None = None,
     number: int | None = None,
     threshold: float | None = None,
-) -> Dwi2responseFaParametersTagged:
+) -> Dwi2responseFaParamsDictTagged:
     """
     Build parameters.
     
@@ -496,7 +496,7 @@ def dwi2response_fa_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseFaParameters` object.
+    `Dwi2responseFaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -523,7 +523,7 @@ def dwi2response_fa_validate(
 
 
 def dwi2response_fa_cargs(
-    params: Dwi2responseFaParameters,
+    params: Dwi2responseFaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -558,7 +558,7 @@ def dwi2response_fa_cargs(
 
 
 def dwi2response_fa_outputs(
-    params: Dwi2responseFaParameters,
+    params: Dwi2responseFaParamsDict,
     execution: Execution,
 ) -> Dwi2responseFaOutputs:
     """
@@ -579,7 +579,7 @@ def dwi2response_fa_outputs(
 
 class Dwi2responseManualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseManualParameters(...)`.
+    Output object returned when calling `Dwi2responseManualParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -587,12 +587,12 @@ class Dwi2responseManualOutputs(typing.NamedTuple):
     """Output response function text file"""
 
 
-def dwi2response_manual_params(
+def dwi2response_manual(
     input_: InputPathType,
     in_voxels: InputPathType,
     output: str,
     dirs: InputPathType | None = None,
-) -> Dwi2responseManualParametersTagged:
+) -> Dwi2responseManualParamsDictTagged:
     """
     Build parameters.
     
@@ -621,7 +621,7 @@ def dwi2response_manual_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseManualParameters` object.
+    `Dwi2responseManualParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -646,7 +646,7 @@ def dwi2response_manual_validate(
 
 
 def dwi2response_manual_cargs(
-    params: Dwi2responseManualParameters,
+    params: Dwi2responseManualParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -672,7 +672,7 @@ def dwi2response_manual_cargs(
 
 
 def dwi2response_manual_outputs(
-    params: Dwi2responseManualParameters,
+    params: Dwi2responseManualParamsDict,
     execution: Execution,
 ) -> Dwi2responseManualOutputs:
     """
@@ -693,7 +693,7 @@ def dwi2response_manual_outputs(
 
 class Dwi2responseMsmt5ttOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseMsmt5ttParameters(...)`.
+    Output object returned when calling `Dwi2responseMsmt5ttParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -705,7 +705,7 @@ class Dwi2responseMsmt5ttOutputs(typing.NamedTuple):
     """Output CSF response text file"""
 
 
-def dwi2response_msmt_5tt_params(
+def dwi2response_msmt_5tt(
     input_: InputPathType,
     in_5tt: InputPathType,
     out_wm: str,
@@ -716,7 +716,7 @@ def dwi2response_msmt_5tt_params(
     pvf: float | None = None,
     wm_algo: typing.Literal["fa", "tax", "tournier"] | None = None,
     sfwm_fa_threshold: float | None = None,
-) -> Dwi2responseMsmt5ttParametersTagged:
+) -> Dwi2responseMsmt5ttParamsDictTagged:
     """
     Build parameters.
     
@@ -766,7 +766,7 @@ def dwi2response_msmt_5tt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseMsmt5ttParameters` object.
+    `Dwi2responseMsmt5ttParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -813,7 +813,7 @@ def dwi2response_msmt_5tt_validate(
 
 
 def dwi2response_msmt_5tt_cargs(
-    params: Dwi2responseMsmt5ttParameters,
+    params: Dwi2responseMsmt5ttParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -861,7 +861,7 @@ def dwi2response_msmt_5tt_cargs(
 
 
 def dwi2response_msmt_5tt_outputs(
-    params: Dwi2responseMsmt5ttParameters,
+    params: Dwi2responseMsmt5ttParamsDict,
     execution: Execution,
 ) -> Dwi2responseMsmt5ttOutputs:
     """
@@ -884,7 +884,7 @@ def dwi2response_msmt_5tt_outputs(
 
 class Dwi2responseTaxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseTaxParameters(...)`.
+    Output object returned when calling `Dwi2responseTaxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -892,13 +892,13 @@ class Dwi2responseTaxOutputs(typing.NamedTuple):
     """The output response function text file"""
 
 
-def dwi2response_tax_params(
+def dwi2response_tax(
     input_: InputPathType,
     output: str,
     peak_ratio: float | None = None,
     max_iters: int | None = None,
     convergence: float | None = None,
-) -> Dwi2responseTaxParametersTagged:
+) -> Dwi2responseTaxParamsDictTagged:
     """
     Build parameters.
     
@@ -931,7 +931,7 @@ def dwi2response_tax_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseTaxParameters` object.
+    `Dwi2responseTaxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -958,7 +958,7 @@ def dwi2response_tax_validate(
 
 
 def dwi2response_tax_cargs(
-    params: Dwi2responseTaxParameters,
+    params: Dwi2responseTaxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -993,7 +993,7 @@ def dwi2response_tax_cargs(
 
 
 def dwi2response_tax_outputs(
-    params: Dwi2responseTaxParameters,
+    params: Dwi2responseTaxParamsDict,
     execution: Execution,
 ) -> Dwi2responseTaxOutputs:
     """
@@ -1014,7 +1014,7 @@ def dwi2response_tax_outputs(
 
 class Dwi2responseTournierOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseTournierParameters(...)`.
+    Output object returned when calling `Dwi2responseTournierParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1022,14 +1022,14 @@ class Dwi2responseTournierOutputs(typing.NamedTuple):
     """The output response function text file"""
 
 
-def dwi2response_tournier_params(
+def dwi2response_tournier(
     input_: InputPathType,
     output: str,
     number: int | None = None,
     iter_voxels: int | None = None,
     dilate: int | None = None,
     max_iters: int | None = None,
-) -> Dwi2responseTournierParametersTagged:
+) -> Dwi2responseTournierParamsDictTagged:
     """
     Build parameters.
     
@@ -1067,7 +1067,7 @@ def dwi2response_tournier_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseTournierParameters` object.
+    `Dwi2responseTournierParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1097,7 +1097,7 @@ def dwi2response_tournier_validate(
 
 
 def dwi2response_tournier_cargs(
-    params: Dwi2responseTournierParameters,
+    params: Dwi2responseTournierParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1137,7 +1137,7 @@ def dwi2response_tournier_cargs(
 
 
 def dwi2response_tournier_outputs(
-    params: Dwi2responseTournierParameters,
+    params: Dwi2responseTournierParamsDict,
     execution: Execution,
 ) -> Dwi2responseTournierOutputs:
     """
@@ -1156,10 +1156,10 @@ def dwi2response_tournier_outputs(
     return ret
 
 
-def dwi2response_fslgrad_params(
+def dwi2response_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2responseFslgradParametersTagged:
+) -> Dwi2responseFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -1188,7 +1188,7 @@ def dwi2response_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseFslgradParameters` object.
+    `Dwi2responseFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1206,7 +1206,7 @@ def dwi2response_fslgrad_validate(
 
 
 def dwi2response_fslgrad_cargs(
-    params: Dwi2responseFslgradParameters,
+    params: Dwi2responseFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1225,10 +1225,10 @@ def dwi2response_fslgrad_cargs(
     return cargs
 
 
-def dwi2response_config_params(
+def dwi2response_config(
     key: str,
     value: str,
-) -> Dwi2responseConfigParametersTagged:
+) -> Dwi2responseConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -1251,7 +1251,7 @@ def dwi2response_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseConfigParameters` object.
+    `Dwi2responseConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1269,7 +1269,7 @@ def dwi2response_config_validate(
 
 
 def dwi2response_config_cargs(
-    params: Dwi2responseConfigParameters,
+    params: Dwi2responseConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1290,21 +1290,21 @@ def dwi2response_config_cargs(
 
 class Dwi2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2responseParameters(...)`.
+    Output object returned when calling `Dwi2responseParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     algorithm: typing.Union[Dwi2responseDhollanderOutputs, Dwi2responseFaOutputs, Dwi2responseManualOutputs, Dwi2responseMsmt5ttOutputs, Dwi2responseTaxOutputs, Dwi2responseTournierOutputs]
-    """Outputs from `Dwi2responseDhollanderParameters` or
-    `Dwi2responseFaParameters` or `Dwi2responseManualParameters` or
-    `Dwi2responseMsmt5ttParameters` or `Dwi2responseTaxParameters` or
-    `Dwi2responseTournierParameters`."""
+    """Outputs from `Dwi2responseDhollanderParamsDict` or
+    `Dwi2responseFaParamsDict` or `Dwi2responseManualParamsDict` or
+    `Dwi2responseMsmt5ttParamsDict` or `Dwi2responseTaxParamsDict` or
+    `Dwi2responseTournierParamsDict`."""
 
 
 def dwi2response_params(
-    algorithm: typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
+    algorithm: typing.Union[Dwi2responseDhollanderParamsDictTagged, Dwi2responseFaParamsDictTagged, Dwi2responseManualParamsDictTagged, Dwi2responseMsmt5ttParamsDictTagged, Dwi2responseTaxParamsDictTagged, Dwi2responseTournierParamsDictTagged],
     grad: InputPathType | None = None,
-    fslgrad: Dwi2responseFslgradParameters | None = None,
+    fslgrad: Dwi2responseFslgradParamsDict | None = None,
     mask: InputPathType | None = None,
     voxels: str | None = None,
     shells: list[int] | None = None,
@@ -1317,10 +1317,10 @@ def dwi2response_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2responseConfigParameters] | None = None,
+    config: list[Dwi2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2responseParametersTagged:
+) -> Dwi2responseParamsDictTagged:
     """
     Build parameters.
     
@@ -1399,7 +1399,7 @@ def dwi2response_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2responseParameters` object.
+    `Dwi2responseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -1412,6 +1412,8 @@ def dwi2response_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["algorithm"])}\'')
     if "@type" not in params["algorithm"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["algorithm"]["@type"] not in ["dhollander", "fa", "manual", "msmt_5tt", "tax", "tournier"]:
+        raise StyxValidationError("Parameter `algorithm`s `@type` must be one of [\"dhollander\", \"fa\", \"manual\", \"msmt_5tt\", \"tax\", \"tournier\"]")
     dwi2response_algorithm_validate_dyn_fn(params["algorithm"]["@type"])(params["algorithm"])
     if params.get("grad", None) is not None:
         if not isinstance(params["grad"], (pathlib.Path, str)):
@@ -1467,7 +1469,7 @@ def dwi2response_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2responseConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2responseConfigParamsDict] | None`')
         for e in params["config"]:
             dwi2response_config_validate(e)
     if params.get("help", False) is None:
@@ -1481,7 +1483,7 @@ def dwi2response_validate(
 
 
 def dwi2response_cargs(
-    params: Dwi2responseParameters,
+    params: Dwi2responseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1558,7 +1560,7 @@ def dwi2response_cargs(
 
 
 def dwi2response_outputs(
-    params: Dwi2responseParameters,
+    params: Dwi2responseParamsDict,
     execution: Execution,
 ) -> Dwi2responseOutputs:
     """
@@ -1578,7 +1580,7 @@ def dwi2response_outputs(
 
 
 def dwi2response_execute(
-    params: Dwi2responseParameters,
+    params: Dwi2responseParamsDict,
     runner: Runner | None = None,
 ) -> Dwi2responseOutputs:
     """
@@ -1614,9 +1616,9 @@ def dwi2response_execute(
 
 
 def dwi2response(
-    algorithm: typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
+    algorithm: typing.Union[Dwi2responseDhollanderParamsDictTagged, Dwi2responseFaParamsDictTagged, Dwi2responseManualParamsDictTagged, Dwi2responseMsmt5ttParamsDictTagged, Dwi2responseTaxParamsDictTagged, Dwi2responseTournierParamsDictTagged],
     grad: InputPathType | None = None,
-    fslgrad: Dwi2responseFslgradParameters | None = None,
+    fslgrad: Dwi2responseFslgradParamsDict | None = None,
     mask: InputPathType | None = None,
     voxels: str | None = None,
     shells: list[int] | None = None,
@@ -1629,7 +1631,7 @@ def dwi2response(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2responseConfigParameters] | None = None,
+    config: list[Dwi2responseConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1712,22 +1714,40 @@ def dwi2response(
 
 __all__ = [
     "DWI2RESPONSE_METADATA",
+    "Dwi2responseConfigParamsDict",
+    "Dwi2responseConfigParamsDictTagged",
     "Dwi2responseDhollanderOutputs",
+    "Dwi2responseDhollanderParamsDict",
+    "Dwi2responseDhollanderParamsDictTagged",
     "Dwi2responseFaOutputs",
+    "Dwi2responseFaParamsDict",
+    "Dwi2responseFaParamsDictTagged",
+    "Dwi2responseFslgradParamsDict",
+    "Dwi2responseFslgradParamsDictTagged",
     "Dwi2responseManualOutputs",
+    "Dwi2responseManualParamsDict",
+    "Dwi2responseManualParamsDictTagged",
     "Dwi2responseMsmt5ttOutputs",
+    "Dwi2responseMsmt5ttParamsDict",
+    "Dwi2responseMsmt5ttParamsDictTagged",
     "Dwi2responseOutputs",
+    "Dwi2responseParamsDict",
+    "Dwi2responseParamsDictTagged",
     "Dwi2responseTaxOutputs",
+    "Dwi2responseTaxParamsDict",
+    "Dwi2responseTaxParamsDictTagged",
     "Dwi2responseTournierOutputs",
+    "Dwi2responseTournierParamsDict",
+    "Dwi2responseTournierParamsDictTagged",
     "dwi2response",
-    "dwi2response_config_params",
-    "dwi2response_dhollander_params",
+    "dwi2response_config",
+    "dwi2response_dhollander",
     "dwi2response_execute",
-    "dwi2response_fa_params",
-    "dwi2response_fslgrad_params",
-    "dwi2response_manual_params",
-    "dwi2response_msmt_5tt_params",
+    "dwi2response_fa",
+    "dwi2response_fslgrad",
+    "dwi2response_manual",
+    "dwi2response_msmt_5tt",
     "dwi2response_params",
-    "dwi2response_tax_params",
-    "dwi2response_tournier_params",
+    "dwi2response_tax",
+    "dwi2response_tournier",
 ]

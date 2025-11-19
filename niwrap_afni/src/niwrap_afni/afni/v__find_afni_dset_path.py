@@ -13,14 +13,14 @@ V__FIND_AFNI_DSET_PATH_METADATA = Metadata(
 )
 
 
-VFindAfniDsetPathParameters = typing.TypedDict('VFindAfniDsetPathParameters', {
+VFindAfniDsetPathParamsDict = typing.TypedDict('VFindAfniDsetPathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@FindAfniDsetPath"]],
     "dsetname": str,
     "append_file": bool,
     "full_path": bool,
     "help": bool,
 })
-VFindAfniDsetPathParametersTagged = typing.TypedDict('VFindAfniDsetPathParametersTagged', {
+VFindAfniDsetPathParamsDictTagged = typing.TypedDict('VFindAfniDsetPathParamsDictTagged', {
     "@type": typing.Literal["afni/@FindAfniDsetPath"],
     "dsetname": str,
     "append_file": bool,
@@ -31,7 +31,7 @@ VFindAfniDsetPathParametersTagged = typing.TypedDict('VFindAfniDsetPathParameter
 
 class VFindAfniDsetPathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFindAfniDsetPathParameters(...)`.
+    Output object returned when calling `VFindAfniDsetPathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v__find_afni_dset_path_params(
     append_file: bool = False,
     full_path: bool = False,
     help_: bool = False,
-) -> VFindAfniDsetPathParametersTagged:
+) -> VFindAfniDsetPathParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def v__find_afni_dset_path_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFindAfniDsetPathParameters` object.
+    `VFindAfniDsetPathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def v__find_afni_dset_path_validate(
 
 
 def v__find_afni_dset_path_cargs(
-    params: VFindAfniDsetPathParameters,
+    params: VFindAfniDsetPathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def v__find_afni_dset_path_cargs(
 
 
 def v__find_afni_dset_path_outputs(
-    params: VFindAfniDsetPathParameters,
+    params: VFindAfniDsetPathParamsDict,
     execution: Execution,
 ) -> VFindAfniDsetPathOutputs:
     """
@@ -139,7 +139,7 @@ def v__find_afni_dset_path_outputs(
 
 
 def v__find_afni_dset_path_execute(
-    params: VFindAfniDsetPathParameters,
+    params: VFindAfniDsetPathParamsDict,
     runner: Runner | None = None,
 ) -> VFindAfniDsetPathOutputs:
     """
@@ -205,6 +205,8 @@ def v__find_afni_dset_path(
 
 __all__ = [
     "VFindAfniDsetPathOutputs",
+    "VFindAfniDsetPathParamsDict",
+    "VFindAfniDsetPathParamsDictTagged",
     "V__FIND_AFNI_DSET_PATH_METADATA",
     "v__find_afni_dset_path",
     "v__find_afni_dset_path_execute",

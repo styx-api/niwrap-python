@@ -3,7 +3,7 @@
   "properties": {
     "add": {
       "var_param": "add",
-      "fn_struct_make_params": "spec_file_modify_add_params",
+      "fn_struct_make_params": "spec_file_modify_add",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -15,7 +15,7 @@
     },
     "remove": {
       "var_param": "remove",
-      "fn_struct_make_params": "spec_file_modify_remove_params",
+      "fn_struct_make_params": "spec_file_modify_remove",
       "properties": {
         "filename": {
           "var_param": "filename"

@@ -13,7 +13,7 @@ DMRI_PROJECT_END_POINTS_METADATA = Metadata(
 )
 
 
-DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameters', {
+DmriProjectEndPointsParamsDict = typing.TypedDict('DmriProjectEndPointsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_projectEndPoints"]],
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
@@ -22,7 +22,7 @@ DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameter
     "right_overlay_file": str,
     "reference_image": InputPathType,
 })
-DmriProjectEndPointsParametersTagged = typing.TypedDict('DmriProjectEndPointsParametersTagged', {
+DmriProjectEndPointsParamsDictTagged = typing.TypedDict('DmriProjectEndPointsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_projectEndPoints"],
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
@@ -35,7 +35,7 @@ DmriProjectEndPointsParametersTagged = typing.TypedDict('DmriProjectEndPointsPar
 
 class DmriProjectEndPointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriProjectEndPointsParameters(...)`.
+    Output object returned when calling `DmriProjectEndPointsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def dmri_project_end_points_params(
     left_overlay_file: str,
     right_overlay_file: str,
     reference_image: InputPathType,
-) -> DmriProjectEndPointsParametersTagged:
+) -> DmriProjectEndPointsParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def dmri_project_end_points_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriProjectEndPointsParameters` object.
+    `DmriProjectEndPointsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def dmri_project_end_points_validate(
 
 
 def dmri_project_end_points_cargs(
-    params: DmriProjectEndPointsParameters,
+    params: DmriProjectEndPointsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def dmri_project_end_points_cargs(
 
 
 def dmri_project_end_points_outputs(
-    params: DmriProjectEndPointsParameters,
+    params: DmriProjectEndPointsParamsDict,
     execution: Execution,
 ) -> DmriProjectEndPointsOutputs:
     """
@@ -182,7 +182,7 @@ def dmri_project_end_points_outputs(
 
 
 def dmri_project_end_points_execute(
-    params: DmriProjectEndPointsParameters,
+    params: DmriProjectEndPointsParamsDict,
     runner: Runner | None = None,
 ) -> DmriProjectEndPointsOutputs:
     """
@@ -257,6 +257,8 @@ def dmri_project_end_points(
 __all__ = [
     "DMRI_PROJECT_END_POINTS_METADATA",
     "DmriProjectEndPointsOutputs",
+    "DmriProjectEndPointsParamsDict",
+    "DmriProjectEndPointsParamsDictTagged",
     "dmri_project_end_points",
     "dmri_project_end_points_execute",
     "dmri_project_end_points_params",

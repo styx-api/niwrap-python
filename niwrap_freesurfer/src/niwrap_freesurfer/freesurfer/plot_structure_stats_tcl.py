@@ -13,12 +13,12 @@ PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
 )
 
 
-PlotStructureStatsTclParameters = typing.TypedDict('PlotStructureStatsTclParameters', {
+PlotStructureStatsTclParamsDict = typing.TypedDict('PlotStructureStatsTclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/plot_structure_stats.tcl"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-PlotStructureStatsTclParametersTagged = typing.TypedDict('PlotStructureStatsTclParametersTagged', {
+PlotStructureStatsTclParamsDictTagged = typing.TypedDict('PlotStructureStatsTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/plot_structure_stats.tcl"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ PlotStructureStatsTclParametersTagged = typing.TypedDict('PlotStructureStatsTclP
 
 class PlotStructureStatsTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PlotStructureStatsTclParameters(...)`.
+    Output object returned when calling `PlotStructureStatsTclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class PlotStructureStatsTclOutputs(typing.NamedTuple):
 def plot_structure_stats_tcl_params(
     input_file: InputPathType,
     output_file: str,
-) -> PlotStructureStatsTclParametersTagged:
+) -> PlotStructureStatsTclParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def plot_structure_stats_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PlotStructureStatsTclParameters` object.
+    `PlotStructureStatsTclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def plot_structure_stats_tcl_validate(
 
 
 def plot_structure_stats_tcl_cargs(
-    params: PlotStructureStatsTclParameters,
+    params: PlotStructureStatsTclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def plot_structure_stats_tcl_cargs(
 
 
 def plot_structure_stats_tcl_outputs(
-    params: PlotStructureStatsTclParameters,
+    params: PlotStructureStatsTclParamsDict,
     execution: Execution,
 ) -> PlotStructureStatsTclOutputs:
     """
@@ -119,7 +119,7 @@ def plot_structure_stats_tcl_outputs(
 
 
 def plot_structure_stats_tcl_execute(
-    params: PlotStructureStatsTclParameters,
+    params: PlotStructureStatsTclParamsDict,
     runner: Runner | None = None,
 ) -> PlotStructureStatsTclOutputs:
     """
@@ -178,6 +178,8 @@ def plot_structure_stats_tcl(
 __all__ = [
     "PLOT_STRUCTURE_STATS_TCL_METADATA",
     "PlotStructureStatsTclOutputs",
+    "PlotStructureStatsTclParamsDict",
+    "PlotStructureStatsTclParamsDictTagged",
     "plot_structure_stats_tcl",
     "plot_structure_stats_tcl_execute",
     "plot_structure_stats_tcl_params",

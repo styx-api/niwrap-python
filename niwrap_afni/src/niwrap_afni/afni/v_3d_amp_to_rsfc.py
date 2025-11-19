@@ -13,7 +13,7 @@ V_3D_AMP_TO_RSFC_METADATA = Metadata(
 )
 
 
-V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
+V3dAmpToRsfcParamsDict = typing.TypedDict('V3dAmpToRsfcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAmpToRSFC"]],
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "nifti": bool,
 })
-V3dAmpToRsfcParametersTagged = typing.TypedDict('V3dAmpToRsfcParametersTagged', {
+V3dAmpToRsfcParamsDictTagged = typing.TypedDict('V3dAmpToRsfcParamsDictTagged', {
     "@type": typing.Literal["afni/3dAmpToRSFC"],
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ V3dAmpToRsfcParametersTagged = typing.TypedDict('V3dAmpToRsfcParametersTagged', 
 
 class V3dAmpToRsfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAmpToRsfcParameters(...)`.
+    Output object returned when calling `V3dAmpToRsfcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v_3d_amp_to_rsfc_params(
     in_pow: InputPathType | None = None,
     mask: InputPathType | None = None,
     nifti: bool = False,
-) -> V3dAmpToRsfcParametersTagged:
+) -> V3dAmpToRsfcParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def v_3d_amp_to_rsfc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAmpToRsfcParameters` object.
+    `V3dAmpToRsfcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def v_3d_amp_to_rsfc_validate(
 
 
 def v_3d_amp_to_rsfc_cargs(
-    params: V3dAmpToRsfcParameters,
+    params: V3dAmpToRsfcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -179,7 +179,7 @@ def v_3d_amp_to_rsfc_cargs(
 
 
 def v_3d_amp_to_rsfc_outputs(
-    params: V3dAmpToRsfcParameters,
+    params: V3dAmpToRsfcParamsDict,
     execution: Execution,
 ) -> V3dAmpToRsfcOutputs:
     """
@@ -204,7 +204,7 @@ def v_3d_amp_to_rsfc_outputs(
 
 
 def v_3d_amp_to_rsfc_execute(
-    params: V3dAmpToRsfcParameters,
+    params: V3dAmpToRsfcParamsDict,
     runner: Runner | None = None,
 ) -> V3dAmpToRsfcOutputs:
     """
@@ -278,6 +278,8 @@ def v_3d_amp_to_rsfc(
 
 __all__ = [
     "V3dAmpToRsfcOutputs",
+    "V3dAmpToRsfcParamsDict",
+    "V3dAmpToRsfcParamsDictTagged",
     "V_3D_AMP_TO_RSFC_METADATA",
     "v_3d_amp_to_rsfc",
     "v_3d_amp_to_rsfc_execute",

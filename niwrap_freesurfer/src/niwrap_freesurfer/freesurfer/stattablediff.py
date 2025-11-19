@@ -13,7 +13,7 @@ STATTABLEDIFF_METADATA = Metadata(
 )
 
 
-StattablediffParameters = typing.TypedDict('StattablediffParameters', {
+StattablediffParamsDict = typing.TypedDict('StattablediffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/stattablediff"]],
     "t1": InputPathType,
     "t2": InputPathType,
@@ -28,7 +28,7 @@ StattablediffParameters = typing.TypedDict('StattablediffParameters', {
     "diff_subjects": bool,
     "noreplace53": bool,
 })
-StattablediffParametersTagged = typing.TypedDict('StattablediffParametersTagged', {
+StattablediffParamsDictTagged = typing.TypedDict('StattablediffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/stattablediff"],
     "t1": InputPathType,
     "t2": InputPathType,
@@ -47,7 +47,7 @@ StattablediffParametersTagged = typing.TypedDict('StattablediffParametersTagged'
 
 class StattablediffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `StattablediffParameters(...)`.
+    Output object returned when calling `StattablediffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def stattablediff_params(
     remove_exvivo: bool = False,
     diff_subjects: bool = False,
     noreplace53: bool = False,
-) -> StattablediffParametersTagged:
+) -> StattablediffParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def stattablediff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `StattablediffParameters` object.
+    `StattablediffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def stattablediff_validate(
 
 
 def stattablediff_cargs(
-    params: StattablediffParameters,
+    params: StattablediffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def stattablediff_cargs(
 
 
 def stattablediff_outputs(
-    params: StattablediffParameters,
+    params: StattablediffParamsDict,
     execution: Execution,
 ) -> StattablediffOutputs:
     """
@@ -234,7 +234,7 @@ def stattablediff_outputs(
 
 
 def stattablediff_execute(
-    params: StattablediffParameters,
+    params: StattablediffParamsDict,
     runner: Runner | None = None,
 ) -> StattablediffOutputs:
     """
@@ -323,6 +323,8 @@ def stattablediff(
 __all__ = [
     "STATTABLEDIFF_METADATA",
     "StattablediffOutputs",
+    "StattablediffParamsDict",
+    "StattablediffParamsDictTagged",
     "stattablediff",
     "stattablediff_execute",
     "stattablediff_params",

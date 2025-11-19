@@ -13,7 +13,7 @@ MRI_TWOCLASS_METADATA = Metadata(
 )
 
 
-MriTwoclassParameters = typing.TypedDict('MriTwoclassParameters', {
+MriTwoclassParamsDict = typing.TypedDict('MriTwoclassParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_twoclass"]],
     "segmentation_volume": InputPathType,
     "output_subject": str,
@@ -23,7 +23,7 @@ MriTwoclassParameters = typing.TypedDict('MriTwoclassParameters', {
     "f_threshold": typing.NotRequired[float | None],
     "bonferroni_correction": bool,
 })
-MriTwoclassParametersTagged = typing.TypedDict('MriTwoclassParametersTagged', {
+MriTwoclassParamsDictTagged = typing.TypedDict('MriTwoclassParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_twoclass"],
     "segmentation_volume": InputPathType,
     "output_subject": str,
@@ -37,7 +37,7 @@ MriTwoclassParametersTagged = typing.TypedDict('MriTwoclassParametersTagged', {
 
 class MriTwoclassOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriTwoclassParameters(...)`.
+    Output object returned when calling `MriTwoclassParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_twoclass_params(
     c2_subjects: list[str],
     f_threshold: float | None = None,
     bonferroni_correction: bool = False,
-) -> MriTwoclassParametersTagged:
+) -> MriTwoclassParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mri_twoclass_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriTwoclassParameters` object.
+    `MriTwoclassParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -130,7 +130,7 @@ def mri_twoclass_validate(
 
 
 def mri_twoclass_cargs(
-    params: MriTwoclassParameters,
+    params: MriTwoclassParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,7 +160,7 @@ def mri_twoclass_cargs(
 
 
 def mri_twoclass_outputs(
-    params: MriTwoclassParameters,
+    params: MriTwoclassParamsDict,
     execution: Execution,
 ) -> MriTwoclassOutputs:
     """
@@ -180,7 +180,7 @@ def mri_twoclass_outputs(
 
 
 def mri_twoclass_execute(
-    params: MriTwoclassParameters,
+    params: MriTwoclassParamsDict,
     runner: Runner | None = None,
 ) -> MriTwoclassOutputs:
     """
@@ -254,6 +254,8 @@ def mri_twoclass(
 __all__ = [
     "MRI_TWOCLASS_METADATA",
     "MriTwoclassOutputs",
+    "MriTwoclassParamsDict",
+    "MriTwoclassParamsDictTagged",
     "mri_twoclass",
     "mri_twoclass_execute",
     "mri_twoclass_params",

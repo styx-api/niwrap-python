@@ -13,7 +13,7 @@ MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
 )
 
 
-MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters', {
+MrisSimulateAtrophyParamsDict = typing.TypedDict('MrisSimulateAtrophyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_simulate_atrophy"]],
     "subject": str,
     "hemi": str,
@@ -23,7 +23,7 @@ MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters'
     "atrophy_percent": typing.NotRequired[float | None],
     "noise_level": typing.NotRequired[float | None],
 })
-MrisSimulateAtrophyParametersTagged = typing.TypedDict('MrisSimulateAtrophyParametersTagged', {
+MrisSimulateAtrophyParamsDictTagged = typing.TypedDict('MrisSimulateAtrophyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_simulate_atrophy"],
     "subject": str,
     "hemi": str,
@@ -37,7 +37,7 @@ MrisSimulateAtrophyParametersTagged = typing.TypedDict('MrisSimulateAtrophyParam
 
 class MrisSimulateAtrophyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSimulateAtrophyParameters(...)`.
+    Output object returned when calling `MrisSimulateAtrophyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_simulate_atrophy_params(
     output_volume: str,
     atrophy_percent: float | None = None,
     noise_level: float | None = None,
-) -> MrisSimulateAtrophyParametersTagged:
+) -> MrisSimulateAtrophyParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def mris_simulate_atrophy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSimulateAtrophyParameters` object.
+    `MrisSimulateAtrophyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def mris_simulate_atrophy_validate(
 
 
 def mris_simulate_atrophy_cargs(
-    params: MrisSimulateAtrophyParameters,
+    params: MrisSimulateAtrophyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def mris_simulate_atrophy_cargs(
 
 
 def mris_simulate_atrophy_outputs(
-    params: MrisSimulateAtrophyParameters,
+    params: MrisSimulateAtrophyParamsDict,
     execution: Execution,
 ) -> MrisSimulateAtrophyOutputs:
     """
@@ -177,7 +177,7 @@ def mris_simulate_atrophy_outputs(
 
 
 def mris_simulate_atrophy_execute(
-    params: MrisSimulateAtrophyParameters,
+    params: MrisSimulateAtrophyParamsDict,
     runner: Runner | None = None,
 ) -> MrisSimulateAtrophyOutputs:
     """
@@ -251,6 +251,8 @@ def mris_simulate_atrophy(
 __all__ = [
     "MRIS_SIMULATE_ATROPHY_METADATA",
     "MrisSimulateAtrophyOutputs",
+    "MrisSimulateAtrophyParamsDict",
+    "MrisSimulateAtrophyParamsDictTagged",
     "mris_simulate_atrophy",
     "mris_simulate_atrophy_execute",
     "mris_simulate_atrophy_params",

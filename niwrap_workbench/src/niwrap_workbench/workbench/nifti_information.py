@@ -12,35 +12,35 @@ NIFTI_INFORMATION_METADATA = Metadata(
 )
 
 
-NiftiInformationPrintXmlParameters = typing.TypedDict('NiftiInformationPrintXmlParameters', {
+NiftiInformationPrintXmlParamsDict = typing.TypedDict('NiftiInformationPrintXmlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["print-xml"]],
     "version": typing.NotRequired[str | None],
 })
-NiftiInformationPrintXmlParametersTagged = typing.TypedDict('NiftiInformationPrintXmlParametersTagged', {
+NiftiInformationPrintXmlParamsDictTagged = typing.TypedDict('NiftiInformationPrintXmlParamsDictTagged', {
     "@type": typing.Literal["print-xml"],
     "version": typing.NotRequired[str | None],
 })
 
 
-NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
+NiftiInformationParamsDict = typing.TypedDict('NiftiInformationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/nifti-information"]],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "nifti-file": str,
 })
-NiftiInformationParametersTagged = typing.TypedDict('NiftiInformationParametersTagged', {
+NiftiInformationParamsDictTagged = typing.TypedDict('NiftiInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/nifti-information"],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "nifti-file": str,
 })
 
 
-def nifti_information_print_xml_params(
+def nifti_information_print_xml(
     version: str | None,
-) -> NiftiInformationPrintXmlParametersTagged:
+) -> NiftiInformationPrintXmlParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def nifti_information_print_xml_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NiftiInformationPrintXmlParameters` object.
+    `NiftiInformationPrintXmlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def nifti_information_print_xml_validate(
 
 
 def nifti_information_print_xml_cargs(
-    params: NiftiInformationPrintXmlParameters,
+    params: NiftiInformationPrintXmlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def nifti_information_print_xml_cargs(
 
 class NiftiInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NiftiInformationParameters(...)`.
+    Output object returned when calling `NiftiInformationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,8 +112,8 @@ def nifti_information_params(
     nifti_file: str,
     allow_truncated: bool | None = False,
     print_matrix: bool = False,
-    print_xml: NiftiInformationPrintXmlParameters | None = None,
-) -> NiftiInformationParametersTagged:
+    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
+) -> NiftiInformationParamsDictTagged:
     """
     Build parameters.
     
@@ -144,7 +144,7 @@ def nifti_information_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NiftiInformationParameters` object.
+    `NiftiInformationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def nifti_information_validate(
 
 
 def nifti_information_cargs(
-    params: NiftiInformationParameters,
+    params: NiftiInformationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def nifti_information_cargs(
 
 
 def nifti_information_outputs(
-    params: NiftiInformationParameters,
+    params: NiftiInformationParamsDict,
     execution: Execution,
 ) -> NiftiInformationOutputs:
     """
@@ -213,7 +213,7 @@ def nifti_information_outputs(
 
 
 def nifti_information_execute(
-    params: NiftiInformationParameters,
+    params: NiftiInformationParamsDict,
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
@@ -241,7 +241,7 @@ def nifti_information(
     nifti_file: str,
     allow_truncated: bool | None = False,
     print_matrix: bool = False,
-    print_xml: NiftiInformationPrintXmlParameters | None = None,
+    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
@@ -272,8 +272,12 @@ def nifti_information(
 __all__ = [
     "NIFTI_INFORMATION_METADATA",
     "NiftiInformationOutputs",
+    "NiftiInformationParamsDict",
+    "NiftiInformationParamsDictTagged",
+    "NiftiInformationPrintXmlParamsDict",
+    "NiftiInformationPrintXmlParamsDictTagged",
     "nifti_information",
     "nifti_information_execute",
     "nifti_information_params",
-    "nifti_information_print_xml_params",
+    "nifti_information_print_xml",
 ]

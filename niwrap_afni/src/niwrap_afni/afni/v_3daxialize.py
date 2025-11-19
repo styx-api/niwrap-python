@@ -13,7 +13,7 @@ V_3DAXIALIZE_METADATA = Metadata(
 )
 
 
-V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
+V3daxializeParamsDict = typing.TypedDict('V3daxializeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3daxialize"]],
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
     "orient_code": typing.NotRequired[str | None],
     "frugal": bool,
 })
-V3daxializeParametersTagged = typing.TypedDict('V3daxializeParametersTagged', {
+V3daxializeParamsDictTagged = typing.TypedDict('V3daxializeParamsDictTagged', {
     "@type": typing.Literal["afni/3daxialize"],
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ V3daxializeParametersTagged = typing.TypedDict('V3daxializeParametersTagged', {
 
 class V3daxializeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3daxializeParameters(...)`.
+    Output object returned when calling `V3daxializeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3daxialize_params(
     axial: bool = False,
     orient_code: str | None = None,
     frugal: bool = False,
-) -> V3daxializeParametersTagged:
+) -> V3daxializeParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def v_3daxialize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3daxializeParameters` object.
+    `V3daxializeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def v_3daxialize_validate(
 
 
 def v_3daxialize_cargs(
-    params: V3daxializeParameters,
+    params: V3daxializeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -175,7 +175,7 @@ def v_3daxialize_cargs(
 
 
 def v_3daxialize_outputs(
-    params: V3daxializeParameters,
+    params: V3daxializeParamsDict,
     execution: Execution,
 ) -> V3daxializeOutputs:
     """
@@ -195,7 +195,7 @@ def v_3daxialize_outputs(
 
 
 def v_3daxialize_execute(
-    params: V3daxializeParameters,
+    params: V3daxializeParamsDict,
     runner: Runner | None = None,
 ) -> V3daxializeOutputs:
     """
@@ -276,6 +276,8 @@ def v_3daxialize(
 
 __all__ = [
     "V3daxializeOutputs",
+    "V3daxializeParamsDict",
+    "V3daxializeParamsDictTagged",
     "V_3DAXIALIZE_METADATA",
     "v_3daxialize",
     "v_3daxialize_execute",

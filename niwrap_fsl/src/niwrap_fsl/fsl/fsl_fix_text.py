@@ -13,12 +13,12 @@ FSL_FIX_TEXT_METADATA = Metadata(
 )
 
 
-FslFixTextParameters = typing.TypedDict('FslFixTextParameters', {
+FslFixTextParamsDict = typing.TypedDict('FslFixTextParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslFixText"]],
     "input_text_file": InputPathType,
     "output_text_file": str,
 })
-FslFixTextParametersTagged = typing.TypedDict('FslFixTextParametersTagged', {
+FslFixTextParamsDictTagged = typing.TypedDict('FslFixTextParamsDictTagged', {
     "@type": typing.Literal["fsl/fslFixText"],
     "input_text_file": InputPathType,
     "output_text_file": str,
@@ -27,7 +27,7 @@ FslFixTextParametersTagged = typing.TypedDict('FslFixTextParametersTagged', {
 
 class FslFixTextOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslFixTextParameters(...)`.
+    Output object returned when calling `FslFixTextParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FslFixTextOutputs(typing.NamedTuple):
 def fsl_fix_text_params(
     input_text_file: InputPathType,
     output_text_file: str,
-) -> FslFixTextParametersTagged:
+) -> FslFixTextParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def fsl_fix_text_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslFixTextParameters` object.
+    `FslFixTextParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fsl_fix_text_validate(
 
 
 def fsl_fix_text_cargs(
-    params: FslFixTextParameters,
+    params: FslFixTextParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def fsl_fix_text_cargs(
 
 
 def fsl_fix_text_outputs(
-    params: FslFixTextParameters,
+    params: FslFixTextParamsDict,
     execution: Execution,
 ) -> FslFixTextOutputs:
     """
@@ -119,7 +119,7 @@ def fsl_fix_text_outputs(
 
 
 def fsl_fix_text_execute(
-    params: FslFixTextParameters,
+    params: FslFixTextParamsDict,
     runner: Runner | None = None,
 ) -> FslFixTextOutputs:
     """
@@ -178,6 +178,8 @@ def fsl_fix_text(
 __all__ = [
     "FSL_FIX_TEXT_METADATA",
     "FslFixTextOutputs",
+    "FslFixTextParamsDict",
+    "FslFixTextParamsDictTagged",
     "fsl_fix_text",
     "fsl_fix_text_execute",
     "fsl_fix_text_params",

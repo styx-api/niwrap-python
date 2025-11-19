@@ -13,14 +13,14 @@ BUGR_METADATA = Metadata(
 )
 
 
-BugrParameters = typing.TypedDict('BugrParameters', {
+BugrParamsDict = typing.TypedDict('BugrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/bugr"]],
     "subject_name": str,
     "command_line": str,
     "error_message": str,
     "log_file": typing.NotRequired[InputPathType | None],
 })
-BugrParametersTagged = typing.TypedDict('BugrParametersTagged', {
+BugrParamsDictTagged = typing.TypedDict('BugrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/bugr"],
     "subject_name": str,
     "command_line": str,
@@ -31,7 +31,7 @@ BugrParametersTagged = typing.TypedDict('BugrParametersTagged', {
 
 class BugrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BugrParameters(...)`.
+    Output object returned when calling `BugrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def bugr_params(
     command_line: str,
     error_message: str,
     log_file: InputPathType | None = None,
-) -> BugrParametersTagged:
+) -> BugrParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def bugr_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `BugrParameters`
+    Validate parameters. Throws an error if `params` is not a valid `BugrParamsDict`
     object.
     
     Args:
@@ -95,7 +95,7 @@ def bugr_validate(
 
 
 def bugr_cargs(
-    params: BugrParameters,
+    params: BugrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def bugr_cargs(
 
 
 def bugr_outputs(
-    params: BugrParameters,
+    params: BugrParamsDict,
     execution: Execution,
 ) -> BugrOutputs:
     """
@@ -149,7 +149,7 @@ def bugr_outputs(
 
 
 def bugr_execute(
-    params: BugrParameters,
+    params: BugrParamsDict,
     runner: Runner | None = None,
 ) -> BugrOutputs:
     """
@@ -214,6 +214,8 @@ def bugr(
 __all__ = [
     "BUGR_METADATA",
     "BugrOutputs",
+    "BugrParamsDict",
+    "BugrParamsDictTagged",
     "bugr",
     "bugr_execute",
     "bugr_params",

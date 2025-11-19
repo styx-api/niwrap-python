@@ -12,7 +12,7 @@ VOLUME_CREATE_METADATA = Metadata(
 )
 
 
-VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
+VolumeCreatePlumbParamsDict = typing.TypedDict('VolumeCreatePlumbParamsDict', {
     "@type": typing.NotRequired[typing.Literal["plumb"]],
     "axis-order": str,
     "x-spacing": float,
@@ -22,7 +22,7 @@ VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
     "y-offset": float,
     "z-offset": float,
 })
-VolumeCreatePlumbParametersTagged = typing.TypedDict('VolumeCreatePlumbParametersTagged', {
+VolumeCreatePlumbParamsDictTagged = typing.TypedDict('VolumeCreatePlumbParamsDictTagged', {
     "@type": typing.Literal["plumb"],
     "axis-order": str,
     "x-spacing": float,
@@ -34,7 +34,7 @@ VolumeCreatePlumbParametersTagged = typing.TypedDict('VolumeCreatePlumbParameter
 })
 
 
-VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
+VolumeCreateSformParamsDict = typing.TypedDict('VolumeCreateSformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sform"]],
     "xi-spacing": float,
     "xj-spacing": float,
@@ -49,7 +49,7 @@ VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
     "zk-spacing": float,
     "z-offset": float,
 })
-VolumeCreateSformParametersTagged = typing.TypedDict('VolumeCreateSformParametersTagged', {
+VolumeCreateSformParamsDictTagged = typing.TypedDict('VolumeCreateSformParamsDictTagged', {
     "@type": typing.Literal["sform"],
     "xi-spacing": float,
     "xj-spacing": float,
@@ -66,27 +66,27 @@ VolumeCreateSformParametersTagged = typing.TypedDict('VolumeCreateSformParameter
 })
 
 
-VolumeCreateParameters = typing.TypedDict('VolumeCreateParameters', {
+VolumeCreateParamsDict = typing.TypedDict('VolumeCreateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-create"]],
     "volume-out": str,
-    "plumb": typing.NotRequired[VolumeCreatePlumbParameters | None],
-    "sform": typing.NotRequired[VolumeCreateSformParameters | None],
+    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
     "i-dim": int,
     "j-dim": int,
     "k-dim": int,
 })
-VolumeCreateParametersTagged = typing.TypedDict('VolumeCreateParametersTagged', {
+VolumeCreateParamsDictTagged = typing.TypedDict('VolumeCreateParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-create"],
     "volume-out": str,
-    "plumb": typing.NotRequired[VolumeCreatePlumbParameters | None],
-    "sform": typing.NotRequired[VolumeCreateSformParameters | None],
+    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
     "i-dim": int,
     "j-dim": int,
     "k-dim": int,
 })
 
 
-def volume_create_plumb_params(
+def volume_create_plumb(
     axis_order: str,
     x_spacing: float,
     y_spacing: float,
@@ -94,7 +94,7 @@ def volume_create_plumb_params(
     x_offset: float,
     y_offset: float,
     z_offset: float,
-) -> VolumeCreatePlumbParametersTagged:
+) -> VolumeCreatePlumbParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def volume_create_plumb_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeCreatePlumbParameters` object.
+    `VolumeCreatePlumbParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def volume_create_plumb_validate(
 
 
 def volume_create_plumb_cargs(
-    params: VolumeCreatePlumbParameters,
+    params: VolumeCreatePlumbParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def volume_create_plumb_cargs(
     return cargs
 
 
-def volume_create_sform_params(
+def volume_create_sform(
     xi_spacing: float,
     xj_spacing: float,
     xk_spacing: float,
@@ -205,7 +205,7 @@ def volume_create_sform_params(
     zj_spacing: float,
     zk_spacing: float,
     z_offset: float,
-) -> VolumeCreateSformParametersTagged:
+) -> VolumeCreateSformParamsDictTagged:
     """
     Build parameters.
     
@@ -248,7 +248,7 @@ def volume_create_sform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeCreateSformParameters` object.
+    `VolumeCreateSformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -306,7 +306,7 @@ def volume_create_sform_validate(
 
 
 def volume_create_sform_cargs(
-    params: VolumeCreateSformParameters,
+    params: VolumeCreateSformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def volume_create_sform_cargs(
 
 class VolumeCreateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeCreateParameters(...)`.
+    Output object returned when calling `VolumeCreateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -352,9 +352,9 @@ def volume_create_params(
     i_dim: int,
     j_dim: int,
     k_dim: int,
-    plumb: VolumeCreatePlumbParameters | None = None,
-    sform: VolumeCreateSformParameters | None = None,
-) -> VolumeCreateParametersTagged:
+    plumb: VolumeCreatePlumbParamsDict | None = None,
+    sform: VolumeCreateSformParamsDict | None = None,
+) -> VolumeCreateParamsDictTagged:
     """
     Build parameters.
     
@@ -387,7 +387,7 @@ def volume_create_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeCreateParameters` object.
+    `VolumeCreateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -417,7 +417,7 @@ def volume_create_validate(
 
 
 def volume_create_cargs(
-    params: VolumeCreateParameters,
+    params: VolumeCreateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -445,7 +445,7 @@ def volume_create_cargs(
 
 
 def volume_create_outputs(
-    params: VolumeCreateParameters,
+    params: VolumeCreateParamsDict,
     execution: Execution,
 ) -> VolumeCreateOutputs:
     """
@@ -465,7 +465,7 @@ def volume_create_outputs(
 
 
 def volume_create_execute(
-    params: VolumeCreateParameters,
+    params: VolumeCreateParamsDict,
     runner: Runner | None = None,
 ) -> VolumeCreateOutputs:
     """
@@ -495,8 +495,8 @@ def volume_create(
     i_dim: int,
     j_dim: int,
     k_dim: int,
-    plumb: VolumeCreatePlumbParameters | None = None,
-    sform: VolumeCreateSformParameters | None = None,
+    plumb: VolumeCreatePlumbParamsDict | None = None,
+    sform: VolumeCreateSformParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeCreateOutputs:
     """
@@ -530,9 +530,15 @@ def volume_create(
 __all__ = [
     "VOLUME_CREATE_METADATA",
     "VolumeCreateOutputs",
+    "VolumeCreateParamsDict",
+    "VolumeCreateParamsDictTagged",
+    "VolumeCreatePlumbParamsDict",
+    "VolumeCreatePlumbParamsDictTagged",
+    "VolumeCreateSformParamsDict",
+    "VolumeCreateSformParamsDictTagged",
     "volume_create",
     "volume_create_execute",
     "volume_create_params",
-    "volume_create_plumb_params",
-    "volume_create_sform_params",
+    "volume_create_plumb",
+    "volume_create_sform",
 ]

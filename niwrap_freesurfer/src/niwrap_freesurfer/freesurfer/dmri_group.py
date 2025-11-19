@@ -13,7 +13,7 @@ DMRI_GROUP_METADATA = Metadata(
 )
 
 
-DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
+DmriGroupParamsDict = typing.TypedDict('DmriGroupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_group"]],
     "input_list": InputPathType,
     "reference_volume": InputPathType,
@@ -23,7 +23,7 @@ DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
     "debug_mode": bool,
     "check_options": bool,
 })
-DmriGroupParametersTagged = typing.TypedDict('DmriGroupParametersTagged', {
+DmriGroupParamsDictTagged = typing.TypedDict('DmriGroupParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_group"],
     "input_list": InputPathType,
     "reference_volume": InputPathType,
@@ -37,7 +37,7 @@ DmriGroupParametersTagged = typing.TypedDict('DmriGroupParametersTagged', {
 
 class DmriGroupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriGroupParameters(...)`.
+    Output object returned when calling `DmriGroupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def dmri_group_params(
     sections_num: float | None = None,
     debug_mode: bool = False,
     check_options: bool = False,
-) -> DmriGroupParametersTagged:
+) -> DmriGroupParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def dmri_group_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriGroupParameters` object.
+    `DmriGroupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -124,7 +124,7 @@ def dmri_group_validate(
 
 
 def dmri_group_cargs(
-    params: DmriGroupParameters,
+    params: DmriGroupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -165,7 +165,7 @@ def dmri_group_cargs(
 
 
 def dmri_group_outputs(
-    params: DmriGroupParameters,
+    params: DmriGroupParamsDict,
     execution: Execution,
 ) -> DmriGroupOutputs:
     """
@@ -184,7 +184,7 @@ def dmri_group_outputs(
 
 
 def dmri_group_execute(
-    params: DmriGroupParameters,
+    params: DmriGroupParamsDict,
     runner: Runner | None = None,
 ) -> DmriGroupOutputs:
     """
@@ -260,6 +260,8 @@ def dmri_group(
 __all__ = [
     "DMRI_GROUP_METADATA",
     "DmriGroupOutputs",
+    "DmriGroupParamsDict",
+    "DmriGroupParamsDictTagged",
     "dmri_group",
     "dmri_group_execute",
     "dmri_group_params",

@@ -13,14 +13,14 @@ RECON_ALL_CLINICAL_SH_METADATA = Metadata(
 )
 
 
-ReconAllClinicalShParameters = typing.TypedDict('ReconAllClinicalShParameters', {
+ReconAllClinicalShParamsDict = typing.TypedDict('ReconAllClinicalShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-clinical.sh"]],
     "input_scan": InputPathType,
     "subject_id": str,
     "threads": int,
     "subject_dir": typing.NotRequired[str | None],
 })
-ReconAllClinicalShParametersTagged = typing.TypedDict('ReconAllClinicalShParametersTagged', {
+ReconAllClinicalShParamsDictTagged = typing.TypedDict('ReconAllClinicalShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/recon-all-clinical.sh"],
     "input_scan": InputPathType,
     "subject_id": str,
@@ -31,7 +31,7 @@ ReconAllClinicalShParametersTagged = typing.TypedDict('ReconAllClinicalShParamet
 
 class ReconAllClinicalShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReconAllClinicalShParameters(...)`.
+    Output object returned when calling `ReconAllClinicalShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def recon_all_clinical_sh_params(
     subject_id: str,
     threads: int,
     subject_dir: str | None = None,
-) -> ReconAllClinicalShParametersTagged:
+) -> ReconAllClinicalShParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def recon_all_clinical_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReconAllClinicalShParameters` object.
+    `ReconAllClinicalShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def recon_all_clinical_sh_validate(
 
 
 def recon_all_clinical_sh_cargs(
-    params: ReconAllClinicalShParameters,
+    params: ReconAllClinicalShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def recon_all_clinical_sh_cargs(
 
 
 def recon_all_clinical_sh_outputs(
-    params: ReconAllClinicalShParameters,
+    params: ReconAllClinicalShParamsDict,
     execution: Execution,
 ) -> ReconAllClinicalShOutputs:
     """
@@ -138,7 +138,7 @@ def recon_all_clinical_sh_outputs(
 
 
 def recon_all_clinical_sh_execute(
-    params: ReconAllClinicalShParameters,
+    params: ReconAllClinicalShParamsDict,
     runner: Runner | None = None,
 ) -> ReconAllClinicalShOutputs:
     """
@@ -206,6 +206,8 @@ def recon_all_clinical_sh(
 __all__ = [
     "RECON_ALL_CLINICAL_SH_METADATA",
     "ReconAllClinicalShOutputs",
+    "ReconAllClinicalShParamsDict",
+    "ReconAllClinicalShParamsDictTagged",
     "recon_all_clinical_sh",
     "recon_all_clinical_sh_execute",
     "recon_all_clinical_sh_params",

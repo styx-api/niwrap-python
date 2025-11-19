@@ -13,7 +13,7 @@ MRIS_SMOOTH_METADATA = Metadata(
 )
 
 
-MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
+MrisSmoothParamsDict = typing.TypedDict('MrisSmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth"]],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -27,7 +27,7 @@ MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
     "momentum": typing.NotRequired[float | None],
     "snapshot_interval": typing.NotRequired[float | None],
 })
-MrisSmoothParametersTagged = typing.TypedDict('MrisSmoothParametersTagged', {
+MrisSmoothParamsDictTagged = typing.TypedDict('MrisSmoothParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_smooth"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -45,7 +45,7 @@ MrisSmoothParametersTagged = typing.TypedDict('MrisSmoothParametersTagged', {
 
 class MrisSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSmoothParameters(...)`.
+    Output object returned when calling `MrisSmoothParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def mris_smooth_params(
     normalize_area: bool = False,
     momentum: float | None = None,
     snapshot_interval: float | None = None,
-) -> MrisSmoothParametersTagged:
+) -> MrisSmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def mris_smooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSmoothParameters` object.
+    `MrisSmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -173,7 +173,7 @@ def mris_smooth_validate(
 
 
 def mris_smooth_cargs(
-    params: MrisSmoothParameters,
+    params: MrisSmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def mris_smooth_cargs(
 
 
 def mris_smooth_outputs(
-    params: MrisSmoothParameters,
+    params: MrisSmoothParamsDict,
     execution: Execution,
 ) -> MrisSmoothOutputs:
     """
@@ -254,7 +254,7 @@ def mris_smooth_outputs(
 
 
 def mris_smooth_execute(
-    params: MrisSmoothParameters,
+    params: MrisSmoothParamsDict,
     runner: Runner | None = None,
 ) -> MrisSmoothOutputs:
     """
@@ -346,6 +346,8 @@ def mris_smooth(
 __all__ = [
     "MRIS_SMOOTH_METADATA",
     "MrisSmoothOutputs",
+    "MrisSmoothParamsDict",
+    "MrisSmoothParamsDictTagged",
     "mris_smooth",
     "mris_smooth_execute",
     "mris_smooth_params",

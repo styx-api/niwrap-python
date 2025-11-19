@@ -13,7 +13,7 @@ FSLROI_METADATA = Metadata(
 )
 
 
-FslroiParameters = typing.TypedDict('FslroiParameters', {
+FslroiParamsDict = typing.TypedDict('FslroiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslroi"]],
     "infile": InputPathType,
     "outfile": str,
@@ -26,7 +26,7 @@ FslroiParameters = typing.TypedDict('FslroiParameters', {
     "tmin": typing.NotRequired[float | None],
     "tsize": typing.NotRequired[float | None],
 })
-FslroiParametersTagged = typing.TypedDict('FslroiParametersTagged', {
+FslroiParamsDictTagged = typing.TypedDict('FslroiParamsDictTagged', {
     "@type": typing.Literal["fsl/fslroi"],
     "infile": InputPathType,
     "outfile": str,
@@ -43,7 +43,7 @@ FslroiParametersTagged = typing.TypedDict('FslroiParametersTagged', {
 
 class FslroiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslroiParameters(...)`.
+    Output object returned when calling `FslroiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def fslroi_params(
     zsize: float | None = None,
     tmin: float | None = None,
     tsize: float | None = None,
-) -> FslroiParametersTagged:
+) -> FslroiParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def fslroi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslroiParameters` object.
+    `FslroiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def fslroi_validate(
 
 
 def fslroi_cargs(
-    params: FslroiParameters,
+    params: FslroiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def fslroi_cargs(
 
 
 def fslroi_outputs(
-    params: FslroiParameters,
+    params: FslroiParamsDict,
     execution: Execution,
 ) -> FslroiOutputs:
     """
@@ -207,7 +207,7 @@ def fslroi_outputs(
 
 
 def fslroi_execute(
-    params: FslroiParameters,
+    params: FslroiParamsDict,
     runner: Runner | None = None,
 ) -> FslroiOutputs:
     """
@@ -290,6 +290,8 @@ def fslroi(
 __all__ = [
     "FSLROI_METADATA",
     "FslroiOutputs",
+    "FslroiParamsDict",
+    "FslroiParamsDictTagged",
     "fslroi",
     "fslroi_execute",
     "fslroi_params",

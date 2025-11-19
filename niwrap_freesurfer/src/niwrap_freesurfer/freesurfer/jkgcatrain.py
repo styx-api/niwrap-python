@@ -13,7 +13,7 @@ JKGCATRAIN_METADATA = Metadata(
 )
 
 
-JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
+JkgcatrainParamsDict = typing.TypedDict('JkgcatrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/jkgcatrain"]],
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
     "no_submit": bool,
     "mail_flag": bool,
 })
-JkgcatrainParametersTagged = typing.TypedDict('JkgcatrainParametersTagged', {
+JkgcatrainParamsDictTagged = typing.TypedDict('JkgcatrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/jkgcatrain"],
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ JkgcatrainParametersTagged = typing.TypedDict('JkgcatrainParametersTagged', {
 
 class JkgcatrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `JkgcatrainParameters(...)`.
+    Output object returned when calling `JkgcatrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def jkgcatrain_params(
     num_threads: float | None = None,
     no_submit: bool = False,
     mail_flag: bool = False,
-) -> JkgcatrainParametersTagged:
+) -> JkgcatrainParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def jkgcatrain_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `JkgcatrainParameters` object.
+    `JkgcatrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def jkgcatrain_validate(
 
 
 def jkgcatrain_cargs(
-    params: JkgcatrainParameters,
+    params: JkgcatrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def jkgcatrain_cargs(
 
 
 def jkgcatrain_outputs(
-    params: JkgcatrainParameters,
+    params: JkgcatrainParamsDict,
     execution: Execution,
 ) -> JkgcatrainOutputs:
     """
@@ -159,7 +159,7 @@ def jkgcatrain_outputs(
 
 
 def jkgcatrain_execute(
-    params: JkgcatrainParameters,
+    params: JkgcatrainParamsDict,
     runner: Runner | None = None,
 ) -> JkgcatrainOutputs:
     """
@@ -227,6 +227,8 @@ def jkgcatrain(
 __all__ = [
     "JKGCATRAIN_METADATA",
     "JkgcatrainOutputs",
+    "JkgcatrainParamsDict",
+    "JkgcatrainParamsDictTagged",
     "jkgcatrain",
     "jkgcatrain_execute",
     "jkgcatrain_params",

@@ -3,7 +3,7 @@
   "properties": {
     "spatial-weights": {
       "var_param": "spatial_weights",
-      "fn_struct_make_params": "cifti_weighted_stats_spatial_weights_params",
+      "fn_struct_make_params": "cifti_weighted_stats_spatial_weights",
       "properties": {
         "left-surf": {
           "var_param": "left_surf"
@@ -33,7 +33,7 @@
     },
     "roi": {
       "var_param": "roi",
-      "fn_struct_make_params": "cifti_weighted_stats_roi_params",
+      "fn_struct_make_params": "cifti_weighted_stats_roi",
       "properties": {
         "roi-cifti": {
           "var_param": "roi_cifti"

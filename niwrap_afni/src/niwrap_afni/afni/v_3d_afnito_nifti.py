@@ -13,7 +13,7 @@ V_3D_AFNITO_NIFTI_METADATA = Metadata(
 )
 
 
-V3dAfnitoNiftiParameters = typing.TypedDict('V3dAfnitoNiftiParameters', {
+V3dAfnitoNiftiParamsDict = typing.TypedDict('V3dAfnitoNiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoNIFTI"]],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -24,7 +24,7 @@ V3dAfnitoNiftiParameters = typing.TypedDict('V3dAfnitoNiftiParameters', {
     "oldid": bool,
     "newid": bool,
 })
-V3dAfnitoNiftiParametersTagged = typing.TypedDict('V3dAfnitoNiftiParametersTagged', {
+V3dAfnitoNiftiParamsDictTagged = typing.TypedDict('V3dAfnitoNiftiParamsDictTagged', {
     "@type": typing.Literal["afni/3dAFNItoNIFTI"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ V3dAfnitoNiftiParametersTagged = typing.TypedDict('V3dAfnitoNiftiParametersTagge
 
 class V3dAfnitoNiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAfnitoNiftiParameters(...)`.
+    Output object returned when calling `V3dAfnitoNiftiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_3d_afnito_nifti_params(
     denote: bool = False,
     oldid: bool = False,
     newid: bool = False,
-) -> V3dAfnitoNiftiParametersTagged:
+) -> V3dAfnitoNiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def v_3d_afnito_nifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAfnitoNiftiParameters` object.
+    `V3dAfnitoNiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def v_3d_afnito_nifti_validate(
 
 
 def v_3d_afnito_nifti_cargs(
-    params: V3dAfnitoNiftiParameters,
+    params: V3dAfnitoNiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def v_3d_afnito_nifti_cargs(
 
 
 def v_3d_afnito_nifti_outputs(
-    params: V3dAfnitoNiftiParameters,
+    params: V3dAfnitoNiftiParamsDict,
     execution: Execution,
 ) -> V3dAfnitoNiftiOutputs:
     """
@@ -190,7 +190,7 @@ def v_3d_afnito_nifti_outputs(
 
 
 def v_3d_afnito_nifti_execute(
-    params: V3dAfnitoNiftiParameters,
+    params: V3dAfnitoNiftiParamsDict,
     runner: Runner | None = None,
 ) -> V3dAfnitoNiftiOutputs:
     """
@@ -267,6 +267,8 @@ def v_3d_afnito_nifti(
 
 __all__ = [
     "V3dAfnitoNiftiOutputs",
+    "V3dAfnitoNiftiParamsDict",
+    "V3dAfnitoNiftiParamsDictTagged",
     "V_3D_AFNITO_NIFTI_METADATA",
     "v_3d_afnito_nifti",
     "v_3d_afnito_nifti_execute",

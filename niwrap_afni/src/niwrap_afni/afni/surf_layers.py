@@ -13,7 +13,7 @@ SURF_LAYERS_METADATA = Metadata(
 )
 
 
-SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
+SurfLayersParamsDict = typing.TypedDict('SurfLayersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfLayers"]],
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
     "echo": bool,
     "no_clean": bool,
 })
-SurfLayersParametersTagged = typing.TypedDict('SurfLayersParametersTagged', {
+SurfLayersParamsDictTagged = typing.TypedDict('SurfLayersParamsDictTagged', {
     "@type": typing.Literal["afni/SurfLayers"],
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ SurfLayersParametersTagged = typing.TypedDict('SurfLayersParametersTagged', {
 
 class SurfLayersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfLayersParameters(...)`.
+    Output object returned when calling `SurfLayersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def surf_layers_params(
     surf_intermed_pref: str | None = None,
     echo: bool = False,
     no_clean: bool = False,
-) -> SurfLayersParametersTagged:
+) -> SurfLayersParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def surf_layers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfLayersParameters` object.
+    `SurfLayersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def surf_layers_validate(
 
 
 def surf_layers_cargs(
-    params: SurfLayersParameters,
+    params: SurfLayersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def surf_layers_cargs(
 
 
 def surf_layers_outputs(
-    params: SurfLayersParameters,
+    params: SurfLayersParamsDict,
     execution: Execution,
 ) -> SurfLayersOutputs:
     """
@@ -235,7 +235,7 @@ def surf_layers_outputs(
 
 
 def surf_layers_execute(
-    params: SurfLayersParameters,
+    params: SurfLayersParamsDict,
     runner: Runner | None = None,
 ) -> SurfLayersOutputs:
     """
@@ -320,6 +320,8 @@ def surf_layers(
 __all__ = [
     "SURF_LAYERS_METADATA",
     "SurfLayersOutputs",
+    "SurfLayersParamsDict",
+    "SurfLayersParamsDictTagged",
     "surf_layers",
     "surf_layers_execute",
     "surf_layers_params",

@@ -13,14 +13,14 @@ V_3D_PVMAP_METADATA = Metadata(
 )
 
 
-V3dPvmapParameters = typing.TypedDict('V3dPvmapParameters', {
+V3dPvmapParamsDict = typing.TypedDict('V3dPvmapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dPVmap"]],
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
     "inputdataset": InputPathType,
 })
-V3dPvmapParametersTagged = typing.TypedDict('V3dPvmapParametersTagged', {
+V3dPvmapParamsDictTagged = typing.TypedDict('V3dPvmapParamsDictTagged', {
     "@type": typing.Literal["afni/3dPVmap"],
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ V3dPvmapParametersTagged = typing.TypedDict('V3dPvmapParametersTagged', {
 
 class V3dPvmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dPvmapParameters(...)`.
+    Output object returned when calling `V3dPvmapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v_3d_pvmap_params(
     prefix: str | None = None,
     mask: InputPathType | None = None,
     automask: bool = False,
-) -> V3dPvmapParametersTagged:
+) -> V3dPvmapParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def v_3d_pvmap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dPvmapParameters` object.
+    `V3dPvmapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def v_3d_pvmap_validate(
 
 
 def v_3d_pvmap_cargs(
-    params: V3dPvmapParameters,
+    params: V3dPvmapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def v_3d_pvmap_cargs(
 
 
 def v_3d_pvmap_outputs(
-    params: V3dPvmapParameters,
+    params: V3dPvmapParamsDict,
     execution: Execution,
 ) -> V3dPvmapOutputs:
     """
@@ -154,7 +154,7 @@ def v_3d_pvmap_outputs(
 
 
 def v_3d_pvmap_execute(
-    params: V3dPvmapParameters,
+    params: V3dPvmapParamsDict,
     runner: Runner | None = None,
 ) -> V3dPvmapOutputs:
     """
@@ -222,6 +222,8 @@ def v_3d_pvmap(
 
 __all__ = [
     "V3dPvmapOutputs",
+    "V3dPvmapParamsDict",
+    "V3dPvmapParamsDictTagged",
     "V_3D_PVMAP_METADATA",
     "v_3d_pvmap",
     "v_3d_pvmap_execute",

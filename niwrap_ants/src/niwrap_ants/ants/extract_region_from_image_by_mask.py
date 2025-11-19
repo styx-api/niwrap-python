@@ -13,7 +13,7 @@ EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
 )
 
 
-ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImageByMaskParameters', {
+ExtractRegionFromImageByMaskParamsDict = typing.TypedDict('ExtractRegionFromImageByMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImageByMask"]],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -22,7 +22,7 @@ ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImag
     "label": typing.NotRequired[int | None],
     "pad_radius": typing.NotRequired[int | None],
 })
-ExtractRegionFromImageByMaskParametersTagged = typing.TypedDict('ExtractRegionFromImageByMaskParametersTagged', {
+ExtractRegionFromImageByMaskParamsDictTagged = typing.TypedDict('ExtractRegionFromImageByMaskParamsDictTagged', {
     "@type": typing.Literal["ants/ExtractRegionFromImageByMask"],
     "image_dimension": int,
     "input_image": InputPathType,
@@ -35,7 +35,7 @@ ExtractRegionFromImageByMaskParametersTagged = typing.TypedDict('ExtractRegionFr
 
 class ExtractRegionFromImageByMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ExtractRegionFromImageByMaskParameters(...)`.
+    Output object returned when calling `ExtractRegionFromImageByMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def extract_region_from_image_by_mask_params(
     label_mask_image: InputPathType,
     label: int | None = None,
     pad_radius: int | None = None,
-) -> ExtractRegionFromImageByMaskParametersTagged:
+) -> ExtractRegionFromImageByMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def extract_region_from_image_by_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ExtractRegionFromImageByMaskParameters` object.
+    `ExtractRegionFromImageByMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def extract_region_from_image_by_mask_validate(
 
 
 def extract_region_from_image_by_mask_cargs(
-    params: ExtractRegionFromImageByMaskParameters,
+    params: ExtractRegionFromImageByMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def extract_region_from_image_by_mask_cargs(
 
 
 def extract_region_from_image_by_mask_outputs(
-    params: ExtractRegionFromImageByMaskParameters,
+    params: ExtractRegionFromImageByMaskParamsDict,
     execution: Execution,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """
@@ -160,7 +160,7 @@ def extract_region_from_image_by_mask_outputs(
 
 
 def extract_region_from_image_by_mask_execute(
-    params: ExtractRegionFromImageByMaskParameters,
+    params: ExtractRegionFromImageByMaskParamsDict,
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """
@@ -235,6 +235,8 @@ def extract_region_from_image_by_mask(
 __all__ = [
     "EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA",
     "ExtractRegionFromImageByMaskOutputs",
+    "ExtractRegionFromImageByMaskParamsDict",
+    "ExtractRegionFromImageByMaskParamsDictTagged",
     "extract_region_from_image_by_mask",
     "extract_region_from_image_by_mask_execute",
     "extract_region_from_image_by_mask_params",

@@ -13,14 +13,14 @@ FS_LIB_CHECK_METADATA = Metadata(
 )
 
 
-FsLibCheckParameters = typing.TypedDict('FsLibCheckParameters', {
+FsLibCheckParamsDict = typing.TypedDict('FsLibCheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_lib_check"]],
     "use_ldconfig": bool,
     "use_rpm": bool,
     "show_help": bool,
     "show_version": bool,
 })
-FsLibCheckParametersTagged = typing.TypedDict('FsLibCheckParametersTagged', {
+FsLibCheckParamsDictTagged = typing.TypedDict('FsLibCheckParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_lib_check"],
     "use_ldconfig": bool,
     "use_rpm": bool,
@@ -31,7 +31,7 @@ FsLibCheckParametersTagged = typing.TypedDict('FsLibCheckParametersTagged', {
 
 class FsLibCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsLibCheckParameters(...)`.
+    Output object returned when calling `FsLibCheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def fs_lib_check_params(
     use_rpm: bool = False,
     show_help: bool = False,
     show_version: bool = False,
-) -> FsLibCheckParametersTagged:
+) -> FsLibCheckParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def fs_lib_check_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsLibCheckParameters` object.
+    `FsLibCheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def fs_lib_check_validate(
 
 
 def fs_lib_check_cargs(
-    params: FsLibCheckParameters,
+    params: FsLibCheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def fs_lib_check_cargs(
 
 
 def fs_lib_check_outputs(
-    params: FsLibCheckParameters,
+    params: FsLibCheckParamsDict,
     execution: Execution,
 ) -> FsLibCheckOutputs:
     """
@@ -145,7 +145,7 @@ def fs_lib_check_outputs(
 
 
 def fs_lib_check_execute(
-    params: FsLibCheckParameters,
+    params: FsLibCheckParamsDict,
     runner: Runner | None = None,
 ) -> FsLibCheckOutputs:
     """
@@ -217,6 +217,8 @@ def fs_lib_check(
 __all__ = [
     "FS_LIB_CHECK_METADATA",
     "FsLibCheckOutputs",
+    "FsLibCheckParamsDict",
+    "FsLibCheckParamsDictTagged",
     "fs_lib_check",
     "fs_lib_check_execute",
     "fs_lib_check_params",

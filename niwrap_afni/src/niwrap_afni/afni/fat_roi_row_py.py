@@ -13,14 +13,14 @@ FAT_ROI_ROW_PY_METADATA = Metadata(
 )
 
 
-FatRoiRowPyParameters = typing.TypedDict('FatRoiRowPyParameters', {
+FatRoiRowPyParamsDict = typing.TypedDict('FatRoiRowPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_roi_row.py"]],
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
     "extern_labs_no": bool,
 })
-FatRoiRowPyParametersTagged = typing.TypedDict('FatRoiRowPyParametersTagged', {
+FatRoiRowPyParamsDictTagged = typing.TypedDict('FatRoiRowPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_roi_row.py"],
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ FatRoiRowPyParametersTagged = typing.TypedDict('FatRoiRowPyParametersTagged', {
 
 class FatRoiRowPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatRoiRowPyParameters(...)`.
+    Output object returned when calling `FatRoiRowPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def fat_roi_row_py_params(
     matrix_files: str | None = None,
     list_file: InputPathType | None = None,
     extern_labs_no: bool = False,
-) -> FatRoiRowPyParametersTagged:
+) -> FatRoiRowPyParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def fat_roi_row_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatRoiRowPyParameters` object.
+    `FatRoiRowPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def fat_roi_row_py_validate(
 
 
 def fat_roi_row_py_cargs(
-    params: FatRoiRowPyParameters,
+    params: FatRoiRowPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def fat_roi_row_py_cargs(
 
 
 def fat_roi_row_py_outputs(
-    params: FatRoiRowPyParameters,
+    params: FatRoiRowPyParamsDict,
     execution: Execution,
 ) -> FatRoiRowPyOutputs:
     """
@@ -158,7 +158,7 @@ def fat_roi_row_py_outputs(
 
 
 def fat_roi_row_py_execute(
-    params: FatRoiRowPyParameters,
+    params: FatRoiRowPyParamsDict,
     runner: Runner | None = None,
 ) -> FatRoiRowPyOutputs:
     """
@@ -232,6 +232,8 @@ def fat_roi_row_py(
 __all__ = [
     "FAT_ROI_ROW_PY_METADATA",
     "FatRoiRowPyOutputs",
+    "FatRoiRowPyParamsDict",
+    "FatRoiRowPyParamsDictTagged",
     "fat_roi_row_py",
     "fat_roi_row_py_execute",
     "fat_roi_row_py_params",

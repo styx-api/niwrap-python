@@ -13,7 +13,7 @@ MRIS_CALC_METADATA = Metadata(
 )
 
 
-MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
+MrisCalcParamsDict = typing.TypedDict('MrisCalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_calc"]],
     "input_file1": InputPathType,
     "action": str,
@@ -22,7 +22,7 @@ MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
     "label_file": typing.NotRequired[InputPathType | None],
     "verbosity": typing.NotRequired[str | None],
 })
-MrisCalcParametersTagged = typing.TypedDict('MrisCalcParametersTagged', {
+MrisCalcParamsDictTagged = typing.TypedDict('MrisCalcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_calc"],
     "input_file1": InputPathType,
     "action": str,
@@ -35,7 +35,7 @@ MrisCalcParametersTagged = typing.TypedDict('MrisCalcParametersTagged', {
 
 class MrisCalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisCalcParameters(...)`.
+    Output object returned when calling `MrisCalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_calc_params(
     output_file: str | None = None,
     label_file: InputPathType | None = None,
     verbosity: str | None = None,
-) -> MrisCalcParametersTagged:
+) -> MrisCalcParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def mris_calc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisCalcParameters` object.
+    `MrisCalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -120,7 +120,7 @@ def mris_calc_validate(
 
 
 def mris_calc_cargs(
-    params: MrisCalcParameters,
+    params: MrisCalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def mris_calc_cargs(
 
 
 def mris_calc_outputs(
-    params: MrisCalcParameters,
+    params: MrisCalcParamsDict,
     execution: Execution,
 ) -> MrisCalcOutputs:
     """
@@ -177,7 +177,7 @@ def mris_calc_outputs(
 
 
 def mris_calc_execute(
-    params: MrisCalcParameters,
+    params: MrisCalcParamsDict,
     runner: Runner | None = None,
 ) -> MrisCalcOutputs:
     """
@@ -253,6 +253,8 @@ def mris_calc(
 __all__ = [
     "MRIS_CALC_METADATA",
     "MrisCalcOutputs",
+    "MrisCalcParamsDict",
+    "MrisCalcParamsDictTagged",
     "mris_calc",
     "mris_calc_execute",
     "mris_calc_params",

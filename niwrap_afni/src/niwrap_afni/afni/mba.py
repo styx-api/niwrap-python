@@ -13,7 +13,7 @@ MBA_METADATA = Metadata(
 )
 
 
-MbaParameters = typing.TypedDict('MbaParameters', {
+MbaParamsDict = typing.TypedDict('MbaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/MBA"]],
     "prefix": str,
     "chains": typing.NotRequired[int | None],
@@ -31,7 +31,7 @@ MbaParameters = typing.TypedDict('MbaParameters', {
     "dbgArgs": bool,
     "help": bool,
 })
-MbaParametersTagged = typing.TypedDict('MbaParametersTagged', {
+MbaParamsDictTagged = typing.TypedDict('MbaParamsDictTagged', {
     "@type": typing.Literal["afni/MBA"],
     "prefix": str,
     "chains": typing.NotRequired[int | None],
@@ -53,7 +53,7 @@ MbaParametersTagged = typing.TypedDict('MbaParametersTagged', {
 
 class MbaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MbaParameters(...)`.
+    Output object returned when calling `MbaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def mba_params(
     se: str | None = None,
     dbg_args: bool = False,
     help_: bool = False,
-) -> MbaParametersTagged:
+) -> MbaParamsDictTagged:
     """
     Build parameters.
     
@@ -143,7 +143,7 @@ def mba_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `MbaParameters`
+    Validate parameters. Throws an error if `params` is not a valid `MbaParamsDict`
     object.
     
     Args:
@@ -203,7 +203,7 @@ def mba_validate(
 
 
 def mba_cargs(
-    params: MbaParameters,
+    params: MbaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def mba_cargs(
 
 
 def mba_outputs(
-    params: MbaParameters,
+    params: MbaParamsDict,
     execution: Execution,
 ) -> MbaOutputs:
     """
@@ -307,7 +307,7 @@ def mba_outputs(
 
 
 def mba_execute(
-    params: MbaParameters,
+    params: MbaParamsDict,
     runner: Runner | None = None,
 ) -> MbaOutputs:
     """
@@ -408,6 +408,8 @@ def mba(
 __all__ = [
     "MBA_METADATA",
     "MbaOutputs",
+    "MbaParamsDict",
+    "MbaParamsDictTagged",
     "mba",
     "mba_execute",
     "mba_params",

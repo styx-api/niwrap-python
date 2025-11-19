@@ -13,7 +13,7 @@ SWI_PROCESS_METADATA = Metadata(
 )
 
 
-SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
+SwiProcessParamsDict = typing.TypedDict('SwiProcessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/swi_process"]],
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
@@ -27,7 +27,7 @@ SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
     "mip_level": typing.NotRequired[float | None],
     "phase_mask_method": typing.NotRequired[str | None],
 })
-SwiProcessParametersTagged = typing.TypedDict('SwiProcessParametersTagged', {
+SwiProcessParamsDictTagged = typing.TypedDict('SwiProcessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/swi_process"],
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
@@ -45,7 +45,7 @@ SwiProcessParametersTagged = typing.TypedDict('SwiProcessParametersTagged', {
 
 class SwiProcessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SwiProcessParameters(...)`.
+    Output object returned when calling `SwiProcessParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def swi_process_params(
     phase_multiplications: float | None = None,
     mip_level: float | None = None,
     phase_mask_method: str | None = None,
-) -> SwiProcessParametersTagged:
+) -> SwiProcessParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def swi_process_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SwiProcessParameters` object.
+    `SwiProcessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def swi_process_validate(
 
 
 def swi_process_cargs(
-    params: SwiProcessParameters,
+    params: SwiProcessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -232,7 +232,7 @@ def swi_process_cargs(
 
 
 def swi_process_outputs(
-    params: SwiProcessParameters,
+    params: SwiProcessParamsDict,
     execution: Execution,
 ) -> SwiProcessOutputs:
     """
@@ -252,7 +252,7 @@ def swi_process_outputs(
 
 
 def swi_process_execute(
-    params: SwiProcessParameters,
+    params: SwiProcessParamsDict,
     runner: Runner | None = None,
 ) -> SwiProcessOutputs:
     """
@@ -351,6 +351,8 @@ def swi_process(
 __all__ = [
     "SWI_PROCESS_METADATA",
     "SwiProcessOutputs",
+    "SwiProcessParamsDict",
+    "SwiProcessParamsDictTagged",
     "swi_process",
     "swi_process_execute",
     "swi_process_params",

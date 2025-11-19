@@ -13,34 +13,34 @@ SH2PEAKS_METADATA = Metadata(
 )
 
 
-Sh2peaksDirectionParameters = typing.TypedDict('Sh2peaksDirectionParameters', {
+Sh2peaksDirectionParamsDict = typing.TypedDict('Sh2peaksDirectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["direction"]],
     "phi": float,
     "theta": float,
 })
-Sh2peaksDirectionParametersTagged = typing.TypedDict('Sh2peaksDirectionParametersTagged', {
+Sh2peaksDirectionParamsDictTagged = typing.TypedDict('Sh2peaksDirectionParamsDictTagged', {
     "@type": typing.Literal["direction"],
     "phi": float,
     "theta": float,
 })
 
 
-Sh2peaksConfigParameters = typing.TypedDict('Sh2peaksConfigParameters', {
+Sh2peaksConfigParamsDict = typing.TypedDict('Sh2peaksConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Sh2peaksConfigParametersTagged = typing.TypedDict('Sh2peaksConfigParametersTagged', {
+Sh2peaksConfigParamsDictTagged = typing.TypedDict('Sh2peaksConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
+Sh2peaksParamsDict = typing.TypedDict('Sh2peaksParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/sh2peaks"]],
     "num": typing.NotRequired[int | None],
-    "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
+    "direction": typing.NotRequired[list[Sh2peaksDirectionParamsDict] | None],
     "peaks": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[float | None],
     "seeds": typing.NotRequired[InputPathType | None],
@@ -51,16 +51,16 @@ Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2peaksConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2peaksConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
     "output": str,
 })
-Sh2peaksParametersTagged = typing.TypedDict('Sh2peaksParametersTagged', {
+Sh2peaksParamsDictTagged = typing.TypedDict('Sh2peaksParamsDictTagged', {
     "@type": typing.Literal["mrtrix/sh2peaks"],
     "num": typing.NotRequired[int | None],
-    "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
+    "direction": typing.NotRequired[list[Sh2peaksDirectionParamsDict] | None],
     "peaks": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[float | None],
     "seeds": typing.NotRequired[InputPathType | None],
@@ -71,7 +71,7 @@ Sh2peaksParametersTagged = typing.TypedDict('Sh2peaksParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2peaksConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2peaksConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "SH": InputPathType,
@@ -79,10 +79,10 @@ Sh2peaksParametersTagged = typing.TypedDict('Sh2peaksParametersTagged', {
 })
 
 
-def sh2peaks_direction_params(
+def sh2peaks_direction(
     phi: float,
     theta: float,
-) -> Sh2peaksDirectionParametersTagged:
+) -> Sh2peaksDirectionParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def sh2peaks_direction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2peaksDirectionParameters` object.
+    `Sh2peaksDirectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def sh2peaks_direction_validate(
 
 
 def sh2peaks_direction_cargs(
-    params: Sh2peaksDirectionParameters,
+    params: Sh2peaksDirectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,10 +145,10 @@ def sh2peaks_direction_cargs(
     return cargs
 
 
-def sh2peaks_config_params(
+def sh2peaks_config(
     key: str,
     value: str,
-) -> Sh2peaksConfigParametersTagged:
+) -> Sh2peaksConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -171,7 +171,7 @@ def sh2peaks_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2peaksConfigParameters` object.
+    `Sh2peaksConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -189,7 +189,7 @@ def sh2peaks_config_validate(
 
 
 def sh2peaks_config_cargs(
-    params: Sh2peaksConfigParameters,
+    params: Sh2peaksConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def sh2peaks_config_cargs(
 
 class Sh2peaksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Sh2peaksParameters(...)`.
+    Output object returned when calling `Sh2peaksParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -223,7 +223,7 @@ def sh2peaks_params(
     sh: InputPathType,
     output: str,
     num: int | None = None,
-    direction: list[Sh2peaksDirectionParameters] | None = None,
+    direction: list[Sh2peaksDirectionParamsDict] | None = None,
     peaks: InputPathType | None = None,
     threshold: float | None = None,
     seeds: InputPathType | None = None,
@@ -234,10 +234,10 @@ def sh2peaks_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2peaksConfigParameters] | None = None,
+    config: list[Sh2peaksConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2peaksParametersTagged:
+) -> Sh2peaksParamsDictTagged:
     """
     Build parameters.
     
@@ -311,7 +311,7 @@ def sh2peaks_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2peaksParameters` object.
+    `Sh2peaksParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -323,7 +323,7 @@ def sh2peaks_validate(
             raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
     if params.get("direction", None) is not None:
         if not isinstance(params["direction"], list):
-            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `list[Sh2peaksDirectionParameters] | None`')
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `list[Sh2peaksDirectionParamsDict] | None`')
         for e in params["direction"]:
             sh2peaks_direction_validate(e)
     if params.get("peaks", None) is not None:
@@ -363,7 +363,7 @@ def sh2peaks_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2peaksConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2peaksConfigParamsDict] | None`')
         for e in params["config"]:
             sh2peaks_config_validate(e)
     if params.get("help", False) is None:
@@ -385,7 +385,7 @@ def sh2peaks_validate(
 
 
 def sh2peaks_cargs(
-    params: Sh2peaksParameters,
+    params: Sh2peaksParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -453,7 +453,7 @@ def sh2peaks_cargs(
 
 
 def sh2peaks_outputs(
-    params: Sh2peaksParameters,
+    params: Sh2peaksParamsDict,
     execution: Execution,
 ) -> Sh2peaksOutputs:
     """
@@ -473,7 +473,7 @@ def sh2peaks_outputs(
 
 
 def sh2peaks_execute(
-    params: Sh2peaksParameters,
+    params: Sh2peaksParamsDict,
     runner: Runner | None = None,
 ) -> Sh2peaksOutputs:
     """
@@ -519,7 +519,7 @@ def sh2peaks(
     sh: InputPathType,
     output: str,
     num: int | None = None,
-    direction: list[Sh2peaksDirectionParameters] | None = None,
+    direction: list[Sh2peaksDirectionParamsDict] | None = None,
     peaks: InputPathType | None = None,
     threshold: float | None = None,
     seeds: InputPathType | None = None,
@@ -530,7 +530,7 @@ def sh2peaks(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2peaksConfigParameters] | None = None,
+    config: list[Sh2peaksConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -617,10 +617,16 @@ def sh2peaks(
 
 __all__ = [
     "SH2PEAKS_METADATA",
+    "Sh2peaksConfigParamsDict",
+    "Sh2peaksConfigParamsDictTagged",
+    "Sh2peaksDirectionParamsDict",
+    "Sh2peaksDirectionParamsDictTagged",
     "Sh2peaksOutputs",
+    "Sh2peaksParamsDict",
+    "Sh2peaksParamsDictTagged",
     "sh2peaks",
-    "sh2peaks_config_params",
-    "sh2peaks_direction_params",
+    "sh2peaks_config",
+    "sh2peaks_direction",
     "sh2peaks_execute",
     "sh2peaks_params",
 ]

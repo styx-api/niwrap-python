@@ -13,7 +13,7 @@ RUN_FASTSURFER_SH_METADATA = Metadata(
 )
 
 
-RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
+RunFastsurferShParamsDict = typing.TypedDict('RunFastsurferShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fastsurfer/run_fastsurfer.sh"]],
     "sid": str,
     "subjects_dir": str,
@@ -51,7 +51,7 @@ RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
     "allow_root": bool,
     "version": typing.NotRequired[str | None],
 })
-RunFastsurferShParametersTagged = typing.TypedDict('RunFastsurferShParametersTagged', {
+RunFastsurferShParamsDictTagged = typing.TypedDict('RunFastsurferShParamsDictTagged', {
     "@type": typing.Literal["fastsurfer/run_fastsurfer.sh"],
     "sid": str,
     "subjects_dir": str,
@@ -93,7 +93,7 @@ RunFastsurferShParametersTagged = typing.TypedDict('RunFastsurferShParametersTag
 
 class RunFastsurferShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RunFastsurferShParameters(...)`.
+    Output object returned when calling `RunFastsurferShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +145,7 @@ def run_fastsurfer_sh_params(
     no_surfreg: bool = False,
     allow_root: bool = False,
     version: str | None = None,
-) -> RunFastsurferShParametersTagged:
+) -> RunFastsurferShParamsDictTagged:
     """
     Build parameters.
     
@@ -252,7 +252,7 @@ def run_fastsurfer_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RunFastsurferShParameters` object.
+    `RunFastsurferShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -393,7 +393,7 @@ def run_fastsurfer_sh_validate(
 
 
 def run_fastsurfer_sh_cargs(
-    params: RunFastsurferShParameters,
+    params: RunFastsurferShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -532,7 +532,7 @@ def run_fastsurfer_sh_cargs(
 
 
 def run_fastsurfer_sh_outputs(
-    params: RunFastsurferShParameters,
+    params: RunFastsurferShParamsDict,
     execution: Execution,
 ) -> RunFastsurferShOutputs:
     """
@@ -556,7 +556,7 @@ def run_fastsurfer_sh_outputs(
 
 
 def run_fastsurfer_sh_execute(
-    params: RunFastsurferShParameters,
+    params: RunFastsurferShParamsDict,
     runner: Runner | None = None,
 ) -> RunFastsurferShOutputs:
     """
@@ -711,6 +711,8 @@ def run_fastsurfer_sh(
 __all__ = [
     "RUN_FASTSURFER_SH_METADATA",
     "RunFastsurferShOutputs",
+    "RunFastsurferShParamsDict",
+    "RunFastsurferShParamsDictTagged",
     "run_fastsurfer_sh",
     "run_fastsurfer_sh_execute",
     "run_fastsurfer_sh_params",

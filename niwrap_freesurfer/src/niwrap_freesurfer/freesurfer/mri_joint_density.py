@@ -13,13 +13,13 @@ MRI_JOINT_DENSITY_METADATA = Metadata(
 )
 
 
-MriJointDensityParameters = typing.TypedDict('MriJointDensityParameters', {
+MriJointDensityParamsDict = typing.TypedDict('MriJointDensityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_joint_density"]],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_density_file": str,
 })
-MriJointDensityParametersTagged = typing.TypedDict('MriJointDensityParametersTagged', {
+MriJointDensityParamsDictTagged = typing.TypedDict('MriJointDensityParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_joint_density"],
     "vol1": InputPathType,
     "vol2": InputPathType,
@@ -29,7 +29,7 @@ MriJointDensityParametersTagged = typing.TypedDict('MriJointDensityParametersTag
 
 class MriJointDensityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriJointDensityParameters(...)`.
+    Output object returned when calling `MriJointDensityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_joint_density_params(
     vol1: InputPathType,
     vol2: InputPathType,
     output_density_file: str,
-) -> MriJointDensityParametersTagged:
+) -> MriJointDensityParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_joint_density_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriJointDensityParameters` object.
+    `MriJointDensityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_joint_density_validate(
 
 
 def mri_joint_density_cargs(
-    params: MriJointDensityParameters,
+    params: MriJointDensityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_joint_density_cargs(
 
 
 def mri_joint_density_outputs(
-    params: MriJointDensityParameters,
+    params: MriJointDensityParamsDict,
     execution: Execution,
 ) -> MriJointDensityOutputs:
     """
@@ -129,7 +129,7 @@ def mri_joint_density_outputs(
 
 
 def mri_joint_density_execute(
-    params: MriJointDensityParameters,
+    params: MriJointDensityParamsDict,
     runner: Runner | None = None,
 ) -> MriJointDensityOutputs:
     """
@@ -191,6 +191,8 @@ def mri_joint_density(
 __all__ = [
     "MRI_JOINT_DENSITY_METADATA",
     "MriJointDensityOutputs",
+    "MriJointDensityParamsDict",
+    "MriJointDensityParamsDictTagged",
     "mri_joint_density",
     "mri_joint_density_execute",
     "mri_joint_density_params",

@@ -13,11 +13,11 @@ FIXUP_MNI_PATHS_METADATA = Metadata(
 )
 
 
-FixupMniPathsParameters = typing.TypedDict('FixupMniPathsParameters', {
+FixupMniPathsParamsDict = typing.TypedDict('FixupMniPathsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fixup_mni_paths"]],
     "verbose": bool,
 })
-FixupMniPathsParametersTagged = typing.TypedDict('FixupMniPathsParametersTagged', {
+FixupMniPathsParamsDictTagged = typing.TypedDict('FixupMniPathsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fixup_mni_paths"],
     "verbose": bool,
 })
@@ -25,7 +25,7 @@ FixupMniPathsParametersTagged = typing.TypedDict('FixupMniPathsParametersTagged'
 
 class FixupMniPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixupMniPathsParameters(...)`.
+    Output object returned when calling `FixupMniPathsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ class FixupMniPathsOutputs(typing.NamedTuple):
 
 def fixup_mni_paths_params(
     verbose: bool = False,
-) -> FixupMniPathsParametersTagged:
+) -> FixupMniPathsParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def fixup_mni_paths_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixupMniPathsParameters` object.
+    `FixupMniPathsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -94,7 +94,7 @@ def fixup_mni_paths_validate(
 
 
 def fixup_mni_paths_cargs(
-    params: FixupMniPathsParameters,
+    params: FixupMniPathsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def fixup_mni_paths_cargs(
 
 
 def fixup_mni_paths_outputs(
-    params: FixupMniPathsParameters,
+    params: FixupMniPathsParamsDict,
     execution: Execution,
 ) -> FixupMniPathsOutputs:
     """
@@ -146,7 +146,7 @@ def fixup_mni_paths_outputs(
 
 
 def fixup_mni_paths_execute(
-    params: FixupMniPathsParameters,
+    params: FixupMniPathsParamsDict,
     runner: Runner | None = None,
 ) -> FixupMniPathsOutputs:
     """
@@ -202,6 +202,8 @@ def fixup_mni_paths(
 __all__ = [
     "FIXUP_MNI_PATHS_METADATA",
     "FixupMniPathsOutputs",
+    "FixupMniPathsParamsDict",
+    "FixupMniPathsParamsDictTagged",
     "fixup_mni_paths",
     "fixup_mni_paths_execute",
     "fixup_mni_paths_params",

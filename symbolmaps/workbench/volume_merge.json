@@ -6,21 +6,21 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "volume_merge_volume_params",
+      "fn_struct_make_params": "volume_merge_volume",
       "properties": {
         "volume-in": {
           "var_param": "volume_in"
         },
         "subvolume": {
           "var_param": "subvolume",
-          "fn_struct_make_params": "volume_merge_subvolume_params",
+          "fn_struct_make_params": "volume_merge_subvolume",
           "properties": {
             "subvol": {
               "var_param": "subvol"
             },
             "up-to": {
               "var_param": "up_to",
-              "fn_struct_make_params": "volume_merge_up_to_params",
+              "fn_struct_make_params": "volume_merge_up_to",
               "properties": {
                 "last-subvol": {
                   "var_param": "last_subvol"

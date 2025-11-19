@@ -13,7 +13,7 @@ MRIS_REGISTER_LABEL_MAP_METADATA = Metadata(
 )
 
 
-MrisRegisterLabelMapParameters = typing.TypedDict('MrisRegisterLabelMapParameters', {
+MrisRegisterLabelMapParamsDict = typing.TypedDict('MrisRegisterLabelMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_label_map"]],
     "subjects_list": str,
     "target_subject": str,
@@ -27,7 +27,7 @@ MrisRegisterLabelMapParameters = typing.TypedDict('MrisRegisterLabelMapParameter
     "version": bool,
     "vno": typing.NotRequired[float | None],
 })
-MrisRegisterLabelMapParametersTagged = typing.TypedDict('MrisRegisterLabelMapParametersTagged', {
+MrisRegisterLabelMapParamsDictTagged = typing.TypedDict('MrisRegisterLabelMapParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_register_label_map"],
     "subjects_list": str,
     "target_subject": str,
@@ -45,7 +45,7 @@ MrisRegisterLabelMapParametersTagged = typing.TypedDict('MrisRegisterLabelMapPar
 
 class MrisRegisterLabelMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRegisterLabelMapParameters(...)`.
+    Output object returned when calling `MrisRegisterLabelMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def mris_register_label_map_params(
     subjects_dir: str | None = None,
     version: bool = False,
     vno: float | None = None,
-) -> MrisRegisterLabelMapParametersTagged:
+) -> MrisRegisterLabelMapParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def mris_register_label_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRegisterLabelMapParameters` object.
+    `MrisRegisterLabelMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def mris_register_label_map_validate(
 
 
 def mris_register_label_map_cargs(
-    params: MrisRegisterLabelMapParameters,
+    params: MrisRegisterLabelMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -214,7 +214,7 @@ def mris_register_label_map_cargs(
 
 
 def mris_register_label_map_outputs(
-    params: MrisRegisterLabelMapParameters,
+    params: MrisRegisterLabelMapParamsDict,
     execution: Execution,
 ) -> MrisRegisterLabelMapOutputs:
     """
@@ -233,7 +233,7 @@ def mris_register_label_map_outputs(
 
 
 def mris_register_label_map_execute(
-    params: MrisRegisterLabelMapParameters,
+    params: MrisRegisterLabelMapParamsDict,
     runner: Runner | None = None,
 ) -> MrisRegisterLabelMapOutputs:
     """
@@ -319,6 +319,8 @@ def mris_register_label_map(
 __all__ = [
     "MRIS_REGISTER_LABEL_MAP_METADATA",
     "MrisRegisterLabelMapOutputs",
+    "MrisRegisterLabelMapParamsDict",
+    "MrisRegisterLabelMapParamsDictTagged",
     "mris_register_label_map",
     "mris_register_label_map_execute",
     "mris_register_label_map_params",

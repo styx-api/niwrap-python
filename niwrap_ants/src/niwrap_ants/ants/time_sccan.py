@@ -13,43 +13,43 @@ TIME_SCCAN_METADATA = Metadata(
 )
 
 
-TimeSccanTimeseriesimageToMatrixParameters = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParameters', {
+TimeSccanTimeseriesimageToMatrixParamsDict = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["timeseriesimage_to_matrix"]],
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
-TimeSccanTimeseriesimageToMatrixParametersTagged = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParametersTagged', {
+TimeSccanTimeseriesimageToMatrixParamsDictTagged = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParamsDictTagged', {
     "@type": typing.Literal["timeseriesimage_to_matrix"],
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
 
 
-TimeSccanNetworkSccaParameters = typing.TypedDict('TimeSccanNetworkSccaParameters', {
+TimeSccanNetworkSccaParamsDict = typing.TypedDict('TimeSccanNetworkSccaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["network_scca"]],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
-TimeSccanNetworkSccaParametersTagged = typing.TypedDict('TimeSccanNetworkSccaParametersTagged', {
+TimeSccanNetworkSccaParamsDictTagged = typing.TypedDict('TimeSccanNetworkSccaParamsDictTagged', {
     "@type": typing.Literal["network_scca"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
-TimeSccanNetworkRegionAveragingParameters = typing.TypedDict('TimeSccanNetworkRegionAveragingParameters', {
+TimeSccanNetworkRegionAveragingParamsDict = typing.TypedDict('TimeSccanNetworkRegionAveragingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["network_region_averaging"]],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
-TimeSccanNetworkRegionAveragingParametersTagged = typing.TypedDict('TimeSccanNetworkRegionAveragingParametersTagged', {
+TimeSccanNetworkRegionAveragingParamsDictTagged = typing.TypedDict('TimeSccanNetworkRegionAveragingParamsDictTagged', {
     "@type": typing.Literal["network_region_averaging"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
-TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
+TimeSccanParamsDict = typing.TypedDict('TimeSccanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/TimeSCCAN"]],
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
@@ -62,11 +62,11 @@ TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
     "cluster_thresh": typing.NotRequired[int | None],
     "ridge_cca": typing.NotRequired[int | None],
     "partial_scca_option": typing.NotRequired[typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None],
-    "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParameters | None],
+    "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParamsDict | None],
     "labelsimage_to_matrix": typing.NotRequired[InputPathType | None],
-    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None],
+    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParamsDictTagged, TimeSccanNetworkRegionAveragingParamsDictTagged] | None],
 })
-TimeSccanParametersTagged = typing.TypedDict('TimeSccanParametersTagged', {
+TimeSccanParamsDictTagged = typing.TypedDict('TimeSccanParamsDictTagged', {
     "@type": typing.Literal["ants/TimeSCCAN"],
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
@@ -79,9 +79,9 @@ TimeSccanParametersTagged = typing.TypedDict('TimeSccanParametersTagged', {
     "cluster_thresh": typing.NotRequired[int | None],
     "ridge_cca": typing.NotRequired[int | None],
     "partial_scca_option": typing.NotRequired[typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None],
-    "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParameters | None],
+    "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParamsDict | None],
     "labelsimage_to_matrix": typing.NotRequired[InputPathType | None],
-    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None],
+    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParamsDictTagged, TimeSccanNetworkRegionAveragingParamsDictTagged] | None],
 })
 
 
@@ -119,10 +119,10 @@ def time_sccan_network_validate_dyn_fn(
     }.get(t)
 
 
-def time_sccan_timeseriesimage_to_matrix_params(
+def time_sccan_timeseriesimage_to_matrix(
     timeseries_image: InputPathType,
     mask_image: InputPathType,
-) -> TimeSccanTimeseriesimageToMatrixParametersTagged:
+) -> TimeSccanTimeseriesimageToMatrixParamsDictTagged:
     """
     Build parameters.
     
@@ -145,7 +145,7 @@ def time_sccan_timeseriesimage_to_matrix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TimeSccanTimeseriesimageToMatrixParameters` object.
+    `TimeSccanTimeseriesimageToMatrixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def time_sccan_timeseriesimage_to_matrix_validate(
 
 
 def time_sccan_timeseriesimage_to_matrix_cargs(
-    params: TimeSccanTimeseriesimageToMatrixParameters,
+    params: TimeSccanTimeseriesimageToMatrixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,10 +180,10 @@ def time_sccan_timeseriesimage_to_matrix_cargs(
     return cargs
 
 
-def time_sccan_network_scca_params(
+def time_sccan_network_scca(
     time_matrix: InputPathType,
     label_matrix: InputPathType,
-) -> TimeSccanNetworkSccaParametersTagged:
+) -> TimeSccanNetworkSccaParamsDictTagged:
     """
     Build parameters.
     
@@ -206,7 +206,7 @@ def time_sccan_network_scca_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TimeSccanNetworkSccaParameters` object.
+    `TimeSccanNetworkSccaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -224,7 +224,7 @@ def time_sccan_network_scca_validate(
 
 
 def time_sccan_network_scca_cargs(
-    params: TimeSccanNetworkSccaParameters,
+    params: TimeSccanNetworkSccaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -241,10 +241,10 @@ def time_sccan_network_scca_cargs(
     return cargs
 
 
-def time_sccan_network_region_averaging_params(
+def time_sccan_network_region_averaging(
     time_matrix: InputPathType,
     label_matrix: InputPathType,
-) -> TimeSccanNetworkRegionAveragingParametersTagged:
+) -> TimeSccanNetworkRegionAveragingParamsDictTagged:
     """
     Build parameters.
     
@@ -267,7 +267,7 @@ def time_sccan_network_region_averaging_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TimeSccanNetworkRegionAveragingParameters` object.
+    `TimeSccanNetworkRegionAveragingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -285,7 +285,7 @@ def time_sccan_network_region_averaging_validate(
 
 
 def time_sccan_network_region_averaging_cargs(
-    params: TimeSccanNetworkRegionAveragingParameters,
+    params: TimeSccanNetworkRegionAveragingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,7 +304,7 @@ def time_sccan_network_region_averaging_cargs(
 
 class TimeSccanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TimeSccanParameters(...)`.
+    Output object returned when calling `TimeSccanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -324,10 +324,10 @@ def time_sccan_params(
     cluster_thresh: int | None = None,
     ridge_cca: int | None = None,
     partial_scca_option: typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None = None,
-    timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParameters | None = None,
+    timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParamsDict | None = None,
     labelsimage_to_matrix: InputPathType | None = None,
-    network: typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None = None,
-) -> TimeSccanParametersTagged:
+    network: typing.Union[TimeSccanNetworkSccaParamsDictTagged, TimeSccanNetworkRegionAveragingParamsDictTagged] | None = None,
+) -> TimeSccanParamsDictTagged:
     """
     Build parameters.
     
@@ -396,7 +396,7 @@ def time_sccan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TimeSccanParameters` object.
+    `TimeSccanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -449,11 +449,13 @@ def time_sccan_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["network"])}\'')
         if "@type" not in params["network"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["network"]["@type"] not in ["network_scca", "network_region_averaging"]:
+            raise StyxValidationError("Parameter `network`s `@type` must be one of [\"network_scca\", \"network_region_averaging\"]")
         time_sccan_network_validate_dyn_fn(params["network"]["@type"])(params["network"])
 
 
 def time_sccan_cargs(
-    params: TimeSccanParameters,
+    params: TimeSccanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -540,7 +542,7 @@ def time_sccan_cargs(
 
 
 def time_sccan_outputs(
-    params: TimeSccanParameters,
+    params: TimeSccanParamsDict,
     execution: Execution,
 ) -> TimeSccanOutputs:
     """
@@ -560,7 +562,7 @@ def time_sccan_outputs(
 
 
 def time_sccan_execute(
-    params: TimeSccanParameters,
+    params: TimeSccanParamsDict,
     runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
@@ -600,9 +602,9 @@ def time_sccan(
     cluster_thresh: int | None = None,
     ridge_cca: int | None = None,
     partial_scca_option: typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None = None,
-    timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParameters | None = None,
+    timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParamsDict | None = None,
     labelsimage_to_matrix: InputPathType | None = None,
-    network: typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None = None,
+    network: typing.Union[TimeSccanNetworkSccaParamsDictTagged, TimeSccanNetworkRegionAveragingParamsDictTagged] | None = None,
     runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
@@ -663,11 +665,19 @@ def time_sccan(
 
 __all__ = [
     "TIME_SCCAN_METADATA",
+    "TimeSccanNetworkRegionAveragingParamsDict",
+    "TimeSccanNetworkRegionAveragingParamsDictTagged",
+    "TimeSccanNetworkSccaParamsDict",
+    "TimeSccanNetworkSccaParamsDictTagged",
     "TimeSccanOutputs",
+    "TimeSccanParamsDict",
+    "TimeSccanParamsDictTagged",
+    "TimeSccanTimeseriesimageToMatrixParamsDict",
+    "TimeSccanTimeseriesimageToMatrixParamsDictTagged",
     "time_sccan",
     "time_sccan_execute",
-    "time_sccan_network_region_averaging_params",
-    "time_sccan_network_scca_params",
+    "time_sccan_network_region_averaging",
+    "time_sccan_network_scca",
     "time_sccan_params",
-    "time_sccan_timeseriesimage_to_matrix_params",
+    "time_sccan_timeseriesimage_to_matrix",
 ]

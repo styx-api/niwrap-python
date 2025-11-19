@@ -13,13 +13,13 @@ LABELS_DISJOINT_METADATA = Metadata(
 )
 
 
-LabelsDisjointParameters = typing.TypedDict('LabelsDisjointParameters', {
+LabelsDisjointParamsDict = typing.TypedDict('LabelsDisjointParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/labels_disjoint"]],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
-LabelsDisjointParametersTagged = typing.TypedDict('LabelsDisjointParametersTagged', {
+LabelsDisjointParamsDictTagged = typing.TypedDict('LabelsDisjointParamsDictTagged', {
     "@type": typing.Literal["freesurfer/labels_disjoint"],
     "label1": InputPathType,
     "label2": InputPathType,
@@ -29,7 +29,7 @@ LabelsDisjointParametersTagged = typing.TypedDict('LabelsDisjointParametersTagge
 
 class LabelsDisjointOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelsDisjointParameters(...)`.
+    Output object returned when calling `LabelsDisjointParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def labels_disjoint_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsDisjointParametersTagged:
+) -> LabelsDisjointParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def labels_disjoint_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelsDisjointParameters` object.
+    `LabelsDisjointParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def labels_disjoint_validate(
 
 
 def labels_disjoint_cargs(
-    params: LabelsDisjointParameters,
+    params: LabelsDisjointParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def labels_disjoint_cargs(
 
 
 def labels_disjoint_outputs(
-    params: LabelsDisjointParameters,
+    params: LabelsDisjointParamsDict,
     execution: Execution,
 ) -> LabelsDisjointOutputs:
     """
@@ -131,7 +131,7 @@ def labels_disjoint_outputs(
 
 
 def labels_disjoint_execute(
-    params: LabelsDisjointParameters,
+    params: LabelsDisjointParamsDict,
     runner: Runner | None = None,
 ) -> LabelsDisjointOutputs:
     """
@@ -197,6 +197,8 @@ def labels_disjoint(
 __all__ = [
     "LABELS_DISJOINT_METADATA",
     "LabelsDisjointOutputs",
+    "LabelsDisjointParamsDict",
+    "LabelsDisjointParamsDictTagged",
     "labels_disjoint",
     "labels_disjoint_execute",
     "labels_disjoint_params",

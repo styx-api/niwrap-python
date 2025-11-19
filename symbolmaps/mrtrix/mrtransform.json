@@ -54,7 +54,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "mrtransform_fslgrad_params",
+      "fn_struct_make_params": "mrtransform_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -69,7 +69,7 @@
     },
     "export_grad_fsl": {
       "var_param": "export_grad_fsl",
-      "fn_struct_make_params": "mrtransform_export_grad_fsl_params",
+      "fn_struct_make_params": "mrtransform_export_grad_fsl",
       "properties": {
         "bvecs_path": {
           "var_param": "bvecs_path"
@@ -86,7 +86,7 @@
       "var_param": "strides",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "mrtransform_various_string_params",
+          "fn_struct_make_params": "mrtransform_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -94,7 +94,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "mrtransform_various_file_params",
+          "fn_struct_make_params": "mrtransform_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -126,7 +126,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrtransform_config_params",
+      "fn_struct_make_params": "mrtransform_config",
       "properties": {
         "key": {
           "var_param": "key"

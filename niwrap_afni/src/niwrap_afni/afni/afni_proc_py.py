@@ -13,7 +13,7 @@ AFNI_PROC_PY_METADATA = Metadata(
 )
 
 
-AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
+AfniProcPyParamsDict = typing.TypedDict('AfniProcPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_proc.py"]],
     "dsets": list[InputPathType],
     "subj_id": str,
@@ -27,7 +27,7 @@ AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
     "copy_anat": typing.NotRequired[InputPathType | None],
     "regress_params": typing.NotRequired[list[str] | None],
 })
-AfniProcPyParametersTagged = typing.TypedDict('AfniProcPyParametersTagged', {
+AfniProcPyParamsDictTagged = typing.TypedDict('AfniProcPyParamsDictTagged', {
     "@type": typing.Literal["afni/afni_proc.py"],
     "dsets": list[InputPathType],
     "subj_id": str,
@@ -45,7 +45,7 @@ AfniProcPyParametersTagged = typing.TypedDict('AfniProcPyParametersTagged', {
 
 class AfniProcPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniProcPyParameters(...)`.
+    Output object returned when calling `AfniProcPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def afni_proc_py_params(
     copy_files: list[InputPathType] | None = None,
     copy_anat: InputPathType | None = None,
     regress_params: list[str] | None = None,
-) -> AfniProcPyParametersTagged:
+) -> AfniProcPyParamsDictTagged:
     """
     Build parameters.
     
@@ -118,7 +118,7 @@ def afni_proc_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniProcPyParameters` object.
+    `AfniProcPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def afni_proc_py_validate(
 
 
 def afni_proc_py_cargs(
-    params: AfniProcPyParameters,
+    params: AfniProcPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -225,7 +225,7 @@ def afni_proc_py_cargs(
 
 
 def afni_proc_py_outputs(
-    params: AfniProcPyParameters,
+    params: AfniProcPyParamsDict,
     execution: Execution,
 ) -> AfniProcPyOutputs:
     """
@@ -245,7 +245,7 @@ def afni_proc_py_outputs(
 
 
 def afni_proc_py_execute(
-    params: AfniProcPyParameters,
+    params: AfniProcPyParamsDict,
     runner: Runner | None = None,
 ) -> AfniProcPyOutputs:
     """
@@ -335,6 +335,8 @@ def afni_proc_py(
 __all__ = [
     "AFNI_PROC_PY_METADATA",
     "AfniProcPyOutputs",
+    "AfniProcPyParamsDict",
+    "AfniProcPyParamsDictTagged",
     "afni_proc_py",
     "afni_proc_py_execute",
     "afni_proc_py_params",

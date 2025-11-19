@@ -13,7 +13,7 @@ SURFACE_BASED_SMOOTHING_METADATA = Metadata(
 )
 
 
-SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParameters', {
+SurfaceBasedSmoothingParamsDict = typing.TypedDict('SurfaceBasedSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/SurfaceBasedSmoothing"]],
     "image_to_smooth": InputPathType,
     "sigma": float,
@@ -21,7 +21,7 @@ SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParamet
     "outname": str,
     "num_repeats": typing.NotRequired[int | None],
 })
-SurfaceBasedSmoothingParametersTagged = typing.TypedDict('SurfaceBasedSmoothingParametersTagged', {
+SurfaceBasedSmoothingParamsDictTagged = typing.TypedDict('SurfaceBasedSmoothingParamsDictTagged', {
     "@type": typing.Literal["ants/SurfaceBasedSmoothing"],
     "image_to_smooth": InputPathType,
     "sigma": float,
@@ -33,7 +33,7 @@ SurfaceBasedSmoothingParametersTagged = typing.TypedDict('SurfaceBasedSmoothingP
 
 class SurfaceBasedSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceBasedSmoothingParameters(...)`.
+    Output object returned when calling `SurfaceBasedSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def surface_based_smoothing_params(
     surface_image: InputPathType,
     outname: str,
     num_repeats: int | None = None,
-) -> SurfaceBasedSmoothingParametersTagged:
+) -> SurfaceBasedSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def surface_based_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceBasedSmoothingParameters` object.
+    `SurfaceBasedSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def surface_based_smoothing_validate(
 
 
 def surface_based_smoothing_cargs(
-    params: SurfaceBasedSmoothingParameters,
+    params: SurfaceBasedSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def surface_based_smoothing_cargs(
 
 
 def surface_based_smoothing_outputs(
-    params: SurfaceBasedSmoothingParameters,
+    params: SurfaceBasedSmoothingParamsDict,
     execution: Execution,
 ) -> SurfaceBasedSmoothingOutputs:
     """
@@ -151,7 +151,7 @@ def surface_based_smoothing_outputs(
 
 
 def surface_based_smoothing_execute(
-    params: SurfaceBasedSmoothingParameters,
+    params: SurfaceBasedSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceBasedSmoothingOutputs:
     """
@@ -222,6 +222,8 @@ def surface_based_smoothing(
 __all__ = [
     "SURFACE_BASED_SMOOTHING_METADATA",
     "SurfaceBasedSmoothingOutputs",
+    "SurfaceBasedSmoothingParamsDict",
+    "SurfaceBasedSmoothingParamsDictTagged",
     "surface_based_smoothing",
     "surface_based_smoothing_execute",
     "surface_based_smoothing_params",

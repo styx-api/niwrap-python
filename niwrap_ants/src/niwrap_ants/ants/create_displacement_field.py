@@ -13,14 +13,14 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 )
 
 
-CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldParameters', {
+CreateDisplacementFieldParamsDict = typing.TypedDict('CreateDisplacementFieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/CreateDisplacementField"]],
     "image_dimension": int,
     "enforce_zero_boundary_flag": bool,
     "component_images": list[InputPathType],
     "output_image": str,
 })
-CreateDisplacementFieldParametersTagged = typing.TypedDict('CreateDisplacementFieldParametersTagged', {
+CreateDisplacementFieldParamsDictTagged = typing.TypedDict('CreateDisplacementFieldParamsDictTagged', {
     "@type": typing.Literal["ants/CreateDisplacementField"],
     "image_dimension": int,
     "enforce_zero_boundary_flag": bool,
@@ -31,7 +31,7 @@ CreateDisplacementFieldParametersTagged = typing.TypedDict('CreateDisplacementFi
 
 class CreateDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateDisplacementFieldParameters(...)`.
+    Output object returned when calling `CreateDisplacementFieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def create_displacement_field_params(
     enforce_zero_boundary_flag: bool,
     component_images: list[InputPathType],
     output_image: str,
-) -> CreateDisplacementFieldParametersTagged:
+) -> CreateDisplacementFieldParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def create_displacement_field_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateDisplacementFieldParameters` object.
+    `CreateDisplacementFieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -108,7 +108,7 @@ def create_displacement_field_validate(
 
 
 def create_displacement_field_cargs(
-    params: CreateDisplacementFieldParameters,
+    params: CreateDisplacementFieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def create_displacement_field_cargs(
 
 
 def create_displacement_field_outputs(
-    params: CreateDisplacementFieldParameters,
+    params: CreateDisplacementFieldParamsDict,
     execution: Execution,
 ) -> CreateDisplacementFieldOutputs:
     """
@@ -150,7 +150,7 @@ def create_displacement_field_outputs(
 
 
 def create_displacement_field_execute(
-    params: CreateDisplacementFieldParameters,
+    params: CreateDisplacementFieldParamsDict,
     runner: Runner | None = None,
 ) -> CreateDisplacementFieldOutputs:
     """
@@ -232,6 +232,8 @@ def create_displacement_field(
 __all__ = [
     "CREATE_DISPLACEMENT_FIELD_METADATA",
     "CreateDisplacementFieldOutputs",
+    "CreateDisplacementFieldParamsDict",
+    "CreateDisplacementFieldParamsDictTagged",
     "create_displacement_field",
     "create_displacement_field_execute",
     "create_displacement_field_params",

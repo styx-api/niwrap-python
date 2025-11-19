@@ -13,7 +13,7 @@ V_3D_FFT_METADATA = Metadata(
 )
 
 
-V3dFftParameters = typing.TypedDict('V3dFftParameters', {
+V3dFftParamsDict = typing.TypedDict('V3dFftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dFFT"]],
     "dataset": InputPathType,
     "abs": bool,
@@ -28,7 +28,7 @@ V3dFftParameters = typing.TypedDict('V3dFftParameters', {
     "input": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
 })
-V3dFftParametersTagged = typing.TypedDict('V3dFftParametersTagged', {
+V3dFftParamsDictTagged = typing.TypedDict('V3dFftParamsDictTagged', {
     "@type": typing.Literal["afni/3dFFT"],
     "dataset": InputPathType,
     "abs": bool,
@@ -47,7 +47,7 @@ V3dFftParametersTagged = typing.TypedDict('V3dFftParametersTagged', {
 
 class V3dFftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dFftParameters(...)`.
+    Output object returned when calling `V3dFftParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +68,7 @@ def v_3d_fft_params(
     alt_out: bool = False,
     input_: InputPathType | None = None,
     prefix: str | None = None,
-) -> V3dFftParametersTagged:
+) -> V3dFftParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def v_3d_fft_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dFftParameters` object.
+    `V3dFftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def v_3d_fft_validate(
 
 
 def v_3d_fft_cargs(
-    params: V3dFftParameters,
+    params: V3dFftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -230,7 +230,7 @@ def v_3d_fft_cargs(
 
 
 def v_3d_fft_outputs(
-    params: V3dFftParameters,
+    params: V3dFftParamsDict,
     execution: Execution,
 ) -> V3dFftOutputs:
     """
@@ -250,7 +250,7 @@ def v_3d_fft_outputs(
 
 
 def v_3d_fft_execute(
-    params: V3dFftParameters,
+    params: V3dFftParamsDict,
     runner: Runner | None = None,
 ) -> V3dFftOutputs:
     """
@@ -345,6 +345,8 @@ def v_3d_fft(
 
 __all__ = [
     "V3dFftOutputs",
+    "V3dFftParamsDict",
+    "V3dFftParamsDictTagged",
     "V_3D_FFT_METADATA",
     "v_3d_fft",
     "v_3d_fft_execute",

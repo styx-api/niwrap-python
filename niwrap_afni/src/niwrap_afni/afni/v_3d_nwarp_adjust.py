@@ -13,13 +13,13 @@ V_3D_NWARP_ADJUST_METADATA = Metadata(
 )
 
 
-V3dNwarpAdjustParameters = typing.TypedDict('V3dNwarpAdjustParameters', {
+V3dNwarpAdjustParamsDict = typing.TypedDict('V3dNwarpAdjustParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNwarpAdjust"]],
     "input_warps": list[InputPathType],
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
     "output_prefix": typing.NotRequired[str | None],
 })
-V3dNwarpAdjustParametersTagged = typing.TypedDict('V3dNwarpAdjustParametersTagged', {
+V3dNwarpAdjustParamsDictTagged = typing.TypedDict('V3dNwarpAdjustParamsDictTagged', {
     "@type": typing.Literal["afni/3dNwarpAdjust"],
     "input_warps": list[InputPathType],
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
@@ -29,7 +29,7 @@ V3dNwarpAdjustParametersTagged = typing.TypedDict('V3dNwarpAdjustParametersTagge
 
 class V3dNwarpAdjustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNwarpAdjustParameters(...)`.
+    Output object returned when calling `V3dNwarpAdjustParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def v_3d_nwarp_adjust_params(
     input_warps: list[InputPathType],
     source_datasets: list[InputPathType] | None = None,
     output_prefix: str | None = None,
-) -> V3dNwarpAdjustParametersTagged:
+) -> V3dNwarpAdjustParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def v_3d_nwarp_adjust_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNwarpAdjustParameters` object.
+    `V3dNwarpAdjustParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def v_3d_nwarp_adjust_validate(
 
 
 def v_3d_nwarp_adjust_cargs(
-    params: V3dNwarpAdjustParameters,
+    params: V3dNwarpAdjustParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def v_3d_nwarp_adjust_cargs(
 
 
 def v_3d_nwarp_adjust_outputs(
-    params: V3dNwarpAdjustParameters,
+    params: V3dNwarpAdjustParamsDict,
     execution: Execution,
 ) -> V3dNwarpAdjustOutputs:
     """
@@ -152,7 +152,7 @@ def v_3d_nwarp_adjust_outputs(
 
 
 def v_3d_nwarp_adjust_execute(
-    params: V3dNwarpAdjustParameters,
+    params: V3dNwarpAdjustParamsDict,
     runner: Runner | None = None,
 ) -> V3dNwarpAdjustOutputs:
     """
@@ -220,6 +220,8 @@ def v_3d_nwarp_adjust(
 
 __all__ = [
     "V3dNwarpAdjustOutputs",
+    "V3dNwarpAdjustParamsDict",
+    "V3dNwarpAdjustParamsDictTagged",
     "V_3D_NWARP_ADJUST_METADATA",
     "v_3d_nwarp_adjust",
     "v_3d_nwarp_adjust_execute",

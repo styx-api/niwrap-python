@@ -13,7 +13,7 @@ V_3D_FDR_METADATA = Metadata(
 )
 
 
-V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
+V3dFdrParamsDict = typing.TypedDict('V3dFdrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dFDR"]],
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
     "float": bool,
     "qval": bool,
 })
-V3dFdrParametersTagged = typing.TypedDict('V3dFdrParametersTagged', {
+V3dFdrParamsDictTagged = typing.TypedDict('V3dFdrParamsDictTagged', {
     "@type": typing.Literal["afni/3dFDR"],
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ V3dFdrParametersTagged = typing.TypedDict('V3dFdrParametersTagged', {
 
 class V3dFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dFdrParameters(...)`.
+    Output object returned when calling `V3dFdrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v_3d_fdr_params(
     force: bool = False,
     float_: bool = False,
     qval: bool = False,
-) -> V3dFdrParametersTagged:
+) -> V3dFdrParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def v_3d_fdr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dFdrParameters` object.
+    `V3dFdrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -201,7 +201,7 @@ def v_3d_fdr_validate(
 
 
 def v_3d_fdr_cargs(
-    params: V3dFdrParameters,
+    params: V3dFdrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -266,7 +266,7 @@ def v_3d_fdr_cargs(
 
 
 def v_3d_fdr_outputs(
-    params: V3dFdrParameters,
+    params: V3dFdrParamsDict,
     execution: Execution,
 ) -> V3dFdrOutputs:
     """
@@ -288,7 +288,7 @@ def v_3d_fdr_outputs(
 
 
 def v_3d_fdr_execute(
-    params: V3dFdrParameters,
+    params: V3dFdrParamsDict,
     runner: Runner | None = None,
 ) -> V3dFdrOutputs:
     """
@@ -390,6 +390,8 @@ def v_3d_fdr(
 
 __all__ = [
     "V3dFdrOutputs",
+    "V3dFdrParamsDict",
+    "V3dFdrParamsDictTagged",
     "V_3D_FDR_METADATA",
     "v_3d_fdr",
     "v_3d_fdr_execute",

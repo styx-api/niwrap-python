@@ -13,7 +13,7 @@ SIENAX_METADATA = Metadata(
 )
 
 
-SienaxParameters = typing.TypedDict('SienaxParameters', {
+SienaxParamsDict = typing.TypedDict('SienaxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/sienax"]],
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ SienaxParameters = typing.TypedDict('SienaxParameters', {
     "lesion_mask": typing.NotRequired[InputPathType | None],
     "fast_options": typing.NotRequired[str | None],
 })
-SienaxParametersTagged = typing.TypedDict('SienaxParametersTagged', {
+SienaxParamsDictTagged = typing.TypedDict('SienaxParamsDictTagged', {
     "@type": typing.Literal["fsl/sienax"],
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ SienaxParametersTagged = typing.TypedDict('SienaxParametersTagged', {
 
 class SienaxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SienaxParameters(...)`.
+    Output object returned when calling `SienaxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def sienax_params(
     regional_flag: bool = False,
     lesion_mask: InputPathType | None = None,
     fast_options: str | None = None,
-) -> SienaxParametersTagged:
+) -> SienaxParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def sienax_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SienaxParameters` object.
+    `SienaxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def sienax_validate(
 
 
 def sienax_cargs(
-    params: SienaxParameters,
+    params: SienaxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -225,7 +225,7 @@ def sienax_cargs(
 
 
 def sienax_outputs(
-    params: SienaxParameters,
+    params: SienaxParamsDict,
     execution: Execution,
 ) -> SienaxOutputs:
     """
@@ -246,7 +246,7 @@ def sienax_outputs(
 
 
 def sienax_execute(
-    params: SienaxParameters,
+    params: SienaxParamsDict,
     runner: Runner | None = None,
 ) -> SienaxOutputs:
     """
@@ -340,6 +340,8 @@ def sienax(
 __all__ = [
     "SIENAX_METADATA",
     "SienaxOutputs",
+    "SienaxParamsDict",
+    "SienaxParamsDictTagged",
     "sienax",
     "sienax_execute",
     "sienax_params",

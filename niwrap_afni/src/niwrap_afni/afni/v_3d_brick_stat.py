@@ -13,7 +13,7 @@ V_3D_BRICK_STAT_METADATA = Metadata(
 )
 
 
-V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
+V3dBrickStatParamsDict = typing.TypedDict('V3dBrickStatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBrickStat"]],
     "dataset": str,
     "quick": bool,
@@ -46,7 +46,7 @@ V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
     "ver": bool,
     "help": bool,
 })
-V3dBrickStatParametersTagged = typing.TypedDict('V3dBrickStatParametersTagged', {
+V3dBrickStatParamsDictTagged = typing.TypedDict('V3dBrickStatParamsDictTagged', {
     "@type": typing.Literal["afni/3dBrickStat"],
     "dataset": str,
     "quick": bool,
@@ -83,7 +83,7 @@ V3dBrickStatParametersTagged = typing.TypedDict('V3dBrickStatParametersTagged', 
 
 class V3dBrickStatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBrickStatParameters(...)`.
+    Output object returned when calling `V3dBrickStatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +122,7 @@ def v_3d_brick_stat_params(
     perc_quiet: bool = False,
     ver: bool = False,
     help_: bool = False,
-) -> V3dBrickStatParametersTagged:
+) -> V3dBrickStatParamsDictTagged:
     """
     Build parameters.
     
@@ -209,7 +209,7 @@ def v_3d_brick_stat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBrickStatParameters` object.
+    `V3dBrickStatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -347,7 +347,7 @@ def v_3d_brick_stat_validate(
 
 
 def v_3d_brick_stat_cargs(
-    params: V3dBrickStatParameters,
+    params: V3dBrickStatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -439,7 +439,7 @@ def v_3d_brick_stat_cargs(
 
 
 def v_3d_brick_stat_outputs(
-    params: V3dBrickStatParameters,
+    params: V3dBrickStatParamsDict,
     execution: Execution,
 ) -> V3dBrickStatOutputs:
     """
@@ -459,7 +459,7 @@ def v_3d_brick_stat_outputs(
 
 
 def v_3d_brick_stat_execute(
-    params: V3dBrickStatParameters,
+    params: V3dBrickStatParamsDict,
     runner: Runner | None = None,
 ) -> V3dBrickStatOutputs:
     """
@@ -604,6 +604,8 @@ def v_3d_brick_stat(
 
 __all__ = [
     "V3dBrickStatOutputs",
+    "V3dBrickStatParamsDict",
+    "V3dBrickStatParamsDictTagged",
     "V_3D_BRICK_STAT_METADATA",
     "v_3d_brick_stat",
     "v_3d_brick_stat_execute",

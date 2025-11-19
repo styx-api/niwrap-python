@@ -13,7 +13,7 @@ DIMON_METADATA = Metadata(
 )
 
 
-DimonParameters = typing.TypedDict('DimonParameters', {
+DimonParamsDict = typing.TypedDict('DimonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/Dimon"]],
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
@@ -25,7 +25,7 @@ DimonParameters = typing.TypedDict('DimonParameters', {
     "te_list": typing.NotRequired[str | None],
     "sort_method": typing.NotRequired[str | None],
 })
-DimonParametersTagged = typing.TypedDict('DimonParametersTagged', {
+DimonParamsDictTagged = typing.TypedDict('DimonParamsDictTagged', {
     "@type": typing.Literal["afni/Dimon"],
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ DimonParametersTagged = typing.TypedDict('DimonParametersTagged', {
 
 class DimonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DimonParameters(...)`.
+    Output object returned when calling `DimonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def dimon_params(
     drive_wait: str | None = None,
     te_list: str | None = None,
     sort_method: str | None = None,
-) -> DimonParametersTagged:
+) -> DimonParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def dimon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DimonParameters` object.
+    `DimonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def dimon_validate(
 
 
 def dimon_cargs(
-    params: DimonParameters,
+    params: DimonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def dimon_cargs(
 
 
 def dimon_outputs(
-    params: DimonParameters,
+    params: DimonParamsDict,
     execution: Execution,
 ) -> DimonOutputs:
     """
@@ -224,7 +224,7 @@ def dimon_outputs(
 
 
 def dimon_execute(
-    params: DimonParameters,
+    params: DimonParamsDict,
     runner: Runner | None = None,
 ) -> DimonOutputs:
     """
@@ -304,6 +304,8 @@ def dimon(
 __all__ = [
     "DIMON_METADATA",
     "DimonOutputs",
+    "DimonParamsDict",
+    "DimonParamsDictTagged",
     "dimon",
     "dimon_execute",
     "dimon_params",

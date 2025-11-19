@@ -13,14 +13,14 @@ RMZ_METADATA = Metadata(
 )
 
 
-RmzParameters = typing.TypedDict('RmzParameters', {
+RmzParamsDict = typing.TypedDict('RmzParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/rmz"]],
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
     "keep_flag": bool,
     "filenames": list[InputPathType],
 })
-RmzParametersTagged = typing.TypedDict('RmzParametersTagged', {
+RmzParamsDictTagged = typing.TypedDict('RmzParamsDictTagged', {
     "@type": typing.Literal["afni/rmz"],
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
@@ -31,7 +31,7 @@ RmzParametersTagged = typing.TypedDict('RmzParametersTagged', {
 
 class RmzOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RmzParameters(...)`.
+    Output object returned when calling `RmzParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def rmz_params(
     quiet: bool = False,
     hash_flag: float | None = None,
     keep_flag: bool = False,
-) -> RmzParametersTagged:
+) -> RmzParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def rmz_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `RmzParameters`
+    Validate parameters. Throws an error if `params` is not a valid `RmzParamsDict`
     object.
     
     Args:
@@ -98,7 +98,7 @@ def rmz_validate(
 
 
 def rmz_cargs(
-    params: RmzParameters,
+    params: RmzParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def rmz_cargs(
 
 
 def rmz_outputs(
-    params: RmzParameters,
+    params: RmzParamsDict,
     execution: Execution,
 ) -> RmzOutputs:
     """
@@ -145,7 +145,7 @@ def rmz_outputs(
 
 
 def rmz_execute(
-    params: RmzParameters,
+    params: RmzParamsDict,
     runner: Runner | None = None,
 ) -> RmzOutputs:
     """
@@ -210,6 +210,8 @@ def rmz(
 __all__ = [
     "RMZ_METADATA",
     "RmzOutputs",
+    "RmzParamsDict",
+    "RmzParamsDictTagged",
     "rmz",
     "rmz_execute",
     "rmz_params",

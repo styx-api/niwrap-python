@@ -39,7 +39,7 @@
     },
     "seed_image": {
       "var_param": "seed_image",
-      "fn_struct_make_params": "tckgen_seed_image_params",
+      "fn_struct_make_params": "tckgen_seed_image",
       "properties": {
         "image": {
           "var_param": "image"
@@ -48,7 +48,7 @@
     },
     "seed_sphere": {
       "var_param": "seed_sphere",
-      "fn_struct_make_params": "tckgen_seed_sphere_params",
+      "fn_struct_make_params": "tckgen_seed_sphere",
       "properties": {
         "spec": {
           "var_param": "spec"
@@ -57,7 +57,7 @@
     },
     "seed_random_per_voxel": {
       "var_param": "seed_random_per_voxel",
-      "fn_struct_make_params": "tckgen_seed_random_per_voxel_params",
+      "fn_struct_make_params": "tckgen_seed_random_per_voxel",
       "properties": {
         "image": {
           "var_param": "image"
@@ -69,7 +69,7 @@
     },
     "seed_grid_per_voxel": {
       "var_param": "seed_grid_per_voxel",
-      "fn_struct_make_params": "tckgen_seed_grid_per_voxel_params",
+      "fn_struct_make_params": "tckgen_seed_grid_per_voxel",
       "properties": {
         "image": {
           "var_param": "image"
@@ -81,7 +81,7 @@
     },
     "seed_rejection": {
       "var_param": "seed_rejection",
-      "fn_struct_make_params": "tckgen_seed_rejection_params",
+      "fn_struct_make_params": "tckgen_seed_rejection",
       "properties": {
         "image": {
           "var_param": "image"
@@ -90,7 +90,7 @@
     },
     "seed_gmwmi": {
       "var_param": "seed_gmwmi",
-      "fn_struct_make_params": "tckgen_seed_gmwmi_params",
+      "fn_struct_make_params": "tckgen_seed_gmwmi",
       "properties": {
         "image": {
           "var_param": "image"
@@ -120,13 +120,13 @@
     },
     "include": {
       "var_param": "include",
-      "fn_struct_make_params": "tckgen_include_params",
+      "fn_struct_make_params": "tckgen_include",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString": {
-              "fn_struct_make_params": "tckgen_various_string_params",
+              "fn_struct_make_params": "tckgen_various_string",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -134,7 +134,7 @@
               }
             },
             "VariousFile": {
-              "fn_struct_make_params": "tckgen_various_file_params",
+              "fn_struct_make_params": "tckgen_various_file",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -147,7 +147,7 @@
     },
     "include_ordered": {
       "var_param": "include_ordered",
-      "fn_struct_make_params": "tckgen_include_ordered_params",
+      "fn_struct_make_params": "tckgen_include_ordered",
       "properties": {
         "image": {
           "var_param": "image"
@@ -156,13 +156,13 @@
     },
     "exclude": {
       "var_param": "exclude",
-      "fn_struct_make_params": "tckgen_exclude_params",
+      "fn_struct_make_params": "tckgen_exclude",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString_1": {
-              "fn_struct_make_params": "tckgen_various_string_1_params",
+              "fn_struct_make_params": "tckgen_various_string_1",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -170,7 +170,7 @@
               }
             },
             "VariousFile_1": {
-              "fn_struct_make_params": "tckgen_various_file_1_params",
+              "fn_struct_make_params": "tckgen_various_file_1",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -183,13 +183,13 @@
     },
     "mask": {
       "var_param": "mask",
-      "fn_struct_make_params": "tckgen_mask_params",
+      "fn_struct_make_params": "tckgen_mask",
       "properties": {
         "spec": {
           "var_param": "spec",
           "variants": {
             "VariousString_2": {
-              "fn_struct_make_params": "tckgen_various_string_2_params",
+              "fn_struct_make_params": "tckgen_various_string_2",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -197,7 +197,7 @@
               }
             },
             "VariousFile_2": {
-              "fn_struct_make_params": "tckgen_various_file_2_params",
+              "fn_struct_make_params": "tckgen_various_file_2",
               "properties": {
                 "obj": {
                   "var_param": "obj"
@@ -228,7 +228,7 @@
     },
     "fslgrad": {
       "var_param": "fslgrad",
-      "fn_struct_make_params": "tckgen_fslgrad_params",
+      "fn_struct_make_params": "tckgen_fslgrad",
       "properties": {
         "bvecs": {
           "var_param": "bvecs"
@@ -255,7 +255,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "tckgen_config_params",
+      "fn_struct_make_params": "tckgen_config",
       "properties": {
         "key": {
           "var_param": "key"

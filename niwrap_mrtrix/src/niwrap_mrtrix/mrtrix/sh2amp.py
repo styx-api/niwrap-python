@@ -13,82 +13,82 @@ SH2AMP_METADATA = Metadata(
 )
 
 
-Sh2ampFslgradParameters = typing.TypedDict('Sh2ampFslgradParameters', {
+Sh2ampFslgradParamsDict = typing.TypedDict('Sh2ampFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Sh2ampFslgradParametersTagged = typing.TypedDict('Sh2ampFslgradParametersTagged', {
+Sh2ampFslgradParamsDictTagged = typing.TypedDict('Sh2ampFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Sh2ampVariousStringParameters = typing.TypedDict('Sh2ampVariousStringParameters', {
+Sh2ampVariousStringParamsDict = typing.TypedDict('Sh2ampVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-Sh2ampVariousStringParametersTagged = typing.TypedDict('Sh2ampVariousStringParametersTagged', {
+Sh2ampVariousStringParamsDictTagged = typing.TypedDict('Sh2ampVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-Sh2ampVariousFileParameters = typing.TypedDict('Sh2ampVariousFileParameters', {
+Sh2ampVariousFileParamsDict = typing.TypedDict('Sh2ampVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-Sh2ampVariousFileParametersTagged = typing.TypedDict('Sh2ampVariousFileParametersTagged', {
+Sh2ampVariousFileParamsDictTagged = typing.TypedDict('Sh2ampVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-Sh2ampConfigParameters = typing.TypedDict('Sh2ampConfigParameters', {
+Sh2ampConfigParamsDict = typing.TypedDict('Sh2ampConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Sh2ampConfigParametersTagged = typing.TypedDict('Sh2ampConfigParametersTagged', {
+Sh2ampConfigParamsDictTagged = typing.TypedDict('Sh2ampConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Sh2ampParameters = typing.TypedDict('Sh2ampParameters', {
+Sh2ampParamsDict = typing.TypedDict('Sh2ampParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/sh2amp"]],
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],
-    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None],
+    "fslgrad": typing.NotRequired[Sh2ampFslgradParamsDict | None],
+    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParamsDictTagged, Sh2ampVariousFileParamsDictTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2ampConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2ampConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "directions": InputPathType,
     "output": str,
 })
-Sh2ampParametersTagged = typing.TypedDict('Sh2ampParametersTagged', {
+Sh2ampParamsDictTagged = typing.TypedDict('Sh2ampParamsDictTagged', {
     "@type": typing.Literal["mrtrix/sh2amp"],
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],
-    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None],
+    "fslgrad": typing.NotRequired[Sh2ampFslgradParamsDict | None],
+    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParamsDictTagged, Sh2ampVariousFileParamsDictTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Sh2ampConfigParameters] | None],
+    "config": typing.NotRequired[list[Sh2ampConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -131,10 +131,10 @@ def sh2amp_strides_validate_dyn_fn(
     }.get(t)
 
 
-def sh2amp_fslgrad_params(
+def sh2amp_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Sh2ampFslgradParametersTagged:
+) -> Sh2ampFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -163,7 +163,7 @@ def sh2amp_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2ampFslgradParameters` object.
+    `Sh2ampFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -181,7 +181,7 @@ def sh2amp_fslgrad_validate(
 
 
 def sh2amp_fslgrad_cargs(
-    params: Sh2ampFslgradParameters,
+    params: Sh2ampFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,9 +200,9 @@ def sh2amp_fslgrad_cargs(
     return cargs
 
 
-def sh2amp_various_string_params(
+def sh2amp_various_string(
     obj: str,
-) -> Sh2ampVariousStringParametersTagged:
+) -> Sh2ampVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -223,7 +223,7 @@ def sh2amp_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2ampVariousStringParameters` object.
+    `Sh2ampVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -237,7 +237,7 @@ def sh2amp_various_string_validate(
 
 
 def sh2amp_various_string_cargs(
-    params: Sh2ampVariousStringParameters,
+    params: Sh2ampVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,9 +254,9 @@ def sh2amp_various_string_cargs(
     return cargs
 
 
-def sh2amp_various_file_params(
+def sh2amp_various_file(
     obj: InputPathType,
-) -> Sh2ampVariousFileParametersTagged:
+) -> Sh2ampVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -277,7 +277,7 @@ def sh2amp_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2ampVariousFileParameters` object.
+    `Sh2ampVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -291,7 +291,7 @@ def sh2amp_various_file_validate(
 
 
 def sh2amp_various_file_cargs(
-    params: Sh2ampVariousFileParameters,
+    params: Sh2ampVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -308,10 +308,10 @@ def sh2amp_various_file_cargs(
     return cargs
 
 
-def sh2amp_config_params(
+def sh2amp_config(
     key: str,
     value: str,
-) -> Sh2ampConfigParametersTagged:
+) -> Sh2ampConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -334,7 +334,7 @@ def sh2amp_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2ampConfigParameters` object.
+    `Sh2ampConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -352,7 +352,7 @@ def sh2amp_config_validate(
 
 
 def sh2amp_config_cargs(
-    params: Sh2ampConfigParameters,
+    params: Sh2ampConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -373,7 +373,7 @@ def sh2amp_config_cargs(
 
 class Sh2ampOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Sh2ampParameters(...)`.
+    Output object returned when calling `Sh2ampParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -388,18 +388,18 @@ def sh2amp_params(
     output: str,
     nonnegative: bool = False,
     grad: InputPathType | None = None,
-    fslgrad: Sh2ampFslgradParameters | None = None,
-    strides: typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None = None,
+    fslgrad: Sh2ampFslgradParamsDict | None = None,
+    strides: typing.Union[Sh2ampVariousStringParamsDictTagged, Sh2ampVariousFileParamsDictTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2ampConfigParameters] | None = None,
+    config: list[Sh2ampConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2ampParametersTagged:
+) -> Sh2ampParamsDictTagged:
     """
     Build parameters.
     
@@ -479,7 +479,7 @@ def sh2amp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Sh2ampParameters` object.
+    `Sh2ampParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -500,6 +500,8 @@ def sh2amp_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         sh2amp_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("datatype", None) is not None:
         if not isinstance(params["datatype"], str):
@@ -525,7 +527,7 @@ def sh2amp_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2ampConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2ampConfigParamsDict] | None`')
         for e in params["config"]:
             sh2amp_config_validate(e)
     if params.get("help", False) is None:
@@ -551,7 +553,7 @@ def sh2amp_validate(
 
 
 def sh2amp_cargs(
-    params: Sh2ampParameters,
+    params: Sh2ampParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -610,7 +612,7 @@ def sh2amp_cargs(
 
 
 def sh2amp_outputs(
-    params: Sh2ampParameters,
+    params: Sh2ampParamsDict,
     execution: Execution,
 ) -> Sh2ampOutputs:
     """
@@ -630,7 +632,7 @@ def sh2amp_outputs(
 
 
 def sh2amp_execute(
-    params: Sh2ampParameters,
+    params: Sh2ampParamsDict,
     runner: Runner | None = None,
 ) -> Sh2ampOutputs:
     """
@@ -698,15 +700,15 @@ def sh2amp(
     output: str,
     nonnegative: bool = False,
     grad: InputPathType | None = None,
-    fslgrad: Sh2ampFslgradParameters | None = None,
-    strides: typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None = None,
+    fslgrad: Sh2ampFslgradParamsDict | None = None,
+    strides: typing.Union[Sh2ampVariousStringParamsDictTagged, Sh2ampVariousFileParamsDictTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Sh2ampConfigParameters] | None = None,
+    config: list[Sh2ampConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -821,12 +823,22 @@ def sh2amp(
 
 __all__ = [
     "SH2AMP_METADATA",
+    "Sh2ampConfigParamsDict",
+    "Sh2ampConfigParamsDictTagged",
+    "Sh2ampFslgradParamsDict",
+    "Sh2ampFslgradParamsDictTagged",
     "Sh2ampOutputs",
+    "Sh2ampParamsDict",
+    "Sh2ampParamsDictTagged",
+    "Sh2ampVariousFileParamsDict",
+    "Sh2ampVariousFileParamsDictTagged",
+    "Sh2ampVariousStringParamsDict",
+    "Sh2ampVariousStringParamsDictTagged",
     "sh2amp",
-    "sh2amp_config_params",
+    "sh2amp_config",
     "sh2amp_execute",
-    "sh2amp_fslgrad_params",
+    "sh2amp_fslgrad",
     "sh2amp_params",
-    "sh2amp_various_file_params",
-    "sh2amp_various_string_params",
+    "sh2amp_various_file",
+    "sh2amp_various_string",
 ]

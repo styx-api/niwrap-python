@@ -13,7 +13,7 @@ UN_WARP_EPI_PY_METADATA = Metadata(
 )
 
 
-UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
+UnWarpEpiPyParamsDict = typing.TypedDict('UnWarpEpiPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/unWarpEPI.py"]],
     "forward": InputPathType,
     "reverse": InputPathType,
@@ -22,7 +22,7 @@ UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
     "subjID": str,
     "giant_move": bool,
 })
-UnWarpEpiPyParametersTagged = typing.TypedDict('UnWarpEpiPyParametersTagged', {
+UnWarpEpiPyParamsDictTagged = typing.TypedDict('UnWarpEpiPyParamsDictTagged', {
     "@type": typing.Literal["afni/unWarpEPI.py"],
     "forward": InputPathType,
     "reverse": InputPathType,
@@ -35,7 +35,7 @@ UnWarpEpiPyParametersTagged = typing.TypedDict('UnWarpEpiPyParametersTagged', {
 
 class UnWarpEpiPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnWarpEpiPyParameters(...)`.
+    Output object returned when calling `UnWarpEpiPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def un_warp_epi_py_params(
     data: str,
     subj_id: str,
     giant_move: bool = False,
-) -> UnWarpEpiPyParametersTagged:
+) -> UnWarpEpiPyParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def un_warp_epi_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnWarpEpiPyParameters` object.
+    `UnWarpEpiPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def un_warp_epi_py_validate(
 
 
 def un_warp_epi_py_cargs(
-    params: UnWarpEpiPyParameters,
+    params: UnWarpEpiPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def un_warp_epi_py_cargs(
 
 
 def un_warp_epi_py_outputs(
-    params: UnWarpEpiPyParameters,
+    params: UnWarpEpiPyParamsDict,
     execution: Execution,
 ) -> UnWarpEpiPyOutputs:
     """
@@ -174,7 +174,7 @@ def un_warp_epi_py_outputs(
 
 
 def un_warp_epi_py_execute(
-    params: UnWarpEpiPyParameters,
+    params: UnWarpEpiPyParamsDict,
     runner: Runner | None = None,
 ) -> UnWarpEpiPyOutputs:
     """
@@ -249,6 +249,8 @@ def un_warp_epi_py(
 __all__ = [
     "UN_WARP_EPI_PY_METADATA",
     "UnWarpEpiPyOutputs",
+    "UnWarpEpiPyParamsDict",
+    "UnWarpEpiPyParamsDictTagged",
     "un_warp_epi_py",
     "un_warp_epi_py_execute",
     "un_warp_epi_py_params",

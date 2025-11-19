@@ -13,7 +13,7 @@ ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA = Metadata(
 )
 
 
-AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDiffusionDirectionParameters', {
+AntsMotionCorrDiffusionDirectionParamsDict = typing.TypedDict('AntsMotionCorrDiffusionDirectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrDiffusionDirection"]],
     "scheme": InputPathType,
     "bvec": InputPathType,
@@ -21,7 +21,7 @@ AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDif
     "moco": InputPathType,
     "output": str,
 })
-AntsMotionCorrDiffusionDirectionParametersTagged = typing.TypedDict('AntsMotionCorrDiffusionDirectionParametersTagged', {
+AntsMotionCorrDiffusionDirectionParamsDictTagged = typing.TypedDict('AntsMotionCorrDiffusionDirectionParamsDictTagged', {
     "@type": typing.Literal["ants/antsMotionCorrDiffusionDirection"],
     "scheme": InputPathType,
     "bvec": InputPathType,
@@ -33,7 +33,7 @@ AntsMotionCorrDiffusionDirectionParametersTagged = typing.TypedDict('AntsMotionC
 
 class AntsMotionCorrDiffusionDirectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsMotionCorrDiffusionDirectionParameters(...)`.
+    Output object returned when calling `AntsMotionCorrDiffusionDirectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def ants_motion_corr_diffusion_direction_params(
     physical: InputPathType,
     moco: InputPathType,
     output: str,
-) -> AntsMotionCorrDiffusionDirectionParametersTagged:
+) -> AntsMotionCorrDiffusionDirectionParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def ants_motion_corr_diffusion_direction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsMotionCorrDiffusionDirectionParameters` object.
+    `AntsMotionCorrDiffusionDirectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def ants_motion_corr_diffusion_direction_validate(
 
 
 def ants_motion_corr_diffusion_direction_cargs(
-    params: AntsMotionCorrDiffusionDirectionParameters,
+    params: AntsMotionCorrDiffusionDirectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def ants_motion_corr_diffusion_direction_cargs(
 
 
 def ants_motion_corr_diffusion_direction_outputs(
-    params: AntsMotionCorrDiffusionDirectionParameters,
+    params: AntsMotionCorrDiffusionDirectionParamsDict,
     execution: Execution,
 ) -> AntsMotionCorrDiffusionDirectionOutputs:
     """
@@ -164,7 +164,7 @@ def ants_motion_corr_diffusion_direction_outputs(
 
 
 def ants_motion_corr_diffusion_direction_execute(
-    params: AntsMotionCorrDiffusionDirectionParameters,
+    params: AntsMotionCorrDiffusionDirectionParamsDict,
     runner: Runner | None = None,
 ) -> AntsMotionCorrDiffusionDirectionOutputs:
     """
@@ -232,6 +232,8 @@ def ants_motion_corr_diffusion_direction(
 __all__ = [
     "ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA",
     "AntsMotionCorrDiffusionDirectionOutputs",
+    "AntsMotionCorrDiffusionDirectionParamsDict",
+    "AntsMotionCorrDiffusionDirectionParamsDictTagged",
     "ants_motion_corr_diffusion_direction",
     "ants_motion_corr_diffusion_direction_execute",
     "ants_motion_corr_diffusion_direction_params",

@@ -13,55 +13,55 @@ DWI2ADC_METADATA = Metadata(
 )
 
 
-Dwi2adcFslgradParameters = typing.TypedDict('Dwi2adcFslgradParameters', {
+Dwi2adcFslgradParamsDict = typing.TypedDict('Dwi2adcFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-Dwi2adcFslgradParametersTagged = typing.TypedDict('Dwi2adcFslgradParametersTagged', {
+Dwi2adcFslgradParamsDictTagged = typing.TypedDict('Dwi2adcFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-Dwi2adcConfigParameters = typing.TypedDict('Dwi2adcConfigParameters', {
+Dwi2adcConfigParamsDict = typing.TypedDict('Dwi2adcConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Dwi2adcConfigParametersTagged = typing.TypedDict('Dwi2adcConfigParametersTagged', {
+Dwi2adcConfigParamsDictTagged = typing.TypedDict('Dwi2adcConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Dwi2adcParameters = typing.TypedDict('Dwi2adcParameters', {
+Dwi2adcParamsDict = typing.TypedDict('Dwi2adcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2adc"]],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2adcFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2adcConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2adcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-Dwi2adcParametersTagged = typing.TypedDict('Dwi2adcParametersTagged', {
+Dwi2adcParamsDictTagged = typing.TypedDict('Dwi2adcParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwi2adc"],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
+    "fslgrad": typing.NotRequired[Dwi2adcFslgradParamsDict | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Dwi2adcConfigParameters] | None],
+    "config": typing.NotRequired[list[Dwi2adcConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -69,10 +69,10 @@ Dwi2adcParametersTagged = typing.TypedDict('Dwi2adcParametersTagged', {
 })
 
 
-def dwi2adc_fslgrad_params(
+def dwi2adc_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2adcFslgradParametersTagged:
+) -> Dwi2adcFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def dwi2adc_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2adcFslgradParameters` object.
+    `Dwi2adcFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def dwi2adc_fslgrad_validate(
 
 
 def dwi2adc_fslgrad_cargs(
-    params: Dwi2adcFslgradParameters,
+    params: Dwi2adcFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,10 +138,10 @@ def dwi2adc_fslgrad_cargs(
     return cargs
 
 
-def dwi2adc_config_params(
+def dwi2adc_config(
     key: str,
     value: str,
-) -> Dwi2adcConfigParametersTagged:
+) -> Dwi2adcConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def dwi2adc_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2adcConfigParameters` object.
+    `Dwi2adcConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def dwi2adc_config_validate(
 
 
 def dwi2adc_config_cargs(
-    params: Dwi2adcConfigParameters,
+    params: Dwi2adcConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def dwi2adc_config_cargs(
 
 class Dwi2adcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dwi2adcParameters(...)`.
+    Output object returned when calling `Dwi2adcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -215,16 +215,16 @@ def dwi2adc_params(
     input_: InputPathType,
     output: str,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2adcFslgradParameters | None = None,
+    fslgrad: Dwi2adcFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2adcConfigParameters] | None = None,
+    config: list[Dwi2adcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2adcParametersTagged:
+) -> Dwi2adcParamsDictTagged:
     """
     Build parameters.
     
@@ -283,7 +283,7 @@ def dwi2adc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dwi2adcParameters` object.
+    `Dwi2adcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -316,7 +316,7 @@ def dwi2adc_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2adcConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2adcConfigParamsDict] | None`')
         for e in params["config"]:
             dwi2adc_config_validate(e)
     if params.get("help", False) is None:
@@ -338,7 +338,7 @@ def dwi2adc_validate(
 
 
 def dwi2adc_cargs(
-    params: Dwi2adcParameters,
+    params: Dwi2adcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -384,7 +384,7 @@ def dwi2adc_cargs(
 
 
 def dwi2adc_outputs(
-    params: Dwi2adcParameters,
+    params: Dwi2adcParamsDict,
     execution: Execution,
 ) -> Dwi2adcOutputs:
     """
@@ -404,7 +404,7 @@ def dwi2adc_outputs(
 
 
 def dwi2adc_execute(
-    params: Dwi2adcParameters,
+    params: Dwi2adcParamsDict,
     runner: Runner | None = None,
 ) -> Dwi2adcOutputs:
     """
@@ -442,13 +442,13 @@ def dwi2adc(
     input_: InputPathType,
     output: str,
     grad: InputPathType | None = None,
-    fslgrad: Dwi2adcFslgradParameters | None = None,
+    fslgrad: Dwi2adcFslgradParamsDict | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Dwi2adcConfigParameters] | None = None,
+    config: list[Dwi2adcConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -516,10 +516,16 @@ def dwi2adc(
 
 __all__ = [
     "DWI2ADC_METADATA",
+    "Dwi2adcConfigParamsDict",
+    "Dwi2adcConfigParamsDictTagged",
+    "Dwi2adcFslgradParamsDict",
+    "Dwi2adcFslgradParamsDictTagged",
     "Dwi2adcOutputs",
+    "Dwi2adcParamsDict",
+    "Dwi2adcParamsDictTagged",
     "dwi2adc",
-    "dwi2adc_config_params",
+    "dwi2adc_config",
     "dwi2adc_execute",
-    "dwi2adc_fslgrad_params",
+    "dwi2adc_fslgrad",
     "dwi2adc_params",
 ]

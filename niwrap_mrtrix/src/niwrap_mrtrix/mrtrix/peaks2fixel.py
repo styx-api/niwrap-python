@@ -13,19 +13,19 @@ PEAKS2FIXEL_METADATA = Metadata(
 )
 
 
-Peaks2fixelConfigParameters = typing.TypedDict('Peaks2fixelConfigParameters', {
+Peaks2fixelConfigParamsDict = typing.TypedDict('Peaks2fixelConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Peaks2fixelConfigParametersTagged = typing.TypedDict('Peaks2fixelConfigParametersTagged', {
+Peaks2fixelConfigParamsDictTagged = typing.TypedDict('Peaks2fixelConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
+Peaks2fixelParamsDict = typing.TypedDict('Peaks2fixelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2fixel"]],
     "dataname": typing.NotRequired[str | None],
     "info": bool,
@@ -33,13 +33,13 @@ Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Peaks2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Peaks2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "directions": InputPathType,
     "fixels": str,
 })
-Peaks2fixelParametersTagged = typing.TypedDict('Peaks2fixelParametersTagged', {
+Peaks2fixelParamsDictTagged = typing.TypedDict('Peaks2fixelParamsDictTagged', {
     "@type": typing.Literal["mrtrix/peaks2fixel"],
     "dataname": typing.NotRequired[str | None],
     "info": bool,
@@ -47,7 +47,7 @@ Peaks2fixelParametersTagged = typing.TypedDict('Peaks2fixelParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Peaks2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Peaks2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "directions": InputPathType,
@@ -55,10 +55,10 @@ Peaks2fixelParametersTagged = typing.TypedDict('Peaks2fixelParametersTagged', {
 })
 
 
-def peaks2fixel_config_params(
+def peaks2fixel_config(
     key: str,
     value: str,
-) -> Peaks2fixelConfigParametersTagged:
+) -> Peaks2fixelConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def peaks2fixel_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Peaks2fixelConfigParameters` object.
+    `Peaks2fixelConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def peaks2fixel_config_validate(
 
 
 def peaks2fixel_config_cargs(
-    params: Peaks2fixelConfigParameters,
+    params: Peaks2fixelConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def peaks2fixel_config_cargs(
 
 class Peaks2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Peaks2fixelParameters(...)`.
+    Output object returned when calling `Peaks2fixelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def peaks2fixel_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Peaks2fixelConfigParameters] | None = None,
+    config: list[Peaks2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Peaks2fixelParametersTagged:
+) -> Peaks2fixelParamsDictTagged:
     """
     Build parameters.
     
@@ -190,7 +190,7 @@ def peaks2fixel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Peaks2fixelParameters` object.
+    `Peaks2fixelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -221,7 +221,7 @@ def peaks2fixel_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Peaks2fixelConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Peaks2fixelConfigParamsDict] | None`')
         for e in params["config"]:
             peaks2fixel_config_validate(e)
     if params.get("help", False) is None:
@@ -243,7 +243,7 @@ def peaks2fixel_validate(
 
 
 def peaks2fixel_cargs(
-    params: Peaks2fixelParameters,
+    params: Peaks2fixelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -287,7 +287,7 @@ def peaks2fixel_cargs(
 
 
 def peaks2fixel_outputs(
-    params: Peaks2fixelParameters,
+    params: Peaks2fixelParamsDict,
     execution: Execution,
 ) -> Peaks2fixelOutputs:
     """
@@ -307,7 +307,7 @@ def peaks2fixel_outputs(
 
 
 def peaks2fixel_execute(
-    params: Peaks2fixelParameters,
+    params: Peaks2fixelParamsDict,
     runner: Runner | None = None,
 ) -> Peaks2fixelOutputs:
     """
@@ -350,7 +350,7 @@ def peaks2fixel(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Peaks2fixelConfigParameters] | None = None,
+    config: list[Peaks2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -410,9 +410,13 @@ def peaks2fixel(
 
 __all__ = [
     "PEAKS2FIXEL_METADATA",
+    "Peaks2fixelConfigParamsDict",
+    "Peaks2fixelConfigParamsDictTagged",
     "Peaks2fixelOutputs",
+    "Peaks2fixelParamsDict",
+    "Peaks2fixelParamsDictTagged",
     "peaks2fixel",
-    "peaks2fixel_config_params",
+    "peaks2fixel_config",
     "peaks2fixel_execute",
     "peaks2fixel_params",
 ]

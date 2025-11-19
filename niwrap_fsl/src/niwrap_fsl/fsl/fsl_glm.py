@@ -13,7 +13,7 @@ FSL_GLM_METADATA = Metadata(
 )
 
 
-FslGlmParameters = typing.TypedDict('FslGlmParameters', {
+FslGlmParamsDict = typing.TypedDict('FslGlmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_glm"]],
     "input_file": InputPathType,
     "design_matrix": InputPathType,
@@ -40,7 +40,7 @@ FslGlmParameters = typing.TypedDict('FslGlmParameters', {
     "vx_images": typing.NotRequired[list[InputPathType] | None],
     "help_flag": bool,
 })
-FslGlmParametersTagged = typing.TypedDict('FslGlmParametersTagged', {
+FslGlmParamsDictTagged = typing.TypedDict('FslGlmParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_glm"],
     "input_file": InputPathType,
     "design_matrix": InputPathType,
@@ -71,7 +71,7 @@ FslGlmParametersTagged = typing.TypedDict('FslGlmParametersTagged', {
 
 class FslGlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslGlmParameters(...)`.
+    Output object returned when calling `FslGlmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +127,7 @@ def fsl_glm_params(
     vx_text: list[str] | None = None,
     vx_images: list[InputPathType] | None = None,
     help_flag: bool = False,
-) -> FslGlmParametersTagged:
+) -> FslGlmParamsDictTagged:
     """
     Build parameters.
     
@@ -220,7 +220,7 @@ def fsl_glm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslGlmParameters` object.
+    `FslGlmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -315,7 +315,7 @@ def fsl_glm_validate(
 
 
 def fsl_glm_cargs(
-    params: FslGlmParameters,
+    params: FslGlmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -436,7 +436,7 @@ def fsl_glm_cargs(
 
 
 def fsl_glm_outputs(
-    params: FslGlmParameters,
+    params: FslGlmParamsDict,
     execution: Execution,
 ) -> FslGlmOutputs:
     """
@@ -467,7 +467,7 @@ def fsl_glm_outputs(
 
 
 def fsl_glm_execute(
-    params: FslGlmParameters,
+    params: FslGlmParamsDict,
     runner: Runner | None = None,
 ) -> FslGlmOutputs:
     """
@@ -603,6 +603,8 @@ def fsl_glm(
 __all__ = [
     "FSL_GLM_METADATA",
     "FslGlmOutputs",
+    "FslGlmParamsDict",
+    "FslGlmParamsDictTagged",
     "fsl_glm",
     "fsl_glm_execute",
     "fsl_glm_params",

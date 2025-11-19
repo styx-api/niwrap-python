@@ -13,7 +13,7 @@ V_1DFFT_METADATA = Metadata(
 )
 
 
-V1dfftParameters = typing.TypedDict('V1dfftParameters', {
+V1dfftParamsDict = typing.TypedDict('V1dfftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dfft"]],
     "infile": InputPathType,
     "outfile": str,
@@ -25,7 +25,7 @@ V1dfftParameters = typing.TypedDict('V1dfftParameters', {
     "hilbert": bool,
     "nodetrend": bool,
 })
-V1dfftParametersTagged = typing.TypedDict('V1dfftParametersTagged', {
+V1dfftParamsDictTagged = typing.TypedDict('V1dfftParamsDictTagged', {
     "@type": typing.Literal["afni/1dfft"],
     "infile": InputPathType,
     "outfile": str,
@@ -41,7 +41,7 @@ V1dfftParametersTagged = typing.TypedDict('V1dfftParametersTagged', {
 
 class V1dfftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dfftParameters(...)`.
+    Output object returned when calling `V1dfftParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_1dfft_params(
     fromcx: bool = False,
     hilbert: bool = False,
     nodetrend: bool = False,
-) -> V1dfftParametersTagged:
+) -> V1dfftParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def v_1dfft_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dfftParameters` object.
+    `V1dfftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def v_1dfft_validate(
 
 
 def v_1dfft_cargs(
-    params: V1dfftParameters,
+    params: V1dfftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def v_1dfft_cargs(
 
 
 def v_1dfft_outputs(
-    params: V1dfftParameters,
+    params: V1dfftParamsDict,
     execution: Execution,
 ) -> V1dfftOutputs:
     """
@@ -216,7 +216,7 @@ def v_1dfft_outputs(
 
 
 def v_1dfft_execute(
-    params: V1dfftParameters,
+    params: V1dfftParamsDict,
     runner: Runner | None = None,
 ) -> V1dfftOutputs:
     """
@@ -300,6 +300,8 @@ def v_1dfft(
 
 __all__ = [
     "V1dfftOutputs",
+    "V1dfftParamsDict",
+    "V1dfftParamsDictTagged",
     "V_1DFFT_METADATA",
     "v_1dfft",
     "v_1dfft_execute",

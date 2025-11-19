@@ -13,7 +13,7 @@ SLICER_METADATA = Metadata(
 )
 
 
-SlicerParameters = typing.TypedDict('SlicerParameters', {
+SlicerParamsDict = typing.TypedDict('SlicerParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/slicer"]],
     "in_file": InputPathType,
     "overlay_file": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ SlicerParameters = typing.TypedDict('SlicerParameters', {
     "output_sample_axial_slices_width": typing.NotRequired[str | None],
     "output_sample_axial_slices_fname": typing.NotRequired[str | None],
 })
-SlicerParametersTagged = typing.TypedDict('SlicerParametersTagged', {
+SlicerParamsDictTagged = typing.TypedDict('SlicerParamsDictTagged', {
     "@type": typing.Literal["fsl/slicer"],
     "in_file": InputPathType,
     "overlay_file": typing.NotRequired[InputPathType | None],
@@ -69,7 +69,7 @@ SlicerParametersTagged = typing.TypedDict('SlicerParametersTagged', {
 
 class SlicerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SlicerParameters(...)`.
+    Output object returned when calling `SlicerParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +109,7 @@ def slicer_params(
     output_sample_axial_slices: bool = False,
     output_sample_axial_slices_width: str | None = None,
     output_sample_axial_slices_fname: str | None = None,
-) -> SlicerParametersTagged:
+) -> SlicerParamsDictTagged:
     """
     Build parameters.
     
@@ -194,7 +194,7 @@ def slicer_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SlicerParameters` object.
+    `SlicerParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -289,7 +289,7 @@ def slicer_validate(
 
 
 def slicer_cargs(
-    params: SlicerParameters,
+    params: SlicerParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -367,7 +367,7 @@ def slicer_cargs(
 
 
 def slicer_outputs(
-    params: SlicerParameters,
+    params: SlicerParamsDict,
     execution: Execution,
 ) -> SlicerOutputs:
     """
@@ -391,7 +391,7 @@ def slicer_outputs(
 
 
 def slicer_execute(
-    params: SlicerParameters,
+    params: SlicerParamsDict,
     runner: Runner | None = None,
 ) -> SlicerOutputs:
     """
@@ -529,6 +529,8 @@ def slicer(
 __all__ = [
     "SLICER_METADATA",
     "SlicerOutputs",
+    "SlicerParamsDict",
+    "SlicerParamsDictTagged",
     "slicer",
     "slicer_execute",
     "slicer_params",

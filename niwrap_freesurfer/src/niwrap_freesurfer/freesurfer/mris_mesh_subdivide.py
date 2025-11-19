@@ -13,14 +13,14 @@ MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
 )
 
 
-MrisMeshSubdivideParameters = typing.TypedDict('MrisMeshSubdivideParameters', {
+MrisMeshSubdivideParamsDict = typing.TypedDict('MrisMeshSubdivideParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mesh_subdivide"]],
     "input_surface": InputPathType,
     "output_surface": str,
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
     "iterations": typing.NotRequired[float | None],
 })
-MrisMeshSubdivideParametersTagged = typing.TypedDict('MrisMeshSubdivideParametersTagged', {
+MrisMeshSubdivideParamsDictTagged = typing.TypedDict('MrisMeshSubdivideParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_mesh_subdivide"],
     "input_surface": InputPathType,
     "output_surface": str,
@@ -31,7 +31,7 @@ MrisMeshSubdivideParametersTagged = typing.TypedDict('MrisMeshSubdivideParameter
 
 class MrisMeshSubdivideOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMeshSubdivideParameters(...)`.
+    Output object returned when calling `MrisMeshSubdivideParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_mesh_subdivide_params(
     output_surface: str,
     subdivision_method: typing.Literal["butterfly", "loop", "linear"] | None = None,
     iterations: float | None = None,
-) -> MrisMeshSubdivideParametersTagged:
+) -> MrisMeshSubdivideParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def mris_mesh_subdivide_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMeshSubdivideParameters` object.
+    `MrisMeshSubdivideParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def mris_mesh_subdivide_validate(
 
 
 def mris_mesh_subdivide_cargs(
-    params: MrisMeshSubdivideParameters,
+    params: MrisMeshSubdivideParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def mris_mesh_subdivide_cargs(
 
 
 def mris_mesh_subdivide_outputs(
-    params: MrisMeshSubdivideParameters,
+    params: MrisMeshSubdivideParamsDict,
     execution: Execution,
 ) -> MrisMeshSubdivideOutputs:
     """
@@ -157,7 +157,7 @@ def mris_mesh_subdivide_outputs(
 
 
 def mris_mesh_subdivide_execute(
-    params: MrisMeshSubdivideParameters,
+    params: MrisMeshSubdivideParamsDict,
     runner: Runner | None = None,
 ) -> MrisMeshSubdivideOutputs:
     """
@@ -224,6 +224,8 @@ def mris_mesh_subdivide(
 __all__ = [
     "MRIS_MESH_SUBDIVIDE_METADATA",
     "MrisMeshSubdivideOutputs",
+    "MrisMeshSubdivideParamsDict",
+    "MrisMeshSubdivideParamsDictTagged",
     "mris_mesh_subdivide",
     "mris_mesh_subdivide_execute",
     "mris_mesh_subdivide_params",

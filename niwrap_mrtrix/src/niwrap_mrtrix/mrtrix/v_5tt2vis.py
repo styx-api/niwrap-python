@@ -13,19 +13,19 @@ V_5TT2VIS_METADATA = Metadata(
 )
 
 
-V5tt2visConfigParameters = typing.TypedDict('V5tt2visConfigParameters', {
+V5tt2visConfigParamsDict = typing.TypedDict('V5tt2visConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-V5tt2visConfigParametersTagged = typing.TypedDict('V5tt2visConfigParametersTagged', {
+V5tt2visConfigParamsDictTagged = typing.TypedDict('V5tt2visConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-V5tt2visParameters = typing.TypedDict('V5tt2visParameters', {
+V5tt2visParamsDict = typing.TypedDict('V5tt2visParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/5tt2vis"]],
     "bg": typing.NotRequired[float | None],
     "cgm": typing.NotRequired[float | None],
@@ -38,13 +38,13 @@ V5tt2visParameters = typing.TypedDict('V5tt2visParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tt2visConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tt2visConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-V5tt2visParametersTagged = typing.TypedDict('V5tt2visParametersTagged', {
+V5tt2visParamsDictTagged = typing.TypedDict('V5tt2visParamsDictTagged', {
     "@type": typing.Literal["mrtrix/5tt2vis"],
     "bg": typing.NotRequired[float | None],
     "cgm": typing.NotRequired[float | None],
@@ -57,7 +57,7 @@ V5tt2visParametersTagged = typing.TypedDict('V5tt2visParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[V5tt2visConfigParameters] | None],
+    "config": typing.NotRequired[list[V5tt2visConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -65,10 +65,10 @@ V5tt2visParametersTagged = typing.TypedDict('V5tt2visParametersTagged', {
 })
 
 
-def v_5tt2vis_config_params(
+def v_5tt2vis_config(
     key: str,
     value: str,
-) -> V5tt2visConfigParametersTagged:
+) -> V5tt2visConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def v_5tt2vis_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tt2visConfigParameters` object.
+    `V5tt2visConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def v_5tt2vis_config_validate(
 
 
 def v_5tt2vis_config_cargs(
-    params: V5tt2visConfigParameters,
+    params: V5tt2visConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def v_5tt2vis_config_cargs(
 
 class V5tt2visOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V5tt2visParameters(...)`.
+    Output object returned when calling `V5tt2visParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -152,10 +152,10 @@ def v_5tt2vis_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tt2visConfigParameters] | None = None,
+    config: list[V5tt2visConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5tt2visParametersTagged:
+) -> V5tt2visParamsDictTagged:
     """
     Build parameters.
     
@@ -218,7 +218,7 @@ def v_5tt2vis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V5tt2visParameters` object.
+    `V5tt2visParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -264,7 +264,7 @@ def v_5tt2vis_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tt2visConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5tt2visConfigParamsDict] | None`')
         for e in params["config"]:
             v_5tt2vis_config_validate(e)
     if params.get("help", False) is None:
@@ -286,7 +286,7 @@ def v_5tt2vis_validate(
 
 
 def v_5tt2vis_cargs(
-    params: V5tt2visParameters,
+    params: V5tt2visParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -355,7 +355,7 @@ def v_5tt2vis_cargs(
 
 
 def v_5tt2vis_outputs(
-    params: V5tt2visParameters,
+    params: V5tt2visParamsDict,
     execution: Execution,
 ) -> V5tt2visOutputs:
     """
@@ -375,7 +375,7 @@ def v_5tt2vis_outputs(
 
 
 def v_5tt2vis_execute(
-    params: V5tt2visParameters,
+    params: V5tt2visParamsDict,
     runner: Runner | None = None,
 ) -> V5tt2visOutputs:
     """
@@ -424,7 +424,7 @@ def v_5tt2vis(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[V5tt2visConfigParameters] | None = None,
+    config: list[V5tt2visConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -492,10 +492,14 @@ def v_5tt2vis(
 
 
 __all__ = [
+    "V5tt2visConfigParamsDict",
+    "V5tt2visConfigParamsDictTagged",
     "V5tt2visOutputs",
+    "V5tt2visParamsDict",
+    "V5tt2visParamsDictTagged",
     "V_5TT2VIS_METADATA",
     "v_5tt2vis",
-    "v_5tt2vis_config_params",
+    "v_5tt2vis_config",
     "v_5tt2vis_execute",
     "v_5tt2vis_params",
 ]

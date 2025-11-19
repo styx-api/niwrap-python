@@ -13,14 +13,14 @@ MRIS_BA_SEGMENT_METADATA = Metadata(
 )
 
 
-MrisBaSegmentParameters = typing.TypedDict('MrisBaSegmentParameters', {
+MrisBaSegmentParamsDict = typing.TypedDict('MrisBaSegmentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_BA_segment"]],
     "surface": InputPathType,
     "profiles": InputPathType,
     "prior_label": InputPathType,
     "output_label": str,
 })
-MrisBaSegmentParametersTagged = typing.TypedDict('MrisBaSegmentParametersTagged', {
+MrisBaSegmentParamsDictTagged = typing.TypedDict('MrisBaSegmentParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_BA_segment"],
     "surface": InputPathType,
     "profiles": InputPathType,
@@ -31,7 +31,7 @@ MrisBaSegmentParametersTagged = typing.TypedDict('MrisBaSegmentParametersTagged'
 
 class MrisBaSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisBaSegmentParameters(...)`.
+    Output object returned when calling `MrisBaSegmentParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_ba_segment_params(
     profiles: InputPathType,
     prior_label: InputPathType,
     output_label: str,
-) -> MrisBaSegmentParametersTagged:
+) -> MrisBaSegmentParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mris_ba_segment_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisBaSegmentParameters` object.
+    `MrisBaSegmentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mris_ba_segment_validate(
 
 
 def mris_ba_segment_cargs(
-    params: MrisBaSegmentParameters,
+    params: MrisBaSegmentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mris_ba_segment_cargs(
 
 
 def mris_ba_segment_outputs(
-    params: MrisBaSegmentParameters,
+    params: MrisBaSegmentParamsDict,
     execution: Execution,
 ) -> MrisBaSegmentOutputs:
     """
@@ -139,7 +139,7 @@ def mris_ba_segment_outputs(
 
 
 def mris_ba_segment_execute(
-    params: MrisBaSegmentParameters,
+    params: MrisBaSegmentParamsDict,
     runner: Runner | None = None,
 ) -> MrisBaSegmentOutputs:
     """
@@ -206,6 +206,8 @@ def mris_ba_segment(
 __all__ = [
     "MRIS_BA_SEGMENT_METADATA",
     "MrisBaSegmentOutputs",
+    "MrisBaSegmentParamsDict",
+    "MrisBaSegmentParamsDictTagged",
     "mris_ba_segment",
     "mris_ba_segment_execute",
     "mris_ba_segment_params",

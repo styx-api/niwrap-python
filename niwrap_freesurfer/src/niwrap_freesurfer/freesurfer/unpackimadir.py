@@ -13,12 +13,12 @@ UNPACKIMADIR_METADATA = Metadata(
 )
 
 
-UnpackimadirParameters = typing.TypedDict('UnpackimadirParameters', {
+UnpackimadirParamsDict = typing.TypedDict('UnpackimadirParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/unpackimadir"]],
     "source_directory": str,
     "target_directory": str,
 })
-UnpackimadirParametersTagged = typing.TypedDict('UnpackimadirParametersTagged', {
+UnpackimadirParamsDictTagged = typing.TypedDict('UnpackimadirParamsDictTagged', {
     "@type": typing.Literal["freesurfer/unpackimadir"],
     "source_directory": str,
     "target_directory": str,
@@ -27,7 +27,7 @@ UnpackimadirParametersTagged = typing.TypedDict('UnpackimadirParametersTagged', 
 
 class UnpackimadirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `UnpackimadirParameters(...)`.
+    Output object returned when calling `UnpackimadirParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class UnpackimadirOutputs(typing.NamedTuple):
 def unpackimadir_params(
     source_directory: str,
     target_directory: str,
-) -> UnpackimadirParametersTagged:
+) -> UnpackimadirParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def unpackimadir_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `UnpackimadirParameters` object.
+    `UnpackimadirParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def unpackimadir_validate(
 
 
 def unpackimadir_cargs(
-    params: UnpackimadirParameters,
+    params: UnpackimadirParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def unpackimadir_cargs(
 
 
 def unpackimadir_outputs(
-    params: UnpackimadirParameters,
+    params: UnpackimadirParamsDict,
     execution: Execution,
 ) -> UnpackimadirOutputs:
     """
@@ -123,7 +123,7 @@ def unpackimadir_outputs(
 
 
 def unpackimadir_execute(
-    params: UnpackimadirParameters,
+    params: UnpackimadirParamsDict,
     runner: Runner | None = None,
 ) -> UnpackimadirOutputs:
     """
@@ -183,6 +183,8 @@ def unpackimadir(
 __all__ = [
     "UNPACKIMADIR_METADATA",
     "UnpackimadirOutputs",
+    "UnpackimadirParamsDict",
+    "UnpackimadirParamsDictTagged",
     "unpackimadir",
     "unpackimadir_execute",
     "unpackimadir_params",

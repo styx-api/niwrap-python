@@ -13,13 +13,13 @@ REGISTER_CSH_METADATA = Metadata(
 )
 
 
-RegisterCshParameters = typing.TypedDict('RegisterCshParameters', {
+RegisterCshParamsDict = typing.TypedDict('RegisterCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/register.csh"]],
     "base_image": InputPathType,
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],
 })
-RegisterCshParametersTagged = typing.TypedDict('RegisterCshParametersTagged', {
+RegisterCshParamsDictTagged = typing.TypedDict('RegisterCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register.csh"],
     "base_image": InputPathType,
     "new_image": InputPathType,
@@ -29,7 +29,7 @@ RegisterCshParametersTagged = typing.TypedDict('RegisterCshParametersTagged', {
 
 class RegisterCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegisterCshParameters(...)`.
+    Output object returned when calling `RegisterCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def register_csh_params(
     base_image: InputPathType,
     new_image: InputPathType,
     options: str | None = None,
-) -> RegisterCshParametersTagged:
+) -> RegisterCshParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def register_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegisterCshParameters` object.
+    `RegisterCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def register_csh_validate(
 
 
 def register_csh_cargs(
-    params: RegisterCshParameters,
+    params: RegisterCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def register_csh_cargs(
 
 
 def register_csh_outputs(
-    params: RegisterCshParameters,
+    params: RegisterCshParamsDict,
     execution: Execution,
 ) -> RegisterCshOutputs:
     """
@@ -130,7 +130,7 @@ def register_csh_outputs(
 
 
 def register_csh_execute(
-    params: RegisterCshParameters,
+    params: RegisterCshParamsDict,
     runner: Runner | None = None,
 ) -> RegisterCshOutputs:
     """
@@ -192,6 +192,8 @@ def register_csh(
 __all__ = [
     "REGISTER_CSH_METADATA",
     "RegisterCshOutputs",
+    "RegisterCshParamsDict",
+    "RegisterCshParamsDictTagged",
     "register_csh",
     "register_csh_execute",
     "register_csh_params",

@@ -13,7 +13,7 @@ TALSEGPROB_METADATA = Metadata(
 )
 
 
-TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
+TalsegprobParamsDict = typing.TypedDict('TalsegprobParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/talsegprob"]],
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
     "version_flag": bool,
     "echo_flag": bool,
 })
-TalsegprobParametersTagged = typing.TypedDict('TalsegprobParametersTagged', {
+TalsegprobParamsDictTagged = typing.TypedDict('TalsegprobParamsDictTagged', {
     "@type": typing.Literal["freesurfer/talsegprob"],
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ TalsegprobParametersTagged = typing.TypedDict('TalsegprobParametersTagged', {
 
 class TalsegprobOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TalsegprobParameters(...)`.
+    Output object returned when calling `TalsegprobParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def talsegprob_params(
     nocleanup_flag: bool = False,
     version_flag: bool = False,
     echo_flag: bool = False,
-) -> TalsegprobParametersTagged:
+) -> TalsegprobParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def talsegprob_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TalsegprobParameters` object.
+    `TalsegprobParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def talsegprob_validate(
 
 
 def talsegprob_cargs(
-    params: TalsegprobParameters,
+    params: TalsegprobParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def talsegprob_cargs(
 
 
 def talsegprob_outputs(
-    params: TalsegprobParameters,
+    params: TalsegprobParamsDict,
     execution: Execution,
 ) -> TalsegprobOutputs:
     """
@@ -329,7 +329,7 @@ def talsegprob_outputs(
 
 
 def talsegprob_execute(
-    params: TalsegprobParameters,
+    params: TalsegprobParamsDict,
     runner: Runner | None = None,
 ) -> TalsegprobOutputs:
     """
@@ -436,6 +436,8 @@ def talsegprob(
 __all__ = [
     "TALSEGPROB_METADATA",
     "TalsegprobOutputs",
+    "TalsegprobParamsDict",
+    "TalsegprobParamsDictTagged",
     "talsegprob",
     "talsegprob_execute",
     "talsegprob_params",

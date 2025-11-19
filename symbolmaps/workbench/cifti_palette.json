@@ -9,7 +9,7 @@
     },
     "pos-percent": {
       "var_param": "pos_percent",
-      "fn_struct_make_params": "cifti_palette_pos_percent_params",
+      "fn_struct_make_params": "cifti_palette_pos_percent",
       "properties": {
         "pos-min-%": {
           "var_param": "pos_min__"
@@ -21,7 +21,7 @@
     },
     "neg-percent": {
       "var_param": "neg_percent",
-      "fn_struct_make_params": "cifti_palette_neg_percent_params",
+      "fn_struct_make_params": "cifti_palette_neg_percent",
       "properties": {
         "neg-min-%": {
           "var_param": "neg_min__"
@@ -33,7 +33,7 @@
     },
     "pos-user": {
       "var_param": "pos_user",
-      "fn_struct_make_params": "cifti_palette_pos_user_params",
+      "fn_struct_make_params": "cifti_palette_pos_user",
       "properties": {
         "pos-min-user": {
           "var_param": "pos_min_user"
@@ -45,7 +45,7 @@
     },
     "neg-user": {
       "var_param": "neg_user",
-      "fn_struct_make_params": "cifti_palette_neg_user_params",
+      "fn_struct_make_params": "cifti_palette_neg_user",
       "properties": {
         "neg-min-user": {
           "var_param": "neg_min_user"
@@ -66,7 +66,7 @@
     },
     "thresholding": {
       "var_param": "thresholding",
-      "fn_struct_make_params": "cifti_palette_thresholding_params",
+      "fn_struct_make_params": "cifti_palette_thresholding",
       "properties": {
         "type": {
           "var_param": "type_"

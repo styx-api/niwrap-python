@@ -13,7 +13,7 @@ FSL_RIGID_REGISTER_METADATA = Metadata(
 )
 
 
-FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
+FslRigidRegisterParamsDict = typing.TypedDict('FslRigidRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_rigid_register"]],
     "refvol": InputPathType,
     "inputvol": InputPathType,
@@ -38,7 +38,7 @@ FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
     "version": bool,
     "help": bool,
 })
-FslRigidRegisterParametersTagged = typing.TypedDict('FslRigidRegisterParametersTagged', {
+FslRigidRegisterParamsDictTagged = typing.TypedDict('FslRigidRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fsl_rigid_register"],
     "refvol": InputPathType,
     "inputvol": InputPathType,
@@ -67,7 +67,7 @@ FslRigidRegisterParametersTagged = typing.TypedDict('FslRigidRegisterParametersT
 
 class FslRigidRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslRigidRegisterParameters(...)`.
+    Output object returned when calling `FslRigidRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +98,7 @@ def fsl_rigid_register_params(
     subject: str | None = None,
     version: bool = False,
     help_: bool = False,
-) -> FslRigidRegisterParametersTagged:
+) -> FslRigidRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -178,7 +178,7 @@ def fsl_rigid_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslRigidRegisterParameters` object.
+    `FslRigidRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -263,7 +263,7 @@ def fsl_rigid_register_validate(
 
 
 def fsl_rigid_register_cargs(
-    params: FslRigidRegisterParameters,
+    params: FslRigidRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -370,7 +370,7 @@ def fsl_rigid_register_cargs(
 
 
 def fsl_rigid_register_outputs(
-    params: FslRigidRegisterParameters,
+    params: FslRigidRegisterParamsDict,
     execution: Execution,
 ) -> FslRigidRegisterOutputs:
     """
@@ -390,7 +390,7 @@ def fsl_rigid_register_outputs(
 
 
 def fsl_rigid_register_execute(
-    params: FslRigidRegisterParameters,
+    params: FslRigidRegisterParamsDict,
     runner: Runner | None = None,
 ) -> FslRigidRegisterOutputs:
     """
@@ -515,6 +515,8 @@ def fsl_rigid_register(
 __all__ = [
     "FSL_RIGID_REGISTER_METADATA",
     "FslRigidRegisterOutputs",
+    "FslRigidRegisterParamsDict",
+    "FslRigidRegisterParamsDictTagged",
     "fsl_rigid_register",
     "fsl_rigid_register_execute",
     "fsl_rigid_register_params",

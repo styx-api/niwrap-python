@@ -13,12 +13,12 @@ FSL2ASCII_METADATA = Metadata(
 )
 
 
-Fsl2asciiParameters = typing.TypedDict('Fsl2asciiParameters', {
+Fsl2asciiParamsDict = typing.TypedDict('Fsl2asciiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl2ascii"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-Fsl2asciiParametersTagged = typing.TypedDict('Fsl2asciiParametersTagged', {
+Fsl2asciiParamsDictTagged = typing.TypedDict('Fsl2asciiParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl2ascii"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ Fsl2asciiParametersTagged = typing.TypedDict('Fsl2asciiParametersTagged', {
 
 class Fsl2asciiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fsl2asciiParameters(...)`.
+    Output object returned when calling `Fsl2asciiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class Fsl2asciiOutputs(typing.NamedTuple):
 def fsl2ascii_params(
     input_file: InputPathType,
     output_file: str,
-) -> Fsl2asciiParametersTagged:
+) -> Fsl2asciiParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def fsl2ascii_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fsl2asciiParameters` object.
+    `Fsl2asciiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fsl2ascii_validate(
 
 
 def fsl2ascii_cargs(
-    params: Fsl2asciiParameters,
+    params: Fsl2asciiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def fsl2ascii_cargs(
 
 
 def fsl2ascii_outputs(
-    params: Fsl2asciiParameters,
+    params: Fsl2asciiParamsDict,
     execution: Execution,
 ) -> Fsl2asciiOutputs:
     """
@@ -119,7 +119,7 @@ def fsl2ascii_outputs(
 
 
 def fsl2ascii_execute(
-    params: Fsl2asciiParameters,
+    params: Fsl2asciiParamsDict,
     runner: Runner | None = None,
 ) -> Fsl2asciiOutputs:
     """
@@ -178,6 +178,8 @@ def fsl2ascii(
 __all__ = [
     "FSL2ASCII_METADATA",
     "Fsl2asciiOutputs",
+    "Fsl2asciiParamsDict",
+    "Fsl2asciiParamsDictTagged",
     "fsl2ascii",
     "fsl2ascii_execute",
     "fsl2ascii_params",

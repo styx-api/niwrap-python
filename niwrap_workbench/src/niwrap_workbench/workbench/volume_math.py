@@ -12,14 +12,14 @@ VOLUME_MATH_METADATA = Metadata(
 )
 
 
-VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
+VolumeMathVarParamsDict = typing.TypedDict('VolumeMathVarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["var"]],
     "name": str,
     "volume": InputPathType,
     "subvol": typing.NotRequired[str | None],
     "repeat": bool,
 })
-VolumeMathVarParametersTagged = typing.TypedDict('VolumeMathVarParametersTagged', {
+VolumeMathVarParamsDictTagged = typing.TypedDict('VolumeMathVarParamsDictTagged', {
     "@type": typing.Literal["var"],
     "name": str,
     "volume": InputPathType,
@@ -28,28 +28,28 @@ VolumeMathVarParametersTagged = typing.TypedDict('VolumeMathVarParametersTagged'
 })
 
 
-VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
+VolumeMathParamsDict = typing.TypedDict('VolumeMathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-math"]],
     "volume-out": str,
     "replace": typing.NotRequired[float | None],
-    "var": typing.NotRequired[list[VolumeMathVarParameters] | None],
+    "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
     "expression": str,
 })
-VolumeMathParametersTagged = typing.TypedDict('VolumeMathParametersTagged', {
+VolumeMathParamsDictTagged = typing.TypedDict('VolumeMathParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-math"],
     "volume-out": str,
     "replace": typing.NotRequired[float | None],
-    "var": typing.NotRequired[list[VolumeMathVarParameters] | None],
+    "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
     "expression": str,
 })
 
 
-def volume_math_var_params(
+def volume_math_var(
     name: str,
     volume: InputPathType,
     subvol: str | None,
     repeat: bool = False,
-) -> VolumeMathVarParametersTagged:
+) -> VolumeMathVarParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def volume_math_var_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMathVarParameters` object.
+    `VolumeMathVarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def volume_math_var_validate(
 
 
 def volume_math_var_cargs(
-    params: VolumeMathVarParameters,
+    params: VolumeMathVarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def volume_math_var_cargs(
 
 class VolumeMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeMathParameters(...)`.
+    Output object returned when calling `VolumeMathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,8 +143,8 @@ def volume_math_params(
     volume_out: str,
     replace: float | None,
     expression: str,
-    var: list[VolumeMathVarParameters] | None = None,
-) -> VolumeMathParametersTagged:
+    var: list[VolumeMathVarParamsDict] | None = None,
+) -> VolumeMathParamsDictTagged:
     """
     Build parameters.
     
@@ -175,7 +175,7 @@ def volume_math_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeMathParameters` object.
+    `VolumeMathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def volume_math_validate(
             raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("var", None) is not None:
         if not isinstance(params["var"], list):
-            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[VolumeMathVarParameters] | None`')
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[VolumeMathVarParamsDict] | None`')
         for e in params["var"]:
             volume_math_var_validate(e)
     if params.get("expression", None) is None:
@@ -201,7 +201,7 @@ def volume_math_validate(
 
 
 def volume_math_cargs(
-    params: VolumeMathParameters,
+    params: VolumeMathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def volume_math_cargs(
 
 
 def volume_math_outputs(
-    params: VolumeMathParameters,
+    params: VolumeMathParamsDict,
     execution: Execution,
 ) -> VolumeMathOutputs:
     """
@@ -248,7 +248,7 @@ def volume_math_outputs(
 
 
 def volume_math_execute(
-    params: VolumeMathParameters,
+    params: VolumeMathParamsDict,
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
@@ -343,7 +343,7 @@ def volume_math(
     volume_out: str,
     replace: float | None,
     expression: str,
-    var: list[VolumeMathVarParameters] | None = None,
+    var: list[VolumeMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
@@ -441,8 +441,12 @@ def volume_math(
 __all__ = [
     "VOLUME_MATH_METADATA",
     "VolumeMathOutputs",
+    "VolumeMathParamsDict",
+    "VolumeMathParamsDictTagged",
+    "VolumeMathVarParamsDict",
+    "VolumeMathVarParamsDictTagged",
     "volume_math",
     "volume_math_execute",
     "volume_math_params",
-    "volume_math_var_params",
+    "volume_math_var",
 ]

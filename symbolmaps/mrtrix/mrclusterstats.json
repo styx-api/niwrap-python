@@ -54,7 +54,7 @@
     },
     "column": {
       "var_param": "column",
-      "fn_struct_make_params": "mrclusterstats_column_params",
+      "fn_struct_make_params": "mrclusterstats_column",
       "properties": {
         "path": {
           "var_param": "path"
@@ -84,7 +84,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrclusterstats_config_params",
+      "fn_struct_make_params": "mrclusterstats_config",
       "properties": {
         "key": {
           "var_param": "key"

@@ -13,19 +13,19 @@ WARPCONVERT_METADATA = Metadata(
 )
 
 
-WarpconvertConfigParameters = typing.TypedDict('WarpconvertConfigParameters', {
+WarpconvertConfigParamsDict = typing.TypedDict('WarpconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-WarpconvertConfigParametersTagged = typing.TypedDict('WarpconvertConfigParametersTagged', {
+WarpconvertConfigParamsDictTagged = typing.TypedDict('WarpconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
+WarpconvertParamsDict = typing.TypedDict('WarpconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/warpconvert"]],
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
@@ -35,14 +35,14 @@ WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
     "type": str,
     "out": str,
 })
-WarpconvertParametersTagged = typing.TypedDict('WarpconvertParametersTagged', {
+WarpconvertParamsDictTagged = typing.TypedDict('WarpconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/warpconvert"],
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
@@ -52,7 +52,7 @@ WarpconvertParametersTagged = typing.TypedDict('WarpconvertParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[WarpconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[WarpconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in": InputPathType,
@@ -61,10 +61,10 @@ WarpconvertParametersTagged = typing.TypedDict('WarpconvertParametersTagged', {
 })
 
 
-def warpconvert_config_params(
+def warpconvert_config(
     key: str,
     value: str,
-) -> WarpconvertConfigParametersTagged:
+) -> WarpconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def warpconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpconvertConfigParameters` object.
+    `WarpconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -105,7 +105,7 @@ def warpconvert_config_validate(
 
 
 def warpconvert_config_cargs(
-    params: WarpconvertConfigParameters,
+    params: WarpconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -126,7 +126,7 @@ def warpconvert_config_cargs(
 
 class WarpconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WarpconvertParameters(...)`.
+    Output object returned when calling `WarpconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,10 +146,10 @@ def warpconvert_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpconvertConfigParameters] | None = None,
+    config: list[WarpconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpconvertParametersTagged:
+) -> WarpconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -217,7 +217,7 @@ def warpconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpconvertParameters` object.
+    `WarpconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -255,7 +255,7 @@ def warpconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[WarpconvertConfigParamsDict] | None`')
         for e in params["config"]:
             warpconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -281,7 +281,7 @@ def warpconvert_validate(
 
 
 def warpconvert_cargs(
-    params: WarpconvertParameters,
+    params: WarpconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -333,7 +333,7 @@ def warpconvert_cargs(
 
 
 def warpconvert_outputs(
-    params: WarpconvertParameters,
+    params: WarpconvertParamsDict,
     execution: Execution,
 ) -> WarpconvertOutputs:
     """
@@ -353,7 +353,7 @@ def warpconvert_outputs(
 
 
 def warpconvert_execute(
-    params: WarpconvertParameters,
+    params: WarpconvertParamsDict,
     runner: Runner | None = None,
 ) -> WarpconvertOutputs:
     """
@@ -404,7 +404,7 @@ def warpconvert(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[WarpconvertConfigParameters] | None = None,
+    config: list[WarpconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -486,9 +486,13 @@ def warpconvert(
 
 __all__ = [
     "WARPCONVERT_METADATA",
+    "WarpconvertConfigParamsDict",
+    "WarpconvertConfigParamsDictTagged",
     "WarpconvertOutputs",
+    "WarpconvertParamsDict",
+    "WarpconvertParamsDictTagged",
     "warpconvert",
-    "warpconvert_config_params",
+    "warpconvert_config",
     "warpconvert_execute",
     "warpconvert_params",
 ]

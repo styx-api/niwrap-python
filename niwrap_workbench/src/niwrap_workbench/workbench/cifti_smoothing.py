@@ -12,49 +12,49 @@ CIFTI_SMOOTHING_METADATA = Metadata(
 )
 
 
-CiftiSmoothingLeftSurfaceParameters = typing.TypedDict('CiftiSmoothingLeftSurfaceParameters', {
+CiftiSmoothingLeftSurfaceParamsDict = typing.TypedDict('CiftiSmoothingLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiSmoothingLeftSurfaceParametersTagged = typing.TypedDict('CiftiSmoothingLeftSurfaceParametersTagged', {
+CiftiSmoothingLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiSmoothingRightSurfaceParameters = typing.TypedDict('CiftiSmoothingRightSurfaceParameters', {
+CiftiSmoothingRightSurfaceParamsDict = typing.TypedDict('CiftiSmoothingRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiSmoothingRightSurfaceParametersTagged = typing.TypedDict('CiftiSmoothingRightSurfaceParametersTagged', {
+CiftiSmoothingRightSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiSmoothingCerebellumSurfaceParameters = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParameters', {
+CiftiSmoothingCerebellumSurfaceParamsDict = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiSmoothingCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParametersTagged', {
+CiftiSmoothingCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-CiftiSmoothingSurfaceParameters = typing.TypedDict('CiftiSmoothingSurfaceParameters', {
+CiftiSmoothingSurfaceParamsDict = typing.TypedDict('CiftiSmoothingSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
     "structure": str,
     "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
 })
-CiftiSmoothingSurfaceParametersTagged = typing.TypedDict('CiftiSmoothingSurfaceParametersTagged', {
+CiftiSmoothingSurfaceParamsDictTagged = typing.TypedDict('CiftiSmoothingSurfaceParamsDictTagged', {
     "@type": typing.Literal["surface"],
     "structure": str,
     "surface": InputPathType,
@@ -62,35 +62,35 @@ CiftiSmoothingSurfaceParametersTagged = typing.TypedDict('CiftiSmoothingSurfaceP
 })
 
 
-CiftiSmoothingParameters = typing.TypedDict('CiftiSmoothingParameters', {
+CiftiSmoothingParamsDict = typing.TypedDict('CiftiSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-smoothing"]],
     "cifti-out": str,
     "fwhm": bool,
-    "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "fix-zeros-volume": bool,
     "fix-zeros-surface": bool,
     "merged-volume": bool,
-    "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParameters] | None],
+    "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParamsDict] | None],
     "cifti": InputPathType,
     "surface-kernel": float,
     "volume-kernel": float,
     "direction": str,
 })
-CiftiSmoothingParametersTagged = typing.TypedDict('CiftiSmoothingParametersTagged', {
+CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-smoothing"],
     "cifti-out": str,
     "fwhm": bool,
-    "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "fix-zeros-volume": bool,
     "fix-zeros-surface": bool,
     "merged-volume": bool,
-    "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParameters] | None],
+    "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParamsDict] | None],
     "cifti": InputPathType,
     "surface-kernel": float,
     "volume-kernel": float,
@@ -98,10 +98,10 @@ CiftiSmoothingParametersTagged = typing.TypedDict('CiftiSmoothingParametersTagge
 })
 
 
-def cifti_smoothing_left_surface_params(
+def cifti_smoothing_left_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiSmoothingLeftSurfaceParametersTagged:
+) -> CiftiSmoothingLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def cifti_smoothing_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSmoothingLeftSurfaceParameters` object.
+    `CiftiSmoothingLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def cifti_smoothing_left_surface_validate(
 
 
 def cifti_smoothing_left_surface_cargs(
-    params: CiftiSmoothingLeftSurfaceParameters,
+    params: CiftiSmoothingLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,10 +168,10 @@ def cifti_smoothing_left_surface_cargs(
     return cargs
 
 
-def cifti_smoothing_right_surface_params(
+def cifti_smoothing_right_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiSmoothingRightSurfaceParametersTagged:
+) -> CiftiSmoothingRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -198,7 +198,7 @@ def cifti_smoothing_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSmoothingRightSurfaceParameters` object.
+    `CiftiSmoothingRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -215,7 +215,7 @@ def cifti_smoothing_right_surface_validate(
 
 
 def cifti_smoothing_right_surface_cargs(
-    params: CiftiSmoothingRightSurfaceParameters,
+    params: CiftiSmoothingRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -238,10 +238,10 @@ def cifti_smoothing_right_surface_cargs(
     return cargs
 
 
-def cifti_smoothing_cerebellum_surface_params(
+def cifti_smoothing_cerebellum_surface(
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiSmoothingCerebellumSurfaceParametersTagged:
+) -> CiftiSmoothingCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -268,7 +268,7 @@ def cifti_smoothing_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSmoothingCerebellumSurfaceParameters` object.
+    `CiftiSmoothingCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -285,7 +285,7 @@ def cifti_smoothing_cerebellum_surface_validate(
 
 
 def cifti_smoothing_cerebellum_surface_cargs(
-    params: CiftiSmoothingCerebellumSurfaceParameters,
+    params: CiftiSmoothingCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -308,11 +308,11 @@ def cifti_smoothing_cerebellum_surface_cargs(
     return cargs
 
 
-def cifti_smoothing_surface_params(
+def cifti_smoothing_surface(
     structure: str,
     surface: InputPathType,
     area_metric: InputPathType | None,
-) -> CiftiSmoothingSurfaceParametersTagged:
+) -> CiftiSmoothingSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -341,7 +341,7 @@ def cifti_smoothing_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSmoothingSurfaceParameters` object.
+    `CiftiSmoothingSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -362,7 +362,7 @@ def cifti_smoothing_surface_validate(
 
 
 def cifti_smoothing_surface_cargs(
-    params: CiftiSmoothingSurfaceParameters,
+    params: CiftiSmoothingSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -388,7 +388,7 @@ def cifti_smoothing_surface_cargs(
 
 class CiftiSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiSmoothingParameters(...)`.
+    Output object returned when calling `CiftiSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -404,14 +404,14 @@ def cifti_smoothing_params(
     volume_kernel: float,
     direction: str,
     fwhm: bool = False,
-    left_surface: CiftiSmoothingLeftSurfaceParameters | None = None,
-    right_surface: CiftiSmoothingRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiSmoothingCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
     fix_zeros_volume: bool = False,
     fix_zeros_surface: bool = False,
     merged_volume: bool = False,
-    surface: list[CiftiSmoothingSurfaceParameters] | None = None,
-) -> CiftiSmoothingParametersTagged:
+    surface: list[CiftiSmoothingSurfaceParamsDict] | None = None,
+) -> CiftiSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -467,7 +467,7 @@ def cifti_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSmoothingParameters` object.
+    `CiftiSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -505,7 +505,7 @@ def cifti_smoothing_validate(
         raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiSmoothingSurfaceParameters] | None`')
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiSmoothingSurfaceParamsDict] | None`')
         for e in params["surface"]:
             cifti_smoothing_surface_validate(e)
     if params.get("cifti", None) is None:
@@ -527,7 +527,7 @@ def cifti_smoothing_validate(
 
 
 def cifti_smoothing_cargs(
-    params: CiftiSmoothingParameters,
+    params: CiftiSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -564,7 +564,7 @@ def cifti_smoothing_cargs(
 
 
 def cifti_smoothing_outputs(
-    params: CiftiSmoothingParameters,
+    params: CiftiSmoothingParamsDict,
     execution: Execution,
 ) -> CiftiSmoothingOutputs:
     """
@@ -584,7 +584,7 @@ def cifti_smoothing_outputs(
 
 
 def cifti_smoothing_execute(
-    params: CiftiSmoothingParameters,
+    params: CiftiSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
@@ -670,13 +670,13 @@ def cifti_smoothing(
     volume_kernel: float,
     direction: str,
     fwhm: bool = False,
-    left_surface: CiftiSmoothingLeftSurfaceParameters | None = None,
-    right_surface: CiftiSmoothingRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiSmoothingCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
     fix_zeros_volume: bool = False,
     fix_zeros_surface: bool = False,
     merged_volume: bool = False,
-    surface: list[CiftiSmoothingSurfaceParameters] | None = None,
+    surface: list[CiftiSmoothingSurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
@@ -782,12 +782,22 @@ def cifti_smoothing(
 
 __all__ = [
     "CIFTI_SMOOTHING_METADATA",
+    "CiftiSmoothingCerebellumSurfaceParamsDict",
+    "CiftiSmoothingCerebellumSurfaceParamsDictTagged",
+    "CiftiSmoothingLeftSurfaceParamsDict",
+    "CiftiSmoothingLeftSurfaceParamsDictTagged",
     "CiftiSmoothingOutputs",
+    "CiftiSmoothingParamsDict",
+    "CiftiSmoothingParamsDictTagged",
+    "CiftiSmoothingRightSurfaceParamsDict",
+    "CiftiSmoothingRightSurfaceParamsDictTagged",
+    "CiftiSmoothingSurfaceParamsDict",
+    "CiftiSmoothingSurfaceParamsDictTagged",
     "cifti_smoothing",
-    "cifti_smoothing_cerebellum_surface_params",
+    "cifti_smoothing_cerebellum_surface",
     "cifti_smoothing_execute",
-    "cifti_smoothing_left_surface_params",
+    "cifti_smoothing_left_surface",
     "cifti_smoothing_params",
-    "cifti_smoothing_right_surface_params",
-    "cifti_smoothing_surface_params",
+    "cifti_smoothing_right_surface",
+    "cifti_smoothing_surface",
 ]

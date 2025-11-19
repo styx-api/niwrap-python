@@ -3,7 +3,7 @@
   "properties": {
     "weight-volume": {
       "var_param": "weight_volume",
-      "fn_struct_make_params": "volume_weighted_stats_weight_volume_params",
+      "fn_struct_make_params": "volume_weighted_stats_weight_volume",
       "properties": {
         "weight-volume": {
           "var_param": "weight_volume"
@@ -18,7 +18,7 @@
     },
     "roi": {
       "var_param": "roi",
-      "fn_struct_make_params": "volume_weighted_stats_roi_params",
+      "fn_struct_make_params": "volume_weighted_stats_roi",
       "properties": {
         "roi-volume": {
           "var_param": "roi_volume"

@@ -12,7 +12,7 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters', {
+SurfaceGeodesicRoisParamsDict = typing.TypedDict('SurfaceGeodesicRoisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-rois"]],
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -23,7 +23,7 @@ SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters'
     "limit": float,
     "vertex-list-file": str,
 })
-SurfaceGeodesicRoisParametersTagged = typing.TypedDict('SurfaceGeodesicRoisParametersTagged', {
+SurfaceGeodesicRoisParamsDictTagged = typing.TypedDict('SurfaceGeodesicRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-rois"],
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ SurfaceGeodesicRoisParametersTagged = typing.TypedDict('SurfaceGeodesicRoisParam
 
 class SurfaceGeodesicRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceGeodesicRoisParameters(...)`.
+    Output object returned when calling `SurfaceGeodesicRoisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def surface_geodesic_rois_params(
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
-) -> SurfaceGeodesicRoisParametersTagged:
+) -> SurfaceGeodesicRoisParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def surface_geodesic_rois_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceGeodesicRoisParameters` object.
+    `SurfaceGeodesicRoisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def surface_geodesic_rois_validate(
 
 
 def surface_geodesic_rois_cargs(
-    params: SurfaceGeodesicRoisParameters,
+    params: SurfaceGeodesicRoisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def surface_geodesic_rois_cargs(
 
 
 def surface_geodesic_rois_outputs(
-    params: SurfaceGeodesicRoisParameters,
+    params: SurfaceGeodesicRoisParamsDict,
     execution: Execution,
 ) -> SurfaceGeodesicRoisOutputs:
     """
@@ -196,7 +196,7 @@ def surface_geodesic_rois_outputs(
 
 
 def surface_geodesic_rois_execute(
-    params: SurfaceGeodesicRoisParameters,
+    params: SurfaceGeodesicRoisParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
@@ -297,6 +297,8 @@ def surface_geodesic_rois(
 __all__ = [
     "SURFACE_GEODESIC_ROIS_METADATA",
     "SurfaceGeodesicRoisOutputs",
+    "SurfaceGeodesicRoisParamsDict",
+    "SurfaceGeodesicRoisParamsDictTagged",
     "surface_geodesic_rois",
     "surface_geodesic_rois_execute",
     "surface_geodesic_rois_params",

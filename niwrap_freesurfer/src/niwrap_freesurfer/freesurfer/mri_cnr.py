@@ -13,7 +13,7 @@ MRI_CNR_METADATA = Metadata(
 )
 
 
-MriCnrParameters = typing.TypedDict('MriCnrParameters', {
+MriCnrParamsDict = typing.TypedDict('MriCnrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cnr"]],
     "surf_dir": str,
     "volume_files": list[InputPathType],
@@ -24,7 +24,7 @@ MriCnrParameters = typing.TypedDict('MriCnrParameters', {
     "version_flag": bool,
     "help_flag": bool,
 })
-MriCnrParametersTagged = typing.TypedDict('MriCnrParametersTagged', {
+MriCnrParamsDictTagged = typing.TypedDict('MriCnrParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cnr"],
     "surf_dir": str,
     "volume_files": list[InputPathType],
@@ -39,7 +39,7 @@ MriCnrParametersTagged = typing.TypedDict('MriCnrParametersTagged', {
 
 class MriCnrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCnrParameters(...)`.
+    Output object returned when calling `MriCnrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def mri_cnr_params(
     print_total_cnr: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriCnrParametersTagged:
+) -> MriCnrParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def mri_cnr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCnrParameters` object.
+    `MriCnrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def mri_cnr_validate(
 
 
 def mri_cnr_cargs(
-    params: MriCnrParameters,
+    params: MriCnrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def mri_cnr_cargs(
 
 
 def mri_cnr_outputs(
-    params: MriCnrParameters,
+    params: MriCnrParamsDict,
     execution: Execution,
 ) -> MriCnrOutputs:
     """
@@ -209,7 +209,7 @@ def mri_cnr_outputs(
 
 
 def mri_cnr_execute(
-    params: MriCnrParameters,
+    params: MriCnrParamsDict,
     runner: Runner | None = None,
 ) -> MriCnrOutputs:
     """
@@ -293,6 +293,8 @@ def mri_cnr(
 __all__ = [
     "MRI_CNR_METADATA",
     "MriCnrOutputs",
+    "MriCnrParamsDict",
+    "MriCnrParamsDictTagged",
     "mri_cnr",
     "mri_cnr_execute",
     "mri_cnr_params",

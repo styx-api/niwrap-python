@@ -13,7 +13,7 @@ V_3D_TSORT_METADATA = Metadata(
 )
 
 
-V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
+V3dTsortParamsDict = typing.TypedDict('V3dTsortParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTsort"]],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
     "randft": bool,
     "datum": typing.NotRequired[str | None],
 })
-V3dTsortParametersTagged = typing.TypedDict('V3dTsortParametersTagged', {
+V3dTsortParamsDictTagged = typing.TypedDict('V3dTsortParamsDictTagged', {
     "@type": typing.Literal["afni/3dTsort"],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ V3dTsortParametersTagged = typing.TypedDict('V3dTsortParametersTagged', {
 
 class V3dTsortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTsortParameters(...)`.
+    Output object returned when calling `V3dTsortParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_3d_tsort_params(
     ranfft: bool = False,
     randft: bool = False,
     datum: str | None = None,
-) -> V3dTsortParametersTagged:
+) -> V3dTsortParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def v_3d_tsort_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTsortParameters` object.
+    `V3dTsortParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def v_3d_tsort_validate(
 
 
 def v_3d_tsort_cargs(
-    params: V3dTsortParameters,
+    params: V3dTsortParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,7 +206,7 @@ def v_3d_tsort_cargs(
 
 
 def v_3d_tsort_outputs(
-    params: V3dTsortParameters,
+    params: V3dTsortParamsDict,
     execution: Execution,
 ) -> V3dTsortOutputs:
     """
@@ -226,7 +226,7 @@ def v_3d_tsort_outputs(
 
 
 def v_3d_tsort_execute(
-    params: V3dTsortParameters,
+    params: V3dTsortParamsDict,
     runner: Runner | None = None,
 ) -> V3dTsortOutputs:
     """
@@ -312,6 +312,8 @@ def v_3d_tsort(
 
 __all__ = [
     "V3dTsortOutputs",
+    "V3dTsortParamsDict",
+    "V3dTsortParamsDictTagged",
     "V_3D_TSORT_METADATA",
     "v_3d_tsort",
     "v_3d_tsort_execute",

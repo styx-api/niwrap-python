@@ -13,13 +13,13 @@ V_3D_AFNITO_RAW_METADATA = Metadata(
 )
 
 
-V3dAfnitoRawParameters = typing.TypedDict('V3dAfnitoRawParameters', {
+V3dAfnitoRawParamsDict = typing.TypedDict('V3dAfnitoRawParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoRaw"]],
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
     "dataset": str,
 })
-V3dAfnitoRawParametersTagged = typing.TypedDict('V3dAfnitoRawParametersTagged', {
+V3dAfnitoRawParamsDictTagged = typing.TypedDict('V3dAfnitoRawParamsDictTagged', {
     "@type": typing.Literal["afni/3dAFNItoRaw"],
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
@@ -29,7 +29,7 @@ V3dAfnitoRawParametersTagged = typing.TypedDict('V3dAfnitoRawParametersTagged', 
 
 class V3dAfnitoRawOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAfnitoRawParameters(...)`.
+    Output object returned when calling `V3dAfnitoRawParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def v_3d_afnito_raw_params(
     dataset: str,
     output_file: str | None = None,
     force_float: bool = False,
-) -> V3dAfnitoRawParametersTagged:
+) -> V3dAfnitoRawParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def v_3d_afnito_raw_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAfnitoRawParameters` object.
+    `V3dAfnitoRawParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def v_3d_afnito_raw_validate(
 
 
 def v_3d_afnito_raw_cargs(
-    params: V3dAfnitoRawParameters,
+    params: V3dAfnitoRawParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -115,7 +115,7 @@ def v_3d_afnito_raw_cargs(
 
 
 def v_3d_afnito_raw_outputs(
-    params: V3dAfnitoRawParameters,
+    params: V3dAfnitoRawParamsDict,
     execution: Execution,
 ) -> V3dAfnitoRawOutputs:
     """
@@ -134,7 +134,7 @@ def v_3d_afnito_raw_outputs(
 
 
 def v_3d_afnito_raw_execute(
-    params: V3dAfnitoRawParameters,
+    params: V3dAfnitoRawParamsDict,
     runner: Runner | None = None,
 ) -> V3dAfnitoRawOutputs:
     """
@@ -200,6 +200,8 @@ def v_3d_afnito_raw(
 
 __all__ = [
     "V3dAfnitoRawOutputs",
+    "V3dAfnitoRawParamsDict",
+    "V3dAfnitoRawParamsDictTagged",
     "V_3D_AFNITO_RAW_METADATA",
     "v_3d_afnito_raw",
     "v_3d_afnito_raw_execute",

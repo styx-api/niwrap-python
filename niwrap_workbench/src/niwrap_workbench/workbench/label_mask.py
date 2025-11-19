@@ -12,14 +12,14 @@ LABEL_MASK_METADATA = Metadata(
 )
 
 
-LabelMaskParameters = typing.TypedDict('LabelMaskParameters', {
+LabelMaskParamsDict = typing.TypedDict('LabelMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-mask"]],
     "label-out": str,
     "column": typing.NotRequired[str | None],
     "label": InputPathType,
     "mask": InputPathType,
 })
-LabelMaskParametersTagged = typing.TypedDict('LabelMaskParametersTagged', {
+LabelMaskParamsDictTagged = typing.TypedDict('LabelMaskParamsDictTagged', {
     "@type": typing.Literal["workbench/label-mask"],
     "label-out": str,
     "column": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ LabelMaskParametersTagged = typing.TypedDict('LabelMaskParametersTagged', {
 
 class LabelMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelMaskParameters(...)`.
+    Output object returned when calling `LabelMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def label_mask_params(
     column: str | None,
     label: InputPathType,
     mask: InputPathType,
-) -> LabelMaskParametersTagged:
+) -> LabelMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def label_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelMaskParameters` object.
+    `LabelMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def label_mask_validate(
 
 
 def label_mask_cargs(
-    params: LabelMaskParameters,
+    params: LabelMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def label_mask_cargs(
 
 
 def label_mask_outputs(
-    params: LabelMaskParameters,
+    params: LabelMaskParamsDict,
     execution: Execution,
 ) -> LabelMaskOutputs:
     """
@@ -145,7 +145,7 @@ def label_mask_outputs(
 
 
 def label_mask_execute(
-    params: LabelMaskParameters,
+    params: LabelMaskParamsDict,
     runner: Runner | None = None,
 ) -> LabelMaskOutputs:
     """
@@ -210,6 +210,8 @@ def label_mask(
 __all__ = [
     "LABEL_MASK_METADATA",
     "LabelMaskOutputs",
+    "LabelMaskParamsDict",
+    "LabelMaskParamsDictTagged",
     "label_mask",
     "label_mask_execute",
     "label_mask_params",

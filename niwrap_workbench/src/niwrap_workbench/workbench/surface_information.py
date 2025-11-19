@@ -12,11 +12,11 @@ SURFACE_INFORMATION_METADATA = Metadata(
 )
 
 
-SurfaceInformationParameters = typing.TypedDict('SurfaceInformationParameters', {
+SurfaceInformationParamsDict = typing.TypedDict('SurfaceInformationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-information"]],
     "Surface File": InputPathType,
 })
-SurfaceInformationParametersTagged = typing.TypedDict('SurfaceInformationParametersTagged', {
+SurfaceInformationParamsDictTagged = typing.TypedDict('SurfaceInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-information"],
     "Surface File": InputPathType,
 })
@@ -24,7 +24,7 @@ SurfaceInformationParametersTagged = typing.TypedDict('SurfaceInformationParamet
 
 class SurfaceInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceInformationParameters(...)`.
+    Output object returned when calling `SurfaceInformationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -32,7 +32,7 @@ class SurfaceInformationOutputs(typing.NamedTuple):
 
 def surface_information_params(
     surface_file: InputPathType,
-) -> SurfaceInformationParametersTagged:
+) -> SurfaceInformationParamsDictTagged:
     """
     Build parameters.
     
@@ -53,7 +53,7 @@ def surface_information_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceInformationParameters` object.
+    `SurfaceInformationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -67,7 +67,7 @@ def surface_information_validate(
 
 
 def surface_information_cargs(
-    params: SurfaceInformationParameters,
+    params: SurfaceInformationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def surface_information_cargs(
 
 
 def surface_information_outputs(
-    params: SurfaceInformationParameters,
+    params: SurfaceInformationParamsDict,
     execution: Execution,
 ) -> SurfaceInformationOutputs:
     """
@@ -108,7 +108,7 @@ def surface_information_outputs(
 
 
 def surface_information_execute(
-    params: SurfaceInformationParameters,
+    params: SurfaceInformationParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
@@ -158,6 +158,8 @@ def surface_information(
 __all__ = [
     "SURFACE_INFORMATION_METADATA",
     "SurfaceInformationOutputs",
+    "SurfaceInformationParamsDict",
+    "SurfaceInformationParamsDictTagged",
     "surface_information",
     "surface_information_execute",
     "surface_information_params",

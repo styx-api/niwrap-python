@@ -13,7 +13,7 @@ V__RENAME_PANGA_METADATA = Metadata(
 )
 
 
-VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
+VRenamePangaParamsDict = typing.TypedDict('VRenamePangaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@RenamePanga"]],
     "dir_number": str,
     "first_image_number": str,
@@ -26,7 +26,7 @@ VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
     "slice_pattern": typing.NotRequired[str | None],
     "output_directory": typing.NotRequired[str | None],
 })
-VRenamePangaParametersTagged = typing.TypedDict('VRenamePangaParametersTagged', {
+VRenamePangaParamsDictTagged = typing.TypedDict('VRenamePangaParamsDictTagged', {
     "@type": typing.Literal["afni/@RenamePanga"],
     "dir_number": str,
     "first_image_number": str,
@@ -43,7 +43,7 @@ VRenamePangaParametersTagged = typing.TypedDict('VRenamePangaParametersTagged', 
 
 class VRenamePangaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRenamePangaParameters(...)`.
+    Output object returned when calling `VRenamePangaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def v__rename_panga_params(
     outliers_check: bool = False,
     slice_pattern: str | None = None,
     output_directory: str | None = None,
-) -> VRenamePangaParametersTagged:
+) -> VRenamePangaParamsDictTagged:
     """
     Build parameters.
     
@@ -113,7 +113,7 @@ def v__rename_panga_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRenamePangaParameters` object.
+    `VRenamePangaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -161,7 +161,7 @@ def v__rename_panga_validate(
 
 
 def v__rename_panga_cargs(
-    params: VRenamePangaParameters,
+    params: VRenamePangaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -200,7 +200,7 @@ def v__rename_panga_cargs(
 
 
 def v__rename_panga_outputs(
-    params: VRenamePangaParameters,
+    params: VRenamePangaParamsDict,
     execution: Execution,
 ) -> VRenamePangaOutputs:
     """
@@ -222,7 +222,7 @@ def v__rename_panga_outputs(
 
 
 def v__rename_panga_execute(
-    params: VRenamePangaParameters,
+    params: VRenamePangaParamsDict,
     runner: Runner | None = None,
 ) -> VRenamePangaOutputs:
     """
@@ -310,6 +310,8 @@ def v__rename_panga(
 
 __all__ = [
     "VRenamePangaOutputs",
+    "VRenamePangaParamsDict",
+    "VRenamePangaParamsDictTagged",
     "V__RENAME_PANGA_METADATA",
     "v__rename_panga",
     "v__rename_panga_execute",

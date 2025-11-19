@@ -13,19 +13,19 @@ TCK2FIXEL_METADATA = Metadata(
 )
 
 
-Tck2fixelConfigParameters = typing.TypedDict('Tck2fixelConfigParameters', {
+Tck2fixelConfigParamsDict = typing.TypedDict('Tck2fixelConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Tck2fixelConfigParametersTagged = typing.TypedDict('Tck2fixelConfigParametersTagged', {
+Tck2fixelConfigParamsDictTagged = typing.TypedDict('Tck2fixelConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Tck2fixelParameters = typing.TypedDict('Tck2fixelParameters', {
+Tck2fixelParamsDict = typing.TypedDict('Tck2fixelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tck2fixel"]],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -33,7 +33,7 @@ Tck2fixelParameters = typing.TypedDict('Tck2fixelParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tck2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Tck2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -41,7 +41,7 @@ Tck2fixelParameters = typing.TypedDict('Tck2fixelParameters', {
     "fixel_folder_out": str,
     "fixel_data_out": str,
 })
-Tck2fixelParametersTagged = typing.TypedDict('Tck2fixelParametersTagged', {
+Tck2fixelParamsDictTagged = typing.TypedDict('Tck2fixelParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tck2fixel"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -49,7 +49,7 @@ Tck2fixelParametersTagged = typing.TypedDict('Tck2fixelParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Tck2fixelConfigParameters] | None],
+    "config": typing.NotRequired[list[Tck2fixelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "tracks": InputPathType,
@@ -59,10 +59,10 @@ Tck2fixelParametersTagged = typing.TypedDict('Tck2fixelParametersTagged', {
 })
 
 
-def tck2fixel_config_params(
+def tck2fixel_config(
     key: str,
     value: str,
-) -> Tck2fixelConfigParametersTagged:
+) -> Tck2fixelConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def tck2fixel_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tck2fixelConfigParameters` object.
+    `Tck2fixelConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def tck2fixel_config_validate(
 
 
 def tck2fixel_config_cargs(
-    params: Tck2fixelConfigParameters,
+    params: Tck2fixelConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def tck2fixel_config_cargs(
 
 class Tck2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Tck2fixelParameters(...)`.
+    Output object returned when calling `Tck2fixelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,10 +141,10 @@ def tck2fixel_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tck2fixelConfigParameters] | None = None,
+    config: list[Tck2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Tck2fixelParametersTagged:
+) -> Tck2fixelParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def tck2fixel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Tck2fixelParameters` object.
+    `Tck2fixelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -230,7 +230,7 @@ def tck2fixel_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tck2fixelConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tck2fixelConfigParamsDict] | None`')
         for e in params["config"]:
             tck2fixel_config_validate(e)
     if params.get("help", False) is None:
@@ -260,7 +260,7 @@ def tck2fixel_validate(
 
 
 def tck2fixel_cargs(
-    params: Tck2fixelParameters,
+    params: Tck2fixelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -306,7 +306,7 @@ def tck2fixel_cargs(
 
 
 def tck2fixel_outputs(
-    params: Tck2fixelParameters,
+    params: Tck2fixelParamsDict,
     execution: Execution,
 ) -> Tck2fixelOutputs:
     """
@@ -325,7 +325,7 @@ def tck2fixel_outputs(
 
 
 def tck2fixel_execute(
-    params: Tck2fixelParameters,
+    params: Tck2fixelParamsDict,
     runner: Runner | None = None,
 ) -> Tck2fixelOutputs:
     """
@@ -370,7 +370,7 @@ def tck2fixel(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Tck2fixelConfigParameters] | None = None,
+    config: list[Tck2fixelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -435,9 +435,13 @@ def tck2fixel(
 
 __all__ = [
     "TCK2FIXEL_METADATA",
+    "Tck2fixelConfigParamsDict",
+    "Tck2fixelConfigParamsDictTagged",
     "Tck2fixelOutputs",
+    "Tck2fixelParamsDict",
+    "Tck2fixelParamsDictTagged",
     "tck2fixel",
-    "tck2fixel_config_params",
+    "tck2fixel_config",
     "tck2fixel_execute",
     "tck2fixel_params",
 ]

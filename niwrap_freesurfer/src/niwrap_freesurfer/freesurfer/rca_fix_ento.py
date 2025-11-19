@@ -13,7 +13,7 @@ RCA_FIX_ENTO_METADATA = Metadata(
 )
 
 
-RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
+RcaFixEntoParamsDict = typing.TypedDict('RcaFixEntoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/rca-fix-ento"]],
     "subject": str,
     "threads": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
     "account": typing.NotRequired[str | None],
     "brain_mask": bool,
 })
-RcaFixEntoParametersTagged = typing.TypedDict('RcaFixEntoParametersTagged', {
+RcaFixEntoParamsDictTagged = typing.TypedDict('RcaFixEntoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/rca-fix-ento"],
     "subject": str,
     "threads": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ RcaFixEntoParametersTagged = typing.TypedDict('RcaFixEntoParametersTagged', {
 
 class RcaFixEntoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RcaFixEntoParameters(...)`.
+    Output object returned when calling `RcaFixEntoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def rca_fix_ento_params(
     submit: bool = False,
     account: str | None = None,
     brain_mask: bool = False,
-) -> RcaFixEntoParametersTagged:
+) -> RcaFixEntoParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def rca_fix_ento_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RcaFixEntoParameters` object.
+    `RcaFixEntoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def rca_fix_ento_validate(
 
 
 def rca_fix_ento_cargs(
-    params: RcaFixEntoParameters,
+    params: RcaFixEntoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def rca_fix_ento_cargs(
 
 
 def rca_fix_ento_outputs(
-    params: RcaFixEntoParameters,
+    params: RcaFixEntoParamsDict,
     execution: Execution,
 ) -> RcaFixEntoOutputs:
     """
@@ -170,7 +170,7 @@ def rca_fix_ento_outputs(
 
 
 def rca_fix_ento_execute(
-    params: RcaFixEntoParameters,
+    params: RcaFixEntoParamsDict,
     runner: Runner | None = None,
 ) -> RcaFixEntoOutputs:
     """
@@ -242,6 +242,8 @@ def rca_fix_ento(
 __all__ = [
     "RCA_FIX_ENTO_METADATA",
     "RcaFixEntoOutputs",
+    "RcaFixEntoParamsDict",
+    "RcaFixEntoParamsDictTagged",
     "rca_fix_ento",
     "rca_fix_ento_execute",
     "rca_fix_ento_params",

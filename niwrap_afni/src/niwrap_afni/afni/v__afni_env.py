@@ -13,7 +13,7 @@ V__AFNI_ENV_METADATA = Metadata(
 )
 
 
-VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
+VAfniEnvParamsDict = typing.TypedDict('VAfniEnvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@AfniEnv"]],
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
     "all_opts_flag": bool,
     "help_find_flag": typing.NotRequired[str | None],
 })
-VAfniEnvParametersTagged = typing.TypedDict('VAfniEnvParametersTagged', {
+VAfniEnvParamsDictTagged = typing.TypedDict('VAfniEnvParamsDictTagged', {
     "@type": typing.Literal["afni/@AfniEnv"],
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ VAfniEnvParametersTagged = typing.TypedDict('VAfniEnvParametersTagged', {
 
 class VAfniEnvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniEnvParameters(...)`.
+    Output object returned when calling `VAfniEnvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def v__afni_env_params(
     help_view_flag_alias: bool = False,
     all_opts_flag: bool = False,
     help_find_flag: str | None = None,
-) -> VAfniEnvParametersTagged:
+) -> VAfniEnvParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def v__afni_env_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniEnvParameters` object.
+    `VAfniEnvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def v__afni_env_validate(
 
 
 def v__afni_env_cargs(
-    params: VAfniEnvParameters,
+    params: VAfniEnvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def v__afni_env_cargs(
 
 
 def v__afni_env_outputs(
-    params: VAfniEnvParameters,
+    params: VAfniEnvParamsDict,
     execution: Execution,
 ) -> VAfniEnvOutputs:
     """
@@ -224,7 +224,7 @@ def v__afni_env_outputs(
 
 
 def v__afni_env_execute(
-    params: VAfniEnvParameters,
+    params: VAfniEnvParamsDict,
     runner: Runner | None = None,
 ) -> VAfniEnvOutputs:
     """
@@ -307,6 +307,8 @@ def v__afni_env(
 
 __all__ = [
     "VAfniEnvOutputs",
+    "VAfniEnvParamsDict",
+    "VAfniEnvParamsDictTagged",
     "V__AFNI_ENV_METADATA",
     "v__afni_env",
     "v__afni_env_execute",

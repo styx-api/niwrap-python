@@ -13,7 +13,7 @@ V_3DMAXIMA_METADATA = Metadata(
 )
 
 
-V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
+V3dmaximaParamsDict = typing.TypedDict('V3dmaximaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmaxima"]],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
     "hist_flag": bool,
     "ver_flag": bool,
 })
-V3dmaximaParametersTagged = typing.TypedDict('V3dmaximaParametersTagged', {
+V3dmaximaParamsDictTagged = typing.TypedDict('V3dmaximaParamsDictTagged', {
     "@type": typing.Literal["afni/3dmaxima"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
@@ -63,7 +63,7 @@ V3dmaximaParametersTagged = typing.TypedDict('V3dmaximaParametersTagged', {
 
 class V3dmaximaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaximaParameters(...)`.
+    Output object returned when calling `V3dmaximaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def v_3dmaxima_params(
     help_flag: bool = False,
     hist_flag: bool = False,
     ver_flag: bool = False,
-) -> V3dmaximaParametersTagged:
+) -> V3dmaximaParamsDictTagged:
     """
     Build parameters.
     
@@ -161,7 +161,7 @@ def v_3dmaxima_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaximaParameters` object.
+    `V3dmaximaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -246,7 +246,7 @@ def v_3dmaxima_validate(
 
 
 def v_3dmaxima_cargs(
-    params: V3dmaximaParameters,
+    params: V3dmaximaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -318,7 +318,7 @@ def v_3dmaxima_cargs(
 
 
 def v_3dmaxima_outputs(
-    params: V3dmaximaParameters,
+    params: V3dmaximaParamsDict,
     execution: Execution,
 ) -> V3dmaximaOutputs:
     """
@@ -339,7 +339,7 @@ def v_3dmaxima_outputs(
 
 
 def v_3dmaxima_execute(
-    params: V3dmaximaParameters,
+    params: V3dmaximaParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaximaOutputs:
     """
@@ -454,6 +454,8 @@ def v_3dmaxima(
 
 __all__ = [
     "V3dmaximaOutputs",
+    "V3dmaximaParamsDict",
+    "V3dmaximaParamsDictTagged",
     "V_3DMAXIMA_METADATA",
     "v_3dmaxima",
     "v_3dmaxima_execute",

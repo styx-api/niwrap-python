@@ -13,7 +13,7 @@ TEDANA_WRAPPER_PY_METADATA = Metadata(
 )
 
 
-TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
+TedanaWrapperPyParamsDict = typing.TypedDict('TedanaWrapperPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/tedana_wrapper.py"]],
     "input_files": list[InputPathType],
     "echo_times": list[float],
@@ -29,7 +29,7 @@ TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
     "help": bool,
     "detailed_help": bool,
 })
-TedanaWrapperPyParametersTagged = typing.TypedDict('TedanaWrapperPyParametersTagged', {
+TedanaWrapperPyParamsDictTagged = typing.TypedDict('TedanaWrapperPyParamsDictTagged', {
     "@type": typing.Literal["afni/tedana_wrapper.py"],
     "input_files": list[InputPathType],
     "echo_times": list[float],
@@ -49,7 +49,7 @@ TedanaWrapperPyParametersTagged = typing.TypedDict('TedanaWrapperPyParametersTag
 
 class TedanaWrapperPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TedanaWrapperPyParameters(...)`.
+    Output object returned when calling `TedanaWrapperPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def tedana_wrapper_py_params(
     tedana_opts: str | None = None,
     help_: bool = False,
     detailed_help: bool = False,
-) -> TedanaWrapperPyParametersTagged:
+) -> TedanaWrapperPyParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def tedana_wrapper_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TedanaWrapperPyParameters` object.
+    `TedanaWrapperPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -191,7 +191,7 @@ def tedana_wrapper_py_validate(
 
 
 def tedana_wrapper_py_cargs(
-    params: TedanaWrapperPyParameters,
+    params: TedanaWrapperPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def tedana_wrapper_py_cargs(
 
 
 def tedana_wrapper_py_outputs(
-    params: TedanaWrapperPyParameters,
+    params: TedanaWrapperPyParamsDict,
     execution: Execution,
 ) -> TedanaWrapperPyOutputs:
     """
@@ -277,7 +277,7 @@ def tedana_wrapper_py_outputs(
 
 
 def tedana_wrapper_py_execute(
-    params: TedanaWrapperPyParameters,
+    params: TedanaWrapperPyParamsDict,
     runner: Runner | None = None,
 ) -> TedanaWrapperPyOutputs:
     """
@@ -374,6 +374,8 @@ def tedana_wrapper_py(
 __all__ = [
     "TEDANA_WRAPPER_PY_METADATA",
     "TedanaWrapperPyOutputs",
+    "TedanaWrapperPyParamsDict",
+    "TedanaWrapperPyParamsDictTagged",
     "tedana_wrapper_py",
     "tedana_wrapper_py_execute",
     "tedana_wrapper_py_params",

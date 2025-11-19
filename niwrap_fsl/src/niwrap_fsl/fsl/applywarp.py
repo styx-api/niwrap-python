@@ -13,7 +13,7 @@ APPLYWARP_METADATA = Metadata(
 )
 
 
-ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
+ApplywarpParamsDict = typing.TypedDict('ApplywarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/applywarp"]],
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
@@ -31,7 +31,7 @@ ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
     "superlevel_2": typing.NotRequired[int | None],
     "supersample": bool,
 })
-ApplywarpParametersTagged = typing.TypedDict('ApplywarpParametersTagged', {
+ApplywarpParamsDictTagged = typing.TypedDict('ApplywarpParamsDictTagged', {
     "@type": typing.Literal["fsl/applywarp"],
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
@@ -53,7 +53,7 @@ ApplywarpParametersTagged = typing.TypedDict('ApplywarpParametersTagged', {
 
 class ApplywarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApplywarpParameters(...)`.
+    Output object returned when calling `ApplywarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def applywarp_params(
     superlevel: typing.Literal["a"] | None = None,
     superlevel_2: int | None = None,
     supersample: bool = False,
-) -> ApplywarpParametersTagged:
+) -> ApplywarpParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def applywarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApplywarpParameters` object.
+    `ApplywarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -209,7 +209,7 @@ def applywarp_validate(
 
 
 def applywarp_cargs(
-    params: ApplywarpParameters,
+    params: ApplywarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -255,7 +255,7 @@ def applywarp_cargs(
 
 
 def applywarp_outputs(
-    params: ApplywarpParameters,
+    params: ApplywarpParamsDict,
     execution: Execution,
 ) -> ApplywarpOutputs:
     """
@@ -275,7 +275,7 @@ def applywarp_outputs(
 
 
 def applywarp_execute(
-    params: ApplywarpParameters,
+    params: ApplywarpParamsDict,
     runner: Runner | None = None,
 ) -> ApplywarpOutputs:
     """
@@ -378,6 +378,8 @@ def applywarp(
 __all__ = [
     "APPLYWARP_METADATA",
     "ApplywarpOutputs",
+    "ApplywarpParamsDict",
+    "ApplywarpParamsDictTagged",
     "applywarp",
     "applywarp_execute",
     "applywarp_params",

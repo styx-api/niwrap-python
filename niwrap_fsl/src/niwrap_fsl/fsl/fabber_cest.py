@@ -13,7 +13,7 @@ FABBER_CEST_METADATA = Metadata(
 )
 
 
-FabberCestParameters = typing.TypedDict('FabberCestParameters', {
+FabberCestParamsDict = typing.TypedDict('FabberCestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_cest"]],
     "output": str,
     "method": str,
@@ -52,7 +52,7 @@ FabberCestParameters = typing.TypedDict('FabberCestParameters', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
-FabberCestParametersTagged = typing.TypedDict('FabberCestParametersTagged', {
+FabberCestParamsDictTagged = typing.TypedDict('FabberCestParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_cest"],
     "output": str,
     "method": str,
@@ -95,7 +95,7 @@ FabberCestParametersTagged = typing.TypedDict('FabberCestParametersTagged', {
 
 class FabberCestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberCestParameters(...)`.
+    Output object returned when calling `FabberCestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -162,7 +162,7 @@ def fabber_cest_params(
     save_free_energy: bool = False,
     optfile: InputPathType | None = None,
     debug: bool = False,
-) -> FabberCestParametersTagged:
+) -> FabberCestParamsDictTagged:
     """
     Build parameters.
     
@@ -269,7 +269,7 @@ def fabber_cest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberCestParameters` object.
+    `FabberCestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -413,7 +413,7 @@ def fabber_cest_validate(
 
 
 def fabber_cest_cargs(
-    params: FabberCestParameters,
+    params: FabberCestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -541,7 +541,7 @@ def fabber_cest_cargs(
 
 
 def fabber_cest_outputs(
-    params: FabberCestParameters,
+    params: FabberCestParamsDict,
     execution: Execution,
 ) -> FabberCestOutputs:
     """
@@ -572,7 +572,7 @@ def fabber_cest_outputs(
 
 
 def fabber_cest_execute(
-    params: FabberCestParameters,
+    params: FabberCestParamsDict,
     runner: Runner | None = None,
 ) -> FabberCestOutputs:
     """
@@ -739,6 +739,8 @@ def fabber_cest(
 __all__ = [
     "FABBER_CEST_METADATA",
     "FabberCestOutputs",
+    "FabberCestParamsDict",
+    "FabberCestParamsDictTagged",
     "fabber_cest",
     "fabber_cest_execute",
     "fabber_cest_params",

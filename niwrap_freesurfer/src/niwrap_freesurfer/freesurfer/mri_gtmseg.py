@@ -13,7 +13,7 @@ MRI_GTMSEG_METADATA = Metadata(
 )
 
 
-MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
+MriGtmsegParamsDict = typing.TypedDict('MriGtmsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmseg"]],
     "output_volume": str,
     "source_subject": str,
@@ -35,7 +35,7 @@ MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
     "debug": bool,
     "check_opts": bool,
 })
-MriGtmsegParametersTagged = typing.TypedDict('MriGtmsegParametersTagged', {
+MriGtmsegParamsDictTagged = typing.TypedDict('MriGtmsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gtmseg"],
     "output_volume": str,
     "source_subject": str,
@@ -61,7 +61,7 @@ MriGtmsegParametersTagged = typing.TypedDict('MriGtmsegParametersTagged', {
 
 class MriGtmsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGtmsegParameters(...)`.
+    Output object returned when calling `MriGtmsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def mri_gtmseg_params(
     threads_max_1: bool = False,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriGtmsegParametersTagged:
+) -> MriGtmsegParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def mri_gtmseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGtmsegParameters` object.
+    `MriGtmsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -260,7 +260,7 @@ def mri_gtmseg_validate(
 
 
 def mri_gtmseg_cargs(
-    params: MriGtmsegParameters,
+    params: MriGtmsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -350,7 +350,7 @@ def mri_gtmseg_cargs(
 
 
 def mri_gtmseg_outputs(
-    params: MriGtmsegParameters,
+    params: MriGtmsegParamsDict,
     execution: Execution,
 ) -> MriGtmsegOutputs:
     """
@@ -369,7 +369,7 @@ def mri_gtmseg_outputs(
 
 
 def mri_gtmseg_execute(
-    params: MriGtmsegParameters,
+    params: MriGtmsegParamsDict,
     runner: Runner | None = None,
 ) -> MriGtmsegOutputs:
     """
@@ -491,6 +491,8 @@ def mri_gtmseg(
 __all__ = [
     "MRI_GTMSEG_METADATA",
     "MriGtmsegOutputs",
+    "MriGtmsegParamsDict",
+    "MriGtmsegParamsDictTagged",
     "mri_gtmseg",
     "mri_gtmseg_execute",
     "mri_gtmseg_params",

@@ -13,11 +13,11 @@ V__SUMA_RENUMBER_FS_METADATA = Metadata(
 )
 
 
-VSumaRenumberFsParameters = typing.TypedDict('VSumaRenumberFsParameters', {
+VSumaRenumberFsParamsDict = typing.TypedDict('VSumaRenumberFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_renumber_FS"]],
     "sumadir": str,
 })
-VSumaRenumberFsParametersTagged = typing.TypedDict('VSumaRenumberFsParametersTagged', {
+VSumaRenumberFsParamsDictTagged = typing.TypedDict('VSumaRenumberFsParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_renumber_FS"],
     "sumadir": str,
 })
@@ -25,7 +25,7 @@ VSumaRenumberFsParametersTagged = typing.TypedDict('VSumaRenumberFsParametersTag
 
 class VSumaRenumberFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaRenumberFsParameters(...)`.
+    Output object returned when calling `VSumaRenumberFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ class VSumaRenumberFsOutputs(typing.NamedTuple):
 
 def v__suma_renumber_fs_params(
     sumadir: str,
-) -> VSumaRenumberFsParametersTagged:
+) -> VSumaRenumberFsParamsDictTagged:
     """
     Build parameters.
     
@@ -77,7 +77,7 @@ def v__suma_renumber_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaRenumberFsParameters` object.
+    `VSumaRenumberFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v__suma_renumber_fs_validate(
 
 
 def v__suma_renumber_fs_cargs(
-    params: VSumaRenumberFsParameters,
+    params: VSumaRenumberFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def v__suma_renumber_fs_cargs(
 
 
 def v__suma_renumber_fs_outputs(
-    params: VSumaRenumberFsParameters,
+    params: VSumaRenumberFsParamsDict,
     execution: Execution,
 ) -> VSumaRenumberFsOutputs:
     """
@@ -140,7 +140,7 @@ def v__suma_renumber_fs_outputs(
 
 
 def v__suma_renumber_fs_execute(
-    params: VSumaRenumberFsParameters,
+    params: VSumaRenumberFsParamsDict,
     runner: Runner | None = None,
 ) -> VSumaRenumberFsOutputs:
     """
@@ -197,6 +197,8 @@ def v__suma_renumber_fs(
 
 __all__ = [
     "VSumaRenumberFsOutputs",
+    "VSumaRenumberFsParamsDict",
+    "VSumaRenumberFsParamsDictTagged",
     "V__SUMA_RENUMBER_FS_METADATA",
     "v__suma_renumber_fs",
     "v__suma_renumber_fs_execute",

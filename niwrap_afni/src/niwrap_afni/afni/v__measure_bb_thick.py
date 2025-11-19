@@ -13,7 +13,7 @@ V__MEASURE_BB_THICK_METADATA = Metadata(
 )
 
 
-VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
+VMeasureBbThickParamsDict = typing.TypedDict('VMeasureBbThickParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@measure_bb_thick"]],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -28,7 +28,7 @@ VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
     "balls_only": bool,
     "surfsmooth_method": typing.NotRequired[str | None],
 })
-VMeasureBbThickParametersTagged = typing.TypedDict('VMeasureBbThickParametersTagged', {
+VMeasureBbThickParamsDictTagged = typing.TypedDict('VMeasureBbThickParamsDictTagged', {
     "@type": typing.Literal["afni/@measure_bb_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
@@ -47,7 +47,7 @@ VMeasureBbThickParametersTagged = typing.TypedDict('VMeasureBbThickParametersTag
 
 class VMeasureBbThickOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VMeasureBbThickParameters(...)`.
+    Output object returned when calling `VMeasureBbThickParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def v__measure_bb_thick_params(
     keep_temp_files: bool = False,
     balls_only: bool = False,
     surfsmooth_method: str | None = None,
-) -> VMeasureBbThickParametersTagged:
+) -> VMeasureBbThickParamsDictTagged:
     """
     Build parameters.
     
@@ -143,7 +143,7 @@ def v__measure_bb_thick_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VMeasureBbThickParameters` object.
+    `VMeasureBbThickParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -193,7 +193,7 @@ def v__measure_bb_thick_validate(
 
 
 def v__measure_bb_thick_cargs(
-    params: VMeasureBbThickParameters,
+    params: VMeasureBbThickParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -263,7 +263,7 @@ def v__measure_bb_thick_cargs(
 
 
 def v__measure_bb_thick_outputs(
-    params: VMeasureBbThickParameters,
+    params: VMeasureBbThickParamsDict,
     execution: Execution,
 ) -> VMeasureBbThickOutputs:
     """
@@ -291,7 +291,7 @@ def v__measure_bb_thick_outputs(
 
 
 def v__measure_bb_thick_execute(
-    params: VMeasureBbThickParameters,
+    params: VMeasureBbThickParamsDict,
     runner: Runner | None = None,
 ) -> VMeasureBbThickOutputs:
     """
@@ -387,6 +387,8 @@ def v__measure_bb_thick(
 
 __all__ = [
     "VMeasureBbThickOutputs",
+    "VMeasureBbThickParamsDict",
+    "VMeasureBbThickParamsDictTagged",
     "V__MEASURE_BB_THICK_METADATA",
     "v__measure_bb_thick",
     "v__measure_bb_thick_execute",

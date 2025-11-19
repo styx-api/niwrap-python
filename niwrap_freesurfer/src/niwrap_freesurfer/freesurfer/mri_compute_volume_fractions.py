@@ -13,7 +13,7 @@ MRI_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 )
 
 
-MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFractionsParameters', {
+MriComputeVolumeFractionsParamsDict = typing.TypedDict('MriComputeVolumeFractionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_volume_fractions"]],
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFraction
     "debug": bool,
     "checkopts": bool,
 })
-MriComputeVolumeFractionsParametersTagged = typing.TypedDict('MriComputeVolumeFractionsParametersTagged', {
+MriComputeVolumeFractionsParamsDictTagged = typing.TypedDict('MriComputeVolumeFractionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_compute_volume_fractions"],
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
@@ -73,7 +73,7 @@ MriComputeVolumeFractionsParametersTagged = typing.TypedDict('MriComputeVolumeFr
 
 class MriComputeVolumeFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriComputeVolumeFractionsParameters(...)`.
+    Output object returned when calling `MriComputeVolumeFractionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def mri_compute_volume_fractions_params(
     vg_thresh: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriComputeVolumeFractionsParametersTagged:
+) -> MriComputeVolumeFractionsParamsDictTagged:
     """
     Build parameters.
     
@@ -206,7 +206,7 @@ def mri_compute_volume_fractions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriComputeVolumeFractionsParameters` object.
+    `MriComputeVolumeFractionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -301,7 +301,7 @@ def mri_compute_volume_fractions_validate(
 
 
 def mri_compute_volume_fractions_cargs(
-    params: MriComputeVolumeFractionsParameters,
+    params: MriComputeVolumeFractionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -416,7 +416,7 @@ def mri_compute_volume_fractions_cargs(
 
 
 def mri_compute_volume_fractions_outputs(
-    params: MriComputeVolumeFractionsParameters,
+    params: MriComputeVolumeFractionsParamsDict,
     execution: Execution,
 ) -> MriComputeVolumeFractionsOutputs:
     """
@@ -439,7 +439,7 @@ def mri_compute_volume_fractions_outputs(
 
 
 def mri_compute_volume_fractions_execute(
-    params: MriComputeVolumeFractionsParameters,
+    params: MriComputeVolumeFractionsParamsDict,
     runner: Runner | None = None,
 ) -> MriComputeVolumeFractionsOutputs:
     """
@@ -576,6 +576,8 @@ def mri_compute_volume_fractions(
 __all__ = [
     "MRI_COMPUTE_VOLUME_FRACTIONS_METADATA",
     "MriComputeVolumeFractionsOutputs",
+    "MriComputeVolumeFractionsParamsDict",
+    "MriComputeVolumeFractionsParamsDictTagged",
     "mri_compute_volume_fractions",
     "mri_compute_volume_fractions_execute",
     "mri_compute_volume_fractions_params",

@@ -12,14 +12,14 @@ FILE_CONVERT_METADATA = Metadata(
 )
 
 
-FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderVersionConvertParameters', {
+FileConvertBorderVersionConvertParamsDict = typing.TypedDict('FileConvertBorderVersionConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["border-version-convert"]],
     "border-in": InputPathType,
     "out-version": int,
     "border-out": str,
     "surface": typing.NotRequired[InputPathType | None],
 })
-FileConvertBorderVersionConvertParametersTagged = typing.TypedDict('FileConvertBorderVersionConvertParametersTagged', {
+FileConvertBorderVersionConvertParamsDictTagged = typing.TypedDict('FileConvertBorderVersionConvertParamsDictTagged', {
     "@type": typing.Literal["border-version-convert"],
     "border-in": InputPathType,
     "out-version": int,
@@ -28,13 +28,13 @@ FileConvertBorderVersionConvertParametersTagged = typing.TypedDict('FileConvertB
 })
 
 
-FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVersionConvertParameters', {
+FileConvertNiftiVersionConvertParamsDict = typing.TypedDict('FileConvertNiftiVersionConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["nifti-version-convert"]],
     "input": str,
     "version": int,
     "output": str,
 })
-FileConvertNiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertNiftiVersionConvertParametersTagged', {
+FileConvertNiftiVersionConvertParamsDictTagged = typing.TypedDict('FileConvertNiftiVersionConvertParamsDictTagged', {
     "@type": typing.Literal["nifti-version-convert"],
     "input": str,
     "version": int,
@@ -42,13 +42,13 @@ FileConvertNiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertNi
 })
 
 
-FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVersionConvertParameters', {
+FileConvertCiftiVersionConvertParamsDict = typing.TypedDict('FileConvertCiftiVersionConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti-version-convert"]],
     "cifti-in": InputPathType,
     "version": str,
     "cifti-out": str,
 })
-FileConvertCiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertCiftiVersionConvertParametersTagged', {
+FileConvertCiftiVersionConvertParamsDictTagged = typing.TypedDict('FileConvertCiftiVersionConvertParamsDictTagged', {
     "@type": typing.Literal["cifti-version-convert"],
     "cifti-in": InputPathType,
     "version": str,
@@ -56,26 +56,26 @@ FileConvertCiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertCi
 })
 
 
-FileConvertParameters = typing.TypedDict('FileConvertParameters', {
+FileConvertParamsDict = typing.TypedDict('FileConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/file-convert"]],
-    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
-    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
-    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
+    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParamsDict | None],
+    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParamsDict | None],
+    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParamsDict | None],
 })
-FileConvertParametersTagged = typing.TypedDict('FileConvertParametersTagged', {
+FileConvertParamsDictTagged = typing.TypedDict('FileConvertParamsDictTagged', {
     "@type": typing.Literal["workbench/file-convert"],
-    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
-    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
-    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
+    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParamsDict | None],
+    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParamsDict | None],
+    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParamsDict | None],
 })
 
 
-def file_convert_border_version_convert_params(
+def file_convert_border_version_convert(
     border_in: InputPathType,
     out_version: int,
     border_out: str,
     surface: InputPathType | None,
-) -> FileConvertBorderVersionConvertParametersTagged:
+) -> FileConvertBorderVersionConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def file_convert_border_version_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileConvertBorderVersionConvertParameters` object.
+    `FileConvertBorderVersionConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -131,7 +131,7 @@ def file_convert_border_version_convert_validate(
 
 
 def file_convert_border_version_convert_cargs(
-    params: FileConvertBorderVersionConvertParameters,
+    params: FileConvertBorderVersionConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,11 +156,11 @@ def file_convert_border_version_convert_cargs(
     return cargs
 
 
-def file_convert_nifti_version_convert_params(
+def file_convert_nifti_version_convert(
     input_: str,
     version: int,
     output: str,
-) -> FileConvertNiftiVersionConvertParametersTagged:
+) -> FileConvertNiftiVersionConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -185,7 +185,7 @@ def file_convert_nifti_version_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileConvertNiftiVersionConvertParameters` object.
+    `FileConvertNiftiVersionConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def file_convert_nifti_version_convert_validate(
 
 
 def file_convert_nifti_version_convert_cargs(
-    params: FileConvertNiftiVersionConvertParameters,
+    params: FileConvertNiftiVersionConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,11 +229,11 @@ def file_convert_nifti_version_convert_cargs(
     return cargs
 
 
-def file_convert_cifti_version_convert_params(
+def file_convert_cifti_version_convert(
     cifti_in: InputPathType,
     version: str,
     cifti_out: str,
-) -> FileConvertCiftiVersionConvertParametersTagged:
+) -> FileConvertCiftiVersionConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -258,7 +258,7 @@ def file_convert_cifti_version_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileConvertCiftiVersionConvertParameters` object.
+    `FileConvertCiftiVersionConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -280,7 +280,7 @@ def file_convert_cifti_version_convert_validate(
 
 
 def file_convert_cifti_version_convert_cargs(
-    params: FileConvertCiftiVersionConvertParameters,
+    params: FileConvertCiftiVersionConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -304,17 +304,17 @@ def file_convert_cifti_version_convert_cargs(
 
 class FileConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FileConvertParameters(...)`.
+    Output object returned when calling `FileConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
 def file_convert_params(
-    border_version_convert: FileConvertBorderVersionConvertParameters | None = None,
-    nifti_version_convert: FileConvertNiftiVersionConvertParameters | None = None,
-    cifti_version_convert: FileConvertCiftiVersionConvertParameters | None = None,
-) -> FileConvertParametersTagged:
+    border_version_convert: FileConvertBorderVersionConvertParamsDict | None = None,
+    nifti_version_convert: FileConvertNiftiVersionConvertParamsDict | None = None,
+    cifti_version_convert: FileConvertCiftiVersionConvertParamsDict | None = None,
+) -> FileConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -342,7 +342,7 @@ def file_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FileConvertParameters` object.
+    `FileConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -358,7 +358,7 @@ def file_convert_validate(
 
 
 def file_convert_cargs(
-    params: FileConvertParameters,
+    params: FileConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -383,7 +383,7 @@ def file_convert_cargs(
 
 
 def file_convert_outputs(
-    params: FileConvertParameters,
+    params: FileConvertParamsDict,
     execution: Execution,
 ) -> FileConvertOutputs:
     """
@@ -402,7 +402,7 @@ def file_convert_outputs(
 
 
 def file_convert_execute(
-    params: FileConvertParameters,
+    params: FileConvertParamsDict,
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
@@ -427,9 +427,9 @@ def file_convert_execute(
 
 
 def file_convert(
-    border_version_convert: FileConvertBorderVersionConvertParameters | None = None,
-    nifti_version_convert: FileConvertNiftiVersionConvertParameters | None = None,
-    cifti_version_convert: FileConvertCiftiVersionConvertParameters | None = None,
+    border_version_convert: FileConvertBorderVersionConvertParamsDict | None = None,
+    nifti_version_convert: FileConvertNiftiVersionConvertParamsDict | None = None,
+    cifti_version_convert: FileConvertCiftiVersionConvertParamsDict | None = None,
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
@@ -455,11 +455,19 @@ def file_convert(
 
 __all__ = [
     "FILE_CONVERT_METADATA",
+    "FileConvertBorderVersionConvertParamsDict",
+    "FileConvertBorderVersionConvertParamsDictTagged",
+    "FileConvertCiftiVersionConvertParamsDict",
+    "FileConvertCiftiVersionConvertParamsDictTagged",
+    "FileConvertNiftiVersionConvertParamsDict",
+    "FileConvertNiftiVersionConvertParamsDictTagged",
     "FileConvertOutputs",
+    "FileConvertParamsDict",
+    "FileConvertParamsDictTagged",
     "file_convert",
-    "file_convert_border_version_convert_params",
-    "file_convert_cifti_version_convert_params",
+    "file_convert_border_version_convert",
+    "file_convert_cifti_version_convert",
     "file_convert_execute",
-    "file_convert_nifti_version_convert_params",
+    "file_convert_nifti_version_convert",
     "file_convert_params",
 ]

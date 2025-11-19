@@ -13,12 +13,12 @@ MRIS_VOLUME_METADATA = Metadata(
 )
 
 
-MrisVolumeParameters = typing.TypedDict('MrisVolumeParameters', {
+MrisVolumeParamsDict = typing.TypedDict('MrisVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volume"]],
     "surface_file": InputPathType,
     "verbose_flag": bool,
 })
-MrisVolumeParametersTagged = typing.TypedDict('MrisVolumeParametersTagged', {
+MrisVolumeParamsDictTagged = typing.TypedDict('MrisVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_volume"],
     "surface_file": InputPathType,
     "verbose_flag": bool,
@@ -27,7 +27,7 @@ MrisVolumeParametersTagged = typing.TypedDict('MrisVolumeParametersTagged', {
 
 class MrisVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisVolumeParameters(...)`.
+    Output object returned when calling `MrisVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MrisVolumeOutputs(typing.NamedTuple):
 def mris_volume_params(
     surface_file: InputPathType,
     verbose_flag: bool = False,
-) -> MrisVolumeParametersTagged:
+) -> MrisVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mris_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisVolumeParameters` object.
+    `MrisVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def mris_volume_validate(
 
 
 def mris_volume_cargs(
-    params: MrisVolumeParameters,
+    params: MrisVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def mris_volume_cargs(
 
 
 def mris_volume_outputs(
-    params: MrisVolumeParameters,
+    params: MrisVolumeParamsDict,
     execution: Execution,
 ) -> MrisVolumeOutputs:
     """
@@ -117,7 +117,7 @@ def mris_volume_outputs(
 
 
 def mris_volume_execute(
-    params: MrisVolumeParameters,
+    params: MrisVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MrisVolumeOutputs:
     """
@@ -178,6 +178,8 @@ def mris_volume(
 __all__ = [
     "MRIS_VOLUME_METADATA",
     "MrisVolumeOutputs",
+    "MrisVolumeParamsDict",
+    "MrisVolumeParamsDictTagged",
     "mris_volume",
     "mris_volume_execute",
     "mris_volume_params",

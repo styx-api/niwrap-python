@@ -13,7 +13,7 @@ V_3D_LOMB_SCARGLE_METADATA = Metadata(
 )
 
 
-V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
+V3dLombScargleParamsDict = typing.TypedDict('V3dLombScargleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLombScargle"]],
     "prefix": str,
     "inset": InputPathType,
@@ -24,7 +24,7 @@ V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
     "nyquist_multiplier": typing.NotRequired[int | None],
     "nifti": bool,
 })
-V3dLombScargleParametersTagged = typing.TypedDict('V3dLombScargleParametersTagged', {
+V3dLombScargleParamsDictTagged = typing.TypedDict('V3dLombScargleParamsDictTagged', {
     "@type": typing.Literal["afni/3dLombScargle"],
     "prefix": str,
     "inset": InputPathType,
@@ -39,7 +39,7 @@ V3dLombScargleParametersTagged = typing.TypedDict('V3dLombScargleParametersTagge
 
 class V3dLombScargleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLombScargleParameters(...)`.
+    Output object returned when calling `V3dLombScargleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def v_3d_lomb_scargle_params(
     out_pow_spec: bool = False,
     nyquist_multiplier: int | None = None,
     nifti: bool = False,
-) -> V3dLombScargleParametersTagged:
+) -> V3dLombScargleParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def v_3d_lomb_scargle_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLombScargleParameters` object.
+    `V3dLombScargleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -158,7 +158,7 @@ def v_3d_lomb_scargle_validate(
 
 
 def v_3d_lomb_scargle_cargs(
-    params: V3dLombScargleParameters,
+    params: V3dLombScargleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -208,7 +208,7 @@ def v_3d_lomb_scargle_cargs(
 
 
 def v_3d_lomb_scargle_outputs(
-    params: V3dLombScargleParameters,
+    params: V3dLombScargleParamsDict,
     execution: Execution,
 ) -> V3dLombScargleOutputs:
     """
@@ -231,7 +231,7 @@ def v_3d_lomb_scargle_outputs(
 
 
 def v_3d_lomb_scargle_execute(
-    params: V3dLombScargleParameters,
+    params: V3dLombScargleParamsDict,
     runner: Runner | None = None,
 ) -> V3dLombScargleOutputs:
     """
@@ -326,6 +326,8 @@ def v_3d_lomb_scargle(
 
 __all__ = [
     "V3dLombScargleOutputs",
+    "V3dLombScargleParamsDict",
+    "V3dLombScargleParamsDictTagged",
     "V_3D_LOMB_SCARGLE_METADATA",
     "v_3d_lomb_scargle",
     "v_3d_lomb_scargle_execute",

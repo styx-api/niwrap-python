@@ -13,7 +13,7 @@ V_3DFIM__METADATA = Metadata(
 )
 
 
-V3dfimParameters = typing.TypedDict('V3dfimParameters', {
+V3dfimParamsDict = typing.TypedDict('V3dfimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dfim+"]],
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
@@ -28,7 +28,7 @@ V3dfimParameters = typing.TypedDict('V3dfimParameters', {
     "output_params": typing.NotRequired[list[str] | None],
     "output_bucket": typing.NotRequired[str | None],
 })
-V3dfimParametersTagged = typing.TypedDict('V3dfimParametersTagged', {
+V3dfimParamsDictTagged = typing.TypedDict('V3dfimParamsDictTagged', {
     "@type": typing.Literal["afni/3dfim+"],
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ V3dfimParametersTagged = typing.TypedDict('V3dfimParametersTagged', {
 
 class V3dfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dfimParameters(...)`.
+    Output object returned when calling `V3dfimParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v_3dfim__params(
     ort_file: InputPathType | None = None,
     output_params: list[str] | None = None,
     output_bucket: str | None = None,
-) -> V3dfimParametersTagged:
+) -> V3dfimParamsDictTagged:
     """
     Build parameters.
     
@@ -138,7 +138,7 @@ def v_3dfim__validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dfimParameters` object.
+    `V3dfimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -193,7 +193,7 @@ def v_3dfim__validate(
 
 
 def v_3dfim__cargs(
-    params: V3dfimParameters,
+    params: V3dfimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -266,7 +266,7 @@ def v_3dfim__cargs(
 
 
 def v_3dfim__outputs(
-    params: V3dfimParameters,
+    params: V3dfimParamsDict,
     execution: Execution,
 ) -> V3dfimOutputs:
     """
@@ -289,7 +289,7 @@ def v_3dfim__outputs(
 
 
 def v_3dfim__execute(
-    params: V3dfimParameters,
+    params: V3dfimParamsDict,
     runner: Runner | None = None,
 ) -> V3dfimOutputs:
     """
@@ -390,6 +390,8 @@ def v_3dfim_(
 
 __all__ = [
     "V3dfimOutputs",
+    "V3dfimParamsDict",
+    "V3dfimParamsDictTagged",
     "V_3DFIM__METADATA",
     "v_3dfim_",
     "v_3dfim__execute",

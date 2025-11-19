@@ -12,7 +12,7 @@
     },
     "series": {
       "var_param": "series",
-      "fn_struct_make_params": "cifti_create_scalar_series_series_params",
+      "fn_struct_make_params": "cifti_create_scalar_series_series",
       "properties": {
         "unit": {
           "var_param": "unit"

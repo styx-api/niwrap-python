@@ -13,7 +13,7 @@ ANTS_REGISTRATION_SY_NQUICK_SH_METADATA = Metadata(
 )
 
 
-AntsRegistrationSyNquickShParameters = typing.TypedDict('AntsRegistrationSyNquickShParameters', {
+AntsRegistrationSyNquickShParamsDict = typing.TypedDict('AntsRegistrationSyNquickShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyNQuick.sh"]],
     "dimensionality": typing.Literal[2, 3],
     "fixed_image": InputPathType,
@@ -21,7 +21,7 @@ AntsRegistrationSyNquickShParameters = typing.TypedDict('AntsRegistrationSyNquic
     "output_prefix": str,
     "transform_type": typing.NotRequired[typing.Literal["s", "b"] | None],
 })
-AntsRegistrationSyNquickShParametersTagged = typing.TypedDict('AntsRegistrationSyNquickShParametersTagged', {
+AntsRegistrationSyNquickShParamsDictTagged = typing.TypedDict('AntsRegistrationSyNquickShParamsDictTagged', {
     "@type": typing.Literal["ants/antsRegistrationSyNQuick.sh"],
     "dimensionality": typing.Literal[2, 3],
     "fixed_image": InputPathType,
@@ -33,7 +33,7 @@ AntsRegistrationSyNquickShParametersTagged = typing.TypedDict('AntsRegistrationS
 
 class AntsRegistrationSyNquickShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsRegistrationSyNquickShParameters(...)`.
+    Output object returned when calling `AntsRegistrationSyNquickShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def ants_registration_sy_nquick_sh_params(
     moving_image: InputPathType,
     output_prefix: str,
     transform_type: typing.Literal["s", "b"] | None = None,
-) -> AntsRegistrationSyNquickShParametersTagged:
+) -> AntsRegistrationSyNquickShParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def ants_registration_sy_nquick_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsRegistrationSyNquickShParameters` object.
+    `AntsRegistrationSyNquickShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def ants_registration_sy_nquick_sh_validate(
 
 
 def ants_registration_sy_nquick_sh_cargs(
-    params: AntsRegistrationSyNquickShParameters,
+    params: AntsRegistrationSyNquickShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def ants_registration_sy_nquick_sh_cargs(
 
 
 def ants_registration_sy_nquick_sh_outputs(
-    params: AntsRegistrationSyNquickShParameters,
+    params: AntsRegistrationSyNquickShParamsDict,
     execution: Execution,
 ) -> AntsRegistrationSyNquickShOutputs:
     """
@@ -176,7 +176,7 @@ def ants_registration_sy_nquick_sh_outputs(
 
 
 def ants_registration_sy_nquick_sh_execute(
-    params: AntsRegistrationSyNquickShParameters,
+    params: AntsRegistrationSyNquickShParamsDict,
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNquickShOutputs:
     """
@@ -247,6 +247,8 @@ def ants_registration_sy_nquick_sh(
 __all__ = [
     "ANTS_REGISTRATION_SY_NQUICK_SH_METADATA",
     "AntsRegistrationSyNquickShOutputs",
+    "AntsRegistrationSyNquickShParamsDict",
+    "AntsRegistrationSyNquickShParamsDictTagged",
     "ants_registration_sy_nquick_sh",
     "ants_registration_sy_nquick_sh_execute",
     "ants_registration_sy_nquick_sh_params",

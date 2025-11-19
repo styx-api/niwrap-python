@@ -13,7 +13,7 @@ FSPALM_METADATA = Metadata(
 )
 
 
-FspalmParameters = typing.TypedDict('FspalmParameters', {
+FspalmParamsDict = typing.TypedDict('FspalmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fspalm"]],
     "glmdir": str,
     "cft": float,
@@ -30,7 +30,7 @@ FspalmParameters = typing.TypedDict('FspalmParameters', {
     "3spaces": bool,
     "pargs": typing.NotRequired[str | None],
 })
-FspalmParametersTagged = typing.TypedDict('FspalmParametersTagged', {
+FspalmParamsDictTagged = typing.TypedDict('FspalmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fspalm"],
     "glmdir": str,
     "cft": float,
@@ -51,7 +51,7 @@ FspalmParametersTagged = typing.TypedDict('FspalmParametersTagged', {
 
 class FspalmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FspalmParameters(...)`.
+    Output object returned when calling `FspalmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def fspalm_params(
     v_2spaces: bool = False,
     v_3spaces: bool = False,
     pargs: str | None = None,
-) -> FspalmParametersTagged:
+) -> FspalmParamsDictTagged:
     """
     Build parameters.
     
@@ -122,7 +122,7 @@ def fspalm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FspalmParameters` object.
+    `FspalmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def fspalm_validate(
 
 
 def fspalm_cargs(
-    params: FspalmParameters,
+    params: FspalmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -246,7 +246,7 @@ def fspalm_cargs(
 
 
 def fspalm_outputs(
-    params: FspalmParameters,
+    params: FspalmParamsDict,
     execution: Execution,
 ) -> FspalmOutputs:
     """
@@ -265,7 +265,7 @@ def fspalm_outputs(
 
 
 def fspalm_execute(
-    params: FspalmParameters,
+    params: FspalmParamsDict,
     runner: Runner | None = None,
 ) -> FspalmOutputs:
     """
@@ -362,6 +362,8 @@ def fspalm(
 __all__ = [
     "FSPALM_METADATA",
     "FspalmOutputs",
+    "FspalmParamsDict",
+    "FspalmParamsDictTagged",
     "fspalm",
     "fspalm_execute",
     "fspalm_params",

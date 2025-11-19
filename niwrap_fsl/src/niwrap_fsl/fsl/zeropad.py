@@ -13,12 +13,12 @@ ZEROPAD_METADATA = Metadata(
 )
 
 
-ZeropadParameters = typing.TypedDict('ZeropadParameters', {
+ZeropadParamsDict = typing.TypedDict('ZeropadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/zeropad"]],
     "input_number": str,
     "length": float,
 })
-ZeropadParametersTagged = typing.TypedDict('ZeropadParametersTagged', {
+ZeropadParamsDictTagged = typing.TypedDict('ZeropadParamsDictTagged', {
     "@type": typing.Literal["fsl/zeropad"],
     "input_number": str,
     "length": float,
@@ -27,7 +27,7 @@ ZeropadParametersTagged = typing.TypedDict('ZeropadParametersTagged', {
 
 class ZeropadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ZeropadParameters(...)`.
+    Output object returned when calling `ZeropadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class ZeropadOutputs(typing.NamedTuple):
 def zeropad_params(
     input_number: str,
     length: float,
-) -> ZeropadParametersTagged:
+) -> ZeropadParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def zeropad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ZeropadParameters` object.
+    `ZeropadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def zeropad_validate(
 
 
 def zeropad_cargs(
-    params: ZeropadParameters,
+    params: ZeropadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def zeropad_cargs(
 
 
 def zeropad_outputs(
-    params: ZeropadParameters,
+    params: ZeropadParamsDict,
     execution: Execution,
 ) -> ZeropadOutputs:
     """
@@ -119,7 +119,7 @@ def zeropad_outputs(
 
 
 def zeropad_execute(
-    params: ZeropadParameters,
+    params: ZeropadParamsDict,
     runner: Runner | None = None,
 ) -> ZeropadOutputs:
     """
@@ -178,6 +178,8 @@ def zeropad(
 __all__ = [
     "ZEROPAD_METADATA",
     "ZeropadOutputs",
+    "ZeropadParamsDict",
+    "ZeropadParamsDictTagged",
     "zeropad",
     "zeropad_execute",
     "zeropad_params",

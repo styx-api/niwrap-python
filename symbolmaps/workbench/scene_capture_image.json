@@ -9,7 +9,7 @@
     },
     "size-width-height": {
       "var_param": "size_width_height",
-      "fn_struct_make_params": "scene_capture_image_size_width_height_params",
+      "fn_struct_make_params": "scene_capture_image_size_width_height",
       "properties": {
         "width": {
           "var_param": "width"
@@ -30,7 +30,7 @@
     },
     "resolution": {
       "var_param": "resolution",
-      "fn_struct_make_params": "scene_capture_image_resolution_params",
+      "fn_struct_make_params": "scene_capture_image_resolution",
       "properties": {
         "Number of pixels": {
           "var_param": "number_of_pixels"
@@ -48,7 +48,7 @@
     },
     "set-map-yoke": {
       "var_param": "set_map_yoke",
-      "fn_struct_make_params": "scene_capture_image_set_map_yoke_params",
+      "fn_struct_make_params": "scene_capture_image_set_map_yoke",
       "properties": {
         "map yoking roman numeral": {
           "var_param": "map_yoking_roman_numeral"
@@ -60,7 +60,7 @@
     },
     "conn-db-login": {
       "var_param": "conn_db_login",
-      "fn_struct_make_params": "scene_capture_image_conn_db_login_params",
+      "fn_struct_make_params": "scene_capture_image_conn_db_login",
       "properties": {
         "username": {
           "var_param": "username"

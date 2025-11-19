@@ -12,14 +12,14 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 )
 
 
-SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedParameters', {
+SurfaceGenerateInflatedParamsDict = typing.TypedDict('SurfaceGenerateInflatedParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-generate-inflated"]],
     "inflated-surface-out": str,
     "very-inflated-surface-out": str,
     "iterations-scale-value": typing.NotRequired[float | None],
     "anatomical-surface-in": InputPathType,
 })
-SurfaceGenerateInflatedParametersTagged = typing.TypedDict('SurfaceGenerateInflatedParametersTagged', {
+SurfaceGenerateInflatedParamsDictTagged = typing.TypedDict('SurfaceGenerateInflatedParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-generate-inflated"],
     "inflated-surface-out": str,
     "very-inflated-surface-out": str,
@@ -30,7 +30,7 @@ SurfaceGenerateInflatedParametersTagged = typing.TypedDict('SurfaceGenerateInfla
 
 class SurfaceGenerateInflatedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceGenerateInflatedParameters(...)`.
+    Output object returned when calling `SurfaceGenerateInflatedParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def surface_generate_inflated_params(
     very_inflated_surface_out: str,
     iterations_scale_value: float | None,
     anatomical_surface_in: InputPathType,
-) -> SurfaceGenerateInflatedParametersTagged:
+) -> SurfaceGenerateInflatedParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def surface_generate_inflated_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceGenerateInflatedParameters` object.
+    `SurfaceGenerateInflatedParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -100,7 +100,7 @@ def surface_generate_inflated_validate(
 
 
 def surface_generate_inflated_cargs(
-    params: SurfaceGenerateInflatedParameters,
+    params: SurfaceGenerateInflatedParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def surface_generate_inflated_cargs(
 
 
 def surface_generate_inflated_outputs(
-    params: SurfaceGenerateInflatedParameters,
+    params: SurfaceGenerateInflatedParamsDict,
     execution: Execution,
 ) -> SurfaceGenerateInflatedOutputs:
     """
@@ -148,7 +148,7 @@ def surface_generate_inflated_outputs(
 
 
 def surface_generate_inflated_execute(
-    params: SurfaceGenerateInflatedParameters,
+    params: SurfaceGenerateInflatedParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
@@ -215,6 +215,8 @@ def surface_generate_inflated(
 __all__ = [
     "SURFACE_GENERATE_INFLATED_METADATA",
     "SurfaceGenerateInflatedOutputs",
+    "SurfaceGenerateInflatedParamsDict",
+    "SurfaceGenerateInflatedParamsDictTagged",
     "surface_generate_inflated",
     "surface_generate_inflated_execute",
     "surface_generate_inflated_params",

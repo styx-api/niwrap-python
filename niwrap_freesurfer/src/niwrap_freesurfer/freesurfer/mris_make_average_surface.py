@@ -13,7 +13,7 @@ MRIS_MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 )
 
 
-MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParameters', {
+MrisMakeAverageSurfaceParamsDict = typing.TypedDict('MrisMakeAverageSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_average_surface"]],
     "hemi": str,
     "outsurfname": str,
@@ -31,7 +31,7 @@ MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParam
     "simple": typing.NotRequired[list[str] | None],
     "diagno": typing.NotRequired[float | None],
 })
-MrisMakeAverageSurfaceParametersTagged = typing.TypedDict('MrisMakeAverageSurfaceParametersTagged', {
+MrisMakeAverageSurfaceParamsDictTagged = typing.TypedDict('MrisMakeAverageSurfaceParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_make_average_surface"],
     "hemi": str,
     "outsurfname": str,
@@ -53,7 +53,7 @@ MrisMakeAverageSurfaceParametersTagged = typing.TypedDict('MrisMakeAverageSurfac
 
 class MrisMakeAverageSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMakeAverageSurfaceParameters(...)`.
+    Output object returned when calling `MrisMakeAverageSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def mris_make_average_surface_params(
     surf2surf_flag: bool = False,
     simple: list[str] | None = None,
     diagno: float | None = None,
-) -> MrisMakeAverageSurfaceParametersTagged:
+) -> MrisMakeAverageSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def mris_make_average_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMakeAverageSurfaceParameters` object.
+    `MrisMakeAverageSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -204,7 +204,7 @@ def mris_make_average_surface_validate(
 
 
 def mris_make_average_surface_cargs(
-    params: MrisMakeAverageSurfaceParameters,
+    params: MrisMakeAverageSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def mris_make_average_surface_cargs(
 
 
 def mris_make_average_surface_outputs(
-    params: MrisMakeAverageSurfaceParameters,
+    params: MrisMakeAverageSurfaceParamsDict,
     execution: Execution,
 ) -> MrisMakeAverageSurfaceOutputs:
     """
@@ -291,7 +291,7 @@ def mris_make_average_surface_outputs(
 
 
 def mris_make_average_surface_execute(
-    params: MrisMakeAverageSurfaceParameters,
+    params: MrisMakeAverageSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> MrisMakeAverageSurfaceOutputs:
     """
@@ -393,6 +393,8 @@ def mris_make_average_surface(
 __all__ = [
     "MRIS_MAKE_AVERAGE_SURFACE_METADATA",
     "MrisMakeAverageSurfaceOutputs",
+    "MrisMakeAverageSurfaceParamsDict",
+    "MrisMakeAverageSurfaceParamsDictTagged",
     "mris_make_average_surface",
     "mris_make_average_surface_execute",
     "mris_make_average_surface_params",

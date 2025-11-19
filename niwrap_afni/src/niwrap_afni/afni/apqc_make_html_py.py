@@ -13,11 +13,11 @@ APQC_MAKE_HTML_PY_METADATA = Metadata(
 )
 
 
-ApqcMakeHtmlPyParameters = typing.TypedDict('ApqcMakeHtmlPyParameters', {
+ApqcMakeHtmlPyParamsDict = typing.TypedDict('ApqcMakeHtmlPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/apqc_make_html.py"]],
     "qc_dir": str,
 })
-ApqcMakeHtmlPyParametersTagged = typing.TypedDict('ApqcMakeHtmlPyParametersTagged', {
+ApqcMakeHtmlPyParamsDictTagged = typing.TypedDict('ApqcMakeHtmlPyParamsDictTagged', {
     "@type": typing.Literal["afni/apqc_make_html.py"],
     "qc_dir": str,
 })
@@ -25,7 +25,7 @@ ApqcMakeHtmlPyParametersTagged = typing.TypedDict('ApqcMakeHtmlPyParametersTagge
 
 class ApqcMakeHtmlPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApqcMakeHtmlPyParameters(...)`.
+    Output object returned when calling `ApqcMakeHtmlPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class ApqcMakeHtmlPyOutputs(typing.NamedTuple):
 
 def apqc_make_html_py_params(
     qc_dir: str,
-) -> ApqcMakeHtmlPyParametersTagged:
+) -> ApqcMakeHtmlPyParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def apqc_make_html_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApqcMakeHtmlPyParameters` object.
+    `ApqcMakeHtmlPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def apqc_make_html_py_validate(
 
 
 def apqc_make_html_py_cargs(
-    params: ApqcMakeHtmlPyParameters,
+    params: ApqcMakeHtmlPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def apqc_make_html_py_cargs(
 
 
 def apqc_make_html_py_outputs(
-    params: ApqcMakeHtmlPyParameters,
+    params: ApqcMakeHtmlPyParamsDict,
     execution: Execution,
 ) -> ApqcMakeHtmlPyOutputs:
     """
@@ -109,7 +109,7 @@ def apqc_make_html_py_outputs(
 
 
 def apqc_make_html_py_execute(
-    params: ApqcMakeHtmlPyParameters,
+    params: ApqcMakeHtmlPyParamsDict,
     runner: Runner | None = None,
 ) -> ApqcMakeHtmlPyOutputs:
     """
@@ -165,6 +165,8 @@ def apqc_make_html_py(
 __all__ = [
     "APQC_MAKE_HTML_PY_METADATA",
     "ApqcMakeHtmlPyOutputs",
+    "ApqcMakeHtmlPyParamsDict",
+    "ApqcMakeHtmlPyParamsDictTagged",
     "apqc_make_html_py",
     "apqc_make_html_py_execute",
     "apqc_make_html_py_params",

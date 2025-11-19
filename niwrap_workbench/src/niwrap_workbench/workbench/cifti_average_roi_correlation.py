@@ -12,32 +12,32 @@ CIFTI_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiAverageRoiCorrelationCiftiRoiParameters = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParameters', {
+CiftiAverageRoiCorrelationCiftiRoiParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti-roi"]],
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
-CiftiAverageRoiCorrelationCiftiRoiParametersTagged = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParametersTagged', {
+CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged', {
     "@type": typing.Literal["cifti-roi"],
     "roi-cifti": InputPathType,
     "in-memory": bool,
 })
 
 
-CiftiAverageRoiCorrelationCiftiParameters = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParameters', {
+CiftiAverageRoiCorrelationCiftiParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
     "cifti-in": InputPathType,
 })
-CiftiAverageRoiCorrelationCiftiParametersTagged = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParametersTagged', {
+CiftiAverageRoiCorrelationCiftiParamsDictTagged = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParamsDictTagged', {
     "@type": typing.Literal["cifti"],
     "cifti-in": InputPathType,
 })
 
 
-CiftiAverageRoiCorrelationParameters = typing.TypedDict('CiftiAverageRoiCorrelationParameters', {
+CiftiAverageRoiCorrelationParamsDict = typing.TypedDict('CiftiAverageRoiCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-average-roi-correlation"]],
     "cifti-out": str,
-    "cifti-roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParameters | None],
+    "cifti-roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -45,12 +45,12 @@ CiftiAverageRoiCorrelationParameters = typing.TypedDict('CiftiAverageRoiCorrelat
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "cifti": typing.NotRequired[list[CiftiAverageRoiCorrelationCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageRoiCorrelationCiftiParamsDict] | None],
 })
-CiftiAverageRoiCorrelationParametersTagged = typing.TypedDict('CiftiAverageRoiCorrelationParametersTagged', {
+CiftiAverageRoiCorrelationParamsDictTagged = typing.TypedDict('CiftiAverageRoiCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-average-roi-correlation"],
     "cifti-out": str,
-    "cifti-roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParameters | None],
+    "cifti-roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -58,14 +58,14 @@ CiftiAverageRoiCorrelationParametersTagged = typing.TypedDict('CiftiAverageRoiCo
     "left-surf": typing.NotRequired[InputPathType | None],
     "right-surf": typing.NotRequired[InputPathType | None],
     "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "cifti": typing.NotRequired[list[CiftiAverageRoiCorrelationCiftiParameters] | None],
+    "cifti": typing.NotRequired[list[CiftiAverageRoiCorrelationCiftiParamsDict] | None],
 })
 
 
-def cifti_average_roi_correlation_cifti_roi_params(
+def cifti_average_roi_correlation_cifti_roi(
     roi_cifti: InputPathType,
     in_memory: bool = False,
-) -> CiftiAverageRoiCorrelationCiftiRoiParametersTagged:
+) -> CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def cifti_average_roi_correlation_cifti_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageRoiCorrelationCiftiRoiParameters` object.
+    `CiftiAverageRoiCorrelationCiftiRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def cifti_average_roi_correlation_cifti_roi_validate(
 
 
 def cifti_average_roi_correlation_cifti_roi_cargs(
-    params: CiftiAverageRoiCorrelationCiftiRoiParameters,
+    params: CiftiAverageRoiCorrelationCiftiRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,9 +129,9 @@ def cifti_average_roi_correlation_cifti_roi_cargs(
     return cargs
 
 
-def cifti_average_roi_correlation_cifti_params(
+def cifti_average_roi_correlation_cifti(
     cifti_in: InputPathType,
-) -> CiftiAverageRoiCorrelationCiftiParametersTagged:
+) -> CiftiAverageRoiCorrelationCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def cifti_average_roi_correlation_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageRoiCorrelationCiftiParameters` object.
+    `CiftiAverageRoiCorrelationCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -166,7 +166,7 @@ def cifti_average_roi_correlation_cifti_validate(
 
 
 def cifti_average_roi_correlation_cifti_cargs(
-    params: CiftiAverageRoiCorrelationCiftiParameters,
+    params: CiftiAverageRoiCorrelationCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def cifti_average_roi_correlation_cifti_cargs(
 
 class CiftiAverageRoiCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiAverageRoiCorrelationParameters(...)`.
+    Output object returned when calling `CiftiAverageRoiCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -205,9 +205,9 @@ def cifti_average_roi_correlation_params(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
-    cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParameters | None = None,
-    cifti: list[CiftiAverageRoiCorrelationCiftiParameters] | None = None,
-) -> CiftiAverageRoiCorrelationParametersTagged:
+    cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageRoiCorrelationCiftiParamsDict] | None = None,
+) -> CiftiAverageRoiCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -270,7 +270,7 @@ def cifti_average_roi_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiAverageRoiCorrelationParameters` object.
+    `CiftiAverageRoiCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -306,13 +306,13 @@ def cifti_average_roi_correlation_validate(
             raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
-            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageRoiCorrelationCiftiParameters] | None`')
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageRoiCorrelationCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_average_roi_correlation_cifti_validate(e)
 
 
 def cifti_average_roi_correlation_cargs(
-    params: CiftiAverageRoiCorrelationParameters,
+    params: CiftiAverageRoiCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -351,7 +351,7 @@ def cifti_average_roi_correlation_cargs(
 
 
 def cifti_average_roi_correlation_outputs(
-    params: CiftiAverageRoiCorrelationParameters,
+    params: CiftiAverageRoiCorrelationParamsDict,
     execution: Execution,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
@@ -371,7 +371,7 @@ def cifti_average_roi_correlation_outputs(
 
 
 def cifti_average_roi_correlation_execute(
-    params: CiftiAverageRoiCorrelationParameters,
+    params: CiftiAverageRoiCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
@@ -411,8 +411,8 @@ def cifti_average_roi_correlation(
     left_surf: InputPathType | None,
     right_surf: InputPathType | None,
     cerebellum_surf: InputPathType | None,
-    cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParameters | None = None,
-    cifti: list[CiftiAverageRoiCorrelationCiftiParameters] | None = None,
+    cifti_roi: CiftiAverageRoiCorrelationCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageRoiCorrelationCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
@@ -474,10 +474,16 @@ def cifti_average_roi_correlation(
 
 __all__ = [
     "CIFTI_AVERAGE_ROI_CORRELATION_METADATA",
+    "CiftiAverageRoiCorrelationCiftiParamsDict",
+    "CiftiAverageRoiCorrelationCiftiParamsDictTagged",
+    "CiftiAverageRoiCorrelationCiftiRoiParamsDict",
+    "CiftiAverageRoiCorrelationCiftiRoiParamsDictTagged",
     "CiftiAverageRoiCorrelationOutputs",
+    "CiftiAverageRoiCorrelationParamsDict",
+    "CiftiAverageRoiCorrelationParamsDictTagged",
     "cifti_average_roi_correlation",
-    "cifti_average_roi_correlation_cifti_params",
-    "cifti_average_roi_correlation_cifti_roi_params",
+    "cifti_average_roi_correlation_cifti",
+    "cifti_average_roi_correlation_cifti_roi",
     "cifti_average_roi_correlation_execute",
     "cifti_average_roi_correlation_params",
 ]

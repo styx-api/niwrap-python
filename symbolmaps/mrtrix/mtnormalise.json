@@ -42,7 +42,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mtnormalise_config_params",
+      "fn_struct_make_params": "mtnormalise_config",
       "properties": {
         "key": {
           "var_param": "key"
@@ -60,7 +60,7 @@
     },
     "input_output": {
       "var_param": "input_output",
-      "fn_struct_make_params": "mtnormalise_input_output_params",
+      "fn_struct_make_params": "mtnormalise_input_output",
       "properties": {
         "input": {
           "var_param": "input_"

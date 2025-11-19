@@ -13,14 +13,14 @@ MCCUTUP_METADATA = Metadata(
 )
 
 
-MccutupParameters = typing.TypedDict('MccutupParameters', {
+MccutupParamsDict = typing.TypedDict('MccutupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/mccutup"]],
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "param1": typing.NotRequired[str | None],
     "param2": typing.NotRequired[str | None],
 })
-MccutupParametersTagged = typing.TypedDict('MccutupParametersTagged', {
+MccutupParamsDictTagged = typing.TypedDict('MccutupParamsDictTagged', {
     "@type": typing.Literal["fsl/mccutup"],
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ MccutupParametersTagged = typing.TypedDict('MccutupParametersTagged', {
 
 class MccutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MccutupParameters(...)`.
+    Output object returned when calling `MccutupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mccutup_params(
     output_file: str | None = None,
     param1: str | None = None,
     param2: str | None = None,
-) -> MccutupParametersTagged:
+) -> MccutupParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def mccutup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MccutupParameters` object.
+    `MccutupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mccutup_validate(
 
 
 def mccutup_cargs(
-    params: MccutupParameters,
+    params: MccutupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,7 +131,7 @@ def mccutup_cargs(
 
 
 def mccutup_outputs(
-    params: MccutupParameters,
+    params: MccutupParamsDict,
     execution: Execution,
 ) -> MccutupOutputs:
     """
@@ -151,7 +151,7 @@ def mccutup_outputs(
 
 
 def mccutup_execute(
-    params: MccutupParameters,
+    params: MccutupParamsDict,
     runner: Runner | None = None,
 ) -> MccutupOutputs:
     """
@@ -216,6 +216,8 @@ def mccutup(
 __all__ = [
     "MCCUTUP_METADATA",
     "MccutupOutputs",
+    "MccutupParamsDict",
+    "MccutupParamsDictTagged",
     "mccutup",
     "mccutup_execute",
     "mccutup_params",

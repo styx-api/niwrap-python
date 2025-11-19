@@ -13,7 +13,7 @@ V_3D_CM_METADATA = Metadata(
 )
 
 
-V3dCmParameters = typing.TypedDict('V3dCmParameters', {
+V3dCmParamsDict = typing.TypedDict('V3dCmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dCM"]],
     "dset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -25,7 +25,7 @@ V3dCmParameters = typing.TypedDict('V3dCmParameters', {
     "icent": bool,
     "dcent": bool,
 })
-V3dCmParametersTagged = typing.TypedDict('V3dCmParametersTagged', {
+V3dCmParamsDictTagged = typing.TypedDict('V3dCmParamsDictTagged', {
     "@type": typing.Literal["afni/3dCM"],
     "dset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ V3dCmParametersTagged = typing.TypedDict('V3dCmParametersTagged', {
 
 class V3dCmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dCmParameters(...)`.
+    Output object returned when calling `V3dCmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_cm_params(
     all_rois: bool = False,
     icent: bool = False,
     dcent: bool = False,
-) -> V3dCmParametersTagged:
+) -> V3dCmParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def v_3d_cm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dCmParameters` object.
+    `V3dCmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def v_3d_cm_validate(
 
 
 def v_3d_cm_cargs(
-    params: V3dCmParameters,
+    params: V3dCmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def v_3d_cm_cargs(
 
 
 def v_3d_cm_outputs(
-    params: V3dCmParameters,
+    params: V3dCmParamsDict,
     execution: Execution,
 ) -> V3dCmOutputs:
     """
@@ -223,7 +223,7 @@ def v_3d_cm_outputs(
 
 
 def v_3d_cm_execute(
-    params: V3dCmParameters,
+    params: V3dCmParamsDict,
     runner: Runner | None = None,
 ) -> V3dCmOutputs:
     """
@@ -311,6 +311,8 @@ def v_3d_cm(
 
 __all__ = [
     "V3dCmOutputs",
+    "V3dCmParamsDict",
+    "V3dCmParamsDictTagged",
     "V_3D_CM_METADATA",
     "v_3d_cm",
     "v_3d_cm_execute",

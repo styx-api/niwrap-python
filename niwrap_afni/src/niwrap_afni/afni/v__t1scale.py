@@ -13,7 +13,7 @@ V__T1SCALE_METADATA = Metadata(
 )
 
 
-VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
+VT1scaleParamsDict = typing.TypedDict('VT1scaleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@T1scale"]],
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
     "all_opts": bool,
     "h_find_word": typing.NotRequired[str | None],
 })
-VT1scaleParametersTagged = typing.TypedDict('VT1scaleParametersTagged', {
+VT1scaleParamsDictTagged = typing.TypedDict('VT1scaleParamsDictTagged', {
     "@type": typing.Literal["afni/@T1scale"],
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ VT1scaleParametersTagged = typing.TypedDict('VT1scaleParametersTagged', {
 
 class VT1scaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VT1scaleParameters(...)`.
+    Output object returned when calling `VT1scaleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def v__t1scale_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find_word: str | None = None,
-) -> VT1scaleParametersTagged:
+) -> VT1scaleParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def v__t1scale_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VT1scaleParameters` object.
+    `VT1scaleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def v__t1scale_validate(
 
 
 def v__t1scale_cargs(
-    params: VT1scaleParameters,
+    params: VT1scaleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -255,7 +255,7 @@ def v__t1scale_cargs(
 
 
 def v__t1scale_outputs(
-    params: VT1scaleParameters,
+    params: VT1scaleParamsDict,
     execution: Execution,
 ) -> VT1scaleOutputs:
     """
@@ -277,7 +277,7 @@ def v__t1scale_outputs(
 
 
 def v__t1scale_execute(
-    params: VT1scaleParameters,
+    params: VT1scaleParamsDict,
     runner: Runner | None = None,
 ) -> VT1scaleOutputs:
     """
@@ -377,6 +377,8 @@ def v__t1scale(
 
 __all__ = [
     "VT1scaleOutputs",
+    "VT1scaleParamsDict",
+    "VT1scaleParamsDictTagged",
     "V__T1SCALE_METADATA",
     "v__t1scale",
     "v__t1scale_execute",

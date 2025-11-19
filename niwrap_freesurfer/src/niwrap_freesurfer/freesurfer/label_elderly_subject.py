@@ -13,14 +13,14 @@ LABEL_ELDERLY_SUBJECT_METADATA = Metadata(
 )
 
 
-LabelElderlySubjectParameters = typing.TypedDict('LabelElderlySubjectParameters', {
+LabelElderlySubjectParamsDict = typing.TypedDict('LabelElderlySubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label_elderly_subject"]],
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
     "classifier_array": typing.NotRequired[InputPathType | None],
     "aseg_volume": InputPathType,
 })
-LabelElderlySubjectParametersTagged = typing.TypedDict('LabelElderlySubjectParametersTagged', {
+LabelElderlySubjectParamsDictTagged = typing.TypedDict('LabelElderlySubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label_elderly_subject"],
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
@@ -31,7 +31,7 @@ LabelElderlySubjectParametersTagged = typing.TypedDict('LabelElderlySubjectParam
 
 class LabelElderlySubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelElderlySubjectParameters(...)`.
+    Output object returned when calling `LabelElderlySubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def label_elderly_subject_params(
     transform_lta: InputPathType,
     aseg_volume: InputPathType,
     classifier_array: InputPathType | None = None,
-) -> LabelElderlySubjectParametersTagged:
+) -> LabelElderlySubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def label_elderly_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelElderlySubjectParameters` object.
+    `LabelElderlySubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def label_elderly_subject_validate(
 
 
 def label_elderly_subject_cargs(
-    params: LabelElderlySubjectParameters,
+    params: LabelElderlySubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def label_elderly_subject_cargs(
 
 
 def label_elderly_subject_outputs(
-    params: LabelElderlySubjectParameters,
+    params: LabelElderlySubjectParamsDict,
     execution: Execution,
 ) -> LabelElderlySubjectOutputs:
     """
@@ -140,7 +140,7 @@ def label_elderly_subject_outputs(
 
 
 def label_elderly_subject_execute(
-    params: LabelElderlySubjectParameters,
+    params: LabelElderlySubjectParamsDict,
     runner: Runner | None = None,
 ) -> LabelElderlySubjectOutputs:
     """
@@ -207,6 +207,8 @@ def label_elderly_subject(
 __all__ = [
     "LABEL_ELDERLY_SUBJECT_METADATA",
     "LabelElderlySubjectOutputs",
+    "LabelElderlySubjectParamsDict",
+    "LabelElderlySubjectParamsDictTagged",
     "label_elderly_subject",
     "label_elderly_subject_execute",
     "label_elderly_subject_params",

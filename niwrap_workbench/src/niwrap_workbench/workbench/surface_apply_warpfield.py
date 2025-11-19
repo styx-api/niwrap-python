@@ -12,14 +12,14 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 )
 
 
-SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParameters', {
+SurfaceApplyWarpfieldParamsDict = typing.TypedDict('SurfaceApplyWarpfieldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-warpfield"]],
     "out-surf": str,
     "forward-warp": typing.NotRequired[str | None],
     "in-surf": InputPathType,
     "warpfield": str,
 })
-SurfaceApplyWarpfieldParametersTagged = typing.TypedDict('SurfaceApplyWarpfieldParametersTagged', {
+SurfaceApplyWarpfieldParamsDictTagged = typing.TypedDict('SurfaceApplyWarpfieldParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-apply-warpfield"],
     "out-surf": str,
     "forward-warp": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ SurfaceApplyWarpfieldParametersTagged = typing.TypedDict('SurfaceApplyWarpfieldP
 
 class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceApplyWarpfieldParameters(...)`.
+    Output object returned when calling `SurfaceApplyWarpfieldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_apply_warpfield_params(
     forward_warp: str | None,
     in_surf: InputPathType,
     warpfield: str,
-) -> SurfaceApplyWarpfieldParametersTagged:
+) -> SurfaceApplyWarpfieldParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def surface_apply_warpfield_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceApplyWarpfieldParameters` object.
+    `SurfaceApplyWarpfieldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def surface_apply_warpfield_validate(
 
 
 def surface_apply_warpfield_cargs(
-    params: SurfaceApplyWarpfieldParameters,
+    params: SurfaceApplyWarpfieldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def surface_apply_warpfield_cargs(
 
 
 def surface_apply_warpfield_outputs(
-    params: SurfaceApplyWarpfieldParameters,
+    params: SurfaceApplyWarpfieldParamsDict,
     execution: Execution,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
@@ -145,7 +145,7 @@ def surface_apply_warpfield_outputs(
 
 
 def surface_apply_warpfield_execute(
-    params: SurfaceApplyWarpfieldParameters,
+    params: SurfaceApplyWarpfieldParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
@@ -216,6 +216,8 @@ def surface_apply_warpfield(
 __all__ = [
     "SURFACE_APPLY_WARPFIELD_METADATA",
     "SurfaceApplyWarpfieldOutputs",
+    "SurfaceApplyWarpfieldParamsDict",
+    "SurfaceApplyWarpfieldParamsDictTagged",
     "surface_apply_warpfield",
     "surface_apply_warpfield_execute",
     "surface_apply_warpfield_params",

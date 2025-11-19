@@ -13,12 +13,12 @@ V__CENTER_DISTANCE_METADATA = Metadata(
 )
 
 
-VCenterDistanceParameters = typing.TypedDict('VCenterDistanceParameters', {
+VCenterDistanceParamsDict = typing.TypedDict('VCenterDistanceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@Center_Distance"]],
     "dset1": InputPathType,
     "dset2": InputPathType,
 })
-VCenterDistanceParametersTagged = typing.TypedDict('VCenterDistanceParametersTagged', {
+VCenterDistanceParamsDictTagged = typing.TypedDict('VCenterDistanceParamsDictTagged', {
     "@type": typing.Literal["afni/@Center_Distance"],
     "dset1": InputPathType,
     "dset2": InputPathType,
@@ -27,7 +27,7 @@ VCenterDistanceParametersTagged = typing.TypedDict('VCenterDistanceParametersTag
 
 class VCenterDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VCenterDistanceParameters(...)`.
+    Output object returned when calling `VCenterDistanceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class VCenterDistanceOutputs(typing.NamedTuple):
 def v__center_distance_params(
     dset1: InputPathType,
     dset2: InputPathType,
-) -> VCenterDistanceParametersTagged:
+) -> VCenterDistanceParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def v__center_distance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VCenterDistanceParameters` object.
+    `VCenterDistanceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def v__center_distance_validate(
 
 
 def v__center_distance_cargs(
-    params: VCenterDistanceParameters,
+    params: VCenterDistanceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def v__center_distance_cargs(
 
 
 def v__center_distance_outputs(
-    params: VCenterDistanceParameters,
+    params: VCenterDistanceParamsDict,
     execution: Execution,
 ) -> VCenterDistanceOutputs:
     """
@@ -122,7 +122,7 @@ def v__center_distance_outputs(
 
 
 def v__center_distance_execute(
-    params: VCenterDistanceParameters,
+    params: VCenterDistanceParamsDict,
     runner: Runner | None = None,
 ) -> VCenterDistanceOutputs:
     """
@@ -180,6 +180,8 @@ def v__center_distance(
 
 __all__ = [
     "VCenterDistanceOutputs",
+    "VCenterDistanceParamsDict",
+    "VCenterDistanceParamsDictTagged",
     "V__CENTER_DISTANCE_METADATA",
     "v__center_distance",
     "v__center_distance_execute",

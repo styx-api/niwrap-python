@@ -13,7 +13,7 @@ FSL_MOTION_OUTLIERS_METADATA = Metadata(
 )
 
 
-FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
+FslMotionOutliersParamsDict = typing.TypedDict('FslMotionOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_motion_outliers"]],
     "input_4d_image": InputPathType,
     "output_confound_file": str,
@@ -31,7 +31,7 @@ FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
     "dummy_scans": typing.NotRequired[float | None],
     "verbose_flag": bool,
 })
-FslMotionOutliersParametersTagged = typing.TypedDict('FslMotionOutliersParametersTagged', {
+FslMotionOutliersParamsDictTagged = typing.TypedDict('FslMotionOutliersParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_motion_outliers"],
     "input_4d_image": InputPathType,
     "output_confound_file": str,
@@ -53,7 +53,7 @@ FslMotionOutliersParametersTagged = typing.TypedDict('FslMotionOutliersParameter
 
 class FslMotionOutliersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslMotionOutliersParameters(...)`.
+    Output object returned when calling `FslMotionOutliersParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def fsl_motion_outliers_params(
     no_moco_flag: bool = False,
     dummy_scans: float | None = None,
     verbose_flag: bool = False,
-) -> FslMotionOutliersParametersTagged:
+) -> FslMotionOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def fsl_motion_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslMotionOutliersParameters` object.
+    `FslMotionOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def fsl_motion_outliers_validate(
 
 
 def fsl_motion_outliers_cargs(
-    params: FslMotionOutliersParameters,
+    params: FslMotionOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -276,7 +276,7 @@ def fsl_motion_outliers_cargs(
 
 
 def fsl_motion_outliers_outputs(
-    params: FslMotionOutliersParameters,
+    params: FslMotionOutliersParamsDict,
     execution: Execution,
 ) -> FslMotionOutliersOutputs:
     """
@@ -298,7 +298,7 @@ def fsl_motion_outliers_outputs(
 
 
 def fsl_motion_outliers_execute(
-    params: FslMotionOutliersParameters,
+    params: FslMotionOutliersParamsDict,
     runner: Runner | None = None,
 ) -> FslMotionOutliersOutputs:
     """
@@ -402,6 +402,8 @@ def fsl_motion_outliers(
 __all__ = [
     "FSL_MOTION_OUTLIERS_METADATA",
     "FslMotionOutliersOutputs",
+    "FslMotionOutliersParamsDict",
+    "FslMotionOutliersParamsDictTagged",
     "fsl_motion_outliers",
     "fsl_motion_outliers_execute",
     "fsl_motion_outliers_params",

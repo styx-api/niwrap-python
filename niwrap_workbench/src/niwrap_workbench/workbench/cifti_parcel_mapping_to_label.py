@@ -12,14 +12,14 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 )
 
 
-CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabelParameters', {
+CiftiParcelMappingToLabelParamsDict = typing.TypedDict('CiftiParcelMappingToLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcel-mapping-to-label"]],
     "dlabel-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "template-cifti": InputPathType,
 })
-CiftiParcelMappingToLabelParametersTagged = typing.TypedDict('CiftiParcelMappingToLabelParametersTagged', {
+CiftiParcelMappingToLabelParamsDictTagged = typing.TypedDict('CiftiParcelMappingToLabelParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-parcel-mapping-to-label"],
     "dlabel-out": str,
     "cifti-in": InputPathType,
@@ -30,7 +30,7 @@ CiftiParcelMappingToLabelParametersTagged = typing.TypedDict('CiftiParcelMapping
 
 class CiftiParcelMappingToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiParcelMappingToLabelParameters(...)`.
+    Output object returned when calling `CiftiParcelMappingToLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def cifti_parcel_mapping_to_label_params(
     cifti_in: InputPathType,
     direction: str,
     template_cifti: InputPathType,
-) -> CiftiParcelMappingToLabelParametersTagged:
+) -> CiftiParcelMappingToLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def cifti_parcel_mapping_to_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiParcelMappingToLabelParameters` object.
+    `CiftiParcelMappingToLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def cifti_parcel_mapping_to_label_validate(
 
 
 def cifti_parcel_mapping_to_label_cargs(
-    params: CiftiParcelMappingToLabelParameters,
+    params: CiftiParcelMappingToLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def cifti_parcel_mapping_to_label_cargs(
 
 
 def cifti_parcel_mapping_to_label_outputs(
-    params: CiftiParcelMappingToLabelParameters,
+    params: CiftiParcelMappingToLabelParamsDict,
     execution: Execution,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
@@ -142,7 +142,7 @@ def cifti_parcel_mapping_to_label_outputs(
 
 
 def cifti_parcel_mapping_to_label_execute(
-    params: CiftiParcelMappingToLabelParameters,
+    params: CiftiParcelMappingToLabelParamsDict,
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
@@ -208,6 +208,8 @@ def cifti_parcel_mapping_to_label(
 __all__ = [
     "CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA",
     "CiftiParcelMappingToLabelOutputs",
+    "CiftiParcelMappingToLabelParamsDict",
+    "CiftiParcelMappingToLabelParamsDictTagged",
     "cifti_parcel_mapping_to_label",
     "cifti_parcel_mapping_to_label_execute",
     "cifti_parcel_mapping_to_label_params",

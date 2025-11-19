@@ -13,14 +13,14 @@ SEGMENT_SUBJECT_SC_METADATA = Metadata(
 )
 
 
-SegmentSubjectScParameters = typing.TypedDict('SegmentSubjectScParameters', {
+SegmentSubjectScParamsDict = typing.TypedDict('SegmentSubjectScParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_sc"]],
     "invol": InputPathType,
     "outxfm": InputPathType,
     "log": typing.NotRequired[str | None],
     "debug": bool,
 })
-SegmentSubjectScParametersTagged = typing.TypedDict('SegmentSubjectScParametersTagged', {
+SegmentSubjectScParamsDictTagged = typing.TypedDict('SegmentSubjectScParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_subject_sc"],
     "invol": InputPathType,
     "outxfm": InputPathType,
@@ -31,7 +31,7 @@ SegmentSubjectScParametersTagged = typing.TypedDict('SegmentSubjectScParametersT
 
 class SegmentSubjectScOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentSubjectScParameters(...)`.
+    Output object returned when calling `SegmentSubjectScParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def segment_subject_sc_params(
     outxfm: InputPathType,
     log: str | None = None,
     debug: bool = False,
-) -> SegmentSubjectScParametersTagged:
+) -> SegmentSubjectScParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def segment_subject_sc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentSubjectScParameters` object.
+    `SegmentSubjectScParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def segment_subject_sc_validate(
 
 
 def segment_subject_sc_cargs(
-    params: SegmentSubjectScParameters,
+    params: SegmentSubjectScParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def segment_subject_sc_cargs(
 
 
 def segment_subject_sc_outputs(
-    params: SegmentSubjectScParameters,
+    params: SegmentSubjectScParamsDict,
     execution: Execution,
 ) -> SegmentSubjectScOutputs:
     """
@@ -150,7 +150,7 @@ def segment_subject_sc_outputs(
 
 
 def segment_subject_sc_execute(
-    params: SegmentSubjectScParameters,
+    params: SegmentSubjectScParamsDict,
     runner: Runner | None = None,
 ) -> SegmentSubjectScOutputs:
     """
@@ -217,6 +217,8 @@ def segment_subject_sc(
 __all__ = [
     "SEGMENT_SUBJECT_SC_METADATA",
     "SegmentSubjectScOutputs",
+    "SegmentSubjectScParamsDict",
+    "SegmentSubjectScParamsDictTagged",
     "segment_subject_sc",
     "segment_subject_sc_execute",
     "segment_subject_sc_params",

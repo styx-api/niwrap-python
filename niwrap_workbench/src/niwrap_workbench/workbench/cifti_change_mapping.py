@@ -12,13 +12,13 @@ CIFTI_CHANGE_MAPPING_METADATA = Metadata(
 )
 
 
-CiftiChangeMappingSeriesParameters = typing.TypedDict('CiftiChangeMappingSeriesParameters', {
+CiftiChangeMappingSeriesParamsDict = typing.TypedDict('CiftiChangeMappingSeriesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["series"]],
     "step": float,
     "start": float,
     "unit": typing.NotRequired[str | None],
 })
-CiftiChangeMappingSeriesParametersTagged = typing.TypedDict('CiftiChangeMappingSeriesParametersTagged', {
+CiftiChangeMappingSeriesParamsDictTagged = typing.TypedDict('CiftiChangeMappingSeriesParamsDictTagged', {
     "@type": typing.Literal["series"],
     "step": float,
     "start": float,
@@ -26,53 +26,53 @@ CiftiChangeMappingSeriesParametersTagged = typing.TypedDict('CiftiChangeMappingS
 })
 
 
-CiftiChangeMappingScalarParameters = typing.TypedDict('CiftiChangeMappingScalarParameters', {
+CiftiChangeMappingScalarParamsDict = typing.TypedDict('CiftiChangeMappingScalarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["scalar"]],
     "file": typing.NotRequired[str | None],
 })
-CiftiChangeMappingScalarParametersTagged = typing.TypedDict('CiftiChangeMappingScalarParametersTagged', {
+CiftiChangeMappingScalarParamsDictTagged = typing.TypedDict('CiftiChangeMappingScalarParamsDictTagged', {
     "@type": typing.Literal["scalar"],
     "file": typing.NotRequired[str | None],
 })
 
 
-CiftiChangeMappingFromCiftiParameters = typing.TypedDict('CiftiChangeMappingFromCiftiParameters', {
+CiftiChangeMappingFromCiftiParamsDict = typing.TypedDict('CiftiChangeMappingFromCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["from-cifti"]],
     "template-cifti": InputPathType,
     "direction": str,
 })
-CiftiChangeMappingFromCiftiParametersTagged = typing.TypedDict('CiftiChangeMappingFromCiftiParametersTagged', {
+CiftiChangeMappingFromCiftiParamsDictTagged = typing.TypedDict('CiftiChangeMappingFromCiftiParamsDictTagged', {
     "@type": typing.Literal["from-cifti"],
     "template-cifti": InputPathType,
     "direction": str,
 })
 
 
-CiftiChangeMappingParameters = typing.TypedDict('CiftiChangeMappingParameters', {
+CiftiChangeMappingParamsDict = typing.TypedDict('CiftiChangeMappingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-change-mapping"]],
     "cifti-out": str,
-    "series": typing.NotRequired[CiftiChangeMappingSeriesParameters | None],
-    "scalar": typing.NotRequired[CiftiChangeMappingScalarParameters | None],
-    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "series": typing.NotRequired[CiftiChangeMappingSeriesParamsDict | None],
+    "scalar": typing.NotRequired[CiftiChangeMappingScalarParamsDict | None],
+    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParamsDict | None],
     "data-cifti": InputPathType,
     "direction": str,
 })
-CiftiChangeMappingParametersTagged = typing.TypedDict('CiftiChangeMappingParametersTagged', {
+CiftiChangeMappingParamsDictTagged = typing.TypedDict('CiftiChangeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-change-mapping"],
     "cifti-out": str,
-    "series": typing.NotRequired[CiftiChangeMappingSeriesParameters | None],
-    "scalar": typing.NotRequired[CiftiChangeMappingScalarParameters | None],
-    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "series": typing.NotRequired[CiftiChangeMappingSeriesParamsDict | None],
+    "scalar": typing.NotRequired[CiftiChangeMappingScalarParamsDict | None],
+    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParamsDict | None],
     "data-cifti": InputPathType,
     "direction": str,
 })
 
 
-def cifti_change_mapping_series_params(
+def cifti_change_mapping_series(
     step: float,
     start: float,
     unit: str | None,
-) -> CiftiChangeMappingSeriesParametersTagged:
+) -> CiftiChangeMappingSeriesParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def cifti_change_mapping_series_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiChangeMappingSeriesParameters` object.
+    `CiftiChangeMappingSeriesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def cifti_change_mapping_series_validate(
 
 
 def cifti_change_mapping_series_cargs(
-    params: CiftiChangeMappingSeriesParameters,
+    params: CiftiChangeMappingSeriesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,9 +145,9 @@ def cifti_change_mapping_series_cargs(
     return cargs
 
 
-def cifti_change_mapping_scalar_params(
+def cifti_change_mapping_scalar(
     file: str | None,
-) -> CiftiChangeMappingScalarParametersTagged:
+) -> CiftiChangeMappingScalarParamsDictTagged:
     """
     Build parameters.
     
@@ -171,7 +171,7 @@ def cifti_change_mapping_scalar_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiChangeMappingScalarParameters` object.
+    `CiftiChangeMappingScalarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def cifti_change_mapping_scalar_validate(
 
 
 def cifti_change_mapping_scalar_cargs(
-    params: CiftiChangeMappingScalarParameters,
+    params: CiftiChangeMappingScalarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,10 +206,10 @@ def cifti_change_mapping_scalar_cargs(
     return cargs
 
 
-def cifti_change_mapping_from_cifti_params(
+def cifti_change_mapping_from_cifti(
     template_cifti: InputPathType,
     direction: str,
-) -> CiftiChangeMappingFromCiftiParametersTagged:
+) -> CiftiChangeMappingFromCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -232,7 +232,7 @@ def cifti_change_mapping_from_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiChangeMappingFromCiftiParameters` object.
+    `CiftiChangeMappingFromCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -250,7 +250,7 @@ def cifti_change_mapping_from_cifti_validate(
 
 
 def cifti_change_mapping_from_cifti_cargs(
-    params: CiftiChangeMappingFromCiftiParameters,
+    params: CiftiChangeMappingFromCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -273,7 +273,7 @@ def cifti_change_mapping_from_cifti_cargs(
 
 class CiftiChangeMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiChangeMappingParameters(...)`.
+    Output object returned when calling `CiftiChangeMappingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -285,10 +285,10 @@ def cifti_change_mapping_params(
     cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
-    series: CiftiChangeMappingSeriesParameters | None = None,
-    scalar: CiftiChangeMappingScalarParameters | None = None,
-    from_cifti: CiftiChangeMappingFromCiftiParameters | None = None,
-) -> CiftiChangeMappingParametersTagged:
+    series: CiftiChangeMappingSeriesParamsDict | None = None,
+    scalar: CiftiChangeMappingScalarParamsDict | None = None,
+    from_cifti: CiftiChangeMappingFromCiftiParamsDict | None = None,
+) -> CiftiChangeMappingParamsDictTagged:
     """
     Build parameters.
     
@@ -322,7 +322,7 @@ def cifti_change_mapping_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiChangeMappingParameters` object.
+    `CiftiChangeMappingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -350,7 +350,7 @@ def cifti_change_mapping_validate(
 
 
 def cifti_change_mapping_cargs(
-    params: CiftiChangeMappingParameters,
+    params: CiftiChangeMappingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -378,7 +378,7 @@ def cifti_change_mapping_cargs(
 
 
 def cifti_change_mapping_outputs(
-    params: CiftiChangeMappingParameters,
+    params: CiftiChangeMappingParamsDict,
     execution: Execution,
 ) -> CiftiChangeMappingOutputs:
     """
@@ -398,7 +398,7 @@ def cifti_change_mapping_outputs(
 
 
 def cifti_change_mapping_execute(
-    params: CiftiChangeMappingParameters,
+    params: CiftiChangeMappingParamsDict,
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
@@ -435,9 +435,9 @@ def cifti_change_mapping(
     cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
-    series: CiftiChangeMappingSeriesParameters | None = None,
-    scalar: CiftiChangeMappingScalarParameters | None = None,
-    from_cifti: CiftiChangeMappingFromCiftiParameters | None = None,
+    series: CiftiChangeMappingSeriesParamsDict | None = None,
+    scalar: CiftiChangeMappingScalarParamsDict | None = None,
+    from_cifti: CiftiChangeMappingFromCiftiParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
@@ -478,11 +478,19 @@ def cifti_change_mapping(
 
 __all__ = [
     "CIFTI_CHANGE_MAPPING_METADATA",
+    "CiftiChangeMappingFromCiftiParamsDict",
+    "CiftiChangeMappingFromCiftiParamsDictTagged",
     "CiftiChangeMappingOutputs",
+    "CiftiChangeMappingParamsDict",
+    "CiftiChangeMappingParamsDictTagged",
+    "CiftiChangeMappingScalarParamsDict",
+    "CiftiChangeMappingScalarParamsDictTagged",
+    "CiftiChangeMappingSeriesParamsDict",
+    "CiftiChangeMappingSeriesParamsDictTagged",
     "cifti_change_mapping",
     "cifti_change_mapping_execute",
-    "cifti_change_mapping_from_cifti_params",
+    "cifti_change_mapping_from_cifti",
     "cifti_change_mapping_params",
-    "cifti_change_mapping_scalar_params",
-    "cifti_change_mapping_series_params",
+    "cifti_change_mapping_scalar",
+    "cifti_change_mapping_series",
 ]

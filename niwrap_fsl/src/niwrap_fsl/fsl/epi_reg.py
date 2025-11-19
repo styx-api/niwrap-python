@@ -13,7 +13,7 @@ EPI_REG_METADATA = Metadata(
 )
 
 
-EpiRegParameters = typing.TypedDict('EpiRegParameters', {
+EpiRegParamsDict = typing.TypedDict('EpiRegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/epi_reg"]],
     "epi": InputPathType,
     "t1_head": InputPathType,
@@ -29,7 +29,7 @@ EpiRegParameters = typing.TypedDict('EpiRegParameters', {
     "weight_image": typing.NotRequired[InputPathType | None],
     "wmseg": typing.NotRequired[InputPathType | None],
 })
-EpiRegParametersTagged = typing.TypedDict('EpiRegParametersTagged', {
+EpiRegParamsDictTagged = typing.TypedDict('EpiRegParamsDictTagged', {
     "@type": typing.Literal["fsl/epi_reg"],
     "epi": InputPathType,
     "t1_head": InputPathType,
@@ -49,7 +49,7 @@ EpiRegParametersTagged = typing.TypedDict('EpiRegParametersTagged', {
 
 class EpiRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EpiRegParameters(...)`.
+    Output object returned when calling `EpiRegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +97,7 @@ def epi_reg_params(
     pedir: typing.Literal["x", "y", "z", "-x", "-y", "-z"] | None = None,
     weight_image: InputPathType | None = None,
     wmseg: InputPathType | None = None,
-) -> EpiRegParametersTagged:
+) -> EpiRegParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def epi_reg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EpiRegParameters` object.
+    `EpiRegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def epi_reg_validate(
 
 
 def epi_reg_cargs(
-    params: EpiRegParameters,
+    params: EpiRegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -250,7 +250,7 @@ def epi_reg_cargs(
 
 
 def epi_reg_outputs(
-    params: EpiRegParameters,
+    params: EpiRegParamsDict,
     execution: Execution,
 ) -> EpiRegOutputs:
     """
@@ -283,7 +283,7 @@ def epi_reg_outputs(
 
 
 def epi_reg_execute(
-    params: EpiRegParameters,
+    params: EpiRegParamsDict,
     runner: Runner | None = None,
 ) -> EpiRegOutputs:
     """
@@ -381,6 +381,8 @@ def epi_reg(
 __all__ = [
     "EPI_REG_METADATA",
     "EpiRegOutputs",
+    "EpiRegParamsDict",
+    "EpiRegParamsDictTagged",
     "epi_reg",
     "epi_reg_execute",
     "epi_reg_params",

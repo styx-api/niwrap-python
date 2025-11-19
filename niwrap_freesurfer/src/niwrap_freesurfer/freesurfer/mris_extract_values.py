@@ -13,7 +13,7 @@ MRIS_EXTRACT_VALUES_METADATA = Metadata(
 )
 
 
-MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
+MrisExtractValuesParamsDict = typing.TypedDict('MrisExtractValuesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_values"]],
     "surface": InputPathType,
     "overlay": InputPathType,
@@ -22,7 +22,7 @@ MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
     "num_images": float,
     "image_files": list[InputPathType],
 })
-MrisExtractValuesParametersTagged = typing.TypedDict('MrisExtractValuesParametersTagged', {
+MrisExtractValuesParamsDictTagged = typing.TypedDict('MrisExtractValuesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_extract_values"],
     "surface": InputPathType,
     "overlay": InputPathType,
@@ -35,7 +35,7 @@ MrisExtractValuesParametersTagged = typing.TypedDict('MrisExtractValuesParameter
 
 class MrisExtractValuesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisExtractValuesParameters(...)`.
+    Output object returned when calling `MrisExtractValuesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_extract_values_params(
     csvfile: str,
     num_images: float,
     image_files: list[InputPathType],
-) -> MrisExtractValuesParametersTagged:
+) -> MrisExtractValuesParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mris_extract_values_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisExtractValuesParameters` object.
+    `MrisExtractValuesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def mris_extract_values_validate(
 
 
 def mris_extract_values_cargs(
-    params: MrisExtractValuesParameters,
+    params: MrisExtractValuesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -160,7 +160,7 @@ def mris_extract_values_cargs(
 
 
 def mris_extract_values_outputs(
-    params: MrisExtractValuesParameters,
+    params: MrisExtractValuesParamsDict,
     execution: Execution,
 ) -> MrisExtractValuesOutputs:
     """
@@ -180,7 +180,7 @@ def mris_extract_values_outputs(
 
 
 def mris_extract_values_execute(
-    params: MrisExtractValuesParameters,
+    params: MrisExtractValuesParamsDict,
     runner: Runner | None = None,
 ) -> MrisExtractValuesOutputs:
     """
@@ -253,6 +253,8 @@ def mris_extract_values(
 __all__ = [
     "MRIS_EXTRACT_VALUES_METADATA",
     "MrisExtractValuesOutputs",
+    "MrisExtractValuesParamsDict",
+    "MrisExtractValuesParamsDictTagged",
     "mris_extract_values",
     "mris_extract_values_execute",
     "mris_extract_values_params",

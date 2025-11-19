@@ -13,19 +13,19 @@ DIRGEN_METADATA = Metadata(
 )
 
 
-DirgenConfigParameters = typing.TypedDict('DirgenConfigParameters', {
+DirgenConfigParamsDict = typing.TypedDict('DirgenConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DirgenConfigParametersTagged = typing.TypedDict('DirgenConfigParametersTagged', {
+DirgenConfigParamsDictTagged = typing.TypedDict('DirgenConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DirgenParameters = typing.TypedDict('DirgenParameters', {
+DirgenParamsDict = typing.TypedDict('DirgenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dirgen"]],
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
@@ -37,13 +37,13 @@ DirgenParameters = typing.TypedDict('DirgenParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirgenConfigParameters] | None],
+    "config": typing.NotRequired[list[DirgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "ndir": int,
     "dirs": str,
 })
-DirgenParametersTagged = typing.TypedDict('DirgenParametersTagged', {
+DirgenParamsDictTagged = typing.TypedDict('DirgenParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dirgen"],
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
@@ -55,7 +55,7 @@ DirgenParametersTagged = typing.TypedDict('DirgenParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[DirgenConfigParameters] | None],
+    "config": typing.NotRequired[list[DirgenConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "ndir": int,
@@ -63,10 +63,10 @@ DirgenParametersTagged = typing.TypedDict('DirgenParametersTagged', {
 })
 
 
-def dirgen_config_params(
+def dirgen_config(
     key: str,
     value: str,
-) -> DirgenConfigParametersTagged:
+) -> DirgenConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def dirgen_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirgenConfigParameters` object.
+    `DirgenConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def dirgen_config_validate(
 
 
 def dirgen_config_cargs(
-    params: DirgenConfigParameters,
+    params: DirgenConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -128,7 +128,7 @@ def dirgen_config_cargs(
 
 class DirgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DirgenParameters(...)`.
+    Output object returned when calling `DirgenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,10 +149,10 @@ def dirgen_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirgenConfigParameters] | None = None,
+    config: list[DirgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirgenParametersTagged:
+) -> DirgenParamsDictTagged:
     """
     Build parameters.
     
@@ -214,7 +214,7 @@ def dirgen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DirgenParameters` object.
+    `DirgenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -259,7 +259,7 @@ def dirgen_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirgenConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirgenConfigParamsDict] | None`')
         for e in params["config"]:
             dirgen_config_validate(e)
     if params.get("help", False) is None:
@@ -281,7 +281,7 @@ def dirgen_validate(
 
 
 def dirgen_cargs(
-    params: DirgenParameters,
+    params: DirgenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -339,7 +339,7 @@ def dirgen_cargs(
 
 
 def dirgen_outputs(
-    params: DirgenParameters,
+    params: DirgenParamsDict,
     execution: Execution,
 ) -> DirgenOutputs:
     """
@@ -359,7 +359,7 @@ def dirgen_outputs(
 
 
 def dirgen_execute(
-    params: DirgenParameters,
+    params: DirgenParamsDict,
     runner: Runner | None = None,
 ) -> DirgenOutputs:
     """
@@ -419,7 +419,7 @@ def dirgen(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[DirgenConfigParameters] | None = None,
+    config: list[DirgenConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -502,9 +502,13 @@ def dirgen(
 
 __all__ = [
     "DIRGEN_METADATA",
+    "DirgenConfigParamsDict",
+    "DirgenConfigParamsDictTagged",
     "DirgenOutputs",
+    "DirgenParamsDict",
+    "DirgenParamsDictTagged",
     "dirgen",
-    "dirgen_config_params",
+    "dirgen_config",
     "dirgen_execute",
     "dirgen_params",
 ]

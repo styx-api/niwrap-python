@@ -13,7 +13,7 @@ V__UPDATE_AFNI_BINARIES_METADATA = Metadata(
 )
 
 
-VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters', {
+VUpdateAfniBinariesParamsDict = typing.TypedDict('VUpdateAfniBinariesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@update.afni.binaries"]],
     "defaults_flag": bool,
     "help_flag": bool,
@@ -40,7 +40,7 @@ VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters'
     "prog_list": typing.NotRequired[list[str] | None],
     "package": typing.NotRequired[str | None],
 })
-VUpdateAfniBinariesParametersTagged = typing.TypedDict('VUpdateAfniBinariesParametersTagged', {
+VUpdateAfniBinariesParamsDictTagged = typing.TypedDict('VUpdateAfniBinariesParamsDictTagged', {
     "@type": typing.Literal["afni/@update.afni.binaries"],
     "defaults_flag": bool,
     "help_flag": bool,
@@ -71,7 +71,7 @@ VUpdateAfniBinariesParametersTagged = typing.TypedDict('VUpdateAfniBinariesParam
 
 class VUpdateAfniBinariesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VUpdateAfniBinariesParameters(...)`.
+    Output object returned when calling `VUpdateAfniBinariesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def v__update_afni_binaries_params(
     local_package: str | None = None,
     prog_list: list[str] | None = None,
     package: str | None = None,
-) -> VUpdateAfniBinariesParametersTagged:
+) -> VUpdateAfniBinariesParamsDictTagged:
     """
     Build parameters.
     
@@ -177,7 +177,7 @@ def v__update_afni_binaries_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VUpdateAfniBinariesParameters` object.
+    `VUpdateAfniBinariesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -279,7 +279,7 @@ def v__update_afni_binaries_validate(
 
 
 def v__update_afni_binaries_cargs(
-    params: VUpdateAfniBinariesParameters,
+    params: VUpdateAfniBinariesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -366,7 +366,7 @@ def v__update_afni_binaries_cargs(
 
 
 def v__update_afni_binaries_outputs(
-    params: VUpdateAfniBinariesParameters,
+    params: VUpdateAfniBinariesParamsDict,
     execution: Execution,
 ) -> VUpdateAfniBinariesOutputs:
     """
@@ -385,7 +385,7 @@ def v__update_afni_binaries_outputs(
 
 
 def v__update_afni_binaries_execute(
-    params: VUpdateAfniBinariesParameters,
+    params: VUpdateAfniBinariesParamsDict,
     runner: Runner | None = None,
 ) -> VUpdateAfniBinariesOutputs:
     """
@@ -510,6 +510,8 @@ def v__update_afni_binaries(
 
 __all__ = [
     "VUpdateAfniBinariesOutputs",
+    "VUpdateAfniBinariesParamsDict",
+    "VUpdateAfniBinariesParamsDictTagged",
     "V__UPDATE_AFNI_BINARIES_METADATA",
     "v__update_afni_binaries",
     "v__update_afni_binaries_execute",

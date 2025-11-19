@@ -13,12 +13,12 @@ FEAT_MODEL_METADATA = Metadata(
 )
 
 
-FeatModelParameters = typing.TypedDict('FeatModelParameters', {
+FeatModelParamsDict = typing.TypedDict('FeatModelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/feat_model"]],
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })
-FeatModelParametersTagged = typing.TypedDict('FeatModelParametersTagged', {
+FeatModelParamsDictTagged = typing.TypedDict('FeatModelParamsDictTagged', {
     "@type": typing.Literal["fsl/feat_model"],
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ FeatModelParametersTagged = typing.TypedDict('FeatModelParametersTagged', {
 
 class FeatModelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FeatModelParameters(...)`.
+    Output object returned when calling `FeatModelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FeatModelOutputs(typing.NamedTuple):
 def feat_model_params(
     design_name_root: str,
     confound_matrix: InputPathType | None = None,
-) -> FeatModelParametersTagged:
+) -> FeatModelParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def feat_model_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FeatModelParameters` object.
+    `FeatModelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def feat_model_validate(
 
 
 def feat_model_cargs(
-    params: FeatModelParameters,
+    params: FeatModelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def feat_model_cargs(
 
 
 def feat_model_outputs(
-    params: FeatModelParameters,
+    params: FeatModelParamsDict,
     execution: Execution,
 ) -> FeatModelOutputs:
     """
@@ -117,7 +117,7 @@ def feat_model_outputs(
 
 
 def feat_model_execute(
-    params: FeatModelParameters,
+    params: FeatModelParamsDict,
     runner: Runner | None = None,
 ) -> FeatModelOutputs:
     """
@@ -176,6 +176,8 @@ def feat_model(
 __all__ = [
     "FEAT_MODEL_METADATA",
     "FeatModelOutputs",
+    "FeatModelParamsDict",
+    "FeatModelParamsDictTagged",
     "feat_model",
     "feat_model_execute",
     "feat_model_params",

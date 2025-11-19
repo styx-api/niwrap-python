@@ -13,7 +13,7 @@ REG_JACOBIAN_METADATA = Metadata(
 )
 
 
-RegJacobianParameters = typing.TypedDict('RegJacobianParameters', {
+RegJacobianParamsDict = typing.TypedDict('RegJacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_jacobian"]],
     "reference_image": InputPathType,
     "deformation_field": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ RegJacobianParameters = typing.TypedDict('RegJacobianParameters', {
     "output_log_jacobian": typing.NotRequired[str | None],
     "affine_matrix": typing.NotRequired[InputPathType | None],
 })
-RegJacobianParametersTagged = typing.TypedDict('RegJacobianParametersTagged', {
+RegJacobianParamsDictTagged = typing.TypedDict('RegJacobianParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_jacobian"],
     "reference_image": InputPathType,
     "deformation_field": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ RegJacobianParametersTagged = typing.TypedDict('RegJacobianParametersTagged', {
 
 class RegJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegJacobianParameters(...)`.
+    Output object returned when calling `RegJacobianParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def reg_jacobian_params(
     output_jacobian_matrix: str | None = None,
     output_log_jacobian: str | None = None,
     affine_matrix: InputPathType | None = None,
-) -> RegJacobianParametersTagged:
+) -> RegJacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def reg_jacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegJacobianParameters` object.
+    `RegJacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def reg_jacobian_validate(
 
 
 def reg_jacobian_cargs(
-    params: RegJacobianParameters,
+    params: RegJacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,7 +185,7 @@ def reg_jacobian_cargs(
 
 
 def reg_jacobian_outputs(
-    params: RegJacobianParameters,
+    params: RegJacobianParamsDict,
     execution: Execution,
 ) -> RegJacobianOutputs:
     """
@@ -207,7 +207,7 @@ def reg_jacobian_outputs(
 
 
 def reg_jacobian_execute(
-    params: RegJacobianParameters,
+    params: RegJacobianParamsDict,
     runner: Runner | None = None,
 ) -> RegJacobianOutputs:
     """
@@ -288,6 +288,8 @@ def reg_jacobian(
 __all__ = [
     "REG_JACOBIAN_METADATA",
     "RegJacobianOutputs",
+    "RegJacobianParamsDict",
+    "RegJacobianParamsDictTagged",
     "reg_jacobian",
     "reg_jacobian_execute",
     "reg_jacobian_params",

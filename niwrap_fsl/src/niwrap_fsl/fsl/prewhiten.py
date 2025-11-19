@@ -13,12 +13,12 @@ PREWHITEN_METADATA = Metadata(
 )
 
 
-PrewhitenParameters = typing.TypedDict('PrewhitenParameters', {
+PrewhitenParamsDict = typing.TypedDict('PrewhitenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/prewhiten"]],
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })
-PrewhitenParametersTagged = typing.TypedDict('PrewhitenParametersTagged', {
+PrewhitenParamsDictTagged = typing.TypedDict('PrewhitenParamsDictTagged', {
     "@type": typing.Literal["fsl/prewhiten"],
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ PrewhitenParametersTagged = typing.TypedDict('PrewhitenParametersTagged', {
 
 class PrewhitenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PrewhitenParameters(...)`.
+    Output object returned when calling `PrewhitenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class PrewhitenOutputs(typing.NamedTuple):
 def prewhiten_params(
     feat_directory: str,
     output_directory: str | None = None,
-) -> PrewhitenParametersTagged:
+) -> PrewhitenParamsDictTagged:
     """
     Build parameters.
     
@@ -63,7 +63,7 @@ def prewhiten_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PrewhitenParameters` object.
+    `PrewhitenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def prewhiten_validate(
 
 
 def prewhiten_cargs(
-    params: PrewhitenParameters,
+    params: PrewhitenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def prewhiten_cargs(
 
 
 def prewhiten_outputs(
-    params: PrewhitenParameters,
+    params: PrewhitenParamsDict,
     execution: Execution,
 ) -> PrewhitenOutputs:
     """
@@ -124,7 +124,7 @@ def prewhiten_outputs(
 
 
 def prewhiten_execute(
-    params: PrewhitenParameters,
+    params: PrewhitenParamsDict,
     runner: Runner | None = None,
 ) -> PrewhitenOutputs:
     """
@@ -184,6 +184,8 @@ def prewhiten(
 __all__ = [
     "PREWHITEN_METADATA",
     "PrewhitenOutputs",
+    "PrewhitenParamsDict",
+    "PrewhitenParamsDictTagged",
     "prewhiten",
     "prewhiten_execute",
     "prewhiten_params",

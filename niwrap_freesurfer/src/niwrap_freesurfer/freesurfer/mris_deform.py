@@ -13,14 +13,14 @@ MRIS_DEFORM_METADATA = Metadata(
 )
 
 
-MrisDeformParameters = typing.TypedDict('MrisDeformParameters', {
+MrisDeformParamsDict = typing.TypedDict('MrisDeformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_deform"]],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "xform": InputPathType,
     "output_surface": str,
 })
-MrisDeformParametersTagged = typing.TypedDict('MrisDeformParametersTagged', {
+MrisDeformParamsDictTagged = typing.TypedDict('MrisDeformParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_deform"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
@@ -31,7 +31,7 @@ MrisDeformParametersTagged = typing.TypedDict('MrisDeformParametersTagged', {
 
 class MrisDeformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisDeformParameters(...)`.
+    Output object returned when calling `MrisDeformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_deform_params(
     input_volume: InputPathType,
     xform: InputPathType,
     output_surface: str,
-) -> MrisDeformParametersTagged:
+) -> MrisDeformParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mris_deform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisDeformParameters` object.
+    `MrisDeformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mris_deform_validate(
 
 
 def mris_deform_cargs(
-    params: MrisDeformParameters,
+    params: MrisDeformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mris_deform_cargs(
 
 
 def mris_deform_outputs(
-    params: MrisDeformParameters,
+    params: MrisDeformParamsDict,
     execution: Execution,
 ) -> MrisDeformOutputs:
     """
@@ -139,7 +139,7 @@ def mris_deform_outputs(
 
 
 def mris_deform_execute(
-    params: MrisDeformParameters,
+    params: MrisDeformParamsDict,
     runner: Runner | None = None,
 ) -> MrisDeformOutputs:
     """
@@ -206,6 +206,8 @@ def mris_deform(
 __all__ = [
     "MRIS_DEFORM_METADATA",
     "MrisDeformOutputs",
+    "MrisDeformParamsDict",
+    "MrisDeformParamsDictTagged",
     "mris_deform",
     "mris_deform_execute",
     "mris_deform_params",

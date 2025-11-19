@@ -13,13 +13,13 @@ FSLFFT_METADATA = Metadata(
 )
 
 
-FslfftParameters = typing.TypedDict('FslfftParameters', {
+FslfftParamsDict = typing.TypedDict('FslfftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslfft"]],
     "input_volume": InputPathType,
     "output_volume": str,
     "inverse_flag": bool,
 })
-FslfftParametersTagged = typing.TypedDict('FslfftParametersTagged', {
+FslfftParamsDictTagged = typing.TypedDict('FslfftParamsDictTagged', {
     "@type": typing.Literal["fsl/fslfft"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -29,7 +29,7 @@ FslfftParametersTagged = typing.TypedDict('FslfftParametersTagged', {
 
 class FslfftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslfftParameters(...)`.
+    Output object returned when calling `FslfftParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def fslfft_params(
     input_volume: InputPathType,
     output_volume: str,
     inverse_flag: bool = False,
-) -> FslfftParametersTagged:
+) -> FslfftParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def fslfft_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslfftParameters` object.
+    `FslfftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def fslfft_validate(
 
 
 def fslfft_cargs(
-    params: FslfftParameters,
+    params: FslfftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def fslfft_cargs(
 
 
 def fslfft_outputs(
-    params: FslfftParameters,
+    params: FslfftParamsDict,
     execution: Execution,
 ) -> FslfftOutputs:
     """
@@ -130,7 +130,7 @@ def fslfft_outputs(
 
 
 def fslfft_execute(
-    params: FslfftParameters,
+    params: FslfftParamsDict,
     runner: Runner | None = None,
 ) -> FslfftOutputs:
     """
@@ -194,6 +194,8 @@ def fslfft(
 __all__ = [
     "FSLFFT_METADATA",
     "FslfftOutputs",
+    "FslfftParamsDict",
+    "FslfftParamsDictTagged",
     "fslfft",
     "fslfft_execute",
     "fslfft_params",

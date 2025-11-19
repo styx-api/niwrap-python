@@ -13,7 +13,7 @@ ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
 )
 
 
-AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameters', {
+AdjunctSumaFsRoiInfoParamsDict = typing.TypedDict('AdjunctSumaFsRoiInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_roi_info"]],
     "subject_id": str,
     "suma_directory": str,
@@ -21,7 +21,7 @@ AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameter
     "hview": bool,
     "version": bool,
 })
-AdjunctSumaFsRoiInfoParametersTagged = typing.TypedDict('AdjunctSumaFsRoiInfoParametersTagged', {
+AdjunctSumaFsRoiInfoParamsDictTagged = typing.TypedDict('AdjunctSumaFsRoiInfoParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_suma_fs_roi_info"],
     "subject_id": str,
     "suma_directory": str,
@@ -33,7 +33,7 @@ AdjunctSumaFsRoiInfoParametersTagged = typing.TypedDict('AdjunctSumaFsRoiInfoPar
 
 class AdjunctSumaFsRoiInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctSumaFsRoiInfoParameters(...)`.
+    Output object returned when calling `AdjunctSumaFsRoiInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def adjunct_suma_fs_roi_info_params(
     help_: bool = False,
     hview: bool = False,
     version: bool = False,
-) -> AdjunctSumaFsRoiInfoParametersTagged:
+) -> AdjunctSumaFsRoiInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def adjunct_suma_fs_roi_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctSumaFsRoiInfoParameters` object.
+    `AdjunctSumaFsRoiInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def adjunct_suma_fs_roi_info_validate(
 
 
 def adjunct_suma_fs_roi_info_cargs(
-    params: AdjunctSumaFsRoiInfoParameters,
+    params: AdjunctSumaFsRoiInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -144,7 +144,7 @@ def adjunct_suma_fs_roi_info_cargs(
 
 
 def adjunct_suma_fs_roi_info_outputs(
-    params: AdjunctSumaFsRoiInfoParameters,
+    params: AdjunctSumaFsRoiInfoParamsDict,
     execution: Execution,
 ) -> AdjunctSumaFsRoiInfoOutputs:
     """
@@ -167,7 +167,7 @@ def adjunct_suma_fs_roi_info_outputs(
 
 
 def adjunct_suma_fs_roi_info_execute(
-    params: AdjunctSumaFsRoiInfoParameters,
+    params: AdjunctSumaFsRoiInfoParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctSumaFsRoiInfoOutputs:
     """
@@ -237,6 +237,8 @@ def adjunct_suma_fs_roi_info(
 __all__ = [
     "ADJUNCT_SUMA_FS_ROI_INFO_METADATA",
     "AdjunctSumaFsRoiInfoOutputs",
+    "AdjunctSumaFsRoiInfoParamsDict",
+    "AdjunctSumaFsRoiInfoParamsDictTagged",
     "adjunct_suma_fs_roi_info",
     "adjunct_suma_fs_roi_info_execute",
     "adjunct_suma_fs_roi_info_params",

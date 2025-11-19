@@ -13,7 +13,7 @@ PARSE_FS_LT_LOG_PY_METADATA = Metadata(
 )
 
 
-ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
+ParseFsLtLogPyParamsDict = typing.TypedDict('ParseFsLtLogPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/parse_fs_lt_log.py"]],
     "logfile": InputPathType,
     "labels": list[str],
@@ -21,7 +21,7 @@ ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
     "show_all_orig": bool,
     "verbosity": typing.NotRequired[float | None],
 })
-ParseFsLtLogPyParametersTagged = typing.TypedDict('ParseFsLtLogPyParametersTagged', {
+ParseFsLtLogPyParamsDictTagged = typing.TypedDict('ParseFsLtLogPyParamsDictTagged', {
     "@type": typing.Literal["afni/parse_fs_lt_log.py"],
     "logfile": InputPathType,
     "labels": list[str],
@@ -33,7 +33,7 @@ ParseFsLtLogPyParametersTagged = typing.TypedDict('ParseFsLtLogPyParametersTagge
 
 class ParseFsLtLogPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ParseFsLtLogPyParameters(...)`.
+    Output object returned when calling `ParseFsLtLogPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def parse_fs_lt_log_py_params(
     show_orig: bool = False,
     show_all_orig: bool = False,
     verbosity: float | None = None,
-) -> ParseFsLtLogPyParametersTagged:
+) -> ParseFsLtLogPyParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def parse_fs_lt_log_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ParseFsLtLogPyParameters` object.
+    `ParseFsLtLogPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -107,7 +107,7 @@ def parse_fs_lt_log_py_validate(
 
 
 def parse_fs_lt_log_py_cargs(
-    params: ParseFsLtLogPyParameters,
+    params: ParseFsLtLogPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -142,7 +142,7 @@ def parse_fs_lt_log_py_cargs(
 
 
 def parse_fs_lt_log_py_outputs(
-    params: ParseFsLtLogPyParameters,
+    params: ParseFsLtLogPyParamsDict,
     execution: Execution,
 ) -> ParseFsLtLogPyOutputs:
     """
@@ -161,7 +161,7 @@ def parse_fs_lt_log_py_outputs(
 
 
 def parse_fs_lt_log_py_execute(
-    params: ParseFsLtLogPyParameters,
+    params: ParseFsLtLogPyParamsDict,
     runner: Runner | None = None,
 ) -> ParseFsLtLogPyOutputs:
     """
@@ -229,6 +229,8 @@ def parse_fs_lt_log_py(
 __all__ = [
     "PARSE_FS_LT_LOG_PY_METADATA",
     "ParseFsLtLogPyOutputs",
+    "ParseFsLtLogPyParamsDict",
+    "ParseFsLtLogPyParamsDictTagged",
     "parse_fs_lt_log_py",
     "parse_fs_lt_log_py_execute",
     "parse_fs_lt_log_py_params",

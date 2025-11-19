@@ -13,11 +13,11 @@ FS_TUTORIAL_DATA_METADATA = Metadata(
 )
 
 
-FsTutorialDataParameters = typing.TypedDict('FsTutorialDataParameters', {
+FsTutorialDataParamsDict = typing.TypedDict('FsTutorialDataParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fs_tutorial_data"]],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
-FsTutorialDataParametersTagged = typing.TypedDict('FsTutorialDataParametersTagged', {
+FsTutorialDataParamsDictTagged = typing.TypedDict('FsTutorialDataParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fs_tutorial_data"],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
@@ -25,7 +25,7 @@ FsTutorialDataParametersTagged = typing.TypedDict('FsTutorialDataParametersTagge
 
 class FsTutorialDataOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FsTutorialDataParameters(...)`.
+    Output object returned when calling `FsTutorialDataParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class FsTutorialDataOutputs(typing.NamedTuple):
 
 def fs_tutorial_data_params(
     rsync_options: list[str] | None = None,
-) -> FsTutorialDataParametersTagged:
+) -> FsTutorialDataParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def fs_tutorial_data_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FsTutorialDataParameters` object.
+    `FsTutorialDataParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def fs_tutorial_data_validate(
 
 
 def fs_tutorial_data_cargs(
-    params: FsTutorialDataParameters,
+    params: FsTutorialDataParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -93,7 +93,7 @@ def fs_tutorial_data_cargs(
 
 
 def fs_tutorial_data_outputs(
-    params: FsTutorialDataParameters,
+    params: FsTutorialDataParamsDict,
     execution: Execution,
 ) -> FsTutorialDataOutputs:
     """
@@ -113,7 +113,7 @@ def fs_tutorial_data_outputs(
 
 
 def fs_tutorial_data_execute(
-    params: FsTutorialDataParameters,
+    params: FsTutorialDataParamsDict,
     runner: Runner | None = None,
 ) -> FsTutorialDataOutputs:
     """
@@ -169,6 +169,8 @@ def fs_tutorial_data(
 __all__ = [
     "FS_TUTORIAL_DATA_METADATA",
     "FsTutorialDataOutputs",
+    "FsTutorialDataParamsDict",
+    "FsTutorialDataParamsDictTagged",
     "fs_tutorial_data",
     "fs_tutorial_data_execute",
     "fs_tutorial_data_params",

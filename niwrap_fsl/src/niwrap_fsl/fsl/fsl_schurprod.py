@@ -13,7 +13,7 @@ FSL_SCHURPROD_METADATA = Metadata(
 )
 
 
-FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
+FslSchurprodParamsDict = typing.TypedDict('FslSchurprodParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_schurprod"]],
     "input_file": InputPathType,
     "design_file": InputPathType,
@@ -24,7 +24,7 @@ FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-FslSchurprodParametersTagged = typing.TypedDict('FslSchurprodParametersTagged', {
+FslSchurprodParamsDictTagged = typing.TypedDict('FslSchurprodParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_schurprod"],
     "input_file": InputPathType,
     "design_file": InputPathType,
@@ -39,7 +39,7 @@ FslSchurprodParametersTagged = typing.TypedDict('FslSchurprodParametersTagged', 
 
 class FslSchurprodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslSchurprodParameters(...)`.
+    Output object returned when calling `FslSchurprodParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def fsl_schurprod_params(
     mask_file: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslSchurprodParametersTagged:
+) -> FslSchurprodParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def fsl_schurprod_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslSchurprodParameters` object.
+    `FslSchurprodParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def fsl_schurprod_validate(
 
 
 def fsl_schurprod_cargs(
-    params: FslSchurprodParameters,
+    params: FslSchurprodParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def fsl_schurprod_cargs(
 
 
 def fsl_schurprod_outputs(
-    params: FslSchurprodParameters,
+    params: FslSchurprodParamsDict,
     execution: Execution,
 ) -> FslSchurprodOutputs:
     """
@@ -200,7 +200,7 @@ def fsl_schurprod_outputs(
 
 
 def fsl_schurprod_execute(
-    params: FslSchurprodParameters,
+    params: FslSchurprodParamsDict,
     runner: Runner | None = None,
 ) -> FslSchurprodOutputs:
     """
@@ -280,6 +280,8 @@ def fsl_schurprod(
 __all__ = [
     "FSL_SCHURPROD_METADATA",
     "FslSchurprodOutputs",
+    "FslSchurprodParamsDict",
+    "FslSchurprodParamsDictTagged",
     "fsl_schurprod",
     "fsl_schurprod_execute",
     "fsl_schurprod_params",

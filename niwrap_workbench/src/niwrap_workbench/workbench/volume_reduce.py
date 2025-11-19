@@ -12,40 +12,40 @@ VOLUME_REDUCE_METADATA = Metadata(
 )
 
 
-VolumeReduceExcludeOutliersParameters = typing.TypedDict('VolumeReduceExcludeOutliersParameters', {
+VolumeReduceExcludeOutliersParamsDict = typing.TypedDict('VolumeReduceExcludeOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
     "sigma-below": float,
     "sigma-above": float,
 })
-VolumeReduceExcludeOutliersParametersTagged = typing.TypedDict('VolumeReduceExcludeOutliersParametersTagged', {
+VolumeReduceExcludeOutliersParamsDictTagged = typing.TypedDict('VolumeReduceExcludeOutliersParamsDictTagged', {
     "@type": typing.Literal["exclude-outliers"],
     "sigma-below": float,
     "sigma-above": float,
 })
 
 
-VolumeReduceParameters = typing.TypedDict('VolumeReduceParameters', {
+VolumeReduceParamsDict = typing.TypedDict('VolumeReduceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-reduce"]],
     "volume-out": str,
-    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "volume-in": InputPathType,
     "operation": str,
 })
-VolumeReduceParametersTagged = typing.TypedDict('VolumeReduceParametersTagged', {
+VolumeReduceParamsDictTagged = typing.TypedDict('VolumeReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-reduce"],
     "volume-out": str,
-    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "volume-in": InputPathType,
     "operation": str,
 })
 
 
-def volume_reduce_exclude_outliers_params(
+def volume_reduce_exclude_outliers(
     sigma_below: float,
     sigma_above: float,
-) -> VolumeReduceExcludeOutliersParametersTagged:
+) -> VolumeReduceExcludeOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def volume_reduce_exclude_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeReduceExcludeOutliersParameters` object.
+    `VolumeReduceExcludeOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def volume_reduce_exclude_outliers_validate(
 
 
 def volume_reduce_exclude_outliers_cargs(
-    params: VolumeReduceExcludeOutliersParameters,
+    params: VolumeReduceExcludeOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def volume_reduce_exclude_outliers_cargs(
 
 class VolumeReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeReduceParameters(...)`.
+    Output object returned when calling `VolumeReduceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,9 +121,9 @@ def volume_reduce_params(
     volume_out: str,
     volume_in: InputPathType,
     operation: str,
-    exclude_outliers: VolumeReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: VolumeReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
-) -> VolumeReduceParametersTagged:
+) -> VolumeReduceParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def volume_reduce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeReduceParameters` object.
+    `VolumeReduceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def volume_reduce_validate(
 
 
 def volume_reduce_cargs(
-    params: VolumeReduceParameters,
+    params: VolumeReduceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -209,7 +209,7 @@ def volume_reduce_cargs(
 
 
 def volume_reduce_outputs(
-    params: VolumeReduceParameters,
+    params: VolumeReduceParamsDict,
     execution: Execution,
 ) -> VolumeReduceOutputs:
     """
@@ -229,7 +229,7 @@ def volume_reduce_outputs(
 
 
 def volume_reduce_execute(
-    params: VolumeReduceParameters,
+    params: VolumeReduceParamsDict,
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
@@ -277,7 +277,7 @@ def volume_reduce(
     volume_out: str,
     volume_in: InputPathType,
     operation: str,
-    exclude_outliers: VolumeReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: VolumeReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
@@ -329,9 +329,13 @@ def volume_reduce(
 
 __all__ = [
     "VOLUME_REDUCE_METADATA",
+    "VolumeReduceExcludeOutliersParamsDict",
+    "VolumeReduceExcludeOutliersParamsDictTagged",
     "VolumeReduceOutputs",
+    "VolumeReduceParamsDict",
+    "VolumeReduceParamsDictTagged",
     "volume_reduce",
-    "volume_reduce_exclude_outliers_params",
+    "volume_reduce_exclude_outliers",
     "volume_reduce_execute",
     "volume_reduce_params",
 ]

@@ -13,14 +13,14 @@ CAT_MATVEC_METADATA = Metadata(
 )
 
 
-CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
+CatMatvecParamsDict = typing.TypedDict('CatMatvecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/cat_matvec"]],
     "matrix_format": bool,
     "oneline_format": bool,
     "four_by_four_format": bool,
     "matvec_spec": list[str],
 })
-CatMatvecParametersTagged = typing.TypedDict('CatMatvecParametersTagged', {
+CatMatvecParamsDictTagged = typing.TypedDict('CatMatvecParamsDictTagged', {
     "@type": typing.Literal["afni/cat_matvec"],
     "matrix_format": bool,
     "oneline_format": bool,
@@ -31,7 +31,7 @@ CatMatvecParametersTagged = typing.TypedDict('CatMatvecParametersTagged', {
 
 class CatMatvecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CatMatvecParameters(...)`.
+    Output object returned when calling `CatMatvecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def cat_matvec_params(
     matrix_format: bool = False,
     oneline_format: bool = False,
     four_by_four_format: bool = False,
-) -> CatMatvecParametersTagged:
+) -> CatMatvecParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def cat_matvec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CatMatvecParameters` object.
+    `CatMatvecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def cat_matvec_validate(
 
 
 def cat_matvec_cargs(
-    params: CatMatvecParameters,
+    params: CatMatvecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -127,7 +127,7 @@ def cat_matvec_cargs(
 
 
 def cat_matvec_outputs(
-    params: CatMatvecParameters,
+    params: CatMatvecParamsDict,
     execution: Execution,
 ) -> CatMatvecOutputs:
     """
@@ -146,7 +146,7 @@ def cat_matvec_outputs(
 
 
 def cat_matvec_execute(
-    params: CatMatvecParameters,
+    params: CatMatvecParamsDict,
     runner: Runner | None = None,
 ) -> CatMatvecOutputs:
     """
@@ -215,6 +215,8 @@ def cat_matvec(
 __all__ = [
     "CAT_MATVEC_METADATA",
     "CatMatvecOutputs",
+    "CatMatvecParamsDict",
+    "CatMatvecParamsDictTagged",
     "cat_matvec",
     "cat_matvec_execute",
     "cat_matvec_params",

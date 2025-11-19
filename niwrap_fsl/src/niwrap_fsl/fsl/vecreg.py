@@ -13,7 +13,7 @@ VECREG_METADATA = Metadata(
 )
 
 
-VecregParameters = typing.TypedDict('VecregParameters', {
+VecregParamsDict = typing.TypedDict('VecregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/vecreg"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ VecregParameters = typing.TypedDict('VecregParameters', {
     "brain_mask": typing.NotRequired[InputPathType | None],
     "ref_brain_mask": typing.NotRequired[InputPathType | None],
 })
-VecregParametersTagged = typing.TypedDict('VecregParametersTagged', {
+VecregParamsDictTagged = typing.TypedDict('VecregParamsDictTagged', {
     "@type": typing.Literal["fsl/vecreg"],
     "input_file": InputPathType,
     "output_file": str,
@@ -45,7 +45,7 @@ VecregParametersTagged = typing.TypedDict('VecregParametersTagged', {
 
 class VecregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VecregParameters(...)`.
+    Output object returned when calling `VecregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def vecreg_params(
     interp_method: str | None = None,
     brain_mask: InputPathType | None = None,
     ref_brain_mask: InputPathType | None = None,
-) -> VecregParametersTagged:
+) -> VecregParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def vecreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VecregParameters` object.
+    `VecregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def vecreg_validate(
 
 
 def vecreg_cargs(
-    params: VecregParameters,
+    params: VecregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def vecreg_cargs(
 
 
 def vecreg_outputs(
-    params: VecregParameters,
+    params: VecregParamsDict,
     execution: Execution,
 ) -> VecregOutputs:
     """
@@ -248,7 +248,7 @@ def vecreg_outputs(
 
 
 def vecreg_execute(
-    params: VecregParameters,
+    params: VecregParamsDict,
     runner: Runner | None = None,
 ) -> VecregOutputs:
     """
@@ -338,6 +338,8 @@ def vecreg(
 __all__ = [
     "VECREG_METADATA",
     "VecregOutputs",
+    "VecregParamsDict",
+    "VecregParamsDictTagged",
     "vecreg",
     "vecreg_execute",
     "vecreg_params",

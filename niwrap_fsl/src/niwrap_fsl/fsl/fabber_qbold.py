@@ -13,7 +13,7 @@ FABBER_QBOLD_METADATA = Metadata(
 )
 
 
-FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
+FabberQboldParamsDict = typing.TypedDict('FabberQboldParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fabber_qbold"]],
     "output_dir": str,
     "method": str,
@@ -51,7 +51,7 @@ FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
     "optfile": typing.NotRequired[InputPathType | None],
     "debug": bool,
 })
-FabberQboldParametersTagged = typing.TypedDict('FabberQboldParametersTagged', {
+FabberQboldParamsDictTagged = typing.TypedDict('FabberQboldParamsDictTagged', {
     "@type": typing.Literal["fsl/fabber_qbold"],
     "output_dir": str,
     "method": str,
@@ -93,7 +93,7 @@ FabberQboldParametersTagged = typing.TypedDict('FabberQboldParametersTagged', {
 
 class FabberQboldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FabberQboldParameters(...)`.
+    Output object returned when calling `FabberQboldParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -161,7 +161,7 @@ def fabber_qbold_params(
     save_free_energy: bool = False,
     optfile: InputPathType | None = None,
     debug: bool = False,
-) -> FabberQboldParametersTagged:
+) -> FabberQboldParamsDictTagged:
     """
     Build parameters.
     
@@ -280,7 +280,7 @@ def fabber_qbold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FabberQboldParameters` object.
+    `FabberQboldParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -420,7 +420,7 @@ def fabber_qbold_validate(
 
 
 def fabber_qbold_cargs(
-    params: FabberQboldParameters,
+    params: FabberQboldParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -546,7 +546,7 @@ def fabber_qbold_cargs(
 
 
 def fabber_qbold_outputs(
-    params: FabberQboldParameters,
+    params: FabberQboldParamsDict,
     execution: Execution,
 ) -> FabberQboldOutputs:
     """
@@ -578,7 +578,7 @@ def fabber_qbold_outputs(
 
 
 def fabber_qbold_execute(
-    params: FabberQboldParameters,
+    params: FabberQboldParamsDict,
     runner: Runner | None = None,
 ) -> FabberQboldOutputs:
     """
@@ -756,6 +756,8 @@ def fabber_qbold(
 __all__ = [
     "FABBER_QBOLD_METADATA",
     "FabberQboldOutputs",
+    "FabberQboldParamsDict",
+    "FabberQboldParamsDictTagged",
     "fabber_qbold",
     "fabber_qbold_execute",
     "fabber_qbold_params",

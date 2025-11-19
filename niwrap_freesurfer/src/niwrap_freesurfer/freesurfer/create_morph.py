@@ -13,7 +13,7 @@ CREATE_MORPH_METADATA = Metadata(
 )
 
 
-CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
+CreateMorphParamsDict = typing.TypedDict('CreateMorphParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/createMorph"]],
     "input_transforms": list[str],
     "output_transform": str,
@@ -21,7 +21,7 @@ CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
     "subject": typing.NotRequired[InputPathType | None],
     "debug_coordinates": typing.NotRequired[list[float] | None],
 })
-CreateMorphParametersTagged = typing.TypedDict('CreateMorphParametersTagged', {
+CreateMorphParamsDictTagged = typing.TypedDict('CreateMorphParamsDictTagged', {
     "@type": typing.Literal["freesurfer/createMorph"],
     "input_transforms": list[str],
     "output_transform": str,
@@ -33,7 +33,7 @@ CreateMorphParametersTagged = typing.TypedDict('CreateMorphParametersTagged', {
 
 class CreateMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CreateMorphParameters(...)`.
+    Output object returned when calling `CreateMorphParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def create_morph_params(
     template: InputPathType | None = None,
     subject: InputPathType | None = None,
     debug_coordinates: list[float] | None = None,
-) -> CreateMorphParametersTagged:
+) -> CreateMorphParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def create_morph_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CreateMorphParameters` object.
+    `CreateMorphParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def create_morph_validate(
 
 
 def create_morph_cargs(
-    params: CreateMorphParameters,
+    params: CreateMorphParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def create_morph_cargs(
 
 
 def create_morph_outputs(
-    params: CreateMorphParameters,
+    params: CreateMorphParamsDict,
     execution: Execution,
 ) -> CreateMorphOutputs:
     """
@@ -177,7 +177,7 @@ def create_morph_outputs(
 
 
 def create_morph_execute(
-    params: CreateMorphParameters,
+    params: CreateMorphParamsDict,
     runner: Runner | None = None,
 ) -> CreateMorphOutputs:
     """
@@ -249,6 +249,8 @@ def create_morph(
 __all__ = [
     "CREATE_MORPH_METADATA",
     "CreateMorphOutputs",
+    "CreateMorphParamsDict",
+    "CreateMorphParamsDictTagged",
     "create_morph",
     "create_morph_execute",
     "create_morph_params",

@@ -12,38 +12,38 @@ SURFACE_AVERAGE_METADATA = Metadata(
 )
 
 
-SurfaceAverageSurfParameters = typing.TypedDict('SurfaceAverageSurfParameters', {
+SurfaceAverageSurfParamsDict = typing.TypedDict('SurfaceAverageSurfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["surf"]],
     "surface": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
-SurfaceAverageSurfParametersTagged = typing.TypedDict('SurfaceAverageSurfParametersTagged', {
+SurfaceAverageSurfParamsDictTagged = typing.TypedDict('SurfaceAverageSurfParamsDictTagged', {
     "@type": typing.Literal["surf"],
     "surface": InputPathType,
     "weight": typing.NotRequired[float | None],
 })
 
 
-SurfaceAverageParameters = typing.TypedDict('SurfaceAverageParameters', {
+SurfaceAverageParamsDict = typing.TypedDict('SurfaceAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-average"]],
     "surface-out": str,
     "stddev-metric-out": typing.NotRequired[str | None],
     "uncert-metric-out": typing.NotRequired[str | None],
-    "surf": typing.NotRequired[list[SurfaceAverageSurfParameters] | None],
+    "surf": typing.NotRequired[list[SurfaceAverageSurfParamsDict] | None],
 })
-SurfaceAverageParametersTagged = typing.TypedDict('SurfaceAverageParametersTagged', {
+SurfaceAverageParamsDictTagged = typing.TypedDict('SurfaceAverageParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-average"],
     "surface-out": str,
     "stddev-metric-out": typing.NotRequired[str | None],
     "uncert-metric-out": typing.NotRequired[str | None],
-    "surf": typing.NotRequired[list[SurfaceAverageSurfParameters] | None],
+    "surf": typing.NotRequired[list[SurfaceAverageSurfParamsDict] | None],
 })
 
 
-def surface_average_surf_params(
+def surface_average_surf(
     surface: InputPathType,
     weight: float | None,
-) -> SurfaceAverageSurfParametersTagged:
+) -> SurfaceAverageSurfParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def surface_average_surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceAverageSurfParameters` object.
+    `SurfaceAverageSurfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def surface_average_surf_validate(
 
 
 def surface_average_surf_cargs(
-    params: SurfaceAverageSurfParameters,
+    params: SurfaceAverageSurfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def surface_average_surf_cargs(
 
 class SurfaceAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceAverageParameters(...)`.
+    Output object returned when calling `SurfaceAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,8 +123,8 @@ def surface_average_params(
     surface_out: str,
     stddev_metric_out: str | None,
     uncert_metric_out: str | None,
-    surf: list[SurfaceAverageSurfParameters] | None = None,
-) -> SurfaceAverageParametersTagged:
+    surf: list[SurfaceAverageSurfParamsDict] | None = None,
+) -> SurfaceAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -158,7 +158,7 @@ def surface_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceAverageParameters` object.
+    `SurfaceAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -177,13 +177,13 @@ def surface_average_validate(
             raise StyxValidationError(f'`uncert-metric-out` has the wrong type: Received `{type(params.get("uncert-metric-out", None))}` expected `str | None`')
     if params.get("surf", None) is not None:
         if not isinstance(params["surf"], list):
-            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `list[SurfaceAverageSurfParameters] | None`')
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `list[SurfaceAverageSurfParamsDict] | None`')
         for e in params["surf"]:
             surface_average_surf_validate(e)
 
 
 def surface_average_cargs(
-    params: SurfaceAverageParameters,
+    params: SurfaceAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -211,7 +211,7 @@ def surface_average_cargs(
 
 
 def surface_average_outputs(
-    params: SurfaceAverageParameters,
+    params: SurfaceAverageParamsDict,
     execution: Execution,
 ) -> SurfaceAverageOutputs:
     """
@@ -231,7 +231,7 @@ def surface_average_outputs(
 
 
 def surface_average_execute(
-    params: SurfaceAverageParameters,
+    params: SurfaceAverageParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
@@ -266,7 +266,7 @@ def surface_average(
     surface_out: str,
     stddev_metric_out: str | None,
     uncert_metric_out: str | None,
-    surf: list[SurfaceAverageSurfParameters] | None = None,
+    surf: list[SurfaceAverageSurfParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
@@ -306,8 +306,12 @@ def surface_average(
 __all__ = [
     "SURFACE_AVERAGE_METADATA",
     "SurfaceAverageOutputs",
+    "SurfaceAverageParamsDict",
+    "SurfaceAverageParamsDictTagged",
+    "SurfaceAverageSurfParamsDict",
+    "SurfaceAverageSurfParamsDictTagged",
     "surface_average",
     "surface_average_execute",
     "surface_average_params",
-    "surface_average_surf_params",
+    "surface_average_surf",
 ]

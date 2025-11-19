@@ -13,12 +13,12 @@ FSL_GEN_3_D_METADATA = Metadata(
 )
 
 
-FslGen3DParameters = typing.TypedDict('FslGen3DParameters', {
+FslGen3DParamsDict = typing.TypedDict('FslGen3DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fsl_gen_3D"]],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
-FslGen3DParametersTagged = typing.TypedDict('FslGen3DParametersTagged', {
+FslGen3DParamsDictTagged = typing.TypedDict('FslGen3DParamsDictTagged', {
     "@type": typing.Literal["fsl/fsl_gen_3D"],
     "infile": InputPathType,
     "outfile": InputPathType,
@@ -27,7 +27,7 @@ FslGen3DParametersTagged = typing.TypedDict('FslGen3DParametersTagged', {
 
 class FslGen3DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslGen3DParameters(...)`.
+    Output object returned when calling `FslGen3DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FslGen3DOutputs(typing.NamedTuple):
 def fsl_gen_3_d_params(
     infile: InputPathType,
     outfile: InputPathType,
-) -> FslGen3DParametersTagged:
+) -> FslGen3DParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def fsl_gen_3_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslGen3DParameters` object.
+    `FslGen3DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def fsl_gen_3_d_validate(
 
 
 def fsl_gen_3_d_cargs(
-    params: FslGen3DParameters,
+    params: FslGen3DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def fsl_gen_3_d_cargs(
 
 
 def fsl_gen_3_d_outputs(
-    params: FslGen3DParameters,
+    params: FslGen3DParamsDict,
     execution: Execution,
 ) -> FslGen3DOutputs:
     """
@@ -119,7 +119,7 @@ def fsl_gen_3_d_outputs(
 
 
 def fsl_gen_3_d_execute(
-    params: FslGen3DParameters,
+    params: FslGen3DParamsDict,
     runner: Runner | None = None,
 ) -> FslGen3DOutputs:
     """
@@ -178,6 +178,8 @@ def fsl_gen_3_d(
 __all__ = [
     "FSL_GEN_3_D_METADATA",
     "FslGen3DOutputs",
+    "FslGen3DParamsDict",
+    "FslGen3DParamsDictTagged",
     "fsl_gen_3_d",
     "fsl_gen_3_d_execute",
     "fsl_gen_3_d_params",

@@ -12,54 +12,54 @@ VOLUME_TFCE_METADATA = Metadata(
 )
 
 
-VolumeTfcePresmoothParameters = typing.TypedDict('VolumeTfcePresmoothParameters', {
+VolumeTfcePresmoothParamsDict = typing.TypedDict('VolumeTfcePresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-VolumeTfcePresmoothParametersTagged = typing.TypedDict('VolumeTfcePresmoothParametersTagged', {
+VolumeTfcePresmoothParamsDictTagged = typing.TypedDict('VolumeTfcePresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-VolumeTfceParametersParameters = typing.TypedDict('VolumeTfceParametersParameters', {
+VolumeTfceParametersParamsDict = typing.TypedDict('VolumeTfceParametersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["parameters"]],
     "E": float,
     "H": float,
 })
-VolumeTfceParametersParametersTagged = typing.TypedDict('VolumeTfceParametersParametersTagged', {
+VolumeTfceParametersParamsDictTagged = typing.TypedDict('VolumeTfceParametersParamsDictTagged', {
     "@type": typing.Literal["parameters"],
     "E": float,
     "H": float,
 })
 
 
-VolumeTfceParameters = typing.TypedDict('VolumeTfceParameters', {
+VolumeTfceParamsDict = typing.TypedDict('VolumeTfceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-tfce"]],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeTfcePresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "parameters": typing.NotRequired[VolumeTfceParametersParameters | None],
+    "parameters": typing.NotRequired[VolumeTfceParametersParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
-VolumeTfceParametersTagged = typing.TypedDict('VolumeTfceParametersTagged', {
+VolumeTfceParamsDictTagged = typing.TypedDict('VolumeTfceParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-tfce"],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeTfcePresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "parameters": typing.NotRequired[VolumeTfceParametersParameters | None],
+    "parameters": typing.NotRequired[VolumeTfceParametersParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
 
 
-def volume_tfce_presmooth_params(
+def volume_tfce_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> VolumeTfcePresmoothParametersTagged:
+) -> VolumeTfcePresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def volume_tfce_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeTfcePresmoothParameters` object.
+    `VolumeTfcePresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def volume_tfce_presmooth_validate(
 
 
 def volume_tfce_presmooth_cargs(
-    params: VolumeTfcePresmoothParameters,
+    params: VolumeTfcePresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,10 +123,10 @@ def volume_tfce_presmooth_cargs(
     return cargs
 
 
-def volume_tfce_parameters_params(
+def volume_tfce_parameters(
     e: float,
     h: float,
-) -> VolumeTfceParametersParametersTagged:
+) -> VolumeTfceParametersParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def volume_tfce_parameters_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeTfceParametersParameters` object.
+    `VolumeTfceParametersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def volume_tfce_parameters_validate(
 
 
 def volume_tfce_parameters_cargs(
-    params: VolumeTfceParametersParameters,
+    params: VolumeTfceParametersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def volume_tfce_parameters_cargs(
 
 class VolumeTfceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeTfceParameters(...)`.
+    Output object returned when calling `VolumeTfceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,9 +203,9 @@ def volume_tfce_params(
     roi_volume: InputPathType | None,
     subvolume: str | None,
     volume_in: InputPathType,
-    presmooth: VolumeTfcePresmoothParameters | None = None,
-    parameters: VolumeTfceParametersParameters | None = None,
-) -> VolumeTfceParametersTagged:
+    presmooth: VolumeTfcePresmoothParamsDict | None = None,
+    parameters: VolumeTfceParametersParamsDict | None = None,
+) -> VolumeTfceParamsDictTagged:
     """
     Build parameters.
     
@@ -244,7 +244,7 @@ def volume_tfce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeTfceParameters` object.
+    `VolumeTfceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -272,7 +272,7 @@ def volume_tfce_validate(
 
 
 def volume_tfce_cargs(
-    params: VolumeTfceParameters,
+    params: VolumeTfceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -302,7 +302,7 @@ def volume_tfce_cargs(
 
 
 def volume_tfce_outputs(
-    params: VolumeTfceParameters,
+    params: VolumeTfceParamsDict,
     execution: Execution,
 ) -> VolumeTfceOutputs:
     """
@@ -322,7 +322,7 @@ def volume_tfce_outputs(
 
 
 def volume_tfce_execute(
-    params: VolumeTfceParameters,
+    params: VolumeTfceParamsDict,
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
@@ -368,8 +368,8 @@ def volume_tfce(
     roi_volume: InputPathType | None,
     subvolume: str | None,
     volume_in: InputPathType,
-    presmooth: VolumeTfcePresmoothParameters | None = None,
-    parameters: VolumeTfceParametersParameters | None = None,
+    presmooth: VolumeTfcePresmoothParamsDict | None = None,
+    parameters: VolumeTfceParametersParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
@@ -423,9 +423,15 @@ def volume_tfce(
 __all__ = [
     "VOLUME_TFCE_METADATA",
     "VolumeTfceOutputs",
+    "VolumeTfceParametersParamsDict",
+    "VolumeTfceParametersParamsDictTagged",
+    "VolumeTfceParamsDict",
+    "VolumeTfceParamsDictTagged",
+    "VolumeTfcePresmoothParamsDict",
+    "VolumeTfcePresmoothParamsDictTagged",
     "volume_tfce",
     "volume_tfce_execute",
-    "volume_tfce_parameters_params",
+    "volume_tfce_parameters",
     "volume_tfce_params",
-    "volume_tfce_presmooth_params",
+    "volume_tfce_presmooth",
 ]

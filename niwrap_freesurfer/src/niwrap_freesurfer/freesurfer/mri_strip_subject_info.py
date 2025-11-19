@@ -13,12 +13,12 @@ MRI_STRIP_SUBJECT_INFO_METADATA = Metadata(
 )
 
 
-MriStripSubjectInfoParameters = typing.TypedDict('MriStripSubjectInfoParameters', {
+MriStripSubjectInfoParamsDict = typing.TypedDict('MriStripSubjectInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_subject_info"]],
     "input_files": list[InputPathType],
     "output_directory": str,
 })
-MriStripSubjectInfoParametersTagged = typing.TypedDict('MriStripSubjectInfoParametersTagged', {
+MriStripSubjectInfoParamsDictTagged = typing.TypedDict('MriStripSubjectInfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_strip_subject_info"],
     "input_files": list[InputPathType],
     "output_directory": str,
@@ -27,7 +27,7 @@ MriStripSubjectInfoParametersTagged = typing.TypedDict('MriStripSubjectInfoParam
 
 class MriStripSubjectInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriStripSubjectInfoParameters(...)`.
+    Output object returned when calling `MriStripSubjectInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriStripSubjectInfoOutputs(typing.NamedTuple):
 def mri_strip_subject_info_params(
     input_files: list[InputPathType],
     output_directory: str,
-) -> MriStripSubjectInfoParametersTagged:
+) -> MriStripSubjectInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mri_strip_subject_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriStripSubjectInfoParameters` object.
+    `MriStripSubjectInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def mri_strip_subject_info_validate(
 
 
 def mri_strip_subject_info_cargs(
-    params: MriStripSubjectInfoParameters,
+    params: MriStripSubjectInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def mri_strip_subject_info_cargs(
 
 
 def mri_strip_subject_info_outputs(
-    params: MriStripSubjectInfoParameters,
+    params: MriStripSubjectInfoParamsDict,
     execution: Execution,
 ) -> MriStripSubjectInfoOutputs:
     """
@@ -119,7 +119,7 @@ def mri_strip_subject_info_outputs(
 
 
 def mri_strip_subject_info_execute(
-    params: MriStripSubjectInfoParameters,
+    params: MriStripSubjectInfoParamsDict,
     runner: Runner | None = None,
 ) -> MriStripSubjectInfoOutputs:
     """
@@ -178,6 +178,8 @@ def mri_strip_subject_info(
 __all__ = [
     "MRI_STRIP_SUBJECT_INFO_METADATA",
     "MriStripSubjectInfoOutputs",
+    "MriStripSubjectInfoParamsDict",
+    "MriStripSubjectInfoParamsDictTagged",
     "mri_strip_subject_info",
     "mri_strip_subject_info_execute",
     "mri_strip_subject_info_params",

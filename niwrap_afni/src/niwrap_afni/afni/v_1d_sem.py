@@ -13,7 +13,7 @@ V_1D_SEM_METADATA = Metadata(
 )
 
 
-V1dSemParameters = typing.TypedDict('V1dSemParameters', {
+V1dSemParamsDict = typing.TypedDict('V1dSemParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dSEM"]],
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
@@ -32,7 +32,7 @@ V1dSemParameters = typing.TypedDict('V1dSemParameters', {
     "grow_all": bool,
     "leafpicker": bool,
 })
-V1dSemParametersTagged = typing.TypedDict('V1dSemParametersTagged', {
+V1dSemParamsDictTagged = typing.TypedDict('V1dSemParamsDictTagged', {
     "@type": typing.Literal["afni/1dSEM"],
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
@@ -55,7 +55,7 @@ V1dSemParametersTagged = typing.TypedDict('V1dSemParametersTagged', {
 
 class V1dSemOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dSemParameters(...)`.
+    Output object returned when calling `V1dSemParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v_1d_sem_params(
     forest_growth: bool = False,
     grow_all: bool = False,
     leafpicker: bool = False,
-) -> V1dSemParametersTagged:
+) -> V1dSemParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def v_1d_sem_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dSemParameters` object.
+    `V1dSemParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -222,7 +222,7 @@ def v_1d_sem_validate(
 
 
 def v_1d_sem_cargs(
-    params: V1dSemParameters,
+    params: V1dSemParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -298,7 +298,7 @@ def v_1d_sem_cargs(
 
 
 def v_1d_sem_outputs(
-    params: V1dSemParameters,
+    params: V1dSemParamsDict,
     execution: Execution,
 ) -> V1dSemOutputs:
     """
@@ -318,7 +318,7 @@ def v_1d_sem_outputs(
 
 
 def v_1d_sem_execute(
-    params: V1dSemParameters,
+    params: V1dSemParamsDict,
     runner: Runner | None = None,
 ) -> V1dSemOutputs:
     """
@@ -432,6 +432,8 @@ def v_1d_sem(
 
 __all__ = [
     "V1dSemOutputs",
+    "V1dSemParamsDict",
+    "V1dSemParamsDictTagged",
     "V_1D_SEM_METADATA",
     "v_1d_sem",
     "v_1d_sem_execute",

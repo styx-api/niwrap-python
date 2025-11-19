@@ -13,11 +13,11 @@ V__FLOAT_FIX_METADATA = Metadata(
 )
 
 
-VFloatFixParameters = typing.TypedDict('VFloatFixParameters', {
+VFloatFixParamsDict = typing.TypedDict('VFloatFixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@float_fix"]],
     "input_files": list[InputPathType],
 })
-VFloatFixParametersTagged = typing.TypedDict('VFloatFixParametersTagged', {
+VFloatFixParamsDictTagged = typing.TypedDict('VFloatFixParamsDictTagged', {
     "@type": typing.Literal["afni/@float_fix"],
     "input_files": list[InputPathType],
 })
@@ -25,7 +25,7 @@ VFloatFixParametersTagged = typing.TypedDict('VFloatFixParametersTagged', {
 
 class VFloatFixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFloatFixParameters(...)`.
+    Output object returned when calling `VFloatFixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class VFloatFixOutputs(typing.NamedTuple):
 
 def v__float_fix_params(
     input_files: list[InputPathType],
-) -> VFloatFixParametersTagged:
+) -> VFloatFixParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def v__float_fix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFloatFixParameters` object.
+    `VFloatFixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def v__float_fix_validate(
 
 
 def v__float_fix_cargs(
-    params: VFloatFixParameters,
+    params: VFloatFixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def v__float_fix_cargs(
 
 
 def v__float_fix_outputs(
-    params: VFloatFixParameters,
+    params: VFloatFixParamsDict,
     execution: Execution,
 ) -> VFloatFixOutputs:
     """
@@ -110,7 +110,7 @@ def v__float_fix_outputs(
 
 
 def v__float_fix_execute(
-    params: VFloatFixParameters,
+    params: VFloatFixParamsDict,
     runner: Runner | None = None,
 ) -> VFloatFixOutputs:
     """
@@ -168,6 +168,8 @@ def v__float_fix(
 
 __all__ = [
     "VFloatFixOutputs",
+    "VFloatFixParamsDict",
+    "VFloatFixParamsDictTagged",
     "V__FLOAT_FIX_METADATA",
     "v__float_fix",
     "v__float_fix_execute",

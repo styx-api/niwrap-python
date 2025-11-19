@@ -12,7 +12,7 @@ VOLUME_SMOOTHING_METADATA = Metadata(
 )
 
 
-VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
+VolumeSmoothingParamsDict = typing.TypedDict('VolumeSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-smoothing"]],
     "volume-out": str,
     "fwhm": bool,
@@ -22,7 +22,7 @@ VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
     "volume-in": InputPathType,
     "kernel": float,
 })
-VolumeSmoothingParametersTagged = typing.TypedDict('VolumeSmoothingParametersTagged', {
+VolumeSmoothingParamsDictTagged = typing.TypedDict('VolumeSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-smoothing"],
     "volume-out": str,
     "fwhm": bool,
@@ -36,7 +36,7 @@ VolumeSmoothingParametersTagged = typing.TypedDict('VolumeSmoothingParametersTag
 
 class VolumeSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeSmoothingParameters(...)`.
+    Output object returned when calling `VolumeSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def volume_smoothing_params(
     kernel: float,
     fwhm: bool = False,
     fix_zeros: bool = False,
-) -> VolumeSmoothingParametersTagged:
+) -> VolumeSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def volume_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeSmoothingParameters` object.
+    `VolumeSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def volume_smoothing_validate(
 
 
 def volume_smoothing_cargs(
-    params: VolumeSmoothingParameters,
+    params: VolumeSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def volume_smoothing_cargs(
 
 
 def volume_smoothing_outputs(
-    params: VolumeSmoothingParameters,
+    params: VolumeSmoothingParamsDict,
     execution: Execution,
 ) -> VolumeSmoothingOutputs:
     """
@@ -179,7 +179,7 @@ def volume_smoothing_outputs(
 
 
 def volume_smoothing_execute(
-    params: VolumeSmoothingParameters,
+    params: VolumeSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
@@ -270,6 +270,8 @@ def volume_smoothing(
 __all__ = [
     "VOLUME_SMOOTHING_METADATA",
     "VolumeSmoothingOutputs",
+    "VolumeSmoothingParamsDict",
+    "VolumeSmoothingParamsDictTagged",
     "volume_smoothing",
     "volume_smoothing_execute",
     "volume_smoothing_params",

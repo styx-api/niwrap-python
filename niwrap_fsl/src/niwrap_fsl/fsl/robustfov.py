@@ -13,7 +13,7 @@ ROBUSTFOV_METADATA = Metadata(
 )
 
 
-RobustfovParameters = typing.TypedDict('RobustfovParameters', {
+RobustfovParamsDict = typing.TypedDict('RobustfovParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/robustfov"]],
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ RobustfovParameters = typing.TypedDict('RobustfovParameters', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
-RobustfovParametersTagged = typing.TypedDict('RobustfovParametersTagged', {
+RobustfovParamsDictTagged = typing.TypedDict('RobustfovParamsDictTagged', {
     "@type": typing.Literal["fsl/robustfov"],
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ RobustfovParametersTagged = typing.TypedDict('RobustfovParametersTagged', {
 
 class RobustfovOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RobustfovParameters(...)`.
+    Output object returned when calling `RobustfovParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def robustfov_params(
     matrix_output: str | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> RobustfovParametersTagged:
+) -> RobustfovParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def robustfov_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RobustfovParameters` object.
+    `RobustfovParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def robustfov_validate(
 
 
 def robustfov_cargs(
-    params: RobustfovParameters,
+    params: RobustfovParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -158,7 +158,7 @@ def robustfov_cargs(
 
 
 def robustfov_outputs(
-    params: RobustfovParameters,
+    params: RobustfovParamsDict,
     execution: Execution,
 ) -> RobustfovOutputs:
     """
@@ -179,7 +179,7 @@ def robustfov_outputs(
 
 
 def robustfov_execute(
-    params: RobustfovParameters,
+    params: RobustfovParamsDict,
     runner: Runner | None = None,
 ) -> RobustfovOutputs:
     """
@@ -250,6 +250,8 @@ def robustfov(
 __all__ = [
     "ROBUSTFOV_METADATA",
     "RobustfovOutputs",
+    "RobustfovParamsDict",
+    "RobustfovParamsDictTagged",
     "robustfov",
     "robustfov_execute",
     "robustfov_params",

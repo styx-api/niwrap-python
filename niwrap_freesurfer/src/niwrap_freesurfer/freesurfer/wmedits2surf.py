@@ -13,7 +13,7 @@ WMEDITS2SURF_METADATA = Metadata(
 )
 
 
-Wmedits2surfParameters = typing.TypedDict('Wmedits2surfParameters', {
+Wmedits2surfParamsDict = typing.TypedDict('Wmedits2surfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/wmedits2surf"]],
     "subject": str,
     "self": bool,
@@ -26,7 +26,7 @@ Wmedits2surfParameters = typing.TypedDict('Wmedits2surfParameters', {
     "rh": bool,
     "no_surfs": bool,
 })
-Wmedits2surfParametersTagged = typing.TypedDict('Wmedits2surfParametersTagged', {
+Wmedits2surfParamsDictTagged = typing.TypedDict('Wmedits2surfParamsDictTagged', {
     "@type": typing.Literal["freesurfer/wmedits2surf"],
     "subject": str,
     "self": bool,
@@ -43,7 +43,7 @@ Wmedits2surfParametersTagged = typing.TypedDict('Wmedits2surfParametersTagged', 
 
 class Wmedits2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Wmedits2surfParameters(...)`.
+    Output object returned when calling `Wmedits2surfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def wmedits2surf_params(
     lh: bool = False,
     rh: bool = False,
     no_surfs: bool = False,
-) -> Wmedits2surfParametersTagged:
+) -> Wmedits2surfParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def wmedits2surf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Wmedits2surfParameters` object.
+    `Wmedits2surfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def wmedits2surf_validate(
 
 
 def wmedits2surf_cargs(
-    params: Wmedits2surfParameters,
+    params: Wmedits2surfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -203,7 +203,7 @@ def wmedits2surf_cargs(
 
 
 def wmedits2surf_outputs(
-    params: Wmedits2surfParameters,
+    params: Wmedits2surfParamsDict,
     execution: Execution,
 ) -> Wmedits2surfOutputs:
     """
@@ -228,7 +228,7 @@ def wmedits2surf_outputs(
 
 
 def wmedits2surf_execute(
-    params: Wmedits2surfParameters,
+    params: Wmedits2surfParamsDict,
     runner: Runner | None = None,
 ) -> Wmedits2surfOutputs:
     """
@@ -312,6 +312,8 @@ def wmedits2surf(
 __all__ = [
     "WMEDITS2SURF_METADATA",
     "Wmedits2surfOutputs",
+    "Wmedits2surfParamsDict",
+    "Wmedits2surfParamsDictTagged",
     "wmedits2surf",
     "wmedits2surf_execute",
     "wmedits2surf_params",

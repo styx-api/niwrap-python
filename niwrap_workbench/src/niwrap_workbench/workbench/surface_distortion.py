@@ -12,44 +12,44 @@ SURFACE_DISTORTION_METADATA = Metadata(
 )
 
 
-SurfaceDistortionSmoothParameters = typing.TypedDict('SurfaceDistortionSmoothParameters', {
+SurfaceDistortionSmoothParamsDict = typing.TypedDict('SurfaceDistortionSmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["smooth"]],
     "sigma": float,
     "fwhm": bool,
 })
-SurfaceDistortionSmoothParametersTagged = typing.TypedDict('SurfaceDistortionSmoothParametersTagged', {
+SurfaceDistortionSmoothParamsDictTagged = typing.TypedDict('SurfaceDistortionSmoothParamsDictTagged', {
     "@type": typing.Literal["smooth"],
     "sigma": float,
     "fwhm": bool,
 })
 
 
-SurfaceDistortionMatchSurfaceAreaParameters = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParameters', {
+SurfaceDistortionMatchSurfaceAreaParamsDict = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["match-surface-area"]],
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
-SurfaceDistortionMatchSurfaceAreaParametersTagged = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParametersTagged', {
+SurfaceDistortionMatchSurfaceAreaParamsDictTagged = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParamsDictTagged', {
     "@type": typing.Literal["match-surface-area"],
     "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
-SurfaceDistortionParameters = typing.TypedDict('SurfaceDistortionParameters', {
+SurfaceDistortionParamsDict = typing.TypedDict('SurfaceDistortionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-distortion"]],
     "metric-out": str,
-    "smooth": typing.NotRequired[SurfaceDistortionSmoothParameters | None],
-    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParameters | None],
+    "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
+    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
     "caret5-method": bool,
     "edge-method": bool,
     "log2": typing.NotRequired[bool | None],
     "surface-reference": InputPathType,
     "surface-distorted": InputPathType,
 })
-SurfaceDistortionParametersTagged = typing.TypedDict('SurfaceDistortionParametersTagged', {
+SurfaceDistortionParamsDictTagged = typing.TypedDict('SurfaceDistortionParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-distortion"],
     "metric-out": str,
-    "smooth": typing.NotRequired[SurfaceDistortionSmoothParameters | None],
-    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParameters | None],
+    "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
+    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
     "caret5-method": bool,
     "edge-method": bool,
     "log2": typing.NotRequired[bool | None],
@@ -58,10 +58,10 @@ SurfaceDistortionParametersTagged = typing.TypedDict('SurfaceDistortionParameter
 })
 
 
-def surface_distortion_smooth_params(
+def surface_distortion_smooth(
     sigma: float,
     fwhm: bool = False,
-) -> SurfaceDistortionSmoothParametersTagged:
+) -> SurfaceDistortionSmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def surface_distortion_smooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceDistortionSmoothParameters` object.
+    `SurfaceDistortionSmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def surface_distortion_smooth_validate(
 
 
 def surface_distortion_smooth_cargs(
-    params: SurfaceDistortionSmoothParameters,
+    params: SurfaceDistortionSmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,9 +124,9 @@ def surface_distortion_smooth_cargs(
     return cargs
 
 
-def surface_distortion_match_surface_area_params(
+def surface_distortion_match_surface_area(
     roi_metric: InputPathType | None,
-) -> SurfaceDistortionMatchSurfaceAreaParametersTagged:
+) -> SurfaceDistortionMatchSurfaceAreaParamsDictTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def surface_distortion_match_surface_area_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceDistortionMatchSurfaceAreaParameters` object.
+    `SurfaceDistortionMatchSurfaceAreaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def surface_distortion_match_surface_area_validate(
 
 
 def surface_distortion_match_surface_area_cargs(
-    params: SurfaceDistortionMatchSurfaceAreaParameters,
+    params: SurfaceDistortionMatchSurfaceAreaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def surface_distortion_match_surface_area_cargs(
 
 class SurfaceDistortionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceDistortionParameters(...)`.
+    Output object returned when calling `SurfaceDistortionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -200,12 +200,12 @@ def surface_distortion_params(
     metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
-    smooth: SurfaceDistortionSmoothParameters | None = None,
-    match_surface_area: SurfaceDistortionMatchSurfaceAreaParameters | None = None,
+    smooth: SurfaceDistortionSmoothParamsDict | None = None,
+    match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     caret5_method: bool = False,
     edge_method: bool = False,
     log2: bool | None = False,
-) -> SurfaceDistortionParametersTagged:
+) -> SurfaceDistortionParamsDictTagged:
     """
     Build parameters.
     
@@ -246,7 +246,7 @@ def surface_distortion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceDistortionParameters` object.
+    `SurfaceDistortionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -283,7 +283,7 @@ def surface_distortion_validate(
 
 
 def surface_distortion_cargs(
-    params: SurfaceDistortionParameters,
+    params: SurfaceDistortionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -314,7 +314,7 @@ def surface_distortion_cargs(
 
 
 def surface_distortion_outputs(
-    params: SurfaceDistortionParameters,
+    params: SurfaceDistortionParamsDict,
     execution: Execution,
 ) -> SurfaceDistortionOutputs:
     """
@@ -334,7 +334,7 @@ def surface_distortion_outputs(
 
 
 def surface_distortion_execute(
-    params: SurfaceDistortionParameters,
+    params: SurfaceDistortionParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
@@ -380,8 +380,8 @@ def surface_distortion(
     metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
-    smooth: SurfaceDistortionSmoothParameters | None = None,
-    match_surface_area: SurfaceDistortionMatchSurfaceAreaParameters | None = None,
+    smooth: SurfaceDistortionSmoothParamsDict | None = None,
+    match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     caret5_method: bool = False,
     edge_method: bool = False,
     log2: bool | None = False,
@@ -441,10 +441,16 @@ def surface_distortion(
 
 __all__ = [
     "SURFACE_DISTORTION_METADATA",
+    "SurfaceDistortionMatchSurfaceAreaParamsDict",
+    "SurfaceDistortionMatchSurfaceAreaParamsDictTagged",
     "SurfaceDistortionOutputs",
+    "SurfaceDistortionParamsDict",
+    "SurfaceDistortionParamsDictTagged",
+    "SurfaceDistortionSmoothParamsDict",
+    "SurfaceDistortionSmoothParamsDictTagged",
     "surface_distortion",
     "surface_distortion_execute",
-    "surface_distortion_match_surface_area_params",
+    "surface_distortion_match_surface_area",
     "surface_distortion_params",
-    "surface_distortion_smooth_params",
+    "surface_distortion_smooth",
 ]

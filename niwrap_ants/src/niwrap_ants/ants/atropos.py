@@ -13,7 +13,7 @@ ATROPOS_METADATA = Metadata(
 )
 
 
-AtroposParameters = typing.TypedDict('AtroposParameters', {
+AtroposParamsDict = typing.TypedDict('AtroposParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/Atropos"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
@@ -35,7 +35,7 @@ AtroposParameters = typing.TypedDict('AtroposParameters', {
     "label_propagation": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[bool | None],
 })
-AtroposParametersTagged = typing.TypedDict('AtroposParametersTagged', {
+AtroposParamsDictTagged = typing.TypedDict('AtroposParamsDictTagged', {
     "@type": typing.Literal["ants/Atropos"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
@@ -61,7 +61,7 @@ AtroposParametersTagged = typing.TypedDict('AtroposParametersTagged', {
 
 class AtroposOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AtroposParameters(...)`.
+    Output object returned when calling `AtroposParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def atropos_params(
     use_euclidean_distance: bool | None = None,
     label_propagation: str | None = None,
     verbose: bool | None = None,
-) -> AtroposParametersTagged:
+) -> AtroposParamsDictTagged:
     """
     Build parameters.
     
@@ -186,7 +186,7 @@ def atropos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AtroposParameters` object.
+    `AtroposParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -261,7 +261,7 @@ def atropos_validate(
 
 
 def atropos_cargs(
-    params: AtroposParameters,
+    params: AtroposParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -368,7 +368,7 @@ def atropos_cargs(
 
 
 def atropos_outputs(
-    params: AtroposParameters,
+    params: AtroposParamsDict,
     execution: Execution,
 ) -> AtroposOutputs:
     """
@@ -389,7 +389,7 @@ def atropos_outputs(
 
 
 def atropos_execute(
-    params: AtroposParameters,
+    params: AtroposParamsDict,
     runner: Runner | None = None,
 ) -> AtroposOutputs:
     """
@@ -527,6 +527,8 @@ def atropos(
 __all__ = [
     "ATROPOS_METADATA",
     "AtroposOutputs",
+    "AtroposParamsDict",
+    "AtroposParamsDictTagged",
     "atropos",
     "atropos_execute",
     "atropos_params",

@@ -13,11 +13,11 @@ BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
 )
 
 
-BrowseMincHeaderTclParameters = typing.TypedDict('BrowseMincHeaderTclParameters', {
+BrowseMincHeaderTclParamsDict = typing.TypedDict('BrowseMincHeaderTclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/browse-minc-header.tcl"]],
     "infile": InputPathType,
 })
-BrowseMincHeaderTclParametersTagged = typing.TypedDict('BrowseMincHeaderTclParametersTagged', {
+BrowseMincHeaderTclParamsDictTagged = typing.TypedDict('BrowseMincHeaderTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/browse-minc-header.tcl"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ BrowseMincHeaderTclParametersTagged = typing.TypedDict('BrowseMincHeaderTclParam
 
 class BrowseMincHeaderTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BrowseMincHeaderTclParameters(...)`.
+    Output object returned when calling `BrowseMincHeaderTclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class BrowseMincHeaderTclOutputs(typing.NamedTuple):
 
 def browse_minc_header_tcl_params(
     infile: InputPathType,
-) -> BrowseMincHeaderTclParametersTagged:
+) -> BrowseMincHeaderTclParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def browse_minc_header_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BrowseMincHeaderTclParameters` object.
+    `BrowseMincHeaderTclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def browse_minc_header_tcl_validate(
 
 
 def browse_minc_header_tcl_cargs(
-    params: BrowseMincHeaderTclParameters,
+    params: BrowseMincHeaderTclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def browse_minc_header_tcl_cargs(
 
 
 def browse_minc_header_tcl_outputs(
-    params: BrowseMincHeaderTclParameters,
+    params: BrowseMincHeaderTclParamsDict,
     execution: Execution,
 ) -> BrowseMincHeaderTclOutputs:
     """
@@ -106,7 +106,7 @@ def browse_minc_header_tcl_outputs(
 
 
 def browse_minc_header_tcl_execute(
-    params: BrowseMincHeaderTclParameters,
+    params: BrowseMincHeaderTclParamsDict,
     runner: Runner | None = None,
 ) -> BrowseMincHeaderTclOutputs:
     """
@@ -164,6 +164,8 @@ def browse_minc_header_tcl(
 __all__ = [
     "BROWSE_MINC_HEADER_TCL_METADATA",
     "BrowseMincHeaderTclOutputs",
+    "BrowseMincHeaderTclParamsDict",
+    "BrowseMincHeaderTclParamsDictTagged",
     "browse_minc_header_tcl",
     "browse_minc_header_tcl_execute",
     "browse_minc_header_tcl_params",

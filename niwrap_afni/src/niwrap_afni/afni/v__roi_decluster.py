@@ -13,7 +13,7 @@ V__ROI_DECLUSTER_METADATA = Metadata(
 )
 
 
-VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
+VRoiDeclusterParamsDict = typing.TypedDict('VRoiDeclusterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ROI_decluster"]],
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
     "prefix": typing.NotRequired[str | None],
     "neighborhood_type": typing.NotRequired[int | None],
 })
-VRoiDeclusterParametersTagged = typing.TypedDict('VRoiDeclusterParametersTagged', {
+VRoiDeclusterParamsDictTagged = typing.TypedDict('VRoiDeclusterParamsDictTagged', {
     "@type": typing.Literal["afni/@ROI_decluster"],
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ VRoiDeclusterParametersTagged = typing.TypedDict('VRoiDeclusterParametersTagged'
 
 class VRoiDeclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRoiDeclusterParameters(...)`.
+    Output object returned when calling `VRoiDeclusterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__roi_decluster_params(
     frac_thresh: float | None = None,
     prefix: str | None = None,
     neighborhood_type: int | None = None,
-) -> VRoiDeclusterParametersTagged:
+) -> VRoiDeclusterParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def v__roi_decluster_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRoiDeclusterParameters` object.
+    `VRoiDeclusterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def v__roi_decluster_validate(
 
 
 def v__roi_decluster_cargs(
-    params: VRoiDeclusterParameters,
+    params: VRoiDeclusterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,7 +168,7 @@ def v__roi_decluster_cargs(
 
 
 def v__roi_decluster_outputs(
-    params: VRoiDeclusterParameters,
+    params: VRoiDeclusterParamsDict,
     execution: Execution,
 ) -> VRoiDeclusterOutputs:
     """
@@ -188,7 +188,7 @@ def v__roi_decluster_outputs(
 
 
 def v__roi_decluster_execute(
-    params: VRoiDeclusterParameters,
+    params: VRoiDeclusterParamsDict,
     runner: Runner | None = None,
 ) -> VRoiDeclusterOutputs:
     """
@@ -264,6 +264,8 @@ def v__roi_decluster(
 
 __all__ = [
     "VRoiDeclusterOutputs",
+    "VRoiDeclusterParamsDict",
+    "VRoiDeclusterParamsDictTagged",
     "V__ROI_DECLUSTER_METADATA",
     "v__roi_decluster",
     "v__roi_decluster_execute",

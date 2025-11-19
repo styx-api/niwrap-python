@@ -13,7 +13,7 @@ XTRACT_STATS_METADATA = Metadata(
 )
 
 
-XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
+XtractStatsParamsDict = typing.TypedDict('XtractStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/xtract_stats"]],
     "folder_basename": str,
     "XTRACT_dir": str,
@@ -25,7 +25,7 @@ XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
     "measurements": typing.NotRequired[str | None],
     "keep_temp_files": bool,
 })
-XtractStatsParametersTagged = typing.TypedDict('XtractStatsParametersTagged', {
+XtractStatsParamsDictTagged = typing.TypedDict('XtractStatsParamsDictTagged', {
     "@type": typing.Literal["fsl/xtract_stats"],
     "folder_basename": str,
     "XTRACT_dir": str,
@@ -41,7 +41,7 @@ XtractStatsParametersTagged = typing.TypedDict('XtractStatsParametersTagged', {
 
 class XtractStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XtractStatsParameters(...)`.
+    Output object returned when calling `XtractStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def xtract_stats_params(
     threshold: float | None = None,
     measurements: str | None = None,
     keep_temp_files: bool = False,
-) -> XtractStatsParametersTagged:
+) -> XtractStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -110,7 +110,7 @@ def xtract_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XtractStatsParameters` object.
+    `XtractStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -151,7 +151,7 @@ def xtract_stats_validate(
 
 
 def xtract_stats_cargs(
-    params: XtractStatsParameters,
+    params: XtractStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -208,7 +208,7 @@ def xtract_stats_cargs(
 
 
 def xtract_stats_outputs(
-    params: XtractStatsParameters,
+    params: XtractStatsParamsDict,
     execution: Execution,
 ) -> XtractStatsOutputs:
     """
@@ -228,7 +228,7 @@ def xtract_stats_outputs(
 
 
 def xtract_stats_execute(
-    params: XtractStatsParameters,
+    params: XtractStatsParamsDict,
     runner: Runner | None = None,
 ) -> XtractStatsOutputs:
     """
@@ -317,6 +317,8 @@ def xtract_stats(
 __all__ = [
     "XTRACT_STATS_METADATA",
     "XtractStatsOutputs",
+    "XtractStatsParamsDict",
+    "XtractStatsParamsDictTagged",
     "xtract_stats",
     "xtract_stats_execute",
     "xtract_stats_params",

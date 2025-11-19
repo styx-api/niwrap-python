@@ -13,7 +13,7 @@ WAVER_METADATA = Metadata(
 )
 
 
-WaverParameters = typing.TypedDict('WaverParameters', {
+WaverParamsDict = typing.TypedDict('WaverParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/waver"]],
     "wav": bool,
     "gam": bool,
@@ -38,7 +38,7 @@ WaverParameters = typing.TypedDict('WaverParameters', {
     "numout": typing.NotRequired[int | None],
     "ver_flag": bool,
 })
-WaverParametersTagged = typing.TypedDict('WaverParametersTagged', {
+WaverParamsDictTagged = typing.TypedDict('WaverParamsDictTagged', {
     "@type": typing.Literal["afni/waver"],
     "wav": bool,
     "gam": bool,
@@ -67,7 +67,7 @@ WaverParametersTagged = typing.TypedDict('WaverParametersTagged', {
 
 class WaverOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WaverParameters(...)`.
+    Output object returned when calling `WaverParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +98,7 @@ def waver_params(
     when_data: str | None = None,
     numout: int | None = None,
     ver_flag: bool = False,
-) -> WaverParametersTagged:
+) -> WaverParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def waver_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WaverParameters` object.
+    `WaverParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,7 +269,7 @@ def waver_validate(
 
 
 def waver_cargs(
-    params: WaverParameters,
+    params: WaverParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -385,7 +385,7 @@ def waver_cargs(
 
 
 def waver_outputs(
-    params: WaverParameters,
+    params: WaverParamsDict,
     execution: Execution,
 ) -> WaverOutputs:
     """
@@ -405,7 +405,7 @@ def waver_outputs(
 
 
 def waver_execute(
-    params: WaverParameters,
+    params: WaverParamsDict,
     runner: Runner | None = None,
 ) -> WaverOutputs:
     """
@@ -534,6 +534,8 @@ def waver(
 __all__ = [
     "WAVER_METADATA",
     "WaverOutputs",
+    "WaverParamsDict",
+    "WaverParamsDictTagged",
     "waver",
     "waver_execute",
     "waver_params",

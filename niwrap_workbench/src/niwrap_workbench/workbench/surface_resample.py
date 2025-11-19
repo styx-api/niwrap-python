@@ -12,46 +12,46 @@ SURFACE_RESAMPLE_METADATA = Metadata(
 )
 
 
-SurfaceResampleAreaSurfsParameters = typing.TypedDict('SurfaceResampleAreaSurfsParameters', {
+SurfaceResampleAreaSurfsParamsDict = typing.TypedDict('SurfaceResampleAreaSurfsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-surfs"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-SurfaceResampleAreaSurfsParametersTagged = typing.TypedDict('SurfaceResampleAreaSurfsParametersTagged', {
+SurfaceResampleAreaSurfsParamsDictTagged = typing.TypedDict('SurfaceResampleAreaSurfsParamsDictTagged', {
     "@type": typing.Literal["area-surfs"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-SurfaceResampleAreaMetricsParameters = typing.TypedDict('SurfaceResampleAreaMetricsParameters', {
+SurfaceResampleAreaMetricsParamsDict = typing.TypedDict('SurfaceResampleAreaMetricsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["area-metrics"]],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
-SurfaceResampleAreaMetricsParametersTagged = typing.TypedDict('SurfaceResampleAreaMetricsParametersTagged', {
+SurfaceResampleAreaMetricsParamsDictTagged = typing.TypedDict('SurfaceResampleAreaMetricsParamsDictTagged', {
     "@type": typing.Literal["area-metrics"],
     "current-area": InputPathType,
     "new-area": InputPathType,
 })
 
 
-SurfaceResampleParameters = typing.TypedDict('SurfaceResampleParameters', {
+SurfaceResampleParamsDict = typing.TypedDict('SurfaceResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-resample"]],
     "surface-out": str,
-    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
     "bypass-sphere-check": bool,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "method": str,
 })
-SurfaceResampleParametersTagged = typing.TypedDict('SurfaceResampleParametersTagged', {
+SurfaceResampleParamsDictTagged = typing.TypedDict('SurfaceResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-resample"],
     "surface-out": str,
-    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
-    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
     "bypass-sphere-check": bool,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
@@ -60,10 +60,10 @@ SurfaceResampleParametersTagged = typing.TypedDict('SurfaceResampleParametersTag
 })
 
 
-def surface_resample_area_surfs_params(
+def surface_resample_area_surfs(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> SurfaceResampleAreaSurfsParametersTagged:
+) -> SurfaceResampleAreaSurfsParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def surface_resample_area_surfs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceResampleAreaSurfsParameters` object.
+    `SurfaceResampleAreaSurfsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def surface_resample_area_surfs_validate(
 
 
 def surface_resample_area_surfs_cargs(
-    params: SurfaceResampleAreaSurfsParameters,
+    params: SurfaceResampleAreaSurfsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,10 +125,10 @@ def surface_resample_area_surfs_cargs(
     return cargs
 
 
-def surface_resample_area_metrics_params(
+def surface_resample_area_metrics(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> SurfaceResampleAreaMetricsParametersTagged:
+) -> SurfaceResampleAreaMetricsParamsDictTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def surface_resample_area_metrics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceResampleAreaMetricsParameters` object.
+    `SurfaceResampleAreaMetricsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def surface_resample_area_metrics_validate(
 
 
 def surface_resample_area_metrics_cargs(
-    params: SurfaceResampleAreaMetricsParameters,
+    params: SurfaceResampleAreaMetricsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def surface_resample_area_metrics_cargs(
 
 class SurfaceResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceResampleParameters(...)`.
+    Output object returned when calling `SurfaceResampleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -206,10 +206,10 @@ def surface_resample_params(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: SurfaceResampleAreaSurfsParameters | None = None,
-    area_metrics: SurfaceResampleAreaMetricsParameters | None = None,
+    area_surfs: SurfaceResampleAreaSurfsParamsDict | None = None,
+    area_metrics: SurfaceResampleAreaMetricsParamsDict | None = None,
     bypass_sphere_check: bool = False,
-) -> SurfaceResampleParametersTagged:
+) -> SurfaceResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def surface_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceResampleParameters` object.
+    `SurfaceResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -288,7 +288,7 @@ def surface_resample_validate(
 
 
 def surface_resample_cargs(
-    params: SurfaceResampleParameters,
+    params: SurfaceResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -318,7 +318,7 @@ def surface_resample_cargs(
 
 
 def surface_resample_outputs(
-    params: SurfaceResampleParameters,
+    params: SurfaceResampleParamsDict,
     execution: Execution,
 ) -> SurfaceResampleOutputs:
     """
@@ -338,7 +338,7 @@ def surface_resample_outputs(
 
 
 def surface_resample_execute(
-    params: SurfaceResampleParameters,
+    params: SurfaceResampleParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
@@ -385,8 +385,8 @@ def surface_resample(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    area_surfs: SurfaceResampleAreaSurfsParameters | None = None,
-    area_metrics: SurfaceResampleAreaMetricsParameters | None = None,
+    area_surfs: SurfaceResampleAreaSurfsParamsDict | None = None,
+    area_metrics: SurfaceResampleAreaMetricsParamsDict | None = None,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
@@ -444,10 +444,16 @@ def surface_resample(
 
 __all__ = [
     "SURFACE_RESAMPLE_METADATA",
+    "SurfaceResampleAreaMetricsParamsDict",
+    "SurfaceResampleAreaMetricsParamsDictTagged",
+    "SurfaceResampleAreaSurfsParamsDict",
+    "SurfaceResampleAreaSurfsParamsDictTagged",
     "SurfaceResampleOutputs",
+    "SurfaceResampleParamsDict",
+    "SurfaceResampleParamsDictTagged",
     "surface_resample",
-    "surface_resample_area_metrics_params",
-    "surface_resample_area_surfs_params",
+    "surface_resample_area_metrics",
+    "surface_resample_area_surfs",
     "surface_resample_execute",
     "surface_resample_params",
 ]

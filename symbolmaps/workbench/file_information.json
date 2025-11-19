@@ -15,7 +15,7 @@
     },
     "only-metadata": {
       "var_param": "only_metadata",
-      "fn_struct_make_params": "file_information_only_metadata_params",
+      "fn_struct_make_params": "file_information_only_metadata",
       "properties": {
         "key": {
           "var_param": "key"

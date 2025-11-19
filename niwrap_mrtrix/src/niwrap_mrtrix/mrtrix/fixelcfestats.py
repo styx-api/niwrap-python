@@ -13,49 +13,49 @@ FIXELCFESTATS_METADATA = Metadata(
 )
 
 
-FixelcfestatsColumnParameters = typing.TypedDict('FixelcfestatsColumnParameters', {
+FixelcfestatsColumnParamsDict = typing.TypedDict('FixelcfestatsColumnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "path": InputPathType,
 })
-FixelcfestatsColumnParametersTagged = typing.TypedDict('FixelcfestatsColumnParametersTagged', {
+FixelcfestatsColumnParamsDictTagged = typing.TypedDict('FixelcfestatsColumnParamsDictTagged', {
     "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
-FixelcfestatsConfigParameters = typing.TypedDict('FixelcfestatsConfigParameters', {
+FixelcfestatsConfigParamsDict = typing.TypedDict('FixelcfestatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelcfestatsConfigParametersTagged = typing.TypedDict('FixelcfestatsConfigParametersTagged', {
+FixelcfestatsConfigParamsDictTagged = typing.TypedDict('FixelcfestatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelcfestatsVariousStringParameters = typing.TypedDict('FixelcfestatsVariousStringParameters', {
+FixelcfestatsVariousStringParamsDict = typing.TypedDict('FixelcfestatsVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-FixelcfestatsVariousStringParametersTagged = typing.TypedDict('FixelcfestatsVariousStringParametersTagged', {
+FixelcfestatsVariousStringParamsDictTagged = typing.TypedDict('FixelcfestatsVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-FixelcfestatsVariousFileParameters = typing.TypedDict('FixelcfestatsVariousFileParameters', {
+FixelcfestatsVariousFileParamsDict = typing.TypedDict('FixelcfestatsVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-FixelcfestatsVariousFileParametersTagged = typing.TypedDict('FixelcfestatsVariousFileParametersTagged', {
+FixelcfestatsVariousFileParamsDictTagged = typing.TypedDict('FixelcfestatsVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
+FixelcfestatsParamsDict = typing.TypedDict('FixelcfestatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcfestats"]],
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
@@ -77,23 +77,23 @@ FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[FixelcfestatsColumnParameters] | None],
+    "column": typing.NotRequired[list[FixelcfestatsColumnParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcfestatsConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcfestatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_fixel_directory": InputPathType,
     "subjects": InputPathType,
     "design": InputPathType,
     "contrast": InputPathType,
-    "connectivity": typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
+    "connectivity": typing.Union[FixelcfestatsVariousStringParamsDictTagged, FixelcfestatsVariousFileParamsDictTagged],
     "out_fixel_directory": str,
 })
-FixelcfestatsParametersTagged = typing.TypedDict('FixelcfestatsParametersTagged', {
+FixelcfestatsParamsDictTagged = typing.TypedDict('FixelcfestatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelcfestats"],
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
@@ -115,20 +115,20 @@ FixelcfestatsParametersTagged = typing.TypedDict('FixelcfestatsParametersTagged'
     "variance": typing.NotRequired[InputPathType | None],
     "ftests": typing.NotRequired[InputPathType | None],
     "fonly": bool,
-    "column": typing.NotRequired[list[FixelcfestatsColumnParameters] | None],
+    "column": typing.NotRequired[list[FixelcfestatsColumnParamsDict] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcfestatsConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcfestatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "in_fixel_directory": InputPathType,
     "subjects": InputPathType,
     "design": InputPathType,
     "contrast": InputPathType,
-    "connectivity": typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
+    "connectivity": typing.Union[FixelcfestatsVariousStringParamsDictTagged, FixelcfestatsVariousFileParamsDictTagged],
     "out_fixel_directory": str,
 })
 
@@ -167,9 +167,9 @@ def fixelcfestats_connectivity_validate_dyn_fn(
     }.get(t)
 
 
-def fixelcfestats_column_params(
+def fixelcfestats_column(
     path: InputPathType,
-) -> FixelcfestatsColumnParametersTagged:
+) -> FixelcfestatsColumnParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def fixelcfestats_column_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcfestatsColumnParameters` object.
+    `FixelcfestatsColumnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def fixelcfestats_column_validate(
 
 
 def fixelcfestats_column_cargs(
-    params: FixelcfestatsColumnParameters,
+    params: FixelcfestatsColumnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -225,10 +225,10 @@ def fixelcfestats_column_cargs(
     return cargs
 
 
-def fixelcfestats_config_params(
+def fixelcfestats_config(
     key: str,
     value: str,
-) -> FixelcfestatsConfigParametersTagged:
+) -> FixelcfestatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -251,7 +251,7 @@ def fixelcfestats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcfestatsConfigParameters` object.
+    `FixelcfestatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,7 +269,7 @@ def fixelcfestats_config_validate(
 
 
 def fixelcfestats_config_cargs(
-    params: FixelcfestatsConfigParameters,
+    params: FixelcfestatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,9 +288,9 @@ def fixelcfestats_config_cargs(
     return cargs
 
 
-def fixelcfestats_various_string_params(
+def fixelcfestats_various_string(
     obj: str,
-) -> FixelcfestatsVariousStringParametersTagged:
+) -> FixelcfestatsVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -311,7 +311,7 @@ def fixelcfestats_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcfestatsVariousStringParameters` object.
+    `FixelcfestatsVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -325,7 +325,7 @@ def fixelcfestats_various_string_validate(
 
 
 def fixelcfestats_various_string_cargs(
-    params: FixelcfestatsVariousStringParameters,
+    params: FixelcfestatsVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -342,9 +342,9 @@ def fixelcfestats_various_string_cargs(
     return cargs
 
 
-def fixelcfestats_various_file_params(
+def fixelcfestats_various_file(
     obj: InputPathType,
-) -> FixelcfestatsVariousFileParametersTagged:
+) -> FixelcfestatsVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -365,7 +365,7 @@ def fixelcfestats_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcfestatsVariousFileParameters` object.
+    `FixelcfestatsVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -379,7 +379,7 @@ def fixelcfestats_various_file_validate(
 
 
 def fixelcfestats_various_file_cargs(
-    params: FixelcfestatsVariousFileParameters,
+    params: FixelcfestatsVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -398,7 +398,7 @@ def fixelcfestats_various_file_cargs(
 
 class FixelcfestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelcfestatsParameters(...)`.
+    Output object returned when calling `FixelcfestatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -409,7 +409,7 @@ def fixelcfestats_params(
     subjects: InputPathType,
     design: InputPathType,
     contrast: InputPathType,
-    connectivity: typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
+    connectivity: typing.Union[FixelcfestatsVariousStringParamsDictTagged, FixelcfestatsVariousFileParamsDictTagged],
     out_fixel_directory: str,
     mask: InputPathType | None = None,
     notest: bool = False,
@@ -431,16 +431,16 @@ def fixelcfestats_params(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[FixelcfestatsColumnParameters] | None = None,
+    column: list[FixelcfestatsColumnParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcfestatsConfigParameters] | None = None,
+    config: list[FixelcfestatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcfestatsParametersTagged:
+) -> FixelcfestatsParamsDictTagged:
     """
     Build parameters.
     
@@ -585,7 +585,7 @@ def fixelcfestats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcfestatsParameters` object.
+    `FixelcfestatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -659,7 +659,7 @@ def fixelcfestats_validate(
         raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], list):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[FixelcfestatsColumnParameters] | None`')
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[FixelcfestatsColumnParamsDict] | None`')
         for e in params["column"]:
             fixelcfestats_column_validate(e)
     if params.get("info", False) is None:
@@ -683,7 +683,7 @@ def fixelcfestats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcfestatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcfestatsConfigParamsDict] | None`')
         for e in params["config"]:
             fixelcfestats_config_validate(e)
     if params.get("help", False) is None:
@@ -716,6 +716,8 @@ def fixelcfestats_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["connectivity"])}\'')
     if "@type" not in params["connectivity"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["connectivity"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `connectivity`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     fixelcfestats_connectivity_validate_dyn_fn(params["connectivity"]["@type"])(params["connectivity"])
     if params.get("out_fixel_directory", None) is None:
         raise StyxValidationError("`out_fixel_directory` must not be None")
@@ -724,7 +726,7 @@ def fixelcfestats_validate(
 
 
 def fixelcfestats_cargs(
-    params: FixelcfestatsParameters,
+    params: FixelcfestatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -854,7 +856,7 @@ def fixelcfestats_cargs(
 
 
 def fixelcfestats_outputs(
-    params: FixelcfestatsParameters,
+    params: FixelcfestatsParamsDict,
     execution: Execution,
 ) -> FixelcfestatsOutputs:
     """
@@ -873,7 +875,7 @@ def fixelcfestats_outputs(
 
 
 def fixelcfestats_execute(
-    params: FixelcfestatsParameters,
+    params: FixelcfestatsParamsDict,
     runner: Runner | None = None,
 ) -> FixelcfestatsOutputs:
     """
@@ -950,7 +952,7 @@ def fixelcfestats(
     subjects: InputPathType,
     design: InputPathType,
     contrast: InputPathType,
-    connectivity: typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
+    connectivity: typing.Union[FixelcfestatsVariousStringParamsDictTagged, FixelcfestatsVariousFileParamsDictTagged],
     out_fixel_directory: str,
     mask: InputPathType | None = None,
     notest: bool = False,
@@ -972,13 +974,13 @@ def fixelcfestats(
     variance: InputPathType | None = None,
     ftests: InputPathType | None = None,
     fonly: bool = False,
-    column: list[FixelcfestatsColumnParameters] | None = None,
+    column: list[FixelcfestatsColumnParamsDict] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcfestatsConfigParameters] | None = None,
+    config: list[FixelcfestatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1156,12 +1158,22 @@ def fixelcfestats(
 
 __all__ = [
     "FIXELCFESTATS_METADATA",
+    "FixelcfestatsColumnParamsDict",
+    "FixelcfestatsColumnParamsDictTagged",
+    "FixelcfestatsConfigParamsDict",
+    "FixelcfestatsConfigParamsDictTagged",
     "FixelcfestatsOutputs",
+    "FixelcfestatsParamsDict",
+    "FixelcfestatsParamsDictTagged",
+    "FixelcfestatsVariousFileParamsDict",
+    "FixelcfestatsVariousFileParamsDictTagged",
+    "FixelcfestatsVariousStringParamsDict",
+    "FixelcfestatsVariousStringParamsDictTagged",
     "fixelcfestats",
-    "fixelcfestats_column_params",
-    "fixelcfestats_config_params",
+    "fixelcfestats_column",
+    "fixelcfestats_config",
     "fixelcfestats_execute",
     "fixelcfestats_params",
-    "fixelcfestats_various_file_params",
-    "fixelcfestats_various_string_params",
+    "fixelcfestats_various_file",
+    "fixelcfestats_various_string",
 ]

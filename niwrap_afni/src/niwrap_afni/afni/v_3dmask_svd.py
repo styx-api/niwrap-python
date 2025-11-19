@@ -13,7 +13,7 @@ V_3DMASK_SVD_METADATA = Metadata(
 )
 
 
-V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
+V3dmaskSvdParamsDict = typing.TypedDict('V3dmaskSvdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dmaskSVD"]],
     "input_dataset": InputPathType,
     "vnorm": bool,
@@ -25,7 +25,7 @@ V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
     "ort": typing.NotRequired[list[InputPathType] | None],
     "alt_input": typing.NotRequired[InputPathType | None],
 })
-V3dmaskSvdParametersTagged = typing.TypedDict('V3dmaskSvdParametersTagged', {
+V3dmaskSvdParamsDictTagged = typing.TypedDict('V3dmaskSvdParamsDictTagged', {
     "@type": typing.Literal["afni/3dmaskSVD"],
     "input_dataset": InputPathType,
     "vnorm": bool,
@@ -41,7 +41,7 @@ V3dmaskSvdParametersTagged = typing.TypedDict('V3dmaskSvdParametersTagged', {
 
 class V3dmaskSvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dmaskSvdParameters(...)`.
+    Output object returned when calling `V3dmaskSvdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3dmask_svd_params(
     bandpass: list[str] | None = None,
     ort: list[InputPathType] | None = None,
     alt_input: InputPathType | None = None,
-) -> V3dmaskSvdParametersTagged:
+) -> V3dmaskSvdParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_3dmask_svd_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dmaskSvdParameters` object.
+    `V3dmaskSvdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def v_3dmask_svd_validate(
 
 
 def v_3dmask_svd_cargs(
-    params: V3dmaskSvdParameters,
+    params: V3dmaskSvdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -206,7 +206,7 @@ def v_3dmask_svd_cargs(
 
 
 def v_3dmask_svd_outputs(
-    params: V3dmaskSvdParameters,
+    params: V3dmaskSvdParamsDict,
     execution: Execution,
 ) -> V3dmaskSvdOutputs:
     """
@@ -226,7 +226,7 @@ def v_3dmask_svd_outputs(
 
 
 def v_3dmask_svd_execute(
-    params: V3dmaskSvdParameters,
+    params: V3dmaskSvdParamsDict,
     runner: Runner | None = None,
 ) -> V3dmaskSvdOutputs:
     """
@@ -308,6 +308,8 @@ def v_3dmask_svd(
 
 __all__ = [
     "V3dmaskSvdOutputs",
+    "V3dmaskSvdParamsDict",
+    "V3dmaskSvdParamsDictTagged",
     "V_3DMASK_SVD_METADATA",
     "v_3dmask_svd",
     "v_3dmask_svd_execute",

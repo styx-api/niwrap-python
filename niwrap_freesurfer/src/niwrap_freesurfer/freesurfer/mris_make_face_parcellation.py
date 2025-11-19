@@ -13,14 +13,14 @@ MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
 )
 
 
-MrisMakeFaceParcellationParameters = typing.TypedDict('MrisMakeFaceParcellationParameters', {
+MrisMakeFaceParcellationParamsDict = typing.TypedDict('MrisMakeFaceParcellationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_face_parcellation"]],
     "input_surface": InputPathType,
     "ico_file": InputPathType,
     "output_annot": str,
     "colortable": typing.NotRequired[InputPathType | None],
 })
-MrisMakeFaceParcellationParametersTagged = typing.TypedDict('MrisMakeFaceParcellationParametersTagged', {
+MrisMakeFaceParcellationParamsDictTagged = typing.TypedDict('MrisMakeFaceParcellationParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_make_face_parcellation"],
     "input_surface": InputPathType,
     "ico_file": InputPathType,
@@ -31,7 +31,7 @@ MrisMakeFaceParcellationParametersTagged = typing.TypedDict('MrisMakeFaceParcell
 
 class MrisMakeFaceParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMakeFaceParcellationParameters(...)`.
+    Output object returned when calling `MrisMakeFaceParcellationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mris_make_face_parcellation_params(
     ico_file: InputPathType,
     output_annot: str,
     colortable: InputPathType | None = None,
-) -> MrisMakeFaceParcellationParametersTagged:
+) -> MrisMakeFaceParcellationParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mris_make_face_parcellation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMakeFaceParcellationParameters` object.
+    `MrisMakeFaceParcellationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mris_make_face_parcellation_validate(
 
 
 def mris_make_face_parcellation_cargs(
-    params: MrisMakeFaceParcellationParameters,
+    params: MrisMakeFaceParcellationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def mris_make_face_parcellation_cargs(
 
 
 def mris_make_face_parcellation_outputs(
-    params: MrisMakeFaceParcellationParameters,
+    params: MrisMakeFaceParcellationParamsDict,
     execution: Execution,
 ) -> MrisMakeFaceParcellationOutputs:
     """
@@ -143,7 +143,7 @@ def mris_make_face_parcellation_outputs(
 
 
 def mris_make_face_parcellation_execute(
-    params: MrisMakeFaceParcellationParameters,
+    params: MrisMakeFaceParcellationParamsDict,
     runner: Runner | None = None,
 ) -> MrisMakeFaceParcellationOutputs:
     """
@@ -210,6 +210,8 @@ def mris_make_face_parcellation(
 __all__ = [
     "MRIS_MAKE_FACE_PARCELLATION_METADATA",
     "MrisMakeFaceParcellationOutputs",
+    "MrisMakeFaceParcellationParamsDict",
+    "MrisMakeFaceParcellationParamsDictTagged",
     "mris_make_face_parcellation",
     "mris_make_face_parcellation_execute",
     "mris_make_face_parcellation_params",

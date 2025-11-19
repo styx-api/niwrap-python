@@ -12,12 +12,12 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
 )
 
 
-VolumeRemoveIslandsParameters = typing.TypedDict('VolumeRemoveIslandsParameters', {
+VolumeRemoveIslandsParamsDict = typing.TypedDict('VolumeRemoveIslandsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-remove-islands"]],
     "volume-out": str,
     "volume-in": InputPathType,
 })
-VolumeRemoveIslandsParametersTagged = typing.TypedDict('VolumeRemoveIslandsParametersTagged', {
+VolumeRemoveIslandsParamsDictTagged = typing.TypedDict('VolumeRemoveIslandsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-remove-islands"],
     "volume-out": str,
     "volume-in": InputPathType,
@@ -26,7 +26,7 @@ VolumeRemoveIslandsParametersTagged = typing.TypedDict('VolumeRemoveIslandsParam
 
 class VolumeRemoveIslandsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeRemoveIslandsParameters(...)`.
+    Output object returned when calling `VolumeRemoveIslandsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -37,7 +37,7 @@ class VolumeRemoveIslandsOutputs(typing.NamedTuple):
 def volume_remove_islands_params(
     volume_out: str,
     volume_in: InputPathType,
-) -> VolumeRemoveIslandsParametersTagged:
+) -> VolumeRemoveIslandsParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def volume_remove_islands_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeRemoveIslandsParameters` object.
+    `VolumeRemoveIslandsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -78,7 +78,7 @@ def volume_remove_islands_validate(
 
 
 def volume_remove_islands_cargs(
-    params: VolumeRemoveIslandsParameters,
+    params: VolumeRemoveIslandsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def volume_remove_islands_cargs(
 
 
 def volume_remove_islands_outputs(
-    params: VolumeRemoveIslandsParameters,
+    params: VolumeRemoveIslandsParamsDict,
     execution: Execution,
 ) -> VolumeRemoveIslandsOutputs:
     """
@@ -121,7 +121,7 @@ def volume_remove_islands_outputs(
 
 
 def volume_remove_islands_execute(
-    params: VolumeRemoveIslandsParameters,
+    params: VolumeRemoveIslandsParamsDict,
     runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
@@ -174,6 +174,8 @@ def volume_remove_islands(
 __all__ = [
     "VOLUME_REMOVE_ISLANDS_METADATA",
     "VolumeRemoveIslandsOutputs",
+    "VolumeRemoveIslandsParamsDict",
+    "VolumeRemoveIslandsParamsDictTagged",
     "volume_remove_islands",
     "volume_remove_islands_execute",
     "volume_remove_islands_params",

@@ -13,12 +13,12 @@ FAT_MVM_GRIDCONV_PY_METADATA = Metadata(
 )
 
 
-FatMvmGridconvPyParameters = typing.TypedDict('FatMvmGridconvPyParameters', {
+FatMvmGridconvPyParamsDict = typing.TypedDict('FatMvmGridconvPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_gridconv.py"]],
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
 })
-FatMvmGridconvPyParametersTagged = typing.TypedDict('FatMvmGridconvPyParametersTagged', {
+FatMvmGridconvPyParamsDictTagged = typing.TypedDict('FatMvmGridconvPyParamsDictTagged', {
     "@type": typing.Literal["afni/fat_mvm_gridconv.py"],
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ FatMvmGridconvPyParametersTagged = typing.TypedDict('FatMvmGridconvPyParametersT
 
 class FatMvmGridconvPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatMvmGridconvPyParameters(...)`.
+    Output object returned when calling `FatMvmGridconvPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FatMvmGridconvPyOutputs(typing.NamedTuple):
 def fat_mvm_gridconv_py_params(
     matrix_files: str | None = None,
     list_file: InputPathType | None = None,
-) -> FatMvmGridconvPyParametersTagged:
+) -> FatMvmGridconvPyParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def fat_mvm_gridconv_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatMvmGridconvPyParameters` object.
+    `FatMvmGridconvPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def fat_mvm_gridconv_py_validate(
 
 
 def fat_mvm_gridconv_py_cargs(
-    params: FatMvmGridconvPyParameters,
+    params: FatMvmGridconvPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def fat_mvm_gridconv_py_cargs(
 
 
 def fat_mvm_gridconv_py_outputs(
-    params: FatMvmGridconvPyParameters,
+    params: FatMvmGridconvPyParamsDict,
     execution: Execution,
 ) -> FatMvmGridconvPyOutputs:
     """
@@ -130,7 +130,7 @@ def fat_mvm_gridconv_py_outputs(
 
 
 def fat_mvm_gridconv_py_execute(
-    params: FatMvmGridconvPyParameters,
+    params: FatMvmGridconvPyParamsDict,
     runner: Runner | None = None,
 ) -> FatMvmGridconvPyOutputs:
     """
@@ -195,6 +195,8 @@ def fat_mvm_gridconv_py(
 __all__ = [
     "FAT_MVM_GRIDCONV_PY_METADATA",
     "FatMvmGridconvPyOutputs",
+    "FatMvmGridconvPyParamsDict",
+    "FatMvmGridconvPyParamsDictTagged",
     "fat_mvm_gridconv_py",
     "fat_mvm_gridconv_py_execute",
     "fat_mvm_gridconv_py_params",

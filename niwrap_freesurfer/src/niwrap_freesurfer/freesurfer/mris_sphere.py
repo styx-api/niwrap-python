@@ -13,13 +13,13 @@ MRIS_SPHERE_METADATA = Metadata(
 )
 
 
-MrisSphereParameters = typing.TypedDict('MrisSphereParameters', {
+MrisSphereParamsDict = typing.TypedDict('MrisSphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sphere"]],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
 })
-MrisSphereParametersTagged = typing.TypedDict('MrisSphereParametersTagged', {
+MrisSphereParamsDictTagged = typing.TypedDict('MrisSphereParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_sphere"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
@@ -29,7 +29,7 @@ MrisSphereParametersTagged = typing.TypedDict('MrisSphereParametersTagged', {
 
 class MrisSphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSphereParameters(...)`.
+    Output object returned when calling `MrisSphereParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mris_sphere_params(
     surface_file: InputPathType,
     patch_file: InputPathType,
     output_patch: str,
-) -> MrisSphereParametersTagged:
+) -> MrisSphereParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mris_sphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSphereParameters` object.
+    `MrisSphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mris_sphere_validate(
 
 
 def mris_sphere_cargs(
-    params: MrisSphereParameters,
+    params: MrisSphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mris_sphere_cargs(
 
 
 def mris_sphere_outputs(
-    params: MrisSphereParameters,
+    params: MrisSphereParamsDict,
     execution: Execution,
 ) -> MrisSphereOutputs:
     """
@@ -129,7 +129,7 @@ def mris_sphere_outputs(
 
 
 def mris_sphere_execute(
-    params: MrisSphereParameters,
+    params: MrisSphereParamsDict,
     runner: Runner | None = None,
 ) -> MrisSphereOutputs:
     """
@@ -191,6 +191,8 @@ def mris_sphere(
 __all__ = [
     "MRIS_SPHERE_METADATA",
     "MrisSphereOutputs",
+    "MrisSphereParamsDict",
+    "MrisSphereParamsDictTagged",
     "mris_sphere",
     "mris_sphere_execute",
     "mris_sphere_params",

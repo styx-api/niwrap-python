@@ -12,7 +12,7 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParameters', {
+CiftiCrossCorrelationParamsDict = typing.TypedDict('CiftiCrossCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-cross-correlation"]],
     "cifti-out": str,
     "weight-file": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParamet
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
-CiftiCrossCorrelationParametersTagged = typing.TypedDict('CiftiCrossCorrelationParametersTagged', {
+CiftiCrossCorrelationParamsDictTagged = typing.TypedDict('CiftiCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-cross-correlation"],
     "cifti-out": str,
     "weight-file": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ CiftiCrossCorrelationParametersTagged = typing.TypedDict('CiftiCrossCorrelationP
 
 class CiftiCrossCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiCrossCorrelationParameters(...)`.
+    Output object returned when calling `CiftiCrossCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def cifti_cross_correlation_params(
     cifti_a: InputPathType,
     cifti_b: InputPathType,
     fisher_z: bool = False,
-) -> CiftiCrossCorrelationParametersTagged:
+) -> CiftiCrossCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def cifti_cross_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiCrossCorrelationParameters` object.
+    `CiftiCrossCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def cifti_cross_correlation_validate(
 
 
 def cifti_cross_correlation_cargs(
-    params: CiftiCrossCorrelationParameters,
+    params: CiftiCrossCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def cifti_cross_correlation_cargs(
 
 
 def cifti_cross_correlation_outputs(
-    params: CiftiCrossCorrelationParameters,
+    params: CiftiCrossCorrelationParamsDict,
     execution: Execution,
 ) -> CiftiCrossCorrelationOutputs:
     """
@@ -168,7 +168,7 @@ def cifti_cross_correlation_outputs(
 
 
 def cifti_cross_correlation_execute(
-    params: CiftiCrossCorrelationParameters,
+    params: CiftiCrossCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
@@ -249,6 +249,8 @@ def cifti_cross_correlation(
 __all__ = [
     "CIFTI_CROSS_CORRELATION_METADATA",
     "CiftiCrossCorrelationOutputs",
+    "CiftiCrossCorrelationParamsDict",
+    "CiftiCrossCorrelationParamsDictTagged",
     "cifti_cross_correlation",
     "cifti_cross_correlation_execute",
     "cifti_cross_correlation_params",

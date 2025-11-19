@@ -13,7 +13,7 @@ ASL_FILE_METADATA = Metadata(
 )
 
 
-AslFileParameters = typing.TypedDict('AslFileParameters', {
+AslFileParamsDict = typing.TypedDict('AslFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/asl_file"]],
     "datafile": InputPathType,
     "ntis": float,
@@ -43,7 +43,7 @@ AslFileParameters = typing.TypedDict('AslFileParameters', {
     "help": bool,
     "version": bool,
 })
-AslFileParametersTagged = typing.TypedDict('AslFileParametersTagged', {
+AslFileParamsDictTagged = typing.TypedDict('AslFileParamsDictTagged', {
     "@type": typing.Literal["fsl/asl_file"],
     "datafile": InputPathType,
     "ntis": float,
@@ -77,7 +77,7 @@ AslFileParametersTagged = typing.TypedDict('AslFileParametersTagged', {
 
 class AslFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AslFileParameters(...)`.
+    Output object returned when calling `AslFileParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +115,7 @@ def asl_file_params(
     aif: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> AslFileParametersTagged:
+) -> AslFileParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def asl_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AslFileParameters` object.
+    `AslFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -329,7 +329,7 @@ def asl_file_validate(
 
 
 def asl_file_cargs(
-    params: AslFileParameters,
+    params: AslFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -449,7 +449,7 @@ def asl_file_cargs(
 
 
 def asl_file_outputs(
-    params: AslFileParameters,
+    params: AslFileParamsDict,
     execution: Execution,
 ) -> AslFileOutputs:
     """
@@ -470,7 +470,7 @@ def asl_file_outputs(
 
 
 def asl_file_execute(
-    params: AslFileParameters,
+    params: AslFileParamsDict,
     runner: Runner | None = None,
 ) -> AslFileOutputs:
     """
@@ -615,6 +615,8 @@ def asl_file(
 __all__ = [
     "ASL_FILE_METADATA",
     "AslFileOutputs",
+    "AslFileParamsDict",
+    "AslFileParamsDictTagged",
     "asl_file",
     "asl_file_execute",
     "asl_file_params",

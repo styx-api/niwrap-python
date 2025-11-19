@@ -13,7 +13,7 @@ PRELUDE_METADATA = Metadata(
 )
 
 
-PreludeParameters = typing.TypedDict('PreludeParameters', {
+PreludeParamsDict = typing.TypedDict('PreludeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/prelude"]],
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
@@ -46,7 +46,7 @@ PreludeParameters = typing.TypedDict('PreludeParameters', {
     "help": bool,
     "help_alias": bool,
 })
-PreludeParametersTagged = typing.TypedDict('PreludeParametersTagged', {
+PreludeParamsDictTagged = typing.TypedDict('PreludeParamsDictTagged', {
     "@type": typing.Literal["fsl/prelude"],
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
@@ -83,7 +83,7 @@ PreludeParametersTagged = typing.TypedDict('PreludeParametersTagged', {
 
 class PreludeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PreludeParameters(...)`.
+    Output object returned when calling `PreludeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +128,7 @@ def prelude_params(
     verbose_alias: bool = False,
     help_: bool = False,
     help_alias: bool = False,
-) -> PreludeParametersTagged:
+) -> PreludeParamsDictTagged:
     """
     Build parameters.
     
@@ -225,7 +225,7 @@ def prelude_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PreludeParameters` object.
+    `PreludeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -337,7 +337,7 @@ def prelude_validate(
 
 
 def prelude_cargs(
-    params: PreludeParameters,
+    params: PreludeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -473,7 +473,7 @@ def prelude_cargs(
 
 
 def prelude_outputs(
-    params: PreludeParameters,
+    params: PreludeParamsDict,
     execution: Execution,
 ) -> PreludeOutputs:
     """
@@ -496,7 +496,7 @@ def prelude_outputs(
 
 
 def prelude_execute(
-    params: PreludeParameters,
+    params: PreludeParamsDict,
     runner: Runner | None = None,
 ) -> PreludeOutputs:
     """
@@ -639,6 +639,8 @@ def prelude(
 __all__ = [
     "PRELUDE_METADATA",
     "PreludeOutputs",
+    "PreludeParamsDict",
+    "PreludeParamsDictTagged",
     "prelude",
     "prelude_execute",
     "prelude_params",

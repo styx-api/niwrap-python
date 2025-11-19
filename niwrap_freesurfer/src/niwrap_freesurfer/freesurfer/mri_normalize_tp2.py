@@ -13,7 +13,7 @@ MRI_NORMALIZE_TP2_METADATA = Metadata(
 )
 
 
-MriNormalizeTp2Parameters = typing.TypedDict('MriNormalizeTp2Parameters', {
+MriNormalizeTp2ParamsDict = typing.TypedDict('MriNormalizeTp2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_normalize_tp2"]],
     "input_vol": InputPathType,
     "normalized_vol": str,
@@ -27,7 +27,7 @@ MriNormalizeTp2Parameters = typing.TypedDict('MriNormalizeTp2Parameters', {
     "lta_src": typing.NotRequired[InputPathType | None],
     "lta_dst": typing.NotRequired[InputPathType | None],
 })
-MriNormalizeTp2ParametersTagged = typing.TypedDict('MriNormalizeTp2ParametersTagged', {
+MriNormalizeTp2ParamsDictTagged = typing.TypedDict('MriNormalizeTp2ParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_normalize_tp2"],
     "input_vol": InputPathType,
     "normalized_vol": str,
@@ -45,7 +45,7 @@ MriNormalizeTp2ParametersTagged = typing.TypedDict('MriNormalizeTp2ParametersTag
 
 class MriNormalizeTp2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNormalizeTp2Parameters(...)`.
+    Output object returned when calling `MriNormalizeTp2ParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def mri_normalize_tp2_params(
     invert_flag: bool = False,
     lta_src: InputPathType | None = None,
     lta_dst: InputPathType | None = None,
-) -> MriNormalizeTp2ParametersTagged:
+) -> MriNormalizeTp2ParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def mri_normalize_tp2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNormalizeTp2Parameters` object.
+    `MriNormalizeTp2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -160,7 +160,7 @@ def mri_normalize_tp2_validate(
 
 
 def mri_normalize_tp2_cargs(
-    params: MriNormalizeTp2Parameters,
+    params: MriNormalizeTp2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -222,7 +222,7 @@ def mri_normalize_tp2_cargs(
 
 
 def mri_normalize_tp2_outputs(
-    params: MriNormalizeTp2Parameters,
+    params: MriNormalizeTp2ParamsDict,
     execution: Execution,
 ) -> MriNormalizeTp2Outputs:
     """
@@ -242,7 +242,7 @@ def mri_normalize_tp2_outputs(
 
 
 def mri_normalize_tp2_execute(
-    params: MriNormalizeTp2Parameters,
+    params: MriNormalizeTp2ParamsDict,
     runner: Runner | None = None,
 ) -> MriNormalizeTp2Outputs:
     """
@@ -330,6 +330,8 @@ def mri_normalize_tp2(
 __all__ = [
     "MRI_NORMALIZE_TP2_METADATA",
     "MriNormalizeTp2Outputs",
+    "MriNormalizeTp2ParamsDict",
+    "MriNormalizeTp2ParamsDictTagged",
     "mri_normalize_tp2",
     "mri_normalize_tp2_execute",
     "mri_normalize_tp2_params",

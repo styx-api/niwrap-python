@@ -13,12 +13,12 @@ MORPH_KERNEL_METADATA = Metadata(
 )
 
 
-MorphKernelParameters = typing.TypedDict('MorphKernelParameters', {
+MorphKernelParamsDict = typing.TypedDict('MorphKernelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/morph_kernel"]],
     "cube_side_length": float,
     "sphere_radius": float,
 })
-MorphKernelParametersTagged = typing.TypedDict('MorphKernelParametersTagged', {
+MorphKernelParamsDictTagged = typing.TypedDict('MorphKernelParamsDictTagged', {
     "@type": typing.Literal["fsl/morph_kernel"],
     "cube_side_length": float,
     "sphere_radius": float,
@@ -27,7 +27,7 @@ MorphKernelParametersTagged = typing.TypedDict('MorphKernelParametersTagged', {
 
 class MorphKernelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphKernelParameters(...)`.
+    Output object returned when calling `MorphKernelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MorphKernelOutputs(typing.NamedTuple):
 def morph_kernel_params(
     cube_side_length: float,
     sphere_radius: float,
-) -> MorphKernelParametersTagged:
+) -> MorphKernelParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def morph_kernel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphKernelParameters` object.
+    `MorphKernelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def morph_kernel_validate(
 
 
 def morph_kernel_cargs(
-    params: MorphKernelParameters,
+    params: MorphKernelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def morph_kernel_cargs(
 
 
 def morph_kernel_outputs(
-    params: MorphKernelParameters,
+    params: MorphKernelParamsDict,
     execution: Execution,
 ) -> MorphKernelOutputs:
     """
@@ -119,7 +119,7 @@ def morph_kernel_outputs(
 
 
 def morph_kernel_execute(
-    params: MorphKernelParameters,
+    params: MorphKernelParamsDict,
     runner: Runner | None = None,
 ) -> MorphKernelOutputs:
     """
@@ -178,6 +178,8 @@ def morph_kernel(
 __all__ = [
     "MORPH_KERNEL_METADATA",
     "MorphKernelOutputs",
+    "MorphKernelParamsDict",
+    "MorphKernelParamsDictTagged",
     "morph_kernel",
     "morph_kernel_execute",
     "morph_kernel_params",

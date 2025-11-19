@@ -13,7 +13,7 @@ PROBTRACKX_METADATA = Metadata(
 )
 
 
-ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
+ProbtrackxParamsDict = typing.TypedDict('ProbtrackxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/probtrackx"]],
     "samples": InputPathType,
     "mask": InputPathType,
@@ -50,7 +50,7 @@ ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
     "rseed": typing.NotRequired[int | None],
     "s2tastext": bool,
 })
-ProbtrackxParametersTagged = typing.TypedDict('ProbtrackxParametersTagged', {
+ProbtrackxParamsDictTagged = typing.TypedDict('ProbtrackxParamsDictTagged', {
     "@type": typing.Literal["fsl/probtrackx"],
     "samples": InputPathType,
     "mask": InputPathType,
@@ -91,7 +91,7 @@ ProbtrackxParametersTagged = typing.TypedDict('ProbtrackxParametersTagged', {
 
 class ProbtrackxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ProbtrackxParameters(...)`.
+    Output object returned when calling `ProbtrackxParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +132,7 @@ def probtrackx_params(
     modeuler: bool = False,
     rseed: int | None = None,
     s2tastext: bool = False,
-) -> ProbtrackxParametersTagged:
+) -> ProbtrackxParamsDictTagged:
     """
     Build parameters.
     
@@ -256,7 +256,7 @@ def probtrackx_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxParameters` object.
+    `ProbtrackxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -384,7 +384,7 @@ def probtrackx_validate(
 
 
 def probtrackx_cargs(
-    params: ProbtrackxParameters,
+    params: ProbtrackxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -538,7 +538,7 @@ def probtrackx_cargs(
 
 
 def probtrackx_outputs(
-    params: ProbtrackxParameters,
+    params: ProbtrackxParamsDict,
     execution: Execution,
 ) -> ProbtrackxOutputs:
     """
@@ -557,7 +557,7 @@ def probtrackx_outputs(
 
 
 def probtrackx_execute(
-    params: ProbtrackxParameters,
+    params: ProbtrackxParamsDict,
     runner: Runner | None = None,
 ) -> ProbtrackxOutputs:
     """
@@ -729,6 +729,8 @@ def probtrackx(
 __all__ = [
     "PROBTRACKX_METADATA",
     "ProbtrackxOutputs",
+    "ProbtrackxParamsDict",
+    "ProbtrackxParamsDictTagged",
     "probtrackx",
     "probtrackx_execute",
     "probtrackx_params",

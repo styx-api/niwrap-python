@@ -13,13 +13,13 @@ FSLANIMATE_METADATA = Metadata(
 )
 
 
-FslanimateParameters = typing.TypedDict('FslanimateParameters', {
+FslanimateParamsDict = typing.TypedDict('FslanimateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslanimate"]],
     "input_file": InputPathType,
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],
 })
-FslanimateParametersTagged = typing.TypedDict('FslanimateParametersTagged', {
+FslanimateParamsDictTagged = typing.TypedDict('FslanimateParamsDictTagged', {
     "@type": typing.Literal["fsl/fslanimate"],
     "input_file": InputPathType,
     "output_file": str,
@@ -29,7 +29,7 @@ FslanimateParametersTagged = typing.TypedDict('FslanimateParametersTagged', {
 
 class FslanimateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslanimateParameters(...)`.
+    Output object returned when calling `FslanimateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def fslanimate_params(
     input_file: InputPathType,
     output_file: str,
     tmp_dir: str | None = None,
-) -> FslanimateParametersTagged:
+) -> FslanimateParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def fslanimate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslanimateParameters` object.
+    `FslanimateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def fslanimate_validate(
 
 
 def fslanimate_cargs(
-    params: FslanimateParameters,
+    params: FslanimateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -110,7 +110,7 @@ def fslanimate_cargs(
 
 
 def fslanimate_outputs(
-    params: FslanimateParameters,
+    params: FslanimateParamsDict,
     execution: Execution,
 ) -> FslanimateOutputs:
     """
@@ -130,7 +130,7 @@ def fslanimate_outputs(
 
 
 def fslanimate_execute(
-    params: FslanimateParameters,
+    params: FslanimateParamsDict,
     runner: Runner | None = None,
 ) -> FslanimateOutputs:
     """
@@ -192,6 +192,8 @@ def fslanimate(
 __all__ = [
     "FSLANIMATE_METADATA",
     "FslanimateOutputs",
+    "FslanimateParamsDict",
+    "FslanimateParamsDictTagged",
     "fslanimate",
     "fslanimate_execute",
     "fslanimate_params",

@@ -13,7 +13,7 @@ V_3DBUCKET_METADATA = Metadata(
 )
 
 
-V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
+V3dbucketParamsDict = typing.TypedDict('V3dbucketParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dbucket"]],
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
     "abuc": bool,
     "input_files": list[str],
 })
-V3dbucketParametersTagged = typing.TypedDict('V3dbucketParametersTagged', {
+V3dbucketParamsDictTagged = typing.TypedDict('V3dbucketParamsDictTagged', {
     "@type": typing.Literal["afni/3dbucket"],
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ V3dbucketParametersTagged = typing.TypedDict('V3dbucketParametersTagged', {
 
 class V3dbucketOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dbucketParameters(...)`.
+    Output object returned when calling `V3dbucketParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def v_3dbucket_params(
     verbose: bool = False,
     fbuc: bool = False,
     abuc: bool = False,
-) -> V3dbucketParametersTagged:
+) -> V3dbucketParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def v_3dbucket_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dbucketParameters` object.
+    `V3dbucketParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -155,7 +155,7 @@ def v_3dbucket_validate(
 
 
 def v_3dbucket_cargs(
-    params: V3dbucketParameters,
+    params: V3dbucketParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -207,7 +207,7 @@ def v_3dbucket_cargs(
 
 
 def v_3dbucket_outputs(
-    params: V3dbucketParameters,
+    params: V3dbucketParamsDict,
     execution: Execution,
 ) -> V3dbucketOutputs:
     """
@@ -226,7 +226,7 @@ def v_3dbucket_outputs(
 
 
 def v_3dbucket_execute(
-    params: V3dbucketParameters,
+    params: V3dbucketParamsDict,
     runner: Runner | None = None,
 ) -> V3dbucketOutputs:
     """
@@ -311,6 +311,8 @@ def v_3dbucket(
 
 __all__ = [
     "V3dbucketOutputs",
+    "V3dbucketParamsDict",
+    "V3dbucketParamsDictTagged",
     "V_3DBUCKET_METADATA",
     "v_3dbucket",
     "v_3dbucket_execute",

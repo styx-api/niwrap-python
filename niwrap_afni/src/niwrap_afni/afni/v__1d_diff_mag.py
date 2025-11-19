@@ -13,11 +13,11 @@ V__1D_DIFF_MAG_METADATA = Metadata(
 )
 
 
-V1dDiffMagParameters = typing.TypedDict('V1dDiffMagParameters', {
+V1dDiffMagParamsDict = typing.TypedDict('V1dDiffMagParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@1dDiffMag"]],
     "infile": InputPathType,
 })
-V1dDiffMagParametersTagged = typing.TypedDict('V1dDiffMagParametersTagged', {
+V1dDiffMagParamsDictTagged = typing.TypedDict('V1dDiffMagParamsDictTagged', {
     "@type": typing.Literal["afni/@1dDiffMag"],
     "infile": InputPathType,
 })
@@ -25,7 +25,7 @@ V1dDiffMagParametersTagged = typing.TypedDict('V1dDiffMagParametersTagged', {
 
 class V1dDiffMagOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dDiffMagParameters(...)`.
+    Output object returned when calling `V1dDiffMagParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class V1dDiffMagOutputs(typing.NamedTuple):
 
 def v__1d_diff_mag_params(
     infile: InputPathType,
-) -> V1dDiffMagParametersTagged:
+) -> V1dDiffMagParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__1d_diff_mag_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dDiffMagParameters` object.
+    `V1dDiffMagParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def v__1d_diff_mag_validate(
 
 
 def v__1d_diff_mag_cargs(
-    params: V1dDiffMagParameters,
+    params: V1dDiffMagParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__1d_diff_mag_cargs(
 
 
 def v__1d_diff_mag_outputs(
-    params: V1dDiffMagParameters,
+    params: V1dDiffMagParamsDict,
     execution: Execution,
 ) -> V1dDiffMagOutputs:
     """
@@ -110,7 +110,7 @@ def v__1d_diff_mag_outputs(
 
 
 def v__1d_diff_mag_execute(
-    params: V1dDiffMagParameters,
+    params: V1dDiffMagParamsDict,
     runner: Runner | None = None,
 ) -> V1dDiffMagOutputs:
     """
@@ -166,6 +166,8 @@ def v__1d_diff_mag(
 
 __all__ = [
     "V1dDiffMagOutputs",
+    "V1dDiffMagParamsDict",
+    "V1dDiffMagParamsDictTagged",
     "V__1D_DIFF_MAG_METADATA",
     "v__1d_diff_mag",
     "v__1d_diff_mag_execute",

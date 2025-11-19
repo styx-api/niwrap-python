@@ -13,13 +13,13 @@ TBSS_DEPROJECT_METADATA = Metadata(
 )
 
 
-TbssDeprojectParameters = typing.TypedDict('TbssDeprojectParameters', {
+TbssDeprojectParamsDict = typing.TypedDict('TbssDeprojectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_deproject"]],
     "skeleton_space_input_image": InputPathType,
     "final_space_option": int,
     "index_image_flag": bool,
 })
-TbssDeprojectParametersTagged = typing.TypedDict('TbssDeprojectParametersTagged', {
+TbssDeprojectParamsDictTagged = typing.TypedDict('TbssDeprojectParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_deproject"],
     "skeleton_space_input_image": InputPathType,
     "final_space_option": int,
@@ -29,7 +29,7 @@ TbssDeprojectParametersTagged = typing.TypedDict('TbssDeprojectParametersTagged'
 
 class TbssDeprojectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TbssDeprojectParameters(...)`.
+    Output object returned when calling `TbssDeprojectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def tbss_deproject_params(
     skeleton_space_input_image: InputPathType,
     final_space_option: int,
     index_image_flag: bool = False,
-) -> TbssDeprojectParametersTagged:
+) -> TbssDeprojectParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def tbss_deproject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TbssDeprojectParameters` object.
+    `TbssDeprojectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -92,7 +92,7 @@ def tbss_deproject_validate(
 
 
 def tbss_deproject_cargs(
-    params: TbssDeprojectParameters,
+    params: TbssDeprojectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def tbss_deproject_cargs(
 
 
 def tbss_deproject_outputs(
-    params: TbssDeprojectParameters,
+    params: TbssDeprojectParamsDict,
     execution: Execution,
 ) -> TbssDeprojectOutputs:
     """
@@ -135,7 +135,7 @@ def tbss_deproject_outputs(
 
 
 def tbss_deproject_execute(
-    params: TbssDeprojectParameters,
+    params: TbssDeprojectParamsDict,
     runner: Runner | None = None,
 ) -> TbssDeprojectOutputs:
     """
@@ -199,6 +199,8 @@ def tbss_deproject(
 __all__ = [
     "TBSS_DEPROJECT_METADATA",
     "TbssDeprojectOutputs",
+    "TbssDeprojectParamsDict",
+    "TbssDeprojectParamsDictTagged",
     "tbss_deproject",
     "tbss_deproject_execute",
     "tbss_deproject_params",

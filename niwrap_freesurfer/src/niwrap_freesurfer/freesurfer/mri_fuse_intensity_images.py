@@ -13,14 +13,14 @@ MRI_FUSE_INTENSITY_IMAGES_METADATA = Metadata(
 )
 
 
-MriFuseIntensityImagesParameters = typing.TypedDict('MriFuseIntensityImagesParameters', {
+MriFuseIntensityImagesParamsDict = typing.TypedDict('MriFuseIntensityImagesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_intensity_images"]],
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
     "transform_file": InputPathType,
     "output_volume": str,
 })
-MriFuseIntensityImagesParametersTagged = typing.TypedDict('MriFuseIntensityImagesParametersTagged', {
+MriFuseIntensityImagesParamsDictTagged = typing.TypedDict('MriFuseIntensityImagesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fuse_intensity_images"],
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
@@ -31,7 +31,7 @@ MriFuseIntensityImagesParametersTagged = typing.TypedDict('MriFuseIntensityImage
 
 class MriFuseIntensityImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFuseIntensityImagesParameters(...)`.
+    Output object returned when calling `MriFuseIntensityImagesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_fuse_intensity_images_params(
     input_volume: InputPathType,
     transform_file: InputPathType,
     output_volume: str,
-) -> MriFuseIntensityImagesParametersTagged:
+) -> MriFuseIntensityImagesParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def mri_fuse_intensity_images_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFuseIntensityImagesParameters` object.
+    `MriFuseIntensityImagesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def mri_fuse_intensity_images_validate(
 
 
 def mri_fuse_intensity_images_cargs(
-    params: MriFuseIntensityImagesParameters,
+    params: MriFuseIntensityImagesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mri_fuse_intensity_images_cargs(
 
 
 def mri_fuse_intensity_images_outputs(
-    params: MriFuseIntensityImagesParameters,
+    params: MriFuseIntensityImagesParamsDict,
     execution: Execution,
 ) -> MriFuseIntensityImagesOutputs:
     """
@@ -140,7 +140,7 @@ def mri_fuse_intensity_images_outputs(
 
 
 def mri_fuse_intensity_images_execute(
-    params: MriFuseIntensityImagesParameters,
+    params: MriFuseIntensityImagesParamsDict,
     runner: Runner | None = None,
 ) -> MriFuseIntensityImagesOutputs:
     """
@@ -206,6 +206,8 @@ def mri_fuse_intensity_images(
 __all__ = [
     "MRI_FUSE_INTENSITY_IMAGES_METADATA",
     "MriFuseIntensityImagesOutputs",
+    "MriFuseIntensityImagesParamsDict",
+    "MriFuseIntensityImagesParamsDictTagged",
     "mri_fuse_intensity_images",
     "mri_fuse_intensity_images_execute",
     "mri_fuse_intensity_images_params",

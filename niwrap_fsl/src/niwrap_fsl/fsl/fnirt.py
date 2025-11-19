@@ -13,7 +13,7 @@ FNIRT_METADATA = Metadata(
 )
 
 
-FnirtParameters = typing.TypedDict('FnirtParameters', {
+FnirtParamsDict = typing.TypedDict('FnirtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fnirt"]],
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
@@ -27,7 +27,7 @@ FnirtParameters = typing.TypedDict('FnirtParameters', {
     "refmask_file": typing.NotRequired[InputPathType | None],
     "warped_file": typing.NotRequired[InputPathType | None],
 })
-FnirtParametersTagged = typing.TypedDict('FnirtParametersTagged', {
+FnirtParamsDictTagged = typing.TypedDict('FnirtParamsDictTagged', {
     "@type": typing.Literal["fsl/fnirt"],
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
@@ -45,7 +45,7 @@ FnirtParametersTagged = typing.TypedDict('FnirtParametersTagged', {
 
 class FnirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FnirtParameters(...)`.
+    Output object returned when calling `FnirtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def fnirt_params(
     modulatedref_file: str | None = None,
     refmask_file: InputPathType | None = None,
     warped_file: InputPathType | None = None,
-) -> FnirtParametersTagged:
+) -> FnirtParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def fnirt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FnirtParameters` object.
+    `FnirtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -177,7 +177,7 @@ def fnirt_validate(
 
 
 def fnirt_cargs(
-    params: FnirtParameters,
+    params: FnirtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -215,7 +215,7 @@ def fnirt_cargs(
 
 
 def fnirt_outputs(
-    params: FnirtParameters,
+    params: FnirtParamsDict,
     execution: Execution,
 ) -> FnirtOutputs:
     """
@@ -240,7 +240,7 @@ def fnirt_outputs(
 
 
 def fnirt_execute(
-    params: FnirtParameters,
+    params: FnirtParamsDict,
     runner: Runner | None = None,
 ) -> FnirtOutputs:
     """
@@ -331,6 +331,8 @@ def fnirt(
 __all__ = [
     "FNIRT_METADATA",
     "FnirtOutputs",
+    "FnirtParamsDict",
+    "FnirtParamsDictTagged",
     "fnirt",
     "fnirt_execute",
     "fnirt_params",

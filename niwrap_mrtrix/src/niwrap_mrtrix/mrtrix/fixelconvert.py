@@ -13,59 +13,59 @@ FIXELCONVERT_METADATA = Metadata(
 )
 
 
-FixelconvertConfigParameters = typing.TypedDict('FixelconvertConfigParameters', {
+FixelconvertConfigParamsDict = typing.TypedDict('FixelconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelconvertConfigParametersTagged = typing.TypedDict('FixelconvertConfigParametersTagged', {
+FixelconvertConfigParamsDictTagged = typing.TypedDict('FixelconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelconvertVariousStringParameters = typing.TypedDict('FixelconvertVariousStringParameters', {
+FixelconvertVariousStringParamsDict = typing.TypedDict('FixelconvertVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-FixelconvertVariousStringParametersTagged = typing.TypedDict('FixelconvertVariousStringParametersTagged', {
+FixelconvertVariousStringParamsDictTagged = typing.TypedDict('FixelconvertVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-FixelconvertVariousFileParameters = typing.TypedDict('FixelconvertVariousFileParameters', {
+FixelconvertVariousFileParamsDict = typing.TypedDict('FixelconvertVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-FixelconvertVariousFileParametersTagged = typing.TypedDict('FixelconvertVariousFileParametersTagged', {
+FixelconvertVariousFileParamsDictTagged = typing.TypedDict('FixelconvertVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-FixelconvertVariousString1Parameters = typing.TypedDict('FixelconvertVariousString1Parameters', {
+FixelconvertVariousString1ParamsDict = typing.TypedDict('FixelconvertVariousString1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
     "obj": str,
 })
-FixelconvertVariousString1ParametersTagged = typing.TypedDict('FixelconvertVariousString1ParametersTagged', {
+FixelconvertVariousString1ParamsDictTagged = typing.TypedDict('FixelconvertVariousString1ParamsDictTagged', {
     "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
-FixelconvertVariousFile1Parameters = typing.TypedDict('FixelconvertVariousFile1Parameters', {
+FixelconvertVariousFile1ParamsDict = typing.TypedDict('FixelconvertVariousFile1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
     "obj": InputPathType,
 })
-FixelconvertVariousFile1ParametersTagged = typing.TypedDict('FixelconvertVariousFile1ParametersTagged', {
+FixelconvertVariousFile1ParamsDictTagged = typing.TypedDict('FixelconvertVariousFile1ParamsDictTagged', {
     "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
-FixelconvertParameters = typing.TypedDict('FixelconvertParameters', {
+FixelconvertParamsDict = typing.TypedDict('FixelconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelconvert"]],
     "name": typing.NotRequired[str | None],
     "nii": bool,
@@ -78,13 +78,13 @@ FixelconvertParameters = typing.TypedDict('FixelconvertParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "fixel_in": typing.Union[FixelconvertVariousStringParametersTagged, FixelconvertVariousFileParametersTagged],
-    "fixel_out": typing.Union[FixelconvertVariousString1ParametersTagged, FixelconvertVariousFile1ParametersTagged],
+    "fixel_in": typing.Union[FixelconvertVariousStringParamsDictTagged, FixelconvertVariousFileParamsDictTagged],
+    "fixel_out": typing.Union[FixelconvertVariousString1ParamsDictTagged, FixelconvertVariousFile1ParamsDictTagged],
 })
-FixelconvertParametersTagged = typing.TypedDict('FixelconvertParametersTagged', {
+FixelconvertParamsDictTagged = typing.TypedDict('FixelconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelconvert"],
     "name": typing.NotRequired[str | None],
     "nii": bool,
@@ -97,11 +97,11 @@ FixelconvertParametersTagged = typing.TypedDict('FixelconvertParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "fixel_in": typing.Union[FixelconvertVariousStringParametersTagged, FixelconvertVariousFileParametersTagged],
-    "fixel_out": typing.Union[FixelconvertVariousString1ParametersTagged, FixelconvertVariousFile1ParametersTagged],
+    "fixel_in": typing.Union[FixelconvertVariousStringParamsDictTagged, FixelconvertVariousFileParamsDictTagged],
+    "fixel_out": typing.Union[FixelconvertVariousString1ParamsDictTagged, FixelconvertVariousFile1ParamsDictTagged],
 })
 
 
@@ -173,10 +173,10 @@ def fixelconvert_fixel_out_validate_dyn_fn(
     }.get(t)
 
 
-def fixelconvert_config_params(
+def fixelconvert_config(
     key: str,
     value: str,
-) -> FixelconvertConfigParametersTagged:
+) -> FixelconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -199,7 +199,7 @@ def fixelconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertConfigParameters` object.
+    `FixelconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -217,7 +217,7 @@ def fixelconvert_config_validate(
 
 
 def fixelconvert_config_cargs(
-    params: FixelconvertConfigParameters,
+    params: FixelconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -236,9 +236,9 @@ def fixelconvert_config_cargs(
     return cargs
 
 
-def fixelconvert_various_string_params(
+def fixelconvert_various_string(
     obj: str,
-) -> FixelconvertVariousStringParametersTagged:
+) -> FixelconvertVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -259,7 +259,7 @@ def fixelconvert_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertVariousStringParameters` object.
+    `FixelconvertVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -273,7 +273,7 @@ def fixelconvert_various_string_validate(
 
 
 def fixelconvert_various_string_cargs(
-    params: FixelconvertVariousStringParameters,
+    params: FixelconvertVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -290,9 +290,9 @@ def fixelconvert_various_string_cargs(
     return cargs
 
 
-def fixelconvert_various_file_params(
+def fixelconvert_various_file(
     obj: InputPathType,
-) -> FixelconvertVariousFileParametersTagged:
+) -> FixelconvertVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -313,7 +313,7 @@ def fixelconvert_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertVariousFileParameters` object.
+    `FixelconvertVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -327,7 +327,7 @@ def fixelconvert_various_file_validate(
 
 
 def fixelconvert_various_file_cargs(
-    params: FixelconvertVariousFileParameters,
+    params: FixelconvertVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -344,9 +344,9 @@ def fixelconvert_various_file_cargs(
     return cargs
 
 
-def fixelconvert_various_string_1_params(
+def fixelconvert_various_string_1(
     obj: str,
-) -> FixelconvertVariousString1ParametersTagged:
+) -> FixelconvertVariousString1ParamsDictTagged:
     """
     Build parameters.
     
@@ -367,7 +367,7 @@ def fixelconvert_various_string_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertVariousString1Parameters` object.
+    `FixelconvertVariousString1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -381,7 +381,7 @@ def fixelconvert_various_string_1_validate(
 
 
 def fixelconvert_various_string_1_cargs(
-    params: FixelconvertVariousString1Parameters,
+    params: FixelconvertVariousString1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -398,9 +398,9 @@ def fixelconvert_various_string_1_cargs(
     return cargs
 
 
-def fixelconvert_various_file_1_params(
+def fixelconvert_various_file_1(
     obj: InputPathType,
-) -> FixelconvertVariousFile1ParametersTagged:
+) -> FixelconvertVariousFile1ParamsDictTagged:
     """
     Build parameters.
     
@@ -421,7 +421,7 @@ def fixelconvert_various_file_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertVariousFile1Parameters` object.
+    `FixelconvertVariousFile1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -435,7 +435,7 @@ def fixelconvert_various_file_1_validate(
 
 
 def fixelconvert_various_file_1_cargs(
-    params: FixelconvertVariousFile1Parameters,
+    params: FixelconvertVariousFile1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -454,15 +454,15 @@ def fixelconvert_various_file_1_cargs(
 
 class FixelconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelconvertParameters(...)`.
+    Output object returned when calling `FixelconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
 def fixelconvert_params(
-    fixel_in: typing.Union[FixelconvertVariousStringParametersTagged, FixelconvertVariousFileParametersTagged],
-    fixel_out: typing.Union[FixelconvertVariousString1ParametersTagged, FixelconvertVariousFile1ParametersTagged],
+    fixel_in: typing.Union[FixelconvertVariousStringParamsDictTagged, FixelconvertVariousFileParamsDictTagged],
+    fixel_out: typing.Union[FixelconvertVariousString1ParamsDictTagged, FixelconvertVariousFile1ParamsDictTagged],
     name: str | None = None,
     nii: bool = False,
     out_size: bool = False,
@@ -474,10 +474,10 @@ def fixelconvert_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelconvertConfigParameters] | None = None,
+    config: list[FixelconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelconvertParametersTagged:
+) -> FixelconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -542,7 +542,7 @@ def fixelconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelconvertParameters` object.
+    `FixelconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -590,7 +590,7 @@ def fixelconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelconvertConfigParamsDict] | None`')
         for e in params["config"]:
             fixelconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -607,6 +607,8 @@ def fixelconvert_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["fixel_in"])}\'')
     if "@type" not in params["fixel_in"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["fixel_in"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `fixel_in`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     fixelconvert_fixel_in_validate_dyn_fn(params["fixel_in"]["@type"])(params["fixel_in"])
     if params.get("fixel_out", None) is None:
         raise StyxValidationError("`fixel_out` must not be None")
@@ -614,11 +616,13 @@ def fixelconvert_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["fixel_out"])}\'')
     if "@type" not in params["fixel_out"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["fixel_out"]["@type"] not in ["VariousString_1", "VariousFile_1"]:
+        raise StyxValidationError("Parameter `fixel_out`s `@type` must be one of [\"VariousString_1\", \"VariousFile_1\"]")
     fixelconvert_fixel_out_validate_dyn_fn(params["fixel_out"]["@type"])(params["fixel_out"])
 
 
 def fixelconvert_cargs(
-    params: FixelconvertParameters,
+    params: FixelconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -681,7 +685,7 @@ def fixelconvert_cargs(
 
 
 def fixelconvert_outputs(
-    params: FixelconvertParameters,
+    params: FixelconvertParamsDict,
     execution: Execution,
 ) -> FixelconvertOutputs:
     """
@@ -700,7 +704,7 @@ def fixelconvert_outputs(
 
 
 def fixelconvert_execute(
-    params: FixelconvertParameters,
+    params: FixelconvertParamsDict,
     runner: Runner | None = None,
 ) -> FixelconvertOutputs:
     """
@@ -736,8 +740,8 @@ def fixelconvert_execute(
 
 
 def fixelconvert(
-    fixel_in: typing.Union[FixelconvertVariousStringParametersTagged, FixelconvertVariousFileParametersTagged],
-    fixel_out: typing.Union[FixelconvertVariousString1ParametersTagged, FixelconvertVariousFile1ParametersTagged],
+    fixel_in: typing.Union[FixelconvertVariousStringParamsDictTagged, FixelconvertVariousFileParamsDictTagged],
+    fixel_out: typing.Union[FixelconvertVariousString1ParamsDictTagged, FixelconvertVariousFile1ParamsDictTagged],
     name: str | None = None,
     nii: bool = False,
     out_size: bool = False,
@@ -749,7 +753,7 @@ def fixelconvert(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelconvertConfigParameters] | None = None,
+    config: list[FixelconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -822,13 +826,25 @@ def fixelconvert(
 
 __all__ = [
     "FIXELCONVERT_METADATA",
+    "FixelconvertConfigParamsDict",
+    "FixelconvertConfigParamsDictTagged",
     "FixelconvertOutputs",
+    "FixelconvertParamsDict",
+    "FixelconvertParamsDictTagged",
+    "FixelconvertVariousFile1ParamsDict",
+    "FixelconvertVariousFile1ParamsDictTagged",
+    "FixelconvertVariousFileParamsDict",
+    "FixelconvertVariousFileParamsDictTagged",
+    "FixelconvertVariousString1ParamsDict",
+    "FixelconvertVariousString1ParamsDictTagged",
+    "FixelconvertVariousStringParamsDict",
+    "FixelconvertVariousStringParamsDictTagged",
     "fixelconvert",
-    "fixelconvert_config_params",
+    "fixelconvert_config",
     "fixelconvert_execute",
     "fixelconvert_params",
-    "fixelconvert_various_file_1_params",
-    "fixelconvert_various_file_params",
-    "fixelconvert_various_string_1_params",
-    "fixelconvert_various_string_params",
+    "fixelconvert_various_file",
+    "fixelconvert_various_file_1",
+    "fixelconvert_various_string",
+    "fixelconvert_various_string_1",
 ]

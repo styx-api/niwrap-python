@@ -13,7 +13,7 @@ REALTIME_RECEIVER_PY_METADATA = Metadata(
 )
 
 
-RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', {
+RealtimeReceiverPyParamsDict = typing.TypedDict('RealtimeReceiverPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/realtime_receiver.py"]],
     "show_data": typing.NotRequired[bool | None],
     "write_text_data": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', 
     "tcp_port": typing.NotRequired[float | None],
     "verbosity": typing.NotRequired[float | None],
 })
-RealtimeReceiverPyParametersTagged = typing.TypedDict('RealtimeReceiverPyParametersTagged', {
+RealtimeReceiverPyParamsDictTagged = typing.TypedDict('RealtimeReceiverPyParamsDictTagged', {
     "@type": typing.Literal["afni/realtime_receiver.py"],
     "show_data": typing.NotRequired[bool | None],
     "write_text_data": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ RealtimeReceiverPyParametersTagged = typing.TypedDict('RealtimeReceiverPyParamet
 
 class RealtimeReceiverPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RealtimeReceiverPyParameters(...)`.
+    Output object returned when calling `RealtimeReceiverPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def realtime_receiver_py_params(
     swap: bool = False,
     tcp_port: float | None = None,
     verbosity: float | None = None,
-) -> RealtimeReceiverPyParametersTagged:
+) -> RealtimeReceiverPyParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def realtime_receiver_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RealtimeReceiverPyParameters` object.
+    `RealtimeReceiverPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -173,7 +173,7 @@ def realtime_receiver_py_validate(
 
 
 def realtime_receiver_py_cargs(
-    params: RealtimeReceiverPyParameters,
+    params: RealtimeReceiverPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def realtime_receiver_py_cargs(
 
 
 def realtime_receiver_py_outputs(
-    params: RealtimeReceiverPyParameters,
+    params: RealtimeReceiverPyParamsDict,
     execution: Execution,
 ) -> RealtimeReceiverPyOutputs:
     """
@@ -261,7 +261,7 @@ def realtime_receiver_py_outputs(
 
 
 def realtime_receiver_py_execute(
-    params: RealtimeReceiverPyParameters,
+    params: RealtimeReceiverPyParamsDict,
     runner: Runner | None = None,
 ) -> RealtimeReceiverPyOutputs:
     """
@@ -351,6 +351,8 @@ def realtime_receiver_py(
 __all__ = [
     "REALTIME_RECEIVER_PY_METADATA",
     "RealtimeReceiverPyOutputs",
+    "RealtimeReceiverPyParamsDict",
+    "RealtimeReceiverPyParamsDictTagged",
     "realtime_receiver_py",
     "realtime_receiver_py_execute",
     "realtime_receiver_py_params",

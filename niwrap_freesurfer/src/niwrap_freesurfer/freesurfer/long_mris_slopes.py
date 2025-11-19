@@ -13,7 +13,7 @@ LONG_MRIS_SLOPES_METADATA = Metadata(
 )
 
 
-LongMrisSlopesParameters = typing.TypedDict('LongMrisSlopesParameters', {
+LongMrisSlopesParamsDict = typing.TypedDict('LongMrisSlopesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/long_mris_slopes"]],
     "qdec": InputPathType,
     "meas": str,
@@ -50,7 +50,7 @@ LongMrisSlopesParameters = typing.TypedDict('LongMrisSlopesParameters', {
     "stack_spc": typing.NotRequired[str | None],
     "stack_resid": typing.NotRequired[str | None],
 })
-LongMrisSlopesParametersTagged = typing.TypedDict('LongMrisSlopesParametersTagged', {
+LongMrisSlopesParamsDictTagged = typing.TypedDict('LongMrisSlopesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/long_mris_slopes"],
     "qdec": InputPathType,
     "meas": str,
@@ -91,7 +91,7 @@ LongMrisSlopesParametersTagged = typing.TypedDict('LongMrisSlopesParametersTagge
 
 class LongMrisSlopesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LongMrisSlopesParameters(...)`.
+    Output object returned when calling `LongMrisSlopesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +132,7 @@ def long_mris_slopes_params(
     stack_pc1: str | None = None,
     stack_spc: str | None = None,
     stack_resid: str | None = None,
-) -> LongMrisSlopesParametersTagged:
+) -> LongMrisSlopesParamsDictTagged:
     """
     Build parameters.
     
@@ -246,7 +246,7 @@ def long_mris_slopes_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LongMrisSlopesParameters` object.
+    `LongMrisSlopesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -372,7 +372,7 @@ def long_mris_slopes_validate(
 
 
 def long_mris_slopes_cargs(
-    params: LongMrisSlopesParameters,
+    params: LongMrisSlopesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -526,7 +526,7 @@ def long_mris_slopes_cargs(
 
 
 def long_mris_slopes_outputs(
-    params: LongMrisSlopesParameters,
+    params: LongMrisSlopesParamsDict,
     execution: Execution,
 ) -> LongMrisSlopesOutputs:
     """
@@ -545,7 +545,7 @@ def long_mris_slopes_outputs(
 
 
 def long_mris_slopes_execute(
-    params: LongMrisSlopesParameters,
+    params: LongMrisSlopesParamsDict,
     runner: Runner | None = None,
 ) -> LongMrisSlopesOutputs:
     """
@@ -709,6 +709,8 @@ def long_mris_slopes(
 __all__ = [
     "LONG_MRIS_SLOPES_METADATA",
     "LongMrisSlopesOutputs",
+    "LongMrisSlopesParamsDict",
+    "LongMrisSlopesParamsDictTagged",
     "long_mris_slopes",
     "long_mris_slopes_execute",
     "long_mris_slopes_params",

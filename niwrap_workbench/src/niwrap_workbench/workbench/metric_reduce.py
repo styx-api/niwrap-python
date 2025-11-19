@@ -12,40 +12,40 @@ METRIC_REDUCE_METADATA = Metadata(
 )
 
 
-MetricReduceExcludeOutliersParameters = typing.TypedDict('MetricReduceExcludeOutliersParameters', {
+MetricReduceExcludeOutliersParamsDict = typing.TypedDict('MetricReduceExcludeOutliersParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
     "sigma-below": float,
     "sigma-above": float,
 })
-MetricReduceExcludeOutliersParametersTagged = typing.TypedDict('MetricReduceExcludeOutliersParametersTagged', {
+MetricReduceExcludeOutliersParamsDictTagged = typing.TypedDict('MetricReduceExcludeOutliersParamsDictTagged', {
     "@type": typing.Literal["exclude-outliers"],
     "sigma-below": float,
     "sigma-above": float,
 })
 
 
-MetricReduceParameters = typing.TypedDict('MetricReduceParameters', {
+MetricReduceParamsDict = typing.TypedDict('MetricReduceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-reduce"]],
     "metric-out": str,
-    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "metric-in": InputPathType,
     "operation": str,
 })
-MetricReduceParametersTagged = typing.TypedDict('MetricReduceParametersTagged', {
+MetricReduceParamsDictTagged = typing.TypedDict('MetricReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-reduce"],
     "metric-out": str,
-    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
+    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "metric-in": InputPathType,
     "operation": str,
 })
 
 
-def metric_reduce_exclude_outliers_params(
+def metric_reduce_exclude_outliers(
     sigma_below: float,
     sigma_above: float,
-) -> MetricReduceExcludeOutliersParametersTagged:
+) -> MetricReduceExcludeOutliersParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def metric_reduce_exclude_outliers_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricReduceExcludeOutliersParameters` object.
+    `MetricReduceExcludeOutliersParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def metric_reduce_exclude_outliers_validate(
 
 
 def metric_reduce_exclude_outliers_cargs(
-    params: MetricReduceExcludeOutliersParameters,
+    params: MetricReduceExcludeOutliersParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def metric_reduce_exclude_outliers_cargs(
 
 class MetricReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricReduceParameters(...)`.
+    Output object returned when calling `MetricReduceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,9 +121,9 @@ def metric_reduce_params(
     metric_out: str,
     metric_in: InputPathType,
     operation: str,
-    exclude_outliers: MetricReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: MetricReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
-) -> MetricReduceParametersTagged:
+) -> MetricReduceParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def metric_reduce_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricReduceParameters` object.
+    `MetricReduceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def metric_reduce_validate(
 
 
 def metric_reduce_cargs(
-    params: MetricReduceParameters,
+    params: MetricReduceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -209,7 +209,7 @@ def metric_reduce_cargs(
 
 
 def metric_reduce_outputs(
-    params: MetricReduceParameters,
+    params: MetricReduceParamsDict,
     execution: Execution,
 ) -> MetricReduceOutputs:
     """
@@ -229,7 +229,7 @@ def metric_reduce_outputs(
 
 
 def metric_reduce_execute(
-    params: MetricReduceParameters,
+    params: MetricReduceParamsDict,
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
@@ -277,7 +277,7 @@ def metric_reduce(
     metric_out: str,
     metric_in: InputPathType,
     operation: str,
-    exclude_outliers: MetricReduceExcludeOutliersParameters | None = None,
+    exclude_outliers: MetricReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
@@ -329,9 +329,13 @@ def metric_reduce(
 
 __all__ = [
     "METRIC_REDUCE_METADATA",
+    "MetricReduceExcludeOutliersParamsDict",
+    "MetricReduceExcludeOutliersParamsDictTagged",
     "MetricReduceOutputs",
+    "MetricReduceParamsDict",
+    "MetricReduceParamsDictTagged",
     "metric_reduce",
-    "metric_reduce_exclude_outliers_params",
+    "metric_reduce_exclude_outliers",
     "metric_reduce_execute",
     "metric_reduce_params",
 ]

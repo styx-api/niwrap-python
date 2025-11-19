@@ -13,7 +13,7 @@ MRIS_REGISTER_METADATA = Metadata(
 )
 
 
-MrisRegisterParameters = typing.TypedDict('MrisRegisterParameters', {
+MrisRegisterParamsDict = typing.TypedDict('MrisRegisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register"]],
     "surf_fname": InputPathType,
     "target": InputPathType,
@@ -79,7 +79,7 @@ MrisRegisterParameters = typing.TypedDict('MrisRegisterParameters', {
     "threads": typing.NotRequired[float | None],
     "version_flag": bool,
 })
-MrisRegisterParametersTagged = typing.TypedDict('MrisRegisterParametersTagged', {
+MrisRegisterParamsDictTagged = typing.TypedDict('MrisRegisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_register"],
     "surf_fname": InputPathType,
     "target": InputPathType,
@@ -149,7 +149,7 @@ MrisRegisterParametersTagged = typing.TypedDict('MrisRegisterParametersTagged', 
 
 class MrisRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisRegisterParameters(...)`.
+    Output object returned when calling `MrisRegisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -223,7 +223,7 @@ def mris_register_params(
     vector_flag: bool = False,
     threads: float | None = None,
     version_flag: bool = False,
-) -> MrisRegisterParametersTagged:
+) -> MrisRegisterParamsDictTagged:
     """
     Build parameters.
     
@@ -421,7 +421,7 @@ def mris_register_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisRegisterParameters` object.
+    `MrisRegisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -640,7 +640,7 @@ def mris_register_validate(
 
 
 def mris_register_cargs(
-    params: MrisRegisterParameters,
+    params: MrisRegisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -910,7 +910,7 @@ def mris_register_cargs(
 
 
 def mris_register_outputs(
-    params: MrisRegisterParameters,
+    params: MrisRegisterParamsDict,
     execution: Execution,
 ) -> MrisRegisterOutputs:
     """
@@ -931,7 +931,7 @@ def mris_register_outputs(
 
 
 def mris_register_execute(
-    params: MrisRegisterParameters,
+    params: MrisRegisterParamsDict,
     runner: Runner | None = None,
 ) -> MrisRegisterOutputs:
     """
@@ -1183,6 +1183,8 @@ def mris_register(
 __all__ = [
     "MRIS_REGISTER_METADATA",
     "MrisRegisterOutputs",
+    "MrisRegisterParamsDict",
+    "MrisRegisterParamsDictTagged",
     "mris_register",
     "mris_register_execute",
     "mris_register_params",

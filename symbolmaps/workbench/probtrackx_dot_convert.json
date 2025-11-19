@@ -6,7 +6,7 @@
     },
     "row-voxels": {
       "var_param": "row_voxels",
-      "fn_struct_make_params": "probtrackx_dot_convert_row_voxels_params",
+      "fn_struct_make_params": "probtrackx_dot_convert_row_voxels",
       "properties": {
         "voxel-list-file": {
           "var_param": "voxel_list_file"
@@ -21,7 +21,7 @@
     },
     "row-cifti": {
       "var_param": "row_cifti",
-      "fn_struct_make_params": "probtrackx_dot_convert_row_cifti_params",
+      "fn_struct_make_params": "probtrackx_dot_convert_row_cifti",
       "properties": {
         "cifti": {
           "var_param": "cifti"
@@ -33,7 +33,7 @@
     },
     "col-voxels": {
       "var_param": "col_voxels",
-      "fn_struct_make_params": "probtrackx_dot_convert_col_voxels_params",
+      "fn_struct_make_params": "probtrackx_dot_convert_col_voxels",
       "properties": {
         "voxel-list-file": {
           "var_param": "voxel_list_file"
@@ -45,7 +45,7 @@
     },
     "col-cifti": {
       "var_param": "col_cifti",
-      "fn_struct_make_params": "probtrackx_dot_convert_col_cifti_params",
+      "fn_struct_make_params": "probtrackx_dot_convert_col_cifti",
       "properties": {
         "cifti": {
           "var_param": "cifti"

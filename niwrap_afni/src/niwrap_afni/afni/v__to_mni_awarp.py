@@ -13,12 +13,12 @@ V__TO_MNI_AWARP_METADATA = Metadata(
 )
 
 
-VToMniAwarpParameters = typing.TypedDict('VToMniAwarpParameters', {
+VToMniAwarpParamsDict = typing.TypedDict('VToMniAwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Awarp"]],
     "directory": str,
     "datasets": list[InputPathType],
 })
-VToMniAwarpParametersTagged = typing.TypedDict('VToMniAwarpParametersTagged', {
+VToMniAwarpParamsDictTagged = typing.TypedDict('VToMniAwarpParamsDictTagged', {
     "@type": typing.Literal["afni/@toMNI_Awarp"],
     "directory": str,
     "datasets": list[InputPathType],
@@ -27,7 +27,7 @@ VToMniAwarpParametersTagged = typing.TypedDict('VToMniAwarpParametersTagged', {
 
 class VToMniAwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VToMniAwarpParameters(...)`.
+    Output object returned when calling `VToMniAwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VToMniAwarpOutputs(typing.NamedTuple):
 def v__to_mni_awarp_params(
     directory: str,
     datasets: list[InputPathType],
-) -> VToMniAwarpParametersTagged:
+) -> VToMniAwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def v__to_mni_awarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VToMniAwarpParameters` object.
+    `VToMniAwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -81,7 +81,7 @@ def v__to_mni_awarp_validate(
 
 
 def v__to_mni_awarp_cargs(
-    params: VToMniAwarpParameters,
+    params: VToMniAwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -101,7 +101,7 @@ def v__to_mni_awarp_cargs(
 
 
 def v__to_mni_awarp_outputs(
-    params: VToMniAwarpParameters,
+    params: VToMniAwarpParamsDict,
     execution: Execution,
 ) -> VToMniAwarpOutputs:
     """
@@ -120,7 +120,7 @@ def v__to_mni_awarp_outputs(
 
 
 def v__to_mni_awarp_execute(
-    params: VToMniAwarpParameters,
+    params: VToMniAwarpParamsDict,
     runner: Runner | None = None,
 ) -> VToMniAwarpOutputs:
     """
@@ -181,6 +181,8 @@ def v__to_mni_awarp(
 
 __all__ = [
     "VToMniAwarpOutputs",
+    "VToMniAwarpParamsDict",
+    "VToMniAwarpParamsDictTagged",
     "V__TO_MNI_AWARP_METADATA",
     "v__to_mni_awarp",
     "v__to_mni_awarp_execute",

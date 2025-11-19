@@ -12,7 +12,7 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 )
 
 
-SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParameters', {
+SurfaceGeodesicDistanceAllToAllParamsDict = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-all-to-all"]],
     "cifti-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -21,7 +21,7 @@ SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDis
     "naive": bool,
     "surface": InputPathType,
 })
-SurfaceGeodesicDistanceAllToAllParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParametersTagged', {
+SurfaceGeodesicDistanceAllToAllParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance-all-to-all"],
     "cifti-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ SurfaceGeodesicDistanceAllToAllParametersTagged = typing.TypedDict('SurfaceGeode
 
 class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceGeodesicDistanceAllToAllParameters(...)`.
+    Output object returned when calling `SurfaceGeodesicDistanceAllToAllParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -49,7 +49,7 @@ def surface_geodesic_distance_all_to_all_params(
     area_metric: InputPathType | None,
     surface: InputPathType,
     naive: bool = False,
-) -> SurfaceGeodesicDistanceAllToAllParametersTagged:
+) -> SurfaceGeodesicDistanceAllToAllParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def surface_geodesic_distance_all_to_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceGeodesicDistanceAllToAllParameters` object.
+    `SurfaceGeodesicDistanceAllToAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def surface_geodesic_distance_all_to_all_validate(
 
 
 def surface_geodesic_distance_all_to_all_cargs(
-    params: SurfaceGeodesicDistanceAllToAllParameters,
+    params: SurfaceGeodesicDistanceAllToAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def surface_geodesic_distance_all_to_all_cargs(
 
 
 def surface_geodesic_distance_all_to_all_outputs(
-    params: SurfaceGeodesicDistanceAllToAllParameters,
+    params: SurfaceGeodesicDistanceAllToAllParamsDict,
     execution: Execution,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
@@ -172,7 +172,7 @@ def surface_geodesic_distance_all_to_all_outputs(
 
 
 def surface_geodesic_distance_all_to_all_execute(
-    params: SurfaceGeodesicDistanceAllToAllParameters,
+    params: SurfaceGeodesicDistanceAllToAllParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
@@ -278,6 +278,8 @@ def surface_geodesic_distance_all_to_all(
 __all__ = [
     "SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA",
     "SurfaceGeodesicDistanceAllToAllOutputs",
+    "SurfaceGeodesicDistanceAllToAllParamsDict",
+    "SurfaceGeodesicDistanceAllToAllParamsDictTagged",
     "surface_geodesic_distance_all_to_all",
     "surface_geodesic_distance_all_to_all_execute",
     "surface_geodesic_distance_all_to_all_params",

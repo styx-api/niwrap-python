@@ -81,7 +81,7 @@
     },
     "trace": {
       "var_param": "trace_",
-      "fn_struct_make_params": "scale_to_map_trace_params",
+      "fn_struct_make_params": "scale_to_map_trace",
       "properties": {
         "trace": {
           "var_param": "trace_"

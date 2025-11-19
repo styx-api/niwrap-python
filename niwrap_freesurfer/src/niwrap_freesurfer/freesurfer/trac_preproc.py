@@ -13,7 +13,7 @@ TRAC_PREPROC_METADATA = Metadata(
 )
 
 
-TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
+TracPreprocParamsDict = typing.TypedDict('TracPreprocParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/trac-preproc"]],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
@@ -28,7 +28,7 @@ TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
     "dontrun": bool,
     "version": bool,
 })
-TracPreprocParametersTagged = typing.TypedDict('TracPreprocParametersTagged', {
+TracPreprocParamsDictTagged = typing.TypedDict('TracPreprocParamsDictTagged', {
     "@type": typing.Literal["freesurfer/trac-preproc"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
@@ -47,7 +47,7 @@ TracPreprocParametersTagged = typing.TypedDict('TracPreprocParametersTagged', {
 
 class TracPreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TracPreprocParameters(...)`.
+    Output object returned when calling `TracPreprocParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def trac_preproc_params(
     debug: bool = False,
     dontrun: bool = False,
     version: bool = False,
-) -> TracPreprocParametersTagged:
+) -> TracPreprocParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def trac_preproc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TracPreprocParameters` object.
+    `TracPreprocParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def trac_preproc_validate(
 
 
 def trac_preproc_cargs(
-    params: TracPreprocParameters,
+    params: TracPreprocParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -224,7 +224,7 @@ def trac_preproc_cargs(
 
 
 def trac_preproc_outputs(
-    params: TracPreprocParameters,
+    params: TracPreprocParamsDict,
     execution: Execution,
 ) -> TracPreprocOutputs:
     """
@@ -243,7 +243,7 @@ def trac_preproc_outputs(
 
 
 def trac_preproc_execute(
-    params: TracPreprocParameters,
+    params: TracPreprocParamsDict,
     runner: Runner | None = None,
 ) -> TracPreprocOutputs:
     """
@@ -333,6 +333,8 @@ def trac_preproc(
 __all__ = [
     "TRAC_PREPROC_METADATA",
     "TracPreprocOutputs",
+    "TracPreprocParamsDict",
+    "TracPreprocParamsDictTagged",
     "trac_preproc",
     "trac_preproc_execute",
     "trac_preproc_params",

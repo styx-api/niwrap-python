@@ -13,7 +13,7 @@ GCAPREPONE_METADATA = Metadata(
 )
 
 
-GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
+GcapreponeParamsDict = typing.TypedDict('GcapreponeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/gcaprepone"]],
     "gcadir": str,
     "subject": str,
@@ -22,7 +22,7 @@ GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
     "done_file": str,
     "no_emreg": bool,
 })
-GcapreponeParametersTagged = typing.TypedDict('GcapreponeParametersTagged', {
+GcapreponeParamsDictTagged = typing.TypedDict('GcapreponeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/gcaprepone"],
     "gcadir": str,
     "subject": str,
@@ -35,7 +35,7 @@ GcapreponeParametersTagged = typing.TypedDict('GcapreponeParametersTagged', {
 
 class GcapreponeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `GcapreponeParameters(...)`.
+    Output object returned when calling `GcapreponeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def gcaprepone_params(
     done_file: str,
     init_subject: bool = False,
     no_emreg: bool = False,
-) -> GcapreponeParametersTagged:
+) -> GcapreponeParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def gcaprepone_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `GcapreponeParameters` object.
+    `GcapreponeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def gcaprepone_validate(
 
 
 def gcaprepone_cargs(
-    params: GcapreponeParameters,
+    params: GcapreponeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def gcaprepone_cargs(
 
 
 def gcaprepone_outputs(
-    params: GcapreponeParameters,
+    params: GcapreponeParamsDict,
     execution: Execution,
 ) -> GcapreponeOutputs:
     """
@@ -170,7 +170,7 @@ def gcaprepone_outputs(
 
 
 def gcaprepone_execute(
-    params: GcapreponeParameters,
+    params: GcapreponeParamsDict,
     runner: Runner | None = None,
 ) -> GcapreponeOutputs:
     """
@@ -243,6 +243,8 @@ def gcaprepone(
 __all__ = [
     "GCAPREPONE_METADATA",
     "GcapreponeOutputs",
+    "GcapreponeParamsDict",
+    "GcapreponeParamsDictTagged",
     "gcaprepone",
     "gcaprepone_execute",
     "gcaprepone_params",

@@ -13,7 +13,7 @@ MRIS_SAMPLE_PARC_METADATA = Metadata(
 )
 
 
-MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
+MrisSampleParcParamsDict = typing.TypedDict('MrisSampleParcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_parc"]],
     "subject_name": str,
     "hemisphere": str,
@@ -39,7 +39,7 @@ MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
     "help": bool,
     "version": bool,
 })
-MrisSampleParcParametersTagged = typing.TypedDict('MrisSampleParcParametersTagged', {
+MrisSampleParcParamsDictTagged = typing.TypedDict('MrisSampleParcParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_sample_parc"],
     "subject_name": str,
     "hemisphere": str,
@@ -69,7 +69,7 @@ MrisSampleParcParametersTagged = typing.TypedDict('MrisSampleParcParametersTagge
 
 class MrisSampleParcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisSampleParcParameters(...)`.
+    Output object returned when calling `MrisSampleParcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +101,7 @@ def mris_sample_parc_params(
     change_unknown: float | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrisSampleParcParametersTagged:
+) -> MrisSampleParcParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def mris_sample_parc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisSampleParcParameters` object.
+    `MrisSampleParcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -278,7 +278,7 @@ def mris_sample_parc_validate(
 
 
 def mris_sample_parc_cargs(
-    params: MrisSampleParcParameters,
+    params: MrisSampleParcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -389,7 +389,7 @@ def mris_sample_parc_cargs(
 
 
 def mris_sample_parc_outputs(
-    params: MrisSampleParcParameters,
+    params: MrisSampleParcParamsDict,
     execution: Execution,
 ) -> MrisSampleParcOutputs:
     """
@@ -409,7 +409,7 @@ def mris_sample_parc_outputs(
 
 
 def mris_sample_parc_execute(
-    params: MrisSampleParcParameters,
+    params: MrisSampleParcParamsDict,
     runner: Runner | None = None,
 ) -> MrisSampleParcOutputs:
     """
@@ -536,6 +536,8 @@ def mris_sample_parc(
 __all__ = [
     "MRIS_SAMPLE_PARC_METADATA",
     "MrisSampleParcOutputs",
+    "MrisSampleParcParamsDict",
+    "MrisSampleParcParamsDictTagged",
     "mris_sample_parc",
     "mris_sample_parc_execute",
     "mris_sample_parc_params",

@@ -13,7 +13,7 @@ MRI_SEG_DIFF_METADATA = Metadata(
 )
 
 
-MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
+MriSegDiffParamsDict = typing.TypedDict('MriSegDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_diff"]],
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
     "checkopts": bool,
     "version": bool,
 })
-MriSegDiffParametersTagged = typing.TypedDict('MriSegDiffParametersTagged', {
+MriSegDiffParamsDictTagged = typing.TypedDict('MriSegDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_seg_diff"],
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ MriSegDiffParametersTagged = typing.TypedDict('MriSegDiffParametersTagged', {
 
 class MriSegDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegDiffParameters(...)`.
+    Output object returned when calling `MriSegDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def mri_seg_diff_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriSegDiffParametersTagged:
+) -> MriSegDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def mri_seg_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegDiffParameters` object.
+    `MriSegDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def mri_seg_diff_validate(
 
 
 def mri_seg_diff_cargs(
-    params: MriSegDiffParameters,
+    params: MriSegDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -208,7 +208,7 @@ def mri_seg_diff_cargs(
 
 
 def mri_seg_diff_outputs(
-    params: MriSegDiffParameters,
+    params: MriSegDiffParamsDict,
     execution: Execution,
 ) -> MriSegDiffOutputs:
     """
@@ -229,7 +229,7 @@ def mri_seg_diff_outputs(
 
 
 def mri_seg_diff_execute(
-    params: MriSegDiffParameters,
+    params: MriSegDiffParamsDict,
     runner: Runner | None = None,
 ) -> MriSegDiffOutputs:
     """
@@ -314,6 +314,8 @@ def mri_seg_diff(
 __all__ = [
     "MRI_SEG_DIFF_METADATA",
     "MriSegDiffOutputs",
+    "MriSegDiffParamsDict",
+    "MriSegDiffParamsDictTagged",
     "mri_seg_diff",
     "mri_seg_diff_execute",
     "mri_seg_diff_params",

@@ -13,7 +13,7 @@ V_3D_GROUP_IN_CORR_METADATA = Metadata(
 )
 
 
-V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
+V3dGroupInCorrParamsDict = typing.TypedDict('V3dGroupInCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dGroupInCorr"]],
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
     "debug": bool,
     "batch": typing.NotRequired[str | None],
 })
-V3dGroupInCorrParametersTagged = typing.TypedDict('V3dGroupInCorrParametersTagged', {
+V3dGroupInCorrParamsDictTagged = typing.TypedDict('V3dGroupInCorrParamsDictTagged', {
     "@type": typing.Literal["afni/3dGroupInCorr"],
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
@@ -79,7 +79,7 @@ V3dGroupInCorrParametersTagged = typing.TypedDict('V3dGroupInCorrParametersTagge
 
 class V3dGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dGroupInCorrParameters(...)`.
+    Output object returned when calling `V3dGroupInCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +116,7 @@ def v_3d_group_in_corr_params(
     very_verbose: bool = False,
     debug: bool = False,
     batch: str | None = None,
-) -> V3dGroupInCorrParametersTagged:
+) -> V3dGroupInCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -210,7 +210,7 @@ def v_3d_group_in_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dGroupInCorrParameters` object.
+    `V3dGroupInCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -320,7 +320,7 @@ def v_3d_group_in_corr_validate(
 
 
 def v_3d_group_in_corr_cargs(
-    params: V3dGroupInCorrParameters,
+    params: V3dGroupInCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -432,7 +432,7 @@ def v_3d_group_in_corr_cargs(
 
 
 def v_3d_group_in_corr_outputs(
-    params: V3dGroupInCorrParameters,
+    params: V3dGroupInCorrParamsDict,
     execution: Execution,
 ) -> V3dGroupInCorrOutputs:
     """
@@ -452,7 +452,7 @@ def v_3d_group_in_corr_outputs(
 
 
 def v_3d_group_in_corr_execute(
-    params: V3dGroupInCorrParameters,
+    params: V3dGroupInCorrParamsDict,
     runner: Runner | None = None,
 ) -> V3dGroupInCorrOutputs:
     """
@@ -595,6 +595,8 @@ def v_3d_group_in_corr(
 
 __all__ = [
     "V3dGroupInCorrOutputs",
+    "V3dGroupInCorrParamsDict",
+    "V3dGroupInCorrParamsDictTagged",
     "V_3D_GROUP_IN_CORR_METADATA",
     "v_3d_group_in_corr",
     "v_3d_group_in_corr_execute",

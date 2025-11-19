@@ -13,19 +13,19 @@ FIXEL2TSF_METADATA = Metadata(
 )
 
 
-Fixel2tsfConfigParameters = typing.TypedDict('Fixel2tsfConfigParameters', {
+Fixel2tsfConfigParamsDict = typing.TypedDict('Fixel2tsfConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Fixel2tsfConfigParametersTagged = typing.TypedDict('Fixel2tsfConfigParametersTagged', {
+Fixel2tsfConfigParamsDictTagged = typing.TypedDict('Fixel2tsfConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
+Fixel2tsfParamsDict = typing.TypedDict('Fixel2tsfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2tsf"]],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -33,14 +33,14 @@ Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2tsfConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2tsfConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
     "tracks": InputPathType,
     "tsf": str,
 })
-Fixel2tsfParametersTagged = typing.TypedDict('Fixel2tsfParametersTagged', {
+Fixel2tsfParamsDictTagged = typing.TypedDict('Fixel2tsfParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixel2tsf"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
@@ -48,7 +48,7 @@ Fixel2tsfParametersTagged = typing.TypedDict('Fixel2tsfParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Fixel2tsfConfigParameters] | None],
+    "config": typing.NotRequired[list[Fixel2tsfConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
@@ -57,10 +57,10 @@ Fixel2tsfParametersTagged = typing.TypedDict('Fixel2tsfParametersTagged', {
 })
 
 
-def fixel2tsf_config_params(
+def fixel2tsf_config(
     key: str,
     value: str,
-) -> Fixel2tsfConfigParametersTagged:
+) -> Fixel2tsfConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def fixel2tsf_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2tsfConfigParameters` object.
+    `Fixel2tsfConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def fixel2tsf_config_validate(
 
 
 def fixel2tsf_config_cargs(
-    params: Fixel2tsfConfigParameters,
+    params: Fixel2tsfConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def fixel2tsf_config_cargs(
 
 class Fixel2tsfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fixel2tsfParameters(...)`.
+    Output object returned when calling `Fixel2tsfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def fixel2tsf_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2tsfConfigParameters] | None = None,
+    config: list[Fixel2tsfConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2tsfParametersTagged:
+) -> Fixel2tsfParamsDictTagged:
     """
     Build parameters.
     
@@ -194,7 +194,7 @@ def fixel2tsf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fixel2tsfParameters` object.
+    `Fixel2tsfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def fixel2tsf_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2tsfConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Fixel2tsfConfigParamsDict] | None`')
         for e in params["config"]:
             fixel2tsf_config_validate(e)
     if params.get("help", False) is None:
@@ -251,7 +251,7 @@ def fixel2tsf_validate(
 
 
 def fixel2tsf_cargs(
-    params: Fixel2tsfParameters,
+    params: Fixel2tsfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -296,7 +296,7 @@ def fixel2tsf_cargs(
 
 
 def fixel2tsf_outputs(
-    params: Fixel2tsfParameters,
+    params: Fixel2tsfParamsDict,
     execution: Execution,
 ) -> Fixel2tsfOutputs:
     """
@@ -316,7 +316,7 @@ def fixel2tsf_outputs(
 
 
 def fixel2tsf_execute(
-    params: Fixel2tsfParameters,
+    params: Fixel2tsfParamsDict,
     runner: Runner | None = None,
 ) -> Fixel2tsfOutputs:
     """
@@ -361,7 +361,7 @@ def fixel2tsf(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Fixel2tsfConfigParameters] | None = None,
+    config: list[Fixel2tsfConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -423,9 +423,13 @@ def fixel2tsf(
 
 __all__ = [
     "FIXEL2TSF_METADATA",
+    "Fixel2tsfConfigParamsDict",
+    "Fixel2tsfConfigParamsDictTagged",
     "Fixel2tsfOutputs",
+    "Fixel2tsfParamsDict",
+    "Fixel2tsfParamsDictTagged",
     "fixel2tsf",
-    "fixel2tsf_config_params",
+    "fixel2tsf_config",
     "fixel2tsf_execute",
     "fixel2tsf_params",
 ]

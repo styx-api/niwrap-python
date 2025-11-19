@@ -13,12 +13,12 @@ HIAM_MAKE_SURFACES_METADATA = Metadata(
 )
 
 
-HiamMakeSurfacesParameters = typing.TypedDict('HiamMakeSurfacesParameters', {
+HiamMakeSurfacesParamsDict = typing.TypedDict('HiamMakeSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_surfaces"]],
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })
-HiamMakeSurfacesParametersTagged = typing.TypedDict('HiamMakeSurfacesParametersTagged', {
+HiamMakeSurfacesParamsDictTagged = typing.TypedDict('HiamMakeSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/hiam_make_surfaces"],
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
@@ -27,7 +27,7 @@ HiamMakeSurfacesParametersTagged = typing.TypedDict('HiamMakeSurfacesParametersT
 
 class HiamMakeSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HiamMakeSurfacesParameters(...)`.
+    Output object returned when calling `HiamMakeSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class HiamMakeSurfacesOutputs(typing.NamedTuple):
 def hiam_make_surfaces_params(
     subject_name: str,
     structure: typing.Literal["RA", "LA", "RH", "LH"],
-) -> HiamMakeSurfacesParametersTagged:
+) -> HiamMakeSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def hiam_make_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HiamMakeSurfacesParameters` object.
+    `HiamMakeSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def hiam_make_surfaces_validate(
 
 
 def hiam_make_surfaces_cargs(
-    params: HiamMakeSurfacesParameters,
+    params: HiamMakeSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def hiam_make_surfaces_cargs(
 
 
 def hiam_make_surfaces_outputs(
-    params: HiamMakeSurfacesParameters,
+    params: HiamMakeSurfacesParamsDict,
     execution: Execution,
 ) -> HiamMakeSurfacesOutputs:
     """
@@ -119,7 +119,7 @@ def hiam_make_surfaces_outputs(
 
 
 def hiam_make_surfaces_execute(
-    params: HiamMakeSurfacesParameters,
+    params: HiamMakeSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> HiamMakeSurfacesOutputs:
     """
@@ -179,6 +179,8 @@ def hiam_make_surfaces(
 __all__ = [
     "HIAM_MAKE_SURFACES_METADATA",
     "HiamMakeSurfacesOutputs",
+    "HiamMakeSurfacesParamsDict",
+    "HiamMakeSurfacesParamsDictTagged",
     "hiam_make_surfaces",
     "hiam_make_surfaces_execute",
     "hiam_make_surfaces_params",

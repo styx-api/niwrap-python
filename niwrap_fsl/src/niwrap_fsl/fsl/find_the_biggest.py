@@ -13,12 +13,12 @@ FIND_THE_BIGGEST_METADATA = Metadata(
 )
 
 
-FindTheBiggestParameters = typing.TypedDict('FindTheBiggestParameters', {
+FindTheBiggestParamsDict = typing.TypedDict('FindTheBiggestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/find_the_biggest"]],
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })
-FindTheBiggestParametersTagged = typing.TypedDict('FindTheBiggestParametersTagged', {
+FindTheBiggestParamsDictTagged = typing.TypedDict('FindTheBiggestParamsDictTagged', {
     "@type": typing.Literal["fsl/find_the_biggest"],
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
@@ -27,7 +27,7 @@ FindTheBiggestParametersTagged = typing.TypedDict('FindTheBiggestParametersTagge
 
 class FindTheBiggestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FindTheBiggestParameters(...)`.
+    Output object returned when calling `FindTheBiggestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FindTheBiggestOutputs(typing.NamedTuple):
 def find_the_biggest_params(
     volumes_surfaces: list[InputPathType],
     output_index: str,
-) -> FindTheBiggestParametersTagged:
+) -> FindTheBiggestParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def find_the_biggest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FindTheBiggestParameters` object.
+    `FindTheBiggestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def find_the_biggest_validate(
 
 
 def find_the_biggest_cargs(
-    params: FindTheBiggestParameters,
+    params: FindTheBiggestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def find_the_biggest_cargs(
 
 
 def find_the_biggest_outputs(
-    params: FindTheBiggestParameters,
+    params: FindTheBiggestParamsDict,
     execution: Execution,
 ) -> FindTheBiggestOutputs:
     """
@@ -122,7 +122,7 @@ def find_the_biggest_outputs(
 
 
 def find_the_biggest_execute(
-    params: FindTheBiggestParameters,
+    params: FindTheBiggestParamsDict,
     runner: Runner | None = None,
 ) -> FindTheBiggestOutputs:
     """
@@ -181,6 +181,8 @@ def find_the_biggest(
 __all__ = [
     "FIND_THE_BIGGEST_METADATA",
     "FindTheBiggestOutputs",
+    "FindTheBiggestParamsDict",
+    "FindTheBiggestParamsDictTagged",
     "find_the_biggest",
     "find_the_biggest_execute",
     "find_the_biggest_params",

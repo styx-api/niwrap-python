@@ -13,14 +13,14 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 )
 
 
-V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
+V3dAfnito3DParamsDict = typing.TypedDict('V3dAfnito3DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAFNIto3D"]],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "binary": bool,
     "text": bool,
 })
-V3dAfnito3DParametersTagged = typing.TypedDict('V3dAfnito3DParametersTagged', {
+V3dAfnito3DParamsDictTagged = typing.TypedDict('V3dAfnito3DParamsDictTagged', {
     "@type": typing.Literal["afni/3dAFNIto3D"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dAfnito3DParametersTagged = typing.TypedDict('V3dAfnito3DParametersTagged', {
 
 class V3dAfnito3DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAfnito3DParameters(...)`.
+    Output object returned when calling `V3dAfnito3DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3d_afnito3_d_params(
     prefix: str | None = None,
     binary: bool = False,
     text: bool = False,
-) -> V3dAfnito3DParametersTagged:
+) -> V3dAfnito3DParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_afnito3_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAfnito3DParameters` object.
+    `V3dAfnito3DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def v_3d_afnito3_d_validate(
 
 
 def v_3d_afnito3_d_cargs(
-    params: V3dAfnito3DParameters,
+    params: V3dAfnito3DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def v_3d_afnito3_d_cargs(
 
 
 def v_3d_afnito3_d_outputs(
-    params: V3dAfnito3DParameters,
+    params: V3dAfnito3DParamsDict,
     execution: Execution,
 ) -> V3dAfnito3DOutputs:
     """
@@ -145,7 +145,7 @@ def v_3d_afnito3_d_outputs(
 
 
 def v_3d_afnito3_d_execute(
-    params: V3dAfnito3DParameters,
+    params: V3dAfnito3DParamsDict,
     runner: Runner | None = None,
 ) -> V3dAfnito3DOutputs:
     """
@@ -209,6 +209,8 @@ def v_3d_afnito3_d(
 
 __all__ = [
     "V3dAfnito3DOutputs",
+    "V3dAfnito3DParamsDict",
+    "V3dAfnito3DParamsDictTagged",
     "V_3D_AFNITO3_D_METADATA",
     "v_3d_afnito3_d",
     "v_3d_afnito3_d_execute",

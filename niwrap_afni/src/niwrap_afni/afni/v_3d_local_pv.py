@@ -13,7 +13,7 @@ V_3D_LOCAL_PV_METADATA = Metadata(
 )
 
 
-V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
+V3dLocalPvParamsDict = typing.TypedDict('V3dLocalPvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalPV"]],
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
     "vnorm": bool,
     "vproj": typing.NotRequired[str | None],
 })
-V3dLocalPvParametersTagged = typing.TypedDict('V3dLocalPvParametersTagged', {
+V3dLocalPvParamsDictTagged = typing.TypedDict('V3dLocalPvParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalPV"],
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ V3dLocalPvParametersTagged = typing.TypedDict('V3dLocalPvParametersTagged', {
 
 class V3dLocalPvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalPvParameters(...)`.
+    Output object returned when calling `V3dLocalPvParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def v_3d_local_pv_params(
     polort: float | None = None,
     vnorm: bool = False,
     vproj: str | None = None,
-) -> V3dLocalPvParametersTagged:
+) -> V3dLocalPvParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def v_3d_local_pv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalPvParameters` object.
+    `V3dLocalPvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def v_3d_local_pv_validate(
 
 
 def v_3d_local_pv_cargs(
-    params: V3dLocalPvParameters,
+    params: V3dLocalPvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -231,7 +231,7 @@ def v_3d_local_pv_cargs(
 
 
 def v_3d_local_pv_outputs(
-    params: V3dLocalPvParameters,
+    params: V3dLocalPvParamsDict,
     execution: Execution,
 ) -> V3dLocalPvOutputs:
     """
@@ -253,7 +253,7 @@ def v_3d_local_pv_outputs(
 
 
 def v_3d_local_pv_execute(
-    params: V3dLocalPvParameters,
+    params: V3dLocalPvParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalPvOutputs:
     """
@@ -349,6 +349,8 @@ def v_3d_local_pv(
 
 __all__ = [
     "V3dLocalPvOutputs",
+    "V3dLocalPvParamsDict",
+    "V3dLocalPvParamsDictTagged",
     "V_3D_LOCAL_PV_METADATA",
     "v_3d_local_pv",
     "v_3d_local_pv_execute",

@@ -13,13 +13,13 @@ ADJUNCT_SELECT_STR_PY_METADATA = Metadata(
 )
 
 
-AdjunctSelectStrPyParameters = typing.TypedDict('AdjunctSelectStrPyParameters', {
+AdjunctSelectStrPyParamsDict = typing.TypedDict('AdjunctSelectStrPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_select_str.py"]],
     "input_file": InputPathType,
     "num_bricks": float,
     "output_file": str,
 })
-AdjunctSelectStrPyParametersTagged = typing.TypedDict('AdjunctSelectStrPyParametersTagged', {
+AdjunctSelectStrPyParamsDictTagged = typing.TypedDict('AdjunctSelectStrPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_select_str.py"],
     "input_file": InputPathType,
     "num_bricks": float,
@@ -29,7 +29,7 @@ AdjunctSelectStrPyParametersTagged = typing.TypedDict('AdjunctSelectStrPyParamet
 
 class AdjunctSelectStrPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctSelectStrPyParameters(...)`.
+    Output object returned when calling `AdjunctSelectStrPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def adjunct_select_str_py_params(
     input_file: InputPathType,
     num_bricks: float,
     output_file: str,
-) -> AdjunctSelectStrPyParametersTagged:
+) -> AdjunctSelectStrPyParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def adjunct_select_str_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctSelectStrPyParameters` object.
+    `AdjunctSelectStrPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def adjunct_select_str_py_validate(
 
 
 def adjunct_select_str_py_cargs(
-    params: AdjunctSelectStrPyParameters,
+    params: AdjunctSelectStrPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def adjunct_select_str_py_cargs(
 
 
 def adjunct_select_str_py_outputs(
-    params: AdjunctSelectStrPyParameters,
+    params: AdjunctSelectStrPyParamsDict,
     execution: Execution,
 ) -> AdjunctSelectStrPyOutputs:
     """
@@ -126,7 +126,7 @@ def adjunct_select_str_py_outputs(
 
 
 def adjunct_select_str_py_execute(
-    params: AdjunctSelectStrPyParameters,
+    params: AdjunctSelectStrPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctSelectStrPyOutputs:
     """
@@ -188,6 +188,8 @@ def adjunct_select_str_py(
 __all__ = [
     "ADJUNCT_SELECT_STR_PY_METADATA",
     "AdjunctSelectStrPyOutputs",
+    "AdjunctSelectStrPyParamsDict",
+    "AdjunctSelectStrPyParamsDictTagged",
     "adjunct_select_str_py",
     "adjunct_select_str_py_execute",
     "adjunct_select_str_py_params",

@@ -13,7 +13,7 @@ DSETSTAT2P_METADATA = Metadata(
 )
 
 
-Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
+Dsetstat2pParamsDict = typing.TypedDict('Dsetstat2pParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/dsetstat2p"]],
     "dataset": str,
     "statval": float,
@@ -22,7 +22,7 @@ Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
     "one_sided": bool,
     "quiet": bool,
 })
-Dsetstat2pParametersTagged = typing.TypedDict('Dsetstat2pParametersTagged', {
+Dsetstat2pParamsDictTagged = typing.TypedDict('Dsetstat2pParamsDictTagged', {
     "@type": typing.Literal["afni/dsetstat2p"],
     "dataset": str,
     "statval": float,
@@ -35,7 +35,7 @@ Dsetstat2pParametersTagged = typing.TypedDict('Dsetstat2pParametersTagged', {
 
 class Dsetstat2pOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dsetstat2pParameters(...)`.
+    Output object returned when calling `Dsetstat2pParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def dsetstat2p_params(
     two_sided: bool = False,
     one_sided: bool = False,
     quiet: bool = False,
-) -> Dsetstat2pParametersTagged:
+) -> Dsetstat2pParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def dsetstat2p_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dsetstat2pParameters` object.
+    `Dsetstat2pParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def dsetstat2p_validate(
 
 
 def dsetstat2p_cargs(
-    params: Dsetstat2pParameters,
+    params: Dsetstat2pParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def dsetstat2p_cargs(
 
 
 def dsetstat2p_outputs(
-    params: Dsetstat2pParameters,
+    params: Dsetstat2pParamsDict,
     execution: Execution,
 ) -> Dsetstat2pOutputs:
     """
@@ -173,7 +173,7 @@ def dsetstat2p_outputs(
 
 
 def dsetstat2p_execute(
-    params: Dsetstat2pParameters,
+    params: Dsetstat2pParamsDict,
     runner: Runner | None = None,
 ) -> Dsetstat2pOutputs:
     """
@@ -252,6 +252,8 @@ def dsetstat2p(
 __all__ = [
     "DSETSTAT2P_METADATA",
     "Dsetstat2pOutputs",
+    "Dsetstat2pParamsDict",
+    "Dsetstat2pParamsDictTagged",
     "dsetstat2p",
     "dsetstat2p_execute",
     "dsetstat2p_params",

@@ -13,7 +13,7 @@ DMRI_MOTION_METADATA = Metadata(
 )
 
 
-DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
+DmriMotionParamsDict = typing.TypedDict('DmriMotionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_motion"]],
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
     "help": bool,
     "version": bool,
 })
-DmriMotionParametersTagged = typing.TypedDict('DmriMotionParametersTagged', {
+DmriMotionParamsDictTagged = typing.TypedDict('DmriMotionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_motion"],
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ DmriMotionParametersTagged = typing.TypedDict('DmriMotionParametersTagged', {
 
 class DmriMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriMotionParameters(...)`.
+    Output object returned when calling `DmriMotionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def dmri_motion_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriMotionParametersTagged:
+) -> DmriMotionParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def dmri_motion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriMotionParameters` object.
+    `DmriMotionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -168,7 +168,7 @@ def dmri_motion_validate(
 
 
 def dmri_motion_cargs(
-    params: DmriMotionParameters,
+    params: DmriMotionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def dmri_motion_cargs(
 
 
 def dmri_motion_outputs(
-    params: DmriMotionParameters,
+    params: DmriMotionParamsDict,
     execution: Execution,
 ) -> DmriMotionOutputs:
     """
@@ -249,7 +249,7 @@ def dmri_motion_outputs(
 
 
 def dmri_motion_execute(
-    params: DmriMotionParameters,
+    params: DmriMotionParamsDict,
     runner: Runner | None = None,
 ) -> DmriMotionOutputs:
     """
@@ -335,6 +335,8 @@ def dmri_motion(
 __all__ = [
     "DMRI_MOTION_METADATA",
     "DmriMotionOutputs",
+    "DmriMotionParamsDict",
+    "DmriMotionParamsDictTagged",
     "dmri_motion",
     "dmri_motion_execute",
     "dmri_motion_params",

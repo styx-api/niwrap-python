@@ -12,13 +12,13 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 )
 
 
-SurfaceWedgeVolumeParameters = typing.TypedDict('SurfaceWedgeVolumeParameters', {
+SurfaceWedgeVolumeParamsDict = typing.TypedDict('SurfaceWedgeVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-wedge-volume"]],
     "metric": str,
     "inner-surface": InputPathType,
     "outer-surface": InputPathType,
 })
-SurfaceWedgeVolumeParametersTagged = typing.TypedDict('SurfaceWedgeVolumeParametersTagged', {
+SurfaceWedgeVolumeParamsDictTagged = typing.TypedDict('SurfaceWedgeVolumeParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-wedge-volume"],
     "metric": str,
     "inner-surface": InputPathType,
@@ -28,7 +28,7 @@ SurfaceWedgeVolumeParametersTagged = typing.TypedDict('SurfaceWedgeVolumeParamet
 
 class SurfaceWedgeVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceWedgeVolumeParameters(...)`.
+    Output object returned when calling `SurfaceWedgeVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def surface_wedge_volume_params(
     metric: str,
     inner_surface: InputPathType,
     outer_surface: InputPathType,
-) -> SurfaceWedgeVolumeParametersTagged:
+) -> SurfaceWedgeVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def surface_wedge_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceWedgeVolumeParameters` object.
+    `SurfaceWedgeVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def surface_wedge_volume_validate(
 
 
 def surface_wedge_volume_cargs(
-    params: SurfaceWedgeVolumeParameters,
+    params: SurfaceWedgeVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def surface_wedge_volume_cargs(
 
 
 def surface_wedge_volume_outputs(
-    params: SurfaceWedgeVolumeParameters,
+    params: SurfaceWedgeVolumeParamsDict,
     execution: Execution,
 ) -> SurfaceWedgeVolumeOutputs:
     """
@@ -131,7 +131,7 @@ def surface_wedge_volume_outputs(
 
 
 def surface_wedge_volume_execute(
-    params: SurfaceWedgeVolumeParameters,
+    params: SurfaceWedgeVolumeParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceWedgeVolumeOutputs:
     """
@@ -189,6 +189,8 @@ def surface_wedge_volume(
 __all__ = [
     "SURFACE_WEDGE_VOLUME_METADATA",
     "SurfaceWedgeVolumeOutputs",
+    "SurfaceWedgeVolumeParamsDict",
+    "SurfaceWedgeVolumeParamsDictTagged",
     "surface_wedge_volume",
     "surface_wedge_volume_execute",
     "surface_wedge_volume_params",

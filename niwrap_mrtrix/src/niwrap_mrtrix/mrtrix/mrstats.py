@@ -13,31 +13,31 @@ MRSTATS_METADATA = Metadata(
 )
 
 
-MrstatsOutputParameters = typing.TypedDict('MrstatsOutputParameters', {
+MrstatsOutputParamsDict = typing.TypedDict('MrstatsOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output"]],
     "field": str,
 })
-MrstatsOutputParametersTagged = typing.TypedDict('MrstatsOutputParametersTagged', {
+MrstatsOutputParamsDictTagged = typing.TypedDict('MrstatsOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "field": str,
 })
 
 
-MrstatsConfigParameters = typing.TypedDict('MrstatsConfigParameters', {
+MrstatsConfigParamsDict = typing.TypedDict('MrstatsConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrstatsConfigParametersTagged = typing.TypedDict('MrstatsConfigParametersTagged', {
+MrstatsConfigParamsDictTagged = typing.TypedDict('MrstatsConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrstatsParameters = typing.TypedDict('MrstatsParameters', {
+MrstatsParamsDict = typing.TypedDict('MrstatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrstats"]],
-    "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
+    "output": typing.NotRequired[list[MrstatsOutputParamsDict] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,
     "allvolumes": bool,
@@ -46,14 +46,14 @@ MrstatsParameters = typing.TypedDict('MrstatsParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
 })
-MrstatsParametersTagged = typing.TypedDict('MrstatsParametersTagged', {
+MrstatsParamsDictTagged = typing.TypedDict('MrstatsParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrstats"],
-    "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
+    "output": typing.NotRequired[list[MrstatsOutputParamsDict] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,
     "allvolumes": bool,
@@ -62,16 +62,16 @@ MrstatsParametersTagged = typing.TypedDict('MrstatsParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrstatsConfigParameters] | None],
+    "config": typing.NotRequired[list[MrstatsConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "image": InputPathType,
 })
 
 
-def mrstats_output_params(
+def mrstats_output(
     field: str,
-) -> MrstatsOutputParametersTagged:
+) -> MrstatsOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def mrstats_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrstatsOutputParameters` object.
+    `MrstatsOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def mrstats_output_validate(
 
 
 def mrstats_output_cargs(
-    params: MrstatsOutputParameters,
+    params: MrstatsOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,10 +130,10 @@ def mrstats_output_cargs(
     return cargs
 
 
-def mrstats_config_params(
+def mrstats_config(
     key: str,
     value: str,
-) -> MrstatsConfigParametersTagged:
+) -> MrstatsConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -156,7 +156,7 @@ def mrstats_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrstatsConfigParameters` object.
+    `MrstatsConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -174,7 +174,7 @@ def mrstats_config_validate(
 
 
 def mrstats_config_cargs(
-    params: MrstatsConfigParameters,
+    params: MrstatsConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -195,7 +195,7 @@ def mrstats_config_cargs(
 
 class MrstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrstatsParameters(...)`.
+    Output object returned when calling `MrstatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -203,7 +203,7 @@ class MrstatsOutputs(typing.NamedTuple):
 
 def mrstats_params(
     image: InputPathType,
-    output: list[MrstatsOutputParameters] | None = None,
+    output: list[MrstatsOutputParamsDict] | None = None,
     mask: InputPathType | None = None,
     ignorezero: bool = False,
     allvolumes: bool = False,
@@ -212,10 +212,10 @@ def mrstats_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrstatsConfigParameters] | None = None,
+    config: list[MrstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrstatsParametersTagged:
+) -> MrstatsParamsDictTagged:
     """
     Build parameters.
     
@@ -275,7 +275,7 @@ def mrstats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrstatsParameters` object.
+    `MrstatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -284,7 +284,7 @@ def mrstats_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("output", None) is not None:
         if not isinstance(params["output"], list):
-            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `list[MrstatsOutputParameters] | None`')
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `list[MrstatsOutputParamsDict] | None`')
         for e in params["output"]:
             mrstats_output_validate(e)
     if params.get("mask", None) is not None:
@@ -319,7 +319,7 @@ def mrstats_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrstatsConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrstatsConfigParamsDict] | None`')
         for e in params["config"]:
             mrstats_config_validate(e)
     if params.get("help", False) is None:
@@ -337,7 +337,7 @@ def mrstats_validate(
 
 
 def mrstats_cargs(
-    params: MrstatsParameters,
+    params: MrstatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -386,7 +386,7 @@ def mrstats_cargs(
 
 
 def mrstats_outputs(
-    params: MrstatsParameters,
+    params: MrstatsParamsDict,
     execution: Execution,
 ) -> MrstatsOutputs:
     """
@@ -405,7 +405,7 @@ def mrstats_outputs(
 
 
 def mrstats_execute(
-    params: MrstatsParameters,
+    params: MrstatsParamsDict,
     runner: Runner | None = None,
 ) -> MrstatsOutputs:
     """
@@ -441,7 +441,7 @@ def mrstats_execute(
 
 def mrstats(
     image: InputPathType,
-    output: list[MrstatsOutputParameters] | None = None,
+    output: list[MrstatsOutputParamsDict] | None = None,
     mask: InputPathType | None = None,
     ignorezero: bool = False,
     allvolumes: bool = False,
@@ -450,7 +450,7 @@ def mrstats(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrstatsConfigParameters] | None = None,
+    config: list[MrstatsConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -519,10 +519,16 @@ def mrstats(
 
 __all__ = [
     "MRSTATS_METADATA",
+    "MrstatsConfigParamsDict",
+    "MrstatsConfigParamsDictTagged",
+    "MrstatsOutputParamsDict",
+    "MrstatsOutputParamsDictTagged",
     "MrstatsOutputs",
+    "MrstatsParamsDict",
+    "MrstatsParamsDictTagged",
     "mrstats",
-    "mrstats_config_params",
+    "mrstats_config",
     "mrstats_execute",
-    "mrstats_output_params",
+    "mrstats_output",
     "mrstats_params",
 ]

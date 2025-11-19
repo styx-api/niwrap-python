@@ -13,7 +13,7 @@ SEG2RECON_METADATA = Metadata(
 )
 
 
-Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
+Seg2reconParamsDict = typing.TypedDict('Seg2reconParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/seg2recon"]],
     "subject": str,
     "segvol": InputPathType,
@@ -30,7 +30,7 @@ Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
     "rca": bool,
     "no_bias_field_cor": bool,
 })
-Seg2reconParametersTagged = typing.TypedDict('Seg2reconParametersTagged', {
+Seg2reconParamsDictTagged = typing.TypedDict('Seg2reconParamsDictTagged', {
     "@type": typing.Literal["freesurfer/seg2recon"],
     "subject": str,
     "segvol": InputPathType,
@@ -51,7 +51,7 @@ Seg2reconParametersTagged = typing.TypedDict('Seg2reconParametersTagged', {
 
 class Seg2reconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Seg2reconParameters(...)`.
+    Output object returned when calling `Seg2reconParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def seg2recon_params(
     expert: InputPathType | None = None,
     rca: bool = False,
     no_bias_field_cor: bool = False,
-) -> Seg2reconParametersTagged:
+) -> Seg2reconParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def seg2recon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Seg2reconParameters` object.
+    `Seg2reconParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def seg2recon_validate(
 
 
 def seg2recon_cargs(
-    params: Seg2reconParameters,
+    params: Seg2reconParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -268,7 +268,7 @@ def seg2recon_cargs(
 
 
 def seg2recon_outputs(
-    params: Seg2reconParameters,
+    params: Seg2reconParamsDict,
     execution: Execution,
 ) -> Seg2reconOutputs:
     """
@@ -290,7 +290,7 @@ def seg2recon_outputs(
 
 
 def seg2recon_execute(
-    params: Seg2reconParameters,
+    params: Seg2reconParamsDict,
     runner: Runner | None = None,
 ) -> Seg2reconOutputs:
     """
@@ -391,6 +391,8 @@ def seg2recon(
 __all__ = [
     "SEG2RECON_METADATA",
     "Seg2reconOutputs",
+    "Seg2reconParamsDict",
+    "Seg2reconParamsDictTagged",
     "seg2recon",
     "seg2recon_execute",
     "seg2recon_params",

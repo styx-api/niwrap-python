@@ -13,11 +13,11 @@ NMOVIE_QT_METADATA = Metadata(
 )
 
 
-NmovieQtParameters = typing.TypedDict('NmovieQtParameters', {
+NmovieQtParamsDict = typing.TypedDict('NmovieQtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/nmovie_qt"]],
     "images": list[InputPathType],
 })
-NmovieQtParametersTagged = typing.TypedDict('NmovieQtParametersTagged', {
+NmovieQtParamsDictTagged = typing.TypedDict('NmovieQtParamsDictTagged', {
     "@type": typing.Literal["freesurfer/nmovie_qt"],
     "images": list[InputPathType],
 })
@@ -25,7 +25,7 @@ NmovieQtParametersTagged = typing.TypedDict('NmovieQtParametersTagged', {
 
 class NmovieQtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `NmovieQtParameters(...)`.
+    Output object returned when calling `NmovieQtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class NmovieQtOutputs(typing.NamedTuple):
 
 def nmovie_qt_params(
     images: list[InputPathType],
-) -> NmovieQtParametersTagged:
+) -> NmovieQtParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def nmovie_qt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `NmovieQtParameters` object.
+    `NmovieQtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def nmovie_qt_validate(
 
 
 def nmovie_qt_cargs(
-    params: NmovieQtParameters,
+    params: NmovieQtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -91,7 +91,7 @@ def nmovie_qt_cargs(
 
 
 def nmovie_qt_outputs(
-    params: NmovieQtParameters,
+    params: NmovieQtParamsDict,
     execution: Execution,
 ) -> NmovieQtOutputs:
     """
@@ -110,7 +110,7 @@ def nmovie_qt_outputs(
 
 
 def nmovie_qt_execute(
-    params: NmovieQtParameters,
+    params: NmovieQtParamsDict,
     runner: Runner | None = None,
 ) -> NmovieQtOutputs:
     """
@@ -167,6 +167,8 @@ def nmovie_qt(
 __all__ = [
     "NMOVIE_QT_METADATA",
     "NmovieQtOutputs",
+    "NmovieQtParamsDict",
+    "NmovieQtParamsDictTagged",
     "nmovie_qt",
     "nmovie_qt_execute",
     "nmovie_qt_params",

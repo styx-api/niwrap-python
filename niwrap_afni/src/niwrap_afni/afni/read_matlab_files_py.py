@@ -13,7 +13,7 @@ READ_MATLAB_FILES_PY_METADATA = Metadata(
 )
 
 
-ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
+ReadMatlabFilesPyParamsDict = typing.TypedDict('ReadMatlabFilesPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/read_matlab_files.py"]],
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
     "history": bool,
     "version": bool,
 })
-ReadMatlabFilesPyParametersTagged = typing.TypedDict('ReadMatlabFilesPyParametersTagged', {
+ReadMatlabFilesPyParamsDictTagged = typing.TypedDict('ReadMatlabFilesPyParamsDictTagged', {
     "@type": typing.Literal["afni/read_matlab_files.py"],
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ ReadMatlabFilesPyParametersTagged = typing.TypedDict('ReadMatlabFilesPyParameter
 
 class ReadMatlabFilesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ReadMatlabFilesPyParameters(...)`.
+    Output object returned when calling `ReadMatlabFilesPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def read_matlab_files_py_params(
     help_: bool = False,
     history: bool = False,
     version: bool = False,
-) -> ReadMatlabFilesPyParametersTagged:
+) -> ReadMatlabFilesPyParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def read_matlab_files_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ReadMatlabFilesPyParameters` object.
+    `ReadMatlabFilesPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def read_matlab_files_py_validate(
 
 
 def read_matlab_files_py_cargs(
-    params: ReadMatlabFilesPyParameters,
+    params: ReadMatlabFilesPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def read_matlab_files_py_cargs(
 
 
 def read_matlab_files_py_outputs(
-    params: ReadMatlabFilesPyParameters,
+    params: ReadMatlabFilesPyParamsDict,
     execution: Execution,
 ) -> ReadMatlabFilesPyOutputs:
     """
@@ -170,7 +170,7 @@ def read_matlab_files_py_outputs(
 
 
 def read_matlab_files_py_execute(
-    params: ReadMatlabFilesPyParameters,
+    params: ReadMatlabFilesPyParamsDict,
     runner: Runner | None = None,
 ) -> ReadMatlabFilesPyOutputs:
     """
@@ -241,6 +241,8 @@ def read_matlab_files_py(
 __all__ = [
     "READ_MATLAB_FILES_PY_METADATA",
     "ReadMatlabFilesPyOutputs",
+    "ReadMatlabFilesPyParamsDict",
+    "ReadMatlabFilesPyParamsDictTagged",
     "read_matlab_files_py",
     "read_matlab_files_py_execute",
     "read_matlab_files_py_params",

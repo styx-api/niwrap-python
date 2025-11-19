@@ -13,7 +13,7 @@ V__GRAD_FLIP_TEST_METADATA = Metadata(
 )
 
 
-VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
+VGradFlipTestParamsDict = typing.TypedDict('VGradFlipTestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GradFlipTest"]],
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
     "wdir": typing.NotRequired[str | None],
     "do_clean": bool,
 })
-VGradFlipTestParametersTagged = typing.TypedDict('VGradFlipTestParametersTagged', {
+VGradFlipTestParamsDictTagged = typing.TypedDict('VGradFlipTestParamsDictTagged', {
     "@type": typing.Literal["afni/@GradFlipTest"],
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ VGradFlipTestParametersTagged = typing.TypedDict('VGradFlipTestParametersTagged'
 
 class VGradFlipTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGradFlipTestParameters(...)`.
+    Output object returned when calling `VGradFlipTestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ def v__grad_flip_test_params(
     scale_out_1000: bool = False,
     wdir: str | None = None,
     do_clean: bool = False,
-) -> VGradFlipTestParametersTagged:
+) -> VGradFlipTestParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def v__grad_flip_test_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGradFlipTestParameters` object.
+    `VGradFlipTestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -195,7 +195,7 @@ def v__grad_flip_test_validate(
 
 
 def v__grad_flip_test_cargs(
-    params: VGradFlipTestParameters,
+    params: VGradFlipTestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -276,7 +276,7 @@ def v__grad_flip_test_cargs(
 
 
 def v__grad_flip_test_outputs(
-    params: VGradFlipTestParameters,
+    params: VGradFlipTestParamsDict,
     execution: Execution,
 ) -> VGradFlipTestOutputs:
     """
@@ -297,7 +297,7 @@ def v__grad_flip_test_outputs(
 
 
 def v__grad_flip_test_execute(
-    params: VGradFlipTestParameters,
+    params: VGradFlipTestParamsDict,
     runner: Runner | None = None,
 ) -> VGradFlipTestOutputs:
     """
@@ -397,6 +397,8 @@ def v__grad_flip_test(
 
 __all__ = [
     "VGradFlipTestOutputs",
+    "VGradFlipTestParamsDict",
+    "VGradFlipTestParamsDictTagged",
     "V__GRAD_FLIP_TEST_METADATA",
     "v__grad_flip_test",
     "v__grad_flip_test_execute",

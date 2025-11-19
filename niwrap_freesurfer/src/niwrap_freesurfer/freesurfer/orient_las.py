@@ -13,13 +13,13 @@ ORIENT_LAS_METADATA = Metadata(
 )
 
 
-OrientLasParameters = typing.TypedDict('OrientLasParameters', {
+OrientLasParamsDict = typing.TypedDict('OrientLasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/orientLAS"]],
     "input_image": InputPathType,
     "output_image": str,
     "check": bool,
 })
-OrientLasParametersTagged = typing.TypedDict('OrientLasParametersTagged', {
+OrientLasParamsDictTagged = typing.TypedDict('OrientLasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/orientLAS"],
     "input_image": InputPathType,
     "output_image": str,
@@ -29,7 +29,7 @@ OrientLasParametersTagged = typing.TypedDict('OrientLasParametersTagged', {
 
 class OrientLasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `OrientLasParameters(...)`.
+    Output object returned when calling `OrientLasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def orient_las_params(
     input_image: InputPathType,
     output_image: str,
     check: bool = False,
-) -> OrientLasParametersTagged:
+) -> OrientLasParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def orient_las_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `OrientLasParameters` object.
+    `OrientLasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def orient_las_validate(
 
 
 def orient_las_cargs(
-    params: OrientLasParameters,
+    params: OrientLasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def orient_las_cargs(
 
 
 def orient_las_outputs(
-    params: OrientLasParameters,
+    params: OrientLasParamsDict,
     execution: Execution,
 ) -> OrientLasOutputs:
     """
@@ -131,7 +131,7 @@ def orient_las_outputs(
 
 
 def orient_las_execute(
-    params: OrientLasParameters,
+    params: OrientLasParamsDict,
     runner: Runner | None = None,
 ) -> OrientLasOutputs:
     """
@@ -194,6 +194,8 @@ def orient_las(
 __all__ = [
     "ORIENT_LAS_METADATA",
     "OrientLasOutputs",
+    "OrientLasParamsDict",
+    "OrientLasParamsDictTagged",
     "orient_las",
     "orient_las_execute",
     "orient_las_params",

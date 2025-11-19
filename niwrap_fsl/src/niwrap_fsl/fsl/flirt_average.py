@@ -13,7 +13,7 @@ FLIRT_AVERAGE_METADATA = Metadata(
 )
 
 
-FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
+FlirtAverageParamsDict = typing.TypedDict('FlirtAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/flirt_average"]],
     "ninputs": int,
     "input1": InputPathType,
@@ -23,7 +23,7 @@ FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
     "reference_image": typing.NotRequired[InputPathType | None],
     "flirt_options": typing.NotRequired[str | None],
 })
-FlirtAverageParametersTagged = typing.TypedDict('FlirtAverageParametersTagged', {
+FlirtAverageParamsDictTagged = typing.TypedDict('FlirtAverageParamsDictTagged', {
     "@type": typing.Literal["fsl/flirt_average"],
     "ninputs": int,
     "input1": InputPathType,
@@ -37,7 +37,7 @@ FlirtAverageParametersTagged = typing.TypedDict('FlirtAverageParametersTagged', 
 
 class FlirtAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FlirtAverageParameters(...)`.
+    Output object returned when calling `FlirtAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def flirt_average_params(
     input3: InputPathType | None = None,
     reference_image: InputPathType | None = None,
     flirt_options: str | None = None,
-) -> FlirtAverageParametersTagged:
+) -> FlirtAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def flirt_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FlirtAverageParameters` object.
+    `FlirtAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def flirt_average_validate(
 
 
 def flirt_average_cargs(
-    params: FlirtAverageParameters,
+    params: FlirtAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def flirt_average_cargs(
 
 
 def flirt_average_outputs(
-    params: FlirtAverageParameters,
+    params: FlirtAverageParamsDict,
     execution: Execution,
 ) -> FlirtAverageOutputs:
     """
@@ -177,7 +177,7 @@ def flirt_average_outputs(
 
 
 def flirt_average_execute(
-    params: FlirtAverageParameters,
+    params: FlirtAverageParamsDict,
     runner: Runner | None = None,
 ) -> FlirtAverageOutputs:
     """
@@ -251,6 +251,8 @@ def flirt_average(
 __all__ = [
     "FLIRT_AVERAGE_METADATA",
     "FlirtAverageOutputs",
+    "FlirtAverageParamsDict",
+    "FlirtAverageParamsDictTagged",
     "flirt_average",
     "flirt_average_execute",
     "flirt_average_params",

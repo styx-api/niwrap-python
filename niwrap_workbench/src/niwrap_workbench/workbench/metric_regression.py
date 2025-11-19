@@ -12,54 +12,54 @@ METRIC_REGRESSION_METADATA = Metadata(
 )
 
 
-MetricRegressionRemoveParameters = typing.TypedDict('MetricRegressionRemoveParameters', {
+MetricRegressionRemoveParamsDict = typing.TypedDict('MetricRegressionRemoveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["remove"]],
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
-MetricRegressionRemoveParametersTagged = typing.TypedDict('MetricRegressionRemoveParametersTagged', {
+MetricRegressionRemoveParamsDictTagged = typing.TypedDict('MetricRegressionRemoveParamsDictTagged', {
     "@type": typing.Literal["remove"],
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
 
 
-MetricRegressionKeepParameters = typing.TypedDict('MetricRegressionKeepParameters', {
+MetricRegressionKeepParamsDict = typing.TypedDict('MetricRegressionKeepParamsDict', {
     "@type": typing.NotRequired[typing.Literal["keep"]],
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
-MetricRegressionKeepParametersTagged = typing.TypedDict('MetricRegressionKeepParametersTagged', {
+MetricRegressionKeepParamsDictTagged = typing.TypedDict('MetricRegressionKeepParamsDictTagged', {
     "@type": typing.Literal["keep"],
     "metric": InputPathType,
     "column": typing.NotRequired[str | None],
 })
 
 
-MetricRegressionParameters = typing.TypedDict('MetricRegressionParameters', {
+MetricRegressionParamsDict = typing.TypedDict('MetricRegressionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-regression"]],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
-    "remove": typing.NotRequired[list[MetricRegressionRemoveParameters] | None],
-    "keep": typing.NotRequired[list[MetricRegressionKeepParameters] | None],
+    "remove": typing.NotRequired[list[MetricRegressionRemoveParamsDict] | None],
+    "keep": typing.NotRequired[list[MetricRegressionKeepParamsDict] | None],
     "metric-in": InputPathType,
 })
-MetricRegressionParametersTagged = typing.TypedDict('MetricRegressionParametersTagged', {
+MetricRegressionParamsDictTagged = typing.TypedDict('MetricRegressionParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-regression"],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
-    "remove": typing.NotRequired[list[MetricRegressionRemoveParameters] | None],
-    "keep": typing.NotRequired[list[MetricRegressionKeepParameters] | None],
+    "remove": typing.NotRequired[list[MetricRegressionRemoveParamsDict] | None],
+    "keep": typing.NotRequired[list[MetricRegressionKeepParamsDict] | None],
     "metric-in": InputPathType,
 })
 
 
-def metric_regression_remove_params(
+def metric_regression_remove(
     metric: InputPathType,
     column: str | None,
-) -> MetricRegressionRemoveParametersTagged:
+) -> MetricRegressionRemoveParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def metric_regression_remove_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRegressionRemoveParameters` object.
+    `MetricRegressionRemoveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def metric_regression_remove_validate(
 
 
 def metric_regression_remove_cargs(
-    params: MetricRegressionRemoveParameters,
+    params: MetricRegressionRemoveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,10 +125,10 @@ def metric_regression_remove_cargs(
     return cargs
 
 
-def metric_regression_keep_params(
+def metric_regression_keep(
     metric: InputPathType,
     column: str | None,
-) -> MetricRegressionKeepParametersTagged:
+) -> MetricRegressionKeepParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def metric_regression_keep_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRegressionKeepParameters` object.
+    `MetricRegressionKeepParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def metric_regression_keep_validate(
 
 
 def metric_regression_keep_cargs(
-    params: MetricRegressionKeepParameters,
+    params: MetricRegressionKeepParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -196,7 +196,7 @@ def metric_regression_keep_cargs(
 
 class MetricRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricRegressionParameters(...)`.
+    Output object returned when calling `MetricRegressionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -209,9 +209,9 @@ def metric_regression_params(
     roi_metric: InputPathType | None,
     column: str | None,
     metric_in: InputPathType,
-    remove: list[MetricRegressionRemoveParameters] | None = None,
-    keep: list[MetricRegressionKeepParameters] | None = None,
-) -> MetricRegressionParametersTagged:
+    remove: list[MetricRegressionRemoveParamsDict] | None = None,
+    keep: list[MetricRegressionKeepParamsDict] | None = None,
+) -> MetricRegressionParamsDictTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def metric_regression_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRegressionParameters` object.
+    `MetricRegressionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -269,12 +269,12 @@ def metric_regression_validate(
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("remove", None) is not None:
         if not isinstance(params["remove"], list):
-            raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[MetricRegressionRemoveParameters] | None`')
+            raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[MetricRegressionRemoveParamsDict] | None`')
         for e in params["remove"]:
             metric_regression_remove_validate(e)
     if params.get("keep", None) is not None:
         if not isinstance(params["keep"], list):
-            raise StyxValidationError(f'`keep` has the wrong type: Received `{type(params.get("keep", None))}` expected `list[MetricRegressionKeepParameters] | None`')
+            raise StyxValidationError(f'`keep` has the wrong type: Received `{type(params.get("keep", None))}` expected `list[MetricRegressionKeepParamsDict] | None`')
         for e in params["keep"]:
             metric_regression_keep_validate(e)
     if params.get("metric-in", None) is None:
@@ -284,7 +284,7 @@ def metric_regression_validate(
 
 
 def metric_regression_cargs(
-    params: MetricRegressionParameters,
+    params: MetricRegressionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -314,7 +314,7 @@ def metric_regression_cargs(
 
 
 def metric_regression_outputs(
-    params: MetricRegressionParameters,
+    params: MetricRegressionParamsDict,
     execution: Execution,
 ) -> MetricRegressionOutputs:
     """
@@ -334,7 +334,7 @@ def metric_regression_outputs(
 
 
 def metric_regression_execute(
-    params: MetricRegressionParameters,
+    params: MetricRegressionParamsDict,
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
@@ -367,8 +367,8 @@ def metric_regression(
     roi_metric: InputPathType | None,
     column: str | None,
     metric_in: InputPathType,
-    remove: list[MetricRegressionRemoveParameters] | None = None,
-    keep: list[MetricRegressionKeepParameters] | None = None,
+    remove: list[MetricRegressionRemoveParamsDict] | None = None,
+    keep: list[MetricRegressionKeepParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
@@ -408,10 +408,16 @@ def metric_regression(
 
 __all__ = [
     "METRIC_REGRESSION_METADATA",
+    "MetricRegressionKeepParamsDict",
+    "MetricRegressionKeepParamsDictTagged",
     "MetricRegressionOutputs",
+    "MetricRegressionParamsDict",
+    "MetricRegressionParamsDictTagged",
+    "MetricRegressionRemoveParamsDict",
+    "MetricRegressionRemoveParamsDictTagged",
     "metric_regression",
     "metric_regression_execute",
-    "metric_regression_keep_params",
+    "metric_regression_keep",
     "metric_regression_params",
-    "metric_regression_remove_params",
+    "metric_regression_remove",
 ]

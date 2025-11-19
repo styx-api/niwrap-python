@@ -13,7 +13,7 @@ ANTSJACOBIAN_METADATA = Metadata(
 )
 
 
-AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
+AntsjacobianParamsDict = typing.TypedDict('AntsjacobianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ANTSJacobian"]],
     "imagedim": int,
     "gwarp": InputPathType,
@@ -23,7 +23,7 @@ AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
     "normbytotalbool": int,
     "projectionvector": typing.NotRequired[str | None],
 })
-AntsjacobianParametersTagged = typing.TypedDict('AntsjacobianParametersTagged', {
+AntsjacobianParamsDictTagged = typing.TypedDict('AntsjacobianParamsDictTagged', {
     "@type": typing.Literal["ants/ANTSJacobian"],
     "imagedim": int,
     "gwarp": InputPathType,
@@ -37,7 +37,7 @@ AntsjacobianParametersTagged = typing.TypedDict('AntsjacobianParametersTagged', 
 
 class AntsjacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsjacobianParameters(...)`.
+    Output object returned when calling `AntsjacobianParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def antsjacobian_params(
     maskfn: InputPathType,
     normbytotalbool: int,
     projectionvector: str | None = None,
-) -> AntsjacobianParametersTagged:
+) -> AntsjacobianParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def antsjacobian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsjacobianParameters` object.
+    `AntsjacobianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def antsjacobian_validate(
 
 
 def antsjacobian_cargs(
-    params: AntsjacobianParameters,
+    params: AntsjacobianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -152,7 +152,7 @@ def antsjacobian_cargs(
 
 
 def antsjacobian_outputs(
-    params: AntsjacobianParameters,
+    params: AntsjacobianParamsDict,
     execution: Execution,
 ) -> AntsjacobianOutputs:
     """
@@ -172,7 +172,7 @@ def antsjacobian_outputs(
 
 
 def antsjacobian_execute(
-    params: AntsjacobianParameters,
+    params: AntsjacobianParamsDict,
     runner: Runner | None = None,
 ) -> AntsjacobianOutputs:
     """
@@ -252,6 +252,8 @@ def antsjacobian(
 __all__ = [
     "ANTSJACOBIAN_METADATA",
     "AntsjacobianOutputs",
+    "AntsjacobianParamsDict",
+    "AntsjacobianParamsDictTagged",
     "antsjacobian",
     "antsjacobian_execute",
     "antsjacobian_params",

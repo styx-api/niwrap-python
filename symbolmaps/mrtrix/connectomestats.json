@@ -54,7 +54,7 @@
     },
     "column": {
       "var_param": "column",
-      "fn_struct_make_params": "connectomestats_column_params",
+      "fn_struct_make_params": "connectomestats_column",
       "properties": {
         "path": {
           "var_param": "path"
@@ -81,7 +81,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "connectomestats_config_params",
+      "fn_struct_make_params": "connectomestats_config",
       "properties": {
         "key": {
           "var_param": "key"

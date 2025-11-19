@@ -12,14 +12,14 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
 )
 
 
-CiftiLabelExportTableParameters = typing.TypedDict('CiftiLabelExportTableParameters', {
+CiftiLabelExportTableParamsDict = typing.TypedDict('CiftiLabelExportTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-export-table"]],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
     "table-out": str,
 })
-CiftiLabelExportTableParametersTagged = typing.TypedDict('CiftiLabelExportTableParametersTagged', {
+CiftiLabelExportTableParamsDictTagged = typing.TypedDict('CiftiLabelExportTableParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-export-table"],
     "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
@@ -30,7 +30,7 @@ CiftiLabelExportTableParametersTagged = typing.TypedDict('CiftiLabelExportTableP
 
 class CiftiLabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiLabelExportTableParameters(...)`.
+    Output object returned when calling `CiftiLabelExportTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def cifti_label_export_table_params(
     label_in: InputPathType,
     map_: str,
     table_out: str,
-) -> CiftiLabelExportTableParametersTagged:
+) -> CiftiLabelExportTableParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def cifti_label_export_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiLabelExportTableParameters` object.
+    `CiftiLabelExportTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def cifti_label_export_table_validate(
 
 
 def cifti_label_export_table_cargs(
-    params: CiftiLabelExportTableParameters,
+    params: CiftiLabelExportTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def cifti_label_export_table_cargs(
 
 
 def cifti_label_export_table_outputs(
-    params: CiftiLabelExportTableParameters,
+    params: CiftiLabelExportTableParamsDict,
     execution: Execution,
 ) -> CiftiLabelExportTableOutputs:
     """
@@ -142,7 +142,7 @@ def cifti_label_export_table_outputs(
 
 
 def cifti_label_export_table_execute(
-    params: CiftiLabelExportTableParameters,
+    params: CiftiLabelExportTableParamsDict,
     runner: Runner | None = None,
 ) -> CiftiLabelExportTableOutputs:
     """
@@ -203,6 +203,8 @@ def cifti_label_export_table(
 __all__ = [
     "CIFTI_LABEL_EXPORT_TABLE_METADATA",
     "CiftiLabelExportTableOutputs",
+    "CiftiLabelExportTableParamsDict",
+    "CiftiLabelExportTableParamsDictTagged",
     "cifti_label_export_table",
     "cifti_label_export_table_execute",
     "cifti_label_export_table_params",

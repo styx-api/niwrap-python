@@ -13,7 +13,7 @@ V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
 )
 
 
-V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters', {
+V3dDegreeCentralityParamsDict = typing.TypedDict('V3dDegreeCentralityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDegreeCentrality"]],
     "autoclip": bool,
     "automask": bool,
@@ -24,7 +24,7 @@ V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters'
     "sparsity": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
 })
-V3dDegreeCentralityParametersTagged = typing.TypedDict('V3dDegreeCentralityParametersTagged', {
+V3dDegreeCentralityParamsDictTagged = typing.TypedDict('V3dDegreeCentralityParamsDictTagged', {
     "@type": typing.Literal["afni/3dDegreeCentrality"],
     "autoclip": bool,
     "automask": bool,
@@ -39,7 +39,7 @@ V3dDegreeCentralityParametersTagged = typing.TypedDict('V3dDegreeCentralityParam
 
 class V3dDegreeCentralityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDegreeCentralityParameters(...)`.
+    Output object returned when calling `V3dDegreeCentralityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def v_3d_degree_centrality_params(
     polort: int | None = None,
     sparsity: float | None = None,
     thresh: float | None = None,
-) -> V3dDegreeCentralityParametersTagged:
+) -> V3dDegreeCentralityParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def v_3d_degree_centrality_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDegreeCentralityParameters` object.
+    `V3dDegreeCentralityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def v_3d_degree_centrality_validate(
 
 
 def v_3d_degree_centrality_cargs(
-    params: V3dDegreeCentralityParameters,
+    params: V3dDegreeCentralityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,7 +185,7 @@ def v_3d_degree_centrality_cargs(
 
 
 def v_3d_degree_centrality_outputs(
-    params: V3dDegreeCentralityParameters,
+    params: V3dDegreeCentralityParamsDict,
     execution: Execution,
 ) -> V3dDegreeCentralityOutputs:
     """
@@ -206,7 +206,7 @@ def v_3d_degree_centrality_outputs(
 
 
 def v_3d_degree_centrality_execute(
-    params: V3dDegreeCentralityParameters,
+    params: V3dDegreeCentralityParamsDict,
     runner: Runner | None = None,
 ) -> V3dDegreeCentralityOutputs:
     """
@@ -288,6 +288,8 @@ def v_3d_degree_centrality(
 
 __all__ = [
     "V3dDegreeCentralityOutputs",
+    "V3dDegreeCentralityParamsDict",
+    "V3dDegreeCentralityParamsDictTagged",
     "V_3D_DEGREE_CENTRALITY_METADATA",
     "v_3d_degree_centrality",
     "v_3d_degree_centrality_execute",

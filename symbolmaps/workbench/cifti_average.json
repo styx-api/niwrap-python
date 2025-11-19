@@ -6,7 +6,7 @@
     },
     "exclude-outliers": {
       "var_param": "exclude_outliers",
-      "fn_struct_make_params": "cifti_average_exclude_outliers_params",
+      "fn_struct_make_params": "cifti_average_exclude_outliers",
       "properties": {
         "sigma-below": {
           "var_param": "sigma_below"
@@ -21,7 +21,7 @@
     },
     "cifti": {
       "var_param": "cifti",
-      "fn_struct_make_params": "cifti_average_cifti_params",
+      "fn_struct_make_params": "cifti_average_cifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"

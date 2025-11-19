@@ -13,12 +13,12 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 )
 
 
-FiducialsCorrectionParameters = typing.TypedDict('FiducialsCorrectionParameters', {
+FiducialsCorrectionParamsDict = typing.TypedDict('FiducialsCorrectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_correction"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-FiducialsCorrectionParametersTagged = typing.TypedDict('FiducialsCorrectionParametersTagged', {
+FiducialsCorrectionParamsDictTagged = typing.TypedDict('FiducialsCorrectionParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fiducials_correction"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ FiducialsCorrectionParametersTagged = typing.TypedDict('FiducialsCorrectionParam
 
 class FiducialsCorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FiducialsCorrectionParameters(...)`.
+    Output object returned when calling `FiducialsCorrectionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class FiducialsCorrectionOutputs(typing.NamedTuple):
 def fiducials_correction_params(
     input_file: InputPathType,
     output_file: str,
-) -> FiducialsCorrectionParametersTagged:
+) -> FiducialsCorrectionParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def fiducials_correction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FiducialsCorrectionParameters` object.
+    `FiducialsCorrectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def fiducials_correction_validate(
 
 
 def fiducials_correction_cargs(
-    params: FiducialsCorrectionParameters,
+    params: FiducialsCorrectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def fiducials_correction_cargs(
 
 
 def fiducials_correction_outputs(
-    params: FiducialsCorrectionParameters,
+    params: FiducialsCorrectionParamsDict,
     execution: Execution,
 ) -> FiducialsCorrectionOutputs:
     """
@@ -120,7 +120,7 @@ def fiducials_correction_outputs(
 
 
 def fiducials_correction_execute(
-    params: FiducialsCorrectionParameters,
+    params: FiducialsCorrectionParamsDict,
     runner: Runner | None = None,
 ) -> FiducialsCorrectionOutputs:
     """
@@ -184,6 +184,8 @@ def fiducials_correction(
 __all__ = [
     "FIDUCIALS_CORRECTION_METADATA",
     "FiducialsCorrectionOutputs",
+    "FiducialsCorrectionParamsDict",
+    "FiducialsCorrectionParamsDictTagged",
     "fiducials_correction",
     "fiducials_correction_execute",
     "fiducials_correction_params",

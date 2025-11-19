@@ -13,7 +13,7 @@ I_MATH_METADATA = Metadata(
 )
 
 
-IMathParameters = typing.TypedDict('IMathParameters', {
+IMathParamsDict = typing.TypedDict('IMathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/iMath"]],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
@@ -21,7 +21,7 @@ IMathParameters = typing.TypedDict('IMathParameters', {
     "image1": InputPathType,
     "image2": typing.NotRequired[InputPathType | None],
 })
-IMathParametersTagged = typing.TypedDict('IMathParametersTagged', {
+IMathParamsDictTagged = typing.TypedDict('IMathParamsDictTagged', {
     "@type": typing.Literal["ants/iMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
@@ -33,7 +33,7 @@ IMathParametersTagged = typing.TypedDict('IMathParametersTagged', {
 
 class IMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IMathParameters(...)`.
+    Output object returned when calling `IMathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def i_math_params(
     operations: str,
     image1: InputPathType,
     image2: InputPathType | None = None,
-) -> IMathParametersTagged:
+) -> IMathParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def i_math_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IMathParameters` object.
+    `IMathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def i_math_validate(
 
 
 def i_math_cargs(
-    params: IMathParameters,
+    params: IMathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,7 +133,7 @@ def i_math_cargs(
 
 
 def i_math_outputs(
-    params: IMathParameters,
+    params: IMathParamsDict,
     execution: Execution,
 ) -> IMathOutputs:
     """
@@ -153,7 +153,7 @@ def i_math_outputs(
 
 
 def i_math_execute(
-    params: IMathParameters,
+    params: IMathParamsDict,
     runner: Runner | None = None,
 ) -> IMathOutputs:
     """
@@ -223,6 +223,8 @@ def i_math(
 
 __all__ = [
     "IMathOutputs",
+    "IMathParamsDict",
+    "IMathParamsDictTagged",
     "I_MATH_METADATA",
     "i_math",
     "i_math_execute",

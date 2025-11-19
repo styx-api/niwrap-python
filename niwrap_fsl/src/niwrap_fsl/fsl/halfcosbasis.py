@@ -13,7 +13,7 @@ HALFCOSBASIS_METADATA = Metadata(
 )
 
 
-HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
+HalfcosbasisParamsDict = typing.TypedDict('HalfcosbasisParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/halfcosbasis"]],
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
@@ -33,7 +33,7 @@ HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
     "help_flag": bool,
     "help_flag_long": bool,
 })
-HalfcosbasisParametersTagged = typing.TypedDict('HalfcosbasisParametersTagged', {
+HalfcosbasisParamsDictTagged = typing.TypedDict('HalfcosbasisParamsDictTagged', {
     "@type": typing.Literal["fsl/halfcosbasis"],
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
@@ -57,7 +57,7 @@ HalfcosbasisParametersTagged = typing.TypedDict('HalfcosbasisParametersTagged', 
 
 class HalfcosbasisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HalfcosbasisParameters(...)`.
+    Output object returned when calling `HalfcosbasisParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def halfcosbasis_params(
     temp_res: float | None = None,
     help_flag: bool = False,
     help_flag_long: bool = False,
-) -> HalfcosbasisParametersTagged:
+) -> HalfcosbasisParamsDictTagged:
     """
     Build parameters.
     
@@ -146,7 +146,7 @@ def halfcosbasis_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HalfcosbasisParameters` object.
+    `HalfcosbasisParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -213,7 +213,7 @@ def halfcosbasis_validate(
 
 
 def halfcosbasis_cargs(
-    params: HalfcosbasisParameters,
+    params: HalfcosbasisParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -302,7 +302,7 @@ def halfcosbasis_cargs(
 
 
 def halfcosbasis_outputs(
-    params: HalfcosbasisParameters,
+    params: HalfcosbasisParamsDict,
     execution: Execution,
 ) -> HalfcosbasisOutputs:
     """
@@ -321,7 +321,7 @@ def halfcosbasis_outputs(
 
 
 def halfcosbasis_execute(
-    params: HalfcosbasisParameters,
+    params: HalfcosbasisParamsDict,
     runner: Runner | None = None,
 ) -> HalfcosbasisOutputs:
     """
@@ -426,6 +426,8 @@ def halfcosbasis(
 __all__ = [
     "HALFCOSBASIS_METADATA",
     "HalfcosbasisOutputs",
+    "HalfcosbasisParamsDict",
+    "HalfcosbasisParamsDictTagged",
     "halfcosbasis",
     "halfcosbasis_execute",
     "halfcosbasis_params",

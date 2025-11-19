@@ -9,7 +9,7 @@
     },
     "tag": {
       "var_param": "tag",
-      "fn_struct_make_params": "dcmedit_tag_params",
+      "fn_struct_make_params": "dcmedit_tag",
       "properties": {
         "group": {
           "var_param": "group"
@@ -39,7 +39,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "dcmedit_config_params",
+      "fn_struct_make_params": "dcmedit_config",
       "properties": {
         "key": {
           "var_param": "key"

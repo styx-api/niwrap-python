@@ -13,7 +13,7 @@ MRIS_THICKNESS_METADATA = Metadata(
 )
 
 
-MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
+MrisThicknessParamsDict = typing.TypedDict('MrisThicknessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness"]],
     "subject_name": str,
     "hemi": str,
@@ -23,7 +23,7 @@ MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
     "thickness_from_seg": typing.NotRequired[list[str] | None],
     "vector": bool,
 })
-MrisThicknessParametersTagged = typing.TypedDict('MrisThicknessParametersTagged', {
+MrisThicknessParamsDictTagged = typing.TypedDict('MrisThicknessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_thickness"],
     "subject_name": str,
     "hemi": str,
@@ -37,7 +37,7 @@ MrisThicknessParametersTagged = typing.TypedDict('MrisThicknessParametersTagged'
 
 class MrisThicknessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisThicknessParameters(...)`.
+    Output object returned when calling `MrisThicknessParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_thickness_params(
     fill_holes: list[str] | None = None,
     thickness_from_seg: list[str] | None = None,
     vector: bool = False,
-) -> MrisThicknessParametersTagged:
+) -> MrisThicknessParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def mris_thickness_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisThicknessParameters` object.
+    `MrisThicknessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -138,7 +138,7 @@ def mris_thickness_validate(
 
 
 def mris_thickness_cargs(
-    params: MrisThicknessParameters,
+    params: MrisThicknessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def mris_thickness_cargs(
 
 
 def mris_thickness_outputs(
-    params: MrisThicknessParameters,
+    params: MrisThicknessParamsDict,
     execution: Execution,
 ) -> MrisThicknessOutputs:
     """
@@ -196,7 +196,7 @@ def mris_thickness_outputs(
 
 
 def mris_thickness_execute(
-    params: MrisThicknessParameters,
+    params: MrisThicknessParamsDict,
     runner: Runner | None = None,
 ) -> MrisThicknessOutputs:
     """
@@ -274,6 +274,8 @@ def mris_thickness(
 __all__ = [
     "MRIS_THICKNESS_METADATA",
     "MrisThicknessOutputs",
+    "MrisThicknessParamsDict",
+    "MrisThicknessParamsDictTagged",
     "mris_thickness",
     "mris_thickness_execute",
     "mris_thickness_params",

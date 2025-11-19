@@ -13,11 +13,11 @@ MORPH_RGB_LH_METADATA = Metadata(
 )
 
 
-MorphRgbLhParameters = typing.TypedDict('MorphRgbLhParameters', {
+MorphRgbLhParamsDict = typing.TypedDict('MorphRgbLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/morph_rgb-lh"]],
     "subject_id": str,
 })
-MorphRgbLhParametersTagged = typing.TypedDict('MorphRgbLhParametersTagged', {
+MorphRgbLhParamsDictTagged = typing.TypedDict('MorphRgbLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_rgb-lh"],
     "subject_id": str,
 })
@@ -25,7 +25,7 @@ MorphRgbLhParametersTagged = typing.TypedDict('MorphRgbLhParametersTagged', {
 
 class MorphRgbLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphRgbLhParameters(...)`.
+    Output object returned when calling `MorphRgbLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class MorphRgbLhOutputs(typing.NamedTuple):
 
 def morph_rgb_lh_params(
     subject_id: str,
-) -> MorphRgbLhParametersTagged:
+) -> MorphRgbLhParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def morph_rgb_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphRgbLhParameters` object.
+    `MorphRgbLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def morph_rgb_lh_validate(
 
 
 def morph_rgb_lh_cargs(
-    params: MorphRgbLhParameters,
+    params: MorphRgbLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def morph_rgb_lh_cargs(
 
 
 def morph_rgb_lh_outputs(
-    params: MorphRgbLhParameters,
+    params: MorphRgbLhParamsDict,
     execution: Execution,
 ) -> MorphRgbLhOutputs:
     """
@@ -111,7 +111,7 @@ def morph_rgb_lh_outputs(
 
 
 def morph_rgb_lh_execute(
-    params: MorphRgbLhParameters,
+    params: MorphRgbLhParamsDict,
     runner: Runner | None = None,
 ) -> MorphRgbLhOutputs:
     """
@@ -171,6 +171,8 @@ def morph_rgb_lh(
 __all__ = [
     "MORPH_RGB_LH_METADATA",
     "MorphRgbLhOutputs",
+    "MorphRgbLhParamsDict",
+    "MorphRgbLhParamsDictTagged",
     "morph_rgb_lh",
     "morph_rgb_lh_execute",
     "morph_rgb_lh_params",

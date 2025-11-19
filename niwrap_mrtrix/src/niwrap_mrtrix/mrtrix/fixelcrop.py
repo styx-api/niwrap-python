@@ -13,40 +13,40 @@ FIXELCROP_METADATA = Metadata(
 )
 
 
-FixelcropConfigParameters = typing.TypedDict('FixelcropConfigParameters', {
+FixelcropConfigParamsDict = typing.TypedDict('FixelcropConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelcropConfigParametersTagged = typing.TypedDict('FixelcropConfigParametersTagged', {
+FixelcropConfigParamsDictTagged = typing.TypedDict('FixelcropConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelcropParameters = typing.TypedDict('FixelcropParameters', {
+FixelcropParamsDict = typing.TypedDict('FixelcropParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcrop"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcropConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcropConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input_fixel_directory": InputPathType,
     "input_fixel_mask": InputPathType,
     "output_fixel_directory": str,
 })
-FixelcropParametersTagged = typing.TypedDict('FixelcropParametersTagged', {
+FixelcropParamsDictTagged = typing.TypedDict('FixelcropParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelcrop"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelcropConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelcropConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input_fixel_directory": InputPathType,
@@ -55,10 +55,10 @@ FixelcropParametersTagged = typing.TypedDict('FixelcropParametersTagged', {
 })
 
 
-def fixelcrop_config_params(
+def fixelcrop_config(
     key: str,
     value: str,
-) -> FixelcropConfigParametersTagged:
+) -> FixelcropConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def fixelcrop_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcropConfigParameters` object.
+    `FixelcropConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def fixelcrop_config_validate(
 
 
 def fixelcrop_config_cargs(
-    params: FixelcropConfigParameters,
+    params: FixelcropConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def fixelcrop_config_cargs(
 
 class FixelcropOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelcropParameters(...)`.
+    Output object returned when calling `FixelcropParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def fixelcrop_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcropConfigParameters] | None = None,
+    config: list[FixelcropConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcropParametersTagged:
+) -> FixelcropParamsDictTagged:
     """
     Build parameters.
     
@@ -190,7 +190,7 @@ def fixelcrop_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelcropParameters` object.
+    `FixelcropParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -218,7 +218,7 @@ def fixelcrop_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcropConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelcropConfigParamsDict] | None`')
         for e in params["config"]:
             fixelcrop_config_validate(e)
     if params.get("help", False) is None:
@@ -244,7 +244,7 @@ def fixelcrop_validate(
 
 
 def fixelcrop_cargs(
-    params: FixelcropParameters,
+    params: FixelcropParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -284,7 +284,7 @@ def fixelcrop_cargs(
 
 
 def fixelcrop_outputs(
-    params: FixelcropParameters,
+    params: FixelcropParamsDict,
     execution: Execution,
 ) -> FixelcropOutputs:
     """
@@ -304,7 +304,7 @@ def fixelcrop_outputs(
 
 
 def fixelcrop_execute(
-    params: FixelcropParameters,
+    params: FixelcropParamsDict,
     runner: Runner | None = None,
 ) -> FixelcropOutputs:
     """
@@ -348,7 +348,7 @@ def fixelcrop(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelcropConfigParameters] | None = None,
+    config: list[FixelcropConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -410,9 +410,13 @@ def fixelcrop(
 
 __all__ = [
     "FIXELCROP_METADATA",
+    "FixelcropConfigParamsDict",
+    "FixelcropConfigParamsDictTagged",
     "FixelcropOutputs",
+    "FixelcropParamsDict",
+    "FixelcropParamsDictTagged",
     "fixelcrop",
-    "fixelcrop_config_params",
+    "fixelcrop_config",
     "fixelcrop_execute",
     "fixelcrop_params",
 ]

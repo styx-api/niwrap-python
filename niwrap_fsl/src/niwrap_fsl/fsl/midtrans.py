@@ -13,7 +13,7 @@ MIDTRANS_METADATA = Metadata(
 )
 
 
-MidtransParameters = typing.TypedDict('MidtransParameters', {
+MidtransParamsDict = typing.TypedDict('MidtransParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/midtrans"]],
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ MidtransParameters = typing.TypedDict('MidtransParameters', {
     "debug_flag": bool,
     "verbose_flag": bool,
 })
-MidtransParametersTagged = typing.TypedDict('MidtransParametersTagged', {
+MidtransParamsDictTagged = typing.TypedDict('MidtransParamsDictTagged', {
     "@type": typing.Literal["fsl/midtrans"],
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ MidtransParametersTagged = typing.TypedDict('MidtransParametersTagged', {
 
 class MidtransOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MidtransParameters(...)`.
+    Output object returned when calling `MidtransParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def midtrans_params(
     separate_basename: str | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> MidtransParametersTagged:
+) -> MidtransParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def midtrans_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MidtransParameters` object.
+    `MidtransParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def midtrans_validate(
 
 
 def midtrans_cargs(
-    params: MidtransParameters,
+    params: MidtransParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def midtrans_cargs(
 
 
 def midtrans_outputs(
-    params: MidtransParameters,
+    params: MidtransParamsDict,
     execution: Execution,
 ) -> MidtransOutputs:
     """
@@ -176,7 +176,7 @@ def midtrans_outputs(
 
 
 def midtrans_execute(
-    params: MidtransParameters,
+    params: MidtransParamsDict,
     runner: Runner | None = None,
 ) -> MidtransOutputs:
     """
@@ -250,6 +250,8 @@ def midtrans(
 __all__ = [
     "MIDTRANS_METADATA",
     "MidtransOutputs",
+    "MidtransParamsDict",
+    "MidtransParamsDictTagged",
     "midtrans",
     "midtrans_execute",
     "midtrans_params",

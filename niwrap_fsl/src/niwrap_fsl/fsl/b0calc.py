@@ -13,7 +13,7 @@ B0CALC_METADATA = Metadata(
 )
 
 
-B0calcParameters = typing.TypedDict('B0calcParameters', {
+B0calcParamsDict = typing.TypedDict('B0calcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/b0calc"]],
     "input_file": InputPathType,
     "output_file": str,
@@ -31,7 +31,7 @@ B0calcParameters = typing.TypedDict('B0calcParameters', {
     "verbose_flag": bool,
     "help_flag": bool,
 })
-B0calcParametersTagged = typing.TypedDict('B0calcParametersTagged', {
+B0calcParamsDictTagged = typing.TypedDict('B0calcParamsDictTagged', {
     "@type": typing.Literal["fsl/b0calc"],
     "input_file": InputPathType,
     "output_file": str,
@@ -53,7 +53,7 @@ B0calcParametersTagged = typing.TypedDict('B0calcParametersTagged', {
 
 class B0calcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `B0calcParameters(...)`.
+    Output object returned when calling `B0calcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def b0calc_params(
     direct_conv: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> B0calcParametersTagged:
+) -> B0calcParamsDictTagged:
     """
     Build parameters.
     
@@ -145,7 +145,7 @@ def b0calc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `B0calcParameters` object.
+    `B0calcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def b0calc_validate(
 
 
 def b0calc_cargs(
-    params: B0calcParameters,
+    params: B0calcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,7 +285,7 @@ def b0calc_cargs(
 
 
 def b0calc_outputs(
-    params: B0calcParameters,
+    params: B0calcParamsDict,
     execution: Execution,
 ) -> B0calcOutputs:
     """
@@ -308,7 +308,7 @@ def b0calc_outputs(
 
 
 def b0calc_execute(
-    params: B0calcParameters,
+    params: B0calcParamsDict,
     runner: Runner | None = None,
 ) -> B0calcOutputs:
     """
@@ -410,6 +410,8 @@ def b0calc(
 __all__ = [
     "B0CALC_METADATA",
     "B0calcOutputs",
+    "B0calcParamsDict",
+    "B0calcParamsDictTagged",
     "b0calc",
     "b0calc_execute",
     "b0calc_params",

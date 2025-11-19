@@ -13,11 +13,11 @@ V__GET_AFNI_VIEW_METADATA = Metadata(
 )
 
 
-VGetAfniViewParameters = typing.TypedDict('VGetAfniViewParameters', {
+VGetAfniViewParamsDict = typing.TypedDict('VGetAfniViewParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniView"]],
     "dataset_name": str,
 })
-VGetAfniViewParametersTagged = typing.TypedDict('VGetAfniViewParametersTagged', {
+VGetAfniViewParamsDictTagged = typing.TypedDict('VGetAfniViewParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniView"],
     "dataset_name": str,
 })
@@ -25,7 +25,7 @@ VGetAfniViewParametersTagged = typing.TypedDict('VGetAfniViewParametersTagged', 
 
 class VGetAfniViewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniViewParameters(...)`.
+    Output object returned when calling `VGetAfniViewParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VGetAfniViewOutputs(typing.NamedTuple):
 
 def v__get_afni_view_params(
     dataset_name: str,
-) -> VGetAfniViewParametersTagged:
+) -> VGetAfniViewParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def v__get_afni_view_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniViewParameters` object.
+    `VGetAfniViewParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -71,7 +71,7 @@ def v__get_afni_view_validate(
 
 
 def v__get_afni_view_cargs(
-    params: VGetAfniViewParameters,
+    params: VGetAfniViewParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def v__get_afni_view_cargs(
 
 
 def v__get_afni_view_outputs(
-    params: VGetAfniViewParameters,
+    params: VGetAfniViewParamsDict,
     execution: Execution,
 ) -> VGetAfniViewOutputs:
     """
@@ -110,7 +110,7 @@ def v__get_afni_view_outputs(
 
 
 def v__get_afni_view_execute(
-    params: VGetAfniViewParameters,
+    params: VGetAfniViewParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniViewOutputs:
     """
@@ -166,6 +166,8 @@ def v__get_afni_view(
 
 __all__ = [
     "VGetAfniViewOutputs",
+    "VGetAfniViewParamsDict",
+    "VGetAfniViewParamsDictTagged",
     "V__GET_AFNI_VIEW_METADATA",
     "v__get_afni_view",
     "v__get_afni_view_execute",

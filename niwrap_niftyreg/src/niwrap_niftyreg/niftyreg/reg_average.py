@@ -13,12 +13,12 @@ REG_AVERAGE_METADATA = Metadata(
 )
 
 
-RegAverageParameters = typing.TypedDict('RegAverageParameters', {
+RegAverageParamsDict = typing.TypedDict('RegAverageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["niftyreg/reg_average"]],
     "output_file": str,
     "input_files": list[InputPathType],
 })
-RegAverageParametersTagged = typing.TypedDict('RegAverageParametersTagged', {
+RegAverageParamsDictTagged = typing.TypedDict('RegAverageParamsDictTagged', {
     "@type": typing.Literal["niftyreg/reg_average"],
     "output_file": str,
     "input_files": list[InputPathType],
@@ -27,7 +27,7 @@ RegAverageParametersTagged = typing.TypedDict('RegAverageParametersTagged', {
 
 class RegAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegAverageParameters(...)`.
+    Output object returned when calling `RegAverageParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class RegAverageOutputs(typing.NamedTuple):
 def reg_average_params(
     output_file: str,
     input_files: list[InputPathType],
-) -> RegAverageParametersTagged:
+) -> RegAverageParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def reg_average_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegAverageParameters` object.
+    `RegAverageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -83,7 +83,7 @@ def reg_average_validate(
 
 
 def reg_average_cargs(
-    params: RegAverageParameters,
+    params: RegAverageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def reg_average_cargs(
 
 
 def reg_average_outputs(
-    params: RegAverageParameters,
+    params: RegAverageParamsDict,
     execution: Execution,
 ) -> RegAverageOutputs:
     """
@@ -123,7 +123,7 @@ def reg_average_outputs(
 
 
 def reg_average_execute(
-    params: RegAverageParameters,
+    params: RegAverageParamsDict,
     runner: Runner | None = None,
 ) -> RegAverageOutputs:
     """
@@ -183,6 +183,8 @@ def reg_average(
 __all__ = [
     "REG_AVERAGE_METADATA",
     "RegAverageOutputs",
+    "RegAverageParamsDict",
+    "RegAverageParamsDictTagged",
     "reg_average",
     "reg_average_execute",
     "reg_average_params",

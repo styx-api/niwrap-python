@@ -13,7 +13,7 @@ V_3D_BLUR_IN_MASK_METADATA = Metadata(
 )
 
 
-V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
+V3dBlurInMaskParamsDict = typing.TypedDict('V3dBlurInMaskParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBlurInMask"]],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -27,7 +27,7 @@ V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
     "float": bool,
     "fwhm_xyz": typing.NotRequired[list[float] | None],
 })
-V3dBlurInMaskParametersTagged = typing.TypedDict('V3dBlurInMaskParametersTagged', {
+V3dBlurInMaskParamsDictTagged = typing.TypedDict('V3dBlurInMaskParamsDictTagged', {
     "@type": typing.Literal["afni/3dBlurInMask"],
     "input_file": InputPathType,
     "output_prefix": str,
@@ -45,7 +45,7 @@ V3dBlurInMaskParametersTagged = typing.TypedDict('V3dBlurInMaskParametersTagged'
 
 class V3dBlurInMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBlurInMaskParameters(...)`.
+    Output object returned when calling `V3dBlurInMaskParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def v_3d_blur_in_mask_params(
     quiet: bool = False,
     float_: bool = False,
     fwhm_xyz: list[float] | None = None,
-) -> V3dBlurInMaskParametersTagged:
+) -> V3dBlurInMaskParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def v_3d_blur_in_mask_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBlurInMaskParameters` object.
+    `V3dBlurInMaskParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -169,7 +169,7 @@ def v_3d_blur_in_mask_validate(
 
 
 def v_3d_blur_in_mask_cargs(
-    params: V3dBlurInMaskParameters,
+    params: V3dBlurInMaskParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -221,7 +221,7 @@ def v_3d_blur_in_mask_cargs(
 
 
 def v_3d_blur_in_mask_outputs(
-    params: V3dBlurInMaskParameters,
+    params: V3dBlurInMaskParamsDict,
     execution: Execution,
 ) -> V3dBlurInMaskOutputs:
     """
@@ -241,7 +241,7 @@ def v_3d_blur_in_mask_outputs(
 
 
 def v_3d_blur_in_mask_execute(
-    params: V3dBlurInMaskParameters,
+    params: V3dBlurInMaskParamsDict,
     runner: Runner | None = None,
 ) -> V3dBlurInMaskOutputs:
     """
@@ -330,6 +330,8 @@ def v_3d_blur_in_mask(
 
 __all__ = [
     "V3dBlurInMaskOutputs",
+    "V3dBlurInMaskParamsDict",
+    "V3dBlurInMaskParamsDictTagged",
     "V_3D_BLUR_IN_MASK_METADATA",
     "v_3d_blur_in_mask",
     "v_3d_blur_in_mask_execute",

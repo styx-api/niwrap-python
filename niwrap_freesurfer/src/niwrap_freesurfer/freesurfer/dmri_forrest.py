@@ -13,7 +13,7 @@ DMRI_FORREST_METADATA = Metadata(
 )
 
 
-DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
+DmriForrestParamsDict = typing.TypedDict('DmriForrestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_forrest"]],
     "test_dir": str,
     "train_file": InputPathType,
@@ -25,7 +25,7 @@ DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
     "checkopts": bool,
     "help": bool,
 })
-DmriForrestParametersTagged = typing.TypedDict('DmriForrestParametersTagged', {
+DmriForrestParamsDictTagged = typing.TypedDict('DmriForrestParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_forrest"],
     "test_dir": str,
     "train_file": InputPathType,
@@ -41,7 +41,7 @@ DmriForrestParametersTagged = typing.TypedDict('DmriForrestParametersTagged', {
 
 class DmriForrestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriForrestParameters(...)`.
+    Output object returned when calling `DmriForrestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def dmri_forrest_params(
     debug: bool = False,
     checkopts: bool = False,
     help_: bool = False,
-) -> DmriForrestParametersTagged:
+) -> DmriForrestParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def dmri_forrest_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriForrestParameters` object.
+    `DmriForrestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def dmri_forrest_validate(
 
 
 def dmri_forrest_cargs(
-    params: DmriForrestParameters,
+    params: DmriForrestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -194,7 +194,7 @@ def dmri_forrest_cargs(
 
 
 def dmri_forrest_outputs(
-    params: DmriForrestParameters,
+    params: DmriForrestParamsDict,
     execution: Execution,
 ) -> DmriForrestOutputs:
     """
@@ -213,7 +213,7 @@ def dmri_forrest_outputs(
 
 
 def dmri_forrest_execute(
-    params: DmriForrestParameters,
+    params: DmriForrestParamsDict,
     runner: Runner | None = None,
 ) -> DmriForrestOutputs:
     """
@@ -296,6 +296,8 @@ def dmri_forrest(
 __all__ = [
     "DMRI_FORREST_METADATA",
     "DmriForrestOutputs",
+    "DmriForrestParamsDict",
+    "DmriForrestParamsDictTagged",
     "dmri_forrest",
     "dmri_forrest_execute",
     "dmri_forrest_params",

@@ -13,11 +13,11 @@ FREEVIEW_METADATA = Metadata(
 )
 
 
-FreeviewParameters = typing.TypedDict('FreeviewParameters', {
+FreeviewParamsDict = typing.TypedDict('FreeviewParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/freeview"]],
     "args": typing.NotRequired[str | None],
 })
-FreeviewParametersTagged = typing.TypedDict('FreeviewParametersTagged', {
+FreeviewParamsDictTagged = typing.TypedDict('FreeviewParamsDictTagged', {
     "@type": typing.Literal["freesurfer/freeview"],
     "args": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ FreeviewParametersTagged = typing.TypedDict('FreeviewParametersTagged', {
 
 class FreeviewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FreeviewParameters(...)`.
+    Output object returned when calling `FreeviewParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class FreeviewOutputs(typing.NamedTuple):
 
 def freeview_params(
     args: str | None = None,
-) -> FreeviewParametersTagged:
+) -> FreeviewParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def freeview_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FreeviewParameters` object.
+    `FreeviewParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def freeview_validate(
 
 
 def freeview_cargs(
-    params: FreeviewParameters,
+    params: FreeviewParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def freeview_cargs(
 
 
 def freeview_outputs(
-    params: FreeviewParameters,
+    params: FreeviewParamsDict,
     execution: Execution,
 ) -> FreeviewOutputs:
     """
@@ -107,7 +107,7 @@ def freeview_outputs(
 
 
 def freeview_execute(
-    params: FreeviewParameters,
+    params: FreeviewParamsDict,
     runner: Runner | None = None,
 ) -> FreeviewOutputs:
     """
@@ -163,6 +163,8 @@ def freeview(
 __all__ = [
     "FREEVIEW_METADATA",
     "FreeviewOutputs",
+    "FreeviewParamsDict",
+    "FreeviewParamsDictTagged",
     "freeview",
     "freeview_execute",
     "freeview_params",

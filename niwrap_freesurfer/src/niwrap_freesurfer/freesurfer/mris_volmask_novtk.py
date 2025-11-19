@@ -13,7 +13,7 @@ MRIS_VOLMASK_NOVTK_METADATA = Metadata(
 )
 
 
-MrisVolmaskNovtkParameters = typing.TypedDict('MrisVolmaskNovtkParameters', {
+MrisVolmaskNovtkParamsDict = typing.TypedDict('MrisVolmaskNovtkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask_novtk"]],
     "io": str,
     "cap_distance": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ MrisVolmaskNovtkParameters = typing.TypedDict('MrisVolmaskNovtkParameters', {
     "edit_aseg": bool,
     "save_ribbon": bool,
 })
-MrisVolmaskNovtkParametersTagged = typing.TypedDict('MrisVolmaskNovtkParametersTagged', {
+MrisVolmaskNovtkParamsDictTagged = typing.TypedDict('MrisVolmaskNovtkParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_volmask_novtk"],
     "io": str,
     "cap_distance": typing.NotRequired[float | None],
@@ -59,7 +59,7 @@ MrisVolmaskNovtkParametersTagged = typing.TypedDict('MrisVolmaskNovtkParametersT
 
 class MrisVolmaskNovtkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisVolmaskNovtkParameters(...)`.
+    Output object returned when calling `MrisVolmaskNovtkParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def mris_volmask_novtk_params(
     parallel: bool = False,
     edit_aseg: bool = False,
     save_ribbon: bool = False,
-) -> MrisVolmaskNovtkParametersTagged:
+) -> MrisVolmaskNovtkParamsDictTagged:
     """
     Build parameters.
     
@@ -154,7 +154,7 @@ def mris_volmask_novtk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisVolmaskNovtkParameters` object.
+    `MrisVolmaskNovtkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def mris_volmask_novtk_validate(
 
 
 def mris_volmask_novtk_cargs(
-    params: MrisVolmaskNovtkParameters,
+    params: MrisVolmaskNovtkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -311,7 +311,7 @@ def mris_volmask_novtk_cargs(
 
 
 def mris_volmask_novtk_outputs(
-    params: MrisVolmaskNovtkParameters,
+    params: MrisVolmaskNovtkParamsDict,
     execution: Execution,
 ) -> MrisVolmaskNovtkOutputs:
     """
@@ -330,7 +330,7 @@ def mris_volmask_novtk_outputs(
 
 
 def mris_volmask_novtk_execute(
-    params: MrisVolmaskNovtkParameters,
+    params: MrisVolmaskNovtkParamsDict,
     runner: Runner | None = None,
 ) -> MrisVolmaskNovtkOutputs:
     """
@@ -443,6 +443,8 @@ def mris_volmask_novtk(
 __all__ = [
     "MRIS_VOLMASK_NOVTK_METADATA",
     "MrisVolmaskNovtkOutputs",
+    "MrisVolmaskNovtkParamsDict",
+    "MrisVolmaskNovtkParamsDictTagged",
     "mris_volmask_novtk",
     "mris_volmask_novtk_execute",
     "mris_volmask_novtk_params",

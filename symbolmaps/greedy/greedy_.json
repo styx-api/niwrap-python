@@ -6,7 +6,7 @@
     },
     "input_images": {
       "var_param": "input_images",
-      "fn_struct_make_params": "greedy_input_images_params",
+      "fn_struct_make_params": "greedy_input_images",
       "properties": {
         "fixed": {
           "var_param": "fixed"
@@ -33,7 +33,7 @@
     },
     "invert": {
       "var_param": "invert",
-      "fn_struct_make_params": "greedy_invert_params",
+      "fn_struct_make_params": "greedy_invert",
       "properties": {
         "inwarp": {
           "var_param": "inwarp"
@@ -45,7 +45,7 @@
     },
     "root": {
       "var_param": "root",
-      "fn_struct_make_params": "greedy_root_params",
+      "fn_struct_make_params": "greedy_root",
       "properties": {
         "inwarp": {
           "var_param": "inwarp"
@@ -60,7 +60,7 @@
     },
     "jacobian": {
       "var_param": "jacobian",
-      "fn_struct_make_params": "greedy_jacobian_params",
+      "fn_struct_make_params": "greedy_jacobian",
       "properties": {
         "inwarp": {
           "var_param": "inwarp"
@@ -81,7 +81,7 @@
     },
     "metric": {
       "var_param": "metric",
-      "fn_struct_make_params": "greedy_metric_params",
+      "fn_struct_make_params": "greedy_metric",
       "properties": {
         "metric_type": {
           "var_param": "metric_type"
@@ -162,7 +162,7 @@
     },
     "tjr": {
       "var_param": "tjr",
-      "fn_struct_make_params": "greedy_tjr_params",
+      "fn_struct_make_params": "greedy_tjr",
       "properties": {
         "mesh": {
           "var_param": "mesh"
@@ -201,7 +201,7 @@
     },
     "search": {
       "var_param": "search",
-      "fn_struct_make_params": "greedy_search_params",
+      "fn_struct_make_params": "greedy_search",
       "properties": {
         "n": {
           "var_param": "n"
@@ -225,7 +225,7 @@
     },
     "reslice_moving_image": {
       "var_param": "reslice_moving_image",
-      "fn_struct_make_params": "greedy_reslice_moving_image_params",
+      "fn_struct_make_params": "greedy_reslice_moving_image",
       "properties": {
         "moving": {
           "var_param": "moving"
@@ -237,7 +237,7 @@
     },
     "reslice_surface": {
       "var_param": "reslice_surface",
-      "fn_struct_make_params": "greedy_reslice_surface_params",
+      "fn_struct_make_params": "greedy_reslice_surface",
       "properties": {
         "inmesh": {
           "var_param": "inmesh"
@@ -251,15 +251,15 @@
       "var_param": "interpolation",
       "variants": {
         "nn": {
-          "fn_struct_make_params": "greedy_nn_params",
+          "fn_struct_make_params": "greedy_nn",
           "properties": {}
         },
         "linear": {
-          "fn_struct_make_params": "greedy_linear_params",
+          "fn_struct_make_params": "greedy_linear",
           "properties": {}
         },
         "label": {
-          "fn_struct_make_params": "greedy_label_params",
+          "fn_struct_make_params": "greedy_label",
           "properties": {
             "sigma_spec": {
               "var_param": "sigma_spec"
@@ -282,7 +282,7 @@
     },
     "reslice_simplex_jacobian": {
       "var_param": "reslice_simplex_jacobian",
-      "fn_struct_make_params": "greedy_reslice_simplex_jacobian_params",
+      "fn_struct_make_params": "greedy_reslice_simplex_jacobian",
       "properties": {
         "inmesh": {
           "var_param": "inmesh"

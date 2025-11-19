@@ -13,14 +13,14 @@ V_3D_XYZCAT_METADATA = Metadata(
 )
 
 
-V3dXyzcatParameters = typing.TypedDict('V3dXyzcatParameters', {
+V3dXyzcatParamsDict = typing.TypedDict('V3dXyzcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dXYZcat"]],
     "direction": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
     "datasets": list[InputPathType],
 })
-V3dXyzcatParametersTagged = typing.TypedDict('V3dXyzcatParametersTagged', {
+V3dXyzcatParamsDictTagged = typing.TypedDict('V3dXyzcatParamsDictTagged', {
     "@type": typing.Literal["afni/3dXYZcat"],
     "direction": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ V3dXyzcatParametersTagged = typing.TypedDict('V3dXyzcatParametersTagged', {
 
 class V3dXyzcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dXyzcatParameters(...)`.
+    Output object returned when calling `V3dXyzcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def v_3d_xyzcat_params(
     direction: str | None = None,
     prefix: str | None = None,
     verbose: bool = False,
-) -> V3dXyzcatParametersTagged:
+) -> V3dXyzcatParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def v_3d_xyzcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dXyzcatParameters` object.
+    `V3dXyzcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def v_3d_xyzcat_validate(
 
 
 def v_3d_xyzcat_cargs(
-    params: V3dXyzcatParameters,
+    params: V3dXyzcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -134,7 +134,7 @@ def v_3d_xyzcat_cargs(
 
 
 def v_3d_xyzcat_outputs(
-    params: V3dXyzcatParameters,
+    params: V3dXyzcatParamsDict,
     execution: Execution,
 ) -> V3dXyzcatOutputs:
     """
@@ -155,7 +155,7 @@ def v_3d_xyzcat_outputs(
 
 
 def v_3d_xyzcat_execute(
-    params: V3dXyzcatParameters,
+    params: V3dXyzcatParamsDict,
     runner: Runner | None = None,
 ) -> V3dXyzcatOutputs:
     """
@@ -220,6 +220,8 @@ def v_3d_xyzcat(
 
 __all__ = [
     "V3dXyzcatOutputs",
+    "V3dXyzcatParamsDict",
+    "V3dXyzcatParamsDictTagged",
     "V_3D_XYZCAT_METADATA",
     "v_3d_xyzcat",
     "v_3d_xyzcat_execute",

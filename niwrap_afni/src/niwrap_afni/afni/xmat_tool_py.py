@@ -13,7 +13,7 @@ XMAT_TOOL_PY_METADATA = Metadata(
 )
 
 
-XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
+XmatToolPyParamsDict = typing.TypedDict('XmatToolPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/xmat_tool.py"]],
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
     "show_1d": bool,
     "gui_plot_xmat_as_one": bool,
 })
-XmatToolPyParametersTagged = typing.TypedDict('XmatToolPyParametersTagged', {
+XmatToolPyParamsDictTagged = typing.TypedDict('XmatToolPyParamsDictTagged', {
     "@type": typing.Literal["afni/xmat_tool.py"],
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
@@ -65,7 +65,7 @@ XmatToolPyParametersTagged = typing.TypedDict('XmatToolPyParametersTagged', {
 
 class XmatToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XmatToolPyParameters(...)`.
+    Output object returned when calling `XmatToolPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +95,7 @@ def xmat_tool_py_params(
     show_xmat: bool = False,
     show_1d: bool = False,
     gui_plot_xmat_as_one: bool = False,
-) -> XmatToolPyParametersTagged:
+) -> XmatToolPyParamsDictTagged:
     """
     Build parameters.
     
@@ -162,7 +162,7 @@ def xmat_tool_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XmatToolPyParameters` object.
+    `XmatToolPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -250,7 +250,7 @@ def xmat_tool_py_validate(
 
 
 def xmat_tool_py_cargs(
-    params: XmatToolPyParameters,
+    params: XmatToolPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def xmat_tool_py_cargs(
 
 
 def xmat_tool_py_outputs(
-    params: XmatToolPyParameters,
+    params: XmatToolPyParamsDict,
     execution: Execution,
 ) -> XmatToolPyOutputs:
     """
@@ -348,7 +348,7 @@ def xmat_tool_py_outputs(
 
 
 def xmat_tool_py_execute(
-    params: XmatToolPyParameters,
+    params: XmatToolPyParamsDict,
     runner: Runner | None = None,
 ) -> XmatToolPyOutputs:
     """
@@ -464,6 +464,8 @@ def xmat_tool_py(
 __all__ = [
     "XMAT_TOOL_PY_METADATA",
     "XmatToolPyOutputs",
+    "XmatToolPyParamsDict",
+    "XmatToolPyParamsDictTagged",
     "xmat_tool_py",
     "xmat_tool_py_execute",
     "xmat_tool_py_params",

@@ -13,7 +13,7 @@ MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
 )
 
 
-MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParameters', {
+MriSegmentThalamicNucleiDtiCnnParamsDict = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_thalamic_nuclei_dti_cnn"]],
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicN
     "force_cpu": bool,
     "model": typing.NotRequired[InputPathType | None],
 })
-MriSegmentThalamicNucleiDtiCnnParametersTagged = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParametersTagged', {
+MriSegmentThalamicNucleiDtiCnnParamsDictTagged = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segment_thalamic_nuclei_dti_cnn"],
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ MriSegmentThalamicNucleiDtiCnnParametersTagged = typing.TypedDict('MriSegmentTha
 
 class MriSegmentThalamicNucleiDtiCnnOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegmentThalamicNucleiDtiCnnParameters(...)`.
+    Output object returned when calling `MriSegmentThalamicNucleiDtiCnnParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_params(
     threads: float | None = None,
     force_cpu: bool = False,
     model: InputPathType | None = None,
-) -> MriSegmentThalamicNucleiDtiCnnParametersTagged:
+) -> MriSegmentThalamicNucleiDtiCnnParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegmentThalamicNucleiDtiCnnParameters` object.
+    `MriSegmentThalamicNucleiDtiCnnParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -157,7 +157,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_validate(
 
 
 def mri_segment_thalamic_nuclei_dti_cnn_cargs(
-    params: MriSegmentThalamicNucleiDtiCnnParameters,
+    params: MriSegmentThalamicNucleiDtiCnnParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -218,7 +218,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_cargs(
 
 
 def mri_segment_thalamic_nuclei_dti_cnn_outputs(
-    params: MriSegmentThalamicNucleiDtiCnnParameters,
+    params: MriSegmentThalamicNucleiDtiCnnParamsDict,
     execution: Execution,
 ) -> MriSegmentThalamicNucleiDtiCnnOutputs:
     """
@@ -240,7 +240,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_outputs(
 
 
 def mri_segment_thalamic_nuclei_dti_cnn_execute(
-    params: MriSegmentThalamicNucleiDtiCnnParameters,
+    params: MriSegmentThalamicNucleiDtiCnnParamsDict,
     runner: Runner | None = None,
 ) -> MriSegmentThalamicNucleiDtiCnnOutputs:
     """
@@ -327,6 +327,8 @@ def mri_segment_thalamic_nuclei_dti_cnn(
 __all__ = [
     "MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA",
     "MriSegmentThalamicNucleiDtiCnnOutputs",
+    "MriSegmentThalamicNucleiDtiCnnParamsDict",
+    "MriSegmentThalamicNucleiDtiCnnParamsDictTagged",
     "mri_segment_thalamic_nuclei_dti_cnn",
     "mri_segment_thalamic_nuclei_dti_cnn_execute",
     "mri_segment_thalamic_nuclei_dti_cnn_params",

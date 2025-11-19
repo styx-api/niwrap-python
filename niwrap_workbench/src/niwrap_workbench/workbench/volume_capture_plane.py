@@ -12,7 +12,7 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
 )
 
 
-VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', {
+VolumeCapturePlaneParamsDict = typing.TypedDict('VolumeCapturePlaneParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-capture-plane"]],
     "volume": InputPathType,
     "subvolume": str,
@@ -32,7 +32,7 @@ VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', 
     "top-left-z": float,
     "image": str,
 })
-VolumeCapturePlaneParametersTagged = typing.TypedDict('VolumeCapturePlaneParametersTagged', {
+VolumeCapturePlaneParamsDictTagged = typing.TypedDict('VolumeCapturePlaneParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-capture-plane"],
     "volume": InputPathType,
     "subvolume": str,
@@ -56,7 +56,7 @@ VolumeCapturePlaneParametersTagged = typing.TypedDict('VolumeCapturePlaneParamet
 
 class VolumeCapturePlaneOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeCapturePlaneParameters(...)`.
+    Output object returned when calling `VolumeCapturePlaneParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def volume_capture_plane_params(
     top_left_y: float,
     top_left_z: float,
     image: str,
-) -> VolumeCapturePlaneParametersTagged:
+) -> VolumeCapturePlaneParamsDictTagged:
     """
     Build parameters.
     
@@ -133,7 +133,7 @@ def volume_capture_plane_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeCapturePlaneParameters` object.
+    `VolumeCapturePlaneParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -211,7 +211,7 @@ def volume_capture_plane_validate(
 
 
 def volume_capture_plane_cargs(
-    params: VolumeCapturePlaneParameters,
+    params: VolumeCapturePlaneParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def volume_capture_plane_cargs(
 
 
 def volume_capture_plane_outputs(
-    params: VolumeCapturePlaneParameters,
+    params: VolumeCapturePlaneParamsDict,
     execution: Execution,
 ) -> VolumeCapturePlaneOutputs:
     """
@@ -268,7 +268,7 @@ def volume_capture_plane_outputs(
 
 
 def volume_capture_plane_execute(
-    params: VolumeCapturePlaneParameters,
+    params: VolumeCapturePlaneParamsDict,
     runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
@@ -380,6 +380,8 @@ def volume_capture_plane(
 __all__ = [
     "VOLUME_CAPTURE_PLANE_METADATA",
     "VolumeCapturePlaneOutputs",
+    "VolumeCapturePlaneParamsDict",
+    "VolumeCapturePlaneParamsDictTagged",
     "volume_capture_plane",
     "volume_capture_plane_execute",
     "volume_capture_plane_params",

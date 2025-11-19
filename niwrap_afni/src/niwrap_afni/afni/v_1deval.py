@@ -13,7 +13,7 @@ V_1DEVAL_METADATA = Metadata(
 )
 
 
-V1devalParameters = typing.TypedDict('V1devalParameters', {
+V1devalParamsDict = typing.TypedDict('V1devalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1deval"]],
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
@@ -24,7 +24,7 @@ V1devalParameters = typing.TypedDict('V1devalParameters', {
     "symbol_values": typing.NotRequired[list[str] | None],
     "expression": str,
 })
-V1devalParametersTagged = typing.TypedDict('V1devalParametersTagged', {
+V1devalParamsDictTagged = typing.TypedDict('V1devalParamsDictTagged', {
     "@type": typing.Literal["afni/1deval"],
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ V1devalParametersTagged = typing.TypedDict('V1devalParametersTagged', {
 
 class V1devalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1devalParameters(...)`.
+    Output object returned when calling `V1devalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def v_1deval_params(
     v_1_d: bool = False,
     symbols: list[InputPathType] | None = None,
     symbol_values: list[str] | None = None,
-) -> V1devalParametersTagged:
+) -> V1devalParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_1deval_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1devalParameters` object.
+    `V1devalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def v_1deval_validate(
 
 
 def v_1deval_cargs(
-    params: V1devalParameters,
+    params: V1devalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -199,7 +199,7 @@ def v_1deval_cargs(
 
 
 def v_1deval_outputs(
-    params: V1devalParameters,
+    params: V1devalParamsDict,
     execution: Execution,
 ) -> V1devalOutputs:
     """
@@ -219,7 +219,7 @@ def v_1deval_outputs(
 
 
 def v_1deval_execute(
-    params: V1devalParameters,
+    params: V1devalParamsDict,
     runner: Runner | None = None,
 ) -> V1devalOutputs:
     """
@@ -303,6 +303,8 @@ def v_1deval(
 
 __all__ = [
     "V1devalOutputs",
+    "V1devalParamsDict",
+    "V1devalParamsDictTagged",
     "V_1DEVAL_METADATA",
     "v_1deval",
     "v_1deval_execute",

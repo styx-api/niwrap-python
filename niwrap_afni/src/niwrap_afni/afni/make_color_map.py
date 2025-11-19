@@ -13,7 +13,7 @@ MAKE_COLOR_MAP_METADATA = Metadata(
 )
 
 
-MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
+MakeColorMapParamsDict = typing.TypedDict('MakeColorMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/MakeColorMap"]],
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
     "help_full_flag": bool,
     "flip_map_updside_down": bool,
 })
-MakeColorMapParametersTagged = typing.TypedDict('MakeColorMapParametersTagged', {
+MakeColorMapParamsDictTagged = typing.TypedDict('MakeColorMapParamsDictTagged', {
     "@type": typing.Literal["afni/MakeColorMap"],
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
@@ -63,7 +63,7 @@ MakeColorMapParametersTagged = typing.TypedDict('MakeColorMapParametersTagged', 
 
 class MakeColorMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeColorMapParameters(...)`.
+    Output object returned when calling `MakeColorMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +94,7 @@ def make_color_map_params(
     help_flag: bool = False,
     help_full_flag: bool = False,
     flip_map_updside_down: bool = False,
-) -> MakeColorMapParametersTagged:
+) -> MakeColorMapParamsDictTagged:
     """
     Build parameters.
     
@@ -171,7 +171,7 @@ def make_color_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeColorMapParameters` object.
+    `MakeColorMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -252,7 +252,7 @@ def make_color_map_validate(
 
 
 def make_color_map_cargs(
-    params: MakeColorMapParameters,
+    params: MakeColorMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -352,7 +352,7 @@ def make_color_map_cargs(
 
 
 def make_color_map_outputs(
-    params: MakeColorMapParameters,
+    params: MakeColorMapParamsDict,
     execution: Execution,
 ) -> MakeColorMapOutputs:
     """
@@ -373,7 +373,7 @@ def make_color_map_outputs(
 
 
 def make_color_map_execute(
-    params: MakeColorMapParameters,
+    params: MakeColorMapParamsDict,
     runner: Runner | None = None,
 ) -> MakeColorMapOutputs:
     """
@@ -492,6 +492,8 @@ def make_color_map(
 __all__ = [
     "MAKE_COLOR_MAP_METADATA",
     "MakeColorMapOutputs",
+    "MakeColorMapParamsDict",
+    "MakeColorMapParamsDictTagged",
     "make_color_map",
     "make_color_map_execute",
     "make_color_map_params",

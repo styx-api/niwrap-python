@@ -13,12 +13,12 @@ TKMEDIT_METADATA = Metadata(
 )
 
 
-TkmeditParameters = typing.TypedDict('TkmeditParameters', {
+TkmeditParamsDict = typing.TypedDict('TkmeditParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/tkmedit"]],
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })
-TkmeditParametersTagged = typing.TypedDict('TkmeditParametersTagged', {
+TkmeditParamsDictTagged = typing.TypedDict('TkmeditParamsDictTagged', {
     "@type": typing.Literal["freesurfer/tkmedit"],
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ TkmeditParametersTagged = typing.TypedDict('TkmeditParametersTagged', {
 
 class TkmeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TkmeditParameters(...)`.
+    Output object returned when calling `TkmeditParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class TkmeditOutputs(typing.NamedTuple):
 def tkmedit_params(
     input_volume: InputPathType,
     options: str | None = None,
-) -> TkmeditParametersTagged:
+) -> TkmeditParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def tkmedit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TkmeditParameters` object.
+    `TkmeditParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def tkmedit_validate(
 
 
 def tkmedit_cargs(
-    params: TkmeditParameters,
+    params: TkmeditParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def tkmedit_cargs(
 
 
 def tkmedit_outputs(
-    params: TkmeditParameters,
+    params: TkmeditParamsDict,
     execution: Execution,
 ) -> TkmeditOutputs:
     """
@@ -117,7 +117,7 @@ def tkmedit_outputs(
 
 
 def tkmedit_execute(
-    params: TkmeditParameters,
+    params: TkmeditParamsDict,
     runner: Runner | None = None,
 ) -> TkmeditOutputs:
     """
@@ -180,6 +180,8 @@ def tkmedit(
 __all__ = [
     "TKMEDIT_METADATA",
     "TkmeditOutputs",
+    "TkmeditParamsDict",
+    "TkmeditParamsDictTagged",
     "tkmedit",
     "tkmedit_execute",
     "tkmedit_params",

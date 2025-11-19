@@ -12,7 +12,7 @@ METRIC_DILATE_METADATA = Metadata(
 )
 
 
-MetricDilateParameters = typing.TypedDict('MetricDilateParameters', {
+MetricDilateParamsDict = typing.TypedDict('MetricDilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-dilate"]],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -27,7 +27,7 @@ MetricDilateParameters = typing.TypedDict('MetricDilateParameters', {
     "surface": InputPathType,
     "distance": float,
 })
-MetricDilateParametersTagged = typing.TypedDict('MetricDilateParametersTagged', {
+MetricDilateParamsDictTagged = typing.TypedDict('MetricDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-dilate"],
     "metric-out": str,
     "roi-metric": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ MetricDilateParametersTagged = typing.TypedDict('MetricDilateParametersTagged', 
 
 class MetricDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricDilateParameters(...)`.
+    Output object returned when calling `MetricDilateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ def metric_dilate_params(
     nearest: bool = False,
     linear: bool = False,
     legacy_cutoff: bool = False,
-) -> MetricDilateParametersTagged:
+) -> MetricDilateParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def metric_dilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricDilateParameters` object.
+    `MetricDilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -184,7 +184,7 @@ def metric_dilate_validate(
 
 
 def metric_dilate_cargs(
-    params: MetricDilateParameters,
+    params: MetricDilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -223,7 +223,7 @@ def metric_dilate_cargs(
 
 
 def metric_dilate_outputs(
-    params: MetricDilateParameters,
+    params: MetricDilateParamsDict,
     execution: Execution,
 ) -> MetricDilateOutputs:
     """
@@ -243,7 +243,7 @@ def metric_dilate_outputs(
 
 
 def metric_dilate_execute(
-    params: MetricDilateParameters,
+    params: MetricDilateParamsDict,
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
@@ -374,6 +374,8 @@ def metric_dilate(
 __all__ = [
     "METRIC_DILATE_METADATA",
     "MetricDilateOutputs",
+    "MetricDilateParamsDict",
+    "MetricDilateParamsDictTagged",
     "metric_dilate",
     "metric_dilate_execute",
     "metric_dilate_params",

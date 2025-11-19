@@ -13,7 +13,7 @@ V_3DSVM_METADATA = Metadata(
 )
 
 
-V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
+V3dsvmParamsDict = typing.TypedDict('V3dsvmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dsvm"]],
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
     "help": bool,
     "version": bool,
 })
-V3dsvmParametersTagged = typing.TypedDict('V3dsvmParametersTagged', {
+V3dsvmParamsDictTagged = typing.TypedDict('V3dsvmParamsDictTagged', {
     "@type": typing.Literal["afni/3dsvm"],
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
@@ -77,7 +77,7 @@ V3dsvmParametersTagged = typing.TypedDict('V3dsvmParametersTagged', {
 
 class V3dsvmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dsvmParameters(...)`.
+    Output object returned when calling `V3dsvmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +119,7 @@ def v_3dsvm_params(
     multiclass: typing.Literal["DAG", "vote"] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V3dsvmParametersTagged:
+) -> V3dsvmParamsDictTagged:
     """
     Build parameters.
     
@@ -222,7 +222,7 @@ def v_3dsvm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dsvmParameters` object.
+    `V3dsvmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -328,7 +328,7 @@ def v_3dsvm_validate(
 
 
 def v_3dsvm_cargs(
-    params: V3dsvmParameters,
+    params: V3dsvmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,7 +456,7 @@ def v_3dsvm_cargs(
 
 
 def v_3dsvm_outputs(
-    params: V3dsvmParameters,
+    params: V3dsvmParamsDict,
     execution: Execution,
 ) -> V3dsvmOutputs:
     """
@@ -479,7 +479,7 @@ def v_3dsvm_outputs(
 
 
 def v_3dsvm_execute(
-    params: V3dsvmParameters,
+    params: V3dsvmParamsDict,
     runner: Runner | None = None,
 ) -> V3dsvmOutputs:
     """
@@ -624,6 +624,8 @@ def v_3dsvm(
 
 __all__ = [
     "V3dsvmOutputs",
+    "V3dsvmParamsDict",
+    "V3dsvmParamsDictTagged",
     "V_3DSVM_METADATA",
     "v_3dsvm",
     "v_3dsvm_execute",

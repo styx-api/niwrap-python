@@ -6,7 +6,7 @@
     },
     "cifti-roi": {
       "var_param": "cifti_roi",
-      "fn_struct_make_params": "cifti_average_roi_correlation_cifti_roi_params",
+      "fn_struct_make_params": "cifti_average_roi_correlation_cifti_roi",
       "properties": {
         "roi-cifti": {
           "var_param": "roi_cifti"
@@ -33,7 +33,7 @@
     },
     "cifti": {
       "var_param": "cifti",
-      "fn_struct_make_params": "cifti_average_roi_correlation_cifti_params",
+      "fn_struct_make_params": "cifti_average_roi_correlation_cifti",
       "properties": {
         "cifti-in": {
           "var_param": "cifti_in"

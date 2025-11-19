@@ -13,7 +13,7 @@ V__BUILD_AFNI_XLIB_METADATA = Metadata(
 )
 
 
-VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
+VBuildAfniXlibParamsDict = typing.TypedDict('VBuildAfniXlibParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@build_afni_Xlib"]],
     "afniX": bool,
     "localinstall": bool,
@@ -22,7 +22,7 @@ VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
     "lib64": bool,
     "packages": list[str],
 })
-VBuildAfniXlibParametersTagged = typing.TypedDict('VBuildAfniXlibParametersTagged', {
+VBuildAfniXlibParamsDictTagged = typing.TypedDict('VBuildAfniXlibParamsDictTagged', {
     "@type": typing.Literal["afni/@build_afni_Xlib"],
     "afniX": bool,
     "localinstall": bool,
@@ -35,7 +35,7 @@ VBuildAfniXlibParametersTagged = typing.TypedDict('VBuildAfniXlibParametersTagge
 
 class VBuildAfniXlibOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VBuildAfniXlibParameters(...)`.
+    Output object returned when calling `VBuildAfniXlibParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v__build_afni_xlib_params(
     debug_symbols: bool = False,
     lib32: bool = False,
     lib64: bool = False,
-) -> VBuildAfniXlibParametersTagged:
+) -> VBuildAfniXlibParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v__build_afni_xlib_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VBuildAfniXlibParameters` object.
+    `VBuildAfniXlibParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def v__build_afni_xlib_validate(
 
 
 def v__build_afni_xlib_cargs(
-    params: VBuildAfniXlibParameters,
+    params: VBuildAfniXlibParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -147,7 +147,7 @@ def v__build_afni_xlib_cargs(
 
 
 def v__build_afni_xlib_outputs(
-    params: VBuildAfniXlibParameters,
+    params: VBuildAfniXlibParamsDict,
     execution: Execution,
 ) -> VBuildAfniXlibOutputs:
     """
@@ -166,7 +166,7 @@ def v__build_afni_xlib_outputs(
 
 
 def v__build_afni_xlib_execute(
-    params: VBuildAfniXlibParameters,
+    params: VBuildAfniXlibParamsDict,
     runner: Runner | None = None,
 ) -> VBuildAfniXlibOutputs:
     """
@@ -238,6 +238,8 @@ def v__build_afni_xlib(
 
 __all__ = [
     "VBuildAfniXlibOutputs",
+    "VBuildAfniXlibParamsDict",
+    "VBuildAfniXlibParamsDictTagged",
     "V__BUILD_AFNI_XLIB_METADATA",
     "v__build_afni_xlib",
     "v__build_afni_xlib_execute",

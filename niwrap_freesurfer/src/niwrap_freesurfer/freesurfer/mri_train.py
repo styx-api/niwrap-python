@@ -13,12 +13,12 @@ MRI_TRAIN_METADATA = Metadata(
 )
 
 
-MriTrainParameters = typing.TypedDict('MriTrainParameters', {
+MriTrainParamsDict = typing.TypedDict('MriTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_train"]],
     "training_file": InputPathType,
     "output_file": str,
 })
-MriTrainParametersTagged = typing.TypedDict('MriTrainParametersTagged', {
+MriTrainParamsDictTagged = typing.TypedDict('MriTrainParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_train"],
     "training_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ MriTrainParametersTagged = typing.TypedDict('MriTrainParametersTagged', {
 
 class MriTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriTrainParameters(...)`.
+    Output object returned when calling `MriTrainParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MriTrainOutputs(typing.NamedTuple):
 def mri_train_params(
     training_file: InputPathType,
     output_file: str,
-) -> MriTrainParametersTagged:
+) -> MriTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mri_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriTrainParameters` object.
+    `MriTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mri_train_validate(
 
 
 def mri_train_cargs(
-    params: MriTrainParameters,
+    params: MriTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mri_train_cargs(
 
 
 def mri_train_outputs(
-    params: MriTrainParameters,
+    params: MriTrainParamsDict,
     execution: Execution,
 ) -> MriTrainOutputs:
     """
@@ -119,7 +119,7 @@ def mri_train_outputs(
 
 
 def mri_train_execute(
-    params: MriTrainParameters,
+    params: MriTrainParamsDict,
     runner: Runner | None = None,
 ) -> MriTrainOutputs:
     """
@@ -178,6 +178,8 @@ def mri_train(
 __all__ = [
     "MRI_TRAIN_METADATA",
     "MriTrainOutputs",
+    "MriTrainParamsDict",
+    "MriTrainParamsDictTagged",
     "mri_train",
     "mri_train_execute",
     "mri_train_params",

@@ -33,7 +33,7 @@
     },
     "axis": {
       "var_param": "axis",
-      "fn_struct_make_params": "mrgrid_axis_params",
+      "fn_struct_make_params": "mrgrid_axis",
       "properties": {
         "index": {
           "var_param": "index"
@@ -53,7 +53,7 @@
       "var_param": "strides",
       "variants": {
         "VariousString": {
-          "fn_struct_make_params": "mrgrid_various_string_params",
+          "fn_struct_make_params": "mrgrid_various_string",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -61,7 +61,7 @@
           }
         },
         "VariousFile": {
-          "fn_struct_make_params": "mrgrid_various_file_params",
+          "fn_struct_make_params": "mrgrid_various_file",
           "properties": {
             "obj": {
               "var_param": "obj"
@@ -90,7 +90,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "mrgrid_config_params",
+      "fn_struct_make_params": "mrgrid_config",
       "properties": {
         "key": {
           "var_param": "key"

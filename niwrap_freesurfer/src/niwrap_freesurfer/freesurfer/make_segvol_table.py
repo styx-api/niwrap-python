@@ -13,7 +13,7 @@ MAKE_SEGVOL_TABLE_METADATA = Metadata(
 )
 
 
-MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
+MakeSegvolTableParamsDict = typing.TypedDict('MakeSegvolTableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/make-segvol-table"]],
     "subjects": list[str],
     "subject_file": InputPathType,
@@ -26,7 +26,7 @@ MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
     "version": bool,
     "help": bool,
 })
-MakeSegvolTableParametersTagged = typing.TypedDict('MakeSegvolTableParametersTagged', {
+MakeSegvolTableParamsDictTagged = typing.TypedDict('MakeSegvolTableParamsDictTagged', {
     "@type": typing.Literal["freesurfer/make-segvol-table"],
     "subjects": list[str],
     "subject_file": InputPathType,
@@ -43,7 +43,7 @@ MakeSegvolTableParametersTagged = typing.TypedDict('MakeSegvolTableParametersTag
 
 class MakeSegvolTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeSegvolTableParameters(...)`.
+    Output object returned when calling `MakeSegvolTableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def make_segvol_table_params(
     umask: str | None = None,
     version: bool = False,
     help_: bool = False,
-) -> MakeSegvolTableParametersTagged:
+) -> MakeSegvolTableParamsDictTagged:
     """
     Build parameters.
     
@@ -111,7 +111,7 @@ def make_segvol_table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeSegvolTableParameters` object.
+    `MakeSegvolTableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,7 +162,7 @@ def make_segvol_table_validate(
 
 
 def make_segvol_table_cargs(
-    params: MakeSegvolTableParameters,
+    params: MakeSegvolTableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -221,7 +221,7 @@ def make_segvol_table_cargs(
 
 
 def make_segvol_table_outputs(
-    params: MakeSegvolTableParameters,
+    params: MakeSegvolTableParamsDict,
     execution: Execution,
 ) -> MakeSegvolTableOutputs:
     """
@@ -241,7 +241,7 @@ def make_segvol_table_outputs(
 
 
 def make_segvol_table_execute(
-    params: MakeSegvolTableParameters,
+    params: MakeSegvolTableParamsDict,
     runner: Runner | None = None,
 ) -> MakeSegvolTableOutputs:
     """
@@ -330,6 +330,8 @@ def make_segvol_table(
 __all__ = [
     "MAKE_SEGVOL_TABLE_METADATA",
     "MakeSegvolTableOutputs",
+    "MakeSegvolTableParamsDict",
+    "MakeSegvolTableParamsDictTagged",
     "make_segvol_table",
     "make_segvol_table_execute",
     "make_segvol_table_params",

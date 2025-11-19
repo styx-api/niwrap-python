@@ -13,7 +13,7 @@ MRI_EXVIVO_NORM_METADATA = Metadata(
 )
 
 
-MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
+MriExvivoNormParamsDict = typing.TypedDict('MriExvivoNormParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_norm"]],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -31,7 +31,7 @@ MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
     "weights_file": typing.NotRequired[InputPathType | None],
     "gpu_number": typing.NotRequired[float | None],
 })
-MriExvivoNormParametersTagged = typing.TypedDict('MriExvivoNormParametersTagged', {
+MriExvivoNormParamsDictTagged = typing.TypedDict('MriExvivoNormParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_exvivo_norm"],
     "input_volume": InputPathType,
     "output_volume": str,
@@ -53,7 +53,7 @@ MriExvivoNormParametersTagged = typing.TypedDict('MriExvivoNormParametersTagged'
 
 class MriExvivoNormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriExvivoNormParameters(...)`.
+    Output object returned when calling `MriExvivoNormParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +77,7 @@ def mri_exvivo_norm_params(
     model_file: InputPathType | None = None,
     weights_file: InputPathType | None = None,
     gpu_number: float | None = None,
-) -> MriExvivoNormParametersTagged:
+) -> MriExvivoNormParamsDictTagged:
     """
     Build parameters.
     
@@ -136,7 +136,7 @@ def mri_exvivo_norm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriExvivoNormParameters` object.
+    `MriExvivoNormParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def mri_exvivo_norm_validate(
 
 
 def mri_exvivo_norm_cargs(
-    params: MriExvivoNormParameters,
+    params: MriExvivoNormParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -276,7 +276,7 @@ def mri_exvivo_norm_cargs(
 
 
 def mri_exvivo_norm_outputs(
-    params: MriExvivoNormParameters,
+    params: MriExvivoNormParamsDict,
     execution: Execution,
 ) -> MriExvivoNormOutputs:
     """
@@ -296,7 +296,7 @@ def mri_exvivo_norm_outputs(
 
 
 def mri_exvivo_norm_execute(
-    params: MriExvivoNormParameters,
+    params: MriExvivoNormParamsDict,
     runner: Runner | None = None,
 ) -> MriExvivoNormOutputs:
     """
@@ -396,6 +396,8 @@ def mri_exvivo_norm(
 __all__ = [
     "MRI_EXVIVO_NORM_METADATA",
     "MriExvivoNormOutputs",
+    "MriExvivoNormParamsDict",
+    "MriExvivoNormParamsDictTagged",
     "mri_exvivo_norm",
     "mri_exvivo_norm_execute",
     "mri_exvivo_norm_params",

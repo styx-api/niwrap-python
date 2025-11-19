@@ -13,7 +13,7 @@ SURF_CLUST_METADATA = Metadata(
 )
 
 
-SurfClustParameters = typing.TypedDict('SurfClustParameters', {
+SurfClustParamsDict = typing.TypedDict('SurfClustParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfClust"]],
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ SurfClustParameters = typing.TypedDict('SurfClustParameters', {
     "spx_help": bool,
     "aspx_help": bool,
 })
-SurfClustParametersTagged = typing.TypedDict('SurfClustParametersTagged', {
+SurfClustParamsDictTagged = typing.TypedDict('SurfClustParamsDictTagged', {
     "@type": typing.Literal["afni/SurfClust"],
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
@@ -101,7 +101,7 @@ SurfClustParametersTagged = typing.TypedDict('SurfClustParametersTagged', {
 
 class SurfClustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfClustParameters(...)`.
+    Output object returned when calling `SurfClustParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,7 +153,7 @@ def surf_clust_params(
     raw_help: bool = False,
     spx_help: bool = False,
     aspx_help: bool = False,
-) -> SurfClustParametersTagged:
+) -> SurfClustParamsDictTagged:
     """
     Build parameters.
     
@@ -277,7 +277,7 @@ def surf_clust_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfClustParameters` object.
+    `SurfClustParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -444,7 +444,7 @@ def surf_clust_validate(
 
 
 def surf_clust_cargs(
-    params: SurfClustParameters,
+    params: SurfClustParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -586,7 +586,7 @@ def surf_clust_cargs(
 
 
 def surf_clust_outputs(
-    params: SurfClustParameters,
+    params: SurfClustParamsDict,
     execution: Execution,
 ) -> SurfClustOutputs:
     """
@@ -608,7 +608,7 @@ def surf_clust_outputs(
 
 
 def surf_clust_execute(
-    params: SurfClustParameters,
+    params: SurfClustParamsDict,
     runner: Runner | None = None,
 ) -> SurfClustOutputs:
     """
@@ -791,6 +791,8 @@ def surf_clust(
 __all__ = [
     "SURF_CLUST_METADATA",
     "SurfClustOutputs",
+    "SurfClustParamsDict",
+    "SurfClustParamsDictTagged",
     "surf_clust",
     "surf_clust_execute",
     "surf_clust_params",

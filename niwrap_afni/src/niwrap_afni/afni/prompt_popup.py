@@ -13,7 +13,7 @@ PROMPT_POPUP_METADATA = Metadata(
 )
 
 
-PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
+PromptPopupParamsDict = typing.TypedDict('PromptPopupParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/prompt_popup"]],
     "message": str,
     "message_pause": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
     "timeout": typing.NotRequired[float | None],
     "timeout_to": typing.NotRequired[float | None],
 })
-PromptPopupParametersTagged = typing.TypedDict('PromptPopupParametersTagged', {
+PromptPopupParamsDictTagged = typing.TypedDict('PromptPopupParamsDictTagged', {
     "@type": typing.Literal["afni/prompt_popup"],
     "message": str,
     "message_pause": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ PromptPopupParametersTagged = typing.TypedDict('PromptPopupParametersTagged', {
 
 class PromptPopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PromptPopupParameters(...)`.
+    Output object returned when calling `PromptPopupParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def prompt_popup_params(
     buttons_b: list[str] | None = None,
     timeout: float | None = None,
     timeout_to: float | None = None,
-) -> PromptPopupParametersTagged:
+) -> PromptPopupParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def prompt_popup_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PromptPopupParameters` object.
+    `PromptPopupParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def prompt_popup_validate(
 
 
 def prompt_popup_cargs(
-    params: PromptPopupParameters,
+    params: PromptPopupParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -170,7 +170,7 @@ def prompt_popup_cargs(
 
 
 def prompt_popup_outputs(
-    params: PromptPopupParameters,
+    params: PromptPopupParamsDict,
     execution: Execution,
 ) -> PromptPopupOutputs:
     """
@@ -189,7 +189,7 @@ def prompt_popup_outputs(
 
 
 def prompt_popup_execute(
-    params: PromptPopupParameters,
+    params: PromptPopupParamsDict,
     runner: Runner | None = None,
 ) -> PromptPopupOutputs:
     """
@@ -266,6 +266,8 @@ def prompt_popup(
 __all__ = [
     "PROMPT_POPUP_METADATA",
     "PromptPopupOutputs",
+    "PromptPopupParamsDict",
+    "PromptPopupParamsDictTagged",
     "prompt_popup",
     "prompt_popup_execute",
     "prompt_popup_params",

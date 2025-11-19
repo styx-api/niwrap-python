@@ -12,14 +12,14 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
 )
 
 
-SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDistanceParameters', {
+SurfaceToSurface3dDistanceParamsDict = typing.TypedDict('SurfaceToSurface3dDistanceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-to-surface-3d-distance"]],
     "dists-out": str,
     "vectors-out": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
 })
-SurfaceToSurface3dDistanceParametersTagged = typing.TypedDict('SurfaceToSurface3dDistanceParametersTagged', {
+SurfaceToSurface3dDistanceParamsDictTagged = typing.TypedDict('SurfaceToSurface3dDistanceParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-to-surface-3d-distance"],
     "dists-out": str,
     "vectors-out": typing.NotRequired[str | None],
@@ -30,7 +30,7 @@ SurfaceToSurface3dDistanceParametersTagged = typing.TypedDict('SurfaceToSurface3
 
 class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceToSurface3dDistanceParameters(...)`.
+    Output object returned when calling `SurfaceToSurface3dDistanceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_to_surface_3d_distance_params(
     vectors_out: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-) -> SurfaceToSurface3dDistanceParametersTagged:
+) -> SurfaceToSurface3dDistanceParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def surface_to_surface_3d_distance_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceToSurface3dDistanceParameters` object.
+    `SurfaceToSurface3dDistanceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def surface_to_surface_3d_distance_validate(
 
 
 def surface_to_surface_3d_distance_cargs(
-    params: SurfaceToSurface3dDistanceParameters,
+    params: SurfaceToSurface3dDistanceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def surface_to_surface_3d_distance_cargs(
 
 
 def surface_to_surface_3d_distance_outputs(
-    params: SurfaceToSurface3dDistanceParameters,
+    params: SurfaceToSurface3dDistanceParamsDict,
     execution: Execution,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
@@ -145,7 +145,7 @@ def surface_to_surface_3d_distance_outputs(
 
 
 def surface_to_surface_3d_distance_execute(
-    params: SurfaceToSurface3dDistanceParameters,
+    params: SurfaceToSurface3dDistanceParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
@@ -208,6 +208,8 @@ def surface_to_surface_3d_distance(
 __all__ = [
     "SURFACE_TO_SURFACE_3D_DISTANCE_METADATA",
     "SurfaceToSurface3dDistanceOutputs",
+    "SurfaceToSurface3dDistanceParamsDict",
+    "SurfaceToSurface3dDistanceParamsDictTagged",
     "surface_to_surface_3d_distance",
     "surface_to_surface_3d_distance_execute",
     "surface_to_surface_3d_distance_params",

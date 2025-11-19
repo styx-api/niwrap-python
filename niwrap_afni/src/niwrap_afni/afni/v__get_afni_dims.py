@@ -13,11 +13,11 @@ V__GET_AFNI_DIMS_METADATA = Metadata(
 )
 
 
-VGetAfniDimsParameters = typing.TypedDict('VGetAfniDimsParameters', {
+VGetAfniDimsParamsDict = typing.TypedDict('VGetAfniDimsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@GetAfniDims"]],
     "input_dset": InputPathType,
 })
-VGetAfniDimsParametersTagged = typing.TypedDict('VGetAfniDimsParametersTagged', {
+VGetAfniDimsParamsDictTagged = typing.TypedDict('VGetAfniDimsParamsDictTagged', {
     "@type": typing.Literal["afni/@GetAfniDims"],
     "input_dset": InputPathType,
 })
@@ -25,7 +25,7 @@ VGetAfniDimsParametersTagged = typing.TypedDict('VGetAfniDimsParametersTagged', 
 
 class VGetAfniDimsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VGetAfniDimsParameters(...)`.
+    Output object returned when calling `VGetAfniDimsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VGetAfniDimsOutputs(typing.NamedTuple):
 
 def v__get_afni_dims_params(
     input_dset: InputPathType,
-) -> VGetAfniDimsParametersTagged:
+) -> VGetAfniDimsParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__get_afni_dims_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VGetAfniDimsParameters` object.
+    `VGetAfniDimsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__get_afni_dims_validate(
 
 
 def v__get_afni_dims_cargs(
-    params: VGetAfniDimsParameters,
+    params: VGetAfniDimsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__get_afni_dims_cargs(
 
 
 def v__get_afni_dims_outputs(
-    params: VGetAfniDimsParameters,
+    params: VGetAfniDimsParamsDict,
     execution: Execution,
 ) -> VGetAfniDimsOutputs:
     """
@@ -109,7 +109,7 @@ def v__get_afni_dims_outputs(
 
 
 def v__get_afni_dims_execute(
-    params: VGetAfniDimsParameters,
+    params: VGetAfniDimsParamsDict,
     runner: Runner | None = None,
 ) -> VGetAfniDimsOutputs:
     """
@@ -164,6 +164,8 @@ def v__get_afni_dims(
 
 __all__ = [
     "VGetAfniDimsOutputs",
+    "VGetAfniDimsParamsDict",
+    "VGetAfniDimsParamsDictTagged",
     "V__GET_AFNI_DIMS_METADATA",
     "v__get_afni_dims",
     "v__get_afni_dims_execute",

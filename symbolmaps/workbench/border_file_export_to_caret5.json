@@ -3,7 +3,7 @@
   "properties": {
     "surface": {
       "var_param": "surface",
-      "fn_struct_make_params": "border_file_export_to_caret5_surface_params",
+      "fn_struct_make_params": "border_file_export_to_caret5_surface",
       "properties": {
         "surface-in": {
           "var_param": "surface_in"

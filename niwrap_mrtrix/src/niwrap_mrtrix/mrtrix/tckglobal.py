@@ -13,33 +13,33 @@ TCKGLOBAL_METADATA = Metadata(
 )
 
 
-TckglobalRisoParameters = typing.TypedDict('TckglobalRisoParameters', {
+TckglobalRisoParamsDict = typing.TypedDict('TckglobalRisoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["riso"]],
     "response": InputPathType,
 })
-TckglobalRisoParametersTagged = typing.TypedDict('TckglobalRisoParametersTagged', {
+TckglobalRisoParamsDictTagged = typing.TypedDict('TckglobalRisoParamsDictTagged', {
     "@type": typing.Literal["riso"],
     "response": InputPathType,
 })
 
 
-TckglobalConfigParameters = typing.TypedDict('TckglobalConfigParameters', {
+TckglobalConfigParamsDict = typing.TypedDict('TckglobalConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckglobalConfigParametersTagged = typing.TypedDict('TckglobalConfigParametersTagged', {
+TckglobalConfigParamsDictTagged = typing.TypedDict('TckglobalConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckglobalParameters = typing.TypedDict('TckglobalParameters', {
+TckglobalParamsDict = typing.TypedDict('TckglobalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckglobal"]],
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
-    "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],
+    "riso": typing.NotRequired[list[TckglobalRisoParamsDict] | None],
     "lmax": typing.NotRequired[int | None],
     "length": typing.NotRequired[float | None],
     "weight": typing.NotRequired[float | None],
@@ -63,18 +63,18 @@ TckglobalParameters = typing.TypedDict('TckglobalParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckglobalConfigParameters] | None],
+    "config": typing.NotRequired[list[TckglobalConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
     "response": InputPathType,
     "tracks": str,
 })
-TckglobalParametersTagged = typing.TypedDict('TckglobalParametersTagged', {
+TckglobalParamsDictTagged = typing.TypedDict('TckglobalParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckglobal"],
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
-    "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],
+    "riso": typing.NotRequired[list[TckglobalRisoParamsDict] | None],
     "lmax": typing.NotRequired[int | None],
     "length": typing.NotRequired[float | None],
     "weight": typing.NotRequired[float | None],
@@ -98,7 +98,7 @@ TckglobalParametersTagged = typing.TypedDict('TckglobalParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckglobalConfigParameters] | None],
+    "config": typing.NotRequired[list[TckglobalConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
@@ -107,9 +107,9 @@ TckglobalParametersTagged = typing.TypedDict('TckglobalParametersTagged', {
 })
 
 
-def tckglobal_riso_params(
+def tckglobal_riso(
     response: InputPathType,
-) -> TckglobalRisoParametersTagged:
+) -> TckglobalRisoParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def tckglobal_riso_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckglobalRisoParameters` object.
+    `TckglobalRisoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def tckglobal_riso_validate(
 
 
 def tckglobal_riso_cargs(
-    params: TckglobalRisoParameters,
+    params: TckglobalRisoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,10 +163,10 @@ def tckglobal_riso_cargs(
     return cargs
 
 
-def tckglobal_config_params(
+def tckglobal_config(
     key: str,
     value: str,
-) -> TckglobalConfigParametersTagged:
+) -> TckglobalConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -189,7 +189,7 @@ def tckglobal_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckglobalConfigParameters` object.
+    `TckglobalConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -207,7 +207,7 @@ def tckglobal_config_validate(
 
 
 def tckglobal_config_cargs(
-    params: TckglobalConfigParameters,
+    params: TckglobalConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,7 +228,7 @@ def tckglobal_config_cargs(
 
 class TckglobalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckglobalParameters(...)`.
+    Output object returned when calling `TckglobalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -257,7 +257,7 @@ def tckglobal_params(
     tracks: str,
     grad: InputPathType | None = None,
     mask: InputPathType | None = None,
-    riso: list[TckglobalRisoParameters] | None = None,
+    riso: list[TckglobalRisoParamsDict] | None = None,
     lmax: int | None = None,
     length: float | None = None,
     weight: float | None = None,
@@ -281,10 +281,10 @@ def tckglobal_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckglobalConfigParameters] | None = None,
+    config: list[TckglobalConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckglobalParametersTagged:
+) -> TckglobalParamsDictTagged:
     """
     Build parameters.
     
@@ -420,7 +420,7 @@ def tckglobal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckglobalParameters` object.
+    `TckglobalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -435,7 +435,7 @@ def tckglobal_validate(
             raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
     if params.get("riso", None) is not None:
         if not isinstance(params["riso"], list):
-            raise StyxValidationError(f'`riso` has the wrong type: Received `{type(params.get("riso", None))}` expected `list[TckglobalRisoParameters] | None`')
+            raise StyxValidationError(f'`riso` has the wrong type: Received `{type(params.get("riso", None))}` expected `list[TckglobalRisoParamsDict] | None`')
         for e in params["riso"]:
             tckglobal_riso_validate(e)
     if params.get("lmax", None) is not None:
@@ -517,7 +517,7 @@ def tckglobal_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckglobalConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckglobalConfigParamsDict] | None`')
         for e in params["config"]:
             tckglobal_config_validate(e)
     if params.get("help", False) is None:
@@ -543,7 +543,7 @@ def tckglobal_validate(
 
 
 def tckglobal_cargs(
-    params: TckglobalParameters,
+    params: TckglobalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -682,7 +682,7 @@ def tckglobal_cargs(
 
 
 def tckglobal_outputs(
-    params: TckglobalParameters,
+    params: TckglobalParamsDict,
     execution: Execution,
 ) -> TckglobalOutputs:
     """
@@ -706,7 +706,7 @@ def tckglobal_outputs(
 
 
 def tckglobal_execute(
-    params: TckglobalParameters,
+    params: TckglobalParamsDict,
     runner: Runner | None = None,
 ) -> TckglobalOutputs:
     """
@@ -762,7 +762,7 @@ def tckglobal(
     tracks: str,
     grad: InputPathType | None = None,
     mask: InputPathType | None = None,
-    riso: list[TckglobalRisoParameters] | None = None,
+    riso: list[TckglobalRisoParamsDict] | None = None,
     lmax: int | None = None,
     length: float | None = None,
     weight: float | None = None,
@@ -786,7 +786,7 @@ def tckglobal(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckglobalConfigParameters] | None = None,
+    config: list[TckglobalConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -929,10 +929,16 @@ def tckglobal(
 
 __all__ = [
     "TCKGLOBAL_METADATA",
+    "TckglobalConfigParamsDict",
+    "TckglobalConfigParamsDictTagged",
     "TckglobalOutputs",
+    "TckglobalParamsDict",
+    "TckglobalParamsDictTagged",
+    "TckglobalRisoParamsDict",
+    "TckglobalRisoParamsDictTagged",
     "tckglobal",
-    "tckglobal_config_params",
+    "tckglobal_config",
     "tckglobal_execute",
     "tckglobal_params",
-    "tckglobal_riso_params",
+    "tckglobal_riso",
 ]

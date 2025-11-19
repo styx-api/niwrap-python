@@ -13,11 +13,11 @@ REGISTER_SUBJECT_FLASH_METADATA = Metadata(
 )
 
 
-RegisterSubjectFlashParameters = typing.TypedDict('RegisterSubjectFlashParameters', {
+RegisterSubjectFlashParamsDict = typing.TypedDict('RegisterSubjectFlashParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject_flash"]],
     "input_volumes": list[InputPathType],
 })
-RegisterSubjectFlashParametersTagged = typing.TypedDict('RegisterSubjectFlashParametersTagged', {
+RegisterSubjectFlashParamsDictTagged = typing.TypedDict('RegisterSubjectFlashParamsDictTagged', {
     "@type": typing.Literal["freesurfer/register_subject_flash"],
     "input_volumes": list[InputPathType],
 })
@@ -25,7 +25,7 @@ RegisterSubjectFlashParametersTagged = typing.TypedDict('RegisterSubjectFlashPar
 
 class RegisterSubjectFlashOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `RegisterSubjectFlashParameters(...)`.
+    Output object returned when calling `RegisterSubjectFlashParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class RegisterSubjectFlashOutputs(typing.NamedTuple):
 
 def register_subject_flash_params(
     input_volumes: list[InputPathType],
-) -> RegisterSubjectFlashParametersTagged:
+) -> RegisterSubjectFlashParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def register_subject_flash_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `RegisterSubjectFlashParameters` object.
+    `RegisterSubjectFlashParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def register_subject_flash_validate(
 
 
 def register_subject_flash_cargs(
-    params: RegisterSubjectFlashParameters,
+    params: RegisterSubjectFlashParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def register_subject_flash_cargs(
 
 
 def register_subject_flash_outputs(
-    params: RegisterSubjectFlashParameters,
+    params: RegisterSubjectFlashParamsDict,
     execution: Execution,
 ) -> RegisterSubjectFlashOutputs:
     """
@@ -112,7 +112,7 @@ def register_subject_flash_outputs(
 
 
 def register_subject_flash_execute(
-    params: RegisterSubjectFlashParameters,
+    params: RegisterSubjectFlashParamsDict,
     runner: Runner | None = None,
 ) -> RegisterSubjectFlashOutputs:
     """
@@ -168,6 +168,8 @@ def register_subject_flash(
 __all__ = [
     "REGISTER_SUBJECT_FLASH_METADATA",
     "RegisterSubjectFlashOutputs",
+    "RegisterSubjectFlashParamsDict",
+    "RegisterSubjectFlashParamsDictTagged",
     "register_subject_flash",
     "register_subject_flash_execute",
     "register_subject_flash_params",

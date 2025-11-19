@@ -13,14 +13,14 @@ V_3D_PERIODOGRAM_METADATA = Metadata(
 )
 
 
-V3dPeriodogramParameters = typing.TypedDict('V3dPeriodogramParameters', {
+V3dPeriodogramParamsDict = typing.TypedDict('V3dPeriodogramParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dPeriodogram"]],
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
     "nfft": typing.NotRequired[float | None],
     "dataset": InputPathType,
 })
-V3dPeriodogramParametersTagged = typing.TypedDict('V3dPeriodogramParametersTagged', {
+V3dPeriodogramParamsDictTagged = typing.TypedDict('V3dPeriodogramParamsDictTagged', {
     "@type": typing.Literal["afni/3dPeriodogram"],
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
@@ -31,7 +31,7 @@ V3dPeriodogramParametersTagged = typing.TypedDict('V3dPeriodogramParametersTagge
 
 class V3dPeriodogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dPeriodogramParameters(...)`.
+    Output object returned when calling `V3dPeriodogramParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def v_3d_periodogram_params(
     prefix: str | None = None,
     taper: float | None = None,
     nfft: float | None = None,
-) -> V3dPeriodogramParametersTagged:
+) -> V3dPeriodogramParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def v_3d_periodogram_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dPeriodogramParameters` object.
+    `V3dPeriodogramParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def v_3d_periodogram_validate(
 
 
 def v_3d_periodogram_cargs(
-    params: V3dPeriodogramParameters,
+    params: V3dPeriodogramParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,7 +135,7 @@ def v_3d_periodogram_cargs(
 
 
 def v_3d_periodogram_outputs(
-    params: V3dPeriodogramParameters,
+    params: V3dPeriodogramParamsDict,
     execution: Execution,
 ) -> V3dPeriodogramOutputs:
     """
@@ -156,7 +156,7 @@ def v_3d_periodogram_outputs(
 
 
 def v_3d_periodogram_execute(
-    params: V3dPeriodogramParameters,
+    params: V3dPeriodogramParamsDict,
     runner: Runner | None = None,
 ) -> V3dPeriodogramOutputs:
     """
@@ -222,6 +222,8 @@ def v_3d_periodogram(
 
 __all__ = [
     "V3dPeriodogramOutputs",
+    "V3dPeriodogramParamsDict",
+    "V3dPeriodogramParamsDictTagged",
     "V_3D_PERIODOGRAM_METADATA",
     "v_3d_periodogram",
     "v_3d_periodogram_execute",

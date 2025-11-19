@@ -13,7 +13,7 @@ MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA = Metadata(
 )
 
 
-MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothalamicSubunitsParameters', {
+MriSegmentHypothalamicSubunitsParamsDict = typing.TypedDict('MriSegmentHypothalamicSubunitsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_hypothalamic_subunits"]],
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothala
     "threads": typing.NotRequired[float | None],
     "cpu": bool,
 })
-MriSegmentHypothalamicSubunitsParametersTagged = typing.TypedDict('MriSegmentHypothalamicSubunitsParametersTagged', {
+MriSegmentHypothalamicSubunitsParamsDictTagged = typing.TypedDict('MriSegmentHypothalamicSubunitsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_segment_hypothalamic_subunits"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ MriSegmentHypothalamicSubunitsParametersTagged = typing.TypedDict('MriSegmentHyp
 
 class MriSegmentHypothalamicSubunitsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriSegmentHypothalamicSubunitsParameters(...)`.
+    Output object returned when calling `MriSegmentHypothalamicSubunitsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def mri_segment_hypothalamic_subunits_params(
     crop_size: list[float] | None = None,
     threads: float | None = None,
     cpu: bool = False,
-) -> MriSegmentHypothalamicSubunitsParametersTagged:
+) -> MriSegmentHypothalamicSubunitsParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def mri_segment_hypothalamic_subunits_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriSegmentHypothalamicSubunitsParameters` object.
+    `MriSegmentHypothalamicSubunitsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def mri_segment_hypothalamic_subunits_validate(
 
 
 def mri_segment_hypothalamic_subunits_cargs(
-    params: MriSegmentHypothalamicSubunitsParameters,
+    params: MriSegmentHypothalamicSubunitsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def mri_segment_hypothalamic_subunits_cargs(
 
 
 def mri_segment_hypothalamic_subunits_outputs(
-    params: MriSegmentHypothalamicSubunitsParameters,
+    params: MriSegmentHypothalamicSubunitsParamsDict,
     execution: Execution,
 ) -> MriSegmentHypothalamicSubunitsOutputs:
     """
@@ -272,7 +272,7 @@ def mri_segment_hypothalamic_subunits_outputs(
 
 
 def mri_segment_hypothalamic_subunits_execute(
-    params: MriSegmentHypothalamicSubunitsParameters,
+    params: MriSegmentHypothalamicSubunitsParamsDict,
     runner: Runner | None = None,
 ) -> MriSegmentHypothalamicSubunitsOutputs:
     """
@@ -372,6 +372,8 @@ def mri_segment_hypothalamic_subunits(
 __all__ = [
     "MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA",
     "MriSegmentHypothalamicSubunitsOutputs",
+    "MriSegmentHypothalamicSubunitsParamsDict",
+    "MriSegmentHypothalamicSubunitsParamsDictTagged",
     "mri_segment_hypothalamic_subunits",
     "mri_segment_hypothalamic_subunits_execute",
     "mri_segment_hypothalamic_subunits_params",

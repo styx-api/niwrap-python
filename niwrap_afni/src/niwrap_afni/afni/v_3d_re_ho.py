@@ -13,7 +13,7 @@ V_3D_RE_HO_METADATA = Metadata(
 )
 
 
-V3dReHoParameters = typing.TypedDict('V3dReHoParameters', {
+V3dReHoParamsDict = typing.TypedDict('V3dReHoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dReHo"]],
     "prefix": str,
     "inset": InputPathType,
@@ -30,7 +30,7 @@ V3dReHoParameters = typing.TypedDict('V3dReHoParameters', {
     "box_z": typing.NotRequired[float | None],
     "in_rois": typing.NotRequired[InputPathType | None],
 })
-V3dReHoParametersTagged = typing.TypedDict('V3dReHoParametersTagged', {
+V3dReHoParamsDictTagged = typing.TypedDict('V3dReHoParamsDictTagged', {
     "@type": typing.Literal["afni/3dReHo"],
     "prefix": str,
     "inset": InputPathType,
@@ -51,7 +51,7 @@ V3dReHoParametersTagged = typing.TypedDict('V3dReHoParametersTagged', {
 
 class V3dReHoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dReHoParameters(...)`.
+    Output object returned when calling `V3dReHoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ def v_3d_re_ho_params(
     box_y: float | None = None,
     box_z: float | None = None,
     in_rois: InputPathType | None = None,
-) -> V3dReHoParametersTagged:
+) -> V3dReHoParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def v_3d_re_ho_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dReHoParameters` object.
+    `V3dReHoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def v_3d_re_ho_validate(
 
 
 def v_3d_re_ho_cargs(
-    params: V3dReHoParameters,
+    params: V3dReHoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -288,7 +288,7 @@ def v_3d_re_ho_cargs(
 
 
 def v_3d_re_ho_outputs(
-    params: V3dReHoParameters,
+    params: V3dReHoParamsDict,
     execution: Execution,
 ) -> V3dReHoOutputs:
     """
@@ -311,7 +311,7 @@ def v_3d_re_ho_outputs(
 
 
 def v_3d_re_ho_execute(
-    params: V3dReHoParameters,
+    params: V3dReHoParamsDict,
     runner: Runner | None = None,
 ) -> V3dReHoOutputs:
     """
@@ -418,6 +418,8 @@ def v_3d_re_ho(
 
 __all__ = [
     "V3dReHoOutputs",
+    "V3dReHoParamsDict",
+    "V3dReHoParamsDictTagged",
     "V_3D_RE_HO_METADATA",
     "v_3d_re_ho",
     "v_3d_re_ho_execute",

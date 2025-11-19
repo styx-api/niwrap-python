@@ -6,7 +6,7 @@
     },
     "direction": {
       "var_param": "direction",
-      "fn_struct_make_params": "sh2peaks_direction_params",
+      "fn_struct_make_params": "sh2peaks_direction",
       "properties": {
         "phi": {
           "var_param": "phi"
@@ -48,7 +48,7 @@
     },
     "config": {
       "var_param": "config",
-      "fn_struct_make_params": "sh2peaks_config_params",
+      "fn_struct_make_params": "sh2peaks_config",
       "properties": {
         "key": {
           "var_param": "key"

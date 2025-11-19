@@ -12,38 +12,38 @@ SET_MAP_NAMES_METADATA = Metadata(
 )
 
 
-SetMapNamesMapParameters = typing.TypedDict('SetMapNamesMapParameters', {
+SetMapNamesMapParamsDict = typing.TypedDict('SetMapNamesMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["map"]],
     "index": int,
     "new-name": str,
 })
-SetMapNamesMapParametersTagged = typing.TypedDict('SetMapNamesMapParametersTagged', {
+SetMapNamesMapParamsDictTagged = typing.TypedDict('SetMapNamesMapParamsDictTagged', {
     "@type": typing.Literal["map"],
     "index": int,
     "new-name": str,
 })
 
 
-SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
+SetMapNamesParamsDict = typing.TypedDict('SetMapNamesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/set-map-names"]],
     "file": typing.NotRequired[str | None],
     "file": typing.NotRequired[str | None],
-    "map": typing.NotRequired[list[SetMapNamesMapParameters] | None],
+    "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
     "data-file": str,
 })
-SetMapNamesParametersTagged = typing.TypedDict('SetMapNamesParametersTagged', {
+SetMapNamesParamsDictTagged = typing.TypedDict('SetMapNamesParamsDictTagged', {
     "@type": typing.Literal["workbench/set-map-names"],
     "file": typing.NotRequired[str | None],
     "file": typing.NotRequired[str | None],
-    "map": typing.NotRequired[list[SetMapNamesMapParameters] | None],
+    "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
     "data-file": str,
 })
 
 
-def set_map_names_map_params(
+def set_map_names_map(
     index: int,
     new_name: str,
-) -> SetMapNamesMapParametersTagged:
+) -> SetMapNamesMapParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def set_map_names_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SetMapNamesMapParameters` object.
+    `SetMapNamesMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -84,7 +84,7 @@ def set_map_names_map_validate(
 
 
 def set_map_names_map_cargs(
-    params: SetMapNamesMapParameters,
+    params: SetMapNamesMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def set_map_names_map_cargs(
 
 class SetMapNamesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SetMapNamesParameters(...)`.
+    Output object returned when calling `SetMapNamesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,8 +117,8 @@ def set_map_names_params(
     file: str | None,
     file_: str | None,
     data_file: str,
-    map_: list[SetMapNamesMapParameters] | None = None,
-) -> SetMapNamesParametersTagged:
+    map_: list[SetMapNamesMapParamsDict] | None = None,
+) -> SetMapNamesParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def set_map_names_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SetMapNamesParameters` object.
+    `SetMapNamesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -167,7 +167,7 @@ def set_map_names_validate(
             raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("map", None) is not None:
         if not isinstance(params["map"], list):
-            raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `list[SetMapNamesMapParameters] | None`')
+            raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `list[SetMapNamesMapParamsDict] | None`')
         for e in params["map"]:
             set_map_names_map_validate(e)
     if params.get("data-file", None) is None:
@@ -177,7 +177,7 @@ def set_map_names_validate(
 
 
 def set_map_names_cargs(
-    params: SetMapNamesParameters,
+    params: SetMapNamesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -205,7 +205,7 @@ def set_map_names_cargs(
 
 
 def set_map_names_outputs(
-    params: SetMapNamesParameters,
+    params: SetMapNamesParamsDict,
     execution: Execution,
 ) -> SetMapNamesOutputs:
     """
@@ -224,7 +224,7 @@ def set_map_names_outputs(
 
 
 def set_map_names_execute(
-    params: SetMapNamesParameters,
+    params: SetMapNamesParamsDict,
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
@@ -255,7 +255,7 @@ def set_map_names(
     file: str | None,
     file_: str | None,
     data_file: str,
-    map_: list[SetMapNamesMapParameters] | None = None,
+    map_: list[SetMapNamesMapParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
@@ -290,9 +290,13 @@ def set_map_names(
 
 __all__ = [
     "SET_MAP_NAMES_METADATA",
+    "SetMapNamesMapParamsDict",
+    "SetMapNamesMapParamsDictTagged",
     "SetMapNamesOutputs",
+    "SetMapNamesParamsDict",
+    "SetMapNamesParamsDictTagged",
     "set_map_names",
     "set_map_names_execute",
-    "set_map_names_map_params",
+    "set_map_names_map",
     "set_map_names_params",
 ]

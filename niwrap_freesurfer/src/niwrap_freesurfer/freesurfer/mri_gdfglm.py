@@ -13,11 +13,11 @@ MRI_GDFGLM_METADATA = Metadata(
 )
 
 
-MriGdfglmParameters = typing.TypedDict('MriGdfglmParameters', {
+MriGdfglmParamsDict = typing.TypedDict('MriGdfglmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gdfglm"]],
     "inputs": typing.NotRequired[str | None],
 })
-MriGdfglmParametersTagged = typing.TypedDict('MriGdfglmParametersTagged', {
+MriGdfglmParamsDictTagged = typing.TypedDict('MriGdfglmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_gdfglm"],
     "inputs": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ MriGdfglmParametersTagged = typing.TypedDict('MriGdfglmParametersTagged', {
 
 class MriGdfglmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriGdfglmParameters(...)`.
+    Output object returned when calling `MriGdfglmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class MriGdfglmOutputs(typing.NamedTuple):
 
 def mri_gdfglm_params(
     inputs: str | None = None,
-) -> MriGdfglmParametersTagged:
+) -> MriGdfglmParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def mri_gdfglm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriGdfglmParameters` object.
+    `MriGdfglmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -72,7 +72,7 @@ def mri_gdfglm_validate(
 
 
 def mri_gdfglm_cargs(
-    params: MriGdfglmParameters,
+    params: MriGdfglmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def mri_gdfglm_cargs(
 
 
 def mri_gdfglm_outputs(
-    params: MriGdfglmParameters,
+    params: MriGdfglmParamsDict,
     execution: Execution,
 ) -> MriGdfglmOutputs:
     """
@@ -112,7 +112,7 @@ def mri_gdfglm_outputs(
 
 
 def mri_gdfglm_execute(
-    params: MriGdfglmParameters,
+    params: MriGdfglmParamsDict,
     runner: Runner | None = None,
 ) -> MriGdfglmOutputs:
     """
@@ -171,6 +171,8 @@ def mri_gdfglm(
 __all__ = [
     "MRI_GDFGLM_METADATA",
     "MriGdfglmOutputs",
+    "MriGdfglmParamsDict",
+    "MriGdfglmParamsDictTagged",
     "mri_gdfglm",
     "mri_gdfglm_execute",
     "mri_gdfglm_params",

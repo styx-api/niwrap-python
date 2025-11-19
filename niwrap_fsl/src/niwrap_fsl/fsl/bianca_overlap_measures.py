@@ -13,13 +13,13 @@ BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
 )
 
 
-BiancaOverlapMeasuresParameters = typing.TypedDict('BiancaOverlapMeasuresParameters', {
+BiancaOverlapMeasuresParamsDict = typing.TypedDict('BiancaOverlapMeasuresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bianca_overlap_measures"]],
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
     "output_dir": str,
 })
-BiancaOverlapMeasuresParametersTagged = typing.TypedDict('BiancaOverlapMeasuresParametersTagged', {
+BiancaOverlapMeasuresParamsDictTagged = typing.TypedDict('BiancaOverlapMeasuresParamsDictTagged', {
     "@type": typing.Literal["fsl/bianca_overlap_measures"],
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
@@ -29,7 +29,7 @@ BiancaOverlapMeasuresParametersTagged = typing.TypedDict('BiancaOverlapMeasuresP
 
 class BiancaOverlapMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BiancaOverlapMeasuresParameters(...)`.
+    Output object returned when calling `BiancaOverlapMeasuresParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def bianca_overlap_measures_params(
     lesion_mask: InputPathType,
     manual_mask: InputPathType,
     output_dir: str,
-) -> BiancaOverlapMeasuresParametersTagged:
+) -> BiancaOverlapMeasuresParamsDictTagged:
     """
     Build parameters.
     
@@ -80,7 +80,7 @@ def bianca_overlap_measures_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BiancaOverlapMeasuresParameters` object.
+    `BiancaOverlapMeasuresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -102,7 +102,7 @@ def bianca_overlap_measures_validate(
 
 
 def bianca_overlap_measures_cargs(
-    params: BiancaOverlapMeasuresParameters,
+    params: BiancaOverlapMeasuresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -123,7 +123,7 @@ def bianca_overlap_measures_cargs(
 
 
 def bianca_overlap_measures_outputs(
-    params: BiancaOverlapMeasuresParameters,
+    params: BiancaOverlapMeasuresParamsDict,
     execution: Execution,
 ) -> BiancaOverlapMeasuresOutputs:
     """
@@ -150,7 +150,7 @@ def bianca_overlap_measures_outputs(
 
 
 def bianca_overlap_measures_execute(
-    params: BiancaOverlapMeasuresParameters,
+    params: BiancaOverlapMeasuresParamsDict,
     runner: Runner | None = None,
 ) -> BiancaOverlapMeasuresOutputs:
     """
@@ -212,6 +212,8 @@ def bianca_overlap_measures(
 __all__ = [
     "BIANCA_OVERLAP_MEASURES_METADATA",
     "BiancaOverlapMeasuresOutputs",
+    "BiancaOverlapMeasuresParamsDict",
+    "BiancaOverlapMeasuresParamsDictTagged",
     "bianca_overlap_measures",
     "bianca_overlap_measures_execute",
     "bianca_overlap_measures_params",

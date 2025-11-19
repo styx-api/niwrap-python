@@ -13,19 +13,19 @@ LABELCONVERT_METADATA = Metadata(
 )
 
 
-LabelconvertConfigParameters = typing.TypedDict('LabelconvertConfigParameters', {
+LabelconvertConfigParamsDict = typing.TypedDict('LabelconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-LabelconvertConfigParametersTagged = typing.TypedDict('LabelconvertConfigParametersTagged', {
+LabelconvertConfigParamsDictTagged = typing.TypedDict('LabelconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
+LabelconvertParamsDict = typing.TypedDict('LabelconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/labelconvert"]],
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -33,7 +33,7 @@ LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[LabelconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[LabelconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "path_in": InputPathType,
@@ -41,7 +41,7 @@ LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
     "lut_out": InputPathType,
     "image_out": str,
 })
-LabelconvertParametersTagged = typing.TypedDict('LabelconvertParametersTagged', {
+LabelconvertParamsDictTagged = typing.TypedDict('LabelconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/labelconvert"],
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
@@ -49,7 +49,7 @@ LabelconvertParametersTagged = typing.TypedDict('LabelconvertParametersTagged', 
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[LabelconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[LabelconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "path_in": InputPathType,
@@ -59,10 +59,10 @@ LabelconvertParametersTagged = typing.TypedDict('LabelconvertParametersTagged', 
 })
 
 
-def labelconvert_config_params(
+def labelconvert_config(
     key: str,
     value: str,
-) -> LabelconvertConfigParametersTagged:
+) -> LabelconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -85,7 +85,7 @@ def labelconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelconvertConfigParameters` object.
+    `LabelconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def labelconvert_config_validate(
 
 
 def labelconvert_config_cargs(
-    params: LabelconvertConfigParameters,
+    params: LabelconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def labelconvert_config_cargs(
 
 class LabelconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelconvertParameters(...)`.
+    Output object returned when calling `LabelconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,10 +143,10 @@ def labelconvert_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[LabelconvertConfigParameters] | None = None,
+    config: list[LabelconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> LabelconvertParametersTagged:
+) -> LabelconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def labelconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelconvertParameters` object.
+    `LabelconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,7 +231,7 @@ def labelconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[LabelconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[LabelconvertConfigParamsDict] | None`')
         for e in params["config"]:
             labelconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -261,7 +261,7 @@ def labelconvert_validate(
 
 
 def labelconvert_cargs(
-    params: LabelconvertParameters,
+    params: LabelconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -307,7 +307,7 @@ def labelconvert_cargs(
 
 
 def labelconvert_outputs(
-    params: LabelconvertParameters,
+    params: LabelconvertParamsDict,
     execution: Execution,
 ) -> LabelconvertOutputs:
     """
@@ -327,7 +327,7 @@ def labelconvert_outputs(
 
 
 def labelconvert_execute(
-    params: LabelconvertParameters,
+    params: LabelconvertParamsDict,
     runner: Runner | None = None,
 ) -> LabelconvertOutputs:
     """
@@ -378,7 +378,7 @@ def labelconvert(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[LabelconvertConfigParameters] | None = None,
+    config: list[LabelconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -448,9 +448,13 @@ def labelconvert(
 
 __all__ = [
     "LABELCONVERT_METADATA",
+    "LabelconvertConfigParamsDict",
+    "LabelconvertConfigParamsDictTagged",
     "LabelconvertOutputs",
+    "LabelconvertParamsDict",
+    "LabelconvertParamsDictTagged",
     "labelconvert",
-    "labelconvert_config_params",
+    "labelconvert_config",
     "labelconvert_execute",
     "labelconvert_params",
 ]

@@ -13,7 +13,7 @@ V_3D_TWOTO_COMPLEX_METADATA = Metadata(
 )
 
 
-V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
+V3dTwotoComplexParamsDict = typing.TypedDict('V3dTwotoComplexParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTwotoComplex"]],
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
     "mp": bool,
     "mask": typing.NotRequired[InputPathType | None],
 })
-V3dTwotoComplexParametersTagged = typing.TypedDict('V3dTwotoComplexParametersTagged', {
+V3dTwotoComplexParamsDictTagged = typing.TypedDict('V3dTwotoComplexParamsDictTagged', {
     "@type": typing.Literal["afni/3dTwotoComplex"],
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ V3dTwotoComplexParametersTagged = typing.TypedDict('V3dTwotoComplexParametersTag
 
 class V3dTwotoComplexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTwotoComplexParameters(...)`.
+    Output object returned when calling `V3dTwotoComplexParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v_3d_twoto_complex_params(
     ri: bool = False,
     mp: bool = False,
     mask: InputPathType | None = None,
-) -> V3dTwotoComplexParametersTagged:
+) -> V3dTwotoComplexParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def v_3d_twoto_complex_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTwotoComplexParameters` object.
+    `V3dTwotoComplexParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def v_3d_twoto_complex_validate(
 
 
 def v_3d_twoto_complex_cargs(
-    params: V3dTwotoComplexParameters,
+    params: V3dTwotoComplexParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v_3d_twoto_complex_cargs(
 
 
 def v_3d_twoto_complex_outputs(
-    params: V3dTwotoComplexParameters,
+    params: V3dTwotoComplexParamsDict,
     execution: Execution,
 ) -> V3dTwotoComplexOutputs:
     """
@@ -177,7 +177,7 @@ def v_3d_twoto_complex_outputs(
 
 
 def v_3d_twoto_complex_execute(
-    params: V3dTwotoComplexParameters,
+    params: V3dTwotoComplexParamsDict,
     runner: Runner | None = None,
 ) -> V3dTwotoComplexOutputs:
     """
@@ -251,6 +251,8 @@ def v_3d_twoto_complex(
 
 __all__ = [
     "V3dTwotoComplexOutputs",
+    "V3dTwotoComplexParamsDict",
+    "V3dTwotoComplexParamsDictTagged",
     "V_3D_TWOTO_COMPLEX_METADATA",
     "v_3d_twoto_complex",
     "v_3d_twoto_complex_execute",

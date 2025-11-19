@@ -13,7 +13,7 @@ STIMBAND_METADATA = Metadata(
 )
 
 
-StimbandParameters = typing.TypedDict('StimbandParameters', {
+StimbandParamsDict = typing.TypedDict('StimbandParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/stimband"]],
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
@@ -22,7 +22,7 @@ StimbandParameters = typing.TypedDict('StimbandParameters', {
     "min_bwidth": typing.NotRequired[float | None],
     "min_pow": typing.NotRequired[float | None],
 })
-StimbandParametersTagged = typing.TypedDict('StimbandParametersTagged', {
+StimbandParamsDictTagged = typing.TypedDict('StimbandParamsDictTagged', {
     "@type": typing.Literal["afni/stimband"],
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
@@ -35,7 +35,7 @@ StimbandParametersTagged = typing.TypedDict('StimbandParametersTagged', {
 
 class StimbandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `StimbandParameters(...)`.
+    Output object returned when calling `StimbandParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def stimband_params(
     min_freq: float | None = None,
     min_bwidth: float | None = None,
     min_pow: float | None = None,
-) -> StimbandParametersTagged:
+) -> StimbandParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def stimband_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `StimbandParameters` object.
+    `StimbandParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -128,7 +128,7 @@ def stimband_validate(
 
 
 def stimband_cargs(
-    params: StimbandParameters,
+    params: StimbandParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -169,7 +169,7 @@ def stimband_cargs(
 
 
 def stimband_outputs(
-    params: StimbandParameters,
+    params: StimbandParamsDict,
     execution: Execution,
 ) -> StimbandOutputs:
     """
@@ -189,7 +189,7 @@ def stimband_outputs(
 
 
 def stimband_execute(
-    params: StimbandParameters,
+    params: StimbandParamsDict,
     runner: Runner | None = None,
 ) -> StimbandOutputs:
     """
@@ -266,6 +266,8 @@ def stimband(
 __all__ = [
     "STIMBAND_METADATA",
     "StimbandOutputs",
+    "StimbandParamsDict",
+    "StimbandParamsDictTagged",
     "stimband",
     "stimband_execute",
     "stimband_params",

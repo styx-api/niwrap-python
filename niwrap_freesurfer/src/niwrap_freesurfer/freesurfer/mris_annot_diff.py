@@ -13,14 +13,14 @@ MRIS_ANNOT_DIFF_METADATA = Metadata(
 )
 
 
-MrisAnnotDiffParameters = typing.TypedDict('MrisAnnotDiffParameters', {
+MrisAnnotDiffParamsDict = typing.TypedDict('MrisAnnotDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_annot_diff"]],
     "annot1": InputPathType,
     "annot2": InputPathType,
     "diff_ctab": bool,
     "verbose": bool,
 })
-MrisAnnotDiffParametersTagged = typing.TypedDict('MrisAnnotDiffParametersTagged', {
+MrisAnnotDiffParamsDictTagged = typing.TypedDict('MrisAnnotDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_annot_diff"],
     "annot1": InputPathType,
     "annot2": InputPathType,
@@ -31,7 +31,7 @@ MrisAnnotDiffParametersTagged = typing.TypedDict('MrisAnnotDiffParametersTagged'
 
 class MrisAnnotDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAnnotDiffParameters(...)`.
+    Output object returned when calling `MrisAnnotDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def mris_annot_diff_params(
     annot2: InputPathType,
     diff_ctab: bool = False,
     verbose: bool = False,
-) -> MrisAnnotDiffParametersTagged:
+) -> MrisAnnotDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -69,7 +69,7 @@ def mris_annot_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAnnotDiffParameters` object.
+    `MrisAnnotDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -95,7 +95,7 @@ def mris_annot_diff_validate(
 
 
 def mris_annot_diff_cargs(
-    params: MrisAnnotDiffParameters,
+    params: MrisAnnotDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mris_annot_diff_cargs(
 
 
 def mris_annot_diff_outputs(
-    params: MrisAnnotDiffParameters,
+    params: MrisAnnotDiffParamsDict,
     execution: Execution,
 ) -> MrisAnnotDiffOutputs:
     """
@@ -138,7 +138,7 @@ def mris_annot_diff_outputs(
 
 
 def mris_annot_diff_execute(
-    params: MrisAnnotDiffParameters,
+    params: MrisAnnotDiffParamsDict,
     runner: Runner | None = None,
 ) -> MrisAnnotDiffOutputs:
     """
@@ -203,6 +203,8 @@ def mris_annot_diff(
 __all__ = [
     "MRIS_ANNOT_DIFF_METADATA",
     "MrisAnnotDiffOutputs",
+    "MrisAnnotDiffParamsDict",
+    "MrisAnnotDiffParamsDictTagged",
     "mris_annot_diff",
     "mris_annot_diff_execute",
     "mris_annot_diff_params",

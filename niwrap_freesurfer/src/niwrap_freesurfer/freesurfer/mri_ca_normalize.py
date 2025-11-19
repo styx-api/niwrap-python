@@ -13,7 +13,7 @@ MRI_CA_NORMALIZE_METADATA = Metadata(
 )
 
 
-MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
+MriCaNormalizeParamsDict = typing.TypedDict('MriCaNormalizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_normalize"]],
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
@@ -43,7 +43,7 @@ MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
     "renorm_file": typing.NotRequired[InputPathType | None],
     "flash_flag": bool,
 })
-MriCaNormalizeParametersTagged = typing.TypedDict('MriCaNormalizeParametersTagged', {
+MriCaNormalizeParamsDictTagged = typing.TypedDict('MriCaNormalizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_ca_normalize"],
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
@@ -77,7 +77,7 @@ MriCaNormalizeParametersTagged = typing.TypedDict('MriCaNormalizeParametersTagge
 
 class MriCaNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCaNormalizeParameters(...)`.
+    Output object returned when calling `MriCaNormalizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def mri_ca_normalize_params(
     novar_flag: bool = False,
     renorm_file: InputPathType | None = None,
     flash_flag: bool = False,
-) -> MriCaNormalizeParametersTagged:
+) -> MriCaNormalizeParamsDictTagged:
     """
     Build parameters.
     
@@ -212,7 +212,7 @@ def mri_ca_normalize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCaNormalizeParameters` object.
+    `MriCaNormalizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -325,7 +325,7 @@ def mri_ca_normalize_validate(
 
 
 def mri_ca_normalize_cargs(
-    params: MriCaNormalizeParameters,
+    params: MriCaNormalizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,7 +456,7 @@ def mri_ca_normalize_cargs(
 
 
 def mri_ca_normalize_outputs(
-    params: MriCaNormalizeParameters,
+    params: MriCaNormalizeParamsDict,
     execution: Execution,
 ) -> MriCaNormalizeOutputs:
     """
@@ -476,7 +476,7 @@ def mri_ca_normalize_outputs(
 
 
 def mri_ca_normalize_execute(
-    params: MriCaNormalizeParameters,
+    params: MriCaNormalizeParamsDict,
     runner: Runner | None = None,
 ) -> MriCaNormalizeOutputs:
     """
@@ -617,6 +617,8 @@ def mri_ca_normalize(
 __all__ = [
     "MRI_CA_NORMALIZE_METADATA",
     "MriCaNormalizeOutputs",
+    "MriCaNormalizeParamsDict",
+    "MriCaNormalizeParamsDictTagged",
     "mri_ca_normalize",
     "mri_ca_normalize_execute",
     "mri_ca_normalize_params",

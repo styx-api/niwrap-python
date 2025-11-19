@@ -3,7 +3,7 @@
   "properties": {
     "volume-all": {
       "var_param": "volume_all",
-      "fn_struct_make_params": "cifti_separate_volume_all_params",
+      "fn_struct_make_params": "cifti_separate_volume_all",
       "properties": {
         "volume-out": {
           "var_param": "volume_out"
@@ -21,7 +21,7 @@
     },
     "label": {
       "var_param": "label",
-      "fn_struct_make_params": "cifti_separate_label_params",
+      "fn_struct_make_params": "cifti_separate_label",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -36,7 +36,7 @@
     },
     "metric": {
       "var_param": "metric",
-      "fn_struct_make_params": "cifti_separate_metric_params",
+      "fn_struct_make_params": "cifti_separate_metric",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -51,7 +51,7 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "cifti_separate_volume_params",
+      "fn_struct_make_params": "cifti_separate_volume",
       "properties": {
         "structure": {
           "var_param": "structure"

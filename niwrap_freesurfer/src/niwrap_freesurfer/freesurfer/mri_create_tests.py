@@ -13,7 +13,7 @@ MRI_CREATE_TESTS_METADATA = Metadata(
 )
 
 
-MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
+MriCreateTestsParamsDict = typing.TypedDict('MriCreateTestsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_tests"]],
     "input_file": InputPathType,
     "out_src": str,
@@ -35,7 +35,7 @@ MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
     "lta_outt": typing.NotRequired[str | None],
     "iscale_out": typing.NotRequired[str | None],
 })
-MriCreateTestsParametersTagged = typing.TypedDict('MriCreateTestsParametersTagged', {
+MriCreateTestsParamsDictTagged = typing.TypedDict('MriCreateTestsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_create_tests"],
     "input_file": InputPathType,
     "out_src": str,
@@ -61,7 +61,7 @@ MriCreateTestsParametersTagged = typing.TypedDict('MriCreateTestsParametersTagge
 
 class MriCreateTestsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCreateTestsParameters(...)`.
+    Output object returned when calling `MriCreateTestsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +87,7 @@ def mri_create_tests_params(
     lta_outs: str | None = None,
     lta_outt: str | None = None,
     iscale_out: str | None = None,
-) -> MriCreateTestsParametersTagged:
+) -> MriCreateTestsParamsDictTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def mri_create_tests_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCreateTestsParameters` object.
+    `MriCreateTestsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -233,7 +233,7 @@ def mri_create_tests_validate(
 
 
 def mri_create_tests_cargs(
-    params: MriCreateTestsParameters,
+    params: MriCreateTestsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -334,7 +334,7 @@ def mri_create_tests_cargs(
 
 
 def mri_create_tests_outputs(
-    params: MriCreateTestsParameters,
+    params: MriCreateTestsParamsDict,
     execution: Execution,
 ) -> MriCreateTestsOutputs:
     """
@@ -353,7 +353,7 @@ def mri_create_tests_outputs(
 
 
 def mri_create_tests_execute(
-    params: MriCreateTestsParameters,
+    params: MriCreateTestsParamsDict,
     runner: Runner | None = None,
 ) -> MriCreateTestsOutputs:
     """
@@ -468,6 +468,8 @@ def mri_create_tests(
 __all__ = [
     "MRI_CREATE_TESTS_METADATA",
     "MriCreateTestsOutputs",
+    "MriCreateTestsParamsDict",
+    "MriCreateTestsParamsDictTagged",
     "mri_create_tests",
     "mri_create_tests_execute",
     "mri_create_tests_params",

@@ -13,12 +13,12 @@ LABEL_SUBJECT_METADATA = Metadata(
 )
 
 
-LabelSubjectParameters = typing.TypedDict('LabelSubjectParameters', {
+LabelSubjectParamsDict = typing.TypedDict('LabelSubjectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject"]],
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })
-LabelSubjectParametersTagged = typing.TypedDict('LabelSubjectParametersTagged', {
+LabelSubjectParamsDictTagged = typing.TypedDict('LabelSubjectParamsDictTagged', {
     "@type": typing.Literal["freesurfer/label_subject"],
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ LabelSubjectParametersTagged = typing.TypedDict('LabelSubjectParametersTagged', 
 
 class LabelSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelSubjectParameters(...)`.
+    Output object returned when calling `LabelSubjectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class LabelSubjectOutputs(typing.NamedTuple):
 def label_subject_params(
     nu_file: InputPathType | None = None,
     orig_dir: str | None = None,
-) -> LabelSubjectParametersTagged:
+) -> LabelSubjectParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def label_subject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelSubjectParameters` object.
+    `LabelSubjectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def label_subject_validate(
 
 
 def label_subject_cargs(
-    params: LabelSubjectParameters,
+    params: LabelSubjectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -102,7 +102,7 @@ def label_subject_cargs(
 
 
 def label_subject_outputs(
-    params: LabelSubjectParameters,
+    params: LabelSubjectParamsDict,
     execution: Execution,
 ) -> LabelSubjectOutputs:
     """
@@ -122,7 +122,7 @@ def label_subject_outputs(
 
 
 def label_subject_execute(
-    params: LabelSubjectParameters,
+    params: LabelSubjectParamsDict,
     runner: Runner | None = None,
 ) -> LabelSubjectOutputs:
     """
@@ -182,6 +182,8 @@ def label_subject(
 __all__ = [
     "LABEL_SUBJECT_METADATA",
     "LabelSubjectOutputs",
+    "LabelSubjectParamsDict",
+    "LabelSubjectParamsDictTagged",
     "label_subject",
     "label_subject_execute",
     "label_subject_params",

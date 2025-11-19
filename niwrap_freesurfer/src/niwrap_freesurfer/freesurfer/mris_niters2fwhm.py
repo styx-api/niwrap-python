@@ -13,7 +13,7 @@ MRIS_NITERS2FWHM_METADATA = Metadata(
 )
 
 
-MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
+MrisNiters2fwhmParamsDict = typing.TypedDict('MrisNiters2fwhmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_niters2fwhm"]],
     "subject": str,
     "hemi": str,
@@ -25,7 +25,7 @@ MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
     "help": bool,
     "version": bool,
 })
-MrisNiters2fwhmParametersTagged = typing.TypedDict('MrisNiters2fwhmParametersTagged', {
+MrisNiters2fwhmParamsDictTagged = typing.TypedDict('MrisNiters2fwhmParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_niters2fwhm"],
     "subject": str,
     "hemi": str,
@@ -41,7 +41,7 @@ MrisNiters2fwhmParametersTagged = typing.TypedDict('MrisNiters2fwhmParametersTag
 
 class MrisNiters2fwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisNiters2fwhmParameters(...)`.
+    Output object returned when calling `MrisNiters2fwhmParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def mris_niters2fwhm_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisNiters2fwhmParametersTagged:
+) -> MrisNiters2fwhmParamsDictTagged:
     """
     Build parameters.
     
@@ -94,7 +94,7 @@ def mris_niters2fwhm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisNiters2fwhmParameters` object.
+    `MrisNiters2fwhmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def mris_niters2fwhm_validate(
 
 
 def mris_niters2fwhm_cargs(
-    params: MrisNiters2fwhmParameters,
+    params: MrisNiters2fwhmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -186,7 +186,7 @@ def mris_niters2fwhm_cargs(
 
 
 def mris_niters2fwhm_outputs(
-    params: MrisNiters2fwhmParameters,
+    params: MrisNiters2fwhmParamsDict,
     execution: Execution,
 ) -> MrisNiters2fwhmOutputs:
     """
@@ -205,7 +205,7 @@ def mris_niters2fwhm_outputs(
 
 
 def mris_niters2fwhm_execute(
-    params: MrisNiters2fwhmParameters,
+    params: MrisNiters2fwhmParamsDict,
     runner: Runner | None = None,
 ) -> MrisNiters2fwhmOutputs:
     """
@@ -287,6 +287,8 @@ def mris_niters2fwhm(
 __all__ = [
     "MRIS_NITERS2FWHM_METADATA",
     "MrisNiters2fwhmOutputs",
+    "MrisNiters2fwhmParamsDict",
+    "MrisNiters2fwhmParamsDictTagged",
     "mris_niters2fwhm",
     "mris_niters2fwhm_execute",
     "mris_niters2fwhm_params",

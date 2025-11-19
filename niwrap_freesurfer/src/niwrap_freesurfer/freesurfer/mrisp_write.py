@@ -13,7 +13,7 @@ MRISP_WRITE_METADATA = Metadata(
 )
 
 
-MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
+MrispWriteParamsDict = typing.TypedDict('MrispWriteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_write"]],
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
@@ -27,7 +27,7 @@ MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
     "verbose_vertex": typing.NotRequired[float | None],
     "write_diagnostics": bool,
 })
-MrispWriteParametersTagged = typing.TypedDict('MrispWriteParametersTagged', {
+MrispWriteParamsDictTagged = typing.TypedDict('MrispWriteParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mrisp_write"],
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
@@ -45,7 +45,7 @@ MrispWriteParametersTagged = typing.TypedDict('MrispWriteParametersTagged', {
 
 class MrispWriteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrispWriteParameters(...)`.
+    Output object returned when calling `MrispWriteParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +66,7 @@ def mrisp_write_params(
     normalize_curvature: bool = False,
     verbose_vertex: float | None = None,
     write_diagnostics: bool = False,
-) -> MrispWriteParametersTagged:
+) -> MrispWriteParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def mrisp_write_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrispWriteParameters` object.
+    `MrispWriteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -163,7 +163,7 @@ def mrisp_write_validate(
 
 
 def mrisp_write_cargs(
-    params: MrispWriteParameters,
+    params: MrispWriteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -218,7 +218,7 @@ def mrisp_write_cargs(
 
 
 def mrisp_write_outputs(
-    params: MrispWriteParameters,
+    params: MrispWriteParamsDict,
     execution: Execution,
 ) -> MrispWriteOutputs:
     """
@@ -238,7 +238,7 @@ def mrisp_write_outputs(
 
 
 def mrisp_write_execute(
-    params: MrispWriteParameters,
+    params: MrispWriteParamsDict,
     runner: Runner | None = None,
 ) -> MrispWriteOutputs:
     """
@@ -326,6 +326,8 @@ def mrisp_write(
 __all__ = [
     "MRISP_WRITE_METADATA",
     "MrispWriteOutputs",
+    "MrispWriteParamsDict",
+    "MrispWriteParamsDictTagged",
     "mrisp_write",
     "mrisp_write_execute",
     "mrisp_write_params",

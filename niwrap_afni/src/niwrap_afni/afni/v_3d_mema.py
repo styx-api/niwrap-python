@@ -13,7 +13,7 @@ V_3D_MEMA_METADATA = Metadata(
 )
 
 
-V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
+V3dMemaParamsDict = typing.TypedDict('V3dMemaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMEMA"]],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
@@ -43,7 +43,7 @@ V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
     "conditions": typing.NotRequired[list[str] | None],
     "no_tstat": bool,
 })
-V3dMemaParametersTagged = typing.TypedDict('V3dMemaParametersTagged', {
+V3dMemaParamsDictTagged = typing.TypedDict('V3dMemaParamsDictTagged', {
     "@type": typing.Literal["afni/3dMEMA"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
@@ -77,7 +77,7 @@ V3dMemaParametersTagged = typing.TypedDict('V3dMemaParametersTagged', {
 
 class V3dMemaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMemaParameters(...)`.
+    Output object returned when calling `V3dMemaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def v_3d_mema_params(
     help_: bool = False,
     conditions: list[str] | None = None,
     no_tstat: bool = False,
-) -> V3dMemaParametersTagged:
+) -> V3dMemaParamsDictTagged:
     """
     Build parameters.
     
@@ -200,7 +200,7 @@ def v_3d_mema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMemaParameters` object.
+    `V3dMemaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -321,7 +321,7 @@ def v_3d_mema_validate(
 
 
 def v_3d_mema_cargs(
-    params: V3dMemaParameters,
+    params: V3dMemaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -433,7 +433,7 @@ def v_3d_mema_cargs(
 
 
 def v_3d_mema_outputs(
-    params: V3dMemaParameters,
+    params: V3dMemaParamsDict,
     execution: Execution,
 ) -> V3dMemaOutputs:
     """
@@ -453,7 +453,7 @@ def v_3d_mema_outputs(
 
 
 def v_3d_mema_execute(
-    params: V3dMemaParameters,
+    params: V3dMemaParamsDict,
     runner: Runner | None = None,
 ) -> V3dMemaOutputs:
     """
@@ -590,6 +590,8 @@ def v_3d_mema(
 
 __all__ = [
     "V3dMemaOutputs",
+    "V3dMemaParamsDict",
+    "V3dMemaParamsDictTagged",
     "V_3D_MEMA_METADATA",
     "v_3d_mema",
     "v_3d_mema_execute",

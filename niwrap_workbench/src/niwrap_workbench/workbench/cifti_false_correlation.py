@@ -12,59 +12,59 @@ CIFTI_FALSE_CORRELATION_METADATA = Metadata(
 )
 
 
-CiftiFalseCorrelationLeftSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParameters', {
+CiftiFalseCorrelationLeftSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
-CiftiFalseCorrelationLeftSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParametersTagged', {
+CiftiFalseCorrelationLeftSurfaceParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParamsDictTagged', {
     "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
 
 
-CiftiFalseCorrelationRightSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParameters', {
+CiftiFalseCorrelationRightSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
-CiftiFalseCorrelationRightSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParametersTagged', {
+CiftiFalseCorrelationRightSurfaceParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParamsDictTagged', {
     "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
 
 
-CiftiFalseCorrelationCerebellumSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParameters', {
+CiftiFalseCorrelationCerebellumSurfaceParamsDict = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
-CiftiFalseCorrelationCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParametersTagged', {
+CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged', {
     "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
     "text-out": typing.NotRequired[str | None],
 })
 
 
-CiftiFalseCorrelationParameters = typing.TypedDict('CiftiFalseCorrelationParameters', {
+CiftiFalseCorrelationParamsDict = typing.TypedDict('CiftiFalseCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-false-correlation"]],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
     "cifti-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
     "geo-inner": float,
 })
-CiftiFalseCorrelationParametersTagged = typing.TypedDict('CiftiFalseCorrelationParametersTagged', {
+CiftiFalseCorrelationParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-false-correlation"],
     "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
-    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
     "cifti-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
@@ -72,10 +72,10 @@ CiftiFalseCorrelationParametersTagged = typing.TypedDict('CiftiFalseCorrelationP
 })
 
 
-def cifti_false_correlation_left_surface_params(
+def cifti_false_correlation_left_surface(
     surface: InputPathType,
     text_out: str | None,
-) -> CiftiFalseCorrelationLeftSurfaceParametersTagged:
+) -> CiftiFalseCorrelationLeftSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def cifti_false_correlation_left_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFalseCorrelationLeftSurfaceParameters` object.
+    `CiftiFalseCorrelationLeftSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def cifti_false_correlation_left_surface_validate(
 
 
 def cifti_false_correlation_left_surface_cargs(
-    params: CiftiFalseCorrelationLeftSurfaceParameters,
+    params: CiftiFalseCorrelationLeftSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,10 +141,10 @@ def cifti_false_correlation_left_surface_cargs(
     return cargs
 
 
-def cifti_false_correlation_right_surface_params(
+def cifti_false_correlation_right_surface(
     surface: InputPathType,
     text_out: str | None,
-) -> CiftiFalseCorrelationRightSurfaceParametersTagged:
+) -> CiftiFalseCorrelationRightSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -170,7 +170,7 @@ def cifti_false_correlation_right_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFalseCorrelationRightSurfaceParameters` object.
+    `CiftiFalseCorrelationRightSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def cifti_false_correlation_right_surface_validate(
 
 
 def cifti_false_correlation_right_surface_cargs(
-    params: CiftiFalseCorrelationRightSurfaceParameters,
+    params: CiftiFalseCorrelationRightSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,10 +210,10 @@ def cifti_false_correlation_right_surface_cargs(
     return cargs
 
 
-def cifti_false_correlation_cerebellum_surface_params(
+def cifti_false_correlation_cerebellum_surface(
     surface: InputPathType,
     text_out: str | None,
-) -> CiftiFalseCorrelationCerebellumSurfaceParametersTagged:
+) -> CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -239,7 +239,7 @@ def cifti_false_correlation_cerebellum_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFalseCorrelationCerebellumSurfaceParameters` object.
+    `CiftiFalseCorrelationCerebellumSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -256,7 +256,7 @@ def cifti_false_correlation_cerebellum_surface_validate(
 
 
 def cifti_false_correlation_cerebellum_surface_cargs(
-    params: CiftiFalseCorrelationCerebellumSurfaceParameters,
+    params: CiftiFalseCorrelationCerebellumSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -281,7 +281,7 @@ def cifti_false_correlation_cerebellum_surface_cargs(
 
 class CiftiFalseCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiFalseCorrelationParameters(...)`.
+    Output object returned when calling `CiftiFalseCorrelationParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -295,10 +295,10 @@ def cifti_false_correlation_params(
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    left_surface: CiftiFalseCorrelationLeftSurfaceParameters | None = None,
-    right_surface: CiftiFalseCorrelationRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParameters | None = None,
-) -> CiftiFalseCorrelationParametersTagged:
+    left_surface: CiftiFalseCorrelationLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiFalseCorrelationRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParamsDict | None = None,
+) -> CiftiFalseCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -336,7 +336,7 @@ def cifti_false_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiFalseCorrelationParameters` object.
+    `CiftiFalseCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -372,7 +372,7 @@ def cifti_false_correlation_validate(
 
 
 def cifti_false_correlation_cargs(
-    params: CiftiFalseCorrelationParameters,
+    params: CiftiFalseCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -402,7 +402,7 @@ def cifti_false_correlation_cargs(
 
 
 def cifti_false_correlation_outputs(
-    params: CiftiFalseCorrelationParameters,
+    params: CiftiFalseCorrelationParamsDict,
     execution: Execution,
 ) -> CiftiFalseCorrelationOutputs:
     """
@@ -422,7 +422,7 @@ def cifti_false_correlation_outputs(
 
 
 def cifti_false_correlation_execute(
-    params: CiftiFalseCorrelationParameters,
+    params: CiftiFalseCorrelationParamsDict,
     runner: Runner | None = None,
 ) -> CiftiFalseCorrelationOutputs:
     """
@@ -457,9 +457,9 @@ def cifti_false_correlation(
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    left_surface: CiftiFalseCorrelationLeftSurfaceParameters | None = None,
-    right_surface: CiftiFalseCorrelationRightSurfaceParameters | None = None,
-    cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParameters | None = None,
+    left_surface: CiftiFalseCorrelationLeftSurfaceParamsDict | None = None,
+    right_surface: CiftiFalseCorrelationRightSurfaceParamsDict | None = None,
+    cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParamsDict | None = None,
     runner: Runner | None = None,
 ) -> CiftiFalseCorrelationOutputs:
     """
@@ -500,11 +500,19 @@ def cifti_false_correlation(
 
 __all__ = [
     "CIFTI_FALSE_CORRELATION_METADATA",
+    "CiftiFalseCorrelationCerebellumSurfaceParamsDict",
+    "CiftiFalseCorrelationCerebellumSurfaceParamsDictTagged",
+    "CiftiFalseCorrelationLeftSurfaceParamsDict",
+    "CiftiFalseCorrelationLeftSurfaceParamsDictTagged",
     "CiftiFalseCorrelationOutputs",
+    "CiftiFalseCorrelationParamsDict",
+    "CiftiFalseCorrelationParamsDictTagged",
+    "CiftiFalseCorrelationRightSurfaceParamsDict",
+    "CiftiFalseCorrelationRightSurfaceParamsDictTagged",
     "cifti_false_correlation",
-    "cifti_false_correlation_cerebellum_surface_params",
+    "cifti_false_correlation_cerebellum_surface",
     "cifti_false_correlation_execute",
-    "cifti_false_correlation_left_surface_params",
+    "cifti_false_correlation_left_surface",
     "cifti_false_correlation_params",
-    "cifti_false_correlation_right_surface_params",
+    "cifti_false_correlation_right_surface",
 ]

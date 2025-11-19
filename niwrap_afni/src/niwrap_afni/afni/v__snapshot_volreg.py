@@ -13,14 +13,14 @@ V__SNAPSHOT_VOLREG_METADATA = Metadata(
 )
 
 
-VSnapshotVolregParameters = typing.TypedDict('VSnapshotVolregParameters', {
+VSnapshotVolregParamsDict = typing.TypedDict('VSnapshotVolregParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@snapshot_volreg"]],
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
     "jname": typing.NotRequired[str | None],
     "xdisplay": typing.NotRequired[str | None],
 })
-VSnapshotVolregParametersTagged = typing.TypedDict('VSnapshotVolregParametersTagged', {
+VSnapshotVolregParamsDictTagged = typing.TypedDict('VSnapshotVolregParamsDictTagged', {
     "@type": typing.Literal["afni/@snapshot_volreg"],
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
@@ -31,7 +31,7 @@ VSnapshotVolregParametersTagged = typing.TypedDict('VSnapshotVolregParametersTag
 
 class VSnapshotVolregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSnapshotVolregParameters(...)`.
+    Output object returned when calling `VSnapshotVolregParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v__snapshot_volreg_params(
     epidataset: InputPathType,
     jname: str | None = None,
     xdisplay: str | None = None,
-) -> VSnapshotVolregParametersTagged:
+) -> VSnapshotVolregParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def v__snapshot_volreg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSnapshotVolregParameters` object.
+    `VSnapshotVolregParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def v__snapshot_volreg_validate(
 
 
 def v__snapshot_volreg_cargs(
-    params: VSnapshotVolregParameters,
+    params: VSnapshotVolregParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def v__snapshot_volreg_cargs(
 
 
 def v__snapshot_volreg_outputs(
-    params: VSnapshotVolregParameters,
+    params: VSnapshotVolregParamsDict,
     execution: Execution,
 ) -> VSnapshotVolregOutputs:
     """
@@ -142,7 +142,7 @@ def v__snapshot_volreg_outputs(
 
 
 def v__snapshot_volreg_execute(
-    params: VSnapshotVolregParameters,
+    params: VSnapshotVolregParamsDict,
     runner: Runner | None = None,
 ) -> VSnapshotVolregOutputs:
     """
@@ -208,6 +208,8 @@ def v__snapshot_volreg(
 
 __all__ = [
     "VSnapshotVolregOutputs",
+    "VSnapshotVolregParamsDict",
+    "VSnapshotVolregParamsDictTagged",
     "V__SNAPSHOT_VOLREG_METADATA",
     "v__snapshot_volreg",
     "v__snapshot_volreg_execute",

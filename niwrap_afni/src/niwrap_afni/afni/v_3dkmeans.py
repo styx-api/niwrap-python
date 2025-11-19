@@ -13,7 +13,7 @@ V_3DKMEANS_METADATA = Metadata(
 )
 
 
-V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
+V3dkmeansParamsDict = typing.TypedDict('V3dkmeansParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dkmeans"]],
     "version": bool,
     "input": list[InputPathType],
@@ -35,7 +35,7 @@ V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
     "voxdbg": typing.NotRequired[list[float] | None],
     "seed": typing.NotRequired[float | None],
 })
-V3dkmeansParametersTagged = typing.TypedDict('V3dkmeansParametersTagged', {
+V3dkmeansParamsDictTagged = typing.TypedDict('V3dkmeansParamsDictTagged', {
     "@type": typing.Literal["afni/3dkmeans"],
     "version": bool,
     "input": list[InputPathType],
@@ -61,7 +61,7 @@ V3dkmeansParametersTagged = typing.TypedDict('V3dkmeansParametersTagged', {
 
 class V3dkmeansOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dkmeansParameters(...)`.
+    Output object returned when calling `V3dkmeansParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +101,7 @@ def v_3dkmeans_params(
     write_dists: bool = False,
     voxdbg: list[float] | None = None,
     seed: float | None = None,
-) -> V3dkmeansParametersTagged:
+) -> V3dkmeansParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def v_3dkmeans_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dkmeansParameters` object.
+    `V3dkmeansParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def v_3dkmeans_validate(
 
 
 def v_3dkmeans_cargs(
-    params: V3dkmeansParameters,
+    params: V3dkmeansParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -378,7 +378,7 @@ def v_3dkmeans_cargs(
 
 
 def v_3dkmeans_outputs(
-    params: V3dkmeansParameters,
+    params: V3dkmeansParamsDict,
     execution: Execution,
 ) -> V3dkmeansOutputs:
     """
@@ -404,7 +404,7 @@ def v_3dkmeans_outputs(
 
 
 def v_3dkmeans_execute(
-    params: V3dkmeansParameters,
+    params: V3dkmeansParamsDict,
     runner: Runner | None = None,
 ) -> V3dkmeansOutputs:
     """
@@ -528,6 +528,8 @@ def v_3dkmeans(
 
 __all__ = [
     "V3dkmeansOutputs",
+    "V3dkmeansParamsDict",
+    "V3dkmeansParamsDictTagged",
     "V_3DKMEANS_METADATA",
     "v_3dkmeans",
     "v_3dkmeans_execute",

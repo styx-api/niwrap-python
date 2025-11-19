@@ -13,7 +13,7 @@ LPCREGISTER_METADATA = Metadata(
 )
 
 
-LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
+LpcregisterParamsDict = typing.TypedDict('LpcregisterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/lpcregister"]],
     "subject_id": str,
     "mov_volume": str,
@@ -29,7 +29,7 @@ LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
     "version": bool,
     "help": bool,
 })
-LpcregisterParametersTagged = typing.TypedDict('LpcregisterParametersTagged', {
+LpcregisterParamsDictTagged = typing.TypedDict('LpcregisterParamsDictTagged', {
     "@type": typing.Literal["freesurfer/lpcregister"],
     "subject_id": str,
     "mov_volume": str,
@@ -49,7 +49,7 @@ LpcregisterParametersTagged = typing.TypedDict('LpcregisterParametersTagged', {
 
 class LpcregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LpcregisterParameters(...)`.
+    Output object returned when calling `LpcregisterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def lpcregister_params(
     no_cleanup: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> LpcregisterParametersTagged:
+) -> LpcregisterParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def lpcregister_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LpcregisterParameters` object.
+    `LpcregisterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -187,7 +187,7 @@ def lpcregister_validate(
 
 
 def lpcregister_cargs(
-    params: LpcregisterParameters,
+    params: LpcregisterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -249,7 +249,7 @@ def lpcregister_cargs(
 
 
 def lpcregister_outputs(
-    params: LpcregisterParameters,
+    params: LpcregisterParamsDict,
     execution: Execution,
 ) -> LpcregisterOutputs:
     """
@@ -270,7 +270,7 @@ def lpcregister_outputs(
 
 
 def lpcregister_execute(
-    params: LpcregisterParameters,
+    params: LpcregisterParamsDict,
     runner: Runner | None = None,
 ) -> LpcregisterOutputs:
     """
@@ -373,6 +373,8 @@ def lpcregister(
 __all__ = [
     "LPCREGISTER_METADATA",
     "LpcregisterOutputs",
+    "LpcregisterParamsDict",
+    "LpcregisterParamsDictTagged",
     "lpcregister",
     "lpcregister_execute",
     "lpcregister_params",

@@ -13,7 +13,7 @@ V__FIX_FSSPHERE_METADATA = Metadata(
 )
 
 
-VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
+VFixFssphereParamsDict = typing.TypedDict('VFixFssphereParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@fix_FSsphere"]],
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
@@ -22,7 +22,7 @@ VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
     "project_first": bool,
     "keep_temp": bool,
 })
-VFixFssphereParametersTagged = typing.TypedDict('VFixFssphereParametersTagged', {
+VFixFssphereParamsDictTagged = typing.TypedDict('VFixFssphereParamsDictTagged', {
     "@type": typing.Literal["afni/@fix_FSsphere"],
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
@@ -35,7 +35,7 @@ VFixFssphereParametersTagged = typing.TypedDict('VFixFssphereParametersTagged', 
 
 class VFixFssphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFixFssphereParameters(...)`.
+    Output object returned when calling `VFixFssphereParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v__fix_fssphere_params(
     extent_lim: float | None = None,
     project_first: bool = False,
     keep_temp: bool = False,
-) -> VFixFssphereParametersTagged:
+) -> VFixFssphereParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def v__fix_fssphere_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFixFssphereParameters` object.
+    `VFixFssphereParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def v__fix_fssphere_validate(
 
 
 def v__fix_fssphere_cargs(
-    params: VFixFssphereParameters,
+    params: VFixFssphereParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,7 +156,7 @@ def v__fix_fssphere_cargs(
 
 
 def v__fix_fssphere_outputs(
-    params: VFixFssphereParameters,
+    params: VFixFssphereParamsDict,
     execution: Execution,
 ) -> VFixFssphereOutputs:
     """
@@ -176,7 +176,7 @@ def v__fix_fssphere_outputs(
 
 
 def v__fix_fssphere_execute(
-    params: VFixFssphereParameters,
+    params: VFixFssphereParamsDict,
     runner: Runner | None = None,
 ) -> VFixFssphereOutputs:
     """
@@ -247,6 +247,8 @@ def v__fix_fssphere(
 
 __all__ = [
     "VFixFssphereOutputs",
+    "VFixFssphereParamsDict",
+    "VFixFssphereParamsDictTagged",
     "V__FIX_FSSPHERE_METADATA",
     "v__fix_fssphere",
     "v__fix_fssphere_execute",

@@ -13,7 +13,7 @@ MRIS_LABEL2ANNOT_METADATA = Metadata(
 )
 
 
-MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
+MrisLabel2annotParamsDict = typing.TypedDict('MrisLabel2annotParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label2annot"]],
     "subject": str,
     "hemi": str,
@@ -30,7 +30,7 @@ MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
     "surf": typing.NotRequired[str | None],
     "subjects_dir": typing.NotRequired[str | None],
 })
-MrisLabel2annotParametersTagged = typing.TypedDict('MrisLabel2annotParametersTagged', {
+MrisLabel2annotParamsDictTagged = typing.TypedDict('MrisLabel2annotParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_label2annot"],
     "subject": str,
     "hemi": str,
@@ -51,7 +51,7 @@ MrisLabel2annotParametersTagged = typing.TypedDict('MrisLabel2annotParametersTag
 
 class MrisLabel2annotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisLabel2annotParameters(...)`.
+    Output object returned when calling `MrisLabel2annotParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def mris_label2annot_params(
     maxstatwinner: bool = False,
     surf: str | None = None,
     subjects_dir: str | None = None,
-) -> MrisLabel2annotParametersTagged:
+) -> MrisLabel2annotParamsDictTagged:
     """
     Build parameters.
     
@@ -128,7 +128,7 @@ def mris_label2annot_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisLabel2annotParameters` object.
+    `MrisLabel2annotParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -190,7 +190,7 @@ def mris_label2annot_validate(
 
 
 def mris_label2annot_cargs(
-    params: MrisLabel2annotParameters,
+    params: MrisLabel2annotParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -265,7 +265,7 @@ def mris_label2annot_cargs(
 
 
 def mris_label2annot_outputs(
-    params: MrisLabel2annotParameters,
+    params: MrisLabel2annotParamsDict,
     execution: Execution,
 ) -> MrisLabel2annotOutputs:
     """
@@ -285,7 +285,7 @@ def mris_label2annot_outputs(
 
 
 def mris_label2annot_execute(
-    params: MrisLabel2annotParameters,
+    params: MrisLabel2annotParamsDict,
     runner: Runner | None = None,
 ) -> MrisLabel2annotOutputs:
     """
@@ -380,6 +380,8 @@ def mris_label2annot(
 __all__ = [
     "MRIS_LABEL2ANNOT_METADATA",
     "MrisLabel2annotOutputs",
+    "MrisLabel2annotParamsDict",
+    "MrisLabel2annotParamsDictTagged",
     "mris_label2annot",
     "mris_label2annot_execute",
     "mris_label2annot_params",

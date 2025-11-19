@@ -13,7 +13,7 @@ V_3D_DTEIG_METADATA = Metadata(
 )
 
 
-V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
+V3dDteigParamsDict = typing.TypedDict('V3dDteigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDTeig"]],
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
@@ -21,7 +21,7 @@ V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
     "sep_dsets": bool,
     "uddata": bool,
 })
-V3dDteigParametersTagged = typing.TypedDict('V3dDteigParametersTagged', {
+V3dDteigParamsDictTagged = typing.TypedDict('V3dDteigParamsDictTagged', {
     "@type": typing.Literal["afni/3dDTeig"],
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ V3dDteigParametersTagged = typing.TypedDict('V3dDteigParametersTagged', {
 
 class V3dDteigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDteigParameters(...)`.
+    Output object returned when calling `V3dDteigParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def v_3d_dteig_params(
     datum: typing.Literal["byte", "short", "float"] | None = None,
     sep_dsets: bool = False,
     uddata: bool = False,
-) -> V3dDteigParametersTagged:
+) -> V3dDteigParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v_3d_dteig_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDteigParameters` object.
+    `V3dDteigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -118,7 +118,7 @@ def v_3d_dteig_validate(
 
 
 def v_3d_dteig_cargs(
-    params: V3dDteigParameters,
+    params: V3dDteigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -151,7 +151,7 @@ def v_3d_dteig_cargs(
 
 
 def v_3d_dteig_outputs(
-    params: V3dDteigParameters,
+    params: V3dDteigParamsDict,
     execution: Execution,
 ) -> V3dDteigOutputs:
     """
@@ -175,7 +175,7 @@ def v_3d_dteig_outputs(
 
 
 def v_3d_dteig_execute(
-    params: V3dDteigParameters,
+    params: V3dDteigParamsDict,
     runner: Runner | None = None,
 ) -> V3dDteigOutputs:
     """
@@ -244,6 +244,8 @@ def v_3d_dteig(
 
 __all__ = [
     "V3dDteigOutputs",
+    "V3dDteigParamsDict",
+    "V3dDteigParamsDictTagged",
     "V_3D_DTEIG_METADATA",
     "v_3d_dteig",
     "v_3d_dteig_execute",

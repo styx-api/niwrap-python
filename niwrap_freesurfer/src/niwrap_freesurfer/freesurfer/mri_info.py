@@ -13,7 +13,7 @@ MRI_INFO_METADATA = Metadata(
 )
 
 
-MriInfoParameters = typing.TypedDict('MriInfoParameters', {
+MriInfoParamsDict = typing.TypedDict('MriInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_info"]],
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
@@ -68,7 +68,7 @@ MriInfoParameters = typing.TypedDict('MriInfoParameters', {
     "orig_ras2vox": bool,
     "in_type": typing.NotRequired[str | None],
 })
-MriInfoParametersTagged = typing.TypedDict('MriInfoParametersTagged', {
+MriInfoParamsDictTagged = typing.TypedDict('MriInfoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_info"],
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
@@ -127,7 +127,7 @@ MriInfoParametersTagged = typing.TypedDict('MriInfoParametersTagged', {
 
 class MriInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriInfoParameters(...)`.
+    Output object returned when calling `MriInfoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -186,7 +186,7 @@ def mri_info_params(
     output_file: InputPathType | None = None,
     orig_ras2vox: bool = False,
     in_type: str | None = None,
-) -> MriInfoParametersTagged:
+) -> MriInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -314,7 +314,7 @@ def mri_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriInfoParameters` object.
+    `MriInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -533,7 +533,7 @@ def mri_info_validate(
 
 
 def mri_info_cargs(
-    params: MriInfoParameters,
+    params: MriInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -663,7 +663,7 @@ def mri_info_cargs(
 
 
 def mri_info_outputs(
-    params: MriInfoParameters,
+    params: MriInfoParamsDict,
     execution: Execution,
 ) -> MriInfoOutputs:
     """
@@ -682,7 +682,7 @@ def mri_info_outputs(
 
 
 def mri_info_execute(
-    params: MriInfoParameters,
+    params: MriInfoParamsDict,
     runner: Runner | None = None,
 ) -> MriInfoOutputs:
     """
@@ -892,6 +892,8 @@ def mri_info(
 __all__ = [
     "MRI_INFO_METADATA",
     "MriInfoOutputs",
+    "MriInfoParamsDict",
+    "MriInfoParamsDictTagged",
     "mri_info",
     "mri_info_execute",
     "mri_info_params",

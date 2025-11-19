@@ -13,7 +13,7 @@ MRI_FILL_METADATA = Metadata(
 )
 
 
-MriFillParameters = typing.TypedDict('MriFillParameters', {
+MriFillParamsDict = typing.TypedDict('MriFillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fill"]],
     "input_mr_dir": str,
     "output_mr_dir": str,
@@ -33,7 +33,7 @@ MriFillParameters = typing.TypedDict('MriFillParameters', {
     "pointset_args": typing.NotRequired[list[str] | None],
     "ctab_file": typing.NotRequired[InputPathType | None],
 })
-MriFillParametersTagged = typing.TypedDict('MriFillParametersTagged', {
+MriFillParamsDictTagged = typing.TypedDict('MriFillParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_fill"],
     "input_mr_dir": str,
     "output_mr_dir": str,
@@ -57,7 +57,7 @@ MriFillParametersTagged = typing.TypedDict('MriFillParametersTagged', {
 
 class MriFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriFillParameters(...)`.
+    Output object returned when calling `MriFillParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def mri_fill_params(
     no_auto_man: bool = False,
     pointset_args: list[str] | None = None,
     ctab_file: InputPathType | None = None,
-) -> MriFillParametersTagged:
+) -> MriFillParamsDictTagged:
     """
     Build parameters.
     
@@ -159,7 +159,7 @@ def mri_fill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriFillParameters` object.
+    `MriFillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -260,7 +260,7 @@ def mri_fill_validate(
 
 
 def mri_fill_cargs(
-    params: MriFillParameters,
+    params: MriFillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -349,7 +349,7 @@ def mri_fill_cargs(
 
 
 def mri_fill_outputs(
-    params: MriFillParameters,
+    params: MriFillParamsDict,
     execution: Execution,
 ) -> MriFillOutputs:
     """
@@ -369,7 +369,7 @@ def mri_fill_outputs(
 
 
 def mri_fill_execute(
-    params: MriFillParameters,
+    params: MriFillParamsDict,
     runner: Runner | None = None,
 ) -> MriFillOutputs:
     """
@@ -484,6 +484,8 @@ def mri_fill(
 __all__ = [
     "MRI_FILL_METADATA",
     "MriFillOutputs",
+    "MriFillParamsDict",
+    "MriFillParamsDictTagged",
     "mri_fill",
     "mri_fill_execute",
     "mri_fill_params",

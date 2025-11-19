@@ -13,11 +13,11 @@ SUMA_GLXDINO_METADATA = Metadata(
 )
 
 
-SumaGlxdinoParameters = typing.TypedDict('SumaGlxdinoParameters', {
+SumaGlxdinoParamsDict = typing.TypedDict('SumaGlxdinoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SUMA_glxdino"]],
     "verbose": bool,
 })
-SumaGlxdinoParametersTagged = typing.TypedDict('SumaGlxdinoParametersTagged', {
+SumaGlxdinoParamsDictTagged = typing.TypedDict('SumaGlxdinoParamsDictTagged', {
     "@type": typing.Literal["afni/SUMA_glxdino"],
     "verbose": bool,
 })
@@ -25,7 +25,7 @@ SumaGlxdinoParametersTagged = typing.TypedDict('SumaGlxdinoParametersTagged', {
 
 class SumaGlxdinoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SumaGlxdinoParameters(...)`.
+    Output object returned when calling `SumaGlxdinoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class SumaGlxdinoOutputs(typing.NamedTuple):
 
 def suma_glxdino_params(
     verbose: bool = False,
-) -> SumaGlxdinoParametersTagged:
+) -> SumaGlxdinoParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def suma_glxdino_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SumaGlxdinoParameters` object.
+    `SumaGlxdinoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def suma_glxdino_validate(
 
 
 def suma_glxdino_cargs(
-    params: SumaGlxdinoParameters,
+    params: SumaGlxdinoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -88,7 +88,7 @@ def suma_glxdino_cargs(
 
 
 def suma_glxdino_outputs(
-    params: SumaGlxdinoParameters,
+    params: SumaGlxdinoParamsDict,
     execution: Execution,
 ) -> SumaGlxdinoOutputs:
     """
@@ -107,7 +107,7 @@ def suma_glxdino_outputs(
 
 
 def suma_glxdino_execute(
-    params: SumaGlxdinoParameters,
+    params: SumaGlxdinoParamsDict,
     runner: Runner | None = None,
 ) -> SumaGlxdinoOutputs:
     """
@@ -165,6 +165,8 @@ def suma_glxdino(
 __all__ = [
     "SUMA_GLXDINO_METADATA",
     "SumaGlxdinoOutputs",
+    "SumaGlxdinoParamsDict",
+    "SumaGlxdinoParamsDictTagged",
     "suma_glxdino",
     "suma_glxdino_execute",
     "suma_glxdino_params",

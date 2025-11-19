@@ -13,7 +13,7 @@ V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
 )
 
 
-VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
+VSumaMakeSpecFsParamsDict = typing.TypedDict('VSumaMakeSpecFsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_FS"]],
     "subject_id": str,
     "debug": typing.NotRequired[int | None],
@@ -32,7 +32,7 @@ VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
     "ldpref": typing.NotRequired[str | None],
     "no_ld": bool,
 })
-VSumaMakeSpecFsParametersTagged = typing.TypedDict('VSumaMakeSpecFsParametersTagged', {
+VSumaMakeSpecFsParamsDictTagged = typing.TypedDict('VSumaMakeSpecFsParamsDictTagged', {
     "@type": typing.Literal["afni/@SUMA_Make_Spec_FS"],
     "subject_id": str,
     "debug": typing.NotRequired[int | None],
@@ -55,7 +55,7 @@ VSumaMakeSpecFsParametersTagged = typing.TypedDict('VSumaMakeSpecFsParametersTag
 
 class VSumaMakeSpecFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSumaMakeSpecFsParameters(...)`.
+    Output object returned when calling `VSumaMakeSpecFsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v__suma_make_spec_fs_params(
     ld: float | None = None,
     ldpref: str | None = None,
     no_ld: bool = False,
-) -> VSumaMakeSpecFsParametersTagged:
+) -> VSumaMakeSpecFsParamsDictTagged:
     """
     Build parameters.
     
@@ -145,7 +145,7 @@ def v__suma_make_spec_fs_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSumaMakeSpecFsParameters` object.
+    `VSumaMakeSpecFsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -219,7 +219,7 @@ def v__suma_make_spec_fs_validate(
 
 
 def v__suma_make_spec_fs_cargs(
-    params: VSumaMakeSpecFsParameters,
+    params: VSumaMakeSpecFsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -295,7 +295,7 @@ def v__suma_make_spec_fs_cargs(
 
 
 def v__suma_make_spec_fs_outputs(
-    params: VSumaMakeSpecFsParameters,
+    params: VSumaMakeSpecFsParamsDict,
     execution: Execution,
 ) -> VSumaMakeSpecFsOutputs:
     """
@@ -315,7 +315,7 @@ def v__suma_make_spec_fs_outputs(
 
 
 def v__suma_make_spec_fs_execute(
-    params: VSumaMakeSpecFsParameters,
+    params: VSumaMakeSpecFsParamsDict,
     runner: Runner | None = None,
 ) -> VSumaMakeSpecFsOutputs:
     """
@@ -421,6 +421,8 @@ def v__suma_make_spec_fs(
 
 __all__ = [
     "VSumaMakeSpecFsOutputs",
+    "VSumaMakeSpecFsParamsDict",
+    "VSumaMakeSpecFsParamsDictTagged",
     "V__SUMA_MAKE_SPEC_FS_METADATA",
     "v__suma_make_spec_fs",
     "v__suma_make_spec_fs_execute",

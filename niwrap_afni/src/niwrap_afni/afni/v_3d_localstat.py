@@ -13,7 +13,7 @@ V_3D_LOCALSTAT_METADATA = Metadata(
 )
 
 
-V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
+V3dLocalstatParamsDict = typing.TypedDict('V3dLocalstatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalstat"]],
     "dataset": InputPathType,
     "nbhd": str,
@@ -36,7 +36,7 @@ V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
     "maskvalue": typing.NotRequired[float | None],
     "maskvalue2": typing.NotRequired[float | None],
 })
-V3dLocalstatParametersTagged = typing.TypedDict('V3dLocalstatParametersTagged', {
+V3dLocalstatParamsDictTagged = typing.TypedDict('V3dLocalstatParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalstat"],
     "dataset": InputPathType,
     "nbhd": str,
@@ -63,7 +63,7 @@ V3dLocalstatParametersTagged = typing.TypedDict('V3dLocalstatParametersTagged', 
 
 class V3dLocalstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalstatParameters(...)`.
+    Output object returned when calling `V3dLocalstatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ def v_3d_localstat_params(
     unfillvalue: float | None = None,
     maskvalue: float | None = None,
     maskvalue2: float | None = None,
-) -> V3dLocalstatParametersTagged:
+) -> V3dLocalstatParamsDictTagged:
     """
     Build parameters.
     
@@ -176,7 +176,7 @@ def v_3d_localstat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalstatParameters` object.
+    `V3dLocalstatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -266,7 +266,7 @@ def v_3d_localstat_validate(
 
 
 def v_3d_localstat_cargs(
-    params: V3dLocalstatParameters,
+    params: V3dLocalstatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -364,7 +364,7 @@ def v_3d_localstat_cargs(
 
 
 def v_3d_localstat_outputs(
-    params: V3dLocalstatParameters,
+    params: V3dLocalstatParamsDict,
     execution: Execution,
 ) -> V3dLocalstatOutputs:
     """
@@ -384,7 +384,7 @@ def v_3d_localstat_outputs(
 
 
 def v_3d_localstat_execute(
-    params: V3dLocalstatParameters,
+    params: V3dLocalstatParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalstatOutputs:
     """
@@ -510,6 +510,8 @@ def v_3d_localstat(
 
 __all__ = [
     "V3dLocalstatOutputs",
+    "V3dLocalstatParamsDict",
+    "V3dLocalstatParamsDictTagged",
     "V_3D_LOCALSTAT_METADATA",
     "v_3d_localstat",
     "v_3d_localstat_execute",

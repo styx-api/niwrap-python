@@ -13,7 +13,7 @@ V_3D_TCAT_METADATA = Metadata(
 )
 
 
-V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
+V3dTcatParamsDict = typing.TypedDict('V3dTcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTcat"]],
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
@@ -22,7 +22,7 @@ V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
     "num_threads": typing.NotRequired[int | None],
     "verbose": bool,
 })
-V3dTcatParametersTagged = typing.TypedDict('V3dTcatParametersTagged', {
+V3dTcatParamsDictTagged = typing.TypedDict('V3dTcatParamsDictTagged', {
     "@type": typing.Literal["afni/3dTcat"],
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
@@ -35,7 +35,7 @@ V3dTcatParametersTagged = typing.TypedDict('V3dTcatParametersTagged', {
 
 class V3dTcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTcatParameters(...)`.
+    Output object returned when calling `V3dTcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_tcat_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     num_threads: int | None = None,
     verbose: bool = False,
-) -> V3dTcatParametersTagged:
+) -> V3dTcatParamsDictTagged:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def v_3d_tcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTcatParameters` object.
+    `V3dTcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def v_3d_tcat_validate(
 
 
 def v_3d_tcat_cargs(
-    params: V3dTcatParameters,
+    params: V3dTcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -157,7 +157,7 @@ def v_3d_tcat_cargs(
 
 
 def v_3d_tcat_outputs(
-    params: V3dTcatParameters,
+    params: V3dTcatParamsDict,
     execution: Execution,
 ) -> V3dTcatOutputs:
     """
@@ -177,7 +177,7 @@ def v_3d_tcat_outputs(
 
 
 def v_3d_tcat_execute(
-    params: V3dTcatParameters,
+    params: V3dTcatParamsDict,
     runner: Runner | None = None,
 ) -> V3dTcatOutputs:
     """
@@ -255,6 +255,8 @@ def v_3d_tcat(
 
 __all__ = [
     "V3dTcatOutputs",
+    "V3dTcatParamsDict",
+    "V3dTcatParamsDictTagged",
     "V_3D_TCAT_METADATA",
     "v_3d_tcat",
     "v_3d_tcat_execute",

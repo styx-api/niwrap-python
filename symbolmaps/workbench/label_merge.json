@@ -6,21 +6,21 @@
     },
     "label": {
       "var_param": "label",
-      "fn_struct_make_params": "label_merge_label_params",
+      "fn_struct_make_params": "label_merge_label",
       "properties": {
         "label-in": {
           "var_param": "label_in"
         },
         "column": {
           "var_param": "column",
-          "fn_struct_make_params": "label_merge_column_params",
+          "fn_struct_make_params": "label_merge_column",
           "properties": {
             "column": {
               "var_param": "column"
             },
             "up-to": {
               "var_param": "up_to",
-              "fn_struct_make_params": "label_merge_up_to_params",
+              "fn_struct_make_params": "label_merge_up_to",
               "properties": {
                 "last-column": {
                   "var_param": "last_column"

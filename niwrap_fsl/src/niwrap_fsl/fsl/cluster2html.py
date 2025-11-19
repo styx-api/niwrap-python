@@ -13,13 +13,13 @@ CLUSTER2HTML_METADATA = Metadata(
 )
 
 
-Cluster2htmlParameters = typing.TypedDict('Cluster2htmlParameters', {
+Cluster2htmlParamsDict = typing.TypedDict('Cluster2htmlParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/cluster2html"]],
     "featdir": str,
     "inroot": str,
     "std_flag": bool,
 })
-Cluster2htmlParametersTagged = typing.TypedDict('Cluster2htmlParametersTagged', {
+Cluster2htmlParamsDictTagged = typing.TypedDict('Cluster2htmlParamsDictTagged', {
     "@type": typing.Literal["fsl/cluster2html"],
     "featdir": str,
     "inroot": str,
@@ -29,7 +29,7 @@ Cluster2htmlParametersTagged = typing.TypedDict('Cluster2htmlParametersTagged', 
 
 class Cluster2htmlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Cluster2htmlParameters(...)`.
+    Output object returned when calling `Cluster2htmlParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def cluster2html_params(
     featdir: str,
     inroot: str,
     std_flag: bool = False,
-) -> Cluster2htmlParametersTagged:
+) -> Cluster2htmlParamsDictTagged:
     """
     Build parameters.
     
@@ -65,7 +65,7 @@ def cluster2html_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Cluster2htmlParameters` object.
+    `Cluster2htmlParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def cluster2html_validate(
 
 
 def cluster2html_cargs(
-    params: Cluster2htmlParameters,
+    params: Cluster2htmlParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def cluster2html_cargs(
 
 
 def cluster2html_outputs(
-    params: Cluster2htmlParameters,
+    params: Cluster2htmlParamsDict,
     execution: Execution,
 ) -> Cluster2htmlOutputs:
     """
@@ -128,7 +128,7 @@ def cluster2html_outputs(
 
 
 def cluster2html_execute(
-    params: Cluster2htmlParameters,
+    params: Cluster2htmlParamsDict,
     runner: Runner | None = None,
 ) -> Cluster2htmlOutputs:
     """
@@ -191,6 +191,8 @@ def cluster2html(
 __all__ = [
     "CLUSTER2HTML_METADATA",
     "Cluster2htmlOutputs",
+    "Cluster2htmlParamsDict",
+    "Cluster2htmlParamsDictTagged",
     "cluster2html",
     "cluster2html_execute",
     "cluster2html_params",

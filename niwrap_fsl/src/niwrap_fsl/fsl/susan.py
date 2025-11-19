@@ -13,7 +13,7 @@ SUSAN_METADATA = Metadata(
 )
 
 
-SusanParameters = typing.TypedDict('SusanParameters', {
+SusanParamsDict = typing.TypedDict('SusanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/susan"]],
     "input_file": InputPathType,
     "brightness_threshold": float,
@@ -27,7 +27,7 @@ SusanParameters = typing.TypedDict('SusanParameters', {
     "brightness_threshold2": typing.NotRequired[float | None],
     "output_file": str,
 })
-SusanParametersTagged = typing.TypedDict('SusanParametersTagged', {
+SusanParamsDictTagged = typing.TypedDict('SusanParamsDictTagged', {
     "@type": typing.Literal["fsl/susan"],
     "input_file": InputPathType,
     "brightness_threshold": float,
@@ -45,7 +45,7 @@ SusanParametersTagged = typing.TypedDict('SusanParametersTagged', {
 
 class SusanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SusanParameters(...)`.
+    Output object returned when calling `SusanParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +65,7 @@ def susan_params(
     brightness_threshold1: float | None = None,
     usan2: InputPathType | None = None,
     brightness_threshold2: float | None = None,
-) -> SusanParametersTagged:
+) -> SusanParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def susan_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SusanParameters` object.
+    `SusanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def susan_validate(
 
 
 def susan_cargs(
-    params: SusanParameters,
+    params: SusanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def susan_cargs(
 
 
 def susan_outputs(
-    params: SusanParameters,
+    params: SusanParamsDict,
     execution: Execution,
 ) -> SusanOutputs:
     """
@@ -224,7 +224,7 @@ def susan_outputs(
 
 
 def susan_execute(
-    params: SusanParameters,
+    params: SusanParamsDict,
     runner: Runner | None = None,
 ) -> SusanOutputs:
     """
@@ -315,6 +315,8 @@ def susan(
 __all__ = [
     "SUSAN_METADATA",
     "SusanOutputs",
+    "SusanParamsDict",
+    "SusanParamsDictTagged",
     "susan",
     "susan_execute",
     "susan_params",

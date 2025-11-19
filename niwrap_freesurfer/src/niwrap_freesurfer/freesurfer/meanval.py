@@ -13,14 +13,14 @@ MEANVAL_METADATA = Metadata(
 )
 
 
-MeanvalParameters = typing.TypedDict('MeanvalParameters', {
+MeanvalParamsDict = typing.TypedDict('MeanvalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/meanval"]],
     "input_file": InputPathType,
     "mask_file": InputPathType,
     "output_file": str,
     "avgwf_flag": bool,
 })
-MeanvalParametersTagged = typing.TypedDict('MeanvalParametersTagged', {
+MeanvalParamsDictTagged = typing.TypedDict('MeanvalParamsDictTagged', {
     "@type": typing.Literal["freesurfer/meanval"],
     "input_file": InputPathType,
     "mask_file": InputPathType,
@@ -31,7 +31,7 @@ MeanvalParametersTagged = typing.TypedDict('MeanvalParametersTagged', {
 
 class MeanvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MeanvalParameters(...)`.
+    Output object returned when calling `MeanvalParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def meanval_params(
     mask_file: InputPathType,
     output_file: str,
     avgwf_flag: bool = False,
-) -> MeanvalParametersTagged:
+) -> MeanvalParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def meanval_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeanvalParameters` object.
+    `MeanvalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def meanval_validate(
 
 
 def meanval_cargs(
-    params: MeanvalParameters,
+    params: MeanvalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def meanval_cargs(
 
 
 def meanval_outputs(
-    params: MeanvalParameters,
+    params: MeanvalParamsDict,
     execution: Execution,
 ) -> MeanvalOutputs:
     """
@@ -149,7 +149,7 @@ def meanval_outputs(
 
 
 def meanval_execute(
-    params: MeanvalParameters,
+    params: MeanvalParamsDict,
     runner: Runner | None = None,
 ) -> MeanvalOutputs:
     """
@@ -214,6 +214,8 @@ def meanval(
 __all__ = [
     "MEANVAL_METADATA",
     "MeanvalOutputs",
+    "MeanvalParamsDict",
+    "MeanvalParamsDictTagged",
     "meanval",
     "meanval_execute",
     "meanval_params",

@@ -13,7 +13,7 @@ WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 )
 
 
-WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesImageMultiTransformParameters', {
+WarpTimeSeriesImageMultiTransformParamsDict = typing.TypedDict('WarpTimeSeriesImageMultiTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/WarpTimeSeriesImageMultiTransform"]],
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
@@ -22,7 +22,7 @@ WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesIm
     "transforms": list[str],
     "interpolation": typing.NotRequired[typing.Literal["NearestNeighbor", "BSpline"] | None],
 })
-WarpTimeSeriesImageMultiTransformParametersTagged = typing.TypedDict('WarpTimeSeriesImageMultiTransformParametersTagged', {
+WarpTimeSeriesImageMultiTransformParamsDictTagged = typing.TypedDict('WarpTimeSeriesImageMultiTransformParamsDictTagged', {
     "@type": typing.Literal["ants/WarpTimeSeriesImageMultiTransform"],
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
@@ -35,7 +35,7 @@ WarpTimeSeriesImageMultiTransformParametersTagged = typing.TypedDict('WarpTimeSe
 
 class WarpTimeSeriesImageMultiTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WarpTimeSeriesImageMultiTransformParameters(...)`.
+    Output object returned when calling `WarpTimeSeriesImageMultiTransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def warp_time_series_image_multi_transform_params(
     reference_image: InputPathType,
     transforms: list[str],
     interpolation: typing.Literal["NearestNeighbor", "BSpline"] | None = None,
-) -> WarpTimeSeriesImageMultiTransformParametersTagged:
+) -> WarpTimeSeriesImageMultiTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def warp_time_series_image_multi_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `WarpTimeSeriesImageMultiTransformParameters` object.
+    `WarpTimeSeriesImageMultiTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -127,7 +127,7 @@ def warp_time_series_image_multi_transform_validate(
 
 
 def warp_time_series_image_multi_transform_cargs(
-    params: WarpTimeSeriesImageMultiTransformParameters,
+    params: WarpTimeSeriesImageMultiTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def warp_time_series_image_multi_transform_cargs(
 
 
 def warp_time_series_image_multi_transform_outputs(
-    params: WarpTimeSeriesImageMultiTransformParameters,
+    params: WarpTimeSeriesImageMultiTransformParamsDict,
     execution: Execution,
 ) -> WarpTimeSeriesImageMultiTransformOutputs:
     """
@@ -175,7 +175,7 @@ def warp_time_series_image_multi_transform_outputs(
 
 
 def warp_time_series_image_multi_transform_execute(
-    params: WarpTimeSeriesImageMultiTransformParameters,
+    params: WarpTimeSeriesImageMultiTransformParamsDict,
     runner: Runner | None = None,
 ) -> WarpTimeSeriesImageMultiTransformOutputs:
     """
@@ -255,6 +255,8 @@ def warp_time_series_image_multi_transform(
 __all__ = [
     "WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA",
     "WarpTimeSeriesImageMultiTransformOutputs",
+    "WarpTimeSeriesImageMultiTransformParamsDict",
+    "WarpTimeSeriesImageMultiTransformParamsDictTagged",
     "warp_time_series_image_multi_transform",
     "warp_time_series_image_multi_transform_execute",
     "warp_time_series_image_multi_transform_params",

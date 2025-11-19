@@ -12,13 +12,13 @@ LABEL_PROBABILITY_METADATA = Metadata(
 )
 
 
-LabelProbabilityParameters = typing.TypedDict('LabelProbabilityParameters', {
+LabelProbabilityParamsDict = typing.TypedDict('LabelProbabilityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-probability"]],
     "probability-metric-out": str,
     "exclude-unlabeled": bool,
     "label-maps": InputPathType,
 })
-LabelProbabilityParametersTagged = typing.TypedDict('LabelProbabilityParametersTagged', {
+LabelProbabilityParamsDictTagged = typing.TypedDict('LabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/label-probability"],
     "probability-metric-out": str,
     "exclude-unlabeled": bool,
@@ -28,7 +28,7 @@ LabelProbabilityParametersTagged = typing.TypedDict('LabelProbabilityParametersT
 
 class LabelProbabilityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelProbabilityParameters(...)`.
+    Output object returned when calling `LabelProbabilityParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -40,7 +40,7 @@ def label_probability_params(
     probability_metric_out: str,
     label_maps: InputPathType,
     exclude_unlabeled: bool = False,
-) -> LabelProbabilityParametersTagged:
+) -> LabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def label_probability_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelProbabilityParameters` object.
+    `LabelProbabilityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def label_probability_validate(
 
 
 def label_probability_cargs(
-    params: LabelProbabilityParameters,
+    params: LabelProbabilityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def label_probability_cargs(
 
 
 def label_probability_outputs(
-    params: LabelProbabilityParameters,
+    params: LabelProbabilityParamsDict,
     execution: Execution,
 ) -> LabelProbabilityOutputs:
     """
@@ -134,7 +134,7 @@ def label_probability_outputs(
 
 
 def label_probability_execute(
-    params: LabelProbabilityParameters,
+    params: LabelProbabilityParamsDict,
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
@@ -194,6 +194,8 @@ def label_probability(
 __all__ = [
     "LABEL_PROBABILITY_METADATA",
     "LabelProbabilityOutputs",
+    "LabelProbabilityParamsDict",
+    "LabelProbabilityParamsDictTagged",
     "label_probability",
     "label_probability_execute",
     "label_probability_params",

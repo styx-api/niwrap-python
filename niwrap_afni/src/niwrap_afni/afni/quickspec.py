@@ -13,7 +13,7 @@ QUICKSPEC_METADATA = Metadata(
 )
 
 
-QuickspecParameters = typing.TypedDict('QuickspecParameters', {
+QuickspecParamsDict = typing.TypedDict('QuickspecParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/quickspec"]],
     "tn": list[str],
     "tsn": list[str],
@@ -23,7 +23,7 @@ QuickspecParameters = typing.TypedDict('QuickspecParameters', {
     "spec": typing.NotRequired[str | None],
     "help": bool,
 })
-QuickspecParametersTagged = typing.TypedDict('QuickspecParametersTagged', {
+QuickspecParamsDictTagged = typing.TypedDict('QuickspecParamsDictTagged', {
     "@type": typing.Literal["afni/quickspec"],
     "tn": list[str],
     "tsn": list[str],
@@ -37,7 +37,7 @@ QuickspecParametersTagged = typing.TypedDict('QuickspecParametersTagged', {
 
 class QuickspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `QuickspecParameters(...)`.
+    Output object returned when calling `QuickspecParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def quickspec_params(
     tsnadl: list[str] | None = None,
     spec: str | None = None,
     help_: bool = False,
-) -> QuickspecParametersTagged:
+) -> QuickspecParamsDictTagged:
     """
     Build parameters.
     
@@ -93,7 +93,7 @@ def quickspec_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `QuickspecParameters` object.
+    `QuickspecParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -142,7 +142,7 @@ def quickspec_validate(
 
 
 def quickspec_cargs(
-    params: QuickspecParameters,
+    params: QuickspecParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,7 +190,7 @@ def quickspec_cargs(
 
 
 def quickspec_outputs(
-    params: QuickspecParameters,
+    params: QuickspecParamsDict,
     execution: Execution,
 ) -> QuickspecOutputs:
     """
@@ -210,7 +210,7 @@ def quickspec_outputs(
 
 
 def quickspec_execute(
-    params: QuickspecParameters,
+    params: QuickspecParamsDict,
     runner: Runner | None = None,
 ) -> QuickspecOutputs:
     """
@@ -289,6 +289,8 @@ def quickspec(
 __all__ = [
     "QUICKSPEC_METADATA",
     "QuickspecOutputs",
+    "QuickspecParamsDict",
+    "QuickspecParamsDictTagged",
     "quickspec",
     "quickspec_execute",
     "quickspec_params",

@@ -13,12 +13,12 @@ V__FROM_RAI_METADATA = Metadata(
 )
 
 
-VFromRaiParameters = typing.TypedDict('VFromRaiParameters', {
+VFromRaiParamsDict = typing.TypedDict('VFromRaiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@FromRAI"]],
     "rai_coordinates": list[float],
     "orientation": str,
 })
-VFromRaiParametersTagged = typing.TypedDict('VFromRaiParametersTagged', {
+VFromRaiParamsDictTagged = typing.TypedDict('VFromRaiParamsDictTagged', {
     "@type": typing.Literal["afni/@FromRAI"],
     "rai_coordinates": list[float],
     "orientation": str,
@@ -27,7 +27,7 @@ VFromRaiParametersTagged = typing.TypedDict('VFromRaiParametersTagged', {
 
 class VFromRaiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFromRaiParameters(...)`.
+    Output object returned when calling `VFromRaiParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class VFromRaiOutputs(typing.NamedTuple):
 def v__from_rai_params(
     rai_coordinates: list[float],
     orientation: str,
-) -> VFromRaiParametersTagged:
+) -> VFromRaiParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v__from_rai_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFromRaiParameters` object.
+    `VFromRaiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -82,7 +82,7 @@ def v__from_rai_validate(
 
 
 def v__from_rai_cargs(
-    params: VFromRaiParameters,
+    params: VFromRaiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -108,7 +108,7 @@ def v__from_rai_cargs(
 
 
 def v__from_rai_outputs(
-    params: VFromRaiParameters,
+    params: VFromRaiParamsDict,
     execution: Execution,
 ) -> VFromRaiOutputs:
     """
@@ -127,7 +127,7 @@ def v__from_rai_outputs(
 
 
 def v__from_rai_execute(
-    params: VFromRaiParameters,
+    params: VFromRaiParamsDict,
     runner: Runner | None = None,
 ) -> VFromRaiOutputs:
     """
@@ -185,6 +185,8 @@ def v__from_rai(
 
 __all__ = [
     "VFromRaiOutputs",
+    "VFromRaiParamsDict",
+    "VFromRaiParamsDictTagged",
     "V__FROM_RAI_METADATA",
     "v__from_rai",
     "v__from_rai_execute",

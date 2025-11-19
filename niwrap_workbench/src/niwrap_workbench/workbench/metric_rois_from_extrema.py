@@ -12,7 +12,7 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 )
 
 
-MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParameters', {
+MetricRoisFromExtremaParamsDict = typing.TypedDict('MetricRoisFromExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-from-extrema"]],
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -23,7 +23,7 @@ MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParamet
     "metric": InputPathType,
     "limit": float,
 })
-MetricRoisFromExtremaParametersTagged = typing.TypedDict('MetricRoisFromExtremaParametersTagged', {
+MetricRoisFromExtremaParamsDictTagged = typing.TypedDict('MetricRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-from-extrema"],
     "metric-out": str,
     "sigma": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ MetricRoisFromExtremaParametersTagged = typing.TypedDict('MetricRoisFromExtremaP
 
 class MetricRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricRoisFromExtremaParameters(...)`.
+    Output object returned when calling `MetricRoisFromExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def metric_rois_from_extrema_params(
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
-) -> MetricRoisFromExtremaParametersTagged:
+) -> MetricRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -102,7 +102,7 @@ def metric_rois_from_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricRoisFromExtremaParameters` object.
+    `MetricRoisFromExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -140,7 +140,7 @@ def metric_rois_from_extrema_validate(
 
 
 def metric_rois_from_extrema_cargs(
-    params: MetricRoisFromExtremaParameters,
+    params: MetricRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -174,7 +174,7 @@ def metric_rois_from_extrema_cargs(
 
 
 def metric_rois_from_extrema_outputs(
-    params: MetricRoisFromExtremaParameters,
+    params: MetricRoisFromExtremaParamsDict,
     execution: Execution,
 ) -> MetricRoisFromExtremaOutputs:
     """
@@ -194,7 +194,7 @@ def metric_rois_from_extrema_outputs(
 
 
 def metric_rois_from_extrema_execute(
-    params: MetricRoisFromExtremaParameters,
+    params: MetricRoisFromExtremaParamsDict,
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
@@ -285,6 +285,8 @@ def metric_rois_from_extrema(
 __all__ = [
     "METRIC_ROIS_FROM_EXTREMA_METADATA",
     "MetricRoisFromExtremaOutputs",
+    "MetricRoisFromExtremaParamsDict",
+    "MetricRoisFromExtremaParamsDictTagged",
     "metric_rois_from_extrema",
     "metric_rois_from_extrema_execute",
     "metric_rois_from_extrema_params",

@@ -13,11 +13,11 @@ V__DEMO_PROMPT_METADATA = Metadata(
 )
 
 
-VDemoPromptParameters = typing.TypedDict('VDemoPromptParameters', {
+VDemoPromptParamsDict = typing.TypedDict('VDemoPromptParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@demo_prompt"]],
     "message": str,
 })
-VDemoPromptParametersTagged = typing.TypedDict('VDemoPromptParametersTagged', {
+VDemoPromptParamsDictTagged = typing.TypedDict('VDemoPromptParamsDictTagged', {
     "@type": typing.Literal["afni/@demo_prompt"],
     "message": str,
 })
@@ -25,7 +25,7 @@ VDemoPromptParametersTagged = typing.TypedDict('VDemoPromptParametersTagged', {
 
 class VDemoPromptOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VDemoPromptParameters(...)`.
+    Output object returned when calling `VDemoPromptParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VDemoPromptOutputs(typing.NamedTuple):
 
 def v__demo_prompt_params(
     message: str,
-) -> VDemoPromptParametersTagged:
+) -> VDemoPromptParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def v__demo_prompt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VDemoPromptParameters` object.
+    `VDemoPromptParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def v__demo_prompt_validate(
 
 
 def v__demo_prompt_cargs(
-    params: VDemoPromptParameters,
+    params: VDemoPromptParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__demo_prompt_cargs(
 
 
 def v__demo_prompt_outputs(
-    params: VDemoPromptParameters,
+    params: VDemoPromptParamsDict,
     execution: Execution,
 ) -> VDemoPromptOutputs:
     """
@@ -109,7 +109,7 @@ def v__demo_prompt_outputs(
 
 
 def v__demo_prompt_execute(
-    params: VDemoPromptParameters,
+    params: VDemoPromptParamsDict,
     runner: Runner | None = None,
 ) -> VDemoPromptOutputs:
     """
@@ -164,6 +164,8 @@ def v__demo_prompt(
 
 __all__ = [
     "VDemoPromptOutputs",
+    "VDemoPromptParamsDict",
+    "VDemoPromptParamsDictTagged",
     "V__DEMO_PROMPT_METADATA",
     "v__demo_prompt",
     "v__demo_prompt_execute",

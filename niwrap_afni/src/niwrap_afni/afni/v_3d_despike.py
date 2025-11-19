@@ -13,12 +13,12 @@ V_3D_DESPIKE_METADATA = Metadata(
 )
 
 
-V3dDespikeParameters = typing.TypedDict('V3dDespikeParameters', {
+V3dDespikeParamsDict = typing.TypedDict('V3dDespikeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDespike"]],
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
-V3dDespikeParametersTagged = typing.TypedDict('V3dDespikeParametersTagged', {
+V3dDespikeParamsDictTagged = typing.TypedDict('V3dDespikeParamsDictTagged', {
     "@type": typing.Literal["afni/3dDespike"],
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
@@ -27,7 +27,7 @@ V3dDespikeParametersTagged = typing.TypedDict('V3dDespikeParametersTagged', {
 
 class V3dDespikeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDespikeParameters(...)`.
+    Output object returned when calling `V3dDespikeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class V3dDespikeOutputs(typing.NamedTuple):
 def v_3d_despike_params(
     in_file: InputPathType,
     prefix: str | None = None,
-) -> V3dDespikeParametersTagged:
+) -> V3dDespikeParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def v_3d_despike_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDespikeParameters` object.
+    `V3dDespikeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def v_3d_despike_validate(
 
 
 def v_3d_despike_cargs(
-    params: V3dDespikeParameters,
+    params: V3dDespikeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -103,7 +103,7 @@ def v_3d_despike_cargs(
 
 
 def v_3d_despike_outputs(
-    params: V3dDespikeParameters,
+    params: V3dDespikeParamsDict,
     execution: Execution,
 ) -> V3dDespikeOutputs:
     """
@@ -123,7 +123,7 @@ def v_3d_despike_outputs(
 
 
 def v_3d_despike_execute(
-    params: V3dDespikeParameters,
+    params: V3dDespikeParamsDict,
     runner: Runner | None = None,
 ) -> V3dDespikeOutputs:
     """
@@ -183,6 +183,8 @@ def v_3d_despike(
 
 __all__ = [
     "V3dDespikeOutputs",
+    "V3dDespikeParamsDict",
+    "V3dDespikeParamsDictTagged",
     "V_3D_DESPIKE_METADATA",
     "v_3d_despike",
     "v_3d_despike_execute",

@@ -13,7 +13,7 @@ ADWARP_METADATA = Metadata(
 )
 
 
-AdwarpParameters = typing.TypedDict('AdwarpParameters', {
+AdwarpParamsDict = typing.TypedDict('AdwarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adwarp"]],
     "apar": InputPathType,
     "dpar": str,
@@ -25,7 +25,7 @@ AdwarpParameters = typing.TypedDict('AdwarpParameters', {
     "thr": typing.NotRequired[str | None],
     "func": typing.NotRequired[str | None],
 })
-AdwarpParametersTagged = typing.TypedDict('AdwarpParametersTagged', {
+AdwarpParamsDictTagged = typing.TypedDict('AdwarpParamsDictTagged', {
     "@type": typing.Literal["afni/adwarp"],
     "apar": InputPathType,
     "dpar": str,
@@ -41,7 +41,7 @@ AdwarpParametersTagged = typing.TypedDict('AdwarpParametersTagged', {
 
 class AdwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdwarpParameters(...)`.
+    Output object returned when calling `AdwarpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def adwarp_params(
     resam: str | None = None,
     thr: str | None = None,
     func: str | None = None,
-) -> AdwarpParametersTagged:
+) -> AdwarpParamsDictTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def adwarp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdwarpParameters` object.
+    `AdwarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def adwarp_validate(
 
 
 def adwarp_cargs(
-    params: AdwarpParameters,
+    params: AdwarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -208,7 +208,7 @@ def adwarp_cargs(
 
 
 def adwarp_outputs(
-    params: AdwarpParameters,
+    params: AdwarpParamsDict,
     execution: Execution,
 ) -> AdwarpOutputs:
     """
@@ -229,7 +229,7 @@ def adwarp_outputs(
 
 
 def adwarp_execute(
-    params: AdwarpParameters,
+    params: AdwarpParamsDict,
     runner: Runner | None = None,
 ) -> AdwarpOutputs:
     """
@@ -320,6 +320,8 @@ def adwarp(
 __all__ = [
     "ADWARP_METADATA",
     "AdwarpOutputs",
+    "AdwarpParamsDict",
+    "AdwarpParamsDictTagged",
     "adwarp",
     "adwarp_execute",
     "adwarp_params",

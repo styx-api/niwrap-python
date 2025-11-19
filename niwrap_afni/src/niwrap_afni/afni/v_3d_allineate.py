@@ -13,7 +13,7 @@ V_3D_ALLINEATE_METADATA = Metadata(
 )
 
 
-V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
+V3dAllineateParamsDict = typing.TypedDict('V3dAllineateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAllineate"]],
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
@@ -30,7 +30,7 @@ V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
     "verbose": bool,
     "quiet": bool,
 })
-V3dAllineateParametersTagged = typing.TypedDict('V3dAllineateParametersTagged', {
+V3dAllineateParamsDictTagged = typing.TypedDict('V3dAllineateParamsDictTagged', {
     "@type": typing.Literal["afni/3dAllineate"],
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ V3dAllineateParametersTagged = typing.TypedDict('V3dAllineateParametersTagged', 
 
 class V3dAllineateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAllineateParameters(...)`.
+    Output object returned when calling `V3dAllineateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def v_3d_allineate_params(
     nopad: bool = False,
     verbose: bool = False,
     quiet: bool = False,
-) -> V3dAllineateParametersTagged:
+) -> V3dAllineateParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def v_3d_allineate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAllineateParameters` object.
+    `V3dAllineateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -197,7 +197,7 @@ def v_3d_allineate_validate(
 
 
 def v_3d_allineate_cargs(
-    params: V3dAllineateParameters,
+    params: V3dAllineateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def v_3d_allineate_cargs(
 
 
 def v_3d_allineate_outputs(
-    params: V3dAllineateParameters,
+    params: V3dAllineateParamsDict,
     execution: Execution,
 ) -> V3dAllineateOutputs:
     """
@@ -294,7 +294,7 @@ def v_3d_allineate_outputs(
 
 
 def v_3d_allineate_execute(
-    params: V3dAllineateParameters,
+    params: V3dAllineateParamsDict,
     runner: Runner | None = None,
 ) -> V3dAllineateOutputs:
     """
@@ -394,6 +394,8 @@ def v_3d_allineate(
 
 __all__ = [
     "V3dAllineateOutputs",
+    "V3dAllineateParamsDict",
+    "V3dAllineateParamsDictTagged",
     "V_3D_ALLINEATE_METADATA",
     "v_3d_allineate",
     "v_3d_allineate_execute",

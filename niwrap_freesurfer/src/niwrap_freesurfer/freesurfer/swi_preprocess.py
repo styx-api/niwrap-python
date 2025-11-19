@@ -13,7 +13,7 @@ SWI_PREPROCESS_METADATA = Metadata(
 )
 
 
-SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
+SwiPreprocessParamsDict = typing.TypedDict('SwiPreprocessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/swi_preprocess"]],
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
@@ -23,7 +23,7 @@ SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
     "out_magnitude": str,
     "out_phase": str,
 })
-SwiPreprocessParametersTagged = typing.TypedDict('SwiPreprocessParametersTagged', {
+SwiPreprocessParamsDictTagged = typing.TypedDict('SwiPreprocessParamsDictTagged', {
     "@type": typing.Literal["freesurfer/swi_preprocess"],
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ SwiPreprocessParametersTagged = typing.TypedDict('SwiPreprocessParametersTagged'
 
 class SwiPreprocessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SwiPreprocessParameters(...)`.
+    Output object returned when calling `SwiPreprocessParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -55,7 +55,7 @@ def swi_preprocess_params(
     philips_file: InputPathType | None = None,
     siemens_magnitude: InputPathType | None = None,
     siemens_phase: InputPathType | None = None,
-) -> SwiPreprocessParametersTagged:
+) -> SwiPreprocessParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def swi_preprocess_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SwiPreprocessParameters` object.
+    `SwiPreprocessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -134,7 +134,7 @@ def swi_preprocess_validate(
 
 
 def swi_preprocess_cargs(
-    params: SwiPreprocessParameters,
+    params: SwiPreprocessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -184,7 +184,7 @@ def swi_preprocess_cargs(
 
 
 def swi_preprocess_outputs(
-    params: SwiPreprocessParameters,
+    params: SwiPreprocessParamsDict,
     execution: Execution,
 ) -> SwiPreprocessOutputs:
     """
@@ -205,7 +205,7 @@ def swi_preprocess_outputs(
 
 
 def swi_preprocess_execute(
-    params: SwiPreprocessParameters,
+    params: SwiPreprocessParamsDict,
     runner: Runner | None = None,
 ) -> SwiPreprocessOutputs:
     """
@@ -287,6 +287,8 @@ def swi_preprocess(
 __all__ = [
     "SWI_PREPROCESS_METADATA",
     "SwiPreprocessOutputs",
+    "SwiPreprocessParamsDict",
+    "SwiPreprocessParamsDictTagged",
     "swi_preprocess",
     "swi_preprocess_execute",
     "swi_preprocess_params",

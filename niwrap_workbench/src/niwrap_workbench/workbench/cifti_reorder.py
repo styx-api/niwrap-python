@@ -12,14 +12,14 @@ CIFTI_REORDER_METADATA = Metadata(
 )
 
 
-CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
+CiftiReorderParamsDict = typing.TypedDict('CiftiReorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-reorder"]],
     "cifti-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "reorder-list": str,
 })
-CiftiReorderParametersTagged = typing.TypedDict('CiftiReorderParametersTagged', {
+CiftiReorderParamsDictTagged = typing.TypedDict('CiftiReorderParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-reorder"],
     "cifti-out": str,
     "cifti-in": InputPathType,
@@ -30,7 +30,7 @@ CiftiReorderParametersTagged = typing.TypedDict('CiftiReorderParametersTagged', 
 
 class CiftiReorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiReorderParameters(...)`.
+    Output object returned when calling `CiftiReorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def cifti_reorder_params(
     cifti_in: InputPathType,
     direction: str,
     reorder_list: str,
-) -> CiftiReorderParametersTagged:
+) -> CiftiReorderParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def cifti_reorder_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiReorderParameters` object.
+    `CiftiReorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -96,7 +96,7 @@ def cifti_reorder_validate(
 
 
 def cifti_reorder_cargs(
-    params: CiftiReorderParameters,
+    params: CiftiReorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -121,7 +121,7 @@ def cifti_reorder_cargs(
 
 
 def cifti_reorder_outputs(
-    params: CiftiReorderParameters,
+    params: CiftiReorderParamsDict,
     execution: Execution,
 ) -> CiftiReorderOutputs:
     """
@@ -141,7 +141,7 @@ def cifti_reorder_outputs(
 
 
 def cifti_reorder_execute(
-    params: CiftiReorderParameters,
+    params: CiftiReorderParamsDict,
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
@@ -212,6 +212,8 @@ def cifti_reorder(
 __all__ = [
     "CIFTI_REORDER_METADATA",
     "CiftiReorderOutputs",
+    "CiftiReorderParamsDict",
+    "CiftiReorderParamsDictTagged",
     "cifti_reorder",
     "cifti_reorder_execute",
     "cifti_reorder_params",

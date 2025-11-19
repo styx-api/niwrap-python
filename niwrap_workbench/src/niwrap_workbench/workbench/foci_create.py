@@ -12,13 +12,13 @@ FOCI_CREATE_METADATA = Metadata(
 )
 
 
-FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
+FociCreateClassParamsDict = typing.TypedDict('FociCreateClassParamsDict', {
     "@type": typing.NotRequired[typing.Literal["class"]],
     "class-name": str,
     "foci-list-file": str,
     "surface": InputPathType,
 })
-FociCreateClassParametersTagged = typing.TypedDict('FociCreateClassParametersTagged', {
+FociCreateClassParamsDictTagged = typing.TypedDict('FociCreateClassParamsDictTagged', {
     "@type": typing.Literal["class"],
     "class-name": str,
     "foci-list-file": str,
@@ -26,23 +26,23 @@ FociCreateClassParametersTagged = typing.TypedDict('FociCreateClassParametersTag
 })
 
 
-FociCreateParameters = typing.TypedDict('FociCreateParameters', {
+FociCreateParamsDict = typing.TypedDict('FociCreateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/foci-create"]],
     "output": str,
-    "class": typing.NotRequired[list[FociCreateClassParameters] | None],
+    "class": typing.NotRequired[list[FociCreateClassParamsDict] | None],
 })
-FociCreateParametersTagged = typing.TypedDict('FociCreateParametersTagged', {
+FociCreateParamsDictTagged = typing.TypedDict('FociCreateParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-create"],
     "output": str,
-    "class": typing.NotRequired[list[FociCreateClassParameters] | None],
+    "class": typing.NotRequired[list[FociCreateClassParamsDict] | None],
 })
 
 
-def foci_create_class_params(
+def foci_create_class(
     class_name: str,
     foci_list_file: str,
     surface: InputPathType,
-) -> FociCreateClassParametersTagged:
+) -> FociCreateClassParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def foci_create_class_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FociCreateClassParameters` object.
+    `FociCreateClassParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -90,7 +90,7 @@ def foci_create_class_validate(
 
 
 def foci_create_class_cargs(
-    params: FociCreateClassParameters,
+    params: FociCreateClassParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def foci_create_class_cargs(
 
 class FociCreateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FociCreateParameters(...)`.
+    Output object returned when calling `FociCreateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,8 +124,8 @@ class FociCreateOutputs(typing.NamedTuple):
 
 def foci_create_params(
     output: str,
-    class_: list[FociCreateClassParameters] | None = None,
-) -> FociCreateParametersTagged:
+    class_: list[FociCreateClassParamsDict] | None = None,
+) -> FociCreateParamsDictTagged:
     """
     Build parameters.
     
@@ -149,7 +149,7 @@ def foci_create_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FociCreateParameters` object.
+    `FociCreateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -162,13 +162,13 @@ def foci_create_validate(
         raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
     if params.get("class", None) is not None:
         if not isinstance(params["class"], list):
-            raise StyxValidationError(f'`class` has the wrong type: Received `{type(params.get("class", None))}` expected `list[FociCreateClassParameters] | None`')
+            raise StyxValidationError(f'`class` has the wrong type: Received `{type(params.get("class", None))}` expected `list[FociCreateClassParamsDict] | None`')
         for e in params["class"]:
             foci_create_class_validate(e)
 
 
 def foci_create_cargs(
-    params: FociCreateParameters,
+    params: FociCreateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -192,7 +192,7 @@ def foci_create_cargs(
 
 
 def foci_create_outputs(
-    params: FociCreateParameters,
+    params: FociCreateParamsDict,
     execution: Execution,
 ) -> FociCreateOutputs:
     """
@@ -212,7 +212,7 @@ def foci_create_outputs(
 
 
 def foci_create_execute(
-    params: FociCreateParameters,
+    params: FociCreateParamsDict,
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
@@ -255,7 +255,7 @@ def foci_create_execute(
 
 def foci_create(
     output: str,
-    class_: list[FociCreateClassParameters] | None = None,
+    class_: list[FociCreateClassParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
@@ -296,9 +296,13 @@ def foci_create(
 
 __all__ = [
     "FOCI_CREATE_METADATA",
+    "FociCreateClassParamsDict",
+    "FociCreateClassParamsDictTagged",
     "FociCreateOutputs",
+    "FociCreateParamsDict",
+    "FociCreateParamsDictTagged",
     "foci_create",
-    "foci_create_class_params",
+    "foci_create_class",
     "foci_create_execute",
     "foci_create_params",
 ]

@@ -13,11 +13,11 @@ FIX_SUBJECT_CORRECTED_RH_METADATA = Metadata(
 )
 
 
-FixSubjectCorrectedRhParameters = typing.TypedDict('FixSubjectCorrectedRhParameters', {
+FixSubjectCorrectedRhParamsDict = typing.TypedDict('FixSubjectCorrectedRhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected-rh"]],
     "subject_dir": str,
 })
-FixSubjectCorrectedRhParametersTagged = typing.TypedDict('FixSubjectCorrectedRhParametersTagged', {
+FixSubjectCorrectedRhParamsDictTagged = typing.TypedDict('FixSubjectCorrectedRhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/fix_subject_corrected-rh"],
     "subject_dir": str,
 })
@@ -25,7 +25,7 @@ FixSubjectCorrectedRhParametersTagged = typing.TypedDict('FixSubjectCorrectedRhP
 
 class FixSubjectCorrectedRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixSubjectCorrectedRhParameters(...)`.
+    Output object returned when calling `FixSubjectCorrectedRhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class FixSubjectCorrectedRhOutputs(typing.NamedTuple):
 
 def fix_subject_corrected_rh_params(
     subject_dir: str,
-) -> FixSubjectCorrectedRhParametersTagged:
+) -> FixSubjectCorrectedRhParamsDictTagged:
     """
     Build parameters.
     
@@ -56,7 +56,7 @@ def fix_subject_corrected_rh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixSubjectCorrectedRhParameters` object.
+    `FixSubjectCorrectedRhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def fix_subject_corrected_rh_validate(
 
 
 def fix_subject_corrected_rh_cargs(
-    params: FixSubjectCorrectedRhParameters,
+    params: FixSubjectCorrectedRhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def fix_subject_corrected_rh_cargs(
 
 
 def fix_subject_corrected_rh_outputs(
-    params: FixSubjectCorrectedRhParameters,
+    params: FixSubjectCorrectedRhParamsDict,
     execution: Execution,
 ) -> FixSubjectCorrectedRhOutputs:
     """
@@ -112,7 +112,7 @@ def fix_subject_corrected_rh_outputs(
 
 
 def fix_subject_corrected_rh_execute(
-    params: FixSubjectCorrectedRhParameters,
+    params: FixSubjectCorrectedRhParamsDict,
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedRhOutputs:
     """
@@ -168,6 +168,8 @@ def fix_subject_corrected_rh(
 __all__ = [
     "FIX_SUBJECT_CORRECTED_RH_METADATA",
     "FixSubjectCorrectedRhOutputs",
+    "FixSubjectCorrectedRhParamsDict",
+    "FixSubjectCorrectedRhParamsDictTagged",
     "fix_subject_corrected_rh",
     "fix_subject_corrected_rh_execute",
     "fix_subject_corrected_rh_params",

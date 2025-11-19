@@ -13,7 +13,7 @@ TCALC_METADATA = Metadata(
 )
 
 
-TcalcParameters = typing.TypedDict('TcalcParameters', {
+TcalcParamsDict = typing.TypedDict('TcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tcalc"]],
     "input_image": InputPathType,
     "output_image": str,
@@ -31,7 +31,7 @@ TcalcParameters = typing.TypedDict('TcalcParameters', {
     "save_flag": bool,
     "verbose_flag": bool,
 })
-TcalcParametersTagged = typing.TypedDict('TcalcParametersTagged', {
+TcalcParamsDictTagged = typing.TypedDict('TcalcParamsDictTagged', {
     "@type": typing.Literal["fsl/tcalc"],
     "input_image": InputPathType,
     "output_image": str,
@@ -53,7 +53,7 @@ TcalcParametersTagged = typing.TypedDict('TcalcParametersTagged', {
 
 class TcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TcalcParameters(...)`.
+    Output object returned when calling `TcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def tcalc_params(
     noise_sigma: float | None = None,
     save_flag: bool = False,
     verbose_flag: bool = False,
-) -> TcalcParametersTagged:
+) -> TcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -142,7 +142,7 @@ def tcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TcalcParameters` object.
+    `TcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -201,7 +201,7 @@ def tcalc_validate(
 
 
 def tcalc_cargs(
-    params: TcalcParameters,
+    params: TcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,7 +280,7 @@ def tcalc_cargs(
 
 
 def tcalc_outputs(
-    params: TcalcParameters,
+    params: TcalcParamsDict,
     execution: Execution,
 ) -> TcalcOutputs:
     """
@@ -301,7 +301,7 @@ def tcalc_outputs(
 
 
 def tcalc_execute(
-    params: TcalcParameters,
+    params: TcalcParamsDict,
     runner: Runner | None = None,
 ) -> TcalcOutputs:
     """
@@ -402,6 +402,8 @@ def tcalc(
 __all__ = [
     "TCALC_METADATA",
     "TcalcOutputs",
+    "TcalcParamsDict",
+    "TcalcParamsDictTagged",
     "tcalc",
     "tcalc_execute",
     "tcalc_params",

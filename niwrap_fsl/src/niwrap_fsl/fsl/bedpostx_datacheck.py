@@ -13,11 +13,11 @@ BEDPOSTX_DATACHECK_METADATA = Metadata(
 )
 
 
-BedpostxDatacheckParameters = typing.TypedDict('BedpostxDatacheckParameters', {
+BedpostxDatacheckParamsDict = typing.TypedDict('BedpostxDatacheckParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_datacheck"]],
     "data_dir": str,
 })
-BedpostxDatacheckParametersTagged = typing.TypedDict('BedpostxDatacheckParametersTagged', {
+BedpostxDatacheckParamsDictTagged = typing.TypedDict('BedpostxDatacheckParamsDictTagged', {
     "@type": typing.Literal["fsl/bedpostx_datacheck"],
     "data_dir": str,
 })
@@ -25,7 +25,7 @@ BedpostxDatacheckParametersTagged = typing.TypedDict('BedpostxDatacheckParameter
 
 class BedpostxDatacheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `BedpostxDatacheckParameters(...)`.
+    Output object returned when calling `BedpostxDatacheckParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class BedpostxDatacheckOutputs(typing.NamedTuple):
 
 def bedpostx_datacheck_params(
     data_dir: str,
-) -> BedpostxDatacheckParametersTagged:
+) -> BedpostxDatacheckParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def bedpostx_datacheck_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `BedpostxDatacheckParameters` object.
+    `BedpostxDatacheckParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def bedpostx_datacheck_validate(
 
 
 def bedpostx_datacheck_cargs(
-    params: BedpostxDatacheckParameters,
+    params: BedpostxDatacheckParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def bedpostx_datacheck_cargs(
 
 
 def bedpostx_datacheck_outputs(
-    params: BedpostxDatacheckParameters,
+    params: BedpostxDatacheckParamsDict,
     execution: Execution,
 ) -> BedpostxDatacheckOutputs:
     """
@@ -106,7 +106,7 @@ def bedpostx_datacheck_outputs(
 
 
 def bedpostx_datacheck_execute(
-    params: BedpostxDatacheckParameters,
+    params: BedpostxDatacheckParamsDict,
     runner: Runner | None = None,
 ) -> BedpostxDatacheckOutputs:
     """
@@ -162,6 +162,8 @@ def bedpostx_datacheck(
 __all__ = [
     "BEDPOSTX_DATACHECK_METADATA",
     "BedpostxDatacheckOutputs",
+    "BedpostxDatacheckParamsDict",
+    "BedpostxDatacheckParamsDictTagged",
     "bedpostx_datacheck",
     "bedpostx_datacheck_execute",
     "bedpostx_datacheck_params",

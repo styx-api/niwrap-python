@@ -13,7 +13,7 @@ ANTS_INTRODUCTION_SH_METADATA = Metadata(
 )
 
 
-AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', {
+AntsIntroductionShParamsDict = typing.TypedDict('AntsIntroductionShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsIntroduction.sh"]],
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
@@ -27,7 +27,7 @@ AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', 
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_model": typing.NotRequired[str | None],
 })
-AntsIntroductionShParametersTagged = typing.TypedDict('AntsIntroductionShParametersTagged', {
+AntsIntroductionShParamsDictTagged = typing.TypedDict('AntsIntroductionShParamsDictTagged', {
     "@type": typing.Literal["ants/antsIntroduction.sh"],
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
@@ -45,7 +45,7 @@ AntsIntroductionShParametersTagged = typing.TypedDict('AntsIntroductionShParamet
 
 class AntsIntroductionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsIntroductionShParameters(...)`.
+    Output object returned when calling `AntsIntroductionShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +63,7 @@ def ants_introduction_sh_params(
     quality_check: bool | None = None,
     similarity_metric: str | None = None,
     transformation_model: str | None = None,
-) -> AntsIntroductionShParametersTagged:
+) -> AntsIntroductionShParamsDictTagged:
     """
     Build parameters.
     
@@ -116,7 +116,7 @@ def ants_introduction_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsIntroductionShParameters` object.
+    `AntsIntroductionShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -164,7 +164,7 @@ def ants_introduction_sh_validate(
 
 
 def ants_introduction_sh_cargs(
-    params: AntsIntroductionShParameters,
+    params: AntsIntroductionShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -234,7 +234,7 @@ def ants_introduction_sh_cargs(
 
 
 def ants_introduction_sh_outputs(
-    params: AntsIntroductionShParameters,
+    params: AntsIntroductionShParamsDict,
     execution: Execution,
 ) -> AntsIntroductionShOutputs:
     """
@@ -253,7 +253,7 @@ def ants_introduction_sh_outputs(
 
 
 def ants_introduction_sh_execute(
-    params: AntsIntroductionShParameters,
+    params: AntsIntroductionShParamsDict,
     runner: Runner | None = None,
 ) -> AntsIntroductionShOutputs:
     """
@@ -343,6 +343,8 @@ def ants_introduction_sh(
 __all__ = [
     "ANTS_INTRODUCTION_SH_METADATA",
     "AntsIntroductionShOutputs",
+    "AntsIntroductionShParamsDict",
+    "AntsIntroductionShParamsDictTagged",
     "ants_introduction_sh",
     "ants_introduction_sh_execute",
     "ants_introduction_sh_params",

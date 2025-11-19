@@ -13,7 +13,7 @@ V__FAT_TRACT_COLORIZE_METADATA = Metadata(
 )
 
 
-VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
+VFatTractColorizeParamsDict = typing.TypedDict('VFatTractColorizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@fat_tract_colorize"]],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
@@ -23,7 +23,7 @@ VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
     "no_view": bool,
     "only_view": bool,
 })
-VFatTractColorizeParametersTagged = typing.TypedDict('VFatTractColorizeParametersTagged', {
+VFatTractColorizeParamsDictTagged = typing.TypedDict('VFatTractColorizeParamsDictTagged', {
     "@type": typing.Literal["afni/@fat_tract_colorize"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
@@ -37,7 +37,7 @@ VFatTractColorizeParametersTagged = typing.TypedDict('VFatTractColorizeParameter
 
 class VFatTractColorizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFatTractColorizeParameters(...)`.
+    Output object returned when calling `VFatTractColorizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def v__fat_tract_colorize_params(
     in_ulay: InputPathType | None = None,
     no_view: bool = False,
     only_view: bool = False,
-) -> VFatTractColorizeParametersTagged:
+) -> VFatTractColorizeParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def v__fat_tract_colorize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFatTractColorizeParameters` object.
+    `VFatTractColorizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def v__fat_tract_colorize_validate(
 
 
 def v__fat_tract_colorize_cargs(
-    params: VFatTractColorizeParameters,
+    params: VFatTractColorizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def v__fat_tract_colorize_cargs(
 
 
 def v__fat_tract_colorize_outputs(
-    params: VFatTractColorizeParameters,
+    params: VFatTractColorizeParamsDict,
     execution: Execution,
 ) -> VFatTractColorizeOutputs:
     """
@@ -203,7 +203,7 @@ def v__fat_tract_colorize_outputs(
 
 
 def v__fat_tract_colorize_execute(
-    params: VFatTractColorizeParameters,
+    params: VFatTractColorizeParamsDict,
     runner: Runner | None = None,
 ) -> VFatTractColorizeOutputs:
     """
@@ -284,6 +284,8 @@ def v__fat_tract_colorize(
 
 __all__ = [
     "VFatTractColorizeOutputs",
+    "VFatTractColorizeParamsDict",
+    "VFatTractColorizeParamsDictTagged",
     "V__FAT_TRACT_COLORIZE_METADATA",
     "v__fat_tract_colorize",
     "v__fat_tract_colorize_execute",

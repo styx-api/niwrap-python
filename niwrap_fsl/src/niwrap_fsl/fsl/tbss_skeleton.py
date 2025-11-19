@@ -13,7 +13,7 @@ TBSS_SKELETON_METADATA = Metadata(
 )
 
 
-TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
+TbssSkeletonParamsDict = typing.TypedDict('TbssSkeletonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/tbss_skeleton"]],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
     "debug_flag": bool,
     "debug2_flag": typing.NotRequired[InputPathType | None],
 })
-TbssSkeletonParametersTagged = typing.TypedDict('TbssSkeletonParametersTagged', {
+TbssSkeletonParamsDictTagged = typing.TypedDict('TbssSkeletonParamsDictTagged', {
     "@type": typing.Literal["fsl/tbss_skeleton"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ TbssSkeletonParametersTagged = typing.TypedDict('TbssSkeletonParametersTagged', 
 
 class TbssSkeletonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TbssSkeletonParameters(...)`.
+    Output object returned when calling `TbssSkeletonParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -61,7 +61,7 @@ def tbss_skeleton_params(
     alt_skeleton: InputPathType | None = None,
     debug_flag: bool = False,
     debug2_flag: InputPathType | None = None,
-) -> TbssSkeletonParametersTagged:
+) -> TbssSkeletonParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def tbss_skeleton_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TbssSkeletonParameters` object.
+    `TbssSkeletonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -139,7 +139,7 @@ def tbss_skeleton_validate(
 
 
 def tbss_skeleton_cargs(
-    params: TbssSkeletonParameters,
+    params: TbssSkeletonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -188,7 +188,7 @@ def tbss_skeleton_cargs(
 
 
 def tbss_skeleton_outputs(
-    params: TbssSkeletonParameters,
+    params: TbssSkeletonParamsDict,
     execution: Execution,
 ) -> TbssSkeletonOutputs:
     """
@@ -212,7 +212,7 @@ def tbss_skeleton_outputs(
 
 
 def tbss_skeleton_execute(
-    params: TbssSkeletonParameters,
+    params: TbssSkeletonParamsDict,
     runner: Runner | None = None,
 ) -> TbssSkeletonOutputs:
     """
@@ -290,6 +290,8 @@ def tbss_skeleton(
 __all__ = [
     "TBSS_SKELETON_METADATA",
     "TbssSkeletonOutputs",
+    "TbssSkeletonParamsDict",
+    "TbssSkeletonParamsDictTagged",
     "tbss_skeleton",
     "tbss_skeleton_execute",
     "tbss_skeleton_params",

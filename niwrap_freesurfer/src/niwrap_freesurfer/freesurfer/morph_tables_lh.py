@@ -13,12 +13,12 @@ MORPH_TABLES_LH_METADATA = Metadata(
 )
 
 
-MorphTablesLhParameters = typing.TypedDict('MorphTablesLhParameters', {
+MorphTablesLhParamsDict = typing.TypedDict('MorphTablesLhParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/morph_tables-lh"]],
     "input_file": InputPathType,
     "some_flag": bool,
 })
-MorphTablesLhParametersTagged = typing.TypedDict('MorphTablesLhParametersTagged', {
+MorphTablesLhParamsDictTagged = typing.TypedDict('MorphTablesLhParamsDictTagged', {
     "@type": typing.Literal["freesurfer/morph_tables-lh"],
     "input_file": InputPathType,
     "some_flag": bool,
@@ -27,7 +27,7 @@ MorphTablesLhParametersTagged = typing.TypedDict('MorphTablesLhParametersTagged'
 
 class MorphTablesLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MorphTablesLhParameters(...)`.
+    Output object returned when calling `MorphTablesLhParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MorphTablesLhOutputs(typing.NamedTuple):
 def morph_tables_lh_params(
     input_file: InputPathType,
     some_flag: bool = False,
-) -> MorphTablesLhParametersTagged:
+) -> MorphTablesLhParamsDictTagged:
     """
     Build parameters.
     
@@ -62,7 +62,7 @@ def morph_tables_lh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MorphTablesLhParameters` object.
+    `MorphTablesLhParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -80,7 +80,7 @@ def morph_tables_lh_validate(
 
 
 def morph_tables_lh_cargs(
-    params: MorphTablesLhParameters,
+    params: MorphTablesLhParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,7 +104,7 @@ def morph_tables_lh_cargs(
 
 
 def morph_tables_lh_outputs(
-    params: MorphTablesLhParameters,
+    params: MorphTablesLhParamsDict,
     execution: Execution,
 ) -> MorphTablesLhOutputs:
     """
@@ -124,7 +124,7 @@ def morph_tables_lh_outputs(
 
 
 def morph_tables_lh_execute(
-    params: MorphTablesLhParameters,
+    params: MorphTablesLhParamsDict,
     runner: Runner | None = None,
 ) -> MorphTablesLhOutputs:
     """
@@ -184,6 +184,8 @@ def morph_tables_lh(
 __all__ = [
     "MORPH_TABLES_LH_METADATA",
     "MorphTablesLhOutputs",
+    "MorphTablesLhParamsDict",
+    "MorphTablesLhParamsDictTagged",
     "morph_tables_lh",
     "morph_tables_lh_execute",
     "morph_tables_lh_params",

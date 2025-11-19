@@ -13,7 +13,7 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 )
 
 
-VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
+VComputeOcWeightsParamsDict = typing.TypedDict('VComputeOcWeightsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@compute_OC_weights"]],
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
@@ -26,7 +26,7 @@ VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
     "work_dir": typing.NotRequired[str | None],
     "verbosity": bool,
 })
-VComputeOcWeightsParametersTagged = typing.TypedDict('VComputeOcWeightsParametersTagged', {
+VComputeOcWeightsParamsDictTagged = typing.TypedDict('VComputeOcWeightsParamsDictTagged', {
     "@type": typing.Literal["afni/@compute_OC_weights"],
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ VComputeOcWeightsParametersTagged = typing.TypedDict('VComputeOcWeightsParameter
 
 class VComputeOcWeightsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VComputeOcWeightsParameters(...)`.
+    Output object returned when calling `VComputeOcWeightsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def v__compute_oc_weights_params(
     t2_star_limit: float | None = None,
     work_dir: str | None = None,
     verbosity: bool = False,
-) -> VComputeOcWeightsParametersTagged:
+) -> VComputeOcWeightsParamsDictTagged:
     """
     Build parameters.
     
@@ -114,7 +114,7 @@ def v__compute_oc_weights_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VComputeOcWeightsParameters` object.
+    `VComputeOcWeightsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def v__compute_oc_weights_validate(
 
 
 def v__compute_oc_weights_cargs(
-    params: VComputeOcWeightsParameters,
+    params: VComputeOcWeightsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -223,7 +223,7 @@ def v__compute_oc_weights_cargs(
 
 
 def v__compute_oc_weights_outputs(
-    params: VComputeOcWeightsParameters,
+    params: VComputeOcWeightsParamsDict,
     execution: Execution,
 ) -> VComputeOcWeightsOutputs:
     """
@@ -243,7 +243,7 @@ def v__compute_oc_weights_outputs(
 
 
 def v__compute_oc_weights_execute(
-    params: VComputeOcWeightsParameters,
+    params: VComputeOcWeightsParamsDict,
     runner: Runner | None = None,
 ) -> VComputeOcWeightsOutputs:
     """
@@ -330,6 +330,8 @@ def v__compute_oc_weights(
 
 __all__ = [
     "VComputeOcWeightsOutputs",
+    "VComputeOcWeightsParamsDict",
+    "VComputeOcWeightsParamsDictTagged",
     "V__COMPUTE_OC_WEIGHTS_METADATA",
     "v__compute_oc_weights",
     "v__compute_oc_weights_execute",

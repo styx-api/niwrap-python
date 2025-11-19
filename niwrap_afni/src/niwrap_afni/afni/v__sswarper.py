@@ -13,7 +13,7 @@ V__SSWARPER_METADATA = Metadata(
 )
 
 
-VSswarperParameters = typing.TypedDict('VSswarperParameters', {
+VSswarperParamsDict = typing.TypedDict('VSswarperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@SSwarper"]],
     "input_file": InputPathType,
     "base_template": InputPathType,
@@ -39,7 +39,7 @@ VSswarperParameters = typing.TypedDict('VSswarperParameters', {
     "verbose": bool,
     "noclean": bool,
 })
-VSswarperParametersTagged = typing.TypedDict('VSswarperParametersTagged', {
+VSswarperParamsDictTagged = typing.TypedDict('VSswarperParamsDictTagged', {
     "@type": typing.Literal["afni/@SSwarper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
@@ -69,7 +69,7 @@ VSswarperParametersTagged = typing.TypedDict('VSswarperParametersTagged', {
 
 class VSswarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSswarperParameters(...)`.
+    Output object returned when calling `VSswarperParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,7 +130,7 @@ def v__sswarper_params(
     echo: bool = False,
     verbose: bool = False,
     noclean: bool = False,
-) -> VSswarperParametersTagged:
+) -> VSswarperParamsDictTagged:
     """
     Build parameters.
     
@@ -209,7 +209,7 @@ def v__sswarper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSswarperParameters` object.
+    `VSswarperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -307,7 +307,7 @@ def v__sswarper_validate(
 
 
 def v__sswarper_cargs(
-    params: VSswarperParameters,
+    params: VSswarperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -395,7 +395,7 @@ def v__sswarper_cargs(
 
 
 def v__sswarper_outputs(
-    params: VSswarperParameters,
+    params: VSswarperParamsDict,
     execution: Execution,
 ) -> VSswarperOutputs:
     """
@@ -428,7 +428,7 @@ def v__sswarper_outputs(
 
 
 def v__sswarper_execute(
-    params: VSswarperParameters,
+    params: VSswarperParamsDict,
     runner: Runner | None = None,
 ) -> VSswarperOutputs:
     """
@@ -561,6 +561,8 @@ def v__sswarper(
 
 __all__ = [
     "VSswarperOutputs",
+    "VSswarperParamsDict",
+    "VSswarperParamsDictTagged",
     "V__SSWARPER_METADATA",
     "v__sswarper",
     "v__sswarper_execute",

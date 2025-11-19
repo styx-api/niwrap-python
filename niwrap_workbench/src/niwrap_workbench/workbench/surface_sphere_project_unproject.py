@@ -12,14 +12,14 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 )
 
 
-SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProjectUnprojectParameters', {
+SurfaceSphereProjectUnprojectParamsDict = typing.TypedDict('SurfaceSphereProjectUnprojectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-project-unproject"]],
     "sphere-out": str,
     "sphere-in": InputPathType,
     "sphere-project-to": InputPathType,
     "sphere-unproject-from": InputPathType,
 })
-SurfaceSphereProjectUnprojectParametersTagged = typing.TypedDict('SurfaceSphereProjectUnprojectParametersTagged', {
+SurfaceSphereProjectUnprojectParamsDictTagged = typing.TypedDict('SurfaceSphereProjectUnprojectParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-sphere-project-unproject"],
     "sphere-out": str,
     "sphere-in": InputPathType,
@@ -30,7 +30,7 @@ SurfaceSphereProjectUnprojectParametersTagged = typing.TypedDict('SurfaceSphereP
 
 class SurfaceSphereProjectUnprojectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfaceSphereProjectUnprojectParameters(...)`.
+    Output object returned when calling `SurfaceSphereProjectUnprojectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -43,7 +43,7 @@ def surface_sphere_project_unproject_params(
     sphere_in: InputPathType,
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
-) -> SurfaceSphereProjectUnprojectParametersTagged:
+) -> SurfaceSphereProjectUnprojectParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def surface_sphere_project_unproject_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfaceSphereProjectUnprojectParameters` object.
+    `SurfaceSphereProjectUnprojectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def surface_sphere_project_unproject_validate(
 
 
 def surface_sphere_project_unproject_cargs(
-    params: SurfaceSphereProjectUnprojectParameters,
+    params: SurfaceSphereProjectUnprojectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -122,7 +122,7 @@ def surface_sphere_project_unproject_cargs(
 
 
 def surface_sphere_project_unproject_outputs(
-    params: SurfaceSphereProjectUnprojectParameters,
+    params: SurfaceSphereProjectUnprojectParamsDict,
     execution: Execution,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
@@ -142,7 +142,7 @@ def surface_sphere_project_unproject_outputs(
 
 
 def surface_sphere_project_unproject_execute(
-    params: SurfaceSphereProjectUnprojectParameters,
+    params: SurfaceSphereProjectUnprojectParamsDict,
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
@@ -306,6 +306,8 @@ def surface_sphere_project_unproject(
 __all__ = [
     "SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA",
     "SurfaceSphereProjectUnprojectOutputs",
+    "SurfaceSphereProjectUnprojectParamsDict",
+    "SurfaceSphereProjectUnprojectParamsDictTagged",
     "surface_sphere_project_unproject",
     "surface_sphere_project_unproject_execute",
     "surface_sphere_project_unproject_params",

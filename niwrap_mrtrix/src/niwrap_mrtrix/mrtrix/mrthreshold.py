@@ -13,19 +13,19 @@ MRTHRESHOLD_METADATA = Metadata(
 )
 
 
-MrthresholdConfigParameters = typing.TypedDict('MrthresholdConfigParameters', {
+MrthresholdConfigParamsDict = typing.TypedDict('MrthresholdConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrthresholdConfigParametersTagged = typing.TypedDict('MrthresholdConfigParametersTagged', {
+MrthresholdConfigParamsDictTagged = typing.TypedDict('MrthresholdConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrthresholdParameters = typing.TypedDict('MrthresholdParameters', {
+MrthresholdParamsDict = typing.TypedDict('MrthresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrthreshold"]],
     "abs": typing.NotRequired[float | None],
     "percentile": typing.NotRequired[float | None],
@@ -43,13 +43,13 @@ MrthresholdParameters = typing.TypedDict('MrthresholdParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrthresholdConfigParameters] | None],
+    "config": typing.NotRequired[list[MrthresholdConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": typing.NotRequired[str | None],
 })
-MrthresholdParametersTagged = typing.TypedDict('MrthresholdParametersTagged', {
+MrthresholdParamsDictTagged = typing.TypedDict('MrthresholdParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrthreshold"],
     "abs": typing.NotRequired[float | None],
     "percentile": typing.NotRequired[float | None],
@@ -67,7 +67,7 @@ MrthresholdParametersTagged = typing.TypedDict('MrthresholdParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrthresholdConfigParameters] | None],
+    "config": typing.NotRequired[list[MrthresholdConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -75,10 +75,10 @@ MrthresholdParametersTagged = typing.TypedDict('MrthresholdParametersTagged', {
 })
 
 
-def mrthreshold_config_params(
+def mrthreshold_config(
     key: str,
     value: str,
-) -> MrthresholdConfigParametersTagged:
+) -> MrthresholdConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -101,7 +101,7 @@ def mrthreshold_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrthresholdConfigParameters` object.
+    `MrthresholdConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def mrthreshold_config_validate(
 
 
 def mrthreshold_config_cargs(
-    params: MrthresholdConfigParameters,
+    params: MrthresholdConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -140,7 +140,7 @@ def mrthreshold_config_cargs(
 
 class MrthresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrthresholdParameters(...)`.
+    Output object returned when calling `MrthresholdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -166,11 +166,11 @@ def mrthreshold_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrthresholdConfigParameters] | None = None,
+    config: list[MrthresholdConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MrthresholdParametersTagged:
+) -> MrthresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -255,7 +255,7 @@ def mrthreshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrthresholdParameters` object.
+    `MrthresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -321,7 +321,7 @@ def mrthreshold_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrthresholdConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrthresholdConfigParamsDict] | None`')
         for e in params["config"]:
             mrthreshold_config_validate(e)
     if params.get("help", False) is None:
@@ -342,7 +342,7 @@ def mrthreshold_validate(
 
 
 def mrthreshold_cargs(
-    params: MrthresholdParameters,
+    params: MrthresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -422,7 +422,7 @@ def mrthreshold_cargs(
 
 
 def mrthreshold_outputs(
-    params: MrthresholdParameters,
+    params: MrthresholdParamsDict,
     execution: Execution,
 ) -> MrthresholdOutputs:
     """
@@ -442,7 +442,7 @@ def mrthreshold_outputs(
 
 
 def mrthreshold_execute(
-    params: MrthresholdParameters,
+    params: MrthresholdParamsDict,
     runner: Runner | None = None,
 ) -> MrthresholdOutputs:
     """
@@ -529,7 +529,7 @@ def mrthreshold(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrthresholdConfigParameters] | None = None,
+    config: list[MrthresholdConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
@@ -654,9 +654,13 @@ def mrthreshold(
 
 __all__ = [
     "MRTHRESHOLD_METADATA",
+    "MrthresholdConfigParamsDict",
+    "MrthresholdConfigParamsDictTagged",
     "MrthresholdOutputs",
+    "MrthresholdParamsDict",
+    "MrthresholdParamsDictTagged",
     "mrthreshold",
-    "mrthreshold_config_params",
+    "mrthreshold_config",
     "mrthreshold_execute",
     "mrthreshold_params",
 ]

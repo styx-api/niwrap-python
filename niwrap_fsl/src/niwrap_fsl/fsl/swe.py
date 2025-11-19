@@ -13,7 +13,7 @@ SWE_METADATA = Metadata(
 )
 
 
-SweParameters = typing.TypedDict('SweParameters', {
+SweParamsDict = typing.TypedDict('SweParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/swe"]],
     "input_file": InputPathType,
     "output_root": str,
@@ -50,7 +50,7 @@ SweParameters = typing.TypedDict('SweParameters', {
     "voxelwise_evs": typing.NotRequired[list[InputPathType] | None],
     "glm_output": bool,
 })
-SweParametersTagged = typing.TypedDict('SweParametersTagged', {
+SweParamsDictTagged = typing.TypedDict('SweParamsDictTagged', {
     "@type": typing.Literal["fsl/swe"],
     "input_file": InputPathType,
     "output_root": str,
@@ -91,7 +91,7 @@ SweParametersTagged = typing.TypedDict('SweParametersTagged', {
 
 class SweOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SweParameters(...)`.
+    Output object returned when calling `SweParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -148,7 +148,7 @@ def swe_params(
     voxelwise_ev: list[float] | None = None,
     voxelwise_evs: list[InputPathType] | None = None,
     glm_output: bool = False,
-) -> SweParametersTagged:
+) -> SweParamsDictTagged:
     """
     Build parameters.
     
@@ -260,7 +260,7 @@ def swe_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `SweParameters`
+    Validate parameters. Throws an error if `params` is not a valid `SweParamsDict`
     object.
     
     Args:
@@ -399,7 +399,7 @@ def swe_validate(
 
 
 def swe_cargs(
-    params: SweParameters,
+    params: SweParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -537,7 +537,7 @@ def swe_cargs(
 
 
 def swe_outputs(
-    params: SweParameters,
+    params: SweParamsDict,
     execution: Execution,
 ) -> SweOutputs:
     """
@@ -564,7 +564,7 @@ def swe_outputs(
 
 
 def swe_execute(
-    params: SweParameters,
+    params: SweParamsDict,
     runner: Runner | None = None,
 ) -> SweOutputs:
     """
@@ -731,6 +731,8 @@ def swe(
 __all__ = [
     "SWE_METADATA",
     "SweOutputs",
+    "SweParamsDict",
+    "SweParamsDictTagged",
     "swe",
     "swe_execute",
     "swe_params",

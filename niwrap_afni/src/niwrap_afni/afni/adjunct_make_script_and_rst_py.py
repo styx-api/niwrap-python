@@ -13,7 +13,7 @@ ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
 )
 
 
-AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstPyParameters', {
+AdjunctMakeScriptAndRstPyParamsDict = typing.TypedDict('AdjunctMakeScriptAndRstPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_make_script_and_rst.py"]],
     "input_script": InputPathType,
     "prefix_rst": str,
@@ -21,7 +21,7 @@ AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstP
     "reflink": str,
     "execute_script": bool,
 })
-AdjunctMakeScriptAndRstPyParametersTagged = typing.TypedDict('AdjunctMakeScriptAndRstPyParametersTagged', {
+AdjunctMakeScriptAndRstPyParamsDictTagged = typing.TypedDict('AdjunctMakeScriptAndRstPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_make_script_and_rst.py"],
     "input_script": InputPathType,
     "prefix_rst": str,
@@ -33,7 +33,7 @@ AdjunctMakeScriptAndRstPyParametersTagged = typing.TypedDict('AdjunctMakeScriptA
 
 class AdjunctMakeScriptAndRstPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctMakeScriptAndRstPyParameters(...)`.
+    Output object returned when calling `AdjunctMakeScriptAndRstPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -51,7 +51,7 @@ def adjunct_make_script_and_rst_py_params(
     prefix_script: str,
     reflink: str,
     execute_script: bool = False,
-) -> AdjunctMakeScriptAndRstPyParametersTagged:
+) -> AdjunctMakeScriptAndRstPyParamsDictTagged:
     """
     Build parameters.
     
@@ -84,7 +84,7 @@ def adjunct_make_script_and_rst_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctMakeScriptAndRstPyParameters` object.
+    `AdjunctMakeScriptAndRstPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -114,7 +114,7 @@ def adjunct_make_script_and_rst_py_validate(
 
 
 def adjunct_make_script_and_rst_py_cargs(
-    params: AdjunctMakeScriptAndRstPyParameters,
+    params: AdjunctMakeScriptAndRstPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -150,7 +150,7 @@ def adjunct_make_script_and_rst_py_cargs(
 
 
 def adjunct_make_script_and_rst_py_outputs(
-    params: AdjunctMakeScriptAndRstPyParameters,
+    params: AdjunctMakeScriptAndRstPyParamsDict,
     execution: Execution,
 ) -> AdjunctMakeScriptAndRstPyOutputs:
     """
@@ -172,7 +172,7 @@ def adjunct_make_script_and_rst_py_outputs(
 
 
 def adjunct_make_script_and_rst_py_execute(
-    params: AdjunctMakeScriptAndRstPyParameters,
+    params: AdjunctMakeScriptAndRstPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctMakeScriptAndRstPyOutputs:
     """
@@ -246,6 +246,8 @@ def adjunct_make_script_and_rst_py(
 __all__ = [
     "ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA",
     "AdjunctMakeScriptAndRstPyOutputs",
+    "AdjunctMakeScriptAndRstPyParamsDict",
+    "AdjunctMakeScriptAndRstPyParamsDictTagged",
     "adjunct_make_script_and_rst_py",
     "adjunct_make_script_and_rst_py_execute",
     "adjunct_make_script_and_rst_py_params",

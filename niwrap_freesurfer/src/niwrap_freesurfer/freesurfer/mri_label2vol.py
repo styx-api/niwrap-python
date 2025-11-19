@@ -13,7 +13,7 @@ MRI_LABEL2VOL_METADATA = Metadata(
 )
 
 
-MriLabel2volParameters = typing.TypedDict('MriLabel2volParameters', {
+MriLabel2volParamsDict = typing.TypedDict('MriLabel2volParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label2vol"]],
     "labels": typing.NotRequired[list[str] | None],
     "annotation": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ MriLabel2volParameters = typing.TypedDict('MriLabel2volParameters', {
     "defects": typing.NotRequired[str | None],
     "native_vox2ras_flag": bool,
 })
-MriLabel2volParametersTagged = typing.TypedDict('MriLabel2volParametersTagged', {
+MriLabel2volParamsDictTagged = typing.TypedDict('MriLabel2volParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_label2vol"],
     "labels": typing.NotRequired[list[str] | None],
     "annotation": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ MriLabel2volParametersTagged = typing.TypedDict('MriLabel2volParametersTagged', 
 
 class MriLabel2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLabel2volParameters(...)`.
+    Output object returned when calling `MriLabel2volParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def mri_label2vol_params(
     offset: float | None = None,
     defects: str | None = None,
     native_vox2ras_flag: bool = False,
-) -> MriLabel2volParametersTagged:
+) -> MriLabel2volParamsDictTagged:
     """
     Build parameters.
     
@@ -168,7 +168,7 @@ def mri_label2vol_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLabel2volParameters` object.
+    `MriLabel2volParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -241,7 +241,7 @@ def mri_label2vol_validate(
 
 
 def mri_label2vol_cargs(
-    params: MriLabel2volParameters,
+    params: MriLabel2volParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -341,7 +341,7 @@ def mri_label2vol_cargs(
 
 
 def mri_label2vol_outputs(
-    params: MriLabel2volParameters,
+    params: MriLabel2volParamsDict,
     execution: Execution,
 ) -> MriLabel2volOutputs:
     """
@@ -363,7 +363,7 @@ def mri_label2vol_outputs(
 
 
 def mri_label2vol_execute(
-    params: MriLabel2volParameters,
+    params: MriLabel2volParamsDict,
     runner: Runner | None = None,
 ) -> MriLabel2volOutputs:
     """
@@ -479,6 +479,8 @@ def mri_label2vol(
 __all__ = [
     "MRI_LABEL2VOL_METADATA",
     "MriLabel2volOutputs",
+    "MriLabel2volParamsDict",
+    "MriLabel2volParamsDictTagged",
     "mri_label2vol",
     "mri_label2vol_execute",
     "mri_label2vol_params",

@@ -13,7 +13,7 @@ MRI_LABEL_VOLUME_METADATA = Metadata(
 )
 
 
-MriLabelVolumeParameters = typing.TypedDict('MriLabelVolumeParameters', {
+MriLabelVolumeParamsDict = typing.TypedDict('MriLabelVolumeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_volume"]],
     "volume": InputPathType,
     "labels": list[str],
@@ -32,7 +32,7 @@ MriLabelVolumeParameters = typing.TypedDict('MriLabelVolumeParameters', {
     "etiv_scalefactor": typing.NotRequired[float | None],
     "etiv_subject": typing.NotRequired[str | None],
 })
-MriLabelVolumeParametersTagged = typing.TypedDict('MriLabelVolumeParametersTagged', {
+MriLabelVolumeParamsDictTagged = typing.TypedDict('MriLabelVolumeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_label_volume"],
     "volume": InputPathType,
     "labels": list[str],
@@ -55,7 +55,7 @@ MriLabelVolumeParametersTagged = typing.TypedDict('MriLabelVolumeParametersTagge
 
 class MriLabelVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLabelVolumeParameters(...)`.
+    Output object returned when calling `MriLabelVolumeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +82,7 @@ def mri_label_volume_params(
     etiv_transform_file: InputPathType | None = None,
     etiv_scalefactor: float | None = None,
     etiv_subject: str | None = None,
-) -> MriLabelVolumeParametersTagged:
+) -> MriLabelVolumeParamsDictTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def mri_label_volume_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLabelVolumeParameters` object.
+    `MriLabelVolumeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -216,7 +216,7 @@ def mri_label_volume_validate(
 
 
 def mri_label_volume_cargs(
-    params: MriLabelVolumeParameters,
+    params: MriLabelVolumeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -291,7 +291,7 @@ def mri_label_volume_cargs(
 
 
 def mri_label_volume_outputs(
-    params: MriLabelVolumeParameters,
+    params: MriLabelVolumeParamsDict,
     execution: Execution,
 ) -> MriLabelVolumeOutputs:
     """
@@ -312,7 +312,7 @@ def mri_label_volume_outputs(
 
 
 def mri_label_volume_execute(
-    params: MriLabelVolumeParameters,
+    params: MriLabelVolumeParamsDict,
     runner: Runner | None = None,
 ) -> MriLabelVolumeOutputs:
     """
@@ -421,6 +421,8 @@ def mri_label_volume(
 __all__ = [
     "MRI_LABEL_VOLUME_METADATA",
     "MriLabelVolumeOutputs",
+    "MriLabelVolumeParamsDict",
+    "MriLabelVolumeParamsDictTagged",
     "mri_label_volume",
     "mri_label_volume_execute",
     "mri_label_volume_params",

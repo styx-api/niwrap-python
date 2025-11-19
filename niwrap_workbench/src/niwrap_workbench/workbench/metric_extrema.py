@@ -12,36 +12,36 @@ METRIC_EXTREMA_METADATA = Metadata(
 )
 
 
-MetricExtremaPresmoothParameters = typing.TypedDict('MetricExtremaPresmoothParameters', {
+MetricExtremaPresmoothParamsDict = typing.TypedDict('MetricExtremaPresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-MetricExtremaPresmoothParametersTagged = typing.TypedDict('MetricExtremaPresmoothParametersTagged', {
+MetricExtremaPresmoothParamsDictTagged = typing.TypedDict('MetricExtremaPresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-MetricExtremaThresholdParameters = typing.TypedDict('MetricExtremaThresholdParameters', {
+MetricExtremaThresholdParamsDict = typing.TypedDict('MetricExtremaThresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["threshold"]],
     "low": float,
     "high": float,
 })
-MetricExtremaThresholdParametersTagged = typing.TypedDict('MetricExtremaThresholdParametersTagged', {
+MetricExtremaThresholdParamsDictTagged = typing.TypedDict('MetricExtremaThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
-MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
+MetricExtremaParamsDict = typing.TypedDict('MetricExtremaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-extrema"]],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricExtremaPresmoothParameters | None],
+    "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "threshold": typing.NotRequired[MetricExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
     "sum-columns": bool,
     "consolidate-mode": bool,
     "only-maxima": bool,
@@ -51,12 +51,12 @@ MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
     "metric-in": InputPathType,
     "distance": float,
 })
-MetricExtremaParametersTagged = typing.TypedDict('MetricExtremaParametersTagged', {
+MetricExtremaParamsDictTagged = typing.TypedDict('MetricExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-extrema"],
     "metric-out": str,
-    "presmooth": typing.NotRequired[MetricExtremaPresmoothParameters | None],
+    "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "threshold": typing.NotRequired[MetricExtremaThresholdParameters | None],
+    "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
     "sum-columns": bool,
     "consolidate-mode": bool,
     "only-maxima": bool,
@@ -68,10 +68,10 @@ MetricExtremaParametersTagged = typing.TypedDict('MetricExtremaParametersTagged'
 })
 
 
-def metric_extrema_presmooth_params(
+def metric_extrema_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> MetricExtremaPresmoothParametersTagged:
+) -> MetricExtremaPresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def metric_extrema_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricExtremaPresmoothParameters` object.
+    `MetricExtremaPresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -113,7 +113,7 @@ def metric_extrema_presmooth_validate(
 
 
 def metric_extrema_presmooth_cargs(
-    params: MetricExtremaPresmoothParameters,
+    params: MetricExtremaPresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -135,10 +135,10 @@ def metric_extrema_presmooth_cargs(
     return cargs
 
 
-def metric_extrema_threshold_params(
+def metric_extrema_threshold(
     low: float,
     high: float,
-) -> MetricExtremaThresholdParametersTagged:
+) -> MetricExtremaThresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -161,7 +161,7 @@ def metric_extrema_threshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricExtremaThresholdParameters` object.
+    `MetricExtremaThresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -179,7 +179,7 @@ def metric_extrema_threshold_validate(
 
 
 def metric_extrema_threshold_cargs(
-    params: MetricExtremaThresholdParameters,
+    params: MetricExtremaThresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -202,7 +202,7 @@ def metric_extrema_threshold_cargs(
 
 class MetricExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetricExtremaParameters(...)`.
+    Output object returned when calling `MetricExtremaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -217,13 +217,13 @@ def metric_extrema_params(
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
-    presmooth: MetricExtremaPresmoothParameters | None = None,
-    threshold: MetricExtremaThresholdParameters | None = None,
+    presmooth: MetricExtremaPresmoothParamsDict | None = None,
+    threshold: MetricExtremaThresholdParamsDict | None = None,
     sum_columns: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
     only_minima: bool = False,
-) -> MetricExtremaParametersTagged:
+) -> MetricExtremaParamsDictTagged:
     """
     Build parameters.
     
@@ -277,7 +277,7 @@ def metric_extrema_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetricExtremaParameters` object.
+    `MetricExtremaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -329,7 +329,7 @@ def metric_extrema_validate(
 
 
 def metric_extrema_cargs(
-    params: MetricExtremaParameters,
+    params: MetricExtremaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -365,7 +365,7 @@ def metric_extrema_cargs(
 
 
 def metric_extrema_outputs(
-    params: MetricExtremaParameters,
+    params: MetricExtremaParamsDict,
     execution: Execution,
 ) -> MetricExtremaOutputs:
     """
@@ -385,7 +385,7 @@ def metric_extrema_outputs(
 
 
 def metric_extrema_execute(
-    params: MetricExtremaParameters,
+    params: MetricExtremaParamsDict,
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
@@ -440,8 +440,8 @@ def metric_extrema(
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
-    presmooth: MetricExtremaPresmoothParameters | None = None,
-    threshold: MetricExtremaThresholdParameters | None = None,
+    presmooth: MetricExtremaPresmoothParamsDict | None = None,
+    threshold: MetricExtremaThresholdParamsDict | None = None,
     sum_columns: bool = False,
     consolidate_mode: bool = False,
     only_maxima: bool = False,
@@ -521,9 +521,15 @@ def metric_extrema(
 __all__ = [
     "METRIC_EXTREMA_METADATA",
     "MetricExtremaOutputs",
+    "MetricExtremaParamsDict",
+    "MetricExtremaParamsDictTagged",
+    "MetricExtremaPresmoothParamsDict",
+    "MetricExtremaPresmoothParamsDictTagged",
+    "MetricExtremaThresholdParamsDict",
+    "MetricExtremaThresholdParamsDictTagged",
     "metric_extrema",
     "metric_extrema_execute",
     "metric_extrema_params",
-    "metric_extrema_presmooth_params",
-    "metric_extrema_threshold_params",
+    "metric_extrema_presmooth",
+    "metric_extrema_threshold",
 ]

@@ -12,31 +12,31 @@ VOLUME_GRADIENT_METADATA = Metadata(
 )
 
 
-VolumeGradientPresmoothParameters = typing.TypedDict('VolumeGradientPresmoothParameters', {
+VolumeGradientPresmoothParamsDict = typing.TypedDict('VolumeGradientPresmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
     "fwhm": bool,
 })
-VolumeGradientPresmoothParametersTagged = typing.TypedDict('VolumeGradientPresmoothParametersTagged', {
+VolumeGradientPresmoothParamsDictTagged = typing.TypedDict('VolumeGradientPresmoothParamsDictTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
     "fwhm": bool,
 })
 
 
-VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
+VolumeGradientParamsDict = typing.TypedDict('VolumeGradientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-gradient"]],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "vector-volume-out": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
-VolumeGradientParametersTagged = typing.TypedDict('VolumeGradientParametersTagged', {
+VolumeGradientParamsDictTagged = typing.TypedDict('VolumeGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-gradient"],
     "volume-out": str,
-    "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
+    "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "vector-volume-out": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
@@ -44,10 +44,10 @@ VolumeGradientParametersTagged = typing.TypedDict('VolumeGradientParametersTagge
 })
 
 
-def volume_gradient_presmooth_params(
+def volume_gradient_presmooth(
     kernel: float,
     fwhm: bool = False,
-) -> VolumeGradientPresmoothParametersTagged:
+) -> VolumeGradientPresmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def volume_gradient_presmooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeGradientPresmoothParameters` object.
+    `VolumeGradientPresmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def volume_gradient_presmooth_validate(
 
 
 def volume_gradient_presmooth_cargs(
-    params: VolumeGradientPresmoothParameters,
+    params: VolumeGradientPresmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def volume_gradient_presmooth_cargs(
 
 class VolumeGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VolumeGradientParameters(...)`.
+    Output object returned when calling `VolumeGradientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,8 +127,8 @@ def volume_gradient_params(
     vector_volume_out: str | None,
     subvol: str | None,
     volume_in: InputPathType,
-    presmooth: VolumeGradientPresmoothParameters | None = None,
-) -> VolumeGradientParametersTagged:
+    presmooth: VolumeGradientPresmoothParamsDict | None = None,
+) -> VolumeGradientParamsDictTagged:
     """
     Build parameters.
     
@@ -169,7 +169,7 @@ def volume_gradient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VolumeGradientParameters` object.
+    `VolumeGradientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def volume_gradient_validate(
 
 
 def volume_gradient_cargs(
-    params: VolumeGradientParameters,
+    params: VolumeGradientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -229,7 +229,7 @@ def volume_gradient_cargs(
 
 
 def volume_gradient_outputs(
-    params: VolumeGradientParameters,
+    params: VolumeGradientParamsDict,
     execution: Execution,
 ) -> VolumeGradientOutputs:
     """
@@ -249,7 +249,7 @@ def volume_gradient_outputs(
 
 
 def volume_gradient_execute(
-    params: VolumeGradientParameters,
+    params: VolumeGradientParamsDict,
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
@@ -284,7 +284,7 @@ def volume_gradient(
     vector_volume_out: str | None,
     subvol: str | None,
     volume_in: InputPathType,
-    presmooth: VolumeGradientPresmoothParameters | None = None,
+    presmooth: VolumeGradientPresmoothParamsDict | None = None,
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
@@ -328,8 +328,12 @@ def volume_gradient(
 __all__ = [
     "VOLUME_GRADIENT_METADATA",
     "VolumeGradientOutputs",
+    "VolumeGradientParamsDict",
+    "VolumeGradientParamsDictTagged",
+    "VolumeGradientPresmoothParamsDict",
+    "VolumeGradientPresmoothParamsDictTagged",
     "volume_gradient",
     "volume_gradient_execute",
     "volume_gradient_params",
-    "volume_gradient_presmooth_params",
+    "volume_gradient_presmooth",
 ]

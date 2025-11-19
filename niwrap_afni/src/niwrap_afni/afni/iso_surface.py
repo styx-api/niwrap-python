@@ -13,7 +13,7 @@ ISO_SURFACE_METADATA = Metadata(
 )
 
 
-IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
+IsoSurfaceParamsDict = typing.TypedDict('IsoSurfaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/IsoSurface"]],
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
@@ -30,7 +30,7 @@ IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
     "novolreg": bool,
     "noxform": bool,
 })
-IsoSurfaceParametersTagged = typing.TypedDict('IsoSurfaceParametersTagged', {
+IsoSurfaceParamsDictTagged = typing.TypedDict('IsoSurfaceParamsDictTagged', {
     "@type": typing.Literal["afni/IsoSurface"],
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
@@ -51,7 +51,7 @@ IsoSurfaceParametersTagged = typing.TypedDict('IsoSurfaceParametersTagged', {
 
 class IsoSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsoSurfaceParameters(...)`.
+    Output object returned when calling `IsoSurfaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def iso_surface_params(
     xform: str | None = None,
     novolreg: bool = False,
     noxform: bool = False,
-) -> IsoSurfaceParametersTagged:
+) -> IsoSurfaceParamsDictTagged:
     """
     Build parameters.
     
@@ -137,7 +137,7 @@ def iso_surface_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsoSurfaceParameters` object.
+    `IsoSurfaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -202,7 +202,7 @@ def iso_surface_validate(
 
 
 def iso_surface_cargs(
-    params: IsoSurfaceParameters,
+    params: IsoSurfaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -278,7 +278,7 @@ def iso_surface_cargs(
 
 
 def iso_surface_outputs(
-    params: IsoSurfaceParameters,
+    params: IsoSurfaceParamsDict,
     execution: Execution,
 ) -> IsoSurfaceOutputs:
     """
@@ -300,7 +300,7 @@ def iso_surface_outputs(
 
 
 def iso_surface_execute(
-    params: IsoSurfaceParameters,
+    params: IsoSurfaceParamsDict,
     runner: Runner | None = None,
 ) -> IsoSurfaceOutputs:
     """
@@ -397,6 +397,8 @@ def iso_surface(
 __all__ = [
     "ISO_SURFACE_METADATA",
     "IsoSurfaceOutputs",
+    "IsoSurfaceParamsDict",
+    "IsoSurfaceParamsDictTagged",
     "iso_surface",
     "iso_surface_execute",
     "iso_surface_params",

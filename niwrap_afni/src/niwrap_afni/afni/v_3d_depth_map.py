@@ -13,7 +13,7 @@ V_3D_DEPTH_MAP_METADATA = Metadata(
 )
 
 
-V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
+V3dDepthMapParamsDict = typing.TypedDict('V3dDepthMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dDepthMap"]],
     "input_dataset": InputPathType,
     "output_prefix": str,
@@ -29,7 +29,7 @@ V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
     "binary_only": bool,
     "verbosity": typing.NotRequired[float | None],
 })
-V3dDepthMapParametersTagged = typing.TypedDict('V3dDepthMapParametersTagged', {
+V3dDepthMapParamsDictTagged = typing.TypedDict('V3dDepthMapParamsDictTagged', {
     "@type": typing.Literal["afni/3dDepthMap"],
     "input_dataset": InputPathType,
     "output_prefix": str,
@@ -49,7 +49,7 @@ V3dDepthMapParametersTagged = typing.TypedDict('V3dDepthMapParametersTagged', {
 
 class V3dDepthMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dDepthMapParameters(...)`.
+    Output object returned when calling `V3dDepthMapParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +71,7 @@ def v_3d_depth_map_params(
     only2_d: str | None = None,
     binary_only: bool = False,
     verbosity: float | None = None,
-) -> V3dDepthMapParametersTagged:
+) -> V3dDepthMapParamsDictTagged:
     """
     Build parameters.
     
@@ -124,7 +124,7 @@ def v_3d_depth_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dDepthMapParameters` object.
+    `V3dDepthMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -182,7 +182,7 @@ def v_3d_depth_map_validate(
 
 
 def v_3d_depth_map_cargs(
-    params: V3dDepthMapParameters,
+    params: V3dDepthMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -242,7 +242,7 @@ def v_3d_depth_map_cargs(
 
 
 def v_3d_depth_map_outputs(
-    params: V3dDepthMapParameters,
+    params: V3dDepthMapParamsDict,
     execution: Execution,
 ) -> V3dDepthMapOutputs:
     """
@@ -262,7 +262,7 @@ def v_3d_depth_map_outputs(
 
 
 def v_3d_depth_map_execute(
-    params: V3dDepthMapParameters,
+    params: V3dDepthMapParamsDict,
     runner: Runner | None = None,
 ) -> V3dDepthMapOutputs:
     """
@@ -361,6 +361,8 @@ def v_3d_depth_map(
 
 __all__ = [
     "V3dDepthMapOutputs",
+    "V3dDepthMapParamsDict",
+    "V3dDepthMapParamsDictTagged",
     "V_3D_DEPTH_MAP_METADATA",
     "v_3d_depth_map",
     "v_3d_depth_map_execute",

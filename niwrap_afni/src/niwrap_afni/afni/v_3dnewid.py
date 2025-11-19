@@ -13,7 +13,7 @@ V_3DNEWID_METADATA = Metadata(
 )
 
 
-V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
+V3dnewidParamsDict = typing.TypedDict('V3dnewidParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dnewid"]],
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
     "hash": typing.NotRequired[str | None],
     "MD5": typing.NotRequired[str | None],
 })
-V3dnewidParametersTagged = typing.TypedDict('V3dnewidParametersTagged', {
+V3dnewidParamsDictTagged = typing.TypedDict('V3dnewidParamsDictTagged', {
     "@type": typing.Literal["afni/3dnewid"],
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ V3dnewidParametersTagged = typing.TypedDict('V3dnewidParametersTagged', {
 
 class V3dnewidOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dnewidParameters(...)`.
+    Output object returned when calling `V3dnewidParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v_3dnewid_params(
     int_: bool = False,
     hash_: str | None = None,
     md5: str | None = None,
-) -> V3dnewidParametersTagged:
+) -> V3dnewidParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def v_3dnewid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dnewidParameters` object.
+    `V3dnewidParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -121,7 +121,7 @@ def v_3dnewid_validate(
 
 
 def v_3dnewid_cargs(
-    params: V3dnewidParameters,
+    params: V3dnewidParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def v_3dnewid_cargs(
 
 
 def v_3dnewid_outputs(
-    params: V3dnewidParameters,
+    params: V3dnewidParamsDict,
     execution: Execution,
 ) -> V3dnewidOutputs:
     """
@@ -178,7 +178,7 @@ def v_3dnewid_outputs(
 
 
 def v_3dnewid_execute(
-    params: V3dnewidParameters,
+    params: V3dnewidParamsDict,
     runner: Runner | None = None,
 ) -> V3dnewidOutputs:
     """
@@ -255,6 +255,8 @@ def v_3dnewid(
 
 __all__ = [
     "V3dnewidOutputs",
+    "V3dnewidParamsDict",
+    "V3dnewidParamsDictTagged",
     "V_3DNEWID_METADATA",
     "v_3dnewid",
     "v_3dnewid_execute",

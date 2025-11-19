@@ -13,7 +13,7 @@ ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
 )
 
 
-AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShParameters', {
+AntsCorticalThicknessShParamsDict = typing.TypedDict('AntsCorticalThicknessShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsCorticalThickness.sh"]],
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
@@ -41,7 +41,7 @@ AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShPar
     "script_stage_to_run": typing.NotRequired[int | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
-AntsCorticalThicknessShParametersTagged = typing.TypedDict('AntsCorticalThicknessShParametersTagged', {
+AntsCorticalThicknessShParamsDictTagged = typing.TypedDict('AntsCorticalThicknessShParamsDictTagged', {
     "@type": typing.Literal["ants/antsCorticalThickness.sh"],
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
@@ -73,7 +73,7 @@ AntsCorticalThicknessShParametersTagged = typing.TypedDict('AntsCorticalThicknes
 
 class AntsCorticalThicknessShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsCorticalThicknessShParameters(...)`.
+    Output object returned when calling `AntsCorticalThicknessShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +113,7 @@ def ants_cortical_thickness_sh_params(
     atropos_iterations: int | None = None,
     script_stage_to_run: int | None = None,
     test_debug_mode: int | None = None,
-) -> AntsCorticalThicknessShParametersTagged:
+) -> AntsCorticalThicknessShParamsDictTagged:
     """
     Build parameters.
     
@@ -224,7 +224,7 @@ def ants_cortical_thickness_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsCorticalThicknessShParameters` object.
+    `AntsCorticalThicknessShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -317,7 +317,7 @@ def ants_cortical_thickness_sh_validate(
 
 
 def ants_cortical_thickness_sh_cargs(
-    params: AntsCorticalThicknessShParameters,
+    params: AntsCorticalThicknessShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -454,7 +454,7 @@ def ants_cortical_thickness_sh_cargs(
 
 
 def ants_cortical_thickness_sh_outputs(
-    params: AntsCorticalThicknessShParameters,
+    params: AntsCorticalThicknessShParamsDict,
     execution: Execution,
 ) -> AntsCorticalThicknessShOutputs:
     """
@@ -477,7 +477,7 @@ def ants_cortical_thickness_sh_outputs(
 
 
 def ants_cortical_thickness_sh_execute(
-    params: AntsCorticalThicknessShParameters,
+    params: AntsCorticalThicknessShParamsDict,
     runner: Runner | None = None,
 ) -> AntsCorticalThicknessShOutputs:
     """
@@ -632,6 +632,8 @@ def ants_cortical_thickness_sh(
 __all__ = [
     "ANTS_CORTICAL_THICKNESS_SH_METADATA",
     "AntsCorticalThicknessShOutputs",
+    "AntsCorticalThicknessShParamsDict",
+    "AntsCorticalThicknessShParamsDictTagged",
     "ants_cortical_thickness_sh",
     "ants_cortical_thickness_sh_execute",
     "ants_cortical_thickness_sh_params",

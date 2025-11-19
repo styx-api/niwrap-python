@@ -13,7 +13,7 @@ MRIS_MAKE_SURFACES_METADATA = Metadata(
 )
 
 
-MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
+MrisMakeSurfacesParamsDict = typing.TypedDict('MrisMakeSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_surfaces"]],
     "subject_name": str,
     "hemisphere": str,
@@ -69,7 +69,7 @@ MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
     "min_gray_csf_border": typing.NotRequired[float | None],
     "max_csf": typing.NotRequired[float | None],
 })
-MrisMakeSurfacesParametersTagged = typing.TypedDict('MrisMakeSurfacesParametersTagged', {
+MrisMakeSurfacesParamsDictTagged = typing.TypedDict('MrisMakeSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_make_surfaces"],
     "subject_name": str,
     "hemisphere": str,
@@ -129,7 +129,7 @@ MrisMakeSurfacesParametersTagged = typing.TypedDict('MrisMakeSurfacesParametersT
 
 class MrisMakeSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisMakeSurfacesParameters(...)`.
+    Output object returned when calling `MrisMakeSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -189,7 +189,7 @@ def mris_make_surfaces_params(
     max_gray_csf_border: float | None = None,
     min_gray_csf_border: float | None = None,
     max_csf: float | None = None,
-) -> MrisMakeSurfacesParametersTagged:
+) -> MrisMakeSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -372,7 +372,7 @@ def mris_make_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisMakeSurfacesParameters` object.
+    `MrisMakeSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -554,7 +554,7 @@ def mris_make_surfaces_validate(
 
 
 def mris_make_surfaces_cargs(
-    params: MrisMakeSurfacesParameters,
+    params: MrisMakeSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -796,7 +796,7 @@ def mris_make_surfaces_cargs(
 
 
 def mris_make_surfaces_outputs(
-    params: MrisMakeSurfacesParameters,
+    params: MrisMakeSurfacesParamsDict,
     execution: Execution,
 ) -> MrisMakeSurfacesOutputs:
     """
@@ -815,7 +815,7 @@ def mris_make_surfaces_outputs(
 
 
 def mris_make_surfaces_execute(
-    params: MrisMakeSurfacesParameters,
+    params: MrisMakeSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MrisMakeSurfacesOutputs:
     """
@@ -1049,6 +1049,8 @@ def mris_make_surfaces(
 __all__ = [
     "MRIS_MAKE_SURFACES_METADATA",
     "MrisMakeSurfacesOutputs",
+    "MrisMakeSurfacesParamsDict",
+    "MrisMakeSurfacesParamsDictTagged",
     "mris_make_surfaces",
     "mris_make_surfaces_execute",
     "mris_make_surfaces_params",

@@ -13,1806 +13,1806 @@ C3D_METADATA = Metadata(
 )
 
 
-C3dAccumParameters = typing.TypedDict('C3dAccumParameters', {
+C3dAccumParamsDict = typing.TypedDict('C3dAccumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["accum"]],
     "accum": str,
 })
-C3dAccumParametersTagged = typing.TypedDict('C3dAccumParametersTagged', {
+C3dAccumParamsDictTagged = typing.TypedDict('C3dAccumParamsDictTagged', {
     "@type": typing.Literal["accum"],
     "accum": str,
 })
 
 
-C3dAcosParameters = typing.TypedDict('C3dAcosParameters', {
+C3dAcosParamsDict = typing.TypedDict('C3dAcosParamsDict', {
     "@type": typing.NotRequired[typing.Literal["acos"]],
     "acos": str,
 })
-C3dAcosParametersTagged = typing.TypedDict('C3dAcosParametersTagged', {
+C3dAcosParamsDictTagged = typing.TypedDict('C3dAcosParamsDictTagged', {
     "@type": typing.Literal["acos"],
     "acos": str,
 })
 
 
-C3dAddParameters = typing.TypedDict('C3dAddParameters', {
+C3dAddParamsDict = typing.TypedDict('C3dAddParamsDict', {
     "@type": typing.NotRequired[typing.Literal["add"]],
     "add": str,
 })
-C3dAddParametersTagged = typing.TypedDict('C3dAddParametersTagged', {
+C3dAddParamsDictTagged = typing.TypedDict('C3dAddParamsDictTagged', {
     "@type": typing.Literal["add"],
     "add": str,
 })
 
 
-C3dAlignLandmarksParameters = typing.TypedDict('C3dAlignLandmarksParameters', {
+C3dAlignLandmarksParamsDict = typing.TypedDict('C3dAlignLandmarksParamsDict', {
     "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
     "align_landmarks": str,
 })
-C3dAlignLandmarksParametersTagged = typing.TypedDict('C3dAlignLandmarksParametersTagged', {
+C3dAlignLandmarksParamsDictTagged = typing.TypedDict('C3dAlignLandmarksParamsDictTagged', {
     "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
 
 
-C3dAnisotropicDiffusionParameters = typing.TypedDict('C3dAnisotropicDiffusionParameters', {
+C3dAnisotropicDiffusionParamsDict = typing.TypedDict('C3dAnisotropicDiffusionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
     "anisotropic_diffusion": str,
 })
-C3dAnisotropicDiffusionParametersTagged = typing.TypedDict('C3dAnisotropicDiffusionParametersTagged', {
+C3dAnisotropicDiffusionParamsDictTagged = typing.TypedDict('C3dAnisotropicDiffusionParamsDictTagged', {
     "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
 
 
-C3dAntialiasParameters = typing.TypedDict('C3dAntialiasParameters', {
+C3dAntialiasParamsDict = typing.TypedDict('C3dAntialiasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["antialias"]],
     "antialias": str,
 })
-C3dAntialiasParametersTagged = typing.TypedDict('C3dAntialiasParametersTagged', {
+C3dAntialiasParamsDictTagged = typing.TypedDict('C3dAntialiasParamsDictTagged', {
     "@type": typing.Literal["antialias"],
     "antialias": str,
 })
 
 
-C3dSetParameters = typing.TypedDict('C3dSetParameters', {
+C3dSetParamsDict = typing.TypedDict('C3dSetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["set"]],
     "set": str,
 })
-C3dSetParametersTagged = typing.TypedDict('C3dSetParametersTagged', {
+C3dSetParamsDictTagged = typing.TypedDict('C3dSetParamsDictTagged', {
     "@type": typing.Literal["set"],
     "set": str,
 })
 
 
-C3dAsinParameters = typing.TypedDict('C3dAsinParameters', {
+C3dAsinParamsDict = typing.TypedDict('C3dAsinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["asin"]],
     "asin": str,
 })
-C3dAsinParametersTagged = typing.TypedDict('C3dAsinParametersTagged', {
+C3dAsinParamsDictTagged = typing.TypedDict('C3dAsinParamsDictTagged', {
     "@type": typing.Literal["asin"],
     "asin": str,
 })
 
 
-C3dAtan2Parameters = typing.TypedDict('C3dAtan2Parameters', {
+C3dAtan2ParamsDict = typing.TypedDict('C3dAtan2ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["atan2"]],
     "atan2": str,
 })
-C3dAtan2ParametersTagged = typing.TypedDict('C3dAtan2ParametersTagged', {
+C3dAtan2ParamsDictTagged = typing.TypedDict('C3dAtan2ParamsDictTagged', {
     "@type": typing.Literal["atan2"],
     "atan2": str,
 })
 
 
-C3dBackgroundParameters = typing.TypedDict('C3dBackgroundParameters', {
+C3dBackgroundParamsDict = typing.TypedDict('C3dBackgroundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["background"]],
     "background": str,
 })
-C3dBackgroundParametersTagged = typing.TypedDict('C3dBackgroundParametersTagged', {
+C3dBackgroundParamsDictTagged = typing.TypedDict('C3dBackgroundParamsDictTagged', {
     "@type": typing.Literal["background"],
     "background": str,
 })
 
 
-C3dN4BiasCorrectionParameters = typing.TypedDict('C3dN4BiasCorrectionParameters', {
+C3dN4BiasCorrectionParamsDict = typing.TypedDict('C3dN4BiasCorrectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
     "n4_bias_correction": str,
 })
-C3dN4BiasCorrectionParametersTagged = typing.TypedDict('C3dN4BiasCorrectionParametersTagged', {
+C3dN4BiasCorrectionParamsDictTagged = typing.TypedDict('C3dN4BiasCorrectionParamsDictTagged', {
     "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
 
 
-C3dBinarizeParameters = typing.TypedDict('C3dBinarizeParameters', {
+C3dBinarizeParamsDict = typing.TypedDict('C3dBinarizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["binarize"]],
     "binarize": str,
 })
-C3dBinarizeParametersTagged = typing.TypedDict('C3dBinarizeParametersTagged', {
+C3dBinarizeParamsDictTagged = typing.TypedDict('C3dBinarizeParamsDictTagged', {
     "@type": typing.Literal["binarize"],
     "binarize": str,
 })
 
 
-C3dCannyParameters = typing.TypedDict('C3dCannyParameters', {
+C3dCannyParamsDict = typing.TypedDict('C3dCannyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["canny"]],
     "canny": str,
 })
-C3dCannyParametersTagged = typing.TypedDict('C3dCannyParametersTagged', {
+C3dCannyParamsDictTagged = typing.TypedDict('C3dCannyParamsDictTagged', {
     "@type": typing.Literal["canny"],
     "canny": str,
 })
 
 
-C3dCeilParameters = typing.TypedDict('C3dCeilParameters', {
+C3dCeilParamsDict = typing.TypedDict('C3dCeilParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ceil"]],
     "ceil": str,
 })
-C3dCeilParametersTagged = typing.TypedDict('C3dCeilParametersTagged', {
+C3dCeilParamsDictTagged = typing.TypedDict('C3dCeilParamsDictTagged', {
     "@type": typing.Literal["ceil"],
     "ceil": str,
 })
 
 
-C3dCentroidParameters = typing.TypedDict('C3dCentroidParameters', {
+C3dCentroidParamsDict = typing.TypedDict('C3dCentroidParamsDict', {
     "@type": typing.NotRequired[typing.Literal["centroid"]],
     "centroid": str,
 })
-C3dCentroidParametersTagged = typing.TypedDict('C3dCentroidParametersTagged', {
+C3dCentroidParamsDictTagged = typing.TypedDict('C3dCentroidParamsDictTagged', {
     "@type": typing.Literal["centroid"],
     "centroid": str,
 })
 
 
-C3dCentroidMarkParameters = typing.TypedDict('C3dCentroidMarkParameters', {
+C3dCentroidMarkParamsDict = typing.TypedDict('C3dCentroidMarkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
     "centroid_mark": str,
 })
-C3dCentroidMarkParametersTagged = typing.TypedDict('C3dCentroidMarkParametersTagged', {
+C3dCentroidMarkParamsDictTagged = typing.TypedDict('C3dCentroidMarkParamsDictTagged', {
     "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
 
 
-C3dConnectedComponentsParameters = typing.TypedDict('C3dConnectedComponentsParameters', {
+C3dConnectedComponentsParamsDict = typing.TypedDict('C3dConnectedComponentsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["connected_components"]],
     "connected_components": str,
 })
-C3dConnectedComponentsParametersTagged = typing.TypedDict('C3dConnectedComponentsParametersTagged', {
+C3dConnectedComponentsParamsDictTagged = typing.TypedDict('C3dConnectedComponentsParamsDictTagged', {
     "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
 
 
-C3dClearParameters = typing.TypedDict('C3dClearParameters', {
+C3dClearParamsDict = typing.TypedDict('C3dClearParamsDict', {
     "@type": typing.NotRequired[typing.Literal["clear"]],
     "clear": str,
 })
-C3dClearParametersTagged = typing.TypedDict('C3dClearParametersTagged', {
+C3dClearParamsDictTagged = typing.TypedDict('C3dClearParamsDictTagged', {
     "@type": typing.Literal["clear"],
     "clear": str,
 })
 
 
-C3dClipParameters = typing.TypedDict('C3dClipParameters', {
+C3dClipParamsDict = typing.TypedDict('C3dClipParamsDict', {
     "@type": typing.NotRequired[typing.Literal["clip"]],
     "clip": str,
 })
-C3dClipParametersTagged = typing.TypedDict('C3dClipParametersTagged', {
+C3dClipParamsDictTagged = typing.TypedDict('C3dClipParamsDictTagged', {
     "@type": typing.Literal["clip"],
     "clip": str,
 })
 
 
-C3dColorMapParameters = typing.TypedDict('C3dColorMapParameters', {
+C3dColorMapParamsDict = typing.TypedDict('C3dColorMapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["color_map"]],
     "color_map": str,
 })
-C3dColorMapParametersTagged = typing.TypedDict('C3dColorMapParametersTagged', {
+C3dColorMapParamsDictTagged = typing.TypedDict('C3dColorMapParamsDictTagged', {
     "@type": typing.Literal["color_map"],
     "color_map": str,
 })
 
 
-C3dCompressParameters = typing.TypedDict('C3dCompressParameters', {
+C3dCompressParamsDict = typing.TypedDict('C3dCompressParamsDict', {
     "@type": typing.NotRequired[typing.Literal["compress"]],
     "compress": str,
 })
-C3dCompressParametersTagged = typing.TypedDict('C3dCompressParametersTagged', {
+C3dCompressParamsDictTagged = typing.TypedDict('C3dCompressParamsDictTagged', {
     "@type": typing.Literal["compress"],
     "compress": str,
 })
 
 
-C3dNoCompressParameters = typing.TypedDict('C3dNoCompressParameters', {
+C3dNoCompressParamsDict = typing.TypedDict('C3dNoCompressParamsDict', {
     "@type": typing.NotRequired[typing.Literal["no_compress"]],
     "no_compress": str,
 })
-C3dNoCompressParametersTagged = typing.TypedDict('C3dNoCompressParametersTagged', {
+C3dNoCompressParamsDictTagged = typing.TypedDict('C3dNoCompressParamsDictTagged', {
     "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
 
 
-C3dConvParameters = typing.TypedDict('C3dConvParameters', {
+C3dConvParamsDict = typing.TypedDict('C3dConvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["conv"]],
     "conv": str,
 })
-C3dConvParametersTagged = typing.TypedDict('C3dConvParametersTagged', {
+C3dConvParamsDictTagged = typing.TypedDict('C3dConvParamsDictTagged', {
     "@type": typing.Literal["conv"],
     "conv": str,
 })
 
 
-C3dCoordinateMapVoxelParameters = typing.TypedDict('C3dCoordinateMapVoxelParameters', {
+C3dCoordinateMapVoxelParamsDict = typing.TypedDict('C3dCoordinateMapVoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
     "coordinate_map_voxel": str,
 })
-C3dCoordinateMapVoxelParametersTagged = typing.TypedDict('C3dCoordinateMapVoxelParametersTagged', {
+C3dCoordinateMapVoxelParamsDictTagged = typing.TypedDict('C3dCoordinateMapVoxelParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
 
 
-C3dCoordinateMapPhysicalParameters = typing.TypedDict('C3dCoordinateMapPhysicalParameters', {
+C3dCoordinateMapPhysicalParamsDict = typing.TypedDict('C3dCoordinateMapPhysicalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
     "coordinate_map_physical": str,
 })
-C3dCoordinateMapPhysicalParametersTagged = typing.TypedDict('C3dCoordinateMapPhysicalParametersTagged', {
+C3dCoordinateMapPhysicalParamsDictTagged = typing.TypedDict('C3dCoordinateMapPhysicalParamsDictTagged', {
     "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
 
 
-C3dCopyTransformParameters = typing.TypedDict('C3dCopyTransformParameters', {
+C3dCopyTransformParamsDict = typing.TypedDict('C3dCopyTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["copy_transform"]],
     "copy_transform": str,
 })
-C3dCopyTransformParametersTagged = typing.TypedDict('C3dCopyTransformParametersTagged', {
+C3dCopyTransformParamsDictTagged = typing.TypedDict('C3dCopyTransformParamsDictTagged', {
     "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
 
 
-C3dCosParameters = typing.TypedDict('C3dCosParameters', {
+C3dCosParamsDict = typing.TypedDict('C3dCosParamsDict', {
     "@type": typing.NotRequired[typing.Literal["cos"]],
     "cos": str,
 })
-C3dCosParametersTagged = typing.TypedDict('C3dCosParametersTagged', {
+C3dCosParamsDictTagged = typing.TypedDict('C3dCosParamsDictTagged', {
     "@type": typing.Literal["cos"],
     "cos": str,
 })
 
 
-C3dCreateParameters = typing.TypedDict('C3dCreateParameters', {
+C3dCreateParamsDict = typing.TypedDict('C3dCreateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["create"]],
     "create": str,
 })
-C3dCreateParametersTagged = typing.TypedDict('C3dCreateParametersTagged', {
+C3dCreateParamsDictTagged = typing.TypedDict('C3dCreateParamsDictTagged', {
     "@type": typing.Literal["create"],
     "create": str,
 })
 
 
-C3dDicomSeriesListParameters = typing.TypedDict('C3dDicomSeriesListParameters', {
+C3dDicomSeriesListParamsDict = typing.TypedDict('C3dDicomSeriesListParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
     "dicom_series_list": str,
 })
-C3dDicomSeriesListParametersTagged = typing.TypedDict('C3dDicomSeriesListParametersTagged', {
+C3dDicomSeriesListParamsDictTagged = typing.TypedDict('C3dDicomSeriesListParamsDictTagged', {
     "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
 
 
-C3dDicomSeriesReadParameters = typing.TypedDict('C3dDicomSeriesReadParameters', {
+C3dDicomSeriesReadParamsDict = typing.TypedDict('C3dDicomSeriesReadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
     "dicom_series_read": str,
 })
-C3dDicomSeriesReadParametersTagged = typing.TypedDict('C3dDicomSeriesReadParametersTagged', {
+C3dDicomSeriesReadParamsDictTagged = typing.TypedDict('C3dDicomSeriesReadParamsDictTagged', {
     "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
 
 
-C3dDilateParameters = typing.TypedDict('C3dDilateParameters', {
+C3dDilateParamsDict = typing.TypedDict('C3dDilateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dilate"]],
     "dilate": str,
 })
-C3dDilateParametersTagged = typing.TypedDict('C3dDilateParametersTagged', {
+C3dDilateParamsDictTagged = typing.TypedDict('C3dDilateParamsDictTagged', {
     "@type": typing.Literal["dilate"],
     "dilate": str,
 })
 
 
-C3dDivideParameters = typing.TypedDict('C3dDivideParameters', {
+C3dDivideParamsDict = typing.TypedDict('C3dDivideParamsDict', {
     "@type": typing.NotRequired[typing.Literal["divide"]],
     "divide": str,
 })
-C3dDivideParametersTagged = typing.TypedDict('C3dDivideParametersTagged', {
+C3dDivideParamsDictTagged = typing.TypedDict('C3dDivideParamsDictTagged', {
     "@type": typing.Literal["divide"],
     "divide": str,
 })
 
 
-C3dDuplicateParameters = typing.TypedDict('C3dDuplicateParameters', {
+C3dDuplicateParamsDict = typing.TypedDict('C3dDuplicateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["duplicate"]],
     "duplicate": str,
 })
-C3dDuplicateParametersTagged = typing.TypedDict('C3dDuplicateParametersTagged', {
+C3dDuplicateParamsDictTagged = typing.TypedDict('C3dDuplicateParamsDictTagged', {
     "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
 
 
-C3dEndaccumParameters = typing.TypedDict('C3dEndaccumParameters', {
+C3dEndaccumParamsDict = typing.TypedDict('C3dEndaccumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["endaccum"]],
     "endaccum": str,
 })
-C3dEndaccumParametersTagged = typing.TypedDict('C3dEndaccumParametersTagged', {
+C3dEndaccumParamsDictTagged = typing.TypedDict('C3dEndaccumParamsDictTagged', {
     "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
 
 
-C3dEndforParameters = typing.TypedDict('C3dEndforParameters', {
+C3dEndforParamsDict = typing.TypedDict('C3dEndforParamsDict', {
     "@type": typing.NotRequired[typing.Literal["endfor"]],
     "endfor": str,
 })
-C3dEndforParametersTagged = typing.TypedDict('C3dEndforParametersTagged', {
+C3dEndforParamsDictTagged = typing.TypedDict('C3dEndforParamsDictTagged', {
     "@type": typing.Literal["endfor"],
     "endfor": str,
 })
 
 
-C3dErodeParameters = typing.TypedDict('C3dErodeParameters', {
+C3dErodeParamsDict = typing.TypedDict('C3dErodeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["erode"]],
     "erode": str,
 })
-C3dErodeParametersTagged = typing.TypedDict('C3dErodeParametersTagged', {
+C3dErodeParamsDictTagged = typing.TypedDict('C3dErodeParamsDictTagged', {
     "@type": typing.Literal["erode"],
     "erode": str,
 })
 
 
-C3dErfParameters = typing.TypedDict('C3dErfParameters', {
+C3dErfParamsDict = typing.TypedDict('C3dErfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["erf"]],
     "erf": str,
 })
-C3dErfParametersTagged = typing.TypedDict('C3dErfParametersTagged', {
+C3dErfParamsDictTagged = typing.TypedDict('C3dErfParamsDictTagged', {
     "@type": typing.Literal["erf"],
     "erf": str,
 })
 
 
-C3dExpParameters = typing.TypedDict('C3dExpParameters', {
+C3dExpParamsDict = typing.TypedDict('C3dExpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["exp"]],
     "exp": str,
 })
-C3dExpParametersTagged = typing.TypedDict('C3dExpParametersTagged', {
+C3dExpParamsDictTagged = typing.TypedDict('C3dExpParamsDictTagged', {
     "@type": typing.Literal["exp"],
     "exp": str,
 })
 
 
-C3dExportPatchesParameters = typing.TypedDict('C3dExportPatchesParameters', {
+C3dExportPatchesParamsDict = typing.TypedDict('C3dExportPatchesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_patches"]],
     "export_patches": str,
 })
-C3dExportPatchesParametersTagged = typing.TypedDict('C3dExportPatchesParametersTagged', {
+C3dExportPatchesParamsDictTagged = typing.TypedDict('C3dExportPatchesParamsDictTagged', {
     "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
 
 
-C3dExportPatchesAugParameters = typing.TypedDict('C3dExportPatchesAugParameters', {
+C3dExportPatchesAugParamsDict = typing.TypedDict('C3dExportPatchesAugParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
     "export_patches_aug": str,
 })
-C3dExportPatchesAugParametersTagged = typing.TypedDict('C3dExportPatchesAugParametersTagged', {
+C3dExportPatchesAugParamsDictTagged = typing.TypedDict('C3dExportPatchesAugParamsDictTagged', {
     "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
 
 
-C3dExtrudeSegParameters = typing.TypedDict('C3dExtrudeSegParameters', {
+C3dExtrudeSegParamsDict = typing.TypedDict('C3dExtrudeSegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
     "extrude_seg": str,
 })
-C3dExtrudeSegParametersTagged = typing.TypedDict('C3dExtrudeSegParametersTagged', {
+C3dExtrudeSegParamsDictTagged = typing.TypedDict('C3dExtrudeSegParamsDictTagged', {
     "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
 
 
-C3dFillBackgroundWithNoiseParameters = typing.TypedDict('C3dFillBackgroundWithNoiseParameters', {
+C3dFillBackgroundWithNoiseParamsDict = typing.TypedDict('C3dFillBackgroundWithNoiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
     "fill_background_with_noise": str,
 })
-C3dFillBackgroundWithNoiseParametersTagged = typing.TypedDict('C3dFillBackgroundWithNoiseParametersTagged', {
+C3dFillBackgroundWithNoiseParamsDictTagged = typing.TypedDict('C3dFillBackgroundWithNoiseParamsDictTagged', {
     "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
 
 
-C3dFftParameters = typing.TypedDict('C3dFftParameters', {
+C3dFftParamsDict = typing.TypedDict('C3dFftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fft"]],
     "fft": str,
 })
-C3dFftParametersTagged = typing.TypedDict('C3dFftParametersTagged', {
+C3dFftParamsDictTagged = typing.TypedDict('C3dFftParamsDictTagged', {
     "@type": typing.Literal["fft"],
     "fft": str,
 })
 
 
-C3dFlipParameters = typing.TypedDict('C3dFlipParameters', {
+C3dFlipParamsDict = typing.TypedDict('C3dFlipParamsDict', {
     "@type": typing.NotRequired[typing.Literal["flip"]],
     "flip": str,
 })
-C3dFlipParametersTagged = typing.TypedDict('C3dFlipParametersTagged', {
+C3dFlipParamsDictTagged = typing.TypedDict('C3dFlipParamsDictTagged', {
     "@type": typing.Literal["flip"],
     "flip": str,
 })
 
 
-C3dFloorParameters = typing.TypedDict('C3dFloorParameters', {
+C3dFloorParamsDict = typing.TypedDict('C3dFloorParamsDict', {
     "@type": typing.NotRequired[typing.Literal["floor"]],
     "floor": str,
 })
-C3dFloorParametersTagged = typing.TypedDict('C3dFloorParametersTagged', {
+C3dFloorParamsDictTagged = typing.TypedDict('C3dFloorParamsDictTagged', {
     "@type": typing.Literal["floor"],
     "floor": str,
 })
 
 
-C3dForeachParameters = typing.TypedDict('C3dForeachParameters', {
+C3dForeachParamsDict = typing.TypedDict('C3dForeachParamsDict', {
     "@type": typing.NotRequired[typing.Literal["foreach"]],
     "foreach": str,
 })
-C3dForeachParametersTagged = typing.TypedDict('C3dForeachParametersTagged', {
+C3dForeachParamsDictTagged = typing.TypedDict('C3dForeachParamsDictTagged', {
     "@type": typing.Literal["foreach"],
     "foreach": str,
 })
 
 
-C3dForeachCompParameters = typing.TypedDict('C3dForeachCompParameters', {
+C3dForeachCompParamsDict = typing.TypedDict('C3dForeachCompParamsDict', {
     "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
     "foreach_comp": str,
 })
-C3dForeachCompParametersTagged = typing.TypedDict('C3dForeachCompParametersTagged', {
+C3dForeachCompParamsDictTagged = typing.TypedDict('C3dForeachCompParamsDictTagged', {
     "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
 
 
-C3dGlmParameters = typing.TypedDict('C3dGlmParameters', {
+C3dGlmParamsDict = typing.TypedDict('C3dGlmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["glm"]],
     "glm": str,
 })
-C3dGlmParametersTagged = typing.TypedDict('C3dGlmParametersTagged', {
+C3dGlmParamsDictTagged = typing.TypedDict('C3dGlmParamsDictTagged', {
     "@type": typing.Literal["glm"],
     "glm": str,
 })
 
 
-C3dGradientParameters = typing.TypedDict('C3dGradientParameters', {
+C3dGradientParamsDict = typing.TypedDict('C3dGradientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["gradient"]],
     "gradient": str,
 })
-C3dGradientParametersTagged = typing.TypedDict('C3dGradientParametersTagged', {
+C3dGradientParamsDictTagged = typing.TypedDict('C3dGradientParamsDictTagged', {
     "@type": typing.Literal["gradient"],
     "gradient": str,
 })
 
 
-C3dHelpParameters = typing.TypedDict('C3dHelpParameters', {
+C3dHelpParamsDict = typing.TypedDict('C3dHelpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["_help"]],
     "_help": str,
 })
-C3dHelpParametersTagged = typing.TypedDict('C3dHelpParametersTagged', {
+C3dHelpParamsDictTagged = typing.TypedDict('C3dHelpParamsDictTagged', {
     "@type": typing.Literal["_help"],
     "_help": str,
 })
 
 
-C3dHolefillParameters = typing.TypedDict('C3dHolefillParameters', {
+C3dHolefillParamsDict = typing.TypedDict('C3dHolefillParamsDict', {
     "@type": typing.NotRequired[typing.Literal["holefill"]],
     "holefill": str,
 })
-C3dHolefillParametersTagged = typing.TypedDict('C3dHolefillParametersTagged', {
+C3dHolefillParamsDictTagged = typing.TypedDict('C3dHolefillParamsDictTagged', {
     "@type": typing.Literal["holefill"],
     "holefill": str,
 })
 
 
-C3dHessianEigenvaluesParameters = typing.TypedDict('C3dHessianEigenvaluesParameters', {
+C3dHessianEigenvaluesParamsDict = typing.TypedDict('C3dHessianEigenvaluesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
     "hessian_eigenvalues": str,
 })
-C3dHessianEigenvaluesParametersTagged = typing.TypedDict('C3dHessianEigenvaluesParametersTagged', {
+C3dHessianEigenvaluesParamsDictTagged = typing.TypedDict('C3dHessianEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
 
 
-C3dHessianObjectnessParameters = typing.TypedDict('C3dHessianObjectnessParameters', {
+C3dHessianObjectnessParamsDict = typing.TypedDict('C3dHessianObjectnessParamsDict', {
     "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
     "hessian_objectness": str,
 })
-C3dHessianObjectnessParametersTagged = typing.TypedDict('C3dHessianObjectnessParametersTagged', {
+C3dHessianObjectnessParamsDictTagged = typing.TypedDict('C3dHessianObjectnessParamsDictTagged', {
     "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
 
 
-C3dHistogramMatchParameters = typing.TypedDict('C3dHistogramMatchParameters', {
+C3dHistogramMatchParamsDict = typing.TypedDict('C3dHistogramMatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["histogram_match"]],
     "histogram_match": str,
 })
-C3dHistogramMatchParametersTagged = typing.TypedDict('C3dHistogramMatchParametersTagged', {
+C3dHistogramMatchParamsDictTagged = typing.TypedDict('C3dHistogramMatchParamsDictTagged', {
     "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
 
 
-C3dInfoParameters = typing.TypedDict('C3dInfoParameters', {
+C3dInfoParamsDict = typing.TypedDict('C3dInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["info"]],
     "info": str,
 })
-C3dInfoParametersTagged = typing.TypedDict('C3dInfoParametersTagged', {
+C3dInfoParamsDictTagged = typing.TypedDict('C3dInfoParamsDictTagged', {
     "@type": typing.Literal["info"],
     "info": str,
 })
 
 
-C3dInfoFullParameters = typing.TypedDict('C3dInfoFullParameters', {
+C3dInfoFullParamsDict = typing.TypedDict('C3dInfoFullParamsDict', {
     "@type": typing.NotRequired[typing.Literal["info_full"]],
     "info_full": str,
 })
-C3dInfoFullParametersTagged = typing.TypedDict('C3dInfoFullParametersTagged', {
+C3dInfoFullParamsDictTagged = typing.TypedDict('C3dInfoFullParamsDictTagged', {
     "@type": typing.Literal["info_full"],
     "info_full": str,
 })
 
 
-C3dInsertParameters = typing.TypedDict('C3dInsertParameters', {
+C3dInsertParamsDict = typing.TypedDict('C3dInsertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["insert"]],
     "insert": str,
 })
-C3dInsertParametersTagged = typing.TypedDict('C3dInsertParametersTagged', {
+C3dInsertParamsDictTagged = typing.TypedDict('C3dInsertParamsDictTagged', {
     "@type": typing.Literal["insert"],
     "insert": str,
 })
 
 
-C3dInterpolationParameters = typing.TypedDict('C3dInterpolationParameters', {
+C3dInterpolationParamsDict = typing.TypedDict('C3dInterpolationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["interpolation"]],
     "interpolation": str,
 })
-C3dInterpolationParametersTagged = typing.TypedDict('C3dInterpolationParametersTagged', {
+C3dInterpolationParamsDictTagged = typing.TypedDict('C3dInterpolationParamsDictTagged', {
     "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
 
 
-C3dIterationsParameters = typing.TypedDict('C3dIterationsParameters', {
+C3dIterationsParamsDict = typing.TypedDict('C3dIterationsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["iterations"]],
     "iterations": str,
 })
-C3dIterationsParametersTagged = typing.TypedDict('C3dIterationsParametersTagged', {
+C3dIterationsParamsDictTagged = typing.TypedDict('C3dIterationsParamsDictTagged', {
     "@type": typing.Literal["iterations"],
     "iterations": str,
 })
 
 
-C3dLabelOverlapParameters = typing.TypedDict('C3dLabelOverlapParameters', {
+C3dLabelOverlapParamsDict = typing.TypedDict('C3dLabelOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label_overlap"]],
     "label_overlap": str,
 })
-C3dLabelOverlapParametersTagged = typing.TypedDict('C3dLabelOverlapParametersTagged', {
+C3dLabelOverlapParamsDictTagged = typing.TypedDict('C3dLabelOverlapParamsDictTagged', {
     "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
 
 
-C3dLabelStatisticsParameters = typing.TypedDict('C3dLabelStatisticsParameters', {
+C3dLabelStatisticsParamsDict = typing.TypedDict('C3dLabelStatisticsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["label_statistics"]],
     "label_statistics": str,
 })
-C3dLabelStatisticsParametersTagged = typing.TypedDict('C3dLabelStatisticsParametersTagged', {
+C3dLabelStatisticsParamsDictTagged = typing.TypedDict('C3dLabelStatisticsParamsDictTagged', {
     "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
 
 
-C3dLandmarksToSpheresParameters = typing.TypedDict('C3dLandmarksToSpheresParameters', {
+C3dLandmarksToSpheresParamsDict = typing.TypedDict('C3dLandmarksToSpheresParamsDict', {
     "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
     "landmarks_to_spheres": str,
 })
-C3dLandmarksToSpheresParametersTagged = typing.TypedDict('C3dLandmarksToSpheresParametersTagged', {
+C3dLandmarksToSpheresParamsDictTagged = typing.TypedDict('C3dLandmarksToSpheresParamsDictTagged', {
     "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
 
 
-C3dLaplacianParameters = typing.TypedDict('C3dLaplacianParameters', {
+C3dLaplacianParamsDict = typing.TypedDict('C3dLaplacianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["laplacian"]],
     "laplacian": str,
 })
-C3dLaplacianParametersTagged = typing.TypedDict('C3dLaplacianParametersTagged', {
+C3dLaplacianParamsDictTagged = typing.TypedDict('C3dLaplacianParamsDictTagged', {
     "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
 
 
-C3dLevelsetParameters = typing.TypedDict('C3dLevelsetParameters', {
+C3dLevelsetParamsDict = typing.TypedDict('C3dLevelsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["levelset"]],
     "levelset": str,
 })
-C3dLevelsetParametersTagged = typing.TypedDict('C3dLevelsetParametersTagged', {
+C3dLevelsetParamsDictTagged = typing.TypedDict('C3dLevelsetParamsDictTagged', {
     "@type": typing.Literal["levelset"],
     "levelset": str,
 })
 
 
-C3dLevelsetCurvatureParameters = typing.TypedDict('C3dLevelsetCurvatureParameters', {
+C3dLevelsetCurvatureParamsDict = typing.TypedDict('C3dLevelsetCurvatureParamsDict', {
     "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
     "levelset_curvature": str,
 })
-C3dLevelsetCurvatureParametersTagged = typing.TypedDict('C3dLevelsetCurvatureParametersTagged', {
+C3dLevelsetCurvatureParamsDictTagged = typing.TypedDict('C3dLevelsetCurvatureParamsDictTagged', {
     "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
 
 
-C3dLevelsetAdvectionParameters = typing.TypedDict('C3dLevelsetAdvectionParameters', {
+C3dLevelsetAdvectionParamsDict = typing.TypedDict('C3dLevelsetAdvectionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
     "levelset_advection": str,
 })
-C3dLevelsetAdvectionParametersTagged = typing.TypedDict('C3dLevelsetAdvectionParametersTagged', {
+C3dLevelsetAdvectionParamsDictTagged = typing.TypedDict('C3dLevelsetAdvectionParamsDictTagged', {
     "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
 
 
-C3dLogParameters = typing.TypedDict('C3dLogParameters', {
+C3dLogParamsDict = typing.TypedDict('C3dLogParamsDict', {
     "@type": typing.NotRequired[typing.Literal["log"]],
     "log": str,
 })
-C3dLogParametersTagged = typing.TypedDict('C3dLogParametersTagged', {
+C3dLogParamsDictTagged = typing.TypedDict('C3dLogParamsDictTagged', {
     "@type": typing.Literal["log"],
     "log": str,
 })
 
 
-C3dLog10Parameters = typing.TypedDict('C3dLog10Parameters', {
+C3dLog10ParamsDict = typing.TypedDict('C3dLog10ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["log10"]],
     "log10": str,
 })
-C3dLog10ParametersTagged = typing.TypedDict('C3dLog10ParametersTagged', {
+C3dLog10ParamsDictTagged = typing.TypedDict('C3dLog10ParamsDictTagged', {
     "@type": typing.Literal["log10"],
     "log10": str,
 })
 
 
-C3dManualParameters = typing.TypedDict('C3dManualParameters', {
+C3dManualParamsDict = typing.TypedDict('C3dManualParamsDict', {
     "@type": typing.NotRequired[typing.Literal["manual"]],
     "manual": str,
 })
-C3dManualParametersTagged = typing.TypedDict('C3dManualParametersTagged', {
+C3dManualParamsDictTagged = typing.TypedDict('C3dManualParamsDictTagged', {
     "@type": typing.Literal["manual"],
     "manual": str,
 })
 
 
-C3dMatchBoundingBoxParameters = typing.TypedDict('C3dMatchBoundingBoxParameters', {
+C3dMatchBoundingBoxParamsDict = typing.TypedDict('C3dMatchBoundingBoxParamsDict', {
     "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
     "match_bounding_box": str,
 })
-C3dMatchBoundingBoxParametersTagged = typing.TypedDict('C3dMatchBoundingBoxParametersTagged', {
+C3dMatchBoundingBoxParamsDictTagged = typing.TypedDict('C3dMatchBoundingBoxParamsDictTagged', {
     "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
 
 
-C3dMaximumParameters = typing.TypedDict('C3dMaximumParameters', {
+C3dMaximumParamsDict = typing.TypedDict('C3dMaximumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["maximum"]],
     "maximum": str,
 })
-C3dMaximumParametersTagged = typing.TypedDict('C3dMaximumParametersTagged', {
+C3dMaximumParamsDictTagged = typing.TypedDict('C3dMaximumParamsDictTagged', {
     "@type": typing.Literal["maximum"],
     "maximum": str,
 })
 
 
-C3dMulticomponentSplitParameters = typing.TypedDict('C3dMulticomponentSplitParameters', {
+C3dMulticomponentSplitParamsDict = typing.TypedDict('C3dMulticomponentSplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
     "multicomponent_split": str,
 })
-C3dMulticomponentSplitParametersTagged = typing.TypedDict('C3dMulticomponentSplitParametersTagged', {
+C3dMulticomponentSplitParamsDictTagged = typing.TypedDict('C3dMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
 
 
-C3dMeanParameters = typing.TypedDict('C3dMeanParameters', {
+C3dMeanParamsDict = typing.TypedDict('C3dMeanParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mean"]],
     "mean": str,
 })
-C3dMeanParametersTagged = typing.TypedDict('C3dMeanParametersTagged', {
+C3dMeanParamsDictTagged = typing.TypedDict('C3dMeanParamsDictTagged', {
     "@type": typing.Literal["mean"],
     "mean": str,
 })
 
 
-C3dMedianFilterParameters = typing.TypedDict('C3dMedianFilterParameters', {
+C3dMedianFilterParamsDict = typing.TypedDict('C3dMedianFilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["median_filter"]],
     "median_filter": str,
 })
-C3dMedianFilterParametersTagged = typing.TypedDict('C3dMedianFilterParametersTagged', {
+C3dMedianFilterParamsDictTagged = typing.TypedDict('C3dMedianFilterParamsDictTagged', {
     "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
 
 
-C3dMergeParameters = typing.TypedDict('C3dMergeParameters', {
+C3dMergeParamsDict = typing.TypedDict('C3dMergeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["merge"]],
     "merge": str,
 })
-C3dMergeParametersTagged = typing.TypedDict('C3dMergeParametersTagged', {
+C3dMergeParamsDictTagged = typing.TypedDict('C3dMergeParamsDictTagged', {
     "@type": typing.Literal["merge"],
     "merge": str,
 })
 
 
-C3dMeanFilterParameters = typing.TypedDict('C3dMeanFilterParameters', {
+C3dMeanFilterParamsDict = typing.TypedDict('C3dMeanFilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mean_filter"]],
     "mean_filter": str,
 })
-C3dMeanFilterParametersTagged = typing.TypedDict('C3dMeanFilterParametersTagged', {
+C3dMeanFilterParamsDictTagged = typing.TypedDict('C3dMeanFilterParamsDictTagged', {
     "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
 
 
-C3dMutualInfoParameters = typing.TypedDict('C3dMutualInfoParameters', {
+C3dMutualInfoParamsDict = typing.TypedDict('C3dMutualInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mutual_info"]],
     "mutual_info": str,
 })
-C3dMutualInfoParametersTagged = typing.TypedDict('C3dMutualInfoParametersTagged', {
+C3dMutualInfoParamsDictTagged = typing.TypedDict('C3dMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
 
 
-C3dMinimumParameters = typing.TypedDict('C3dMinimumParameters', {
+C3dMinimumParamsDict = typing.TypedDict('C3dMinimumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["minimum"]],
     "minimum": str,
 })
-C3dMinimumParametersTagged = typing.TypedDict('C3dMinimumParametersTagged', {
+C3dMinimumParamsDictTagged = typing.TypedDict('C3dMinimumParamsDictTagged', {
     "@type": typing.Literal["minimum"],
     "minimum": str,
 })
 
 
-C3dMixtureModelParameters = typing.TypedDict('C3dMixtureModelParameters', {
+C3dMixtureModelParamsDict = typing.TypedDict('C3dMixtureModelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mixture_model"]],
     "mixture_model": str,
 })
-C3dMixtureModelParametersTagged = typing.TypedDict('C3dMixtureModelParametersTagged', {
+C3dMixtureModelParamsDictTagged = typing.TypedDict('C3dMixtureModelParamsDictTagged', {
     "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
 
 
-C3dMomentsParameters = typing.TypedDict('C3dMomentsParameters', {
+C3dMomentsParamsDict = typing.TypedDict('C3dMomentsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["moments"]],
     "moments": str,
 })
-C3dMomentsParametersTagged = typing.TypedDict('C3dMomentsParametersTagged', {
+C3dMomentsParamsDictTagged = typing.TypedDict('C3dMomentsParamsDictTagged', {
     "@type": typing.Literal["moments"],
     "moments": str,
 })
 
 
-C3dMattesMutualInfoParameters = typing.TypedDict('C3dMattesMutualInfoParameters', {
+C3dMattesMutualInfoParamsDict = typing.TypedDict('C3dMattesMutualInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
     "mattes_mutual_info": str,
 })
-C3dMattesMutualInfoParametersTagged = typing.TypedDict('C3dMattesMutualInfoParametersTagged', {
+C3dMattesMutualInfoParamsDictTagged = typing.TypedDict('C3dMattesMutualInfoParamsDictTagged', {
     "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
 
 
-C3dMeanSquareParameters = typing.TypedDict('C3dMeanSquareParameters', {
+C3dMeanSquareParamsDict = typing.TypedDict('C3dMeanSquareParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mean_square"]],
     "mean_square": str,
 })
-C3dMeanSquareParametersTagged = typing.TypedDict('C3dMeanSquareParametersTagged', {
+C3dMeanSquareParamsDictTagged = typing.TypedDict('C3dMeanSquareParamsDictTagged', {
     "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
 
 
-C3dMultiplyParameters = typing.TypedDict('C3dMultiplyParameters', {
+C3dMultiplyParamsDict = typing.TypedDict('C3dMultiplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["multiply"]],
     "multiply": str,
 })
-C3dMultiplyParametersTagged = typing.TypedDict('C3dMultiplyParametersTagged', {
+C3dMultiplyParamsDictTagged = typing.TypedDict('C3dMultiplyParamsDictTagged', {
     "@type": typing.Literal["multiply"],
     "multiply": str,
 })
 
 
-C3dNormalizedCrossCorrelationParameters = typing.TypedDict('C3dNormalizedCrossCorrelationParameters', {
+C3dNormalizedCrossCorrelationParamsDict = typing.TypedDict('C3dNormalizedCrossCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
     "normalized_cross_correlation": str,
 })
-C3dNormalizedCrossCorrelationParametersTagged = typing.TypedDict('C3dNormalizedCrossCorrelationParametersTagged', {
+C3dNormalizedCrossCorrelationParamsDictTagged = typing.TypedDict('C3dNormalizedCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
 
 
-C3dNormalizedCorrelationParameters = typing.TypedDict('C3dNormalizedCorrelationParameters', {
+C3dNormalizedCorrelationParamsDict = typing.TypedDict('C3dNormalizedCorrelationParamsDict', {
     "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
     "normalized_correlation": str,
 })
-C3dNormalizedCorrelationParametersTagged = typing.TypedDict('C3dNormalizedCorrelationParametersTagged', {
+C3dNormalizedCorrelationParamsDictTagged = typing.TypedDict('C3dNormalizedCorrelationParamsDictTagged', {
     "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
 
 
-C3dNormalizedMutualInfoParameters = typing.TypedDict('C3dNormalizedMutualInfoParameters', {
+C3dNormalizedMutualInfoParamsDict = typing.TypedDict('C3dNormalizedMutualInfoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
     "normalized_mutual_info": str,
 })
-C3dNormalizedMutualInfoParametersTagged = typing.TypedDict('C3dNormalizedMutualInfoParametersTagged', {
+C3dNormalizedMutualInfoParamsDictTagged = typing.TypedDict('C3dNormalizedMutualInfoParamsDictTagged', {
     "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
 
 
-C3dNoiseGaussianParameters = typing.TypedDict('C3dNoiseGaussianParameters', {
+C3dNoiseGaussianParamsDict = typing.TypedDict('C3dNoiseGaussianParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
     "noise_gaussian": str,
 })
-C3dNoiseGaussianParametersTagged = typing.TypedDict('C3dNoiseGaussianParametersTagged', {
+C3dNoiseGaussianParamsDictTagged = typing.TypedDict('C3dNoiseGaussianParamsDictTagged', {
     "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
 
 
-C3dNoisePoissonParameters = typing.TypedDict('C3dNoisePoissonParameters', {
+C3dNoisePoissonParamsDict = typing.TypedDict('C3dNoisePoissonParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
     "noise_poisson": str,
 })
-C3dNoisePoissonParametersTagged = typing.TypedDict('C3dNoisePoissonParametersTagged', {
+C3dNoisePoissonParamsDictTagged = typing.TypedDict('C3dNoisePoissonParamsDictTagged', {
     "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
 
 
-C3dNoiseSpeckleParameters = typing.TypedDict('C3dNoiseSpeckleParameters', {
+C3dNoiseSpeckleParamsDict = typing.TypedDict('C3dNoiseSpeckleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
     "noise_speckle": str,
 })
-C3dNoiseSpeckleParametersTagged = typing.TypedDict('C3dNoiseSpeckleParametersTagged', {
+C3dNoiseSpeckleParamsDictTagged = typing.TypedDict('C3dNoiseSpeckleParamsDictTagged', {
     "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
 
 
-C3dNoiseSaltPepperParameters = typing.TypedDict('C3dNoiseSaltPepperParameters', {
+C3dNoiseSaltPepperParamsDict = typing.TypedDict('C3dNoiseSaltPepperParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
     "noise_salt_pepper": str,
 })
-C3dNoiseSaltPepperParametersTagged = typing.TypedDict('C3dNoiseSaltPepperParametersTagged', {
+C3dNoiseSaltPepperParamsDictTagged = typing.TypedDict('C3dNoiseSaltPepperParamsDictTagged', {
     "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
 
 
-C3dNoMulticomponentSplitParameters = typing.TypedDict('C3dNoMulticomponentSplitParameters', {
+C3dNoMulticomponentSplitParamsDict = typing.TypedDict('C3dNoMulticomponentSplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
     "no_multicomponent_split": str,
 })
-C3dNoMulticomponentSplitParametersTagged = typing.TypedDict('C3dNoMulticomponentSplitParametersTagged', {
+C3dNoMulticomponentSplitParamsDictTagged = typing.TypedDict('C3dNoMulticomponentSplitParamsDictTagged', {
     "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
 
 
-C3dNormalizeLocalWindowParameters = typing.TypedDict('C3dNormalizeLocalWindowParameters', {
+C3dNormalizeLocalWindowParamsDict = typing.TypedDict('C3dNormalizeLocalWindowParamsDict', {
     "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
     "normalize_local_window": str,
 })
-C3dNormalizeLocalWindowParametersTagged = typing.TypedDict('C3dNormalizeLocalWindowParametersTagged', {
+C3dNormalizeLocalWindowParamsDictTagged = typing.TypedDict('C3dNormalizeLocalWindowParamsDictTagged', {
     "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
 
 
-C3dNormpdfParameters = typing.TypedDict('C3dNormpdfParameters', {
+C3dNormpdfParamsDict = typing.TypedDict('C3dNormpdfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["normpdf"]],
     "normpdf": str,
 })
-C3dNormpdfParametersTagged = typing.TypedDict('C3dNormpdfParametersTagged', {
+C3dNormpdfParamsDictTagged = typing.TypedDict('C3dNormpdfParamsDictTagged', {
     "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
 
 
-C3dNoroundParameters = typing.TypedDict('C3dNoroundParameters', {
+C3dNoroundParamsDict = typing.TypedDict('C3dNoroundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noround"]],
     "noround": str,
 })
-C3dNoroundParametersTagged = typing.TypedDict('C3dNoroundParametersTagged', {
+C3dNoroundParamsDictTagged = typing.TypedDict('C3dNoroundParamsDictTagged', {
     "@type": typing.Literal["noround"],
     "noround": str,
 })
 
 
-C3dNospmParameters = typing.TypedDict('C3dNospmParameters', {
+C3dNospmParamsDict = typing.TypedDict('C3dNospmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["nospm"]],
     "nospm": str,
 })
-C3dNospmParametersTagged = typing.TypedDict('C3dNospmParametersTagged', {
+C3dNospmParamsDictTagged = typing.TypedDict('C3dNospmParamsDictTagged', {
     "@type": typing.Literal["nospm"],
     "nospm": str,
 })
 
 
-C3dOutputParameters = typing.TypedDict('C3dOutputParameters', {
+C3dOutputParamsDict = typing.TypedDict('C3dOutputParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output"]],
     "output": str,
 })
-C3dOutputParametersTagged = typing.TypedDict('C3dOutputParametersTagged', {
+C3dOutputParamsDictTagged = typing.TypedDict('C3dOutputParamsDictTagged', {
     "@type": typing.Literal["output"],
     "output": str,
 })
 
 
-C3dOutputMulticomponentParameters = typing.TypedDict('C3dOutputMulticomponentParameters', {
+C3dOutputMulticomponentParamsDict = typing.TypedDict('C3dOutputMulticomponentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
     "output_multicomponent": str,
 })
-C3dOutputMulticomponentParametersTagged = typing.TypedDict('C3dOutputMulticomponentParametersTagged', {
+C3dOutputMulticomponentParamsDictTagged = typing.TypedDict('C3dOutputMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
 
 
-C3dOutputMultipleMulticomponentParameters = typing.TypedDict('C3dOutputMultipleMulticomponentParameters', {
+C3dOutputMultipleMulticomponentParamsDict = typing.TypedDict('C3dOutputMultipleMulticomponentParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
     "output_multiple_multicomponent": str,
 })
-C3dOutputMultipleMulticomponentParametersTagged = typing.TypedDict('C3dOutputMultipleMulticomponentParametersTagged', {
+C3dOutputMultipleMulticomponentParamsDictTagged = typing.TypedDict('C3dOutputMultipleMulticomponentParamsDictTagged', {
     "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
 
 
-C3dOrientParameters = typing.TypedDict('C3dOrientParameters', {
+C3dOrientParamsDict = typing.TypedDict('C3dOrientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["orient"]],
     "orient": str,
 })
-C3dOrientParametersTagged = typing.TypedDict('C3dOrientParametersTagged', {
+C3dOrientParamsDictTagged = typing.TypedDict('C3dOrientParamsDictTagged', {
     "@type": typing.Literal["orient"],
     "orient": str,
 })
 
 
-C3dOutputMultipleParameters = typing.TypedDict('C3dOutputMultipleParameters', {
+C3dOutputMultipleParamsDict = typing.TypedDict('C3dOutputMultipleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["output_multiple"]],
     "output_multiple": str,
 })
-C3dOutputMultipleParametersTagged = typing.TypedDict('C3dOutputMultipleParametersTagged', {
+C3dOutputMultipleParamsDictTagged = typing.TypedDict('C3dOutputMultipleParamsDictTagged', {
     "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
 
 
-C3dOrient1Parameters = typing.TypedDict('C3dOrient1Parameters', {
+C3dOrient1ParamsDict = typing.TypedDict('C3dOrient1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["orient_1"]],
     "orient": str,
 })
-C3dOrient1ParametersTagged = typing.TypedDict('C3dOrient1ParametersTagged', {
+C3dOrient1ParamsDictTagged = typing.TypedDict('C3dOrient1ParamsDictTagged', {
     "@type": typing.Literal["orient_1"],
     "orient": str,
 })
 
 
-C3dOriginParameters = typing.TypedDict('C3dOriginParameters', {
+C3dOriginParamsDict = typing.TypedDict('C3dOriginParamsDict', {
     "@type": typing.NotRequired[typing.Literal["origin"]],
     "origin": str,
 })
-C3dOriginParametersTagged = typing.TypedDict('C3dOriginParametersTagged', {
+C3dOriginParamsDictTagged = typing.TypedDict('C3dOriginParamsDictTagged', {
     "@type": typing.Literal["origin"],
     "origin": str,
 })
 
 
-C3dOriginVoxelParameters = typing.TypedDict('C3dOriginVoxelParameters', {
+C3dOriginVoxelParamsDict = typing.TypedDict('C3dOriginVoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
     "origin_voxel": str,
 })
-C3dOriginVoxelParametersTagged = typing.TypedDict('C3dOriginVoxelParametersTagged', {
+C3dOriginVoxelParamsDictTagged = typing.TypedDict('C3dOriginVoxelParamsDictTagged', {
     "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
 
 
-C3dOriginVoxelCoordParameters = typing.TypedDict('C3dOriginVoxelCoordParameters', {
+C3dOriginVoxelCoordParamsDict = typing.TypedDict('C3dOriginVoxelCoordParamsDict', {
     "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
     "origin_voxel_coord": str,
 })
-C3dOriginVoxelCoordParametersTagged = typing.TypedDict('C3dOriginVoxelCoordParametersTagged', {
+C3dOriginVoxelCoordParamsDictTagged = typing.TypedDict('C3dOriginVoxelCoordParamsDictTagged', {
     "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
 
 
-C3dOverlapParameters = typing.TypedDict('C3dOverlapParameters', {
+C3dOverlapParamsDict = typing.TypedDict('C3dOverlapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["overlap"]],
     "overlap": str,
 })
-C3dOverlapParametersTagged = typing.TypedDict('C3dOverlapParametersTagged', {
+C3dOverlapParamsDictTagged = typing.TypedDict('C3dOverlapParamsDictTagged', {
     "@type": typing.Literal["overlap"],
     "overlap": str,
 })
 
 
-C3dOverlayLabelImageParameters = typing.TypedDict('C3dOverlayLabelImageParameters', {
+C3dOverlayLabelImageParamsDict = typing.TypedDict('C3dOverlayLabelImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
     "overlay_label_image": str,
 })
-C3dOverlayLabelImageParametersTagged = typing.TypedDict('C3dOverlayLabelImageParametersTagged', {
+C3dOverlayLabelImageParamsDictTagged = typing.TypedDict('C3dOverlayLabelImageParamsDictTagged', {
     "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
 
 
-C3dPadParameters = typing.TypedDict('C3dPadParameters', {
+C3dPadParamsDict = typing.TypedDict('C3dPadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pad"]],
     "pad": str,
 })
-C3dPadParametersTagged = typing.TypedDict('C3dPadParametersTagged', {
+C3dPadParamsDictTagged = typing.TypedDict('C3dPadParamsDictTagged', {
     "@type": typing.Literal["pad"],
     "pad": str,
 })
 
 
-C3dPadToParameters = typing.TypedDict('C3dPadToParameters', {
+C3dPadToParamsDict = typing.TypedDict('C3dPadToParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pad_to"]],
     "pad_to": str,
 })
-C3dPadToParametersTagged = typing.TypedDict('C3dPadToParametersTagged', {
+C3dPadToParamsDictTagged = typing.TypedDict('C3dPadToParamsDictTagged', {
     "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
 
 
-C3dPcaParameters = typing.TypedDict('C3dPcaParameters', {
+C3dPcaParamsDict = typing.TypedDict('C3dPcaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pca"]],
     "pca": str,
 })
-C3dPcaParametersTagged = typing.TypedDict('C3dPcaParametersTagged', {
+C3dPcaParamsDictTagged = typing.TypedDict('C3dPcaParamsDictTagged', {
     "@type": typing.Literal["pca"],
     "pca": str,
 })
 
 
-C3dPercentIntensityModeParameters = typing.TypedDict('C3dPercentIntensityModeParameters', {
+C3dPercentIntensityModeParamsDict = typing.TypedDict('C3dPercentIntensityModeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
     "percent_intensity_mode": str,
 })
-C3dPercentIntensityModeParametersTagged = typing.TypedDict('C3dPercentIntensityModeParametersTagged', {
+C3dPercentIntensityModeParamsDictTagged = typing.TypedDict('C3dPercentIntensityModeParamsDictTagged', {
     "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
 
 
-C3dPixelParameters = typing.TypedDict('C3dPixelParameters', {
+C3dPixelParamsDict = typing.TypedDict('C3dPixelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pixel"]],
     "pixel": str,
 })
-C3dPixelParametersTagged = typing.TypedDict('C3dPixelParametersTagged', {
+C3dPixelParamsDictTagged = typing.TypedDict('C3dPixelParamsDictTagged', {
     "@type": typing.Literal["pixel"],
     "pixel": str,
 })
 
 
-C3dPopParameters = typing.TypedDict('C3dPopParameters', {
+C3dPopParamsDict = typing.TypedDict('C3dPopParamsDict', {
     "@type": typing.NotRequired[typing.Literal["pop"]],
     "pop": str,
 })
-C3dPopParametersTagged = typing.TypedDict('C3dPopParametersTagged', {
+C3dPopParamsDictTagged = typing.TypedDict('C3dPopParamsDictTagged', {
     "@type": typing.Literal["pop"],
     "pop": str,
 })
 
 
-C3dPopasParameters = typing.TypedDict('C3dPopasParameters', {
+C3dPopasParamsDict = typing.TypedDict('C3dPopasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["popas"]],
     "popas": str,
 })
-C3dPopasParametersTagged = typing.TypedDict('C3dPopasParametersTagged', {
+C3dPopasParamsDictTagged = typing.TypedDict('C3dPopasParamsDictTagged', {
     "@type": typing.Literal["popas"],
     "popas": str,
 })
 
 
-C3dProbeParameters = typing.TypedDict('C3dProbeParameters', {
+C3dProbeParamsDict = typing.TypedDict('C3dProbeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["probe"]],
     "probe": str,
 })
-C3dProbeParametersTagged = typing.TypedDict('C3dProbeParametersTagged', {
+C3dProbeParamsDictTagged = typing.TypedDict('C3dProbeParamsDictTagged', {
     "@type": typing.Literal["probe"],
     "probe": str,
 })
 
 
-C3dPushParameters = typing.TypedDict('C3dPushParameters', {
+C3dPushParamsDict = typing.TypedDict('C3dPushParamsDict', {
     "@type": typing.NotRequired[typing.Literal["push"]],
     "push": str,
 })
-C3dPushParametersTagged = typing.TypedDict('C3dPushParametersTagged', {
+C3dPushParamsDictTagged = typing.TypedDict('C3dPushParamsDictTagged', {
     "@type": typing.Literal["push"],
     "push": str,
 })
 
 
-C3dRankParameters = typing.TypedDict('C3dRankParameters', {
+C3dRankParamsDict = typing.TypedDict('C3dRankParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rank"]],
     "rank": str,
 })
-C3dRankParametersTagged = typing.TypedDict('C3dRankParametersTagged', {
+C3dRankParamsDictTagged = typing.TypedDict('C3dRankParamsDictTagged', {
     "@type": typing.Literal["rank"],
     "rank": str,
 })
 
 
-C3dReciprocalParameters = typing.TypedDict('C3dReciprocalParameters', {
+C3dReciprocalParamsDict = typing.TypedDict('C3dReciprocalParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reciprocal"]],
     "reciprocal": str,
 })
-C3dReciprocalParametersTagged = typing.TypedDict('C3dReciprocalParametersTagged', {
+C3dReciprocalParamsDictTagged = typing.TypedDict('C3dReciprocalParamsDictTagged', {
     "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
 
 
-C3dRegionParameters = typing.TypedDict('C3dRegionParameters', {
+C3dRegionParamsDict = typing.TypedDict('C3dRegionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["region"]],
     "region": str,
 })
-C3dRegionParametersTagged = typing.TypedDict('C3dRegionParametersTagged', {
+C3dRegionParamsDictTagged = typing.TypedDict('C3dRegionParamsDictTagged', {
     "@type": typing.Literal["region"],
     "region": str,
 })
 
 
-C3dReorderParameters = typing.TypedDict('C3dReorderParameters', {
+C3dReorderParamsDict = typing.TypedDict('C3dReorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reorder"]],
     "reorder": str,
 })
-C3dReorderParametersTagged = typing.TypedDict('C3dReorderParametersTagged', {
+C3dReorderParamsDictTagged = typing.TypedDict('C3dReorderParamsDictTagged', {
     "@type": typing.Literal["reorder"],
     "reorder": str,
 })
 
 
-C3dRetainLabelsParameters = typing.TypedDict('C3dRetainLabelsParameters', {
+C3dRetainLabelsParamsDict = typing.TypedDict('C3dRetainLabelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["retain_labels"]],
     "retain_labels": str,
 })
-C3dRetainLabelsParametersTagged = typing.TypedDict('C3dRetainLabelsParametersTagged', {
+C3dRetainLabelsParamsDictTagged = typing.TypedDict('C3dRetainLabelsParamsDictTagged', {
     "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
 
 
-C3dRfApplyParameters = typing.TypedDict('C3dRfApplyParameters', {
+C3dRfApplyParamsDict = typing.TypedDict('C3dRfApplyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_apply"]],
     "rf_apply": str,
 })
-C3dRfApplyParametersTagged = typing.TypedDict('C3dRfApplyParametersTagged', {
+C3dRfApplyParamsDictTagged = typing.TypedDict('C3dRfApplyParamsDictTagged', {
     "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
 
 
-C3dRfTrainParameters = typing.TypedDict('C3dRfTrainParameters', {
+C3dRfTrainParamsDict = typing.TypedDict('C3dRfTrainParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_train"]],
     "rf_train": str,
 })
-C3dRfTrainParametersTagged = typing.TypedDict('C3dRfTrainParametersTagged', {
+C3dRfTrainParamsDictTagged = typing.TypedDict('C3dRfTrainParamsDictTagged', {
     "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
 
 
-C3dRfParamPatchParameters = typing.TypedDict('C3dRfParamPatchParameters', {
+C3dRfParamPatchParamsDict = typing.TypedDict('C3dRfParamPatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
     "rf_param_patch": str,
 })
-C3dRfParamPatchParametersTagged = typing.TypedDict('C3dRfParamPatchParametersTagged', {
+C3dRfParamPatchParamsDictTagged = typing.TypedDict('C3dRfParamPatchParamsDictTagged', {
     "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
 
 
-C3dRfParamUsexyzParameters = typing.TypedDict('C3dRfParamUsexyzParameters', {
+C3dRfParamUsexyzParamsDict = typing.TypedDict('C3dRfParamUsexyzParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
     "rf_param_usexyz": str,
 })
-C3dRfParamUsexyzParametersTagged = typing.TypedDict('C3dRfParamUsexyzParametersTagged', {
+C3dRfParamUsexyzParamsDictTagged = typing.TypedDict('C3dRfParamUsexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
 
 
-C3dRfParamNousexyzParameters = typing.TypedDict('C3dRfParamNousexyzParameters', {
+C3dRfParamNousexyzParamsDict = typing.TypedDict('C3dRfParamNousexyzParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
     "rf_param_nousexyz": str,
 })
-C3dRfParamNousexyzParametersTagged = typing.TypedDict('C3dRfParamNousexyzParametersTagged', {
+C3dRfParamNousexyzParamsDictTagged = typing.TypedDict('C3dRfParamNousexyzParamsDictTagged', {
     "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
 
 
-C3dRfParamNtreesParameters = typing.TypedDict('C3dRfParamNtreesParameters', {
+C3dRfParamNtreesParamsDict = typing.TypedDict('C3dRfParamNtreesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
     "rf_param_ntrees": str,
 })
-C3dRfParamNtreesParametersTagged = typing.TypedDict('C3dRfParamNtreesParametersTagged', {
+C3dRfParamNtreesParamsDictTagged = typing.TypedDict('C3dRfParamNtreesParamsDictTagged', {
     "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
 
 
-C3dRfParamTreedepthParameters = typing.TypedDict('C3dRfParamTreedepthParameters', {
+C3dRfParamTreedepthParamsDict = typing.TypedDict('C3dRfParamTreedepthParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
     "rf_param_treedepth": str,
 })
-C3dRfParamTreedepthParametersTagged = typing.TypedDict('C3dRfParamTreedepthParametersTagged', {
+C3dRfParamTreedepthParamsDictTagged = typing.TypedDict('C3dRfParamTreedepthParamsDictTagged', {
     "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
 
 
-C3dSetSformParameters = typing.TypedDict('C3dSetSformParameters', {
+C3dSetSformParamsDict = typing.TypedDict('C3dSetSformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["set_sform"]],
     "set_sform": str,
 })
-C3dSetSformParametersTagged = typing.TypedDict('C3dSetSformParametersTagged', {
+C3dSetSformParamsDictTagged = typing.TypedDict('C3dSetSformParamsDictTagged', {
     "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
 
 
-C3dReplaceParameters = typing.TypedDict('C3dReplaceParameters', {
+C3dReplaceParamsDict = typing.TypedDict('C3dReplaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["replace"]],
     "replace": str,
 })
-C3dReplaceParametersTagged = typing.TypedDict('C3dReplaceParametersTagged', {
+C3dReplaceParamsDictTagged = typing.TypedDict('C3dReplaceParamsDictTagged', {
     "@type": typing.Literal["replace"],
     "replace": str,
 })
 
 
-C3dResampleParameters = typing.TypedDict('C3dResampleParameters', {
+C3dResampleParamsDict = typing.TypedDict('C3dResampleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["resample"]],
     "resample": str,
 })
-C3dResampleParametersTagged = typing.TypedDict('C3dResampleParametersTagged', {
+C3dResampleParamsDictTagged = typing.TypedDict('C3dResampleParamsDictTagged', {
     "@type": typing.Literal["resample"],
     "resample": str,
 })
 
 
-C3dResampleIsoParameters = typing.TypedDict('C3dResampleIsoParameters', {
+C3dResampleIsoParamsDict = typing.TypedDict('C3dResampleIsoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["resample_iso"]],
     "resample_iso": str,
 })
-C3dResampleIsoParametersTagged = typing.TypedDict('C3dResampleIsoParametersTagged', {
+C3dResampleIsoParamsDictTagged = typing.TypedDict('C3dResampleIsoParamsDictTagged', {
     "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
 
 
-C3dResampleMmParameters = typing.TypedDict('C3dResampleMmParameters', {
+C3dResampleMmParamsDict = typing.TypedDict('C3dResampleMmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["resample_mm"]],
     "resample_mm": str,
 })
-C3dResampleMmParametersTagged = typing.TypedDict('C3dResampleMmParametersTagged', {
+C3dResampleMmParamsDictTagged = typing.TypedDict('C3dResampleMmParamsDictTagged', {
     "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
 
 
-C3dResliceItkParameters = typing.TypedDict('C3dResliceItkParameters', {
+C3dResliceItkParamsDict = typing.TypedDict('C3dResliceItkParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
     "reslice_itk": str,
 })
-C3dResliceItkParametersTagged = typing.TypedDict('C3dResliceItkParametersTagged', {
+C3dResliceItkParamsDictTagged = typing.TypedDict('C3dResliceItkParamsDictTagged', {
     "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
 
 
-C3dResliceMatrixParameters = typing.TypedDict('C3dResliceMatrixParameters', {
+C3dResliceMatrixParamsDict = typing.TypedDict('C3dResliceMatrixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
     "reslice_matrix": str,
 })
-C3dResliceMatrixParametersTagged = typing.TypedDict('C3dResliceMatrixParametersTagged', {
+C3dResliceMatrixParamsDictTagged = typing.TypedDict('C3dResliceMatrixParamsDictTagged', {
     "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
 
 
-C3dResliceIdentityParameters = typing.TypedDict('C3dResliceIdentityParameters', {
+C3dResliceIdentityParamsDict = typing.TypedDict('C3dResliceIdentityParamsDict', {
     "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
     "reslice_identity": str,
 })
-C3dResliceIdentityParametersTagged = typing.TypedDict('C3dResliceIdentityParametersTagged', {
+C3dResliceIdentityParamsDictTagged = typing.TypedDict('C3dResliceIdentityParamsDictTagged', {
     "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
 
 
-C3dRgb2hsvParameters = typing.TypedDict('C3dRgb2hsvParameters', {
+C3dRgb2hsvParamsDict = typing.TypedDict('C3dRgb2hsvParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
     "rgb2hsv": str,
 })
-C3dRgb2hsvParametersTagged = typing.TypedDict('C3dRgb2hsvParametersTagged', {
+C3dRgb2hsvParamsDictTagged = typing.TypedDict('C3dRgb2hsvParamsDictTagged', {
     "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
 
 
-C3dRmsParameters = typing.TypedDict('C3dRmsParameters', {
+C3dRmsParamsDict = typing.TypedDict('C3dRmsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["rms"]],
     "rms": str,
 })
-C3dRmsParametersTagged = typing.TypedDict('C3dRmsParametersTagged', {
+C3dRmsParamsDictTagged = typing.TypedDict('C3dRmsParamsDictTagged', {
     "@type": typing.Literal["rms"],
     "rms": str,
 })
 
 
-C3dRoundParameters = typing.TypedDict('C3dRoundParameters', {
+C3dRoundParamsDict = typing.TypedDict('C3dRoundParamsDict', {
     "@type": typing.NotRequired[typing.Literal["round"]],
     "round": str,
 })
-C3dRoundParametersTagged = typing.TypedDict('C3dRoundParametersTagged', {
+C3dRoundParamsDictTagged = typing.TypedDict('C3dRoundParamsDictTagged', {
     "@type": typing.Literal["round"],
     "round": str,
 })
 
 
-C3dScaleParameters = typing.TypedDict('C3dScaleParameters', {
+C3dScaleParamsDict = typing.TypedDict('C3dScaleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["scale"]],
     "scale": str,
 })
-C3dScaleParametersTagged = typing.TypedDict('C3dScaleParametersTagged', {
+C3dScaleParamsDictTagged = typing.TypedDict('C3dScaleParamsDictTagged', {
     "@type": typing.Literal["scale"],
     "scale": str,
 })
 
 
-C3dSetSform1Parameters = typing.TypedDict('C3dSetSform1Parameters', {
+C3dSetSform1ParamsDict = typing.TypedDict('C3dSetSform1ParamsDict', {
     "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
     "set_sform": str,
 })
-C3dSetSform1ParametersTagged = typing.TypedDict('C3dSetSform1ParametersTagged', {
+C3dSetSform1ParamsDictTagged = typing.TypedDict('C3dSetSform1ParamsDictTagged', {
     "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
 
 
-C3dSinParameters = typing.TypedDict('C3dSinParameters', {
+C3dSinParamsDict = typing.TypedDict('C3dSinParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sin"]],
     "sin": str,
 })
-C3dSinParametersTagged = typing.TypedDict('C3dSinParametersTagged', {
+C3dSinParamsDictTagged = typing.TypedDict('C3dSinParamsDictTagged', {
     "@type": typing.Literal["sin"],
     "sin": str,
 })
 
 
-C3dSliceParameters = typing.TypedDict('C3dSliceParameters', {
+C3dSliceParamsDict = typing.TypedDict('C3dSliceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["slice"]],
     "slice": str,
 })
-C3dSliceParametersTagged = typing.TypedDict('C3dSliceParametersTagged', {
+C3dSliceParamsDictTagged = typing.TypedDict('C3dSliceParamsDictTagged', {
     "@type": typing.Literal["slice"],
     "slice": str,
 })
 
 
-C3dSliceAllParameters = typing.TypedDict('C3dSliceAllParameters', {
+C3dSliceAllParamsDict = typing.TypedDict('C3dSliceAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["slice_all"]],
     "slice_all": str,
 })
-C3dSliceAllParametersTagged = typing.TypedDict('C3dSliceAllParametersTagged', {
+C3dSliceAllParamsDictTagged = typing.TypedDict('C3dSliceAllParamsDictTagged', {
     "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
 
 
-C3dSharpenParameters = typing.TypedDict('C3dSharpenParameters', {
+C3dSharpenParamsDict = typing.TypedDict('C3dSharpenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sharpen"]],
     "sharpen": str,
 })
-C3dSharpenParametersTagged = typing.TypedDict('C3dSharpenParametersTagged', {
+C3dSharpenParamsDictTagged = typing.TypedDict('C3dSharpenParamsDictTagged', {
     "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
 
 
-C3dShiftParameters = typing.TypedDict('C3dShiftParameters', {
+C3dShiftParamsDict = typing.TypedDict('C3dShiftParamsDict', {
     "@type": typing.NotRequired[typing.Literal["shift"]],
     "shift": str,
 })
-C3dShiftParametersTagged = typing.TypedDict('C3dShiftParametersTagged', {
+C3dShiftParamsDictTagged = typing.TypedDict('C3dShiftParamsDictTagged', {
     "@type": typing.Literal["shift"],
     "shift": str,
 })
 
 
-C3dSignedDistanceTransformParameters = typing.TypedDict('C3dSignedDistanceTransformParameters', {
+C3dSignedDistanceTransformParamsDict = typing.TypedDict('C3dSignedDistanceTransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
     "signed_distance_transform": str,
 })
-C3dSignedDistanceTransformParametersTagged = typing.TypedDict('C3dSignedDistanceTransformParametersTagged', {
+C3dSignedDistanceTransformParamsDictTagged = typing.TypedDict('C3dSignedDistanceTransformParamsDictTagged', {
     "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
 
 
-C3dSmoothParameters = typing.TypedDict('C3dSmoothParameters', {
+C3dSmoothParamsDict = typing.TypedDict('C3dSmoothParamsDict', {
     "@type": typing.NotRequired[typing.Literal["smooth"]],
     "smooth": str,
 })
-C3dSmoothParametersTagged = typing.TypedDict('C3dSmoothParametersTagged', {
+C3dSmoothParamsDictTagged = typing.TypedDict('C3dSmoothParamsDictTagged', {
     "@type": typing.Literal["smooth"],
     "smooth": str,
 })
 
 
-C3dSmoothFastParameters = typing.TypedDict('C3dSmoothFastParameters', {
+C3dSmoothFastParamsDict = typing.TypedDict('C3dSmoothFastParamsDict', {
     "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
     "smooth_fast": str,
 })
-C3dSmoothFastParametersTagged = typing.TypedDict('C3dSmoothFastParametersTagged', {
+C3dSmoothFastParamsDictTagged = typing.TypedDict('C3dSmoothFastParamsDictTagged', {
     "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
 
 
-C3dSpacingParameters = typing.TypedDict('C3dSpacingParameters', {
+C3dSpacingParamsDict = typing.TypedDict('C3dSpacingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["spacing"]],
     "spacing": str,
 })
-C3dSpacingParametersTagged = typing.TypedDict('C3dSpacingParametersTagged', {
+C3dSpacingParamsDictTagged = typing.TypedDict('C3dSpacingParamsDictTagged', {
     "@type": typing.Literal["spacing"],
     "spacing": str,
 })
 
 
-C3dSplitParameters = typing.TypedDict('C3dSplitParameters', {
+C3dSplitParamsDict = typing.TypedDict('C3dSplitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["split"]],
     "split": str,
 })
-C3dSplitParametersTagged = typing.TypedDict('C3dSplitParametersTagged', {
+C3dSplitParamsDictTagged = typing.TypedDict('C3dSplitParamsDictTagged', {
     "@type": typing.Literal["split"],
     "split": str,
 })
 
 
-C3dSqrtParameters = typing.TypedDict('C3dSqrtParameters', {
+C3dSqrtParamsDict = typing.TypedDict('C3dSqrtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["sqrt"]],
     "sqrt": str,
 })
-C3dSqrtParametersTagged = typing.TypedDict('C3dSqrtParametersTagged', {
+C3dSqrtParamsDictTagged = typing.TypedDict('C3dSqrtParamsDictTagged', {
     "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
 
 
-C3dStapleParameters = typing.TypedDict('C3dStapleParameters', {
+C3dStapleParamsDict = typing.TypedDict('C3dStapleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["staple"]],
     "staple": str,
 })
-C3dStapleParametersTagged = typing.TypedDict('C3dStapleParametersTagged', {
+C3dStapleParamsDictTagged = typing.TypedDict('C3dStapleParamsDictTagged', {
     "@type": typing.Literal["staple"],
     "staple": str,
 })
 
 
-C3dStructureTensorEigenvaluesParameters = typing.TypedDict('C3dStructureTensorEigenvaluesParameters', {
+C3dStructureTensorEigenvaluesParamsDict = typing.TypedDict('C3dStructureTensorEigenvaluesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
     "structure_tensor_eigenvalues": str,
 })
-C3dStructureTensorEigenvaluesParametersTagged = typing.TypedDict('C3dStructureTensorEigenvaluesParametersTagged', {
+C3dStructureTensorEigenvaluesParamsDictTagged = typing.TypedDict('C3dStructureTensorEigenvaluesParamsDictTagged', {
     "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
 
 
-C3dSpmParameters = typing.TypedDict('C3dSpmParameters', {
+C3dSpmParamsDict = typing.TypedDict('C3dSpmParamsDict', {
     "@type": typing.NotRequired[typing.Literal["spm"]],
     "spm": str,
 })
-C3dSpmParametersTagged = typing.TypedDict('C3dSpmParametersTagged', {
+C3dSpmParamsDictTagged = typing.TypedDict('C3dSpmParamsDictTagged', {
     "@type": typing.Literal["spm"],
     "spm": str,
 })
 
 
-C3dSubtractParameters = typing.TypedDict('C3dSubtractParameters', {
+C3dSubtractParamsDict = typing.TypedDict('C3dSubtractParamsDict', {
     "@type": typing.NotRequired[typing.Literal["subtract"]],
     "subtract": str,
 })
-C3dSubtractParametersTagged = typing.TypedDict('C3dSubtractParametersTagged', {
+C3dSubtractParamsDictTagged = typing.TypedDict('C3dSubtractParamsDictTagged', {
     "@type": typing.Literal["subtract"],
     "subtract": str,
 })
 
 
-C3dSupervoxelParameters = typing.TypedDict('C3dSupervoxelParameters', {
+C3dSupervoxelParamsDict = typing.TypedDict('C3dSupervoxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["supervoxel"]],
     "supervoxel": str,
 })
-C3dSupervoxelParametersTagged = typing.TypedDict('C3dSupervoxelParametersTagged', {
+C3dSupervoxelParamsDictTagged = typing.TypedDict('C3dSupervoxelParamsDictTagged', {
     "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
 
 
-C3dStretchParameters = typing.TypedDict('C3dStretchParameters', {
+C3dStretchParamsDict = typing.TypedDict('C3dStretchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["stretch"]],
     "stretch": str,
 })
-C3dStretchParametersTagged = typing.TypedDict('C3dStretchParametersTagged', {
+C3dStretchParamsDictTagged = typing.TypedDict('C3dStretchParamsDictTagged', {
     "@type": typing.Literal["stretch"],
     "stretch": str,
 })
 
 
-C3dSwapdimParameters = typing.TypedDict('C3dSwapdimParameters', {
+C3dSwapdimParamsDict = typing.TypedDict('C3dSwapdimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["swapdim"]],
     "swapdim": str,
 })
-C3dSwapdimParametersTagged = typing.TypedDict('C3dSwapdimParametersTagged', {
+C3dSwapdimParamsDictTagged = typing.TypedDict('C3dSwapdimParamsDictTagged', {
     "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
 
 
-C3dTestImageParameters = typing.TypedDict('C3dTestImageParameters', {
+C3dTestImageParamsDict = typing.TypedDict('C3dTestImageParamsDict', {
     "@type": typing.NotRequired[typing.Literal["test_image"]],
     "test_image": str,
 })
-C3dTestImageParametersTagged = typing.TypedDict('C3dTestImageParametersTagged', {
+C3dTestImageParamsDictTagged = typing.TypedDict('C3dTestImageParamsDictTagged', {
     "@type": typing.Literal["test_image"],
     "test_image": str,
 })
 
 
-C3dTestProbeParameters = typing.TypedDict('C3dTestProbeParameters', {
+C3dTestProbeParamsDict = typing.TypedDict('C3dTestProbeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["test_probe"]],
     "test_probe": str,
 })
-C3dTestProbeParametersTagged = typing.TypedDict('C3dTestProbeParametersTagged', {
+C3dTestProbeParamsDictTagged = typing.TypedDict('C3dTestProbeParamsDictTagged', {
     "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
 
 
-C3dThresholdParameters = typing.TypedDict('C3dThresholdParameters', {
+C3dThresholdParamsDict = typing.TypedDict('C3dThresholdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["threshold"]],
     "threshold": str,
 })
-C3dThresholdParametersTagged = typing.TypedDict('C3dThresholdParametersTagged', {
+C3dThresholdParamsDictTagged = typing.TypedDict('C3dThresholdParamsDictTagged', {
     "@type": typing.Literal["threshold"],
     "threshold": str,
 })
 
 
-C3dTileParameters = typing.TypedDict('C3dTileParameters', {
+C3dTileParamsDict = typing.TypedDict('C3dTileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["tile"]],
     "tile": str,
 })
-C3dTileParametersTagged = typing.TypedDict('C3dTileParametersTagged', {
+C3dTileParamsDictTagged = typing.TypedDict('C3dTileParamsDictTagged', {
     "@type": typing.Literal["tile"],
     "tile": str,
 })
 
 
-C3dTrimParameters = typing.TypedDict('C3dTrimParameters', {
+C3dTrimParamsDict = typing.TypedDict('C3dTrimParamsDict', {
     "@type": typing.NotRequired[typing.Literal["trim"]],
     "trim": str,
 })
-C3dTrimParametersTagged = typing.TypedDict('C3dTrimParametersTagged', {
+C3dTrimParamsDictTagged = typing.TypedDict('C3dTrimParamsDictTagged', {
     "@type": typing.Literal["trim"],
     "trim": str,
 })
 
 
-C3dTrimToSizeParameters = typing.TypedDict('C3dTrimToSizeParameters', {
+C3dTrimToSizeParamsDict = typing.TypedDict('C3dTrimToSizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
     "trim_to_size": str,
 })
-C3dTrimToSizeParametersTagged = typing.TypedDict('C3dTrimToSizeParametersTagged', {
+C3dTrimToSizeParamsDictTagged = typing.TypedDict('C3dTrimToSizeParamsDictTagged', {
     "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
 
 
-C3dTypeParameters = typing.TypedDict('C3dTypeParameters', {
+C3dTypeParamsDict = typing.TypedDict('C3dTypeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["type"]],
     "type": str,
 })
-C3dTypeParametersTagged = typing.TypedDict('C3dTypeParametersTagged', {
+C3dTypeParamsDictTagged = typing.TypedDict('C3dTypeParamsDictTagged', {
     "@type": typing.Literal["type"],
     "type": str,
 })
 
 
-C3dVerboseParameters = typing.TypedDict('C3dVerboseParameters', {
+C3dVerboseParamsDict = typing.TypedDict('C3dVerboseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["verbose"]],
     "verbose": str,
 })
-C3dVerboseParametersTagged = typing.TypedDict('C3dVerboseParametersTagged', {
+C3dVerboseParamsDictTagged = typing.TypedDict('C3dVerboseParamsDictTagged', {
     "@type": typing.Literal["verbose"],
     "verbose": str,
 })
 
 
-C3dNoverboseParameters = typing.TypedDict('C3dNoverboseParameters', {
+C3dNoverboseParamsDict = typing.TypedDict('C3dNoverboseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["noverbose"]],
     "noverbose": str,
 })
-C3dNoverboseParametersTagged = typing.TypedDict('C3dNoverboseParametersTagged', {
+C3dNoverboseParamsDictTagged = typing.TypedDict('C3dNoverboseParamsDictTagged', {
     "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
 
 
-C3dVersionParameters = typing.TypedDict('C3dVersionParameters', {
+C3dVersionParamsDict = typing.TypedDict('C3dVersionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["version"]],
     "version": str,
 })
-C3dVersionParametersTagged = typing.TypedDict('C3dVersionParametersTagged', {
+C3dVersionParamsDictTagged = typing.TypedDict('C3dVersionParamsDictTagged', {
     "@type": typing.Literal["version"],
     "version": str,
 })
 
 
-C3dVoteParameters = typing.TypedDict('C3dVoteParameters', {
+C3dVoteParamsDict = typing.TypedDict('C3dVoteParamsDict', {
     "@type": typing.NotRequired[typing.Literal["vote"]],
     "vote": str,
 })
-C3dVoteParametersTagged = typing.TypedDict('C3dVoteParametersTagged', {
+C3dVoteParamsDictTagged = typing.TypedDict('C3dVoteParamsDictTagged', {
     "@type": typing.Literal["vote"],
     "vote": str,
 })
 
 
-C3dVoteMrfParameters = typing.TypedDict('C3dVoteMrfParameters', {
+C3dVoteMrfParamsDict = typing.TypedDict('C3dVoteMrfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
     "vote_mrf": str,
 })
-C3dVoteMrfParametersTagged = typing.TypedDict('C3dVoteMrfParametersTagged', {
+C3dVoteMrfParamsDictTagged = typing.TypedDict('C3dVoteMrfParamsDictTagged', {
     "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
 
 
-C3dVoteLabelParameters = typing.TypedDict('C3dVoteLabelParameters', {
+C3dVoteLabelParamsDict = typing.TypedDict('C3dVoteLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["vote_label"]],
     "vote_label": str,
 })
-C3dVoteLabelParametersTagged = typing.TypedDict('C3dVoteLabelParametersTagged', {
+C3dVoteLabelParamsDictTagged = typing.TypedDict('C3dVoteLabelParamsDictTagged', {
     "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
 
 
-C3dVoxelSumParameters = typing.TypedDict('C3dVoxelSumParameters', {
+C3dVoxelSumParamsDict = typing.TypedDict('C3dVoxelSumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
     "voxel_sum": str,
 })
-C3dVoxelSumParametersTagged = typing.TypedDict('C3dVoxelSumParametersTagged', {
+C3dVoxelSumParamsDictTagged = typing.TypedDict('C3dVoxelSumParamsDictTagged', {
     "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
 
 
-C3dVoxelIntegralParameters = typing.TypedDict('C3dVoxelIntegralParameters', {
+C3dVoxelIntegralParamsDict = typing.TypedDict('C3dVoxelIntegralParamsDict', {
     "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
     "voxel_integral": str,
 })
-C3dVoxelIntegralParametersTagged = typing.TypedDict('C3dVoxelIntegralParametersTagged', {
+C3dVoxelIntegralParamsDictTagged = typing.TypedDict('C3dVoxelIntegralParamsDictTagged', {
     "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
 
 
-C3dVoxelwiseRegressionParameters = typing.TypedDict('C3dVoxelwiseRegressionParameters', {
+C3dVoxelwiseRegressionParamsDict = typing.TypedDict('C3dVoxelwiseRegressionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
     "voxelwise_regression": str,
 })
-C3dVoxelwiseRegressionParametersTagged = typing.TypedDict('C3dVoxelwiseRegressionParametersTagged', {
+C3dVoxelwiseRegressionParamsDictTagged = typing.TypedDict('C3dVoxelwiseRegressionParamsDictTagged', {
     "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
 
 
-C3dWarpParameters = typing.TypedDict('C3dWarpParameters', {
+C3dWarpParamsDict = typing.TypedDict('C3dWarpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warp"]],
     "warp": str,
 })
-C3dWarpParametersTagged = typing.TypedDict('C3dWarpParametersTagged', {
+C3dWarpParamsDictTagged = typing.TypedDict('C3dWarpParamsDictTagged', {
     "@type": typing.Literal["warp"],
     "warp": str,
 })
 
 
-C3dWarpLabelParameters = typing.TypedDict('C3dWarpLabelParameters', {
+C3dWarpLabelParamsDict = typing.TypedDict('C3dWarpLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["warp_label"]],
     "warp_label": str,
 })
-C3dWarpLabelParametersTagged = typing.TypedDict('C3dWarpLabelParametersTagged', {
+C3dWarpLabelParamsDictTagged = typing.TypedDict('C3dWarpLabelParamsDictTagged', {
     "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
 
 
-C3dWrapParameters = typing.TypedDict('C3dWrapParameters', {
+C3dWrapParamsDict = typing.TypedDict('C3dWrapParamsDict', {
     "@type": typing.NotRequired[typing.Literal["wrap"]],
     "wrap": str,
 })
-C3dWrapParametersTagged = typing.TypedDict('C3dWrapParametersTagged', {
+C3dWrapParamsDictTagged = typing.TypedDict('C3dWrapParamsDictTagged', {
     "@type": typing.Literal["wrap"],
     "wrap": str,
 })
 
 
-C3dWeightedSumParameters = typing.TypedDict('C3dWeightedSumParameters', {
+C3dWeightedSumParamsDict = typing.TypedDict('C3dWeightedSumParamsDict', {
     "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
     "weighted_sum": str,
 })
-C3dWeightedSumParametersTagged = typing.TypedDict('C3dWeightedSumParametersTagged', {
+C3dWeightedSumParamsDictTagged = typing.TypedDict('C3dWeightedSumParamsDictTagged', {
     "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
 
 
-C3dWeightedSumVoxelwiseParameters = typing.TypedDict('C3dWeightedSumVoxelwiseParameters', {
+C3dWeightedSumVoxelwiseParamsDict = typing.TypedDict('C3dWeightedSumVoxelwiseParamsDict', {
     "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
     "weighted_sum_voxelwise": str,
 })
-C3dWeightedSumVoxelwiseParametersTagged = typing.TypedDict('C3dWeightedSumVoxelwiseParametersTagged', {
+C3dWeightedSumVoxelwiseParamsDictTagged = typing.TypedDict('C3dWeightedSumVoxelwiseParamsDictTagged', {
     "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
 
 
-C3dParameters = typing.TypedDict('C3dParameters', {
+C3dParamsDict = typing.TypedDict('C3dParamsDict', {
     "@type": typing.NotRequired[typing.Literal["c3d/c3d"]],
     "input": list[InputPathType],
-    "operations": list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
+    "operations": list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
 })
-C3dParametersTagged = typing.TypedDict('C3dParametersTagged', {
+C3dParamsDictTagged = typing.TypedDict('C3dParamsDictTagged', {
     "@type": typing.Literal["c3d/c3d"],
     "input": list[InputPathType],
-    "operations": list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
+    "operations": list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     "output": str,
 })
 
@@ -2205,9 +2205,9 @@ def c3d_operations_validate_dyn_fn(
     }.get(t)
 
 
-def c3d_accum_params(
+def c3d_accum(
     accum: str,
-) -> C3dAccumParametersTagged:
+) -> C3dAccumParamsDictTagged:
     """
     Build parameters.
     
@@ -2239,7 +2239,7 @@ def c3d_accum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAccumParameters` object.
+    `C3dAccumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2253,7 +2253,7 @@ def c3d_accum_validate(
 
 
 def c3d_accum_cargs(
-    params: C3dAccumParameters,
+    params: C3dAccumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2273,9 +2273,9 @@ def c3d_accum_cargs(
     return cargs
 
 
-def c3d_acos_params(
+def c3d_acos(
     acos: str,
-) -> C3dAcosParametersTagged:
+) -> C3dAcosParamsDictTagged:
     """
     Build parameters.
     
@@ -2296,7 +2296,7 @@ def c3d_acos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAcosParameters` object.
+    `C3dAcosParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2310,7 +2310,7 @@ def c3d_acos_validate(
 
 
 def c3d_acos_cargs(
-    params: C3dAcosParameters,
+    params: C3dAcosParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2330,9 +2330,9 @@ def c3d_acos_cargs(
     return cargs
 
 
-def c3d_add_params(
+def c3d_add(
     add: str,
-) -> C3dAddParametersTagged:
+) -> C3dAddParamsDictTagged:
     """
     Build parameters.
     
@@ -2369,7 +2369,7 @@ def c3d_add_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAddParameters` object.
+    `C3dAddParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2383,7 +2383,7 @@ def c3d_add_validate(
 
 
 def c3d_add_cargs(
-    params: C3dAddParameters,
+    params: C3dAddParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2403,9 +2403,9 @@ def c3d_add_cargs(
     return cargs
 
 
-def c3d_align_landmarks_params(
+def c3d_align_landmarks(
     align_landmarks: str,
-) -> C3dAlignLandmarksParametersTagged:
+) -> C3dAlignLandmarksParamsDictTagged:
     """
     Build parameters.
     
@@ -2445,7 +2445,7 @@ def c3d_align_landmarks_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAlignLandmarksParameters` object.
+    `C3dAlignLandmarksParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2459,7 +2459,7 @@ def c3d_align_landmarks_validate(
 
 
 def c3d_align_landmarks_cargs(
-    params: C3dAlignLandmarksParameters,
+    params: C3dAlignLandmarksParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2479,9 +2479,9 @@ def c3d_align_landmarks_cargs(
     return cargs
 
 
-def c3d_anisotropic_diffusion_params(
+def c3d_anisotropic_diffusion(
     anisotropic_diffusion: str,
-) -> C3dAnisotropicDiffusionParametersTagged:
+) -> C3dAnisotropicDiffusionParamsDictTagged:
     """
     Build parameters.
     
@@ -2518,7 +2518,7 @@ def c3d_anisotropic_diffusion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAnisotropicDiffusionParameters` object.
+    `C3dAnisotropicDiffusionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2532,7 +2532,7 @@ def c3d_anisotropic_diffusion_validate(
 
 
 def c3d_anisotropic_diffusion_cargs(
-    params: C3dAnisotropicDiffusionParameters,
+    params: C3dAnisotropicDiffusionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2552,9 +2552,9 @@ def c3d_anisotropic_diffusion_cargs(
     return cargs
 
 
-def c3d_antialias_params(
+def c3d_antialias(
     antialias: str,
-) -> C3dAntialiasParametersTagged:
+) -> C3dAntialiasParamsDictTagged:
     """
     Build parameters.
     
@@ -2575,7 +2575,7 @@ def c3d_antialias_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAntialiasParameters` object.
+    `C3dAntialiasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2589,7 +2589,7 @@ def c3d_antialias_validate(
 
 
 def c3d_antialias_cargs(
-    params: C3dAntialiasParameters,
+    params: C3dAntialiasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2609,9 +2609,9 @@ def c3d_antialias_cargs(
     return cargs
 
 
-def c3d_set_params(
+def c3d_set(
     set_: str,
-) -> C3dSetParametersTagged:
+) -> C3dSetParamsDictTagged:
     """
     Build parameters.
     
@@ -2645,7 +2645,7 @@ def c3d_set_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSetParameters` object.
+    `C3dSetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2659,7 +2659,7 @@ def c3d_set_validate(
 
 
 def c3d_set_cargs(
-    params: C3dSetParameters,
+    params: C3dSetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2679,9 +2679,9 @@ def c3d_set_cargs(
     return cargs
 
 
-def c3d_asin_params(
+def c3d_asin(
     asin: str,
-) -> C3dAsinParametersTagged:
+) -> C3dAsinParamsDictTagged:
     """
     Build parameters.
     
@@ -2702,7 +2702,7 @@ def c3d_asin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAsinParameters` object.
+    `C3dAsinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2716,7 +2716,7 @@ def c3d_asin_validate(
 
 
 def c3d_asin_cargs(
-    params: C3dAsinParameters,
+    params: C3dAsinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2736,9 +2736,9 @@ def c3d_asin_cargs(
     return cargs
 
 
-def c3d_atan2_params(
+def c3d_atan2(
     atan2: str,
-) -> C3dAtan2ParametersTagged:
+) -> C3dAtan2ParamsDictTagged:
     """
     Build parameters.
     
@@ -2767,7 +2767,7 @@ def c3d_atan2_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dAtan2Parameters` object.
+    `C3dAtan2ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2781,7 +2781,7 @@ def c3d_atan2_validate(
 
 
 def c3d_atan2_cargs(
-    params: C3dAtan2Parameters,
+    params: C3dAtan2ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2801,9 +2801,9 @@ def c3d_atan2_cargs(
     return cargs
 
 
-def c3d_background_params(
+def c3d_background(
     background: str,
-) -> C3dBackgroundParametersTagged:
+) -> C3dBackgroundParamsDictTagged:
     """
     Build parameters.
     
@@ -2830,7 +2830,7 @@ def c3d_background_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dBackgroundParameters` object.
+    `C3dBackgroundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2844,7 +2844,7 @@ def c3d_background_validate(
 
 
 def c3d_background_cargs(
-    params: C3dBackgroundParameters,
+    params: C3dBackgroundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2864,9 +2864,9 @@ def c3d_background_cargs(
     return cargs
 
 
-def c3d_n4_bias_correction_params(
+def c3d_n4_bias_correction(
     n4_bias_correction: str,
-) -> C3dN4BiasCorrectionParametersTagged:
+) -> C3dN4BiasCorrectionParamsDictTagged:
     """
     Build parameters.
     
@@ -2895,7 +2895,7 @@ def c3d_n4_bias_correction_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dN4BiasCorrectionParameters` object.
+    `C3dN4BiasCorrectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2909,7 +2909,7 @@ def c3d_n4_bias_correction_validate(
 
 
 def c3d_n4_bias_correction_cargs(
-    params: C3dN4BiasCorrectionParameters,
+    params: C3dN4BiasCorrectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2929,9 +2929,9 @@ def c3d_n4_bias_correction_cargs(
     return cargs
 
 
-def c3d_binarize_params(
+def c3d_binarize(
     binarize: str,
-) -> C3dBinarizeParametersTagged:
+) -> C3dBinarizeParamsDictTagged:
     """
     Build parameters.
     
@@ -2963,7 +2963,7 @@ def c3d_binarize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dBinarizeParameters` object.
+    `C3dBinarizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -2977,7 +2977,7 @@ def c3d_binarize_validate(
 
 
 def c3d_binarize_cargs(
-    params: C3dBinarizeParameters,
+    params: C3dBinarizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -2997,9 +2997,9 @@ def c3d_binarize_cargs(
     return cargs
 
 
-def c3d_canny_params(
+def c3d_canny(
     canny: str,
-) -> C3dCannyParametersTagged:
+) -> C3dCannyParamsDictTagged:
     """
     Build parameters.
     
@@ -3028,7 +3028,7 @@ def c3d_canny_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCannyParameters` object.
+    `C3dCannyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3042,7 +3042,7 @@ def c3d_canny_validate(
 
 
 def c3d_canny_cargs(
-    params: C3dCannyParameters,
+    params: C3dCannyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3062,9 +3062,9 @@ def c3d_canny_cargs(
     return cargs
 
 
-def c3d_ceil_params(
+def c3d_ceil(
     ceil: str,
-) -> C3dCeilParametersTagged:
+) -> C3dCeilParamsDictTagged:
     """
     Build parameters.
     
@@ -3092,7 +3092,7 @@ def c3d_ceil_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCeilParameters` object.
+    `C3dCeilParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3106,7 +3106,7 @@ def c3d_ceil_validate(
 
 
 def c3d_ceil_cargs(
-    params: C3dCeilParameters,
+    params: C3dCeilParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3126,9 +3126,9 @@ def c3d_ceil_cargs(
     return cargs
 
 
-def c3d_centroid_params(
+def c3d_centroid(
     centroid: str,
-) -> C3dCentroidParametersTagged:
+) -> C3dCentroidParamsDictTagged:
     """
     Build parameters.
     
@@ -3162,7 +3162,7 @@ def c3d_centroid_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCentroidParameters` object.
+    `C3dCentroidParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3176,7 +3176,7 @@ def c3d_centroid_validate(
 
 
 def c3d_centroid_cargs(
-    params: C3dCentroidParameters,
+    params: C3dCentroidParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3196,9 +3196,9 @@ def c3d_centroid_cargs(
     return cargs
 
 
-def c3d_centroid_mark_params(
+def c3d_centroid_mark(
     centroid_mark: str,
-) -> C3dCentroidMarkParametersTagged:
+) -> C3dCentroidMarkParamsDictTagged:
     """
     Build parameters.
     
@@ -3232,7 +3232,7 @@ def c3d_centroid_mark_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCentroidMarkParameters` object.
+    `C3dCentroidMarkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3246,7 +3246,7 @@ def c3d_centroid_mark_validate(
 
 
 def c3d_centroid_mark_cargs(
-    params: C3dCentroidMarkParameters,
+    params: C3dCentroidMarkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3266,9 +3266,9 @@ def c3d_centroid_mark_cargs(
     return cargs
 
 
-def c3d_connected_components_params(
+def c3d_connected_components(
     connected_components: str,
-) -> C3dConnectedComponentsParametersTagged:
+) -> C3dConnectedComponentsParamsDictTagged:
     """
     Build parameters.
     
@@ -3302,7 +3302,7 @@ def c3d_connected_components_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dConnectedComponentsParameters` object.
+    `C3dConnectedComponentsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3316,7 +3316,7 @@ def c3d_connected_components_validate(
 
 
 def c3d_connected_components_cargs(
-    params: C3dConnectedComponentsParameters,
+    params: C3dConnectedComponentsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3336,9 +3336,9 @@ def c3d_connected_components_cargs(
     return cargs
 
 
-def c3d_clear_params(
+def c3d_clear(
     clear_: str,
-) -> C3dClearParametersTagged:
+) -> C3dClearParamsDictTagged:
     """
     Build parameters.
     
@@ -3364,7 +3364,7 @@ def c3d_clear_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dClearParameters` object.
+    `C3dClearParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3378,7 +3378,7 @@ def c3d_clear_validate(
 
 
 def c3d_clear_cargs(
-    params: C3dClearParameters,
+    params: C3dClearParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3398,9 +3398,9 @@ def c3d_clear_cargs(
     return cargs
 
 
-def c3d_clip_params(
+def c3d_clip(
     clip: str,
-) -> C3dClipParametersTagged:
+) -> C3dClipParamsDictTagged:
     """
     Build parameters.
     
@@ -3434,7 +3434,7 @@ def c3d_clip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dClipParameters` object.
+    `C3dClipParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3448,7 +3448,7 @@ def c3d_clip_validate(
 
 
 def c3d_clip_cargs(
-    params: C3dClipParameters,
+    params: C3dClipParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3468,9 +3468,9 @@ def c3d_clip_cargs(
     return cargs
 
 
-def c3d_color_map_params(
+def c3d_color_map(
     color_map: str,
-) -> C3dColorMapParametersTagged:
+) -> C3dColorMapParamsDictTagged:
     """
     Build parameters.
     
@@ -3516,7 +3516,7 @@ def c3d_color_map_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dColorMapParameters` object.
+    `C3dColorMapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3530,7 +3530,7 @@ def c3d_color_map_validate(
 
 
 def c3d_color_map_cargs(
-    params: C3dColorMapParameters,
+    params: C3dColorMapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3550,9 +3550,9 @@ def c3d_color_map_cargs(
     return cargs
 
 
-def c3d_compress_params(
+def c3d_compress(
     compress: str,
-) -> C3dCompressParametersTagged:
+) -> C3dCompressParamsDictTagged:
     """
     Build parameters.
     
@@ -3586,7 +3586,7 @@ def c3d_compress_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCompressParameters` object.
+    `C3dCompressParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3600,7 +3600,7 @@ def c3d_compress_validate(
 
 
 def c3d_compress_cargs(
-    params: C3dCompressParameters,
+    params: C3dCompressParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3620,9 +3620,9 @@ def c3d_compress_cargs(
     return cargs
 
 
-def c3d_no_compress_params(
+def c3d_no_compress(
     no_compress: str,
-) -> C3dNoCompressParametersTagged:
+) -> C3dNoCompressParamsDictTagged:
     """
     Build parameters.
     
@@ -3656,7 +3656,7 @@ def c3d_no_compress_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoCompressParameters` object.
+    `C3dNoCompressParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3670,7 +3670,7 @@ def c3d_no_compress_validate(
 
 
 def c3d_no_compress_cargs(
-    params: C3dNoCompressParameters,
+    params: C3dNoCompressParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3690,9 +3690,9 @@ def c3d_no_compress_cargs(
     return cargs
 
 
-def c3d_conv_params(
+def c3d_conv(
     conv: str,
-) -> C3dConvParametersTagged:
+) -> C3dConvParamsDictTagged:
     """
     Build parameters.
     
@@ -3725,7 +3725,7 @@ def c3d_conv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dConvParameters` object.
+    `C3dConvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3739,7 +3739,7 @@ def c3d_conv_validate(
 
 
 def c3d_conv_cargs(
-    params: C3dConvParameters,
+    params: C3dConvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3759,9 +3759,9 @@ def c3d_conv_cargs(
     return cargs
 
 
-def c3d_coordinate_map_voxel_params(
+def c3d_coordinate_map_voxel(
     coordinate_map_voxel: str,
-) -> C3dCoordinateMapVoxelParametersTagged:
+) -> C3dCoordinateMapVoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -3800,7 +3800,7 @@ def c3d_coordinate_map_voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCoordinateMapVoxelParameters` object.
+    `C3dCoordinateMapVoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3814,7 +3814,7 @@ def c3d_coordinate_map_voxel_validate(
 
 
 def c3d_coordinate_map_voxel_cargs(
-    params: C3dCoordinateMapVoxelParameters,
+    params: C3dCoordinateMapVoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3834,9 +3834,9 @@ def c3d_coordinate_map_voxel_cargs(
     return cargs
 
 
-def c3d_coordinate_map_physical_params(
+def c3d_coordinate_map_physical(
     coordinate_map_physical: str,
-) -> C3dCoordinateMapPhysicalParametersTagged:
+) -> C3dCoordinateMapPhysicalParamsDictTagged:
     """
     Build parameters.
     
@@ -3864,7 +3864,7 @@ def c3d_coordinate_map_physical_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCoordinateMapPhysicalParameters` object.
+    `C3dCoordinateMapPhysicalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3878,7 +3878,7 @@ def c3d_coordinate_map_physical_validate(
 
 
 def c3d_coordinate_map_physical_cargs(
-    params: C3dCoordinateMapPhysicalParameters,
+    params: C3dCoordinateMapPhysicalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3898,9 +3898,9 @@ def c3d_coordinate_map_physical_cargs(
     return cargs
 
 
-def c3d_copy_transform_params(
+def c3d_copy_transform(
     copy_transform: str,
-) -> C3dCopyTransformParametersTagged:
+) -> C3dCopyTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -3932,7 +3932,7 @@ def c3d_copy_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCopyTransformParameters` object.
+    `C3dCopyTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -3946,7 +3946,7 @@ def c3d_copy_transform_validate(
 
 
 def c3d_copy_transform_cargs(
-    params: C3dCopyTransformParameters,
+    params: C3dCopyTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -3966,9 +3966,9 @@ def c3d_copy_transform_cargs(
     return cargs
 
 
-def c3d_cos_params(
+def c3d_cos(
     cos: str,
-) -> C3dCosParametersTagged:
+) -> C3dCosParamsDictTagged:
     """
     Build parameters.
     
@@ -3989,7 +3989,7 @@ def c3d_cos_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCosParameters` object.
+    `C3dCosParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4003,7 +4003,7 @@ def c3d_cos_validate(
 
 
 def c3d_cos_cargs(
-    params: C3dCosParameters,
+    params: C3dCosParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4023,9 +4023,9 @@ def c3d_cos_cargs(
     return cargs
 
 
-def c3d_create_params(
+def c3d_create(
     create: str,
-) -> C3dCreateParametersTagged:
+) -> C3dCreateParamsDictTagged:
     """
     Build parameters.
     
@@ -4058,7 +4058,7 @@ def c3d_create_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dCreateParameters` object.
+    `C3dCreateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4072,7 +4072,7 @@ def c3d_create_validate(
 
 
 def c3d_create_cargs(
-    params: C3dCreateParameters,
+    params: C3dCreateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4092,9 +4092,9 @@ def c3d_create_cargs(
     return cargs
 
 
-def c3d_dicom_series_list_params(
+def c3d_dicom_series_list(
     dicom_series_list: str,
-) -> C3dDicomSeriesListParametersTagged:
+) -> C3dDicomSeriesListParamsDictTagged:
     """
     Build parameters.
     
@@ -4121,7 +4121,7 @@ def c3d_dicom_series_list_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dDicomSeriesListParameters` object.
+    `C3dDicomSeriesListParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4135,7 +4135,7 @@ def c3d_dicom_series_list_validate(
 
 
 def c3d_dicom_series_list_cargs(
-    params: C3dDicomSeriesListParameters,
+    params: C3dDicomSeriesListParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4155,9 +4155,9 @@ def c3d_dicom_series_list_cargs(
     return cargs
 
 
-def c3d_dicom_series_read_params(
+def c3d_dicom_series_read(
     dicom_series_read: str,
-) -> C3dDicomSeriesReadParametersTagged:
+) -> C3dDicomSeriesReadParamsDictTagged:
     """
     Build parameters.
     
@@ -4186,7 +4186,7 @@ def c3d_dicom_series_read_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dDicomSeriesReadParameters` object.
+    `C3dDicomSeriesReadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4200,7 +4200,7 @@ def c3d_dicom_series_read_validate(
 
 
 def c3d_dicom_series_read_cargs(
-    params: C3dDicomSeriesReadParameters,
+    params: C3dDicomSeriesReadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4220,9 +4220,9 @@ def c3d_dicom_series_read_cargs(
     return cargs
 
 
-def c3d_dilate_params(
+def c3d_dilate(
     dilate: str,
-) -> C3dDilateParametersTagged:
+) -> C3dDilateParamsDictTagged:
     """
     Build parameters.
     
@@ -4252,7 +4252,7 @@ def c3d_dilate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dDilateParameters` object.
+    `C3dDilateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4266,7 +4266,7 @@ def c3d_dilate_validate(
 
 
 def c3d_dilate_cargs(
-    params: C3dDilateParameters,
+    params: C3dDilateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4286,9 +4286,9 @@ def c3d_dilate_cargs(
     return cargs
 
 
-def c3d_divide_params(
+def c3d_divide(
     divide: str,
-) -> C3dDivideParametersTagged:
+) -> C3dDivideParamsDictTagged:
     """
     Build parameters.
     
@@ -4322,7 +4322,7 @@ def c3d_divide_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dDivideParameters` object.
+    `C3dDivideParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4336,7 +4336,7 @@ def c3d_divide_validate(
 
 
 def c3d_divide_cargs(
-    params: C3dDivideParameters,
+    params: C3dDivideParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4356,9 +4356,9 @@ def c3d_divide_cargs(
     return cargs
 
 
-def c3d_duplicate_params(
+def c3d_duplicate(
     duplicate: str,
-) -> C3dDuplicateParametersTagged:
+) -> C3dDuplicateParamsDictTagged:
     """
     Build parameters.
     
@@ -4390,7 +4390,7 @@ def c3d_duplicate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dDuplicateParameters` object.
+    `C3dDuplicateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4404,7 +4404,7 @@ def c3d_duplicate_validate(
 
 
 def c3d_duplicate_cargs(
-    params: C3dDuplicateParameters,
+    params: C3dDuplicateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4424,9 +4424,9 @@ def c3d_duplicate_cargs(
     return cargs
 
 
-def c3d_endaccum_params(
+def c3d_endaccum(
     endaccum: str,
-) -> C3dEndaccumParametersTagged:
+) -> C3dEndaccumParamsDictTagged:
     """
     Build parameters.
     
@@ -4458,7 +4458,7 @@ def c3d_endaccum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dEndaccumParameters` object.
+    `C3dEndaccumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4472,7 +4472,7 @@ def c3d_endaccum_validate(
 
 
 def c3d_endaccum_cargs(
-    params: C3dEndaccumParameters,
+    params: C3dEndaccumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4492,9 +4492,9 @@ def c3d_endaccum_cargs(
     return cargs
 
 
-def c3d_endfor_params(
+def c3d_endfor(
     endfor: str,
-) -> C3dEndforParametersTagged:
+) -> C3dEndforParamsDictTagged:
     """
     Build parameters.
     
@@ -4524,7 +4524,7 @@ def c3d_endfor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dEndforParameters` object.
+    `C3dEndforParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4538,7 +4538,7 @@ def c3d_endfor_validate(
 
 
 def c3d_endfor_cargs(
-    params: C3dEndforParameters,
+    params: C3dEndforParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4558,9 +4558,9 @@ def c3d_endfor_cargs(
     return cargs
 
 
-def c3d_erode_params(
+def c3d_erode(
     erode: str,
-) -> C3dErodeParametersTagged:
+) -> C3dErodeParamsDictTagged:
     """
     Build parameters.
     
@@ -4590,7 +4590,7 @@ def c3d_erode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dErodeParameters` object.
+    `C3dErodeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4604,7 +4604,7 @@ def c3d_erode_validate(
 
 
 def c3d_erode_cargs(
-    params: C3dErodeParameters,
+    params: C3dErodeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4624,9 +4624,9 @@ def c3d_erode_cargs(
     return cargs
 
 
-def c3d_erf_params(
+def c3d_erf(
     erf: str,
-) -> C3dErfParametersTagged:
+) -> C3dErfParamsDictTagged:
     """
     Build parameters.
     
@@ -4654,7 +4654,7 @@ def c3d_erf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dErfParameters` object.
+    `C3dErfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4668,7 +4668,7 @@ def c3d_erf_validate(
 
 
 def c3d_erf_cargs(
-    params: C3dErfParameters,
+    params: C3dErfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4688,9 +4688,9 @@ def c3d_erf_cargs(
     return cargs
 
 
-def c3d_exp_params(
+def c3d_exp(
     exp: str,
-) -> C3dExpParametersTagged:
+) -> C3dExpParamsDictTagged:
     """
     Build parameters.
     
@@ -4717,7 +4717,7 @@ def c3d_exp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dExpParameters` object.
+    `C3dExpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4731,7 +4731,7 @@ def c3d_exp_validate(
 
 
 def c3d_exp_cargs(
-    params: C3dExpParameters,
+    params: C3dExpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4751,9 +4751,9 @@ def c3d_exp_cargs(
     return cargs
 
 
-def c3d_export_patches_params(
+def c3d_export_patches(
     export_patches: str,
-) -> C3dExportPatchesParametersTagged:
+) -> C3dExportPatchesParamsDictTagged:
     """
     Build parameters.
     
@@ -4821,7 +4821,7 @@ def c3d_export_patches_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dExportPatchesParameters` object.
+    `C3dExportPatchesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4835,7 +4835,7 @@ def c3d_export_patches_validate(
 
 
 def c3d_export_patches_cargs(
-    params: C3dExportPatchesParameters,
+    params: C3dExportPatchesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4855,9 +4855,9 @@ def c3d_export_patches_cargs(
     return cargs
 
 
-def c3d_export_patches_aug_params(
+def c3d_export_patches_aug(
     export_patches_aug: str,
-) -> C3dExportPatchesAugParametersTagged:
+) -> C3dExportPatchesAugParamsDictTagged:
     """
     Build parameters.
     
@@ -4892,7 +4892,7 @@ def c3d_export_patches_aug_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dExportPatchesAugParameters` object.
+    `C3dExportPatchesAugParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4906,7 +4906,7 @@ def c3d_export_patches_aug_validate(
 
 
 def c3d_export_patches_aug_cargs(
-    params: C3dExportPatchesAugParameters,
+    params: C3dExportPatchesAugParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4926,9 +4926,9 @@ def c3d_export_patches_aug_cargs(
     return cargs
 
 
-def c3d_extrude_seg_params(
+def c3d_extrude_seg(
     extrude_seg: str,
-) -> C3dExtrudeSegParametersTagged:
+) -> C3dExtrudeSegParamsDictTagged:
     """
     Build parameters.
     
@@ -4949,7 +4949,7 @@ def c3d_extrude_seg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dExtrudeSegParameters` object.
+    `C3dExtrudeSegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -4963,7 +4963,7 @@ def c3d_extrude_seg_validate(
 
 
 def c3d_extrude_seg_cargs(
-    params: C3dExtrudeSegParameters,
+    params: C3dExtrudeSegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -4983,9 +4983,9 @@ def c3d_extrude_seg_cargs(
     return cargs
 
 
-def c3d_fill_background_with_noise_params(
+def c3d_fill_background_with_noise(
     fill_background_with_noise: str,
-) -> C3dFillBackgroundWithNoiseParametersTagged:
+) -> C3dFillBackgroundWithNoiseParamsDictTagged:
     """
     Build parameters.
     
@@ -5006,7 +5006,7 @@ def c3d_fill_background_with_noise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dFillBackgroundWithNoiseParameters` object.
+    `C3dFillBackgroundWithNoiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5020,7 +5020,7 @@ def c3d_fill_background_with_noise_validate(
 
 
 def c3d_fill_background_with_noise_cargs(
-    params: C3dFillBackgroundWithNoiseParameters,
+    params: C3dFillBackgroundWithNoiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5040,9 +5040,9 @@ def c3d_fill_background_with_noise_cargs(
     return cargs
 
 
-def c3d_fft_params(
+def c3d_fft(
     fft: str,
-) -> C3dFftParametersTagged:
+) -> C3dFftParamsDictTagged:
     """
     Build parameters.
     
@@ -5072,7 +5072,7 @@ def c3d_fft_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dFftParameters` object.
+    `C3dFftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5086,7 +5086,7 @@ def c3d_fft_validate(
 
 
 def c3d_fft_cargs(
-    params: C3dFftParameters,
+    params: C3dFftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5106,9 +5106,9 @@ def c3d_fft_cargs(
     return cargs
 
 
-def c3d_flip_params(
+def c3d_flip(
     flip: str,
-) -> C3dFlipParametersTagged:
+) -> C3dFlipParamsDictTagged:
     """
     Build parameters.
     
@@ -5137,7 +5137,7 @@ def c3d_flip_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dFlipParameters` object.
+    `C3dFlipParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5151,7 +5151,7 @@ def c3d_flip_validate(
 
 
 def c3d_flip_cargs(
-    params: C3dFlipParameters,
+    params: C3dFlipParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5171,9 +5171,9 @@ def c3d_flip_cargs(
     return cargs
 
 
-def c3d_floor_params(
+def c3d_floor(
     floor: str,
-) -> C3dFloorParametersTagged:
+) -> C3dFloorParamsDictTagged:
     """
     Build parameters.
     
@@ -5205,7 +5205,7 @@ def c3d_floor_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dFloorParameters` object.
+    `C3dFloorParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5219,7 +5219,7 @@ def c3d_floor_validate(
 
 
 def c3d_floor_cargs(
-    params: C3dFloorParameters,
+    params: C3dFloorParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5239,9 +5239,9 @@ def c3d_floor_cargs(
     return cargs
 
 
-def c3d_foreach_params(
+def c3d_foreach(
     foreach: str,
-) -> C3dForeachParametersTagged:
+) -> C3dForeachParamsDictTagged:
     """
     Build parameters.
     
@@ -5271,7 +5271,7 @@ def c3d_foreach_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dForeachParameters` object.
+    `C3dForeachParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5285,7 +5285,7 @@ def c3d_foreach_validate(
 
 
 def c3d_foreach_cargs(
-    params: C3dForeachParameters,
+    params: C3dForeachParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5305,9 +5305,9 @@ def c3d_foreach_cargs(
     return cargs
 
 
-def c3d_foreach_comp_params(
+def c3d_foreach_comp(
     foreach_comp: str,
-) -> C3dForeachCompParametersTagged:
+) -> C3dForeachCompParamsDictTagged:
     """
     Build parameters.
     
@@ -5344,7 +5344,7 @@ def c3d_foreach_comp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dForeachCompParameters` object.
+    `C3dForeachCompParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5358,7 +5358,7 @@ def c3d_foreach_comp_validate(
 
 
 def c3d_foreach_comp_cargs(
-    params: C3dForeachCompParameters,
+    params: C3dForeachCompParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5378,9 +5378,9 @@ def c3d_foreach_comp_cargs(
     return cargs
 
 
-def c3d_glm_params(
+def c3d_glm(
     glm: str,
-) -> C3dGlmParametersTagged:
+) -> C3dGlmParamsDictTagged:
     """
     Build parameters.
     
@@ -5427,7 +5427,7 @@ def c3d_glm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dGlmParameters` object.
+    `C3dGlmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5441,7 +5441,7 @@ def c3d_glm_validate(
 
 
 def c3d_glm_cargs(
-    params: C3dGlmParameters,
+    params: C3dGlmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5461,9 +5461,9 @@ def c3d_glm_cargs(
     return cargs
 
 
-def c3d_gradient_params(
+def c3d_gradient(
     gradient: str,
-) -> C3dGradientParametersTagged:
+) -> C3dGradientParamsDictTagged:
     """
     Build parameters.
     
@@ -5496,7 +5496,7 @@ def c3d_gradient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dGradientParameters` object.
+    `C3dGradientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5510,7 +5510,7 @@ def c3d_gradient_validate(
 
 
 def c3d_gradient_cargs(
-    params: C3dGradientParameters,
+    params: C3dGradientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5530,9 +5530,9 @@ def c3d_gradient_cargs(
     return cargs
 
 
-def c3d__help_params(
+def c3d__help(
     v__help: str,
-) -> C3dHelpParametersTagged:
+) -> C3dHelpParamsDictTagged:
     """
     Build parameters.
     
@@ -5565,7 +5565,7 @@ def c3d__help_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dHelpParameters` object.
+    `C3dHelpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5579,7 +5579,7 @@ def c3d__help_validate(
 
 
 def c3d__help_cargs(
-    params: C3dHelpParameters,
+    params: C3dHelpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5599,9 +5599,9 @@ def c3d__help_cargs(
     return cargs
 
 
-def c3d_holefill_params(
+def c3d_holefill(
     holefill: str,
-) -> C3dHolefillParametersTagged:
+) -> C3dHolefillParamsDictTagged:
     """
     Build parameters.
     
@@ -5638,7 +5638,7 @@ def c3d_holefill_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dHolefillParameters` object.
+    `C3dHolefillParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5652,7 +5652,7 @@ def c3d_holefill_validate(
 
 
 def c3d_holefill_cargs(
-    params: C3dHolefillParameters,
+    params: C3dHolefillParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5672,9 +5672,9 @@ def c3d_holefill_cargs(
     return cargs
 
 
-def c3d_hessian_eigenvalues_params(
+def c3d_hessian_eigenvalues(
     hessian_eigenvalues: str,
-) -> C3dHessianEigenvaluesParametersTagged:
+) -> C3dHessianEigenvaluesParamsDictTagged:
     """
     Build parameters.
     
@@ -5707,7 +5707,7 @@ def c3d_hessian_eigenvalues_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dHessianEigenvaluesParameters` object.
+    `C3dHessianEigenvaluesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5721,7 +5721,7 @@ def c3d_hessian_eigenvalues_validate(
 
 
 def c3d_hessian_eigenvalues_cargs(
-    params: C3dHessianEigenvaluesParameters,
+    params: C3dHessianEigenvaluesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5741,9 +5741,9 @@ def c3d_hessian_eigenvalues_cargs(
     return cargs
 
 
-def c3d_hessian_objectness_params(
+def c3d_hessian_objectness(
     hessian_objectness: str,
-) -> C3dHessianObjectnessParametersTagged:
+) -> C3dHessianObjectnessParamsDictTagged:
     """
     Build parameters.
     
@@ -5784,7 +5784,7 @@ def c3d_hessian_objectness_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dHessianObjectnessParameters` object.
+    `C3dHessianObjectnessParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5798,7 +5798,7 @@ def c3d_hessian_objectness_validate(
 
 
 def c3d_hessian_objectness_cargs(
-    params: C3dHessianObjectnessParameters,
+    params: C3dHessianObjectnessParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5818,9 +5818,9 @@ def c3d_hessian_objectness_cargs(
     return cargs
 
 
-def c3d_histogram_match_params(
+def c3d_histogram_match(
     histogram_match: str,
-) -> C3dHistogramMatchParametersTagged:
+) -> C3dHistogramMatchParamsDictTagged:
     """
     Build parameters.
     
@@ -5841,7 +5841,7 @@ def c3d_histogram_match_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dHistogramMatchParameters` object.
+    `C3dHistogramMatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5855,7 +5855,7 @@ def c3d_histogram_match_validate(
 
 
 def c3d_histogram_match_cargs(
-    params: C3dHistogramMatchParameters,
+    params: C3dHistogramMatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5875,9 +5875,9 @@ def c3d_histogram_match_cargs(
     return cargs
 
 
-def c3d_info_params(
+def c3d_info(
     info: str,
-) -> C3dInfoParametersTagged:
+) -> C3dInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -5910,7 +5910,7 @@ def c3d_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dInfoParameters` object.
+    `C3dInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5924,7 +5924,7 @@ def c3d_info_validate(
 
 
 def c3d_info_cargs(
-    params: C3dInfoParameters,
+    params: C3dInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -5944,9 +5944,9 @@ def c3d_info_cargs(
     return cargs
 
 
-def c3d_info_full_params(
+def c3d_info_full(
     info_full: str,
-) -> C3dInfoFullParametersTagged:
+) -> C3dInfoFullParamsDictTagged:
     """
     Build parameters.
     
@@ -5974,7 +5974,7 @@ def c3d_info_full_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dInfoFullParameters` object.
+    `C3dInfoFullParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -5988,7 +5988,7 @@ def c3d_info_full_validate(
 
 
 def c3d_info_full_cargs(
-    params: C3dInfoFullParameters,
+    params: C3dInfoFullParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6008,9 +6008,9 @@ def c3d_info_full_cargs(
     return cargs
 
 
-def c3d_insert_params(
+def c3d_insert(
     insert: str,
-) -> C3dInsertParametersTagged:
+) -> C3dInsertParamsDictTagged:
     """
     Build parameters.
     
@@ -6039,7 +6039,7 @@ def c3d_insert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dInsertParameters` object.
+    `C3dInsertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6053,7 +6053,7 @@ def c3d_insert_validate(
 
 
 def c3d_insert_cargs(
-    params: C3dInsertParameters,
+    params: C3dInsertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6073,9 +6073,9 @@ def c3d_insert_cargs(
     return cargs
 
 
-def c3d_interpolation_params(
+def c3d_interpolation(
     interpolation: str,
-) -> C3dInterpolationParametersTagged:
+) -> C3dInterpolationParamsDictTagged:
     """
     Build parameters.
     
@@ -6113,7 +6113,7 @@ def c3d_interpolation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dInterpolationParameters` object.
+    `C3dInterpolationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6127,7 +6127,7 @@ def c3d_interpolation_validate(
 
 
 def c3d_interpolation_cargs(
-    params: C3dInterpolationParameters,
+    params: C3dInterpolationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6147,9 +6147,9 @@ def c3d_interpolation_cargs(
     return cargs
 
 
-def c3d_iterations_params(
+def c3d_iterations(
     iterations: str,
-) -> C3dIterationsParametersTagged:
+) -> C3dIterationsParamsDictTagged:
     """
     Build parameters.
     
@@ -6170,7 +6170,7 @@ def c3d_iterations_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dIterationsParameters` object.
+    `C3dIterationsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6184,7 +6184,7 @@ def c3d_iterations_validate(
 
 
 def c3d_iterations_cargs(
-    params: C3dIterationsParameters,
+    params: C3dIterationsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6204,9 +6204,9 @@ def c3d_iterations_cargs(
     return cargs
 
 
-def c3d_label_overlap_params(
+def c3d_label_overlap(
     label_overlap: str,
-) -> C3dLabelOverlapParametersTagged:
+) -> C3dLabelOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -6227,7 +6227,7 @@ def c3d_label_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLabelOverlapParameters` object.
+    `C3dLabelOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6241,7 +6241,7 @@ def c3d_label_overlap_validate(
 
 
 def c3d_label_overlap_cargs(
-    params: C3dLabelOverlapParameters,
+    params: C3dLabelOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6261,9 +6261,9 @@ def c3d_label_overlap_cargs(
     return cargs
 
 
-def c3d_label_statistics_params(
+def c3d_label_statistics(
     label_statistics: str,
-) -> C3dLabelStatisticsParametersTagged:
+) -> C3dLabelStatisticsParamsDictTagged:
     """
     Build parameters.
     
@@ -6303,7 +6303,7 @@ def c3d_label_statistics_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLabelStatisticsParameters` object.
+    `C3dLabelStatisticsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6317,7 +6317,7 @@ def c3d_label_statistics_validate(
 
 
 def c3d_label_statistics_cargs(
-    params: C3dLabelStatisticsParameters,
+    params: C3dLabelStatisticsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6337,9 +6337,9 @@ def c3d_label_statistics_cargs(
     return cargs
 
 
-def c3d_landmarks_to_spheres_params(
+def c3d_landmarks_to_spheres(
     landmarks_to_spheres: str,
-) -> C3dLandmarksToSpheresParametersTagged:
+) -> C3dLandmarksToSpheresParamsDictTagged:
     """
     Build parameters.
     
@@ -6360,7 +6360,7 @@ def c3d_landmarks_to_spheres_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLandmarksToSpheresParameters` object.
+    `C3dLandmarksToSpheresParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6374,7 +6374,7 @@ def c3d_landmarks_to_spheres_validate(
 
 
 def c3d_landmarks_to_spheres_cargs(
-    params: C3dLandmarksToSpheresParameters,
+    params: C3dLandmarksToSpheresParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6394,9 +6394,9 @@ def c3d_landmarks_to_spheres_cargs(
     return cargs
 
 
-def c3d_laplacian_params(
+def c3d_laplacian(
     laplacian: str,
-) -> C3dLaplacianParametersTagged:
+) -> C3dLaplacianParamsDictTagged:
     """
     Build parameters.
     
@@ -6426,7 +6426,7 @@ def c3d_laplacian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLaplacianParameters` object.
+    `C3dLaplacianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6440,7 +6440,7 @@ def c3d_laplacian_validate(
 
 
 def c3d_laplacian_cargs(
-    params: C3dLaplacianParameters,
+    params: C3dLaplacianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6460,9 +6460,9 @@ def c3d_laplacian_cargs(
     return cargs
 
 
-def c3d_levelset_params(
+def c3d_levelset(
     levelset: str,
-) -> C3dLevelsetParametersTagged:
+) -> C3dLevelsetParamsDictTagged:
     """
     Build parameters.
     
@@ -6522,7 +6522,7 @@ def c3d_levelset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLevelsetParameters` object.
+    `C3dLevelsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6536,7 +6536,7 @@ def c3d_levelset_validate(
 
 
 def c3d_levelset_cargs(
-    params: C3dLevelsetParameters,
+    params: C3dLevelsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6556,9 +6556,9 @@ def c3d_levelset_cargs(
     return cargs
 
 
-def c3d_levelset_curvature_params(
+def c3d_levelset_curvature(
     levelset_curvature: str,
-) -> C3dLevelsetCurvatureParametersTagged:
+) -> C3dLevelsetCurvatureParamsDictTagged:
     """
     Build parameters.
     
@@ -6579,7 +6579,7 @@ def c3d_levelset_curvature_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLevelsetCurvatureParameters` object.
+    `C3dLevelsetCurvatureParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6593,7 +6593,7 @@ def c3d_levelset_curvature_validate(
 
 
 def c3d_levelset_curvature_cargs(
-    params: C3dLevelsetCurvatureParameters,
+    params: C3dLevelsetCurvatureParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6613,9 +6613,9 @@ def c3d_levelset_curvature_cargs(
     return cargs
 
 
-def c3d_levelset_advection_params(
+def c3d_levelset_advection(
     levelset_advection: str,
-) -> C3dLevelsetAdvectionParametersTagged:
+) -> C3dLevelsetAdvectionParamsDictTagged:
     """
     Build parameters.
     
@@ -6636,7 +6636,7 @@ def c3d_levelset_advection_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLevelsetAdvectionParameters` object.
+    `C3dLevelsetAdvectionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6650,7 +6650,7 @@ def c3d_levelset_advection_validate(
 
 
 def c3d_levelset_advection_cargs(
-    params: C3dLevelsetAdvectionParameters,
+    params: C3dLevelsetAdvectionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6670,9 +6670,9 @@ def c3d_levelset_advection_cargs(
     return cargs
 
 
-def c3d_log_params(
+def c3d_log(
     log: str,
-) -> C3dLogParametersTagged:
+) -> C3dLogParamsDictTagged:
     """
     Build parameters.
     
@@ -6698,7 +6698,7 @@ def c3d_log_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLogParameters` object.
+    `C3dLogParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6712,7 +6712,7 @@ def c3d_log_validate(
 
 
 def c3d_log_cargs(
-    params: C3dLogParameters,
+    params: C3dLogParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6732,9 +6732,9 @@ def c3d_log_cargs(
     return cargs
 
 
-def c3d_log10_params(
+def c3d_log10(
     log10: str,
-) -> C3dLog10ParametersTagged:
+) -> C3dLog10ParamsDictTagged:
     """
     Build parameters.
     
@@ -6760,7 +6760,7 @@ def c3d_log10_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dLog10Parameters` object.
+    `C3dLog10ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6774,7 +6774,7 @@ def c3d_log10_validate(
 
 
 def c3d_log10_cargs(
-    params: C3dLog10Parameters,
+    params: C3dLog10ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6794,9 +6794,9 @@ def c3d_log10_cargs(
     return cargs
 
 
-def c3d_manual_params(
+def c3d_manual(
     manual: str,
-) -> C3dManualParametersTagged:
+) -> C3dManualParamsDictTagged:
     """
     Build parameters.
     
@@ -6817,7 +6817,7 @@ def c3d_manual_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dManualParameters` object.
+    `C3dManualParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6831,7 +6831,7 @@ def c3d_manual_validate(
 
 
 def c3d_manual_cargs(
-    params: C3dManualParameters,
+    params: C3dManualParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6851,9 +6851,9 @@ def c3d_manual_cargs(
     return cargs
 
 
-def c3d_match_bounding_box_params(
+def c3d_match_bounding_box(
     match_bounding_box: str,
-) -> C3dMatchBoundingBoxParametersTagged:
+) -> C3dMatchBoundingBoxParamsDictTagged:
     """
     Build parameters.
     
@@ -6885,7 +6885,7 @@ def c3d_match_bounding_box_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMatchBoundingBoxParameters` object.
+    `C3dMatchBoundingBoxParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6899,7 +6899,7 @@ def c3d_match_bounding_box_validate(
 
 
 def c3d_match_bounding_box_cargs(
-    params: C3dMatchBoundingBoxParameters,
+    params: C3dMatchBoundingBoxParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6919,9 +6919,9 @@ def c3d_match_bounding_box_cargs(
     return cargs
 
 
-def c3d_maximum_params(
+def c3d_maximum(
     maximum: str,
-) -> C3dMaximumParametersTagged:
+) -> C3dMaximumParamsDictTagged:
     """
     Build parameters.
     
@@ -6951,7 +6951,7 @@ def c3d_maximum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMaximumParameters` object.
+    `C3dMaximumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -6965,7 +6965,7 @@ def c3d_maximum_validate(
 
 
 def c3d_maximum_cargs(
-    params: C3dMaximumParameters,
+    params: C3dMaximumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -6985,9 +6985,9 @@ def c3d_maximum_cargs(
     return cargs
 
 
-def c3d_multicomponent_split_params(
+def c3d_multicomponent_split(
     multicomponent_split: str,
-) -> C3dMulticomponentSplitParametersTagged:
+) -> C3dMulticomponentSplitParamsDictTagged:
     """
     Build parameters.
     
@@ -7025,7 +7025,7 @@ def c3d_multicomponent_split_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMulticomponentSplitParameters` object.
+    `C3dMulticomponentSplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7039,7 +7039,7 @@ def c3d_multicomponent_split_validate(
 
 
 def c3d_multicomponent_split_cargs(
-    params: C3dMulticomponentSplitParameters,
+    params: C3dMulticomponentSplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7059,9 +7059,9 @@ def c3d_multicomponent_split_cargs(
     return cargs
 
 
-def c3d_mean_params(
+def c3d_mean(
     mean: str,
-) -> C3dMeanParametersTagged:
+) -> C3dMeanParamsDictTagged:
     """
     Build parameters.
     
@@ -7089,7 +7089,7 @@ def c3d_mean_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMeanParameters` object.
+    `C3dMeanParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7103,7 +7103,7 @@ def c3d_mean_validate(
 
 
 def c3d_mean_cargs(
-    params: C3dMeanParameters,
+    params: C3dMeanParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7123,9 +7123,9 @@ def c3d_mean_cargs(
     return cargs
 
 
-def c3d_median_filter_params(
+def c3d_median_filter(
     median_filter: str,
-) -> C3dMedianFilterParametersTagged:
+) -> C3dMedianFilterParamsDictTagged:
     """
     Build parameters.
     
@@ -7155,7 +7155,7 @@ def c3d_median_filter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMedianFilterParameters` object.
+    `C3dMedianFilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7169,7 +7169,7 @@ def c3d_median_filter_validate(
 
 
 def c3d_median_filter_cargs(
-    params: C3dMedianFilterParameters,
+    params: C3dMedianFilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7189,9 +7189,9 @@ def c3d_median_filter_cargs(
     return cargs
 
 
-def c3d_merge_params(
+def c3d_merge(
     merge: str,
-) -> C3dMergeParametersTagged:
+) -> C3dMergeParamsDictTagged:
     """
     Build parameters.
     
@@ -7218,7 +7218,7 @@ def c3d_merge_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMergeParameters` object.
+    `C3dMergeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7232,7 +7232,7 @@ def c3d_merge_validate(
 
 
 def c3d_merge_cargs(
-    params: C3dMergeParameters,
+    params: C3dMergeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7252,9 +7252,9 @@ def c3d_merge_cargs(
     return cargs
 
 
-def c3d_mean_filter_params(
+def c3d_mean_filter(
     mean_filter: str,
-) -> C3dMeanFilterParametersTagged:
+) -> C3dMeanFilterParamsDictTagged:
     """
     Build parameters.
     
@@ -7284,7 +7284,7 @@ def c3d_mean_filter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMeanFilterParameters` object.
+    `C3dMeanFilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7298,7 +7298,7 @@ def c3d_mean_filter_validate(
 
 
 def c3d_mean_filter_cargs(
-    params: C3dMeanFilterParameters,
+    params: C3dMeanFilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7318,9 +7318,9 @@ def c3d_mean_filter_cargs(
     return cargs
 
 
-def c3d_mutual_info_params(
+def c3d_mutual_info(
     mutual_info: str,
-) -> C3dMutualInfoParametersTagged:
+) -> C3dMutualInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -7350,7 +7350,7 @@ def c3d_mutual_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMutualInfoParameters` object.
+    `C3dMutualInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7364,7 +7364,7 @@ def c3d_mutual_info_validate(
 
 
 def c3d_mutual_info_cargs(
-    params: C3dMutualInfoParameters,
+    params: C3dMutualInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7384,9 +7384,9 @@ def c3d_mutual_info_cargs(
     return cargs
 
 
-def c3d_minimum_params(
+def c3d_minimum(
     minimum: str,
-) -> C3dMinimumParametersTagged:
+) -> C3dMinimumParamsDictTagged:
     """
     Build parameters.
     
@@ -7416,7 +7416,7 @@ def c3d_minimum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMinimumParameters` object.
+    `C3dMinimumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7430,7 +7430,7 @@ def c3d_minimum_validate(
 
 
 def c3d_minimum_cargs(
-    params: C3dMinimumParameters,
+    params: C3dMinimumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7450,9 +7450,9 @@ def c3d_minimum_cargs(
     return cargs
 
 
-def c3d_mixture_model_params(
+def c3d_mixture_model(
     mixture_model: str,
-) -> C3dMixtureModelParametersTagged:
+) -> C3dMixtureModelParamsDictTagged:
     """
     Build parameters.
     
@@ -7473,7 +7473,7 @@ def c3d_mixture_model_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMixtureModelParameters` object.
+    `C3dMixtureModelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7487,7 +7487,7 @@ def c3d_mixture_model_validate(
 
 
 def c3d_mixture_model_cargs(
-    params: C3dMixtureModelParameters,
+    params: C3dMixtureModelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7507,9 +7507,9 @@ def c3d_mixture_model_cargs(
     return cargs
 
 
-def c3d_moments_params(
+def c3d_moments(
     moments: str,
-) -> C3dMomentsParametersTagged:
+) -> C3dMomentsParamsDictTagged:
     """
     Build parameters.
     
@@ -7530,7 +7530,7 @@ def c3d_moments_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMomentsParameters` object.
+    `C3dMomentsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7544,7 +7544,7 @@ def c3d_moments_validate(
 
 
 def c3d_moments_cargs(
-    params: C3dMomentsParameters,
+    params: C3dMomentsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7564,9 +7564,9 @@ def c3d_moments_cargs(
     return cargs
 
 
-def c3d_mattes_mutual_info_params(
+def c3d_mattes_mutual_info(
     mattes_mutual_info: str,
-) -> C3dMattesMutualInfoParametersTagged:
+) -> C3dMattesMutualInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -7587,7 +7587,7 @@ def c3d_mattes_mutual_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMattesMutualInfoParameters` object.
+    `C3dMattesMutualInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7601,7 +7601,7 @@ def c3d_mattes_mutual_info_validate(
 
 
 def c3d_mattes_mutual_info_cargs(
-    params: C3dMattesMutualInfoParameters,
+    params: C3dMattesMutualInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7621,9 +7621,9 @@ def c3d_mattes_mutual_info_cargs(
     return cargs
 
 
-def c3d_mean_square_params(
+def c3d_mean_square(
     mean_square: str,
-) -> C3dMeanSquareParametersTagged:
+) -> C3dMeanSquareParamsDictTagged:
     """
     Build parameters.
     
@@ -7671,7 +7671,7 @@ def c3d_mean_square_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMeanSquareParameters` object.
+    `C3dMeanSquareParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7685,7 +7685,7 @@ def c3d_mean_square_validate(
 
 
 def c3d_mean_square_cargs(
-    params: C3dMeanSquareParameters,
+    params: C3dMeanSquareParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7705,9 +7705,9 @@ def c3d_mean_square_cargs(
     return cargs
 
 
-def c3d_multiply_params(
+def c3d_multiply(
     multiply: str,
-) -> C3dMultiplyParametersTagged:
+) -> C3dMultiplyParamsDictTagged:
     """
     Build parameters.
     
@@ -7745,7 +7745,7 @@ def c3d_multiply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dMultiplyParameters` object.
+    `C3dMultiplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7759,7 +7759,7 @@ def c3d_multiply_validate(
 
 
 def c3d_multiply_cargs(
-    params: C3dMultiplyParameters,
+    params: C3dMultiplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7779,9 +7779,9 @@ def c3d_multiply_cargs(
     return cargs
 
 
-def c3d_normalized_cross_correlation_params(
+def c3d_normalized_cross_correlation(
     normalized_cross_correlation: str,
-) -> C3dNormalizedCrossCorrelationParametersTagged:
+) -> C3dNormalizedCrossCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -7811,7 +7811,7 @@ def c3d_normalized_cross_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNormalizedCrossCorrelationParameters` object.
+    `C3dNormalizedCrossCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7825,7 +7825,7 @@ def c3d_normalized_cross_correlation_validate(
 
 
 def c3d_normalized_cross_correlation_cargs(
-    params: C3dNormalizedCrossCorrelationParameters,
+    params: C3dNormalizedCrossCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7845,9 +7845,9 @@ def c3d_normalized_cross_correlation_cargs(
     return cargs
 
 
-def c3d_normalized_correlation_params(
+def c3d_normalized_correlation(
     normalized_correlation: str,
-) -> C3dNormalizedCorrelationParametersTagged:
+) -> C3dNormalizedCorrelationParamsDictTagged:
     """
     Build parameters.
     
@@ -7874,7 +7874,7 @@ def c3d_normalized_correlation_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNormalizedCorrelationParameters` object.
+    `C3dNormalizedCorrelationParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7888,7 +7888,7 @@ def c3d_normalized_correlation_validate(
 
 
 def c3d_normalized_correlation_cargs(
-    params: C3dNormalizedCorrelationParameters,
+    params: C3dNormalizedCorrelationParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7908,9 +7908,9 @@ def c3d_normalized_correlation_cargs(
     return cargs
 
 
-def c3d_normalized_mutual_info_params(
+def c3d_normalized_mutual_info(
     normalized_mutual_info: str,
-) -> C3dNormalizedMutualInfoParametersTagged:
+) -> C3dNormalizedMutualInfoParamsDictTagged:
     """
     Build parameters.
     
@@ -7937,7 +7937,7 @@ def c3d_normalized_mutual_info_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNormalizedMutualInfoParameters` object.
+    `C3dNormalizedMutualInfoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -7951,7 +7951,7 @@ def c3d_normalized_mutual_info_validate(
 
 
 def c3d_normalized_mutual_info_cargs(
-    params: C3dNormalizedMutualInfoParameters,
+    params: C3dNormalizedMutualInfoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -7971,9 +7971,9 @@ def c3d_normalized_mutual_info_cargs(
     return cargs
 
 
-def c3d_noise_gaussian_params(
+def c3d_noise_gaussian(
     noise_gaussian: str,
-) -> C3dNoiseGaussianParametersTagged:
+) -> C3dNoiseGaussianParamsDictTagged:
     """
     Build parameters.
     
@@ -8002,7 +8002,7 @@ def c3d_noise_gaussian_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoiseGaussianParameters` object.
+    `C3dNoiseGaussianParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8016,7 +8016,7 @@ def c3d_noise_gaussian_validate(
 
 
 def c3d_noise_gaussian_cargs(
-    params: C3dNoiseGaussianParameters,
+    params: C3dNoiseGaussianParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8036,9 +8036,9 @@ def c3d_noise_gaussian_cargs(
     return cargs
 
 
-def c3d_noise_poisson_params(
+def c3d_noise_poisson(
     noise_poisson: str,
-) -> C3dNoisePoissonParametersTagged:
+) -> C3dNoisePoissonParamsDictTagged:
     """
     Build parameters.
     
@@ -8065,7 +8065,7 @@ def c3d_noise_poisson_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoisePoissonParameters` object.
+    `C3dNoisePoissonParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8079,7 +8079,7 @@ def c3d_noise_poisson_validate(
 
 
 def c3d_noise_poisson_cargs(
-    params: C3dNoisePoissonParameters,
+    params: C3dNoisePoissonParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8099,9 +8099,9 @@ def c3d_noise_poisson_cargs(
     return cargs
 
 
-def c3d_noise_speckle_params(
+def c3d_noise_speckle(
     noise_speckle: str,
-) -> C3dNoiseSpeckleParametersTagged:
+) -> C3dNoiseSpeckleParamsDictTagged:
     """
     Build parameters.
     
@@ -8129,7 +8129,7 @@ def c3d_noise_speckle_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoiseSpeckleParameters` object.
+    `C3dNoiseSpeckleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8143,7 +8143,7 @@ def c3d_noise_speckle_validate(
 
 
 def c3d_noise_speckle_cargs(
-    params: C3dNoiseSpeckleParameters,
+    params: C3dNoiseSpeckleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8163,9 +8163,9 @@ def c3d_noise_speckle_cargs(
     return cargs
 
 
-def c3d_noise_salt_pepper_params(
+def c3d_noise_salt_pepper(
     noise_salt_pepper: str,
-) -> C3dNoiseSaltPepperParametersTagged:
+) -> C3dNoiseSaltPepperParamsDictTagged:
     """
     Build parameters.
     
@@ -8193,7 +8193,7 @@ def c3d_noise_salt_pepper_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoiseSaltPepperParameters` object.
+    `C3dNoiseSaltPepperParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8207,7 +8207,7 @@ def c3d_noise_salt_pepper_validate(
 
 
 def c3d_noise_salt_pepper_cargs(
-    params: C3dNoiseSaltPepperParameters,
+    params: C3dNoiseSaltPepperParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8227,9 +8227,9 @@ def c3d_noise_salt_pepper_cargs(
     return cargs
 
 
-def c3d_no_multicomponent_split_params(
+def c3d_no_multicomponent_split(
     no_multicomponent_split: str,
-) -> C3dNoMulticomponentSplitParametersTagged:
+) -> C3dNoMulticomponentSplitParamsDictTagged:
     """
     Build parameters.
     
@@ -8255,7 +8255,7 @@ def c3d_no_multicomponent_split_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoMulticomponentSplitParameters` object.
+    `C3dNoMulticomponentSplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8269,7 +8269,7 @@ def c3d_no_multicomponent_split_validate(
 
 
 def c3d_no_multicomponent_split_cargs(
-    params: C3dNoMulticomponentSplitParameters,
+    params: C3dNoMulticomponentSplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8289,9 +8289,9 @@ def c3d_no_multicomponent_split_cargs(
     return cargs
 
 
-def c3d_normalize_local_window_params(
+def c3d_normalize_local_window(
     normalize_local_window: str,
-) -> C3dNormalizeLocalWindowParametersTagged:
+) -> C3dNormalizeLocalWindowParamsDictTagged:
     """
     Build parameters.
     
@@ -8323,7 +8323,7 @@ def c3d_normalize_local_window_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNormalizeLocalWindowParameters` object.
+    `C3dNormalizeLocalWindowParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8337,7 +8337,7 @@ def c3d_normalize_local_window_validate(
 
 
 def c3d_normalize_local_window_cargs(
-    params: C3dNormalizeLocalWindowParameters,
+    params: C3dNormalizeLocalWindowParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8357,9 +8357,9 @@ def c3d_normalize_local_window_cargs(
     return cargs
 
 
-def c3d_normpdf_params(
+def c3d_normpdf(
     normpdf: str,
-) -> C3dNormpdfParametersTagged:
+) -> C3dNormpdfParamsDictTagged:
     """
     Build parameters.
     
@@ -8380,7 +8380,7 @@ def c3d_normpdf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNormpdfParameters` object.
+    `C3dNormpdfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8394,7 +8394,7 @@ def c3d_normpdf_validate(
 
 
 def c3d_normpdf_cargs(
-    params: C3dNormpdfParameters,
+    params: C3dNormpdfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8414,9 +8414,9 @@ def c3d_normpdf_cargs(
     return cargs
 
 
-def c3d_noround_params(
+def c3d_noround(
     noround: str,
-) -> C3dNoroundParametersTagged:
+) -> C3dNoroundParamsDictTagged:
     """
     Build parameters.
     
@@ -8447,7 +8447,7 @@ def c3d_noround_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoroundParameters` object.
+    `C3dNoroundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8461,7 +8461,7 @@ def c3d_noround_validate(
 
 
 def c3d_noround_cargs(
-    params: C3dNoroundParameters,
+    params: C3dNoroundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8481,9 +8481,9 @@ def c3d_noround_cargs(
     return cargs
 
 
-def c3d_nospm_params(
+def c3d_nospm(
     nospm: str,
-) -> C3dNospmParametersTagged:
+) -> C3dNospmParamsDictTagged:
     """
     Build parameters.
     
@@ -8515,7 +8515,7 @@ def c3d_nospm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNospmParameters` object.
+    `C3dNospmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8529,7 +8529,7 @@ def c3d_nospm_validate(
 
 
 def c3d_nospm_cargs(
-    params: C3dNospmParameters,
+    params: C3dNospmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8551,7 +8551,7 @@ def c3d_nospm_cargs(
 
 class C3dOutputOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `C3dOutputParameters(...)`.
+    Output object returned when calling `C3dOutputParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -8559,9 +8559,9 @@ class C3dOutputOutputs(typing.NamedTuple):
     """The output"""
 
 
-def c3d_output_params(
+def c3d_output(
     output: str,
-) -> C3dOutputParametersTagged:
+) -> C3dOutputParamsDictTagged:
     """
     Build parameters.
     
@@ -8597,7 +8597,7 @@ def c3d_output_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOutputParameters` object.
+    `C3dOutputParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8611,7 +8611,7 @@ def c3d_output_validate(
 
 
 def c3d_output_cargs(
-    params: C3dOutputParameters,
+    params: C3dOutputParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8632,7 +8632,7 @@ def c3d_output_cargs(
 
 
 def c3d_output_outputs(
-    params: C3dOutputParameters,
+    params: C3dOutputParamsDict,
     execution: Execution,
 ) -> C3dOutputOutputs:
     """
@@ -8651,9 +8651,9 @@ def c3d_output_outputs(
     return ret
 
 
-def c3d_output_multicomponent_params(
+def c3d_output_multicomponent(
     output_multicomponent: str,
-) -> C3dOutputMulticomponentParametersTagged:
+) -> C3dOutputMulticomponentParamsDictTagged:
     """
     Build parameters.
     
@@ -8691,7 +8691,7 @@ def c3d_output_multicomponent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOutputMulticomponentParameters` object.
+    `C3dOutputMulticomponentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8705,7 +8705,7 @@ def c3d_output_multicomponent_validate(
 
 
 def c3d_output_multicomponent_cargs(
-    params: C3dOutputMulticomponentParameters,
+    params: C3dOutputMulticomponentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8725,9 +8725,9 @@ def c3d_output_multicomponent_cargs(
     return cargs
 
 
-def c3d_output_multiple_multicomponent_params(
+def c3d_output_multiple_multicomponent(
     output_multiple_multicomponent: str,
-) -> C3dOutputMultipleMulticomponentParametersTagged:
+) -> C3dOutputMultipleMulticomponentParamsDictTagged:
     """
     Build parameters.
     
@@ -8776,7 +8776,7 @@ def c3d_output_multiple_multicomponent_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOutputMultipleMulticomponentParameters` object.
+    `C3dOutputMultipleMulticomponentParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8790,7 +8790,7 @@ def c3d_output_multiple_multicomponent_validate(
 
 
 def c3d_output_multiple_multicomponent_cargs(
-    params: C3dOutputMultipleMulticomponentParameters,
+    params: C3dOutputMultipleMulticomponentParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8810,9 +8810,9 @@ def c3d_output_multiple_multicomponent_cargs(
     return cargs
 
 
-def c3d_orient_params(
+def c3d_orient(
     orient: str,
-) -> C3dOrientParametersTagged:
+) -> C3dOrientParamsDictTagged:
     """
     Build parameters.
     
@@ -8857,7 +8857,7 @@ def c3d_orient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOrientParameters` object.
+    `C3dOrientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8871,7 +8871,7 @@ def c3d_orient_validate(
 
 
 def c3d_orient_cargs(
-    params: C3dOrientParameters,
+    params: C3dOrientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8891,9 +8891,9 @@ def c3d_orient_cargs(
     return cargs
 
 
-def c3d_output_multiple_params(
+def c3d_output_multiple(
     output_multiple: str,
-) -> C3dOutputMultipleParametersTagged:
+) -> C3dOutputMultipleParamsDictTagged:
     """
     Build parameters.
     
@@ -8938,7 +8938,7 @@ def c3d_output_multiple_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOutputMultipleParameters` object.
+    `C3dOutputMultipleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -8952,7 +8952,7 @@ def c3d_output_multiple_validate(
 
 
 def c3d_output_multiple_cargs(
-    params: C3dOutputMultipleParameters,
+    params: C3dOutputMultipleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -8972,9 +8972,9 @@ def c3d_output_multiple_cargs(
     return cargs
 
 
-def c3d_orient_1_params(
+def c3d_orient_1(
     orient: str,
-) -> C3dOrient1ParametersTagged:
+) -> C3dOrient1ParamsDictTagged:
     """
     Build parameters.
     
@@ -9019,7 +9019,7 @@ def c3d_orient_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOrient1Parameters` object.
+    `C3dOrient1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9033,7 +9033,7 @@ def c3d_orient_1_validate(
 
 
 def c3d_orient_1_cargs(
-    params: C3dOrient1Parameters,
+    params: C3dOrient1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9053,9 +9053,9 @@ def c3d_orient_1_cargs(
     return cargs
 
 
-def c3d_origin_params(
+def c3d_origin(
     origin: str,
-) -> C3dOriginParametersTagged:
+) -> C3dOriginParamsDictTagged:
     """
     Build parameters.
     
@@ -9084,7 +9084,7 @@ def c3d_origin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOriginParameters` object.
+    `C3dOriginParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9098,7 +9098,7 @@ def c3d_origin_validate(
 
 
 def c3d_origin_cargs(
-    params: C3dOriginParameters,
+    params: C3dOriginParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9118,9 +9118,9 @@ def c3d_origin_cargs(
     return cargs
 
 
-def c3d_origin_voxel_params(
+def c3d_origin_voxel(
     origin_voxel: str,
-) -> C3dOriginVoxelParametersTagged:
+) -> C3dOriginVoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -9151,7 +9151,7 @@ def c3d_origin_voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOriginVoxelParameters` object.
+    `C3dOriginVoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9165,7 +9165,7 @@ def c3d_origin_voxel_validate(
 
 
 def c3d_origin_voxel_cargs(
-    params: C3dOriginVoxelParameters,
+    params: C3dOriginVoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9185,9 +9185,9 @@ def c3d_origin_voxel_cargs(
     return cargs
 
 
-def c3d_origin_voxel_coord_params(
+def c3d_origin_voxel_coord(
     origin_voxel_coord: str,
-) -> C3dOriginVoxelCoordParametersTagged:
+) -> C3dOriginVoxelCoordParamsDictTagged:
     """
     Build parameters.
     
@@ -9218,7 +9218,7 @@ def c3d_origin_voxel_coord_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOriginVoxelCoordParameters` object.
+    `C3dOriginVoxelCoordParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9232,7 +9232,7 @@ def c3d_origin_voxel_coord_validate(
 
 
 def c3d_origin_voxel_coord_cargs(
-    params: C3dOriginVoxelCoordParameters,
+    params: C3dOriginVoxelCoordParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9252,9 +9252,9 @@ def c3d_origin_voxel_coord_cargs(
     return cargs
 
 
-def c3d_overlap_params(
+def c3d_overlap(
     overlap: str,
-) -> C3dOverlapParametersTagged:
+) -> C3dOverlapParamsDictTagged:
     """
     Build parameters.
     
@@ -9305,7 +9305,7 @@ def c3d_overlap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOverlapParameters` object.
+    `C3dOverlapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9319,7 +9319,7 @@ def c3d_overlap_validate(
 
 
 def c3d_overlap_cargs(
-    params: C3dOverlapParameters,
+    params: C3dOverlapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9339,9 +9339,9 @@ def c3d_overlap_cargs(
     return cargs
 
 
-def c3d_overlay_label_image_params(
+def c3d_overlay_label_image(
     overlay_label_image: str,
-) -> C3dOverlayLabelImageParametersTagged:
+) -> C3dOverlayLabelImageParamsDictTagged:
     """
     Build parameters.
     
@@ -9402,7 +9402,7 @@ def c3d_overlay_label_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dOverlayLabelImageParameters` object.
+    `C3dOverlayLabelImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9416,7 +9416,7 @@ def c3d_overlay_label_image_validate(
 
 
 def c3d_overlay_label_image_cargs(
-    params: C3dOverlayLabelImageParameters,
+    params: C3dOverlayLabelImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9436,9 +9436,9 @@ def c3d_overlay_label_image_cargs(
     return cargs
 
 
-def c3d_pad_params(
+def c3d_pad(
     pad: str,
-) -> C3dPadParametersTagged:
+) -> C3dPadParamsDictTagged:
     """
     Build parameters.
     
@@ -9486,7 +9486,7 @@ def c3d_pad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPadParameters` object.
+    `C3dPadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9500,7 +9500,7 @@ def c3d_pad_validate(
 
 
 def c3d_pad_cargs(
-    params: C3dPadParameters,
+    params: C3dPadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9520,9 +9520,9 @@ def c3d_pad_cargs(
     return cargs
 
 
-def c3d_pad_to_params(
+def c3d_pad_to(
     pad_to: str,
-) -> C3dPadToParametersTagged:
+) -> C3dPadToParamsDictTagged:
     """
     Build parameters.
     
@@ -9543,7 +9543,7 @@ def c3d_pad_to_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPadToParameters` object.
+    `C3dPadToParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9557,7 +9557,7 @@ def c3d_pad_to_validate(
 
 
 def c3d_pad_to_cargs(
-    params: C3dPadToParameters,
+    params: C3dPadToParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9577,9 +9577,9 @@ def c3d_pad_to_cargs(
     return cargs
 
 
-def c3d_pca_params(
+def c3d_pca(
     pca: str,
-) -> C3dPcaParametersTagged:
+) -> C3dPcaParamsDictTagged:
     """
     Build parameters.
     
@@ -9614,7 +9614,7 @@ def c3d_pca_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPcaParameters` object.
+    `C3dPcaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9628,7 +9628,7 @@ def c3d_pca_validate(
 
 
 def c3d_pca_cargs(
-    params: C3dPcaParameters,
+    params: C3dPcaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9648,9 +9648,9 @@ def c3d_pca_cargs(
     return cargs
 
 
-def c3d_percent_intensity_mode_params(
+def c3d_percent_intensity_mode(
     percent_intensity_mode: str,
-) -> C3dPercentIntensityModeParametersTagged:
+) -> C3dPercentIntensityModeParamsDictTagged:
     """
     Build parameters.
     
@@ -9697,7 +9697,7 @@ def c3d_percent_intensity_mode_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPercentIntensityModeParameters` object.
+    `C3dPercentIntensityModeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9711,7 +9711,7 @@ def c3d_percent_intensity_mode_validate(
 
 
 def c3d_percent_intensity_mode_cargs(
-    params: C3dPercentIntensityModeParameters,
+    params: C3dPercentIntensityModeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9731,9 +9731,9 @@ def c3d_percent_intensity_mode_cargs(
     return cargs
 
 
-def c3d_pixel_params(
+def c3d_pixel(
     pixel: str,
-) -> C3dPixelParametersTagged:
+) -> C3dPixelParamsDictTagged:
     """
     Build parameters.
     
@@ -9754,7 +9754,7 @@ def c3d_pixel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPixelParameters` object.
+    `C3dPixelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9768,7 +9768,7 @@ def c3d_pixel_validate(
 
 
 def c3d_pixel_cargs(
-    params: C3dPixelParameters,
+    params: C3dPixelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9788,9 +9788,9 @@ def c3d_pixel_cargs(
     return cargs
 
 
-def c3d_pop_params(
+def c3d_pop(
     pop_: str,
-) -> C3dPopParametersTagged:
+) -> C3dPopParamsDictTagged:
     """
     Build parameters.
     
@@ -9816,7 +9816,7 @@ def c3d_pop_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPopParameters` object.
+    `C3dPopParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9830,7 +9830,7 @@ def c3d_pop_validate(
 
 
 def c3d_pop_cargs(
-    params: C3dPopParameters,
+    params: C3dPopParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9850,9 +9850,9 @@ def c3d_pop_cargs(
     return cargs
 
 
-def c3d_popas_params(
+def c3d_popas(
     popas: str,
-) -> C3dPopasParametersTagged:
+) -> C3dPopasParamsDictTagged:
     """
     Build parameters.
     
@@ -9879,7 +9879,7 @@ def c3d_popas_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPopasParameters` object.
+    `C3dPopasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9893,7 +9893,7 @@ def c3d_popas_validate(
 
 
 def c3d_popas_cargs(
-    params: C3dPopasParameters,
+    params: C3dPopasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9913,9 +9913,9 @@ def c3d_popas_cargs(
     return cargs
 
 
-def c3d_probe_params(
+def c3d_probe(
     probe: str,
-) -> C3dProbeParametersTagged:
+) -> C3dProbeParamsDictTagged:
     """
     Build parameters.
     
@@ -9946,7 +9946,7 @@ def c3d_probe_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dProbeParameters` object.
+    `C3dProbeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -9960,7 +9960,7 @@ def c3d_probe_validate(
 
 
 def c3d_probe_cargs(
-    params: C3dProbeParameters,
+    params: C3dProbeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -9980,9 +9980,9 @@ def c3d_probe_cargs(
     return cargs
 
 
-def c3d_push_params(
+def c3d_push(
     push: str,
-) -> C3dPushParametersTagged:
+) -> C3dPushParamsDictTagged:
     """
     Build parameters.
     
@@ -10015,7 +10015,7 @@ def c3d_push_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dPushParameters` object.
+    `C3dPushParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10029,7 +10029,7 @@ def c3d_push_validate(
 
 
 def c3d_push_cargs(
-    params: C3dPushParameters,
+    params: C3dPushParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10049,9 +10049,9 @@ def c3d_push_cargs(
     return cargs
 
 
-def c3d_rank_params(
+def c3d_rank(
     rank: str,
-) -> C3dRankParametersTagged:
+) -> C3dRankParamsDictTagged:
     """
     Build parameters.
     
@@ -10082,7 +10082,7 @@ def c3d_rank_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRankParameters` object.
+    `C3dRankParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10096,7 +10096,7 @@ def c3d_rank_validate(
 
 
 def c3d_rank_cargs(
-    params: C3dRankParameters,
+    params: C3dRankParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10116,9 +10116,9 @@ def c3d_rank_cargs(
     return cargs
 
 
-def c3d_reciprocal_params(
+def c3d_reciprocal(
     reciprocal: str,
-) -> C3dReciprocalParametersTagged:
+) -> C3dReciprocalParamsDictTagged:
     """
     Build parameters.
     
@@ -10146,7 +10146,7 @@ def c3d_reciprocal_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dReciprocalParameters` object.
+    `C3dReciprocalParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10160,7 +10160,7 @@ def c3d_reciprocal_validate(
 
 
 def c3d_reciprocal_cargs(
-    params: C3dReciprocalParameters,
+    params: C3dReciprocalParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10180,9 +10180,9 @@ def c3d_reciprocal_cargs(
     return cargs
 
 
-def c3d_region_params(
+def c3d_region(
     region: str,
-) -> C3dRegionParametersTagged:
+) -> C3dRegionParamsDictTagged:
     """
     Build parameters.
     
@@ -10212,7 +10212,7 @@ def c3d_region_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRegionParameters` object.
+    `C3dRegionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10226,7 +10226,7 @@ def c3d_region_validate(
 
 
 def c3d_region_cargs(
-    params: C3dRegionParameters,
+    params: C3dRegionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10246,9 +10246,9 @@ def c3d_region_cargs(
     return cargs
 
 
-def c3d_reorder_params(
+def c3d_reorder(
     reorder: str,
-) -> C3dReorderParametersTagged:
+) -> C3dReorderParamsDictTagged:
     """
     Build parameters.
     
@@ -10301,7 +10301,7 @@ def c3d_reorder_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dReorderParameters` object.
+    `C3dReorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10315,7 +10315,7 @@ def c3d_reorder_validate(
 
 
 def c3d_reorder_cargs(
-    params: C3dReorderParameters,
+    params: C3dReorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10335,9 +10335,9 @@ def c3d_reorder_cargs(
     return cargs
 
 
-def c3d_retain_labels_params(
+def c3d_retain_labels(
     retain_labels: str,
-) -> C3dRetainLabelsParametersTagged:
+) -> C3dRetainLabelsParamsDictTagged:
     """
     Build parameters.
     
@@ -10366,7 +10366,7 @@ def c3d_retain_labels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRetainLabelsParameters` object.
+    `C3dRetainLabelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10380,7 +10380,7 @@ def c3d_retain_labels_validate(
 
 
 def c3d_retain_labels_cargs(
-    params: C3dRetainLabelsParameters,
+    params: C3dRetainLabelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10400,9 +10400,9 @@ def c3d_retain_labels_cargs(
     return cargs
 
 
-def c3d_rf_apply_params(
+def c3d_rf_apply(
     rf_apply: str,
-) -> C3dRfApplyParametersTagged:
+) -> C3dRfApplyParamsDictTagged:
     """
     Build parameters.
     
@@ -10432,7 +10432,7 @@ def c3d_rf_apply_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfApplyParameters` object.
+    `C3dRfApplyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10446,7 +10446,7 @@ def c3d_rf_apply_validate(
 
 
 def c3d_rf_apply_cargs(
-    params: C3dRfApplyParameters,
+    params: C3dRfApplyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10466,9 +10466,9 @@ def c3d_rf_apply_cargs(
     return cargs
 
 
-def c3d_rf_train_params(
+def c3d_rf_train(
     rf_train: str,
-) -> C3dRfTrainParametersTagged:
+) -> C3dRfTrainParamsDictTagged:
     """
     Build parameters.
     
@@ -10538,7 +10538,7 @@ def c3d_rf_train_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfTrainParameters` object.
+    `C3dRfTrainParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10552,7 +10552,7 @@ def c3d_rf_train_validate(
 
 
 def c3d_rf_train_cargs(
-    params: C3dRfTrainParameters,
+    params: C3dRfTrainParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10572,9 +10572,9 @@ def c3d_rf_train_cargs(
     return cargs
 
 
-def c3d_rf_param_patch_params(
+def c3d_rf_param_patch(
     rf_param_patch: str,
-) -> C3dRfParamPatchParametersTagged:
+) -> C3dRfParamPatchParamsDictTagged:
     """
     Build parameters.
     
@@ -10608,7 +10608,7 @@ def c3d_rf_param_patch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfParamPatchParameters` object.
+    `C3dRfParamPatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10622,7 +10622,7 @@ def c3d_rf_param_patch_validate(
 
 
 def c3d_rf_param_patch_cargs(
-    params: C3dRfParamPatchParameters,
+    params: C3dRfParamPatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10642,9 +10642,9 @@ def c3d_rf_param_patch_cargs(
     return cargs
 
 
-def c3d_rf_param_usexyz_params(
+def c3d_rf_param_usexyz(
     rf_param_usexyz: str,
-) -> C3dRfParamUsexyzParametersTagged:
+) -> C3dRfParamUsexyzParamsDictTagged:
     """
     Build parameters.
     
@@ -10671,7 +10671,7 @@ def c3d_rf_param_usexyz_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfParamUsexyzParameters` object.
+    `C3dRfParamUsexyzParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10685,7 +10685,7 @@ def c3d_rf_param_usexyz_validate(
 
 
 def c3d_rf_param_usexyz_cargs(
-    params: C3dRfParamUsexyzParameters,
+    params: C3dRfParamUsexyzParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10705,9 +10705,9 @@ def c3d_rf_param_usexyz_cargs(
     return cargs
 
 
-def c3d_rf_param_nousexyz_params(
+def c3d_rf_param_nousexyz(
     rf_param_nousexyz: str,
-) -> C3dRfParamNousexyzParametersTagged:
+) -> C3dRfParamNousexyzParamsDictTagged:
     """
     Build parameters.
     
@@ -10728,7 +10728,7 @@ def c3d_rf_param_nousexyz_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfParamNousexyzParameters` object.
+    `C3dRfParamNousexyzParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10742,7 +10742,7 @@ def c3d_rf_param_nousexyz_validate(
 
 
 def c3d_rf_param_nousexyz_cargs(
-    params: C3dRfParamNousexyzParameters,
+    params: C3dRfParamNousexyzParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10762,9 +10762,9 @@ def c3d_rf_param_nousexyz_cargs(
     return cargs
 
 
-def c3d_rf_param_ntrees_params(
+def c3d_rf_param_ntrees(
     rf_param_ntrees: str,
-) -> C3dRfParamNtreesParametersTagged:
+) -> C3dRfParamNtreesParamsDictTagged:
     """
     Build parameters.
     
@@ -10790,7 +10790,7 @@ def c3d_rf_param_ntrees_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfParamNtreesParameters` object.
+    `C3dRfParamNtreesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10804,7 +10804,7 @@ def c3d_rf_param_ntrees_validate(
 
 
 def c3d_rf_param_ntrees_cargs(
-    params: C3dRfParamNtreesParameters,
+    params: C3dRfParamNtreesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10824,9 +10824,9 @@ def c3d_rf_param_ntrees_cargs(
     return cargs
 
 
-def c3d_rf_param_treedepth_params(
+def c3d_rf_param_treedepth(
     rf_param_treedepth: str,
-) -> C3dRfParamTreedepthParametersTagged:
+) -> C3dRfParamTreedepthParamsDictTagged:
     """
     Build parameters.
     
@@ -10852,7 +10852,7 @@ def c3d_rf_param_treedepth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRfParamTreedepthParameters` object.
+    `C3dRfParamTreedepthParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10866,7 +10866,7 @@ def c3d_rf_param_treedepth_validate(
 
 
 def c3d_rf_param_treedepth_cargs(
-    params: C3dRfParamTreedepthParameters,
+    params: C3dRfParamTreedepthParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10886,9 +10886,9 @@ def c3d_rf_param_treedepth_cargs(
     return cargs
 
 
-def c3d_set_sform_params(
+def c3d_set_sform(
     set_sform: str,
-) -> C3dSetSformParametersTagged:
+) -> C3dSetSformParamsDictTagged:
     """
     Build parameters.
     
@@ -10914,7 +10914,7 @@ def c3d_set_sform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSetSformParameters` object.
+    `C3dSetSformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10928,7 +10928,7 @@ def c3d_set_sform_validate(
 
 
 def c3d_set_sform_cargs(
-    params: C3dSetSformParameters,
+    params: C3dSetSformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -10948,9 +10948,9 @@ def c3d_set_sform_cargs(
     return cargs
 
 
-def c3d_replace_params(
+def c3d_replace(
     replace: str,
-) -> C3dReplaceParametersTagged:
+) -> C3dReplaceParamsDictTagged:
     """
     Build parameters.
     
@@ -10978,7 +10978,7 @@ def c3d_replace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dReplaceParameters` object.
+    `C3dReplaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -10992,7 +10992,7 @@ def c3d_replace_validate(
 
 
 def c3d_replace_cargs(
-    params: C3dReplaceParameters,
+    params: C3dReplaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11012,9 +11012,9 @@ def c3d_replace_cargs(
     return cargs
 
 
-def c3d_resample_params(
+def c3d_resample(
     resample: str,
-) -> C3dResampleParametersTagged:
+) -> C3dResampleParamsDictTagged:
     """
     Build parameters.
     
@@ -11049,7 +11049,7 @@ def c3d_resample_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResampleParameters` object.
+    `C3dResampleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11063,7 +11063,7 @@ def c3d_resample_validate(
 
 
 def c3d_resample_cargs(
-    params: C3dResampleParameters,
+    params: C3dResampleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11083,9 +11083,9 @@ def c3d_resample_cargs(
     return cargs
 
 
-def c3d_resample_iso_params(
+def c3d_resample_iso(
     resample_iso: str,
-) -> C3dResampleIsoParametersTagged:
+) -> C3dResampleIsoParamsDictTagged:
     """
     Build parameters.
     
@@ -11119,7 +11119,7 @@ def c3d_resample_iso_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResampleIsoParameters` object.
+    `C3dResampleIsoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11133,7 +11133,7 @@ def c3d_resample_iso_validate(
 
 
 def c3d_resample_iso_cargs(
-    params: C3dResampleIsoParameters,
+    params: C3dResampleIsoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11153,9 +11153,9 @@ def c3d_resample_iso_cargs(
     return cargs
 
 
-def c3d_resample_mm_params(
+def c3d_resample_mm(
     resample_mm: str,
-) -> C3dResampleMmParametersTagged:
+) -> C3dResampleMmParamsDictTagged:
     """
     Build parameters.
     
@@ -11185,7 +11185,7 @@ def c3d_resample_mm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResampleMmParameters` object.
+    `C3dResampleMmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11199,7 +11199,7 @@ def c3d_resample_mm_validate(
 
 
 def c3d_resample_mm_cargs(
-    params: C3dResampleMmParameters,
+    params: C3dResampleMmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11219,9 +11219,9 @@ def c3d_resample_mm_cargs(
     return cargs
 
 
-def c3d_reslice_itk_params(
+def c3d_reslice_itk(
     reslice_itk: str,
-) -> C3dResliceItkParametersTagged:
+) -> C3dResliceItkParamsDictTagged:
     """
     Build parameters.
     
@@ -11247,7 +11247,7 @@ def c3d_reslice_itk_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResliceItkParameters` object.
+    `C3dResliceItkParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11261,7 +11261,7 @@ def c3d_reslice_itk_validate(
 
 
 def c3d_reslice_itk_cargs(
-    params: C3dResliceItkParameters,
+    params: C3dResliceItkParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11281,9 +11281,9 @@ def c3d_reslice_itk_cargs(
     return cargs
 
 
-def c3d_reslice_matrix_params(
+def c3d_reslice_matrix(
     reslice_matrix: str,
-) -> C3dResliceMatrixParametersTagged:
+) -> C3dResliceMatrixParamsDictTagged:
     """
     Build parameters.
     
@@ -11304,7 +11304,7 @@ def c3d_reslice_matrix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResliceMatrixParameters` object.
+    `C3dResliceMatrixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11318,7 +11318,7 @@ def c3d_reslice_matrix_validate(
 
 
 def c3d_reslice_matrix_cargs(
-    params: C3dResliceMatrixParameters,
+    params: C3dResliceMatrixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11338,9 +11338,9 @@ def c3d_reslice_matrix_cargs(
     return cargs
 
 
-def c3d_reslice_identity_params(
+def c3d_reslice_identity(
     reslice_identity: str,
-) -> C3dResliceIdentityParametersTagged:
+) -> C3dResliceIdentityParamsDictTagged:
     """
     Build parameters.
     
@@ -11373,7 +11373,7 @@ def c3d_reslice_identity_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dResliceIdentityParameters` object.
+    `C3dResliceIdentityParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11387,7 +11387,7 @@ def c3d_reslice_identity_validate(
 
 
 def c3d_reslice_identity_cargs(
-    params: C3dResliceIdentityParameters,
+    params: C3dResliceIdentityParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11407,9 +11407,9 @@ def c3d_reslice_identity_cargs(
     return cargs
 
 
-def c3d_rgb2hsv_params(
+def c3d_rgb2hsv(
     rgb2hsv: str,
-) -> C3dRgb2hsvParametersTagged:
+) -> C3dRgb2hsvParamsDictTagged:
     """
     Build parameters.
     
@@ -11439,7 +11439,7 @@ def c3d_rgb2hsv_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRgb2hsvParameters` object.
+    `C3dRgb2hsvParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11453,7 +11453,7 @@ def c3d_rgb2hsv_validate(
 
 
 def c3d_rgb2hsv_cargs(
-    params: C3dRgb2hsvParameters,
+    params: C3dRgb2hsvParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11473,9 +11473,9 @@ def c3d_rgb2hsv_cargs(
     return cargs
 
 
-def c3d_rms_params(
+def c3d_rms(
     rms: str,
-) -> C3dRmsParametersTagged:
+) -> C3dRmsParamsDictTagged:
     """
     Build parameters.
     
@@ -11512,7 +11512,7 @@ def c3d_rms_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRmsParameters` object.
+    `C3dRmsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11526,7 +11526,7 @@ def c3d_rms_validate(
 
 
 def c3d_rms_cargs(
-    params: C3dRmsParameters,
+    params: C3dRmsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11546,9 +11546,9 @@ def c3d_rms_cargs(
     return cargs
 
 
-def c3d_round_params(
+def c3d_round(
     round_: str,
-) -> C3dRoundParametersTagged:
+) -> C3dRoundParamsDictTagged:
     """
     Build parameters.
     
@@ -11579,7 +11579,7 @@ def c3d_round_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dRoundParameters` object.
+    `C3dRoundParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11593,7 +11593,7 @@ def c3d_round_validate(
 
 
 def c3d_round_cargs(
-    params: C3dRoundParameters,
+    params: C3dRoundParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11613,9 +11613,9 @@ def c3d_round_cargs(
     return cargs
 
 
-def c3d_scale_params(
+def c3d_scale(
     scale: str,
-) -> C3dScaleParametersTagged:
+) -> C3dScaleParamsDictTagged:
     """
     Build parameters.
     
@@ -11643,7 +11643,7 @@ def c3d_scale_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dScaleParameters` object.
+    `C3dScaleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11657,7 +11657,7 @@ def c3d_scale_validate(
 
 
 def c3d_scale_cargs(
-    params: C3dScaleParameters,
+    params: C3dScaleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11677,9 +11677,9 @@ def c3d_scale_cargs(
     return cargs
 
 
-def c3d_set_sform_1_params(
+def c3d_set_sform_1(
     set_sform: str,
-) -> C3dSetSform1ParametersTagged:
+) -> C3dSetSform1ParamsDictTagged:
     """
     Build parameters.
     
@@ -11705,7 +11705,7 @@ def c3d_set_sform_1_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSetSform1Parameters` object.
+    `C3dSetSform1ParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11719,7 +11719,7 @@ def c3d_set_sform_1_validate(
 
 
 def c3d_set_sform_1_cargs(
-    params: C3dSetSform1Parameters,
+    params: C3dSetSform1ParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11739,9 +11739,9 @@ def c3d_set_sform_1_cargs(
     return cargs
 
 
-def c3d_sin_params(
+def c3d_sin(
     sin: str,
-) -> C3dSinParametersTagged:
+) -> C3dSinParamsDictTagged:
     """
     Build parameters.
     
@@ -11767,7 +11767,7 @@ def c3d_sin_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSinParameters` object.
+    `C3dSinParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11781,7 +11781,7 @@ def c3d_sin_validate(
 
 
 def c3d_sin_cargs(
-    params: C3dSinParameters,
+    params: C3dSinParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11801,9 +11801,9 @@ def c3d_sin_cargs(
     return cargs
 
 
-def c3d_slice_params(
+def c3d_slice(
     slice_: str,
-) -> C3dSliceParametersTagged:
+) -> C3dSliceParamsDictTagged:
     """
     Build parameters.
     
@@ -11849,7 +11849,7 @@ def c3d_slice_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSliceParameters` object.
+    `C3dSliceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11863,7 +11863,7 @@ def c3d_slice_validate(
 
 
 def c3d_slice_cargs(
-    params: C3dSliceParameters,
+    params: C3dSliceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11883,9 +11883,9 @@ def c3d_slice_cargs(
     return cargs
 
 
-def c3d_slice_all_params(
+def c3d_slice_all(
     slice_all: str,
-) -> C3dSliceAllParametersTagged:
+) -> C3dSliceAllParamsDictTagged:
     """
     Build parameters.
     
@@ -11916,7 +11916,7 @@ def c3d_slice_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSliceAllParameters` object.
+    `C3dSliceAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11930,7 +11930,7 @@ def c3d_slice_all_validate(
 
 
 def c3d_slice_all_cargs(
-    params: C3dSliceAllParameters,
+    params: C3dSliceAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -11950,9 +11950,9 @@ def c3d_slice_all_cargs(
     return cargs
 
 
-def c3d_sharpen_params(
+def c3d_sharpen(
     sharpen: str,
-) -> C3dSharpenParametersTagged:
+) -> C3dSharpenParamsDictTagged:
     """
     Build parameters.
     
@@ -11980,7 +11980,7 @@ def c3d_sharpen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSharpenParameters` object.
+    `C3dSharpenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -11994,7 +11994,7 @@ def c3d_sharpen_validate(
 
 
 def c3d_sharpen_cargs(
-    params: C3dSharpenParameters,
+    params: C3dSharpenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12014,9 +12014,9 @@ def c3d_sharpen_cargs(
     return cargs
 
 
-def c3d_shift_params(
+def c3d_shift(
     shift: str,
-) -> C3dShiftParametersTagged:
+) -> C3dShiftParamsDictTagged:
     """
     Build parameters.
     
@@ -12043,7 +12043,7 @@ def c3d_shift_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dShiftParameters` object.
+    `C3dShiftParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12057,7 +12057,7 @@ def c3d_shift_validate(
 
 
 def c3d_shift_cargs(
-    params: C3dShiftParameters,
+    params: C3dShiftParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12077,9 +12077,9 @@ def c3d_shift_cargs(
     return cargs
 
 
-def c3d_signed_distance_transform_params(
+def c3d_signed_distance_transform(
     signed_distance_transform: str,
-) -> C3dSignedDistanceTransformParametersTagged:
+) -> C3dSignedDistanceTransformParamsDictTagged:
     """
     Build parameters.
     
@@ -12112,7 +12112,7 @@ def c3d_signed_distance_transform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSignedDistanceTransformParameters` object.
+    `C3dSignedDistanceTransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12126,7 +12126,7 @@ def c3d_signed_distance_transform_validate(
 
 
 def c3d_signed_distance_transform_cargs(
-    params: C3dSignedDistanceTransformParameters,
+    params: C3dSignedDistanceTransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12146,9 +12146,9 @@ def c3d_signed_distance_transform_cargs(
     return cargs
 
 
-def c3d_smooth_params(
+def c3d_smooth(
     smooth: str,
-) -> C3dSmoothParametersTagged:
+) -> C3dSmoothParamsDictTagged:
     """
     Build parameters.
     
@@ -12177,7 +12177,7 @@ def c3d_smooth_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSmoothParameters` object.
+    `C3dSmoothParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12191,7 +12191,7 @@ def c3d_smooth_validate(
 
 
 def c3d_smooth_cargs(
-    params: C3dSmoothParameters,
+    params: C3dSmoothParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12211,9 +12211,9 @@ def c3d_smooth_cargs(
     return cargs
 
 
-def c3d_smooth_fast_params(
+def c3d_smooth_fast(
     smooth_fast: str,
-) -> C3dSmoothFastParametersTagged:
+) -> C3dSmoothFastParamsDictTagged:
     """
     Build parameters.
     
@@ -12243,7 +12243,7 @@ def c3d_smooth_fast_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSmoothFastParameters` object.
+    `C3dSmoothFastParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12257,7 +12257,7 @@ def c3d_smooth_fast_validate(
 
 
 def c3d_smooth_fast_cargs(
-    params: C3dSmoothFastParameters,
+    params: C3dSmoothFastParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12277,9 +12277,9 @@ def c3d_smooth_fast_cargs(
     return cargs
 
 
-def c3d_spacing_params(
+def c3d_spacing(
     spacing: str,
-) -> C3dSpacingParametersTagged:
+) -> C3dSpacingParamsDictTagged:
     """
     Build parameters.
     
@@ -12309,7 +12309,7 @@ def c3d_spacing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSpacingParameters` object.
+    `C3dSpacingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12323,7 +12323,7 @@ def c3d_spacing_validate(
 
 
 def c3d_spacing_cargs(
-    params: C3dSpacingParameters,
+    params: C3dSpacingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12343,9 +12343,9 @@ def c3d_spacing_cargs(
     return cargs
 
 
-def c3d_split_params(
+def c3d_split(
     split: str,
-) -> C3dSplitParametersTagged:
+) -> C3dSplitParamsDictTagged:
     """
     Build parameters.
     
@@ -12387,7 +12387,7 @@ def c3d_split_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSplitParameters` object.
+    `C3dSplitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12401,7 +12401,7 @@ def c3d_split_validate(
 
 
 def c3d_split_cargs(
-    params: C3dSplitParameters,
+    params: C3dSplitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12421,9 +12421,9 @@ def c3d_split_cargs(
     return cargs
 
 
-def c3d_sqrt_params(
+def c3d_sqrt(
     sqrt: str,
-) -> C3dSqrtParametersTagged:
+) -> C3dSqrtParamsDictTagged:
     """
     Build parameters.
     
@@ -12450,7 +12450,7 @@ def c3d_sqrt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSqrtParameters` object.
+    `C3dSqrtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12464,7 +12464,7 @@ def c3d_sqrt_validate(
 
 
 def c3d_sqrt_cargs(
-    params: C3dSqrtParameters,
+    params: C3dSqrtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12484,9 +12484,9 @@ def c3d_sqrt_cargs(
     return cargs
 
 
-def c3d_staple_params(
+def c3d_staple(
     staple: str,
-) -> C3dStapleParametersTagged:
+) -> C3dStapleParamsDictTagged:
     """
     Build parameters.
     
@@ -12532,7 +12532,7 @@ def c3d_staple_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dStapleParameters` object.
+    `C3dStapleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12546,7 +12546,7 @@ def c3d_staple_validate(
 
 
 def c3d_staple_cargs(
-    params: C3dStapleParameters,
+    params: C3dStapleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12566,9 +12566,9 @@ def c3d_staple_cargs(
     return cargs
 
 
-def c3d_structure_tensor_eigenvalues_params(
+def c3d_structure_tensor_eigenvalues(
     structure_tensor_eigenvalues: str,
-) -> C3dStructureTensorEigenvaluesParametersTagged:
+) -> C3dStructureTensorEigenvaluesParamsDictTagged:
     """
     Build parameters.
     
@@ -12601,7 +12601,7 @@ def c3d_structure_tensor_eigenvalues_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dStructureTensorEigenvaluesParameters` object.
+    `C3dStructureTensorEigenvaluesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12615,7 +12615,7 @@ def c3d_structure_tensor_eigenvalues_validate(
 
 
 def c3d_structure_tensor_eigenvalues_cargs(
-    params: C3dStructureTensorEigenvaluesParameters,
+    params: C3dStructureTensorEigenvaluesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12635,9 +12635,9 @@ def c3d_structure_tensor_eigenvalues_cargs(
     return cargs
 
 
-def c3d_spm_params(
+def c3d_spm(
     spm: str,
-) -> C3dSpmParametersTagged:
+) -> C3dSpmParamsDictTagged:
     """
     Build parameters.
     
@@ -12669,7 +12669,7 @@ def c3d_spm_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSpmParameters` object.
+    `C3dSpmParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12683,7 +12683,7 @@ def c3d_spm_validate(
 
 
 def c3d_spm_cargs(
-    params: C3dSpmParameters,
+    params: C3dSpmParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12703,9 +12703,9 @@ def c3d_spm_cargs(
     return cargs
 
 
-def c3d_subtract_params(
+def c3d_subtract(
     subtract: str,
-) -> C3dSubtractParametersTagged:
+) -> C3dSubtractParamsDictTagged:
     """
     Build parameters.
     
@@ -12726,7 +12726,7 @@ def c3d_subtract_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSubtractParameters` object.
+    `C3dSubtractParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12740,7 +12740,7 @@ def c3d_subtract_validate(
 
 
 def c3d_subtract_cargs(
-    params: C3dSubtractParameters,
+    params: C3dSubtractParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12760,9 +12760,9 @@ def c3d_subtract_cargs(
     return cargs
 
 
-def c3d_supervoxel_params(
+def c3d_supervoxel(
     supervoxel: str,
-) -> C3dSupervoxelParametersTagged:
+) -> C3dSupervoxelParamsDictTagged:
     """
     Build parameters.
     
@@ -12783,7 +12783,7 @@ def c3d_supervoxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSupervoxelParameters` object.
+    `C3dSupervoxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12797,7 +12797,7 @@ def c3d_supervoxel_validate(
 
 
 def c3d_supervoxel_cargs(
-    params: C3dSupervoxelParameters,
+    params: C3dSupervoxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12817,9 +12817,9 @@ def c3d_supervoxel_cargs(
     return cargs
 
 
-def c3d_stretch_params(
+def c3d_stretch(
     stretch: str,
-) -> C3dStretchParametersTagged:
+) -> C3dStretchParamsDictTagged:
     """
     Build parameters.
     
@@ -12850,7 +12850,7 @@ def c3d_stretch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dStretchParameters` object.
+    `C3dStretchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12864,7 +12864,7 @@ def c3d_stretch_validate(
 
 
 def c3d_stretch_cargs(
-    params: C3dStretchParameters,
+    params: C3dStretchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12884,9 +12884,9 @@ def c3d_stretch_cargs(
     return cargs
 
 
-def c3d_swapdim_params(
+def c3d_swapdim(
     swapdim: str,
-) -> C3dSwapdimParametersTagged:
+) -> C3dSwapdimParamsDictTagged:
     """
     Build parameters.
     
@@ -12926,7 +12926,7 @@ def c3d_swapdim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dSwapdimParameters` object.
+    `C3dSwapdimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -12940,7 +12940,7 @@ def c3d_swapdim_validate(
 
 
 def c3d_swapdim_cargs(
-    params: C3dSwapdimParameters,
+    params: C3dSwapdimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -12960,9 +12960,9 @@ def c3d_swapdim_cargs(
     return cargs
 
 
-def c3d_test_image_params(
+def c3d_test_image(
     test_image: str,
-) -> C3dTestImageParametersTagged:
+) -> C3dTestImageParamsDictTagged:
     """
     Build parameters.
     
@@ -13007,7 +13007,7 @@ def c3d_test_image_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTestImageParameters` object.
+    `C3dTestImageParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13021,7 +13021,7 @@ def c3d_test_image_validate(
 
 
 def c3d_test_image_cargs(
-    params: C3dTestImageParameters,
+    params: C3dTestImageParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13041,9 +13041,9 @@ def c3d_test_image_cargs(
     return cargs
 
 
-def c3d_test_probe_params(
+def c3d_test_probe(
     test_probe: str,
-) -> C3dTestProbeParametersTagged:
+) -> C3dTestProbeParamsDictTagged:
     """
     Build parameters.
     
@@ -13088,7 +13088,7 @@ def c3d_test_probe_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTestProbeParameters` object.
+    `C3dTestProbeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13102,7 +13102,7 @@ def c3d_test_probe_validate(
 
 
 def c3d_test_probe_cargs(
-    params: C3dTestProbeParameters,
+    params: C3dTestProbeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13122,9 +13122,9 @@ def c3d_test_probe_cargs(
     return cargs
 
 
-def c3d_threshold_params(
+def c3d_threshold(
     threshold: str,
-) -> C3dThresholdParametersTagged:
+) -> C3dThresholdParamsDictTagged:
     """
     Build parameters.
     
@@ -13157,7 +13157,7 @@ def c3d_threshold_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dThresholdParameters` object.
+    `C3dThresholdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13171,7 +13171,7 @@ def c3d_threshold_validate(
 
 
 def c3d_threshold_cargs(
-    params: C3dThresholdParameters,
+    params: C3dThresholdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13191,9 +13191,9 @@ def c3d_threshold_cargs(
     return cargs
 
 
-def c3d_tile_params(
+def c3d_tile(
     tile: str,
-) -> C3dTileParametersTagged:
+) -> C3dTileParamsDictTagged:
     """
     Build parameters.
     
@@ -13233,7 +13233,7 @@ def c3d_tile_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTileParameters` object.
+    `C3dTileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13247,7 +13247,7 @@ def c3d_tile_validate(
 
 
 def c3d_tile_cargs(
-    params: C3dTileParameters,
+    params: C3dTileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13267,9 +13267,9 @@ def c3d_tile_cargs(
     return cargs
 
 
-def c3d_trim_params(
+def c3d_trim(
     trim: str,
-) -> C3dTrimParametersTagged:
+) -> C3dTrimParamsDictTagged:
     """
     Build parameters.
     
@@ -13302,7 +13302,7 @@ def c3d_trim_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTrimParameters` object.
+    `C3dTrimParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13316,7 +13316,7 @@ def c3d_trim_validate(
 
 
 def c3d_trim_cargs(
-    params: C3dTrimParameters,
+    params: C3dTrimParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13336,9 +13336,9 @@ def c3d_trim_cargs(
     return cargs
 
 
-def c3d_trim_to_size_params(
+def c3d_trim_to_size(
     trim_to_size: str,
-) -> C3dTrimToSizeParametersTagged:
+) -> C3dTrimToSizeParamsDictTagged:
     """
     Build parameters.
     
@@ -13370,7 +13370,7 @@ def c3d_trim_to_size_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTrimToSizeParameters` object.
+    `C3dTrimToSizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13384,7 +13384,7 @@ def c3d_trim_to_size_validate(
 
 
 def c3d_trim_to_size_cargs(
-    params: C3dTrimToSizeParameters,
+    params: C3dTrimToSizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13404,9 +13404,9 @@ def c3d_trim_to_size_cargs(
     return cargs
 
 
-def c3d_type_params(
+def c3d_type(
     type_: str,
-) -> C3dTypeParametersTagged:
+) -> C3dTypeParamsDictTagged:
     """
     Build parameters.
     
@@ -13439,7 +13439,7 @@ def c3d_type_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dTypeParameters` object.
+    `C3dTypeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13453,7 +13453,7 @@ def c3d_type_validate(
 
 
 def c3d_type_cargs(
-    params: C3dTypeParameters,
+    params: C3dTypeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13473,9 +13473,9 @@ def c3d_type_cargs(
     return cargs
 
 
-def c3d_verbose_params(
+def c3d_verbose(
     verbose: str,
-) -> C3dVerboseParametersTagged:
+) -> C3dVerboseParamsDictTagged:
     """
     Build parameters.
     
@@ -13503,7 +13503,7 @@ def c3d_verbose_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVerboseParameters` object.
+    `C3dVerboseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13517,7 +13517,7 @@ def c3d_verbose_validate(
 
 
 def c3d_verbose_cargs(
-    params: C3dVerboseParameters,
+    params: C3dVerboseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13537,9 +13537,9 @@ def c3d_verbose_cargs(
     return cargs
 
 
-def c3d_noverbose_params(
+def c3d_noverbose(
     noverbose: str,
-) -> C3dNoverboseParametersTagged:
+) -> C3dNoverboseParamsDictTagged:
     """
     Build parameters.
     
@@ -13560,7 +13560,7 @@ def c3d_noverbose_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dNoverboseParameters` object.
+    `C3dNoverboseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13574,7 +13574,7 @@ def c3d_noverbose_validate(
 
 
 def c3d_noverbose_cargs(
-    params: C3dNoverboseParameters,
+    params: C3dNoverboseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13594,9 +13594,9 @@ def c3d_noverbose_cargs(
     return cargs
 
 
-def c3d_version_params(
+def c3d_version(
     version: str,
-) -> C3dVersionParametersTagged:
+) -> C3dVersionParamsDictTagged:
     """
     Build parameters.
     
@@ -13617,7 +13617,7 @@ def c3d_version_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVersionParameters` object.
+    `C3dVersionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13631,7 +13631,7 @@ def c3d_version_validate(
 
 
 def c3d_version_cargs(
-    params: C3dVersionParameters,
+    params: C3dVersionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13651,9 +13651,9 @@ def c3d_version_cargs(
     return cargs
 
 
-def c3d_vote_params(
+def c3d_vote(
     vote: str,
-) -> C3dVoteParametersTagged:
+) -> C3dVoteParamsDictTagged:
     """
     Build parameters.
     
@@ -13692,7 +13692,7 @@ def c3d_vote_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoteParameters` object.
+    `C3dVoteParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13706,7 +13706,7 @@ def c3d_vote_validate(
 
 
 def c3d_vote_cargs(
-    params: C3dVoteParameters,
+    params: C3dVoteParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13726,9 +13726,9 @@ def c3d_vote_cargs(
     return cargs
 
 
-def c3d_vote_mrf_params(
+def c3d_vote_mrf(
     vote_mrf: str,
-) -> C3dVoteMrfParametersTagged:
+) -> C3dVoteMrfParamsDictTagged:
     """
     Build parameters.
     
@@ -13823,7 +13823,7 @@ def c3d_vote_mrf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoteMrfParameters` object.
+    `C3dVoteMrfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13837,7 +13837,7 @@ def c3d_vote_mrf_validate(
 
 
 def c3d_vote_mrf_cargs(
-    params: C3dVoteMrfParameters,
+    params: C3dVoteMrfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13857,9 +13857,9 @@ def c3d_vote_mrf_cargs(
     return cargs
 
 
-def c3d_vote_label_params(
+def c3d_vote_label(
     vote_label: str,
-) -> C3dVoteLabelParametersTagged:
+) -> C3dVoteLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -13880,7 +13880,7 @@ def c3d_vote_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoteLabelParameters` object.
+    `C3dVoteLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13894,7 +13894,7 @@ def c3d_vote_label_validate(
 
 
 def c3d_vote_label_cargs(
-    params: C3dVoteLabelParameters,
+    params: C3dVoteLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13914,9 +13914,9 @@ def c3d_vote_label_cargs(
     return cargs
 
 
-def c3d_voxel_sum_params(
+def c3d_voxel_sum(
     voxel_sum: str,
-) -> C3dVoxelSumParametersTagged:
+) -> C3dVoxelSumParamsDictTagged:
     """
     Build parameters.
     
@@ -13944,7 +13944,7 @@ def c3d_voxel_sum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoxelSumParameters` object.
+    `C3dVoxelSumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -13958,7 +13958,7 @@ def c3d_voxel_sum_validate(
 
 
 def c3d_voxel_sum_cargs(
-    params: C3dVoxelSumParameters,
+    params: C3dVoxelSumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -13978,9 +13978,9 @@ def c3d_voxel_sum_cargs(
     return cargs
 
 
-def c3d_voxel_integral_params(
+def c3d_voxel_integral(
     voxel_integral: str,
-) -> C3dVoxelIntegralParametersTagged:
+) -> C3dVoxelIntegralParamsDictTagged:
     """
     Build parameters.
     
@@ -14011,7 +14011,7 @@ def c3d_voxel_integral_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoxelIntegralParameters` object.
+    `C3dVoxelIntegralParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14025,7 +14025,7 @@ def c3d_voxel_integral_validate(
 
 
 def c3d_voxel_integral_cargs(
-    params: C3dVoxelIntegralParameters,
+    params: C3dVoxelIntegralParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14045,9 +14045,9 @@ def c3d_voxel_integral_cargs(
     return cargs
 
 
-def c3d_voxelwise_regression_params(
+def c3d_voxelwise_regression(
     voxelwise_regression: str,
-) -> C3dVoxelwiseRegressionParametersTagged:
+) -> C3dVoxelwiseRegressionParamsDictTagged:
     """
     Build parameters.
     
@@ -14085,7 +14085,7 @@ def c3d_voxelwise_regression_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dVoxelwiseRegressionParameters` object.
+    `C3dVoxelwiseRegressionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14099,7 +14099,7 @@ def c3d_voxelwise_regression_validate(
 
 
 def c3d_voxelwise_regression_cargs(
-    params: C3dVoxelwiseRegressionParameters,
+    params: C3dVoxelwiseRegressionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14119,9 +14119,9 @@ def c3d_voxelwise_regression_cargs(
     return cargs
 
 
-def c3d_warp_params(
+def c3d_warp(
     warp: str,
-) -> C3dWarpParametersTagged:
+) -> C3dWarpParamsDictTagged:
     """
     Build parameters.
     
@@ -14142,7 +14142,7 @@ def c3d_warp_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dWarpParameters` object.
+    `C3dWarpParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14156,7 +14156,7 @@ def c3d_warp_validate(
 
 
 def c3d_warp_cargs(
-    params: C3dWarpParameters,
+    params: C3dWarpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14176,9 +14176,9 @@ def c3d_warp_cargs(
     return cargs
 
 
-def c3d_warp_label_params(
+def c3d_warp_label(
     warp_label: str,
-) -> C3dWarpLabelParametersTagged:
+) -> C3dWarpLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -14199,7 +14199,7 @@ def c3d_warp_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dWarpLabelParameters` object.
+    `C3dWarpLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14213,7 +14213,7 @@ def c3d_warp_label_validate(
 
 
 def c3d_warp_label_cargs(
-    params: C3dWarpLabelParameters,
+    params: C3dWarpLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14233,9 +14233,9 @@ def c3d_warp_label_cargs(
     return cargs
 
 
-def c3d_wrap_params(
+def c3d_wrap(
     wrap: str,
-) -> C3dWrapParametersTagged:
+) -> C3dWrapParamsDictTagged:
     """
     Build parameters.
     
@@ -14274,7 +14274,7 @@ def c3d_wrap_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dWrapParameters` object.
+    `C3dWrapParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14288,7 +14288,7 @@ def c3d_wrap_validate(
 
 
 def c3d_wrap_cargs(
-    params: C3dWrapParameters,
+    params: C3dWrapParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14308,9 +14308,9 @@ def c3d_wrap_cargs(
     return cargs
 
 
-def c3d_weighted_sum_params(
+def c3d_weighted_sum(
     weighted_sum: str,
-) -> C3dWeightedSumParametersTagged:
+) -> C3dWeightedSumParamsDictTagged:
     """
     Build parameters.
     
@@ -14344,7 +14344,7 @@ def c3d_weighted_sum_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dWeightedSumParameters` object.
+    `C3dWeightedSumParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14358,7 +14358,7 @@ def c3d_weighted_sum_validate(
 
 
 def c3d_weighted_sum_cargs(
-    params: C3dWeightedSumParameters,
+    params: C3dWeightedSumParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14378,9 +14378,9 @@ def c3d_weighted_sum_cargs(
     return cargs
 
 
-def c3d_weighted_sum_voxelwise_params(
+def c3d_weighted_sum_voxelwise(
     weighted_sum_voxelwise: str,
-) -> C3dWeightedSumVoxelwiseParametersTagged:
+) -> C3dWeightedSumVoxelwiseParamsDictTagged:
     """
     Build parameters.
     
@@ -14417,7 +14417,7 @@ def c3d_weighted_sum_voxelwise_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `C3dWeightedSumVoxelwiseParameters` object.
+    `C3dWeightedSumVoxelwiseParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -14431,7 +14431,7 @@ def c3d_weighted_sum_voxelwise_validate(
 
 
 def c3d_weighted_sum_voxelwise_cargs(
-    params: C3dWeightedSumVoxelwiseParameters,
+    params: C3dWeightedSumVoxelwiseParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14453,20 +14453,20 @@ def c3d_weighted_sum_voxelwise_cargs(
 
 class C3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `C3dParameters(...)`.
+    Output object returned when calling `C3dParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     operations: list[typing.Union[C3dOutputOutputs]]
-    """Outputs from `C3dOutputParameters`.This is a list of outputs with the
+    """Outputs from `C3dOutputParamsDict`.This is a list of outputs with the
     same length and order as the inputs."""
 
 
 def c3d_params(
     input_: list[InputPathType],
-    operations: list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
+    operations: list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     output: str,
-) -> C3dParametersTagged:
+) -> C3dParamsDictTagged:
     """
     Build parameters.
     
@@ -14490,7 +14490,7 @@ def c3d_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `C3dParameters`
+    Validate parameters. Throws an error if `params` is not a valid `C3dParamsDict`
     object.
     
     Args:
@@ -14508,12 +14508,14 @@ def c3d_validate(
     if params.get("operations", None) is None:
         raise StyxValidationError("`operations` must not be None")
     if not isinstance(params["operations"], list):
-        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]]`')
+        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]]`')
     for e in params["operations"]:
         if not isinstance(e, dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
         if "@type" not in e:
             raise StyxValidationError("Params object is missing `@type`")
+        if e["@type"] not in ["accum", "acos", "add", "align_landmarks", "anisotropic_diffusion", "antialias", "set", "asin", "atan2", "background", "n4_bias_correction", "binarize", "canny", "ceil", "centroid", "centroid_mark", "connected_components", "clear", "clip", "color_map", "compress", "no_compress", "conv", "coordinate_map_voxel", "coordinate_map_physical", "copy_transform", "cos", "create", "dicom_series_list", "dicom_series_read", "dilate", "divide", "duplicate", "endaccum", "endfor", "erode", "erf", "exp", "export_patches", "export_patches_aug", "extrude_seg", "fill_background_with_noise", "fft", "flip", "floor", "foreach", "foreach_comp", "glm", "gradient", "_help", "holefill", "hessian_eigenvalues", "hessian_objectness", "histogram_match", "info", "info_full", "insert", "interpolation", "iterations", "label_overlap", "label_statistics", "landmarks_to_spheres", "laplacian", "levelset", "levelset_curvature", "levelset_advection", "log", "log10", "manual", "match_bounding_box", "maximum", "multicomponent_split", "mean", "median_filter", "merge", "mean_filter", "mutual_info", "minimum", "mixture_model", "moments", "mattes_mutual_info", "mean_square", "multiply", "normalized_cross_correlation", "normalized_correlation", "normalized_mutual_info", "noise_gaussian", "noise_poisson", "noise_speckle", "noise_salt_pepper", "no_multicomponent_split", "normalize_local_window", "normpdf", "noround", "nospm", "output", "output_multicomponent", "output_multiple_multicomponent", "orient", "output_multiple", "orient_1", "origin", "origin_voxel", "origin_voxel_coord", "overlap", "overlay_label_image", "pad", "pad_to", "pca", "percent_intensity_mode", "pixel", "pop", "popas", "probe", "push", "rank", "reciprocal", "region", "reorder", "retain_labels", "rf_apply", "rf_train", "rf_param_patch", "rf_param_usexyz", "rf_param_nousexyz", "rf_param_ntrees", "rf_param_treedepth", "set_sform", "replace", "resample", "resample_iso", "resample_mm", "reslice_itk", "reslice_matrix", "reslice_identity", "rgb2hsv", "rms", "round", "scale", "set_sform_1", "sin", "slice", "slice_all", "sharpen", "shift", "signed_distance_transform", "smooth", "smooth_fast", "spacing", "split", "sqrt", "staple", "structure_tensor_eigenvalues", "spm", "subtract", "supervoxel", "stretch", "swapdim", "test_image", "test_probe", "threshold", "tile", "trim", "trim_to_size", "type", "verbose", "noverbose", "version", "vote", "vote_mrf", "vote_label", "voxel_sum", "voxel_integral", "voxelwise_regression", "warp", "warp_label", "wrap", "weighted_sum", "weighted_sum_voxelwise"]:
+            raise StyxValidationError("Parameter `operations`s `@type` must be one of [\"accum\", \"acos\", \"add\", \"align_landmarks\", \"anisotropic_diffusion\", \"antialias\", \"set\", \"asin\", \"atan2\", \"background\", \"n4_bias_correction\", \"binarize\", \"canny\", \"ceil\", \"centroid\", \"centroid_mark\", \"connected_components\", \"clear\", \"clip\", \"color_map\", \"compress\", \"no_compress\", \"conv\", \"coordinate_map_voxel\", \"coordinate_map_physical\", \"copy_transform\", \"cos\", \"create\", \"dicom_series_list\", \"dicom_series_read\", \"dilate\", \"divide\", \"duplicate\", \"endaccum\", \"endfor\", \"erode\", \"erf\", \"exp\", \"export_patches\", \"export_patches_aug\", \"extrude_seg\", \"fill_background_with_noise\", \"fft\", \"flip\", \"floor\", \"foreach\", \"foreach_comp\", \"glm\", \"gradient\", \"_help\", \"holefill\", \"hessian_eigenvalues\", \"hessian_objectness\", \"histogram_match\", \"info\", \"info_full\", \"insert\", \"interpolation\", \"iterations\", \"label_overlap\", \"label_statistics\", \"landmarks_to_spheres\", \"laplacian\", \"levelset\", \"levelset_curvature\", \"levelset_advection\", \"log\", \"log10\", \"manual\", \"match_bounding_box\", \"maximum\", \"multicomponent_split\", \"mean\", \"median_filter\", \"merge\", \"mean_filter\", \"mutual_info\", \"minimum\", \"mixture_model\", \"moments\", \"mattes_mutual_info\", \"mean_square\", \"multiply\", \"normalized_cross_correlation\", \"normalized_correlation\", \"normalized_mutual_info\", \"noise_gaussian\", \"noise_poisson\", \"noise_speckle\", \"noise_salt_pepper\", \"no_multicomponent_split\", \"normalize_local_window\", \"normpdf\", \"noround\", \"nospm\", \"output\", \"output_multicomponent\", \"output_multiple_multicomponent\", \"orient\", \"output_multiple\", \"orient_1\", \"origin\", \"origin_voxel\", \"origin_voxel_coord\", \"overlap\", \"overlay_label_image\", \"pad\", \"pad_to\", \"pca\", \"percent_intensity_mode\", \"pixel\", \"pop\", \"popas\", \"probe\", \"push\", \"rank\", \"reciprocal\", \"region\", \"reorder\", \"retain_labels\", \"rf_apply\", \"rf_train\", \"rf_param_patch\", \"rf_param_usexyz\", \"rf_param_nousexyz\", \"rf_param_ntrees\", \"rf_param_treedepth\", \"set_sform\", \"replace\", \"resample\", \"resample_iso\", \"resample_mm\", \"reslice_itk\", \"reslice_matrix\", \"reslice_identity\", \"rgb2hsv\", \"rms\", \"round\", \"scale\", \"set_sform_1\", \"sin\", \"slice\", \"slice_all\", \"sharpen\", \"shift\", \"signed_distance_transform\", \"smooth\", \"smooth_fast\", \"spacing\", \"split\", \"sqrt\", \"staple\", \"structure_tensor_eigenvalues\", \"spm\", \"subtract\", \"supervoxel\", \"stretch\", \"swapdim\", \"test_image\", \"test_probe\", \"threshold\", \"tile\", \"trim\", \"trim_to_size\", \"type\", \"verbose\", \"noverbose\", \"version\", \"vote\", \"vote_mrf\", \"vote_label\", \"voxel_sum\", \"voxel_integral\", \"voxelwise_regression\", \"warp\", \"warp_label\", \"wrap\", \"weighted_sum\", \"weighted_sum_voxelwise\"]")
         c3d_operations_validate_dyn_fn(e["@type"])(e)
     if params.get("output", None) is None:
         raise StyxValidationError("`output` must not be None")
@@ -14522,7 +14524,7 @@ def c3d_validate(
 
 
 def c3d_cargs(
-    params: C3dParameters,
+    params: C3dParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -14546,7 +14548,7 @@ def c3d_cargs(
 
 
 def c3d_outputs(
-    params: C3dParameters,
+    params: C3dParamsDict,
     execution: Execution,
 ) -> C3dOutputs:
     """
@@ -14566,7 +14568,7 @@ def c3d_outputs(
 
 
 def c3d_execute(
-    params: C3dParameters,
+    params: C3dParamsDict,
     runner: Runner | None = None,
 ) -> C3dOutputs:
     """
@@ -14596,7 +14598,7 @@ def c3d_execute(
 
 def c3d_(
     input_: list[InputPathType],
-    operations: list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
+    operations: list[typing.Union[C3dAccumParamsDictTagged, C3dAcosParamsDictTagged, C3dAddParamsDictTagged, C3dAlignLandmarksParamsDictTagged, C3dAnisotropicDiffusionParamsDictTagged, C3dAntialiasParamsDictTagged, C3dSetParamsDictTagged, C3dAsinParamsDictTagged, C3dAtan2ParamsDictTagged, C3dBackgroundParamsDictTagged, C3dN4BiasCorrectionParamsDictTagged, C3dBinarizeParamsDictTagged, C3dCannyParamsDictTagged, C3dCeilParamsDictTagged, C3dCentroidParamsDictTagged, C3dCentroidMarkParamsDictTagged, C3dConnectedComponentsParamsDictTagged, C3dClearParamsDictTagged, C3dClipParamsDictTagged, C3dColorMapParamsDictTagged, C3dCompressParamsDictTagged, C3dNoCompressParamsDictTagged, C3dConvParamsDictTagged, C3dCoordinateMapVoxelParamsDictTagged, C3dCoordinateMapPhysicalParamsDictTagged, C3dCopyTransformParamsDictTagged, C3dCosParamsDictTagged, C3dCreateParamsDictTagged, C3dDicomSeriesListParamsDictTagged, C3dDicomSeriesReadParamsDictTagged, C3dDilateParamsDictTagged, C3dDivideParamsDictTagged, C3dDuplicateParamsDictTagged, C3dEndaccumParamsDictTagged, C3dEndforParamsDictTagged, C3dErodeParamsDictTagged, C3dErfParamsDictTagged, C3dExpParamsDictTagged, C3dExportPatchesParamsDictTagged, C3dExportPatchesAugParamsDictTagged, C3dExtrudeSegParamsDictTagged, C3dFillBackgroundWithNoiseParamsDictTagged, C3dFftParamsDictTagged, C3dFlipParamsDictTagged, C3dFloorParamsDictTagged, C3dForeachParamsDictTagged, C3dForeachCompParamsDictTagged, C3dGlmParamsDictTagged, C3dGradientParamsDictTagged, C3dHelpParamsDictTagged, C3dHolefillParamsDictTagged, C3dHessianEigenvaluesParamsDictTagged, C3dHessianObjectnessParamsDictTagged, C3dHistogramMatchParamsDictTagged, C3dInfoParamsDictTagged, C3dInfoFullParamsDictTagged, C3dInsertParamsDictTagged, C3dInterpolationParamsDictTagged, C3dIterationsParamsDictTagged, C3dLabelOverlapParamsDictTagged, C3dLabelStatisticsParamsDictTagged, C3dLandmarksToSpheresParamsDictTagged, C3dLaplacianParamsDictTagged, C3dLevelsetParamsDictTagged, C3dLevelsetCurvatureParamsDictTagged, C3dLevelsetAdvectionParamsDictTagged, C3dLogParamsDictTagged, C3dLog10ParamsDictTagged, C3dManualParamsDictTagged, C3dMatchBoundingBoxParamsDictTagged, C3dMaximumParamsDictTagged, C3dMulticomponentSplitParamsDictTagged, C3dMeanParamsDictTagged, C3dMedianFilterParamsDictTagged, C3dMergeParamsDictTagged, C3dMeanFilterParamsDictTagged, C3dMutualInfoParamsDictTagged, C3dMinimumParamsDictTagged, C3dMixtureModelParamsDictTagged, C3dMomentsParamsDictTagged, C3dMattesMutualInfoParamsDictTagged, C3dMeanSquareParamsDictTagged, C3dMultiplyParamsDictTagged, C3dNormalizedCrossCorrelationParamsDictTagged, C3dNormalizedCorrelationParamsDictTagged, C3dNormalizedMutualInfoParamsDictTagged, C3dNoiseGaussianParamsDictTagged, C3dNoisePoissonParamsDictTagged, C3dNoiseSpeckleParamsDictTagged, C3dNoiseSaltPepperParamsDictTagged, C3dNoMulticomponentSplitParamsDictTagged, C3dNormalizeLocalWindowParamsDictTagged, C3dNormpdfParamsDictTagged, C3dNoroundParamsDictTagged, C3dNospmParamsDictTagged, C3dOutputParamsDictTagged, C3dOutputMulticomponentParamsDictTagged, C3dOutputMultipleMulticomponentParamsDictTagged, C3dOrientParamsDictTagged, C3dOutputMultipleParamsDictTagged, C3dOrient1ParamsDictTagged, C3dOriginParamsDictTagged, C3dOriginVoxelParamsDictTagged, C3dOriginVoxelCoordParamsDictTagged, C3dOverlapParamsDictTagged, C3dOverlayLabelImageParamsDictTagged, C3dPadParamsDictTagged, C3dPadToParamsDictTagged, C3dPcaParamsDictTagged, C3dPercentIntensityModeParamsDictTagged, C3dPixelParamsDictTagged, C3dPopParamsDictTagged, C3dPopasParamsDictTagged, C3dProbeParamsDictTagged, C3dPushParamsDictTagged, C3dRankParamsDictTagged, C3dReciprocalParamsDictTagged, C3dRegionParamsDictTagged, C3dReorderParamsDictTagged, C3dRetainLabelsParamsDictTagged, C3dRfApplyParamsDictTagged, C3dRfTrainParamsDictTagged, C3dRfParamPatchParamsDictTagged, C3dRfParamUsexyzParamsDictTagged, C3dRfParamNousexyzParamsDictTagged, C3dRfParamNtreesParamsDictTagged, C3dRfParamTreedepthParamsDictTagged, C3dSetSformParamsDictTagged, C3dReplaceParamsDictTagged, C3dResampleParamsDictTagged, C3dResampleIsoParamsDictTagged, C3dResampleMmParamsDictTagged, C3dResliceItkParamsDictTagged, C3dResliceMatrixParamsDictTagged, C3dResliceIdentityParamsDictTagged, C3dRgb2hsvParamsDictTagged, C3dRmsParamsDictTagged, C3dRoundParamsDictTagged, C3dScaleParamsDictTagged, C3dSetSform1ParamsDictTagged, C3dSinParamsDictTagged, C3dSliceParamsDictTagged, C3dSliceAllParamsDictTagged, C3dSharpenParamsDictTagged, C3dShiftParamsDictTagged, C3dSignedDistanceTransformParamsDictTagged, C3dSmoothParamsDictTagged, C3dSmoothFastParamsDictTagged, C3dSpacingParamsDictTagged, C3dSplitParamsDictTagged, C3dSqrtParamsDictTagged, C3dStapleParamsDictTagged, C3dStructureTensorEigenvaluesParamsDictTagged, C3dSpmParamsDictTagged, C3dSubtractParamsDictTagged, C3dSupervoxelParamsDictTagged, C3dStretchParamsDictTagged, C3dSwapdimParamsDictTagged, C3dTestImageParamsDictTagged, C3dTestProbeParamsDictTagged, C3dThresholdParamsDictTagged, C3dTileParamsDictTagged, C3dTrimParamsDictTagged, C3dTrimToSizeParamsDictTagged, C3dTypeParamsDictTagged, C3dVerboseParamsDictTagged, C3dNoverboseParamsDictTagged, C3dVersionParamsDictTagged, C3dVoteParamsDictTagged, C3dVoteMrfParamsDictTagged, C3dVoteLabelParamsDictTagged, C3dVoxelSumParamsDictTagged, C3dVoxelIntegralParamsDictTagged, C3dVoxelwiseRegressionParamsDictTagged, C3dWarpParamsDictTagged, C3dWarpLabelParamsDictTagged, C3dWrapParamsDictTagged, C3dWeightedSumParamsDictTagged, C3dWeightedSumVoxelwiseParamsDictTagged]],
     output: str,
     runner: Runner | None = None,
 ) -> C3dOutputs:
@@ -14627,188 +14629,548 @@ def c3d_(
 
 __all__ = [
     "C3D_METADATA",
+    "C3dAccumParamsDict",
+    "C3dAccumParamsDictTagged",
+    "C3dAcosParamsDict",
+    "C3dAcosParamsDictTagged",
+    "C3dAddParamsDict",
+    "C3dAddParamsDictTagged",
+    "C3dAlignLandmarksParamsDict",
+    "C3dAlignLandmarksParamsDictTagged",
+    "C3dAnisotropicDiffusionParamsDict",
+    "C3dAnisotropicDiffusionParamsDictTagged",
+    "C3dAntialiasParamsDict",
+    "C3dAntialiasParamsDictTagged",
+    "C3dAsinParamsDict",
+    "C3dAsinParamsDictTagged",
+    "C3dAtan2ParamsDict",
+    "C3dAtan2ParamsDictTagged",
+    "C3dBackgroundParamsDict",
+    "C3dBackgroundParamsDictTagged",
+    "C3dBinarizeParamsDict",
+    "C3dBinarizeParamsDictTagged",
+    "C3dCannyParamsDict",
+    "C3dCannyParamsDictTagged",
+    "C3dCeilParamsDict",
+    "C3dCeilParamsDictTagged",
+    "C3dCentroidMarkParamsDict",
+    "C3dCentroidMarkParamsDictTagged",
+    "C3dCentroidParamsDict",
+    "C3dCentroidParamsDictTagged",
+    "C3dClearParamsDict",
+    "C3dClearParamsDictTagged",
+    "C3dClipParamsDict",
+    "C3dClipParamsDictTagged",
+    "C3dColorMapParamsDict",
+    "C3dColorMapParamsDictTagged",
+    "C3dCompressParamsDict",
+    "C3dCompressParamsDictTagged",
+    "C3dConnectedComponentsParamsDict",
+    "C3dConnectedComponentsParamsDictTagged",
+    "C3dConvParamsDict",
+    "C3dConvParamsDictTagged",
+    "C3dCoordinateMapPhysicalParamsDict",
+    "C3dCoordinateMapPhysicalParamsDictTagged",
+    "C3dCoordinateMapVoxelParamsDict",
+    "C3dCoordinateMapVoxelParamsDictTagged",
+    "C3dCopyTransformParamsDict",
+    "C3dCopyTransformParamsDictTagged",
+    "C3dCosParamsDict",
+    "C3dCosParamsDictTagged",
+    "C3dCreateParamsDict",
+    "C3dCreateParamsDictTagged",
+    "C3dDicomSeriesListParamsDict",
+    "C3dDicomSeriesListParamsDictTagged",
+    "C3dDicomSeriesReadParamsDict",
+    "C3dDicomSeriesReadParamsDictTagged",
+    "C3dDilateParamsDict",
+    "C3dDilateParamsDictTagged",
+    "C3dDivideParamsDict",
+    "C3dDivideParamsDictTagged",
+    "C3dDuplicateParamsDict",
+    "C3dDuplicateParamsDictTagged",
+    "C3dEndaccumParamsDict",
+    "C3dEndaccumParamsDictTagged",
+    "C3dEndforParamsDict",
+    "C3dEndforParamsDictTagged",
+    "C3dErfParamsDict",
+    "C3dErfParamsDictTagged",
+    "C3dErodeParamsDict",
+    "C3dErodeParamsDictTagged",
+    "C3dExpParamsDict",
+    "C3dExpParamsDictTagged",
+    "C3dExportPatchesAugParamsDict",
+    "C3dExportPatchesAugParamsDictTagged",
+    "C3dExportPatchesParamsDict",
+    "C3dExportPatchesParamsDictTagged",
+    "C3dExtrudeSegParamsDict",
+    "C3dExtrudeSegParamsDictTagged",
+    "C3dFftParamsDict",
+    "C3dFftParamsDictTagged",
+    "C3dFillBackgroundWithNoiseParamsDict",
+    "C3dFillBackgroundWithNoiseParamsDictTagged",
+    "C3dFlipParamsDict",
+    "C3dFlipParamsDictTagged",
+    "C3dFloorParamsDict",
+    "C3dFloorParamsDictTagged",
+    "C3dForeachCompParamsDict",
+    "C3dForeachCompParamsDictTagged",
+    "C3dForeachParamsDict",
+    "C3dForeachParamsDictTagged",
+    "C3dGlmParamsDict",
+    "C3dGlmParamsDictTagged",
+    "C3dGradientParamsDict",
+    "C3dGradientParamsDictTagged",
+    "C3dHelpParamsDict",
+    "C3dHelpParamsDictTagged",
+    "C3dHessianEigenvaluesParamsDict",
+    "C3dHessianEigenvaluesParamsDictTagged",
+    "C3dHessianObjectnessParamsDict",
+    "C3dHessianObjectnessParamsDictTagged",
+    "C3dHistogramMatchParamsDict",
+    "C3dHistogramMatchParamsDictTagged",
+    "C3dHolefillParamsDict",
+    "C3dHolefillParamsDictTagged",
+    "C3dInfoFullParamsDict",
+    "C3dInfoFullParamsDictTagged",
+    "C3dInfoParamsDict",
+    "C3dInfoParamsDictTagged",
+    "C3dInsertParamsDict",
+    "C3dInsertParamsDictTagged",
+    "C3dInterpolationParamsDict",
+    "C3dInterpolationParamsDictTagged",
+    "C3dIterationsParamsDict",
+    "C3dIterationsParamsDictTagged",
+    "C3dLabelOverlapParamsDict",
+    "C3dLabelOverlapParamsDictTagged",
+    "C3dLabelStatisticsParamsDict",
+    "C3dLabelStatisticsParamsDictTagged",
+    "C3dLandmarksToSpheresParamsDict",
+    "C3dLandmarksToSpheresParamsDictTagged",
+    "C3dLaplacianParamsDict",
+    "C3dLaplacianParamsDictTagged",
+    "C3dLevelsetAdvectionParamsDict",
+    "C3dLevelsetAdvectionParamsDictTagged",
+    "C3dLevelsetCurvatureParamsDict",
+    "C3dLevelsetCurvatureParamsDictTagged",
+    "C3dLevelsetParamsDict",
+    "C3dLevelsetParamsDictTagged",
+    "C3dLog10ParamsDict",
+    "C3dLog10ParamsDictTagged",
+    "C3dLogParamsDict",
+    "C3dLogParamsDictTagged",
+    "C3dManualParamsDict",
+    "C3dManualParamsDictTagged",
+    "C3dMatchBoundingBoxParamsDict",
+    "C3dMatchBoundingBoxParamsDictTagged",
+    "C3dMattesMutualInfoParamsDict",
+    "C3dMattesMutualInfoParamsDictTagged",
+    "C3dMaximumParamsDict",
+    "C3dMaximumParamsDictTagged",
+    "C3dMeanFilterParamsDict",
+    "C3dMeanFilterParamsDictTagged",
+    "C3dMeanParamsDict",
+    "C3dMeanParamsDictTagged",
+    "C3dMeanSquareParamsDict",
+    "C3dMeanSquareParamsDictTagged",
+    "C3dMedianFilterParamsDict",
+    "C3dMedianFilterParamsDictTagged",
+    "C3dMergeParamsDict",
+    "C3dMergeParamsDictTagged",
+    "C3dMinimumParamsDict",
+    "C3dMinimumParamsDictTagged",
+    "C3dMixtureModelParamsDict",
+    "C3dMixtureModelParamsDictTagged",
+    "C3dMomentsParamsDict",
+    "C3dMomentsParamsDictTagged",
+    "C3dMulticomponentSplitParamsDict",
+    "C3dMulticomponentSplitParamsDictTagged",
+    "C3dMultiplyParamsDict",
+    "C3dMultiplyParamsDictTagged",
+    "C3dMutualInfoParamsDict",
+    "C3dMutualInfoParamsDictTagged",
+    "C3dN4BiasCorrectionParamsDict",
+    "C3dN4BiasCorrectionParamsDictTagged",
+    "C3dNoCompressParamsDict",
+    "C3dNoCompressParamsDictTagged",
+    "C3dNoMulticomponentSplitParamsDict",
+    "C3dNoMulticomponentSplitParamsDictTagged",
+    "C3dNoiseGaussianParamsDict",
+    "C3dNoiseGaussianParamsDictTagged",
+    "C3dNoisePoissonParamsDict",
+    "C3dNoisePoissonParamsDictTagged",
+    "C3dNoiseSaltPepperParamsDict",
+    "C3dNoiseSaltPepperParamsDictTagged",
+    "C3dNoiseSpeckleParamsDict",
+    "C3dNoiseSpeckleParamsDictTagged",
+    "C3dNormalizeLocalWindowParamsDict",
+    "C3dNormalizeLocalWindowParamsDictTagged",
+    "C3dNormalizedCorrelationParamsDict",
+    "C3dNormalizedCorrelationParamsDictTagged",
+    "C3dNormalizedCrossCorrelationParamsDict",
+    "C3dNormalizedCrossCorrelationParamsDictTagged",
+    "C3dNormalizedMutualInfoParamsDict",
+    "C3dNormalizedMutualInfoParamsDictTagged",
+    "C3dNormpdfParamsDict",
+    "C3dNormpdfParamsDictTagged",
+    "C3dNoroundParamsDict",
+    "C3dNoroundParamsDictTagged",
+    "C3dNospmParamsDict",
+    "C3dNospmParamsDictTagged",
+    "C3dNoverboseParamsDict",
+    "C3dNoverboseParamsDictTagged",
+    "C3dOrient1ParamsDict",
+    "C3dOrient1ParamsDictTagged",
+    "C3dOrientParamsDict",
+    "C3dOrientParamsDictTagged",
+    "C3dOriginParamsDict",
+    "C3dOriginParamsDictTagged",
+    "C3dOriginVoxelCoordParamsDict",
+    "C3dOriginVoxelCoordParamsDictTagged",
+    "C3dOriginVoxelParamsDict",
+    "C3dOriginVoxelParamsDictTagged",
+    "C3dOutputMulticomponentParamsDict",
+    "C3dOutputMulticomponentParamsDictTagged",
+    "C3dOutputMultipleMulticomponentParamsDict",
+    "C3dOutputMultipleMulticomponentParamsDictTagged",
+    "C3dOutputMultipleParamsDict",
+    "C3dOutputMultipleParamsDictTagged",
     "C3dOutputOutputs",
+    "C3dOutputParamsDict",
+    "C3dOutputParamsDictTagged",
     "C3dOutputs",
+    "C3dOverlapParamsDict",
+    "C3dOverlapParamsDictTagged",
+    "C3dOverlayLabelImageParamsDict",
+    "C3dOverlayLabelImageParamsDictTagged",
+    "C3dPadParamsDict",
+    "C3dPadParamsDictTagged",
+    "C3dPadToParamsDict",
+    "C3dPadToParamsDictTagged",
+    "C3dParamsDict",
+    "C3dParamsDictTagged",
+    "C3dPcaParamsDict",
+    "C3dPcaParamsDictTagged",
+    "C3dPercentIntensityModeParamsDict",
+    "C3dPercentIntensityModeParamsDictTagged",
+    "C3dPixelParamsDict",
+    "C3dPixelParamsDictTagged",
+    "C3dPopParamsDict",
+    "C3dPopParamsDictTagged",
+    "C3dPopasParamsDict",
+    "C3dPopasParamsDictTagged",
+    "C3dProbeParamsDict",
+    "C3dProbeParamsDictTagged",
+    "C3dPushParamsDict",
+    "C3dPushParamsDictTagged",
+    "C3dRankParamsDict",
+    "C3dRankParamsDictTagged",
+    "C3dReciprocalParamsDict",
+    "C3dReciprocalParamsDictTagged",
+    "C3dRegionParamsDict",
+    "C3dRegionParamsDictTagged",
+    "C3dReorderParamsDict",
+    "C3dReorderParamsDictTagged",
+    "C3dReplaceParamsDict",
+    "C3dReplaceParamsDictTagged",
+    "C3dResampleIsoParamsDict",
+    "C3dResampleIsoParamsDictTagged",
+    "C3dResampleMmParamsDict",
+    "C3dResampleMmParamsDictTagged",
+    "C3dResampleParamsDict",
+    "C3dResampleParamsDictTagged",
+    "C3dResliceIdentityParamsDict",
+    "C3dResliceIdentityParamsDictTagged",
+    "C3dResliceItkParamsDict",
+    "C3dResliceItkParamsDictTagged",
+    "C3dResliceMatrixParamsDict",
+    "C3dResliceMatrixParamsDictTagged",
+    "C3dRetainLabelsParamsDict",
+    "C3dRetainLabelsParamsDictTagged",
+    "C3dRfApplyParamsDict",
+    "C3dRfApplyParamsDictTagged",
+    "C3dRfParamNousexyzParamsDict",
+    "C3dRfParamNousexyzParamsDictTagged",
+    "C3dRfParamNtreesParamsDict",
+    "C3dRfParamNtreesParamsDictTagged",
+    "C3dRfParamPatchParamsDict",
+    "C3dRfParamPatchParamsDictTagged",
+    "C3dRfParamTreedepthParamsDict",
+    "C3dRfParamTreedepthParamsDictTagged",
+    "C3dRfParamUsexyzParamsDict",
+    "C3dRfParamUsexyzParamsDictTagged",
+    "C3dRfTrainParamsDict",
+    "C3dRfTrainParamsDictTagged",
+    "C3dRgb2hsvParamsDict",
+    "C3dRgb2hsvParamsDictTagged",
+    "C3dRmsParamsDict",
+    "C3dRmsParamsDictTagged",
+    "C3dRoundParamsDict",
+    "C3dRoundParamsDictTagged",
+    "C3dScaleParamsDict",
+    "C3dScaleParamsDictTagged",
+    "C3dSetParamsDict",
+    "C3dSetParamsDictTagged",
+    "C3dSetSform1ParamsDict",
+    "C3dSetSform1ParamsDictTagged",
+    "C3dSetSformParamsDict",
+    "C3dSetSformParamsDictTagged",
+    "C3dSharpenParamsDict",
+    "C3dSharpenParamsDictTagged",
+    "C3dShiftParamsDict",
+    "C3dShiftParamsDictTagged",
+    "C3dSignedDistanceTransformParamsDict",
+    "C3dSignedDistanceTransformParamsDictTagged",
+    "C3dSinParamsDict",
+    "C3dSinParamsDictTagged",
+    "C3dSliceAllParamsDict",
+    "C3dSliceAllParamsDictTagged",
+    "C3dSliceParamsDict",
+    "C3dSliceParamsDictTagged",
+    "C3dSmoothFastParamsDict",
+    "C3dSmoothFastParamsDictTagged",
+    "C3dSmoothParamsDict",
+    "C3dSmoothParamsDictTagged",
+    "C3dSpacingParamsDict",
+    "C3dSpacingParamsDictTagged",
+    "C3dSplitParamsDict",
+    "C3dSplitParamsDictTagged",
+    "C3dSpmParamsDict",
+    "C3dSpmParamsDictTagged",
+    "C3dSqrtParamsDict",
+    "C3dSqrtParamsDictTagged",
+    "C3dStapleParamsDict",
+    "C3dStapleParamsDictTagged",
+    "C3dStretchParamsDict",
+    "C3dStretchParamsDictTagged",
+    "C3dStructureTensorEigenvaluesParamsDict",
+    "C3dStructureTensorEigenvaluesParamsDictTagged",
+    "C3dSubtractParamsDict",
+    "C3dSubtractParamsDictTagged",
+    "C3dSupervoxelParamsDict",
+    "C3dSupervoxelParamsDictTagged",
+    "C3dSwapdimParamsDict",
+    "C3dSwapdimParamsDictTagged",
+    "C3dTestImageParamsDict",
+    "C3dTestImageParamsDictTagged",
+    "C3dTestProbeParamsDict",
+    "C3dTestProbeParamsDictTagged",
+    "C3dThresholdParamsDict",
+    "C3dThresholdParamsDictTagged",
+    "C3dTileParamsDict",
+    "C3dTileParamsDictTagged",
+    "C3dTrimParamsDict",
+    "C3dTrimParamsDictTagged",
+    "C3dTrimToSizeParamsDict",
+    "C3dTrimToSizeParamsDictTagged",
+    "C3dTypeParamsDict",
+    "C3dTypeParamsDictTagged",
+    "C3dVerboseParamsDict",
+    "C3dVerboseParamsDictTagged",
+    "C3dVersionParamsDict",
+    "C3dVersionParamsDictTagged",
+    "C3dVoteLabelParamsDict",
+    "C3dVoteLabelParamsDictTagged",
+    "C3dVoteMrfParamsDict",
+    "C3dVoteMrfParamsDictTagged",
+    "C3dVoteParamsDict",
+    "C3dVoteParamsDictTagged",
+    "C3dVoxelIntegralParamsDict",
+    "C3dVoxelIntegralParamsDictTagged",
+    "C3dVoxelSumParamsDict",
+    "C3dVoxelSumParamsDictTagged",
+    "C3dVoxelwiseRegressionParamsDict",
+    "C3dVoxelwiseRegressionParamsDictTagged",
+    "C3dWarpLabelParamsDict",
+    "C3dWarpLabelParamsDictTagged",
+    "C3dWarpParamsDict",
+    "C3dWarpParamsDictTagged",
+    "C3dWeightedSumParamsDict",
+    "C3dWeightedSumParamsDictTagged",
+    "C3dWeightedSumVoxelwiseParamsDict",
+    "C3dWeightedSumVoxelwiseParamsDictTagged",
+    "C3dWrapParamsDict",
+    "C3dWrapParamsDictTagged",
     "c3d_",
-    "c3d__help_params",
-    "c3d_accum_params",
-    "c3d_acos_params",
-    "c3d_add_params",
-    "c3d_align_landmarks_params",
-    "c3d_anisotropic_diffusion_params",
-    "c3d_antialias_params",
-    "c3d_asin_params",
-    "c3d_atan2_params",
-    "c3d_background_params",
-    "c3d_binarize_params",
-    "c3d_canny_params",
-    "c3d_ceil_params",
-    "c3d_centroid_mark_params",
-    "c3d_centroid_params",
-    "c3d_clear_params",
-    "c3d_clip_params",
-    "c3d_color_map_params",
-    "c3d_compress_params",
-    "c3d_connected_components_params",
-    "c3d_conv_params",
-    "c3d_coordinate_map_physical_params",
-    "c3d_coordinate_map_voxel_params",
-    "c3d_copy_transform_params",
-    "c3d_cos_params",
-    "c3d_create_params",
-    "c3d_dicom_series_list_params",
-    "c3d_dicom_series_read_params",
-    "c3d_dilate_params",
-    "c3d_divide_params",
-    "c3d_duplicate_params",
-    "c3d_endaccum_params",
-    "c3d_endfor_params",
-    "c3d_erf_params",
-    "c3d_erode_params",
+    "c3d__help",
+    "c3d_accum",
+    "c3d_acos",
+    "c3d_add",
+    "c3d_align_landmarks",
+    "c3d_anisotropic_diffusion",
+    "c3d_antialias",
+    "c3d_asin",
+    "c3d_atan2",
+    "c3d_background",
+    "c3d_binarize",
+    "c3d_canny",
+    "c3d_ceil",
+    "c3d_centroid",
+    "c3d_centroid_mark",
+    "c3d_clear",
+    "c3d_clip",
+    "c3d_color_map",
+    "c3d_compress",
+    "c3d_connected_components",
+    "c3d_conv",
+    "c3d_coordinate_map_physical",
+    "c3d_coordinate_map_voxel",
+    "c3d_copy_transform",
+    "c3d_cos",
+    "c3d_create",
+    "c3d_dicom_series_list",
+    "c3d_dicom_series_read",
+    "c3d_dilate",
+    "c3d_divide",
+    "c3d_duplicate",
+    "c3d_endaccum",
+    "c3d_endfor",
+    "c3d_erf",
+    "c3d_erode",
     "c3d_execute",
-    "c3d_exp_params",
-    "c3d_export_patches_aug_params",
-    "c3d_export_patches_params",
-    "c3d_extrude_seg_params",
-    "c3d_fft_params",
-    "c3d_fill_background_with_noise_params",
-    "c3d_flip_params",
-    "c3d_floor_params",
-    "c3d_foreach_comp_params",
-    "c3d_foreach_params",
-    "c3d_glm_params",
-    "c3d_gradient_params",
-    "c3d_hessian_eigenvalues_params",
-    "c3d_hessian_objectness_params",
-    "c3d_histogram_match_params",
-    "c3d_holefill_params",
-    "c3d_info_full_params",
-    "c3d_info_params",
-    "c3d_insert_params",
-    "c3d_interpolation_params",
-    "c3d_iterations_params",
-    "c3d_label_overlap_params",
-    "c3d_label_statistics_params",
-    "c3d_landmarks_to_spheres_params",
-    "c3d_laplacian_params",
-    "c3d_levelset_advection_params",
-    "c3d_levelset_curvature_params",
-    "c3d_levelset_params",
-    "c3d_log10_params",
-    "c3d_log_params",
-    "c3d_manual_params",
-    "c3d_match_bounding_box_params",
-    "c3d_mattes_mutual_info_params",
-    "c3d_maximum_params",
-    "c3d_mean_filter_params",
-    "c3d_mean_params",
-    "c3d_mean_square_params",
-    "c3d_median_filter_params",
-    "c3d_merge_params",
-    "c3d_minimum_params",
-    "c3d_mixture_model_params",
-    "c3d_moments_params",
-    "c3d_multicomponent_split_params",
-    "c3d_multiply_params",
-    "c3d_mutual_info_params",
-    "c3d_n4_bias_correction_params",
-    "c3d_no_compress_params",
-    "c3d_no_multicomponent_split_params",
-    "c3d_noise_gaussian_params",
-    "c3d_noise_poisson_params",
-    "c3d_noise_salt_pepper_params",
-    "c3d_noise_speckle_params",
-    "c3d_normalize_local_window_params",
-    "c3d_normalized_correlation_params",
-    "c3d_normalized_cross_correlation_params",
-    "c3d_normalized_mutual_info_params",
-    "c3d_normpdf_params",
-    "c3d_noround_params",
-    "c3d_nospm_params",
-    "c3d_noverbose_params",
-    "c3d_orient_1_params",
-    "c3d_orient_params",
-    "c3d_origin_params",
-    "c3d_origin_voxel_coord_params",
-    "c3d_origin_voxel_params",
-    "c3d_output_multicomponent_params",
-    "c3d_output_multiple_multicomponent_params",
-    "c3d_output_multiple_params",
-    "c3d_output_params",
-    "c3d_overlap_params",
-    "c3d_overlay_label_image_params",
-    "c3d_pad_params",
-    "c3d_pad_to_params",
+    "c3d_exp",
+    "c3d_export_patches",
+    "c3d_export_patches_aug",
+    "c3d_extrude_seg",
+    "c3d_fft",
+    "c3d_fill_background_with_noise",
+    "c3d_flip",
+    "c3d_floor",
+    "c3d_foreach",
+    "c3d_foreach_comp",
+    "c3d_glm",
+    "c3d_gradient",
+    "c3d_hessian_eigenvalues",
+    "c3d_hessian_objectness",
+    "c3d_histogram_match",
+    "c3d_holefill",
+    "c3d_info",
+    "c3d_info_full",
+    "c3d_insert",
+    "c3d_interpolation",
+    "c3d_iterations",
+    "c3d_label_overlap",
+    "c3d_label_statistics",
+    "c3d_landmarks_to_spheres",
+    "c3d_laplacian",
+    "c3d_levelset",
+    "c3d_levelset_advection",
+    "c3d_levelset_curvature",
+    "c3d_log",
+    "c3d_log10",
+    "c3d_manual",
+    "c3d_match_bounding_box",
+    "c3d_mattes_mutual_info",
+    "c3d_maximum",
+    "c3d_mean",
+    "c3d_mean_filter",
+    "c3d_mean_square",
+    "c3d_median_filter",
+    "c3d_merge",
+    "c3d_minimum",
+    "c3d_mixture_model",
+    "c3d_moments",
+    "c3d_multicomponent_split",
+    "c3d_multiply",
+    "c3d_mutual_info",
+    "c3d_n4_bias_correction",
+    "c3d_no_compress",
+    "c3d_no_multicomponent_split",
+    "c3d_noise_gaussian",
+    "c3d_noise_poisson",
+    "c3d_noise_salt_pepper",
+    "c3d_noise_speckle",
+    "c3d_normalize_local_window",
+    "c3d_normalized_correlation",
+    "c3d_normalized_cross_correlation",
+    "c3d_normalized_mutual_info",
+    "c3d_normpdf",
+    "c3d_noround",
+    "c3d_nospm",
+    "c3d_noverbose",
+    "c3d_orient",
+    "c3d_orient_1",
+    "c3d_origin",
+    "c3d_origin_voxel",
+    "c3d_origin_voxel_coord",
+    "c3d_output",
+    "c3d_output_multicomponent",
+    "c3d_output_multiple",
+    "c3d_output_multiple_multicomponent",
+    "c3d_overlap",
+    "c3d_overlay_label_image",
+    "c3d_pad",
+    "c3d_pad_to",
     "c3d_params",
-    "c3d_pca_params",
-    "c3d_percent_intensity_mode_params",
-    "c3d_pixel_params",
-    "c3d_pop_params",
-    "c3d_popas_params",
-    "c3d_probe_params",
-    "c3d_push_params",
-    "c3d_rank_params",
-    "c3d_reciprocal_params",
-    "c3d_region_params",
-    "c3d_reorder_params",
-    "c3d_replace_params",
-    "c3d_resample_iso_params",
-    "c3d_resample_mm_params",
-    "c3d_resample_params",
-    "c3d_reslice_identity_params",
-    "c3d_reslice_itk_params",
-    "c3d_reslice_matrix_params",
-    "c3d_retain_labels_params",
-    "c3d_rf_apply_params",
-    "c3d_rf_param_nousexyz_params",
-    "c3d_rf_param_ntrees_params",
-    "c3d_rf_param_patch_params",
-    "c3d_rf_param_treedepth_params",
-    "c3d_rf_param_usexyz_params",
-    "c3d_rf_train_params",
-    "c3d_rgb2hsv_params",
-    "c3d_rms_params",
-    "c3d_round_params",
-    "c3d_scale_params",
-    "c3d_set_params",
-    "c3d_set_sform_1_params",
-    "c3d_set_sform_params",
-    "c3d_sharpen_params",
-    "c3d_shift_params",
-    "c3d_signed_distance_transform_params",
-    "c3d_sin_params",
-    "c3d_slice_all_params",
-    "c3d_slice_params",
-    "c3d_smooth_fast_params",
-    "c3d_smooth_params",
-    "c3d_spacing_params",
-    "c3d_split_params",
-    "c3d_spm_params",
-    "c3d_sqrt_params",
-    "c3d_staple_params",
-    "c3d_stretch_params",
-    "c3d_structure_tensor_eigenvalues_params",
-    "c3d_subtract_params",
-    "c3d_supervoxel_params",
-    "c3d_swapdim_params",
-    "c3d_test_image_params",
-    "c3d_test_probe_params",
-    "c3d_threshold_params",
-    "c3d_tile_params",
-    "c3d_trim_params",
-    "c3d_trim_to_size_params",
-    "c3d_type_params",
-    "c3d_verbose_params",
-    "c3d_version_params",
-    "c3d_vote_label_params",
-    "c3d_vote_mrf_params",
-    "c3d_vote_params",
-    "c3d_voxel_integral_params",
-    "c3d_voxel_sum_params",
-    "c3d_voxelwise_regression_params",
-    "c3d_warp_label_params",
-    "c3d_warp_params",
-    "c3d_weighted_sum_params",
-    "c3d_weighted_sum_voxelwise_params",
-    "c3d_wrap_params",
+    "c3d_pca",
+    "c3d_percent_intensity_mode",
+    "c3d_pixel",
+    "c3d_pop",
+    "c3d_popas",
+    "c3d_probe",
+    "c3d_push",
+    "c3d_rank",
+    "c3d_reciprocal",
+    "c3d_region",
+    "c3d_reorder",
+    "c3d_replace",
+    "c3d_resample",
+    "c3d_resample_iso",
+    "c3d_resample_mm",
+    "c3d_reslice_identity",
+    "c3d_reslice_itk",
+    "c3d_reslice_matrix",
+    "c3d_retain_labels",
+    "c3d_rf_apply",
+    "c3d_rf_param_nousexyz",
+    "c3d_rf_param_ntrees",
+    "c3d_rf_param_patch",
+    "c3d_rf_param_treedepth",
+    "c3d_rf_param_usexyz",
+    "c3d_rf_train",
+    "c3d_rgb2hsv",
+    "c3d_rms",
+    "c3d_round",
+    "c3d_scale",
+    "c3d_set",
+    "c3d_set_sform",
+    "c3d_set_sform_1",
+    "c3d_sharpen",
+    "c3d_shift",
+    "c3d_signed_distance_transform",
+    "c3d_sin",
+    "c3d_slice",
+    "c3d_slice_all",
+    "c3d_smooth",
+    "c3d_smooth_fast",
+    "c3d_spacing",
+    "c3d_split",
+    "c3d_spm",
+    "c3d_sqrt",
+    "c3d_staple",
+    "c3d_stretch",
+    "c3d_structure_tensor_eigenvalues",
+    "c3d_subtract",
+    "c3d_supervoxel",
+    "c3d_swapdim",
+    "c3d_test_image",
+    "c3d_test_probe",
+    "c3d_threshold",
+    "c3d_tile",
+    "c3d_trim",
+    "c3d_trim_to_size",
+    "c3d_type",
+    "c3d_verbose",
+    "c3d_version",
+    "c3d_vote",
+    "c3d_vote_label",
+    "c3d_vote_mrf",
+    "c3d_voxel_integral",
+    "c3d_voxel_sum",
+    "c3d_voxelwise_regression",
+    "c3d_warp",
+    "c3d_warp_label",
+    "c3d_weighted_sum",
+    "c3d_weighted_sum_voxelwise",
+    "c3d_wrap",
 ]

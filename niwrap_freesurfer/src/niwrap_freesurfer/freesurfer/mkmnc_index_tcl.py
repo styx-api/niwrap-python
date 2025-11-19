@@ -13,12 +13,12 @@ MKMNC_INDEX_TCL_METADATA = Metadata(
 )
 
 
-MkmncIndexTclParameters = typing.TypedDict('MkmncIndexTclParameters', {
+MkmncIndexTclParamsDict = typing.TypedDict('MkmncIndexTclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mkmnc_index.tcl"]],
     "infile": InputPathType,
     "outfile": str,
 })
-MkmncIndexTclParametersTagged = typing.TypedDict('MkmncIndexTclParametersTagged', {
+MkmncIndexTclParamsDictTagged = typing.TypedDict('MkmncIndexTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mkmnc_index.tcl"],
     "infile": InputPathType,
     "outfile": str,
@@ -27,7 +27,7 @@ MkmncIndexTclParametersTagged = typing.TypedDict('MkmncIndexTclParametersTagged'
 
 class MkmncIndexTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MkmncIndexTclParameters(...)`.
+    Output object returned when calling `MkmncIndexTclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MkmncIndexTclOutputs(typing.NamedTuple):
 def mkmnc_index_tcl_params(
     infile: InputPathType,
     outfile: str,
-) -> MkmncIndexTclParametersTagged:
+) -> MkmncIndexTclParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mkmnc_index_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MkmncIndexTclParameters` object.
+    `MkmncIndexTclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mkmnc_index_tcl_validate(
 
 
 def mkmnc_index_tcl_cargs(
-    params: MkmncIndexTclParameters,
+    params: MkmncIndexTclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def mkmnc_index_tcl_cargs(
 
 
 def mkmnc_index_tcl_outputs(
-    params: MkmncIndexTclParameters,
+    params: MkmncIndexTclParamsDict,
     execution: Execution,
 ) -> MkmncIndexTclOutputs:
     """
@@ -119,7 +119,7 @@ def mkmnc_index_tcl_outputs(
 
 
 def mkmnc_index_tcl_execute(
-    params: MkmncIndexTclParameters,
+    params: MkmncIndexTclParamsDict,
     runner: Runner | None = None,
 ) -> MkmncIndexTclOutputs:
     """
@@ -178,6 +178,8 @@ def mkmnc_index_tcl(
 __all__ = [
     "MKMNC_INDEX_TCL_METADATA",
     "MkmncIndexTclOutputs",
+    "MkmncIndexTclParamsDict",
+    "MkmncIndexTclParamsDictTagged",
     "mkmnc_index_tcl",
     "mkmnc_index_tcl_execute",
     "mkmnc_index_tcl_params",

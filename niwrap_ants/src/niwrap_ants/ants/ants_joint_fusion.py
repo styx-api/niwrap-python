@@ -13,7 +13,7 @@ ANTS_JOINT_FUSION_METADATA = Metadata(
 )
 
 
-AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
+AntsJointFusionParamsDict = typing.TypedDict('AntsJointFusionParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsJointFusion"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[InputPathType],
@@ -30,7 +30,7 @@ AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
     "output": str,
     "verbose": typing.NotRequired[bool | None],
 })
-AntsJointFusionParametersTagged = typing.TypedDict('AntsJointFusionParametersTagged', {
+AntsJointFusionParamsDictTagged = typing.TypedDict('AntsJointFusionParamsDictTagged', {
     "@type": typing.Literal["ants/antsJointFusion"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[InputPathType],
@@ -51,7 +51,7 @@ AntsJointFusionParametersTagged = typing.TypedDict('AntsJointFusionParametersTag
 
 class AntsJointFusionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsJointFusionParameters(...)`.
+    Output object returned when calling `AntsJointFusionParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +80,7 @@ def ants_joint_fusion_params(
     exclusion_image: InputPathType | None = None,
     mask_image: InputPathType | None = None,
     verbose: bool | None = None,
-) -> AntsJointFusionParametersTagged:
+) -> AntsJointFusionParamsDictTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def ants_joint_fusion_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsJointFusionParameters` object.
+    `AntsJointFusionParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -218,7 +218,7 @@ def ants_joint_fusion_validate(
 
 
 def ants_joint_fusion_cargs(
-    params: AntsJointFusionParameters,
+    params: AntsJointFusionParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -302,7 +302,7 @@ def ants_joint_fusion_cargs(
 
 
 def ants_joint_fusion_outputs(
-    params: AntsJointFusionParameters,
+    params: AntsJointFusionParamsDict,
     execution: Execution,
 ) -> AntsJointFusionOutputs:
     """
@@ -325,7 +325,7 @@ def ants_joint_fusion_outputs(
 
 
 def ants_joint_fusion_execute(
-    params: AntsJointFusionParameters,
+    params: AntsJointFusionParamsDict,
     runner: Runner | None = None,
 ) -> AntsJointFusionOutputs:
     """
@@ -441,6 +441,8 @@ def ants_joint_fusion(
 __all__ = [
     "ANTS_JOINT_FUSION_METADATA",
     "AntsJointFusionOutputs",
+    "AntsJointFusionParamsDict",
+    "AntsJointFusionParamsDictTagged",
     "ants_joint_fusion",
     "ants_joint_fusion_execute",
     "ants_joint_fusion_params",

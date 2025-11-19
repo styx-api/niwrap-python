@@ -13,7 +13,7 @@ MRI_REORIENT_LR_CSH_METADATA = Metadata(
 )
 
 
-MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
+MriReorientLrCshParamsDict = typing.TypedDict('MriReorientLrCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reorient_LR.csh"]],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -23,7 +23,7 @@ MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
     "version": bool,
     "help": bool,
 })
-MriReorientLrCshParametersTagged = typing.TypedDict('MriReorientLrCshParametersTagged', {
+MriReorientLrCshParamsDictTagged = typing.TypedDict('MriReorientLrCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_reorient_LR.csh"],
     "input_vol": InputPathType,
     "output_vol": str,
@@ -37,7 +37,7 @@ MriReorientLrCshParametersTagged = typing.TypedDict('MriReorientLrCshParametersT
 
 class MriReorientLrCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriReorientLrCshParameters(...)`.
+    Output object returned when calling `MriReorientLrCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mri_reorient_lr_csh_params(
     output_registration: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MriReorientLrCshParametersTagged:
+) -> MriReorientLrCshParamsDictTagged:
     """
     Build parameters.
     
@@ -87,7 +87,7 @@ def mri_reorient_lr_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriReorientLrCshParameters` object.
+    `MriReorientLrCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -125,7 +125,7 @@ def mri_reorient_lr_csh_validate(
 
 
 def mri_reorient_lr_csh_cargs(
-    params: MriReorientLrCshParameters,
+    params: MriReorientLrCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -161,7 +161,7 @@ def mri_reorient_lr_csh_cargs(
 
 
 def mri_reorient_lr_csh_outputs(
-    params: MriReorientLrCshParameters,
+    params: MriReorientLrCshParamsDict,
     execution: Execution,
 ) -> MriReorientLrCshOutputs:
     """
@@ -181,7 +181,7 @@ def mri_reorient_lr_csh_outputs(
 
 
 def mri_reorient_lr_csh_execute(
-    params: MriReorientLrCshParameters,
+    params: MriReorientLrCshParamsDict,
     runner: Runner | None = None,
 ) -> MriReorientLrCshOutputs:
     """
@@ -256,6 +256,8 @@ def mri_reorient_lr_csh(
 __all__ = [
     "MRI_REORIENT_LR_CSH_METADATA",
     "MriReorientLrCshOutputs",
+    "MriReorientLrCshParamsDict",
+    "MriReorientLrCshParamsDictTagged",
     "mri_reorient_lr_csh",
     "mri_reorient_lr_csh_execute",
     "mri_reorient_lr_csh_params",

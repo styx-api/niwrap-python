@@ -13,13 +13,13 @@ ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
 )
 
 
-AdjunctCombineStrPyParameters = typing.TypedDict('AdjunctCombineStrPyParameters', {
+AdjunctCombineStrPyParamsDict = typing.TypedDict('AdjunctCombineStrPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/adjunct_combine_str.py"]],
     "output_file": str,
     "upper_index": float,
     "string_selectors": list[str],
 })
-AdjunctCombineStrPyParametersTagged = typing.TypedDict('AdjunctCombineStrPyParametersTagged', {
+AdjunctCombineStrPyParamsDictTagged = typing.TypedDict('AdjunctCombineStrPyParamsDictTagged', {
     "@type": typing.Literal["afni/adjunct_combine_str.py"],
     "output_file": str,
     "upper_index": float,
@@ -29,7 +29,7 @@ AdjunctCombineStrPyParametersTagged = typing.TypedDict('AdjunctCombineStrPyParam
 
 class AdjunctCombineStrPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AdjunctCombineStrPyParameters(...)`.
+    Output object returned when calling `AdjunctCombineStrPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def adjunct_combine_str_py_params(
     output_file: str,
     upper_index: float,
     string_selectors: list[str],
-) -> AdjunctCombineStrPyParametersTagged:
+) -> AdjunctCombineStrPyParamsDictTagged:
     """
     Build parameters.
     
@@ -68,7 +68,7 @@ def adjunct_combine_str_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AdjunctCombineStrPyParameters` object.
+    `AdjunctCombineStrPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -93,7 +93,7 @@ def adjunct_combine_str_py_validate(
 
 
 def adjunct_combine_str_py_cargs(
-    params: AdjunctCombineStrPyParameters,
+    params: AdjunctCombineStrPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -114,7 +114,7 @@ def adjunct_combine_str_py_cargs(
 
 
 def adjunct_combine_str_py_outputs(
-    params: AdjunctCombineStrPyParameters,
+    params: AdjunctCombineStrPyParamsDict,
     execution: Execution,
 ) -> AdjunctCombineStrPyOutputs:
     """
@@ -134,7 +134,7 @@ def adjunct_combine_str_py_outputs(
 
 
 def adjunct_combine_str_py_execute(
-    params: AdjunctCombineStrPyParameters,
+    params: AdjunctCombineStrPyParamsDict,
     runner: Runner | None = None,
 ) -> AdjunctCombineStrPyOutputs:
     """
@@ -200,6 +200,8 @@ def adjunct_combine_str_py(
 __all__ = [
     "ADJUNCT_COMBINE_STR_PY_METADATA",
     "AdjunctCombineStrPyOutputs",
+    "AdjunctCombineStrPyParamsDict",
+    "AdjunctCombineStrPyParamsDictTagged",
     "adjunct_combine_str_py",
     "adjunct_combine_str_py_execute",
     "adjunct_combine_str_py_params",

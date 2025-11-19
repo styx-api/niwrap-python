@@ -13,13 +13,13 @@ APSEARCH_METADATA = Metadata(
 )
 
 
-ApsearchParameters = typing.TypedDict('ApsearchParameters', {
+ApsearchParamsDict = typing.TypedDict('ApsearchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/apsearch"]],
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,
 })
-ApsearchParametersTagged = typing.TypedDict('ApsearchParametersTagged', {
+ApsearchParamsDictTagged = typing.TypedDict('ApsearchParamsDictTagged', {
     "@type": typing.Literal["afni/apsearch"],
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ ApsearchParametersTagged = typing.TypedDict('ApsearchParametersTagged', {
 
 class ApsearchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ApsearchParameters(...)`.
+    Output object returned when calling `ApsearchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def apsearch_params(
     search_term: str,
     file_output: str | None = None,
     verbose: bool = False,
-) -> ApsearchParametersTagged:
+) -> ApsearchParamsDictTagged:
     """
     Build parameters.
     
@@ -67,7 +67,7 @@ def apsearch_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ApsearchParameters` object.
+    `ApsearchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def apsearch_validate(
 
 
 def apsearch_cargs(
-    params: ApsearchParameters,
+    params: ApsearchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -111,7 +111,7 @@ def apsearch_cargs(
 
 
 def apsearch_outputs(
-    params: ApsearchParameters,
+    params: ApsearchParamsDict,
     execution: Execution,
 ) -> ApsearchOutputs:
     """
@@ -131,7 +131,7 @@ def apsearch_outputs(
 
 
 def apsearch_execute(
-    params: ApsearchParameters,
+    params: ApsearchParamsDict,
     runner: Runner | None = None,
 ) -> ApsearchOutputs:
     """
@@ -193,6 +193,8 @@ def apsearch(
 __all__ = [
     "APSEARCH_METADATA",
     "ApsearchOutputs",
+    "ApsearchParamsDict",
+    "ApsearchParamsDictTagged",
     "apsearch",
     "apsearch_execute",
     "apsearch_params",

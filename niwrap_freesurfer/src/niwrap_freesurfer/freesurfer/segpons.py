@@ -13,7 +13,7 @@ SEGPONS_METADATA = Metadata(
 )
 
 
-SegponsParameters = typing.TypedDict('SegponsParameters', {
+SegponsParamsDict = typing.TypedDict('SegponsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segpons"]],
     "subject": str,
     "aseg": bool,
@@ -22,7 +22,7 @@ SegponsParameters = typing.TypedDict('SegponsParameters', {
     "no_refine": bool,
     "pons152_mask": typing.NotRequired[InputPathType | None],
 })
-SegponsParametersTagged = typing.TypedDict('SegponsParametersTagged', {
+SegponsParamsDictTagged = typing.TypedDict('SegponsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segpons"],
     "subject": str,
     "aseg": bool,
@@ -35,7 +35,7 @@ SegponsParametersTagged = typing.TypedDict('SegponsParametersTagged', {
 
 class SegponsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegponsParameters(...)`.
+    Output object returned when calling `SegponsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def segpons_params(
     seg: InputPathType | None = None,
     no_refine: bool = False,
     pons152_mask: InputPathType | None = None,
-) -> SegponsParametersTagged:
+) -> SegponsParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def segpons_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegponsParameters` object.
+    `SegponsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def segpons_validate(
 
 
 def segpons_cargs(
-    params: SegponsParameters,
+    params: SegponsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -153,7 +153,7 @@ def segpons_cargs(
 
 
 def segpons_outputs(
-    params: SegponsParameters,
+    params: SegponsParamsDict,
     execution: Execution,
 ) -> SegponsOutputs:
     """
@@ -173,7 +173,7 @@ def segpons_outputs(
 
 
 def segpons_execute(
-    params: SegponsParameters,
+    params: SegponsParamsDict,
     runner: Runner | None = None,
 ) -> SegponsOutputs:
     """
@@ -244,6 +244,8 @@ def segpons(
 __all__ = [
     "SEGPONS_METADATA",
     "SegponsOutputs",
+    "SegponsParamsDict",
+    "SegponsParamsDictTagged",
     "segpons",
     "segpons_execute",
     "segpons_params",

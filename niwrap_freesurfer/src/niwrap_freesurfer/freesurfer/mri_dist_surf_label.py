@@ -13,13 +13,13 @@ MRI_DIST_SURF_LABEL_METADATA = Metadata(
 )
 
 
-MriDistSurfLabelParameters = typing.TypedDict('MriDistSurfLabelParameters', {
+MriDistSurfLabelParamsDict = typing.TypedDict('MriDistSurfLabelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dist_surf_label"]],
     "surface": InputPathType,
     "label_file": InputPathType,
     "output": str,
 })
-MriDistSurfLabelParametersTagged = typing.TypedDict('MriDistSurfLabelParametersTagged', {
+MriDistSurfLabelParamsDictTagged = typing.TypedDict('MriDistSurfLabelParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_dist_surf_label"],
     "surface": InputPathType,
     "label_file": InputPathType,
@@ -29,7 +29,7 @@ MriDistSurfLabelParametersTagged = typing.TypedDict('MriDistSurfLabelParametersT
 
 class MriDistSurfLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriDistSurfLabelParameters(...)`.
+    Output object returned when calling `MriDistSurfLabelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_dist_surf_label_params(
     surface: InputPathType,
     label_file: InputPathType,
     output: str,
-) -> MriDistSurfLabelParametersTagged:
+) -> MriDistSurfLabelParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_dist_surf_label_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriDistSurfLabelParameters` object.
+    `MriDistSurfLabelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_dist_surf_label_validate(
 
 
 def mri_dist_surf_label_cargs(
-    params: MriDistSurfLabelParameters,
+    params: MriDistSurfLabelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_dist_surf_label_cargs(
 
 
 def mri_dist_surf_label_outputs(
-    params: MriDistSurfLabelParameters,
+    params: MriDistSurfLabelParamsDict,
     execution: Execution,
 ) -> MriDistSurfLabelOutputs:
     """
@@ -129,7 +129,7 @@ def mri_dist_surf_label_outputs(
 
 
 def mri_dist_surf_label_execute(
-    params: MriDistSurfLabelParameters,
+    params: MriDistSurfLabelParamsDict,
     runner: Runner | None = None,
 ) -> MriDistSurfLabelOutputs:
     """
@@ -191,6 +191,8 @@ def mri_dist_surf_label(
 __all__ = [
     "MRI_DIST_SURF_LABEL_METADATA",
     "MriDistSurfLabelOutputs",
+    "MriDistSurfLabelParamsDict",
+    "MriDistSurfLabelParamsDictTagged",
     "mri_dist_surf_label",
     "mri_dist_surf_label_execute",
     "mri_dist_surf_label_params",

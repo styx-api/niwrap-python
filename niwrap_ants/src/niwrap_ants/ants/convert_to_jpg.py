@@ -13,12 +13,12 @@ CONVERT_TO_JPG_METADATA = Metadata(
 )
 
 
-ConvertToJpgParameters = typing.TypedDict('ConvertToJpgParameters', {
+ConvertToJpgParamsDict = typing.TypedDict('ConvertToJpgParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/ConvertToJpg"]],
     "infile": InputPathType,
     "outfile": str,
 })
-ConvertToJpgParametersTagged = typing.TypedDict('ConvertToJpgParametersTagged', {
+ConvertToJpgParamsDictTagged = typing.TypedDict('ConvertToJpgParamsDictTagged', {
     "@type": typing.Literal["ants/ConvertToJpg"],
     "infile": InputPathType,
     "outfile": str,
@@ -27,7 +27,7 @@ ConvertToJpgParametersTagged = typing.TypedDict('ConvertToJpgParametersTagged', 
 
 class ConvertToJpgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ConvertToJpgParameters(...)`.
+    Output object returned when calling `ConvertToJpgParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class ConvertToJpgOutputs(typing.NamedTuple):
 def convert_to_jpg_params(
     infile: InputPathType,
     outfile: str,
-) -> ConvertToJpgParametersTagged:
+) -> ConvertToJpgParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def convert_to_jpg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ConvertToJpgParameters` object.
+    `ConvertToJpgParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def convert_to_jpg_validate(
 
 
 def convert_to_jpg_cargs(
-    params: ConvertToJpgParameters,
+    params: ConvertToJpgParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def convert_to_jpg_cargs(
 
 
 def convert_to_jpg_outputs(
-    params: ConvertToJpgParameters,
+    params: ConvertToJpgParamsDict,
     execution: Execution,
 ) -> ConvertToJpgOutputs:
     """
@@ -119,7 +119,7 @@ def convert_to_jpg_outputs(
 
 
 def convert_to_jpg_execute(
-    params: ConvertToJpgParameters,
+    params: ConvertToJpgParamsDict,
     runner: Runner | None = None,
 ) -> ConvertToJpgOutputs:
     """
@@ -178,6 +178,8 @@ def convert_to_jpg(
 __all__ = [
     "CONVERT_TO_JPG_METADATA",
     "ConvertToJpgOutputs",
+    "ConvertToJpgParamsDict",
+    "ConvertToJpgParamsDictTagged",
     "convert_to_jpg",
     "convert_to_jpg_execute",
     "convert_to_jpg_params",

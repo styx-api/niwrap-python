@@ -13,7 +13,7 @@ WPNG_METADATA = Metadata(
 )
 
 
-WpngParameters = typing.TypedDict('WpngParameters', {
+WpngParamsDict = typing.TypedDict('WpngParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/wpng"]],
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ WpngParameters = typing.TypedDict('WpngParameters', {
     "time_flag": bool,
     "interlace_flag": bool,
 })
-WpngParametersTagged = typing.TypedDict('WpngParametersTagged', {
+WpngParamsDictTagged = typing.TypedDict('WpngParamsDictTagged', {
     "@type": typing.Literal["fsl/wpng"],
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ WpngParametersTagged = typing.TypedDict('WpngParametersTagged', {
 
 class WpngOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `WpngParameters(...)`.
+    Output object returned when calling `WpngParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def wpng_params(
     text_flag: bool = False,
     time_flag: bool = False,
     interlace_flag: bool = False,
-) -> WpngParametersTagged:
+) -> WpngParamsDictTagged:
     """
     Build parameters.
     
@@ -90,7 +90,7 @@ def wpng_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `WpngParameters`
+    Validate parameters. Throws an error if `params` is not a valid `WpngParamsDict`
     object.
     
     Args:
@@ -122,7 +122,7 @@ def wpng_validate(
 
 
 def wpng_cargs(
-    params: WpngParameters,
+    params: WpngParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -158,7 +158,7 @@ def wpng_cargs(
 
 
 def wpng_outputs(
-    params: WpngParameters,
+    params: WpngParamsDict,
     execution: Execution,
 ) -> WpngOutputs:
     """
@@ -178,7 +178,7 @@ def wpng_outputs(
 
 
 def wpng_execute(
-    params: WpngParameters,
+    params: WpngParamsDict,
     runner: Runner | None = None,
 ) -> WpngOutputs:
     """
@@ -256,6 +256,8 @@ def wpng(
 __all__ = [
     "WPNG_METADATA",
     "WpngOutputs",
+    "WpngParamsDict",
+    "WpngParamsDictTagged",
     "wpng",
     "wpng_execute",
     "wpng_params",

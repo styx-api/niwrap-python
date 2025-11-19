@@ -13,14 +13,14 @@ MRI_LABEL_HISTO_METADATA = Metadata(
 )
 
 
-MriLabelHistoParameters = typing.TypedDict('MriLabelHistoParameters', {
+MriLabelHistoParamsDict = typing.TypedDict('MriLabelHistoParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_histo"]],
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
     "label": float,
     "output": str,
 })
-MriLabelHistoParametersTagged = typing.TypedDict('MriLabelHistoParametersTagged', {
+MriLabelHistoParamsDictTagged = typing.TypedDict('MriLabelHistoParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_label_histo"],
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
@@ -31,7 +31,7 @@ MriLabelHistoParametersTagged = typing.TypedDict('MriLabelHistoParametersTagged'
 
 class MriLabelHistoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLabelHistoParameters(...)`.
+    Output object returned when calling `MriLabelHistoParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def mri_label_histo_params(
     labeled_volume: InputPathType,
     label: float,
     output: str,
-) -> MriLabelHistoParametersTagged:
+) -> MriLabelHistoParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def mri_label_histo_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLabelHistoParameters` object.
+    `MriLabelHistoParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def mri_label_histo_validate(
 
 
 def mri_label_histo_cargs(
-    params: MriLabelHistoParameters,
+    params: MriLabelHistoParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def mri_label_histo_cargs(
 
 
 def mri_label_histo_outputs(
-    params: MriLabelHistoParameters,
+    params: MriLabelHistoParamsDict,
     execution: Execution,
 ) -> MriLabelHistoOutputs:
     """
@@ -139,7 +139,7 @@ def mri_label_histo_outputs(
 
 
 def mri_label_histo_execute(
-    params: MriLabelHistoParameters,
+    params: MriLabelHistoParamsDict,
     runner: Runner | None = None,
 ) -> MriLabelHistoOutputs:
     """
@@ -204,6 +204,8 @@ def mri_label_histo(
 __all__ = [
     "MRI_LABEL_HISTO_METADATA",
     "MriLabelHistoOutputs",
+    "MriLabelHistoParamsDict",
+    "MriLabelHistoParamsDictTagged",
     "mri_label_histo",
     "mri_label_histo_execute",
     "mri_label_histo_params",

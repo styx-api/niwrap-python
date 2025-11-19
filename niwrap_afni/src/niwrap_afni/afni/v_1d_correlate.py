@@ -13,7 +13,7 @@ V_1D_CORRELATE_METADATA = Metadata(
 )
 
 
-V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
+V1dCorrelateParamsDict = typing.TypedDict('V1dCorrelateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dCorrelate"]],
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
@@ -25,7 +25,7 @@ V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
     "quadrant": bool,
     "input_files": list[InputPathType],
 })
-V1dCorrelateParametersTagged = typing.TypedDict('V1dCorrelateParametersTagged', {
+V1dCorrelateParamsDictTagged = typing.TypedDict('V1dCorrelateParamsDictTagged', {
     "@type": typing.Literal["afni/1dCorrelate"],
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ V1dCorrelateParametersTagged = typing.TypedDict('V1dCorrelateParametersTagged', 
 
 class V1dCorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dCorrelateParameters(...)`.
+    Output object returned when calling `V1dCorrelateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -57,7 +57,7 @@ def v_1d_correlate_params(
     pearson: bool = False,
     spearman: bool = False,
     quadrant: bool = False,
-) -> V1dCorrelateParametersTagged:
+) -> V1dCorrelateParamsDictTagged:
     """
     Build parameters.
     
@@ -97,7 +97,7 @@ def v_1d_correlate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dCorrelateParameters` object.
+    `V1dCorrelateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -146,7 +146,7 @@ def v_1d_correlate_validate(
 
 
 def v_1d_correlate_cargs(
-    params: V1dCorrelateParameters,
+    params: V1dCorrelateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -187,7 +187,7 @@ def v_1d_correlate_cargs(
 
 
 def v_1d_correlate_outputs(
-    params: V1dCorrelateParameters,
+    params: V1dCorrelateParamsDict,
     execution: Execution,
 ) -> V1dCorrelateOutputs:
     """
@@ -206,7 +206,7 @@ def v_1d_correlate_outputs(
 
 
 def v_1d_correlate_execute(
-    params: V1dCorrelateParameters,
+    params: V1dCorrelateParamsDict,
     runner: Runner | None = None,
 ) -> V1dCorrelateOutputs:
     """
@@ -288,6 +288,8 @@ def v_1d_correlate(
 
 __all__ = [
     "V1dCorrelateOutputs",
+    "V1dCorrelateParamsDict",
+    "V1dCorrelateParamsDictTagged",
     "V_1D_CORRELATE_METADATA",
     "v_1d_correlate",
     "v_1d_correlate_execute",

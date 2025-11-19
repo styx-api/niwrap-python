@@ -13,7 +13,7 @@ MRIS_THICKNESS_DIFF_METADATA = Metadata(
 )
 
 
-MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
+MrisThicknessDiffParamsDict = typing.TypedDict('MrisThicknessDiffParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_diff"]],
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
     "log_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
 })
-MrisThicknessDiffParametersTagged = typing.TypedDict('MrisThicknessDiffParametersTagged', {
+MrisThicknessDiffParamsDictTagged = typing.TypedDict('MrisThicknessDiffParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_thickness_diff"],
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ MrisThicknessDiffParametersTagged = typing.TypedDict('MrisThicknessDiffParameter
 
 class MrisThicknessDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisThicknessDiffParameters(...)`.
+    Output object returned when calling `MrisThicknessDiffParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ def mris_thickness_diff_params(
     abs_: bool = False,
     log_file: InputPathType | None = None,
     subject_name: str | None = None,
-) -> MrisThicknessDiffParametersTagged:
+) -> MrisThicknessDiffParamsDictTagged:
     """
     Build parameters.
     
@@ -127,7 +127,7 @@ def mris_thickness_diff_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisThicknessDiffParameters` object.
+    `MrisThicknessDiffParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,7 +180,7 @@ def mris_thickness_diff_validate(
 
 
 def mris_thickness_diff_cargs(
-    params: MrisThicknessDiffParameters,
+    params: MrisThicknessDiffParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -253,7 +253,7 @@ def mris_thickness_diff_cargs(
 
 
 def mris_thickness_diff_outputs(
-    params: MrisThicknessDiffParameters,
+    params: MrisThicknessDiffParamsDict,
     execution: Execution,
 ) -> MrisThicknessDiffOutputs:
     """
@@ -274,7 +274,7 @@ def mris_thickness_diff_outputs(
 
 
 def mris_thickness_diff_execute(
-    params: MrisThicknessDiffParameters,
+    params: MrisThicknessDiffParamsDict,
     runner: Runner | None = None,
 ) -> MrisThicknessDiffOutputs:
     """
@@ -368,6 +368,8 @@ def mris_thickness_diff(
 __all__ = [
     "MRIS_THICKNESS_DIFF_METADATA",
     "MrisThicknessDiffOutputs",
+    "MrisThicknessDiffParamsDict",
+    "MrisThicknessDiffParamsDictTagged",
     "mris_thickness_diff",
     "mris_thickness_diff_execute",
     "mris_thickness_diff_params",

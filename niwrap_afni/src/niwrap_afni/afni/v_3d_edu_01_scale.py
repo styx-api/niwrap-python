@@ -13,14 +13,14 @@ V_3D_EDU_01_SCALE_METADATA = Metadata(
 )
 
 
-V3dEdu01ScaleParameters = typing.TypedDict('V3dEdu01ScaleParameters', {
+V3dEdu01ScaleParamsDict = typing.TypedDict('V3dEdu01ScaleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dEdu_01_scale"]],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mult_factors": typing.NotRequired[list[float] | None],
     "option_flag": bool,
 })
-V3dEdu01ScaleParametersTagged = typing.TypedDict('V3dEdu01ScaleParametersTagged', {
+V3dEdu01ScaleParamsDictTagged = typing.TypedDict('V3dEdu01ScaleParamsDictTagged', {
     "@type": typing.Literal["afni/3dEdu_01_scale"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,7 +31,7 @@ V3dEdu01ScaleParametersTagged = typing.TypedDict('V3dEdu01ScaleParametersTagged'
 
 class V3dEdu01ScaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dEdu01ScaleParameters(...)`.
+    Output object returned when calling `V3dEdu01ScaleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def v_3d_edu_01_scale_params(
     mask: InputPathType | None = None,
     mult_factors: list[float] | None = None,
     option_flag: bool = False,
-) -> V3dEdu01ScaleParametersTagged:
+) -> V3dEdu01ScaleParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_edu_01_scale_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dEdu01ScaleParameters` object.
+    `V3dEdu01ScaleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -101,7 +101,7 @@ def v_3d_edu_01_scale_validate(
 
 
 def v_3d_edu_01_scale_cargs(
-    params: V3dEdu01ScaleParameters,
+    params: V3dEdu01ScaleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -132,7 +132,7 @@ def v_3d_edu_01_scale_cargs(
 
 
 def v_3d_edu_01_scale_outputs(
-    params: V3dEdu01ScaleParameters,
+    params: V3dEdu01ScaleParamsDict,
     execution: Execution,
 ) -> V3dEdu01ScaleOutputs:
     """
@@ -151,7 +151,7 @@ def v_3d_edu_01_scale_outputs(
 
 
 def v_3d_edu_01_scale_execute(
-    params: V3dEdu01ScaleParameters,
+    params: V3dEdu01ScaleParamsDict,
     runner: Runner | None = None,
 ) -> V3dEdu01ScaleOutputs:
     """
@@ -218,6 +218,8 @@ def v_3d_edu_01_scale(
 
 __all__ = [
     "V3dEdu01ScaleOutputs",
+    "V3dEdu01ScaleParamsDict",
+    "V3dEdu01ScaleParamsDictTagged",
     "V_3D_EDU_01_SCALE_METADATA",
     "v_3d_edu_01_scale",
     "v_3d_edu_01_scale_execute",

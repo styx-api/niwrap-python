@@ -13,7 +13,7 @@ PCTSURFCON_METADATA = Metadata(
 )
 
 
-PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
+PctsurfconParamsDict = typing.TypedDict('PctsurfconParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/pctsurfcon"]],
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
     "tmp": typing.NotRequired[str | None],
     "nocleanup": bool,
 })
-PctsurfconParametersTagged = typing.TypedDict('PctsurfconParametersTagged', {
+PctsurfconParamsDictTagged = typing.TypedDict('PctsurfconParamsDictTagged', {
     "@type": typing.Literal["freesurfer/pctsurfcon"],
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ PctsurfconParametersTagged = typing.TypedDict('PctsurfconParametersTagged', {
 
 class PctsurfconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PctsurfconParameters(...)`.
+    Output object returned when calling `PctsurfconParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def pctsurfcon_params(
     pial: bool = False,
     tmp: str | None = None,
     nocleanup: bool = False,
-) -> PctsurfconParametersTagged:
+) -> PctsurfconParamsDictTagged:
     """
     Build parameters.
     
@@ -120,7 +120,7 @@ def pctsurfcon_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PctsurfconParameters` object.
+    `PctsurfconParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -176,7 +176,7 @@ def pctsurfcon_validate(
 
 
 def pctsurfcon_cargs(
-    params: PctsurfconParameters,
+    params: PctsurfconParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -240,7 +240,7 @@ def pctsurfcon_cargs(
 
 
 def pctsurfcon_outputs(
-    params: PctsurfconParameters,
+    params: PctsurfconParamsDict,
     execution: Execution,
 ) -> PctsurfconOutputs:
     """
@@ -259,7 +259,7 @@ def pctsurfcon_outputs(
 
 
 def pctsurfcon_execute(
-    params: PctsurfconParameters,
+    params: PctsurfconParamsDict,
     runner: Runner | None = None,
 ) -> PctsurfconOutputs:
     """
@@ -351,6 +351,8 @@ def pctsurfcon(
 __all__ = [
     "PCTSURFCON_METADATA",
     "PctsurfconOutputs",
+    "PctsurfconParamsDict",
+    "PctsurfconParamsDictTagged",
     "pctsurfcon",
     "pctsurfcon_execute",
     "pctsurfcon_params",

@@ -13,11 +13,11 @@ SEGMENT_MONKEY_METADATA = Metadata(
 )
 
 
-SegmentMonkeyParameters = typing.TypedDict('SegmentMonkeyParameters', {
+SegmentMonkeyParamsDict = typing.TypedDict('SegmentMonkeyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/segment_monkey"]],
     "control_points": list[str],
 })
-SegmentMonkeyParametersTagged = typing.TypedDict('SegmentMonkeyParametersTagged', {
+SegmentMonkeyParamsDictTagged = typing.TypedDict('SegmentMonkeyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/segment_monkey"],
     "control_points": list[str],
 })
@@ -25,7 +25,7 @@ SegmentMonkeyParametersTagged = typing.TypedDict('SegmentMonkeyParametersTagged'
 
 class SegmentMonkeyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SegmentMonkeyParameters(...)`.
+    Output object returned when calling `SegmentMonkeyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class SegmentMonkeyOutputs(typing.NamedTuple):
 
 def segment_monkey_params(
     control_points: list[str],
-) -> SegmentMonkeyParametersTagged:
+) -> SegmentMonkeyParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def segment_monkey_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SegmentMonkeyParameters` object.
+    `SegmentMonkeyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -73,7 +73,7 @@ def segment_monkey_validate(
 
 
 def segment_monkey_cargs(
-    params: SegmentMonkeyParameters,
+    params: SegmentMonkeyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -92,7 +92,7 @@ def segment_monkey_cargs(
 
 
 def segment_monkey_outputs(
-    params: SegmentMonkeyParameters,
+    params: SegmentMonkeyParamsDict,
     execution: Execution,
 ) -> SegmentMonkeyOutputs:
     """
@@ -111,7 +111,7 @@ def segment_monkey_outputs(
 
 
 def segment_monkey_execute(
-    params: SegmentMonkeyParameters,
+    params: SegmentMonkeyParamsDict,
     runner: Runner | None = None,
 ) -> SegmentMonkeyOutputs:
     """
@@ -167,6 +167,8 @@ def segment_monkey(
 __all__ = [
     "SEGMENT_MONKEY_METADATA",
     "SegmentMonkeyOutputs",
+    "SegmentMonkeyParamsDict",
+    "SegmentMonkeyParamsDictTagged",
     "segment_monkey",
     "segment_monkey_execute",
     "segment_monkey_params",

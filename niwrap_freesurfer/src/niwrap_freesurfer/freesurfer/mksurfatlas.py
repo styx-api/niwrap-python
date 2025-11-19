@@ -13,7 +13,7 @@ MKSURFATLAS_METADATA = Metadata(
 )
 
 
-MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
+MksurfatlasParamsDict = typing.TypedDict('MksurfatlasParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mksurfatlas"]],
     "atlas": str,
     "hemi": str,
@@ -25,7 +25,7 @@ MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
     "version": bool,
     "help": bool,
 })
-MksurfatlasParametersTagged = typing.TypedDict('MksurfatlasParametersTagged', {
+MksurfatlasParamsDictTagged = typing.TypedDict('MksurfatlasParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mksurfatlas"],
     "atlas": str,
     "hemi": str,
@@ -41,7 +41,7 @@ MksurfatlasParametersTagged = typing.TypedDict('MksurfatlasParametersTagged', {
 
 class MksurfatlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MksurfatlasParameters(...)`.
+    Output object returned when calling `MksurfatlasParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mksurfatlas_params(
     debug: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MksurfatlasParametersTagged:
+) -> MksurfatlasParamsDictTagged:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def mksurfatlas_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MksurfatlasParameters` object.
+    `MksurfatlasParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -147,7 +147,7 @@ def mksurfatlas_validate(
 
 
 def mksurfatlas_cargs(
-    params: MksurfatlasParameters,
+    params: MksurfatlasParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,7 +197,7 @@ def mksurfatlas_cargs(
 
 
 def mksurfatlas_outputs(
-    params: MksurfatlasParameters,
+    params: MksurfatlasParamsDict,
     execution: Execution,
 ) -> MksurfatlasOutputs:
     """
@@ -217,7 +217,7 @@ def mksurfatlas_outputs(
 
 
 def mksurfatlas_execute(
-    params: MksurfatlasParameters,
+    params: MksurfatlasParamsDict,
     runner: Runner | None = None,
 ) -> MksurfatlasOutputs:
     """
@@ -301,6 +301,8 @@ def mksurfatlas(
 __all__ = [
     "MKSURFATLAS_METADATA",
     "MksurfatlasOutputs",
+    "MksurfatlasParamsDict",
+    "MksurfatlasParamsDictTagged",
     "mksurfatlas",
     "mksurfatlas_execute",
     "mksurfatlas_params",

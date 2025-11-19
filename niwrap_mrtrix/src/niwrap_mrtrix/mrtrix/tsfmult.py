@@ -13,39 +13,39 @@ TSFMULT_METADATA = Metadata(
 )
 
 
-TsfmultConfigParameters = typing.TypedDict('TsfmultConfigParameters', {
+TsfmultConfigParamsDict = typing.TypedDict('TsfmultConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TsfmultConfigParametersTagged = typing.TypedDict('TsfmultConfigParametersTagged', {
+TsfmultConfigParamsDictTagged = typing.TypedDict('TsfmultConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TsfmultParameters = typing.TypedDict('TsfmultParameters', {
+TsfmultParamsDict = typing.TypedDict('TsfmultParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tsfmult"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfmultConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfmultConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input1": InputPathType,
     "output": str,
 })
-TsfmultParametersTagged = typing.TypedDict('TsfmultParametersTagged', {
+TsfmultParamsDictTagged = typing.TypedDict('TsfmultParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tsfmult"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TsfmultConfigParameters] | None],
+    "config": typing.NotRequired[list[TsfmultConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input1": InputPathType,
@@ -53,10 +53,10 @@ TsfmultParametersTagged = typing.TypedDict('TsfmultParametersTagged', {
 })
 
 
-def tsfmult_config_params(
+def tsfmult_config(
     key: str,
     value: str,
-) -> TsfmultConfigParametersTagged:
+) -> TsfmultConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def tsfmult_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfmultConfigParameters` object.
+    `TsfmultConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def tsfmult_config_validate(
 
 
 def tsfmult_config_cargs(
-    params: TsfmultConfigParameters,
+    params: TsfmultConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -118,7 +118,7 @@ def tsfmult_config_cargs(
 
 class TsfmultOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TsfmultParameters(...)`.
+    Output object returned when calling `TsfmultParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,10 +134,10 @@ def tsfmult_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfmultConfigParameters] | None = None,
+    config: list[TsfmultConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfmultParametersTagged:
+) -> TsfmultParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def tsfmult_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TsfmultParameters` object.
+    `TsfmultParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -210,7 +210,7 @@ def tsfmult_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfmultConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TsfmultConfigParamsDict] | None`')
         for e in params["config"]:
             tsfmult_config_validate(e)
     if params.get("help", False) is None:
@@ -232,7 +232,7 @@ def tsfmult_validate(
 
 
 def tsfmult_cargs(
-    params: TsfmultParameters,
+    params: TsfmultParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -271,7 +271,7 @@ def tsfmult_cargs(
 
 
 def tsfmult_outputs(
-    params: TsfmultParameters,
+    params: TsfmultParamsDict,
     execution: Execution,
 ) -> TsfmultOutputs:
     """
@@ -291,7 +291,7 @@ def tsfmult_outputs(
 
 
 def tsfmult_execute(
-    params: TsfmultParameters,
+    params: TsfmultParamsDict,
     runner: Runner | None = None,
 ) -> TsfmultOutputs:
     """
@@ -333,7 +333,7 @@ def tsfmult(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TsfmultConfigParameters] | None = None,
+    config: list[TsfmultConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -389,9 +389,13 @@ def tsfmult(
 
 __all__ = [
     "TSFMULT_METADATA",
+    "TsfmultConfigParamsDict",
+    "TsfmultConfigParamsDictTagged",
     "TsfmultOutputs",
+    "TsfmultParamsDict",
+    "TsfmultParamsDictTagged",
     "tsfmult",
-    "tsfmult_config_params",
+    "tsfmult_config",
     "tsfmult_execute",
     "tsfmult_params",
 ]

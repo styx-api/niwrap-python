@@ -13,7 +13,7 @@ V_3DREFIT_METADATA = Metadata(
 )
 
 
-V3drefitParameters = typing.TypedDict('V3drefitParameters', {
+V3drefitParamsDict = typing.TypedDict('V3drefitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3drefit"]],
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
@@ -33,7 +33,7 @@ V3drefitParameters = typing.TypedDict('V3drefitParameters', {
     "zdel": typing.NotRequired[float | None],
     "zorigin": typing.NotRequired[str | None],
 })
-V3drefitParametersTagged = typing.TypedDict('V3drefitParametersTagged', {
+V3drefitParamsDictTagged = typing.TypedDict('V3drefitParamsDictTagged', {
     "@type": typing.Literal["afni/3drefit"],
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
@@ -57,7 +57,7 @@ V3drefitParametersTagged = typing.TypedDict('V3drefitParametersTagged', {
 
 class V3drefitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3drefitParameters(...)`.
+    Output object returned when calling `V3drefitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ def v_3drefit_params(
     yorigin: str | None = None,
     zdel: float | None = None,
     zorigin: str | None = None,
-) -> V3drefitParametersTagged:
+) -> V3drefitParamsDictTagged:
     """
     Build parameters.
     
@@ -166,7 +166,7 @@ def v_3drefit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3drefitParameters` object.
+    `V3drefitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -253,7 +253,7 @@ def v_3drefit_validate(
 
 
 def v_3drefit_cargs(
-    params: V3drefitParameters,
+    params: V3drefitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -343,7 +343,7 @@ def v_3drefit_cargs(
 
 
 def v_3drefit_outputs(
-    params: V3drefitParameters,
+    params: V3drefitParamsDict,
     execution: Execution,
 ) -> V3drefitOutputs:
     """
@@ -363,7 +363,7 @@ def v_3drefit_outputs(
 
 
 def v_3drefit_execute(
-    params: V3drefitParameters,
+    params: V3drefitParamsDict,
     runner: Runner | None = None,
 ) -> V3drefitOutputs:
     """
@@ -483,6 +483,8 @@ def v_3drefit(
 
 __all__ = [
     "V3drefitOutputs",
+    "V3drefitParamsDict",
+    "V3drefitParamsDictTagged",
     "V_3DREFIT_METADATA",
     "v_3drefit",
     "v_3drefit_execute",

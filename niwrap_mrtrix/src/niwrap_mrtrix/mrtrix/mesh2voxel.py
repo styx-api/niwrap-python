@@ -13,40 +13,40 @@ MESH2VOXEL_METADATA = Metadata(
 )
 
 
-Mesh2voxelConfigParameters = typing.TypedDict('Mesh2voxelConfigParameters', {
+Mesh2voxelConfigParamsDict = typing.TypedDict('Mesh2voxelConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-Mesh2voxelConfigParametersTagged = typing.TypedDict('Mesh2voxelConfigParametersTagged', {
+Mesh2voxelConfigParamsDictTagged = typing.TypedDict('Mesh2voxelConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-Mesh2voxelParameters = typing.TypedDict('Mesh2voxelParameters', {
+Mesh2voxelParamsDict = typing.TypedDict('Mesh2voxelParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mesh2voxel"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Mesh2voxelConfigParameters] | None],
+    "config": typing.NotRequired[list[Mesh2voxelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
     "template": InputPathType,
     "output": str,
 })
-Mesh2voxelParametersTagged = typing.TypedDict('Mesh2voxelParametersTagged', {
+Mesh2voxelParamsDictTagged = typing.TypedDict('Mesh2voxelParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mesh2voxel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[Mesh2voxelConfigParameters] | None],
+    "config": typing.NotRequired[list[Mesh2voxelConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "source": InputPathType,
@@ -55,10 +55,10 @@ Mesh2voxelParametersTagged = typing.TypedDict('Mesh2voxelParametersTagged', {
 })
 
 
-def mesh2voxel_config_params(
+def mesh2voxel_config(
     key: str,
     value: str,
-) -> Mesh2voxelConfigParametersTagged:
+) -> Mesh2voxelConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def mesh2voxel_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mesh2voxelConfigParameters` object.
+    `Mesh2voxelConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def mesh2voxel_config_validate(
 
 
 def mesh2voxel_config_cargs(
-    params: Mesh2voxelConfigParameters,
+    params: Mesh2voxelConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def mesh2voxel_config_cargs(
 
 class Mesh2voxelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Mesh2voxelParameters(...)`.
+    Output object returned when calling `Mesh2voxelParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,10 +137,10 @@ def mesh2voxel_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Mesh2voxelConfigParameters] | None = None,
+    config: list[Mesh2voxelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Mesh2voxelParametersTagged:
+) -> Mesh2voxelParamsDictTagged:
     """
     Build parameters.
     
@@ -188,7 +188,7 @@ def mesh2voxel_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Mesh2voxelParameters` object.
+    `Mesh2voxelParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -216,7 +216,7 @@ def mesh2voxel_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Mesh2voxelConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Mesh2voxelConfigParamsDict] | None`')
         for e in params["config"]:
             mesh2voxel_config_validate(e)
     if params.get("help", False) is None:
@@ -242,7 +242,7 @@ def mesh2voxel_validate(
 
 
 def mesh2voxel_cargs(
-    params: Mesh2voxelParameters,
+    params: Mesh2voxelParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -282,7 +282,7 @@ def mesh2voxel_cargs(
 
 
 def mesh2voxel_outputs(
-    params: Mesh2voxelParameters,
+    params: Mesh2voxelParamsDict,
     execution: Execution,
 ) -> Mesh2voxelOutputs:
     """
@@ -302,7 +302,7 @@ def mesh2voxel_outputs(
 
 
 def mesh2voxel_execute(
-    params: Mesh2voxelParameters,
+    params: Mesh2voxelParamsDict,
     runner: Runner | None = None,
 ) -> Mesh2voxelOutputs:
     """
@@ -348,7 +348,7 @@ def mesh2voxel(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[Mesh2voxelConfigParameters] | None = None,
+    config: list[Mesh2voxelConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -410,9 +410,13 @@ def mesh2voxel(
 
 __all__ = [
     "MESH2VOXEL_METADATA",
+    "Mesh2voxelConfigParamsDict",
+    "Mesh2voxelConfigParamsDictTagged",
     "Mesh2voxelOutputs",
+    "Mesh2voxelParamsDict",
+    "Mesh2voxelParamsDictTagged",
     "mesh2voxel",
-    "mesh2voxel_config_params",
+    "mesh2voxel_config",
     "mesh2voxel_execute",
     "mesh2voxel_params",
 ]

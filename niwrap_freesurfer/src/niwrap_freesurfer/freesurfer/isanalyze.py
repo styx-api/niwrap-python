@@ -13,11 +13,11 @@ ISANALYZE_METADATA = Metadata(
 )
 
 
-IsanalyzeParameters = typing.TypedDict('IsanalyzeParameters', {
+IsanalyzeParamsDict = typing.TypedDict('IsanalyzeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/isanalyze"]],
     "input_file": InputPathType,
 })
-IsanalyzeParametersTagged = typing.TypedDict('IsanalyzeParametersTagged', {
+IsanalyzeParamsDictTagged = typing.TypedDict('IsanalyzeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/isanalyze"],
     "input_file": InputPathType,
 })
@@ -25,7 +25,7 @@ IsanalyzeParametersTagged = typing.TypedDict('IsanalyzeParametersTagged', {
 
 class IsanalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsanalyzeParameters(...)`.
+    Output object returned when calling `IsanalyzeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -33,7 +33,7 @@ class IsanalyzeOutputs(typing.NamedTuple):
 
 def isanalyze_params(
     input_file: InputPathType,
-) -> IsanalyzeParametersTagged:
+) -> IsanalyzeParamsDictTagged:
     """
     Build parameters.
     
@@ -54,7 +54,7 @@ def isanalyze_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsanalyzeParameters` object.
+    `IsanalyzeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -68,7 +68,7 @@ def isanalyze_validate(
 
 
 def isanalyze_cargs(
-    params: IsanalyzeParameters,
+    params: IsanalyzeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -87,7 +87,7 @@ def isanalyze_cargs(
 
 
 def isanalyze_outputs(
-    params: IsanalyzeParameters,
+    params: IsanalyzeParamsDict,
     execution: Execution,
 ) -> IsanalyzeOutputs:
     """
@@ -106,7 +106,7 @@ def isanalyze_outputs(
 
 
 def isanalyze_execute(
-    params: IsanalyzeParameters,
+    params: IsanalyzeParamsDict,
     runner: Runner | None = None,
 ) -> IsanalyzeOutputs:
     """
@@ -162,6 +162,8 @@ def isanalyze(
 __all__ = [
     "ISANALYZE_METADATA",
     "IsanalyzeOutputs",
+    "IsanalyzeParamsDict",
+    "IsanalyzeParamsDictTagged",
     "isanalyze",
     "isanalyze_execute",
     "isanalyze_params",

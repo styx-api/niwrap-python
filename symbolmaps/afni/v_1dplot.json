@@ -18,7 +18,7 @@
     },
     "noline": {
       "var_param": "noline",
-      "fn_struct_make_params": "v_1dplot_noline_params",
+      "fn_struct_make_params": "v_1dplot_noline",
       "properties": {
         "noline": {
           "var_param": "noline"
@@ -138,7 +138,7 @@
     },
     "thick": {
       "var_param": "thick",
-      "fn_struct_make_params": "v_1dplot_thick_params",
+      "fn_struct_make_params": "v_1dplot_thick",
       "properties": {
         "thick": {
           "var_param": "thick"
@@ -168,7 +168,7 @@
     },
     "rbox": {
       "var_param": "rbox",
-      "fn_struct_make_params": "v_1dplot_rbox_params",
+      "fn_struct_make_params": "v_1dplot_rbox",
       "properties": {
         "rbox": {
           "var_param": "rbox"

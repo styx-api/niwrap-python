@@ -3,7 +3,7 @@
   "properties": {
     "volume-all": {
       "var_param": "volume_all",
-      "fn_struct_make_params": "cifti_export_dense_mapping_volume_all_params",
+      "fn_struct_make_params": "cifti_export_dense_mapping_volume_all",
       "properties": {
         "text-out": {
           "var_param": "text_out"
@@ -18,7 +18,7 @@
     },
     "surface": {
       "var_param": "surface",
-      "fn_struct_make_params": "cifti_export_dense_mapping_surface_params",
+      "fn_struct_make_params": "cifti_export_dense_mapping_surface",
       "properties": {
         "structure": {
           "var_param": "structure"
@@ -33,7 +33,7 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "cifti_export_dense_mapping_volume_params",
+      "fn_struct_make_params": "cifti_export_dense_mapping_volume",
       "properties": {
         "structure": {
           "var_param": "structure"

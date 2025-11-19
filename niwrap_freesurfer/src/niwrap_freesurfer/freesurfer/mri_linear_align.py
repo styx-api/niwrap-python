@@ -13,13 +13,13 @@ MRI_LINEAR_ALIGN_METADATA = Metadata(
 )
 
 
-MriLinearAlignParameters = typing.TypedDict('MriLinearAlignParameters', {
+MriLinearAlignParamsDict = typing.TypedDict('MriLinearAlignParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_align"]],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
 })
-MriLinearAlignParametersTagged = typing.TypedDict('MriLinearAlignParametersTagged', {
+MriLinearAlignParamsDictTagged = typing.TypedDict('MriLinearAlignParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_linear_align"],
     "source": InputPathType,
     "target": InputPathType,
@@ -29,7 +29,7 @@ MriLinearAlignParametersTagged = typing.TypedDict('MriLinearAlignParametersTagge
 
 class MriLinearAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriLinearAlignParameters(...)`.
+    Output object returned when calling `MriLinearAlignParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -39,7 +39,7 @@ def mri_linear_align_params(
     source: InputPathType,
     target: InputPathType,
     output_xform: str,
-) -> MriLinearAlignParametersTagged:
+) -> MriLinearAlignParamsDictTagged:
     """
     Build parameters.
     
@@ -64,7 +64,7 @@ def mri_linear_align_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriLinearAlignParameters` object.
+    `MriLinearAlignParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -86,7 +86,7 @@ def mri_linear_align_validate(
 
 
 def mri_linear_align_cargs(
-    params: MriLinearAlignParameters,
+    params: MriLinearAlignParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -107,7 +107,7 @@ def mri_linear_align_cargs(
 
 
 def mri_linear_align_outputs(
-    params: MriLinearAlignParameters,
+    params: MriLinearAlignParamsDict,
     execution: Execution,
 ) -> MriLinearAlignOutputs:
     """
@@ -126,7 +126,7 @@ def mri_linear_align_outputs(
 
 
 def mri_linear_align_execute(
-    params: MriLinearAlignParameters,
+    params: MriLinearAlignParamsDict,
     runner: Runner | None = None,
 ) -> MriLinearAlignOutputs:
     """
@@ -188,6 +188,8 @@ def mri_linear_align(
 __all__ = [
     "MRI_LINEAR_ALIGN_METADATA",
     "MriLinearAlignOutputs",
+    "MriLinearAlignParamsDict",
+    "MriLinearAlignParamsDictTagged",
     "mri_linear_align",
     "mri_linear_align_execute",
     "mri_linear_align_params",

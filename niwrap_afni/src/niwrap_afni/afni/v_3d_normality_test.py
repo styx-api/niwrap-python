@@ -13,14 +13,14 @@ V_3D_NORMALITY_TEST_METADATA = Metadata(
 )
 
 
-V3dNormalityTestParameters = typing.TypedDict('V3dNormalityTestParameters', {
+V3dNormalityTestParamsDict = typing.TypedDict('V3dNormalityTestParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dNormalityTest"]],
     "input": InputPathType,
     "prefix": str,
     "noexp": bool,
     "pval": bool,
 })
-V3dNormalityTestParametersTagged = typing.TypedDict('V3dNormalityTestParametersTagged', {
+V3dNormalityTestParamsDictTagged = typing.TypedDict('V3dNormalityTestParamsDictTagged', {
     "@type": typing.Literal["afni/3dNormalityTest"],
     "input": InputPathType,
     "prefix": str,
@@ -31,7 +31,7 @@ V3dNormalityTestParametersTagged = typing.TypedDict('V3dNormalityTestParametersT
 
 class V3dNormalityTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dNormalityTestParameters(...)`.
+    Output object returned when calling `V3dNormalityTestParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def v_3d_normality_test_params(
     prefix: str,
     noexp: bool = False,
     pval: bool = False,
-) -> V3dNormalityTestParametersTagged:
+) -> V3dNormalityTestParamsDictTagged:
     """
     Build parameters.
     
@@ -72,7 +72,7 @@ def v_3d_normality_test_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dNormalityTestParameters` object.
+    `V3dNormalityTestParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def v_3d_normality_test_validate(
 
 
 def v_3d_normality_test_cargs(
-    params: V3dNormalityTestParameters,
+    params: V3dNormalityTestParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -125,7 +125,7 @@ def v_3d_normality_test_cargs(
 
 
 def v_3d_normality_test_outputs(
-    params: V3dNormalityTestParameters,
+    params: V3dNormalityTestParamsDict,
     execution: Execution,
 ) -> V3dNormalityTestOutputs:
     """
@@ -145,7 +145,7 @@ def v_3d_normality_test_outputs(
 
 
 def v_3d_normality_test_execute(
-    params: V3dNormalityTestParameters,
+    params: V3dNormalityTestParamsDict,
     runner: Runner | None = None,
 ) -> V3dNormalityTestOutputs:
     """
@@ -212,6 +212,8 @@ def v_3d_normality_test(
 
 __all__ = [
     "V3dNormalityTestOutputs",
+    "V3dNormalityTestParamsDict",
+    "V3dNormalityTestParamsDictTagged",
     "V_3D_NORMALITY_TEST_METADATA",
     "v_3d_normality_test",
     "v_3d_normality_test_execute",

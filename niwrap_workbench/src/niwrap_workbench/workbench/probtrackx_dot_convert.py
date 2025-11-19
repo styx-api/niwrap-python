@@ -12,86 +12,86 @@ PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
 )
 
 
-ProbtrackxDotConvertRowVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParameters', {
+ProbtrackxDotConvertRowVoxelsParamsDict = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["row-voxels"]],
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
-ProbtrackxDotConvertRowVoxelsParametersTagged = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParametersTagged', {
+ProbtrackxDotConvertRowVoxelsParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParamsDictTagged', {
     "@type": typing.Literal["row-voxels"],
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
 
 
-ProbtrackxDotConvertRowCiftiParameters = typing.TypedDict('ProbtrackxDotConvertRowCiftiParameters', {
+ProbtrackxDotConvertRowCiftiParamsDict = typing.TypedDict('ProbtrackxDotConvertRowCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["row-cifti"]],
     "cifti": InputPathType,
     "direction": str,
 })
-ProbtrackxDotConvertRowCiftiParametersTagged = typing.TypedDict('ProbtrackxDotConvertRowCiftiParametersTagged', {
+ProbtrackxDotConvertRowCiftiParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertRowCiftiParamsDictTagged', {
     "@type": typing.Literal["row-cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
-ProbtrackxDotConvertColVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertColVoxelsParameters', {
+ProbtrackxDotConvertColVoxelsParamsDict = typing.TypedDict('ProbtrackxDotConvertColVoxelsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["col-voxels"]],
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
-ProbtrackxDotConvertColVoxelsParametersTagged = typing.TypedDict('ProbtrackxDotConvertColVoxelsParametersTagged', {
+ProbtrackxDotConvertColVoxelsParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertColVoxelsParamsDictTagged', {
     "@type": typing.Literal["col-voxels"],
     "voxel-list-file": str,
     "label-vol": InputPathType,
 })
 
 
-ProbtrackxDotConvertColCiftiParameters = typing.TypedDict('ProbtrackxDotConvertColCiftiParameters', {
+ProbtrackxDotConvertColCiftiParamsDict = typing.TypedDict('ProbtrackxDotConvertColCiftiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["col-cifti"]],
     "cifti": InputPathType,
     "direction": str,
 })
-ProbtrackxDotConvertColCiftiParametersTagged = typing.TypedDict('ProbtrackxDotConvertColCiftiParametersTagged', {
+ProbtrackxDotConvertColCiftiParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertColCiftiParamsDictTagged', {
     "@type": typing.Literal["col-cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
-ProbtrackxDotConvertParameters = typing.TypedDict('ProbtrackxDotConvertParameters', {
+ProbtrackxDotConvertParamsDict = typing.TypedDict('ProbtrackxDotConvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/probtrackx-dot-convert"]],
     "cifti-out": str,
-    "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParameters | None],
+    "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParameters | None],
-    "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParameters | None],
+    "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParamsDict | None],
+    "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParameters | None],
+    "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParamsDict | None],
     "transpose": bool,
     "make-symmetric": bool,
     "dot-file": str,
 })
-ProbtrackxDotConvertParametersTagged = typing.TypedDict('ProbtrackxDotConvertParametersTagged', {
+ProbtrackxDotConvertParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertParamsDictTagged', {
     "@type": typing.Literal["workbench/probtrackx-dot-convert"],
     "cifti-out": str,
-    "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParameters | None],
+    "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParameters | None],
-    "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParameters | None],
+    "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParamsDict | None],
+    "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParameters | None],
+    "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParamsDict | None],
     "transpose": bool,
     "make-symmetric": bool,
     "dot-file": str,
 })
 
 
-def probtrackx_dot_convert_row_voxels_params(
+def probtrackx_dot_convert_row_voxels(
     voxel_list_file: str,
     label_vol: InputPathType,
-) -> ProbtrackxDotConvertRowVoxelsParametersTagged:
+) -> ProbtrackxDotConvertRowVoxelsParamsDictTagged:
     """
     Build parameters.
     
@@ -115,7 +115,7 @@ def probtrackx_dot_convert_row_voxels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxDotConvertRowVoxelsParameters` object.
+    `ProbtrackxDotConvertRowVoxelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def probtrackx_dot_convert_row_voxels_validate(
 
 
 def probtrackx_dot_convert_row_voxels_cargs(
-    params: ProbtrackxDotConvertRowVoxelsParameters,
+    params: ProbtrackxDotConvertRowVoxelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,10 +154,10 @@ def probtrackx_dot_convert_row_voxels_cargs(
     return cargs
 
 
-def probtrackx_dot_convert_row_cifti_params(
+def probtrackx_dot_convert_row_cifti(
     cifti: InputPathType,
     direction: str,
-) -> ProbtrackxDotConvertRowCiftiParametersTagged:
+) -> ProbtrackxDotConvertRowCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -180,7 +180,7 @@ def probtrackx_dot_convert_row_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxDotConvertRowCiftiParameters` object.
+    `ProbtrackxDotConvertRowCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -198,7 +198,7 @@ def probtrackx_dot_convert_row_cifti_validate(
 
 
 def probtrackx_dot_convert_row_cifti_cargs(
-    params: ProbtrackxDotConvertRowCiftiParameters,
+    params: ProbtrackxDotConvertRowCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -219,10 +219,10 @@ def probtrackx_dot_convert_row_cifti_cargs(
     return cargs
 
 
-def probtrackx_dot_convert_col_voxels_params(
+def probtrackx_dot_convert_col_voxels(
     voxel_list_file: str,
     label_vol: InputPathType,
-) -> ProbtrackxDotConvertColVoxelsParametersTagged:
+) -> ProbtrackxDotConvertColVoxelsParamsDictTagged:
     """
     Build parameters.
     
@@ -246,7 +246,7 @@ def probtrackx_dot_convert_col_voxels_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxDotConvertColVoxelsParameters` object.
+    `ProbtrackxDotConvertColVoxelsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -264,7 +264,7 @@ def probtrackx_dot_convert_col_voxels_validate(
 
 
 def probtrackx_dot_convert_col_voxels_cargs(
-    params: ProbtrackxDotConvertColVoxelsParameters,
+    params: ProbtrackxDotConvertColVoxelsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -285,10 +285,10 @@ def probtrackx_dot_convert_col_voxels_cargs(
     return cargs
 
 
-def probtrackx_dot_convert_col_cifti_params(
+def probtrackx_dot_convert_col_cifti(
     cifti: InputPathType,
     direction: str,
-) -> ProbtrackxDotConvertColCiftiParametersTagged:
+) -> ProbtrackxDotConvertColCiftiParamsDictTagged:
     """
     Build parameters.
     
@@ -311,7 +311,7 @@ def probtrackx_dot_convert_col_cifti_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxDotConvertColCiftiParameters` object.
+    `ProbtrackxDotConvertColCiftiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -329,7 +329,7 @@ def probtrackx_dot_convert_col_cifti_validate(
 
 
 def probtrackx_dot_convert_col_cifti_cargs(
-    params: ProbtrackxDotConvertColCiftiParameters,
+    params: ProbtrackxDotConvertColCiftiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -352,7 +352,7 @@ def probtrackx_dot_convert_col_cifti_cargs(
 
 class ProbtrackxDotConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ProbtrackxDotConvertParameters(...)`.
+    Output object returned when calling `ProbtrackxDotConvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -365,13 +365,13 @@ def probtrackx_dot_convert_params(
     roi_metric: InputPathType | None,
     roi_metric_: InputPathType | None,
     dot_file: str,
-    row_voxels: ProbtrackxDotConvertRowVoxelsParameters | None = None,
-    row_cifti: ProbtrackxDotConvertRowCiftiParameters | None = None,
-    col_voxels: ProbtrackxDotConvertColVoxelsParameters | None = None,
-    col_cifti: ProbtrackxDotConvertColCiftiParameters | None = None,
+    row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
+    row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
+    col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
+    col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
     transpose: bool = False,
     make_symmetric: bool = False,
-) -> ProbtrackxDotConvertParametersTagged:
+) -> ProbtrackxDotConvertParamsDictTagged:
     """
     Build parameters.
     
@@ -420,7 +420,7 @@ def probtrackx_dot_convert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ProbtrackxDotConvertParameters` object.
+    `ProbtrackxDotConvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -460,7 +460,7 @@ def probtrackx_dot_convert_validate(
 
 
 def probtrackx_dot_convert_cargs(
-    params: ProbtrackxDotConvertParameters,
+    params: ProbtrackxDotConvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -494,7 +494,7 @@ def probtrackx_dot_convert_cargs(
 
 
 def probtrackx_dot_convert_outputs(
-    params: ProbtrackxDotConvertParameters,
+    params: ProbtrackxDotConvertParamsDict,
     execution: Execution,
 ) -> ProbtrackxDotConvertOutputs:
     """
@@ -514,7 +514,7 @@ def probtrackx_dot_convert_outputs(
 
 
 def probtrackx_dot_convert_execute(
-    params: ProbtrackxDotConvertParameters,
+    params: ProbtrackxDotConvertParamsDict,
     runner: Runner | None = None,
 ) -> ProbtrackxDotConvertOutputs:
     """
@@ -589,10 +589,10 @@ def probtrackx_dot_convert(
     roi_metric: InputPathType | None,
     roi_metric_: InputPathType | None,
     dot_file: str,
-    row_voxels: ProbtrackxDotConvertRowVoxelsParameters | None = None,
-    row_cifti: ProbtrackxDotConvertRowCiftiParameters | None = None,
-    col_voxels: ProbtrackxDotConvertColVoxelsParameters | None = None,
-    col_cifti: ProbtrackxDotConvertColCiftiParameters | None = None,
+    row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
+    row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
+    col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
+    col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
     transpose: bool = False,
     make_symmetric: bool = False,
     runner: Runner | None = None,
@@ -684,12 +684,22 @@ def probtrackx_dot_convert(
 
 __all__ = [
     "PROBTRACKX_DOT_CONVERT_METADATA",
+    "ProbtrackxDotConvertColCiftiParamsDict",
+    "ProbtrackxDotConvertColCiftiParamsDictTagged",
+    "ProbtrackxDotConvertColVoxelsParamsDict",
+    "ProbtrackxDotConvertColVoxelsParamsDictTagged",
     "ProbtrackxDotConvertOutputs",
+    "ProbtrackxDotConvertParamsDict",
+    "ProbtrackxDotConvertParamsDictTagged",
+    "ProbtrackxDotConvertRowCiftiParamsDict",
+    "ProbtrackxDotConvertRowCiftiParamsDictTagged",
+    "ProbtrackxDotConvertRowVoxelsParamsDict",
+    "ProbtrackxDotConvertRowVoxelsParamsDictTagged",
     "probtrackx_dot_convert",
-    "probtrackx_dot_convert_col_cifti_params",
-    "probtrackx_dot_convert_col_voxels_params",
+    "probtrackx_dot_convert_col_cifti",
+    "probtrackx_dot_convert_col_voxels",
     "probtrackx_dot_convert_execute",
     "probtrackx_dot_convert_params",
-    "probtrackx_dot_convert_row_cifti_params",
-    "probtrackx_dot_convert_row_voxels_params",
+    "probtrackx_dot_convert_row_cifti",
+    "probtrackx_dot_convert_row_voxels",
 ]

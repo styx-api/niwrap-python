@@ -13,7 +13,7 @@ MRIS_EXVIVO_SURFACES_METADATA = Metadata(
 )
 
 
-MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', {
+MrisExvivoSurfacesParamsDict = typing.TypedDict('MrisExvivoSurfacesParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_exvivo_surfaces"]],
     "subject_name": str,
     "hemisphere": str,
@@ -23,7 +23,7 @@ MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', 
     "white_only": bool,
     "formalin": typing.NotRequired[int | None],
 })
-MrisExvivoSurfacesParametersTagged = typing.TypedDict('MrisExvivoSurfacesParametersTagged', {
+MrisExvivoSurfacesParamsDictTagged = typing.TypedDict('MrisExvivoSurfacesParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_exvivo_surfaces"],
     "subject_name": str,
     "hemisphere": str,
@@ -37,7 +37,7 @@ MrisExvivoSurfacesParametersTagged = typing.TypedDict('MrisExvivoSurfacesParamet
 
 class MrisExvivoSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisExvivoSurfacesParameters(...)`.
+    Output object returned when calling `MrisExvivoSurfacesParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def mris_exvivo_surfaces_params(
     average_curvature: float | None = None,
     white_only: bool = False,
     formalin: int | None = None,
-) -> MrisExvivoSurfacesParametersTagged:
+) -> MrisExvivoSurfacesParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def mris_exvivo_surfaces_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisExvivoSurfacesParameters` object.
+    `MrisExvivoSurfacesParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -136,7 +136,7 @@ def mris_exvivo_surfaces_validate(
 
 
 def mris_exvivo_surfaces_cargs(
-    params: MrisExvivoSurfacesParameters,
+    params: MrisExvivoSurfacesParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -172,7 +172,7 @@ def mris_exvivo_surfaces_cargs(
 
 
 def mris_exvivo_surfaces_outputs(
-    params: MrisExvivoSurfacesParameters,
+    params: MrisExvivoSurfacesParamsDict,
     execution: Execution,
 ) -> MrisExvivoSurfacesOutputs:
     """
@@ -195,7 +195,7 @@ def mris_exvivo_surfaces_outputs(
 
 
 def mris_exvivo_surfaces_execute(
-    params: MrisExvivoSurfacesParameters,
+    params: MrisExvivoSurfacesParamsDict,
     runner: Runner | None = None,
 ) -> MrisExvivoSurfacesOutputs:
     """
@@ -275,6 +275,8 @@ def mris_exvivo_surfaces(
 __all__ = [
     "MRIS_EXVIVO_SURFACES_METADATA",
     "MrisExvivoSurfacesOutputs",
+    "MrisExvivoSurfacesParamsDict",
+    "MrisExvivoSurfacesParamsDictTagged",
     "mris_exvivo_surfaces",
     "mris_exvivo_surfaces_execute",
     "mris_exvivo_surfaces_params",

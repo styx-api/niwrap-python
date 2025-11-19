@@ -13,7 +13,7 @@ V_3D_AUTO_TCORRELATE_METADATA = Metadata(
 )
 
 
-V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
+V3dAutoTcorrelateParamsDict = typing.TypedDict('V3dAutoTcorrelateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dAutoTcorrelate"]],
     "input_dataset": InputPathType,
     "pearson": bool,
@@ -29,7 +29,7 @@ V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
     "time": bool,
     "mmap": bool,
 })
-V3dAutoTcorrelateParametersTagged = typing.TypedDict('V3dAutoTcorrelateParametersTagged', {
+V3dAutoTcorrelateParamsDictTagged = typing.TypedDict('V3dAutoTcorrelateParamsDictTagged', {
     "@type": typing.Literal["afni/3dAutoTcorrelate"],
     "input_dataset": InputPathType,
     "pearson": bool,
@@ -49,7 +49,7 @@ V3dAutoTcorrelateParametersTagged = typing.TypedDict('V3dAutoTcorrelateParameter
 
 class V3dAutoTcorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dAutoTcorrelateParameters(...)`.
+    Output object returned when calling `V3dAutoTcorrelateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def v_3d_auto_tcorrelate_params(
     out1d: str | None = None,
     time_: bool = False,
     mmap_: bool = False,
-) -> V3dAutoTcorrelateParametersTagged:
+) -> V3dAutoTcorrelateParamsDictTagged:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def v_3d_auto_tcorrelate_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dAutoTcorrelateParameters` object.
+    `V3dAutoTcorrelateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -183,7 +183,7 @@ def v_3d_auto_tcorrelate_validate(
 
 
 def v_3d_auto_tcorrelate_cargs(
-    params: V3dAutoTcorrelateParameters,
+    params: V3dAutoTcorrelateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -241,7 +241,7 @@ def v_3d_auto_tcorrelate_cargs(
 
 
 def v_3d_auto_tcorrelate_outputs(
-    params: V3dAutoTcorrelateParameters,
+    params: V3dAutoTcorrelateParamsDict,
     execution: Execution,
 ) -> V3dAutoTcorrelateOutputs:
     """
@@ -263,7 +263,7 @@ def v_3d_auto_tcorrelate_outputs(
 
 
 def v_3d_auto_tcorrelate_execute(
-    params: V3dAutoTcorrelateParameters,
+    params: V3dAutoTcorrelateParamsDict,
     runner: Runner | None = None,
 ) -> V3dAutoTcorrelateOutputs:
     """
@@ -357,6 +357,8 @@ def v_3d_auto_tcorrelate(
 
 __all__ = [
     "V3dAutoTcorrelateOutputs",
+    "V3dAutoTcorrelateParamsDict",
+    "V3dAutoTcorrelateParamsDictTagged",
     "V_3D_AUTO_TCORRELATE_METADATA",
     "v_3d_auto_tcorrelate",
     "v_3d_auto_tcorrelate_execute",

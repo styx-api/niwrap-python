@@ -13,7 +13,7 @@ V_3D_MEDIAN_FILTER_METADATA = Metadata(
 )
 
 
-V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
+V3dMedianFilterParamsDict = typing.TypedDict('V3dMedianFilterParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMedianFilter"]],
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
@@ -22,7 +22,7 @@ V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
     "automask": bool,
     "dataset": InputPathType,
 })
-V3dMedianFilterParametersTagged = typing.TypedDict('V3dMedianFilterParametersTagged', {
+V3dMedianFilterParamsDictTagged = typing.TypedDict('V3dMedianFilterParamsDictTagged', {
     "@type": typing.Literal["afni/3dMedianFilter"],
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ V3dMedianFilterParametersTagged = typing.TypedDict('V3dMedianFilterParametersTag
 
 class V3dMedianFilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMedianFilterParameters(...)`.
+    Output object returned when calling `V3dMedianFilterParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def v_3d_median_filter_params(
     verbose: bool = False,
     prefix: str | None = None,
     automask: bool = False,
-) -> V3dMedianFilterParametersTagged:
+) -> V3dMedianFilterParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v_3d_median_filter_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMedianFilterParameters` object.
+    `V3dMedianFilterParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -117,7 +117,7 @@ def v_3d_median_filter_validate(
 
 
 def v_3d_median_filter_cargs(
-    params: V3dMedianFilterParameters,
+    params: V3dMedianFilterParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -155,7 +155,7 @@ def v_3d_median_filter_cargs(
 
 
 def v_3d_median_filter_outputs(
-    params: V3dMedianFilterParameters,
+    params: V3dMedianFilterParamsDict,
     execution: Execution,
 ) -> V3dMedianFilterOutputs:
     """
@@ -176,7 +176,7 @@ def v_3d_median_filter_outputs(
 
 
 def v_3d_median_filter_execute(
-    params: V3dMedianFilterParameters,
+    params: V3dMedianFilterParamsDict,
     runner: Runner | None = None,
 ) -> V3dMedianFilterOutputs:
     """
@@ -248,6 +248,8 @@ def v_3d_median_filter(
 
 __all__ = [
     "V3dMedianFilterOutputs",
+    "V3dMedianFilterParamsDict",
+    "V3dMedianFilterParamsDictTagged",
     "V_3D_MEDIAN_FILTER_METADATA",
     "v_3d_median_filter",
     "v_3d_median_filter_execute",

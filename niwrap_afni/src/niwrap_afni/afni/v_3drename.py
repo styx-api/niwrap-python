@@ -13,12 +13,12 @@ V_3DRENAME_METADATA = Metadata(
 )
 
 
-V3drenameParameters = typing.TypedDict('V3drenameParameters', {
+V3drenameParamsDict = typing.TypedDict('V3drenameParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3drename"]],
     "old_prefix": str,
     "new_prefix": str,
 })
-V3drenameParametersTagged = typing.TypedDict('V3drenameParametersTagged', {
+V3drenameParamsDictTagged = typing.TypedDict('V3drenameParamsDictTagged', {
     "@type": typing.Literal["afni/3drename"],
     "old_prefix": str,
     "new_prefix": str,
@@ -27,7 +27,7 @@ V3drenameParametersTagged = typing.TypedDict('V3drenameParametersTagged', {
 
 class V3drenameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3drenameParameters(...)`.
+    Output object returned when calling `V3drenameParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class V3drenameOutputs(typing.NamedTuple):
 def v_3drename_params(
     old_prefix: str,
     new_prefix: str,
-) -> V3drenameParametersTagged:
+) -> V3drenameParamsDictTagged:
     """
     Build parameters.
     
@@ -59,7 +59,7 @@ def v_3drename_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3drenameParameters` object.
+    `V3drenameParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def v_3drename_validate(
 
 
 def v_3drename_cargs(
-    params: V3drenameParameters,
+    params: V3drenameParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -97,7 +97,7 @@ def v_3drename_cargs(
 
 
 def v_3drename_outputs(
-    params: V3drenameParameters,
+    params: V3drenameParamsDict,
     execution: Execution,
 ) -> V3drenameOutputs:
     """
@@ -116,7 +116,7 @@ def v_3drename_outputs(
 
 
 def v_3drename_execute(
-    params: V3drenameParameters,
+    params: V3drenameParamsDict,
     runner: Runner | None = None,
 ) -> V3drenameOutputs:
     """
@@ -174,6 +174,8 @@ def v_3drename(
 
 __all__ = [
     "V3drenameOutputs",
+    "V3drenameParamsDict",
+    "V3drenameParamsDictTagged",
     "V_3DRENAME_METADATA",
     "v_3drename",
     "v_3drename_execute",

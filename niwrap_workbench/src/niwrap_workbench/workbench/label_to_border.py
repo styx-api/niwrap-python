@@ -12,7 +12,7 @@ LABEL_TO_BORDER_METADATA = Metadata(
 )
 
 
-LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
+LabelToBorderParamsDict = typing.TypedDict('LabelToBorderParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-to-border"]],
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
@@ -20,7 +20,7 @@ LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
     "surface": InputPathType,
     "label-in": InputPathType,
 })
-LabelToBorderParametersTagged = typing.TypedDict('LabelToBorderParametersTagged', {
+LabelToBorderParamsDictTagged = typing.TypedDict('LabelToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/label-to-border"],
     "border-out": str,
     "fraction": typing.NotRequired[float | None],
@@ -32,7 +32,7 @@ LabelToBorderParametersTagged = typing.TypedDict('LabelToBorderParametersTagged'
 
 class LabelToBorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `LabelToBorderParameters(...)`.
+    Output object returned when calling `LabelToBorderParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def label_to_border_params(
     column: str | None,
     surface: InputPathType,
     label_in: InputPathType,
-) -> LabelToBorderParametersTagged:
+) -> LabelToBorderParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def label_to_border_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `LabelToBorderParameters` object.
+    `LabelToBorderParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def label_to_border_validate(
 
 
 def label_to_border_cargs(
-    params: LabelToBorderParameters,
+    params: LabelToBorderParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -138,7 +138,7 @@ def label_to_border_cargs(
 
 
 def label_to_border_outputs(
-    params: LabelToBorderParameters,
+    params: LabelToBorderParamsDict,
     execution: Execution,
 ) -> LabelToBorderOutputs:
     """
@@ -158,7 +158,7 @@ def label_to_border_outputs(
 
 
 def label_to_border_execute(
-    params: LabelToBorderParameters,
+    params: LabelToBorderParamsDict,
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
@@ -228,6 +228,8 @@ def label_to_border(
 __all__ = [
     "LABEL_TO_BORDER_METADATA",
     "LabelToBorderOutputs",
+    "LabelToBorderParamsDict",
+    "LabelToBorderParamsDictTagged",
     "label_to_border",
     "label_to_border_execute",
     "label_to_border_params",

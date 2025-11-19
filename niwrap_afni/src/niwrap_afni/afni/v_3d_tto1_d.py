@@ -13,7 +13,7 @@ V_3D_TTO1_D_METADATA = Metadata(
 )
 
 
-V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
+V3dTto1DParamsDict = typing.TypedDict('V3dTto1DParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTto1D"]],
     "input_dataset": InputPathType,
     "method": str,
@@ -22,7 +22,7 @@ V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
     "prefix": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[float | None],
 })
-V3dTto1DParametersTagged = typing.TypedDict('V3dTto1DParametersTagged', {
+V3dTto1DParamsDictTagged = typing.TypedDict('V3dTto1DParamsDictTagged', {
     "@type": typing.Literal["afni/3dTto1D"],
     "input_dataset": InputPathType,
     "method": str,
@@ -35,7 +35,7 @@ V3dTto1DParametersTagged = typing.TypedDict('V3dTto1DParametersTagged', {
 
 class V3dTto1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTto1DParameters(...)`.
+    Output object returned when calling `V3dTto1DParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_tto1_d_params(
     mask: InputPathType | None = None,
     prefix: str | None = None,
     verbose: float | None = None,
-) -> V3dTto1DParametersTagged:
+) -> V3dTto1DParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def v_3d_tto1_d_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTto1DParameters` object.
+    `V3dTto1DParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -119,7 +119,7 @@ def v_3d_tto1_d_validate(
 
 
 def v_3d_tto1_d_cargs(
-    params: V3dTto1DParameters,
+    params: V3dTto1DParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def v_3d_tto1_d_cargs(
 
 
 def v_3d_tto1_d_outputs(
-    params: V3dTto1DParameters,
+    params: V3dTto1DParamsDict,
     execution: Execution,
 ) -> V3dTto1DOutputs:
     """
@@ -182,7 +182,7 @@ def v_3d_tto1_d_outputs(
 
 
 def v_3d_tto1_d_execute(
-    params: V3dTto1DParameters,
+    params: V3dTto1DParamsDict,
     runner: Runner | None = None,
 ) -> V3dTto1DOutputs:
     """
@@ -256,6 +256,8 @@ def v_3d_tto1_d(
 
 __all__ = [
     "V3dTto1DOutputs",
+    "V3dTto1DParamsDict",
+    "V3dTto1DParamsDictTagged",
     "V_3D_TTO1_D_METADATA",
     "v_3d_tto1_d",
     "v_3d_tto1_d_execute",

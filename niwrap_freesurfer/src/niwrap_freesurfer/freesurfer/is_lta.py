@@ -13,12 +13,12 @@ IS_LTA_METADATA = Metadata(
 )
 
 
-IsLtaParameters = typing.TypedDict('IsLtaParameters', {
+IsLtaParamsDict = typing.TypedDict('IsLtaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/IsLTA"]],
     "candidate_file": InputPathType,
     "outfile": str,
 })
-IsLtaParametersTagged = typing.TypedDict('IsLtaParametersTagged', {
+IsLtaParamsDictTagged = typing.TypedDict('IsLtaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/IsLTA"],
     "candidate_file": InputPathType,
     "outfile": str,
@@ -27,7 +27,7 @@ IsLtaParametersTagged = typing.TypedDict('IsLtaParametersTagged', {
 
 class IsLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `IsLtaParameters(...)`.
+    Output object returned when calling `IsLtaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class IsLtaOutputs(typing.NamedTuple):
 def is_lta_params(
     candidate_file: InputPathType,
     outfile: str,
-) -> IsLtaParametersTagged:
+) -> IsLtaParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def is_lta_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `IsLtaParameters` object.
+    `IsLtaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def is_lta_validate(
 
 
 def is_lta_cargs(
-    params: IsLtaParameters,
+    params: IsLtaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -105,7 +105,7 @@ def is_lta_cargs(
 
 
 def is_lta_outputs(
-    params: IsLtaParameters,
+    params: IsLtaParamsDict,
     execution: Execution,
 ) -> IsLtaOutputs:
     """
@@ -125,7 +125,7 @@ def is_lta_outputs(
 
 
 def is_lta_execute(
-    params: IsLtaParameters,
+    params: IsLtaParamsDict,
     runner: Runner | None = None,
 ) -> IsLtaOutputs:
     """
@@ -186,6 +186,8 @@ def is_lta(
 __all__ = [
     "IS_LTA_METADATA",
     "IsLtaOutputs",
+    "IsLtaParamsDict",
+    "IsLtaParamsDictTagged",
     "is_lta",
     "is_lta_execute",
     "is_lta_params",

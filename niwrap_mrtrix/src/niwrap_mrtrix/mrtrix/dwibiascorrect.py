@@ -13,37 +13,37 @@ DWIBIASCORRECT_METADATA = Metadata(
 )
 
 
-DwibiascorrectFslgradParameters = typing.TypedDict('DwibiascorrectFslgradParameters', {
+DwibiascorrectFslgradParamsDict = typing.TypedDict('DwibiascorrectFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-DwibiascorrectFslgradParametersTagged = typing.TypedDict('DwibiascorrectFslgradParametersTagged', {
+DwibiascorrectFslgradParamsDictTagged = typing.TypedDict('DwibiascorrectFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-DwibiascorrectConfigParameters = typing.TypedDict('DwibiascorrectConfigParameters', {
+DwibiascorrectConfigParamsDict = typing.TypedDict('DwibiascorrectConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-DwibiascorrectConfigParametersTagged = typing.TypedDict('DwibiascorrectConfigParametersTagged', {
+DwibiascorrectConfigParamsDictTagged = typing.TypedDict('DwibiascorrectConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
+DwibiascorrectParamsDict = typing.TypedDict('DwibiascorrectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/dwibiascorrect"]],
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwibiascorrectFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwibiascorrectFslgradParamsDict | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "bias_image": typing.NotRequired[InputPathType | None],
     "nocleanup": bool,
@@ -54,20 +54,20 @@ DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[float | None],
-    "config": typing.NotRequired[list[DwibiascorrectConfigParameters] | None],
+    "config": typing.NotRequired[list[DwibiascorrectConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "ants_b": typing.NotRequired[str | None],
     "ants_c": typing.NotRequired[str | None],
     "ants_s": typing.NotRequired[str | None],
 })
-DwibiascorrectParametersTagged = typing.TypedDict('DwibiascorrectParametersTagged', {
+DwibiascorrectParamsDictTagged = typing.TypedDict('DwibiascorrectParamsDictTagged', {
     "@type": typing.Literal["mrtrix/dwibiascorrect"],
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[DwibiascorrectFslgradParameters | None],
+    "fslgrad": typing.NotRequired[DwibiascorrectFslgradParamsDict | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "bias_image": typing.NotRequired[InputPathType | None],
     "nocleanup": bool,
@@ -78,7 +78,7 @@ DwibiascorrectParametersTagged = typing.TypedDict('DwibiascorrectParametersTagge
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[float | None],
-    "config": typing.NotRequired[list[DwibiascorrectConfigParameters] | None],
+    "config": typing.NotRequired[list[DwibiascorrectConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "ants_b": typing.NotRequired[str | None],
@@ -87,10 +87,10 @@ DwibiascorrectParametersTagged = typing.TypedDict('DwibiascorrectParametersTagge
 })
 
 
-def dwibiascorrect_fslgrad_params(
+def dwibiascorrect_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DwibiascorrectFslgradParametersTagged:
+) -> DwibiascorrectFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -119,7 +119,7 @@ def dwibiascorrect_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwibiascorrectFslgradParameters` object.
+    `DwibiascorrectFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -137,7 +137,7 @@ def dwibiascorrect_fslgrad_validate(
 
 
 def dwibiascorrect_fslgrad_cargs(
-    params: DwibiascorrectFslgradParameters,
+    params: DwibiascorrectFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -156,10 +156,10 @@ def dwibiascorrect_fslgrad_cargs(
     return cargs
 
 
-def dwibiascorrect_config_params(
+def dwibiascorrect_config(
     key: str,
     value: str,
-) -> DwibiascorrectConfigParametersTagged:
+) -> DwibiascorrectConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -182,7 +182,7 @@ def dwibiascorrect_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwibiascorrectConfigParameters` object.
+    `DwibiascorrectConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -200,7 +200,7 @@ def dwibiascorrect_config_validate(
 
 
 def dwibiascorrect_config_cargs(
-    params: DwibiascorrectConfigParameters,
+    params: DwibiascorrectConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -221,7 +221,7 @@ def dwibiascorrect_config_cargs(
 
 class DwibiascorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DwibiascorrectParameters(...)`.
+    Output object returned when calling `DwibiascorrectParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -236,7 +236,7 @@ def dwibiascorrect_params(
     input_image: InputPathType,
     output_image: str,
     grad: InputPathType | None = None,
-    fslgrad: DwibiascorrectFslgradParameters | None = None,
+    fslgrad: DwibiascorrectFslgradParamsDict | None = None,
     mask_image: InputPathType | None = None,
     bias_image: InputPathType | None = None,
     nocleanup: bool = False,
@@ -247,13 +247,13 @@ def dwibiascorrect_params(
     debug: bool = False,
     force: bool = False,
     nthreads: float | None = None,
-    config: list[DwibiascorrectConfigParameters] | None = None,
+    config: list[DwibiascorrectConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     ants_b: str | None = None,
     ants_c: str | None = None,
     ants_s: str | None = None,
-) -> DwibiascorrectParametersTagged:
+) -> DwibiascorrectParamsDictTagged:
     """
     Build parameters.
     
@@ -336,7 +336,7 @@ def dwibiascorrect_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DwibiascorrectParameters` object.
+    `DwibiascorrectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -402,7 +402,7 @@ def dwibiascorrect_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwibiascorrectConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwibiascorrectConfigParamsDict] | None`')
         for e in params["config"]:
             dwibiascorrect_config_validate(e)
     if params.get("help", False) is None:
@@ -425,7 +425,7 @@ def dwibiascorrect_validate(
 
 
 def dwibiascorrect_cargs(
-    params: DwibiascorrectParameters,
+    params: DwibiascorrectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -509,7 +509,7 @@ def dwibiascorrect_cargs(
 
 
 def dwibiascorrect_outputs(
-    params: DwibiascorrectParameters,
+    params: DwibiascorrectParamsDict,
     execution: Execution,
 ) -> DwibiascorrectOutputs:
     """
@@ -530,7 +530,7 @@ def dwibiascorrect_outputs(
 
 
 def dwibiascorrect_execute(
-    params: DwibiascorrectParameters,
+    params: DwibiascorrectParamsDict,
     runner: Runner | None = None,
 ) -> DwibiascorrectOutputs:
     """
@@ -564,7 +564,7 @@ def dwibiascorrect(
     input_image: InputPathType,
     output_image: str,
     grad: InputPathType | None = None,
-    fslgrad: DwibiascorrectFslgradParameters | None = None,
+    fslgrad: DwibiascorrectFslgradParamsDict | None = None,
     mask_image: InputPathType | None = None,
     bias_image: InputPathType | None = None,
     nocleanup: bool = False,
@@ -575,7 +575,7 @@ def dwibiascorrect(
     debug: bool = False,
     force: bool = False,
     nthreads: float | None = None,
-    config: list[DwibiascorrectConfigParameters] | None = None,
+    config: list[DwibiascorrectConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     ants_b: str | None = None,
@@ -658,10 +658,16 @@ def dwibiascorrect(
 
 __all__ = [
     "DWIBIASCORRECT_METADATA",
+    "DwibiascorrectConfigParamsDict",
+    "DwibiascorrectConfigParamsDictTagged",
+    "DwibiascorrectFslgradParamsDict",
+    "DwibiascorrectFslgradParamsDictTagged",
     "DwibiascorrectOutputs",
+    "DwibiascorrectParamsDict",
+    "DwibiascorrectParamsDictTagged",
     "dwibiascorrect",
-    "dwibiascorrect_config_params",
+    "dwibiascorrect_config",
     "dwibiascorrect_execute",
-    "dwibiascorrect_fslgrad_params",
+    "dwibiascorrect_fslgrad",
     "dwibiascorrect_params",
 ]

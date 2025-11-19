@@ -13,7 +13,7 @@ AFNI_SYSTEM_CHECK_PY_METADATA = Metadata(
 )
 
 
-AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
+AfniSystemCheckPyParamsDict = typing.TypedDict('AfniSystemCheckPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/afni_system_check.py"]],
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
     "casematch": typing.NotRequired[str | None],
     "data_root": typing.NotRequired[str | None],
 })
-AfniSystemCheckPyParametersTagged = typing.TypedDict('AfniSystemCheckPyParametersTagged', {
+AfniSystemCheckPyParamsDictTagged = typing.TypedDict('AfniSystemCheckPyParamsDictTagged', {
     "@type": typing.Literal["afni/afni_system_check.py"],
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ AfniSystemCheckPyParametersTagged = typing.TypedDict('AfniSystemCheckPyParameter
 
 class AfniSystemCheckPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AfniSystemCheckPyParameters(...)`.
+    Output object returned when calling `AfniSystemCheckPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +60,7 @@ def afni_system_check_py_params(
     dot_file_pack: str | None = None,
     casematch: str | None = None,
     data_root: str | None = None,
-) -> AfniSystemCheckPyParametersTagged:
+) -> AfniSystemCheckPyParamsDictTagged:
     """
     Build parameters.
     
@@ -104,7 +104,7 @@ def afni_system_check_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AfniSystemCheckPyParameters` object.
+    `AfniSystemCheckPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -149,7 +149,7 @@ def afni_system_check_py_validate(
 
 
 def afni_system_check_py_cargs(
-    params: AfniSystemCheckPyParameters,
+    params: AfniSystemCheckPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -202,7 +202,7 @@ def afni_system_check_py_cargs(
 
 
 def afni_system_check_py_outputs(
-    params: AfniSystemCheckPyParameters,
+    params: AfniSystemCheckPyParamsDict,
     execution: Execution,
 ) -> AfniSystemCheckPyOutputs:
     """
@@ -221,7 +221,7 @@ def afni_system_check_py_outputs(
 
 
 def afni_system_check_py_execute(
-    params: AfniSystemCheckPyParameters,
+    params: AfniSystemCheckPyParamsDict,
     runner: Runner | None = None,
 ) -> AfniSystemCheckPyOutputs:
     """
@@ -304,6 +304,8 @@ def afni_system_check_py(
 __all__ = [
     "AFNI_SYSTEM_CHECK_PY_METADATA",
     "AfniSystemCheckPyOutputs",
+    "AfniSystemCheckPyParamsDict",
+    "AfniSystemCheckPyParamsDictTagged",
     "afni_system_check_py",
     "afni_system_check_py_execute",
     "afni_system_check_py_params",

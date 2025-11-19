@@ -29,7 +29,7 @@
       "var_param": "output",
       "variants": {
         "correctedOutput": {
-          "fn_struct_make_params": "denoise_image_corrected_output_params",
+          "fn_struct_make_params": "denoise_image_corrected_output",
           "properties": {
             "correctedOutputFileName": {
               "var_param": "corrected_output_file_name"
@@ -37,7 +37,7 @@
           }
         },
         "correctedOutputNoise": {
-          "fn_struct_make_params": "denoise_image_corrected_output_noise_params",
+          "fn_struct_make_params": "denoise_image_corrected_output_noise",
           "properties": {
             "correctedOutputFileName": {
               "var_param": "corrected_output_file_name"

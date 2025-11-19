@@ -13,13 +13,13 @@ HISTO_SYNTHESIZE_METADATA = Metadata(
 )
 
 
-HistoSynthesizeParameters = typing.TypedDict('HistoSynthesizeParameters', {
+HistoSynthesizeParamsDict = typing.TypedDict('HistoSynthesizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/histo_synthesize"]],
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
     "synthetic_histo": str,
 })
-HistoSynthesizeParametersTagged = typing.TypedDict('HistoSynthesizeParametersTagged', {
+HistoSynthesizeParamsDictTagged = typing.TypedDict('HistoSynthesizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/histo_synthesize"],
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
@@ -29,7 +29,7 @@ HistoSynthesizeParametersTagged = typing.TypedDict('HistoSynthesizeParametersTag
 
 class HistoSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `HistoSynthesizeParameters(...)`.
+    Output object returned when calling `HistoSynthesizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def histo_synthesize_params(
     mri_volume: InputPathType,
     histo_volume: InputPathType,
     synthetic_histo: str,
-) -> HistoSynthesizeParametersTagged:
+) -> HistoSynthesizeParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def histo_synthesize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `HistoSynthesizeParameters` object.
+    `HistoSynthesizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def histo_synthesize_validate(
 
 
 def histo_synthesize_cargs(
-    params: HistoSynthesizeParameters,
+    params: HistoSynthesizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def histo_synthesize_cargs(
 
 
 def histo_synthesize_outputs(
-    params: HistoSynthesizeParameters,
+    params: HistoSynthesizeParamsDict,
     execution: Execution,
 ) -> HistoSynthesizeOutputs:
     """
@@ -129,7 +129,7 @@ def histo_synthesize_outputs(
 
 
 def histo_synthesize_execute(
-    params: HistoSynthesizeParameters,
+    params: HistoSynthesizeParamsDict,
     runner: Runner | None = None,
 ) -> HistoSynthesizeOutputs:
     """
@@ -191,6 +191,8 @@ def histo_synthesize(
 __all__ = [
     "HISTO_SYNTHESIZE_METADATA",
     "HistoSynthesizeOutputs",
+    "HistoSynthesizeParamsDict",
+    "HistoSynthesizeParamsDictTagged",
     "histo_synthesize",
     "histo_synthesize_execute",
     "histo_synthesize_params",

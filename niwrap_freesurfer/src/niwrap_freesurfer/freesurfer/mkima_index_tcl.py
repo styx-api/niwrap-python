@@ -13,12 +13,12 @@ MKIMA_INDEX_TCL_METADATA = Metadata(
 )
 
 
-MkimaIndexTclParameters = typing.TypedDict('MkimaIndexTclParameters', {
+MkimaIndexTclParamsDict = typing.TypedDict('MkimaIndexTclParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mkima_index.tcl"]],
     "input_file": InputPathType,
     "output_flag": bool,
 })
-MkimaIndexTclParametersTagged = typing.TypedDict('MkimaIndexTclParametersTagged', {
+MkimaIndexTclParamsDictTagged = typing.TypedDict('MkimaIndexTclParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mkima_index.tcl"],
     "input_file": InputPathType,
     "output_flag": bool,
@@ -27,7 +27,7 @@ MkimaIndexTclParametersTagged = typing.TypedDict('MkimaIndexTclParametersTagged'
 
 class MkimaIndexTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MkimaIndexTclParameters(...)`.
+    Output object returned when calling `MkimaIndexTclParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class MkimaIndexTclOutputs(typing.NamedTuple):
 def mkima_index_tcl_params(
     input_file: InputPathType,
     output_flag: bool = False,
-) -> MkimaIndexTclParametersTagged:
+) -> MkimaIndexTclParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def mkima_index_tcl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MkimaIndexTclParameters` object.
+    `MkimaIndexTclParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def mkima_index_tcl_validate(
 
 
 def mkima_index_tcl_cargs(
-    params: MkimaIndexTclParameters,
+    params: MkimaIndexTclParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -100,7 +100,7 @@ def mkima_index_tcl_cargs(
 
 
 def mkima_index_tcl_outputs(
-    params: MkimaIndexTclParameters,
+    params: MkimaIndexTclParamsDict,
     execution: Execution,
 ) -> MkimaIndexTclOutputs:
     """
@@ -120,7 +120,7 @@ def mkima_index_tcl_outputs(
 
 
 def mkima_index_tcl_execute(
-    params: MkimaIndexTclParameters,
+    params: MkimaIndexTclParamsDict,
     runner: Runner | None = None,
 ) -> MkimaIndexTclOutputs:
     """
@@ -179,6 +179,8 @@ def mkima_index_tcl(
 __all__ = [
     "MKIMA_INDEX_TCL_METADATA",
     "MkimaIndexTclOutputs",
+    "MkimaIndexTclParamsDict",
+    "MkimaIndexTclParamsDictTagged",
     "mkima_index_tcl",
     "mkima_index_tcl_execute",
     "mkima_index_tcl_params",

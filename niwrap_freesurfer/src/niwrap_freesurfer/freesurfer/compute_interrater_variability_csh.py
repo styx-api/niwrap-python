@@ -13,7 +13,7 @@ COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
 )
 
 
-ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterVariabilityCshParameters', {
+ComputeInterraterVariabilityCshParamsDict = typing.TypedDict('ComputeInterraterVariabilityCshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/compute_interrater_variability.csh"]],
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
@@ -21,7 +21,7 @@ ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterV
     "version": bool,
     "help": bool,
 })
-ComputeInterraterVariabilityCshParametersTagged = typing.TypedDict('ComputeInterraterVariabilityCshParametersTagged', {
+ComputeInterraterVariabilityCshParamsDictTagged = typing.TypedDict('ComputeInterraterVariabilityCshParamsDictTagged', {
     "@type": typing.Literal["freesurfer/compute_interrater_variability.csh"],
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
@@ -33,7 +33,7 @@ ComputeInterraterVariabilityCshParametersTagged = typing.TypedDict('ComputeInter
 
 class ComputeInterraterVariabilityCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ComputeInterraterVariabilityCshParameters(...)`.
+    Output object returned when calling `ComputeInterraterVariabilityCshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -52,7 +52,7 @@ def compute_interrater_variability_csh_params(
     output_prefix: str,
     version: bool = False,
     help_: bool = False,
-) -> ComputeInterraterVariabilityCshParametersTagged:
+) -> ComputeInterraterVariabilityCshParamsDictTagged:
     """
     Build parameters.
     
@@ -82,7 +82,7 @@ def compute_interrater_variability_csh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ComputeInterraterVariabilityCshParameters` object.
+    `ComputeInterraterVariabilityCshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def compute_interrater_variability_csh_validate(
 
 
 def compute_interrater_variability_csh_cargs(
-    params: ComputeInterraterVariabilityCshParameters,
+    params: ComputeInterraterVariabilityCshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def compute_interrater_variability_csh_cargs(
 
 
 def compute_interrater_variability_csh_outputs(
-    params: ComputeInterraterVariabilityCshParameters,
+    params: ComputeInterraterVariabilityCshParamsDict,
     execution: Execution,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
@@ -168,7 +168,7 @@ def compute_interrater_variability_csh_outputs(
 
 
 def compute_interrater_variability_csh_execute(
-    params: ComputeInterraterVariabilityCshParameters,
+    params: ComputeInterraterVariabilityCshParamsDict,
     runner: Runner | None = None,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
@@ -239,6 +239,8 @@ def compute_interrater_variability_csh(
 __all__ = [
     "COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA",
     "ComputeInterraterVariabilityCshOutputs",
+    "ComputeInterraterVariabilityCshParamsDict",
+    "ComputeInterraterVariabilityCshParamsDictTagged",
     "compute_interrater_variability_csh",
     "compute_interrater_variability_csh_execute",
     "compute_interrater_variability_csh_params",

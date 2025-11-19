@@ -13,7 +13,7 @@ EDDY_QUAD_METADATA = Metadata(
 )
 
 
-EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
+EddyQuadParamsDict = typing.TypedDict('EddyQuadParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/eddy_quad"]],
     "eddyBase": str,
     "eddyIndex": InputPathType,
@@ -26,7 +26,7 @@ EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
     "slspec": typing.NotRequired[InputPathType | None],
     "verbose": bool,
 })
-EddyQuadParametersTagged = typing.TypedDict('EddyQuadParametersTagged', {
+EddyQuadParamsDictTagged = typing.TypedDict('EddyQuadParamsDictTagged', {
     "@type": typing.Literal["fsl/eddy_quad"],
     "eddyBase": str,
     "eddyIndex": InputPathType,
@@ -43,7 +43,7 @@ EddyQuadParametersTagged = typing.TypedDict('EddyQuadParametersTagged', {
 
 class EddyQuadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EddyQuadParameters(...)`.
+    Output object returned when calling `EddyQuadParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def eddy_quad_params(
     field: InputPathType | None = None,
     slspec: InputPathType | None = None,
     verbose: bool = False,
-) -> EddyQuadParametersTagged:
+) -> EddyQuadParamsDictTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def eddy_quad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EddyQuadParameters` object.
+    `EddyQuadParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def eddy_quad_validate(
 
 
 def eddy_quad_cargs(
-    params: EddyQuadParameters,
+    params: EddyQuadParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,7 +210,7 @@ def eddy_quad_cargs(
 
 
 def eddy_quad_outputs(
-    params: EddyQuadParameters,
+    params: EddyQuadParamsDict,
     execution: Execution,
 ) -> EddyQuadOutputs:
     """
@@ -230,7 +230,7 @@ def eddy_quad_outputs(
 
 
 def eddy_quad_execute(
-    params: EddyQuadParameters,
+    params: EddyQuadParamsDict,
     runner: Runner | None = None,
 ) -> EddyQuadOutputs:
     """
@@ -315,6 +315,8 @@ def eddy_quad(
 __all__ = [
     "EDDY_QUAD_METADATA",
     "EddyQuadOutputs",
+    "EddyQuadParamsDict",
+    "EddyQuadParamsDictTagged",
     "eddy_quad",
     "eddy_quad_execute",
     "eddy_quad_params",

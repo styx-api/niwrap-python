@@ -13,13 +13,13 @@ V_1D_MARRY_METADATA = Metadata(
 )
 
 
-V1dMarryParameters = typing.TypedDict('V1dMarryParameters', {
+V1dMarryParamsDict = typing.TypedDict('V1dMarryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dMarry"]],
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
     "files": list[InputPathType],
 })
-V1dMarryParametersTagged = typing.TypedDict('V1dMarryParametersTagged', {
+V1dMarryParamsDictTagged = typing.TypedDict('V1dMarryParamsDictTagged', {
     "@type": typing.Literal["afni/1dMarry"],
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
@@ -29,7 +29,7 @@ V1dMarryParametersTagged = typing.TypedDict('V1dMarryParametersTagged', {
 
 class V1dMarryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dMarryParameters(...)`.
+    Output object returned when calling `V1dMarryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -46,7 +46,7 @@ def v_1d_marry_params(
     files: list[InputPathType],
     sep: str | None = None,
     divorce: bool = False,
-) -> V1dMarryParametersTagged:
+) -> V1dMarryParamsDictTagged:
     """
     Build parameters.
     
@@ -74,7 +74,7 @@ def v_1d_marry_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dMarryParameters` object.
+    `V1dMarryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -98,7 +98,7 @@ def v_1d_marry_validate(
 
 
 def v_1d_marry_cargs(
-    params: V1dMarryParameters,
+    params: V1dMarryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -124,7 +124,7 @@ def v_1d_marry_cargs(
 
 
 def v_1d_marry_outputs(
-    params: V1dMarryParameters,
+    params: V1dMarryParamsDict,
     execution: Execution,
 ) -> V1dMarryOutputs:
     """
@@ -146,7 +146,7 @@ def v_1d_marry_outputs(
 
 
 def v_1d_marry_execute(
-    params: V1dMarryParameters,
+    params: V1dMarryParamsDict,
     runner: Runner | None = None,
 ) -> V1dMarryOutputs:
     """
@@ -213,6 +213,8 @@ def v_1d_marry(
 
 __all__ = [
     "V1dMarryOutputs",
+    "V1dMarryParamsDict",
+    "V1dMarryParamsDictTagged",
     "V_1D_MARRY_METADATA",
     "v_1d_marry",
     "v_1d_marry_execute",

@@ -13,7 +13,7 @@ MEICA_PY_METADATA = Metadata(
 )
 
 
-MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
+MeicaPyParamsDict = typing.TypedDict('MeicaPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/meica.py"]],
     "infile": InputPathType,
     "echo_times": str,
@@ -24,7 +24,7 @@ MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
     "threshold": typing.NotRequired[float | None],
     "debug": bool,
 })
-MeicaPyParametersTagged = typing.TypedDict('MeicaPyParametersTagged', {
+MeicaPyParamsDictTagged = typing.TypedDict('MeicaPyParamsDictTagged', {
     "@type": typing.Literal["afni/meica.py"],
     "infile": InputPathType,
     "echo_times": str,
@@ -39,7 +39,7 @@ MeicaPyParametersTagged = typing.TypedDict('MeicaPyParametersTagged', {
 
 class MeicaPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MeicaPyParameters(...)`.
+    Output object returned when calling `MeicaPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -58,7 +58,7 @@ def meica_py_params(
     talairach: bool = False,
     threshold: float | None = None,
     debug: bool = False,
-) -> MeicaPyParametersTagged:
+) -> MeicaPyParamsDictTagged:
     """
     Build parameters.
     
@@ -95,7 +95,7 @@ def meica_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MeicaPyParameters` object.
+    `MeicaPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def meica_py_validate(
 
 
 def meica_py_cargs(
-    params: MeicaPyParameters,
+    params: MeicaPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -183,7 +183,7 @@ def meica_py_cargs(
 
 
 def meica_py_outputs(
-    params: MeicaPyParameters,
+    params: MeicaPyParamsDict,
     execution: Execution,
 ) -> MeicaPyOutputs:
     """
@@ -204,7 +204,7 @@ def meica_py_outputs(
 
 
 def meica_py_execute(
-    params: MeicaPyParameters,
+    params: MeicaPyParamsDict,
     runner: Runner | None = None,
 ) -> MeicaPyOutputs:
     """
@@ -281,6 +281,8 @@ def meica_py(
 __all__ = [
     "MEICA_PY_METADATA",
     "MeicaPyOutputs",
+    "MeicaPyParamsDict",
+    "MeicaPyParamsDictTagged",
     "meica_py",
     "meica_py_execute",
     "meica_py_params",

@@ -13,63 +13,63 @@ MRTRANSFORM_METADATA = Metadata(
 )
 
 
-MrtransformFslgradParameters = typing.TypedDict('MrtransformFslgradParameters', {
+MrtransformFslgradParamsDict = typing.TypedDict('MrtransformFslgradParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fslgrad"]],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
-MrtransformFslgradParametersTagged = typing.TypedDict('MrtransformFslgradParametersTagged', {
+MrtransformFslgradParamsDictTagged = typing.TypedDict('MrtransformFslgradParamsDictTagged', {
     "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
-MrtransformExportGradFslParameters = typing.TypedDict('MrtransformExportGradFslParameters', {
+MrtransformExportGradFslParamsDict = typing.TypedDict('MrtransformExportGradFslParamsDict', {
     "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
     "bvecs_path": str,
     "bvals_path": str,
 })
-MrtransformExportGradFslParametersTagged = typing.TypedDict('MrtransformExportGradFslParametersTagged', {
+MrtransformExportGradFslParamsDictTagged = typing.TypedDict('MrtransformExportGradFslParamsDictTagged', {
     "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
-MrtransformVariousStringParameters = typing.TypedDict('MrtransformVariousStringParameters', {
+MrtransformVariousStringParamsDict = typing.TypedDict('MrtransformVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-MrtransformVariousStringParametersTagged = typing.TypedDict('MrtransformVariousStringParametersTagged', {
+MrtransformVariousStringParamsDictTagged = typing.TypedDict('MrtransformVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-MrtransformVariousFileParameters = typing.TypedDict('MrtransformVariousFileParameters', {
+MrtransformVariousFileParamsDict = typing.TypedDict('MrtransformVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-MrtransformVariousFileParametersTagged = typing.TypedDict('MrtransformVariousFileParametersTagged', {
+MrtransformVariousFileParamsDictTagged = typing.TypedDict('MrtransformVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-MrtransformConfigParameters = typing.TypedDict('MrtransformConfigParameters', {
+MrtransformConfigParamsDict = typing.TypedDict('MrtransformConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-MrtransformConfigParametersTagged = typing.TypedDict('MrtransformConfigParametersTagged', {
+MrtransformConfigParamsDictTagged = typing.TypedDict('MrtransformConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-MrtransformParameters = typing.TypedDict('MrtransformParameters', {
+MrtransformParamsDict = typing.TypedDict('MrtransformParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/mrtransform"]],
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
@@ -88,11 +88,11 @@ MrtransformParameters = typing.TypedDict('MrtransformParameters', {
     "directions": typing.NotRequired[InputPathType | None],
     "reorient_fod": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[MrtransformFslgradParameters | None],
+    "fslgrad": typing.NotRequired[MrtransformFslgradParamsDict | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParamsDict | None],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParamsDictTagged, MrtransformVariousFileParamsDictTagged] | None],
     "nan": bool,
     "no_reorientation": bool,
     "info": bool,
@@ -100,13 +100,13 @@ MrtransformParameters = typing.TypedDict('MrtransformParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrtransformConfigParameters] | None],
+    "config": typing.NotRequired[list[MrtransformConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
     "output": str,
 })
-MrtransformParametersTagged = typing.TypedDict('MrtransformParametersTagged', {
+MrtransformParamsDictTagged = typing.TypedDict('MrtransformParamsDictTagged', {
     "@type": typing.Literal["mrtrix/mrtransform"],
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
@@ -125,11 +125,11 @@ MrtransformParametersTagged = typing.TypedDict('MrtransformParametersTagged', {
     "directions": typing.NotRequired[InputPathType | None],
     "reorient_fod": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
-    "fslgrad": typing.NotRequired[MrtransformFslgradParameters | None],
+    "fslgrad": typing.NotRequired[MrtransformFslgradParamsDict | None],
     "export_grad_mrtrix": typing.NotRequired[str | None],
-    "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParameters | None],
+    "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParamsDict | None],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParamsDictTagged, MrtransformVariousFileParamsDictTagged] | None],
     "nan": bool,
     "no_reorientation": bool,
     "info": bool,
@@ -137,7 +137,7 @@ MrtransformParametersTagged = typing.TypedDict('MrtransformParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[MrtransformConfigParameters] | None],
+    "config": typing.NotRequired[list[MrtransformConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "input": InputPathType,
@@ -179,10 +179,10 @@ def mrtransform_strides_validate_dyn_fn(
     }.get(t)
 
 
-def mrtransform_fslgrad_params(
+def mrtransform_fslgrad(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> MrtransformFslgradParametersTagged:
+) -> MrtransformFslgradParamsDictTagged:
     """
     Build parameters.
     
@@ -211,7 +211,7 @@ def mrtransform_fslgrad_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformFslgradParameters` object.
+    `MrtransformFslgradParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -229,7 +229,7 @@ def mrtransform_fslgrad_validate(
 
 
 def mrtransform_fslgrad_cargs(
-    params: MrtransformFslgradParameters,
+    params: MrtransformFslgradParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -250,7 +250,7 @@ def mrtransform_fslgrad_cargs(
 
 class MrtransformExportGradFslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrtransformExportGradFslParameters | None(...)`.
+    Output object returned when calling `MrtransformExportGradFslParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -262,10 +262,10 @@ class MrtransformExportGradFslOutputs(typing.NamedTuple):
     bvals) format"""
 
 
-def mrtransform_export_grad_fsl_params(
+def mrtransform_export_grad_fsl(
     bvecs_path: str,
     bvals_path: str,
-) -> MrtransformExportGradFslParametersTagged:
+) -> MrtransformExportGradFslParamsDictTagged:
     """
     Build parameters.
     
@@ -290,7 +290,7 @@ def mrtransform_export_grad_fsl_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformExportGradFslParameters` object.
+    `MrtransformExportGradFslParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -308,7 +308,7 @@ def mrtransform_export_grad_fsl_validate(
 
 
 def mrtransform_export_grad_fsl_cargs(
-    params: MrtransformExportGradFslParameters,
+    params: MrtransformExportGradFslParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -328,7 +328,7 @@ def mrtransform_export_grad_fsl_cargs(
 
 
 def mrtransform_export_grad_fsl_outputs(
-    params: MrtransformExportGradFslParameters,
+    params: MrtransformExportGradFslParamsDict,
     execution: Execution,
 ) -> MrtransformExportGradFslOutputs:
     """
@@ -348,9 +348,9 @@ def mrtransform_export_grad_fsl_outputs(
     return ret
 
 
-def mrtransform_various_string_params(
+def mrtransform_various_string(
     obj: str,
-) -> MrtransformVariousStringParametersTagged:
+) -> MrtransformVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -371,7 +371,7 @@ def mrtransform_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformVariousStringParameters` object.
+    `MrtransformVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -385,7 +385,7 @@ def mrtransform_various_string_validate(
 
 
 def mrtransform_various_string_cargs(
-    params: MrtransformVariousStringParameters,
+    params: MrtransformVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -402,9 +402,9 @@ def mrtransform_various_string_cargs(
     return cargs
 
 
-def mrtransform_various_file_params(
+def mrtransform_various_file(
     obj: InputPathType,
-) -> MrtransformVariousFileParametersTagged:
+) -> MrtransformVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -425,7 +425,7 @@ def mrtransform_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformVariousFileParameters` object.
+    `MrtransformVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -439,7 +439,7 @@ def mrtransform_various_file_validate(
 
 
 def mrtransform_various_file_cargs(
-    params: MrtransformVariousFileParameters,
+    params: MrtransformVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -456,10 +456,10 @@ def mrtransform_various_file_cargs(
     return cargs
 
 
-def mrtransform_config_params(
+def mrtransform_config(
     key: str,
     value: str,
-) -> MrtransformConfigParametersTagged:
+) -> MrtransformConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -482,7 +482,7 @@ def mrtransform_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformConfigParameters` object.
+    `MrtransformConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -500,7 +500,7 @@ def mrtransform_config_validate(
 
 
 def mrtransform_config_cargs(
-    params: MrtransformConfigParameters,
+    params: MrtransformConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -521,7 +521,7 @@ def mrtransform_config_cargs(
 
 class MrtransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrtransformParameters(...)`.
+    Output object returned when calling `MrtransformParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -553,11 +553,11 @@ def mrtransform_params(
     directions: InputPathType | None = None,
     reorient_fod: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: MrtransformFslgradParameters | None = None,
+    fslgrad: MrtransformFslgradParamsDict | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: MrtransformExportGradFslParameters | None = None,
+    export_grad_fsl: MrtransformExportGradFslParamsDict | None = None,
     datatype: str | None = None,
-    strides: typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrtransformVariousStringParamsDictTagged, MrtransformVariousFileParamsDictTagged] | None = None,
     nan: bool = False,
     no_reorientation: bool = False,
     info: bool = False,
@@ -565,10 +565,10 @@ def mrtransform_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrtransformConfigParameters] | None = None,
+    config: list[MrtransformConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrtransformParametersTagged:
+) -> MrtransformParamsDictTagged:
     """
     Build parameters.
     
@@ -748,7 +748,7 @@ def mrtransform_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrtransformParameters` object.
+    `MrtransformParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -831,6 +831,8 @@ def mrtransform_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
         if "@type" not in params["strides"]:
             raise StyxValidationError("Params object is missing `@type`")
+        if params["strides"]["@type"] not in ["VariousString", "VariousFile"]:
+            raise StyxValidationError("Parameter `strides`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
         mrtransform_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
     if params.get("nan", False) is None:
         raise StyxValidationError("`nan` must not be None")
@@ -861,7 +863,7 @@ def mrtransform_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrtransformConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrtransformConfigParamsDict] | None`')
         for e in params["config"]:
             mrtransform_config_validate(e)
     if params.get("help", False) is None:
@@ -883,7 +885,7 @@ def mrtransform_validate(
 
 
 def mrtransform_cargs(
-    params: MrtransformParameters,
+    params: MrtransformParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1018,7 +1020,7 @@ def mrtransform_cargs(
 
 
 def mrtransform_outputs(
-    params: MrtransformParameters,
+    params: MrtransformParamsDict,
     execution: Execution,
 ) -> MrtransformOutputs:
     """
@@ -1040,7 +1042,7 @@ def mrtransform_outputs(
 
 
 def mrtransform_execute(
-    params: MrtransformParameters,
+    params: MrtransformParamsDict,
     runner: Runner | None = None,
 ) -> MrtransformOutputs:
     """
@@ -1127,11 +1129,11 @@ def mrtransform(
     directions: InputPathType | None = None,
     reorient_fod: str | None = None,
     grad: InputPathType | None = None,
-    fslgrad: MrtransformFslgradParameters | None = None,
+    fslgrad: MrtransformFslgradParamsDict | None = None,
     export_grad_mrtrix: str | None = None,
-    export_grad_fsl: MrtransformExportGradFslParameters | None = None,
+    export_grad_fsl: MrtransformExportGradFslParamsDict | None = None,
     datatype: str | None = None,
-    strides: typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrtransformVariousStringParamsDictTagged, MrtransformVariousFileParamsDictTagged] | None = None,
     nan: bool = False,
     no_reorientation: bool = False,
     info: bool = False,
@@ -1139,7 +1141,7 @@ def mrtransform(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[MrtransformConfigParameters] | None = None,
+    config: list[MrtransformConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -1345,14 +1347,26 @@ def mrtransform(
 
 __all__ = [
     "MRTRANSFORM_METADATA",
+    "MrtransformConfigParamsDict",
+    "MrtransformConfigParamsDictTagged",
     "MrtransformExportGradFslOutputs",
+    "MrtransformExportGradFslParamsDict",
+    "MrtransformExportGradFslParamsDictTagged",
+    "MrtransformFslgradParamsDict",
+    "MrtransformFslgradParamsDictTagged",
     "MrtransformOutputs",
+    "MrtransformParamsDict",
+    "MrtransformParamsDictTagged",
+    "MrtransformVariousFileParamsDict",
+    "MrtransformVariousFileParamsDictTagged",
+    "MrtransformVariousStringParamsDict",
+    "MrtransformVariousStringParamsDictTagged",
     "mrtransform",
-    "mrtransform_config_params",
+    "mrtransform_config",
     "mrtransform_execute",
-    "mrtransform_export_grad_fsl_params",
-    "mrtransform_fslgrad_params",
+    "mrtransform_export_grad_fsl",
+    "mrtransform_fslgrad",
     "mrtransform_params",
-    "mrtransform_various_file_params",
-    "mrtransform_various_string_params",
+    "mrtransform_various_file",
+    "mrtransform_various_string",
 ]

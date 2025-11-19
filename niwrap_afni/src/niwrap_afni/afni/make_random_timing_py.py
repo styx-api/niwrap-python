@@ -13,7 +13,7 @@ MAKE_RANDOM_TIMING_PY_METADATA = Metadata(
 )
 
 
-MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', {
+MakeRandomTimingPyParamsDict = typing.TypedDict('MakeRandomTimingPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/make_random_timing.py"]],
     "num_runs": float,
     "run_time": list[float],
@@ -41,7 +41,7 @@ MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', 
     "verb": typing.NotRequired[float | None],
     "show_timing_stats": bool,
 })
-MakeRandomTimingPyParametersTagged = typing.TypedDict('MakeRandomTimingPyParametersTagged', {
+MakeRandomTimingPyParamsDictTagged = typing.TypedDict('MakeRandomTimingPyParamsDictTagged', {
     "@type": typing.Literal["afni/make_random_timing.py"],
     "num_runs": float,
     "run_time": list[float],
@@ -73,7 +73,7 @@ MakeRandomTimingPyParametersTagged = typing.TypedDict('MakeRandomTimingPyParamet
 
 class MakeRandomTimingPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MakeRandomTimingPyParameters(...)`.
+    Output object returned when calling `MakeRandomTimingPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +105,7 @@ def make_random_timing_py_params(
     tr_locked: bool = False,
     verb: float | None = None,
     show_timing_stats: bool = False,
-) -> MakeRandomTimingPyParametersTagged:
+) -> MakeRandomTimingPyParamsDictTagged:
     """
     Build parameters.
     
@@ -191,7 +191,7 @@ def make_random_timing_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MakeRandomTimingPyParameters` object.
+    `MakeRandomTimingPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -328,7 +328,7 @@ def make_random_timing_py_validate(
 
 
 def make_random_timing_py_cargs(
-    params: MakeRandomTimingPyParameters,
+    params: MakeRandomTimingPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +457,7 @@ def make_random_timing_py_cargs(
 
 
 def make_random_timing_py_outputs(
-    params: MakeRandomTimingPyParameters,
+    params: MakeRandomTimingPyParamsDict,
     execution: Execution,
 ) -> MakeRandomTimingPyOutputs:
     """
@@ -476,7 +476,7 @@ def make_random_timing_py_outputs(
 
 
 def make_random_timing_py_execute(
-    params: MakeRandomTimingPyParameters,
+    params: MakeRandomTimingPyParamsDict,
     runner: Runner | None = None,
 ) -> MakeRandomTimingPyOutputs:
     """
@@ -604,6 +604,8 @@ def make_random_timing_py(
 __all__ = [
     "MAKE_RANDOM_TIMING_PY_METADATA",
     "MakeRandomTimingPyOutputs",
+    "MakeRandomTimingPyParamsDict",
+    "MakeRandomTimingPyParamsDictTagged",
     "make_random_timing_py",
     "make_random_timing_py_execute",
     "make_random_timing_py_params",

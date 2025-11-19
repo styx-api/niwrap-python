@@ -13,7 +13,7 @@ MRI_MAKE_UCHAR_METADATA = Metadata(
 )
 
 
-MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
+MriMakeUcharParamsDict = typing.TypedDict('MriMakeUcharParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_uchar"]],
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
@@ -24,7 +24,7 @@ MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
     "cumulative_histo": typing.NotRequired[str | None],
     "vradvol": typing.NotRequired[str | None],
 })
-MriMakeUcharParametersTagged = typing.TypedDict('MriMakeUcharParametersTagged', {
+MriMakeUcharParamsDictTagged = typing.TypedDict('MriMakeUcharParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_make_uchar"],
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
@@ -39,7 +39,7 @@ MriMakeUcharParametersTagged = typing.TypedDict('MriMakeUcharParametersTagged', 
 
 class MriMakeUcharOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriMakeUcharParameters(...)`.
+    Output object returned when calling `MriMakeUcharParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def mri_make_uchar_params(
     max_radius: float | None = None,
     cumulative_histo: str | None = None,
     vradvol: str | None = None,
-) -> MriMakeUcharParametersTagged:
+) -> MriMakeUcharParamsDictTagged:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def mri_make_uchar_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriMakeUcharParameters` object.
+    `MriMakeUcharParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def mri_make_uchar_validate(
 
 
 def mri_make_uchar_cargs(
-    params: MriMakeUcharParameters,
+    params: MriMakeUcharParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -181,7 +181,7 @@ def mri_make_uchar_cargs(
 
 
 def mri_make_uchar_outputs(
-    params: MriMakeUcharParameters,
+    params: MriMakeUcharParamsDict,
     execution: Execution,
 ) -> MriMakeUcharOutputs:
     """
@@ -201,7 +201,7 @@ def mri_make_uchar_outputs(
 
 
 def mri_make_uchar_execute(
-    params: MriMakeUcharParameters,
+    params: MriMakeUcharParamsDict,
     runner: Runner | None = None,
 ) -> MriMakeUcharOutputs:
     """
@@ -282,6 +282,8 @@ def mri_make_uchar(
 __all__ = [
     "MRI_MAKE_UCHAR_METADATA",
     "MriMakeUcharOutputs",
+    "MriMakeUcharParamsDict",
+    "MriMakeUcharParamsDictTagged",
     "mri_make_uchar",
     "mri_make_uchar_execute",
     "mri_make_uchar_params",

@@ -13,7 +13,7 @@ V__FSLABEL2DSET_METADATA = Metadata(
 )
 
 
-VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
+VFslabel2dsetParamsDict = typing.TypedDict('VFslabel2dsetParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@FSlabel2dset"]],
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
     "echo": bool,
     "keep_tmp": bool,
 })
-VFslabel2dsetParametersTagged = typing.TypedDict('VFslabel2dsetParametersTagged', {
+VFslabel2dsetParamsDictTagged = typing.TypedDict('VFslabel2dsetParamsDictTagged', {
     "@type": typing.Literal["afni/@FSlabel2dset"],
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ VFslabel2dsetParametersTagged = typing.TypedDict('VFslabel2dsetParametersTagged'
 
 class VFslabel2dsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VFslabel2dsetParameters(...)`.
+    Output object returned when calling `VFslabel2dsetParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def v__fslabel2dset_params(
     help_: bool = False,
     echo: bool = False,
     keep_tmp: bool = False,
-) -> VFslabel2dsetParametersTagged:
+) -> VFslabel2dsetParamsDictTagged:
     """
     Build parameters.
     
@@ -75,7 +75,7 @@ def v__fslabel2dset_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VFslabel2dsetParameters` object.
+    `VFslabel2dsetParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -104,7 +104,7 @@ def v__fslabel2dset_validate(
 
 
 def v__fslabel2dset_cargs(
-    params: VFslabel2dsetParameters,
+    params: VFslabel2dsetParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -137,7 +137,7 @@ def v__fslabel2dset_cargs(
 
 
 def v__fslabel2dset_outputs(
-    params: VFslabel2dsetParameters,
+    params: VFslabel2dsetParamsDict,
     execution: Execution,
 ) -> VFslabel2dsetOutputs:
     """
@@ -156,7 +156,7 @@ def v__fslabel2dset_outputs(
 
 
 def v__fslabel2dset_execute(
-    params: VFslabel2dsetParameters,
+    params: VFslabel2dsetParamsDict,
     runner: Runner | None = None,
 ) -> VFslabel2dsetOutputs:
     """
@@ -225,6 +225,8 @@ def v__fslabel2dset(
 
 __all__ = [
     "VFslabel2dsetOutputs",
+    "VFslabel2dsetParamsDict",
+    "VFslabel2dsetParamsDictTagged",
     "V__FSLABEL2DSET_METADATA",
     "v__fslabel2dset",
     "v__fslabel2dset_execute",

@@ -13,7 +13,7 @@ ABIDS_JSON_TOOL_PY_METADATA = Metadata(
 )
 
 
-AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
+AbidsJsonToolPyParamsDict = typing.TypedDict('AbidsJsonToolPyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/abids_json_tool.py"]],
     "input_file": InputPathType,
     "prefix": str,
@@ -29,7 +29,7 @@ AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
     "literal_keys": bool,
     "values_stay_str": bool,
 })
-AbidsJsonToolPyParametersTagged = typing.TypedDict('AbidsJsonToolPyParametersTagged', {
+AbidsJsonToolPyParamsDictTagged = typing.TypedDict('AbidsJsonToolPyParamsDictTagged', {
     "@type": typing.Literal["afni/abids_json_tool.py"],
     "input_file": InputPathType,
     "prefix": str,
@@ -49,7 +49,7 @@ AbidsJsonToolPyParametersTagged = typing.TypedDict('AbidsJsonToolPyParametersTag
 
 class AbidsJsonToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AbidsJsonToolPyParameters(...)`.
+    Output object returned when calling `AbidsJsonToolPyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def abids_json_tool_py_params(
     delimiter_minor: str | None = None,
     literal_keys: bool = False,
     values_stay_str: bool = False,
-) -> AbidsJsonToolPyParametersTagged:
+) -> AbidsJsonToolPyParamsDictTagged:
     """
     Build parameters.
     
@@ -125,7 +125,7 @@ def abids_json_tool_py_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AbidsJsonToolPyParameters` object.
+    `AbidsJsonToolPyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -188,7 +188,7 @@ def abids_json_tool_py_validate(
 
 
 def abids_json_tool_py_cargs(
-    params: AbidsJsonToolPyParameters,
+    params: AbidsJsonToolPyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def abids_json_tool_py_cargs(
 
 
 def abids_json_tool_py_outputs(
-    params: AbidsJsonToolPyParameters,
+    params: AbidsJsonToolPyParamsDict,
     execution: Execution,
 ) -> AbidsJsonToolPyOutputs:
     """
@@ -267,7 +267,7 @@ def abids_json_tool_py_outputs(
 
 
 def abids_json_tool_py_execute(
-    params: AbidsJsonToolPyParameters,
+    params: AbidsJsonToolPyParamsDict,
     runner: Runner | None = None,
 ) -> AbidsJsonToolPyOutputs:
     """
@@ -366,6 +366,8 @@ def abids_json_tool_py(
 __all__ = [
     "ABIDS_JSON_TOOL_PY_METADATA",
     "AbidsJsonToolPyOutputs",
+    "AbidsJsonToolPyParamsDict",
+    "AbidsJsonToolPyParamsDictTagged",
     "abids_json_tool_py",
     "abids_json_tool_py_execute",
     "abids_json_tool_py_params",

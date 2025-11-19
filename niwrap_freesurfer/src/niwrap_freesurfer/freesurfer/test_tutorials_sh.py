@@ -13,7 +13,7 @@ TEST_TUTORIALS_SH_METADATA = Metadata(
 )
 
 
-TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
+TestTutorialsShParamsDict = typing.TypedDict('TestTutorialsShParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/test_tutorials.sh"]],
     "all_tutorials": bool,
     "quick_test": bool,
@@ -32,7 +32,7 @@ TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
     "fsfast": bool,
     "multimodal": bool,
 })
-TestTutorialsShParametersTagged = typing.TypedDict('TestTutorialsShParametersTagged', {
+TestTutorialsShParamsDictTagged = typing.TypedDict('TestTutorialsShParamsDictTagged', {
     "@type": typing.Literal["freesurfer/test_tutorials.sh"],
     "all_tutorials": bool,
     "quick_test": bool,
@@ -55,7 +55,7 @@ TestTutorialsShParametersTagged = typing.TypedDict('TestTutorialsShParametersTag
 
 class TestTutorialsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TestTutorialsShParameters(...)`.
+    Output object returned when calling `TestTutorialsShParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +78,7 @@ def test_tutorials_sh_params(
     tracula: bool = False,
     fsfast: bool = False,
     multimodal: bool = False,
-) -> TestTutorialsShParametersTagged:
+) -> TestTutorialsShParamsDictTagged:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def test_tutorials_sh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TestTutorialsShParameters` object.
+    `TestTutorialsShParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -205,7 +205,7 @@ def test_tutorials_sh_validate(
 
 
 def test_tutorials_sh_cargs(
-    params: TestTutorialsShParameters,
+    params: TestTutorialsShParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -255,7 +255,7 @@ def test_tutorials_sh_cargs(
 
 
 def test_tutorials_sh_outputs(
-    params: TestTutorialsShParameters,
+    params: TestTutorialsShParamsDict,
     execution: Execution,
 ) -> TestTutorialsShOutputs:
     """
@@ -274,7 +274,7 @@ def test_tutorials_sh_outputs(
 
 
 def test_tutorials_sh_execute(
-    params: TestTutorialsShParameters,
+    params: TestTutorialsShParamsDict,
     runner: Runner | None = None,
 ) -> TestTutorialsShOutputs:
     """
@@ -379,6 +379,8 @@ def test_tutorials_sh(
 __all__ = [
     "TEST_TUTORIALS_SH_METADATA",
     "TestTutorialsShOutputs",
+    "TestTutorialsShParamsDict",
+    "TestTutorialsShParamsDictTagged",
     "test_tutorials_sh",
     "test_tutorials_sh_execute",
     "test_tutorials_sh_params",

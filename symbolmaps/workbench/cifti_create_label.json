@@ -6,7 +6,7 @@
     },
     "volume": {
       "var_param": "volume",
-      "fn_struct_make_params": "cifti_create_label_volume_params",
+      "fn_struct_make_params": "cifti_create_label_volume",
       "properties": {
         "label-volume": {
           "var_param": "label_volume"
@@ -18,7 +18,7 @@
     },
     "left-label": {
       "var_param": "left_label",
-      "fn_struct_make_params": "cifti_create_label_left_label_params",
+      "fn_struct_make_params": "cifti_create_label_left_label",
       "properties": {
         "label": {
           "var_param": "label"
@@ -30,7 +30,7 @@
     },
     "right-label": {
       "var_param": "right_label",
-      "fn_struct_make_params": "cifti_create_label_right_label_params",
+      "fn_struct_make_params": "cifti_create_label_right_label",
       "properties": {
         "label": {
           "var_param": "label"
@@ -42,7 +42,7 @@
     },
     "cerebellum-label": {
       "var_param": "cerebellum_label",
-      "fn_struct_make_params": "cifti_create_label_cerebellum_label_params",
+      "fn_struct_make_params": "cifti_create_label_cerebellum_label",
       "properties": {
         "label": {
           "var_param": "label"
@@ -54,7 +54,7 @@
     },
     "label": {
       "var_param": "label",
-      "fn_struct_make_params": "cifti_create_label_label_params",
+      "fn_struct_make_params": "cifti_create_label_label",
       "properties": {
         "structure": {
           "var_param": "structure"

@@ -13,7 +13,7 @@ DMRI_SPLINE_METADATA = Metadata(
 )
 
 
-DmriSplineParameters = typing.TypedDict('DmriSplineParameters', {
+DmriSplineParamsDict = typing.TypedDict('DmriSplineParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_spline"]],
     "control_points_file": InputPathType,
     "mask_volume": InputPathType,
@@ -24,7 +24,7 @@ DmriSplineParameters = typing.TypedDict('DmriSplineParameters', {
     "debug": bool,
     "check_options": bool,
 })
-DmriSplineParametersTagged = typing.TypedDict('DmriSplineParametersTagged', {
+DmriSplineParamsDictTagged = typing.TypedDict('DmriSplineParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_spline"],
     "control_points_file": InputPathType,
     "mask_volume": InputPathType,
@@ -39,7 +39,7 @@ DmriSplineParametersTagged = typing.TypedDict('DmriSplineParametersTagged', {
 
 class DmriSplineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriSplineParameters(...)`.
+    Output object returned when calling `DmriSplineParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def dmri_spline_params(
     output_vectors_base: str | None = None,
     debug: bool = False,
     check_options: bool = False,
-) -> DmriSplineParametersTagged:
+) -> DmriSplineParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def dmri_spline_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriSplineParameters` object.
+    `DmriSplineParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -144,7 +144,7 @@ def dmri_spline_validate(
 
 
 def dmri_spline_cargs(
-    params: DmriSplineParameters,
+    params: DmriSplineParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def dmri_spline_cargs(
 
 
 def dmri_spline_outputs(
-    params: DmriSplineParameters,
+    params: DmriSplineParamsDict,
     execution: Execution,
 ) -> DmriSplineOutputs:
     """
@@ -215,7 +215,7 @@ def dmri_spline_outputs(
 
 
 def dmri_spline_execute(
-    params: DmriSplineParameters,
+    params: DmriSplineParamsDict,
     runner: Runner | None = None,
 ) -> DmriSplineOutputs:
     """
@@ -295,6 +295,8 @@ def dmri_spline(
 __all__ = [
     "DMRI_SPLINE_METADATA",
     "DmriSplineOutputs",
+    "DmriSplineParamsDict",
+    "DmriSplineParamsDictTagged",
     "dmri_spline",
     "dmri_spline_execute",
     "dmri_spline_params",

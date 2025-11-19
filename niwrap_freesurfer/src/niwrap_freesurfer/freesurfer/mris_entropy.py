@@ -13,7 +13,7 @@ MRIS_ENTROPY_METADATA = Metadata(
 )
 
 
-MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
+MrisEntropyParamsDict = typing.TypedDict('MrisEntropyParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_entropy"]],
     "subject": str,
     "hemi": str,
@@ -22,7 +22,7 @@ MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
     "average_iterations": typing.NotRequired[float | None],
     "normalize": bool,
 })
-MrisEntropyParametersTagged = typing.TypedDict('MrisEntropyParametersTagged', {
+MrisEntropyParamsDictTagged = typing.TypedDict('MrisEntropyParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_entropy"],
     "subject": str,
     "hemi": str,
@@ -35,7 +35,7 @@ MrisEntropyParametersTagged = typing.TypedDict('MrisEntropyParametersTagged', {
 
 class MrisEntropyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisEntropyParameters(...)`.
+    Output object returned when calling `MrisEntropyParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def mris_entropy_params(
     curvfile: InputPathType,
     average_iterations: float | None = None,
     normalize: bool = False,
-) -> MrisEntropyParametersTagged:
+) -> MrisEntropyParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def mris_entropy_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisEntropyParameters` object.
+    `MrisEntropyParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -116,7 +116,7 @@ def mris_entropy_validate(
 
 
 def mris_entropy_cargs(
-    params: MrisEntropyParameters,
+    params: MrisEntropyParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -145,7 +145,7 @@ def mris_entropy_cargs(
 
 
 def mris_entropy_outputs(
-    params: MrisEntropyParameters,
+    params: MrisEntropyParamsDict,
     execution: Execution,
 ) -> MrisEntropyOutputs:
     """
@@ -165,7 +165,7 @@ def mris_entropy_outputs(
 
 
 def mris_entropy_execute(
-    params: MrisEntropyParameters,
+    params: MrisEntropyParamsDict,
     runner: Runner | None = None,
 ) -> MrisEntropyOutputs:
     """
@@ -237,6 +237,8 @@ def mris_entropy(
 __all__ = [
     "MRIS_ENTROPY_METADATA",
     "MrisEntropyOutputs",
+    "MrisEntropyParamsDict",
+    "MrisEntropyParamsDictTagged",
     "mris_entropy",
     "mris_entropy_execute",
     "mris_entropy_params",

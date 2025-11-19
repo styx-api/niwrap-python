@@ -13,7 +13,7 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 )
 
 
-VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
+VAfniRefacerRunParamsDict = typing.TypedDict('VAfniRefacerRunParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_run"]],
     "input_file": InputPathType,
     "mode_deface": bool,
@@ -29,7 +29,7 @@ VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
     "overwrite": bool,
     "verbose": bool,
 })
-VAfniRefacerRunParametersTagged = typing.TypedDict('VAfniRefacerRunParametersTagged', {
+VAfniRefacerRunParamsDictTagged = typing.TypedDict('VAfniRefacerRunParamsDictTagged', {
     "@type": typing.Literal["afni/@afni_refacer_run"],
     "input_file": InputPathType,
     "mode_deface": bool,
@@ -49,7 +49,7 @@ VAfniRefacerRunParametersTagged = typing.TypedDict('VAfniRefacerRunParametersTag
 
 class VAfniRefacerRunOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VAfniRefacerRunParameters(...)`.
+    Output object returned when calling `VAfniRefacerRunParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ def v__afni_refacer_run_params(
     no_images: bool = False,
     overwrite: bool = False,
     verbose: bool = False,
-) -> VAfniRefacerRunParametersTagged:
+) -> VAfniRefacerRunParamsDictTagged:
     """
     Build parameters.
     
@@ -140,7 +140,7 @@ def v__afni_refacer_run_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VAfniRefacerRunParameters` object.
+    `VAfniRefacerRunParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -200,7 +200,7 @@ def v__afni_refacer_run_validate(
 
 
 def v__afni_refacer_run_cargs(
-    params: VAfniRefacerRunParameters,
+    params: VAfniRefacerRunParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -254,7 +254,7 @@ def v__afni_refacer_run_cargs(
 
 
 def v__afni_refacer_run_outputs(
-    params: VAfniRefacerRunParameters,
+    params: VAfniRefacerRunParamsDict,
     execution: Execution,
 ) -> VAfniRefacerRunOutputs:
     """
@@ -278,7 +278,7 @@ def v__afni_refacer_run_outputs(
 
 
 def v__afni_refacer_run_execute(
-    params: VAfniRefacerRunParameters,
+    params: VAfniRefacerRunParamsDict,
     runner: Runner | None = None,
 ) -> VAfniRefacerRunOutputs:
     """
@@ -385,6 +385,8 @@ def v__afni_refacer_run(
 
 __all__ = [
     "VAfniRefacerRunOutputs",
+    "VAfniRefacerRunParamsDict",
+    "VAfniRefacerRunParamsDictTagged",
     "V__AFNI_REFACER_RUN_METADATA",
     "v__afni_refacer_run",
     "v__afni_refacer_run_execute",

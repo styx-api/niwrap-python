@@ -13,7 +13,7 @@ IMCAT_METADATA = Metadata(
 )
 
 
-ImcatParameters = typing.TypedDict('ImcatParameters', {
+ImcatParamsDict = typing.TypedDict('ImcatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imcat"]],
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ ImcatParameters = typing.TypedDict('ImcatParameters', {
     "gap": typing.NotRequired[float | None],
     "gap_col": typing.NotRequired[list[float] | None],
 })
-ImcatParametersTagged = typing.TypedDict('ImcatParametersTagged', {
+ImcatParamsDictTagged = typing.TypedDict('ImcatParamsDictTagged', {
     "@type": typing.Literal["afni/imcat"],
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
@@ -73,7 +73,7 @@ ImcatParametersTagged = typing.TypedDict('ImcatParametersTagged', {
 
 class ImcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImcatParameters(...)`.
+    Output object returned when calling `ImcatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +107,7 @@ def imcat_params(
     matrix_from_scale: bool = False,
     gap: float | None = None,
     gap_col: list[float] | None = None,
-) -> ImcatParametersTagged:
+) -> ImcatParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def imcat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImcatParameters` object.
+    `ImcatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -339,7 +339,7 @@ def imcat_validate(
 
 
 def imcat_cargs(
-    params: ImcatParameters,
+    params: ImcatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -454,7 +454,7 @@ def imcat_cargs(
 
 
 def imcat_outputs(
-    params: ImcatParameters,
+    params: ImcatParamsDict,
     execution: Execution,
 ) -> ImcatOutputs:
     """
@@ -474,7 +474,7 @@ def imcat_outputs(
 
 
 def imcat_execute(
-    params: ImcatParameters,
+    params: ImcatParamsDict,
     runner: Runner | None = None,
 ) -> ImcatOutputs:
     """
@@ -625,6 +625,8 @@ def imcat(
 __all__ = [
     "IMCAT_METADATA",
     "ImcatOutputs",
+    "ImcatParamsDict",
+    "ImcatParamsDictTagged",
     "imcat",
     "imcat_execute",
     "imcat_params",

@@ -13,7 +13,7 @@ SURF_DIST_METADATA = Metadata(
 )
 
 
-SurfDistParameters = typing.TypedDict('SurfDistParameters', {
+SurfDistParamsDict = typing.TypedDict('SurfDistParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/SurfDist"]],
     "surface": InputPathType,
     "nodepairs": InputPathType,
@@ -24,7 +24,7 @@ SurfDistParameters = typing.TypedDict('SurfDistParameters', {
     "from_node": typing.NotRequired[str | None],
     "to_nodes": typing.NotRequired[InputPathType | None],
 })
-SurfDistParametersTagged = typing.TypedDict('SurfDistParametersTagged', {
+SurfDistParamsDictTagged = typing.TypedDict('SurfDistParamsDictTagged', {
     "@type": typing.Literal["afni/SurfDist"],
     "surface": InputPathType,
     "nodepairs": InputPathType,
@@ -39,7 +39,7 @@ SurfDistParametersTagged = typing.TypedDict('SurfDistParametersTagged', {
 
 class SurfDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `SurfDistParameters(...)`.
+    Output object returned when calling `SurfDistParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -56,7 +56,7 @@ def surf_dist_params(
     graph: bool = False,
     from_node: str | None = None,
     to_nodes: InputPathType | None = None,
-) -> SurfDistParametersTagged:
+) -> SurfDistParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def surf_dist_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `SurfDistParameters` object.
+    `SurfDistParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -135,7 +135,7 @@ def surf_dist_validate(
 
 
 def surf_dist_cargs(
-    params: SurfDistParameters,
+    params: SurfDistParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -176,7 +176,7 @@ def surf_dist_cargs(
 
 
 def surf_dist_outputs(
-    params: SurfDistParameters,
+    params: SurfDistParamsDict,
     execution: Execution,
 ) -> SurfDistOutputs:
     """
@@ -196,7 +196,7 @@ def surf_dist_outputs(
 
 
 def surf_dist_execute(
-    params: SurfDistParameters,
+    params: SurfDistParamsDict,
     runner: Runner | None = None,
 ) -> SurfDistOutputs:
     """
@@ -275,6 +275,8 @@ def surf_dist(
 __all__ = [
     "SURF_DIST_METADATA",
     "SurfDistOutputs",
+    "SurfDistParamsDict",
+    "SurfDistParamsDictTagged",
     "surf_dist",
     "surf_dist_execute",
     "surf_dist_params",

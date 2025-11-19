@@ -13,7 +13,7 @@ MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
 )
 
 
-MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameters', {
+MriCalRenormalizeGcaParamsDict = typing.TypedDict('MriCalRenormalizeGcaParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cal_renormalize_gca"]],
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
@@ -21,7 +21,7 @@ MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameter
     "transform_file": InputPathType,
     "output_atlas": str,
 })
-MriCalRenormalizeGcaParametersTagged = typing.TypedDict('MriCalRenormalizeGcaParametersTagged', {
+MriCalRenormalizeGcaParamsDictTagged = typing.TypedDict('MriCalRenormalizeGcaParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_cal_renormalize_gca"],
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
@@ -33,7 +33,7 @@ MriCalRenormalizeGcaParametersTagged = typing.TypedDict('MriCalRenormalizeGcaPar
 
 class MriCalRenormalizeGcaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriCalRenormalizeGcaParameters(...)`.
+    Output object returned when calling `MriCalRenormalizeGcaParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def mri_cal_renormalize_gca_params(
     input_atlas: InputPathType,
     transform_file: InputPathType,
     output_atlas: str,
-) -> MriCalRenormalizeGcaParametersTagged:
+) -> MriCalRenormalizeGcaParamsDictTagged:
     """
     Build parameters.
     
@@ -76,7 +76,7 @@ def mri_cal_renormalize_gca_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriCalRenormalizeGcaParameters` object.
+    `MriCalRenormalizeGcaParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def mri_cal_renormalize_gca_validate(
 
 
 def mri_cal_renormalize_gca_cargs(
-    params: MriCalRenormalizeGcaParameters,
+    params: MriCalRenormalizeGcaParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,7 +129,7 @@ def mri_cal_renormalize_gca_cargs(
 
 
 def mri_cal_renormalize_gca_outputs(
-    params: MriCalRenormalizeGcaParameters,
+    params: MriCalRenormalizeGcaParamsDict,
     execution: Execution,
 ) -> MriCalRenormalizeGcaOutputs:
     """
@@ -149,7 +149,7 @@ def mri_cal_renormalize_gca_outputs(
 
 
 def mri_cal_renormalize_gca_execute(
-    params: MriCalRenormalizeGcaParameters,
+    params: MriCalRenormalizeGcaParamsDict,
     runner: Runner | None = None,
 ) -> MriCalRenormalizeGcaOutputs:
     """
@@ -217,6 +217,8 @@ def mri_cal_renormalize_gca(
 __all__ = [
     "MRI_CAL_RENORMALIZE_GCA_METADATA",
     "MriCalRenormalizeGcaOutputs",
+    "MriCalRenormalizeGcaParamsDict",
+    "MriCalRenormalizeGcaParamsDictTagged",
     "mri_cal_renormalize_gca",
     "mri_cal_renormalize_gca_execute",
     "mri_cal_renormalize_gca_params",

@@ -13,7 +13,7 @@ V_3D_TSGEN_METADATA = Metadata(
 )
 
 
-V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
+V3dTsgenParamsDict = typing.TypedDict('V3dTsgenParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTSgen"]],
     "input_file": InputPathType,
     "in_tr_flag": bool,
@@ -29,7 +29,7 @@ V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
     "bucket_config": typing.NotRequired[str | None],
     "brick_config": typing.NotRequired[str | None],
 })
-V3dTsgenParametersTagged = typing.TypedDict('V3dTsgenParametersTagged', {
+V3dTsgenParamsDictTagged = typing.TypedDict('V3dTsgenParamsDictTagged', {
     "@type": typing.Literal["afni/3dTSgen"],
     "input_file": InputPathType,
     "in_tr_flag": bool,
@@ -49,7 +49,7 @@ V3dTsgenParametersTagged = typing.TypedDict('V3dTsgenParametersTagged', {
 
 class V3dTsgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTsgenParameters(...)`.
+    Output object returned when calling `V3dTsgenParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ def v_3d_tsgen_params(
     noise_coef: str | None = None,
     bucket_config: str | None = None,
     brick_config: str | None = None,
-) -> V3dTsgenParametersTagged:
+) -> V3dTsgenParamsDictTagged:
     """
     Build parameters.
     
@@ -130,7 +130,7 @@ def v_3d_tsgen_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTsgenParameters` object.
+    `V3dTsgenParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def v_3d_tsgen_validate(
 
 
 def v_3d_tsgen_cargs(
-    params: V3dTsgenParameters,
+    params: V3dTsgenParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -257,7 +257,7 @@ def v_3d_tsgen_cargs(
 
 
 def v_3d_tsgen_outputs(
-    params: V3dTsgenParameters,
+    params: V3dTsgenParamsDict,
     execution: Execution,
 ) -> V3dTsgenOutputs:
     """
@@ -276,7 +276,7 @@ def v_3d_tsgen_outputs(
 
 
 def v_3d_tsgen_execute(
-    params: V3dTsgenParameters,
+    params: V3dTsgenParamsDict,
     runner: Runner | None = None,
 ) -> V3dTsgenOutputs:
     """
@@ -378,6 +378,8 @@ def v_3d_tsgen(
 
 __all__ = [
     "V3dTsgenOutputs",
+    "V3dTsgenParamsDict",
+    "V3dTsgenParamsDictTagged",
     "V_3D_TSGEN_METADATA",
     "v_3d_tsgen",
     "v_3d_tsgen_execute",

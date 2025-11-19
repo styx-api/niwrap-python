@@ -13,11 +13,11 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 )
 
 
-MrisAddTemplateParameters = typing.TypedDict('MrisAddTemplateParameters', {
+MrisAddTemplateParamsDict = typing.TypedDict('MrisAddTemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_add_template"]],
     "placeholder_input": typing.NotRequired[str | None],
 })
-MrisAddTemplateParametersTagged = typing.TypedDict('MrisAddTemplateParametersTagged', {
+MrisAddTemplateParamsDictTagged = typing.TypedDict('MrisAddTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_add_template"],
     "placeholder_input": typing.NotRequired[str | None],
 })
@@ -25,7 +25,7 @@ MrisAddTemplateParametersTagged = typing.TypedDict('MrisAddTemplateParametersTag
 
 class MrisAddTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisAddTemplateParameters(...)`.
+    Output object returned when calling `MrisAddTemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class MrisAddTemplateOutputs(typing.NamedTuple):
 
 def mris_add_template_params(
     placeholder_input: str | None = None,
-) -> MrisAddTemplateParametersTagged:
+) -> MrisAddTemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -57,7 +57,7 @@ def mris_add_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisAddTemplateParameters` object.
+    `MrisAddTemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -70,7 +70,7 @@ def mris_add_template_validate(
 
 
 def mris_add_template_cargs(
-    params: MrisAddTemplateParameters,
+    params: MrisAddTemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -90,7 +90,7 @@ def mris_add_template_cargs(
 
 
 def mris_add_template_outputs(
-    params: MrisAddTemplateParameters,
+    params: MrisAddTemplateParamsDict,
     execution: Execution,
 ) -> MrisAddTemplateOutputs:
     """
@@ -110,7 +110,7 @@ def mris_add_template_outputs(
 
 
 def mris_add_template_execute(
-    params: MrisAddTemplateParameters,
+    params: MrisAddTemplateParamsDict,
     runner: Runner | None = None,
 ) -> MrisAddTemplateOutputs:
     """
@@ -166,6 +166,8 @@ def mris_add_template(
 __all__ = [
     "MRIS_ADD_TEMPLATE_METADATA",
     "MrisAddTemplateOutputs",
+    "MrisAddTemplateParamsDict",
+    "MrisAddTemplateParamsDictTagged",
     "mris_add_template",
     "mris_add_template_execute",
     "mris_add_template_params",

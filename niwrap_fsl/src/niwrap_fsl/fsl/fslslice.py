@@ -13,12 +13,12 @@ FSLSLICE_METADATA = Metadata(
 )
 
 
-FslsliceParameters = typing.TypedDict('FslsliceParameters', {
+FslsliceParamsDict = typing.TypedDict('FslsliceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslslice"]],
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })
-FslsliceParametersTagged = typing.TypedDict('FslsliceParametersTagged', {
+FslsliceParamsDictTagged = typing.TypedDict('FslsliceParamsDictTagged', {
     "@type": typing.Literal["fsl/fslslice"],
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
@@ -27,7 +27,7 @@ FslsliceParametersTagged = typing.TypedDict('FslsliceParametersTagged', {
 
 class FslsliceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FslsliceParameters(...)`.
+    Output object returned when calling `FslsliceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -36,7 +36,7 @@ class FslsliceOutputs(typing.NamedTuple):
 def fslslice_params(
     volume: InputPathType,
     output_basename: str | None = None,
-) -> FslsliceParametersTagged:
+) -> FslsliceParamsDictTagged:
     """
     Build parameters.
     
@@ -60,7 +60,7 @@ def fslslice_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslsliceParameters` object.
+    `FslsliceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -77,7 +77,7 @@ def fslslice_validate(
 
 
 def fslslice_cargs(
-    params: FslsliceParameters,
+    params: FslsliceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,7 +98,7 @@ def fslslice_cargs(
 
 
 def fslslice_outputs(
-    params: FslsliceParameters,
+    params: FslsliceParamsDict,
     execution: Execution,
 ) -> FslsliceOutputs:
     """
@@ -117,7 +117,7 @@ def fslslice_outputs(
 
 
 def fslslice_execute(
-    params: FslsliceParameters,
+    params: FslsliceParamsDict,
     runner: Runner | None = None,
 ) -> FslsliceOutputs:
     """
@@ -176,6 +176,8 @@ def fslslice(
 __all__ = [
     "FSLSLICE_METADATA",
     "FslsliceOutputs",
+    "FslsliceParamsDict",
+    "FslsliceParamsDictTagged",
     "fslslice",
     "fslslice_execute",
     "fslslice_params",

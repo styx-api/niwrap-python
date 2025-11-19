@@ -13,7 +13,7 @@ V__ROI_CORR_MAT_METADATA = Metadata(
 )
 
 
-VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
+VRoiCorrMatParamsDict = typing.TypedDict('VRoiCorrMatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@ROI_Corr_Mat"]],
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
@@ -26,7 +26,7 @@ VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
     "echo": bool,
     "verb": bool,
 })
-VRoiCorrMatParametersTagged = typing.TypedDict('VRoiCorrMatParametersTagged', {
+VRoiCorrMatParamsDictTagged = typing.TypedDict('VRoiCorrMatParamsDictTagged', {
     "@type": typing.Literal["afni/@ROI_Corr_Mat"],
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
@@ -43,7 +43,7 @@ VRoiCorrMatParametersTagged = typing.TypedDict('VRoiCorrMatParametersTagged', {
 
 class VRoiCorrMatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VRoiCorrMatParameters(...)`.
+    Output object returned when calling `VRoiCorrMatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def v__roi_corr_mat_params(
     keep_tmp: bool = False,
     echo: bool = False,
     verb: bool = False,
-) -> VRoiCorrMatParametersTagged:
+) -> VRoiCorrMatParamsDictTagged:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def v__roi_corr_mat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VRoiCorrMatParameters` object.
+    `VRoiCorrMatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -154,7 +154,7 @@ def v__roi_corr_mat_validate(
 
 
 def v__roi_corr_mat_cargs(
-    params: VRoiCorrMatParameters,
+    params: VRoiCorrMatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -204,7 +204,7 @@ def v__roi_corr_mat_cargs(
 
 
 def v__roi_corr_mat_outputs(
-    params: VRoiCorrMatParameters,
+    params: VRoiCorrMatParamsDict,
     execution: Execution,
 ) -> VRoiCorrMatOutputs:
     """
@@ -225,7 +225,7 @@ def v__roi_corr_mat_outputs(
 
 
 def v__roi_corr_mat_execute(
-    params: VRoiCorrMatParameters,
+    params: VRoiCorrMatParamsDict,
     runner: Runner | None = None,
 ) -> VRoiCorrMatOutputs:
     """
@@ -308,6 +308,8 @@ def v__roi_corr_mat(
 
 __all__ = [
     "VRoiCorrMatOutputs",
+    "VRoiCorrMatParamsDict",
+    "VRoiCorrMatParamsDictTagged",
     "V__ROI_CORR_MAT_METADATA",
     "v__roi_corr_mat",
     "v__roi_corr_mat_execute",

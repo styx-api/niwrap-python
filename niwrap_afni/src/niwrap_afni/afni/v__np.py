@@ -13,11 +13,11 @@ V__NP_METADATA = Metadata(
 )
 
 
-VNpParameters = typing.TypedDict('VNpParameters', {
+VNpParamsDict = typing.TypedDict('VNpParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@np"]],
     "prefix": str,
 })
-VNpParametersTagged = typing.TypedDict('VNpParametersTagged', {
+VNpParamsDictTagged = typing.TypedDict('VNpParamsDictTagged', {
     "@type": typing.Literal["afni/@np"],
     "prefix": str,
 })
@@ -25,7 +25,7 @@ VNpParametersTagged = typing.TypedDict('VNpParametersTagged', {
 
 class VNpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VNpParameters(...)`.
+    Output object returned when calling `VNpParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -35,7 +35,7 @@ class VNpOutputs(typing.NamedTuple):
 
 def v__np_params(
     prefix: str,
-) -> VNpParametersTagged:
+) -> VNpParamsDictTagged:
     """
     Build parameters.
     
@@ -55,7 +55,7 @@ def v__np_validate(
     params: typing.Any,
 ) -> None:
     """
-    Validate parameters. Throws an error if `params` is not a valid `VNpParameters`
+    Validate parameters. Throws an error if `params` is not a valid `VNpParamsDict`
     object.
     
     Args:
@@ -70,7 +70,7 @@ def v__np_validate(
 
 
 def v__np_cargs(
-    params: VNpParameters,
+    params: VNpParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -89,7 +89,7 @@ def v__np_cargs(
 
 
 def v__np_outputs(
-    params: VNpParameters,
+    params: VNpParamsDict,
     execution: Execution,
 ) -> VNpOutputs:
     """
@@ -109,7 +109,7 @@ def v__np_outputs(
 
 
 def v__np_execute(
-    params: VNpParameters,
+    params: VNpParamsDict,
     runner: Runner | None = None,
 ) -> VNpOutputs:
     """
@@ -170,6 +170,8 @@ def v__np(
 
 __all__ = [
     "VNpOutputs",
+    "VNpParamsDict",
+    "VNpParamsDictTagged",
     "V__NP_METADATA",
     "v__np",
     "v__np_execute",

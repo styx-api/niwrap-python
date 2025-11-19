@@ -13,7 +13,7 @@ COUNT_METADATA = Metadata(
 )
 
 
-CountParameters = typing.TypedDict('CountParameters', {
+CountParamsDict = typing.TypedDict('CountParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/count"]],
     "bot": str,
     "top": str,
@@ -30,7 +30,7 @@ CountParameters = typing.TypedDict('CountParameters', {
     "comma": bool,
     "skipnmodm": typing.NotRequired[str | None],
 })
-CountParametersTagged = typing.TypedDict('CountParametersTagged', {
+CountParamsDictTagged = typing.TypedDict('CountParamsDictTagged', {
     "@type": typing.Literal["afni/count"],
     "bot": str,
     "top": str,
@@ -51,7 +51,7 @@ CountParametersTagged = typing.TypedDict('CountParametersTagged', {
 
 class CountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CountParameters(...)`.
+    Output object returned when calling `CountParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ def count_params(
     scale: float | None = None,
     comma: bool = False,
     skipnmodm: str | None = None,
-) -> CountParametersTagged:
+) -> CountParamsDictTagged:
     """
     Build parameters.
     
@@ -129,7 +129,7 @@ def count_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CountParameters` object.
+    `CountParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -185,7 +185,7 @@ def count_validate(
 
 
 def count_cargs(
-    params: CountParameters,
+    params: CountParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -256,7 +256,7 @@ def count_cargs(
 
 
 def count_outputs(
-    params: CountParameters,
+    params: CountParamsDict,
     execution: Execution,
 ) -> CountOutputs:
     """
@@ -275,7 +275,7 @@ def count_outputs(
 
 
 def count_execute(
-    params: CountParameters,
+    params: CountParamsDict,
     runner: Runner | None = None,
 ) -> CountOutputs:
     """
@@ -372,6 +372,8 @@ def count(
 __all__ = [
     "COUNT_METADATA",
     "CountOutputs",
+    "CountParamsDict",
+    "CountParamsDictTagged",
     "count",
     "count_execute",
     "count_params",

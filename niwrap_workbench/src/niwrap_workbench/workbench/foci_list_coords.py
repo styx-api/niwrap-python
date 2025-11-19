@@ -12,13 +12,13 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 )
 
 
-FociListCoordsParameters = typing.TypedDict('FociListCoordsParameters', {
+FociListCoordsParamsDict = typing.TypedDict('FociListCoordsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/foci-list-coords"]],
     "names-file-out": typing.NotRequired[str | None],
     "foci-file": InputPathType,
     "coord-file-out": str,
 })
-FociListCoordsParametersTagged = typing.TypedDict('FociListCoordsParametersTagged', {
+FociListCoordsParamsDictTagged = typing.TypedDict('FociListCoordsParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-list-coords"],
     "names-file-out": typing.NotRequired[str | None],
     "foci-file": InputPathType,
@@ -28,7 +28,7 @@ FociListCoordsParametersTagged = typing.TypedDict('FociListCoordsParametersTagge
 
 class FociListCoordsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FociListCoordsParameters(...)`.
+    Output object returned when calling `FociListCoordsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ def foci_list_coords_params(
     names_file_out: str | None,
     foci_file: InputPathType,
     coord_file_out: str,
-) -> FociListCoordsParametersTagged:
+) -> FociListCoordsParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def foci_list_coords_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FociListCoordsParameters` object.
+    `FociListCoordsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -87,7 +87,7 @@ def foci_list_coords_validate(
 
 
 def foci_list_coords_cargs(
-    params: FociListCoordsParameters,
+    params: FociListCoordsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def foci_list_coords_cargs(
 
 
 def foci_list_coords_outputs(
-    params: FociListCoordsParameters,
+    params: FociListCoordsParamsDict,
     execution: Execution,
 ) -> FociListCoordsOutputs:
     """
@@ -132,7 +132,7 @@ def foci_list_coords_outputs(
 
 
 def foci_list_coords_execute(
-    params: FociListCoordsParameters,
+    params: FociListCoordsParamsDict,
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
@@ -190,6 +190,8 @@ def foci_list_coords(
 __all__ = [
     "FOCI_LIST_COORDS_METADATA",
     "FociListCoordsOutputs",
+    "FociListCoordsParamsDict",
+    "FociListCoordsParamsDictTagged",
     "foci_list_coords",
     "foci_list_coords_execute",
     "foci_list_coords_params",

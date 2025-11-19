@@ -13,7 +13,7 @@ STAT_NORMALIZE_METADATA = Metadata(
 )
 
 
-StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
+StatNormalizeParamsDict = typing.TypedDict('StatNormalizeParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/stat_normalize"]],
     "input_sv_prefix": str,
     "output_sv_prefix": str,
@@ -24,7 +24,7 @@ StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
     "fix_xfm_flag": bool,
     "float2int_option": typing.NotRequired[str | None],
 })
-StatNormalizeParametersTagged = typing.TypedDict('StatNormalizeParametersTagged', {
+StatNormalizeParamsDictTagged = typing.TypedDict('StatNormalizeParamsDictTagged', {
     "@type": typing.Literal["freesurfer/stat_normalize"],
     "input_sv_prefix": str,
     "output_sv_prefix": str,
@@ -39,7 +39,7 @@ StatNormalizeParametersTagged = typing.TypedDict('StatNormalizeParametersTagged'
 
 class StatNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `StatNormalizeParameters(...)`.
+    Output object returned when calling `StatNormalizeParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -54,7 +54,7 @@ def stat_normalize_params(
     xfm_file: str | None = None,
     fix_xfm_flag: bool = False,
     float2int_option: str | None = None,
-) -> StatNormalizeParametersTagged:
+) -> StatNormalizeParamsDictTagged:
     """
     Build parameters.
     
@@ -96,7 +96,7 @@ def stat_normalize_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `StatNormalizeParameters` object.
+    `StatNormalizeParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -133,7 +133,7 @@ def stat_normalize_validate(
 
 
 def stat_normalize_cargs(
-    params: StatNormalizeParameters,
+    params: StatNormalizeParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,7 +180,7 @@ def stat_normalize_cargs(
 
 
 def stat_normalize_outputs(
-    params: StatNormalizeParameters,
+    params: StatNormalizeParamsDict,
     execution: Execution,
 ) -> StatNormalizeOutputs:
     """
@@ -199,7 +199,7 @@ def stat_normalize_outputs(
 
 
 def stat_normalize_execute(
-    params: StatNormalizeParameters,
+    params: StatNormalizeParamsDict,
     runner: Runner | None = None,
 ) -> StatNormalizeOutputs:
     """
@@ -280,6 +280,8 @@ def stat_normalize(
 __all__ = [
     "STAT_NORMALIZE_METADATA",
     "StatNormalizeOutputs",
+    "StatNormalizeParamsDict",
+    "StatNormalizeParamsDictTagged",
     "stat_normalize",
     "stat_normalize_execute",
     "stat_normalize_params",

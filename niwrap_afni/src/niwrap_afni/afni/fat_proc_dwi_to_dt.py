@@ -13,7 +13,7 @@ FAT_PROC_DWI_TO_DT_METADATA = Metadata(
 )
 
 
-FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
+FatProcDwiToDtParamsDict = typing.TypedDict('FatProcDwiToDtParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/fat_proc_dwi_to_dt"]],
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
@@ -45,7 +45,7 @@ FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
     "uncert_extra_cmds": typing.NotRequired[str | None],
     "check_abs_min": typing.NotRequired[float | None],
 })
-FatProcDwiToDtParametersTagged = typing.TypedDict('FatProcDwiToDtParametersTagged', {
+FatProcDwiToDtParamsDictTagged = typing.TypedDict('FatProcDwiToDtParamsDictTagged', {
     "@type": typing.Literal["afni/fat_proc_dwi_to_dt"],
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
@@ -81,7 +81,7 @@ FatProcDwiToDtParametersTagged = typing.TypedDict('FatProcDwiToDtParametersTagge
 
 class FatProcDwiToDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FatProcDwiToDtParameters(...)`.
+    Output object returned when calling `FatProcDwiToDtParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +117,7 @@ def fat_proc_dwi_to_dt_params(
     uncert_iters: float | None = None,
     uncert_extra_cmds: str | None = None,
     check_abs_min: float | None = None,
-) -> FatProcDwiToDtParametersTagged:
+) -> FatProcDwiToDtParamsDictTagged:
     """
     Build parameters.
     
@@ -224,7 +224,7 @@ def fat_proc_dwi_to_dt_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FatProcDwiToDtParameters` object.
+    `FatProcDwiToDtParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -336,7 +336,7 @@ def fat_proc_dwi_to_dt_validate(
 
 
 def fat_proc_dwi_to_dt_cargs(
-    params: FatProcDwiToDtParameters,
+    params: FatProcDwiToDtParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -457,7 +457,7 @@ def fat_proc_dwi_to_dt_cargs(
 
 
 def fat_proc_dwi_to_dt_outputs(
-    params: FatProcDwiToDtParameters,
+    params: FatProcDwiToDtParamsDict,
     execution: Execution,
 ) -> FatProcDwiToDtOutputs:
     """
@@ -476,7 +476,7 @@ def fat_proc_dwi_to_dt_outputs(
 
 
 def fat_proc_dwi_to_dt_execute(
-    params: FatProcDwiToDtParameters,
+    params: FatProcDwiToDtParamsDict,
     runner: Runner | None = None,
 ) -> FatProcDwiToDtOutputs:
     """
@@ -634,6 +634,8 @@ def fat_proc_dwi_to_dt(
 __all__ = [
     "FAT_PROC_DWI_TO_DT_METADATA",
     "FatProcDwiToDtOutputs",
+    "FatProcDwiToDtParamsDict",
+    "FatProcDwiToDtParamsDictTagged",
     "fat_proc_dwi_to_dt",
     "fat_proc_dwi_to_dt_execute",
     "fat_proc_dwi_to_dt_params",

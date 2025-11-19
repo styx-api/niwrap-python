@@ -13,7 +13,7 @@ POST_RECON_ALL_METADATA = Metadata(
 )
 
 
-PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
+PostReconAllParamsDict = typing.TypedDict('PostReconAllParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/post-recon-all"]],
     "subject": str,
     "subfields": bool,
@@ -36,7 +36,7 @@ PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
     "force": bool,
     "exit_on_error": bool,
 })
-PostReconAllParametersTagged = typing.TypedDict('PostReconAllParametersTagged', {
+PostReconAllParamsDictTagged = typing.TypedDict('PostReconAllParamsDictTagged', {
     "@type": typing.Literal["freesurfer/post-recon-all"],
     "subject": str,
     "subfields": bool,
@@ -63,7 +63,7 @@ PostReconAllParametersTagged = typing.TypedDict('PostReconAllParametersTagged', 
 
 class PostReconAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PostReconAllParameters(...)`.
+    Output object returned when calling `PostReconAllParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +90,7 @@ def post_recon_all_params(
     threads: float | None = None,
     force: bool = False,
     exit_on_error: bool = False,
-) -> PostReconAllParametersTagged:
+) -> PostReconAllParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def post_recon_all_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PostReconAllParameters` object.
+    `PostReconAllParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -239,7 +239,7 @@ def post_recon_all_validate(
 
 
 def post_recon_all_cargs(
-    params: PostReconAllParameters,
+    params: PostReconAllParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -302,7 +302,7 @@ def post_recon_all_cargs(
 
 
 def post_recon_all_outputs(
-    params: PostReconAllParameters,
+    params: PostReconAllParamsDict,
     execution: Execution,
 ) -> PostReconAllOutputs:
     """
@@ -321,7 +321,7 @@ def post_recon_all_outputs(
 
 
 def post_recon_all_execute(
-    params: PostReconAllParameters,
+    params: PostReconAllParamsDict,
     runner: Runner | None = None,
 ) -> PostReconAllOutputs:
     """
@@ -434,6 +434,8 @@ def post_recon_all(
 __all__ = [
     "POST_RECON_ALL_METADATA",
     "PostReconAllOutputs",
+    "PostReconAllParamsDict",
+    "PostReconAllParamsDictTagged",
     "post_recon_all",
     "post_recon_all_execute",
     "post_recon_all_params",

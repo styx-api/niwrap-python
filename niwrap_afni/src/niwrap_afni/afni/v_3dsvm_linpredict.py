@@ -13,13 +13,13 @@ V_3DSVM_LINPREDICT_METADATA = Metadata(
 )
 
 
-V3dsvmLinpredictParameters = typing.TypedDict('V3dsvmLinpredictParameters', {
+V3dsvmLinpredictParamsDict = typing.TypedDict('V3dsvmLinpredictParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dsvm_linpredict"]],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
     "input_dataset": str,
 })
-V3dsvmLinpredictParametersTagged = typing.TypedDict('V3dsvmLinpredictParametersTagged', {
+V3dsvmLinpredictParamsDictTagged = typing.TypedDict('V3dsvmLinpredictParamsDictTagged', {
     "@type": typing.Literal["afni/3dsvm_linpredict"],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
@@ -29,7 +29,7 @@ V3dsvmLinpredictParametersTagged = typing.TypedDict('V3dsvmLinpredictParametersT
 
 class V3dsvmLinpredictOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dsvmLinpredictParameters(...)`.
+    Output object returned when calling `V3dsvmLinpredictParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def v_3dsvm_linpredict_params(
     weight_vector: InputPathType,
     input_dataset: str,
     mask_dataset: InputPathType | None = None,
-) -> V3dsvmLinpredictParametersTagged:
+) -> V3dsvmLinpredictParamsDictTagged:
     """
     Build parameters.
     
@@ -70,7 +70,7 @@ def v_3dsvm_linpredict_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dsvmLinpredictParameters` object.
+    `V3dsvmLinpredictParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -91,7 +91,7 @@ def v_3dsvm_linpredict_validate(
 
 
 def v_3dsvm_linpredict_cargs(
-    params: V3dsvmLinpredictParameters,
+    params: V3dsvmLinpredictParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -116,7 +116,7 @@ def v_3dsvm_linpredict_cargs(
 
 
 def v_3dsvm_linpredict_outputs(
-    params: V3dsvmLinpredictParameters,
+    params: V3dsvmLinpredictParamsDict,
     execution: Execution,
 ) -> V3dsvmLinpredictOutputs:
     """
@@ -136,7 +136,7 @@ def v_3dsvm_linpredict_outputs(
 
 
 def v_3dsvm_linpredict_execute(
-    params: V3dsvmLinpredictParameters,
+    params: V3dsvmLinpredictParamsDict,
     runner: Runner | None = None,
 ) -> V3dsvmLinpredictOutputs:
     """
@@ -200,6 +200,8 @@ def v_3dsvm_linpredict(
 
 __all__ = [
     "V3dsvmLinpredictOutputs",
+    "V3dsvmLinpredictParamsDict",
+    "V3dsvmLinpredictParamsDictTagged",
     "V_3DSVM_LINPREDICT_METADATA",
     "v_3dsvm_linpredict",
     "v_3dsvm_linpredict_execute",

@@ -13,7 +13,7 @@ ANTS_MOTION_CORR_METADATA = Metadata(
 )
 
 
-AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
+AntsMotionCorrParamsDict = typing.TypedDict('AntsMotionCorrParamsDict', {
     "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorr"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
@@ -32,7 +32,7 @@ AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
     "verbose": typing.NotRequired[bool | None],
 })
-AntsMotionCorrParametersTagged = typing.TypedDict('AntsMotionCorrParametersTagged', {
+AntsMotionCorrParamsDictTagged = typing.TypedDict('AntsMotionCorrParamsDictTagged', {
     "@type": typing.Literal["ants/antsMotionCorr"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
@@ -55,7 +55,7 @@ AntsMotionCorrParametersTagged = typing.TypedDict('AntsMotionCorrParametersTagge
 
 class AntsMotionCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `AntsMotionCorrParameters(...)`.
+    Output object returned when calling `AntsMotionCorrParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ def ants_motion_corr_params(
     random_seed: int | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: bool | None = None,
-) -> AntsMotionCorrParametersTagged:
+) -> AntsMotionCorrParamsDictTagged:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def ants_motion_corr_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `AntsMotionCorrParameters` object.
+    `AntsMotionCorrParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -231,7 +231,7 @@ def ants_motion_corr_validate(
 
 
 def ants_motion_corr_cargs(
-    params: AntsMotionCorrParameters,
+    params: AntsMotionCorrParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -320,7 +320,7 @@ def ants_motion_corr_cargs(
 
 
 def ants_motion_corr_outputs(
-    params: AntsMotionCorrParameters,
+    params: AntsMotionCorrParamsDict,
     execution: Execution,
 ) -> AntsMotionCorrOutputs:
     """
@@ -342,7 +342,7 @@ def ants_motion_corr_outputs(
 
 
 def ants_motion_corr_execute(
-    params: AntsMotionCorrParameters,
+    params: AntsMotionCorrParamsDict,
     runner: Runner | None = None,
 ) -> AntsMotionCorrOutputs:
     """
@@ -461,6 +461,8 @@ def ants_motion_corr(
 __all__ = [
     "ANTS_MOTION_CORR_METADATA",
     "AntsMotionCorrOutputs",
+    "AntsMotionCorrParamsDict",
+    "AntsMotionCorrParamsDictTagged",
     "ants_motion_corr",
     "ants_motion_corr_execute",
     "ants_motion_corr_params",

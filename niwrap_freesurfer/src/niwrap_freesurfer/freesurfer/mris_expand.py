@@ -13,7 +13,7 @@ MRIS_EXPAND_METADATA = Metadata(
 )
 
 
-MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
+MrisExpandParamsDict = typing.TypedDict('MrisExpandParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mris_expand"]],
     "input_surface": InputPathType,
     "expansion_distance": float,
@@ -23,7 +23,7 @@ MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
     "tmap": typing.NotRequired[str | None],
     "tmap_random": typing.NotRequired[str | None],
 })
-MrisExpandParametersTagged = typing.TypedDict('MrisExpandParametersTagged', {
+MrisExpandParamsDictTagged = typing.TypedDict('MrisExpandParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mris_expand"],
     "input_surface": InputPathType,
     "expansion_distance": float,
@@ -37,7 +37,7 @@ MrisExpandParametersTagged = typing.TypedDict('MrisExpandParametersTagged', {
 
 class MrisExpandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MrisExpandParameters(...)`.
+    Output object returned when calling `MrisExpandParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -53,7 +53,7 @@ def mris_expand_params(
     label: str | None = None,
     tmap: str | None = None,
     tmap_random: str | None = None,
-) -> MrisExpandParametersTagged:
+) -> MrisExpandParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def mris_expand_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MrisExpandParameters` object.
+    `MrisExpandParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -126,7 +126,7 @@ def mris_expand_validate(
 
 
 def mris_expand_cargs(
-    params: MrisExpandParameters,
+    params: MrisExpandParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -164,7 +164,7 @@ def mris_expand_cargs(
 
 
 def mris_expand_outputs(
-    params: MrisExpandParameters,
+    params: MrisExpandParamsDict,
     execution: Execution,
 ) -> MrisExpandOutputs:
     """
@@ -184,7 +184,7 @@ def mris_expand_outputs(
 
 
 def mris_expand_execute(
-    params: MrisExpandParameters,
+    params: MrisExpandParamsDict,
     runner: Runner | None = None,
 ) -> MrisExpandOutputs:
     """
@@ -260,6 +260,8 @@ def mris_expand(
 __all__ = [
     "MRIS_EXPAND_METADATA",
     "MrisExpandOutputs",
+    "MrisExpandParamsDict",
+    "MrisExpandParamsDictTagged",
     "mris_expand",
     "mris_expand_execute",
     "mris_expand_params",

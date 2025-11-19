@@ -13,14 +13,14 @@ MATCH_SMOOTHING_METADATA = Metadata(
 )
 
 
-MatchSmoothingParameters = typing.TypedDict('MatchSmoothingParameters', {
+MatchSmoothingParamsDict = typing.TypedDict('MatchSmoothingParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/match_smoothing"]],
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
     "example_structural": InputPathType,
     "standard_space_resolution": float,
 })
-MatchSmoothingParametersTagged = typing.TypedDict('MatchSmoothingParametersTagged', {
+MatchSmoothingParamsDictTagged = typing.TypedDict('MatchSmoothingParamsDictTagged', {
     "@type": typing.Literal["fsl/match_smoothing"],
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
@@ -31,7 +31,7 @@ MatchSmoothingParametersTagged = typing.TypedDict('MatchSmoothingParametersTagge
 
 class MatchSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MatchSmoothingParameters(...)`.
+    Output object returned when calling `MatchSmoothingParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -42,7 +42,7 @@ def match_smoothing_params(
     func_smoothing_fwhm: float,
     example_structural: InputPathType,
     standard_space_resolution: float,
-) -> MatchSmoothingParametersTagged:
+) -> MatchSmoothingParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def match_smoothing_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MatchSmoothingParameters` object.
+    `MatchSmoothingParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -97,7 +97,7 @@ def match_smoothing_validate(
 
 
 def match_smoothing_cargs(
-    params: MatchSmoothingParameters,
+    params: MatchSmoothingParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -119,7 +119,7 @@ def match_smoothing_cargs(
 
 
 def match_smoothing_outputs(
-    params: MatchSmoothingParameters,
+    params: MatchSmoothingParamsDict,
     execution: Execution,
 ) -> MatchSmoothingOutputs:
     """
@@ -138,7 +138,7 @@ def match_smoothing_outputs(
 
 
 def match_smoothing_execute(
-    params: MatchSmoothingParameters,
+    params: MatchSmoothingParamsDict,
     runner: Runner | None = None,
 ) -> MatchSmoothingOutputs:
     """
@@ -207,6 +207,8 @@ def match_smoothing(
 __all__ = [
     "MATCH_SMOOTHING_METADATA",
     "MatchSmoothingOutputs",
+    "MatchSmoothingParamsDict",
+    "MatchSmoothingParamsDictTagged",
     "match_smoothing",
     "match_smoothing_execute",
     "match_smoothing_params",

@@ -13,12 +13,12 @@ DMRI_NEIGHBORING_REGIONS_METADATA = Metadata(
 )
 
 
-DmriNeighboringRegionsParameters = typing.TypedDict('DmriNeighboringRegionsParameters', {
+DmriNeighboringRegionsParamsDict = typing.TypedDict('DmriNeighboringRegionsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_neighboringRegions"]],
     "input_file": InputPathType,
     "output_file": str,
 })
-DmriNeighboringRegionsParametersTagged = typing.TypedDict('DmriNeighboringRegionsParametersTagged', {
+DmriNeighboringRegionsParamsDictTagged = typing.TypedDict('DmriNeighboringRegionsParamsDictTagged', {
     "@type": typing.Literal["freesurfer/dmri_neighboringRegions"],
     "input_file": InputPathType,
     "output_file": str,
@@ -27,7 +27,7 @@ DmriNeighboringRegionsParametersTagged = typing.TypedDict('DmriNeighboringRegion
 
 class DmriNeighboringRegionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DmriNeighboringRegionsParameters(...)`.
+    Output object returned when calling `DmriNeighboringRegionsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -38,7 +38,7 @@ class DmriNeighboringRegionsOutputs(typing.NamedTuple):
 def dmri_neighboring_regions_params(
     input_file: InputPathType,
     output_file: str,
-) -> DmriNeighboringRegionsParametersTagged:
+) -> DmriNeighboringRegionsParamsDictTagged:
     """
     Build parameters.
     
@@ -61,7 +61,7 @@ def dmri_neighboring_regions_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DmriNeighboringRegionsParameters` object.
+    `DmriNeighboringRegionsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -79,7 +79,7 @@ def dmri_neighboring_regions_validate(
 
 
 def dmri_neighboring_regions_cargs(
-    params: DmriNeighboringRegionsParameters,
+    params: DmriNeighboringRegionsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -99,7 +99,7 @@ def dmri_neighboring_regions_cargs(
 
 
 def dmri_neighboring_regions_outputs(
-    params: DmriNeighboringRegionsParameters,
+    params: DmriNeighboringRegionsParamsDict,
     execution: Execution,
 ) -> DmriNeighboringRegionsOutputs:
     """
@@ -119,7 +119,7 @@ def dmri_neighboring_regions_outputs(
 
 
 def dmri_neighboring_regions_execute(
-    params: DmriNeighboringRegionsParameters,
+    params: DmriNeighboringRegionsParamsDict,
     runner: Runner | None = None,
 ) -> DmriNeighboringRegionsOutputs:
     """
@@ -178,6 +178,8 @@ def dmri_neighboring_regions(
 __all__ = [
     "DMRI_NEIGHBORING_REGIONS_METADATA",
     "DmriNeighboringRegionsOutputs",
+    "DmriNeighboringRegionsParamsDict",
+    "DmriNeighboringRegionsParamsDictTagged",
     "dmri_neighboring_regions",
     "dmri_neighboring_regions_execute",
     "dmri_neighboring_regions_params",

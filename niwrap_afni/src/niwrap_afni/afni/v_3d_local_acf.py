@@ -13,7 +13,7 @@ V_3D_LOCAL_ACF_METADATA = Metadata(
 )
 
 
-V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
+V3dLocalAcfParamsDict = typing.TypedDict('V3dLocalAcfParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dLocalACF"]],
     "prefix": str,
     "input_file": InputPathType,
@@ -21,7 +21,7 @@ V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
     "mask_file": typing.NotRequired[InputPathType | None],
     "auto_mask": bool,
 })
-V3dLocalAcfParametersTagged = typing.TypedDict('V3dLocalAcfParametersTagged', {
+V3dLocalAcfParamsDictTagged = typing.TypedDict('V3dLocalAcfParamsDictTagged', {
     "@type": typing.Literal["afni/3dLocalACF"],
     "prefix": str,
     "input_file": InputPathType,
@@ -33,7 +33,7 @@ V3dLocalAcfParametersTagged = typing.TypedDict('V3dLocalAcfParametersTagged', {
 
 class V3dLocalAcfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dLocalAcfParameters(...)`.
+    Output object returned when calling `V3dLocalAcfParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3d_local_acf_params(
     neighborhood: str | None = None,
     mask_file: InputPathType | None = None,
     auto_mask: bool = False,
-) -> V3dLocalAcfParametersTagged:
+) -> V3dLocalAcfParamsDictTagged:
     """
     Build parameters.
     
@@ -78,7 +78,7 @@ def v_3d_local_acf_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dLocalAcfParameters` object.
+    `V3dLocalAcfParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -106,7 +106,7 @@ def v_3d_local_acf_validate(
 
 
 def v_3d_local_acf_cargs(
-    params: V3dLocalAcfParameters,
+    params: V3dLocalAcfParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -141,7 +141,7 @@ def v_3d_local_acf_cargs(
 
 
 def v_3d_local_acf_outputs(
-    params: V3dLocalAcfParameters,
+    params: V3dLocalAcfParamsDict,
     execution: Execution,
 ) -> V3dLocalAcfOutputs:
     """
@@ -161,7 +161,7 @@ def v_3d_local_acf_outputs(
 
 
 def v_3d_local_acf_execute(
-    params: V3dLocalAcfParameters,
+    params: V3dLocalAcfParamsDict,
     runner: Runner | None = None,
 ) -> V3dLocalAcfOutputs:
     """
@@ -230,6 +230,8 @@ def v_3d_local_acf(
 
 __all__ = [
     "V3dLocalAcfOutputs",
+    "V3dLocalAcfParamsDict",
+    "V3dLocalAcfParamsDictTagged",
     "V_3D_LOCAL_ACF_METADATA",
     "v_3d_local_acf",
     "v_3d_local_acf_execute",

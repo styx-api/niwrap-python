@@ -13,7 +13,7 @@ FSLVBM_2_TEMPLATE_METADATA = Metadata(
 )
 
 
-Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
+Fslvbm2TemplateParamsDict = typing.TypedDict('Fslvbm2TemplateParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_2_template"]],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
     "runtime_limit": typing.NotRequired[float | None],
     "job_file": typing.NotRequired[InputPathType | None],
 })
-Fslvbm2TemplateParametersTagged = typing.TypedDict('Fslvbm2TemplateParametersTagged', {
+Fslvbm2TemplateParamsDictTagged = typing.TypedDict('Fslvbm2TemplateParamsDictTagged', {
     "@type": typing.Literal["fsl/fslvbm_2_template"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
@@ -71,7 +71,7 @@ Fslvbm2TemplateParametersTagged = typing.TypedDict('Fslvbm2TemplateParametersTag
 
 class Fslvbm2TemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Fslvbm2TemplateParameters(...)`.
+    Output object returned when calling `Fslvbm2TemplateParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def fslvbm_2_template_params(
     project: str | None = None,
     runtime_limit: float | None = None,
     job_file: InputPathType | None = None,
-) -> Fslvbm2TemplateParametersTagged:
+) -> Fslvbm2TemplateParamsDictTagged:
     """
     Build parameters.
     
@@ -193,7 +193,7 @@ def fslvbm_2_template_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Fslvbm2TemplateParameters` object.
+    `Fslvbm2TemplateParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -275,7 +275,7 @@ def fslvbm_2_template_validate(
 
 
 def fslvbm_2_template_cargs(
-    params: Fslvbm2TemplateParameters,
+    params: Fslvbm2TemplateParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -413,7 +413,7 @@ def fslvbm_2_template_cargs(
 
 
 def fslvbm_2_template_outputs(
-    params: Fslvbm2TemplateParameters,
+    params: Fslvbm2TemplateParamsDict,
     execution: Execution,
 ) -> Fslvbm2TemplateOutputs:
     """
@@ -432,7 +432,7 @@ def fslvbm_2_template_outputs(
 
 
 def fslvbm_2_template_execute(
-    params: Fslvbm2TemplateParameters,
+    params: Fslvbm2TemplateParamsDict,
     runner: Runner | None = None,
 ) -> Fslvbm2TemplateOutputs:
     """
@@ -557,6 +557,8 @@ def fslvbm_2_template(
 __all__ = [
     "FSLVBM_2_TEMPLATE_METADATA",
     "Fslvbm2TemplateOutputs",
+    "Fslvbm2TemplateParamsDict",
+    "Fslvbm2TemplateParamsDictTagged",
     "fslvbm_2_template",
     "fslvbm_2_template_execute",
     "fslvbm_2_template_params",

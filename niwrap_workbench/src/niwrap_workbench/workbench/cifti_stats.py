@@ -12,42 +12,42 @@ CIFTI_STATS_METADATA = Metadata(
 )
 
 
-CiftiStatsRoiParameters = typing.TypedDict('CiftiStatsRoiParameters', {
+CiftiStatsRoiParamsDict = typing.TypedDict('CiftiStatsRoiParamsDict', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
-CiftiStatsRoiParametersTagged = typing.TypedDict('CiftiStatsRoiParametersTagged', {
+CiftiStatsRoiParamsDictTagged = typing.TypedDict('CiftiStatsRoiParamsDictTagged', {
     "@type": typing.Literal["roi"],
     "roi-cifti": InputPathType,
     "match-maps": bool,
 })
 
 
-CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
+CiftiStatsParamsDict = typing.TypedDict('CiftiStatsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-stats"]],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[int | None],
-    "roi": typing.NotRequired[CiftiStatsRoiParameters | None],
+    "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
-CiftiStatsParametersTagged = typing.TypedDict('CiftiStatsParametersTagged', {
+CiftiStatsParamsDictTagged = typing.TypedDict('CiftiStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-stats"],
     "operation": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "column": typing.NotRequired[int | None],
-    "roi": typing.NotRequired[CiftiStatsRoiParameters | None],
+    "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
 
 
-def cifti_stats_roi_params(
+def cifti_stats_roi(
     roi_cifti: InputPathType,
     match_maps: bool = False,
-) -> CiftiStatsRoiParametersTagged:
+) -> CiftiStatsRoiParamsDictTagged:
     """
     Build parameters.
     
@@ -71,7 +71,7 @@ def cifti_stats_roi_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiStatsRoiParameters` object.
+    `CiftiStatsRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -89,7 +89,7 @@ def cifti_stats_roi_validate(
 
 
 def cifti_stats_roi_cargs(
-    params: CiftiStatsRoiParameters,
+    params: CiftiStatsRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -113,7 +113,7 @@ def cifti_stats_roi_cargs(
 
 class CiftiStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiStatsParameters(...)`.
+    Output object returned when calling `CiftiStatsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,9 +124,9 @@ def cifti_stats_params(
     percent: float | None,
     column: int | None,
     cifti_in: InputPathType,
-    roi: CiftiStatsRoiParameters | None = None,
+    roi: CiftiStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
-) -> CiftiStatsParametersTagged:
+) -> CiftiStatsParamsDictTagged:
     """
     Build parameters.
     
@@ -167,7 +167,7 @@ def cifti_stats_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiStatsParameters` object.
+    `CiftiStatsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -196,7 +196,7 @@ def cifti_stats_validate(
 
 
 def cifti_stats_cargs(
-    params: CiftiStatsParameters,
+    params: CiftiStatsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -227,7 +227,7 @@ def cifti_stats_cargs(
 
 
 def cifti_stats_outputs(
-    params: CiftiStatsParameters,
+    params: CiftiStatsParamsDict,
     execution: Execution,
 ) -> CiftiStatsOutputs:
     """
@@ -246,7 +246,7 @@ def cifti_stats_outputs(
 
 
 def cifti_stats_execute(
-    params: CiftiStatsParameters,
+    params: CiftiStatsParamsDict,
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
@@ -300,7 +300,7 @@ def cifti_stats(
     percent: float | None,
     column: int | None,
     cifti_in: InputPathType,
-    roi: CiftiStatsRoiParameters | None = None,
+    roi: CiftiStatsRoiParamsDict | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
@@ -365,8 +365,12 @@ def cifti_stats(
 __all__ = [
     "CIFTI_STATS_METADATA",
     "CiftiStatsOutputs",
+    "CiftiStatsParamsDict",
+    "CiftiStatsParamsDictTagged",
+    "CiftiStatsRoiParamsDict",
+    "CiftiStatsRoiParamsDictTagged",
     "cifti_stats",
     "cifti_stats_execute",
     "cifti_stats_params",
-    "cifti_stats_roi_params",
+    "cifti_stats_roi",
 ]

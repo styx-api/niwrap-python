@@ -13,39 +13,39 @@ TCKCONVERT_METADATA = Metadata(
 )
 
 
-TckconvertConfigParameters = typing.TypedDict('TckconvertConfigParameters', {
+TckconvertConfigParamsDict = typing.TypedDict('TckconvertConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-TckconvertConfigParametersTagged = typing.TypedDict('TckconvertConfigParametersTagged', {
+TckconvertConfigParamsDictTagged = typing.TypedDict('TckconvertConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-TckconvertVariousStringParameters = typing.TypedDict('TckconvertVariousStringParameters', {
+TckconvertVariousStringParamsDict = typing.TypedDict('TckconvertVariousStringParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousString"]],
     "obj": str,
 })
-TckconvertVariousStringParametersTagged = typing.TypedDict('TckconvertVariousStringParametersTagged', {
+TckconvertVariousStringParamsDictTagged = typing.TypedDict('TckconvertVariousStringParamsDictTagged', {
     "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
-TckconvertVariousFileParameters = typing.TypedDict('TckconvertVariousFileParameters', {
+TckconvertVariousFileParamsDict = typing.TypedDict('TckconvertVariousFileParamsDict', {
     "@type": typing.NotRequired[typing.Literal["VariousFile"]],
     "obj": InputPathType,
 })
-TckconvertVariousFileParametersTagged = typing.TypedDict('TckconvertVariousFileParametersTagged', {
+TckconvertVariousFileParamsDictTagged = typing.TypedDict('TckconvertVariousFileParamsDictTagged', {
     "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
-TckconvertParameters = typing.TypedDict('TckconvertParameters', {
+TckconvertParamsDict = typing.TypedDict('TckconvertParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/tckconvert"]],
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
@@ -62,13 +62,13 @@ TckconvertParameters = typing.TypedDict('TckconvertParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[TckconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
+    "input": typing.Union[TckconvertVariousStringParamsDictTagged, TckconvertVariousFileParamsDictTagged],
     "output": str,
 })
-TckconvertParametersTagged = typing.TypedDict('TckconvertParametersTagged', {
+TckconvertParamsDictTagged = typing.TypedDict('TckconvertParamsDictTagged', {
     "@type": typing.Literal["mrtrix/tckconvert"],
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
@@ -85,10 +85,10 @@ TckconvertParametersTagged = typing.TypedDict('TckconvertParametersTagged', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[TckconvertConfigParameters] | None],
+    "config": typing.NotRequired[list[TckconvertConfigParamsDict] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
+    "input": typing.Union[TckconvertVariousStringParamsDictTagged, TckconvertVariousFileParamsDictTagged],
     "output": str,
 })
 
@@ -127,10 +127,10 @@ def tckconvert_input_validate_dyn_fn(
     }.get(t)
 
 
-def tckconvert_config_params(
+def tckconvert_config(
     key: str,
     value: str,
-) -> TckconvertConfigParametersTagged:
+) -> TckconvertConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -153,7 +153,7 @@ def tckconvert_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckconvertConfigParameters` object.
+    `TckconvertConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def tckconvert_config_validate(
 
 
 def tckconvert_config_cargs(
-    params: TckconvertConfigParameters,
+    params: TckconvertConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -190,9 +190,9 @@ def tckconvert_config_cargs(
     return cargs
 
 
-def tckconvert_various_string_params(
+def tckconvert_various_string(
     obj: str,
-) -> TckconvertVariousStringParametersTagged:
+) -> TckconvertVariousStringParamsDictTagged:
     """
     Build parameters.
     
@@ -213,7 +213,7 @@ def tckconvert_various_string_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckconvertVariousStringParameters` object.
+    `TckconvertVariousStringParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -227,7 +227,7 @@ def tckconvert_various_string_validate(
 
 
 def tckconvert_various_string_cargs(
-    params: TckconvertVariousStringParameters,
+    params: TckconvertVariousStringParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -244,9 +244,9 @@ def tckconvert_various_string_cargs(
     return cargs
 
 
-def tckconvert_various_file_params(
+def tckconvert_various_file(
     obj: InputPathType,
-) -> TckconvertVariousFileParametersTagged:
+) -> TckconvertVariousFileParamsDictTagged:
     """
     Build parameters.
     
@@ -267,7 +267,7 @@ def tckconvert_various_file_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckconvertVariousFileParameters` object.
+    `TckconvertVariousFileParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -281,7 +281,7 @@ def tckconvert_various_file_validate(
 
 
 def tckconvert_various_file_cargs(
-    params: TckconvertVariousFileParameters,
+    params: TckconvertVariousFileParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -300,7 +300,7 @@ def tckconvert_various_file_cargs(
 
 class TckconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `TckconvertParameters(...)`.
+    Output object returned when calling `TckconvertParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -309,7 +309,7 @@ class TckconvertOutputs(typing.NamedTuple):
 
 
 def tckconvert_params(
-    input_: typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
+    input_: typing.Union[TckconvertVariousStringParamsDictTagged, TckconvertVariousFileParamsDictTagged],
     output: str,
     scanner2voxel: InputPathType | None = None,
     scanner2image: InputPathType | None = None,
@@ -326,10 +326,10 @@ def tckconvert_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckconvertConfigParameters] | None = None,
+    config: list[TckconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckconvertParametersTagged:
+) -> TckconvertParamsDictTagged:
     """
     Build parameters.
     
@@ -409,7 +409,7 @@ def tckconvert_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `TckconvertParameters` object.
+    `TckconvertParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -470,7 +470,7 @@ def tckconvert_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckconvertConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckconvertConfigParamsDict] | None`')
         for e in params["config"]:
             tckconvert_config_validate(e)
     if params.get("help", False) is None:
@@ -487,6 +487,8 @@ def tckconvert_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params["input"])}\'')
     if "@type" not in params["input"]:
         raise StyxValidationError("Params object is missing `@type`")
+    if params["input"]["@type"] not in ["VariousString", "VariousFile"]:
+        raise StyxValidationError("Parameter `input`s `@type` must be one of [\"VariousString\", \"VariousFile\"]")
     tckconvert_input_validate_dyn_fn(params["input"]["@type"])(params["input"])
     if params.get("output", None) is None:
         raise StyxValidationError("`output` must not be None")
@@ -495,7 +497,7 @@ def tckconvert_validate(
 
 
 def tckconvert_cargs(
-    params: TckconvertParameters,
+    params: TckconvertParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -575,7 +577,7 @@ def tckconvert_cargs(
 
 
 def tckconvert_outputs(
-    params: TckconvertParameters,
+    params: TckconvertParamsDict,
     execution: Execution,
 ) -> TckconvertOutputs:
     """
@@ -595,7 +597,7 @@ def tckconvert_outputs(
 
 
 def tckconvert_execute(
-    params: TckconvertParameters,
+    params: TckconvertParamsDict,
     runner: Runner | None = None,
 ) -> TckconvertOutputs:
     """
@@ -642,7 +644,7 @@ def tckconvert_execute(
 
 
 def tckconvert(
-    input_: typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
+    input_: typing.Union[TckconvertVariousStringParamsDictTagged, TckconvertVariousFileParamsDictTagged],
     output: str,
     scanner2voxel: InputPathType | None = None,
     scanner2image: InputPathType | None = None,
@@ -659,7 +661,7 @@ def tckconvert(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[TckconvertConfigParameters] | None = None,
+    config: list[TckconvertConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -755,11 +757,19 @@ def tckconvert(
 
 __all__ = [
     "TCKCONVERT_METADATA",
+    "TckconvertConfigParamsDict",
+    "TckconvertConfigParamsDictTagged",
     "TckconvertOutputs",
+    "TckconvertParamsDict",
+    "TckconvertParamsDictTagged",
+    "TckconvertVariousFileParamsDict",
+    "TckconvertVariousFileParamsDictTagged",
+    "TckconvertVariousStringParamsDict",
+    "TckconvertVariousStringParamsDictTagged",
     "tckconvert",
-    "tckconvert_config_params",
+    "tckconvert_config",
     "tckconvert_execute",
     "tckconvert_params",
-    "tckconvert_various_file_params",
-    "tckconvert_various_string_params",
+    "tckconvert_various_file",
+    "tckconvert_various_string",
 ]

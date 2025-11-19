@@ -13,14 +13,14 @@ IMCALC_METADATA = Metadata(
 )
 
 
-ImcalcParameters = typing.TypedDict('ImcalcParameters', {
+ImcalcParamsDict = typing.TypedDict('ImcalcParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/imcalc"]],
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
     "expression": str,
     "output_name": typing.NotRequired[str | None],
 })
-ImcalcParametersTagged = typing.TypedDict('ImcalcParametersTagged', {
+ImcalcParamsDictTagged = typing.TypedDict('ImcalcParamsDictTagged', {
     "@type": typing.Literal["afni/imcalc"],
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
@@ -31,7 +31,7 @@ ImcalcParametersTagged = typing.TypedDict('ImcalcParametersTagged', {
 
 class ImcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ImcalcParameters(...)`.
+    Output object returned when calling `ImcalcParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -45,7 +45,7 @@ def imcalc_params(
     datum_type: str | None = None,
     image_inputs: list[InputPathType] | None = None,
     output_name: str | None = None,
-) -> ImcalcParametersTagged:
+) -> ImcalcParamsDictTagged:
     """
     Build parameters.
     
@@ -83,7 +83,7 @@ def imcalc_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `ImcalcParameters` object.
+    `ImcalcParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -109,7 +109,7 @@ def imcalc_validate(
 
 
 def imcalc_cargs(
-    params: ImcalcParameters,
+    params: ImcalcParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -146,7 +146,7 @@ def imcalc_cargs(
 
 
 def imcalc_outputs(
-    params: ImcalcParameters,
+    params: ImcalcParamsDict,
     execution: Execution,
 ) -> ImcalcOutputs:
     """
@@ -166,7 +166,7 @@ def imcalc_outputs(
 
 
 def imcalc_execute(
-    params: ImcalcParameters,
+    params: ImcalcParamsDict,
     runner: Runner | None = None,
 ) -> ImcalcOutputs:
     """
@@ -239,6 +239,8 @@ def imcalc(
 __all__ = [
     "IMCALC_METADATA",
     "ImcalcOutputs",
+    "ImcalcParamsDict",
+    "ImcalcParamsDictTagged",
     "imcalc",
     "imcalc_execute",
     "imcalc_params",

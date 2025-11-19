@@ -13,7 +13,7 @@ V_3D_ERRTS_CORMAT_METADATA = Metadata(
 )
 
 
-V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
+V3dErrtsCormatParamsDict = typing.TypedDict('V3dErrtsCormatParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dErrtsCormat"]],
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
@@ -22,7 +22,7 @@ V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
     "maxlag": typing.NotRequired[float | None],
     "polort": typing.NotRequired[float | None],
 })
-V3dErrtsCormatParametersTagged = typing.TypedDict('V3dErrtsCormatParametersTagged', {
+V3dErrtsCormatParamsDictTagged = typing.TypedDict('V3dErrtsCormatParamsDictTagged', {
     "@type": typing.Literal["afni/3dErrtsCormat"],
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ V3dErrtsCormatParametersTagged = typing.TypedDict('V3dErrtsCormatParametersTagge
 
 class V3dErrtsCormatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dErrtsCormatParameters(...)`.
+    Output object returned when calling `V3dErrtsCormatParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -50,7 +50,7 @@ def v_3d_errts_cormat_params(
     mask: InputPathType | None = None,
     maxlag: float | None = None,
     polort: float | None = None,
-) -> V3dErrtsCormatParametersTagged:
+) -> V3dErrtsCormatParamsDictTagged:
     """
     Build parameters.
     
@@ -86,7 +86,7 @@ def v_3d_errts_cormat_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dErrtsCormatParameters` object.
+    `V3dErrtsCormatParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -115,7 +115,7 @@ def v_3d_errts_cormat_validate(
 
 
 def v_3d_errts_cormat_cargs(
-    params: V3dErrtsCormatParameters,
+    params: V3dErrtsCormatParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -159,7 +159,7 @@ def v_3d_errts_cormat_cargs(
 
 
 def v_3d_errts_cormat_outputs(
-    params: V3dErrtsCormatParameters,
+    params: V3dErrtsCormatParamsDict,
     execution: Execution,
 ) -> V3dErrtsCormatOutputs:
     """
@@ -179,7 +179,7 @@ def v_3d_errts_cormat_outputs(
 
 
 def v_3d_errts_cormat_execute(
-    params: V3dErrtsCormatParameters,
+    params: V3dErrtsCormatParamsDict,
     runner: Runner | None = None,
 ) -> V3dErrtsCormatOutputs:
     """
@@ -251,6 +251,8 @@ def v_3d_errts_cormat(
 
 __all__ = [
     "V3dErrtsCormatOutputs",
+    "V3dErrtsCormatParamsDict",
+    "V3dErrtsCormatParamsDictTagged",
     "V_3D_ERRTS_CORMAT_METADATA",
     "v_3d_errts_cormat",
     "v_3d_errts_cormat_execute",

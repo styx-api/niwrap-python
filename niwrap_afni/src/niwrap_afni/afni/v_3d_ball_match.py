@@ -13,7 +13,7 @@ V_3D_BALL_MATCH_METADATA = Metadata(
 )
 
 
-V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
+V3dBallMatchParamsDict = typing.TypedDict('V3dBallMatchParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dBallMatch"]],
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
@@ -21,7 +21,7 @@ V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
     "ball_radius": typing.NotRequired[float | None],
     "spheroid_axes": typing.NotRequired[list[float] | None],
 })
-V3dBallMatchParametersTagged = typing.TypedDict('V3dBallMatchParametersTagged', {
+V3dBallMatchParamsDictTagged = typing.TypedDict('V3dBallMatchParamsDictTagged', {
     "@type": typing.Literal["afni/3dBallMatch"],
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ V3dBallMatchParametersTagged = typing.TypedDict('V3dBallMatchParametersTagged', 
 
 class V3dBallMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dBallMatchParameters(...)`.
+    Output object returned when calling `V3dBallMatchParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -47,7 +47,7 @@ def v_3d_ball_match_params(
     dataset_option: str | None = None,
     ball_radius: float | None = None,
     spheroid_axes: list[float] | None = None,
-) -> V3dBallMatchParametersTagged:
+) -> V3dBallMatchParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def v_3d_ball_match_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dBallMatchParameters` object.
+    `V3dBallMatchParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -112,7 +112,7 @@ def v_3d_ball_match_validate(
 
 
 def v_3d_ball_match_cargs(
-    params: V3dBallMatchParameters,
+    params: V3dBallMatchParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -148,7 +148,7 @@ def v_3d_ball_match_cargs(
 
 
 def v_3d_ball_match_outputs(
-    params: V3dBallMatchParameters,
+    params: V3dBallMatchParamsDict,
     execution: Execution,
 ) -> V3dBallMatchOutputs:
     """
@@ -168,7 +168,7 @@ def v_3d_ball_match_outputs(
 
 
 def v_3d_ball_match_execute(
-    params: V3dBallMatchParameters,
+    params: V3dBallMatchParamsDict,
     runner: Runner | None = None,
 ) -> V3dBallMatchOutputs:
     """
@@ -240,6 +240,8 @@ def v_3d_ball_match(
 
 __all__ = [
     "V3dBallMatchOutputs",
+    "V3dBallMatchParamsDict",
+    "V3dBallMatchParamsDictTagged",
     "V_3D_BALL_MATCH_METADATA",
     "v_3d_ball_match",
     "v_3d_ball_match_execute",

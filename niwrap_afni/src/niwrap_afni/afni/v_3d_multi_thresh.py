@@ -13,7 +13,7 @@ V_3D_MULTI_THRESH_METADATA = Metadata(
 )
 
 
-V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
+V3dMultiThreshParamsDict = typing.TypedDict('V3dMultiThreshParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dMultiThresh"]],
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
@@ -27,7 +27,7 @@ V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
     "no_zero_flag": bool,
     "quiet_flag": bool,
 })
-V3dMultiThreshParametersTagged = typing.TypedDict('V3dMultiThreshParametersTagged', {
+V3dMultiThreshParamsDictTagged = typing.TypedDict('V3dMultiThreshParamsDictTagged', {
     "@type": typing.Literal["afni/3dMultiThresh"],
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
@@ -45,7 +45,7 @@ V3dMultiThreshParametersTagged = typing.TypedDict('V3dMultiThreshParametersTagge
 
 class V3dMultiThreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dMultiThreshParameters(...)`.
+    Output object returned when calling `V3dMultiThreshParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ def v_3d_multi_thresh_params(
     all_mask: str | None = None,
     no_zero_flag: bool = False,
     quiet_flag: bool = False,
-) -> V3dMultiThreshParametersTagged:
+) -> V3dMultiThreshParamsDictTagged:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def v_3d_multi_thresh_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dMultiThreshParameters` object.
+    `V3dMultiThreshParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -171,7 +171,7 @@ def v_3d_multi_thresh_validate(
 
 
 def v_3d_multi_thresh_cargs(
-    params: V3dMultiThreshParameters,
+    params: V3dMultiThreshParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -227,7 +227,7 @@ def v_3d_multi_thresh_cargs(
 
 
 def v_3d_multi_thresh_outputs(
-    params: V3dMultiThreshParameters,
+    params: V3dMultiThreshParamsDict,
     execution: Execution,
 ) -> V3dMultiThreshOutputs:
     """
@@ -249,7 +249,7 @@ def v_3d_multi_thresh_outputs(
 
 
 def v_3d_multi_thresh_execute(
-    params: V3dMultiThreshParameters,
+    params: V3dMultiThreshParamsDict,
     runner: Runner | None = None,
 ) -> V3dMultiThreshOutputs:
     """
@@ -340,6 +340,8 @@ def v_3d_multi_thresh(
 
 __all__ = [
     "V3dMultiThreshOutputs",
+    "V3dMultiThreshParamsDict",
+    "V3dMultiThreshParamsDictTagged",
     "V_3D_MULTI_THRESH_METADATA",
     "v_3d_multi_thresh",
     "v_3d_multi_thresh_execute",

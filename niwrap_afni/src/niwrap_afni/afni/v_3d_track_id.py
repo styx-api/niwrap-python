@@ -13,7 +13,7 @@ V_3D_TRACK_ID_METADATA = Metadata(
 )
 
 
-V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
+V3dTrackIdParamsDict = typing.TypedDict('V3dTrackIdParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dTrackID"]],
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
@@ -60,7 +60,7 @@ V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
     "pair_out_power": bool,
     "verb": typing.NotRequired[float | None],
 })
-V3dTrackIdParametersTagged = typing.TypedDict('V3dTrackIdParametersTagged', {
+V3dTrackIdParamsDictTagged = typing.TypedDict('V3dTrackIdParamsDictTagged', {
     "@type": typing.Literal["afni/3dTrackID"],
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
@@ -111,7 +111,7 @@ V3dTrackIdParametersTagged = typing.TypedDict('V3dTrackIdParametersTagged', {
 
 class V3dTrackIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dTrackIdParameters(...)`.
+    Output object returned when calling `V3dTrackIdParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -180,7 +180,7 @@ def v_3d_track_id_params(
     write_opts: bool = False,
     pair_out_power: bool = False,
     verb: float | None = None,
-) -> V3dTrackIdParametersTagged:
+) -> V3dTrackIdParamsDictTagged:
     """
     Build parameters.
     
@@ -321,7 +321,7 @@ def v_3d_track_id_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dTrackIdParameters` object.
+    `V3dTrackIdParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -489,7 +489,7 @@ def v_3d_track_id_validate(
 
 
 def v_3d_track_id_cargs(
-    params: V3dTrackIdParameters,
+    params: V3dTrackIdParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -591,7 +591,7 @@ def v_3d_track_id_cargs(
 
 
 def v_3d_track_id_outputs(
-    params: V3dTrackIdParameters,
+    params: V3dTrackIdParamsDict,
     execution: Execution,
 ) -> V3dTrackIdOutputs:
     """
@@ -619,7 +619,7 @@ def v_3d_track_id_outputs(
 
 
 def v_3d_track_id_execute(
-    params: V3dTrackIdParameters,
+    params: V3dTrackIdParamsDict,
     runner: Runner | None = None,
 ) -> V3dTrackIdOutputs:
     """
@@ -813,6 +813,8 @@ def v_3d_track_id(
 
 __all__ = [
     "V3dTrackIdOutputs",
+    "V3dTrackIdParamsDict",
+    "V3dTrackIdParamsDictTagged",
     "V_3D_TRACK_ID_METADATA",
     "v_3d_track_id",
     "v_3d_track_id_execute",

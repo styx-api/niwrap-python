@@ -13,40 +13,40 @@ FIXELREORIENT_METADATA = Metadata(
 )
 
 
-FixelreorientConfigParameters = typing.TypedDict('FixelreorientConfigParameters', {
+FixelreorientConfigParamsDict = typing.TypedDict('FixelreorientConfigParamsDict', {
     "@type": typing.NotRequired[typing.Literal["config"]],
     "key": str,
     "value": str,
 })
-FixelreorientConfigParametersTagged = typing.TypedDict('FixelreorientConfigParametersTagged', {
+FixelreorientConfigParamsDictTagged = typing.TypedDict('FixelreorientConfigParamsDictTagged', {
     "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
-FixelreorientParameters = typing.TypedDict('FixelreorientParameters', {
+FixelreorientParamsDict = typing.TypedDict('FixelreorientParamsDict', {
     "@type": typing.NotRequired[typing.Literal["mrtrix/fixelreorient"]],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelreorientConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelreorientConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
     "warp": InputPathType,
     "fixel_out": str,
 })
-FixelreorientParametersTagged = typing.TypedDict('FixelreorientParametersTagged', {
+FixelreorientParamsDictTagged = typing.TypedDict('FixelreorientParamsDictTagged', {
     "@type": typing.Literal["mrtrix/fixelreorient"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[int | None],
-    "config": typing.NotRequired[list[FixelreorientConfigParameters] | None],
+    "config": typing.NotRequired[list[FixelreorientConfigParamsDict] | None],
     "help": bool,
     "version": bool,
     "fixel_in": InputPathType,
@@ -55,10 +55,10 @@ FixelreorientParametersTagged = typing.TypedDict('FixelreorientParametersTagged'
 })
 
 
-def fixelreorient_config_params(
+def fixelreorient_config(
     key: str,
     value: str,
-) -> FixelreorientConfigParametersTagged:
+) -> FixelreorientConfigParamsDictTagged:
     """
     Build parameters.
     
@@ -81,7 +81,7 @@ def fixelreorient_config_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelreorientConfigParameters` object.
+    `FixelreorientConfigParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -99,7 +99,7 @@ def fixelreorient_config_validate(
 
 
 def fixelreorient_config_cargs(
-    params: FixelreorientConfigParameters,
+    params: FixelreorientConfigParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -120,7 +120,7 @@ def fixelreorient_config_cargs(
 
 class FixelreorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `FixelreorientParameters(...)`.
+    Output object returned when calling `FixelreorientParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,10 +140,10 @@ def fixelreorient_params(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelreorientConfigParameters] | None = None,
+    config: list[FixelreorientConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelreorientParametersTagged:
+) -> FixelreorientParamsDictTagged:
     """
     Build parameters.
     
@@ -197,7 +197,7 @@ def fixelreorient_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FixelreorientParameters` object.
+    `FixelreorientParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -225,7 +225,7 @@ def fixelreorient_validate(
             raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
     if params.get("config", None) is not None:
         if not isinstance(params["config"], list):
-            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelreorientConfigParameters] | None`')
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelreorientConfigParamsDict] | None`')
         for e in params["config"]:
             fixelreorient_config_validate(e)
     if params.get("help", False) is None:
@@ -251,7 +251,7 @@ def fixelreorient_validate(
 
 
 def fixelreorient_cargs(
-    params: FixelreorientParameters,
+    params: FixelreorientParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -291,7 +291,7 @@ def fixelreorient_cargs(
 
 
 def fixelreorient_outputs(
-    params: FixelreorientParameters,
+    params: FixelreorientParamsDict,
     execution: Execution,
 ) -> FixelreorientOutputs:
     """
@@ -311,7 +311,7 @@ def fixelreorient_outputs(
 
 
 def fixelreorient_execute(
-    params: FixelreorientParameters,
+    params: FixelreorientParamsDict,
     runner: Runner | None = None,
 ) -> FixelreorientOutputs:
     """
@@ -356,7 +356,7 @@ def fixelreorient(
     debug: bool = False,
     force: bool = False,
     nthreads: int | None = None,
-    config: list[FixelreorientConfigParameters] | None = None,
+    config: list[FixelreorientConfigParamsDict] | None = None,
     help_: bool = False,
     version: bool = False,
     runner: Runner | None = None,
@@ -423,9 +423,13 @@ def fixelreorient(
 
 __all__ = [
     "FIXELREORIENT_METADATA",
+    "FixelreorientConfigParamsDict",
+    "FixelreorientConfigParamsDictTagged",
     "FixelreorientOutputs",
+    "FixelreorientParamsDict",
+    "FixelreorientParamsDictTagged",
     "fixelreorient",
-    "fixelreorient_config_params",
+    "fixelreorient_config",
     "fixelreorient_execute",
     "fixelreorient_params",
 ]

@@ -13,7 +13,7 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 )
 
 
-PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
+PlugoutDriveParamsDict = typing.TypedDict('PlugoutDriveParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/plugout_drive"]],
     "host": typing.NotRequired[str | None],
     "shm": bool,
@@ -31,7 +31,7 @@ PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
     "num_assigned_ports": bool,
     "num_assigned_ports_quiet": bool,
 })
-PlugoutDriveParametersTagged = typing.TypedDict('PlugoutDriveParametersTagged', {
+PlugoutDriveParamsDictTagged = typing.TypedDict('PlugoutDriveParamsDictTagged', {
     "@type": typing.Literal["afni/plugout_drive"],
     "host": typing.NotRequired[str | None],
     "shm": bool,
@@ -53,7 +53,7 @@ PlugoutDriveParametersTagged = typing.TypedDict('PlugoutDriveParametersTagged', 
 
 class PlugoutDriveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `PlugoutDriveParameters(...)`.
+    Output object returned when calling `PlugoutDriveParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +75,7 @@ def plugout_drive_params(
     max_port_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutDriveParametersTagged:
+) -> PlugoutDriveParamsDictTagged:
     """
     Build parameters.
     
@@ -141,7 +141,7 @@ def plugout_drive_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `PlugoutDriveParameters` object.
+    `PlugoutDriveParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -206,7 +206,7 @@ def plugout_drive_validate(
 
 
 def plugout_drive_cargs(
-    params: PlugoutDriveParameters,
+    params: PlugoutDriveParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -278,7 +278,7 @@ def plugout_drive_cargs(
 
 
 def plugout_drive_outputs(
-    params: PlugoutDriveParameters,
+    params: PlugoutDriveParamsDict,
     execution: Execution,
 ) -> PlugoutDriveOutputs:
     """
@@ -297,7 +297,7 @@ def plugout_drive_outputs(
 
 
 def plugout_drive_execute(
-    params: PlugoutDriveParameters,
+    params: PlugoutDriveParamsDict,
     runner: Runner | None = None,
 ) -> PlugoutDriveOutputs:
     """
@@ -406,6 +406,8 @@ def plugout_drive(
 __all__ = [
     "PLUGOUT_DRIVE_METADATA",
     "PlugoutDriveOutputs",
+    "PlugoutDriveParamsDict",
+    "PlugoutDriveParamsDictTagged",
     "plugout_drive",
     "plugout_drive_execute",
     "plugout_drive_params",

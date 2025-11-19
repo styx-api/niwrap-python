@@ -13,7 +13,7 @@ V_1D_NLFIT_METADATA = Metadata(
 )
 
 
-V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
+V1dNlfitParamsDict = typing.TypedDict('V1dNlfitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/1dNLfit"]],
     "expression": str,
     "independent_variable": str,
@@ -21,7 +21,7 @@ V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
     "dependent_data": InputPathType,
     "method": typing.NotRequired[int | None],
 })
-V1dNlfitParametersTagged = typing.TypedDict('V1dNlfitParametersTagged', {
+V1dNlfitParamsDictTagged = typing.TypedDict('V1dNlfitParamsDictTagged', {
     "@type": typing.Literal["afni/1dNLfit"],
     "expression": str,
     "independent_variable": str,
@@ -33,7 +33,7 @@ V1dNlfitParametersTagged = typing.TypedDict('V1dNlfitParametersTagged', {
 
 class V1dNlfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V1dNlfitParameters(...)`.
+    Output object returned when calling `V1dNlfitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -48,7 +48,7 @@ def v_1d_nlfit_params(
     parameters: list[str],
     dependent_data: InputPathType,
     method: int | None = None,
-) -> V1dNlfitParametersTagged:
+) -> V1dNlfitParamsDictTagged:
     """
     Build parameters.
     
@@ -91,7 +91,7 @@ def v_1d_nlfit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V1dNlfitParameters` object.
+    `V1dNlfitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -123,7 +123,7 @@ def v_1d_nlfit_validate(
 
 
 def v_1d_nlfit_cargs(
-    params: V1dNlfitParameters,
+    params: V1dNlfitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -162,7 +162,7 @@ def v_1d_nlfit_cargs(
 
 
 def v_1d_nlfit_outputs(
-    params: V1dNlfitParameters,
+    params: V1dNlfitParamsDict,
     execution: Execution,
 ) -> V1dNlfitOutputs:
     """
@@ -182,7 +182,7 @@ def v_1d_nlfit_outputs(
 
 
 def v_1d_nlfit_execute(
-    params: V1dNlfitParameters,
+    params: V1dNlfitParamsDict,
     runner: Runner | None = None,
 ) -> V1dNlfitOutputs:
     """
@@ -264,6 +264,8 @@ def v_1d_nlfit(
 
 __all__ = [
     "V1dNlfitOutputs",
+    "V1dNlfitParamsDict",
+    "V1dNlfitParamsDictTagged",
     "V_1D_NLFIT_METADATA",
     "v_1d_nlfit",
     "v_1d_nlfit_execute",

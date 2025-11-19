@@ -12,7 +12,7 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 )
 
 
-EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParameters', {
+EstimateFiberBinghamsParamsDict = typing.TypedDict('EstimateFiberBinghamsParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/estimate-fiber-binghams"]],
     "cifti-out": str,
     "merged_f1samples": InputPathType,
@@ -26,7 +26,7 @@ EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParamet
     "merged_ph3samples": InputPathType,
     "label-volume": InputPathType,
 })
-EstimateFiberBinghamsParametersTagged = typing.TypedDict('EstimateFiberBinghamsParametersTagged', {
+EstimateFiberBinghamsParamsDictTagged = typing.TypedDict('EstimateFiberBinghamsParamsDictTagged', {
     "@type": typing.Literal["workbench/estimate-fiber-binghams"],
     "cifti-out": str,
     "merged_f1samples": InputPathType,
@@ -44,7 +44,7 @@ EstimateFiberBinghamsParametersTagged = typing.TypedDict('EstimateFiberBinghamsP
 
 class EstimateFiberBinghamsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `EstimateFiberBinghamsParameters(...)`.
+    Output object returned when calling `EstimateFiberBinghamsParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +64,7 @@ def estimate_fiber_binghams_params(
     merged_th3samples: InputPathType,
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
-) -> EstimateFiberBinghamsParametersTagged:
+) -> EstimateFiberBinghamsParamsDictTagged:
     """
     Build parameters.
     
@@ -105,7 +105,7 @@ def estimate_fiber_binghams_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `EstimateFiberBinghamsParameters` object.
+    `EstimateFiberBinghamsParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -159,7 +159,7 @@ def estimate_fiber_binghams_validate(
 
 
 def estimate_fiber_binghams_cargs(
-    params: EstimateFiberBinghamsParameters,
+    params: EstimateFiberBinghamsParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -191,7 +191,7 @@ def estimate_fiber_binghams_cargs(
 
 
 def estimate_fiber_binghams_outputs(
-    params: EstimateFiberBinghamsParameters,
+    params: EstimateFiberBinghamsParamsDict,
     execution: Execution,
 ) -> EstimateFiberBinghamsOutputs:
     """
@@ -211,7 +211,7 @@ def estimate_fiber_binghams_outputs(
 
 
 def estimate_fiber_binghams_execute(
-    params: EstimateFiberBinghamsParameters,
+    params: EstimateFiberBinghamsParamsDict,
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
@@ -367,6 +367,8 @@ def estimate_fiber_binghams(
 __all__ = [
     "ESTIMATE_FIBER_BINGHAMS_METADATA",
     "EstimateFiberBinghamsOutputs",
+    "EstimateFiberBinghamsParamsDict",
+    "EstimateFiberBinghamsParamsDictTagged",
     "estimate_fiber_binghams",
     "estimate_fiber_binghams_execute",
     "estimate_fiber_binghams_params",

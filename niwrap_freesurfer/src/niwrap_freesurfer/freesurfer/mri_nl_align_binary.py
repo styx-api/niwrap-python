@@ -13,13 +13,13 @@ MRI_NL_ALIGN_BINARY_METADATA = Metadata(
 )
 
 
-MriNlAlignBinaryParameters = typing.TypedDict('MriNlAlignBinaryParameters', {
+MriNlAlignBinaryParamsDict = typing.TypedDict('MriNlAlignBinaryParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nl_align_binary"]],
     "source_file": InputPathType,
     "target_file": InputPathType,
     "warp_file": str,
 })
-MriNlAlignBinaryParametersTagged = typing.TypedDict('MriNlAlignBinaryParametersTagged', {
+MriNlAlignBinaryParamsDictTagged = typing.TypedDict('MriNlAlignBinaryParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_nl_align_binary"],
     "source_file": InputPathType,
     "target_file": InputPathType,
@@ -29,7 +29,7 @@ MriNlAlignBinaryParametersTagged = typing.TypedDict('MriNlAlignBinaryParametersT
 
 class MriNlAlignBinaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MriNlAlignBinaryParameters(...)`.
+    Output object returned when calling `MriNlAlignBinaryParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -41,7 +41,7 @@ def mri_nl_align_binary_params(
     source_file: InputPathType,
     target_file: InputPathType,
     warp_file: str,
-) -> MriNlAlignBinaryParametersTagged:
+) -> MriNlAlignBinaryParamsDictTagged:
     """
     Build parameters.
     
@@ -66,7 +66,7 @@ def mri_nl_align_binary_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MriNlAlignBinaryParameters` object.
+    `MriNlAlignBinaryParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -88,7 +88,7 @@ def mri_nl_align_binary_validate(
 
 
 def mri_nl_align_binary_cargs(
-    params: MriNlAlignBinaryParameters,
+    params: MriNlAlignBinaryParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -109,7 +109,7 @@ def mri_nl_align_binary_cargs(
 
 
 def mri_nl_align_binary_outputs(
-    params: MriNlAlignBinaryParameters,
+    params: MriNlAlignBinaryParamsDict,
     execution: Execution,
 ) -> MriNlAlignBinaryOutputs:
     """
@@ -129,7 +129,7 @@ def mri_nl_align_binary_outputs(
 
 
 def mri_nl_align_binary_execute(
-    params: MriNlAlignBinaryParameters,
+    params: MriNlAlignBinaryParamsDict,
     runner: Runner | None = None,
 ) -> MriNlAlignBinaryOutputs:
     """
@@ -191,6 +191,8 @@ def mri_nl_align_binary(
 __all__ = [
     "MRI_NL_ALIGN_BINARY_METADATA",
     "MriNlAlignBinaryOutputs",
+    "MriNlAlignBinaryParamsDict",
+    "MriNlAlignBinaryParamsDictTagged",
     "mri_nl_align_binary",
     "mri_nl_align_binary_execute",
     "mri_nl_align_binary_params",

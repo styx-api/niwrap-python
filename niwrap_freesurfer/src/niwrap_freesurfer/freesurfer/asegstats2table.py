@@ -13,7 +13,7 @@ ASEGSTATS2TABLE_METADATA = Metadata(
 )
 
 
-Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
+Asegstats2tableParamsDict = typing.TypedDict('Asegstats2tableParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/asegstats2table"]],
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
@@ -40,7 +40,7 @@ Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
     "skip_missing_flag": bool,
     "replace53_flag": bool,
 })
-Asegstats2tableParametersTagged = typing.TypedDict('Asegstats2tableParametersTagged', {
+Asegstats2tableParamsDictTagged = typing.TypedDict('Asegstats2tableParamsDictTagged', {
     "@type": typing.Literal["freesurfer/asegstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
@@ -71,7 +71,7 @@ Asegstats2tableParametersTagged = typing.TypedDict('Asegstats2tableParametersTag
 
 class Asegstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Asegstats2tableParameters(...)`.
+    Output object returned when calling `Asegstats2tableParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,7 +104,7 @@ def asegstats2table_params(
     no_vol_extras_flag: bool = False,
     skip_missing_flag: bool = False,
     replace53_flag: bool = False,
-) -> Asegstats2tableParametersTagged:
+) -> Asegstats2tableParamsDictTagged:
     """
     Build parameters.
     
@@ -196,7 +196,7 @@ def asegstats2table_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Asegstats2tableParameters` object.
+    `Asegstats2tableParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -302,7 +302,7 @@ def asegstats2table_validate(
 
 
 def asegstats2table_cargs(
-    params: Asegstats2tableParameters,
+    params: Asegstats2tableParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -415,7 +415,7 @@ def asegstats2table_cargs(
 
 
 def asegstats2table_outputs(
-    params: Asegstats2tableParameters,
+    params: Asegstats2tableParamsDict,
     execution: Execution,
 ) -> Asegstats2tableOutputs:
     """
@@ -435,7 +435,7 @@ def asegstats2table_outputs(
 
 
 def asegstats2table_execute(
-    params: Asegstats2tableParameters,
+    params: Asegstats2tableParamsDict,
     runner: Runner | None = None,
 ) -> Asegstats2tableOutputs:
     """
@@ -572,6 +572,8 @@ def asegstats2table(
 __all__ = [
     "ASEGSTATS2TABLE_METADATA",
     "Asegstats2tableOutputs",
+    "Asegstats2tableParamsDict",
+    "Asegstats2tableParamsDictTagged",
     "asegstats2table",
     "asegstats2table_execute",
     "asegstats2table_params",

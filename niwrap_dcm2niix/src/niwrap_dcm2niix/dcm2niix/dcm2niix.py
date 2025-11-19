@@ -13,7 +13,7 @@ DCM2NIIX_METADATA = Metadata(
 )
 
 
-Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
+Dcm2niixParamsDict = typing.TypedDict('Dcm2niixParamsDict', {
     "@type": typing.NotRequired[typing.Literal["dcm2niix/dcm2niix"]],
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[bool | None],
@@ -45,7 +45,7 @@ Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
     "xml": bool,
     "input_dir": InputPathType,
 })
-Dcm2niixParametersTagged = typing.TypedDict('Dcm2niixParametersTagged', {
+Dcm2niixParamsDictTagged = typing.TypedDict('Dcm2niixParamsDictTagged', {
     "@type": typing.Literal["dcm2niix/dcm2niix"],
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[bool | None],
@@ -81,7 +81,7 @@ Dcm2niixParametersTagged = typing.TypedDict('Dcm2niixParametersTagged', {
 
 class Dcm2niixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `Dcm2niixParameters(...)`.
+    Output object returned when calling `Dcm2niixParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +117,7 @@ def dcm2niix_params(
     ignore_trigger: bool = False,
     terse: bool = False,
     xml_: bool = False,
-) -> Dcm2niixParametersTagged:
+) -> Dcm2niixParamsDictTagged:
     """
     Build parameters.
     
@@ -234,7 +234,7 @@ def dcm2niix_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `Dcm2niixParameters` object.
+    `Dcm2niixParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -360,7 +360,7 @@ def dcm2niix_validate(
 
 
 def dcm2niix_cargs(
-    params: Dcm2niixParameters,
+    params: Dcm2niixParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -504,7 +504,7 @@ def dcm2niix_cargs(
 
 
 def dcm2niix_outputs(
-    params: Dcm2niixParameters,
+    params: Dcm2niixParamsDict,
     execution: Execution,
 ) -> Dcm2niixOutputs:
     """
@@ -523,7 +523,7 @@ def dcm2niix_outputs(
 
 
 def dcm2niix_execute(
-    params: Dcm2niixParameters,
+    params: Dcm2niixParamsDict,
     runner: Runner | None = None,
 ) -> Dcm2niixOutputs:
     """
@@ -677,6 +677,8 @@ def dcm2niix_(
 __all__ = [
     "DCM2NIIX_METADATA",
     "Dcm2niixOutputs",
+    "Dcm2niixParamsDict",
+    "Dcm2niixParamsDictTagged",
     "dcm2niix_",
     "dcm2niix_execute",
     "dcm2niix_params",

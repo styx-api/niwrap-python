@@ -12,13 +12,13 @@ CIFTI_MATH_METADATA = Metadata(
 )
 
 
-CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
+CiftiMathSelectParamsDict = typing.TypedDict('CiftiMathSelectParamsDict', {
     "@type": typing.NotRequired[typing.Literal["select"]],
     "dim": int,
     "index": str,
     "repeat": bool,
 })
-CiftiMathSelectParametersTagged = typing.TypedDict('CiftiMathSelectParametersTagged', {
+CiftiMathSelectParamsDictTagged = typing.TypedDict('CiftiMathSelectParamsDictTagged', {
     "@type": typing.Literal["select"],
     "dim": int,
     "index": str,
@@ -26,43 +26,43 @@ CiftiMathSelectParametersTagged = typing.TypedDict('CiftiMathSelectParametersTag
 })
 
 
-CiftiMathVarParameters = typing.TypedDict('CiftiMathVarParameters', {
+CiftiMathVarParamsDict = typing.TypedDict('CiftiMathVarParamsDict', {
     "@type": typing.NotRequired[typing.Literal["var"]],
     "name": str,
     "cifti": InputPathType,
-    "select": typing.NotRequired[list[CiftiMathSelectParameters] | None],
+    "select": typing.NotRequired[list[CiftiMathSelectParamsDict] | None],
 })
-CiftiMathVarParametersTagged = typing.TypedDict('CiftiMathVarParametersTagged', {
+CiftiMathVarParamsDictTagged = typing.TypedDict('CiftiMathVarParamsDictTagged', {
     "@type": typing.Literal["var"],
     "name": str,
     "cifti": InputPathType,
-    "select": typing.NotRequired[list[CiftiMathSelectParameters] | None],
+    "select": typing.NotRequired[list[CiftiMathSelectParamsDict] | None],
 })
 
 
-CiftiMathParameters = typing.TypedDict('CiftiMathParameters', {
+CiftiMathParamsDict = typing.TypedDict('CiftiMathParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-math"]],
     "cifti-out": str,
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "var": typing.NotRequired[list[CiftiMathVarParameters] | None],
+    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "expression": str,
 })
-CiftiMathParametersTagged = typing.TypedDict('CiftiMathParametersTagged', {
+CiftiMathParamsDictTagged = typing.TypedDict('CiftiMathParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-math"],
     "cifti-out": str,
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "var": typing.NotRequired[list[CiftiMathVarParameters] | None],
+    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "expression": str,
 })
 
 
-def cifti_math_select_params(
+def cifti_math_select(
     dim: int,
     index: str,
     repeat: bool = False,
-) -> CiftiMathSelectParametersTagged:
+) -> CiftiMathSelectParamsDictTagged:
     """
     Build parameters.
     
@@ -88,7 +88,7 @@ def cifti_math_select_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMathSelectParameters` object.
+    `CiftiMathSelectParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -110,7 +110,7 @@ def cifti_math_select_validate(
 
 
 def cifti_math_select_cargs(
-    params: CiftiMathSelectParameters,
+    params: CiftiMathSelectParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,11 +133,11 @@ def cifti_math_select_cargs(
     return cargs
 
 
-def cifti_math_var_params(
+def cifti_math_var(
     name: str,
     cifti: InputPathType,
-    select_: list[CiftiMathSelectParameters] | None = None,
-) -> CiftiMathVarParametersTagged:
+    select_: list[CiftiMathSelectParamsDict] | None = None,
+) -> CiftiMathVarParamsDictTagged:
     """
     Build parameters.
     
@@ -163,7 +163,7 @@ def cifti_math_var_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMathVarParameters` object.
+    `CiftiMathVarParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -180,13 +180,13 @@ def cifti_math_var_validate(
         raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
     if params.get("select", None) is not None:
         if not isinstance(params["select"], list):
-            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[CiftiMathSelectParameters] | None`')
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[CiftiMathSelectParamsDict] | None`')
         for e in params["select"]:
             cifti_math_select_validate(e)
 
 
 def cifti_math_var_cargs(
-    params: CiftiMathVarParameters,
+    params: CiftiMathVarParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -211,7 +211,7 @@ def cifti_math_var_cargs(
 
 class CiftiMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiMathParameters(...)`.
+    Output object returned when calling `CiftiMathParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -224,8 +224,8 @@ def cifti_math_params(
     replace: float | None,
     expression: str,
     override_mapping_check: bool = False,
-    var: list[CiftiMathVarParameters] | None = None,
-) -> CiftiMathParametersTagged:
+    var: list[CiftiMathVarParamsDict] | None = None,
+) -> CiftiMathParamsDictTagged:
     """
     Build parameters.
     
@@ -259,7 +259,7 @@ def cifti_math_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiMathParameters` object.
+    `CiftiMathParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -279,7 +279,7 @@ def cifti_math_validate(
         raise StyxValidationError(f'`override-mapping-check` has the wrong type: Received `{type(params.get("override-mapping-check", False))}` expected `bool`')
     if params.get("var", None) is not None:
         if not isinstance(params["var"], list):
-            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[CiftiMathVarParameters] | None`')
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[CiftiMathVarParamsDict] | None`')
         for e in params["var"]:
             cifti_math_var_validate(e)
     if params.get("expression", None) is None:
@@ -289,7 +289,7 @@ def cifti_math_validate(
 
 
 def cifti_math_cargs(
-    params: CiftiMathParameters,
+    params: CiftiMathParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -317,7 +317,7 @@ def cifti_math_cargs(
 
 
 def cifti_math_outputs(
-    params: CiftiMathParameters,
+    params: CiftiMathParamsDict,
     execution: Execution,
 ) -> CiftiMathOutputs:
     """
@@ -337,7 +337,7 @@ def cifti_math_outputs(
 
 
 def cifti_math_execute(
-    params: CiftiMathParameters,
+    params: CiftiMathParamsDict,
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
@@ -437,7 +437,7 @@ def cifti_math(
     replace: float | None,
     expression: str,
     override_mapping_check: bool = False,
-    var: list[CiftiMathVarParameters] | None = None,
+    var: list[CiftiMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
@@ -542,9 +542,15 @@ def cifti_math(
 __all__ = [
     "CIFTI_MATH_METADATA",
     "CiftiMathOutputs",
+    "CiftiMathParamsDict",
+    "CiftiMathParamsDictTagged",
+    "CiftiMathSelectParamsDict",
+    "CiftiMathSelectParamsDictTagged",
+    "CiftiMathVarParamsDict",
+    "CiftiMathVarParamsDictTagged",
     "cifti_math",
     "cifti_math_execute",
     "cifti_math_params",
-    "cifti_math_select_params",
-    "cifti_math_var_params",
+    "cifti_math_select",
+    "cifti_math_var",
 ]

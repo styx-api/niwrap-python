@@ -12,7 +12,7 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 )
 
 
-MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParameters', {
+MetadataStringReplaceParamsDict = typing.TypedDict('MetadataStringReplaceParamsDict', {
     "@type": typing.NotRequired[typing.Literal["workbench/metadata-string-replace"]],
     "case-insensitive": bool,
     "input-file": str,
@@ -20,7 +20,7 @@ MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParamet
     "replace-string": str,
     "output-file": str,
 })
-MetadataStringReplaceParametersTagged = typing.TypedDict('MetadataStringReplaceParametersTagged', {
+MetadataStringReplaceParamsDictTagged = typing.TypedDict('MetadataStringReplaceParamsDictTagged', {
     "@type": typing.Literal["workbench/metadata-string-replace"],
     "case-insensitive": bool,
     "input-file": str,
@@ -32,7 +32,7 @@ MetadataStringReplaceParametersTagged = typing.TypedDict('MetadataStringReplaceP
 
 class MetadataStringReplaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `MetadataStringReplaceParameters(...)`.
+    Output object returned when calling `MetadataStringReplaceParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -44,7 +44,7 @@ def metadata_string_replace_params(
     replace_string: str,
     output_file: str,
     case_insensitive: bool = False,
-) -> MetadataStringReplaceParametersTagged:
+) -> MetadataStringReplaceParamsDictTagged:
     """
     Build parameters.
     
@@ -73,7 +73,7 @@ def metadata_string_replace_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `MetadataStringReplaceParameters` object.
+    `MetadataStringReplaceParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -103,7 +103,7 @@ def metadata_string_replace_validate(
 
 
 def metadata_string_replace_cargs(
-    params: MetadataStringReplaceParameters,
+    params: MetadataStringReplaceParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -130,7 +130,7 @@ def metadata_string_replace_cargs(
 
 
 def metadata_string_replace_outputs(
-    params: MetadataStringReplaceParameters,
+    params: MetadataStringReplaceParamsDict,
     execution: Execution,
 ) -> MetadataStringReplaceOutputs:
     """
@@ -149,7 +149,7 @@ def metadata_string_replace_outputs(
 
 
 def metadata_string_replace_execute(
-    params: MetadataStringReplaceParameters,
+    params: MetadataStringReplaceParamsDict,
     runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
@@ -211,6 +211,8 @@ def metadata_string_replace(
 __all__ = [
     "METADATA_STRING_REPLACE_METADATA",
     "MetadataStringReplaceOutputs",
+    "MetadataStringReplaceParamsDict",
+    "MetadataStringReplaceParamsDictTagged",
     "metadata_string_replace",
     "metadata_string_replace_execute",
     "metadata_string_replace_params",

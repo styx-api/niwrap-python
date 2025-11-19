@@ -13,7 +13,7 @@ V_3DHISTOG_METADATA = Metadata(
 )
 
 
-V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
+V3dhistogParamsDict = typing.TypedDict('V3dhistogParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dhistog"]],
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
     "unq": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
 })
-V3dhistogParametersTagged = typing.TypedDict('V3dhistogParametersTagged', {
+V3dhistogParamsDictTagged = typing.TypedDict('V3dhistogParamsDictTagged', {
     "@type": typing.Literal["afni/3dhistog"],
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
@@ -59,7 +59,7 @@ V3dhistogParametersTagged = typing.TypedDict('V3dhistogParametersTagged', {
 
 class V3dhistogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dhistogParameters(...)`.
+    Output object returned when calling `V3dhistogParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +86,7 @@ def v_3dhistog_params(
     float_: bool = False,
     unq: str | None = None,
     prefix: str | None = None,
-) -> V3dhistogParametersTagged:
+) -> V3dhistogParamsDictTagged:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def v_3dhistog_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dhistogParameters` object.
+    `V3dhistogParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -228,7 +228,7 @@ def v_3dhistog_validate(
 
 
 def v_3dhistog_cargs(
-    params: V3dhistogParameters,
+    params: V3dhistogParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -308,7 +308,7 @@ def v_3dhistog_cargs(
 
 
 def v_3dhistog_outputs(
-    params: V3dhistogParameters,
+    params: V3dhistogParamsDict,
     execution: Execution,
 ) -> V3dhistogOutputs:
     """
@@ -328,7 +328,7 @@ def v_3dhistog_outputs(
 
 
 def v_3dhistog_execute(
-    params: V3dhistogParameters,
+    params: V3dhistogParamsDict,
     runner: Runner | None = None,
 ) -> V3dhistogOutputs:
     """
@@ -434,6 +434,8 @@ def v_3dhistog(
 
 __all__ = [
     "V3dhistogOutputs",
+    "V3dhistogParamsDict",
+    "V3dhistogParamsDictTagged",
     "V_3DHISTOG_METADATA",
     "v_3dhistog",
     "v_3dhistog_execute",

@@ -13,7 +13,7 @@ DTIFIT_METADATA = Metadata(
 )
 
 
-DtifitParameters = typing.TypedDict('DtifitParameters', {
+DtifitParamsDict = typing.TypedDict('DtifitParamsDict', {
     "@type": typing.NotRequired[typing.Literal["fsl/dtifit"]],
     "data_file": InputPathType,
     "output_basename": str,
@@ -36,7 +36,7 @@ DtifitParameters = typing.TypedDict('DtifitParameters', {
     "gradnonlin_file": typing.NotRequired[InputPathType | None],
     "confound_regressors": typing.NotRequired[InputPathType | None],
 })
-DtifitParametersTagged = typing.TypedDict('DtifitParametersTagged', {
+DtifitParamsDictTagged = typing.TypedDict('DtifitParamsDictTagged', {
     "@type": typing.Literal["fsl/dtifit"],
     "data_file": InputPathType,
     "output_basename": str,
@@ -63,7 +63,7 @@ DtifitParametersTagged = typing.TypedDict('DtifitParametersTagged', {
 
 class DtifitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `DtifitParameters(...)`.
+    Output object returned when calling `DtifitParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +102,7 @@ def dtifit_params(
     xmax: float | None = None,
     gradnonlin_file: InputPathType | None = None,
     confound_regressors: InputPathType | None = None,
-) -> DtifitParametersTagged:
+) -> DtifitParamsDictTagged:
     """
     Build parameters.
     
@@ -170,7 +170,7 @@ def dtifit_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `DtifitParameters` object.
+    `DtifitParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -252,7 +252,7 @@ def dtifit_validate(
 
 
 def dtifit_cargs(
-    params: DtifitParameters,
+    params: DtifitParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -344,7 +344,7 @@ def dtifit_cargs(
 
 
 def dtifit_outputs(
-    params: DtifitParameters,
+    params: DtifitParamsDict,
     execution: Execution,
 ) -> DtifitOutputs:
     """
@@ -369,7 +369,7 @@ def dtifit_outputs(
 
 
 def dtifit_execute(
-    params: DtifitParameters,
+    params: DtifitParamsDict,
     runner: Runner | None = None,
 ) -> DtifitOutputs:
     """
@@ -483,6 +483,8 @@ def dtifit(
 __all__ = [
     "DTIFIT_METADATA",
     "DtifitOutputs",
+    "DtifitParamsDict",
+    "DtifitParamsDictTagged",
     "dtifit",
     "dtifit_execute",
     "dtifit_params",

@@ -13,7 +13,7 @@ V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
 )
 
 
-VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
+VSurfToVolSpackleParamsDict = typing.TypedDict('VSurfToVolSpackleParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/@surf_to_vol_spackle"]],
     "maskset": InputPathType,
     "spec": InputPathType,
@@ -30,7 +30,7 @@ VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
     "datum_type": typing.NotRequired[str | None],
     "ignore_unknown_options": bool,
 })
-VSurfToVolSpackleParametersTagged = typing.TypedDict('VSurfToVolSpackleParametersTagged', {
+VSurfToVolSpackleParamsDictTagged = typing.TypedDict('VSurfToVolSpackleParamsDictTagged', {
     "@type": typing.Literal["afni/@surf_to_vol_spackle"],
     "maskset": InputPathType,
     "spec": InputPathType,
@@ -51,7 +51,7 @@ VSurfToVolSpackleParametersTagged = typing.TypedDict('VSurfToVolSpackleParameter
 
 class VSurfToVolSpackleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `VSurfToVolSpackleParameters(...)`.
+    Output object returned when calling `VSurfToVolSpackleParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +74,7 @@ def v__surf_to_vol_spackle_params(
     use_mode: bool = False,
     datum_type: str | None = None,
     ignore_unknown_options: bool = False,
-) -> VSurfToVolSpackleParametersTagged:
+) -> VSurfToVolSpackleParamsDictTagged:
     """
     Build parameters.
     
@@ -132,7 +132,7 @@ def v__surf_to_vol_spackle_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `VSurfToVolSpackleParameters` object.
+    `VSurfToVolSpackleParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -192,7 +192,7 @@ def v__surf_to_vol_spackle_validate(
 
 
 def v__surf_to_vol_spackle_cargs(
-    params: VSurfToVolSpackleParameters,
+    params: VSurfToVolSpackleParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -248,7 +248,7 @@ def v__surf_to_vol_spackle_cargs(
 
 
 def v__surf_to_vol_spackle_outputs(
-    params: VSurfToVolSpackleParameters,
+    params: VSurfToVolSpackleParamsDict,
     execution: Execution,
 ) -> VSurfToVolSpackleOutputs:
     """
@@ -268,7 +268,7 @@ def v__surf_to_vol_spackle_outputs(
 
 
 def v__surf_to_vol_spackle_execute(
-    params: VSurfToVolSpackleParameters,
+    params: VSurfToVolSpackleParamsDict,
     runner: Runner | None = None,
 ) -> VSurfToVolSpackleOutputs:
     """
@@ -369,6 +369,8 @@ def v__surf_to_vol_spackle(
 
 __all__ = [
     "VSurfToVolSpackleOutputs",
+    "VSurfToVolSpackleParamsDict",
+    "VSurfToVolSpackleParamsDictTagged",
     "V__SURF_TO_VOL_SPACKLE_METADATA",
     "v__surf_to_vol_spackle",
     "v__surf_to_vol_spackle_execute",

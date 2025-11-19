@@ -13,7 +13,7 @@ V_3D_INTRACRANIAL_METADATA = Metadata(
 )
 
 
-V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
+V3dIntracranialParamsDict = typing.TypedDict('V3dIntracranialParamsDict', {
     "@type": typing.NotRequired[typing.Literal["afni/3dIntracranial"]],
     "infile": InputPathType,
     "prefix": str,
@@ -25,7 +25,7 @@ V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
     "mask": bool,
     "quiet": bool,
 })
-V3dIntracranialParametersTagged = typing.TypedDict('V3dIntracranialParametersTagged', {
+V3dIntracranialParamsDictTagged = typing.TypedDict('V3dIntracranialParamsDictTagged', {
     "@type": typing.Literal["afni/3dIntracranial"],
     "infile": InputPathType,
     "prefix": str,
@@ -41,7 +41,7 @@ V3dIntracranialParametersTagged = typing.TypedDict('V3dIntracranialParametersTag
 
 class V3dIntracranialOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `V3dIntracranialParameters(...)`.
+    Output object returned when calling `V3dIntracranialParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -59,7 +59,7 @@ def v_3d_intracranial_params(
     no_smooth: bool = False,
     mask: bool = False,
     quiet: bool = False,
-) -> V3dIntracranialParametersTagged:
+) -> V3dIntracranialParamsDictTagged:
     """
     Build parameters.
     
@@ -103,7 +103,7 @@ def v_3d_intracranial_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `V3dIntracranialParameters` object.
+    `V3dIntracranialParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -145,7 +145,7 @@ def v_3d_intracranial_validate(
 
 
 def v_3d_intracranial_cargs(
-    params: V3dIntracranialParameters,
+    params: V3dIntracranialParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -197,7 +197,7 @@ def v_3d_intracranial_cargs(
 
 
 def v_3d_intracranial_outputs(
-    params: V3dIntracranialParameters,
+    params: V3dIntracranialParamsDict,
     execution: Execution,
 ) -> V3dIntracranialOutputs:
     """
@@ -217,7 +217,7 @@ def v_3d_intracranial_outputs(
 
 
 def v_3d_intracranial_execute(
-    params: V3dIntracranialParameters,
+    params: V3dIntracranialParamsDict,
     runner: Runner | None = None,
 ) -> V3dIntracranialOutputs:
     """
@@ -299,6 +299,8 @@ def v_3d_intracranial(
 
 __all__ = [
     "V3dIntracranialOutputs",
+    "V3dIntracranialParamsDict",
+    "V3dIntracranialParamsDictTagged",
     "V_3D_INTRACRANIAL_METADATA",
     "v_3d_intracranial",
     "v_3d_intracranial_execute",

@@ -13,7 +13,7 @@ XCEREBRALSEG_METADATA = Metadata(
 )
 
 
-XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
+XcerebralsegParamsDict = typing.TypedDict('XcerebralsegParamsDict', {
     "@type": typing.NotRequired[typing.Literal["freesurfer/xcerebralseg"]],
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
@@ -26,7 +26,7 @@ XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
     "no_vermis": bool,
     "threads": typing.NotRequired[float | None],
 })
-XcerebralsegParametersTagged = typing.TypedDict('XcerebralsegParametersTagged', {
+XcerebralsegParamsDictTagged = typing.TypedDict('XcerebralsegParamsDictTagged', {
     "@type": typing.Literal["freesurfer/xcerebralseg"],
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ XcerebralsegParametersTagged = typing.TypedDict('XcerebralsegParametersTagged', 
 
 class XcerebralsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `XcerebralsegParameters(...)`.
+    Output object returned when calling `XcerebralsegParamsDict(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +62,7 @@ def xcerebralseg_params(
     no_pons: bool = False,
     no_vermis: bool = False,
     threads: float | None = None,
-) -> XcerebralsegParametersTagged:
+) -> XcerebralsegParamsDictTagged:
     """
     Build parameters.
     
@@ -109,7 +109,7 @@ def xcerebralseg_validate(
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `XcerebralsegParameters` object.
+    `XcerebralsegParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -153,7 +153,7 @@ def xcerebralseg_validate(
 
 
 def xcerebralseg_cargs(
-    params: XcerebralsegParameters,
+    params: XcerebralsegParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -211,7 +211,7 @@ def xcerebralseg_cargs(
 
 
 def xcerebralseg_outputs(
-    params: XcerebralsegParameters,
+    params: XcerebralsegParamsDict,
     execution: Execution,
 ) -> XcerebralsegOutputs:
     """
@@ -231,7 +231,7 @@ def xcerebralseg_outputs(
 
 
 def xcerebralseg_execute(
-    params: XcerebralsegParameters,
+    params: XcerebralsegParamsDict,
     runner: Runner | None = None,
 ) -> XcerebralsegOutputs:
     """
@@ -320,6 +320,8 @@ def xcerebralseg(
 __all__ = [
     "XCEREBRALSEG_METADATA",
     "XcerebralsegOutputs",
+    "XcerebralsegParamsDict",
+    "XcerebralsegParamsDictTagged",
     "xcerebralseg",
     "xcerebralseg_execute",
     "xcerebralseg_params",
