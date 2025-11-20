@@ -9,6 +9,7 @@ VOLUME_MATH_METADATA = Metadata(
     id="ed80a7d73850df806877a40dcced769f42073178.workbench",
     name="volume-math",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

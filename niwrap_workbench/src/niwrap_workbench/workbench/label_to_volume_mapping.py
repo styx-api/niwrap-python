@@ -9,6 +9,7 @@ LABEL_TO_VOLUME_MAPPING_METADATA = Metadata(
     id="fe59ab1deb4665e43a374960ee3b2ea00f5e999a.workbench",
     name="label-to-volume-mapping",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

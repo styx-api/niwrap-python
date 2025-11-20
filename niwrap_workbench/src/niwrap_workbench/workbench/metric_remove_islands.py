@@ -9,6 +9,7 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
     id="e1ca1127c9380dc9d8ce9364a1b74e3cb9676753.workbench",
     name="metric-remove-islands",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

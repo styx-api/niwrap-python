@@ -9,6 +9,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
     id="d5eee7e4c555970158a785c68fecd07f7b6649cb.workbench",
     name="surface-curvature",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

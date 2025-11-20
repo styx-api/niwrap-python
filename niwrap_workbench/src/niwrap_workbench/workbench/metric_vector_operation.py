@@ -9,6 +9,7 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
     id="2ed0edf6d0f6355b8d747c848ce1f1d204659400.workbench",
     name="metric-vector-operation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

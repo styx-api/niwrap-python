@@ -9,6 +9,7 @@ VOLUME_DILATE_METADATA = Metadata(
     id="63f0ca3ad59f9e1f8239c3ea5c2e72dfdc878c7e.workbench",
     name="volume-dilate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

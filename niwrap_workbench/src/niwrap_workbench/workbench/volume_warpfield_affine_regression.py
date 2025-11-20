@@ -9,6 +9,7 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
     id="89e83249d5059a7e652b2c0a10e95f7e3d72df57.workbench",
     name="volume-warpfield-affine-regression",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

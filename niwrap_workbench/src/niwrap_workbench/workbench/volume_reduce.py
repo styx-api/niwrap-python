@@ -9,6 +9,7 @@ VOLUME_REDUCE_METADATA = Metadata(
     id="640fab587d02e7f004bb3968f135463a35a2774a.workbench",
     name="volume-reduce",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

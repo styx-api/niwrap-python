@@ -9,6 +9,7 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
     id="59e64c901ea699276bc6abbb818ee42c40042ca0.workbench",
     name="metric-to-volume-mapping",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

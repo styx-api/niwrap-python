@@ -9,6 +9,7 @@ SET_STRUCTURE_METADATA = Metadata(
     id="3f017d3648fe7b335b883d3f5dcd0884cd807980.workbench",
     name="set-structure",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

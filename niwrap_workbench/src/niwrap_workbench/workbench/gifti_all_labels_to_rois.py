@@ -9,6 +9,7 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
     id="0e399afa8268c4aa88310407830c9ce63af9480a.workbench",
     name="gifti-all-labels-to-rois",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

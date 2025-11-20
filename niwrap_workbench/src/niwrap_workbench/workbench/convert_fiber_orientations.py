@@ -9,6 +9,7 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
     id="c03f58871879950a5d06809f88add9efe24fe896.workbench",
     name="convert-fiber-orientations",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

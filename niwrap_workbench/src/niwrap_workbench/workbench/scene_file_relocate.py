@@ -9,6 +9,7 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
     id="cce9293384c531d31f6ab6adfc95c967b2740fd1.workbench",
     name="scene-file-relocate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
     id="74fc5b736152760ce25b6a49aed11ec82a2d48ab.workbench",
     name="scene-file-update",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

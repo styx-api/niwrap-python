@@ -9,6 +9,7 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
     id="9741081a1f9bdfe5deb553d7d2cb39c92eb6cafe.workbench",
     name="volume-rois-from-extrema",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

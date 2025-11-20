@@ -9,6 +9,7 @@ VOLUME_ERODE_METADATA = Metadata(
     id="de54c7f54c6368999f264ce5975a56da07dfce18.workbench",
     name="volume-erode",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

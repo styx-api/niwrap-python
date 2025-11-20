@@ -9,6 +9,7 @@ VOLUME_TFCE_METADATA = Metadata(
     id="88157dd1b5611c70b241d14e8a78bfe6302ab544.workbench",
     name="volume-tfce",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

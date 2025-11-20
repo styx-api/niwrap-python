@@ -9,6 +9,7 @@ FILE_INFORMATION_METADATA = Metadata(
     id="c64f1cc09da72b367adf8dd817016952eac8d776.workbench",
     name="file-information",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

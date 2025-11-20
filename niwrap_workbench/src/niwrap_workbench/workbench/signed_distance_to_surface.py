@@ -9,6 +9,7 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
     id="344a7869e0c667f1b8e4af3135dc6ab6eadc0253.workbench",
     name="signed-distance-to-surface",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

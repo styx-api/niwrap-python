@@ -9,6 +9,7 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
     id="c5fa55ac073dd0a51eb97deb240c610fa9ebef79.workbench",
     name="metric-false-correlation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
     id="6ce86eb45c0ecdba0ec54fdba3ac609b406e8dcc.workbench",
     name="estimate-fiber-binghams",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
     id="433915b90ed4936671e31ff5e9d775b5a9ffb4e9.workbench",
     name="volume-label-probability",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ METRIC_ERODE_METADATA = Metadata(
     id="778174a7101c157fd44e9efd68314bd69963400f.workbench",
     name="metric-erode",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

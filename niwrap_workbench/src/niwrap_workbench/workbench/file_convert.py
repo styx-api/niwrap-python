@@ -9,6 +9,7 @@ FILE_CONVERT_METADATA = Metadata(
     id="955bdf431ca1cccbf73a19afbeac8667fbb4a28c.workbench",
     name="file-convert",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ LABEL_RESAMPLE_METADATA = Metadata(
     id="c5578cc16cfdc8f6e4a75e75e6c10f719016d2e0.workbench",
     name="label-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

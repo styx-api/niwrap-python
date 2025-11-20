@@ -9,6 +9,7 @@ BORDER_TO_ROIS_METADATA = Metadata(
     id="3bfc45e6cda7bb869f41f04607d7a710d2fab5dd.workbench",
     name="border-to-rois",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

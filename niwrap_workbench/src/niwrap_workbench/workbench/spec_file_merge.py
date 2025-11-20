@@ -9,6 +9,7 @@ SPEC_FILE_MERGE_METADATA = Metadata(
     id="85ecceaff1fc0a1530a0d4627dab53d2a72a20ea.workbench",
     name="spec-file-merge",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ GIFTI_LABEL_TO_ROI_METADATA = Metadata(
     id="82549fa4f4d713245781e307c4dd75baad9fe47c.workbench",
     name="gifti-label-to-roi",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

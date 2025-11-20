@@ -9,6 +9,7 @@ CIFTI_FIND_CLUSTERS_METADATA = Metadata(
     id="72f5480b9af6a98bf8c924c75b2fd0dcccbf6c11.workbench",
     name="cifti-find-clusters",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
     id="fcda0671173456c7a0dc9ad4eeb91facd1507c4f.workbench",
     name="volume-capture-plane",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

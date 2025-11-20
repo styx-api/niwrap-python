@@ -9,6 +9,7 @@ CONVERT_WARPFIELD_METADATA = Metadata(
     id="4f9d440378d5e5e478898e11b30a204baa1a8db9.workbench",
     name="convert-warpfield",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

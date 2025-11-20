@@ -9,6 +9,7 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
     id="caf8dad8ae4809da9a7eb9ca3301a06449390ae2.workbench",
     name="cifti-export-dense-mapping",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

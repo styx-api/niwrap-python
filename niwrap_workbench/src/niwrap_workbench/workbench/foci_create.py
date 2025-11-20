@@ -9,6 +9,7 @@ FOCI_CREATE_METADATA = Metadata(
     id="1960245f5f1335cfba8188182bda09435e59d575.workbench",
     name="foci-create",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

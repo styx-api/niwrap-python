@@ -9,6 +9,7 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
     id="6da54211fa44d381c5a103ea7e5e59ecf82e5e80.workbench",
     name="cifti-label-export-table",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

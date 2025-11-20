@@ -9,6 +9,7 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
     id="c1b64c2a3ef6542f7a8f34965d349c950dd4cb74.workbench",
     name="cifti-label-modify-keys",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

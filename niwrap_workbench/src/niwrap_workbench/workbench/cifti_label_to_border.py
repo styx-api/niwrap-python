@@ -9,6 +9,7 @@ CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
     id="ad9549859ecd3b88b8cca8704b00cceb77188e6a.workbench",
     name="cifti-label-to-border",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

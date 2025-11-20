@@ -9,6 +9,7 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
     id="62835d3af56370841cd14095a4b69710f24db721.workbench",
     name="volume-components-to-frames",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

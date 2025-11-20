@@ -9,6 +9,7 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
     id="ce08a74db6f042fde95fefc290e8baf47feda5cc.workbench",
     name="cifti-parcel-mapping-to-label",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

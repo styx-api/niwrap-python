@@ -9,6 +9,7 @@ CIFTI_CONVERT_METADATA = Metadata(
     id="ab14ca28df7d909cf2bd3b8aa98a47d8e0cd6a2c.workbench",
     name="cifti-convert",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

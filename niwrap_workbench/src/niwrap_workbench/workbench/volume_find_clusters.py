@@ -9,6 +9,7 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
     id="80ccd8653d75a12acc8bcc204d1a6379b0a31cfe.workbench",
     name="volume-find-clusters",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

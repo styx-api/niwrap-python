@@ -9,6 +9,7 @@ METRIC_REDUCE_METADATA = Metadata(
     id="16a5b7e816fece45188696cd1530041a0b700afe.workbench",
     name="metric-reduce",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

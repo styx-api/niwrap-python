@@ -9,6 +9,7 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
     id="81f972736bb6af1bd37bc10b9a2daf65cf08fc89.workbench",
     name="surface-apply-warpfield",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

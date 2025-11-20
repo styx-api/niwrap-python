@@ -9,6 +9,7 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
     id="eaeddcfbdd465eca8821f3fb34094dfb589855c3.workbench",
     name="surface-sphere-triangular-patches",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ CIFTI_CORRELATION_METADATA = Metadata(
     id="dcfca8ed7e2b49948aa64aa87d5693dc899aee50.workbench",
     name="cifti-correlation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

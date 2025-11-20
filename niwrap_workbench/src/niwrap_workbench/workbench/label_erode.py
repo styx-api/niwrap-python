@@ -9,6 +9,7 @@ LABEL_ERODE_METADATA = Metadata(
     id="467892b0c56af1ac7a7fb22a622b70f03bfa2579.workbench",
     name="label-erode",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

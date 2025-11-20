@@ -9,6 +9,7 @@ CIFTI_CHANGE_MAPPING_METADATA = Metadata(
     id="98052ea0462fd3e196a00f6d6e0bcbac9ddc17e4.workbench",
     name="cifti-change-mapping",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

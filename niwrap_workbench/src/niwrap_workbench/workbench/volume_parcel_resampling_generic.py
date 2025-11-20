@@ -9,6 +9,7 @@ VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA = Metadata(
     id="e32bbe9380f1fe73ba584da4cb72ecad324951cc.workbench",
     name="volume-parcel-resampling-generic",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

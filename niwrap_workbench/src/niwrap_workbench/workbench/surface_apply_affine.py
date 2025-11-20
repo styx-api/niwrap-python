@@ -9,6 +9,7 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
     id="248f32501c3003298999c7da69bba8ad26520e39.workbench",
     name="surface-apply-affine",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

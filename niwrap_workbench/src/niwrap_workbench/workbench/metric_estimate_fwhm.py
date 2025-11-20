@@ -9,6 +9,7 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
     id="9c0ae9d2b6ef7d3111a63f811feffe7ae9dde13f.workbench",
     name="metric-estimate-fwhm",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

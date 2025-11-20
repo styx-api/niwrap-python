@@ -9,6 +9,7 @@ SURFACE_MATCH_METADATA = Metadata(
     id="6335c2c3b01da0e8439ffac4c9d4032ef21fd455.workbench",
     name="surface-match",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

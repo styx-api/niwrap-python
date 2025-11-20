@@ -9,6 +9,7 @@ SURFACE_AVERAGE_METADATA = Metadata(
     id="3cbdda68e7c781752cdffcc794c5ac24ffea464a.workbench",
     name="surface-average",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

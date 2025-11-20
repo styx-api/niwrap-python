@@ -9,6 +9,7 @@ FOCI_LIST_COORDS_METADATA = Metadata(
     id="b16ceca59fb70119f927e417ec349a0afda6a816.workbench",
     name="foci-list-coords",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ METRIC_MATH_METADATA = Metadata(
     id="c3f61d2cfe1af355592b15dccd2cddda61e44ce6.workbench",
     name="metric-math",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

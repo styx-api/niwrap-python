@@ -9,6 +9,7 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
     id="7e590372c8ad9ee4a954f1f091435601a39d86ba.workbench",
     name="metric-find-clusters",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

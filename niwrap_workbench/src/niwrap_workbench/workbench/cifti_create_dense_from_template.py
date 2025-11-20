@@ -9,6 +9,7 @@ CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
     id="256335c826196a13acd4616532a3d282a4815826.workbench",
     name="cifti-create-dense-from-template",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

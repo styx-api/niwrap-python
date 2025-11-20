@@ -9,6 +9,7 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
     id="57b8d61f61212b6239a54858cfc23c4862eead0f.workbench",
     name="metric-vector-toward-roi",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

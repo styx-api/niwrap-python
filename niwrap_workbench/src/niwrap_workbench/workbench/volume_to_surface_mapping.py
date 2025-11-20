@@ -9,6 +9,7 @@ VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
     id="8506ce44812c4aebe401b46dcdf27231e04f47d0.workbench",
     name="volume-to-surface-mapping",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

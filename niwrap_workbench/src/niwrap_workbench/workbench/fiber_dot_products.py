@@ -9,6 +9,7 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
     id="59c62ac73c0dcf4d07840b26ea3183b46e8c89ab.workbench",
     name="fiber-dot-products",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

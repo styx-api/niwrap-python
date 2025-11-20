@@ -9,6 +9,7 @@ BORDER_LENGTH_METADATA = Metadata(
     id="cb4f6a9883ab1f8156dad010df4a97753b4a5a6d.workbench",
     name="border-length",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

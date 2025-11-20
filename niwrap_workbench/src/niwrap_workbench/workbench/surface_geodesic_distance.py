@@ -9,6 +9,7 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
     id="837e71cb509241e4094936fe5257e2f011b758dc.workbench",
     name="surface-geodesic-distance",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

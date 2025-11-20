@@ -9,6 +9,7 @@ CIFTI_SEPARATE_METADATA = Metadata(
     id="2d80a0fa0d07f262c86f7f51153d3da319275b60.workbench",
     name="cifti-separate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
     id="f848c1442e1f12445caedd02a0679985ee1cf53c.workbench",
     name="metric-rois-from-extrema",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

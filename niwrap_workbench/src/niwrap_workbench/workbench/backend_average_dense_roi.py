@@ -9,6 +9,7 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
     id="af0de4e5ef947f744f8051acd2cc8811f3f4cf73.workbench",
     name="backend-average-dense-roi",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

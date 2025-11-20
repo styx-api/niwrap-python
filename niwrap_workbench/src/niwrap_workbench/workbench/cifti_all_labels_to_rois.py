@@ -9,6 +9,7 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
     id="b5d932e91b5ad5cb5d4e5be33f986a8e0158cb63.workbench",
     name="cifti-all-labels-to-rois",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

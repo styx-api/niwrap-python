@@ -9,6 +9,7 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
     id="8854ebdafebd2ec6672ea73ead63ee985ee25822.workbench",
     name="surface-coordinates-to-metric",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

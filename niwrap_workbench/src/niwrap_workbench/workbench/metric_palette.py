@@ -9,6 +9,7 @@ METRIC_PALETTE_METADATA = Metadata(
     id="8d6cbb35e7b410dce378acf392873934c73456df.workbench",
     name="metric-palette",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

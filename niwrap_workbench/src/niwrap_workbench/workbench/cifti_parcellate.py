@@ -9,6 +9,7 @@ CIFTI_PARCELLATE_METADATA = Metadata(
     id="7b2f49ca19798d787ca04a1e72ba218c146a3ab4.workbench",
     name="cifti-parcellate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

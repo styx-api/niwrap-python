@@ -9,6 +9,7 @@ SURFACE_INFLATION_METADATA = Metadata(
     id="9461f44d7d7d0b826502df0acb5b89588faca185.workbench",
     name="surface-inflation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

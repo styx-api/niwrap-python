@@ -9,6 +9,7 @@ BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
     id="d4e6431becb0638cb3d2c64db0bbecb9e7a7b28c.workbench",
     name="border-file-export-to-caret5",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

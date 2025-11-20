@@ -9,6 +9,7 @@ SCENE_CAPTURE_IMAGE_METADATA = Metadata(
     id="d7f78e620a92e4692790ceda0d24ff04fb837ed8.workbench",
     name="scene-capture-image",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

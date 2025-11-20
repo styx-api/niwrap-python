@@ -9,6 +9,7 @@ BORDER_TO_VERTICES_METADATA = Metadata(
     id="3844ea00db2d10878f48538c7a9b40fecdd4a9e0.workbench",
     name="border-to-vertices",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

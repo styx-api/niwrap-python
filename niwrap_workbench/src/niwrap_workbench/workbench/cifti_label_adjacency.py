@@ -9,6 +9,7 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
     id="2e19cd8506381d00a3254296038c79a01dddd353.workbench",
     name="cifti-label-adjacency",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

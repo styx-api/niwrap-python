@@ -9,6 +9,7 @@ CIFTI_MERGE_PARCELS_METADATA = Metadata(
     id="bdc0b6e6d2c4a10f36778082f10a27acb88cc48e.workbench",
     name="cifti-merge-parcels",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

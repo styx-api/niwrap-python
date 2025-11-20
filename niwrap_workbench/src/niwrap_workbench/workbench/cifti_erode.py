@@ -9,6 +9,7 @@ CIFTI_ERODE_METADATA = Metadata(
     id="4f49d2de43c52dfd46795fc526b69cf0dadd9733.workbench",
     name="cifti-erode",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

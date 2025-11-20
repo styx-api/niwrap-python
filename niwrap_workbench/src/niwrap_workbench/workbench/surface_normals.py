@@ -9,6 +9,7 @@ SURFACE_NORMALS_METADATA = Metadata(
     id="83e8a1501232a070f787b1bba983b4bc5b446ed2.workbench",
     name="surface-normals",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

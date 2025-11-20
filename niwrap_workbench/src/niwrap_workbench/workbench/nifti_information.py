@@ -9,6 +9,7 @@ NIFTI_INFORMATION_METADATA = Metadata(
     id="e9c11d632fc070fafb7efd4e280c2753fca13b1e.workbench",
     name="nifti-information",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

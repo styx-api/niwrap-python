@@ -9,6 +9,7 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
     id="25c70d1f4cda55f2df56316907bd5e6bb29642d1.workbench",
     name="volume-all-labels-to-rois",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

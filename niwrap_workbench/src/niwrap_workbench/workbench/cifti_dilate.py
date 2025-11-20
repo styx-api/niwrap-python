@@ -9,6 +9,7 @@ CIFTI_DILATE_METADATA = Metadata(
     id="224f2fa95412d16b7d3853836e3c088fb81a4158.workbench",
     name="cifti-dilate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

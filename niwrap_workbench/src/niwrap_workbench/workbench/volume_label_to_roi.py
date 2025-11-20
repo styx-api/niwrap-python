@@ -9,6 +9,7 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
     id="f849408f8ec3fabb1a2cc5fda20d4180749ba643.workbench",
     name="volume-label-to-roi",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

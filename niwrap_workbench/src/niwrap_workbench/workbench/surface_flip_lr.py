@@ -9,6 +9,7 @@ SURFACE_FLIP_LR_METADATA = Metadata(
     id="bdd0276d22f7add2db023bdd235def55dde8330f.workbench",
     name="surface-flip-lr",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

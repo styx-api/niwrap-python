@@ -9,6 +9,7 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
     id="15d326c1749b72cd350d3064369db0c366e4f1b4.workbench",
     name="cifti-restrict-dense-map",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

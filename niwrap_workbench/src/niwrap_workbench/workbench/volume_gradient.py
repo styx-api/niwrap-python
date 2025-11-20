@@ -9,6 +9,7 @@ VOLUME_GRADIENT_METADATA = Metadata(
     id="5a5d7ede042330cd65eec319159b5ecf75f94aed.workbench",
     name="volume-gradient",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

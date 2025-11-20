@@ -9,6 +9,7 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
     id="6b1c39b77ea63d80e9eaa7d762e583b3aa47688b.workbench",
     name="convert-matrix4-to-matrix2",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

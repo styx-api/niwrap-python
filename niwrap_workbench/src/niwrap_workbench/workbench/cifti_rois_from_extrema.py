@@ -9,6 +9,7 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
     id="492da6c54d7bc71ffb335dead8e22b05bbb50c8d.workbench",
     name="cifti-rois-from-extrema",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

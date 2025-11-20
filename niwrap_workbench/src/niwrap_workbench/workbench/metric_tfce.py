@@ -9,6 +9,7 @@ METRIC_TFCE_METADATA = Metadata(
     id="08ff0e7a57ecc93cc6a3d034347b01fa26e0507a.workbench",
     name="metric-tfce",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

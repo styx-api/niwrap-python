@@ -9,6 +9,7 @@ VOLUME_MERGE_METADATA = Metadata(
     id="fff7d7c8a2075faa5da5ccad34db6f9ba87459dd.workbench",
     name="volume-merge",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

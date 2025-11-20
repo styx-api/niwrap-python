@@ -9,6 +9,7 @@ METRIC_CONVERT_METADATA = Metadata(
     id="4df60d9d341bdad2b06cad65892590415be630ec.workbench",
     name="metric-convert",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

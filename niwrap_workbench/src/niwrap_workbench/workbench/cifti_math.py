@@ -9,6 +9,7 @@ CIFTI_MATH_METADATA = Metadata(
     id="78bc304aa1a0ed74c8c953b7728762dcccfadd4c.workbench",
     name="cifti-math",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

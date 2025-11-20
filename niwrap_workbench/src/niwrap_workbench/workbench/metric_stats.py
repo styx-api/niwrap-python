@@ -9,6 +9,7 @@ METRIC_STATS_METADATA = Metadata(
     id="0e12ce38a883534ee44f0de43d440a9587a5a4b6.workbench",
     name="metric-stats",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

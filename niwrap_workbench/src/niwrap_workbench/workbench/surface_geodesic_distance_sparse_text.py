@@ -9,6 +9,7 @@ SURFACE_GEODESIC_DISTANCE_SPARSE_TEXT_METADATA = Metadata(
     id="cd601df7eb26b8adf13c26cf609d763a8d458dd0.workbench",
     name="surface-geodesic-distance-sparse-text",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

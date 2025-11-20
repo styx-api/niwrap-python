@@ -9,6 +9,7 @@ VOLUME_SET_SPACE_METADATA = Metadata(
     id="39cfd66daa80ee755b48163f61a64435ef0a12be.workbench",
     name="volume-set-space",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
     id="f25f67a6aee8059eca2c82a262cae6039d6a01fe.workbench",
     name="cifti-resample-dconn-memory",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

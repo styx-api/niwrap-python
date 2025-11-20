@@ -9,6 +9,7 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
     id="55b7a978f9f49454807f669731d7622637a374b9.workbench",
     name="border-export-color-table",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

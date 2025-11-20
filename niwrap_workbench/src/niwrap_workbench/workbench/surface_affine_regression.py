@@ -9,6 +9,7 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
     id="81e681b772379bf62c291d6e75c808098051eb2f.workbench",
     name="surface-affine-regression",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

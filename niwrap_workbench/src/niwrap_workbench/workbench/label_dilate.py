@@ -9,6 +9,7 @@ LABEL_DILATE_METADATA = Metadata(
     id="e02283fd8307f04426742148eee8e3e920bc3fac.workbench",
     name="label-dilate",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

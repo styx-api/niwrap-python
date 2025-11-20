@@ -53,7 +53,7 @@ pip install -r https://raw.githubusercontent.com/styx-api/niwrap-python/main/req
 | [MRTrix3](https://www.mrtrix.org/) | [`3.0.4`](https://hub.docker.com/r/mrtrix3/mrtrix3) | 115/121 (95.0%) |
 | [MRTrix3Tissue](https://3tissue.github.io/) | [`5.2.8`](https://hub.docker.com/r/brainlife/3tissue) | 1/1 (100% 🎉) |
 | [NiftyReg](http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg) | [`1.4.0`](https://hub.docker.com/r/vnmd/niftyreg_1.4.0) | 7/7 (100% 🎉) |
-| [Connectome Workbench](https://github.com/Washington-University/workbench) | ? | 203/203 (100% 🎉) |
+| [Connectome Workbench](https://github.com/Washington-University/workbench) | [`2.1.0`](https://hub.docker.com/r/nx10x/workbench) | 203/203 (100% 🎉) |
 
 ## 🛠 Usage Examples
 

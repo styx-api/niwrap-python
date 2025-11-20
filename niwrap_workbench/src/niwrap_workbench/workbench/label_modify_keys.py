@@ -9,6 +9,7 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
     id="e84f8183032da13712cc4d51e831efb848fef7f4.workbench",
     name="label-modify-keys",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

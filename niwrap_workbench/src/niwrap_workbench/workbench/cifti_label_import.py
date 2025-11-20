@@ -9,6 +9,7 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
     id="a6ac49efad7e33730c569a6154b9c1ecb184a663.workbench",
     name="cifti-label-import",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

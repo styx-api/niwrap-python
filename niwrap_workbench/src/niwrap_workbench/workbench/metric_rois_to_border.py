@@ -9,6 +9,7 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
     id="ae7c7bdc27fb14b4ccb473f0ba599b0647222c8f.workbench",
     name="metric-rois-to-border",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

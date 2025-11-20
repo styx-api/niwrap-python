@@ -9,6 +9,7 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
     id="8c740646d34e5a61db7e9f5f4bf71bcd927fb141.workbench",
     name="surface-to-surface-3d-distance",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

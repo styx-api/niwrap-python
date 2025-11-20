@@ -9,6 +9,7 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
     id="827d8c9c417738182ec650ca8db5ba34c2591ae8.workbench",
     name="cifti-vector-operation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

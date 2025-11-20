@@ -9,6 +9,7 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
     id="ce53186c774fd3df17402a86376908e43ca4e439.workbench",
     name="volume-copy-extensions",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

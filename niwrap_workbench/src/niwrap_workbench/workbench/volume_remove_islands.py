@@ -9,6 +9,7 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
     id="a370afa2e772151ea839c55863c1976554e9fbc1.workbench",
     name="volume-remove-islands",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

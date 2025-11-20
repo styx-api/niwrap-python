@@ -9,6 +9,7 @@ CIFTI_PALETTE_METADATA = Metadata(
     id="3652ab6e763b84bc6b6ba51b4559b8fa5adb74c9.workbench",
     name="cifti-palette",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

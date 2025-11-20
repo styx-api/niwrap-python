@@ -9,6 +9,7 @@ VOLUME_PALETTE_METADATA = Metadata(
     id="e4d48e09652e2a3420ac6c01dde2735f59b8d4ba.workbench",
     name="volume-palette",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

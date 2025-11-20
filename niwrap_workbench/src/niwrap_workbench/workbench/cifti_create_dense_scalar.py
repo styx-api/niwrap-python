@@ -9,6 +9,7 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
     id="e17e9d7682a88404f1c7e8f47d1454ee199d7b6e.workbench",
     name="cifti-create-dense-scalar",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

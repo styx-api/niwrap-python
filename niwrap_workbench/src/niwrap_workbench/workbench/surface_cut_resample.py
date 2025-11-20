@@ -9,6 +9,7 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
     id="4fdc0efb8ff92dfb91c639b6b9fe6d92fc4d0e35.workbench",
     name="surface-cut-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ VOLUME_STATS_METADATA = Metadata(
     id="ec1af7e3dc9990ebe00878d35008f857657ae3d6.workbench",
     name="volume-stats",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

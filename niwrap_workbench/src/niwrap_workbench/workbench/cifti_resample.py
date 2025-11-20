@@ -9,6 +9,7 @@ CIFTI_RESAMPLE_METADATA = Metadata(
     id="e71a66883dbc661cfc445c13c6c8a3b6b4db7894.workbench",
     name="cifti-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

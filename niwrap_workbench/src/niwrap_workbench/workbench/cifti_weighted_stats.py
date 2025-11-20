@@ -9,6 +9,7 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
     id="014a1bf95b4718c304bf3aa95e26fa00e131122c.workbench",
     name="cifti-weighted-stats",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

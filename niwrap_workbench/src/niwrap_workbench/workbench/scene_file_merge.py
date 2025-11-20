@@ -9,6 +9,7 @@ SCENE_FILE_MERGE_METADATA = Metadata(
     id="72ce88135b0199024083ada6e5b4934b29d0f4bf.workbench",
     name="scene-file-merge",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

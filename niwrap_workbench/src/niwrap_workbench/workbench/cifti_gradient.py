@@ -9,6 +9,7 @@ CIFTI_GRADIENT_METADATA = Metadata(
     id="d2460b1cd46e52f13e61657937e6834a86e13b49.workbench",
     name="cifti-gradient",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

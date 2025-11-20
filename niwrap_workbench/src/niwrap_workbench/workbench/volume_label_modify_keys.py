@@ -9,6 +9,7 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
     id="6f0777ef0f6c477c81ddf6a694255d974aa7d61a.workbench",
     name="volume-label-modify-keys",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

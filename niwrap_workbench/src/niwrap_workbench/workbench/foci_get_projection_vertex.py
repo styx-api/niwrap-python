@@ -9,6 +9,7 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
     id="9698c37ae8d619d4e10d7f0fad13430ab0600e96.workbench",
     name="foci-get-projection-vertex",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

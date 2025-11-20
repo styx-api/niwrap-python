@@ -9,6 +9,7 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
     id="f87a6cb5ac13c0fb001a38de1f733f6c74e325bc.workbench",
     name="label-export-table",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

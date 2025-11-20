@@ -9,6 +9,7 @@ LABEL_PROBABILITY_METADATA = Metadata(
     id="3036af31e9086ad81e72bfa02cf68fef734a77c9.workbench",
     name="label-probability",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

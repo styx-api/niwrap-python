@@ -9,6 +9,7 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
     id="a7b40c2eabbd684e2841e97eb61c046f68f16b83.workbench",
     name="annotation-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
     id="0435d93a94c261bb607b4770626109d9ebab1571.workbench",
     name="cifti-label-probability",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

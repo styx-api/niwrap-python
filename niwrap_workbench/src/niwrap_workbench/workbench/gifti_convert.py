@@ -9,6 +9,7 @@ GIFTI_CONVERT_METADATA = Metadata(
     id="d26d59cbf0d26ca7ba848af31d7c9fb624cd4747.workbench",
     name="gifti-convert",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

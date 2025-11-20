@@ -9,6 +9,7 @@ VOLUME_CREATE_METADATA = Metadata(
     id="0ea13854b7a75326c4a105c15f5a5b8318a5d533.workbench",
     name="volume-create",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

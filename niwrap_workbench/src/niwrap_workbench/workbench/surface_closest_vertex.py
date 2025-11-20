@@ -9,6 +9,7 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
     id="8e2994073dcddf2123edc18251adf084b07af842.workbench",
     name="surface-closest-vertex",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

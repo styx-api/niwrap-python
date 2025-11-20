@@ -9,6 +9,7 @@ CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
     id="8d713a958679f48506f74cec988ea68de2166f03.workbench",
     name="cifti-create-scalar-series",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

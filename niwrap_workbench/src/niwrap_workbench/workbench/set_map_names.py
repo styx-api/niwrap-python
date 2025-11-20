@@ -9,6 +9,7 @@ SET_MAP_NAMES_METADATA = Metadata(
     id="05c23caac5c21808cadb7f27b12f6fd3f1d3c1f7.workbench",
     name="set-map-names",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

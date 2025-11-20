@@ -9,6 +9,7 @@ BORDER_MERGE_METADATA = Metadata(
     id="2b501fbb7f7c4f9515ae97ae16a101a97a54eaab.workbench",
     name="border-merge",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

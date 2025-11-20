@@ -9,6 +9,7 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
     id="38c1eece6b324d7db2ee50b9cf77f58d586aed39.workbench",
     name="surface-vertex-areas",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

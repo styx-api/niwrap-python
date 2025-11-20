@@ -9,6 +9,7 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
     id="8ebfebc97768bf77ee4f3467a6f745021a8c3a59.workbench",
     name="volume-label-import",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

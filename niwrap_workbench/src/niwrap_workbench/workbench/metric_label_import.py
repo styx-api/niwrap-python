@@ -9,6 +9,7 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
     id="0a29a376e9ba8790e9b6a9f0024efa2495527eaa.workbench",
     name="metric-label-import",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

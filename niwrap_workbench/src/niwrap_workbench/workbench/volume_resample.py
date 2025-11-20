@@ -9,6 +9,7 @@ VOLUME_RESAMPLE_METADATA = Metadata(
     id="bc1ecda25e27333d33b361ed48fef4f0c37935a7.workbench",
     name="volume-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

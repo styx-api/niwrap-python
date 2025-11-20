@@ -9,6 +9,7 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
     id="b51c91b2c38d7ed3b698640355ba702a40cc04d8.workbench",
     name="backend-average-roi-correlation",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

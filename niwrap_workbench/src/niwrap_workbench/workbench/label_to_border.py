@@ -9,6 +9,7 @@ LABEL_TO_BORDER_METADATA = Metadata(
     id="73238edbf5a2ddc85d7db5f72cf5459fa04f8d95.workbench",
     name="label-to-border",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

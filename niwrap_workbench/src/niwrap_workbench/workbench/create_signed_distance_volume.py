@@ -9,6 +9,7 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
     id="4d61fcbc40072b03f96c88c490ff99bbafba1379.workbench",
     name="create-signed-distance-volume",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

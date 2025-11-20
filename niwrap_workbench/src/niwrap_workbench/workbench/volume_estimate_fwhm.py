@@ -9,6 +9,7 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
     id="25607ae5dff68c55973abc5a13016a50bb089e8e.workbench",
     name="volume-estimate-fwhm",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

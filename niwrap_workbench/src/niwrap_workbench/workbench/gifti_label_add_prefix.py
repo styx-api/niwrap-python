@@ -9,6 +9,7 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
     id="2050683cc2a3ac8267565a6d11706197f084954a.workbench",
     name="gifti-label-add-prefix",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

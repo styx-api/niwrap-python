@@ -9,6 +9,7 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
     id="355a98e0d7f2dd37d2a8db3706f4c44d3c0fd8e8.workbench",
     name="surface-generate-inflated",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

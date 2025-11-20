@@ -9,6 +9,7 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
     id="bd50d144fdc0e871fae85f49e492aee6de124549.workbench",
     name="surface-flip-normals",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

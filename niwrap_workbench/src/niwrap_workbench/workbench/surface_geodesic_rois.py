@@ -9,6 +9,7 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
     id="ec6694baabf8b66b3eafbe5048653b2c790dbe3c.workbench",
     name="surface-geodesic-rois",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

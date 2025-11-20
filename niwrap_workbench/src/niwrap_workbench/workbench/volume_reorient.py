@@ -9,6 +9,7 @@ VOLUME_REORIENT_METADATA = Metadata(
     id="ac98f3ba2fd629f5cfa857bbbce2391858db0cba.workbench",
     name="volume-reorient",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

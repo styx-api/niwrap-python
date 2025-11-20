@@ -9,6 +9,7 @@ PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
     id="f64045e106a3a193429d92ea0f41790a0068c800.workbench",
     name="probtrackx-dot-convert",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

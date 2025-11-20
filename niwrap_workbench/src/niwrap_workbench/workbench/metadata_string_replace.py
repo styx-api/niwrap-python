@@ -9,6 +9,7 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
     id="28580214d2e8a263c11d2757b02229cfd3b15b21.workbench",
     name="metadata-string-replace",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

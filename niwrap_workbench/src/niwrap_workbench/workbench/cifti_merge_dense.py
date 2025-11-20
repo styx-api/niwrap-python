@@ -9,6 +9,7 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
     id="31ef2d25051e5edb39a80b7e1a1896b565b06aea.workbench",
     name="cifti-merge-dense",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

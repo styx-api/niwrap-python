@@ -9,6 +9,7 @@ ZIP_SCENE_FILE_METADATA = Metadata(
     id="b259c5172b5ae3668ffcdba00a5b5a9f3c90cbb1.workbench",
     name="zip-scene-file",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

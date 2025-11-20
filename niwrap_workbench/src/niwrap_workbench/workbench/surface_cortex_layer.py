@@ -9,6 +9,7 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
     id="1f7274373b18590446afbc6e9b2ac5914d86c611.workbench",
     name="surface-cortex-layer",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

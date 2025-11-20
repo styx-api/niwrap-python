@@ -9,6 +9,7 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
     id="a38fc279857d9723961ff9db61fed1fba00e53c2.workbench",
     name="cifti-transpose",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

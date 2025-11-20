@@ -9,6 +9,7 @@ CIFTI_CORRELATION_GRADIENT_METADATA = Metadata(
     id="ee61d770d1b0dbf0c964ee821bf79b84aaac30f5.workbench",
     name="cifti-correlation-gradient",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

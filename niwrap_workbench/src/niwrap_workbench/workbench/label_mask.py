@@ -9,6 +9,7 @@ LABEL_MASK_METADATA = Metadata(
     id="8143b670e00529bec92d2236053b58d9bab6aa76.workbench",
     name="label-mask",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

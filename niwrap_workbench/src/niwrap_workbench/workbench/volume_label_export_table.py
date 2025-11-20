@@ -9,6 +9,7 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
     id="5f455a5d649ff8b24bbab6cef88ad095666c466f.workbench",
     name="volume-label-export-table",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

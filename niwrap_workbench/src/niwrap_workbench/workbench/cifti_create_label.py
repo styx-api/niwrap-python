@@ -9,6 +9,7 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
     id="1efacf6ed3cd2541d0611a121451c354eaf2d727.workbench",
     name="cifti-create-label",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ VOLUME_SMOOTHING_METADATA = Metadata(
     id="d799671856dffbf8bcd37b5fc4f2635099c3c22c.workbench",
     name="volume-smoothing",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

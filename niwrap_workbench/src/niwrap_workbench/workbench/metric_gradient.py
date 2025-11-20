@@ -9,6 +9,7 @@ METRIC_GRADIENT_METADATA = Metadata(
     id="d0c9eab5fa3f31d0fe5fc41483f4bc8eb1ff5488.workbench",
     name="metric-gradient",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

@@ -9,6 +9,7 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
     id="bfd040551c3a70785cb9174fd0ff584bb1326d8a.workbench",
     name="cifti-estimate-fwhm",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

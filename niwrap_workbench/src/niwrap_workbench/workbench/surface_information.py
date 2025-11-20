@@ -9,6 +9,7 @@ SURFACE_INFORMATION_METADATA = Metadata(
     id="87b1b891daeb7b0feeaa4cf02501f4785ccf44ce.workbench",
     name="surface-information",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

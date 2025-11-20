@@ -9,6 +9,7 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
     id="1c54604ccdd07eb726448c23d9769ff3ee506272.workbench",
     name="cifti-roi-average",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

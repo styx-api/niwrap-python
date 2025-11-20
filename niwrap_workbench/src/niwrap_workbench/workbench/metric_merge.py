@@ -9,6 +9,7 @@ METRIC_MERGE_METADATA = Metadata(
     id="58734bb6d294ee25611f347ddc44d2a3b041b696.workbench",
     name="metric-merge",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

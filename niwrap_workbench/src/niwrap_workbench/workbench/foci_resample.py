@@ -9,6 +9,7 @@ FOCI_RESAMPLE_METADATA = Metadata(
     id="6683a0cb7080f4729048697e248762fc138498eb.workbench",
     name="foci-resample",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 

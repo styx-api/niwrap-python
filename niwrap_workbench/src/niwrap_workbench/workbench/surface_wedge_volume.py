@@ -9,6 +9,7 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
     id="836d42477cc472d35639defeb9265c3084b789a0.workbench",
     name="surface-wedge-volume",
     package="workbench",
+    container_image_tag="nx10x/workbench:2.1.0",
 )
 
 
