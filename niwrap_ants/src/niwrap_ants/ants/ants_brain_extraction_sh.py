@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
-    id="1c9417f2b9955b0d99b45712b650286b61783b3e.boutiques",
+    id="72830e1ccd1043926fd7dcd995dc980ded440138.boutiques",
     name="antsBrainExtraction.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -14,38 +14,38 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 
 
 _AntsBrainExtractionShParamsDictNoTag = typing.TypedDict('_AntsBrainExtractionShParamsDictNoTag', {
-    "image_dimension": int,
+    "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "template": InputPathType,
     "probability_mask": InputPathType,
     "tissue_classification": typing.NotRequired[str | None],
     "brain_extraction_registration_mask": typing.NotRequired[InputPathType | None],
-    "keep_temporary_files": bool,
-    "single_floating_point_precision": bool,
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "single_floating_point_precision": typing.NotRequired[bool | None],
     "initial_moving_transform": typing.NotRequired[InputPathType | None],
     "rotation_search_params": typing.NotRequired[str | None],
     "image_file_suffix": typing.NotRequired[str | None],
     "translation_search_params": typing.NotRequired[str | None],
-    "random_seeding": bool,
-    "debug_mode": bool,
+    "random_seeding": typing.NotRequired[bool | None],
+    "debug_mode": typing.NotRequired[int | None],
     "output_prefix": typing.NotRequired[str | None],
 })
 AntsBrainExtractionShParamsDictTagged = typing.TypedDict('AntsBrainExtractionShParamsDictTagged', {
     "@type": typing.Literal["ants/antsBrainExtraction.sh"],
-    "image_dimension": int,
+    "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "template": InputPathType,
     "probability_mask": InputPathType,
     "tissue_classification": typing.NotRequired[str | None],
     "brain_extraction_registration_mask": typing.NotRequired[InputPathType | None],
-    "keep_temporary_files": bool,
-    "single_floating_point_precision": bool,
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "single_floating_point_precision": typing.NotRequired[bool | None],
     "initial_moving_transform": typing.NotRequired[InputPathType | None],
     "rotation_search_params": typing.NotRequired[str | None],
     "image_file_suffix": typing.NotRequired[str | None],
     "translation_search_params": typing.NotRequired[str | None],
-    "random_seeding": bool,
-    "debug_mode": bool,
+    "random_seeding": typing.NotRequired[bool | None],
+    "debug_mode": typing.NotRequired[int | None],
     "output_prefix": typing.NotRequired[str | None],
 })
 AntsBrainExtractionShParamsDict = _AntsBrainExtractionShParamsDictNoTag | AntsBrainExtractionShParamsDictTagged
@@ -60,47 +60,81 @@ class AntsBrainExtractionShOutputs(typing.NamedTuple):
     brain_extracted_image: OutputPathType | None
     """Brain extracted image"""
     brain_mask: OutputPathType | None
-    """Brain mask"""
-    brain_probability_mask: OutputPathType | None
-    """Brain probability mask"""
+    """Brain extraction mask"""
+    brain_segmentation: OutputPathType | None
+    """Brain segmentation (tissue classification)"""
+    csf_segmentation: OutputPathType | None
+    """Cerebrospinal fluid segmentation"""
+    gm_segmentation: OutputPathType | None
+    """Gray matter segmentation"""
+    wm_segmentation: OutputPathType | None
+    """White matter segmentation"""
+    generic_affine: OutputPathType | None
+    """Generic affine transform from registration"""
+    warp_field: OutputPathType | None
+    """Warp field from registration"""
+    inverse_warp_field: OutputPathType | None
+    """Inverse warp field from registration"""
 
 
 def ants_brain_extraction_sh_params(
+    image_dimension: typing.Literal[2, 3],
     anatomical_image: InputPathType,
     template: InputPathType,
     probability_mask: InputPathType,
-    image_dimension: int = 3,
     tissue_classification: str | None = None,
     brain_extraction_registration_mask: InputPathType | None = None,
-    keep_temporary_files: bool = False,
-    single_floating_point_precision: bool = False,
+    keep_temporary_files: bool | None = None,
+    single_floating_point_precision: bool | None = None,
     initial_moving_transform: InputPathType | None = None,
     rotation_search_params: str | None = None,
     image_file_suffix: str | None = None,
     translation_search_params: str | None = None,
-    random_seeding: bool = False,
-    debug_mode: bool = False,
+    random_seeding: bool | None = None,
+    debug_mode: int | None = None,
     output_prefix: str | None = None,
 ) -> AntsBrainExtractionShParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        anatomical_image: Anatomical image (Structural image, typically T1).
+        image_dimension: Image dimension (2 or 3 for 2- or 3-dimensional image).
+        anatomical_image: Anatomical image (Structural image, typically T1). If\
+            more than one anatomical image is specified, subsequently specified\
+            images are used during the segmentation process. However, only the\
+            first image is used in the registration of priors.
         template: Brain extraction template (Anatomical template).
-        probability_mask: Brain extraction probability mask.
-        image_dimension: Image dimension (2 or 3).
-        tissue_classification: Tissue classification.
-        brain_extraction_registration_mask: Brain extraction registration mask.
-        keep_temporary_files: Keep temporary files.
-        single_floating_point_precision: Use single floating point precision.
-        initial_moving_transform: Initial moving transform.
-        rotation_search_params: Rotation search parameters.
-        image_file_suffix: Image file suffix.
-        translation_search_params: Translation search parameters.
-        random_seeding: Use random seeding.
-        debug_mode: Test / debug mode.
-        output_prefix: Output prefix.
+        probability_mask: Brain extraction probability mask (with intensity\
+            range 1=definitely brain to 0=definitely background).
+        tissue_classification: Tissue classification - A k-means segmentation\
+            to find tissue classes. Format: KxcsfLabelxgmLabelxwmLabel. Examples:\
+            '3x1x2x3' for T1 (K=3, CSF=1, GM=2, WM=3), '3x3x2x1' for T2, '3x1x3x2'\
+            for FLAIR, '4x4x2x3' for K=4.
+        brain_extraction_registration_mask: Brain extraction registration mask\
+            (Mask used for registration to limit the metric computation to a\
+            specific region).
+        keep_temporary_files: Keep temporary files (keep brain\
+            extraction/segmentation warps, etc). 0=delete, 1=keep.
+        single_floating_point_precision: Use antsRegistration with single (1)\
+            or double (0) floating point precision.
+        initial_moving_transform: Initial moving transform (An ITK affine\
+            transform, e.g., from antsAI or ITK-SNAP). Without this option, the\
+            script calls antsAI to search for a good initial moving transform.
+        rotation_search_params: Rotation search parameters for antsAI in format\
+            'step,arcFraction'. Step is in degrees, arcFraction goes from 0 (no\
+            search) to 1 (search -180 to 180 degrees).
+        image_file_suffix: Image file suffix (any standard ITK IO format, e.g.,\
+            nrrd, nii.gz, mhd).
+        translation_search_params: Translation search parameters for antsAI in\
+            format 'step,range'. Step is in mm, -range to range will be tested in\
+            each dimension.
+        random_seeding: Use random seeding: 1=use random seed from system\
+            clock, 0=use fixed seed (ANTS_RANDOM_SEED=19650218 or value from\
+            environment). For reproducibility, set to 0 and also set\
+            ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1.
+        debug_mode: Test/debug mode: If > 0, runs a faster version of the\
+            script. Only for debugging, results will not be good.
+        output_prefix: Output prefix (directory + file prefix).
     Returns:
         Parameter dictionary
     """
@@ -110,15 +144,15 @@ def ants_brain_extraction_sh_params(
         "anatomical_image": anatomical_image,
         "template": template,
         "probability_mask": probability_mask,
-        "keep_temporary_files": keep_temporary_files,
-        "single_floating_point_precision": single_floating_point_precision,
-        "random_seeding": random_seeding,
-        "debug_mode": debug_mode,
     }
     if tissue_classification is not None:
         params["tissue_classification"] = tissue_classification
     if brain_extraction_registration_mask is not None:
         params["brain_extraction_registration_mask"] = brain_extraction_registration_mask
+    if keep_temporary_files is not None:
+        params["keep_temporary_files"] = keep_temporary_files
+    if single_floating_point_precision is not None:
+        params["single_floating_point_precision"] = single_floating_point_precision
     if initial_moving_transform is not None:
         params["initial_moving_transform"] = initial_moving_transform
     if rotation_search_params is not None:
@@ -127,6 +161,10 @@ def ants_brain_extraction_sh_params(
         params["image_file_suffix"] = image_file_suffix
     if translation_search_params is not None:
         params["translation_search_params"] = translation_search_params
+    if random_seeding is not None:
+        params["random_seeding"] = random_seeding
+    if debug_mode is not None:
+        params["debug_mode"] = debug_mode
     if output_prefix is not None:
         params["output_prefix"] = output_prefix
     return params
@@ -144,10 +182,12 @@ def ants_brain_extraction_sh_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("image_dimension", 3) is None:
+    if params.get("image_dimension", None) is None:
         raise StyxValidationError("`image_dimension` must not be None")
     if not isinstance(params["image_dimension"], int):
-        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", 3))}` expected `int`')
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3]`')
+    if params["image_dimension"] not in [2, 3]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3]")
     if params.get("anatomical_image", None) is None:
         raise StyxValidationError("`anatomical_image` must not be None")
     if not isinstance(params["anatomical_image"], (pathlib.Path, str)):
@@ -166,14 +206,12 @@ def ants_brain_extraction_sh_validate(
     if params.get("brain_extraction_registration_mask", None) is not None:
         if not isinstance(params["brain_extraction_registration_mask"], (pathlib.Path, str)):
             raise StyxValidationError(f'`brain_extraction_registration_mask` has the wrong type: Received `{type(params.get("brain_extraction_registration_mask", None))}` expected `InputPathType | None`')
-    if params.get("keep_temporary_files", False) is None:
-        raise StyxValidationError("`keep_temporary_files` must not be None")
-    if not isinstance(params["keep_temporary_files"], bool):
-        raise StyxValidationError(f'`keep_temporary_files` has the wrong type: Received `{type(params.get("keep_temporary_files", False))}` expected `bool`')
-    if params.get("single_floating_point_precision", False) is None:
-        raise StyxValidationError("`single_floating_point_precision` must not be None")
-    if not isinstance(params["single_floating_point_precision"], bool):
-        raise StyxValidationError(f'`single_floating_point_precision` has the wrong type: Received `{type(params.get("single_floating_point_precision", False))}` expected `bool`')
+    if params.get("keep_temporary_files", None) is not None:
+        if not isinstance(params["keep_temporary_files"], bool):
+            raise StyxValidationError(f'`keep_temporary_files` has the wrong type: Received `{type(params.get("keep_temporary_files", None))}` expected `bool | None`')
+    if params.get("single_floating_point_precision", None) is not None:
+        if not isinstance(params["single_floating_point_precision"], bool):
+            raise StyxValidationError(f'`single_floating_point_precision` has the wrong type: Received `{type(params.get("single_floating_point_precision", None))}` expected `bool | None`')
     if params.get("initial_moving_transform", None) is not None:
         if not isinstance(params["initial_moving_transform"], (pathlib.Path, str)):
             raise StyxValidationError(f'`initial_moving_transform` has the wrong type: Received `{type(params.get("initial_moving_transform", None))}` expected `InputPathType | None`')
@@ -186,14 +224,14 @@ def ants_brain_extraction_sh_validate(
     if params.get("translation_search_params", None) is not None:
         if not isinstance(params["translation_search_params"], str):
             raise StyxValidationError(f'`translation_search_params` has the wrong type: Received `{type(params.get("translation_search_params", None))}` expected `str | None`')
-    if params.get("random_seeding", False) is None:
-        raise StyxValidationError("`random_seeding` must not be None")
-    if not isinstance(params["random_seeding"], bool):
-        raise StyxValidationError(f'`random_seeding` has the wrong type: Received `{type(params.get("random_seeding", False))}` expected `bool`')
-    if params.get("debug_mode", False) is None:
-        raise StyxValidationError("`debug_mode` must not be None")
-    if not isinstance(params["debug_mode"], bool):
-        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("random_seeding", None) is not None:
+        if not isinstance(params["random_seeding"], bool):
+            raise StyxValidationError(f'`random_seeding` has the wrong type: Received `{type(params.get("random_seeding", None))}` expected `bool | None`')
+    if params.get("debug_mode", None) is not None:
+        if not isinstance(params["debug_mode"], int):
+            raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", None))}` expected `int | None`')
+        if params["debug_mode"] >= 0:
+            raise StyxValidationError("Parameter `debug_mode` must be at least 0")
     if params.get("output_prefix", None) is not None:
         if not isinstance(params["output_prefix"], str):
             raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
@@ -216,7 +254,7 @@ def ants_brain_extraction_sh_cargs(
     cargs.append("antsBrainExtraction.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension", 3))
+        str(params.get("image_dimension", None))
     ])
     cargs.extend([
         "-a",
@@ -240,10 +278,16 @@ def ants_brain_extraction_sh_cargs(
             "-f",
             execution.input_file(params.get("brain_extraction_registration_mask", None))
         ])
-    if params.get("keep_temporary_files", False):
-        cargs.append("-k")
-    if params.get("single_floating_point_precision", False):
-        cargs.append("-q")
+    if params.get("keep_temporary_files", None) is not None:
+        cargs.extend([
+            "-k",
+            ("1" if params.get("keep_temporary_files", None) else "0")
+        ])
+    if params.get("single_floating_point_precision", None) is not None:
+        cargs.extend([
+            "-q",
+            ("1" if params.get("single_floating_point_precision", None) else "0")
+        ])
     if params.get("initial_moving_transform", None) is not None:
         cargs.extend([
             "-r",
@@ -264,10 +308,16 @@ def ants_brain_extraction_sh_cargs(
             "-T",
             params.get("translation_search_params", None)
         ])
-    if params.get("random_seeding", False):
-        cargs.append("-u")
-    if params.get("debug_mode", False):
-        cargs.append("-z")
+    if params.get("random_seeding", None) is not None:
+        cargs.extend([
+            "-u",
+            ("1" if params.get("random_seeding", None) else "0")
+        ])
+    if params.get("debug_mode", None) is not None:
+        cargs.extend([
+            "-z",
+            str(params.get("debug_mode", None))
+        ])
     if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-o",
@@ -291,9 +341,15 @@ def ants_brain_extraction_sh_outputs(
     """
     ret = AntsBrainExtractionShOutputs(
         root=execution.output_file("."),
-        brain_extracted_image=execution.output_file(params.get("output_prefix", "") + "BrainExtractionBrain.nii.gz"),
-        brain_mask=execution.output_file(params.get("output_prefix", "") + "BrainExtractionMask.nii.gz"),
-        brain_probability_mask=execution.output_file(params.get("output_prefix", "") + "BrainExtractionPrior0GenericAffine.mat"),
+        brain_extracted_image=execution.output_file(params.get("output_prefix", None) + "BrainExtractionBrain.nii.gz") if (params.get("output_prefix") is not None) else None,
+        brain_mask=execution.output_file(params.get("output_prefix", None) + "BrainExtractionMask.nii.gz") if (params.get("output_prefix") is not None) else None,
+        brain_segmentation=execution.output_file(params.get("output_prefix", None) + "BrainExtractionSegmentation.nii.gz") if (params.get("output_prefix") is not None) else None,
+        csf_segmentation=execution.output_file(params.get("output_prefix", None) + "BrainExtractionCSF.nii.gz") if (params.get("output_prefix") is not None) else None,
+        gm_segmentation=execution.output_file(params.get("output_prefix", None) + "BrainExtractionGM.nii.gz") if (params.get("output_prefix") is not None) else None,
+        wm_segmentation=execution.output_file(params.get("output_prefix", None) + "BrainExtractionWM.nii.gz") if (params.get("output_prefix") is not None) else None,
+        generic_affine=execution.output_file(params.get("output_prefix", None) + "BrainExtractionPrior0GenericAffine.mat") if (params.get("output_prefix") is not None) else None,
+        warp_field=execution.output_file(params.get("output_prefix", None) + "BrainExtractionPrior1Warp.nii.gz") if (params.get("output_prefix") is not None) else None,
+        inverse_warp_field=execution.output_file(params.get("output_prefix", None) + "BrainExtractionPrior1InverseWarp.nii.gz") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -305,7 +361,8 @@ def ants_brain_extraction_sh_execute(
     """
     antsBrainExtraction.sh
     
-    antsBrainExtraction.sh performs template-based brain extraction.
+    antsBrainExtraction.sh performs template-based brain extraction using N4
+    bias correction, registration, and Atropos segmentation.
     
     Author: ANTs Developers
     
@@ -328,48 +385,71 @@ def ants_brain_extraction_sh_execute(
 
 
 def ants_brain_extraction_sh(
+    image_dimension: typing.Literal[2, 3],
     anatomical_image: InputPathType,
     template: InputPathType,
     probability_mask: InputPathType,
-    image_dimension: int = 3,
     tissue_classification: str | None = None,
     brain_extraction_registration_mask: InputPathType | None = None,
-    keep_temporary_files: bool = False,
-    single_floating_point_precision: bool = False,
+    keep_temporary_files: bool | None = None,
+    single_floating_point_precision: bool | None = None,
     initial_moving_transform: InputPathType | None = None,
     rotation_search_params: str | None = None,
     image_file_suffix: str | None = None,
     translation_search_params: str | None = None,
-    random_seeding: bool = False,
-    debug_mode: bool = False,
+    random_seeding: bool | None = None,
+    debug_mode: int | None = None,
     output_prefix: str | None = None,
     runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """
     antsBrainExtraction.sh
     
-    antsBrainExtraction.sh performs template-based brain extraction.
+    antsBrainExtraction.sh performs template-based brain extraction using N4
+    bias correction, registration, and Atropos segmentation.
     
     Author: ANTs Developers
     
     URL: https://github.com/ANTsX/ANTs
     
     Args:
-        anatomical_image: Anatomical image (Structural image, typically T1).
+        image_dimension: Image dimension (2 or 3 for 2- or 3-dimensional image).
+        anatomical_image: Anatomical image (Structural image, typically T1). If\
+            more than one anatomical image is specified, subsequently specified\
+            images are used during the segmentation process. However, only the\
+            first image is used in the registration of priors.
         template: Brain extraction template (Anatomical template).
-        probability_mask: Brain extraction probability mask.
-        image_dimension: Image dimension (2 or 3).
-        tissue_classification: Tissue classification.
-        brain_extraction_registration_mask: Brain extraction registration mask.
-        keep_temporary_files: Keep temporary files.
-        single_floating_point_precision: Use single floating point precision.
-        initial_moving_transform: Initial moving transform.
-        rotation_search_params: Rotation search parameters.
-        image_file_suffix: Image file suffix.
-        translation_search_params: Translation search parameters.
-        random_seeding: Use random seeding.
-        debug_mode: Test / debug mode.
-        output_prefix: Output prefix.
+        probability_mask: Brain extraction probability mask (with intensity\
+            range 1=definitely brain to 0=definitely background).
+        tissue_classification: Tissue classification - A k-means segmentation\
+            to find tissue classes. Format: KxcsfLabelxgmLabelxwmLabel. Examples:\
+            '3x1x2x3' for T1 (K=3, CSF=1, GM=2, WM=3), '3x3x2x1' for T2, '3x1x3x2'\
+            for FLAIR, '4x4x2x3' for K=4.
+        brain_extraction_registration_mask: Brain extraction registration mask\
+            (Mask used for registration to limit the metric computation to a\
+            specific region).
+        keep_temporary_files: Keep temporary files (keep brain\
+            extraction/segmentation warps, etc). 0=delete, 1=keep.
+        single_floating_point_precision: Use antsRegistration with single (1)\
+            or double (0) floating point precision.
+        initial_moving_transform: Initial moving transform (An ITK affine\
+            transform, e.g., from antsAI or ITK-SNAP). Without this option, the\
+            script calls antsAI to search for a good initial moving transform.
+        rotation_search_params: Rotation search parameters for antsAI in format\
+            'step,arcFraction'. Step is in degrees, arcFraction goes from 0 (no\
+            search) to 1 (search -180 to 180 degrees).
+        image_file_suffix: Image file suffix (any standard ITK IO format, e.g.,\
+            nrrd, nii.gz, mhd).
+        translation_search_params: Translation search parameters for antsAI in\
+            format 'step,range'. Step is in mm, -range to range will be tested in\
+            each dimension.
+        random_seeding: Use random seeding: 1=use random seed from system\
+            clock, 0=use fixed seed (ANTS_RANDOM_SEED=19650218 or value from\
+            environment). For reproducibility, set to 0 and also set\
+            ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1.
+        debug_mode: Test/debug mode: If > 0, runs a faster version of the\
+            script. Only for debugging, results will not be good.
+        output_prefix: Output prefix (directory + file prefix).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsBrainExtractionShOutputs`).
