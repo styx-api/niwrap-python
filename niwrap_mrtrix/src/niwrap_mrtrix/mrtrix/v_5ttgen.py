@@ -144,6 +144,25 @@ def v_5ttgen_algorithm_cargs_dyn_fn(
     }.get(t)
 
 
+def v_5ttgen_algorithm_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "freesurfer": v_5ttgen_freesurfer_outputs,
+        "fsl": v_5ttgen_fsl_outputs,
+        "gif": v_5ttgen_gif_outputs,
+        "hsvs": v_5ttgen_hsvs_outputs,
+    }.get(t)
+
+
 def v_5ttgen_algorithm_validate_dyn_fn(
     t: str,
 ) -> typing.Any:

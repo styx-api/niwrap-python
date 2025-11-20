@@ -120,6 +120,23 @@ def n4_bias_field_correction_output_cargs_dyn_fn(
     }.get(t)
 
 
+def n4_bias_field_correction_output_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "correctedOutput": n4_bias_field_correction_corrected_output_outputs,
+        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_outputs,
+    }.get(t)
+
+
 def n4_bias_field_correction_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:

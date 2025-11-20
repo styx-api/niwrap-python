@@ -78,6 +78,23 @@ def denoise_image_output_cargs_dyn_fn(
     }.get(t)
 
 
+def denoise_image_output_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "correctedOutput": denoise_image_corrected_output_outputs,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
+    }.get(t)
+
+
 def denoise_image_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:

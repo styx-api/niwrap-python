@@ -228,6 +228,24 @@ def ants_apply_transforms_output_cargs_dyn_fn(
     }.get(t)
 
 
+def ants_apply_transforms_output_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "warpedOutput": ants_apply_transforms_warped_output_outputs,
+        "compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_outputs,
+        "genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_outputs,
+    }.get(t)
+
+
 def ants_apply_transforms_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:

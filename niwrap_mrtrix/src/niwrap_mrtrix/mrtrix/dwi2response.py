@@ -230,6 +230,27 @@ def dwi2response_algorithm_cargs_dyn_fn(
     }.get(t)
 
 
+def dwi2response_algorithm_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "dhollander": dwi2response_dhollander_outputs,
+        "fa": dwi2response_fa_outputs,
+        "manual": dwi2response_manual_outputs,
+        "msmt_5tt": dwi2response_msmt_5tt_outputs,
+        "tax": dwi2response_tax_outputs,
+        "tournier": dwi2response_tournier_outputs,
+    }.get(t)
+
+
 def dwi2response_algorithm_validate_dyn_fn(
     t: str,
 ) -> typing.Any:

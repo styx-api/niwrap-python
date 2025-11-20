@@ -2011,6 +2011,22 @@ def c3d_operations_cargs_dyn_fn(
     }.get(t)
 
 
+def c3d_operations_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+        "output": c3d_output_outputs,
+    }.get(t)
+
+
 def c3d_operations_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
